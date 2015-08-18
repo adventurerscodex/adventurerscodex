@@ -1,0 +1,24 @@
+{
+  "name": "dnd_apps",
+  "version": "0.0.1",
+  "authors": [
+    "Brian Schrader <brian@brianschrader.com>"
+  ],
+  "description": "A series of apps for managing a D&D game.",
+  "main": "app.js",
+  "keywords": [
+    "dnd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "knockout": "~3.3.0",
+    "jquery": "~2.1.4"
+  }
+}
