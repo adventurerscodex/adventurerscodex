@@ -8,67 +8,13 @@
  </head>
  <body>
  	<div id='content' class='container'>
-	  <!-- TODO: Add HTML -->
-	  <div class="panel panel-default bio">
-		<div class="panel-heading">
-    		<h2 class="panel-title">Profile</h2>
-    	</div>
-		<div class="panel-body">
-		  <!-- Names -->
-		  <div class="panel-body">
-			<div class="input-group ">
-			  <span class="input-group-addon" id="basic-addon2">Character Name</span>
-			  <input type="text" class="form-control" aria-describedby="basic-addon2"
-				  data-bind='value: characterName' placeholder="Your character's name" />
-			</div>
-		  </div>
-		  <div class="panel-body">
-			<div class="input-group ">
-			  <span class="input-group-addon" id="basic-addon2">Player Name</span>
-			  <input type="text" class="form-control" aria-describedby="basic-addon2"
-				  data-bind='value: playerName' placeholder="Your name" />
-			</div>
-		  </div>
-		  <div class="panel-body">
-		  <!-- Race, Gender, Class, Alignment -->
-		  <div class="input-group ">
-			<span class="input-group-addon" id="basic-addon2">Race</span>
-			<input type="text" class="form-control" placeholder="Elf? Dwarf? Human?" aria-describedby="basic-addon2"
-				data-bind='value: race'>
-		  </div>
-		</div>
-		<div class="panel-body">
-		  <div class="input-group ">
-			<span class="input-group-addon" id="basic-addon2">Gender</span>
-			<input type="text" class="form-control" placeholder="Male or Female?" aria-describedby="basic-addon2"
-				data-bind='value: gender'>
-  		    </div>
-		</div>
-		<div class="panel-body">
-		<div class="input-group">
-			<span class="input-group-addon" id="basic-addon2">Class</span>
-			<input type="text" class="form-control" placeholder="Warrior? Wizard? Monk?" aria-describedby="basic-addon2"
-				data-bind='value: typeClass'>
-		  </div>
-		</div>
-		<div class="panel-body">
-		  <div class="input-group ">
-			<span class="input-group-addon" id="basic-addon2">Alignment</span>
-			<input type="text" class="form-control" placeholder="Good? Evil?" aria-describedby="basic-addon2"
-				data-bind='value: alignment'>
-		  </div>
-		</div>
-		<div class="btn-group right-side" role="group" aria-label="...">
-			<button class="btn btn-default" data-bind="click: importValues">Import</button>
-			<button class="btn btn-default" data-bind="click: exportValues">Export</button>
-			<button class="btn btn-danger" data-bind="click: clear">Clear</button>
-		</div>
-	  </div>
+		<div data-bind="template: { name: 'profile.tmpl' }"></div>
 	</div>
 	<script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
 	<script src="../bin/knockout.localStorage.js" type="text/javascript"></script>
+	<script src="../bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>	
 	<script src="app.js" type="text/javascript"></script>
  </body>
 </html>

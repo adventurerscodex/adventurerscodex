@@ -21,5 +21,8 @@
     "knockout": "~3.3.0",
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5"
+  },
+  "resolutions": {
+    "webcomponentsjs": "~0.5.4"
   }
 }
