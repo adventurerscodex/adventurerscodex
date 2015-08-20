@@ -7,3 +7,20 @@
 .right-side {
 	float:right;
 }
+
+.spacer {
+	width:10px;
+	height:10px;
+}
+
+.inline-left {
+	float:left;
+	display:inline;
+	width: 49%
+}
+
+.inline-right {
+	float:right;
+	display:inline;
+	width: 49%
+}
