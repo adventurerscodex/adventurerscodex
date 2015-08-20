@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "knockout": "~3.3.0",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5"
   }
 }
