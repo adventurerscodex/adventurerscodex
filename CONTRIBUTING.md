@@ -1,5 +1,4 @@
-How to Contribute to Charactersheet
-===================================
+# How to Contribute to Charactersheet
 
 It's easy!
 
@@ -12,12 +11,31 @@ The branch you create should have a name like this:
 
 If you are creating a module for the first time then the issue number should be the string `new`.
 
+	ex: profile-new
+
 Make your modifications and submit a pull request! 
 
 Thanks for contributing to character sheet!
 
-Project Structure
-=================
+# Installing 
+
+1. Get the code:
+	
+		cd <wherever you want>
+		git clone https://github.com/charactersheet/charactersheet
+
+2. Install the bower dependencies:
+
+		cd charactersheet
+		bower install bower.json
+
+If you're using FireFox or Safari, then you're done! If you're using Chrome then there's one more step.
+
+3. Since Chrome won't allow cross domain requests from local files (for some reason) you'll need to start up a web server. The easiest version is the `npm` one. Just make sure you're in the same directory as the project.
+
+		npm install -g serve && serve
+		
+# Project Structure
 
 Character sheet is broken up into apps. Each app has it's own directory and structure, but the base formula is:
 
