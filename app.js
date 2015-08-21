@@ -1,12 +1,4 @@
-var viewModel = {
-	//TODO: Add viewModel properties here.
+function ViewModel() {
+	this.user = ko.observable(new User());
+	this.note = ko.observable(new Note());
 };
-
-
-//TODO: Make other properties.
-
-
-//Ready
-(function(){
-	ko.applyBindings(viewModel);
-});

@@ -47,8 +47,3 @@ function User() {
 		}
 	};
 };
-
-//Ready
-$(function(){
-	ko.applyBindings(new User());
-});

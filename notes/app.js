@@ -15,7 +15,3 @@ function Note() {
 		}
 	};
 };
-
-$(function(){
-	ko.applyBindings(new Note());
-});
