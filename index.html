@@ -12,6 +12,7 @@
 		  <h1>Welcome!</h1>
 		</div>
 		<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile/', data: user }"></div>
+		<div data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats/', data: stats }"></div>
 		<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores/', data: abilityScores }"></div>
 		<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes/', data: note }"></div>
 	</div>
@@ -24,6 +25,7 @@
 	<script src="notes/app.js" type="text/javascript"></script>
 	<script src="ability_scores/app.js" type="text/javascript"></script>
 	<script src="profile/app.js" type="text/javascript"></script>
+	<script src="stats/app.js" type="text/javascript"></script>
 	<script type="text/javascript">$(function(){ ko.applyBindings(new ViewModel()); });</script>
  </body>
 </html>
