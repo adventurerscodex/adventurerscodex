@@ -1,0 +1,33 @@
+<div class="panel panel-default bio">
+  <div class="panel-heading">
+	  <h2 class="panel-title">Backpack</h2>
+  </div>
+	<div class="panel panel-default">
+	  
+		<div class="panel panel-default">
+				<span>Name</span>
+				<span>Description</span>
+				<span>Quantity</span>
+				<span>Weight</span>
+		</div>
+		<div class="panel panel-default" data-bind='foreach: backpack'>
+			<div class="panel panel-default"> 
+				<input type='text' data-bind='textInput: itemName'></input>
+				<input type='text' data-bind='textInput: itemDesc'></input>
+				<input type='text' data-bind='textInput: itemQty'></input>
+				<input type='text' data-bind='textInput: itemWeight'></input>
+
+				
+			</div>
+		</div>
+			<div>
+				<input type='text' data-bind='textInput: blankItem().itemName'></input>
+				<input type='text' data-bind='textInput: blankItem().itemDesc'></input>
+				<input type='text' data-bind='textInput: blankItem().itemQty'></input>
+				<input type='text' data-bind='textInput: blankItem().itemWeight'></input>
+			</div>
+		
+	  
+	  <button type="button" class="btn btn-primary" data-bind='click: addItem'>Add item</button>
+	</div>
+</div>
