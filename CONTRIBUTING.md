@@ -12,9 +12,32 @@ The branch you create should have a name like this:
 
 If you are creating a module for the first time then the issue number should be the string `new`.
 
+	ex. profile-new
+
 Make your modifications and submit a pull request! 
 
 Thanks for contributing to character sheet!
+
+Issues and Features
+===================
+
+Please look through the issues list and feel free to ask questions! A lot of the issues can appear terse, but its probably because they're 'notes to our future-selves'. If a feature looks interesting to you, but you're not clear on the details, ask away!
+
+Technologies
+============
+
+Knockout.js for the front end.
+jQuery for the async networking.
+Bootstrap for the styling.
+
+What should each module contain?
+================================
+
+Unless otherwise specified, every module should contain the following functionalities:
+
+- Import/Export of player data. The notable exception to this is the combat log. These functions should import a native javascript object and export one as well. It should be able to be called at any time and replace all the data that existed beforehand.
+- A function to clear all of the fields and delete the data.  
+- Should follow the basic structure defined below.
 
 Project Structure
 =================
