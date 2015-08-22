@@ -1,5 +1,4 @@
-How to Contribute to Charactersheet
-===================================
+# How to Contribute to Charactersheet
 
 It's easy!
 
