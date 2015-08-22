@@ -4,30 +4,62 @@
   </div>
 	<div class="panel panel-default">
 	  
-		<div class="panel panel-default">
+<!--		<div class="panel panel-default">
 				<span>Name</span>
 				<span>Description</span>
 				<span>Quantity</span>
 				<span>Weight</span>
-		</div>
+		</div>-->
 		<div class="panel panel-default" data-bind='foreach: backpack'>
-			<div class="panel panel-default"> 
-				<input type='text' data-bind='textInput: itemName'></input>
-				<input type='text' data-bind='textInput: itemDesc'></input>
-				<input type='text' data-bind='textInput: itemQty'></input>
-				<input type='text' data-bind='textInput: itemWeight'></input>
-
-				
+<!--			<div class="panel panel-default"> 
+                <div class="panel-heading">
+				    <input class="itemName" type='text' data-bind='textInput: itemName'/>
+                    <input class="itemWeight" type='text' data-bind='textInput: itemWeight'/>
+                </div>
+				<input class="itemDesc" type='text' data-bind='textInput: itemDesc'/>
+				<input class="itemQty" type='text' data-bind='textInput: itemQty'/>
+			</div>-->
+            <div class="panel panel-default"> 
+                <div class="panel-heading">
+				    <label class="itemName" data-bind='text: itemName'/>
+                    <label class="itemQty" data-bind='text: itemQty'/>
+                    <label class="itemWeight" data-bind='text: itemWeight' />
+                </div>
+				<p class="itemDesc" data-bind='text: itemDesc'></p>
+				<div class="panel-footer clearfix">
+                    <button style="margin-left: 10px;" type="button" class="btn btn-info pull-right" >Edit item</button> 
+                    <button style="margin-left: 10px;" type="button" class="btn btn-danger pull-right" >Remove Item</button>
+				</div>
 			</div>
 		</div>
-			<div>
-				<input type='text' data-bind='textInput: blankItem().itemName'></input>
-				<input type='text' data-bind='textInput: blankItem().itemDesc'></input>
-				<input type='text' data-bind='textInput: blankItem().itemQty'></input>
-				<input type='text' data-bind='textInput: blankItem().itemWeight'></input>
+			<div class="panel panel-success">
+                <div class="panel-heading">
+                    Add item
+                </div>
+                <div class="input-group" style="display:inline; width: 25%; float:left;">
+                  <span class="input-group-addon">Name</span>
+                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemName'/>
+                </div>
+                <div class="input-group" style="display:inline; width: 25%; float:left;">
+                  <span class="input-group-addon">Description</span>
+                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemDesc'/>
+                </div>
+                <div class="input-group" style="display:inline; width: 25%; float:left;">
+                  <span class="input-group-addon">Quantity</span>
+                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemQty'/>
+                </div>
+                <div class="input-group" style="display:inline; width: 25%; float:left;">
+                  <span class="input-group-addon">Weight</span>
+                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemWeight'/>
+                </div>
+<!--				<input class="form-control" type='text' data-bind='textInput: blankItem().itemName'/>
+				<input class="form-control" type='text' data-bind='textInput: blankItem().itemDesc'/>
+				<input class="form-control" type='text' data-bind='textInput: blankItem().itemQty'/>
+				<input class="form-control" type='text' data-bind='textInput: blankItem().itemWeight'/>-->
+                <div class="panel-footer clearfix">
+                    <button type="button" class="btn btn-primary" data-bind='click: addItem'>Add item</button>
+                </div>
 			</div>
-		
 	  
-	  <button type="button" class="btn btn-primary" data-bind='click: addItem'>Add item</button>
 	</div>
 </div>
