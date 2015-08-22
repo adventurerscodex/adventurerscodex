@@ -11,31 +11,35 @@ The branch you create should have a name like this:
 
 If you are creating a module for the first time then the issue number should be the string `new`.
 
-	ex: profile-new
+	ex. profile-new
 
 Make your modifications and submit a pull request! 
 
 Thanks for contributing to character sheet!
 
-# Installing 
+Issues and Features
+===================
 
-1. Get the code:
-	
-		cd <wherever you want>
-		git clone https://github.com/charactersheet/charactersheet
+Please look through the issues list and feel free to ask questions! A lot of the issues can appear terse, but its probably because they're 'notes to our future-selves'. If a feature looks interesting to you, but you're not clear on the details, ask away!
 
-2. Install the bower dependencies:
+Technologies
+============
 
-		cd charactersheet
-		bower install bower.json
+Knockout.js for the front end.
+jQuery for the async networking.
+Bootstrap for the styling.
 
-If you're using FireFox or Safari, then you're done! If you're using Chrome then there's one more step.
+What should each module contain?
+================================
 
-3. Since Chrome won't allow cross domain requests from local files (for some reason) you'll need to start up a web server. The easiest version is the `npm` one. Just make sure you're in the same directory as the project.
+Unless otherwise specified, every module should contain the following functionalities:
 
-		npm install -g serve && serve
-		
-# Project Structure
+- Import/Export of player data. The notable exception to this is the combat log. These functions should import a native javascript object and export one as well. It should be able to be called at any time and replace all the data that existed beforehand.
+- A function to clear all of the fields and delete the data.  
+- Should follow the basic structure defined below.
+
+Project Structure
+=================
 
 Character sheet is broken up into apps. Each app has it's own directory and structure, but the base formula is:
 
