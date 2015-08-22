@@ -1,0 +1,35 @@
+<div class="panel panel-default bio">
+  <div class="panel-heading">
+	  <h2 class="panel-title">Stats</h2>
+  </div>
+  <div class="panel-body">
+	<div class="progress">
+		<div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
+			data-bind="style: { width: health.regularProgressWidth }, css: health.progressType,
+				text: health.progressLabel" >
+		  <span class="sr-only"></span>
+		</div>
+		<div id="tempHitPoints" class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0"
+			data-bind="style: { width: health.tempProgressWidth }" >
+		  <span class="sr-only"></span>
+		</div>
+	</div>
+	<div class="panel-body">
+	   <div class="input-group row-fluid inline-left tri">
+		 <span class="input-group-addon" id="basic-addon2">Damage</span>
+		 <input type="number" class="form-control" aria-describedby="basic-addon2"
+			 data-bind='textInput: health.damage' min="0">
+	   </div>
+	   <div class="input-group row-fluid inline-left tri">
+		 <span class="input-group-addon" id="basic-addon2">Max Hit Points</span>
+		 <input type="number" class="form-control" aria-describedby="basic-addon2"
+			 data-bind='textInput: health.maxHitpoints' min="0">
+	   </div>
+	   <div class="input-group row-fluid inline-left tri">
+		 <span class="input-group-addon" id="basic-addon2">Temp Hit Points</span>
+		 <input type="number" class="form-control" aria-describedby="basic-addon2"
+			 data-bind='textInput: health.tempHitpoints' min="0">
+	   </div>
+	</div>
+  </div>
+</div>
