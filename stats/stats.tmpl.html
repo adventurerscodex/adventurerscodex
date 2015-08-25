@@ -3,16 +3,17 @@
 	  <h2 class="panel-title">Stats</h2>
   </div>
   <div class="panel-body">
-	<div class="progress">
+	<div class="progress input-group">
 		<div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
 			data-bind="style: { width: health.regularProgressWidth }, css: health.progressType,
-				text: health.progressLabel" >
+				text: health.progressLabel">
 		  <span class="sr-only"></span>
 		</div>
 		<div id="tempHitPoints" class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0"
-			data-bind="style: { width: health.tempProgressWidth }" >
+			data-bind="style: { width: health.tempProgressWidth }" aria-describedby="hitpointsCounter">
 		  <span class="sr-only"></span>
 		</div>
+		<span class="input-group-addon" id="hitpointsCounter">HP: <span data-bind="text: health.hitpoints"></span>
 	</div>
 	<div class="panel-body">
 	   <div class="input-group row-fluid inline-left tri">
