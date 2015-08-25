@@ -22,7 +22,6 @@
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
     "mocha": "~2.2.5",
-    "FileSaver": "*",
     "file-saver.js": "~1.20150507.2"
   },
   "resolutions": {
