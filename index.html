@@ -9,17 +9,85 @@
  <body>
  	<div id='content' class='container'>
 		<div class="page-header">
-		  <h1>Welcome!</h1>
+		  <div class="container">
+		  	<div class="hard-left">
+		  		<!-- Add header -->
+		  	</div>
+			<div class="btn-group hard-right" role="group" aria-label="...">
+			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#importModal">Import</button>
+			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#exportModal">Export</button>
+			  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#clearModal">Clear</button>
+			</div>
+		  </div>
 		</div>
 		<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile/', data: user }"></div>
 		<div data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats/', data: stats }"></div>
 		<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores/', data: abilityScores }"></div>
 		<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes/', data: note }"></div>
 	</div>
+	<!-- Clear Modal -->
+	<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="clearModalLabel">Are you sure?</h4>
+		  </div>
+		  <div class="modal-body">
+			<p> Are you sure you want to clear all of your data? There is no going back.</p>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			<button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="click: clear">Clear</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- Import Modal -->
+	<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="importModalLabel">Import</h4>
+		  </div>
+		  <div class="modal-body">
+			<p>If you've exported you character data before, you can import it here!</p>
+			<!-- Add import form. -->	
+			<input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary" data-bind="click: importValues" data-dismiss="modal">Import</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<!-- Export Modal -->
+	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+		  </div>
+		  <div class="modal-body">
+			<!-- Add export form. -->
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary" data-bind="click: exportValues" data-dismiss="modal">Export</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+
 	<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
+	<script src="bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script>
 	<script src="bin/knockout.localStorage.js" type="text/javascript"></script>
+	<script src="bin/knockout-file-bind.js" type="text/javascript"></script>
 	<script src="bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
 	<script src="app.js" type="text/javascript"></script>
 	<script src="notes/app.js" type="text/javascript"></script>
