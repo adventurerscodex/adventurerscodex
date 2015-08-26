@@ -6,8 +6,8 @@ function Backpack() {
 		}	+ 'lb', { persist: 'backpack.totalWeight'});
 	
 	}; */
-	this.self = this;	//black magic
-	this.backpack = ko.observableArray([new Item()]);
+	self = this;	//black magic
+	this.backpack = ko.observableArray([]);
 	this.blankItem = ko.observable(new Item());
 	
 	this.addItem = function() {
@@ -15,16 +15,14 @@ function Backpack() {
 		this.blankItem(new Item());
 	};
 	this.removeItem = function(item) {
-		this.backpack.remove(item);
+		self.backpack.remove(item);
 	};
 	
-	this.importValues = function(values) {
-	};
+	//this.importValues = function(values) {
+	//};
 	
-	this.exportValues = function() {
-		return {
-		}
-	};
+	//this.exportValues = function() {
+	//};
 };
 
 function Item() {
