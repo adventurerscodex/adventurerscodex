@@ -44,17 +44,17 @@ function abilityScores() {
 
     this.exportValues = function() {
         return {
-            str: this.str()
-            str_modifier: this.str_modifier()
-            dex: this.dex()
-            dex_modifier: this.dex_modifier()
-            con: this.con()
-            con_modifier: this.con_modifier()
-            int: this.int()
-            int_modifier: this.int_modifier()
-            wis: this.wis()
-            wis_modifier: this.wis_modifier()
-            cha: this.cha()
+            str: this.str(),
+            str_modifier: this.str_modifier(),
+            dex: this.dex(),
+            dex_modifier: this.dex_modifier(),
+            con: this.con(),
+            con_modifier: this.con_modifier(),
+            int: this.int(),
+            int_modifier: this.int_modifier(),
+            wis: this.wis(),
+            wis_modifier: this.wis_modifier(),
+            cha: this.cha(),
             cha_modifier: this.cha_modifier()
         }
     };
