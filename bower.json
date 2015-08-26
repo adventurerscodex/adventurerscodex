@@ -23,7 +23,8 @@
     "bootstrap": "~3.3.5",
     "mocha": "~2.2.5",
     "file-saver.js": "~1.20150507.2",
-    "should": "~7.0.4"
+    "should": "~7.0.4",
+    "karma": "~0.4.6"
   },
   "resolutions": {
     "webcomponentsjs": "~0.5.4"
