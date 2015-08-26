@@ -1,20 +1,22 @@
-function Spells() {
-    this.name = ko.observable('', { persist: 'name.text' });
-    this.school = ko.observable('', { persist: 'school.text' });
-    this.level = ko.observable('', { persist: 'level.text' });
-    this.description = ko.observable('', { persist: 'description.text' });
+function Spellbook() {
+    var self = this;
+    self.spellbook = ko.observableArray([]);
+    self.blankSpell = ko.observable(new Spell());
 
-    this.clear = function() {
-        this.name('');
+    this.addSpell = function() {
+        self.spellbook.push(self.blankSpell());
+        self.blankSpell(new Spell());
     };
 
-    this.importValues = function(values) {
-        this.name(values.name);
-    };
+    self.removeSpell = function(spell) { self.spellbook.remove(spell) }
 
-    this.exportValues = function() {
-        return {
-            name: this.name()
-        }
-    };
+};
+
+function Spell() {
+    var self = this;
+
+    self.spellName = ko.observable('');
+    self.spellSchool = ko.observable('');
+    self.spellLevel = ko.observable('');
+    self.spellDescription = ko.observable('');
 };
