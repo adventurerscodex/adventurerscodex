@@ -11,7 +11,8 @@
         <th>School</th>
         <th>Options</th>
         <th>
-          <a data-bind="click: $root.removeSpell" href="#">
+          <a data-toggle="modal"
+             data-target="#addSpell" href="#">
             <i class="glyphicon glyphicon-plus"></i>
           </a>
         </th>
@@ -36,43 +37,84 @@
     </tbody>
   </table>
 
-    <div class="panel panel-success">
-      <div class="panel-heading">
-        Add Spell
-      </div>
-      <div class="input-group"
-           style="display:inline; width: 25%; float:left;">
-        <span class="input-group-addon">Name</span>
-        <input class="form-control"
-               type='text'
-               data-bind='textInput: blankSpell().spellName'/>
-      </div>
-      <div class="input-group"
-           style="display:inline; width: 25%; float:left;">
-        <span class="input-group-addon">Level</span>
-        <input class="form-control"
-               type='text'
-               data-bind='textInput: blankSpell().spellLevel'/>
-      </div>
-      <div class="input-group"
-           style="display:inline; width: 25%; float:left;">
-        <span class="input-group-addon">School</span>
-        <input class="form-control"
-               type='text'
-               data-bind='textInput: blankSpell().spellSchool'/>
-      </div>
-      <div class="input-group"
-           style="display:inline; width: 25%; float:left;">
-        <span class="input-group-addon">Description</span>
-        <input class="form-control"
-               type='text'
-               data-bind='textInput: blankSpell().spellDescription'/>
-      </div>
-      <div class="panel-footer clearfix">
-          <button type="button"
-                  class="btn btn-primary"
-                  data-bind='click: addSpell'>Add</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- Add Modal -->
+    <div class="modal fade"
+         id="addSpell"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="addSpellLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"
+                id="addSpellLabel">Add a spell to your spellbook.</h4>
+        </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="spellName"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="email"
+                         class="form-control"
+                         id="spellName"
+                         placeholder="Spell Name"
+                         data-bind='textInput: blankSpell().spellName'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="spellLevel"
+                       class="col-sm-2 control-label">Level</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellLevel"
+                           placeholder="Spell Level"
+                           data-bind='textInput: blankSpell().spellLevel'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="spellSchool"
+                       class="col-sm-2 control-label">School</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellSchool"
+                           placeholder="Spell School"
+                           data-bind='textInput: blankSpell().spellSchool'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="spellDescription"
+                       class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea type="password"
+                              class="form-control"
+                              id="spellDescription"
+                              rows="4"
+                              data-bind='textInput: blankSpell().spellDescription'>
+                    </textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal">Cancel</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bind='click: addSpell'
+                        data-dismiss="modal">Add</button>
+              </div>
+            </form>
+          </div> <!-- Modal Body -->
+        </div> <!-- Modal Content -->
+      </div> <!-- Modal Dialog -->
+    </div> <!-- Modal Fade -->
+</div> <!-- Panel -->
+
