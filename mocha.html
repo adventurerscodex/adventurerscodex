@@ -1,0 +1,38 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+</head>
+<body>
+  <div id="mocha"></div>
+
+  <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+  <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+
+	<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
+	<script src="bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script>
+	<script src="bower_components/should/should.js" type="text/javascript"></script>
+	<script src="bin/knockout.localStorage.js" type="text/javascript"></script>
+	<script src="bin/knockout-file-bind.js" type="text/javascript"></script>
+	<script src="bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
+	<script src="app.js" type="text/javascript"></script>
+	<script src="notes/app.js" type="text/javascript"></script>
+	<script src="ability_scores/app.js" type="text/javascript"></script>
+	<script src="profile/app.js" type="text/javascript"></script>
+	<script src="stats/app.js" type="text/javascript"></script>
+
+  <script>mocha.setup('bdd')</script>
+  <script src="test/test_stats.js"></script>
+  <script src="test/test_profile.js"></script>
+  <script src="test/test_notes.js"></script>
+  <script>
+    mocha.checkLeaks();
+    mocha.globals(['jQuery']);
+    mocha.run();
+  </script>
+</body>
+</html>
