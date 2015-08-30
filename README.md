@@ -35,6 +35,25 @@ Where is it?
 
 It's not live just yet, but it will be soon! Check back for more details.
 
+Installation
+============
+
+Installing charactersheet is pretty simple. 
+
+1. Clone the repo 
+    
+    `git clone https://github.com/charactersheet/charactersheet.git`
+
+2. Install the bower dependencies and the node dependencies (Node dependencies
+   are only needed for running the tests).
+
+	`npm install && bower install`
+
+3. Check that your installation works by opening `mocha.html` in your browser.
+   All the unit tests should pass. Next open `index.html`. 
+
+That's it!
+
 How can I contribute?
 =====================
 
