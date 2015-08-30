@@ -1,0 +1,24 @@
+{
+    "name": "Chractersheet",
+    "description": "A tool to help D&D 5e players keep their ducks in a row.",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/charactersheet/charactersheet"
+    },
+    "devDependencies": {
+        "codecov.io": "~0.1.5",
+        "karma": "~0.13.3",
+        "karma-mocha": "~0.2.0",
+        "karma-phantomjs-launcher": "0.2.1",
+        "karma-coverage": "~0.5.0",
+        "grunt": "~0.4.5",
+        "grunt-cli": "~0.1.13",
+        "grunt-karma": "~0.12.0",
+        "mocha": "~2.2.5",
+        "phantomjs": "~1.9.18"
+    },
+    "scripts": {
+        "test": "grunt karma:test"
+      }
+}
