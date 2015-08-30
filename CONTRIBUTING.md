@@ -28,6 +28,8 @@ Technologies
 Knockout.js for the front end.
 jQuery for the async networking.
 Bootstrap for the styling.
+Mocha for unittesting
+Karma, Grunt, and Istanbul for measuring code converage.
 
 What should each module contain?
 ================================
