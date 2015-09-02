@@ -3,6 +3,7 @@ function ViewModel() {
 	this.stats = ko.observable(new Stats());
 	this.note = ko.observable(new Note());
     this.abilityScores = ko.observable(new abilityScores());
+    this.spellSlots = ko.observable(new SpellSlots());
     
     this.fileContents = ko.observable();
     this.fileReader = new FileReader();
@@ -12,6 +13,7 @@ function ViewModel() {
     	this.note().clear();
     	this.abilityScores().clear();
     	this.stats().clear();
+    	this.spellSlots().clear();
     };
     
     this.importValues = function() {
@@ -21,6 +23,7 @@ function ViewModel() {
 			this.stats().importValues(values.stats);
 			this.note().importValues(values.note);
 			this.abilityScores().importValues(values.abilityScores);
+			this.spellSlots().importValues(values.spellSlots);
 		} catch(err) {
 			//Add error handling.
 			console.log(err);
@@ -33,6 +36,7 @@ function ViewModel() {
     		note: this.note().exportValues(),
     		stats: this.stats().exportValues(),
     		abilityScores: this.abilityScores().exportValues(),    	
+    		spellSlots: this.spellSlots().exportValues(),    	
     	});
     	var filename = this.user().characterName();
     	var blob = new Blob([string], {type: "application/json"});
