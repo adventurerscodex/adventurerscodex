@@ -2,31 +2,46 @@
   <div class="panel-heading">
 	  <h2 class="panel-title">Backpack</h2>
   </div>
-	<div class="panel panel-default">
-        <!-- ko if: backpack().length > 0 -->
-		<div class="panel panel-default" data-bind='foreach: backpack'>
-<!--			<div class="panel panel-default"> 
-                <div class="panel-heading">
-				    <input class="itemName" type='text' data-bind='textInput: itemName'/>
-                    <input class="itemWeight" type='text' data-bind='textInput: itemWeight'/>
-                </div>
-				<input class="itemDesc" type='text' data-bind='textInput: itemDesc'/>
-				<input class="itemQty" type='text' data-bind='textInput: itemQty'/>
-			</div>-->
-            <div class="panel panel-default"> 
-                <div class="panel-heading">
-				    <label class="itemName" data-bind='text: itemName '/>
-                    <label class="itemQty" data-bind='text: itemQty'/>
-                    <label class="itemWeight" data-bind='text: itemWeight' />
-                </div>
-				<p class="itemDesc" data-bind='text: itemDesc'></p>
-				<div class="panel-footer clearfix">
-                    <button style="margin-left: 10px;" type="button" class="btn btn-info pull-right" >Edit item</button> 
-                    <button style="margin-left: 10px;" type="button" class="btn btn-danger pull-right" value = 'remove' data-bind='click: $parent.removeItem'>Remove Item</button>
-				</div>
-			</div>
-		</div>
-        <!-- /ko -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Weight</th>
+        <th>Options</th>
+        <th>
+         <a data-toggle="modal"
+          data-target="#addSpell" href="#">
+            <i class="glyphicon glyphicon-plus"></i>
+         </a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: backpack().length > 0 -->
+    <tbody data-bind='foreach: backpack'>
+      <tr>
+        <td  data-bind='text: itemName'></td>
+        <td  data-bind='text: itemQty'></td>
+        <td  data-bind='text: itemWeight'></td>
+        <td>
+          <a data-bind="click: $root.editSpell"
+            href="#"
+            data-toggle="modal"
+            data-target="#viewSpell">
+            <i class="glyphicon glyphicon-eye-open">
+            </i>
+            </a>&nbsp;&nbsp;
+            <a data-bind='click: $parent.removeItem' href="#">
+            <i class="glyphicon glyphicon-remove">
+            </i>
+          </a>
+        </td>
+      </tr>
+
+    </tbody>
+    <!-- /ko -->
+  </table>
+        
 			<div class="panel panel-success">
                 <div class="panel-heading">
                     Add item
@@ -55,6 +70,4 @@
                     <button type="button" class="btn btn-primary" data-bind='click: addItem'>Add item</button>
                 </div>
 			</div>
-	  
-	</div>
 </div>
