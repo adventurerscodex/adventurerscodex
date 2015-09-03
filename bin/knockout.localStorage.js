@@ -16,6 +16,15 @@
           initialValue = JSON.parse(localStorage.getItem(key))
         }catch(e){};
       }
+            
+      var mapping = options.mapping;
+
+      //If there's a valid mapping, call it.
+      if(mapping){
+        try{
+          initialValue = initialValue.map(mapping);
+        }catch(e){};
+      }
 
       // Create observable from saved method
       var observable = saved(initialValue);
