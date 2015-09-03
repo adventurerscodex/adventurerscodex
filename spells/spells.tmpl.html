@@ -119,7 +119,6 @@
       </div> <!-- Modal Dialog -->
     </div> <!-- Modal Fade -->
 
-    <!-- ko if: spellbook().length -->
     <!-- ViewEdit Modal -->
     <div class="modal fade"
          id="viewSpell"
@@ -147,8 +146,7 @@
                   <input type="email"
                          class="form-control"
                          id="spellName"
-                         placeholder="Spell Name"
-                         data-bind='textInput: spellbook()[spellbook.indexOf("test")].spellName' disabled>
+                         placeholder="Spell Name">
                 </div>
               </div>
               <div class="form-group">
@@ -158,8 +156,7 @@
                     <input type="text"
                            class="form-control"
                            id="spellLevel"
-                           placeholder="Spell Level"
-                           data-bind='textInput: blankSpell().spellLevel' disabled>
+                           placeholder="Spell Level">
                   </div>
               </div>
               <div class="form-group">
@@ -169,8 +166,7 @@
                     <input type="text"
                            class="form-control"
                            id="spellSchool"
-                           placeholder="Spell School"
-                           data-bind='textInput: blankSpell().spellSchool' disabled>
+                           placeholder="Spell School">
                   </div>
               </div>
               <div class="form-group">
@@ -180,8 +176,7 @@
                     <textarea type="password"
                               class="form-control"
                               id="spellDescription"
-                              rows="4"
-                              data-bind='textInput: blankSpell().spellDescription' disabled>
+                              rows="4">
                     </textarea>
                   </div>
               </div>
@@ -199,6 +194,5 @@
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
     </div> <!-- Modal Fade -->
-    <!-- /ko -->
 </div> <!-- Panel -->
 
