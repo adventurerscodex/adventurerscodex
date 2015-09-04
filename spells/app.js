@@ -3,7 +3,7 @@
 function Spellbook() {
     var self = this;
     self.selecteditem = ko.observable();
-    self.blankSpell = ko.observable(new Spell('', '', '', '', function(){}));
+    self.blankSpell = ko.observable(new Spell('', '', '', '', '', '', '', function(){}));
     self.spellbook = ko.observableArray([], {
         persist: 'spells.spellbook',
         mapping: function(values){
@@ -16,7 +16,7 @@ function Spellbook() {
 
     self.addSpell = function() {
         self.spellbook.push(self.blankSpell());
-        self.blankSpell(new Spell('', '', '', '', function() {
+        self.blankSpell(new Spell('', '', '', '', '', '', '', '', function() {
                 self.spellbook.valueHasMutated();
             }));
     };
@@ -42,4 +42,16 @@ function Spell(name, school, level, desc, callback) {
 
     self.spellDescription = ko.observable(desc);
     self.spellDescription.subscribe(callback);
+
+    self.spellCastingTime = ko.observable(time);
+    self.spellCastingTime.subscribe(callback);
+
+    self.spellRange = ko.observable(range);
+    self.spellRange.subscribe(callback);
+
+    self.spellComponents = ko.observable(components);
+    self.spellComponents.subscribe(callback);
+
+    self.spellDuration = ko.observable(duration);
+    self.spellDuration.subscribe(callback);
 };
