@@ -28,11 +28,13 @@ automatically. Otherwise the conventions are listed below.
 Javascript
 ----------
 indent_size = space
+
 indent_size = 4
 
 JSON, YAML, CSS, and HTML
 ------------------------------
 indent_style = space
+
 indent_size = 2
 
 [ec]: http://editorconfig.org
