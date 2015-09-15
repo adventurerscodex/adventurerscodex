@@ -1,4 +1,5 @@
-# How to Contribute to Charactersheet
+How to Contribute to Charactersheet
+===================================
 
 It's easy!
 
@@ -16,6 +17,28 @@ If you are creating a module for the first time then the issue number should be 
 Make your modifications and submit a pull request! 
 
 Thanks for contributing to character sheet!
+
+Conventions
+===========
+
+Charactersheet has it's own style guide for Javascript, HTML, and CSS. If you
+use an editor supported by [Editor Config][ec] then everything should work
+automatically. Otherwise the conventions are listed below.
+
+Javascript
+----------
+indent_size = space
+
+indent_size = 4
+
+JSON, YAML, CSS, and HTML
+------------------------------
+indent_style = space
+
+indent_size = 2
+
+[ec]: http://editorconfig.org
+
 
 Issues and Features
 ===================
