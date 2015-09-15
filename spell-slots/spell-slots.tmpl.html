@@ -5,18 +5,11 @@
   <div class="panel-body">
     <div class="container-fluid">
       <div class="row">
-        <div class='col-md-11'>
-        </div> 
-        <div class='col-md-1'>
-          <button class='btn btn-primary glyphicon glyphicon-plus' data-bind='click: addSlot'></button>
-        </div>
-      </div>
-      <div class="row">
         <div class='col-md-12'>
           <div data-bind="foreach: slots">
             <div class='panel panel-default'>
               <div class='panel-heading'>
-                    <h3 class="panel-title" data-bind="text: levelHeader"></h3>
+                <h3 class="panel-title" data-bind="text: levelHeader"></h3>
               </div>
               <div class='panel-body'>
                 <div class="progress input-group">
@@ -48,6 +41,14 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-md-12'>
+            <button class='btn btn-primary btn-md btn-block' data-bind='click: addSlot'>
+              <span class="glyphicon glyphicon-plus"></span>
+              Add Slot
+            </button>
           </div>
         </div>
       </div>
