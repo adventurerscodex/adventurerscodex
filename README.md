@@ -1,5 +1,7 @@
 # Charactersheet
 
+![Build Badge](https://travis-ci.org/charactersheet/charactersheet.svg)
+
 A tool to help D&D 5e players keep their ducks in a row. 
 
 What is it?
