@@ -49,7 +49,7 @@ Installing charactersheet is pretty simple.
 2. Install the bower dependencies and the node dependencies (Node dependencies
    are only needed for running the tests).
 
-	`npm install && bower install`
+	`npm install`
 
 3. Check that your installation works by opening `mocha.html` in your browser.
    All the unit tests should pass. Next open `index.html`. 
