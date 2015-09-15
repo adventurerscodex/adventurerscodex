@@ -1,18 +1,18 @@
 function SpellSlots() {
 	var self = this;
+	var notify = function() {
+		self.slots.valueHasMutated();
+	};
+
 	this.slots = ko.observableArray([], { 
 		persist: 'spellslots.slots', 
 		mapping: function(values){
-			return new Slot(values.level, values.maxSpellSlots, values.usedSpellSlots, function() {
-				self.slots.valueHasMutated();
-			});
+			return new Slot(values.level, values.maxSpellSlots, values.usedSpellSlots, self.notify);
 		}
 	});
 	
 	this.addSlot = function() {
-		this.slots.push(new Slot(0, 0, 0, function() {
-			self.slots.valueHasMutated();
-		}));
+		this.slots.push(new Slot(0, 0, 0, self.notify));
 	};
 	
 	this.removeSlot = function(slot) {
@@ -21,7 +21,8 @@ function SpellSlots() {
 			
 	this.exportValues = function() {
 		var slots = [];
-		for (slot in this.slots()) {
+		for (var i in self.slots()) {
+			var slot = self.slots()[i];
 			slots.push(slot.exportValues());
 		}
 		return {
@@ -31,19 +32,22 @@ function SpellSlots() {
 	
 	this.importValues = function(values) {
 		var newSlots = []
-		for (slot in values.slots) {
-			var newSlot = new Slot();
+		for (var i in values.slots) {
+			var slot = values.slots[i];
+			var newSlot = new Slot(0, 0, 0, function(){});
 			newSlot.importValues(slot);
-			this.slots.push(newSlot);
+			self.slots.push(newSlot);
 		}
 	};
 	
 	this.clear = function() {
-		this.slots([]);
+		self.slots([]);
 	};
 };
 
 function Slot(level, maxSpellSlots, usedSpellSlots, callback) {
+	var self = this;
+	
 	this.level = ko.observable(level);
 	this.level.subscribe(callback);
 	
@@ -54,46 +58,38 @@ function Slot(level, maxSpellSlots, usedSpellSlots, callback) {
 	this.usedSpellSlots.subscribe(callback);
 	
 	this.spellSlots = ko.computed(function() {
-		return (parseInt(this.maxSpellSlots()) - parseInt(this.usedSpellSlots()));
+		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots()));
 	}, this);
-	
-	this.totalSpellSlots = ko.computed(function() {
-		return (parseInt(this.maxSpellSlots()));
-	}, this);
-	
-	this.regularSpellSlotsRemaining = ko.computed(function() {
-		return (parseInt(this.maxSpellSlots()) - (parseInt(this.usedSpellSlots())));
-	}, this);
-	
+		
 	//Convenience Methods
 	
 	this.levelHeader = ko.computed(function() {
-		return 'Level: ' + this.level();
+		return 'Level: ' + self.level();
 	}, this);
 	
 	//Progress bar methods.
 	
 	this.regularProgressWidth = ko.computed(function() {
-		return (parseInt(this.regularSpellSlotsRemaining()) / parseInt(this.totalSpellSlots()) * 100) + '%';
+		return (parseInt(self.spellSlots()) / parseInt(self.maxSpellSlots) * 100) + '%';
 	}, this);
 		
 	this.clear = function() {
-		this.level(0)
-		this.maxSpellSlots(0);
-		this.usedSpellSlots(0);
+		self.level(0);
+		self.maxSpellSlots(0);
+		self.usedSpellSlots(0);
 	};
 	
 	this.importValues = function(values) {
-		this.level(values.level);
-		this.maxSpellSlots(values.maxSpellSlots);
-		this.usedSpellSlots(values.usedSpellSlots);
+		self.level(values.level);
+		self.maxSpellSlots(values.maxSpellSlots);
+		self.usedSpellSlots(values.usedSpellSlots);
 	};
 	
 	this.exportValues = function() {
 		return {
-			level: this.level(),
-			maxSpellSlots: this.maxSpellSlots(),
-			usedSpellSlots: this.usedSpellSlots()
+			level: self.level(),
+			maxSpellSlots: self.maxSpellSlots(),
+			usedSpellSlots: self.usedSpellSlots()
 		}
 	};
 };
