@@ -1,18 +1,19 @@
 function SpellSlots() {
 	var self = this;
-	var notify = function() {
-		self.slots.valueHasMutated();
-	};
 
 	this.slots = ko.observableArray([], { 
 		persist: 'spellslots.slots', 
 		mapping: function(values){
-			return new Slot(values.level, values.maxSpellSlots, values.usedSpellSlots, self.notify);
+			return new Slot(values.level, values.maxSpellSlots, values.usedSpellSlots, function() {
+				self.slots.valueHasMutated();
+			});
 		}
 	});
 	
 	this.addSlot = function() {
-		this.slots.push(new Slot(0, 0, 0, self.notify));
+		this.slots.push(new Slot(0, 0, 0, function() {
+			self.slots.valueHasMutated();
+		}));
 	};
 	
 	this.removeSlot = function(slot) {
@@ -70,7 +71,7 @@ function Slot(level, maxSpellSlots, usedSpellSlots, callback) {
 	//Progress bar methods.
 	
 	this.regularProgressWidth = ko.computed(function() {
-		return (parseInt(self.spellSlots()) / parseInt(self.maxSpellSlots) * 100) + '%';
+		return (parseInt(self.spellSlots()) / parseInt(self.maxSpellSlots()) * 100) + '%';
 	}, this);
 		
 	this.clear = function() {
