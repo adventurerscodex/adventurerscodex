@@ -28,6 +28,17 @@ function Spellbook() {
     self.editSpell = function(spell) {
         self.selecteditem(spell);
     };
+
+    self.exportValues = function() {
+        var spells = [];
+        for (var i in self.spellbook()) {
+            var spell = self.spellbook()[i];
+            spells.push(spell.exportValues());
+        }
+        return {
+            spells: spells
+        }
+    };
 };
 
 function Spell(name, type, dmg, school, level, desc,
