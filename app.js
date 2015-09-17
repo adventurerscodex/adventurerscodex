@@ -15,6 +15,7 @@ function ViewModel() {
     	this.abilityScores().clear();
     	this.stats().clear();
     	this.spellSlots().clear();
+        this.spellbook().clear();
     };
 
     this.importValues = function() {
