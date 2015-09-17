@@ -42,7 +42,7 @@ function Spell(name, school, level, desc,
     self.spellSchool.subscribe(callback);
 
     self.spellLevel = ko.observable(level);
-    self.spellSchool.subscribe(callback);
+    self.spellLevel.subscribe(callback);
 
     self.spellDescription = ko.observable(desc);
     self.spellDescription.subscribe(callback);
