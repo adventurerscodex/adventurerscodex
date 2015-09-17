@@ -4,11 +4,11 @@ function Spellbook() {
     var self = this;
     self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell('', '', '', '',
-                                              '', '', '', '', '', function(){}));
+                                              '', '', '', '', '', '', function(){}));
     self.spellbook = ko.observableArray([], {
         persist: 'spells.spellbook',
         mapping: function(values){
-            return new Spell(values.spellName, values.spellDmgSave, values.spellSchool,
+            return new Spell(values.spellName, values.spellType, values.spellDmg, values.spellSchool,
                              values.spellLevel, values.spellDescription,
                              values.spellCastingTime, values.spellRange,
                              values.spellComponents, values.spellDuration,
@@ -18,7 +18,7 @@ function Spellbook() {
 
     self.addSpell = function() {
         self.spellbook.push(self.blankSpell());
-        self.blankSpell(new Spell('', '', '', '', '', '', '', '', '', function() {
+        self.blankSpell(new Spell('', '', '', '', '', '', '', '', '', '', function() {
                 self.spellbook.valueHasMutated();
             }));
     };
@@ -30,7 +30,7 @@ function Spellbook() {
     };
 };
 
-function Spell(name, dmg_save, school, level, desc,
+function Spell(name, type, dmg, school, level, desc,
                time, range, components,
                duration, callback) {
     var self = this;
@@ -38,8 +38,11 @@ function Spell(name, dmg_save, school, level, desc,
     self.spellName = ko.observable(name);
     self.spellName.subscribe(callback);
 
-    self.spellDmgSave = ko.observable(dmg_save);
-    self.spellDmgSave.subscribe(callback);
+    self.spellType = ko.observable(type);
+    self.spellType.subscribe(callback);
+
+    self.spellDmg = ko.observable(dmg);
+    self.spellDmg.subscribe(callback);
 
     self.spellSchool = ko.observable(school);
     self.spellSchool.subscribe(callback);

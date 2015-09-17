@@ -8,7 +8,8 @@
       <tr>
         <th>Name</th>
         <th>Level</th>
-        <th>Dmg/Save</th>
+        <th>Type</th>
+        <th>Dmg</th>
         <th>Casting Time</th>
         <th>Range</th>
         <th>Options</th>
@@ -24,7 +25,8 @@
       <tr>
         <td data-bind='text: spellName'></td>
         <td data-bind='text: spellLevel'></td>
-        <td data-bind='text: spellDmgSave'></td>
+        <td data-bind='text: spellType'></td>
+        <td data-bind='text: spellDmg'></td>
         <td data-bind='text: spellCastingTime'></td>
         <td data-bind='text: spellRange'></td>
         <td>
@@ -98,14 +100,25 @@
                   </div>
               </div>
               <div class="form-group">
+                <label for="spellType"
+                       class="col-sm-2 control-label">Type</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellType"
+                           placeholder="Spell Type"
+                           data-bind="value: blankSpell().spellType">
+                  </div>
+              </div>
+              <div class="form-group">
                 <label for="spellDmgSave"
-                       class="col-sm-2 control-label">Dmg/Save</label>
+                       class="col-sm-2 control-label">Dmg</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
                            id="spellDmgSave"
-                           placeholder="Spell Dmg/Save"
-                           data-bind="textInput: blankSpell().spellDmgSave">
+                           placeholder="Spell Dmg"
+                           data-bind="textInput: blankSpell().spellDmg">
                   </div>
               </div>
               <div class="form-group">
@@ -234,14 +247,25 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="spellDmgSave"
-                       class="col-sm-2 control-label">Dmg/Save</label>
+                <label for="spellType"
+                       class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
-                           id="spellDmgSave"
-                           placeholder="Spell Dmg/Save"
-                           data-bind="value: spellDmgSave">
+                           id="spellDmg"
+                           placeholder="Spell Type"
+                           data-bind="value: spellType">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="spellDmg"
+                       class="col-sm-2 control-label">Dmg</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellDmg"
+                           placeholder="Spell Dmg"
+                           data-bind="value: spellDmg">
                   </div>
               </div>
               <div class="form-group">
