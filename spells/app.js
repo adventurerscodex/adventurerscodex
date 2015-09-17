@@ -39,6 +39,21 @@ function Spellbook() {
             spells: spells
         }
     };
+
+    self.importValues = function(values) {
+        var newSpells = []
+        for (var i in values.spells) {
+            var spell = values.spells[i];
+            var newSpell = new Spell('', '', '', '',
+                                              '', '', '', '', '', '', function(){});
+            newSpell.importValues(spell);
+            self.spellbook.push(newSpell);
+        }
+    };
+
+    self.clear = function() {
+        self.spellbook([]);
+    };
 };
 
 function Spell(name, type, dmg, school, level, desc,
