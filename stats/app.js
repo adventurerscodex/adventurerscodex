@@ -1,108 +1,111 @@
 function Stats() {
-	this.health = new Health();
+	var self = this;
 
-	this.clear = function() {
-		this.health.clear();
+	self.health = new Health();
+
+	self.clear = function() {
+		self.health.clear();
 	};
 	
-	this.importValues = function(values) {
-		this.health.importValues(values.health);
+	self.importValues = function(values) {
+		self.health.importValues(values.health);
 	};
 	
-	this.exportValues = function() {
+	self.exportValues = function() {
 		return {
-			health: this.health.exportValues()
+			health: self.health.exportValues()
 		}
 	};
 };
 
 function Health() {
-	this.DANGER_THRESHOLD = 0.10;
-	this.WARNING_THRESHOLD = 0.30;
+	var self = this;
+	self.DANGER_THRESHOLD = 0.10;
+	self.WARNING_THRESHOLD = 0.30;
 	
-	this.maxHitpoints = ko.observable(10, { persist: 'stats.health.maxHitpoints' });
-	this.tempHitpoints = ko.observable(0, { persist: 'stats.health.tempHitpoints' });
-	this.damage = ko.observable(0, { persist: 'stats.health.damage' });
+	self.maxHitpoints = ko.observable(10, { persist: 'stats.health.maxHitpoints' });
+	self.tempHitpoints = ko.observable(0, { persist: 'stats.health.tempHitpoints' });
+	self.damage = ko.observable(0, { persist: 'stats.health.damage' });
 		
-	this.hitpoints = ko.computed(function() {
-		return (parseInt(this.maxHitpoints()) + parseInt(this.tempHitpoints())) - parseInt(this.damage());
-	}, this);
+	self.hitpoints = ko.computed(function() {
+		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
+	}, self);
 	
-	this.totalHitpoints = ko.computed(function() {
-		return (parseInt(this.maxHitpoints()) + parseInt(this.tempHitpoints()));
-	}, this);
+	self.totalHitpoints = ko.computed(function() {
+		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints()));
+	}, self);
 	
-	this.tempHitpointsRemaining = ko.computed(function() {
-		return (parseInt(this.tempHitpoints()) - parseInt(this.damage()));
-	}, this);
+	self.tempHitpointsRemaining = ko.computed(function() {
+		return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
+	}, self);
 		
-	this.regularHitpointsRemaining = ko.computed(function() {
-		if (this.tempHitpointsRemaining() > 0) {
-			return parseInt(this.maxHitpoints())
+	self.regularHitpointsRemaining = ko.computed(function() {
+		if (self.tempHitpointsRemaining() > 0) {
+			return parseInt(self.maxHitpoints())
 		}
-		return (parseInt(this.maxHitpoints()) - (parseInt(this.damage()) - parseInt(this.tempHitpoints())));
-	}, this);
+		return (parseInt(self.maxHitpoints()) - (parseInt(self.damage()) - parseInt(self.tempHitpoints())));
+	}, self);
 
 	//Progress bar methods.
 		
-	this.isKnockedOut =  ko.computed(function() {
-		return true ? parseInt(this.hitpoints()) / parseInt(this.totalHitpoints()) <= 0: false; 
-	}, this);
+	self.isKnockedOut =  ko.computed(function() {
+		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= 0: false; 
+	}, self);
 		
-	this.isDangerous = ko.computed(function() {
-		return true ? parseInt(this.hitpoints()) / parseInt(this.totalHitpoints()) < this.DANGER_THRESHOLD : false; 
-	}, this);
+	self.isDangerous = ko.computed(function() {
+		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD : false; 
+	}, self);
 	
-	this.isWarning = ko.computed(function() {
-		return true ? parseInt(this.hitpoints()) / parseInt(this.totalHitpoints()) < this.WARNING_THRESHOLD : false; 
-	}, this);
+	self.isWarning = ko.computed(function() {
+		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD : false; 
+	}, self);
 	
-	this.progressType = ko.computed(function() {
+	self.progressType = ko.computed(function() {
 		var type = 'progress-bar-success';
-		if (this.isWarning()) type = 'progress-bar-warning';
-		if (this.isDangerous()) type = 'progress-bar-danger';
+		if (self.isWarning()) type = 'progress-bar-warning';
+		if (self.isDangerous()) type = 'progress-bar-danger';
 		return type;
-	}, this);
+	}, self);
 	
-	this.regularProgressWidth = ko.computed(function() {
-		if (this.isKnockedOut()) {
+	self.regularProgressWidth = ko.computed(function() {
+		if (self.isKnockedOut()) {
 			return '100%';
 		}
-		return (parseInt(this.regularHitpointsRemaining()) / parseInt(this.totalHitpoints()) * 100) + '%';
-	}, this);
+		return (parseInt(self.regularHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
+	}, self);
 
-	this.tempProgressWidth = ko.computed(function() {
-		if (this.tempHitpointsRemaining() < 0) {
+	self.tempProgressWidth = ko.computed(function() {
+		if (self.tempHitpointsRemaining() < 0) {
 			return '0%';
 		}
-		return (parseInt(this.tempHitpointsRemaining()) / parseInt(this.totalHitpoints()) * 100) + '%';
-	}, this);
+		return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
+	}, self);
 	
 	
-	this.progressLabel = ko.computed(function() {
-		if (this.isKnockedOut()) {
+	self.progressLabel = ko.computed(function() {
+		if (self.isKnockedOut()) {
 			return 'K.O.';
 		} 
 		return '';
-	}, this);
+	}, self);
 	
-	this.clear = function() {
-		this.maxHitpoints(0);
-		this.tempHitpoints(0);
-		this.damage(0);
+	self.clear = function() {
+		self.maxHitpoints(0);
+		self.tempHitpoints(0);
+		self.damage(0);
 	};
 	
-	this.importValues = function(values) {
-		this.maxHitpoints(values.maxHitpoints);
-		this.tempHitpoints(values.tempHitpoints);
-		this.damage(values.damage);
+	self.importValues = function(values) {
+		self.maxHitpoints(values.maxHitpoints);
+		self.tempHitpoints(values.tempHitpoints);
+		self.damage(values.damage);
 	};
 	
-	this.exportValues = function() {
+	self.exportValues = function() {
 		return {
-			maxHitpoints: this.maxHitpoints(),
-			tempHitpoints: this.tempHitpoints(),
-			damage: this.damage()
+			maxHitpoints: self.maxHitpoints(),
+			tempHitpoints: self.tempHitpoints(),
+			damage: self.damage()
 		}
 	};
 };
