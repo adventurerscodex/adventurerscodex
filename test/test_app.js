@@ -49,13 +49,12 @@ describe('App', function() {
 	describe('Global Clear', function() {
 		it('should clear the values for all of the modules.', function() {
 			var v = new ViewModel();
-			v.fileReader.json = data;
-			v.importValues();
+			v.importValues(data);
 			v.clear();
 			v.user().playerName().should.equal("");
 			v.user().characterName().should.equal("");
-			v.stats().health.maxHitpoints().should.equal("");
-			v.stats().health.tempHitpoints().should.equal("");
+			v.stats().health.maxHitpoints().should.equal(0);
+			v.stats().health.tempHitpoints().should.equal(0);
 			v.note().text().should.equal("");
 		});
 	});
@@ -63,8 +62,7 @@ describe('App', function() {
 	describe('Global Import', function() {
 		it('should import a given json file.', function(){
 			var v = new ViewModel();
-			v.fileReader.json = data;
-			v.importValues();
+			v.importValues(data);
 			v.user().playerName().should.equal(data.user.playerName);
 			v.user().characterName().should.equal(data.user.characterName);
 			v.stats().health.maxHitpoints().should.equal(data.stats.health.maxHitpoints);
@@ -73,13 +71,32 @@ describe('App', function() {
 		});
 	});
 	 
-	/*describe('Global Export', function() {	
+	describe('Global Export', function() {	
 		it('should export a given json file.', function(){
-			
+			var v = new ViewModel();
+			v.importValues(data);
+			var r = v.exportValues();
+			r.user.playerName.should.equal(data.user.playerName);
+			r.user.characterName.should.equal(data.user.characterName);
+			r.stats.health.maxHitpoints.should.equal(data.stats.health.maxHitpoints);
+			r.stats.health.tempHitpoints.should.equal(data.stats.health.tempHitpoints);
+			r.note.text.should.equal(data.note.text);
+		});
+	}); 
+	/*
+	describe('JSON Parse', function() {
+		it('should parse a given json text file and make an object out of it.' function() {
+		
+		});
+	});
+	 
+	describe('importFromFile', function() {
+		it('' function() {
+		
 		});
 	}); 
 	
-	describe('JSON Parse', function() {
+	describe('save', function() {
 		it('should parse a given json text file and make an object out of it.' function() {
 		
 		});
