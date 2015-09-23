@@ -36,14 +36,14 @@ function Spellbook() {
             spells.push(spell.exportValues());
         }
         return {
-            spells: spells
+            spellbook: spells
         }
     };
 
     self.importValues = function(values) {
         var newSpells = []
-        for (var i in values.spells) {
-            var spell = values.spells[i];
+        for (var i in values.spellbook) {
+            var spell = values.spellbook[i];
             var newSpell = new Spell('', '', '', '',
                                               '', '', '', '', '', '', function(){});
             newSpell.importValues(spell);
