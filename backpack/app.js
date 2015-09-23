@@ -27,11 +27,22 @@ function Backpack() {
 	self.editItem = function(item) {
 		self.selecteditem(item);
 	};
+	self.clear = function() {
+		self.backpack([]);
+	};
 	//this.importValues = function(values) {
 	//};
 	
-	//this.exportValues = function() {
-	//};
+	self.exportValues = function() {
+		var backpack = [];
+		for (var i in self.backpack()) {
+			var item = self.backpack()[i];
+			backpack.push(item.exportValues());
+		}
+		return {
+			backpack: backpack
+		}
+	};
 };
 
 function Item(name, desc, qty, weight, callback) {
