@@ -43,6 +43,9 @@ describe('App', function() {
 					"usedSpellSlots":"4"
 				}
 			]
+		},
+		"spellbook": {
+			"spellbook": []
 		}
 	};
 	
