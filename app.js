@@ -52,7 +52,7 @@ function ViewModel() {
 		saveAs(blob, filename);    
     };
     
-    self.save = function() {
+    self.saveToFile = function() {
     	var string = JSON.stringify(self.exportValues());
     	var filename = self.user().characterName();
     	var blob = new Blob([string], {type: "application/json"});
