@@ -17,6 +17,7 @@ function ViewModel() {
     	self.abilityScores().clear();
     	self.stats().clear();
     	self.spellSlots().clear();
+        self.spellbook().clear();
     };
 
     self.importValues = function(values) {
@@ -26,6 +27,7 @@ function ViewModel() {
 			self.note().importValues(values.note);
 			self.abilityScores().importValues(values.abilityScores);
 			self.spellSlots().importValues(values.spellSlots);
+            self.spellbook().importValues(values.spellbook);
 		} catch(err) {
 			console.log(err);
 		}
@@ -38,6 +40,7 @@ function ViewModel() {
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlots: self.spellSlots().exportValues(),
+            spellbook: self.spellbook().exportValues()
     	};
     };
 
