@@ -1,54 +1,66 @@
 function ViewModel() {
-	this.user = ko.observable(new User());
-	this.stats = ko.observable(new Stats());
-	this.note = ko.observable(new Note());
-    this.abilityScores = ko.observable(new abilityScores());
-    this.spellSlots = ko.observable(new SpellSlots());
-    this.spellbook = ko.observable(new Spellbook());
+	var self = this;
 
-    this.fileContents = ko.observable();
-    this.fileReader = new FileReader();
-
-    this.clear = function() {
-    	this.user().clear();
-    	this.note().clear();
-    	this.abilityScores().clear();
-    	this.stats().clear();
-    	this.spellSlots().clear();
-        this.spellbook().clear();
+	self.user = ko.observable(new User());
+	self.stats = ko.observable(new Stats());
+	self.note = ko.observable(new Note());
+    self.abilityScores = ko.observable(new abilityScores());
+    self.spellSlots = ko.observable(new SpellSlots());
+    
+    self.fileContents = ko.observable();
+    self.fileReader = new FileReader();
+        
+    self.clear = function() {
+    	self.user().clear();
+    	self.note().clear();
+    	self.abilityScores().clear();
+    	self.stats().clear();
+    	self.spellSlots().clear();
     };
-
-    this.importValues = function() {
-    	var values = this.fileReader.json;
+    
+    self.importValues = function(values) {
     	try {
-			this.user().importValues(values.user);
-			this.stats().importValues(values.stats);
-			this.note().importValues(values.note);
-			this.abilityScores().importValues(values.abilityScores);
-			this.spellSlots().importValues(values.spellSlots);
-            this.spellbook().importValues(values.spellbook);
+			self.user().importValues(values.user);
+			self.stats().importValues(values.stats);
+			self.note().importValues(values.note);
+			self.abilityScores().importValues(values.abilityScores);
+			self.spellSlots().importValues(values.spellSlots);
 		} catch(err) {
-			//Add error handling.
 			console.log(err);
 		}
     };
-
-    this.exportValues = function() {
-    	var string = JSON.stringify({
-    		user: this.user().exportValues(),
-    		note: this.note().exportValues(),
-    		stats: this.stats().exportValues(),
-    		abilityScores: this.abilityScores().exportValues(),
-    		spellSlots: this.spellSlots().exportValues(),
-            spellbook: this.spellbook().exportValues(),
-    	});
-    	var filename = this.user().characterName();
+    
+    self.exportValues = function() {
+    	return {
+    		user: self.user().exportValues(),
+    		note: self.note().exportValues(),
+    		stats: self.stats().exportValues(),
+    		abilityScores: self.abilityScores().exportValues(),    	
+    		spellSlots: self.spellSlots().exportValues(),    	
+    	};
+    };
+    
+    self.importFromFile = function() {
+    	var values = self.fileReader.json;
+		self.importValues(values);
+    };
+    
+    self.save = function() {
+    	var string = JSON.stringify(self.exportValues());
+    	var filename = self.user().characterName();
     	var blob = new Blob([string], {type: "application/json"});
-		saveAs(blob, filename);
+		saveAs(blob, filename);    
+    };
+    
+    self.saveToFile = function() {
+    	var string = JSON.stringify(self.exportValues());
+    	var filename = self.user().characterName();
+    	var blob = new Blob([string], {type: "application/json"});
+		saveAs(blob, filename);    
     };
 
     //File handling
-    this.fileReader.onload = function() {
+    self.fileReader.onload = function() {
     	var l = 'data:application/json;base64,'.length
     	this.json = JSON.parse(atob(this.result.substring(l, this.result.length)));
     }
