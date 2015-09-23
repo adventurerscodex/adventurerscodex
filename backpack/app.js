@@ -10,7 +10,7 @@ function Backpack() {
 	self.backpack = ko.observableArray([], {
 		persist: 'backpack.backpack',
 		mapping: function(values){
-			return new Spell(values.itemName, values.itemDesc, values.itemQty, values.itemWeight,
+			return new Item(values.itemName, values.itemDesc, values.itemQty, values.itemWeight,
 				function() {self.backpack.valueHasMutated();});
 		}});
 	self.blankItem = ko.observable(new Item('','','','', function(){}));
