@@ -24,7 +24,7 @@
         <td  data-bind='text: itemQty'></td>
         <td  data-bind='text: itemWeight'></td>
         <td>
-          <a data-bind="click: $root.editSpell"
+          <a data-bind="click: $root.editItem"
             href="#"
             data-toggle="modal"
             data-target="#viewItem">
@@ -125,80 +125,80 @@
 
 <!-- ViewEdit Modal -->
 <div data-bind="with: selecteditem">
-<div class="modal fade"
-id="viewItem"
-tabindex="-1"
-role="dialog"
-aria-labelledby="viewSpellLabel">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<button type="button"
-class="close"
-data-dismiss="modal"
-aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-<h4 class="modal-title"
-id="addSpellLabel">View a item in your backpack.</h4>
-</div>
-<div class="modal-body">
-<form class="form-horizontal">
-<div class="form-group">
-<label for="itemName"
-class="col-sm-2 control-label">Item Name</label>
-<div class="col-sm-10">
-<input type="email"
-class="form-control"
-id="itemName"
-placeholder="Item Name"
-data-bind="value: itemName">
-</div>
-</div>
-<div class="form-group">
-<label for="itemWeight"
-class="col-sm-2 control-label">Weight</label>
-<div class="col-sm-10">
-<input type="text"
-class="form-control"
-id="itemWeight"
-placeholder="Item Weight"
-data-bind="value: itemWeight">
-</div>
-</div>
-<div class="form-group">
-<label for="itemQuantity"
-class="col-sm-2 control-label">Quantity</label>
-<div class="col-sm-10">
-<input type="text"
-class="form-control"
-id="itemQuantity"
-placeholder="Item Quantity"
-data-bind="value: itemQuantity">
-</div>
-</div>
-<div class="form-group">
-<label for="itemDescription"
-class="col-sm-2 control-label">Description</label>
-<div class="col-sm-10">
-<textarea type="password"
-class="form-control"
-id="itemDescription"
-data-bind="value: itemDescription"
-rows="4">
-</textarea>
-</div>
-</div>
-<div class="modal-footer">
-<button type="button"
-class="btn btn-primary"
-data-dismiss="modal">Done</button>
-</div>
-</form>
-</div> <!-- Modal Body -->
-</div> <!-- Modal Content -->
-</div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
+  <div class="modal fade"
+    id="viewItem"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="viewSpellLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"
+            id="addSpellLabel">View a item in your backpack.</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="itemName"
+              class="col-sm-2 control-label">Item Name</label>
+              <div class="col-sm-10">
+                <input type="email"
+                  class="form-control"
+                  id="itemName"
+                  placeholder="Item Name"
+                  data-bind="value: itemName">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemWeight"
+              class="col-sm-2 control-label">Weight</label>
+              <div class="col-sm-10">
+                <input type="text"
+                class="form-control"
+                id="itemWeight"
+                placeholder="Item Weight"
+                data-bind="value: itemWeight">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemQuantity"
+              class="col-sm-2 control-label">Quantity</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  id="itemQuantity"
+                  placeholder="Item Quantity"
+                  data-bind="value: itemQty">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemDescription"
+              class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea type="password"
+                class="form-control"
+                id="itemDescription"
+                data-bind="value: itemDesc"
+                rows="4">
+                </textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+              class="btn btn-primary"
+              data-dismiss="modal">Done</button>
+            </div>
+          </form>
+        </div> <!-- Modal Body -->
+      </div> <!-- Modal Content -->
+    </div> <!-- Modal Dialog -->
+  </div> <!-- Modal Fade -->
 </div> <!-- End with statement -->
 
 </div>
