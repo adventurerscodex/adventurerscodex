@@ -7,10 +7,10 @@ function ViewModel() {
     self.abilityScores = ko.observable(new abilityScores());
     self.spellSlots = ko.observable(new SpellSlots());
     self.spellbook = ko.observable(new Spellbook());
-    
+
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
-        
+
     self.clear = function() {
     	self.user().clear();
     	self.note().clear();
@@ -18,7 +18,7 @@ function ViewModel() {
     	self.stats().clear();
     	self.spellSlots().clear();
     };
-    
+
     self.importValues = function(values) {
     	try {
 			self.user().importValues(values.user);
@@ -30,39 +30,37 @@ function ViewModel() {
 			console.log(err);
 		}
     };
-    
+
     self.exportValues = function() {
     	return {
     		user: self.user().exportValues(),
     		note: self.note().exportValues(),
     		stats: self.stats().exportValues(),
-    		abilityScores: self.abilityScores().exportValues(),    	
-    		spellSlots: self.spellSlots().exportValues(),    	
+    		abilityScores: self.abilityScores().exportValues(),
+    		spellSlots: self.spellSlots().exportValues(),
     	};
     };
-    
+
     self.importFromFile = function() {
-    	var values = self.fileReader.json;
+        //The first comma in the result file string is the last
+        //character in the string before the actual json data
+        var length = self.fileReader.result.indexOf(",") + 1
+        var values = JSON.parse(atob(self.fileReader.result.substring(
+            length, self.fileReader.result.length)));
 		self.importValues(values);
     };
-    
+
     self.save = function() {
     	var string = JSON.stringify(self.exportValues());
     	var filename = self.user().characterName();
     	var blob = new Blob([string], {type: "application/json"});
-		saveAs(blob, filename);    
+		saveAs(blob, filename);
     };
-    
+
     self.saveToFile = function() {
     	var string = JSON.stringify(self.exportValues());
     	var filename = self.user().characterName();
     	var blob = new Blob([string], {type: "application/json"});
-		saveAs(blob, filename);    
+		saveAs(blob, filename);
     };
-
-    //File handling
-    self.fileReader.onload = function() {
-    	var l = 'data:application/json;base64,'.length
-    	this.json = JSON.parse(atob(this.result.substring(l, this.result.length)));
-    }
 };
