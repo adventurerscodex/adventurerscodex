@@ -2,7 +2,6 @@ describe('Spell Slots', function() {
 	describe('Add Slots', function() {
 		it('should add a new slot to the list of slots', function() {
 			var p = new SpellSlots();
-			p.clear();
 			p.slots().length.should.equal(0);
 			p.addSlot();
 			p.slots().length.should.equal(1);
@@ -12,7 +11,6 @@ describe('Spell Slots', function() {
 	describe('Remove Slot', function() {
 		it('should remove a slot from the list of slots', function() {
 			var p = new SpellSlots();
-			p.clear();
 			p.slots().length.should.equal(0);
 			p.addSlot();
 			p.slots().length.should.equal(1);
@@ -47,7 +45,6 @@ describe('Spell Slots', function() {
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var p = new SpellSlots();
-			p.clear();
 			p.slots().length.should.equal(0);
 			var slots = [{ level:10, maxSpellSlots: 0, usedSpellSlots: 4 }];
 			p.importValues({ slots: slots });

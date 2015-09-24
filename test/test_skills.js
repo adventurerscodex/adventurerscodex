@@ -12,7 +12,6 @@ describe('Skill Tree', function() {
 	describe('Remove Slot', function() {
 		it('should remove a skill from the list of skills', function() {
 			var p = new SkillTree();
-			p.clear();
 			p.skills().length.should.equal(0);
 			p.addSkill();
 			p.skills().length.should.equal(1);
@@ -24,7 +23,6 @@ describe('Skill Tree', function() {
 	describe('Clear', function() {
 		it('should clear all the values in skills.', function() {
 			var p = new SkillTree();
-			p.clear();
 			var skills = [new Skill('Archery', 0, true, function(){})];
 			p.skills(skills);
 			p.skills().should.equal(skills);
@@ -36,7 +34,6 @@ describe('Skill Tree', function() {
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
 			var p = new SkillTree();
-			p.clear();
 			p.skills().length.should.equal(0);
 			p.addSkill();
 			p.skills().length.should.equal(1);
@@ -48,7 +45,6 @@ describe('Skill Tree', function() {
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var p = new SkillTree();
-			p.clear();
 			p.skills().length.should.equal(0);
 			var skills = [{ level:10, maxSpellSlots: 0, usedSpellSlots: 4 }];
 			p.importValues({ skills: skills });
