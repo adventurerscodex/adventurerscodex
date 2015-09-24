@@ -19,7 +19,7 @@ module.exports = function(config) {
 			//Tests to run.
             'test/*.js'
         ],  
-        browsers: ['IE', 'Firefox', 'Chrome', 'PhantomJS'],
+        browsers: ['Chrome', 'PhantomJS'],
                             
         reporters: ['progress', 'coverage'],
         preprocessors: { 
