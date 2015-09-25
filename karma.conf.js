@@ -11,7 +11,6 @@ module.exports = function(config) {
 			{pattern: 'bower_components/knockout/dist/knockout.js', watched: false},
 			{pattern: 'bower_components/file-saver.js/FileSaver.js', watched: false},
 			{pattern: 'bower_components/should/should.js', watched: false},
-			{pattern: 'bin/knockout.localStorage.js', watched: false},
 			{pattern: 'bin/knockout-file-bind.js', watched: false},
 			{pattern: 'bin/koExternalTemplateEngine_all.min.js', watched: false},
 			//Stuff to test.

@@ -7,6 +7,7 @@ function ViewModel() {
     self.abilityScores = ko.observable(new abilityScores());
     self.spellSlots = ko.observable(new SpellSlots());
     self.spellbook = ko.observable(new Spellbook());
+    self.skillTree = ko.observable(new SkillTree());
 
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
