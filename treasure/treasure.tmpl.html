@@ -3,7 +3,15 @@
       <h2 class="panel-title">Treasure</h2>
   </div>
   <div class="panel-body">
-    <div class="panel-body">
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon2">Worth in gold</span>
+      <input type="number"
+             class="form-control"
+             aria-describedby="basic-addon2"
+             data-bind='value: worth_in_gold'>
+    </div>
+  </div>
+  <div class="panel-body">
       <div class="input-group ">
         <span class="input-group-addon" id="basic-addon2">Platinum</span>
         <input type="number"
@@ -46,15 +54,6 @@
                class="form-control"
                aria-describedby="basic-addon2"
                data-bind='value: copper'>
-      </div>
-    </div>
-    <div class="panel-body">
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon2">Worth in gold</span>
-        <input type="number"
-               class="form-control"
-               aria-describedby="basic-addon2"
-               data-bind='value: worth_in_gold'>
       </div>
     </div>
 </div>
