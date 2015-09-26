@@ -18,11 +18,11 @@ function Treasure() {
     };
 
     self.importValues = function(values) {
-        self.platinum(values.characterName);
-        self.gold(values.playerName);
-        self.electrum(values.race);
-        self.silver(values.religion);
-        self.copper(values.typeClass);
+        self.platinum(values.platinum);
+        self.gold(values.gold);
+        self.electrum(values.electrum);
+        self.silver(values.silver);
+        self.copper(values.copper);
     };
 
     self.exportValues = function() {
