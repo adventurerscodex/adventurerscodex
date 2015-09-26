@@ -8,6 +8,7 @@ function Treasure() {
     self.electrum = ko.observable(0, { persist: 'treasure.electrum' });
     self.silver = ko.observable(0, { persist: 'treasure.silver' });
     self.copper = ko.observable(0, { persist: 'treasure.copper' });
+    self.misc = ko.observable('', { persist: 'treasure.misc' });
     self.worth_in_gold = ko.computed(function(){
         var adj_platinum = parseInt(self.platinum()) * 10;
         var adj_gold = parseInt(self.gold());
@@ -24,6 +25,7 @@ function Treasure() {
         self.electrum(0);
         self.silver(0);
         self.copper(0);
+        self.misc('');
         self.worth_in_gold(0);
     };
 
@@ -33,6 +35,7 @@ function Treasure() {
         self.electrum(values.electrum);
         self.silver(values.silver);
         self.copper(values.copper);
+        self.copper(values.misc);
         self.worth_in_gold(values.worth_in_gold);
     };
 
@@ -43,6 +46,7 @@ function Treasure() {
             electrum: self.electrum(),
             silver: self.silver(),
             copper: self.copper(),
+            misc: self.misc(),
             worth_in_gold: self.worth_in_gold()
         }
     };
