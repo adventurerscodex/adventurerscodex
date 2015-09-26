@@ -3,18 +3,18 @@ function Treasure() {
 
     var self = this;
 
-    self.platinum =  ko.observable('', { persist: 'treasure.platinum'});
-    self.gold = ko.observable('', { persist: 'treasure.gold' });
-    self.electrum = ko.observable('', { persist: 'treasure.electrum' });
-    self.silver = ko.observable('', { persist: 'treasure.silver' });
-    self.copper = ko.observable('', { persist: 'treasure.copper' });
+    self.platinum =  ko.observable(0, { persist: 'treasure.platinum'});
+    self.gold = ko.observable(0, { persist: 'treasure.gold' });
+    self.electrum = ko.observable(0, { persist: 'treasure.electrum' });
+    self.silver = ko.observable(0, { persist: 'treasure.silver' });
+    self.copper = ko.observable(0, { persist: 'treasure.copper' });
 
     self.clear = function() {
-        self.platinum('');
-        self.gold('');
-        self.electrum('');
-        self.silver('');
-        self.copper('');
+        self.platinum(0);
+        self.gold(0);
+        self.electrum(0);
+        self.silver(0);
+        self.copper(0);
     };
 
     self.importValues = function(values) {
