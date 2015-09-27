@@ -16,7 +16,9 @@ function Treasure() {
         var adj_silver = parseInt(self.silver()) / 10;
         var adj_copper = parseInt(self.copper()) / 100;
 
-        return adj_platinum + adj_gold + adj_electrum + adj_silver + adj_copper;
+        var total = adj_platinum + adj_gold + adj_electrum + adj_silver + adj_copper;
+
+        return Math.round(total);
     })
 
     self.clear = function() {
