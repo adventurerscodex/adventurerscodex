@@ -26,7 +26,6 @@ function Treasure() {
         self.silver(0);
         self.copper(0);
         self.misc('');
-        self.worth_in_gold(0);
     };
 
     self.importValues = function(values) {
