@@ -8,6 +8,7 @@ function ViewModel() {
     self.spellSlots = ko.observable(new SpellSlots());
     self.spellbook = ko.observable(new Spellbook());
     self.skillTree = ko.observable(new SkillTree());
+    self.treasure = ko.observable(new Treasure());
 
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
@@ -19,6 +20,7 @@ function ViewModel() {
     	self.stats().clear();
     	self.spellSlots().clear();
         self.spellbook().clear();
+        self.treasure().clear();
     };
 
     self.importValues = function(values) {
@@ -29,6 +31,7 @@ function ViewModel() {
 			self.abilityScores().importValues(values.abilityScores);
 			self.spellSlots().importValues(values.spellSlots);
             self.spellbook().importValues(values.spellbook);
+            self.treasure().importValues(values.treasure);
 		} catch(err) {
 			console.log(err);
 		}
@@ -41,7 +44,8 @@ function ViewModel() {
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlots: self.spellSlots().exportValues(),
-            spellbook: self.spellbook().exportValues()
+            spellbook: self.spellbook().exportValues(),
+            treasure: self.treasure().exportValues()
     	};
     };
 
