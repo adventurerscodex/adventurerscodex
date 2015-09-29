@@ -24,7 +24,9 @@
     "mocha": "~2.2.5",
     "file-saver.js": "~1.20150507.2",
     "should": "~7.0.4",
-    "karma": "~0.4.6"
+    "karma": "~0.4.6",
+    "uri.js": "~1.16.1",
+    "node-uuid": "~1.4.3"
   },
   "resolutions": {
     "webcomponentsjs": "~0.5.4"

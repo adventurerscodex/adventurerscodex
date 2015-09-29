@@ -1,11 +1,5 @@
-.container {
-	padding:3%;
-	margin-right:auto;
-	margin-left:auto;
-}
-
-.hard-right {
-	float:right;
+body {
+  padding-top: 80px;
 }
 
 .spacer {
