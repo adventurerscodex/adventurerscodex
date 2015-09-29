@@ -1,7 +1,7 @@
 describe('Profile', function() {
 	describe('Clear', function() {
 		it('should clear all the values in profile', function() {
-			var p = new User();
+			var p = new Profile();
 			p.characterName('Bob');
 			p.characterName().should.equal('Bob');
 			p.clear();
@@ -17,7 +17,7 @@ describe('Profile', function() {
 				level: 1,
 				exp: 2500
 			};
-			var p = new User();
+			var p = new Profile();
 			p.characterName(val.characterName);
 			p.playerName(val.playerName);
 			p.level(val.level);
@@ -38,7 +38,7 @@ describe('Profile', function() {
 				level: 1,
 				exp: 2500
 			};
-			var p = new User();
+			var p = new Profile();
 			p.importValues(val);
 			p.characterName().should.equal(val.characterName);
 			p.playerName().should.equal(val.playerName);

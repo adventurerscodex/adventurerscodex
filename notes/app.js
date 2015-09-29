@@ -1,5 +1,5 @@
 function Note() {
-	this.text = ko.observable('', { persist: 'note.text' });
+	this.text = ko.observable('', { persist: getKey('note.text') });
 
 	this.clear = function() {
 		this.text('');
