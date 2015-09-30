@@ -2,64 +2,204 @@
   <div class="panel-heading">
 	  <h2 class="panel-title">Backpack</h2>
   </div>
-	<div class="panel panel-default">
-	  
-<!--		<div class="panel panel-default">
-				<span>Name</span>
-				<span>Description</span>
-				<span>Quantity</span>
-				<span>Weight</span>
-		</div>-->
-		<div class="panel panel-default" data-bind='foreach: backpack'>
-<!--			<div class="panel panel-default"> 
-                <div class="panel-heading">
-				    <input class="itemName" type='text' data-bind='textInput: itemName'/>
-                    <input class="itemWeight" type='text' data-bind='textInput: itemWeight'/>
-                </div>
-				<input class="itemDesc" type='text' data-bind='textInput: itemDesc'/>
-				<input class="itemQty" type='text' data-bind='textInput: itemQty'/>
-			</div>-->
-            <div class="panel panel-default"> 
-                <div class="panel-heading">
-				    <label class="itemName" data-bind='text: itemName'/>
-                    <label class="itemQty" data-bind='text: itemQty'/>
-                    <label class="itemWeight" data-bind='text: itemWeight' />
-                </div>
-				<p class="itemDesc" data-bind='text: itemDesc'></p>
-				<div class="panel-footer clearfix">
-                    <button style="margin-left: 10px;" type="button" class="btn btn-info pull-right" >Edit item</button> 
-                    <button style="margin-left: 10px;" type="button" class="btn btn-danger pull-right" >Remove Item</button>
-				</div>
-			</div>
-		</div>
-			<div class="panel panel-success">
-                <div class="panel-heading">
-                    Add item
-                </div>
-                <div class="input-group" style="display:inline; width: 25%; float:left;">
-                  <span class="input-group-addon">Name</span>
-                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemName'/>
-                </div>
-                <div class="input-group" style="display:inline; width: 25%; float:left;">
-                  <span class="input-group-addon">Description</span>
-                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemDesc'/>
-                </div>
-                <div class="input-group" style="display:inline; width: 25%; float:left;">
-                  <span class="input-group-addon">Quantity</span>
-                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemQty'/>
-                </div>
-                <div class="input-group" style="display:inline; width: 25%; float:left;">
-                  <span class="input-group-addon">Weight</span>
-                  <input class="form-control" type='text' data-bind='textInput: blankItem().itemWeight'/>
-                </div>
-<!--				<input class="form-control" type='text' data-bind='textInput: blankItem().itemName'/>
-				<input class="form-control" type='text' data-bind='textInput: blankItem().itemDesc'/>
-				<input class="form-control" type='text' data-bind='textInput: blankItem().itemQty'/>
-				<input class="form-control" type='text' data-bind='textInput: blankItem().itemWeight'/>-->
-                <div class="panel-footer clearfix">
-                    <button type="button" class="btn btn-primary" data-bind='click: addItem'>Add item</button>
-                </div>
-			</div>
-	  
-	</div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Weight</th>
+        <th>Options</th>
+        <th>
+         <a data-toggle="modal"
+          data-target="#addItem" href="#">
+            <i class="glyphicon glyphicon-plus"></i>
+         </a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: backpack().length > 0 -->
+    <tbody data-bind='foreach: backpack'>
+      <tr>
+        <td  data-bind='text: itemName'></td>
+        <td  data-bind='text: itemQty'></td>
+        <td  data-bind='text: itemWeight'></td>
+        <td>
+          <a data-bind="click: $root.editItem"
+            href="#"
+            data-toggle="modal"
+            data-target="#viewItem">
+           <i class="glyphicon glyphicon-eye-open">
+            </i>
+            </a>
+            <a data-bind='click: $parent.removeItem' href="#">
+            <i class="glyphicon glyphicon-remove">
+            </i>
+          </a>
+        </td>
+      </tr>
+
+    </tbody>
+    <!-- /ko -->
+  </table>
+        
+  <!-- Add Modal -->
+  <div class="modal fade"
+    id="addItem"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="addItemLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"
+          id="addItemLabel">Add an item to your inventory.</h4>
+        </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="itemName"
+              class="col-sm-2 control-label">Item Name</label>
+            <div class="col-sm-10">
+              <input type="email"
+                class="form-control"
+                id="itemName"
+                placeholder="Item Name"
+                data-bind='textInput: blankItem().itemName'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="itemWeight"
+              class="col-sm-2 control-label">Weight(lbs)</label>
+            <div class="col-sm-10">
+              <input type="text"
+                class="form-control"
+                id="itemWeight"
+                placeholder="Item Weight"
+                data-bind='textInput: blankItem().itemWeight'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="itemQuantity"
+              class="col-sm-2 control-label">Quantity</label>
+            <div class="col-sm-10">
+              <input type="text"
+                class="form-control"
+                id="itemQuantity"
+                placeholder="Item Quantity"
+                data-bind='textInput: blankItem().itemQty'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="itemDescription"
+              class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+              <textarea type="password"
+                class="form-control"
+                id="itemDescription"
+                rows="4"
+                data-bind='textInput: blankItem().itemDesc'>
+              </textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+            class="btn btn-default"
+            data-dismiss="modal">Cancel</button>
+            <button type="button"
+            class="btn btn-primary"
+            data-bind='click: addItem'
+            data-dismiss="modal">Add</button>
+          </div>
+        </form>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+
+<!-- ViewEdit Modal -->
+<div data-bind="with: selecteditem">
+  <div class="modal fade"
+    id="viewItem"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="viewSpellLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title"
+            id="addSpellLabel">View a item in your backpack.</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="itemName"
+              class="col-sm-2 control-label">Item Name</label>
+              <div class="col-sm-10">
+                <input type="email"
+                  class="form-control"
+                  id="itemName"
+                  placeholder="Item Name"
+                  data-bind="value: itemName">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemWeight"
+              class="col-sm-2 control-label">Weight</label>
+              <div class="col-sm-10">
+                <input type="text"
+                class="form-control"
+                id="itemWeight"
+                placeholder="Item Weight"
+                data-bind="value: itemWeight">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemQuantity"
+              class="col-sm-2 control-label">Quantity</label>
+              <div class="col-sm-10">
+                <input type="text"
+                  class="form-control"
+                  id="itemQuantity"
+                  placeholder="Item Quantity"
+                  data-bind="value: itemQty">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="itemDescription"
+              class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea type="password"
+                class="form-control"
+                id="itemDescription"
+                data-bind="value: itemDesc"
+                rows="4">
+                </textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+              class="btn btn-primary"
+              data-dismiss="modal">Done</button>
+            </div>
+          </form>
+        </div> <!-- Modal Body -->
+      </div> <!-- Modal Content -->
+    </div> <!-- Modal Dialog -->
+  </div> <!-- Modal Fade -->
+
+</div> <!-- End with statement -->
+
 </div>

@@ -6,30 +6,88 @@ function Backpack() {
 		}	+ 'lb', { persist: 'backpack.totalWeight'});
 	
 	}; */
-	this.self = this;	//black magic
-	this.backpack = ko.observableArray([new Item()]);
-	this.blankItem = ko.observable(new Item());
+	var self = this;	//black magic
+	self.backpack = ko.observableArray([], {
+		persist: 'backpack.backpack',
+		mapping: function(values){
+			return new Item(values.itemName, values.itemDesc, values.itemQty, values.itemWeight,
+				function() {self.backpack.valueHasMutated();});
+		}});
+	self.blankItem = ko.observable(new Item('','','','', function(){}));
+	self.selecteditem = ko.observable();
 	
-	this.addItem = function() {
-		this.backpack.push(this.blankItem());
-		this.blankItem(new Item());
+	self.addItem = function() {
+		self.backpack.push(self.blankItem());
+		self.blankItem(new Item('','','','', function() {self.backpack.valueHasMutated();}));
 	};
 	this.removeItem = function(item) {
-		this.backpack.remove(item);
+		self.backpack.remove(item);
+	};
+	
+	self.editItem = function(item) {
+		self.selecteditem(item);
+	};
+
+	self.clear = function() {
+		self.backpack([]);
+	};
+	
+	self.exportValues = function() {
+		var backpack = [];
+		for (var i in self.backpack()) {
+			var item = self.backpack()[i];
+			backpack.push(item.exportValues());
+		}
+		return {
+			backpack: backpack
+		}
+	};
+
+	self.importValues = function(values) {
+		var newItems = []
+		for (var i in values.backpack) {
+			var item = values.backpack[i];
+			var newItem = new Item('', '', '', '', function(){});
+			newItem.importValues(item);
+			self.backpack.push(newItem);
+		}
+	};
+};
+//TODO: Add units and make numbers.
+function Item(name, desc, qty, weight, callback) {
+	var self = this;
+	self.itemName = ko.observable(name);
+	self.itemName.subscribe(callback);
+
+	self.itemDesc = ko.observable(desc);
+	self.itemDesc.subscribe(callback);
+
+	self.itemQty = ko.observable(qty);
+	self.itemQty.subscribe(callback);
+
+	self.itemWeight = ko.observable(weight);
+	self.itemWeight.subscribe(callback);
+
+	this.clear = function() {
+		self.itemName('');
+		self.itemDesc('');
+		self.itemQty('');
+		self.itemWeight('');
 	};
 	
 	this.importValues = function(values) {
+		self.itemName(values.itemName);
+		self.itemDesc(values.itemDesc);
+		self.itemQty(values.itemQty);
+		self.itemWeight(values.itemWeight);
 	};
 	
 	this.exportValues = function() {
 		return {
+			itemName: self.itemName(),
+			itemDesc: self.itemDesc(),
+			itemQty: self.itemQty(),
+			itemWeight: self.itemWeight()
 		}
 	};
-};
-
-function Item() {
-	this.itemName = ko.observable('Holy Hand Grenade');
-	this.itemDesc = ko.observable('First thou pullest the Holy Pin. Then thou must count to three. Three shall be the number of the counting and the number of the counting shall be three. Four shalt thou not count, neither shalt thou count two, excepting that thou then proceedeth to three. Five is right out. Once the number three, being the number of the counting, be reached, then lobbest thou the Holy Hand Grenade in the direction of thine foe, who, being naughty in my sight, shall snuff it.');
-	this.itemQty = ko.observable('x' + '5');
-	this.itemWeight = ko.observable('0.5' + 'lbs');
 };
