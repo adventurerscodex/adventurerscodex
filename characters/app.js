@@ -61,7 +61,7 @@ function CharacterManager() {
 	
 	self.localStoragePercent = ko.computed(function() {
 		var n = self.characterKeys().lenth; //Force ko to recompute on change.
-		var used = JSON.stringify(localStorage).length / (2 * 1024 * 1024);
+		var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
 		return (used / self.totalLocalStorage * 100).toFixed(2);
 	});
 	

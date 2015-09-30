@@ -65,3 +65,19 @@ function ViewModel() {
 		saveAs(blob, filename);
     };
 };
+
+/**
+ * Do preflight checks. 
+ * - Has the user been here before? 
+ * - Do they have a character? Etc.
+ */
+init = function() {
+	checkFirstTime();
+};
+
+checkFirstTime = function() {
+	if (localStorage['character.characterKeys'] === undefined 
+			|| eval(localStorage['character.characterKeys']).length < 1) {
+		window.location = '/characters'
+	}
+};
