@@ -1,11 +1,11 @@
 describe('Notes', function() {
 	describe('Clear', function() {
 		it('should clear all the values in notes', function() {
-			var p = new User();
-			p.characterName('Bob');
-			p.characterName().should.equal('Bob');
+			var p = new Note();
+			p.text('Bob');
+			p.text().should.equal('Bob');
 			p.clear();
-			p.characterName().should.equal('');
+			p.text().should.equal('');
 		});
 	});
 
