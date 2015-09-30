@@ -40,6 +40,8 @@
   <script src="test/test_spell_slots.js"></script>
   <script src="test/test_backpack.js"></script>
   <script>
+    /*Mock getkey for testing */ 
+    function getKey(t){return t};
     mocha.checkLeaks();
     mocha.globals(['jQuery']);
     mocha.run();
