@@ -1,6 +1,6 @@
 describe('App', function() {
 	var data = {
-		"user": {
+		"profile": {
 			"characterName":"Brom Eriksson",
 			"playerName":"Brian Schrader",
 			"race":"Half-Elf",
@@ -54,8 +54,8 @@ describe('App', function() {
 			var v = new ViewModel();
 			v.importValues(data);
 			v.clear();
-			v.user().playerName().should.equal("");
-			v.user().characterName().should.equal("");
+			v.profile().playerName().should.equal("");
+			v.profile().characterName().should.equal("");
 			v.stats().health.maxHitpoints().should.equal(0);
 			v.stats().health.tempHitpoints().should.equal(0);
 			v.note().text().should.equal("");
@@ -66,8 +66,8 @@ describe('App', function() {
 		it('should import a given json file.', function(){
 			var v = new ViewModel();
 			v.importValues(data);
-			v.user().playerName().should.equal(data.user.playerName);
-			v.user().characterName().should.equal(data.user.characterName);
+			v.profile().playerName().should.equal(data.profile.playerName);
+			v.profile().characterName().should.equal(data.profile.characterName);
 			v.stats().health.maxHitpoints().should.equal(data.stats.health.maxHitpoints);
 			v.stats().health.tempHitpoints().should.equal(data.stats.health.tempHitpoints);
 			v.note().text().should.equal(data.note.text);
@@ -79,8 +79,8 @@ describe('App', function() {
 			var v = new ViewModel();
 			v.importValues(data);
 			var r = v.exportValues();
-			r.user.playerName.should.equal(data.user.playerName);
-			r.user.characterName.should.equal(data.user.characterName);
+			r.profile.playerName.should.equal(data.profile.playerName);
+			r.profile.characterName.should.equal(data.profile.characterName);
 			r.stats.health.maxHitpoints.should.equal(data.stats.health.maxHitpoints);
 			r.stats.health.tempHitpoints.should.equal(data.stats.health.tempHitpoints);
 			r.note.text.should.equal(data.note.text);

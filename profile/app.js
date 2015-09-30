@@ -1,49 +1,51 @@
-function User() {
-	this.characterName =  ko.observable('', { persist: 'user.characterName'});
-	this.playerName = ko.observable('', { persist: 'user.playerName' });
-	this.race = ko.observable('', { persist: 'user.race' });
-	this.religion = ko.observable('', { persist: 'user.religion' });
-	this.alignment = ko.observable('', { persist: 'user.alignment' });
-	this.typeClass = ko.observable('' ,{ persist: 'user.typeClass' });
-	this.gender = ko.observable('', { persist: 'user.gender' });
-	this.level = ko.observable('1', { persist: 'user.level' });
-	this.exp = ko.observable('0', { persist: 'user.exp' })
+function Profile() {
+	var self = this;
 
-	this.clear = function() {
-		this.characterName('');
-		this.playerName('');
-		this.race('');
-		this.religion('');
-		this.typeClass('');
-		this.alignment('');
-		this.gender('');
-		this.level('1');
-		this.exp('0');
+	self.characterName =  ko.observable('', { persist: getKey('profile.characterName') });
+	self.playerName = ko.observable('', { persist: getKey('profile.playerName') });
+	self.race = ko.observable('', { persist: getKey('profile.race') });
+	self.religion = ko.observable('', { persist: getKey('profile.religion') });
+	self.alignment = ko.observable('', { persist: getKey('profile.alignment') });
+	self.typeClass = ko.observable('' ,{ persist: getKey('profile.typeClass') });
+	self.gender = ko.observable('', { persist: getKey('profile.gender') });
+	self.level = ko.observable('1', { persist: getKey('profile.level') });
+	self.exp = ko.observable('0', { persist: getKey('profile.exp') })
+
+	self.clear = function() {
+		self.characterName('');
+		self.playerName('');
+		self.race('');
+		self.religion('');
+		self.typeClass('');
+		self.alignment('');
+		self.gender('');
+		self.level('1');
+		self.exp('0');
 	};
 	
-	this.importValues = function(values) {
-		this.characterName(values.characterName);
-		this.playerName(values.playerName);
-		this.race(values.race);
-		this.religion(values.religion);
-		this.typeClass(values.typeClass);
-		this.alignment(values.alignment);
-		this.gender(values.gender);		
-		this.level(values.level);
-		this.exp(values.exp);
+	self.importValues = function(values) {
+		self.characterName(values.characterName);
+		self.playerName(values.playerName);
+		self.race(values.race);
+		self.religion(values.religion);
+		self.typeClass(values.typeClass);
+		self.alignment(values.alignment);
+		self.gender(values.gender);		
+		self.level(values.level);
+		self.exp(values.exp);
 	};
 	
-	this.exportValues = function() {
+	self.exportValues = function() {
 		return {
-			characterName: this.characterName(), 
-			playerName: this.playerName(), 
-			race: this.race(), 
-			religion: this.religion(), 
-			typeClass: this.typeClass(), 
-			alignment: this.alignment(), 
-			gender: this.gender(),
-			level: this.level(),
-			exp: this.exp()
+			characterName: self.characterName(), 
+			playerName: self.playerName(), 
+			race: self.race(), 
+			religion: self.religion(), 
+			typeClass: self.typeClass(), 
+			alignment: self.alignment(), 
+			gender: self.gender(),
+			level: self.level(),
+			exp: self.exp()
 		}
 	};
 };

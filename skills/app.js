@@ -5,7 +5,7 @@ function SkillTree() {
     self.selecteditem = ko.observable();
     self.blankSkill = ko.observable(new Skill('', 0, false, function(){}));
     self.skills = ko.observableArray([], {
-        persist: 'skilltree.skills',
+        persist: getKey('skilltree.skills'),
         mapping: function(values){
             return new Skill(values.name, values.bonus, values.proficiency, 
             	function() {

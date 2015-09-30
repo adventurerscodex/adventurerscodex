@@ -6,7 +6,7 @@ function Spellbook() {
     self.blankSpell = ko.observable(new Spell('', '', '', '',
                                               '', '', '', '', '', '', function(){}));
     self.spellbook = ko.observableArray([], {
-        persist: 'spells.spellbook',
+        persist: getKey('spells.spellbook'),
         mapping: function(values){
             return new Spell(values.spellName, values.spellType, values.spellDmg, values.spellSchool,
                              values.spellLevel, values.spellDescription,

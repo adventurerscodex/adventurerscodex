@@ -1,7 +1,7 @@
 function ViewModel() {
 	var self = this;
 
-	self.user = ko.observable(new User());
+	self.profile = ko.observable(new Profile());
 	self.stats = ko.observable(new Stats());
 	self.note = ko.observable(new Note());
     self.abilityScores = ko.observable(new abilityScores());
@@ -10,11 +10,8 @@ function ViewModel() {
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
 
-    self.fileContents = ko.observable();
-    self.fileReader = new FileReader();
-
     self.clear = function() {
-    	self.user().clear();
+    	self.profile().clear();
     	self.note().clear();
     	self.abilityScores().clear();
     	self.stats().clear();
@@ -22,10 +19,15 @@ function ViewModel() {
         self.spellbook().clear();
         self.treasure().clear();
     };
+    
+    self.pageTitle = ko.computed(function() {
+    	return self.profile().characterName() + ' by ' + self.profile().playerName()
+    		+ ' | Adventurer\'s Codex';
+    });
 
     self.importValues = function(values) {
     	try {
-			self.user().importValues(values.user);
+			self.profile().importValues(values.profile);
 			self.stats().importValues(values.stats);
 			self.note().importValues(values.note);
 			self.abilityScores().importValues(values.abilityScores);
@@ -39,7 +41,7 @@ function ViewModel() {
 
     self.exportValues = function() {
     	return {
-    		user: self.user().exportValues(),
+    		profile: self.profile().exportValues(),
     		note: self.note().exportValues(),
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
@@ -49,26 +51,33 @@ function ViewModel() {
     	};
     };
 
-    self.importFromFile = function() {
-        //The first comma in the result file string is the last
-        //character in the string before the actual json data
-        var length = self.fileReader.result.indexOf(",") + 1
-        var values = JSON.parse(atob(self.fileReader.result.substring(
-            length, self.fileReader.result.length)));
-		self.importValues(values);
-    };
-
     self.save = function() {
     	var string = JSON.stringify(self.exportValues());
-    	var filename = self.user().characterName();
+    	var filename = self.profile().characterName();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);
     };
 
     self.saveToFile = function() {
     	var string = JSON.stringify(self.exportValues());
-    	var filename = self.user().characterName();
+    	var filename = self.profile().characterName();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);
     };
+};
+
+/**
+ * Do preflight checks. 
+ * - Has the user been here before? 
+ * - Do they have a character? Etc.
+ */
+init = function() {
+	checkFirstTime();
+};
+
+checkFirstTime = function() {
+	if (localStorage['character.characterKeys'] === undefined 
+			|| eval(localStorage['character.characterKeys']).length < 1) {
+		window.location = '/characters'
+	}
 };

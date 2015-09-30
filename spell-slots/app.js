@@ -4,7 +4,7 @@ function SpellSlots() {
 	var self = this;
 
 	this.slots = ko.observableArray([], { 
-		persist: 'spellslots.slots', 
+		persist: getKey('spellslots.slots'), 
 		mapping: function(values){
 			return new Slot(values.level, values.maxSpellSlots, values.usedSpellSlots, function() {
 				self.slots.valueHasMutated();

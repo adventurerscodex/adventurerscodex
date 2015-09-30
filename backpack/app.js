@@ -8,7 +8,7 @@ function Backpack() {
 	}; */
 	var self = this;	//black magic
 	self.backpack = ko.observableArray([], {
-		persist: 'backpack.backpack',
+		persist: getKey('backpack.backpack'),
 		mapping: function(values){
 			return new Item(values.itemName, values.itemDesc, values.itemQty, values.itemWeight,
 				function() {self.backpack.valueHasMutated();});
