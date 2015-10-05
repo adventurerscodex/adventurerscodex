@@ -61,6 +61,39 @@ describe('Slot Model', function() {
 		});
 	});
 	
+	describe('Increment Counter', function() {
+		it('should increment the number of used slots.', function() {
+			var s = new Slot(10, 4, 1, '', function(){});
+			s.spellSlots().should.equal(3);
+			s.incrUsed();
+			s.spellSlots().should.equal(2);			
+			s.incrUsed();
+			s.incrUsed();
+			s.spellSlots().should.equal(0);			
+			s.incrUsed();
+			s.spellSlots().should.equal(0);			
+		});
+	});
+
+	describe('Decrement Counter', function() {
+		it('should increment the number of used slots.', function() {
+			var s = new Slot(10, 4, 1, '', function(){});
+			s.spellSlots().should.equal(3);
+			s.decrUsed();
+			s.spellSlots().should.equal(4);			
+			s.decrUsed();
+			s.decrUsed();
+			s.spellSlots().should.equal(4);			
+		});
+	});
+	
+	describe('Spell Slots', function() {
+		it('should yield the number of total slots remaining.', function() {
+			var s = new Slot(10, 4, 1, '', function(){});
+			s.spellSlots().should.equal(3);
+		});
+	});
+	
 	describe('Clear', function() {
 		it('should clear all values', function() {
 			var s = new Slot(10, 4, 1, '', function(){});
