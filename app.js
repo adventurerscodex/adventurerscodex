@@ -9,6 +9,7 @@ function ViewModel() {
     self.spellbook = ko.observable(new Spellbook());
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
+    self.featsProf = ko.observable(new FeatsProfViewModel());
 
     self.clear = function() {
     	self.profile().clear();
@@ -18,8 +19,9 @@ function ViewModel() {
     	self.spellSlots().clear();
         self.spellbook().clear();
         self.treasure().clear();
+        self.featsProf().clear();
     };
-    
+
     self.pageTitle = ko.computed(function() {
     	return self.profile().characterName() + ' by ' + self.profile().playerName()
     		+ ' | Adventurer\'s Codex';
@@ -34,6 +36,7 @@ function ViewModel() {
 			self.spellSlots().importValues(values.spellSlots);
             self.spellbook().importValues(values.spellbook);
             self.treasure().importValues(values.treasure);
+            self.featsProf().importValues(values.feats_prof);
 		} catch(err) {
 			console.log(err);
 		}
@@ -47,7 +50,8 @@ function ViewModel() {
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlots: self.spellSlots().exportValues(),
             spellbook: self.spellbook().exportValues(),
-            treasure: self.treasure().exportValues()
+            treasure: self.treasure().exportValues(),
+            feats_prof: self.featsProf().exportValues()
     	};
     };
 
@@ -67,8 +71,8 @@ function ViewModel() {
 };
 
 /**
- * Do preflight checks. 
- * - Has the user been here before? 
+ * Do preflight checks.
+ * - Has the user been here before?
  * - Do they have a character? Etc.
  */
 init = function() {
@@ -76,7 +80,7 @@ init = function() {
 };
 
 checkFirstTime = function() {
-	if (localStorage['character.characterKeys'] === undefined 
+	if (localStorage['character.characterKeys'] === undefined
 			|| eval(localStorage['character.characterKeys']).length < 1) {
 		window.location = '/characters'
 	}

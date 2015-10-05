@@ -36,8 +36,7 @@ function Treasure() {
         self.electrum(values.electrum);
         self.silver(values.silver);
         self.copper(values.copper);
-        self.copper(values.misc);
-        self.worth_in_gold(values.worth_in_gold);
+        self.misc(values.misc);
     };
 
     self.exportValues = function() {
@@ -48,7 +47,6 @@ function Treasure() {
             silver: self.silver(),
             copper: self.copper(),
             misc: self.misc(),
-            worth_in_gold: self.worth_in_gold()
         }
     };
 };
