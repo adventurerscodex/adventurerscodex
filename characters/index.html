@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
- <head>  
-  <title>My Characters | Adventurer's Codex</title>  
+ <head>
+  <title>My Characters | Adventurer's Codex</title>
  	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="../site.css" rel="stylesheet">
@@ -57,7 +57,7 @@
         </div>
         <div class='panel-footer'>
           <a class='btn btn-primary' data-bind='attr: { href: playerUrl }'>
-            <span data-bind='text: characterName'></span>'s character sheet &#8594; 
+            <span data-bind='text: characterName'></span>'s character sheet &#8594;
           </a>
           <button class='btn btn-danger pull-right' data-bind='click: $parent.removeCharacter'>Delete</button>
         </div>
@@ -68,7 +68,7 @@
       <p>Click <a href='/about#storage'>here</a> for more information.</p>
     </div>
   </div>
-	
+
   <!-- Import Modal -->
   <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
     <div class="modal-dialog" role="document">
@@ -88,7 +88,7 @@
       </div>
     </div>
   </div>
-	
+
 	<script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="../bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
@@ -109,6 +109,7 @@
 	<script src="../spells/app.js" type="text/javascript"></script>
 	<script src="../spell-slots/app.js" type="text/javascript"></script>
 	<script src="../treasure/app.js" type="text/javascript"></script>
+  <script src="../feats_prof/app.js" type="text/javascript"></script>
 	<script src="app.js" type="text/javascript"></script>
 	<script type="text/javascript">$(function(){ ko.applyBindings(new CharacterManager()); });</script>
  </body>
