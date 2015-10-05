@@ -50,6 +50,8 @@ As this is Javascript, the code style guide is as follows.
 
 **Casing:** camelCase with the first letter lowercase unless the value is a Knockout ViewModel or other psudo-class object definition.
 
+**Quoting:** In all Javascript, use of single quotes over double quotes is preferred.
+
 **Function Syntax:** Please try to use the following syntax (referred to as variable assigned anonymous function syntax) for defining all functions except Knockout ViewModels. This is preferred over traditional function declarations because it is consistant with Knockout property definitions which are used throughout the app. Opening parens should be on the first line of the function with the function name.
 
 ```javascript
@@ -73,9 +75,12 @@ When designing a module, the app.js file should be in the following format:
 Example `app.js` file:
 ```javascript	
 "use strict";
-function SomeModule() {
-	//Knockout class...
-}	
+function BackpackViewModel() {
+	//Knockout ViewModel...
+}
+function ItemModel() {
+	//Data Model...
+}
 $(function() {
 	//Instantiate jQuery funcions...
 });
