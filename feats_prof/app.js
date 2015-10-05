@@ -1,4 +1,4 @@
-function featsProfViewModel() {
+function FeatsProfViewModel() {
   var self = this;
 
   self.feats = ko.observable('', { persist: getKey('feats.text') });
