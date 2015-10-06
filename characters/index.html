@@ -2,7 +2,8 @@
 <html>
  <head>
   <title>My Characters | Adventurer's Codex</title>
- 	<meta charset="utf-8">
+   	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 	  
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="../site.css" rel="stylesheet">
     <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -28,8 +29,8 @@
       </div><!--/.nav-collapse -->
     </div>
   </nav>
-	<div id='content' class='container'>
-    <div class='container row'>
+	<div id='content' class='container-fluid'>
+    <div class='container-fluid row'>
         <button class='btn btn-primary' data-bind='click: addCharacter'>Create a new character</button>
         <button class='btn btn-default pull-right' data-toggle="modal" data-target="#importModal">Import an existing character</button>
     </div>
