@@ -2,43 +2,43 @@
   <div class="panel-heading">
       <h2 class="panel-title">Skills</h2>
   </div>
-
-  <table class="table table-responsive table-hover">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Bonus</th>
-        <th>Proficient</th>
-        <th>
-          <a data-toggle="modal"
-             data-target="#addSkill" href="#">
-            <i class="glyphicon glyphicon-plus"></i>
-          </a>
-        </th>
-      </tr>
-    </thead>
-    <tbody data-bind='foreach: skills'>
-      <tr>
-        <td data-bind='text: name'></td>
-        <td data-bind='text: bonusLabel'></td>
-        <td> <span data-bind='css: proficiencyLabel'></span</td>
-        <td>
-          <a data-bind="click: $parent.editSkill"
-             href="#"
-             data-toggle="modal"
-             data-target="#viewSkill">
-            <i class="glyphicon glyphicon-eye-open">
-            </i>
-          </a>&nbsp;&nbsp;
-          <a data-bind="click: $parent.removeSkill" href="#">
-            <i class="glyphicon glyphicon-remove">
-            </i>
-          </a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
+  <div class="panel-body">
+    <table class="table table-responsive table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Bonus</th>
+          <th>Proficient</th>
+          <th>
+            <a data-toggle="modal"
+               data-target="#addSkill" href="#">
+              <i class="glyphicon glyphicon-plus"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-bind='foreach: skills'>
+        <tr>
+          <td data-bind='text: name'></td>
+          <td data-bind='text: bonusLabel'></td>
+          <td> <span data-bind='css: proficiencyLabel'></span</td>
+          <td>
+            <a data-bind="click: $parent.editSkill"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSkill">
+              <i class="glyphicon glyphicon-eye-open">
+              </i>
+            </a>&nbsp;&nbsp;
+            <a data-bind="click: $parent.removeSkill" href="#">
+              <i class="glyphicon glyphicon-remove">
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
     <!-- Add Modal -->
     <div class="modal fade"
          id="addSkill"

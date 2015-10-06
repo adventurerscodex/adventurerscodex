@@ -3,60 +3,77 @@
 	  <h2 class="panel-title">Profile</h2>
   </div>
   <div class="panel-body">
-	<!-- Names -->
-	<div class="panel-body">
-	  <div class="input-group ">
-		<span class="input-group-addon" id="basic-addon2">Character Name</span>
-		<input type="text" class="form-control" aria-describedby="basic-addon2"
-			data-bind='value: characterName' placeholder="Your character's name" />
-	  </div>
-	</div>
-	<div class="panel-body">
-	  <div class="input-group ">
-		<span class="input-group-addon" id="basic-addon2">Player Name</span>
-		<input type="text" class="form-control" aria-describedby="basic-addon2"
-			data-bind='value: playerName' placeholder="Your name" />
-	  </div>
-	</div>
-	<div class="panel-body">
+  	<!-- Names -->
+	  <div class="row row-padded">
+      <div class="col-md-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Character Name</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon2"
+            data-bind='value: characterName' placeholder="Your character's name" />
+        </div>
+      </div>
+    </div>
+	  <div class="row row-padded">
+      <div class="col-md-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Player Name</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon2"
+              data-bind='value: playerName' placeholder="Your name" />
+        </div>
+      </div>
+    </div>
+	  <div class="row row-padded">
 	  <!-- Race, Gender, Class, Alignment -->
-	  <div class="input-group ">
-		<span class="input-group-addon" id="basic-addon2">Race</span>
-		<input type="text" class="form-control" placeholder="Elf? Dwarf? Human?" aria-describedby="basic-addon2"
-			data-bind='textInput: race'>
+      <div class="col-md-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Race</span>
+          <input type="text" class="form-control" placeholder="Elf? Dwarf? Human?" aria-describedby="basic-addon2"
+            data-bind='textInput: race'>
+        </div>
+      </div>
+    </div>
+	  <div class="row row-padded">
+      <div class="col-md-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Gender</span>
+          <input type="text" class="form-control" placeholder="Male or Female?" aria-describedby="basic-addon2"
+            data-bind='textInput: gender'>
+        </div>
+      </div>
+    </div>
+	  <div class="row row-padded">
+      <div class="col-md-12">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Class</span>
+          <input type="text" class="form-control" placeholder="Warrior? Wizard? Monk?" aria-describedby="basic-addon2"
+            data-bind='textInput: typeClass'>
+        </div>
+      </div>
+    </div>
+	  <div class="row row-padded">
+      <div class="col-md-12">
+    	  <div class="input-group">
+	      	<span class="input-group-addon" id="basic-addon2">Alignment</span>
+      		<input type="text" class="form-control" placeholder="Good? Evil?" aria-describedby="basic-addon2"
+		      	data-bind='textInput: alignment'>
+  	    </div>
+	    </div>
+  	</div>
+	  <div class="row">
+      <div class="col-md-6 col-padded">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Level</span>
+          <input type="number" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: level'>
+        </div>
+      </div>
+      <div class="col-md-6 col-padded">
+        <div class="input-group">
+		      <span class="input-group-addon" id="basic-addon2">Experience</span>
+		      <input type="number" class="form-control" aria-describedby="basic-addon2"
+			      data-bind='textInput: exp'>
+	      </div>
+	    </div>
 	  </div>
-	</div>
-	<div class="panel-body">
-	  <div class="input-group ">
-		<span class="input-group-addon" id="basic-addon2">Gender</span>
-		<input type="text" class="form-control" placeholder="Male or Female?" aria-describedby="basic-addon2"
-			data-bind='textInput: gender'>
-		</div>
-	</div>
-	<div class="panel-body">
-	<div class="input-group">
-		<span class="input-group-addon" id="basic-addon2">Class</span>
-		<input type="text" class="form-control" placeholder="Warrior? Wizard? Monk?" aria-describedby="basic-addon2"
-			data-bind='textInput: typeClass'>
-	  </div>
-	</div>
-	<div class="panel-body">
-	  <div class="input-group ">
-		<span class="input-group-addon" id="basic-addon2">Alignment</span>
-		<input type="text" class="form-control" placeholder="Good? Evil?" aria-describedby="basic-addon2"
-			data-bind='textInput: alignment'>
-	  </div>
-	</div>
-	 <div class="panel-body">
-	   <div class="input-group row-fluid inline-left">
-		 <span class="input-group-addon" id="basic-addon2">Level</span>
-		 <input type="number" class="form-control" aria-describedby="basic-addon2"
-			 data-bind='textInput: level'>
-	   </div>
-	   <div class="input-group row-fluid inline-right">
-		 <span class="input-group-addon" id="basic-addon2">Experience</span>
-		 <input type="number" class="form-control" aria-describedby="basic-addon2"
-			 data-bind='textInput: exp'>
-	   </div>
 	</div>
 </div>
