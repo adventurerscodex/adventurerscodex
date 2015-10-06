@@ -2,7 +2,6 @@
   <div class="panel-heading">
 	  <h2 class="panel-title">Spell Slots</h2>
   </div>
-  <div class="panel-body">
     <div class="progress" data-bind="{ foreach: slots, visible: slots().length > 0 }">
       <div class="progress-bar" role="progressbar" aria-valuemin="0"
         data-bind="style: { width: progressWidth() * $parent.maxSlotWidth() + '%' }, css: color,
@@ -12,7 +11,7 @@
     </div>
     <div class='row'>
       <div class='col-md-12'>
-      <table id='spellSlotsTable' class="table table-hover">
+      <table id='spellSlotsTable' class="table table-responsive table-hover">
         <thead>
           <tr>
            <th>Level</th>

@@ -10,7 +10,7 @@
  </head>
  <body>
    <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -32,7 +32,7 @@
 	<div id='content' class='container-fluid'>
     <div class='container-fluid row'>
         <button class='btn btn-primary' data-bind='click: addCharacter'>Create a new character</button>
-        <button class='btn btn-default pull-right' data-toggle="modal" data-target="#importModal">Import an existing character</button>
+        <button class='btn btn-default pull-right' data-toggle="modal" data-target="#importModal">Import</button>
     </div>
     <div class='spacer'></div>
     <div data-bind='foreach: characters'>
@@ -58,7 +58,7 @@
         </div>
         <div class='panel-footer'>
           <a class='btn btn-primary' data-bind='attr: { href: playerUrl }'>
-            <span data-bind='text: characterName'></span>'s character sheet &#8594;
+            <!--<span data-bind='text: characterName'></span>'s character sheet -->View &#8594;
           </a>
           <button class='btn btn-danger pull-right' data-bind='click: $parent.removeCharacter'>Delete</button>
         </div>
@@ -73,7 +73,7 @@
   <!-- Import Modal -->
   <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
     <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content container-fluid">
       <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       <h4 class="modal-title" id="importModalLabel">Import</h4>

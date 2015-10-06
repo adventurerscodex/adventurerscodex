@@ -10,7 +10,7 @@
  </head>
  <body>
    <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
           <span class="sr-only">Toggle navigation</span>
@@ -30,7 +30,7 @@
       </div><!--/.nav-collapse -->
     </div>
   </nav>
- 	<div id='content' class='container'>
+ 	<div id='content' class='container-fluid'>
 		<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile/', data: profile }"></div>
 		<div data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats/', data: stats }"></div>
     <div data-bind="template: { name: 'skills.tmpl', templateUrl: 'skills/', data: skillTree }"></div>
@@ -44,7 +44,7 @@
 	<!-- Clear Modal -->
 	<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel">
 	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content container-fluid">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title" id="clearModalLabel">Are you sure?</h4>
@@ -62,7 +62,7 @@
 	<!-- Export Modal -->
 	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel">
 	  <div class="modal-dialog" role="document">
-		<div class="modal-content">
+		<div class="modal-content container-fluid">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
