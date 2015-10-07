@@ -14,11 +14,10 @@
         <thead>
           <tr>
            <th>Level</th>
-           <th>Max</th>
+           <th class="hidden-sm hidden-xs">Max</th>
            <th>Used</th>
            <th>Color</th>
            <th><!-- Edit btn --></th>
-           <th><!-- Del btn --></th>
            <th>
              <a data-toggle="modal"
                 data-target="#addSpellSlot" href="#">
@@ -30,7 +29,7 @@
         <tbody data-bind="foreach: slots">
           <tr>
             <td data-bind="text: level"></td>
-            <td data-bind="text: maxSpellSlots"></td>
+            <td class="hidden-sm hidden-xs" data-bind="text: maxSpellSlots"></td>
             <td>
               <div class="input-group">
                 <span class="input-group-btn">
