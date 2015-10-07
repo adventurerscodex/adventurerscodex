@@ -49,7 +49,7 @@ function ViewModel() {
     	return {
     		profile: self.profile().exportValues(),
     		note: self.note().exportValues(),
-    		backpack: self.stats().backpack(),
+    		backpack: self.backpack().exportValues(),
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlotsViewModel: self.spellSlotsViewModel().exportValues(),
