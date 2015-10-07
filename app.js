@@ -3,6 +3,7 @@ function ViewModel() {
 
 	self.profile = ko.observable(new Profile());
 	self.stats = ko.observable(new Stats());
+	self.backpack = ko.observable(new Backpack());
 	self.note = ko.observable(new Note());
     self.abilityScores = ko.observable(new abilityScores());
     self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
@@ -16,6 +17,7 @@ function ViewModel() {
     	self.note().clear();
     	self.abilityScores().clear();
     	self.stats().clear();
+    	self.backpack().clear();
     	self.spellSlotsViewModel().clear();
         self.spellbook().clear();
         self.treasure().clear();
@@ -32,6 +34,7 @@ function ViewModel() {
 			self.profile().importValues(values.profile);
 			self.stats().importValues(values.stats);
 			self.note().importValues(values.note);
+			self.backpack().importValues(values.backpack);
 			self.abilityScores().importValues(values.abilityScores);
 			self.spellSlotsViewModel().importValues(values.spellSlotsViewModel);
             self.spellbook().importValues(values.spellbook);
@@ -46,6 +49,7 @@ function ViewModel() {
     	return {
     		profile: self.profile().exportValues(),
     		note: self.note().exportValues(),
+    		backpack: self.backpack().exportValues(),
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlotsViewModel: self.spellSlotsViewModel().exportValues(),

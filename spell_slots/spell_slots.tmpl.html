@@ -2,7 +2,7 @@
   <div class="panel-heading">
 	  <h2 class="panel-title">Spell Slots</h2>
   </div>
-  <div class="panel-body">
+  <div class='panel-body'>
     <div class="progress" data-bind="{ foreach: slots, visible: slots().length > 0 }">
       <div class="progress-bar" role="progressbar" aria-valuemin="0"
         data-bind="style: { width: progressWidth() * $parent.maxSlotWidth() + '%' }, css: color,
@@ -10,17 +10,14 @@
         <span class="sr-only"></span>
       </div>
     </div>
-    <div class='row'>
-      <div class='col-md-12'>
-      <table id='spellSlotsTable' class="table table-hover">
+      <table id='spellSlotsTable' class="table table-responsive table-hover">
         <thead>
           <tr>
            <th>Level</th>
-           <th>Max</th>
+           <th class="hidden-sm hidden-xs">Max</th>
            <th>Used</th>
            <th>Color</th>
            <th><!-- Edit btn --></th>
-           <th><!-- Del btn --></th>
            <th>
              <a data-toggle="modal"
                 data-target="#addSpellSlot" href="#">
@@ -32,7 +29,7 @@
         <tbody data-bind="foreach: slots">
           <tr>
             <td data-bind="text: level"></td>
-            <td data-bind="text: maxSpellSlots"></td>
+            <td class="hidden-sm hidden-xs" data-bind="text: maxSpellSlots"></td>
             <td>
               <div class="input-group">
                 <span class="input-group-btn">
@@ -65,7 +62,6 @@
           </tr>
         </tbody>
       </table>
-    </div>
   </div>
 </div>
 
