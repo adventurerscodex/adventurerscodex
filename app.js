@@ -1,7 +1,7 @@
 function ViewModel() {
 	var self = this;
 
-	self.profile = ko.observable(new Profile());
+	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.stats = ko.observable(new Stats());
 	self.backpack = ko.observable(new Backpack());
 	self.note = ko.observable(new Note());
@@ -13,7 +13,7 @@ function ViewModel() {
     self.featsProf = ko.observable(new FeatsProfViewModel());
 
     self.clear = function() {
-    	self.profile().clear();
+    	self.profileViewModel().clear();
     	self.note().clear();
     	self.abilityScores().clear();
     	self.stats().clear();
@@ -25,13 +25,13 @@ function ViewModel() {
     };
 
     self.pageTitle = ko.computed(function() {
-    	return self.profile().characterName() + ' by ' + self.profile().playerName()
+    	return self.profileViewModel().characterName() + ' by ' + self.profileViewModel().playerName()
     		+ ' | Adventurer\'s Codex';
     });
 
     self.importValues = function(values) {
     	try {
-			self.profile().importValues(values.profile);
+			self.profileViewModel().importValues(values.profileViewModel);
 			self.stats().importValues(values.stats);
 			self.note().importValues(values.note);
 			self.backpack().importValues(values.backpack);
@@ -47,7 +47,7 @@ function ViewModel() {
 
     self.exportValues = function() {
     	return {
-    		profile: self.profile().exportValues(),
+    		profileViewModel: self.profileViewModel().exportValues(),
     		note: self.note().exportValues(),
     		backpack: self.backpack().exportValues(),
     		stats: self.stats().exportValues(),
@@ -61,14 +61,14 @@ function ViewModel() {
 
     self.save = function() {
     	var string = JSON.stringify(self.exportValues());
-    	var filename = self.profile().characterName();
+    	var filename = self.profileViewModel().characterName();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);
     };
 
     self.saveToFile = function() {
     	var string = JSON.stringify(self.exportValues());
-    	var filename = self.profile().characterName();
+    	var filename = self.profileViewModel().characterName();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);
     };
