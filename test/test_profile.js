@@ -1,7 +1,26 @@
-describe('Profile', function() {
+var val = {
+	"characterName":"Brom Eriksson",
+	"playerName":"Brian Schrader",
+	"race":"Elf",
+	"religion":"",
+	"typeClass":"Wizard",
+	"alignment":"Good",
+	"gender":"Male",
+	"age":"233",
+	"height":"5'1\"",
+	"weight":"123",
+	"hairColor":"Brown",
+	"eyeColor":"Blue",
+	"skinColor":"Red",
+	"level":"15",
+	"exp":"0"
+};
+
+
+describe('ProfileViewModel', function() {
 	describe('Clear', function() {
 		it('should clear all the values in profile', function() {
-			var p = new Profile();
+			var p = new ProfileViewModel();
 			p.characterName('Bob');
 			p.characterName().should.equal('Bob');
 			p.clear();
@@ -11,13 +30,7 @@ describe('Profile', function() {
 
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var val = {
-				characterName: 'bob',
-				playerName: 'joe',
-				level: 1,
-				exp: 2500
-			};
-			var p = new Profile();
+			var p = new ProfileViewModel();
 			p.characterName(val.characterName);
 			p.playerName(val.playerName);
 			p.level(val.level);
@@ -32,13 +45,7 @@ describe('Profile', function() {
 	
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
-			var val = {
-				characterName: 'bob',
-				playerName: 'joe',
-				level: 1,
-				exp: 2500
-			};
-			var p = new Profile();
+			var p = new ProfileViewModel();
 			p.importValues(val);
 			p.characterName().should.equal(val.characterName);
 			p.playerName().should.equal(val.playerName);

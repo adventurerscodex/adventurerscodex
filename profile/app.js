@@ -1,4 +1,6 @@
-function Profile() {
+"use strict";
+
+function ProfileViewModel() {
 	var self = this;
 
 	self.characterName =  ko.observable('', { persist: getKey('profile.characterName') });
@@ -8,8 +10,14 @@ function Profile() {
 	self.alignment = ko.observable('', { persist: getKey('profile.alignment') });
 	self.typeClass = ko.observable('' ,{ persist: getKey('profile.typeClass') });
 	self.gender = ko.observable('', { persist: getKey('profile.gender') });
+	self.age = ko.observable('', { persist: getKey('profile.age') });
+	self.height = ko.observable('', { persist: getKey('profile.height') });
+	self.weight = ko.observable('', { persist: getKey('profile.weight') });
+	self.hairColor = ko.observable('', { persist: getKey('profile.hairColor') });
+	self.eyeColor = ko.observable('', { persist: getKey('profile.eyeColor') });
+	self.skinColor = ko.observable('', { persist: getKey('profile.skinColor') });
 	self.level = ko.observable('1', { persist: getKey('profile.level') });
-	self.exp = ko.observable('0', { persist: getKey('profile.exp') })
+	self.exp = ko.observable('0', { persist: getKey('profile.exp') });
 
 	self.clear = function() {
 		self.characterName('');
@@ -19,6 +27,12 @@ function Profile() {
 		self.typeClass('');
 		self.alignment('');
 		self.gender('');
+		self.age('');
+		self.height('');
+		self.weight('');
+		self.hairColor('');
+		self.eyeColor('');
+		self.skinColor('');
 		self.level('1');
 		self.exp('0');
 	};
@@ -31,6 +45,12 @@ function Profile() {
 		self.typeClass(values.typeClass);
 		self.alignment(values.alignment);
 		self.gender(values.gender);		
+		self.age(values.age);
+		self.height(values.height);
+		self.weight(values.weight);
+		self.hairColor(values.hairColor);
+		self.eyeColor(values.eyeColor);
+		self.skinColor(values.skinColor);
 		self.level(values.level);
 		self.exp(values.exp);
 	};
@@ -44,6 +64,12 @@ function Profile() {
 			typeClass: self.typeClass(), 
 			alignment: self.alignment(), 
 			gender: self.gender(),
+			age: self.age(),
+			height: self.height(),
+			weight: self.weight(),
+			hairColor: self.hairColor(),
+			eyeColor: self.eyeColor(),
+			skinColor: self.skinColor(),
 			level: self.level(),
 			exp: self.exp()
 		}
