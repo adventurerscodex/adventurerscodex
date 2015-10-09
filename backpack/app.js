@@ -1,26 +1,31 @@
-function Backpack() {
-/* 	function Backpack() {
-		this.maxWeight =  ko.observable('100' + 'lb', { persist: 'backpack.maxWeight'});
-		this.totalWeight =  ko.observable(function sumWeight(){
-			//TODO
-		}	+ 'lb', { persist: 'backpack.totalWeight'});
+"use strict";
+
+function BackpackViewModel(parent) {
+	var self = this;	
+	self.parent = parent;
 	
-	}; */
-	var self = this;	//black magic
 	self.backpack = ko.observableArray([], {
 		persist: getKey('backpack.backpack'),
 		mapping: function(values){
-			return new Item(values.itemName, values.itemDesc, values.itemQty, values.itemWeight,
-				function() {self.backpack.valueHasMutated();});
-		}});
-	self.blankItem = ko.observable(new Item('','','','', function(){}));
+			return (new Item(self.callback)).importValues(values);;
+		}
+	});
+	self.callback = function() {self.backpack.valueHasMutated()};
+		
+	self.blankItem = ko.observable(new Item(self.callback));
 	self.selecteditem = ko.observable();
 	
 	self.addItem = function() {
 		self.backpack.push(self.blankItem());
-		self.blankItem(new Item('','','','', function() {self.backpack.valueHasMutated();}));
+		self.blankItem(new Item(self.callback));
 	};
-	this.removeItem = function(item) {
+	
+	self.equipItem = function(item) {
+		self.backpack.remove(item);
+		self.parent.equipmentViewModel().equippedItems.push(item);	
+	};
+	
+	self.removeItem = function(item) {
 		self.backpack.remove(item);
 	};
 	
@@ -47,47 +52,9 @@ function Backpack() {
 		var newItems = []
 		for (var i in values.backpack) {
 			var item = values.backpack[i];
-			var newItem = new Item('', '', '', '', function(){});
+			var newItem = new Item(new Item(self.callback));
 			newItem.importValues(item);
 			self.backpack.push(newItem);
-		}
-	};
-};
-//TODO: Add units and make numbers.
-function Item(name, desc, qty, weight, callback) {
-	var self = this;
-	self.itemName = ko.observable(name);
-	self.itemName.subscribe(callback);
-
-	self.itemDesc = ko.observable(desc);
-	self.itemDesc.subscribe(callback);
-
-	self.itemQty = ko.observable(qty);
-	self.itemQty.subscribe(callback);
-
-	self.itemWeight = ko.observable(weight);
-	self.itemWeight.subscribe(callback);
-
-	this.clear = function() {
-		self.itemName('');
-		self.itemDesc('');
-		self.itemQty('');
-		self.itemWeight('');
-	};
-	
-	this.importValues = function(values) {
-		self.itemName(values.itemName);
-		self.itemDesc(values.itemDesc);
-		self.itemQty(values.itemQty);
-		self.itemWeight(values.itemWeight);
-	};
-	
-	this.exportValues = function() {
-		return {
-			itemName: self.itemName(),
-			itemDesc: self.itemDesc(),
-			itemQty: self.itemQty(),
-			itemWeight: self.itemWeight()
 		}
 	};
 };
