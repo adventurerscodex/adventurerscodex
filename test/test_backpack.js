@@ -1,7 +1,7 @@
-describe('Backpack', function(){
+describe('BackpackViewModelViewModel', function(){
 	describe('Add Item', function() {
 		it('should add a new item to the backpack', function() {
-			var p = new Backpack();
+			var p = new BackpackViewModel();
 			p.clear();
 			p.backpack().length.should.equal(0);
 			p.addItem();
@@ -11,7 +11,7 @@ describe('Backpack', function(){
 
 	describe('Remove Item', function() {
 		it('should remove a item from the backpack', function() {
-			var p = new Backpack();
+			var p = new BackpackViewModel();
 			p.clear();
 			p.backpack().length.should.equal(0);
 			p.addItem();
@@ -23,7 +23,7 @@ describe('Backpack', function(){
 
 	describe('Clear', function() {
 		it('should clear all the values in the backpack', function() {
-			var p = new Backpack();
+			var p = new BackpackViewModel();
 			var item = [new Item('', '', '', '', function(){})];
 			p.backpack(item);
 			p.backpack().should.equal(item);
@@ -34,7 +34,7 @@ describe('Backpack', function(){
 
 	describe('Export', function() {
 		it('should return an object with the data given', function() {
-			var p = new Backpack();
+			var p = new BackpackViewModel();
 			p.clear();
 			p.backpack().length.should.equal(0);
 			p.addItem();
@@ -46,7 +46,7 @@ describe('Backpack', function(){
 	
 	describe('Import', function() {
 		it('should import an object with the data given', function() {
-			var p = new Backpack();
+			var p = new BackpackViewModel();
 			p.clear();
 			p.backpack().length.should.equal(0);
 			var backpack = [{ itemName:'', itemDesc: '', itemQty: '', itemWeight: '' }];
