@@ -1,6 +1,6 @@
 <div class="panel panel-default bio">
   <div class="panel-heading">
-	  <h2 class="panel-title">Backpack</h2>
+	  <h2 class="panel-title">Equipment</h2>
   </div>
   <table class="table table-hover">
     <thead>
@@ -11,23 +11,22 @@
         <th>Options</th>
         <th>
          <a data-toggle="modal"
-          data-target="#addItem" href="#">
+          data-target="#addItemModal" href="#">
             <i class="glyphicon glyphicon-plus"></i>
          </a>
         </th>
       </tr>
     </thead>
-    <!-- ko if: backpack().length > 0 -->
-    <tbody data-bind='foreach: backpack'>
+    <tbody data-bind='foreach: equippedItems'>
       <tr>
         <td  data-bind='text: itemName'></td>
-        <td  data-bind='text: itemQty'></td>
+        <td  data-bind='text: itemBodyLocation'></td>
         <td  data-bind='text: itemWeight'></td>
         <td>
           <a data-bind="click: $parent.editItem"
             href="#"
             data-toggle="modal"
-            data-target="#viewItem">
+            data-target="#viewEquippedItem">
            <i class="glyphicon glyphicon-eye-open">
             </i>
             </a>
@@ -46,7 +45,7 @@
         
   <!-- Add Modal -->
   <div class="modal fade"
-    id="addItem"
+    id="addItemModal"
     tabindex="-1"
     role="dialog"
     aria-labelledby="addItemLabel">
@@ -60,17 +59,16 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title"
-          id="addItemLabel">Add an item to your inventory.</h4>
+          id="addItemLabel">Add a new equipped item</h4>
         </div>
       <div class="modal-body">
         <form class="form-horizontal">
           <div class="form-group">
             <label for="itemName"
-              class="col-sm-2 control-label">Item Name</label>
+              class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
               <input type="email"
                 class="form-control"
-                id="itemName"
                 placeholder="Item Name"
                 data-bind='textInput: blankItem().itemName'>
             </div>
@@ -79,31 +77,28 @@
             <label for="itemWeight"
               class="col-sm-2 control-label">Weight(lbs)</label>
             <div class="col-sm-10">
-              <input type="text"
+              <input type="number"
                 class="form-control"
-                id="itemWeight"
                 placeholder="Item Weight"
                 data-bind='textInput: blankItem().itemWeight'>
             </div>
           </div>
           <div class="form-group">
             <label for="itemQuantity"
-              class="col-sm-2 control-label">Quantity</label>
+              class="col-sm-2 control-label">Body Part</label>
             <div class="col-sm-10">
               <input type="text"
                 class="form-control"
-                id="itemQuantity"
-                placeholder="Item Quantity"
-                data-bind='textInput: blankItem().itemQty'>
+                placeholder="Head, shoulder, knees, toes?"
+                data-bind='textInput: blankItem().itemBodyLocation'>
             </div>
           </div>
           <div class="form-group">
             <label for="itemDescription"
               class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-              <textarea type="password"
+              <textarea type="text"
                 class="form-control"
-                id="itemDescription"
                 rows="4"
                 data-bind='textInput: blankItem().itemDesc'>
               </textarea>
@@ -128,7 +123,7 @@
 <!-- ViewEdit Modal -->
 <div data-bind="with: selecteditem">
   <div class="modal fade"
-    id="viewItem"
+    id="viewEquippedItem"
     tabindex="-1"
     role="dialog"
     aria-labelledby="viewSpellLabel">
@@ -142,13 +137,13 @@
             <span aria-hidden="true">&times;</span>
           </button>
           <h4 class="modal-title"
-            id="addSpellLabel">View a item in your backpack.</h4>
+            id="addSpellLabel">Details</h4>
         </div>
         <div class="modal-body">
           <form class="form-horizontal">
             <div class="form-group">
               <label for="itemName"
-              class="col-sm-2 control-label">Item Name</label>
+              class="col-sm-2 control-label">Name</label>
               <div class="col-sm-10">
                 <input type="email"
                   class="form-control"
@@ -175,17 +170,17 @@
                 <input type="text"
                   class="form-control"
                   id="itemQuantity"
-                  placeholder="Item Quantity"
-                  data-bind="value: itemQty">
+                  placeholder="Location"
+                  data-bind="value: itemBodyLocation">
               </div>
             </div>
             <div class="form-group">
-              <label for="itemDescription"
+              <label for="description"
               class="col-sm-2 control-label">Description</label>
               <div class="col-sm-10">
-                <textarea type="password"
+                <textarea type=""
                 class="form-control"
-                id="itemDescription"
+                id="description"
                 data-bind="value: itemDesc"
                 rows="4">
                 </textarea>
@@ -194,8 +189,8 @@
             <div class="modal-footer">
               <button type="button"
                 class="btn btn-default"
-                data-bind="click: $parent.equipItem"
-                data-dismiss="modal">Equip this item</button>
+                data-bind="click: $parent.moveToBackpack"
+                data-dismiss="modal">Unequip and move to backpack</button>
               <button type="button"
                 class="btn btn-primary"
                 data-dismiss="modal">Done</button>

@@ -5,11 +5,12 @@ function ViewModel() {
 
 	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.stats = ko.observable(new Stats());
-	self.backpack = ko.observable(new Backpack());
+	self.backpackViewModel = ko.observable(new BackpackViewModel(self));
 	self.note = ko.observable(new Note());
     self.abilityScores = ko.observable(new AbilityScores());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
     self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
+    self.equipmentViewModel = ko.observable(new EquipmentViewModel(self));
     self.spellbook = ko.observable(new Spellbook());
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
@@ -33,9 +34,10 @@ function ViewModel() {
     	self.note().clear();
     	self.abilityScores().clear();
     	self.stats().clear();
-    	self.backpack().clear();
     	self.featuresTraitsViewModel().clear();
-  		self.spellSlotsViewModel().clear();
+    	self.backpackViewModel().clear();
+    	self.equipmentViewModel().clear();
+    	self.spellSlotsViewModel().clear();
         self.spellbook().clear();
         self.treasure().clear();
         self.featsProf().clear();
@@ -45,8 +47,9 @@ function ViewModel() {
     	try {
 			self.profileViewModel().importValues(values.profileViewModel);
 			self.stats().importValues(values.stats);
+			self.equipmentViewModel().importValues(values.equipmentViewModel);
 			self.note().importValues(values.note);
-			self.backpack().importValues(values.backpack);
+			self.backpackViewModel().importValues(values.backpackViewModel);
 			self.abilityScores().importValues(values.abilityScores);
 			self.spellSlotsViewModel().importValues(values.spellSlotsViewModel);
 	    	self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
@@ -62,12 +65,13 @@ function ViewModel() {
     	return {
     		profileViewModel: self.profileViewModel().exportValues(),
     		note: self.note().exportValues(),
-    		backpack: self.backpack().exportValues(),
+    		backpackViewModel: self.backpackViewModel().exportValues(),
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlotsViewModel: self.spellSlotsViewModel().exportValues(),
  	    	featuresTraitsViewModel : self.featuresTraitsViewModel().exportValues(),
-        	spellbook: self.spellbook().exportValues(),
+    		equipmentViewModel: self.equipmentViewModel().exportValues(),
+            spellbook: self.spellbook().exportValues(),
             treasure: self.treasure().exportValues(),
             feats_prof: self.featsProf().exportValues()
     	};

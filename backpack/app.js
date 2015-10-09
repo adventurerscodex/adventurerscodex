@@ -1,6 +1,6 @@
 "use strict";
 
-function Backpack() {
+function BackpackViewModel(parent) {
 	var self = this;
 	
 	self.backpack = ko.observableArray([]);
@@ -11,7 +11,13 @@ function Backpack() {
 		self.backpack.push(self.blankItem());
 		self.blankItem(new Item());
 	};
-	this.removeItem = function(item) {
+	
+	self.equipItem = function(item) {
+		self.backpack.remove(item);
+		self.parent.equipmentViewModel().equippedItems.push(item);	
+	};
+	
+	self.removeItem = function(item) {
 		self.backpack.remove(item);
 	};
 	
@@ -41,37 +47,6 @@ function Backpack() {
 			var newItem = new Item();
 			newItem.importValues(item);
 			self.backpack.push(newItem);
-		}
-	};
-};
-//TODO: Add units and make numbers.
-function Item() {
-	var self = this;
-	self.itemName = ko.observable('');
-	self.itemDesc = ko.observable('');
-	self.itemQty = ko.observable(0);
-	self.itemWeight = ko.observable(0);
-	
-	this.clear = function() {
-		self.itemName('');
-		self.itemDesc('');
-		self.itemQty('');
-		self.itemWeight('');
-	};
-	
-	this.importValues = function(values) {
-		self.itemName(values.itemName);
-		self.itemDesc(values.itemDesc);
-		self.itemQty(values.itemQty);
-		self.itemWeight(values.itemWeight);
-	};
-	
-	this.exportValues = function() {
-		return {
-			itemName: self.itemName(),
-			itemDesc: self.itemDesc(),
-			itemQty: self.itemQty(),
-			itemWeight: self.itemWeight()
 		}
 	};
 };
