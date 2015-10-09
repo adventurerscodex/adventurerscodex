@@ -60,9 +60,12 @@ function ViewModel() {
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlotsViewModel: self.spellSlotsViewModel().exportValues(),
 <<<<<<< HEAD
+<<<<<<< HEAD
  	    	featuresTraitsViewModel : self.featuresTraitsViewModel().exportValues(),
         	spellbook: self.spellbook().exportValues(),
 =======
+=======
+>>>>>>> f6a8ea3723c7e98d22421e401af80832df988c69
     		equipmentViewModel: self.equipmentViewModel().exportValues(),
             spellbook: self.spellbook().exportValues(),
 >>>>>>> Added equipment module and started breaking out models.
