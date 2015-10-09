@@ -25,7 +25,7 @@ function Item() {
 		self.itemWeight(values.itemWeight);
 	};
 	
-	this.exportValues = function() {
+	self.exportValues = function() {
 		return {
 			itemName: self.itemName(),
 			itemDesc: self.itemDesc(),

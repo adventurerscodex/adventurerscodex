@@ -5,12 +5,6 @@ function BackpackViewModel(parent) {
 	
 	self.backpack = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
-	self.selecteditem = ko.observable();
-	
-	self.addItem = function() {
-		self.backpack.push(self.blankItem());
-		self.blankItem(new Item());
-	};
 	
 	self.equipItem = function(item) {
 		self.backpack.remove(item);
