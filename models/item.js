@@ -8,6 +8,8 @@ function Item() {
 	var self = this;
 	self.itemName = ko.observable('');	
 	self.itemType = ko.observable('');
+	self.itemIsEquippable = ko.observable(false);
+	self.itemBodyLocation = ko.observable('');
 	self.itemDesc = ko.observable('');
 	self.itemQty = ko.observable(0);
 	self.itemWeight = ko.observable(0);
@@ -17,21 +19,28 @@ function Item() {
 		self.itemDesc('');
 		self.itemQty('');
 		self.itemWeight('');
+		self.itemIsEquippable(false);
+		self.itemBodyLocation('');
 	};
 	
 	this.importValues = function(values) {
 		self.itemName(values.itemName);
 		self.itemDesc(values.itemDesc);
 		self.itemQty(values.itemQty);
+		self.itemIsEquippable(values.itemIsEquippable)
+		self.itemBodyLocation(values.itemBodyLocation)
 		self.itemWeight(values.itemWeight);
 	};
 	
 	self.exportValues = function() {
-		return {
-			itemName: self.itemName(),
-			itemDesc: self.itemDesc(),
-			itemQty: self.itemQty(),
-			itemWeight: self.itemWeight()
-		}
+		var values = {};
+		values.itemName = self.itemName();
+		values.itemIsEquippable = self.itemIsEquippable();
+		values.itemDesc = self.itemDesc();
+		values.itemBodyLocation = self.itemBodyLocation();
+		values.itemQty = self.itemQty();
+		values.itemWeight = self.itemWeight();
+		values.itemCost = self.itemCost();
+		return values;
 	};
 };

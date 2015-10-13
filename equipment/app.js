@@ -18,24 +18,25 @@ function EquipmentViewModel(parent) {
 	self.blankItem = ko.observable(new Item(self.callback));
 	self.selecteditem = ko.observable();
 	
-	self.addItem = function() {
-		self.equippedItems.push(self.blankItem());
-		self.blankItem(new Item(self.callback));
+	//UI Methods
+	
+	self.moveToBackpackButtonWasClicked = function() {
+		self.moveToBackpack(self.selectedItem());
+	};
+	
+	//Public Methods
+
+	self.equipItem = function(item) {
+		var newItem = new Item(self.callback);
+		newItem.importValues(item.exportValues());
+		self.equippedItems.push(item);
 	};
 	
 	self.moveToBackpack = function(item) {
 		self.removeItem(item);
-		self.parent.backpackViewModel().backpack.push(item);
+		self.parent.backpackViewModel().addToBackpack(item);
 	};
 	
-	self.removeItem = function(item) {
-		self.equippedItems.remove(item);
-	};
-	
-	self.editItem = function(item) {
-		self.selecteditem(item);
-	};
-
 	self.clear = function() {
 		self.equippedItems([]);
 	};
@@ -60,4 +61,19 @@ function EquipmentViewModel(parent) {
 			self.equippedItems.push(newItem);
 		}
 	};
+
+	//Private Methods
+	
+	self.addItem = function(item) {
+		self.equippedItems.push(item)
+	};
+	
+	self.removeItem = function(item) {
+		self.equippedItems.remove(item);
+	};
+	
+	self.editItem = function(item) {
+		self.selecteditem(item);
+	};
+
 };
