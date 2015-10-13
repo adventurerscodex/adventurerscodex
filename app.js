@@ -107,23 +107,19 @@ function ViewModel() {
  * - Set up automatic saving.
  */
 var init = function(viewModel) {
-	checkFirstTime();
-	
-	//Load any saved state.
-	viewModel.load();
-
-	//Setup automatic saving.
-	var saveState = function(){
-		viewModel.save();
-	};
-	window.onbeforeunload = saveState;
-	window.onblur = saveState;
- 	setInterval(saveState, 1000);
-};
-
-var checkFirstTime = function() {
 	if (localStorage['character.characterKeys'] === undefined
 			|| eval(localStorage['character.characterKeys']).length < 1) {
 		window.location = '/characters'
-	}
+	} else {
+		//Load any saved state.
+		viewModel.load();
+
+		//Setup automatic saving.
+		var saveState = function(){
+			viewModel.save();
+		};
+		window.onbeforeunload = saveState;
+		window.onblur = saveState;
+		setInterval(saveState, 1000);
+ 	}
 };

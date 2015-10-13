@@ -20,22 +20,20 @@
       </thead>
       <tbody data-bind='foreach: backpack'>
         <tr>
-          <td  data-bind='text: itemName'></td>
-          <td  data-bind='text: itemQty'></td>
-          <td  data-bind='text: itemWeight'></td>
+          <td data-bind='text: itemName'></td>
+          <td data-bind='text: itemQty'></td>
+          <td data-bind='text: itemWeight'></td>
           <td>
-            <a data-bind="click: $parent.editItemButtonWasClicked"
+            <a data-bind="click: $parent.editItemButton"
               href="#"
               data-toggle="modal"
               data-target="#viewItem">
-             <i class="glyphicon glyphicon-eye-open">
-              </i>
-              </a>
-            </td>
-            <td>
-              <a data-bind='click: $parent.removeItemButtonWasClicked' href="#">
-              <i class="glyphicon glyphicon-remove">
-              </i>
+              <i class="glyphicon glyphicon-eye-open"></i>
+            </a>
+          </td>
+          <td>
+            <a data-bind='click: $parent.removeItemButton' href="#">
+              <i class="glyphicon glyphicon-remove"></i>
             </a>
           </td>
         </tr>
@@ -54,17 +52,30 @@
   aria-labelledby="addItemLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Add an Item</h4>
+      </div>
       <div data-bind="template: { name: 'itemModal', data: $data }"></div>
       <div class="modal-footer">
         <button type="button"
-        class="btn btn-default"
-        data-dismiss="modal">Cancel</button>
+          class="btn btn-default"
+          data-dismiss="modal">
+          Cancel
+        </button>
         <button type="button"
-        class="btn btn-primary"
-        data-dismiss="modal"
-        data-bind='click: $parent.addItemButtonWasClicked'>Add</button>
+          class="btn btn-primary"
+          data-dismiss="modal"
+          data-bind="click: $parent.addItemButton">
+          Add
+        </button>
       </div>
-    </div>
+    </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
 
@@ -78,21 +89,33 @@
   aria-labelledby="viewSpellLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Item Details</h4>
+      </div>
       <div data-bind="template: { name: 'itemModal', data: $data }"></div>
       <div class="modal-footer">
         <button type="button"
           class="btn btn-danger"
           data-dismiss="modal"
-          data-bind="click: $parent.removeItemModalButtonWasClicked">
+          data-bind="click: $parent.removeItemModalButton">
           Remove</button>
         <button type="button"
           class="btn btn-default"
           data-dismiss="modal"
-          data-bind="click: $parent.equipItemButtonWasClicked, visible: itemIsEquippable">
-          Equip</button>
+          data-bind="click: $parent.equipItemButton, visible: itemIsEquippable">
+          Equip
+        </button>
         <button type="button"
           class="btn btn-primary"
-          data-dismiss="modal">Done</button>
+          data-dismiss="modal">
+          Done
+        </button>
       </div>
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
@@ -101,7 +124,6 @@
 
 <script type="text/html" id="itemModal">
   <div class="modal-body">
-    <h4 class="modal-title">View/Add an Item</h4>
     <form class="form-horizontal">
       <div class="form-group">
        <label for="itemName"
@@ -153,6 +175,16 @@
            type="checkbox"
            class="form-control"
            data-bind="checked: itemIsEquippable" />
+       </div>
+     </div>
+     <div class="form-group" data-bind="visible: itemIsEquippable">
+       <label
+         class="col-sm-2 control-label">Body Part</label>
+       <div class="col-sm-10">
+         <input
+           type="text"
+           class="form-control"
+           data-bind="textInput: itemBodyLocation" />
        </div>
      </div>
      <div class="form-group">

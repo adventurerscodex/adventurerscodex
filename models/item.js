@@ -6,6 +6,7 @@
  */
 function Item() {
 	var self = this;
+	
 	self.itemName = ko.observable('');	
 	self.itemType = ko.observable('');
 	self.itemIsEquippable = ko.observable(false);
@@ -13,23 +14,26 @@ function Item() {
 	self.itemDesc = ko.observable('');
 	self.itemQty = ko.observable(0);
 	self.itemWeight = ko.observable(0);
+	self.itemCost = ko.observable(0);
 	
-	this.clear = function() {
+	self.clear = function() {
 		self.itemName('');
 		self.itemDesc('');
 		self.itemQty('');
 		self.itemWeight('');
 		self.itemIsEquippable(false);
 		self.itemBodyLocation('');
+		self.itemCost(0);
 	};
 	
-	this.importValues = function(values) {
+	self.importValues = function(values) {
 		self.itemName(values.itemName);
 		self.itemDesc(values.itemDesc);
 		self.itemQty(values.itemQty);
-		self.itemIsEquippable(values.itemIsEquippable)
-		self.itemBodyLocation(values.itemBodyLocation)
+		self.itemIsEquippable(values.itemIsEquippable);
+		self.itemBodyLocation(values.itemBodyLocation);
 		self.itemWeight(values.itemWeight);
+		self.itemCost(values.itemCost);
 	};
 	
 	self.exportValues = function() {

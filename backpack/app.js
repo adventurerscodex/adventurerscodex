@@ -2,44 +2,46 @@
 
 function BackpackViewModel(parent) {
 	var self = this;
+	self.parent = parent;
 	
 	self.backpack = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
+	self.selecteditem = ko.observable(new Item());
 	
 	//UI Methods
 	
-	self.equipItemButtonWasClicked = function() {
-		self._removeItem(self.selecteditem)
+	self.equipItemButton = function() {
+		self.removeItem(self.selecteditem())
 		self.equipItem(self.selecteditem());
 	};
 	
-	self.removeItemModalButtonWasClicked = function() {
-		self._removeItem(self.selecteditem());
+	self.removeItemModalButton = function() {
+		self.removeItem(self.selecteditem());
 	};
 	
-	self.removeItemButtonWasClicked = function(item) {
-		self._removeItem(item);
+	self.removeItemButton = function(item) {
+		self.removeItem(item);
 	};
 	
-	self.addItemButtonWasClicked = function() {
-		self._addItem(self.blankItem());
-		self.blankItem(new Item(self.callback));
+	self.addItemButton = function() {
+		var item = new Item();
+		item.importValues(self.blankItem().exportValues());
+		self.backpack.push(item); 
+		self.blankItem().clear();
 	};
 	
-	self.editItemButtonWasClicked = function(item) {
-		self._editItem(item);
+	self.editItemButton = function(item) {
+		self.editItem(item);
 	};
 	
 	//Public Methods
 	
 	self.addToBackpack = function(item) {
-		var newItem = new Item(self.callback);
-		newItem.importValues(item.exportValues());
-		self._addItem(newItem);
+		self.addItem(item);
 	};
 	
 	self.equipItem = function(item) {
-		self._removeItem(item);
+		self.removeItem(item);
 		self.parent.equipmentViewModel().equipItem(item);	
 	};
 
@@ -70,15 +72,15 @@ function BackpackViewModel(parent) {
 	
 	//Private Methods	
 
-	self._addItem = function(item) {
+	self.addItem = function(item) {
 		self.backpack.push(item); 
 	};
 
-	self._removeItem = function(item) {
+	self.removeItem = function(item) {
 		self.backpack.remove(item);
 	};
 	
-	self._editItem = function(item) {
+	self.editItem = function(item) {
 		self.selecteditem(item);
 	};
 };

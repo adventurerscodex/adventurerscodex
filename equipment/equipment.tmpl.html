@@ -7,7 +7,7 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Quantity</th>
+          <th>Body Part</th>
           <th>Weight</th>
           <th>Options</th>
         </tr>
@@ -83,7 +83,17 @@
                   class="form-control"
                   id="itemQuantity"
                   placeholder="Location"
-                  data-bind="value: itemBodyLocation">
+                  data-bind="value: itemQty">
+              </div>
+            </div>
+            <div class="form-group">
+              <label
+                class="col-sm-2 control-label">Body Part</label>
+              <div class="col-sm-10">
+                <input
+                  type="text"
+                  class="form-control"
+                  data-bind="textInput: itemBodyLocation" />
               </div>
             </div>
             <div class="form-group">
@@ -102,7 +112,7 @@
               <button type="button"
                 class="btn btn-default"
                 data-bind="click: $parent.moveToBackpack"
-                data-dismiss="modal">Unequip and move to backpack</button>
+                data-dismiss="modal">Unequip</button>
               <button type="button"
                 class="btn btn-primary"
                 data-dismiss="modal">Done</button>

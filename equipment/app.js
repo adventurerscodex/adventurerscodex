@@ -7,15 +7,8 @@ function EquipmentViewModel(parent) {
 	var self = this;
 	self.parent = parent;
 	
-	self.equippedItems = ko.observableArray([], {
-		persist: getKey('equippedItems.equippedItems'),
-		mapping: function(values){
-			return (new Item(self.callback)).importValues(values);;
-		}
-	});
-	self.callback = function() {self.equippedItems.valueHasMutated()};
-	
-	self.blankItem = ko.observable(new Item(self.callback));
+	self.equippedItems = ko.observableArray([]);
+	self.blankItem = ko.observable(new Item());
 	self.selecteditem = ko.observable();
 	
 	//UI Methods
@@ -27,8 +20,6 @@ function EquipmentViewModel(parent) {
 	//Public Methods
 
 	self.equipItem = function(item) {
-		var newItem = new Item(self.callback);
-		newItem.importValues(item.exportValues());
 		self.equippedItems.push(item);
 	};
 	
@@ -56,9 +47,9 @@ function EquipmentViewModel(parent) {
 		var newItems = []
 		for (var i in values.equippedItems) {
 			var item = values.equippedItems[i];
-			var newItem = new Item(self.callback)
+			var newItem = new Item()
 			newItem.importValues(item);
-			self.equippedItems.push(newItem);
+			self.addItem(newItem);
 		}
 	};
 
