@@ -1,5 +1,6 @@
+"use strict";
+
 function CharacterManager() {
-	"use strict";
 	
 	var self = this;
 	
@@ -112,7 +113,7 @@ function CharacterManager() {
  * storing to local storage.
  * 	{ persist: getKey('some.thing') }
  */
-getKey = function(tail) {
+var getKey = function(tail) {
 	var key = keyFromUrl();
 	key = (key !== false && (new CharacterManager()).keyInKeys(key)) ? key : 
 		(new CharacterManager()).defaultCharacterKey();
@@ -122,7 +123,7 @@ getKey = function(tail) {
 /**
  * If a key exists in the URL, return it, else return false.
  */
-keyFromUrl = function() {
+var keyFromUrl = function() {
 	var uri = new URI();
 	var map = uri.search(true);
 	return map.key !== undefined ? map.key : false;
@@ -131,7 +132,7 @@ keyFromUrl = function() {
 /** 
  * Returns a list of all of the keys in local storage.
  */
-getLocalStorageEntries = function() {
+var getLocalStorageEntries = function() {
 	var name = [];
 	for (var i in window.localStorage){
 		name.push(i); // getting name from split string

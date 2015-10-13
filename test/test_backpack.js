@@ -1,3 +1,5 @@
+"use strict";
+
 describe('Backpack', function(){
 	describe('Add Item', function() {
 		it('should add a new item to the backpack', function() {

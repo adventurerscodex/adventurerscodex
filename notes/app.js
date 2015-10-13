@@ -1,3 +1,5 @@
+"use strict";
+
 function Note() {
 	var self = this;
 

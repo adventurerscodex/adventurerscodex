@@ -1,3 +1,5 @@
+"use strict";
+
 function FeatsProfViewModel() {
   var self = this;
 

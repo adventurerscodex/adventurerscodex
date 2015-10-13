@@ -1,3 +1,5 @@
+"use strict";
+
 describe('Stats', function() {
 	describe('Health', function() {
 		describe('Clear', function() {

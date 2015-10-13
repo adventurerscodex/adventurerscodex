@@ -1,3 +1,5 @@
+"use strict";
+
 describe('Spell Slots View Model', function() {
 	describe('Add Slots', function() {
 		it('should add a new slot to the list of slots', function() {

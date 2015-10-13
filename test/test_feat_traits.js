@@ -1,3 +1,5 @@
+"use strict";
+
 var vals = {
 	"background":"A background",
 	"ideals":"LOTS OF THEM",

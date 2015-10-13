@@ -1,3 +1,4 @@
+"use strict";
 
 describe('Skill Tree', function() {
 	describe('Add Slots', function() {

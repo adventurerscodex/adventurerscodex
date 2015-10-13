@@ -1,3 +1,5 @@
+"use strict";
+
 describe('Notes', function() {
 	describe('Clear', function() {
 		it('should clear all the values in notes', function() {

@@ -1,3 +1,5 @@
+"use strict";
+
 function Stats() {
 	var self = this;
 

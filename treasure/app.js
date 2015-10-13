@@ -1,5 +1,6 @@
+"use strict";
+
 function Treasure() {
-    "use strict"
 
     var self = this;
 
