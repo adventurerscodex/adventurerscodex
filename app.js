@@ -109,12 +109,12 @@ var init = function(viewModel) {
 	viewModel.load();
 
 	//Setup automatic saving.
-	$(window).unload(function() {
+	var saveState = function(){
 		viewModel.save();
-	});
- 	setInterval(function() { 
- 		viewModel.save() 
- 	}, 1000);
+	};
+	window.onbeforeunload = saveState;
+	window.onblur = saveState;
+ 	setInterval(saveState, 1000);
 };
 
 var checkFirstTime = function() {
