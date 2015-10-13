@@ -8,17 +8,20 @@ function CharacterManager() {
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
     
-	self.defaultCharacterKey = ko.observable('', { persist: 'character.defaultCharacterKey' });
 	self.characterKeys = ko.observableArray([], { persist: 'character.characterKeys' });
+	self.defaultCharacterKey = ko.observable('', { persist: 'character.defaultCharacterKey' });
 	
 	self.characters = ko.computed(function() {	
 		return $.map(self.characterKeys(), function(key, _) {
-			var playerName = eval(localStorage[key + '.' + 'profile.playerName']) || 'Some Player';
-			var characterName = eval(localStorage[key + '.' + 'profile.characterName']) || 'Some Character';
+			var vm = new ViewModel();
+			var oldKey = vm.key; 
+			vm.key = function(){return key + '.character';};
+			vm.load();
 			
-			var race = eval(localStorage[key + '.' + 'profile.race']), 
-				typeClass = eval(localStorage[key + '.' + 'profile.typeClass']),
-				lvl = eval(localStorage[key + '.' + 'profile.level']);
+			var race = vm.profileViewModel().race(),
+				typeClass = vm.profileViewModel().typeClass(),
+				lvl = vm.profileViewModel().level(),
+				playerName = vm.profileViewModel().playerName();
 			
 			var desc = ((race && race !== '') && (typeClass && typeClass !== '') && (lvl && lvl !== '')) ? 
 						'A level ' + lvl + ' ' + race + ' ' + typeClass + ' by ' + playerName
@@ -27,8 +30,9 @@ function CharacterManager() {
 			var characterDescription = desc || 'A unique character, handcrafted from the finest bits the '
 				+ 'internet can provide.';
 				
+			
 			return {
-				characterName: characterName,
+				characterName: vm.profileViewModel().characterName(),
 				characterDescription: characterDescription,
 				playerName: playerName,
 				playerUrl: '/?key=' + key,
@@ -41,6 +45,9 @@ function CharacterManager() {
 	self.addCharacter = function() {
 		var key = uuid.v4();
 		self.characterKeys.push(key);
+		if (self.defaultCharacterKey() === '') {
+			self.defaultCharacterKey(key);
+		}
 		window.location = '/?key=' + key
 	};
 	
@@ -53,6 +60,13 @@ function CharacterManager() {
 			}
 		});
 		self.characterKeys.remove(key);
+		if (self.defaultCharacterKey() === key) {
+			if (self.characterKeys().length > 0) {
+				self.defaultCharacterKey(self.characterKeys()[0]);
+			} else {
+				self.defaultCharacterKey('');
+			}
+		}		
 	};
 	
 	self.keyInKeys = function(key) {
@@ -80,6 +94,7 @@ function CharacterManager() {
 		//Create a new Character.
 		var v = new ViewModel();
 		v.importValues(values);
+		v.save();
 				
 		//Put everything back.
 		self.defaultCharacterKey(oldKey);

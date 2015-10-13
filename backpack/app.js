@@ -1,24 +1,13 @@
 function Backpack() {
-/* 	function Backpack() {
-		this.maxWeight =  ko.observable('100' + 'lb', { persist: 'backpack.maxWeight'});
-		this.totalWeight =  ko.observable(function sumWeight(){
-			//TODO
-		}	+ 'lb', { persist: 'backpack.totalWeight'});
+	var self = this;
 	
-	}; */
-	var self = this;	//black magic
-	self.backpack = ko.observableArray([], {
-		persist: getKey('backpack.backpack'),
-		mapping: function(values){
-			return new Item(values.itemName, values.itemDesc, values.itemQty, values.itemWeight,
-				function() {self.backpack.valueHasMutated();});
-		}});
-	self.blankItem = ko.observable(new Item('','','','', function(){}));
+	self.backpack = ko.observableArray([]);
+	self.blankItem = ko.observable(new Item());
 	self.selecteditem = ko.observable();
 	
 	self.addItem = function() {
 		self.backpack.push(self.blankItem());
-		self.blankItem(new Item('','','','', function() {self.backpack.valueHasMutated();}));
+		self.blankItem(new Item());
 	};
 	this.removeItem = function(item) {
 		self.backpack.remove(item);
@@ -47,7 +36,7 @@ function Backpack() {
 		var newItems = []
 		for (var i in values.backpack) {
 			var item = values.backpack[i];
-			var newItem = new Item('', '', '', '', function(){});
+			var newItem = new Item();
 			newItem.importValues(item);
 			self.backpack.push(newItem);
 		}

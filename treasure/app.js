@@ -3,12 +3,13 @@ function Treasure() {
 
     var self = this;
 
-    self.platinum =  ko.observable(0, { persist: getKey('treasure.platinum') });
-    self.gold = ko.observable(0, { persist: getKey('treasure.gold') });
-    self.electrum = ko.observable(0, { persist: getKey('treasure.electrum') });
-    self.silver = ko.observable(0, { persist: getKey('treasure.silver') });
-    self.copper = ko.observable(0, { persist: getKey('treasure.copper') });
-    self.misc = ko.observable('', { persist: getKey('treasure.misc') });
+    self.platinum =  ko.observable(0);
+    self.gold = ko.observable(0);
+    self.electrum = ko.observable(0);
+    self.silver = ko.observable(0);
+    self.copper = ko.observable(0);
+    self.misc = ko.observable('');
+    
     self.worth_in_gold = ko.computed(function(){
         var adj_platinum = parseInt(self.platinum()) * 10;
         var adj_gold = parseInt(self.gold());
