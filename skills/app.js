@@ -3,22 +3,12 @@
 function SkillTree() {
     var self = this;
     self.selecteditem = ko.observable();
-    self.blankSkill = ko.observable(new Skill('', 0, false, function(){}));
-    self.skills = ko.observableArray([], {
-        persist: getKey('skilltree.skills'),
-        mapping: function(values){
-            return new Skill(values.name, values.bonus, values.proficiency, 
-            	function() {
-            		self.skills.valueHasMutated();
-            	});
-        }
-    });
+    self.blankSkill = ko.observable(new Skill());
+    self.skills = ko.observableArray([]);
 
     self.addSkill = function() {
         self.skills.push(self.blankSkill());
-        self.blankSkill(new Skill('', 0, false, function() {
-                self.skills.valueHasMutated();
-            }));
+        self.blankSkill(new Skill());
     };
 
     self.removeSkill = function(skill) { 
@@ -44,7 +34,7 @@ function SkillTree() {
         var newSkills = []
         for (var i in values.skills) {
             var skill = values.skills[i];
-            var newSkill = new Skill('', 0, false, function(){});
+            var newSkill = new Skill();
             newSkill.importValues(skill);
             self.skills.push(newSkill);
         }
@@ -55,17 +45,12 @@ function SkillTree() {
     };
 };
 
-function Skill(name, bonus, proficiency, callback) {
+function Skill() {
     var self = this;
 
-    self.name = ko.observable(name);
-    self.name.subscribe(callback);
-
-    self.bonus = ko.observable(bonus);
-    self.bonus.subscribe(callback);
-
-    self.proficiency = ko.observable(proficiency);
-    self.proficiency.subscribe(callback);
+    self.name = ko.observable('');
+    self.bonus = ko.observable(0);
+    self.proficiency = ko.observable(false);
 
 	self.bonusLabel = ko.computed(function() {
 		if (self.bonus() >= 0) {

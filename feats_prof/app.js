@@ -1,8 +1,10 @@
+"use strict";
+
 function FeatsProfViewModel() {
   var self = this;
 
-  self.feats = ko.observable('', { persist: getKey('feats.text') });
-  self.proficiencies = ko.observable('', { persist: getKey('proficiencies.text') });
+  self.feats = ko.observable('');
+  self.proficiencies = ko.observable('');
 
   self.clear = function() {
     self.feats('');

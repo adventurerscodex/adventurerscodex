@@ -3,21 +3,21 @@
 function ProfileViewModel() {
 	var self = this;
 
-	self.characterName =  ko.observable('', { persist: getKey('profile.characterName') });
-	self.playerName = ko.observable('', { persist: getKey('profile.playerName') });
-	self.race = ko.observable('', { persist: getKey('profile.race') });
-	self.religion = ko.observable('', { persist: getKey('profile.religion') });
-	self.alignment = ko.observable('', { persist: getKey('profile.alignment') });
-	self.typeClass = ko.observable('' ,{ persist: getKey('profile.typeClass') });
-	self.gender = ko.observable('', { persist: getKey('profile.gender') });
-	self.age = ko.observable('', { persist: getKey('profile.age') });
-	self.height = ko.observable('', { persist: getKey('profile.height') });
-	self.weight = ko.observable('', { persist: getKey('profile.weight') });
-	self.hairColor = ko.observable('', { persist: getKey('profile.hairColor') });
-	self.eyeColor = ko.observable('', { persist: getKey('profile.eyeColor') });
-	self.skinColor = ko.observable('', { persist: getKey('profile.skinColor') });
-	self.level = ko.observable('1', { persist: getKey('profile.level') });
-	self.exp = ko.observable('0', { persist: getKey('profile.exp') });
+	self.characterName =  ko.observable('');
+	self.playerName = ko.observable('');
+	self.race = ko.observable('');
+	self.religion = ko.observable('');
+	self.alignment = ko.observable('');
+	self.typeClass = ko.observable('');
+	self.gender = ko.observable('');
+	self.age = ko.observable('');
+	self.height = ko.observable('');
+	self.weight = ko.observable('');
+	self.hairColor = ko.observable('');
+	self.eyeColor = ko.observable('');
+	self.skinColor = ko.observable('');
+	self.level = ko.observable('');
+	self.exp = ko.observable('');
 
 	self.clear = function() {
 		self.characterName('');

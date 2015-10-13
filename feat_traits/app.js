@@ -3,10 +3,10 @@
 function FeaturesTraitsViewModel() {
 	var self = this;
 
-	self.background = ko.observable('', { persist: getKey('traits.background') });
-	self.ideals = ko.observable('', { persist: getKey('traits.ideals') });
-	self.flaws = ko.observable('', { persist: getKey('traits.flaws') });
-	self.bonds = ko.observable('', { persist: getKey('traits.bonds') });
+	self.background = ko.observable('');
+	self.ideals = ko.observable('');
+	self.flaws = ko.observable('');
+	self.bonds = ko.observable('');
 
 	self.clear = function() {
 		self.background('');

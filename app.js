@@ -1,3 +1,5 @@
+"use strict";
+
 function ViewModel() {
 	var self = this;
 
@@ -5,13 +7,26 @@ function ViewModel() {
 	self.stats = ko.observable(new Stats());
 	self.backpack = ko.observable(new Backpack());
 	self.note = ko.observable(new Note());
-    self.abilityScores = ko.observable(new abilityScores());
+    self.abilityScores = ko.observable(new AbilityScores());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
     self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
     self.spellbook = ko.observable(new Spellbook());
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
     self.featsProf = ko.observable(new FeatsProfViewModel());
+
+	//UI Methods
+
+    self.pageTitle = ko.computed(function() {
+    	return self.profileViewModel().characterName() + ' by ' + self.profileViewModel().playerName()
+    		+ ' | Adventurer\'s Codex';
+    });
+
+	//Public Methods
+	
+	self.key = function() {
+		return getKey('character');
+	};
 
     self.clear = function() {
     	self.profileViewModel().clear();
@@ -25,11 +40,6 @@ function ViewModel() {
         self.treasure().clear();
         self.featsProf().clear();
     };
-
-    self.pageTitle = ko.computed(function() {
-    	return self.profileViewModel().characterName() + ' by ' + self.profileViewModel().playerName()
-    		+ ' | Adventurer\'s Codex';
-    });
 
     self.importValues = function(values) {
     	try {
@@ -62,13 +72,20 @@ function ViewModel() {
             feats_prof: self.featsProf().exportValues()
     	};
     };
+    
+    //Global Save/Load
 
     self.save = function() {
-    	var string = JSON.stringify(self.exportValues());
-    	var filename = self.profileViewModel().characterName();
-    	var blob = new Blob([string], {type: "application/json"});
-		saveAs(blob, filename);
+		var state = JSON.stringify(self.exportValues());
+		localStorage[self.key()] = state;		
     };
+
+	self.load = function() {
+		var state = localStorage[self.key()];
+		if (state !== undefined) {
+			self.importValues(JSON.parse(state));
+		}
+	};
 
     self.saveToFile = function() {
     	var string = JSON.stringify(self.exportValues());
@@ -82,12 +99,25 @@ function ViewModel() {
  * Do preflight checks.
  * - Has the user been here before?
  * - Do they have a character? Etc.
+ * - Load a pre-existing character 
+ * - Set up automatic saving.
  */
-init = function() {
+var init = function(viewModel) {
 	checkFirstTime();
+	
+	//Load any saved state.
+	viewModel.load();
+
+	//Setup automatic saving.
+	var saveState = function(){
+		viewModel.save();
+	};
+	window.onbeforeunload = saveState;
+	window.onblur = saveState;
+ 	setInterval(saveState, 1000);
 };
 
-checkFirstTime = function() {
+var checkFirstTime = function() {
 	if (localStorage['character.characterKeys'] === undefined
 			|| eval(localStorage['character.characterKeys']).length < 1) {
 		window.location = '/characters'

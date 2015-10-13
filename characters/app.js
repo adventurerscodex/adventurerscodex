@@ -1,5 +1,6 @@
+"use strict";
+
 function CharacterManager() {
-	"use strict";
 	
 	var self = this;
 	
@@ -8,17 +9,20 @@ function CharacterManager() {
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
     
-	self.defaultCharacterKey = ko.observable('', { persist: 'character.defaultCharacterKey' });
 	self.characterKeys = ko.observableArray([], { persist: 'character.characterKeys' });
+	self.defaultCharacterKey = ko.observable('', { persist: 'character.defaultCharacterKey' });
 	
 	self.characters = ko.computed(function() {	
 		return $.map(self.characterKeys(), function(key, _) {
-			var playerName = eval(localStorage[key + '.' + 'profile.playerName']) || 'Some Player';
-			var characterName = eval(localStorage[key + '.' + 'profile.characterName']) || 'Some Character';
+			var vm = new ViewModel();
+			var oldKey = vm.key; 
+			vm.key = function(){return key + '.character';};
+			vm.load();
 			
-			var race = eval(localStorage[key + '.' + 'profile.race']), 
-				typeClass = eval(localStorage[key + '.' + 'profile.typeClass']),
-				lvl = eval(localStorage[key + '.' + 'profile.level']);
+			var race = vm.profileViewModel().race(),
+				typeClass = vm.profileViewModel().typeClass(),
+				lvl = vm.profileViewModel().level(),
+				playerName = vm.profileViewModel().playerName();
 			
 			var desc = ((race && race !== '') && (typeClass && typeClass !== '') && (lvl && lvl !== '')) ? 
 						'A level ' + lvl + ' ' + race + ' ' + typeClass + ' by ' + playerName
@@ -27,8 +31,9 @@ function CharacterManager() {
 			var characterDescription = desc || 'A unique character, handcrafted from the finest bits the '
 				+ 'internet can provide.';
 				
+			
 			return {
-				characterName: characterName,
+				characterName: vm.profileViewModel().characterName(),
 				characterDescription: characterDescription,
 				playerName: playerName,
 				playerUrl: '/?key=' + key,
@@ -41,6 +46,9 @@ function CharacterManager() {
 	self.addCharacter = function() {
 		var key = uuid.v4();
 		self.characterKeys.push(key);
+		if (self.defaultCharacterKey() === '') {
+			self.defaultCharacterKey(key);
+		}
 		window.location = '/?key=' + key
 	};
 	
@@ -53,6 +61,13 @@ function CharacterManager() {
 			}
 		});
 		self.characterKeys.remove(key);
+		if (self.defaultCharacterKey() === key) {
+			if (self.characterKeys().length > 0) {
+				self.defaultCharacterKey(self.characterKeys()[0]);
+			} else {
+				self.defaultCharacterKey('');
+			}
+		}		
 	};
 	
 	self.keyInKeys = function(key) {
@@ -80,6 +95,7 @@ function CharacterManager() {
 		//Create a new Character.
 		var v = new ViewModel();
 		v.importValues(values);
+		v.save();
 				
 		//Put everything back.
 		self.defaultCharacterKey(oldKey);
@@ -97,7 +113,7 @@ function CharacterManager() {
  * storing to local storage.
  * 	{ persist: getKey('some.thing') }
  */
-getKey = function(tail) {
+var getKey = function(tail) {
 	var key = keyFromUrl();
 	key = (key !== false && (new CharacterManager()).keyInKeys(key)) ? key : 
 		(new CharacterManager()).defaultCharacterKey();
@@ -107,7 +123,7 @@ getKey = function(tail) {
 /**
  * If a key exists in the URL, return it, else return false.
  */
-keyFromUrl = function() {
+var keyFromUrl = function() {
 	var uri = new URI();
 	var map = uri.search(true);
 	return map.key !== undefined ? map.key : false;
@@ -116,7 +132,7 @@ keyFromUrl = function() {
 /** 
  * Returns a list of all of the keys in local storage.
  */
-getLocalStorageEntries = function() {
+var getLocalStorageEntries = function() {
 	var name = [];
 	for (var i in window.localStorage){
 		name.push(i); // getting name from split string

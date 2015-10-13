@@ -1,3 +1,4 @@
+"use strict";
 
 describe('Skill Tree', function() {
 	describe('Add Slots', function() {
@@ -56,25 +57,45 @@ describe('Skill Tree', function() {
 describe('Skill', function() {
 	describe('Bonus Label', function() {
 		it('should yield the bonus value (signed).', function() {
-			var s = new Skill('Arcana', 4, true, function(){});
+			var s = new Skill();
+			s.name('Arcana');
+			s.bonus(4);
+			s.proficiency(true);
+			
 			s.bonusLabel().should.equal('+4');
 			
-			var s = new Skill('Arcana', -4, true, function(){});
+			var s = new Skill();
+			s.name('Arcana');
+			s.bonus(-4);
+			s.proficiency(true);
+
 			s.bonusLabel().should.equal('-4');		
 		});
 	});
 	describe('Proficiency Label', function() {
 		it('should yield the proficiency value (or none).', function() {
-			var s = new Skill('Arcana', 4, true, function(){});
+			var s = new Skill();
+			s.name('Arcana');
+			s.bonus(4);
+			s.proficiency(true);
+
 			s.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
 			
-			var s = new Skill('Arcana', -4, false, function(){});
+			var s = new Skill();
+			s.name('Arcana');
+			s.bonus(-4);
+			s.proficiency(false);
+
 			s.proficiencyLabel().should.equal('');		
 		});
 	});
 	describe('Clear', function() {
 		it('should clear all values', function() {
-			var s = new Skill('Arcana', 4, true, function(){});
+			var s = new Skill();
+			s.name('Arcana');
+			s.bonus(4);
+			s.proficiency(true);
+
 			s.name().should.equal('Arcana');
 			s.bonus().should.equal(4);
 			s.proficiency().should.equal(true);
@@ -87,7 +108,11 @@ describe('Skill', function() {
 	
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var s = new Skill('Arcana', 4, true, function(){});
+			var s = new Skill();
+			s.name('Arcana');
+			s.bonus(4);
+			s.proficiency(true);
+
 			s.name().should.equal('Arcana');
 			s.bonus().should.equal(4);
 			s.proficiency().should.equal(true);

@@ -1,3 +1,5 @@
+"use strict";
+
 var val = {
 	"characterName":"Brom Eriksson",
 	"playerName":"Brian Schrader",

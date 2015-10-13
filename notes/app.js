@@ -1,7 +1,9 @@
+"use strict";
+
 function Note() {
 	var self = this;
 
-	self.text = ko.observable('', { persist: getKey('note.text') });
+	self.text = ko.observable('');
 
 	self.clear = function() {
 		self.text('');

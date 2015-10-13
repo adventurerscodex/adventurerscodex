@@ -107,10 +107,9 @@
 	<script src="bower_components/uri.js/src/URI.min.js" type="text/javascript"></script>
 	<script src="bower_components/node-uuid/uuid.js" type="text/javascript"></script>
 
-	<script src="bin/knockout.localStorage.js" type="text/javascript"></script>
 	<script src="bin/knockout-file-bind.js" type="text/javascript"></script>
 	<script src="bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
-
+	<script src="bin/knockout.localStorage.js" type="text/javascript"></script>
 	<script src="app.js" type="text/javascript"></script>
 	<script src="characters/app.js" type="text/javascript"></script>
 	<script src="notes/app.js" type="text/javascript"></script>
@@ -125,6 +124,11 @@
 	<script src="treasure/app.js" type="text/javascript"></script>
   <script src="feats_prof/app.js" type="text/javascript"></script>
 
-	<script type="text/javascript">$(function(){ init(); ko.applyBindings(new ViewModel(), $('#html')[0]); });</script>
+	<script type="text/javascript">
+	$(function(){ 
+	  var viewModel = new ViewModel(); 
+    init(viewModel);
+	  ko.applyBindings(viewModel, $('#html')[0]); 
+	});</script>
  </body>
 </html>

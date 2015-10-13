@@ -18,19 +18,8 @@ function SpellSlotsViewModel() {
 		'progress-bar-blue'
 	];
 	
-	self.slots = ko.observableArray([], { 
-		persist: getKey('spellslots.slots'), 
-		mapping: function(values){
-			return new Slot(values.level, values.maxSpellSlots, values.usedSpellSlots, self.slotColors.pop(), function() {
-				self.slots.valueHasMutated();
-			});
-		}
-	});
-
-	self.blankSlot = ko.observable(new Slot(self.slots().length + 1,'', '', '', function() {
-			self.slots.valueHasMutated();
-		}));
-		
+	self.slots = ko.observableArray([]);
+	self.blankSlot = ko.observable(new Slot());
 	self.selecteditem = ko.observable(null);
 	
 	self.maxSlotWidth = function() {
@@ -42,11 +31,9 @@ function SpellSlotsViewModel() {
     };
 	
 	self.addSlot = function() {
-		var slot = new Slot(self.blankSlot().level(), self.blankSlot().maxSpellSlots(),
-			0, self.slotColors.pop(), function() {
-				self.slots.valueHasMutated();
-			});
-		self.slots.push(slot);
+		self.blankSlot().color(self.slotColors.pop());
+		self.slots.push(self.blankSlot());
+		self.blankSlot(new Slot());
 		self.blankSlot().level(self.slots().length + 1);
 		self.blankSlot().maxSpellSlots('');
 	};
@@ -77,7 +64,7 @@ function SpellSlotsViewModel() {
 		var newSlots = []
 		for (var i in values.slots) {
 			var slot = values.slots[i];
-			var newSlot = new Slot('', '', '' ,'' , function(){});
+			var newSlot = new Slot();
 			newSlot.importValues(slot);
 			self.slots.push(newSlot);
 		}
@@ -88,19 +75,13 @@ function SpellSlotsViewModel() {
 	};
 };
 
-function Slot(level, maxSpellSlots, usedSpellSlots, color, callback) {
+function Slot() {
 	var self = this;
 	
-	self.level = ko.observable(level);
-	self.level.subscribe(callback);
-	
-	self.maxSpellSlots = ko.observable(maxSpellSlots);
-	self.maxSpellSlots.subscribe(callback);
-	
-	self.usedSpellSlots = ko.observable(usedSpellSlots);
-	self.usedSpellSlots.subscribe(callback);
-	
-	self.color = ko.observable(color);
+	self.level = ko.observable(0);	
+	self.maxSpellSlots = ko.observable(0);
+	self.usedSpellSlots = ko.observable(0);	
+	self.color = ko.observable('');
 	
 	self.spellSlots = ko.computed(function() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots()));
@@ -130,19 +111,22 @@ function Slot(level, maxSpellSlots, usedSpellSlots, color, callback) {
 		self.level(0);
 		self.maxSpellSlots(0);
 		self.usedSpellSlots(0);
+		self.color('');
 	};
 	
 	self.importValues = function(values) {
 		self.level(values.level);
 		self.maxSpellSlots(values.maxSpellSlots);
 		self.usedSpellSlots(values.usedSpellSlots);
+		self.color(values.color);
 	};
 	
 	self.exportValues = function() {
 		return {
 			level: self.level(),
 			maxSpellSlots: self.maxSpellSlots(),
-			usedSpellSlots: self.usedSpellSlots()
+			usedSpellSlots: self.usedSpellSlots(),
+			color: self.color()
 		}
 	};
 };

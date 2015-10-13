@@ -1,3 +1,5 @@
+"use strict";
+
 function Stats() {
 	var self = this;
 
@@ -23,9 +25,9 @@ function Health() {
 	self.DANGER_THRESHOLD = 0.10;
 	self.WARNING_THRESHOLD = 0.30;
 	
-	self.maxHitpoints = ko.observable(10, { persist: getKey('stats.health.maxHitpoints') });
-	self.tempHitpoints = ko.observable(0, { persist: getKey('stats.health.tempHitpoints') });
-	self.damage = ko.observable(0, { persist: getKey('stats.health.damage') });
+	self.maxHitpoints = ko.observable(10);
+	self.tempHitpoints = ko.observable(0);
+	self.damage = ko.observable(0);
 		
 	self.hitpoints = ko.computed(function() {
 		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
