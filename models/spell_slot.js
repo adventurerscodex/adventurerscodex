@@ -1,3 +1,5 @@
+"use strict";
+
 function Slot() {
 	var self = this;
 	

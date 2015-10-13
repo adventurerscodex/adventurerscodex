@@ -66,5 +66,4 @@ function EquipmentViewModel(parent) {
 	self.editItem = function(item) {
 		self.selecteditem(item);
 	};
-
 };
