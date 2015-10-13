@@ -19,9 +19,7 @@ function SpellSlotsViewModel() {
 	];
 	
 	self.slots = ko.observableArray([]);
-
 	self.blankSlot = ko.observable(new Slot());
-		
 	self.selecteditem = ko.observable(null);
 	
 	self.maxSlotWidth = function() {
@@ -33,6 +31,7 @@ function SpellSlotsViewModel() {
     };
 	
 	self.addSlot = function() {
+		self.blankSlot().color(self.slotColors.pop());
 		self.slots.push(self.blankSlot());
 		self.blankSlot(new Slot());
 		self.blankSlot().level(self.slots().length + 1);
@@ -112,19 +111,22 @@ function Slot() {
 		self.level(0);
 		self.maxSpellSlots(0);
 		self.usedSpellSlots(0);
+		self.color('');
 	};
 	
 	self.importValues = function(values) {
 		self.level(values.level);
 		self.maxSpellSlots(values.maxSpellSlots);
 		self.usedSpellSlots(values.usedSpellSlots);
+		self.color(values.color);
 	};
 	
 	self.exportValues = function() {
 		return {
 			level: self.level(),
 			maxSpellSlots: self.maxSpellSlots(),
-			usedSpellSlots: self.usedSpellSlots()
+			usedSpellSlots: self.usedSpellSlots(),
+			color: self.color()
 		}
 	};
 };
