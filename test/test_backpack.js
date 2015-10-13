@@ -2,7 +2,6 @@ describe('Backpack', function(){
 	describe('Add Item', function() {
 		it('should add a new item to the backpack', function() {
 			var p = new Backpack();
-			p.clear();
 			p.backpack().length.should.equal(0);
 			p.addItem();
 			p.backpack().length.should.equal(1);
@@ -12,7 +11,6 @@ describe('Backpack', function(){
 	describe('Remove Item', function() {
 		it('should remove a item from the backpack', function() {
 			var p = new Backpack();
-			p.clear();
 			p.backpack().length.should.equal(0);
 			p.addItem();
 			p.backpack().length.should.equal(1);
@@ -24,7 +22,7 @@ describe('Backpack', function(){
 	describe('Clear', function() {
 		it('should clear all the values in the backpack', function() {
 			var p = new Backpack();
-			var item = [new Item('', '', '', '', function(){})];
+			var item = [new Item()];
 			p.backpack(item);
 			p.backpack().should.equal(item);
 			p.clear();
@@ -35,7 +33,6 @@ describe('Backpack', function(){
 	describe('Export', function() {
 		it('should return an object with the data given', function() {
 			var p = new Backpack();
-			p.clear();
 			p.backpack().length.should.equal(0);
 			p.addItem();
 			p.backpack().length.should.equal(1);
@@ -49,7 +46,7 @@ describe('Backpack', function(){
 			var p = new Backpack();
 			p.clear();
 			p.backpack().length.should.equal(0);
-			var backpack = [{ itemName:'', itemDesc: '', itemQty: '', itemWeight: '' }];
+			var backpack = [{ itemName:'', itemDesc: '', itemQty: '', itemWeight: '', itemIsEquippable: false }];
 			p.importValues({ backpack: backpack });
 			p.backpack().length.should.equal(backpack.length);
 		});

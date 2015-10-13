@@ -22,7 +22,8 @@ describe('Spell Slots View Model', function() {
 	describe('Clear', function() {
 		it('should clear all the values in spell slots.', function() {
 			var p = new SpellSlotsViewModel();
-			var slots = [new Slot(0, 0, 0, function(){})];
+			var slot = new Slot();
+			var slots = [slot];
 			p.slots(slots);
 			p.slots().should.equal(slots);
 			p.clear();
@@ -56,14 +57,19 @@ describe('Spell Slots View Model', function() {
 describe('Slot Model', function() {
 	describe('Spell Slots', function() {
 		it('should yield the number of total slots remaining.', function() {
-			var s = new Slot(10, 4, 1, '', function(){});
+			var s = new Slot();
+			s.maxSpellSlots(4);
+			s.usedSpellSlots(1);
 			s.spellSlots().should.equal(3);
 		});
 	});
 	
 	describe('Increment Counter', function() {
 		it('should increment the number of used slots.', function() {
-			var s = new Slot(10, 4, 1, '', function(){});
+			var s = new Slot();
+			s.maxSpellSlots(4);
+			s.usedSpellSlots(1);
+			
 			s.spellSlots().should.equal(3);
 			s.incrUsed();
 			s.spellSlots().should.equal(2);			
@@ -77,7 +83,10 @@ describe('Slot Model', function() {
 
 	describe('Decrement Counter', function() {
 		it('should increment the number of used slots.', function() {
-			var s = new Slot(10, 4, 1, '', function(){});
+			var s = new Slot();
+			s.maxSpellSlots(4);
+			s.usedSpellSlots(1);
+
 			s.spellSlots().should.equal(3);
 			s.decrUsed();
 			s.spellSlots().should.equal(4);			
@@ -89,14 +98,21 @@ describe('Slot Model', function() {
 	
 	describe('Spell Slots', function() {
 		it('should yield the number of total slots remaining.', function() {
-			var s = new Slot(10, 4, 1, '', function(){});
+			var s = new Slot();
+			s.maxSpellSlots(4);
+			s.usedSpellSlots(1);
+
 			s.spellSlots().should.equal(3);
 		});
 	});
 	
 	describe('Clear', function() {
 		it('should clear all values', function() {
-			var s = new Slot(10, 4, 1, '', function(){});
+			var s = new Slot();
+			s.level(10);
+			s.maxSpellSlots(4);
+			s.usedSpellSlots(1);
+
 			s.level().should.equal(10);
 			s.maxSpellSlots().should.equal(4);
 			s.usedSpellSlots().should.equal(1);
@@ -109,7 +125,11 @@ describe('Slot Model', function() {
 	
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var p = new Slot(10, 10, 10, '', function(){});
+			var p = new Slot();
+			p.level(10);
+			p.maxSpellSlots(10);
+			p.usedSpellSlots(10);
+
 			p.level().should.equal(10);
 			p.maxSpellSlots().should.equal(10);
 			p.usedSpellSlots().should.equal(10);
@@ -122,7 +142,10 @@ describe('Slot Model', function() {
 	
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
-			var slot = new Slot(0, 0, 0, '', function(){});
+			var slot = new Slot();
+			slot.maxSpellSlots(0);
+			slot.usedSpellSlots(0);
+
 			var vals = { level: 10, maxSpellSlots: 3, usedSpellSlots: 1 };
 			slot.importValues(vals);
 			slot.level().should.equal(vals.level);

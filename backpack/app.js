@@ -43,20 +43,13 @@ function Backpack() {
 	};
 };
 //TODO: Add units and make numbers.
-function Item(name, desc, qty, weight, callback) {
+function Item() {
 	var self = this;
-	self.itemName = ko.observable(name);
-	self.itemName.subscribe(callback);
-
-	self.itemDesc = ko.observable(desc);
-	self.itemDesc.subscribe(callback);
-
-	self.itemQty = ko.observable(qty);
-	self.itemQty.subscribe(callback);
-
-	self.itemWeight = ko.observable(weight);
-	self.itemWeight.subscribe(callback);
-
+	self.itemName = ko.observable('');
+	self.itemDesc = ko.observable('');
+	self.itemQty = ko.observable(0);
+	self.itemWeight = ko.observable(0);
+	
 	this.clear = function() {
 		self.itemName('');
 		self.itemDesc('');
