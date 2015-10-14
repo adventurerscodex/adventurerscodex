@@ -9,7 +9,14 @@ module.exports = function(grunt) {
         configFile: 'karma.conf.js'
       }
     },
+	coveralls: {
+		options: {
+			coverageDir: 'coverage',
+			force: true,
+			recursive: true
+		}
+	}
   });
-
   grunt.loadNpmTasks('grunt-karma');
+  grunt.loadNpmTasks('grunt-karma-coveralls');
 };
