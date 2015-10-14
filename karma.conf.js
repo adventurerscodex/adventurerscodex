@@ -28,9 +28,17 @@ module.exports = function(config) {
         reporters: ['progress', 'coverage'],
         preprocessors: { 
         	'*.js': ['coverage'],
-        	'*/app.js': ['coverage']
+        	'*/*.js': ['coverage']
         	},
-                                    
+        coverageReporter: {
+			type: "lcov",
+			dir: "coverage/"
+		},
+		plugins: [
+    		'karma-coverage',
+    		'karma-mocha',
+    		'karma-phantomjs-launcher'
+		],                    
         singleRun: true
     }); 
 };
