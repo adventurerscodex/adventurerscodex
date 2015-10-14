@@ -1,22 +1,48 @@
 "use strict";
 
-function Backpack() {
+function BackpackViewModel(parent) {
 	var self = this;
+	self.parent = parent;
 	
 	self.backpack = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
-	self.selecteditem = ko.observable();
+	self.selecteditem = ko.observable(new Item());
 	
-	self.addItem = function() {
-		self.backpack.push(self.blankItem());
-		self.blankItem(new Item());
-	};
-	this.removeItem = function(item) {
-		self.backpack.remove(item);
+	//UI Methods
+	
+	self.equipItemButton = function() {
+		self.removeItem(self.selecteditem())
+		self.equipItem(self.selecteditem());
 	};
 	
-	self.editItem = function(item) {
-		self.selecteditem(item);
+	self.removeItemModalButton = function() {
+		self.removeItem(self.selecteditem());
+	};
+	
+	self.removeItemButton = function(item) {
+		self.removeItem(item);
+	};
+	
+	self.addItemButton = function() {
+		var item = new Item();
+		item.importValues(self.blankItem().exportValues());
+		self.backpack.push(item); 
+		self.blankItem().clear();
+	};
+	
+	self.editItemButton = function(item) {
+		self.editItem(item);
+	};
+	
+	//Public Methods
+	
+	self.addToBackpack = function(item) {
+		self.addItem(item);
+	};
+	
+	self.equipItem = function(item) {
+		self.removeItem(item);
+		self.parent.equipmentViewModel().equipItem(item);	
 	};
 
 	self.clear = function() {
@@ -40,38 +66,21 @@ function Backpack() {
 			var item = values.backpack[i];
 			var newItem = new Item();
 			newItem.importValues(item);
-			self.backpack.push(newItem);
+			self.addItem(newItem);
 		}
 	};
-};
-//TODO: Add units and make numbers.
-function Item() {
-	var self = this;
-	self.itemName = ko.observable('');
-	self.itemDesc = ko.observable('');
-	self.itemQty = ko.observable(0);
-	self.itemWeight = ko.observable(0);
 	
-	this.clear = function() {
-		self.itemName('');
-		self.itemDesc('');
-		self.itemQty('');
-		self.itemWeight('');
+	//Private Methods	
+
+	self.addItem = function(item) {
+		self.backpack.push(item); 
+	};
+
+	self.removeItem = function(item) {
+		self.backpack.remove(item);
 	};
 	
-	this.importValues = function(values) {
-		self.itemName(values.itemName);
-		self.itemDesc(values.itemDesc);
-		self.itemQty(values.itemQty);
-		self.itemWeight(values.itemWeight);
-	};
-	
-	this.exportValues = function() {
-		return {
-			itemName: self.itemName(),
-			itemDesc: self.itemDesc(),
-			itemQty: self.itemQty(),
-			itemWeight: self.itemWeight()
-		}
+	self.editItem = function(item) {
+		self.selecteditem(item);
 	};
 };

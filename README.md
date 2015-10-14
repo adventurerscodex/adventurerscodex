@@ -1,6 +1,8 @@
 # Charactersheet
 
 ![Build Badge](https://travis-ci.org/charactersheet/charactersheet.svg)
+[![Coverage
+Status](https://coveralls.io/repos/charactersheet/charactersheet/badge.svg?branch=master&service=github)](https://coveralls.io/github/charactersheet/charactersheet?branch=master)
 
 A tool to help D&D 5e players keep their ducks in a row. 
 
