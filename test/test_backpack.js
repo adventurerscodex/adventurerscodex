@@ -39,7 +39,7 @@ describe('BackpackViewModelViewModel', function(){
 			var p = new BackpackViewModel();
 			p.clear();
 			p.backpack().length.should.equal(0);
-			p.addItem();
+			p.addItem(new Item());
 			p.backpack().length.should.equal(1);
 			var e = p.exportValues();
 			e.backpack.length.should.equal(p.backpack().length);
