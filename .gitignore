@@ -3,3 +3,4 @@ coverage/
 build/
 .coveralls.yml
 node_modules/
+.DS_Store
