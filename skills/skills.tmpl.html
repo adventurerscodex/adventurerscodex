@@ -6,9 +6,18 @@
     <table class="table table-responsive table-hover">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Bonus</th>
-          <th>Proficient</th>
+          <th data-bind="click: sortBy('name')">
+            Name
+            <span data-bind="css: sortArrow('name')"></span>
+          </th>
+          <th data-bind="click: sortBy('bonus')">
+            Bonus
+            <span data-bind="css: sortArrow('bonus')"></span>
+          </th>
+          <th data-bind="click: sortBy('proficiency')">
+            Proficient
+            <span data-bind="css: sortArrow('proficiency')"></span>
+          </th>
           <th>
             <a data-toggle="modal"
                data-target="#addSkill" href="#">
@@ -17,7 +26,7 @@
           </th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: skills'>
+      <tbody data-bind='foreach: filteredAndSortedSkills'>
         <tr>
           <td data-bind='text: name'></td>
           <td data-bind='text: bonusLabel'></td>

@@ -6,12 +6,30 @@
     <table class="table table-responsive table-hover">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Level</th>
-          <th class="hidden-sm hidden-xs">Type</th>
-          <th class="hidden-sm hidden-xs">Dmg</th>
-          <th class="hidden-sm hidden-xs">Casting Time</th>
-          <th>Range</th>
+          <th data-bind="click: sortBy('spellName')">
+            Name
+            <span data-bind="css: sortArrow('spellName')"></span>
+          </th>
+          <th data-bind="click: sortBy('spellLevel')">
+            Level
+            <span data-bind="css: sortArrow('spellLevel')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellType')">
+            Type
+            <span data-bind="css: sortArrow('spellType')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellDmg')">
+            Damage
+            <span data-bind="css: sortArrow('spellDmg')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellCastingTime')">
+            Casting Time
+            <span data-bind="css: sortArrow('spellCastingTime')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellRange')">
+            Range
+            <span data-bind="css: sortArrow('spellRange')"></span>
+          </th>
           <th></th>
           <th>
             <a data-toggle="modal"
@@ -21,7 +39,7 @@
           </th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: spellbook'>
+      <tbody data-bind='foreach: filteredAndSortedSpells'>
         <tr>
           <td data-bind='text: spellName'></td>
           <td data-bind='text: spellLevel'></td>

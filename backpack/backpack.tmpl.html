@@ -6,9 +6,15 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Quantity</th>
-          <th>Weight</th>
+          <th data-bind="click: sortBy('itemName')">
+            Name
+            <span data-bind="css: sortArrow('itemName')"></span></th>
+          <th data-bind="click: sortBy('itemQty')">
+            Quantity
+            <span data-bind="css: sortArrow('itemQty')"></span></th>
+          <th data-bind="click: sortBy('itemWeight')">
+            Weight
+            <span data-bind="css: sortArrow('itemWeight')"></span></th>
           <th>Options</th>
           <th>
            <a data-toggle="modal"
@@ -18,7 +24,7 @@
           </th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: backpack'>
+      <tbody data-bind='foreach: filteredAndSortedBackpack'>
         <tr>
           <td data-bind='text: itemName'></td>
           <td data-bind='text: itemQty'></td>

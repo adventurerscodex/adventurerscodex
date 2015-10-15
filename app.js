@@ -40,25 +40,23 @@ function ViewModel() {
     	self.spellSlotsViewModel().clear();
         self.spellbook().clear();
         self.treasure().clear();
+        self.skillTree().clear();
         self.featsProf().clear();
     };
 
     self.importValues = function(values) {
-    	try {
-			self.profileViewModel().importValues(values.profileViewModel);
-			self.stats().importValues(values.stats);
-			self.equipmentViewModel().importValues(values.equipmentViewModel);
-			self.note().importValues(values.note);
-			self.backpackViewModel().importValues(values.backpackViewModel);
-			self.abilityScores().importValues(values.abilityScores);
-			self.spellSlotsViewModel().importValues(values.spellSlotsViewModel);
-	    	self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
-            self.spellbook().importValues(values.spellbook);
-            self.treasure().importValues(values.treasure);
-            self.featsProf().importValues(values.feats_prof);
-		} catch(err) {
-			console.log(err);
-		}
+		self.profileViewModel().importValues(values.profileViewModel);
+		self.stats().importValues(values.stats);
+		self.equipmentViewModel().importValues(values.equipmentViewModel);
+		self.note().importValues(values.note);
+		self.backpackViewModel().importValues(values.backpackViewModel);
+		self.abilityScores().importValues(values.abilityScores);
+		self.spellSlotsViewModel().importValues(values.spellSlotsViewModel);
+		self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
+		self.spellbook().importValues(values.spellbook);
+		self.treasure().importValues(values.treasure);
+		//self.featsProf().importValues(values.feats_prof);
+		self.skillTree().importValues(values.skillTree);
     };
 
     self.exportValues = function() {
@@ -73,7 +71,7 @@ function ViewModel() {
     		equipmentViewModel: self.equipmentViewModel().exportValues(),
             spellbook: self.spellbook().exportValues(),
             treasure: self.treasure().exportValues(),
-            feats_prof: self.featsProf().exportValues()
+            skillTree: self.skillTree().exportValues()
     	};
     };
     

@@ -13,12 +13,21 @@
       <table id='spellSlotsTable' class="table table-responsive table-hover">
         <thead>
           <tr>
-           <th>Level</th>
-           <th class="hidden-sm hidden-xs">Max</th>
-           <th>Used</th>
-           <th>Color</th>
-           <th><!-- Edit btn --></th>
-           <th>
+            <th data-bind="click: sortBy('level')">
+              Level
+              <span data-bind="css: sortArrow('level')"></span>
+            </th>
+            <th class="hidden-sm hidden-xs" data-bind="click: sortBy('maxSpellSlots')">
+              Max
+              <span data-bind="css: sortArrow('maxSpellSlots')"></span>
+            </th>
+            <th data-bind="click: sortBy('usedSpellSlots')">
+              Used
+              <span data-bind="css: sortArrow('usedSpellSlots')"></span>
+            </th>
+            <th>Color</th>
+            <th><!-- Edit btn --></th>
+            <th>
              <a data-toggle="modal"
                 data-target="#addSpellSlot" href="#">
                <i class="glyphicon glyphicon-plus"></i>
@@ -26,7 +35,7 @@
            </th>
           </tr>
         </thead>
-        <tbody data-bind="foreach: slots">
+        <tbody data-bind="foreach: filteredAndSortedSlots">
           <tr>
             <td data-bind="text: level"></td>
             <td class="hidden-sm hidden-xs" data-bind="text: maxSpellSlots"></td>

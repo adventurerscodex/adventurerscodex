@@ -6,13 +6,19 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Body Part</th>
-          <th>Weight</th>
+          <th data-bind="click: sortBy('itemName')">
+            Name
+            <span data-bind="css: sortArrow('itemName')"></span></th>
+          <th data-bind="click: sortBy('itemBodyLocation')">
+            Body Part
+            <span data-bind="css: sortArrow('itemBodyLocation')"></span></th>
+          <th data-bind="click: sortBy('itemWeight')">
+            Weight
+            <span data-bind="css: sortArrow('itemWeight')"></span></th>
           <th>Options</th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: equippedItems'>
+      <tbody data-bind='foreach: filteredAndSortedEquippedItems'>
         <tr>
           <td  data-bind='text: itemName'></td>
           <td  data-bind='text: itemBodyLocation'></td>
