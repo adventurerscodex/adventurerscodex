@@ -3,13 +3,13 @@
  <head>
   <title data-bind='text: pageTitle'></title>
  	  <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"> 	  
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="site.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
  </head>
  <body>
-   <nav class="navbar navbar-inverse navbar-fixed-top">
+   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -133,10 +133,10 @@
   <script src="models/spell_slot.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
-	$(function(){ 
-	  var viewModel = new ViewModel(); 
+	$(function(){
+	  var viewModel = new ViewModel();
     init(viewModel);
-	  ko.applyBindings(viewModel, $('#html')[0]); 
+	  ko.applyBindings(viewModel, $('#html')[0]);
 	});</script>
  </body>
 </html>
