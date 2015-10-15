@@ -1,7 +1,7 @@
 "use strict";
 
 describe('Skill Tree', function() {
-	describe('Add Slots', function() {
+	describe('Add skill', function() {
 		it('should add a new skill to the list of skills', function() {
 			var p = new SkillTree();
 			p.skills().length.should.equal(0);
@@ -10,7 +10,7 @@ describe('Skill Tree', function() {
 		});
 	});
 	
-	describe('Remove Slot', function() {
+	describe('Remove skill', function() {
 		it('should remove a skill from the list of skills', function() {
 			var p = new SkillTree();
 			p.skills().length.should.equal(0);
@@ -18,6 +18,45 @@ describe('Skill Tree', function() {
 			p.skills().length.should.equal(1);
 			p.removeSkill(p.skills().pop());
 			p.skills().length.should.equal(0);			
+		});
+	});
+
+	describe('Edit skill', function() {
+		it('should put a skill from the list of skills into the selected slot', function() {
+			var p = new SkillTree();
+			p.addSkill();
+			Should.not.exist(p.selecteditem());
+			p.skills().length.should.equal(1);
+			p.editSkill(p.skills()[0]);
+			p.selecteditem().should.equal(p.skills.pop());
+		});
+	});
+	
+	describe('Sort By', function() {
+		it('should sort the list of skills by given criteria', function() {
+			var p = new SkillTree();
+			p.sortBy('name');
+			p.sort().should.equal(p.sorts['name desc']);
+			p.sortBy('name');
+			p.sort().should.equal(p.sorts['name asc']);
+			p.sortBy('bonus');
+			p.sort().should.equal(p.sorts['bonus asc']);
+			p.sortBy('bonus');
+			p.sort().should.equal(p.sorts['bonus desc']);
+		});
+	});
+	
+	describe('Sort Arrow', function() {
+		it('should sort the list of skills by given criteria', function() {
+			var p = new SkillTree();
+			p.sortBy('name');
+			p.sort().should.equal(p.sorts['name desc']);
+			p.sortArrow('name').should.equal('glyphicon glyphicon-arrow-down');
+			p.sortArrow('bonus').should.equal('');
+			p.sortBy('name');
+			p.sort().should.equal(p.sorts['name asc']);
+			p.sortArrow('name').should.equal('glyphicon glyphicon-arrow-up');
+			p.sortArrow('bonus').should.equal('');
 		});
 	});
 	
@@ -50,87 +89,6 @@ describe('Skill Tree', function() {
 			var skills = [{ level:10, maxSpellSlots: 0, usedSpellSlots: 4 }];
 			p.importValues({ skills: skills });
 			p.skills().length.should.equal(skills.length);
-		});
-	});
-});
-
-describe('Skill', function() {
-	describe('Bonus Label', function() {
-		it('should yield the bonus value (signed).', function() {
-			var s = new Skill();
-			s.name('Arcana');
-			s.bonus(4);
-			s.proficiency(true);
-			
-			s.bonusLabel().should.equal('+4');
-			
-			var s = new Skill();
-			s.name('Arcana');
-			s.bonus(-4);
-			s.proficiency(true);
-
-			s.bonusLabel().should.equal('-4');		
-		});
-	});
-	describe('Proficiency Label', function() {
-		it('should yield the proficiency value (or none).', function() {
-			var s = new Skill();
-			s.name('Arcana');
-			s.bonus(4);
-			s.proficiency(true);
-
-			s.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
-			
-			var s = new Skill();
-			s.name('Arcana');
-			s.bonus(-4);
-			s.proficiency(false);
-
-			s.proficiencyLabel().should.equal('');		
-		});
-	});
-	describe('Clear', function() {
-		it('should clear all values', function() {
-			var s = new Skill();
-			s.name('Arcana');
-			s.bonus(4);
-			s.proficiency(true);
-
-			s.name().should.equal('Arcana');
-			s.bonus().should.equal(4);
-			s.proficiency().should.equal(true);
-			s.clear();
-			s.name().should.equal('');
-			s.bonus().should.equal(0);
-			s.proficiency().should.equal(false);
-		});
-	});
-	
-	describe('Export', function() {
-		it('should yield an object with all the info supplied.', function() {
-			var s = new Skill();
-			s.name('Arcana');
-			s.bonus(4);
-			s.proficiency(true);
-
-			s.name().should.equal('Arcana');
-			s.bonus().should.equal(4);
-			s.proficiency().should.equal(true);
-			var e = s.exportValues();
-			e.name.should.equal(s.name());
-			e.bonus.should.equal(s.bonus());
-			e.proficiency.should.equal(s.proficiency());
-		});
-	});
-	
-	describe('Import', function() {
-		it('should import an object with all the info supplied.', function() {
-			var s = new Skill('', 0, false, function(){});
-			var e = { name: 'Arcana', bonus: 3, proficiency: true };
-			s.importValues(e);
-			e.name.should.equal(s.name());
-			e.bonus.should.equal(s.bonus());
-			e.proficiency.should.equal(s.proficiency());
 		});
 	});
 });
