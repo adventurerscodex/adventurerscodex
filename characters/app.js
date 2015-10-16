@@ -17,25 +17,12 @@ function CharacterManager() {
 			var vm = new RootViewModel();
 			var oldKey = vm.key; 
 			vm.key = function(){return key + '.character';};
-			vm.load();
-			
-			var race = vm.characterTabViewModel().profileViewModel().race(),
-				typeClass = vm.characterTabViewModel().profileViewModel().typeClass(),
-				lvl = vm.characterTabViewModel().profileViewModel().level(),
-				playerName = vm.characterTabViewModel().profileViewModel().playerName();
-			
-			var desc = ((race && race !== '') && (typeClass && typeClass !== '') && (lvl && lvl !== '')) ? 
-						'A level ' + lvl + ' ' + race + ' ' + typeClass + ' by ' + playerName
-						: false;
-			
-			var characterDescription = desc || 'A unique character, handcrafted from the finest bits the '
-				+ 'internet can provide.';
-				
+			vm.load();	
 			
 			return {
-				characterName: vm.characterTabViewModel().profileViewModel().characterName(),
-				characterDescription: characterDescription,
-				playerName: playerName,
+				characterName: vm.playerTitle(),
+				characterDescription: vm.playerSummary(),
+				playerName: vm.playerAuthor(),
 				playerUrl: '/?key=' + key,
 				isDefault: key === self.defaultCharacterKey(),
 				key: key

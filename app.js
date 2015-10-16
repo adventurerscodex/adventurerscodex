@@ -62,13 +62,42 @@ function RootViewModel() {
 
 
 	//UI Methods
-
-    self.pageTitle = ko.computed(function() {
-    	return self.characterTabViewModel().profileViewModel().characterName() + ' by ' 
-    		+ self.characterTabViewModel().profileViewModel().playerName()
-    		+ ' | Adventurer\'s Codex';
+    
+    self.playerSummary = ko.computed(function() {
+    	var summary = '';
+    	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+    		summary = self.characterTabViewModel().profileViewModel().characterSummary();
+    	} else {
+    		summary = self.dmTabViewModel().campaignViewModel().campaignSummary();
+    	}
+    	return summary;
     });
     
+    self.playerTitle = ko.computed(function() {
+    	var name = '';
+    	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+    		name = self.characterTabViewModel().profileViewModel().characterName();
+    	} else {
+    		name = self.dmTabViewModel().campaignViewModel().campaignName();
+    	}
+    	return name;
+    });
+    
+    self.playerAuthor = ko.computed(function() {
+    	var name = '';
+    	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+    		name = self.characterTabViewModel().profileViewModel().playerName();
+    	} else {
+    		name = self.dmTabViewModel().campaignViewModel().dmName();
+    	}
+    	return name;
+    });
+    
+    self.pageTitle = ko.computed(function() {
+    	return self.playerTitle() + ' by ' + self.playerAuthor()
+    		+ ' | Adventurer\'s Codex';
+    });
+
 	//Public Methods
 	
 	self.key = function() {
@@ -78,17 +107,24 @@ function RootViewModel() {
     self.clear = function() {
     	self.playerType(PlayerTypes.characterPlayerType)
     	self.characterTabViewModel().clear();
+    	self.dmTabViewModel().clear();
     };
 
     self.importValues = function(values) {
     	self.playerType(values.playerType);
+    	try {
 		self.characterTabViewModel().importValues(values.characterTabViewModel);
+		} catch(err) {}
+    	try {
+		self.dmTabViewModel().importValues(values.dmTabViewModel);
+		} catch(err) {}
     };
 
     self.exportValues = function() {
     	return {
     		playerType: self.playerType(),
     		characterTabViewModel: self.characterTabViewModel().exportValues(),
+    		dmTabViewModel: self.dmTabViewModel().exportValues(),
     	};
     };
     
@@ -188,8 +224,26 @@ function CharacterTabViewModel() {
 
 function DmTabViewModel() {
 	var self = this;
+	
+	self.notesViewModel = ko.observable(new Note());
+	self.campaignViewModel = ko.observable(new CampaignViewModel());
 
+    self.clear = function() {
+    	self.notesViewModel().clear();
+    	self.campaignViewModel().clear();
+    };
 
+    self.importValues = function(values) {
+		self.notesViewModel().importValues(values.notesViewModel);
+		self.campaignViewModel().importValues(values.campaignViewModel);
+    };
+
+    self.exportValues = function() {
+    	return {
+    		notesViewModel: self.notesViewModel().exportValues(),
+    		campaignViewModel: self.campaignViewModel().exportValues()
+    	};
+    };
 };
 
 
