@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="site.css" rel="stylesheet">
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bin/flatly_bootstrap.min.css" rel="stylesheet">
  </head>
  <body>
@@ -37,7 +38,7 @@
  	    <li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Party</a></li>
  	    <li role="presentation" data-bind="click: activateSettingsTab, css: settingsTabStatus"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
  	  </ul>
- 	
+
  	  <div class="tab-content">
  	    <div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
         <div class="row">
@@ -80,7 +81,7 @@
       <div role="tabpanel" class="tab-pane " id="settings" data-bind="with: settingsTabViewModel, css: settingsTabStatus">
         Settings
       </div> <!-- End settings Tab -->
-    </div> 
+    </div>
   </div>
 	<!-- Clear Modal -->
 	<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel">
