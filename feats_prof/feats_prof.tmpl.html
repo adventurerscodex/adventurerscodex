@@ -7,11 +7,13 @@
     <div class="form-horizontal">
       <div class="form-group">
         <div class="">
-          <textarea class="form-control" rows="5"
-            placeholder="Simple weapons..." data-bind="textInput: proficiencies"></textarea>
+          <label for="proficiencies">Proficiencies:</label>
+          <textarea id="proficiencies" class="form-control" rows="5"
+             data-bind="textInput: proficiencies"></textarea>
           <br />
-          <textarea class="form-control" rows="5"
-            placeholder="Lucky feat..." data-bind="textInput: feats"></textarea>
+          <label for="feats">Feats:</label>
+          <textarea id="feats" class="form-control" rows="5"
+            data-bind="textInput: feats"></textarea>
         </div>
       </div>
     </div>
