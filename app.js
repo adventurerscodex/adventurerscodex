@@ -62,12 +62,6 @@ function RootViewModel() {
 
 
 	//UI Methods
-
-    self.pageTitle = ko.computed(function() {
-    	return self.characterTabViewModel().profileViewModel().characterName() + ' by ' 
-    		+ self.characterTabViewModel().profileViewModel().playerName()
-    		+ ' | Adventurer\'s Codex';
-    });
     
     self.playerSummary = ko.computed(function() {
     	var summary = '';
@@ -99,6 +93,11 @@ function RootViewModel() {
     	return name;
     });
     
+    self.pageTitle = ko.computed(function() {
+    	return self.playerTitle() + ' by ' + self.playerAuthor()
+    		+ ' | Adventurer\'s Codex';
+    });
+
 	//Public Methods
 	
 	self.key = function() {
@@ -230,7 +229,7 @@ function DmTabViewModel() {
 	self.campaignViewModel = ko.observable(new CampaignViewModel());
 
     self.clear = function() {
-    	self.note().clear();
+    	self.notesViewModel().clear();
     	self.campaignViewModel().clear();
     };
 
