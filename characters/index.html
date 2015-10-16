@@ -22,7 +22,7 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class='active'><a href="/characters">Characters</a></li>
+          <li class="active"><a href="/characters">Characters and Games</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/help">Help</a></li>
         </ul>
@@ -31,8 +31,9 @@
   </nav>
 	<div id='content' class='container-fluid'>
     <div class='container-fluid row'>
-        <button class='btn btn-primary' data-bind='click: addCharacter'>Create a new character</button>
-        <button class='btn btn-default pull-right' data-toggle="modal" data-target="#importModal">Import</button>
+      <button class='btn btn-primary' data-bind='click: addCharacter'>Create a new character</button>
+      <button class='btn btn-primary' data-bind='click: addDM'>DM a new game</button>
+      <button class='btn btn-default pull-right' data-toggle="modal" data-target="#importModal">Import</button>
     </div>
     <div class='spacer'></div>
     <div data-bind='foreach: characters'>

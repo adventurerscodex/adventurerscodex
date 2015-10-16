@@ -1,6 +1,127 @@
 "use strict";
 
-function ViewModel() {
+/** 
+ * The Root View Model for the application. All other view models are children of this view model.
+ * This view model contains the global import/export functionality for player data as well as the 
+ * UI helpers for page layout and design.
+ */
+function RootViewModel() {
+	var self = this;
+	
+	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
+	self.activeTab = ko.observable(self.playerType().defaultTab);
+	self.characterTabViewModel = ko.observable(new CharacterTabViewModel());
+	self.dmTabViewModel = ko.observable(new DmTabViewModel());
+	self.partyTabViewModel = ko.observable(new PartyTabViewModel());
+	self.settingsTabViewModel = ko.observable(new SettingsTabViewModel());
+	
+	//Tab Properties
+	self.characterTabStatus = ko.computed(function() {
+		if (self.playerType().visibleTabs.indexOf('character') > -1) {
+	    	return self.activeTab() === 'character' ? 'active' : '';
+    	} else {
+    		return 'hidden';
+    	}
+    });
+	self.dMTabStatus = ko.computed(function() {
+		if (self.playerType().visibleTabs.indexOf('dm') > -1) {
+	    	return self.activeTab() === 'dm' ? 'active' : '';
+    	} else {
+    		return 'hidden';
+    	}
+    });
+	self.partyTabStatus = ko.computed(function() {
+		if (self.playerType().visibleTabs.indexOf('party') > -1) {
+	    	return self.activeTab() === 'party' ? 'active' : '';
+    	} else {
+    		return 'hidden';
+    	}
+    });
+	self.settingsTabStatus = ko.computed(function() {
+		if (self.playerType().visibleTabs.indexOf('settings') > -1) {
+	    	return self.activeTab() === 'settings' ? 'active' : '';
+    	} else {
+    		return 'hidden';
+    	}
+    });
+
+	self.activateCharacterTab = function() {
+		self.activeTab('character');
+	};
+	self.activateDMTab = function() {
+		self.activeTab('dm');
+	};
+	self.activatePartyTab = function() {
+		self.activeTab('party');
+	};
+	self.activateSettingsTab = function() {
+		self.activeTab('settings');
+	};
+
+
+	//UI Methods
+
+    self.pageTitle = ko.computed(function() {
+    	return self.characterTabViewModel().profileViewModel().characterName() + ' by ' 
+    		+ self.characterTabViewModel().profileViewModel().playerName()
+    		+ ' | Adventurer\'s Codex';
+    });
+    
+	//Public Methods
+	
+	self.key = function() {
+		return getKey('character');
+	};
+
+    self.clear = function() {
+    	self.playerType(PlayerTypes.characterPlayerType)
+    	self.characterTabViewModel().profileViewModel().clear();
+    };
+
+    self.importValues = function(values) {
+    	self.playerType(values.playerType);
+		self.characterTabViewModel().profileViewModel().importValues(values.characterTabViewModel.profileViewModel);
+    };
+
+    self.exportValues = function() {
+    	return {
+    		playerType: self.playerType(),
+    		characterTabViewModel: self.characterTabViewModel().exportValues(),
+    	};
+    };
+    
+    //Global Save/Load
+    
+    self.save = function() {
+		var state = JSON.stringify(self.exportValues());
+		localStorage[self.key()] = state;		
+    };
+
+	/**
+	 * Load any saved state if it exists. 
+	 */
+	self.load = function() {
+		var state = localStorage[self.key()];
+		if (state !== undefined) {
+			self.importValues(JSON.parse(state));
+		} 
+ 		self.activeTab(self.playerType().defaultTab);
+	};
+
+    self.saveToFile = function() {
+    	var string = JSON.stringify(self.exportValues());
+    	var filename = self.profileViewModel().characterName();
+    	var blob = new Blob([string], {type: "application/json"});
+		saveAs(blob, filename);
+    };
+};
+
+/**
+ * This view model contains all the relevant child view models for the character
+ * tab. This should contain any child view models that relate to a player character
+ * or to their character sheet.
+ */
+function CharacterTabViewModel() {
 	var self = this;
 
 	self.profileViewModel = ko.observable(new ProfileViewModel());
@@ -15,19 +136,6 @@ function ViewModel() {
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
     self.featsProf = ko.observable(new FeatsProfViewModel());
-
-	//UI Methods
-
-    self.pageTitle = ko.computed(function() {
-    	return self.profileViewModel().characterName() + ' by ' + self.profileViewModel().playerName()
-    		+ ' | Adventurer\'s Codex';
-    });
-
-	//Public Methods
-	
-	self.key = function() {
-		return getKey('character');
-	};
 
     self.clear = function() {
     	self.profileViewModel().clear();
@@ -74,28 +182,39 @@ function ViewModel() {
             skillTree: self.skillTree().exportValues()
     	};
     };
-    
-    //Global Save/Load
-
-    self.save = function() {
-		var state = JSON.stringify(self.exportValues());
-		localStorage[self.key()] = state;		
-    };
-
-	self.load = function() {
-		var state = localStorage[self.key()];
-		if (state !== undefined) {
-			self.importValues(JSON.parse(state));
-		}
-	};
-
-    self.saveToFile = function() {
-    	var string = JSON.stringify(self.exportValues());
-    	var filename = self.profileViewModel().characterName();
-    	var blob = new Blob([string], {type: "application/json"});
-		saveAs(blob, filename);
-    };
 };
+
+function DmTabViewModel() {
+	var self = this;
+
+
+};
+
+
+function PartyTabViewModel() {
+	var self = this;
+
+};
+
+
+function SettingsTabViewModel() {
+	var self = this;
+
+};
+
+var PlayerTypes = {
+	characterPlayerType: {
+		key: 'character',
+		visibleTabs: ['character', 'settings', 'party'],
+		defaultTab: 'character'
+	},
+	dmPlayerType: {
+		key: 'dm',
+		visibleTabs: ['dm', 'settings', 'party'],
+		defaultTab: 'dm'
+	}
+};
+
 
 /**
  * Do preflight checks.
@@ -109,6 +228,16 @@ var init = function(viewModel) {
 			|| eval(localStorage['character.characterKeys']).length < 1) {
 		window.location = '/characters'
 	} else {
+		//Set up the player type if it's the first time
+		var ptKey = playerTypeFromUrl();
+		if (ptKey) {
+			for (var i in Object.keys(PlayerTypes)) {
+				var type = PlayerTypes[Object.keys(PlayerTypes)[i]];
+				if (type.key === ptKey) {
+					viewModel.playerType(type);				
+				}
+			}    
+		}
 		//Load any saved state.
 		viewModel.load();
 
@@ -119,5 +248,5 @@ var init = function(viewModel) {
 		window.onbeforeunload = saveState;
 		window.onblur = saveState;
 		setInterval(saveState, 1000);
- 	}
+  	}
 };

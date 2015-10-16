@@ -14,15 +14,15 @@ function CharacterManager() {
 	
 	self.characters = ko.computed(function() {	
 		return $.map(self.characterKeys(), function(key, _) {
-			var vm = new ViewModel();
+			var vm = new RootViewModel();
 			var oldKey = vm.key; 
 			vm.key = function(){return key + '.character';};
 			vm.load();
 			
-			var race = vm.profileViewModel().race(),
-				typeClass = vm.profileViewModel().typeClass(),
-				lvl = vm.profileViewModel().level(),
-				playerName = vm.profileViewModel().playerName();
+			var race = vm.characterTabViewModel().profileViewModel().race(),
+				typeClass = vm.characterTabViewModel().profileViewModel().typeClass(),
+				lvl = vm.characterTabViewModel().profileViewModel().level(),
+				playerName = vm.characterTabViewModel().profileViewModel().playerName();
 			
 			var desc = ((race && race !== '') && (typeClass && typeClass !== '') && (lvl && lvl !== '')) ? 
 						'A level ' + lvl + ' ' + race + ' ' + typeClass + ' by ' + playerName
@@ -33,7 +33,7 @@ function CharacterManager() {
 				
 			
 			return {
-				characterName: vm.profileViewModel().characterName(),
+				characterName: vm.characterTabViewModel().profileViewModel().characterName(),
 				characterDescription: characterDescription,
 				playerName: playerName,
 				playerUrl: '/?key=' + key,
@@ -49,7 +49,16 @@ function CharacterManager() {
 		if (self.defaultCharacterKey() === '') {
 			self.defaultCharacterKey(key);
 		}
-		window.location = '/?key=' + key
+		window.location = '/?key=' + key + '&playerType=character'
+	};
+	
+	self.addDM = function() {
+		var key = uuid.v4();
+		self.characterKeys.push(key);
+		if (self.defaultCharacterKey() === '') {
+			self.defaultCharacterKey(key);
+		}
+		window.location = '/?key=' + key + '&playerType=dm'
 	};
 	
 	self.removeCharacter = function(character) {
@@ -127,6 +136,15 @@ var keyFromUrl = function() {
 	var uri = new URI();
 	var map = uri.search(true);
 	return map.key !== undefined ? map.key : false;
+};
+
+/**
+ * If a key exists in the URL, return it, else return false.
+ */
+var playerTypeFromUrl = function() {
+	var uri = new URI();
+	var map = uri.search(true);
+	return map.playerType !== undefined ? map.playerType : undefined;
 };
 
 /** 

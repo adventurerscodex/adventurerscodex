@@ -22,7 +22,7 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="/characters">Characters</a></li>
+          <li><a href="/characters">Characters and Games</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/help">Help</a></li>
           <li><a href='#' data-toggle="modal" data-target="#exportModal">Export</a></li>
@@ -32,13 +32,14 @@
   </nav>
  	<div id='content' class='container-fluid'>
  	  <ul class="nav nav-tabs">
- 	    <li role="presentation" class="active"><a href="#character" aria-controls="character" role="tab" data-toggle="tab">Character</a></li>
- 	    <li role="presentation" class=""><a href="#group" aria-controls="group" role="tab" data-toggle="tab">Party</a></li>
- 	    <li role="presentation" class=""><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+ 	    <li role="presentation" data-bind="click: activateCharacterTab, css: characterTabStatus"><a href="#character" aria-controls="character" role="tab" data-toggle="tab">Character</a></li>
+ 	    <li role="presentation" data-bind="click: activateDMTab, css: dMTabStatus"><a href="#dm" aria-controls="dm" role="tab" data-toggle="tab">DM</a></li>
+ 	    <li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Party</a></li>
+ 	    <li role="presentation" data-bind="click: activateSettingsTab, css: settingsTabStatus"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
  	  </ul>
  	
  	  <div class="tab-content">
- 	    <div role="tabpanel" class="tab-pane active" id="character">
+ 	    <div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
         <div class="row">
           <div class="col-md-7 col-padded">
             <div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile/', data: profileViewModel }"></div>
@@ -69,12 +70,17 @@
         <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes/', data: note }"></div>
           </div>
         </div>
-      </div>
-    </div> <!-- End Character Tab -->
-    <div role="tabpanel" class="tab-pane " id="group">
-    </div> <!-- End group Tab -->
-    <div role="tabpanel" class="tab-pane " id="settings">
-    </div> <!-- End settings Tab -->
+      </div><!-- End Character Tab -->
+      <div role="tabpanel" class="tab-pane " id="dm" data-bind="with: dmTabViewModel, css: dMTabStatus">
+        DM
+      </div> <!-- End dm Tab -->
+      <div role="tabpanel" class="tab-pane " id="party" data-bind="with: partyTabViewModel, css: partyTabStatus">
+        Party
+      </div> <!-- End group Tab -->
+      <div role="tabpanel" class="tab-pane " id="settings" data-bind="with: settingsTabViewModel, css: settingsTabStatus">
+        Settings
+      </div> <!-- End settings Tab -->
+    </div> 
   </div>
 	<!-- Clear Modal -->
 	<div class="modal fade" id="clearModal" tabindex="-1" role="dialog" aria-labelledby="clearModalLabel">
@@ -148,7 +154,7 @@
 
 	<script type="text/javascript">
 	$(function(){
-	  var viewModel = new ViewModel();
+	  var viewModel = new RootViewModel();
     init(viewModel);
 	  ko.applyBindings(viewModel, $('#html')[0]);
 	});</script>
