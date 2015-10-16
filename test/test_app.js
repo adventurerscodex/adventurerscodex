@@ -10,7 +10,7 @@ describe('Root View Model', function() {
 			v.clear();
 			v.characterTabViewModel().profileViewModel().playerName().should.equal("");
 			v.characterTabViewModel().profileViewModel().characterName().should.equal("");
-			v.characterTabViewModel().stats().health.maxHitpoints().should.equal(10);
+			v.characterTabViewModel().stats().health.maxHitpoints().should.equal(0);
 			v.characterTabViewModel().stats().health.tempHitpoints().should.equal(0);
 			v.characterTabViewModel().note().text().should.equal("");
 		});
