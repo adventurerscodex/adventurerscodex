@@ -10,6 +10,8 @@ function RootViewModel() {
 	
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
+	
+	//Child View Models
 	self.characterTabViewModel = ko.observable(new CharacterTabViewModel());
 	self.dmTabViewModel = ko.observable(new DmTabViewModel());
 	self.partyTabViewModel = ko.observable(new PartyTabViewModel());
@@ -75,12 +77,12 @@ function RootViewModel() {
 
     self.clear = function() {
     	self.playerType(PlayerTypes.characterPlayerType)
-    	self.characterTabViewModel().profileViewModel().clear();
+    	self.characterTabViewModel().clear();
     };
 
     self.importValues = function(values) {
     	self.playerType(values.playerType);
-		self.characterTabViewModel().profileViewModel().importValues(values.characterTabViewModel.profileViewModel);
+		self.characterTabViewModel().importValues(values.characterTabViewModel);
     };
 
     self.exportValues = function() {
