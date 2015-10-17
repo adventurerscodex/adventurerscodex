@@ -148,7 +148,7 @@ function RootViewModel() {
 
     self.saveToFile = function() {
     	var string = JSON.stringify(self.exportValues());
-    	var filename = self.profileViewModel().characterName();
+    	var filename = self.playerTitle();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);
     };
