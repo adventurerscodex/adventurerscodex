@@ -89,7 +89,7 @@ function CharacterManager() {
 		self.defaultCharacterKey(key);
 		
 		//Create a new Character.
-		var v = new ViewModel();
+		var v = new RootViewModel();
 		v.importValues(values);
 		v.save();
 				
