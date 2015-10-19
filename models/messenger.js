@@ -4,12 +4,13 @@ function Messenger() {
 	var self = this;
 
 	self._socket = null;
-	self._socketUrl = 'http://172.16.0.12:3100/';
+	self._socketUrl = 'http://brianschrader.com:3100';
 		
 	//Public message methods.	
 
 	/**
 	 * Send a system message to all clients connected to a room.
+	 * @params to: Either a single id (room or individual).
 	 * @params type: A classifier for the message type. 
 	 * @params msg: The JSON msg payload.
 	 */
@@ -19,7 +20,7 @@ function Messenger() {
 
 	/**
 	 * Send a data message to all clients in the connected room.
-	 * @params to: Either a single id, a list of ids, or 'All'.
+	 * @params to: Either a single id (room or individual).
 	 * @params type: A classifier for the message type. 
 	 * @params msg: The JSON msg payload.
 	 */
@@ -29,7 +30,7 @@ function Messenger() {
 
 	/**
 	 * Send a request message asking for data to the given members.
-	 * @params to: Either a single id, a list of ids, or 'All'.
+	 * @params to: Either a single id (room or individual).
 	 * @params type: A classifier for the message type. 
 	 * @params msg: The JSON msg payload.
 	 */
