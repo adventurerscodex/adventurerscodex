@@ -24,7 +24,7 @@ function PartyChatViewModel(parent) {
 			msg.from(self.parent.parent.playerTitle());
 			msg.to('');
 			msg.text(message);
-			self.messenger.sendDataMsg(self.mainRoomId(), 'chat', msg.exportValues());
+			self.messenger.sendDataMsg(self._mainRoomId(), 'chat', msg.exportValues());
 			self.message('');
 		}
 	};
@@ -32,12 +32,23 @@ function PartyChatViewModel(parent) {
 	self.handleMessage = function(msg) {
 		var message = new ChatMessage();
 		message.importValues(msg);
-		self.log.push(message);
+		//If the message is to you or the group.
+		if (message.toId() === self.id || message.toId().toLowerCase() === 'all') {
+			self.log.push(message);
+		}
 	};
 	
 	//Private Methods
 	
-	self.mainRoomId = function() {
+	self._mainRoomId = function() {
 		return self.parent.parent.defaultRoomId();
+	};
+	
+	/** 
+	 * Returns the list of player names & id that are currently in the room.
+	 * TODO: get this information from the players module.
+	 */
+	self._playersInRoom = function() {
+		//return self.parent.
 	};
 };

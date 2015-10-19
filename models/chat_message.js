@@ -11,7 +11,9 @@ function ChatMessage() {
 	
 	self.importValues = function(values) {
 		self.to(values.to);
+		self.toId(values.toId);
 		self.from(values.from);
+		self.fromId(values.fromId);
 		self.text(values.text);
 	};
 	
@@ -19,6 +21,8 @@ function ChatMessage() {
 		return {
 			to: self.to(),
 			from: self.from(),
+			fromId: self.fromId(),
+			toId: self.toId(),
 			text: self.text()
 		}
 	};
