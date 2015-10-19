@@ -101,10 +101,12 @@
                 <label for="spellLevel"
                        class="col-sm-2 control-label">Level</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
                            class="form-control"
                            id="spellLevel"
                            placeholder="1"
+                           min="1"
+                           max="9"
                            data-bind='textInput: blankSpell().spellLevel'>
                   </div>
               </div>
@@ -249,9 +251,11 @@
                 <label for="spellLevel"
                        class="col-sm-2 control-label">Level</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
                            class="form-control"
                            id="spellLevel"
+                           min="1"
+                           max="9"
                            placeholder="1"
                            data-bind="value: spellLevel">
                   </div>
