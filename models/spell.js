@@ -8,7 +8,7 @@ function Spell() {
     self.spellType = ko.observable('');
     self.spellDmg = ko.observable('');
     self.spellSchool = ko.observable('');
-    self.spellLevel = ko.observable(0);
+    self.spellLevel = ko.observable(1);
     self.spellDescription = ko.observable('');
     self.spellCastingTime = ko.observable('');
     self.spellRange = ko.observable('');
