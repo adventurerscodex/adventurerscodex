@@ -52,6 +52,8 @@ function Messenger() {
 		});
 	};
 	
+	//Setting up a connection/room.
+	
 	self.connect = function(callback) {
 		self._socket = io(self._socketUrl);
 		self._socket.on('connect', self._onconnect);
@@ -73,42 +75,13 @@ function Messenger() {
 	self.leave = function(id) {
 		self._send(id, 'leave', '', '');		
 	};
-
-	//Event handlers.
 	
+	//Private Methods.
+
 	self._onconnect = function() {
 		console.log('Connected!');
 		self._connected = true;
-		self._socket.on('system', self._onsystemmsg);
-		self._socket.on('data', self._ondatamsg);
-		self._socket.on('req', self._onreqmsg);
 	};
-	
-	self._ondisconnect = function() {
-		console.log('Disconnected!');	
-	};
-
-	self._onreconnect = function() {
-		console.err('Reconnecting!');	
-	};
-
-	self._onerror = function(err) {
-		console.err('Error!', err);	
-	};
-	
-	self._onsystemmsg = function(msg) {
-		console.log(msg);
-	};
-	
-	self._ondatamsg = function(msg) {
-		console.log(msg);
-	};
-	
-	self._onreqmsg = function(msg) {
-		console.log(msg);
-	};
-	
-	//Private Methods.
 	
 	self._send = function(roomId, classification, type, msg) {
 		var payload = { 'type': type, 'msg': msg, 'roomId': roomId };
