@@ -8,13 +8,19 @@
 function RootViewModel() {
 	var self = this;
 	
+	//Socket connection
+	self.messenger = new Messenger();
+	self.connected = ko.observable(false);
+	self.messenger.connect();
+	self.defaultRoomId = ko.observable(null);
+	
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
 	
 	//Child View Models
 	self.characterTabViewModel = ko.observable(new CharacterTabViewModel());
 	self.dmTabViewModel = ko.observable(new DmTabViewModel());
-	self.partyTabViewModel = ko.observable(new PartyTabViewModel());
+	self.partyTabViewModel = ko.observable(new PartyTabViewModel(self));
 	self.settingsTabViewModel = ko.observable(new SettingsTabViewModel());
 	
 	//Tab Properties
@@ -59,7 +65,6 @@ function RootViewModel() {
 	self.activateSettingsTab = function() {
 		self.activeTab('settings');
 	};
-
 
 	//UI Methods
     
@@ -246,10 +251,31 @@ function DmTabViewModel() {
     };
 };
 
-
-function PartyTabViewModel() {
+function PartyTabViewModel(parent) {
 	var self = this;
+	
+	self.parent = parent;
+	self.connected = self.parent.connected;
+	self.messenger = self.parent.messenger;
+	
+	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel(self));
+	self.partyChatViewModel = ko.observable(new PartyChatViewModel(self));
+	
+	self.partyChatViewModel().init();
 
+    self.clear = function() {
+    	self.partyChatViewModel().clear();
+    };
+
+    self.importValues = function(values) {
+		self.partyChatViewModel().importValues(values.partyChatViewModel);
+    };
+
+    self.exportValues = function() {
+    	return {
+    		partyChatViewModel: self.partyChatViewModel().exportValues()
+    	};
+    };
 };
 
 
