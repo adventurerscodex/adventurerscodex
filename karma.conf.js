@@ -13,7 +13,8 @@ module.exports = function(config) {
 			{pattern: 'bower_components/should/should.js', watched: false},
 			{pattern: 'bower_components/uri.js/src/URI.min.js', watched: false},
 			{pattern: 'bower_components/node-uuid/uuid.js', watched: false},
-			
+
+			{pattern: 'bin/socket.io-1.2.0.js', watched: false},
 			{pattern: 'bin/knockout-file-bind.js', watched: false},
 			{pattern: 'bin/koExternalTemplateEngine_all.min.js', watched: false},
 			//Stuff to test.
