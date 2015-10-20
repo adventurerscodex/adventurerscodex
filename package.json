@@ -27,5 +27,8 @@
     "postinstall": "bower install",
     "test": "grunt karma:test",
     "coveralls": "grunt coveralls"
+  },
+  "dependencies": {
+    "socket.io": "^1.3.7"
   }
 }
