@@ -11,7 +11,6 @@ function RootViewModel() {
 	//Socket connection
 	self.messenger = new Messenger();
 	self.connected = ko.observable(false);
-	self.messenger.connect();
 	self.defaultRoomId = ko.observable(null);
 	
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
@@ -105,6 +104,11 @@ function RootViewModel() {
 
 	//Public Methods
 	
+	self.init = function() {
+		self.messenger.connect();
+		self.partyTabViewModel().init();
+	};
+	
 	self.key = function() {
 		return getKey('character');
 	};
@@ -136,8 +140,7 @@ function RootViewModel() {
     //Global Save/Load
     
     self.save = function() {
-		var state = JSON.stringify(self.exportValues());
-		localStorage[self.key()] = state;		
+		localStorage[self.key()] = JSON.stringify(self.exportValues());		
     };
 
 	/**
@@ -206,7 +209,7 @@ function CharacterTabViewModel() {
 		self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
 		self.spellbook().importValues(values.spellbook);
 		self.treasure().importValues(values.treasure);
-		//self.featsProf().importValues(values.feats_prof);
+		self.featsProf().importValues(values.feats_prof);
 		self.skillTree().importValues(values.skillTree);
     };
 
@@ -261,8 +264,10 @@ function PartyTabViewModel(parent) {
 	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel(self));
 	self.partyChatViewModel = ko.observable(new PartyChatViewModel(self));
 	
-	self.partyChatViewModel().init();
-
+	self.init = function() {
+		self.partyChatViewModel().init();
+	};
+	
     self.clear = function() {
     	self.partyChatViewModel().clear();
     };
@@ -297,7 +302,6 @@ var PlayerTypes = {
 	}
 };
 
-
 /**
  * Do preflight checks.
  * - Has the user been here before?
@@ -321,14 +325,7 @@ var init = function(viewModel) {
 			}    
 		}
 		//Load any saved state.
+		viewModel.init();
 		viewModel.load();
-
-		//Setup automatic saving.
-		var saveState = function(){
-			viewModel.save();
-		};
-		window.onbeforeunload = saveState;
-		window.onblur = saveState;
-		setInterval(saveState, 1000);
   	}
 };

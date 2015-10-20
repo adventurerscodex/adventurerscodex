@@ -168,6 +168,12 @@
 	  var viewModel = new RootViewModel();
     init(viewModel);
 	  ko.applyBindings(viewModel, $('#html')[0]);
-	});</script>
+	  
+    //Setup automatic saving.
+    window.onbeforeunload = viewModel.save;
+    window.onblur = viewModel.save;
+    setInterval(viewModel.save, 200);
+	});
+	</script>
  </body>
 </html>
