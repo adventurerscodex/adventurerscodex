@@ -38,6 +38,26 @@ function PartyChatViewModel(parent) {
 		}
 	};
 	
+	self.importValues = function(values) {
+		var log = $.map(values.log, function(e) { 
+			var msg = new ChatMessage();
+			msg.importValues(e); 
+			return msg;
+		});
+		self.log(log);
+	};
+	
+	self.exportValues = function() {
+		var log = $.map(self.log(), function(e) { return e.exportValues(); });
+		return {
+			log: log
+		};
+	};
+	
+	self.clear = function() {
+		self.log([]);
+	};
+	
 	//Private Methods
 	
 	self._mainRoomId = function() {
