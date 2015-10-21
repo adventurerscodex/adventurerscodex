@@ -110,7 +110,7 @@ function RootViewModel() {
 	};
 	
 	self.key = function() {
-		return getKey('character');
+		return getKey('');
 	};
 
     self.clear = function() {
