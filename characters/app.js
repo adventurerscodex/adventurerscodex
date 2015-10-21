@@ -9,6 +9,8 @@ function CharacterManager() {
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
     
+    self.selectedCharacter = ko.observable();
+    
 	self.characterKeys = ko.observableArray([], { persist: 'character.characterKeys' });
 	self.defaultCharacterKey = ko.observable('', { persist: 'character.defaultCharacterKey' });
 	
@@ -16,19 +18,17 @@ function CharacterManager() {
 		return $.map(self.characterKeys(), function(key, _) {
 			var vm = new RootViewModel();
 			var oldKey = vm.key; 
-			vm.key = function(){return key + '.character';};
-			vm.load();	
+			vm.key = function(){ return key; };
+			vm.load();
+			vm.url = '/?key=' + key;
 			
-			return {
-				characterName: vm.playerTitle(),
-				characterDescription: vm.playerSummary(),
-				playerName: vm.playerAuthor(),
-				playerUrl: '/?key=' + key,
-				isDefault: key === self.defaultCharacterKey(),
-				key: key
-			}
+			return vm;
 		});
 	});
+	
+	self.selectCharacter = function(character) {
+		self.selectedCharacter(character);
+	};
 		
 	self.addCharacter = function() {
 		var key = uuid.v4();
@@ -49,7 +49,7 @@ function CharacterManager() {
 	};
 	
 	self.removeCharacter = function(character) {
-		var key = character.key;
+		var key = character.key();
 		//Delete old entries from local storage.
 		$.each(getLocalStorageEntries(), function(_, _key) {
 			if (_key.indexOf(key) !== -1) {
@@ -109,11 +109,11 @@ function CharacterManager() {
  * storing to local storage.
  * 	{ persist: getKey('some.thing') }
  */
-var getKey = function(tail) {
+var getKey = function() {
 	var key = keyFromUrl();
 	key = (key !== false && (new CharacterManager()).keyInKeys(key)) ? key : 
 		(new CharacterManager()).defaultCharacterKey();
-	return key + '.' + tail;
+	return key;
 };
 
 /**

@@ -40,28 +40,33 @@
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">
-            <span data-bind='text: characterName'></span>
+            <span data-bind='text: playerTitle'></span>
             <small>by
-              <span data-bind='text: playerName'>
+              <span data-bind='text: playerAuthor'>
             </small>
+            <button type="button" class="close" data-dismiss="modal" data-bind='click: $parent.removeCharacter'
+              aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </h3>
         </div>
         <div class="panel-body">
           <div class=''>
-            <i><p data-bind='text: characterDescription'></p></i>
+            <i><p data-bind='text: playerSummary'></p></i>
           </div>
           <div class="pull-right">
             <label class="" id="defaultLabel">Default
               <input type='radio' name='default' aria-describedby='defaultLabel'
-                data-bind='checked: $parent.defaultCharacterKey, attr: { value: key }'>
+                data-bind='checked: $parent.defaultCharacterKey, attr: { value: key() }'>
             </label>
           </div>
         </div>
         <div class='panel-footer'>
-          <a class='btn btn-primary' data-bind='attr: { href: playerUrl }'>
+          <a class='btn btn-primary' data-bind='attr: { href: url }'>
             <!--<span data-bind='text: characterName'></span>'s character sheet -->View &#8594;
           </a>
-          <button class='btn btn-danger pull-right' data-bind='click: $parent.removeCharacter'>Delete</button>
+          <button class="btn btn-default pull-right"data-toggle="modal" data-target="#exportModal" 
+            data-bind="click: $parent.selectCharacter">Export</button>
         </div>
       </div>
     </div>
@@ -74,22 +79,45 @@
   <!-- Import Modal -->
   <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel">
     <div class="modal-dialog" role="document">
-    <div class="modal-content container-fluid">
-      <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="importModalLabel">Import</h4>
-      </div>
-      <div class="modal-body">
-      <p>If you've exported you character data before, you can import it here!</p>
-      <!-- Add import form. -->
-      <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
+      <div class="modal-content container-fluid">
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabel">Import</h4>
+        </div>
+        <div class="modal-body">
+        <p>If you've exported you character data before, you can import it here!</p>
+        <!-- Add import form. -->
+        <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Export Modal -->
+	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" data-bind="with: selectedCharacter"
+	  aria-labelledby="exportModalLabel">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content container-fluid">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+		  </div>
+		  <div class="modal-body">
+			<p>Save your character to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+			<p>Note: Safari users will need to save the contents of the page.</p>
+			<!-- Add export form. -->
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			<button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 
 	<script src="../bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 	<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>

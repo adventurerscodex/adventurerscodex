@@ -26,7 +26,6 @@
           <li><a href="/characters">Characters and Games</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/help">Help</a></li>
-          <li><a href='#' data-toggle="modal" data-target="#exportModal">Export</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -99,26 +98,6 @@
 		  <div class="modal-footer">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 			<button type="button" class="btn btn-danger" data-dismiss="modal" data-bind="click: clear">Clear</button>
-		  </div>
-		</div>
-	  </div>
-	</div>
-	<!-- Export Modal -->
-	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel">
-	  <div class="modal-dialog" role="document">
-		<div class="modal-content container-fluid">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
-		  </div>
-		  <div class="modal-body">
-			<p>Save your character to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
-			<p>Note: Safari users will need to save the contents of the page.</p>
-			<!-- Add export form. -->
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>
 		  </div>
 		</div>
 	  </div>
