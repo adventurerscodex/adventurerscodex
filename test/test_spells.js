@@ -34,4 +34,16 @@ describe('Spells', function(){
     });
   });
 
+  describe('Export', function() {
+    it('should return an object with the data given', function() {
+      var book = new Spellbook();
+      book.clear();
+      book.spellbook().length.should.equal(0);
+      book.addSpell(new Spell());
+      book.spellbook().length.should.equal(1);
+      var exportValues = book.exportValues();
+      exportValues.spellbook.length.should.equal(book.spellbook().length);
+    });
+  });
+
 });
