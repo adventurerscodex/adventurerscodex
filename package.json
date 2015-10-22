@@ -24,7 +24,7 @@
     "phantomjs": "~1.9.18"
   },
   "scripts": {
-    "postinstall": "bower install && cp bin/fonts bower_components/bootstrap-theme-bootswatch-flatly/fonts",
+    "postinstall": "bower install && cp -r bin/fonts bower_components/bootstrap-theme-bootswatch-flatly/fonts",
     "test": "grunt karma:test",
     "coveralls": "grunt coveralls"
   },
