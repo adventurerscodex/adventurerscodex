@@ -11,6 +11,10 @@ body {
   padding-bottom: 5px;
 }
 
+.beta {
+  color:orange;
+}
+
 .spacer {
 	width:10px;
 	height:10px;
