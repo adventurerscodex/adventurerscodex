@@ -7,45 +7,47 @@
 		<div class="form-horizontal">
 		  <div class="form-group" data-bind="visible: !parent.connected()">
 			  <div class="row">
-				<div class="col-md-5">
-				</div>
-				<div class="col-md-2">
-					<button data-bind="click: createRoom" class="btn btn-default">Create a new Party</button>
-				</div>
-				<div class="col-md-5">
-				</div>
+          <div class="col-xs-5">
+          </div>
+          <div class="col-xs-2">
+            <button data-bind="click: createRoom" class="btn btn-default">Create a new Party</button>
+          </div>
+          <div class="col-xs-5">
+          </div>
 			  </div>				
 			  <div class="row">
-				<div class="col-md-5">
-				</div>
-				<div class="col-md-2">
-					<h2 class="text-center">or</h2><br />
-				</div>
-				<div class="col-md-5">
-				</div>
+          <div class="col-xs-5">
+          </div>
+          <div class="col-xs-2">
+            <h2 class="text-center">or</h2><br />
+          </div>
+          <div class="col-xs-5">
+          </div>
 			  </div>
 			  <div class="row">
-				<div class="col-md-2">
-				</div>
-				<div class="col-md-2">
-					<button data-bind="click: joinRoom" class="btn btn-default">Join an existing party</button>
-				</div>
-				<div class="col-md-5">
-					<input type="text" class="form-control" placeholder="Room ID" data-bind="textInput: roomId" />
-				</div>
-				<div class="col-md-5">
-				</div>
+          <div class="col-xs-2">
+          </div>
+          <div class="col-xs-2">
+            <button data-bind="click: joinRoom" class="btn btn-default">
+              Join an existing party
+            </button>
+          </div>
+          <div class="col-xs-5">
+            <input type="text" class="form-control" placeholder="Room ID" data-bind="textInput: roomId" />
+          </div>
+          <div class="col-xs-5">
+          </div>
 			  </div>
 		  </div>
 		  <div class="form-group" data-bind="visible: parent.connected()">
 			<div class="row">
-			  <div class="col-md-3">
+			  <div class="col-xs-3">
 			  </div>
-			  <div class="col-md-6 input-group">
+			  <div class="col-xs-6 input-group">
 				<span class="input-group-addon">Room ID</span>
 				<input type="text" class="form-control" data-bind="value: roomId" readonly/>
 			  </div>
-			  <div class="col-md-3">
+			  <div class="col-xs-3">
 			  </div>
 			</div>
 		  </div>
