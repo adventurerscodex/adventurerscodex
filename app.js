@@ -171,6 +171,7 @@ function CharacterTabViewModel() {
 	var self = this;
 
 	self.profileViewModel = ko.observable(new ProfileViewModel());
+	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
 	self.stats = ko.observable(new Stats());
 	self.backpackViewModel = ko.observable(new BackpackViewModel(self));
 	self.note = ko.observable(new Note());
@@ -185,6 +186,7 @@ function CharacterTabViewModel() {
 
     self.clear = function() {
     	self.profileViewModel().clear();
+    	self.appearanceViewModel().clear();
     	self.note().clear();
     	self.abilityScores().clear();
     	self.stats().clear();
@@ -200,6 +202,7 @@ function CharacterTabViewModel() {
 
     self.importValues = function(values) {
 		self.profileViewModel().importValues(values.profileViewModel);
+		self.appearanceViewModel().importValues(values.appearanceViewModel);
 		self.stats().importValues(values.stats);
 		self.equipmentViewModel().importValues(values.equipmentViewModel);
 		self.note().importValues(values.note);
@@ -216,6 +219,7 @@ function CharacterTabViewModel() {
     self.exportValues = function() {
     	return {
     		profileViewModel: self.profileViewModel().exportValues(),
+    		appearanceViewModel: self.appearanceViewModel().exportValues(),
     		note: self.note().exportValues(),
     		backpackViewModel: self.backpackViewModel().exportValues(),
     		stats: self.stats().exportValues(),

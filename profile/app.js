@@ -11,11 +11,6 @@ function ProfileViewModel() {
 	self.typeClass = ko.observable('');
 	self.gender = ko.observable('');
 	self.age = ko.observable('');
-	self.height = ko.observable('');
-	self.weight = ko.observable('');
-	self.hairColor = ko.observable('');
-	self.eyeColor = ko.observable('');
-	self.skinColor = ko.observable('');
 	self.level = ko.observable('');
 	self.exp = ko.observable('');
 
@@ -44,11 +39,6 @@ function ProfileViewModel() {
 		self.alignment('');
 		self.gender('');
 		self.age('');
-		self.height('');
-		self.weight('');
-		self.hairColor('');
-		self.eyeColor('');
-		self.skinColor('');
 		self.level('1');
 		self.exp('0');
 	};
@@ -62,11 +52,6 @@ function ProfileViewModel() {
 		self.alignment(values.alignment);
 		self.gender(values.gender);		
 		self.age(values.age);
-		self.height(values.height);
-		self.weight(values.weight);
-		self.hairColor(values.hairColor);
-		self.eyeColor(values.eyeColor);
-		self.skinColor(values.skinColor);
 		self.level(values.level);
 		self.exp(values.exp);
 	};
@@ -81,11 +66,6 @@ function ProfileViewModel() {
 			alignment: self.alignment(), 
 			gender: self.gender(),
 			age: self.age(),
-			height: self.height(),
-			weight: self.weight(),
-			hairColor: self.hairColor(),
-			eyeColor: self.eyeColor(),
-			skinColor: self.skinColor(),
 			level: self.level(),
 			exp: self.exp()
 		}
