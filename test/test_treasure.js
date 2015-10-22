@@ -9,14 +9,6 @@
     'misc': 'trinkets'
   };
 
-  describe('WorthInGold', function() {
-    it('should test if work in gold calculates correctly.', function() {
-      var coins = new Treasure();
-      coins.importValues(treasure_fixture);
-      coins.worth_in_gold().should.equal(14);
-    });
-  });
-
   describe('Treasure', function() {
     describe('Clear', function() {
       it('should clear all the values in it', function() {
@@ -82,6 +74,14 @@
       exported.silver.should.equal(coins.silver());
       exported.copper.should.equal(coins.copper());
       exported.misc.should.equal(coins.misc());
+    });
+  });
+
+  describe('WorthInGold', function() {
+    it('should test if work in gold calculates correctly.', function() {
+      var coins = new Treasure();
+      coins.importValues(treasure_fixture);
+      coins.worth_in_gold().should.equal(14);
     });
   });
 });
