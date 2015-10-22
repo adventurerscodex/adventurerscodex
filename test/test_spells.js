@@ -23,4 +23,15 @@ describe('Spells', function(){
     });
   });
 
+  describe('Clear', function() {
+    it('should clear all the values in the spellbook', function() {
+      var book = new Spellbook();
+      var spell = [new Spell()];
+      book.spellbook(spell);
+      book.spellbook().should.equal(spell);
+      book.clear();
+      book.spellbook().length.should.equal(0);
+    });
+  });
+
 });
