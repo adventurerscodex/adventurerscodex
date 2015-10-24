@@ -10,7 +10,6 @@ function AppearanceViewModel() {
 	};
 
 	self.importValues = function(values) {
-		console.log(values);
 		self.appearance().importValues(values.appearance);
 	};
 	
