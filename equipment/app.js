@@ -92,6 +92,11 @@ function EquipmentViewModel(parent) {
 		self.removeItem(self.selecteditem())
 		self.equipItem(self.selecteditem());
 	};
+
+	self.equipItemRowButton = function(item) {
+		self.removeItem(item)
+		self.equipItem(item);
+	};
 	
 	self.removeItemModalButton = function() {
 		self.removeItem(self.selecteditem());
