@@ -30,12 +30,22 @@
           <td data-bind='text: itemQty'></td>
           <td data-bind='text: itemWeight'></td>
           <td>
-            <a data-bind="click: $parent.editItemButton"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewItem">
-              <i class="glyphicon glyphicon-eye-open"></i>
-            </a>
+            <div class="row">
+              <div class="col-xs-6">
+                <a data-bind="click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem">
+                  <span class="glyphicon glyphicon-eye-open"></span>
+                </a>
+              </div>
+              <div class="col-xs-6">
+                <a data-bind="click: $parent.equipItemRowButton"
+                  href="#">
+                  <span class="glyphicon glyphicon glyphicon-transfer"></span>
+                </a>
+             </div>
+            </div>
           </td>
           <td>
             <a data-bind='click: $parent.removeItemButton' href="#">

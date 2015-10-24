@@ -91,8 +91,12 @@ function EquippedItemsViewModel(parent) {
 	};
 
 	//Manipulating items	
-	self.moveToBackpackButtonWasClicked = function() {
-		self.moveToBackpack(self.selectedItem());
+	self.moveToEquipmentButton = function() {
+		self.moveToEquipment(self.selecteditem());
+	};
+
+	self.moveToEquipmentRowButton = function(item) {
+		self.moveToEquipment(item);
 	};
 	
 	//Public Methods
@@ -101,9 +105,9 @@ function EquippedItemsViewModel(parent) {
 		self.equippedItems.push(item);
 	};
 	
-	self.moveToBackpack = function(item) {
+	self.moveToEquipment = function(item) {
 		self.removeItem(item);
-		self.parent.backpackViewModel().addToBackpack(item);
+		self.parent.equipmentViewModel().addToEquipment(item);
 	};
 	
 	self.clear = function() {

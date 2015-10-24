@@ -24,14 +24,25 @@
           <td  data-bind='text: itemBodyLocation'></td>
           <td  data-bind='text: itemWeight'></td>
           <td>
-            <a data-bind="click: $parent.editItem"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewEquippedItem">
-             <i class="glyphicon glyphicon-eye-open">
-              </i>
-              </a>
-            </td>
+            <div class="row">
+              <div class="col-xs-6">
+                <a data-bind="click: $parent.editItem"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewEquippedItem">
+                 <i class="glyphicon glyphicon-eye-open">
+                  </i>
+                  </a>
+              </div>
+              <div class="col-xs-6">
+                <a data-bind="click: $parent.moveToEquipmentRowButton"
+                  href="#">
+                 <i class="glyphicon glyphicon-transfer">
+                  </i>
+                  </a>
+             </div>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -117,7 +128,7 @@
           <div class="modal-footer">
             <button type="button"
               class="btn btn-default"
-              data-bind="click: $parent.moveToBackpack"
+              data-bind="click: $parent.moveToEquipmentButton"
               data-dismiss="modal">Unequip</button>
             <button type="button"
               class="btn btn-primary"
