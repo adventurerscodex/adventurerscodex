@@ -68,4 +68,32 @@ describe('Spells', function(){
     });
   });
 
+  describe('Sort By', function() {
+    it('should sort the list of spells by given criteria', function() {
+      var book = new Spellbook();
+      book.sortBy('spellName');
+      book.sort().should.equal(book.sorts['spellName desc']);
+      book.sortBy('spellName');
+      book.sort().should.equal(book.sorts['spellName asc']);
+      book.sortBy('spellLevel');
+      book.sort().should.equal(book.sorts['spellLevel asc']);
+      book.sortBy('spellLevel');
+      book.sort().should.equal(book.sorts['spellLevel desc']);
+    });
+  });
+
+  describe('Sort Arrow', function() {
+    it('should sort the list of skills by given criteria', function() {
+      var book = new Spellbook();
+      book.sortBy('spellName');
+      book.sort().should.equal(book.sorts['spellName desc']);
+      book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-down');
+      book.sortArrow('spellLevel').should.equal('');
+      book.sortBy('spellName');
+      book.sort().should.equal(book.sorts['spellName asc']);
+      book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-up');
+      book.sortArrow('spellLevel').should.equal('');
+    });
+  });
+
 });
