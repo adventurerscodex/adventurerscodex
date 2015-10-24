@@ -1,8 +1,5 @@
 "use strict";
 
-/**
- * The current items that a user has equipped.
- */
 function EquipmentViewModel(parent) {
 	var self = this;
 	self.parent = parent;
@@ -22,9 +19,9 @@ function EquipmentViewModel(parent) {
 	  'itemBodyLocation desc': { field: 'itemBodyLocation', direction: 'desc'}
 	};
 
-	self.equippedItems = ko.observableArray([]);
+	self.equipment = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
-	self.selecteditem = ko.observable();
+	self.selecteditem = ko.observable(new Item());
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
 	
@@ -33,14 +30,14 @@ function EquipmentViewModel(parent) {
 	/**
 	 * Filters and sorts the items for presentation in a table.
 	 */
-    self.filteredAndSortedEquippedItems = ko.computed(function() {
-    	var equippedItems = self.equippedItems();
+    self.filteredAndSortedEquipment = ko.computed(function() {
+    	var equipment = self.equipment();
     	
     	if (self.filter() !== '') {
     		//items = items.filter(function(a) {});
     	}	
     	
-    	return equippedItems.sort(function(a, b) {
+    	return equipment.sort(function(a, b) {
     		var asc = self.sort().direction === 'asc' ? true : false;
     		var res = null;
     		
@@ -90,55 +87,75 @@ function EquipmentViewModel(parent) {
 		self.sort(sort);
 	};
 
-	//Manipulating items	
-	self.moveToBackpackButtonWasClicked = function() {
-		self.moveToBackpack(self.selectedItem());
+	//Manipulating items
+	self.equipItemButton = function() {
+		self.removeItem(self.selecteditem())
+		self.equipItem(self.selecteditem());
+	};
+	
+	self.removeItemModalButton = function() {
+		self.removeItem(self.selecteditem());
+	};
+	
+	self.removeItemButton = function(item) {
+		self.removeItem(item);
+	};
+	
+	self.addItemButton = function() {
+		var item = new Item();
+		item.importValues(self.blankItem().exportValues());
+		self.equipment.push(item); 
+		self.blankItem().clear();
+	};
+	
+	self.editItemButton = function(item) {
+		self.editItem(item);
 	};
 	
 	//Public Methods
-
+	
+	self.addToEquipment = function(item) {
+		self.addItem(item);
+	};
+	
 	self.equipItem = function(item) {
-		self.equippedItems.push(item);
-	};
-	
-	self.moveToBackpack = function(item) {
 		self.removeItem(item);
-		self.parent.backpackViewModel().addToBackpack(item);
+		self.parent.equippedItemsViewModel().equipItem(item);	
 	};
-	
+
 	self.clear = function() {
-		self.equippedItems([]);
+		self.equipment([]);
 	};
 	
 	self.exportValues = function() {
-		var equippedItems = [];
-		for (var i in self.equippedItems()) {
-			var item = self.equippedItems()[i];
-			equippedItems.push(item.exportValues());
+		var equipment = [];
+		for (var i in self.equipment()) {
+			var item = self.equipment()[i];
+			equipment.push(item.exportValues());
 		}
 		return {
-			equippedItems: equippedItems
+			equipment: equipment
 		}
 	};
 
 	self.importValues = function(values) {
 		var newItems = []
-		for (var i in values.equippedItems) {
-			var item = values.equippedItems[i];
-			var newItem = new Item()
+		for (var i in values.equipment) {
+			var item = values.equipment[i];
+			var newItem = new Item();
 			newItem.importValues(item);
 			self.addItem(newItem);
 		}
 	};
+	
+	//Private Methods	
 
-	//Private Methods
-	
 	self.addItem = function(item) {
-		self.equippedItems.push(item)
+		self.equipment.push(item); 
 	};
-	
+
 	self.removeItem = function(item) {
-		self.equippedItems.remove(item);
+		self.equipment.remove(item);
 	};
 	
 	self.editItem = function(item) {

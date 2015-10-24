@@ -1,6 +1,9 @@
 "use strict";
 
-function BackpackViewModel(parent) {
+/**
+ * The current items that a user has equipped.
+ */
+function EquippedItemsViewModel(parent) {
 	var self = this;
 	self.parent = parent;
 	
@@ -19,9 +22,9 @@ function BackpackViewModel(parent) {
 	  'itemBodyLocation desc': { field: 'itemBodyLocation', direction: 'desc'}
 	};
 
-	self.backpack = ko.observableArray([]);
+	self.equippedItems = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
-	self.selecteditem = ko.observable(new Item());
+	self.selecteditem = ko.observable();
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
 	
@@ -30,14 +33,14 @@ function BackpackViewModel(parent) {
 	/**
 	 * Filters and sorts the items for presentation in a table.
 	 */
-    self.filteredAndSortedBackpack = ko.computed(function() {
-    	var backpack = self.backpack();
+    self.filteredAndSortedEquippedItems = ko.computed(function() {
+    	var equippedItems = self.equippedItems();
     	
     	if (self.filter() !== '') {
     		//items = items.filter(function(a) {});
     	}	
     	
-    	return backpack.sort(function(a, b) {
+    	return equippedItems.sort(function(a, b) {
     		var asc = self.sort().direction === 'asc' ? true : false;
     		var res = null;
     		
@@ -87,75 +90,55 @@ function BackpackViewModel(parent) {
 		self.sort(sort);
 	};
 
-	//Manipulating items
-	self.equipItemButton = function() {
-		self.removeItem(self.selecteditem())
-		self.equipItem(self.selecteditem());
-	};
-	
-	self.removeItemModalButton = function() {
-		self.removeItem(self.selecteditem());
-	};
-	
-	self.removeItemButton = function(item) {
-		self.removeItem(item);
-	};
-	
-	self.addItemButton = function() {
-		var item = new Item();
-		item.importValues(self.blankItem().exportValues());
-		self.backpack.push(item); 
-		self.blankItem().clear();
-	};
-	
-	self.editItemButton = function(item) {
-		self.editItem(item);
+	//Manipulating items	
+	self.moveToBackpackButtonWasClicked = function() {
+		self.moveToBackpack(self.selectedItem());
 	};
 	
 	//Public Methods
-	
-	self.addToBackpack = function(item) {
-		self.addItem(item);
-	};
-	
-	self.equipItem = function(item) {
-		self.removeItem(item);
-		self.parent.equipmentViewModel().equipItem(item);	
-	};
 
+	self.equipItem = function(item) {
+		self.equippedItems.push(item);
+	};
+	
+	self.moveToBackpack = function(item) {
+		self.removeItem(item);
+		self.parent.backpackViewModel().addToBackpack(item);
+	};
+	
 	self.clear = function() {
-		self.backpack([]);
+		self.equippedItems([]);
 	};
 	
 	self.exportValues = function() {
-		var backpack = [];
-		for (var i in self.backpack()) {
-			var item = self.backpack()[i];
-			backpack.push(item.exportValues());
+		var equippedItems = [];
+		for (var i in self.equippedItems()) {
+			var item = self.equippedItems()[i];
+			equippedItems.push(item.exportValues());
 		}
 		return {
-			backpack: backpack
+			equippedItems: equippedItems
 		}
 	};
 
 	self.importValues = function(values) {
 		var newItems = []
-		for (var i in values.backpack) {
-			var item = values.backpack[i];
-			var newItem = new Item();
+		for (var i in values.equippedItems) {
+			var item = values.equippedItems[i];
+			var newItem = new Item()
 			newItem.importValues(item);
 			self.addItem(newItem);
 		}
 	};
+
+	//Private Methods
 	
-	//Private Methods	
-
 	self.addItem = function(item) {
-		self.backpack.push(item); 
+		self.equippedItems.push(item)
 	};
-
+	
 	self.removeItem = function(item) {
-		self.backpack.remove(item);
+		self.equippedItems.remove(item);
 	};
 	
 	self.editItem = function(item) {

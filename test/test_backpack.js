@@ -1,59 +1,59 @@
 "use strict";
 
-describe('BackpackViewModelViewModel', function(){
+describe('EquipmentViewModel', function(){
 	describe('Add Item', function() {
-		it('should add a new item to the backpack', function() {
-			var p = new BackpackViewModel();
+		it('should add a new item to the equipment', function() {
+			var p = new EquipmentViewModel();
 			p.clear();
-			p.backpack().length.should.equal(0);
+			p.equipment().length.should.equal(0);
 			p.addItem();
-			p.backpack().length.should.equal(1);
+			p.equipment().length.should.equal(1);
 		});
 	});
 
 	describe('Remove Item', function() {
-		it('should remove a item from the backpack', function() {
-			var p = new BackpackViewModel();
+		it('should remove a item from the equipment', function() {
+			var p = new EquipmentViewModel();
 			p.clear();
-			p.backpack().length.should.equal(0);
+			p.equipment().length.should.equal(0);
 			p.addItem();
-			p.backpack().length.should.equal(1);
-			p.removeItem(p.backpack().pop());
-			p.backpack().length.should.equal(0);			
+			p.equipment().length.should.equal(1);
+			p.removeItem(p.equipment().pop());
+			p.equipment().length.should.equal(0);			
 		});
 	});
 
 	describe('Clear', function() {
-		it('should clear all the values in the backpack', function() {
-			var p = new BackpackViewModel();
+		it('should clear all the values in the equipment', function() {
+			var p = new EquipmentViewModel();
 			var item = [new Item()];
-			p.backpack(item);
-			p.backpack().should.equal(item);
+			p.equipment(item);
+			p.equipment().should.equal(item);
 			p.clear();
-			p.backpack().length.should.equal(0);
+			p.equipment().length.should.equal(0);
 		});
 	});
 
 	describe('Export', function() {
 		it('should return an object with the data given', function() {
-			var p = new BackpackViewModel();
+			var p = new EquipmentViewModel();
 			p.clear();
-			p.backpack().length.should.equal(0);
+			p.equipment().length.should.equal(0);
 			p.addItem(new Item());
-			p.backpack().length.should.equal(1);
+			p.equipment().length.should.equal(1);
 			var e = p.exportValues();
-			e.backpack.length.should.equal(p.backpack().length);
+			e.equipment.length.should.equal(p.equipment().length);
 		});
 	});
 	
 	describe('Import', function() {
 		it('should import an object with the data given', function() {
-			var p = new BackpackViewModel();
+			var p = new EquipmentViewModel();
 			p.clear();
-			p.backpack().length.should.equal(0);
-			var backpack = [{ itemName:'', itemDesc: '', itemQty: '', itemWeight: '', itemIsEquippable: false }];
-			p.importValues({ backpack: backpack });
-			p.backpack().length.should.equal(backpack.length);
+			p.equipment().length.should.equal(0);
+			var equipment = [{ itemName:'', itemDesc: '', itemQty: '', itemWeight: '', itemIsEquippable: false }];
+			p.importValues({ equipment: equipment });
+			p.equipment().length.should.equal(equipment.length);
 		});
 	});
 });

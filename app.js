@@ -173,7 +173,7 @@ function CharacterTabViewModel() {
 	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
 	self.stats = ko.observable(new Stats());
-	self.backpackViewModel = ko.observable(new BackpackViewModel(self));
+	self.equippedItemsViewModel = ko.observable(new EquippedItemsViewModel(self));
 	self.note = ko.observable(new Note());
     self.abilityScores = ko.observable(new AbilityScores());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
@@ -191,7 +191,7 @@ function CharacterTabViewModel() {
     	self.abilityScores().clear();
     	self.stats().clear();
     	self.featuresTraitsViewModel().clear();
-    	self.backpackViewModel().clear();
+    	self.equippedItemsViewModel().clear();
     	self.equipmentViewModel().clear();
     	self.spellSlotsViewModel().clear();
         self.spellbook().clear();
@@ -206,7 +206,7 @@ function CharacterTabViewModel() {
 		self.stats().importValues(values.stats);
 		self.equipmentViewModel().importValues(values.equipmentViewModel);
 		self.note().importValues(values.note);
-		self.backpackViewModel().importValues(values.backpackViewModel);
+		self.equippedItemsViewModel().importValues(values.equippedItemsViewModel);
 		self.abilityScores().importValues(values.abilityScores);
 		self.spellSlotsViewModel().importValues(values.spellSlotsViewModel);
 		self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
@@ -221,7 +221,7 @@ function CharacterTabViewModel() {
     		profileViewModel: self.profileViewModel().exportValues(),
     		appearanceViewModel: self.appearanceViewModel().exportValues(),
     		note: self.note().exportValues(),
-    		backpackViewModel: self.backpackViewModel().exportValues(),
+    		equippedItemsViewModel: self.equippedItemsViewModel().exportValues(),
     		stats: self.stats().exportValues(),
     		abilityScores: self.abilityScores().exportValues(),
     		spellSlotsViewModel: self.spellSlotsViewModel().exportValues(),
