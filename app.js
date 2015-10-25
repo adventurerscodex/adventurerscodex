@@ -152,6 +152,8 @@ function RootViewModel() {
 			self.importValues(JSON.parse(state));
 		} 
  		self.activeTab(self.playerType().defaultTab);
+ 		
+ 		self.characterTabViewModel().load();
 	};
 
     self.saveToFile = function() {
@@ -183,7 +185,11 @@ function CharacterTabViewModel() {
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
     self.featsProf = ko.observable(new FeatsProfViewModel());
-
+    
+    self.load = function() {
+    	self.skillTree().load();
+    };
+    
     self.clear = function() {
     	self.profileViewModel().clear();
     	self.appearanceViewModel().clear();

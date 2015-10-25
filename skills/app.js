@@ -11,12 +11,47 @@ function SkillTree() {
 	  'proficiency asc': { field: 'proficiency', direction: 'asc'},
 	  'proficiency desc': { field: 'proficiency', direction: 'desc'}
 	};
-	    
+	
+	self._defaultSkills = function() {
+		var skills = [
+			{ name: 'Acrobatics', abilityScore: 'Dex', proficency: false, modifier: 0 },
+			{ name: 'Animal Handling', abilityScore: 'Wis', proficency: false, modifier: 0 },
+			{ name: 'Arcana', abilityScore: 'Int', proficency: false, modifier: 0 },
+			{ name: 'Athletics', abilityScore: 'Str', proficency: false, modifier: 0 },
+			{ name: 'Deception', abilityScore: 'Cha', proficency: false, modifier: 0 },
+			{ name: 'History', abilityScore: 'Int', proficency: false, modifier: 0 },
+			{ name: 'Insight', abilityScore: 'Wis', proficency: false, modifier: 0 },
+			{ name: 'Intimidation', abilityScore: 'Cha', proficency: false, modifier: 0 },
+			{ name: 'Investigation', abilityScore: 'Int', proficency: false, modifier: 0 },
+			{ name: 'Medicine', abilityScore: 'Wis', proficency: false, modifier: 0 },
+			{ name: 'Nature', abilityScore: 'Int', proficency: false, modifier: 0 },
+			{ name: 'Perception', abilityScore: 'Wis', proficency: false, modifier: 0 },
+			{ name: 'Performance', abilityScore: 'Cha', proficency: false, modifier: 0 },
+			{ name: 'Persuasion', abilityScore: 'Cha', proficency: false, modifier: 0 },
+			{ name: 'Religion', abilityScore: 'Int', proficency: false, modifier: 0 },
+			{ name: 'Sleight of Hand', abilityScore: 'Dex', proficency: false, modifier: 0 },
+			{ name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: 0 },
+			{ name: 'Survival', abilityScore: 'Dex', proficency: false, modifier: 0 },
+		];
+		return $.map(skills, function(e, _) {
+			var skill = new Skill();
+			skill.importValues(e);
+			return skill;
+		});
+	};
+		    
     self.selecteditem = ko.observable();
     self.blankSkill = ko.observable(new Skill());
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
+    
+    self.load = function() {
+    	if (self.skills().length === 0) {    	
+    		self.skills(self._defaultSkills());
+    	}
+    
+    };
     
 	/* UI Methods */
 	
