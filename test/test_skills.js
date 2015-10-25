@@ -39,10 +39,10 @@ describe('Skill Tree', function() {
 			p.sort().should.equal(p.sorts['name desc']);
 			p.sortBy('name');
 			p.sort().should.equal(p.sorts['name asc']);
-			p.sortBy('bonus');
-			p.sort().should.equal(p.sorts['bonus asc']);
-			p.sortBy('bonus');
-			p.sort().should.equal(p.sorts['bonus desc']);
+			p.sortBy('modifier');
+			p.sort().should.equal(p.sorts['modifier asc']);
+			p.sortBy('modifier');
+			p.sort().should.equal(p.sorts['modifier desc']);
 		});
 	});
 	
@@ -52,11 +52,11 @@ describe('Skill Tree', function() {
 			p.sortBy('name');
 			p.sort().should.equal(p.sorts['name desc']);
 			p.sortArrow('name').should.equal('glyphicon glyphicon-arrow-down');
-			p.sortArrow('bonus').should.equal('');
+			p.sortArrow('modifier').should.equal('');
 			p.sortBy('name');
 			p.sort().should.equal(p.sorts['name asc']);
 			p.sortArrow('name').should.equal('glyphicon glyphicon-arrow-up');
-			p.sortArrow('bonus').should.equal('');
+			p.sortArrow('modifier').should.equal('');
 		});
 	});
 	

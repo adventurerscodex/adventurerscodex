@@ -4,14 +4,17 @@ function Skill() {
     var self = this;
 
     self.name = ko.observable('');
-    self.bonus = ko.observable(0);
+    self.modifier = ko.observable(0);
+    self.abilityScore = ko.observable('');
     self.proficiency = ko.observable(false);
 
-	self.bonusLabel = ko.computed(function() {
-		if (self.bonus() >= 0) {
-			return '+' + self.bonus();
-		} 
-		return String(self.bonus());
+	self.modifierLabel = ko.computed(function() {
+		var str = self.modifier() >= 0 ? 
+			'+' + self.modifier() : 
+			String(self.modifier());
+		str += ' <i><small>(' 
+				+ self.abilityScore() + ')</small></i>'
+		return str;
 	});
 	
 	self.proficiencyLabel = ko.computed(function() {
@@ -21,23 +24,25 @@ function Skill() {
 		return '';
 	});
 
-
     self.clear = function() {
         self.name('');
-        self.bonus(0);
+        self.abilityScore('');
+        self.modifier(0);
         self.proficiency(false);
     };
 
     self.importValues = function(values) {
         self.name(values.name);
-        self.bonus(values.bonus);
+        self.abilityScore(values.abilityScore);
+        self.modifier(values.modifier);
         self.proficiency(values.proficiency);
     };
 
     self.exportValues = function() {
         return {
 			name: self.name(),
-			bonus: self.bonus(),
+			abilityScore: self.abilityScore(),
+			modifier: self.modifier(),
 			proficiency: self.proficiency(),
 		}
     };

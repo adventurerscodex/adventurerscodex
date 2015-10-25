@@ -6,8 +6,8 @@ function SkillTree() {
     self.sorts = {
 	  'name asc': { field: 'name', direction: 'asc'},
 	  'name desc': { field: 'name', direction: 'desc'},
-	  'bonus asc': { field: 'bonus', direction: 'asc'},
-	  'bonus desc': { field: 'bonus', direction: 'desc'},
+	  'modifier asc': { field: 'modifier', direction: 'asc'},
+	  'modifier desc': { field: 'modifier', direction: 'desc'},
 	  'proficiency asc': { field: 'proficiency', direction: 'asc'},
 	  'proficiency desc': { field: 'proficiency', direction: 'desc'}
 	};

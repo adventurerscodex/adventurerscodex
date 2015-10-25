@@ -212,7 +212,7 @@ function CharacterTabViewModel() {
 		self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
 		self.spellbook().importValues(values.spellbook);
 		self.treasure().importValues(values.treasure);
-		self.featsProf().importValues(values.feats_prof);
+		self.featsProf().importValues(values.featsProf);
 		self.skillTree().importValues(values.skillTree);
     };
 
@@ -229,6 +229,7 @@ function CharacterTabViewModel() {
     		equipmentViewModel: self.equipmentViewModel().exportValues(),
             spellbook: self.spellbook().exportValues(),
             treasure: self.treasure().exportValues(),
+            featsProf: self.featsProf().exportValues(),
             skillTree: self.skillTree().exportValues()
     	};
     };
