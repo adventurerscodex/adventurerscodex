@@ -6,15 +6,15 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: sortBy('name')">
+          <th data-bind="click: function(){sortBy('name');}">
             Name
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th data-bind="click: sortBy('modifier')">
+          <th data-bind="click: function(){sortBy('modifier');}">
             Modifier
             <span data-bind="css: sortArrow('modifier')"></span>
           </th>
-          <th data-bind="click: sortBy('proficiency')">
+          <th data-bind="click: function(){sortBy('proficiency');}">
             Proficient
             <span data-bind="css: sortArrow('proficiency')"></span>
           </th>

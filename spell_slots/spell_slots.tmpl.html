@@ -13,15 +13,15 @@
       <table id='spellSlotsTable' class="table table-responsive table-ac-bordered table-hover">
         <thead>
           <tr>
-            <th data-bind="click: sortBy('level')">
+            <th data-bind="click: function(){sortBy('level');}">
               Level
               <span data-bind="css: sortArrow('level')"></span>
             </th>
-            <th class="hidden-sm hidden-xs" data-bind="click: sortBy('maxSpellSlots')">
+            <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('maxSpellSlots');}">
               Max
               <span data-bind="css: sortArrow('maxSpellSlots')"></span>
             </th>
-            <th data-bind="click: sortBy('usedSpellSlots')">
+            <th data-bind="click: function(){sortBy('usedSpellSlots');}">
               Used
               <span data-bind="css: sortArrow('usedSpellSlots')"></span>
             </th>

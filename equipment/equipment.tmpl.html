@@ -6,13 +6,13 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: sortBy('itemName')">
+          <th data-bind="click: function(){sortBy('itemName');}">
             Name
             <span data-bind="css: sortArrow('itemName')"></span></th>
-          <th data-bind="click: sortBy('itemQty')">
+          <th data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th data-bind="click: sortBy('itemWeight')">
+          <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
           <th>Equip</th>

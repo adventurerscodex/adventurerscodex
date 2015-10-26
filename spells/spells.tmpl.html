@@ -6,27 +6,27 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: sortBy('spellName')">
+          <th data-bind="click: function(){sortBy('spellName');}">
             Name
             <span data-bind="css: sortArrow('spellName')"></span>
           </th>
-          <th data-bind="click: sortBy('spellLevel')">
+          <th data-bind="click: function(){sortBy('spellLevel');}">
             Level
             <span data-bind="css: sortArrow('spellLevel')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellType')">
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellType');}">
             Type
             <span data-bind="css: sortArrow('spellType')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellDmg')">
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellDmg');}">
             Damage
             <span data-bind="css: sortArrow('spellDmg')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellCastingTime')">
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellCastingTime');}">
             Casting Time
             <span data-bind="css: sortArrow('spellCastingTime')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: sortBy('spellRange')">
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellRange');}">
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
