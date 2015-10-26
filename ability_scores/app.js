@@ -1,7 +1,18 @@
 "use strict";
 
 var getModifier = function(value){
-  return Math.floor((value - 10) / 2)
+  return Math.floor((value - 10) / 2);
+};
+
+var getStrModifier = function(modifier){
+  var modifier = getModifier(modifier);
+  if (modifier >= 0){
+    modifier = '+ ' + modifier;
+  }
+  else{
+    modifier = '- ' + Math.abs(modifier);
+  }
+   return modifier;
 };
 
 function AbilityScores() {
@@ -9,32 +20,32 @@ function AbilityScores() {
 
     self.str =  ko.observable(18);
     self.strModifier = ko.computed(function(){
-      return getModifier(self.str())
+      return getStrModifier(self.str());
     });
 
     self.dex =  ko.observable(18);
     self.dexModifier =  ko.computed(function(){
-      return getModifier(self.dex())
+      return getStrModifier(self.dex());
     });
 
     self.con =  ko.observable(18);
     self.conModifier =  ko.computed(function(){
-      return getModifier(self.con())
+      return getStrModifier(self.con());
     });
 
     self.int =  ko.observable(18);
     self.intModifier =  ko.computed(function(){
-      return getModifier(self.int())
+      return getStrModifier(self.int());
     });
 
     self.wis =  ko.observable(18);
     self.wisModifier =  ko.computed(function(){
-      return getModifier(self.wis())
+      return getStrModifier(self.wis());
     });
 
     self.cha =  ko.observable(18);
     self.chaModifier =  ko.computed(function(){
-      return getModifier(self.cha())
+      return getStrModifier(self.cha());
     });
 
     self.clear = function() {
@@ -63,6 +74,6 @@ function AbilityScores() {
             int: self.int(),
             wis: self.wis(),
             cha: self.cha(),
-        }
+        };
     };
 };

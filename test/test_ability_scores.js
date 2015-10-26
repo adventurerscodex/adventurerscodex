@@ -89,4 +89,15 @@
       actual.should.equal(3);
     });
   });
+
+  describe('Get Str Modifier', function() {
+    it('should test if modifier has a positive or negative prepended', function() {
+      var actual = getStrModifier(15);
+      actual.should.equal('+ 2');
+      var actual = getStrModifier(1);
+      actual.should.equal('- 5');
+      var actual = getStrModifier(30);
+      actual.should.equal('+ 10');
+    });
+  });
 });
