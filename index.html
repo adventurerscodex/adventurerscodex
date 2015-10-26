@@ -52,33 +52,45 @@
             <div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'appearance/', data: appearanceViewModel }"></div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-4 col-padded">
+            <div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores/', data: abilityScores }"></div>
+         </div>
+          <div class="col-md-4 col-padded">
+            <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'feats_prof/', data: featsProf }"></div>
+          </div>
+          <div class="col-md-4 col-padded">
+            <div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'feat_traits/', data: featuresTraitsViewModel }"></div>
+          </div>
+        </div>
         <div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats/', data: stats }"></div>
         <div class="row">
           <div class="col-md-6 col-padded">
-            <div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores/', data: abilityScores }"></div>
-            <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'feats_prof/', data: featsProf }"></div>
-         </div>
-          <div class="col-md-6 col-padded">
             <div id="skills"  data-bind="template: { name: 'skills.tmpl', templateUrl: 'skills/', data: skillTree }"></div>
           </div>
-        </div>
-        <div class="row">
           <div class="col-md-6 col-padded">
-            <div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'feat_traits/', data: featuresTraitsViewModel }"></div>
-          </div>
-          <div class="col-md-6 col-padded">
+            <div id="spells"  data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells/', data: spellbook }"></div>
             <div id="spell_slots"  data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'spell_slots/', data: spellSlotsViewModel }"></div>
+         </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 col-padded">
+          </div>
+          <div class="col-md-6 col-padded">
           </div>
         </div>
-        <div id="spells"  data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells/', data: spellbook }"></div>
-        <div id="equippedItems"  data-bind="template: { name: 'equipped_items.tmpl', templateUrl: 'equipped_items/', data: equippedItemsViewModel }"></div>
-        <div id="equipment"  data-bind="template: { name: 'equipment.tmpl', templateUrl: 'equipment/', data: equipmentViewModel }"></div>
         <div class="row">
           <div class="col-md-6 col-padded">
-        <div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'treasure/', data: treasure }"></div>
+            <div id="equippedItems"  data-bind="template: { name: 'equipped_items.tmpl', templateUrl: 'equipped_items/', data: equippedItemsViewModel }"></div>
+            <div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'treasure/', data: treasure }"></div>
           </div>
           <div class="col-md-6 col-padded">
-        <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes/', data: note }"></div>
+        <div id="equipment"  data-bind="template: { name: 'equipment.tmpl', templateUrl: 'equipment/', data: equipmentViewModel }"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-padded">
+            <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes/', data: note }"></div>
           </div>
         </div>
       </div><!-- End Character Tab -->
