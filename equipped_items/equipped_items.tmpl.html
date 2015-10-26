@@ -6,15 +6,15 @@
     <table class="table table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: sortBy('itemName')">
+          <th data-bind="click: function(){sortBy('itemName');}">
             Name
             <span data-bind="css: sortArrow('itemName')"></span></th>
-          <th data-bind="click: sortBy('itemBodyLocation')">
+          <th data-bind="click: function(){sortBy('itemBodyLocation');}">
             Body Part
             <span data-bind="css: sortArrow('itemBodyLocation')"></span></th>
-          <th data-bind="click: sortBy('itemWeight')">
+          <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
-            <span data-bind="css: sortArrow('itemWeight')"></span></th>
+            <span data-bind="css: sortArrow('itemWeight');}"></span></th>
           <th>Unequip</th>
         </tr>
       </thead>
