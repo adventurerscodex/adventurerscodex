@@ -321,22 +321,17 @@ var PlayerTypes = {
  * - Set up automatic saving.
  */
 var init = function(viewModel) {
-	if (localStorage['character.characterKeys'] === undefined
-			|| eval(localStorage['character.characterKeys']).length < 1) {
-		window.location = '/characters'
-	} else {
-		//Set up the player type if it's the first time
-		var ptKey = playerTypeFromUrl();
-		if (ptKey) {
-			for (var i in Object.keys(PlayerTypes)) {
-				var type = PlayerTypes[Object.keys(PlayerTypes)[i]];
-				if (type.key === ptKey) {
-					viewModel.playerType(type);				
-				}
-			}    
-		}
-		//Load any saved state.
-		viewModel.init();
-		viewModel.load();
-  	}
+	//Set up the player type if it's the first time
+	var ptKey = playerTypeFromUrl();
+	if (ptKey) {
+		for (var i in Object.keys(PlayerTypes)) {
+			var type = PlayerTypes[Object.keys(PlayerTypes)[i]];
+			if (type.key === ptKey) {
+				viewModel.playerType(type);				
+			}
+		}    
+	}
+	//Load any saved state.
+	viewModel.init();
+	viewModel.load();
 };

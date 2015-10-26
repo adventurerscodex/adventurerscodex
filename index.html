@@ -9,6 +9,12 @@
     <link rel="icon" type="image/png" href="/images/logo-full.png">    
     <link href="site.css" rel="stylesheet">
     <link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
+    <script type="text/javascript">
+    //Check immediately. Skip loading page if necessary.
+    if (localStorage['character.characterKeys'] === undefined || eval(localStorage['character.characterKeys']).length < 1) {
+      window.location = '/characters'
+    }
+    </script>
  </head>
  <body>
    <nav class="navbar navbar-default navbar-fixed-top">
