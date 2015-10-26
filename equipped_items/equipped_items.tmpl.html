@@ -3,7 +3,7 @@
 	  <h2 class="panel-title">Equipped Items</h2>
   </div>
   <div class="panel-body">
-    <table class="table table-bordered table-hover">
+    <table class="table table-ac-bordered table-hover">
       <thead>
         <tr>
           <th data-bind="click: sortBy('itemName')">
@@ -15,33 +15,29 @@
           <th data-bind="click: sortBy('itemWeight')">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th>Options</th>
+          <th>Unequip</th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: filteredAndSortedEquippedItems'>
-        <tr>
-          <td  data-bind='text: itemName'></td>
-          <td  data-bind='text: itemBodyLocation'></td>
-          <td  data-bind='text: itemWeight'></td>
-          <td>
-            <div class="row">
-              <div class="col-xs-6">
-                <a data-bind="click: $parent.editItem"
+      <tbody data-bind="foreach: filteredAndSortedEquippedItems">
+        <tr style="cursor:pointer;">
+          <td data-bind="text: itemName, click: $parent.editItem"
                   href="#"
                   data-toggle="modal"
-                  data-target="#viewEquippedItem">
-                 <i class="glyphicon glyphicon-eye-open">
-                  </i>
-                  </a>
-              </div>
-              <div class="col-xs-6">
-                <a data-bind="click: $parent.moveToEquipmentRowButton"
-                  href="#">
-                 <i class="glyphicon glyphicon-transfer">
-                  </i>
-                  </a>
-             </div>
-            </div>
+                  data-target="#viewEquippedItem"></td>
+          <td data-bind="text: itemBodyLocation, click: $parent.editItem"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewEquippedItem"></td>
+          <td data-bind="text: itemWeight, click: $parent.editItem"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewEquippedItem"></td>
+          <td>
+            <a data-bind="click: $parent.moveToEquipmentRowButton"
+              href="#">
+              <span class="glyphicon glyphicon-transfer">
+              </span>
+            </a>
           </td>
         </tr>
       </tbody>
