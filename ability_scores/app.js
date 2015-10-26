@@ -9,32 +9,56 @@ function AbilityScores() {
 
     self.str =  ko.observable(18);
     self.strModifier = ko.computed(function(){
-      return getModifier(self.str())
+        var modifier = getModifier(self.str());
+      if (modifier >= 0){
+        modifier = '+ ' + modifier;
+      }
+      return modifier
     });
 
     self.dex =  ko.observable(18);
     self.dexModifier =  ko.computed(function(){
-      return getModifier(self.dex())
+         var modifier = getModifier(self.dex());
+      if (modifier >= 0){
+        modifier = '+ ' + modifier;
+      }
+      return modifier
     });
 
     self.con =  ko.observable(18);
     self.conModifier =  ko.computed(function(){
-      return getModifier(self.con())
+         var modifier = getModifier(self.con());
+      if (modifier >= 0){
+        modifier = '+ ' + modifier;
+      }
+      return modifier
     });
 
     self.int =  ko.observable(18);
     self.intModifier =  ko.computed(function(){
-      return getModifier(self.int())
+        var modifier = getModifier(self.int());
+      if (modifier >= 0){
+        modifier = '+ ' + modifier;
+      }
+      return modifier
     });
 
     self.wis =  ko.observable(18);
     self.wisModifier =  ko.computed(function(){
-      return getModifier(self.wis())
+        var modifier = getModifier(self.wis());
+      if (modifier >= 0){
+        modifier = '+ ' + modifier;
+      }
+      return modifier
     });
 
     self.cha =  ko.observable(18);
     self.chaModifier =  ko.computed(function(){
-      return getModifier(self.cha())
+        var modifier = getModifier(self.cha());
+      if (modifier >= 0){
+        modifier = '+ ' + modifier;
+      }
+      return modifier
     });
 
     self.clear = function() {
