@@ -1,9 +1,9 @@
-<div class="panel panel-default bio">
+<div class="panel panel-default">
   <div class="panel-heading">
 	  <h2 class="panel-title">Equipment</h2>
   </div>
   <div class="panel-body">
-    <table class="table table-bordered table-hover">
+    <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
           <th data-bind="click: sortBy('itemName')">
@@ -15,7 +15,7 @@
           <th data-bind="click: sortBy('itemWeight')">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th>Options</th>
+          <th>Equip</th>
           <th>
            <a data-toggle="modal"
             data-target="#addItem" href="#">
@@ -25,27 +25,24 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedEquipment'>
-        <tr>
-          <td data-bind='text: itemName'></td>
-          <td data-bind='text: itemQty'></td>
-          <td data-bind='text: itemWeight'></td>
-          <td>
-            <div class="row">
-              <div class="col-xs-6">
-                <a data-bind="click: $parent.editItemButton"
+        <tr style="cursor:pointer;">
+          <td data-bind="text: itemName, click: $parent.editItemButton"
                   href="#"
                   data-toggle="modal"
-                  data-target="#viewItem">
-                  <span class="glyphicon glyphicon-eye-open"></span>
-                </a>
-              </div>
-              <div class="col-xs-6">
-                <a data-bind="click: $parent.equipItemRowButton"
-                  href="#">
-                  <span class="glyphicon glyphicon glyphicon-transfer"></span>
-                </a>
-             </div>
-            </div>
+                  data-target="#viewItem"></td>
+          <td data-bind="text: itemQty, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>
+          <td data-bind="text: itemWeight, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>
+          <td>
+            <a data-bind="click: $parent.equipItemRowButton"
+              href="#">
+              <span class="glyphicon glyphicon glyphicon-transfer"></span>
+            </a>
           </td>
           <td>
             <a data-bind='click: $parent.removeItemButton' href="#">

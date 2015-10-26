@@ -1,9 +1,9 @@
-<div class="panel panel-default bio">
+<div class="panel panel-default">
   <div class="panel-heading">
       <h2 class="panel-title">Spells</h2>
   </div>
   <div class="panel-body">
-    <table class="table table-responsive table-bordered table-hover">
+    <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
           <th data-bind="click: sortBy('spellName')">
@@ -30,7 +30,6 @@
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
-          <th></th>
           <th>
             <a data-toggle="modal"
                data-target="#addSpell" href="#">
@@ -40,22 +39,31 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSpells'>
-        <tr>
-          <td data-bind='text: spellName'></td>
-          <td data-bind='text: spellLevel'></td>
-          <td class="hidden-sm hidden-xs" data-bind='text: spellType'></td>
-          <td class="hidden-sm hidden-xs" data-bind='text: spellDmg'></td>
-          <td class="hidden-sm hidden-xs" data-bind='text: spellCastingTime'></td>
-          <td data-bind='text: spellRange'></td>
-          <td>
-            <a data-bind="click: $parent.editSpell"
+        <tr style="cursor:pointer;">
+          <td data-bind="text: spellName, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
-               data-target="#viewSpell">
-              <i class="glyphicon glyphicon-eye-open">
-              </i>
-            </a>
-          </td>
+               data-target="#viewSpell"></td>
+          <td data-bind="text: spellLevel, click: $parent.editSpell"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSpell""></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSpell""></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: spellDmg, click: $parent.editSpell"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSpell""></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: spellCastingTime, click: $parent.editSpell"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSpell""></td>
+          <td data-bind="text: spellRange, click: $parent.editSpell"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSpell""></td>
           <td>
             <a data-bind="click: $parent.removeSpell" href="#">
               <i class="glyphicon glyphicon-remove">

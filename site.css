@@ -11,6 +11,10 @@ body {
   padding-bottom: 5px;
 }
 
+.table-ac-bordered tr {
+  border-bottom: thin solid #ecf0f1;
+} 
+
 .beta {
   color:orange;
 }
