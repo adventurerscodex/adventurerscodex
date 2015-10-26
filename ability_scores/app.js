@@ -1,63 +1,68 @@
 "use strict";
 
+var getModifier = function(value){
+  return Math.floor((value - 10) / 2)
+};
+
 function AbilityScores() {
-    this.str =  ko.observable('');
-    this.str_modifier =  ko.observable('');
-    this.dex =  ko.observable('');
-    this.dex_modifier =  ko.observable('');
-    this.con =  ko.observable('');
-    this.con_modifier =  ko.observable('');
-    this.int =  ko.observable('');
-    this.int_modifier =  ko.observable('');
-    this.wis =  ko.observable('');
-    this.wis_modifier =  ko.observable('');
-    this.cha =  ko.observable('');
-    this.cha_modifier =  ko.observable('');
+    var self = this;
 
-    this.clear = function() {
-        this.str('');
-        this.str_modifier('');
-        this.dex('');
-        this.dex_modifier('');
-        this.con('');
-        this.con_modifier('');
-        this.int('');
-        this.int_modifier('');
-        this.wis('');
-        this.wis_modifier('');
-        this.cha('');
-        this.cha_modifier('');
+    self.str =  ko.observable(18);
+    self.strModifier = ko.computed(function(){
+      return getModifier(self.str())
+    });
+
+    self.dex =  ko.observable(18);
+    self.dexModifier =  ko.computed(function(){
+      return getModifier(self.dex())
+    });
+
+    self.con =  ko.observable(18);
+    self.conModifier =  ko.computed(function(){
+      return getModifier(self.con())
+    });
+
+    self.int =  ko.observable(18);
+    self.intModifier =  ko.computed(function(){
+      return getModifier(self.int())
+    });
+
+    self.wis =  ko.observable(18);
+    self.wisModifier =  ko.computed(function(){
+      return getModifier(self.wis())
+    });
+
+    self.cha =  ko.observable(18);
+    self.chaModifier =  ko.computed(function(){
+      return getModifier(self.cha())
+    });
+
+    self.clear = function() {
+        self.str(18);
+        self.dex(18);
+        self.con(18);
+        self.int(18);
+        self.wis(18);
+        self.cha(18);
     };
 
-    this.importValues = function(values) {
-        this.str(values.str);
-        this.str_modifier(values.str_modifier);
-        this.dex(values.dex);
-        this.dex_modifier(values.dex_modifier);
-        this.con(values.con);
-        this.con_modifier(values.con_modifier);
-        this.int(values.int);
-        this.int_modifier(values.int_modifier);
-        this.wis(values.wis);
-        this.wis_modifier(values.wis_modifier);
-        this.cha(values.cha);
-        this.cha_modifier(values.cha_modifier);
+    self.importValues = function(values) {
+        self.str(values.str);
+        self.dex(values.dex);
+        self.con(values.con);
+        self.int(values.int);
+        self.wis(values.wis);
+        self.cha(values.cha);
     };
 
-    this.exportValues = function() {
+    self.exportValues = function() {
         return {
-            str: this.str(),
-            str_modifier: this.str_modifier(),
-            dex: this.dex(),
-            dex_modifier: this.dex_modifier(),
-            con: this.con(),
-            con_modifier: this.con_modifier(),
-            int: this.int(),
-            int_modifier: this.int_modifier(),
-            wis: this.wis(),
-            wis_modifier: this.wis_modifier(),
-            cha: this.cha(),
-            cha_modifier: this.cha_modifier()
+            str: self.str(),
+            dex: self.dex(),
+            con: self.con(),
+            int: self.int(),
+            wis: self.wis(),
+            cha: self.cha(),
         }
     };
 };
