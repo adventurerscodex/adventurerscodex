@@ -2,7 +2,8 @@
 
   var values = {
     'feats': 'tough',
-    'proficiencies': 'simple weapons'
+    'proficiencies': 'simple weapons',
+    'specialAbilities': 'darkvision'
   };
 
   describe('FeatsProfViewModel', function() {
@@ -22,6 +23,7 @@
       profFeats.importValues(values);
       profFeats.feats().should.equal(values.feats);
       profFeats.proficiencies().should.equal(values.proficiencies);
+      profFeats.specialAbilities().should.equal(values.specialAbilities);
     });
   });
 
@@ -30,9 +32,11 @@
       var profFeats = new FeatsProfViewModel();
       profFeats.feats(values.feats);
       profFeats.proficiencies(values.proficiencies);
+      profFeats.proficiencies(values.specialAbilities);
       var exported = profFeats.exportValues();
       exported.feats.should.equal(profFeats.feats());
       exported.proficiencies.should.equal(profFeats.proficiencies());
+      exported.specialAbilities.should.equal(profFeats.specialAbilities());
     });
   });
 });
