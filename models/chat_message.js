@@ -9,6 +9,15 @@ function ChatMessage() {
 	self.fromId = ko.observable('');
 	self.text = ko.observable('');
 	
+	self.message = ko.computed(function () {
+		var message = '';
+		if (self.from().trim() !== '') {
+			message += self.from() + ': ';
+		}
+		message += self.text();
+		return message;
+	});
+	
 	self.importValues = function(values) {
 		self.to(values.to);
 		self.toId(values.toId);

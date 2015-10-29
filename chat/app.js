@@ -5,12 +5,16 @@ function PartyChatViewModel(parent) {
 	
 	self.parent = parent;
 	self.messenger = self.parent.messenger;
+	self.players = self.parent.players;
 	self.log = ko.observableArray([]);
 	self.message = ko.observable('');
-	self.id = uuid.v4();
+	self.id = null;
 	
 	self.init = function() {
 		self.messenger.subscribe('data', 'chat', self.handleMessage);
+		self.players.onPlayerEnters(self.handleNewPlayer);
+		self.players.onPlayerLeaves(self.handlePlayerLeft);
+		self.id = getKey();
 	};
 		
 	//UI Methods
@@ -36,6 +40,18 @@ function PartyChatViewModel(parent) {
 		if (message.toId() === self.id || message.toId().toLowerCase() === 'all') {
 			self.log.push(message);
 		}
+	};
+	
+	self.handleNewPlayer = function(player) {
+		var message = new ChatMessage();
+		message.text('<i><small>' + player.name + ' has entered the room.</small></i>');
+		self.log.push(message);
+	};
+
+	self.handlePlayerLeft = function(player) {
+		var message = new ChatMessage();
+		message.text('<i><small>' + player.name + ' has left the room.</small></i>');
+		self.log.push(message);
 	};
 	
 	self.importValues = function(values) {
