@@ -47,7 +47,7 @@ function Messenger() {
 	 */
 	self.subscribe = function(classification, type, callback) {
 		self._socket.on(classification, function(msg) {
-			if (msg.type === type) {
+			if (msg === type || msg.type === type) {
 				callback(msg.msg);
 			}
 		});
