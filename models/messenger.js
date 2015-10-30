@@ -34,7 +34,7 @@ function Messenger() {
 	 * @params type: A classifier for the message type. 
 	 * @params msg: The JSON msg payload.
 	 */
-	self.sendReqMsg = function(id, to, type, msg) {
+	self.sendReqMsg = function(id, to, type, data) {
 		self._send(to, 'req', type, data);
 	};
 	
@@ -47,7 +47,7 @@ function Messenger() {
 	 */
 	self.subscribe = function(classification, type, callback) {
 		self._socket.on(classification, function(msg) {
-			if (msg.type === type) {
+			if (msg === type || msg.type === type) {
 				callback(msg.msg);
 			}
 		});

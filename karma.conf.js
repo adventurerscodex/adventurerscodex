@@ -28,8 +28,10 @@ module.exports = function(config) {
                             
         reporters: ['progress', 'coverage'],
         preprocessors: { 
-        	'*.js': ['coverage'],
-        	'*/*.js': ['coverage']
+        	'*/app.js': ['coverage'],
+        	'models/*.js': ['coverage'],
+        	'test/*.js': ['coverage'],
+        	'app.js': ['coverage']
         	},
         coverageReporter: {
 			type: "lcov",
