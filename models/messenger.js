@@ -34,7 +34,7 @@ function Messenger() {
 	 * @params type: A classifier for the message type. 
 	 * @params msg: The JSON msg payload.
 	 */
-	self.sendReqMsg = function(id, to, type, msg) {
+	self.sendReqMsg = function(id, to, type, data) {
 		self._send(to, 'req', type, data);
 	};
 	
