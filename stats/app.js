@@ -2,9 +2,11 @@
 
 function Stats() {
 	var self = this;
-
+	
 	self.health = new Health();
 	self.otherStats = new OtherStats();
+	self.blankHitDice = ko.observable(new HitDice());
+	self.hitDiceList = ko.observableArray([]);
 
 	self.clear = function() {
 		self.health.clear();
@@ -14,136 +16,35 @@ function Stats() {
 	self.importValues = function(values) {
 		self.health.importValues(values.health);
 		self.otherStats.importValues(values.otherStats);
+		var newDice = [];
+		for (var i in values.hitDiceList) {
+			var dice = values.hitDiceList[i];
+			var newDice = new HitDice();
+			newDice.importValues(dice);
+			self.hitDiceList.push(newDice);
+		}
 	};
 	
 	self.exportValues = function() {
+		var hitDices = [];
+		for (var i in self.hitDiceList()) {
+			var dice = self.hitDiceList()[i];
+			hitDices.push(dice.exportValues());
+		}
 		return {
 			health: self.health.exportValues(),
-			otherStats: self.otherStats.exportValues()
+			otherStats: self.otherStats.exportValues(),
+			hitDiceList: hitDices
 		}
+	};
+	
+	self.addHitDice = function() {
+		self.hitDiceList.push(self.blankHitDice());
+		self.blankHitDice(new HitDice());
+	};
+	
+	self.removeHitDice = function() {
+		self.hitDiceList.remove(self.hitDiceList.pop());
 	};
 };
 
-function Health() {
-	var self = this;
-	self.DANGER_THRESHOLD = 0.10;
-	self.WARNING_THRESHOLD = 0.30;
-	
-	self.maxHitpoints = ko.observable(10);
-	self.tempHitpoints = ko.observable(0);
-	self.damage = ko.observable(0);
-		
-	self.hitpoints = ko.computed(function() {
-		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
-	}, self);
-	
-	self.totalHitpoints = ko.computed(function() {
-		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints()));
-	}, self);
-	
-	self.tempHitpointsRemaining = ko.computed(function() {
-		return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
-	}, self);
-		
-	self.regularHitpointsRemaining = ko.computed(function() {
-		if (self.tempHitpointsRemaining() > 0) {
-			return parseInt(self.maxHitpoints())
-		}
-		return (parseInt(self.maxHitpoints()) - (parseInt(self.damage()) - parseInt(self.tempHitpoints())));
-	}, self);
-
-	//Progress bar methods.
-		
-	self.isKnockedOut =  ko.computed(function() {
-		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= 0: false; 
-	}, self);
-		
-	self.isDangerous = ko.computed(function() {
-		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD : false; 
-	}, self);
-	
-	self.isWarning = ko.computed(function() {
-		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD : false; 
-	}, self);
-	
-	self.progressType = ko.computed(function() {
-		var type = 'progress-bar-success';
-		if (self.isWarning()) type = 'progress-bar-warning';
-		if (self.isDangerous()) type = 'progress-bar-danger';
-		return type;
-	}, self);
-	
-	self.regularProgressWidth = ko.computed(function() {
-		if (self.isKnockedOut()) {
-			return '100%';
-		}
-		return (parseInt(self.regularHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
-	}, self);
-
-	self.tempProgressWidth = ko.computed(function() {
-		if (self.tempHitpointsRemaining() < 0) {
-			return '0%';
-		}
-		return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
-	}, self);
-	
-	
-	self.progressLabel = ko.computed(function() {
-		if (self.isKnockedOut()) {
-			return 'K.O.';
-		} 
-		return '';
-	}, self);
-	
-	self.clear = function() {
-		self.maxHitpoints(0);
-		self.tempHitpoints(0);
-		self.damage(0);
-	};
-	
-	self.importValues = function(values) {
-		self.maxHitpoints(values.maxHitpoints);
-		self.tempHitpoints(values.tempHitpoints);
-		self.damage(values.damage);
-	};
-	
-	self.exportValues = function() {
-		return {
-			maxHitpoints: self.maxHitpoints(),
-			tempHitpoints: self.tempHitpoints(),
-			damage: self.damage()
-		}
-	};
-};
-
-function OtherStats() {
-	var self = this;
-	
-	self.ac = ko.observable(10);
-	self.initiative = ko.observable(0);
-	self.speed = ko.observable(0);
-	self.inspiration = ko.observable(0);
-	
-	self.clear = function() {
-		self.ac(10);
-		self.initiative(0);
-		self.speed(0);
-		self.inspiration(0);
-	};
-	
-	self.importValues = function(values) {
-		self.ac(values.ac);
-		self.initiative(values.initiative);
-		self.speed(values.speed);
-		self.inspiration(values.inspiration);
-	};
-	
-	self.exportValues = function() {
-		return {
-			ac: self.ac(),
-			initiative: self.initiative(),
-			speed: self.speed(),
-			inspiration: self.inspiration()
-		}
-	};
-};
