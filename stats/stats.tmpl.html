@@ -15,6 +15,7 @@
       </div>
       <span class="input-group-addon" id="hitpointsCounter">HP: <span data-bind="text: health.hitpoints"></span></span>
     </div>
+	<!--Health items -->
     <div class="row row-padded">
       <div class="col-md-1 col-padded"></div>
       <div class="col-md-2 col-padded">
@@ -38,6 +39,42 @@
           <span class="input-group-addon" id="basic-addon2">Temp Hit Points</span>
           <input type="number" class="form-control" aria-describedby="basic-addon2"
             data-bind='textInput: health.tempHitpoints' min="0">
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+      </div>
+	  <!--AC, Initiative, Speed-->
+	<div class="row row-padded">
+      <div class="col-md-1 col-padded"></div>
+      <div class="col-md-2 col-padded">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">AC</span>
+          <input type="number" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: otherStats.ac' min="0">
+          </div>
+        </div>
+        <div class="col-md-1 col-padded"></div>
+        <div class="col-md-2 col-padded">
+          <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Initiative</span>
+          <input type="number" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: otherStats.initiative'>
+          </div>
+        </div>
+        <div class="col-md-1 col-padded"></div>
+        <div class="col-md-2 col-padded">
+          <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Speed</span>
+          <input type="number" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: otherStats.speed' min="0">
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+		<div class="col-md-2 col-padded">
+          <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Inspiration</span>
+          <input type="number" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: otherStats.inspiration' min="0">
           </div>
         </div>
         <div class="col-md-1"></div>

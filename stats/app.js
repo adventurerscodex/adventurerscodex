@@ -4,18 +4,22 @@ function Stats() {
 	var self = this;
 
 	self.health = new Health();
+	self.otherStats = new OtherStats();
 
 	self.clear = function() {
 		self.health.clear();
+		self.otherStats.clear();
 	};
 	
 	self.importValues = function(values) {
 		self.health.importValues(values.health);
+		self.otherStats.importValues(values.otherStats);
 	};
 	
 	self.exportValues = function() {
 		return {
-			health: self.health.exportValues()
+			health: self.health.exportValues(),
+			otherStats: self.otherStats.exportValues()
 		}
 	};
 };
@@ -108,6 +112,38 @@ function Health() {
 			maxHitpoints: self.maxHitpoints(),
 			tempHitpoints: self.tempHitpoints(),
 			damage: self.damage()
+		}
+	};
+};
+
+function OtherStats() {
+	var self = this;
+	
+	self.ac = ko.observable(10);
+	self.initiative = ko.observable(0);
+	self.speed = ko.observable(0);
+	self.inspiration = ko.observable(0);
+	
+	self.clear = function() {
+		self.ac(10);
+		self.initiative(0);
+		self.speed(0);
+		self.inspiration(0);
+	};
+	
+	self.importValues = function(values) {
+		self.ac(values.ac);
+		self.initiative(values.initiative);
+		self.speed(values.speed);
+		self.inspiration(values.inspiration);
+	};
+	
+	self.exportValues = function() {
+		return {
+			ac: self.ac(),
+			initiative: self.initiative(),
+			speed: self.speed(),
+			inspiration: self.inspiration()
 		}
 	};
 };
