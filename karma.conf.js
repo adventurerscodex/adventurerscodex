@@ -20,6 +20,7 @@ module.exports = function(config) {
 			//Stuff to test.
 			'app.js',
 			'*/app.js',
+			'bin/*.js',
 			'models/*.js',
 			//Tests to run.
             'test/*.js'
