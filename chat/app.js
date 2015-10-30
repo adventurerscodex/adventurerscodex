@@ -38,6 +38,7 @@ function PartyChatViewModel(parent) {
 		message.importValues(msg);
 		//If the message is to you or the group.
 		if (message.toId() === self.id || message.toId().toLowerCase() === 'all') {
+			message.text(self.markdown(message.text()));
 			self.log.push(message);
 		}
 	};
@@ -86,5 +87,9 @@ function PartyChatViewModel(parent) {
 	 */
 	self._playersInRoom = function() {
 		//return self.parent.
+	};
+
+	self.markdown = function(text) {
+		return markdown.toHTML(text).replace('<p>', '').replace('</p>', '');
 	};
 };
