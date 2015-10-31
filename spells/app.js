@@ -2,7 +2,7 @@
 
 function Spellbook() {
     var self = this;
-   
+
     self.sorts = {
 	  'spellName asc': { field: 'spellName', direction: 'asc'},
 	  'spellName desc': { field: 'spellName', direction: 'desc'},
@@ -17,47 +17,47 @@ function Spellbook() {
 	  'spellRange asc': { field: 'spellRange', direction: 'asc'},
 	  'spellRange desc': { field: 'spellRange', direction: 'desc'}
 	};
-	
+
     self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
-    
+
 	/* UI Methods */
-	
+
 	/**
 	 * Filters and sorts the spells for presentation in a table.
 	 */
     self.filteredAndSortedSpells = ko.computed(function() {
     	var spells = self.spellbook();
-    	
+
     	if (self.filter() !== '') {
     		//spells = spells.filter(function(a) {});
-    	}	
+    	}
 
     	return spells.sort(function(a, b) {
     		var asc = self.sort().direction === 'asc' ? true : false;
     		var res = null;
-    		
+
     		var aprop = a[self.sort().field]();
     		var bprop = b[self.sort().field]();
-    		
+
     		if (self.sort().numeric) {
 				aprop = parseInt(a[self.sort().field]());
 				bprop = parseInt(b[self.sort().field]());
     		}
-    		
+
     		if (asc) {
 	    		res = aprop > bprop ? 1 : -1;
     		} else {
 	    		res = aprop < bprop ? 1 : -1;
     		}
     		return res;
-    	}); 	
+    	});
     });
-    
+
     /**
      * Determines whether a column should have an up/down/no arrow for sorting.
      */
@@ -83,7 +83,7 @@ function Spellbook() {
 			sort = self.sorts[columnName+' desc'];
 		} else {
 			sort = self.sorts[columnName+' asc'];
-		}	
+		}
 		self.sort(sort);
 	};
 

@@ -47,23 +47,23 @@
           <td data-bind="text: spellLevel, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
-               data-target="#viewSpell""></td>
+               data-target="#viewSpell"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
-               data-target="#viewSpell""></td>
+               data-target="#viewSpell"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellDmg, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
-               data-target="#viewSpell""></td>
+               data-target="#viewSpell"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellCastingTime, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
-               data-target="#viewSpell""></td>
+               data-target="#viewSpell"></td>
           <td data-bind="text: spellRange, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
-               data-target="#viewSpell""></td>
+               data-target="#viewSpell"></td>
           <td>
             <a data-bind="click: $parent.removeSpell" href="#">
               <i class="glyphicon glyphicon-remove">
@@ -113,7 +113,7 @@
                            class="form-control"
                            id="spellLevel"
                            placeholder="1"
-                           min="1"
+                           min="0"
                            max="9"
                            data-bind='textInput: blankSpell().spellLevel'>
                   </div>
@@ -122,22 +122,18 @@
                 <label for="spellSchool"
                        class="col-sm-2 control-label">School</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellSchool"
-                           placeholder="Evocation"
-                           data-bind='textInput: blankSpell().spellSchool'>
+                  <select class="form-control"
+                          data-bind="options: blankSpell().spellSchoolOptions,
+                                     value: blankSpell().spellSchool"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellType"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellType"
-                           placeholder="Savings Throw, Attack Roll, etc"
-                           data-bind="value: blankSpell().spellType">
+                  <select class="form-control"
+                          data-bind="options: blankSpell().spellTypeOptions,
+                                     value: blankSpell().spellType"></select>
                   </div>
               </div>
               <div class="form-group">
@@ -155,44 +151,36 @@
                 <label for="spellCastingTime"
                        class="col-sm-2 control-label">Cast Time</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellCastingTime"
-                           placeholder="1 action"
-                           data-bind='textInput: blankSpell().spellCastingTime'>
+                  <select class="form-control"
+                          data-bind="options: blankSpell().spellCastingTimeOptions,
+                                     value: blankSpell().spellCastingTime"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellRange"
                        class="col-sm-2 control-label">Range</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellRange"
-                           placeholder="120 Feet"
-                           data-bind='textInput: blankSpell().spellRange'>
+                  <select class="form-control"
+                          data-bind="options: blankSpell().spellRangeOptions,
+                                     value: blankSpell().spellRange"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellComponents"
                        class="col-sm-2 control-label">Components</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellComponents"
-                           placeholder="V, S"
-                           data-bind='textInput: blankSpell().spellComponents'>
+                  <select class="form-control"
+                          data-bind="options: blankSpell().spellComponentsOptions,
+                                     value: blankSpell().spellComponents"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellDuration"
                        class="col-sm-2 control-label">Duration</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellDuration"
-                           placeholder="Instantaneous"
-                           data-bind='textInput: blankSpell().spellDuration'>
+                  <select class="form-control"
+                          data-bind="options: blankSpell().spellDurationOptions,
+                                     value: blankSpell().spellDuration"></select>
                   </div>
               </div>
               <div class="form-group">

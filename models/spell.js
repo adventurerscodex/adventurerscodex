@@ -14,6 +14,26 @@ function Spell() {
     self.spellRange = ko.observable('');
     self.spellComponents = ko.observable('');
     self.spellDuration = ko.observable('');
+    self.spellTypeOptions = ko.observableArray(
+        ['Attack', 'Savings Throw', 'Automatic']);
+    self.spellSchoolOptions = ko.observableArray([
+        'Abjuration', 'Cantrip', 'Conjuration',
+        'Divination', 'Enchantment', 'Evocation',
+        'Illusion', 'Necromancy', 'Transmutation']);
+    self.spellCastingTimeOptions = ko.observableArray([
+        '1 action', '1 bonus action', '1 minute',
+        '10 minutes', '1 hour']);
+    self.spellDurationOptions = ko.observableArray([
+        'Instantaneous', '1 round', '8 hours',
+        '24 hours', '10 days', 'Concentration, 1 min',
+        'Concentration, 10 min', 'Concentration, 1 hour',
+        'Concentration, 24 hours', 'Special',
+        'Until dispelled']);
+    self.spellComponentsOptions = ko.observableArray([
+        'S', 'V', 'V, S', 'V, S, M']);
+    self.spellRangeOptions = ko.observableArray([
+        'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
+        '90 ft', '120 ft', '300 ft', '500 ft', '1 mile']);
 
     this.clear = function() {
         self.spellName('');
