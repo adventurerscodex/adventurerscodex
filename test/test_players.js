@@ -12,12 +12,13 @@ describe('Players', function() {
 								return {
 									characterName: function() {
 										return 'hi';
-								}
-							};
+									}
+								};
+							}
 						};
-					},
+					}
 				};
-			},
+			}
 		},
 		messenger: new Messenger()
 	};
