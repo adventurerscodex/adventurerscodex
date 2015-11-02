@@ -147,7 +147,7 @@ function Player() {
 Player.fromRoot = function(root) {
 	var player = new Player();
 	
-	player.name = root.characterTabViewModel().profileViewModel().characterName();
+	player.name = root.characterTabViewModel().profileViewModel().profile().characterName();
 	player.id = getKey();
 	return player;
 };

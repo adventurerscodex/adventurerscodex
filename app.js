@@ -80,7 +80,7 @@ function RootViewModel() {
 	self.playerTitle = ko.computed(function() {
 		var name = '';
 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-			name = self.characterTabViewModel().profileViewModel().characterName();
+			name = self.characterTabViewModel().profileViewModel().profile().characterName();
 		} else {
 			name = self.dmTabViewModel().campaignViewModel().campaignName();
 		}
@@ -90,7 +90,7 @@ function RootViewModel() {
 	self.playerAuthor = ko.computed(function() {
 		var name = '';
 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-			name = self.characterTabViewModel().profileViewModel().playerName();
+			name = self.characterTabViewModel().profileViewModel().profile().playerName();
 		} else {
 			name = self.dmTabViewModel().campaignViewModel().dmName();
 		}
@@ -195,7 +195,7 @@ function CharacterTabViewModel() {
 	self.equipmentViewModel = ko.observable(new EquipmentViewModel(self));
 	self.spellbook = ko.observable(new Spellbook());
 	self.skillTree = ko.observable(new SkillTree());
-	self.treasure = ko.observable(new Treasure());
+	self.treasureViewModel = ko.observable(new TreasureViewModel());
 	self.featsProf = ko.observable(new FeatsProfViewModel());
    
 	self.load = function() {
@@ -213,7 +213,7 @@ function CharacterTabViewModel() {
 		self.equipmentViewModel().clear();
 		self.spellSlotsViewModel().clear();
 		self.spellbook().clear();
-		self.treasure().clear();
+		self.treasureViewModel().clear();
 		self.skillTree().clear();
 		self.featsProf().clear();
 	};
@@ -229,7 +229,7 @@ function CharacterTabViewModel() {
 		self.spellSlotsViewModel().importValues(values.spellSlotsViewModel);
 		self.featuresTraitsViewModel().importValues(values.featuresTraitsViewModel);
 		self.spellbook().importValues(values.spellbook);
-		self.treasure().importValues(values.treasure);
+		self.treasureViewModel().importValues(values.treasureViewModel);
 		self.featsProf().importValues(values.featsProf);
 		self.skillTree().importValues(values.skillTree);
 	};
@@ -246,7 +246,7 @@ function CharacterTabViewModel() {
 			featuresTraitsViewModel : self.featuresTraitsViewModel().exportValues(),
 			equipmentViewModel: self.equipmentViewModel().exportValues(),
 			spellbook: self.spellbook().exportValues(),
-			treasure: self.treasure().exportValues(),
+			treasureViewModel: self.treasureViewModel().exportValues(),
 			featsProf: self.featsProf().exportValues(),
 			skillTree: self.skillTree().exportValues()
 		};
@@ -258,20 +258,24 @@ function DmTabViewModel() {
    
 	self.notesViewModel = ko.observable(new Note());
 	self.campaignViewModel = ko.observable(new CampaignViewModel());
+	self.enemiesViewModel = ko.observable(new EnemiesViewModel());
 
 	self.clear = function() {
 		self.notesViewModel().clear();
 		self.campaignViewModel().clear();
+		self.enemiesViewModel().clear();
 	};
 
 	self.importValues = function(values) {
 		self.notesViewModel().importValues(values.notesViewModel);
 		self.campaignViewModel().importValues(values.campaignViewModel);
+		self.enemiesViewModel().importValues(values.enemiesViewModel);
 	};
 
 	self.exportValues = function() {
 		return {
 			notesViewModel: self.notesViewModel().exportValues(),
+			enemiesViewModel: self.enemiesViewModel().exportValues(),
 			campaignViewModel: self.campaignViewModel().exportValues()
 		};
 	};
