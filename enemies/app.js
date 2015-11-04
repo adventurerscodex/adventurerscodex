@@ -2,17 +2,24 @@ function EnemiesViewModel() {
 	var self = this;
 	
 	self.enemies = ko.observableArray([]);
-	self.selectedEnemy = ko.observable(new NPC());
+	self.selectedEnemy = ko.observable();
 	      
 	self.clear = function() {
 		self.enemies([]);
 	};
 
 	self.importValues = function(values) {
+		self.enemies($.map(values.enemies, function(e, _) {
+			var enemy = new NPC();
+			enemy.importValues(e); 
+			return enemy; 
+		}));
 	};
 
 	self.exportValues = function() {
+		var enemies = $.map(self.enemies(), function(e, _) { return e.exportValues(); });
 		return {
+			enemies: enemies
 		};
 	};
 	
@@ -24,7 +31,7 @@ function EnemiesViewModel() {
 	});
 	
 	self.addEnemyButton = function() {
-		addEnemy();
+		self.addEnemy();
 	};
 	
 	self.removeEnemyButton = function(enemy) {

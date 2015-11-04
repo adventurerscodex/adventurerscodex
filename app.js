@@ -124,9 +124,9 @@ function RootViewModel() {
 		try {
 		self.characterTabViewModel().importValues(values.characterTabViewModel);
 		} catch(err) {}
-		try {
+		//try {
 		self.dmTabViewModel().importValues(values.dmTabViewModel);
-		} catch(err) {}
+		//} catch(err) {}
 	};
 
 	self.exportValues = function() {
