@@ -9,79 +9,79 @@
     'misc': 'trinkets'
   };
 
-  describe('Treasure', function() {
+  describe('TreasureViewModel', function() {
     describe('Clear', function() {
       it('should clear all the values in it', function() {
-        var coins = new Treasure();
-        coins.platinum(treasure_fixture.platinum);
-        coins.platinum().should.equal(treasure_fixture.platinum);
-        coins.clear();
-        coins.platinum().should.equal(0);
+        var coins = new TreasureViewModel();
+        coins.treasure().platinum(treasure_fixture.platinum);
+        coins.treasure().platinum().should.equal(treasure_fixture.platinum);
+        coins.treasure().clear();
+        coins.treasure().platinum().should.equal(0);
 
-        coins.gold(treasure_fixture.gold);
-        coins.gold().should.equal(treasure_fixture.gold);
-        coins.clear();
-        coins.gold().should.equal(0);
+        coins.treasure().gold(treasure_fixture.gold);
+        coins.treasure().gold().should.equal(treasure_fixture.gold);
+        coins.treasure().clear();
+        coins.treasure().gold().should.equal(0);
 
-        coins.electrum(treasure_fixture.electrum);
-        coins.electrum().should.equal(treasure_fixture.electrum);
-        coins.clear();
-        coins.electrum().should.equal(0);
+        coins.treasure().electrum(treasure_fixture.electrum);
+        coins.treasure().electrum().should.equal(treasure_fixture.electrum);
+        coins.treasure().clear();
+        coins.treasure().electrum().should.equal(0);
 
-        coins.silver(treasure_fixture.silver);
-        coins.silver().should.equal(treasure_fixture.silver);
-        coins.clear();
-        coins.silver().should.equal(0);
+        coins.treasure().silver(treasure_fixture.silver);
+        coins.treasure().silver().should.equal(treasure_fixture.silver);
+        coins.treasure().clear();
+        coins.treasure().silver().should.equal(0);
 
-        coins.copper(treasure_fixture.copper);
-        coins.copper().should.equal(treasure_fixture.copper);
-        coins.clear();
-        coins.copper().should.equal(0);
+        coins.treasure().copper(treasure_fixture.copper);
+        coins.treasure().copper().should.equal(treasure_fixture.copper);
+        coins.treasure().clear();
+        coins.treasure().copper().should.equal(0);
 
-        coins.misc(treasure_fixture.misc);
-        coins.misc().should.equal(treasure_fixture.misc);
-        coins.clear();
-        coins.misc().should.equal('');
+        coins.treasure().misc(treasure_fixture.misc);
+        coins.treasure().misc().should.equal(treasure_fixture.misc);
+        coins.treasure().clear();
+        coins.treasure().misc().should.equal('');
       });
     });
 
   describe('Import', function() {
     it('should import an object with all the info supplied.', function() {
-      var coins = new Treasure();
-      coins.importValues(treasure_fixture);
-      coins.platinum().should.equal(treasure_fixture.platinum);
-      coins.gold().should.equal(treasure_fixture.gold);
-      coins.electrum().should.equal(treasure_fixture.electrum);
-      coins.silver().should.equal(treasure_fixture.silver);
-      coins.copper().should.equal(treasure_fixture.copper);
-      coins.misc().should.equal(treasure_fixture.misc);
+      var coins = new TreasureViewModel();
+      coins.treasure().importValues(treasure_fixture);
+      coins.treasure().platinum().should.equal(treasure_fixture.platinum);
+      coins.treasure().gold().should.equal(treasure_fixture.gold);
+      coins.treasure().electrum().should.equal(treasure_fixture.electrum);
+      coins.treasure().silver().should.equal(treasure_fixture.silver);
+      coins.treasure().copper().should.equal(treasure_fixture.copper);
+      coins.treasure().misc().should.equal(treasure_fixture.misc);
     });
   });
 
   describe('Export', function() {
     it('should yield an object with all the info supplied.', function() {
-      var coins = new Treasure();
-      coins.platinum(treasure_fixture.platinum);
-      coins.gold(treasure_fixture.gold);
-      coins.electrum(treasure_fixture.electrum);
-      coins.silver(treasure_fixture.silver);
-      coins.copper(treasure_fixture.copper);
-      coins.misc(treasure_fixture.misc);
-      var exported = coins.exportValues();
-      exported.platinum.should.equal(coins.platinum());
-      exported.gold.should.equal(coins.gold());
-      exported.electrum.should.equal(coins.electrum());
-      exported.silver.should.equal(coins.silver());
-      exported.copper.should.equal(coins.copper());
-      exported.misc.should.equal(coins.misc());
+      var coins = new TreasureViewModel();
+      coins.treasure().platinum(treasure_fixture.platinum);
+      coins.treasure().gold(treasure_fixture.gold);
+      coins.treasure().electrum(treasure_fixture.electrum);
+      coins.treasure().silver(treasure_fixture.silver);
+      coins.treasure().copper(treasure_fixture.copper);
+      coins.treasure().misc(treasure_fixture.misc);
+      var exported = coins.treasure().exportValues();
+      exported.platinum.should.equal(coins.treasure().platinum());
+      exported.gold.should.equal(coins.treasure().gold());
+      exported.electrum.should.equal(coins.treasure().electrum());
+      exported.silver.should.equal(coins.treasure().silver());
+      exported.copper.should.equal(coins.treasure().copper());
+      exported.misc.should.equal(coins.treasure().misc());
     });
   });
 
   describe('WorthInGold', function() {
     it('should test if work in gold calculates correctly.', function() {
-      var coins = new Treasure();
-      coins.importValues(treasure_fixture);
-      coins.worth_in_gold().should.equal(14);
+      var coins = new TreasureViewModel();
+      coins.treasure().importValues(treasure_fixture);
+      coins.treasure().worth_in_gold().should.equal(14);
     });
   });
 });

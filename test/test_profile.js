@@ -1,21 +1,23 @@
 "use strict";
 
 var val = {
-	"characterName":"Brom Eriksson",
-	"playerName":"Brian Schrader",
-	"race":"Elf",
-	"religion":"",
-	"typeClass":"Wizard",
-	"alignment":"Good",
-	"gender":"Male",
-	"age":"233",
-	"height":"5'1\"",
-	"weight":"123",
-	"hairColor":"Brown",
-	"eyeColor":"Blue",
-	"skinColor":"Red",
-	"level":"15",
-	"exp":"0"
+	profile: {
+		"characterName":"Brom Eriksson",
+		"playerName":"Brian Schrader",
+		"race":"Elf",
+		"religion":"",
+		"typeClass":"Wizard",
+		"alignment":"Good",
+		"gender":"Male",
+		"age":"233",
+		"height":"5'1\"",
+		"weight":"123",
+		"hairColor":"Brown",
+		"eyeColor":"Blue",
+		"skinColor":"Red",
+		"level":"15",
+		"exp":"0"
+	}
 };
 
 
@@ -23,25 +25,25 @@ describe('ProfileViewModel', function() {
 	describe('Clear', function() {
 		it('should clear all the values in profile', function() {
 			var p = new ProfileViewModel();
-			p.characterName('Bob');
-			p.characterName().should.equal('Bob');
+			p.profile().characterName('Bob');
+			p.profile().characterName().should.equal('Bob');
 			p.clear();
-			p.characterName().should.equal('');
+			p.profile().characterName().should.equal('');
 		});
 	});
 
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
 			var p = new ProfileViewModel();
-			p.characterName(val.characterName);
-			p.playerName(val.playerName);
-			p.level(val.level);
-			p.exp(val.exp);		
+			p.profile().characterName(val.profile.characterName);
+			p.profile().playerName(val.profile.playerName);
+			p.profile().level(val.profile.level);
+			p.profile().exp(val.profile.exp);		
 			var a = p.exportValues();
-			a.characterName.should.equal(p.characterName());
-			a.playerName.should.equal(p.playerName());
-			a.exp.should.equal(p.exp());
-			a.level.should.equal(p.level());
+			a.profile.characterName.should.equal(p.profile().characterName());
+			a.profile.playerName.should.equal(p.profile().playerName());
+			a.profile.exp.should.equal(p.profile().exp());
+			a.profile.level.should.equal(p.profile().level());
 		});
 	});
 	
@@ -49,10 +51,10 @@ describe('ProfileViewModel', function() {
 		it('should import an object with all the info supplied.', function() {
 			var p = new ProfileViewModel();
 			p.importValues(val);
-			p.characterName().should.equal(val.characterName);
-			p.playerName().should.equal(val.playerName);
-			p.level().should.equal(val.level);
-			p.exp().should.equal(val.exp);			
+			p.profile().characterName().should.equal(val.profile.characterName);
+			p.profile().playerName().should.equal(val.profile.playerName);
+			p.profile().level().should.equal(val.profile.level);
+			p.profile().exp().should.equal(val.profile.exp);			
 		});
 	});
 });

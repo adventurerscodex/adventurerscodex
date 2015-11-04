@@ -7,14 +7,18 @@ describe('Players', function() {
 			characterTabViewModel: function() {  
 				return {
 					profileViewModel: function() {
-						return {
-							characterName: function() {
-								return 'hi';
+						return { 
+							profile: function() {
+								return {
+									characterName: function() {
+										return 'hi';
+									}
+								};
 							}
 						};
-					},
+					}
 				};
-			},
+			}
 		},
 		messenger: new Messenger()
 	};

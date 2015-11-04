@@ -1,0 +1,425 @@
+<div class="panel panel-default bio">
+  <div class="panel-heading">
+      <h2 class="panel-title">Enemies</h2>
+  </div>
+  <div class="panel-body">
+    <table class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+        <tr>
+          <th data-bind="click: function(){}"
+            class="col-sm-4">
+            Name
+            <span data-bind=""></span>
+          </th>
+          <th data-bind="click: function(){}"
+            class="col-sm-2">
+            Race
+            <span data-bind=""></span>
+          </th>
+          <th data-bind="click: function(){}"
+            class="col-sm-6">
+            Health & Damage
+            <span data-bind=""></span>
+          </th>
+          <th
+            class="col-sm-1">
+            <a data-toggle="modal"
+               data-bind="click: newEnemyButton" 
+               data-target="#addEnemy" 
+               href="#">
+               <i class="glyphicon glyphicon-plus"></i>
+             </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-bind='foreach: filteredAndSortedEnemies'>
+        <tr style="cursor:pointer;">
+          <td data-bind="text: profile().characterName, click: $parent.editEnemyButton"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewEnemy"></td>
+          <td data-bind="text: profile().race, click: $parent.editEnemyButton"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewEnemy"></td>
+          <td data-bind="with: health(),click: $parent.editEnemyButton"
+               href="#"
+               >
+            <div class="row">
+              <div class="col-sm-6 col-padded">
+                <div class="progress">
+                  <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
+                    data-bind="style: { width: regularProgressWidth }, css: progressType,
+                      text: progressLabel">
+                    <span class="sr-only"></span>
+                  </div>
+                  <div id="tempHitPoints" class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0"
+                    data-bind="style: { width: tempProgressWidth }" aria-describedby="hitpointsCounter">
+                    <span class="sr-only"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="input-group">
+                  <span class="input-group-addon" id="hitpointsCounter"><span data-bind="text: totalHitpoints"></span> - </span>
+                  <input type="number" class="form-control" min="0" data-bind="value: damage" />
+                  <span class="input-group-addon" id="hitpointsCounter"> = <span data-bind="text: hitpoints"></span> HP</span>                  
+                </div>
+              </div>
+            </div>
+          
+          </td>
+          <td>
+            <a data-bind="click: $parent.removeEnemyRowButton" href="#">
+              <i class="glyphicon glyphicon-remove">
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+</div>
+<!-- Add Modal -->
+<div class="modal fade"
+     data-bind="with: selectedEnemy"
+     id="addEnemy"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="addEnemyLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"
+            id="addEnemyLabel">Add an enemy.</h4>
+    </div>
+      <div class="modal-body" 
+       <form class="form-horizontal">
+          <div data-bind="template: { name: 'enemiesModalTemplate', data: $data }"></div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind="click: $parent.addEnemyButton"
+                    data-dismiss="modal">Add</button>
+          </div>
+        </form>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+     data-bind="with: selectedEnemy"
+     id="viewEnemy"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="viewEnemyLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"
+            id="addEnemyLabel">Edit</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div data-bind="template: { name: 'enemiesModalTemplate', data: $data }"></div>
+          <div class="modal-footer">
+            <button type="button"
+                 class="btn btn-primary"
+                 data-dismiss="modal">Done</button>
+          </div>
+        </form>
+      </div>
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<script id="enemiesModalTemplate" type="text/html">
+  <div class="form-group"> 
+    <div class="container-fluid" data-bind="with: profile()">
+      <!-- Names -->
+      <div class="row">
+        <div class="col-sm-12 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Enemy Name</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon2"
+              data-bind='value: characterName' />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+      <!-- Race, Gender, Class, Alignment -->
+        <div class="col-sm-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Race</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: race'>
+          </div>
+        </div>
+        <div class="col-sm-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Class</span>
+            <input type="text" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: typeClass'>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="container-fluid" data-bind="with: appearance()">
+      <h4>Appearance</h4>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span for="height"
+                   class="input-group-addon">Height</span>
+            <div class="">
+              <input type="text"
+                     class="form-control"
+                     id="height"
+                     placeholder=""
+                     data-bind="value: height">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span for="weight"
+                   class=" input-group-addon">Weight</span>
+            <div class="">
+              <input type="text"
+                     class="form-control"
+                     id="weight"
+                     placeholder=""
+                     data-bind="value: weight">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="container-fluid" data-bind="with: health()">
+      <h4>Health and Stats</h4>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span for="maxHitpoints"
+                   class="input-group-addon">Max Hit Points</span>
+            <div class="">
+              <input type="text"
+                     class="form-control"
+                     id="maxHitpoints"
+                     placeholder=""
+                     data-bind="value: maxHitpoints">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group">
+            <span for="tempHitpoints"
+                   class=" input-group-addon">Temp Hit Points</span>
+            <div class="">
+              <input type="text"
+                     class="form-control"
+                     id="tempHitpoints"
+                     placeholder=""
+                     data-bind="value: tempHitpoints">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="container-fluid" data-bind="with: abilityScores()">
+      <h4>Ability Scores</h4>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon2">Strength
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <input type="number" class="form-control"
+                   aria-describedby="basic-addon2"
+                   data-bind='textInput: str'
+                   min="1"
+                   max="30" />
+            <span class="input-group-addon"
+                  data-bind="text: strModifier"></span>
+          </div>
+        </div>
+        <div class="col-md-6 col-padded">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon2">Dexterity
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <input type="number"
+                   class="form-control"
+                   aria-describedby="basic-addon2"
+                   min="1"
+                   max="30"
+                   data-bind='textInput: dex' />
+            <span class="input-group-addon"
+                  data-bind="text: dexModifier"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon2">Constitution
+            </span>
+            <input type="number"
+                   class="form-control"
+                   aria-describedby="basic-addon2"
+                   min="1"
+                   max="30"
+                   data-bind='textInput: con' />
+            <span class="input-group-addon"
+                  data-bind="text: conModifier"></span>
+          </div>
+        </div>
+        <div class="col-md-6 col-padded">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon2">Intelligence
+              &nbsp;
+            </span>
+            <input type="number"
+                   class="form-control"
+                   aria-describedby="basic-addon2"
+                   min="1"
+                   max="30"
+                   data-bind='textInput: int' />
+            <span class="input-group-addon"
+                  data-bind="text: intModifier"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <div class="input-group ">
+            <span class="input-group-addon" id="basic-addon2">Wisdom
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </span>
+            <input type="number"
+                   class="form-control"
+                   aria-describedby="basic-addon2"
+                   min="1"
+                   max="30"
+                   data-bind='textInput: wis' />
+            <span class="input-group-addon"
+                  data-bind="text: wisModifier"></span>
+          </div>
+        </div>
+        <div class="col-md-6 col-padded">
+           <div class="input-group ">
+             <span class="input-group-addon" id="basic-addon2">Charisma
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             </span>
+             <input type="number"
+                   class="form-control"
+                   aria-describedby="basic-addon2"
+                   min="1"
+                   max="30"
+                   data-bind='textInput: cha' />
+             <span class="input-group-addon"
+                   data-bind="text: chaModifier"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="container-fluid" data-bind="with: treasure()">
+      <h4>Treasure</h4>
+      <div class="row row-padded">
+        <div class="col-sm-6">
+          <div class="input-group ">
+            <span class="input-group-addon">Platinum</span>
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   data-bind='value: platinum'/>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group ">
+            <span class="input-group-addon">Gold</span>
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   data-bind='value: gold'/>
+          </div>
+        </div>
+      </div>
+      <div class="row row-padded">
+        <div class="col-sm-6">
+          <div class="input-group ">
+            <span class="input-group-addon">Electrum</span>
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   data-bind='value: electrum'>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="input-group ">
+            <span class="input-group-addon">Silver</span>
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   data-bind='value: silver'>
+          </div>
+        </div>
+      </div>
+      <div class="row row-padded">
+        <div class="col-md-6">
+          <div class="input-group">
+            <span class="input-group-addon">Copper</span>
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   data-bind='value: copper'>
+          </div>
+        </div>
+      </div>
+      <div class="row row-padded">
+        <div class="col-md-12">
+          <div class="input-group">
+            <span class="input-group-addon">Misc</span>
+            <textarea type="text"
+                    rows="2"
+                    class="form-control"
+                    data-bind='textInput: misc'></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr />
+    <div class="container-fluid" data-bind="with: notes()">
+      <h4>Notes</h4>
+      <div class="row row-padded">
+        <div class="col-md-12">
+          <div class="input-group">
+            <span class="input-group-addon">Notes</span>
+            <textarea type="text"
+                    rows="3"
+                    class="form-control"
+                    data-bind='textInput: text'></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</script>

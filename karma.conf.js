@@ -31,7 +31,7 @@ module.exports = function(config) {
         preprocessors: { 
         	'*/app.js': ['coverage'],
         	'models/*.js': ['coverage'],
-        	'test/*.js': ['coverage'],
+        	//'test/*.js': ['coverage'],
         	'app.js': ['coverage']
         	},
         coverageReporter: {
