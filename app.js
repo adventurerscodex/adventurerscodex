@@ -122,11 +122,11 @@ function RootViewModel() {
 	self.importValues = function(values) {
 		self.playerType(values.playerType);
 		try {
-		self.characterTabViewModel().importValues(values.characterTabViewModel);
+			self.characterTabViewModel().importValues(values.characterTabViewModel);
 		} catch(err) {}
-		//try {
-		self.dmTabViewModel().importValues(values.dmTabViewModel);
-		//} catch(err) {}
+		try {
+			self.dmTabViewModel().importValues(values.dmTabViewModel);
+		} catch(err) {}
 	};
 
 	self.exportValues = function() {
