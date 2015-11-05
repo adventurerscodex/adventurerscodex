@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link href="../site.css" rel="stylesheet">
+    <link href="/bower_components/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
  </head>
  <body>
@@ -33,11 +34,41 @@
     </div>
   </nav>
 	<div id='content' class='container-fluid'>
-    <div class='container-fluid row'>
-      <button class='btn btn-primary' data-bind='click: addCharacter'>Create a new character</button>
-      <button class='btn btn-primary' data-bind='click: addDM'>DM a new game</button>
-      <button class='btn btn-default pull-right' data-toggle="modal" data-target="#importModal">Import</button>
-    </div>
+	  <!-- Desktop and tablet nav -->
+    <ul class="nav nav-pills">
+      <li role="presentation" class="hidden-xs">
+        <button class='btn btn-primary' data-bind='click: addCharacter'> 
+          <span>Create a new character</span>
+        </button>
+      </li>
+      <li role="presentation" class="hidden-xs">
+        <button class='btn btn-primary' data-bind='click: addDM'>
+          <span>DM a new game</span>
+        </button>
+      </li>
+      <!-- Small Mobile menu -->
+      <li role="presentation" class="visible-xs">
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          New <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li role="presentation">
+            <a href="#" data-bind='click: addCharacter'> 
+              <span>New character</span>
+            </a>
+          </li>
+          <li role="presentation">
+            <a href="#" data-bind='click: addDM'>
+              <span>New game</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li role="presentation" class="pull-right ">
+        <button class="btn btn-default" data-toggle="modal" data-target="#importModal">Import</button>
+      </li>
+      </ul>
     <div class='spacer'></div>
     <div data-bind='foreach: characters'>
       <div class="panel panel-default">
@@ -84,16 +115,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content container-fluid">
         <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="importModalLabel">Import</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="importModalLabel">Import</h4>
         </div>
         <div class="modal-body">
-        <p>If you've exported you character data before, you can import it here!</p>
-        <!-- Add import form. -->
-        <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
+          <p>If you've exported you character data before, you can import it here!</p>
+          <!-- Add import form. -->
+          <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
         </div>
       </div>
@@ -104,21 +134,20 @@
 	<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" data-bind="with: selectedCharacter"
 	  aria-labelledby="exportModalLabel">
 	  <div class="modal-dialog" role="document">
-		<div class="modal-content container-fluid">
-		  <div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
-		  </div>
-		  <div class="modal-body">
-			<p>Save your character to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
-			<p>Note: Safari users will need to save the contents of the page.</p>
-			<!-- Add export form. -->
-		  </div>
-		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-			<button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>
-		  </div>
-		</div>
+      <div class="modal-content container-fluid">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+        </div>
+        <div class="modal-body">
+          <p>Save your character to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+          <p>Note: Safari users will need to save the contents of the page.</p>
+        <!-- Add export form. -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>
+        </div>
+      </div>
 	  </div>
 	</div>
 

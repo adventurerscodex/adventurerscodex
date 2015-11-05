@@ -1,0 +1,13 @@
+Goals
+======
+
+
+1. What makes Adventurer's Codex different?
+
+Low barrier to entry
+Easier to use
+Open Source
+Focus on in-person tabletop RPG. Not remote.
+No lockin. Not everyone needs to use it for the group to be better off.
+Bringing the paper character sheets into the 21st century. 
+Not automating, enhancing
