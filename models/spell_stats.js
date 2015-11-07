@@ -4,8 +4,8 @@ function SpellStats() {
   var self = this;
 
   self.spellcastingAbility = ko.observable('');
-  self.spellSaveDc = ko.observable('');
-  self.spellAttackBonus = ko.observable('');
+  self.spellSaveDc = ko.observable(0);
+  self.spellAttackBonus = ko.observable(0);
 
   self.spellcastingAbilityOptions = ko.observableArray([
     'INT', 'WIS', 'CHA']);
