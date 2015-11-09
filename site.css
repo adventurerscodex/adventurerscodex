@@ -94,3 +94,27 @@ body {
 .progress-bar-forest {
   background-color: #2F972F !important;
 }
+
+
+/*******
+ * Experimental stuff
+ *******/
+
+.panel-heading {
+  display:none;
+}
+.panel {
+  box-shadow: 2px 3px 0px 0px #ecf0f1;
+}
+
+div.hr {
+  height:80px;
+  background:url('/images/page-divider.png') no-repeat;
+  
+}
+
+.tab-pane {
+  padding-top:10px;
+}
+
+
