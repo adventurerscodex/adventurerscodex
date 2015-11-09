@@ -50,6 +50,7 @@
 
  	  <div class="tab-content">
  	    <div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
+        <img src="/images/logo-nav.png" height="35" style="margin-top:-12px;" />&nbsp;<h3 style="display:inline;">Profile &amp; Abilities</h3>
         <div class="row">
           <div class="col-md-7 col-sm-12 col-padded">
             <div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile', data: profileViewModel }"></div>
@@ -71,26 +72,27 @@
             <div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'feat_traits', data: featuresTraitsViewModel }"></div>
           </div>
         </div>
+        <img src="/images/heart.png" height="35" style="margin-top:-12px;" />&nbsp;<h3 style="display:inline;">Health &amp; Stats</h3>
+        
         <div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats', data: stats }"></div>
-<!--
         <div class="row">
- -->
-          <div class="col-sm-6 col-padded">
+          <div class="col-sm-5 col-padded">
             <div id="skills"  data-bind="template: { name: 'skills.tmpl', templateUrl: 'skills', data: skillTree }"></div>
           </div>
-          <div class="col-sm-6 col-padded">
+          <div class="col-sm-7 col-padded">
             <div id="spell_stats"  data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'spell_stats', data: spell_stats }"></div>
             <div id="spells"  data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells', data: spellbook }"></div>
             <div id="spell_slots"  data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'spell_slots', data: spellSlotsViewModel }"></div>
          </div>
-<!--         </div> -->
+        </div>
         <div class="row">
           <div class="col-sm-3 col-padded">
           </div>
           <div class="col-sm-6 col-padded">
           </div>
         </div>
-        <div class="row">
+       <img src="/images/shield.png" height="35" style="margin-top:-12px;" />&nbsp;<h3 style="display:inline;">Equipment &amp; Treasure</h3>
+       <div class="row">
           <div class="col-sm-6 col-padded">
             <div id="equippedItems"  data-bind="template: { name: 'equipped_items.tmpl', templateUrl: 'equipped_items', data: equippedItemsViewModel }"></div>
             <div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'treasure', data: treasureViewModel }"></div>
