@@ -20,4 +20,16 @@ function HitDice() {
 			hitDiceUsed: self.hitDiceUsed()
 		}
 	};
+	
+	self.toggleHitDice = function() {
+		self.hitDiceUsed(!self.hitDiceUsed())
+	};
+	
+	self.hitDiceIcon = ko.computed(function() {
+		var css = 'heart-full';
+		if (self.hitDiceUsed()) {
+			css = 'heart-empty';
+		}
+		return css;
+	});
 };
