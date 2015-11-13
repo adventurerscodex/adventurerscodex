@@ -117,4 +117,21 @@ div.hr {
   padding-top:10px;
 }
 
+.heart-full {
+  cursor:pointer;
+  background: url('/images/heart-red-full-20.png');
+  width:20px;
+  height:20px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.heart-empty {
+  cursor:pointer;
+  background: url('/images/heart-red-empty-20.png');
+  width:20px;
+  height:20px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
 
