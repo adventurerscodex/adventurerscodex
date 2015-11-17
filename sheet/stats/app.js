@@ -7,6 +7,9 @@ function Stats() {
 	self.otherStats = new OtherStats();
 	self.blankHitDice = ko.observable(new HitDice());
 	self.hitDiceList = ko.observableArray([]);
+	self.enableAdd = ko.computed(function(){
+		return self.hitDiceList().length < 21;
+	});
 
 	self.clear = function() {
 		self.health.clear();
