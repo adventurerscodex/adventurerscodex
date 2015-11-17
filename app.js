@@ -185,6 +185,7 @@ function CharacterTabViewModel() {
     self.skillTree = ko.observable(new SkillTree());
     self.treasure = ko.observable(new Treasure());
     self.featsProf = ko.observable(new FeatsProfViewModel());
+	self.savingThrows = ko.observable(new SavingThrowsViewModel());
     
     self.load = function() {
     	self.skillTree().load();
@@ -204,6 +205,7 @@ function CharacterTabViewModel() {
         self.treasure().clear();
         self.skillTree().clear();
         self.featsProf().clear();
+		self.savingThrows.clear();
     };
 
     self.importValues = function(values) {
@@ -220,6 +222,7 @@ function CharacterTabViewModel() {
 		self.treasure().importValues(values.treasure);
 		self.featsProf().importValues(values.featsProf);
 		self.skillTree().importValues(values.skillTree);
+		self.savingThrows().importValues(values.savingThrows);
     };
 
     self.exportValues = function() {
@@ -236,7 +239,8 @@ function CharacterTabViewModel() {
             spellbook: self.spellbook().exportValues(),
             treasure: self.treasure().exportValues(),
             featsProf: self.featsProf().exportValues(),
-            skillTree: self.skillTree().exportValues()
+            skillTree: self.skillTree().exportValues(),
+			savingThrows: self.savingThrows().exportValues()
     	};
     };
 };

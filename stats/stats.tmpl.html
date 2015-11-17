@@ -85,14 +85,13 @@
 		<div class="col-md-3 ">
 			<div class="input-group">
 				<span class="input-group-addon">Hit Dice
-				<a data-bind='click: addHitDice' href="#">
+				<a data-bind='click: addHitDice, enable: enableAdd' href="#">
 					<i class="glyphicon glyphicon-plus"></i>
 				</a>					
 				<a data-bind='click: removeHitDice' href="#">
 					<i class="glyphicon glyphicon-remove"></i>
 				</a>
 				</span>
-        
 				<div data-bind="foreach: hitDiceList" >
 					<input type="checkbox" class="checkbox-inline"  data-bind="checked: hitDiceUsed" style="vertical-align: middle;"/>
 				</div>
