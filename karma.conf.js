@@ -18,6 +18,7 @@ module.exports = function(config) {
 			{pattern: 'bin/knockout-file-bind.js', watched: false},
 			{pattern: 'bin/koExternalTemplateEngine_all.min.js', watched: false},
 			//Stuff to test.
+			'*/app.js',
 			'sheet/app.js',
 			'sheet/*/app.js',
 			'bin/*.js',
@@ -29,6 +30,7 @@ module.exports = function(config) {
                             
         reporters: ['progress', 'coverage'],
         preprocessors: { 
+        	'*/app.js',
         	'sheet/*/app.js': ['coverage'],
         	'sheet/models/*.js': ['coverage'],
         	//'test/*.js': ['coverage'],
