@@ -30,10 +30,10 @@ module.exports = function(config) {
                             
         reporters: ['progress', 'coverage'],
         preprocessors: { 
-        	'*/app.js',
+        	//'*/app.js': ['coverage'],
         	'sheet/*/app.js': ['coverage'],
         	'sheet/models/*.js': ['coverage'],
-        	//'test/*.js': ['coverage'],
+        	'test/*.js': ['coverage'],
         	'sheet/app.js': ['coverage']
         	},
         coverageReporter: {
