@@ -94,3 +94,43 @@ body {
 .progress-bar-forest {
   background-color: #2F972F !important;
 }
+
+
+/*******
+ * Experimental stuff
+ *******/
+
+.panel-heading {
+}
+.panel {
+  box-shadow: 2px 3px 0px 0px #ecf0f1;
+}
+
+div.hr {
+  height:80px;
+  background:url('/images/page-divider.png') no-repeat;
+  
+}
+
+.tab-pane {
+  padding-top:10px;
+}
+
+.heart-full {
+  cursor:pointer;
+  background: url('/images/d20-purple-30.png');
+  border: 1 1 1 1 solid #ecf0f1;
+  width:20px;
+  height:23px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.heart-empty {
+  cursor:pointer;
+  background: url('/images/heart-red-empty-20.png');
+  width:20px;
+  height:20px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}

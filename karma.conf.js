@@ -18,10 +18,11 @@ module.exports = function(config) {
 			{pattern: 'bin/knockout-file-bind.js', watched: false},
 			{pattern: 'bin/koExternalTemplateEngine_all.min.js', watched: false},
 			//Stuff to test.
-			'app.js',
 			'*/app.js',
+			'sheet/app.js',
+			'sheet/*/app.js',
 			'bin/*.js',
-			'models/*.js',
+			'sheet/models/*.js',
 			//Tests to run.
             'test/*.js'
         ],  
@@ -29,10 +30,11 @@ module.exports = function(config) {
                             
         reporters: ['progress', 'coverage'],
         preprocessors: { 
-        	'*/app.js': ['coverage'],
-        	'models/*.js': ['coverage'],
-        	//'test/*.js': ['coverage'],
-        	'app.js': ['coverage']
+        	//'*/app.js': ['coverage'],
+        	'sheet/*/app.js': ['coverage'],
+        	'sheet/models/*.js': ['coverage'],
+        	'test/*.js': ['coverage'],
+        	'sheet/app.js': ['coverage']
         	},
         coverageReporter: {
 			type: "lcov",
