@@ -101,7 +101,6 @@ body {
  *******/
 
 .panel-heading {
-  display:none;
 }
 .panel {
   box-shadow: 2px 3px 0px 0px #ecf0f1;
@@ -119,9 +118,10 @@ div.hr {
 
 .heart-full {
   cursor:pointer;
-  background: url('/images/heart-red-full-20.png');
+  background: url('/images/d20-purple-30.png');
+  border: 1 1 1 1 solid #ecf0f1;
   width:20px;
-  height:20px;
+  height:23px;
   display: inline-block;
   padding: 0 0 0 0px;
 }

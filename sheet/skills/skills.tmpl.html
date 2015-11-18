@@ -1,0 +1,211 @@
+<div class="panel panel-default bio">
+<!-- 
+  <div class="panel-heading">
+      <h2 class="panel-title">Skills</h2>
+  </div>
+ -->
+  <div class="panel-body">
+    <table class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+        <tr>
+          <th data-bind="click: function(){sortBy('name');}">
+            Skill
+            <span data-bind="css: sortArrow('name')"></span>
+          </th>
+          <th data-bind="click: function(){sortBy('modifier');}">
+            Modifier
+            <span data-bind="css: sortArrow('modifier')"></span>
+          </th>
+          <th data-bind="click: function(){sortBy('proficiency');}">
+            Proficient
+            <span data-bind="css: sortArrow('proficiency')"></span>
+          </th>
+          <th>
+            <a data-toggle="modal"
+               data-target="#addSkill" href="#">
+              <i class="glyphicon glyphicon-plus"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-bind='foreach: filteredAndSortedSkills'>
+        <tr style="cursor:pointer;">
+          <td data-bind="text: name, click: $parent.editSkill"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSkill"></td>
+          <td data-bind="html: modifierLabel, click: $parent.editSkill"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSkill"></td>
+          <td data-bind="click: $parent.editSkill"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSkill"> <span data-bind="css: proficiencyLabel"></span</td>
+          <td>
+            <a data-bind="click: $parent.removeSkill" href="#">
+              <i class="glyphicon glyphicon-remove">
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade"
+         id="addSkill"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="addSkillLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"
+                id="addSkillLabel">Add a skill.</h4>
+        </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="name"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="name"
+                         placeholder="History"
+                         data-bind='textInput: blankSkill().name'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="abscore"
+                       class="col-sm-2 control-label">Ability Score</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="abscore"
+                           placeholder="Int, Dex, etc."
+                           data-bind='textInput: blankSkill().abilityScore'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="modifier"
+                       class="col-sm-2 control-label">Modifier</label>
+                  <div class="col-sm-10">
+                    <input type="number"
+                           class="form-control"
+                           id="modifier"
+                           min="0"
+                           placeholder="1"
+                           data-bind='textInput: blankSkill().modifier'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="proficiency"
+                       class="col-sm-2 control-label">Proficency</label>
+                  <div class="col-sm-10">
+                    <input type="checkbox"
+                           class="form-control"
+                           id="proficiency"
+                           data-bind='checked: blankSkill().proficiency'>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal">Cancel</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bind='click: addSkill'
+                        data-dismiss="modal">Add</button>
+              </div>
+            </form>
+          </div> <!-- Modal Body -->
+        </div> <!-- Modal Content -->
+      </div> <!-- Modal Dialog -->
+    </div> <!-- Modal Fade -->
+
+    <!-- ViewEdit Modal -->
+    <div data-bind="with: selecteditem">
+    <div class="modal fade"
+         id="viewSkill"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="viewSkillLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"
+                id="addSkillLabel">Edit</h4>
+        </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="name"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="name"
+                         placeholder="Archery"
+                         data-bind="value: name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="modifier"
+                       class="col-sm-2 control-label">Bonus</label>
+                  <div class="col-sm-10">
+                    <input type="number"
+                           class="form-control"
+                           id="modifier"
+                           min="0"
+                           placeholder="1"
+                           data-bind="value: modifier">
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="abscore"
+                       class="col-sm-2 control-label">Ability Score</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="abscore"
+                           data-bind='textInput: abilityScore'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="proficiency"
+                       class="col-sm-2 control-label">Proficiency</label>
+                  <div class="col-sm-10">
+                    <input type="checkbox"
+                           class="form-control"
+                           id="proficiency"
+                           data-bind="checked: proficiency">
+                  </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </form>
+          </div> <!-- Modal Body -->
+        </div> <!-- Modal Content -->
+      </div> <!-- Modal Dialog -->
+    </div> <!-- Modal Fade -->
+    </div> <!-- End with statement -->
+</div> <!-- Panel -->
+
