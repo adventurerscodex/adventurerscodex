@@ -1,17 +1,47 @@
 "use strict";
 
-function Skill() {
+function Skill(parent) {
     var self = this;
-
+    self.root = parent.root;
+    
     self.name = ko.observable('');
     self.modifier = ko.observable(0);
     self.abilityScore = ko.observable('');
     self.proficiency = ko.observable(false);
 
-	self.modifierLabel = ko.computed(function() {
-		var str = self.modifier() >= 0 ? 
-			'+' + self.modifier() : 
-			String(self.modifier());
+    self.proficiencyScore = function() {
+    	var profBonus;
+    	try {
+			profBonus = self.root.characterTabViewModel().stats().otherStats.proficiency();
+		} catch (err) {};
+		return profBonus ? parseInt(profBonus) : 0;
+	};
+	
+	self.abilityScoreModifier = function() {
+    	var score;
+    	try {
+    		score = self.root.characterTabViewModel().abilityScores().modifierFor(self.abilityScore());
+    	} catch (err) {};
+		return parseInt(score);
+	};
+
+	//UI Methods
+	
+	self.bonus = ko.computed(function() {
+		var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
+		if (self.proficiency()) {
+			bonus += self.proficiencyScore() + self.abilityScoreModifier();
+		} else { 
+			bonus += self.abilityScoreModifier(); 
+		}
+		return bonus;
+	});
+
+
+	self.bonusLabel = ko.computed(function() {
+		var str = self.bonus() >= 0 ? 
+			'+' + self.bonus() : 
+			String(self.bonus());
 		str += ' <i><small>(' 
 				+ self.abilityScore() + ')</small></i>'
 		return str;

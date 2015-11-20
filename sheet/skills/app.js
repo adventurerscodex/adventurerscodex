@@ -1,7 +1,8 @@
 "use strict";
 
-function SkillTree() {
+function SkillTree(parent) {
     var self = this;
+    self.root = parent.root;
     
     self.sorts = {
 	  'name asc': { field: 'name', direction: 'asc'},
@@ -34,14 +35,14 @@ function SkillTree() {
 			{ name: 'Survival', abilityScore: 'Dex', proficency: false, modifier: 0 },
 		];
 		return $.map(skills, function(e, _) {
-			var skill = new Skill();
+			var skill = new Skill(self);
 			skill.importValues(e);
 			return skill;
 		});
 	};
 		    
     self.selecteditem = ko.observable();
-    self.blankSkill = ko.observable(new Skill());
+    self.blankSkill = ko.observable(new Skill(self));
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
@@ -118,7 +119,7 @@ function SkillTree() {
 	//Manipulating skills
     self.addSkill = function() {
         self.skills.push(self.blankSkill());
-        self.blankSkill(new Skill());
+        self.blankSkill(new Skill(self));
     };
 
     self.removeSkill = function(skill) { 
@@ -144,7 +145,7 @@ function SkillTree() {
         var newSkills = []
         for (var i in values.skills) {
             var skill = values.skills[i];
-            var newSkill = new Skill();
+            var newSkill = new Skill(self);
             newSkill.importValues(skill);
             self.skills.push(newSkill);
         }
