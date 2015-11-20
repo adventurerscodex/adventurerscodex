@@ -22,13 +22,13 @@ function Skill(parent) {
     	try {
     		score = self.root.characterTabViewModel().abilityScores().modifierFor(self.abilityScore());
     	} catch (err) {};
-		return score;
+		return parseInt(score);
 	};
 
 	//UI Methods
 	
 	self.bonus = ko.computed(function() {
-		var bonus = self.modifier();
+		var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
 		if (self.proficiency()) {
 			bonus += self.proficiencyScore() + self.abilityScoreModifier();
 		} else { 

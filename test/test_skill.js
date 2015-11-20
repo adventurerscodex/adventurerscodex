@@ -1,33 +1,41 @@
 "use strict";
 
 describe('Skill', function() {
+	
+	var root = new RootViewModel();
+	var parent = root.characterTabViewModel().skillTree();
+
 	describe('Bonus Label', function() {
 		it('should yield the modifier value (signed).', function() {
-			var s = new Skill();
+			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(4);
+			s.abilityScore('Wis');
+			s.root.characterTabViewModel().abilityScores().wis(11);
 			s.proficiency(true);
 			
-			s.modifierLabel().should.equal('+4 <i><small>()</small></i>');
+			s.bonusLabel().should.equal('+4 <i><small>(Wis)</small></i>');
 			
-			var s = new Skill();
+			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(-4);
+			s.abilityScore('Wis');
+			s.root.characterTabViewModel().abilityScores().wis(11);
 			s.proficiency(true);
 
-			s.modifierLabel().should.equal('-4 <i><small>()</small></i>');		
+			s.bonusLabel().should.equal('-4 <i><small>(Wis)</small></i>');		
 		});
 	});
 	describe('Proficiency Label', function() {
 		it('should yield the proficiency value (or none).', function() {
-			var s = new Skill();
+			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(4);
 			s.proficiency(true);
 
 			s.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
 			
-			var s = new Skill();
+			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(-4);
 			s.proficiency(false);
@@ -37,7 +45,7 @@ describe('Skill', function() {
 	});
 	describe('Clear', function() {
 		it('should clear all values', function() {
-			var s = new Skill();
+			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(4);
 			s.proficiency(true);
@@ -54,7 +62,7 @@ describe('Skill', function() {
 	
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var s = new Skill();
+			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(4);
 			s.proficiency(true);
@@ -71,7 +79,7 @@ describe('Skill', function() {
 	
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
-			var s = new Skill('', 0, false, function(){});
+			var s = new Skill(parent);
 			var e = { name: 'Arcana', modifier: 3, proficiency: true };
 			s.importValues(e);
 			e.name.should.equal(s.name());
