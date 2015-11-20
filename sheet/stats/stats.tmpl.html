@@ -35,52 +35,58 @@
           data-bind='textInput: health.hitpoints' readonly min="0">
         </div>
       </div>
-  </div>
-	  <!--AC, Initiative, Speed-->
-	<div class="row row-padded">
-      <div class="col-md-4 col-padded">
+    </div>
+    <!--AC, Initiative, Speed-->
+    <div data-bind="with: otherStats" class="row row-padded">
+      <div class="col-md-6 col-padded">
         <div class="input-group">
             <span class="input-group-addon" id="basic-addon2">AC</span>
             <input type="number" class="form-control" aria-describedby="basic-addon2"
-              data-bind='textInput: otherStats.ac' min="10">
+              data-bind='textInput: ac' min="10">
+          </div>
+        </div>
+      <div class="col-md-6 col-padded">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Proficiency</span>
+            <input type="number" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: proficiency' min="10">
           </div>
         </div>
         <div class="col-md-4 col-padded">
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon2">Initiative</span>
             <input type="number" class="form-control" aria-describedby="basic-addon2"
-              data-bind='textInput: otherStats.initiative'>
+              data-bind='textInput: initiative'>
           </div>
         </div>
         <div class="col-md-4 col-padded">
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon2">Inspiration</span>
             <input type="number" class="form-control" aria-describedby="basic-addon2"
-              data-bind='textInput: otherStats.inspiration' min="0">
+              data-bind='textInput: inspiration' min="0">
+          </div>
+        </div>
+        <div class="col-md-4 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Speed</span>
+              <input type="number" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: speed' min="0">
           </div>
         </div>
       </div>
-      <div class="row row-padded">
-		    <div class="col-md-3 col-padded">
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon2">Speed</span>
-            <input type="number" class="form-control" aria-describedby="basic-addon2"
-              data-bind='textInput: otherStats.speed' min="0">
-          </div>
-        </div>
-        <div class="col-md-9 col-padded">
-          <div class="input-group">
-            <span class="input-group-addon">Hit Dice
-            <a data-bind='click: addHitDice' href="#">
-              <i class="glyphicon glyphicon-plus"></i>
-            </a>					
-            <a data-bind='click: removeHitDice' href="#">
-              <i class="glyphicon glyphicon-remove"></i>
-            </a>
-            </span>
-            <div class="form-control"data-bind="foreach: hitDiceList" >
-              <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>
-            </div>
+    <div class="row row-padded">
+      <div class="col-md-12 col-padded">
+        <div class="input-group">
+          <span class="input-group-addon">Hit Dice
+          <a data-bind='click: addHitDice' href="#">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>					
+          <a data-bind='click: removeHitDice' href="#">
+            <i class="glyphicon glyphicon-remove"></i>
+          </a>
+          </span>
+          <div class="form-control"data-bind="foreach: hitDiceList" >
+            <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>
           </div>
         </div>
       </div>

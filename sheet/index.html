@@ -202,6 +202,11 @@
 	$(function(){
 	  var viewModel = new RootViewModel();
     init(viewModel);
+    
+    window.getRootViewModel = function() {
+		  return viewModel;
+    };
+    
 	  ko.applyBindings(viewModel, $('#html')[0]);
 
     //Setup automatic saving.

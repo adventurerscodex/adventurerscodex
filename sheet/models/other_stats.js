@@ -5,11 +5,13 @@ function OtherStats() {
 	self.initiative = ko.observable(0);
 	self.speed = ko.observable(0);
 	self.inspiration = ko.observable(0);
+	self.proficiency = ko.observable(0);
 	
 	self.clear = function() {
 		self.ac(10);
 		self.initiative(0);
 		self.speed(0);
+		self.proficiency(0);
 		self.inspiration(0);
 	};
 	
@@ -18,6 +20,7 @@ function OtherStats() {
 		self.initiative(values.initiative);
 		self.speed(values.speed);
 		self.inspiration(values.inspiration);
+		self.proficiency(values.proficiency);
 	};
 	
 	self.exportValues = function() {
@@ -25,7 +28,8 @@ function OtherStats() {
 			ac: self.ac(),
 			initiative: self.initiative(),
 			speed: self.speed(),
-			inspiration: self.inspiration()
+			inspiration: self.inspiration(),
+			proficiency: self.proficiency()
 		}
 	};
 };

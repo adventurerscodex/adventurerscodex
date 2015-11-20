@@ -17,7 +17,7 @@ function RootViewModel() {
 	self.activeTab = ko.observable(self.playerType().defaultTab);
 
 	//Child View Models
-	self.characterTabViewModel = ko.observable(new CharacterTabViewModel());
+	self.characterTabViewModel = ko.observable(new CharacterTabViewModel(self));
 	self.dmTabViewModel = ko.observable(new DmTabViewModel());
 	self.partyTabViewModel = ko.observable(new PartyTabViewModel(self));
 	self.settingsTabViewModel = ko.observable(new SettingsTabViewModel());
@@ -181,8 +181,9 @@ function RootViewModel() {
  * tab. This should contain any child view models that relate to a player character
  * or to their character sheet.
  */
-function CharacterTabViewModel() {
+function CharacterTabViewModel(parent) {
 	var self = this;
+	self.root = parent;
 
 	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
@@ -195,7 +196,7 @@ function CharacterTabViewModel() {
 	self.equipmentViewModel = ko.observable(new EquipmentViewModel(self));
 	self.spellbook = ko.observable(new Spellbook());
 	self.spell_stats = ko.observable(new SpellStatsViewModel());
-	self.skillTree = ko.observable(new SkillTree());
+	self.skillTree = ko.observable(new SkillTree(self));
 	self.treasureViewModel = ko.observable(new TreasureViewModel());
 	self.featsProf = ko.observable(new FeatsProfViewModel());
 

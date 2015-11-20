@@ -47,6 +47,33 @@ function AbilityScores() {
     self.chaModifier =  ko.computed(function(){
       return getStrModifier(self.cha());
     });
+    
+    //Public Methods
+    
+    self.modifierFor = function(score) {
+		var val = 0;
+		switch(score.toLowerCase()) {
+			case 'str':
+				val = self.str();
+				break;
+			case'dex':
+				val = self.dex();
+				break;
+			case'con':
+				val = self.con();
+				break;
+			case'int':
+				val = self.int();
+				break;
+			case'wis':
+				val = self.wis();
+				break;
+			case'cha':
+				val = self.cha();
+				break;
+		}
+		return getModifier(val);
+    };
 
     self.clear = function() {
         self.str(18);

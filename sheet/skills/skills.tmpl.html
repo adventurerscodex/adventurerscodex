@@ -12,9 +12,9 @@
             Skill
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('modifier');}">
+          <th data-bind="click: function(){sortBy('bonus');}">
             Modifier
-            <span data-bind="css: sortArrow('modifier')"></span>
+            <span data-bind="css: sortArrow('bonus')"></span>
           </th>
           <th data-bind="click: function(){sortBy('proficiency');}">
             Proficient
@@ -34,7 +34,7 @@
                href="#"
                data-toggle="modal"
                data-target="#viewSkill"></td>
-          <td data-bind="html: modifierLabel, click: $parent.editSkill"
+          <td data-bind="html: bonusLabel, click: $parent.editSkill"
                href="#"
                data-toggle="modal"
                data-target="#viewSkill"></td>
