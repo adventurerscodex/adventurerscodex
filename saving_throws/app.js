@@ -13,23 +13,23 @@ function SavingThrowsViewModel() {
 	};
 	
 	self._defaultSkills = function() {
-		var skills = [
-			{ name: 'Strength', abilityScore: 'Str', proficency: false, modifier: 0 },
-			{ name: 'Dexterity', abilityScore: 'Dex', proficency: false, modifier: 0 },
-			{ name: 'Constitution', abilityScore: 'Const', proficency: false, modifier: 0 },
-			{ name: 'Intellegence', abilityScore: 'Int', proficency: false, modifier: 0 },
-			{ name: 'Wisdom', abilityScore: 'Wis', proficency: false, modifier: 0 },
-			{ name: 'Charisma', abilityScore: 'Cha', proficency: false, modifier: 0 }
+		var savingThrows = [
+			{ name: 'Strength', proficency: false, modifier: 0 },
+			{ name: 'Dexterity', proficency: false, modifier: 0 },
+			{ name: 'Constitution', proficency: false, modifier: 0 },
+			{ name: 'Intellegence', proficency: false, modifier: 0 },
+			{ name: 'Wisdom', proficency: false, modifier: 0 },
+			{ name: 'Charisma', proficency: false, modifier: 0 }
 		];
-		return $.map(skills, function(e, _) {
-			var skill = new Skill();
-			skill.importValues(e);
-			return skill;
+		return $.map(savingThrows, function(e, _) {
+			var savingThrow = new SavingThrows();
+			savingThrow.importValues(e);
+			return savingThrow;
 		});
 	};
 		    
     self.selecteditem = ko.observable();
-    self.blankSkill = ko.observable(new Skill());
+    self.blankSkill = ko.observable(new SavingThrows());
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);

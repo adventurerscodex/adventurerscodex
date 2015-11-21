@@ -5,15 +5,13 @@ function SavingThrows() {
 
     self.name = ko.observable('');
     self.modifier = ko.observable(0);
-    self.abilityScore = ko.observable('');
+    /* self.abilityScore = ko.observable(''); */
     self.proficiency = ko.observable(false);
 
 	self.modifierLabel = ko.computed(function() {
-		var str = self.modifier() >= 0 ? 
-			'+' + self.modifier() : 
-			String(self.modifier());
-		str += ' <i><small>(' 
-				+ self.abilityScore() + ')</small></i>'
+		var str = self.modifier() >= 0 ? '+' + self.modifier() : String(self.modifier());
+		/* str += ' <i><small>(' 
+				+ self.abilityScore() + ')</small></i>' */
 		return str;
 	});
 	
@@ -26,14 +24,14 @@ function SavingThrows() {
 
     self.clear = function() {
         self.name('');
-        self.abilityScore('');
+        /* self.abilityScore(''); */
         self.modifier(0);
         self.proficiency(false);
     };
 
     self.importValues = function(values) {
         self.name(values.name);
-        self.abilityScore(values.abilityScore);
+        // self.abilityScore(values.abilityScore);
         self.modifier(values.modifier);
         self.proficiency(values.proficiency);
     };
@@ -41,7 +39,7 @@ function SavingThrows() {
     self.exportValues = function() {
         return {
 			name: self.name(),
-			abilityScore: self.abilityScore(),
+			// abilityScore: self.abilityScore(),
 			modifier: self.modifier(),
 			proficiency: self.proficiency(),
 		}

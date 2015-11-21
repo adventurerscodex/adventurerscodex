@@ -189,6 +189,7 @@ function CharacterTabViewModel() {
     
     self.load = function() {
     	self.skillTree().load();
+		self.savingThrows().load();
     };
     
     self.clear = function() {
