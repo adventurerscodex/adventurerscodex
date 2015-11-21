@@ -98,6 +98,11 @@
             <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes/', data: note }"></div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-3 col-padded">
+            <div data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'saving_throws/', data: savingThrows }"></div>
+          </div>
+        </div>
       </div><!-- End Character Tab -->
       <div role="tabpanel" class="tab-pane" id="dm" data-bind="with: dmTabViewModel, css: dMTabStatus">
         <div data-bind="template: { name: 'campaign.tmpl', templateUrl: 'campaign/', data: campaignViewModel }"></div>
