@@ -20,7 +20,7 @@ function CharacterManager() {
 			var oldKey = vm.key; 
 			vm.key = function(){ return key; };
 			vm.load();
-			vm.url = '/sheet/?key=' + key;
+			vm.url = '/charactersheet/?key=' + key;
 			
 			return vm;
 		});
@@ -36,7 +36,7 @@ function CharacterManager() {
 		if (self.defaultCharacterKey() === '') {
 			self.defaultCharacterKey(key);
 		}
-		window.location = '/sheet/?key=' + key + '&playerType=character'
+		window.location = '/charactersheet/?key=' + key + '&playerType=character'
 	};
 	
 	self.addDM = function() {
@@ -45,7 +45,7 @@ function CharacterManager() {
 		if (self.defaultCharacterKey() === '') {
 			self.defaultCharacterKey(key);
 		}
-		window.location = '/sheet/?key=' + key + '&playerType=dm'
+		window.location = '/charactersheet/?key=' + key + '&playerType=dm'
 	};
 	
 	self.removeCharacter = function(character) {
