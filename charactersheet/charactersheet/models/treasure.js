@@ -1,8 +1,8 @@
 "use strict";
 
 function Treasure() {
-
     var self = this;
+    self.ps = PersistenceService.register(Treasure, self);
 
     self.platinum =  ko.observable(0);
     self.gold = ko.observable(0);
@@ -51,4 +51,12 @@ function Treasure() {
             misc: self.misc(),
         }
     };
+    
+    self.save = function() {
+    	self.ps.save();
+    };
+};
+
+Treasure.find = function() {
+	return PersistenceService.findOne(Treasure);
 };

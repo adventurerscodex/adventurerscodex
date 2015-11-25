@@ -3,17 +3,21 @@
 function TreasureViewModel() {
     var self = this;
 
-	self.treasure = ko.observable(new Treasure());
+	self.treasure = new Treasure();
 
 	self.init = function() {
 	
 	};
 	
 	self.load = function() {
+		var t = Treasure.find();
+		if (t) {
+			self.treasure = t;
+		}
 	};
 	
 	self.unload = function() {
-	
+		self.treasure.save();
 	};
 
     self.clear = function() {
@@ -21,12 +25,12 @@ function TreasureViewModel() {
     };
 
     self.importValues = function(values) {
-        self.treasure().importValues(values.treasure);
+        self.treasure.importValues(values.treasure);
     };
 
     self.exportValues = function() {
         return {
-            treasure: self.treasure().exportValues()
+            treasure: self.treasure.exportValues()
         }
     };
 };
