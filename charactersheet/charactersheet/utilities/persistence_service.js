@@ -306,7 +306,7 @@ PersistenceService._save = function(key, inst) {
 	}
 	//Make an id if one doesn't exist.
 	var id = inst.__id;
-	if (!id) {
+	if (id === undefined || id === null) {
 		var indecies = Object.keys(table);
 		indecies.sort(function(a,b){return parseInt(b)-parseInt(a)});
 		
