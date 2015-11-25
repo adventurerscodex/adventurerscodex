@@ -2,25 +2,23 @@
 
 function FeatsProfViewModel() {
 	var self = this;
-
-	self.feats = ko.observable('');
-	self.proficiencies = ko.observable('');
-	self.specialAbilities = ko.observable('');
-
-	self.clear = function() {
-		self.feats('');
-    	self.proficiencies('');
-    	self.specialAbilities('');
-  	};
-
+	
+	self.featsProf = new FeatsProf();
+	
 	self.init = function() {
 	
 	};
 	
 	self.load = function() {
+		var fp = FeatsProf.find();
+		if (fp) {
+			self.featsProf = fp;
+		}
 	};
 	
 	self.unload = function() {
-	
+		self.featsProf.save();
 	};
+	
+	
 };

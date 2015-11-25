@@ -2,28 +2,21 @@
 
 function FeaturesTraitsViewModel() {
 	var self = this;
-
-	self.background = ko.observable('');
-	self.ideals = ko.observable('');
-	self.flaws = ko.observable('');
-	self.bonds = ko.observable('');
-
+	
+	self.featTraits = new FeaturesTraits();
+	
 	self.init = function() {
 	
 	};
 	
 	self.load = function() {
-	
+		var ft = FeaturesTraits.find();
+		if (ft) {
+			self.featTraits = ft;
+		}
 	};
 	
 	self.unload = function() {
-	
-	};
-
-	self.clear = function() {
-		self.background('');
-		self.ideals('');
-		self.flaws('');
-		self.bonds('');
+		self.featTraits.save();
 	};
 };

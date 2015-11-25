@@ -1,5 +1,6 @@
 function OtherStats() {
 	var self = this;
+	self.ps = PersistenceService.register(OtherStats, self);
 	
 	self.ac = ko.observable(10);
 	self.initiative = ko.observable(0);
@@ -32,4 +33,12 @@ function OtherStats() {
 			proficiency: self.proficiency()
 		}
 	};
+
+	self.save = function() {
+		self.ps.save();
+	};	
+};
+
+OtherStats.find = function() {
+	return PersistenceService.findOne(OtherStats);
 };

@@ -1,5 +1,6 @@
 function HitDice() {
 	var self = this;
+	self.ps = PersistenceService.register(HitDice, self);
 	
 	self.hitDiceType = ko.observable('');
 	self.hitDiceUsed = ko.observable(false);
@@ -21,6 +22,10 @@ function HitDice() {
 		}
 	};
 	
+	self.save = function() {
+		self.ps.save();
+	};
+	
 	self.toggleHitDice = function() {
 		self.hitDiceUsed(!self.hitDiceUsed())
 	};
@@ -32,4 +37,8 @@ function HitDice() {
 		}
 		return css;
 	});
+};
+
+HitDice.findAll = function() {
+	return PersistenceService.findAll(HitDice);
 };

@@ -1,5 +1,7 @@
 function Health() {
 	var self = this;
+	self.ps = PersistenceService.register(Health, self);
+	
 	self.DANGER_THRESHOLD = 0.10;
 	self.WARNING_THRESHOLD = 0.30;
 	
@@ -88,4 +90,12 @@ function Health() {
 			damage: self.damage()
 		}
 	};
+	
+	self.save = function() {
+		self.ps.save();
+	};
+};
+
+Health.find = function() {
+	return PersistenceService.findOne(Health);
 };
