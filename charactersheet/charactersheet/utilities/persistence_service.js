@@ -29,7 +29,7 @@ var PersistenceService = {
  * var people = PersistenceService.findAll(Person);```
  */
 PersistenceService.findAll = function(model) {
-	return PersistenceService._findAll(model.name);
+	return PersistenceService._findAll(model);
 };
 
 /**
@@ -215,7 +215,7 @@ function PersistenceServiceToken(model, inst) {
 	 * }```
 	 */
 	self.save = function() {
-		PersistenceService.save(self.model.name, self.inst);
+		PersistenceService.save(self.model, self.inst);
 	};
 	
 	/**
@@ -234,7 +234,7 @@ function PersistenceServiceToken(model, inst) {
 	 * }```
 	 */
 	self.delete = function() {
-		PersistenceService.delete(self.model.name, self.inst.__id);
+		PersistenceService.delete(self.model, self.inst.__id);
 	};
 };
 
