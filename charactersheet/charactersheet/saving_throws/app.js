@@ -29,7 +29,7 @@ function SavingThrowsViewModel() {
 	};
 		    
     self.selecteditem = ko.observable();
-    self.blankSkill = ko.observable(new SavingThrows());
+    self.blankSavingThrow = ko.observable(new SavingThrows());
     self.savingThrows = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
@@ -115,8 +115,8 @@ function SavingThrowsViewModel() {
 
 	//Manipulating savingThrows
     self.addSkill = function() {
-        self.savingThrows.push(self.blankSkill());
-        self.blankSkill(new Skill());
+        self.savingThrows.push(self.blankSavingThrow());
+        self.blankSavingThrow(new Skill());
     };
 
     self.removeSkill = function(skill) { 

@@ -32,7 +32,9 @@ function SpellSlotsViewModel() {
 	};
 	
 	self.unload = function() {
-
+ 		$.each(self.slots(), function(_, e) {
+			e.save();
+		});
 	};
 	
 	/* UI Methods */

@@ -30,10 +30,16 @@ function SpellbookViewModel() {
 	};
 	
 	self.load = function() {
+		var spells = Spell.findAll();
+		if (spells) {
+			self.spellbook(spells);
+		}
 	};
 	
 	self.unload = function() {
-	
+ 		$.each(self.spellbook(), function(_, e) {
+			e.save();
+		});
 	};
 
 	/* UI Methods */
@@ -100,35 +106,18 @@ function SpellbookViewModel() {
 
 	//Manipulating spells
     self.addSpell = function() {
+    	self.blankSpell().save();
         self.spellbook.push(self.blankSpell());
         self.blankSpell(new Spell());
     };
 
-    self.removeSpell = function(spell) { self.spellbook.remove(spell) };
+    self.removeSpell = function(spell) { 
+    	self.spellbook.remove(spell) 
+    	spell.delete();	
+    };
 
     self.editSpell = function(spell) {
         self.selecteditem(spell);
-    };
-
-    self.exportValues = function() {
-        var spells = [];
-        for (var i in self.spellbook()) {
-            var spell = self.spellbook()[i];
-            spells.push(spell.exportValues());
-        }
-        return {
-            spellbook: spells
-        }
-    };
-
-    self.importValues = function(values) {
-        var newSpells = []
-        for (var i in values.spellbook) {
-            var spell = values.spellbook[i];
-            var newSpell = new Spell();
-            newSpell.importValues(spell);
-            self.spellbook.push(newSpell);
-        }
     };
 
     self.clear = function() {

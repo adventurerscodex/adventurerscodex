@@ -2,7 +2,7 @@
 
 function Spell() {
     var self = this;
-
+	self.ps = PersistenceService.register(Spell, self);
 
     self.spellName = ko.observable('');
     self.spellType = ko.observable('');
@@ -35,7 +35,7 @@ function Spell() {
         'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
         '90 ft', '120 ft', '300 ft', '500 ft', '1 mile']);
 
-    this.clear = function() {
+    self.clear = function() {
         self.spellName('');
         self.spellType('');
         self.spellDmg('');
@@ -48,7 +48,7 @@ function Spell() {
         self.spellDuration('');
     };
 
-    this.importValues = function(values) {
+    self.importValues = function(values) {
         self.spellName(values.spellName);
         self.spellType(values.spellType);
         self.spellDmg(values.spellDmg);
@@ -61,7 +61,7 @@ function Spell() {
         self.spellDuration(values.spellDuration);
     };
 
-    this.exportValues = function() {
+    self.exportValues = function() {
         return {
         spellName: self.spellName(),
         spellType: self.spellType(),
@@ -75,4 +75,16 @@ function Spell() {
         spellDuration: self.spellDuration(),
         }
     };
+    
+    self.save = function() {
+    	self.ps.save();
+    };
+    
+    self.delete = function() {
+    	self.ps.delete();
+    };
+};
+
+Spell.findAll = function() {
+	return PersistenceService.findAll(Spell);
 };
