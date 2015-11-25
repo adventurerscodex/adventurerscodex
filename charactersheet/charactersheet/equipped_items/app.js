@@ -3,9 +3,8 @@
 /**
  * The current items that a user has equipped.
  */
-function EquippedItemsViewModel(parent) {
+function EquippedItemsViewModel() {
 	var self = this;
-	self.parent = parent;
 	
     self.sorts = {
 	  'itemName asc': { field: 'itemName', direction: 'asc'},
@@ -27,6 +26,17 @@ function EquippedItemsViewModel(parent) {
 	self.selecteditem = ko.observable();
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
+	
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
 	
 	/* UI Methods */
 	

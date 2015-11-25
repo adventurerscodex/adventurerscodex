@@ -8,21 +8,17 @@ function EnemiesViewModel() {
 		self.enemies([]);
 	};
 
-	self.importValues = function(values) {
-		self.enemies($.map(values.enemies, function(e, _) {
-			var enemy = new NPC();
-			enemy.importValues(e); 
-			return enemy; 
-		}));
-	};
-
-	self.exportValues = function() {
-		var enemies = $.map(self.enemies(), function(e, _) { return e.exportValues(); });
-		return {
-			enemies: enemies
-		};
+	self.init = function() {
+	
 	};
 	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
+
 	//UI Methods
 	
 	self.filteredAndSortedEnemies = ko.computed(function() {

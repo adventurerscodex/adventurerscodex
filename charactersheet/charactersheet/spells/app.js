@@ -1,6 +1,6 @@
 "use strict";
 
-function Spellbook() {
+function SpellbookViewModel() {
     var self = this;
 
     self.sorts = {
@@ -24,6 +24,17 @@ function Spellbook() {
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
+
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
 
 	/* UI Methods */
 

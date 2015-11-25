@@ -5,6 +5,17 @@ function TreasureViewModel() {
 
 	self.treasure = ko.observable(new Treasure());
 
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
+
     self.clear = function() {
         self.treasure().clear();
     };

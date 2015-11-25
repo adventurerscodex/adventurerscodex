@@ -1,21 +1,24 @@
 "use strict";
 
 function SpellStatsViewModel() {
-  var self = this;
+	var self = this;
 
-  self.spell_stats = ko.observable(new SpellStats());
+	self.spell_stats = ko.observable(new SpellStats());
 
-  self.clear = function() {
-    self.spell_stats().clear();
-  };
+	self.init = function() {
+	
+	};
 
-  self.importValues = function(values) {
-    self.spell_stats().importValues(values.spell_stats);
-  };
+	self.load = function() {
+	
+	};
 
-  self.exportValues = function() {
-    return {
-      spell_stats: self.spell_stats().exportValues()
-    };
-  };
+	self.unload = function() {
+	
+	};
+
+	self.clear = function() {
+		self.spell_stats().clear();
+	};
+
 };

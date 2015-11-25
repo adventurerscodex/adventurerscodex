@@ -15,6 +15,23 @@ var getStrModifier = function(modifier){
    return modifier;
 };
 
+function AbilityScoresViewModel() {
+	var self = this;
+	
+	self.abilityScores = new AbilityScores();
+	
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
+};
+
 function AbilityScores() {
     var self = this;
 

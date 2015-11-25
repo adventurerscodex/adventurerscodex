@@ -1,6 +1,6 @@
 "use strict";
 
-function Stats() {
+function StatsViewModel() {
 	var self = this;
 	
 	self.health = new Health();
@@ -10,6 +10,17 @@ function Stats() {
 	self.enableAdd = ko.computed(function(){
 		return self.hitDiceList().length < 21;
 	});
+
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
 
 	self.clear = function() {
 		self.health.clear();

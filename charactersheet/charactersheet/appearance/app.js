@@ -5,17 +5,22 @@ function AppearanceViewModel() {
 
 	self.appearance = ko.observable(new CharacterAppearance());
 	
-	self.clear = function() {
-		self.appearance().clear();
-	};
-
-	self.importValues = function(values) {
-		self.appearance().importValues(values.appearance);
+	self.init = function() {
+		//Do something.
 	};
 	
-	self.exportValues = function() {
-		return {
-			appearance: self.appearance().exportValues()
-		};
+	self.load = function() {
+		var appear = CharacterAppearance.find();
+		if (appear) {
+			self.appearance(appear);
+		}
+	};
+	
+	self.unload = function() {
+		self.appearance().save();
+	};
+	
+	self.clear = function() {
+		self.appearance().clear();
 	};
 };

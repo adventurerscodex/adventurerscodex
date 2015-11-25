@@ -1,8 +1,7 @@
 "use strict";
 
-function SkillTree(parent) {
+function SkillsViewModel() {
     var self = this;
-    self.root = parent.root;
     
     self.sorts = {
 	  'name asc': { field: 'name', direction: 'asc'},
@@ -47,11 +46,24 @@ function SkillTree(parent) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
     
-    self.load = function() {
-    	if (self.skills().length === 0) {    	
-    		self.skills(self._defaultSkills());
-    	}
+    self.init = function() {
+    	//Do something.
+    };
     
+    self.load = function() {
+    	var skills = Skill.findAll();
+    
+    	if (skills.length === 0) {    	
+    		self.skills(self._defaultSkills());
+    	} else {
+    		self.skills(skills);
+    	}
+    };
+    
+    self.unload = function() {
+    	$.each(self.skills(), function(_, e) {
+    		e.save();
+    	});
     };
     
 	/* UI Methods */
@@ -130,27 +142,6 @@ function SkillTree(parent) {
         self.selecteditem(skill);
     };
     
-    self.exportValues = function() {
-        var skills = [];
-        for (var i in self.skills()) {
-            var skill = self.skills()[i];
-            skills.push(skill.exportValues());
-        }
-        return {
-            skills: skills
-        }
-    };
-
-    self.importValues = function(values) {
-        var newSkills = []
-        for (var i in values.skills) {
-            var skill = values.skills[i];
-            var newSkill = new Skill(self);
-            newSkill.importValues(skill);
-            self.skills.push(newSkill);
-        }
-    };
-
     self.clear = function() {
         self.skills([]);
     };

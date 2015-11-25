@@ -1,11 +1,10 @@
 "use strict";
 
-function PartyChatViewModel(parent) {
+function PartyChatViewModel() {
 	var self = this;
 	
-	self.parent = parent;
-	self.messenger = self.parent.messenger;
-	self.players = self.parent.players;
+	self.messenger = messenger;
+	self.players = players;
 	self.log = ko.observableArray([]);
 	self.message = ko.observable('');
 	self.id = null;

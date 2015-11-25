@@ -5,7 +5,7 @@
   <div class="panel-body">
 	<div class="panel-body">
 		<div class="form-horizontal">
-		  <div class="form-group" data-bind="visible: !parent.connected()">
+		  <div class="form-group" data-bind="visible: !messenger.connected">
 			  <div class="row">
           <div class="col-xs-12 text-center">
             <button data-bind="click: createRoom" class="btn btn-default pull-center">Create a new Party</button>
@@ -36,7 +36,7 @@
 			    <div class="hidden-xs col-sm-3"></div>
 			  </div>
 		  </div>
-		  <div class="form-group" data-bind="visible: parent.connected()">
+		  <div class="form-group" data-bind="visible: messenger.connected">
 			<div class="row">
 			  <div class="col-xs-2">
 			  </div>

@@ -12,7 +12,7 @@ function SavingThrowsViewModel() {
 	  'proficiency desc': { field: 'proficiency', direction: 'desc'}
 	};
 	
-	self._defaultSkills = function() {
+	self._defaultSavingThrows = function() {
 		var savingThrows = [
 			{ name: 'Strength', proficency: false, modifier: 0 },
 			{ name: 'Dexterity', proficency: false, modifier: 0 },
@@ -30,30 +30,40 @@ function SavingThrowsViewModel() {
 		    
     self.selecteditem = ko.observable();
     self.blankSkill = ko.observable(new SavingThrows());
-    self.skills = ko.observableArray([]);
+    self.savingThrows = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
     
+    self.init = function() {
+    	
+    };
+    
     self.load = function() {
-    	if (self.skills().length === 0) {    	
-    		self.skills(self._defaultSkills());
+    	if (self.savingThrows().length === 0) {    	
+    		self.savingThrows(self._defaultSavingThrows());
     	}
     
+    };
+    
+    self.unload = function() {
+		$.each(self.savingThrows(), function(_, e) {
+			e.save();
+		})
     };
     
 	/* UI Methods */
 	
 	/**
-	 * Filters and sorts the skills for presentation in a table.
+	 * Filters and sorts the savingThrows for presentation in a table.
 	 */
-    self.filteredAndSortedSkills = ko.computed(function() {
-    	var skills = self.skills();
+    self.filteredAndSortedSavingThrows = ko.computed(function() {
+    	var savingThrows = self.savingThrows();
     	
     	if (self.filter() !== '') {
-    		//skills = skills.filter(function(a) {});
+    		//savingThrows = savingThrows.filter(function(a) {});
     	}	
 
-    	return skills.sort(function(a, b) {
+    	return savingThrows.sort(function(a, b) {
     		var asc = self.sort().direction === 'asc' ? true : false;
     		var res = null;
     		
@@ -103,14 +113,14 @@ function SavingThrowsViewModel() {
 		self.sort(sort);
 	};
 
-	//Manipulating skills
+	//Manipulating savingThrows
     self.addSkill = function() {
-        self.skills.push(self.blankSkill());
+        self.savingThrows.push(self.blankSkill());
         self.blankSkill(new Skill());
     };
 
     self.removeSkill = function(skill) { 
-    	self.skills.remove(skill) 
+    	self.savingThrows.remove(skill) 
     };
 
     self.editSkill = function(skill) {
@@ -118,27 +128,27 @@ function SavingThrowsViewModel() {
     };
     
     self.exportValues = function() {
-        var skills = [];
-        for (var i in self.skills()) {
-            var skill = self.skills()[i];
-            skills.push(skill.exportValues());
+        var savingThrows = [];
+        for (var i in self.savingThrows()) {
+            var skill = self.savingThrows()[i];
+            savingThrows.push(skill.exportValues());
         }
         return {
-            skills: skills
+            savingThrows: savingThrows
         }
     };
 
     self.importValues = function(values) {
-        var newSkills = []
-        for (var i in values.skills) {
-            var skill = values.skills[i];
+        var newSavingThrows = []
+        for (var i in values.savingThrows) {
+            var skill = values.savingThrows[i];
             var newSkill = new Skill();
             newSkill.importValues(skill);
-            self.skills.push(newSkill);
+            self.savingThrows.push(newSkill);
         }
     };
 
     self.clear = function() {
-        self.skills([]);
+        self.savingThrows([]);
     };
 };

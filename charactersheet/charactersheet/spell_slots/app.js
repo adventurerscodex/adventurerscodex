@@ -32,6 +32,17 @@ function SpellSlotsViewModel() {
 	self.selecteditem = ko.observable(null);
 	self.sort = ko.observable(self.sorts['level asc']);
 	self.filter = ko.observable('');
+
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
 	
 	/* UI Methods */
 	
@@ -122,28 +133,7 @@ function SpellSlotsViewModel() {
 			slot.usedSpellSlots(0);
 		});
 	};
-			
-	self.exportValues = function() {
-		var slots = [];
-		for (var i in self.slots()) {
-			var slot = self.slots()[i];
-			slots.push(slot.exportValues());
-		}
-		return {
-			slots: slots
-		}
-	};
-	
-	self.importValues = function(values) {
-		var newSlots = []
-		for (var i in values.slots) {
-			var slot = values.slots[i];
-			var newSlot = new Slot();
-			newSlot.importValues(slot);
-			self.slots.push(newSlot);
-		}
-	};
-	
+				
 	self.clear = function() {
 		self.slots([]);
 	};

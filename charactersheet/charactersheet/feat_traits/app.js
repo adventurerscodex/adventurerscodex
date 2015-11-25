@@ -8,26 +8,22 @@ function FeaturesTraitsViewModel() {
 	self.flaws = ko.observable('');
 	self.bonds = ko.observable('');
 
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	
+	};
+	
+	self.unload = function() {
+	
+	};
+
 	self.clear = function() {
 		self.background('');
 		self.ideals('');
 		self.flaws('');
 		self.bonds('');
-	};
-
-	self.importValues = function(values) {
-		self.background(values.background);
-		self.ideals(values.ideals);
-		self.flaws(values.flaws);
-		self.bonds(values.bonds);
-	};
-
-	self.exportValues = function() {
-		return {
-			background: self.background(),
-			ideals: self.ideals(),
-			flaws: self.flaws(),
-			bonds: self.bonds(),
-		}
 	};
 };

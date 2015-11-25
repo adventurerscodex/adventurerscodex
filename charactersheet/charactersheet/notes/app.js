@@ -1,21 +1,20 @@
 "use strict";
 
-function Note() {
+function NotesViewModel() {
 	var self = this;
 
-	self.text = ko.observable('');
+	self.note = new Note();
+	
+	self.init = function() {
+	
+	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	
+	};
 
-	self.clear = function() {
-		self.text('');
-	};
-	
-	self.importValues = function(values) {
-		self.text(values.text);
-	};
-	
-	self.exportValues = function() {
-		return {
-			text: self.text()
-		}
-	};
+
 };

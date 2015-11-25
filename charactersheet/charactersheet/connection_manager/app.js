@@ -1,10 +1,9 @@
 "use strict";
 
-function ConnectionManagerViewModel(parent) {
+function ConnectionManagerViewModel() {
 	var self = this;
 	
-	self.parent = parent;
-	self.messenger = self.parent.messenger;
+	self.messenger = messenger;
 	self.roomId = ko.observable('');
 	
 	self.joinRoom = function() {

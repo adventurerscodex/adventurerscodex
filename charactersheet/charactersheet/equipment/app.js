@@ -25,6 +25,21 @@ function EquipmentViewModel(parent) {
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
 	
+	//Responders
+	
+	self.init = function() {
+		//Do something.
+	};
+	
+	self.load = function() {
+		self.equipment(Item.findAll());
+	};
+	
+	self.unload = function() {
+		//Do something.
+	};
+	
+	
 	/* UI Methods */
 	
 	/**
@@ -131,28 +146,7 @@ function EquipmentViewModel(parent) {
 	self.clear = function() {
 		self.equipment([]);
 	};
-	
-	self.exportValues = function() {
-		var equipment = [];
-		for (var i in self.equipment()) {
-			var item = self.equipment()[i];
-			equipment.push(item.exportValues());
-		}
-		return {
-			equipment: equipment
-		}
-	};
-
-	self.importValues = function(values) {
-		var newItems = []
-		for (var i in values.equipment) {
-			var item = values.equipment[i];
-			var newItem = new Item();
-			newItem.importValues(item);
-			self.addItem(newItem);
-		}
-	};
-	
+		
 	//Private Methods	
 
 	self.addItem = function(item) {
