@@ -8,25 +8,23 @@ function Skill() {
     self.modifier = ko.observable(0);
     self.abilityScore = ko.observable('');
     self.proficiency = ko.observable(false);
+    
+    self.updateFields = function() {
+    	self.modifier.notifySubscribers();
+    };
 
+	//UI Methods
+	
     self.proficiencyScore = function() {
-    	var profBonus;
-    	try {
-			//profBonus = self.root.characterTabViewModel().stats().otherStats.proficiency();
-		} catch (err) {};
+    	var profBonus = OtherStats.find().proficiency();
 		return profBonus ? parseInt(profBonus) : 0;
 	};
 	
 	self.abilityScoreModifier = function() {
-    	var score;
-    	try {
-    		//score = self.root.characterTabViewModel().abilityScores().modifierFor(self.abilityScore());
-    	} catch (err) {};
+    	var score = AbilityScores.find().modifierFor(self.abilityScore());
 		return parseInt(score);
 	};
 
-	//UI Methods
-	
 	self.bonus = ko.computed(function() {
 		var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
 		if (self.proficiency()) {
@@ -36,7 +34,6 @@ function Skill() {
 		}
 		return bonus;
 	});
-
 
 	self.bonusLabel = ko.computed(function() {
 		var str = self.bonus() >= 0 ? 
