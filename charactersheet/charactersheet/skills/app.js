@@ -47,7 +47,16 @@ function SkillsViewModel() {
     self.sort = ko.observable(self.sorts['name asc']);
     
     self.init = function() {
-    	//Do something.
+	    AbilityScoresSignaler.changed.add(function() {
+	    	$.each(self.skills(), function(_, e) {
+	    		e.updateFields();
+	    	})
+	    });
+	    StatsSignaler.changed.add(function() {
+	    	$.each(self.skills(), function(_, e) {
+	    		e.updateFields();
+	    	})
+	    });
     };
     
     self.load = function() {

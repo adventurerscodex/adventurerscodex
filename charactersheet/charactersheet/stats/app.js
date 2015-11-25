@@ -1,5 +1,9 @@
 "use strict";
 
+var StatsSignaler = {
+	changed: new signals.Signal()
+};
+
 function StatsViewModel() {
 	var self = this;
 	
@@ -29,6 +33,8 @@ function StatsViewModel() {
 		if (hitDiceList) {
 			self.hitDiceList(hitDiceList);
 		}
+		
+		self.otherStats.proficiency.subscribe(self.otherStats.save);
 	};
 	
 	self.unload = function() {

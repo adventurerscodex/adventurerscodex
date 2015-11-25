@@ -33,7 +33,7 @@ function AbilityScores() {
     self.chaModifier =  ko.computed(function(){
       return getStrModifier(self.cha());
     });
-    
+        
     //Public Methods
     
     self.modifierFor = function(score) {
@@ -70,14 +70,14 @@ function AbilityScores() {
         self.cha(18);
     };
 
-    self.importValues = function(values) {
+    self.importValues = function(values) {    	
         self.str(values.str);
         self.dex(values.dex);
         self.con(values.con);
         self.int(values.int);
         self.wis(values.wis);
         self.cha(values.cha);
-    };
+   };
 
     self.exportValues = function() {
         return {
@@ -92,6 +92,7 @@ function AbilityScores() {
     
     self.save = function() {
     	self.ps.save();
+    	AbilityScoresSignaler.changed.dispatch();
     };
 };
 

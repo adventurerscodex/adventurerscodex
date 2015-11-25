@@ -1,3 +1,5 @@
+"use strict";
+
 function OtherStats() {
 	var self = this;
 	self.ps = PersistenceService.register(OtherStats, self);
@@ -36,6 +38,7 @@ function OtherStats() {
 
 	self.save = function() {
 		self.ps.save();
+		StatsSignaler.changed.dispatch();
 	};	
 };
 

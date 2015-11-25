@@ -21,7 +21,10 @@ function Skill() {
 	};
 	
 	self.abilityScoreModifier = function() {
-    	var score = AbilityScores.find().modifierFor(self.abilityScore());
+    	var score = 0;
+    	try {
+    		score = AbilityScores.find().modifierFor(self.abilityScore());
+		} catch(err) {};
 		return parseInt(score);
 	};
 
