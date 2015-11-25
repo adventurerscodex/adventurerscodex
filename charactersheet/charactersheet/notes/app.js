@@ -10,11 +10,15 @@ function NotesViewModel() {
 	};
 	
 	self.load = function() {
+		var note = Note.find();
+		if (note) {
+			self.note = note;
+		}
 	};
 	
 	self.unload = function() {
-	
-	};
+		self.note.save();
+	};	
 
 
 };

@@ -2,6 +2,7 @@
 
 function Note() {
 	var self = this;
+	self.ps = PersistenceService.register(Note, self);
 
 	self.text = ko.observable('');
 
@@ -18,5 +19,15 @@ function Note() {
 			text: self.text()
 		}
 	};
+	
+	self.save = function() {
+		self.ps.save();
+	};
 };
+
+Note.find = function() {
+	return PersistenceService.findOne(Note);
+};
+
+
 
