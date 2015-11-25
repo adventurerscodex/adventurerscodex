@@ -2,11 +2,35 @@
 
 function Slot() {
 	var self = this;
+	self.ps = PersistenceService.register(Slot, self);
+
+	self.slotColors = [
+		'progress-bar-forest',
+		'progress-bar-sky',
+		'progress-bar-orange',
+		'progress-bar-red',
+		'progress-bar-purple',
+		'progress-bar-teal',
+		'progress-bar-indigo',
+		'progress-bar-brown',
+		'progress-bar-yellow',
+		'progress-bar-magenta',
+		'progress-bar-green',
+		'progress-bar-blue',
+		'progress-bar-red',
+		'progress-bar-purple',
+		'progress-bar-teal',
+		'progress-bar-blue',
+		'progress-bar-indigo'
+	];
 
 	self.level = ko.observable(1);
 	self.maxSpellSlots = ko.observable(1);
 	self.usedSpellSlots = ko.observable(0);
-	self.color = ko.observable('');
+	
+	self.color = ko.computed(function() {
+		return self.slotColors[self.level()-1];
+	});
 
 	self.spellSlots = ko.computed(function() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots()));
@@ -36,14 +60,12 @@ function Slot() {
 		self.level(0);
 		self.maxSpellSlots(0);
 		self.usedSpellSlots(0);
-		self.color('');
 	};
 
 	self.importValues = function(values) {
 		self.level(values.level);
 		self.maxSpellSlots(values.maxSpellSlots);
 		self.usedSpellSlots(values.usedSpellSlots);
-		self.color(values.color);
 	};
 
 	self.exportValues = function() {
@@ -51,7 +73,18 @@ function Slot() {
 			level: self.level(),
 			maxSpellSlots: self.maxSpellSlots(),
 			usedSpellSlots: self.usedSpellSlots(),
-			color: self.color()
 		}
 	};
+	
+	self.save = function() {
+		self.ps.save();
+	};
+	
+	self.delete = function() {
+		self.ps.delete();
+	};
+};
+
+Slot.findAll = function() {
+	return PersistenceService.findAll(Slot);
 };

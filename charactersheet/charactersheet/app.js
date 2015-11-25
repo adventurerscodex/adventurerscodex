@@ -171,7 +171,17 @@ function CharacterTabViewModel() {
 	self.spellStatsViewModel = ko.observable(new SpellStatsViewModel());
     
 	self.init = function() {
-		//Put module init here.
+    	//Init all viewModels.
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().init();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
 	};
 
     self.load = function() {

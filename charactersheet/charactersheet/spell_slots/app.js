@@ -3,21 +3,6 @@
 function SpellSlotsViewModel() {
 	var self = this;
 	
-	self.slotColors = [
-		'progress-bar-red',
-		'progress-bar-purple',
-		'progress-bar-teal',
-		'progress-bar-indigo',
-		'progress-bar-brown',
-		'progress-bar-yellow',
-		'progress-bar-forest',
-		'progress-bar-sky',
-		'progress-bar-orange',
-		'progress-bar-magenta',
-		'progress-bar-green',
-		'progress-bar-blue'
-	];
-	
     self.sorts = {
 	  'level asc': { field: 'level', direction: 'asc', numeric: true},
 	  'level desc': { field: 'level', direction: 'desc', numeric: true},
@@ -34,14 +19,20 @@ function SpellSlotsViewModel() {
 	self.filter = ko.observable('');
 
 	self.init = function() {
-	
+
 	};
 	
 	self.load = function() {
+		var slots = Slot.findAll();
+		if (slots) {
+			self.slots(slots);
+		}
+		self.blankSlot().level(self.slots().length + 1);
+		self.blankSlot().maxSpellSlots(1);	
 	};
 	
 	self.unload = function() {
-	
+
 	};
 	
 	/* UI Methods */
@@ -97,7 +88,7 @@ function SpellSlotsViewModel() {
 	 * Given a column name, determine the current sort type & order.
 	 */
 	self.sortBy = function(columnName) {
-		var sort = null
+		var sort = null;
 		if (self.sort().field === columnName && self.sort().direction === 'asc') {
 			sort = self.sorts[columnName+' desc'];
 		} else {
@@ -116,16 +107,16 @@ function SpellSlotsViewModel() {
     };
 	
 	self.addSlot = function() {
-		self.blankSlot().color(self.slotColors.pop());
 		self.slots.push(self.blankSlot());
+		self.blankSlot().save();
 		self.blankSlot(new Slot());
 		self.blankSlot().level(self.slots().length + 1);
-		self.blankSlot().maxSpellSlots('');
+		self.blankSlot().maxSpellSlots(1);
 	};
 	
 	self.removeSlot = function(slot) {
-		self.slotColors.push(slot.color());
 		self.slots.remove(slot);
+		slot.delete();
 	};
 	
 	self.resetSlots = function() {
