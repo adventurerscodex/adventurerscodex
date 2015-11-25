@@ -2,6 +2,7 @@
 
 function CharacterAppearance() {
 	var self = this;
+	self.ps = PersistenceService.register(CharacterAppearance, self);
 	
 	self.height = ko.observable('');
 	self.weight = ko.observable('');
@@ -10,7 +11,7 @@ function CharacterAppearance() {
 	self.skinColor = ko.observable('');
 
 	//Public Methods
-
+	
 	self.clear = function() {
 		self.height('');
 		self.weight('');
@@ -36,6 +37,15 @@ function CharacterAppearance() {
 			skinColor: self.skinColor()
 		}
 	};
-
-
+			
+	self.save = function() {
+		self.ps.save();
+	};
 };
+
+//CRUD
+
+CharacterAppearance.find = function() {
+	return PersistenceService.findOne(CharacterAppearance);
+};
+

@@ -2,6 +2,7 @@
 
 function Profile() {
 	var self = this;
+	self.ps = PersistenceService.register(Profile, self);
 
 	self.characterName =  ko.observable('');
 	self.playerName = ko.observable('');
@@ -15,6 +16,10 @@ function Profile() {
 	self.exp = ko.observable('');
 	
 	//Public Methods
+	
+	self.save = function() {
+		self.ps.save();
+	};
 
 	self.clear = function() {
 		self.characterName('');
@@ -56,4 +61,8 @@ function Profile() {
 			exp: self.exp()
 		}
 	};
+};
+
+Profile.find = function() {
+	return PersistenceService.findOne(Profile);
 };

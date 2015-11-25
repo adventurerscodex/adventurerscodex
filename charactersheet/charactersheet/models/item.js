@@ -6,6 +6,7 @@
  */
 function Item() {
 	var self = this;
+	self.ps = PersistenceService.register(Item, self);
 	
 	self.itemName = ko.observable('');	
 	self.itemType = ko.observable('');
@@ -47,4 +48,12 @@ function Item() {
 		values.itemCost = self.itemCost();
 		return values;
 	};
+	
+	self.save = function() {
+		self.ps.save();
+	};
+};
+
+Item.findAll = function() {
+	return PersistenceService.findAll(Item);
 };

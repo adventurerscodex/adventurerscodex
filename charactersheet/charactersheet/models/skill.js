@@ -1,8 +1,8 @@
 "use strict";
 
-function Skill(parent) {
+function Skill() {
     var self = this;
-    self.root = parent.root;
+	self.ps = PersistenceService.register(Skill, self);
     
     self.name = ko.observable('');
     self.modifier = ko.observable(0);
@@ -12,7 +12,7 @@ function Skill(parent) {
     self.proficiencyScore = function() {
     	var profBonus;
     	try {
-			profBonus = self.root.characterTabViewModel().stats().otherStats.proficiency();
+			//profBonus = self.root.characterTabViewModel().stats().otherStats.proficiency();
 		} catch (err) {};
 		return profBonus ? parseInt(profBonus) : 0;
 	};
@@ -20,7 +20,7 @@ function Skill(parent) {
 	self.abilityScoreModifier = function() {
     	var score;
     	try {
-    		score = self.root.characterTabViewModel().abilityScores().modifierFor(self.abilityScore());
+    		//score = self.root.characterTabViewModel().abilityScores().modifierFor(self.abilityScore());
     	} catch (err) {};
 		return parseInt(score);
 	};
@@ -53,6 +53,10 @@ function Skill(parent) {
 		} 
 		return '';
 	});
+	
+	self.save = function() {
+		self.ps.save();
+	};
 
     self.clear = function() {
         self.name('');
@@ -76,4 +80,8 @@ function Skill(parent) {
 			proficiency: self.proficiency(),
 		}
     };
+};
+
+Skill.findAll = function() {
+	return PersistenceService.findAll(Skill);
 };

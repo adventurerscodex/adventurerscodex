@@ -2,7 +2,8 @@
 
 function Messenger() {
 	var self = this;
-
+	
+	self.connected = false;
 	self._socket = null;
 	self._socketUrl = 'http://brianschrader.com:3100';
 		
@@ -81,7 +82,7 @@ function Messenger() {
 
 	self._onconnect = function() {
 		console.log('Connected!');
-		self._connected = true;
+		self.connected = true;
 	};
 	
 	self._send = function(roomId, classification, type, msg) {

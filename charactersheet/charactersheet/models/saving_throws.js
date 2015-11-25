@@ -2,6 +2,7 @@
 
 function SavingThrows() {
     var self = this;
+    self.ps = PersistenceService.register(SavingThrows, self);
 
     self.name = ko.observable('');
     self.modifier = ko.observable(0);
@@ -21,6 +22,10 @@ function SavingThrows() {
 		} 
 		return '';
 	});
+
+	self.save = function() {
+		self.ps.save();
+	};
 
     self.clear = function() {
         self.name('');

@@ -5,16 +5,14 @@
  * The model tracks players that come into the room, and considers
  * them gone when they haven't responded for some time.
  */
-function Players(parent) {
+function Players() {
 	var self = this;
 	
 	self.SWEEP_TIMER = 2000;
 	self.SAY_HI_TIMER = 10000;
 	self.PLAYER_EXPIRED_TIMEOUT = 22000;
 	
-	self.parent = parent;
-	self.root = self.parent.parent;
-	self.messenger = self.parent.messenger;
+	self.messenger = messenger;
 	self.inRoom = [];
 	
 	self._onPlayerEnters = [];
