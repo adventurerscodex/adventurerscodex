@@ -1,13 +1,15 @@
 <div class="panel panel-default bio">
+<!-- 
   <div class="panel-heading">
-      <h2 class="panel-title">Saving Throws</h2>
+      <h2 class="panel-title">SavingThrows</h2>
   </div>
+ -->
   <div class="panel-body">
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
           <th data-bind="click: function(){sortBy('name');}">
-            Name
+            SavingThrow
             <span data-bind="css: sortArrow('name')"></span>
           </th>
           <th data-bind="click: function(){sortBy('modifier');}">
@@ -20,28 +22,28 @@
           </th>
           <th>
             <a data-toggle="modal"
-               data-target="#addSkill" href="#">
+               data-target="#addSavingThrow" href="#">
               <i class="glyphicon glyphicon-plus"></i>
             </a>
           </th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: filteredAndSortedSkills'>
+      <tbody data-bind='foreach: filteredAndSortedSavingThrows'>
         <tr style="cursor:pointer;">
-          <td data-bind="text: name, click: $parent.editSkill"
+          <td data-bind="text: name, click: $parent.editSavingThrow"
                href="#"
                data-toggle="modal"
-               data-target="#viewSkill"></td>
-          <td data-bind="html: modifierLabel, click: $parent.editSkill"
+               data-target="#viewSavingThrow"></td>
+          <td data-bind="html: modifierLabel, click: $parent.editSavingThrow"
                href="#"
                data-toggle="modal"
-               data-target="#viewSkill"></td>
-          <td data-bind="click: $parent.editSkill"
+               data-target="#viewSavingThrow"></td>
+          <td data-bind="click: $parent.editSavingThrow"
                href="#"
                data-toggle="modal"
-               data-target="#viewSkill"> <span data-bind="css: proficiencyLabel"></span</td>
+               data-target="#viewSavingThrow"> <span data-bind="css: proficiencyLabel"></span</td>
           <td>
-            <a data-bind="click: $parent.removeSkill" href="#">
+            <a data-bind="click: $parent.removeSavingThrow" href="#">
               <i class="glyphicon glyphicon-remove">
               </i>
             </a>
@@ -52,10 +54,10 @@
     </div>
     <!-- Add Modal -->
     <div class="modal fade"
-         id="addSkill"
+         id="addSavingThrow"
          tabindex="-1"
          role="dialog"
-         aria-labelledby="addSkillLabel">
+         aria-labelledby="addSavingThrowLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -66,7 +68,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="modal-title"
-                id="addSkillLabel">Add a skill.</h4>
+                id="addSavingThrowLabel">Add a saving throw.</h4>
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
@@ -77,21 +79,9 @@
                   <input type="text"
                          class="form-control"
                          id="name"
-                         placeholder="History"
-                         data-bind='textInput: blankSkill().name'>
+                         data-bind='textInput: blankSavingThrow().name'>
                 </div>
               </div>
-<!--               <div class="form-group">
-                <label for="abscore"
-                       class="col-sm-2 control-label">Ability Score</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="abscore"
-                           placeholder="Int, Dex, etc."
-                           data-bind='textInput: blankSkill().abilityScore'>
-                  </div>
-              </div> -->
               <div class="form-group">
                 <label for="modifier"
                        class="col-sm-2 control-label">Modifier</label>
@@ -101,7 +91,7 @@
                            id="modifier"
                            min="0"
                            placeholder="1"
-                           data-bind='textInput: blankSkill().modifier'>
+                           data-bind='textInput: blankSavingThrow().modifier'>
                   </div>
               </div>
               <div class="form-group">
@@ -111,16 +101,13 @@
                     <input type="checkbox"
                            class="form-control"
                            id="proficiency"
-                           data-bind='checked: blankSkill().proficiency'>
+                           data-bind='checked: blankSavingThrow().proficiency'>
                   </div>
               </div>
               <div class="modal-footer">
                 <button type="button"
-                        class="btn btn-default"
-                        data-dismiss="modal">Cancel</button>
-                <button type="button"
                         class="btn btn-primary"
-                        data-bind='click: addSkill'
+                        data-bind='click: addSavingThrow'
                         data-dismiss="modal">Add</button>
               </div>
             </form>
@@ -132,10 +119,10 @@
     <!-- ViewEdit Modal -->
     <div data-bind="with: selecteditem">
     <div class="modal fade"
-         id="viewSkill"
+         id="viewSavingThrow"
          tabindex="-1"
          role="dialog"
-         aria-labelledby="viewSkillLabel">
+         aria-labelledby="viewSavingThrowLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -146,7 +133,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
             <h4 class="modal-title"
-                id="addSkillLabel">Edit</h4>
+                id="addSavingThrowLabel">Edit</h4>
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
@@ -163,26 +150,14 @@
               </div>
               <div class="form-group">
                 <label for="modifier"
-                       class="col-sm-2 control-label">Bonus</label>
+                       class="col-sm-2 control-label">Modifier</label>
                   <div class="col-sm-10">
-                    <input type="number"
-                           class="form-control"
-                           id="modifier"
-                           min="0"
-                           placeholder="1"
-                           data-bind="value: modifier">
+                      <input type="number"
+                             class="form-control"
+                             id="modifier"
+                             data-bind="value: modifier" />
                   </div>
               </div>
-<!--               <div class="form-group">
-                <label for="abscore"
-                       class="col-sm-2 control-label">Ability Score</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="abscore"
-                           data-bind='textInput: abilityScore'>
-                  </div>
-              </div> -->
               <div class="form-group">
                 <label for="proficiency"
                        class="col-sm-2 control-label">Proficiency</label>

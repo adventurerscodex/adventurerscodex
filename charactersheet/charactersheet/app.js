@@ -169,6 +169,7 @@ function CharacterTabViewModel() {
     self.featsProfViewModel = ko.observable(new FeatsProfViewModel());
 	self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
 	self.spellStatsViewModel = ko.observable(new SpellStatsViewModel());
+    self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
     
 	self.init = function() {
     	//Init all viewModels.

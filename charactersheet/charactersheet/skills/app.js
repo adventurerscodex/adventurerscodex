@@ -49,12 +49,12 @@ function SkillsViewModel() {
     self.init = function() {
 	    AbilityScoresSignaler.changed.add(function() {
 	    	$.each(self.skills(), function(_, e) {
-	    		e.updateFields();
+	    		e.updateValues();
 	    	})
 	    });
 	    StatsSignaler.changed.add(function() {
 	    	$.each(self.skills(), function(_, e) {
-	    		e.updateFields();
+	    		e.updateValues();
 	    	})
 	    });
     };

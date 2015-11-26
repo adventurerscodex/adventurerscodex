@@ -9,7 +9,7 @@ function Skill() {
     self.abilityScore = ko.observable('');
     self.proficiency = ko.observable(false);
     
-    self.updateFields = function() {
+    self.updateValues = function() {
     	self.modifier.notifySubscribers();
     };
 

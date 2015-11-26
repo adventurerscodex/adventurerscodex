@@ -35,14 +35,26 @@ function SavingThrowsViewModel() {
     self.sort = ko.observable(self.sorts['name asc']);
     
     self.init = function() {
-    	
+// 	    AbilityScoresSignaler.changed.add(function() {
+// 	    	$.each(self.savingThrows(), function(_, e) {
+// 	    		e.updateValues();
+// 	    	})
+// 	    });
+// 	    StatsSignaler.changed.add(function() {
+// 	    	$.each(self.savingThrows(), function(_, e) {
+// 	    		e.updateValues();
+// 	    	})
+// 	    });
     };
     
     self.load = function() {
-    	if (self.savingThrows().length === 0) {    	
+		var st = SavingThrows.findAll();
+		if (st.length === 0) {
     		self.savingThrows(self._defaultSavingThrows());
+		}
+    	else {    	
+			self.savingThrows(st);
     	}
-    
     };
     
     self.unload = function() {
@@ -114,40 +126,21 @@ function SavingThrowsViewModel() {
 	};
 
 	//Manipulating savingThrows
-    self.addSkill = function() {
+    self.addsavingThrow = function() {
+    	self.blankSavingThrow().save();
         self.savingThrows.push(self.blankSavingThrow());
-        self.blankSavingThrow(new Skill());
+        self.blankSavingThrow(new SavingThrows());
     };
 
-    self.removeSkill = function(skill) { 
-    	self.savingThrows.remove(skill) 
+    self.removeSavingThrow = function(savingThrow) { 
+    	self.savingThrows.remove(savingThrow);
+    	savingThrow.delete();
     };
 
-    self.editSkill = function(skill) {
-        self.selecteditem(skill);
+    self.editSavingThrow = function(savingThrow) {
+        self.selecteditem(savingThrow);
     };
     
-    self.exportValues = function() {
-        var savingThrows = [];
-        for (var i in self.savingThrows()) {
-            var skill = self.savingThrows()[i];
-            savingThrows.push(skill.exportValues());
-        }
-        return {
-            savingThrows: savingThrows
-        }
-    };
-
-    self.importValues = function(values) {
-        var newSavingThrows = []
-        for (var i in values.savingThrows) {
-            var skill = values.savingThrows[i];
-            var newSkill = new Skill();
-            newSkill.importValues(skill);
-            self.savingThrows.push(newSkill);
-        }
-    };
-
     self.clear = function() {
         self.savingThrows([]);
     };
