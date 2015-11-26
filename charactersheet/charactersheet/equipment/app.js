@@ -1,8 +1,7 @@
 "use strict";
 
-function EquipmentViewModel(parent) {
+function EquipmentViewModel() {
 	var self = this;
-	self.parent = parent;
 	
     self.sorts = {
 	  'itemName asc': { field: 'itemName', direction: 'asc'},
@@ -36,7 +35,9 @@ function EquipmentViewModel(parent) {
 	};
 	
 	self.unload = function() {
-		//Do something.
+		$.each(self.equipment(), function(_, e) {
+			e.save();
+		});
 	};
 	
 	
@@ -151,10 +152,12 @@ function EquipmentViewModel(parent) {
 
 	self.addItem = function(item) {
 		self.equipment.push(item); 
+		item.save();
 	};
 
 	self.removeItem = function(item) {
 		self.equipment.remove(item);
+		item.delete();
 	};
 	
 	self.editItem = function(item) {

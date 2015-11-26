@@ -52,6 +52,10 @@ function Item() {
 	self.save = function() {
 		self.ps.save();
 	};
+	
+	self.delete = function() {
+		self.ps.delete();
+	};
 };
 
 Item.findAll = function() {
