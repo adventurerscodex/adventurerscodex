@@ -1,25 +1,28 @@
 "use strict";
 
+var ConnectionManagerSignaler = {
+	connected: new signals.Signal(),
+	disconnected: new signals.Signal(),
+	changed: new signals.Signal()
+};
+
 function ConnectionManagerViewModel() {
 	var self = this;
 	
-	self.messenger = messenger;
-	self.roomId = ko.observable('');
-	
-	self.joinRoom = function() {
-		var roomId = self.roomId().trim();
-		if (roomId !== '') {
-			self.messenger.join(roomId);
-			self.parent.parent.defaultRoomId(roomId);
-			self.parent.parent.connected(true);	
-		}
+	self.connectionManager = new ConnectionManager();
+		
+	self.init = function() {
 	};
 	
-	self.createRoom = function() {
-		var roomId = self.messenger.create();
-		self.parent.parent.defaultRoomId(roomId);
-		self.roomId(roomId);
-		self.parent.parent.connected(true);	
+	self.load = function() {
+		var cm = ConnectionManager.find();
+		if (cm) {
+			self.connectionManager = cm;
+			self.connectionManager.joinRoom();
+		}	
 	};
-
+	
+	self.unload = function() {
+// 		self.connectionManager.save();
+	};
 };

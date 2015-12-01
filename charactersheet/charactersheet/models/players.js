@@ -12,16 +12,15 @@ function Players() {
 	self.SAY_HI_TIMER = 10000;
 	self.PLAYER_EXPIRED_TIMEOUT = 22000;
 	
-	self.messenger = messenger;
 	self.inRoom = [];
 	
 	self._onPlayerEnters = [];
 	self._onPlayerLeaves = [];
 	
 	self.init = function() {
-		self.messenger.subscribe('data', 'hello?', self.handleHello);
-		self.messenger.subscribe('data', 'goodbye!', self.handleGoodBye);
-		self.messenger.subscribe('system', 'yay, welcome', function() {
+		messenger.subscribe('data', 'hello?', self.handleHello);
+		messenger.subscribe('data', 'goodbye!', self.handleGoodBye);
+		messenger.subscribe('system', 'yay, welcome', function() {
 			setInterval(self.sayHello, self.SAY_HI_TIMER);
 //			setInterval(self._sweepRoom, self.SWEEP_TIMER);
 			self.sayHello();
@@ -57,8 +56,11 @@ function Players() {
 	 * everyone know they're there by saying 'hello'.
 	 */
 	self.sayHello = function() {
-		var player = Player.fromRoot(self.root);
-		self.messenger.sendDataMsg(self.root.defaultRoomId(), 'hello?', player);
+		var player = new Player();
+		player.name = Profile.find().characterName();
+		player.id = CharacterManager.activeCharacter();
+
+		messenger.sendDataMsg(ConnectionManager.find().roomId(), 'hello?', player);
 	};
 	
 	/**
@@ -92,8 +94,11 @@ function Players() {
 	 * polite to say goodbye first.
 	 */
 	self.sayGoodBye = function() {
-		var player = Player.fromRoot(self.root);
-		self.messenger.sendDataMsg(self.root.defaultRoomId(), 'goodbye!', player);
+		var player = new Player();
+		player.name = Profile.find().characterName();
+		player.id = CharacterManager.activeCharacter();
+		
+		messenger.sendDataMsg(ConnectionManager.find().roomId(), 'goodbye!', player);
 	};
 	
 	/**
@@ -140,12 +145,4 @@ function Player() {
 	self.name = '';
 	self.id = '';	
 	self.lastPing = 0;
-};
-
-Player.fromRoot = function(root) {
-	var player = new Player();
-	
-	player.name = root.characterTabViewModel().profileViewModel().profile().characterName();
-	player.id = getKey();
-	return player;
 };

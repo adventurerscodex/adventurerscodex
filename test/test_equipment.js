@@ -6,7 +6,7 @@ describe('EquipmentViewModel', function(){
 			var p = new EquipmentViewModel();
 			p.clear();
 			p.equipment().length.should.equal(0);
-			p.addItem();
+			p.addItem(new Item());
 			p.equipment().length.should.equal(1);
 		});
 	});
@@ -16,9 +16,9 @@ describe('EquipmentViewModel', function(){
 			var p = new EquipmentViewModel();
 			p.clear();
 			p.equipment().length.should.equal(0);
-			p.addItem();
+			p.addItem(new Item());
 			p.equipment().length.should.equal(1);
-			p.removeItem(p.equipment().pop());
+			p.removeItem(p.equipment()[0]);
 			p.equipment().length.should.equal(0);			
 		});
 	});
@@ -31,29 +31,6 @@ describe('EquipmentViewModel', function(){
 			p.equipment().should.equal(item);
 			p.clear();
 			p.equipment().length.should.equal(0);
-		});
-	});
-
-	describe('Export', function() {
-		it('should return an object with the data given', function() {
-			var p = new EquipmentViewModel();
-			p.clear();
-			p.equipment().length.should.equal(0);
-			p.addItem(new Item());
-			p.equipment().length.should.equal(1);
-			var e = p.exportValues();
-			e.equipment.length.should.equal(p.equipment().length);
-		});
-	});
-	
-	describe('Import', function() {
-		it('should import an object with the data given', function() {
-			var p = new EquipmentViewModel();
-			p.clear();
-			p.equipment().length.should.equal(0);
-			var equipment = [{ itemName:'', itemDesc: '', itemQty: '', itemWeight: '', itemIsEquippable: false }];
-			p.importValues({ equipment: equipment });
-			p.equipment().length.should.equal(equipment.length);
 		});
 	});
 });

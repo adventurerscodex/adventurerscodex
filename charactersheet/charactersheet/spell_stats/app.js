@@ -21,7 +21,7 @@ function SpellStatsViewModel() {
 	};
 
 	self.clear = function() {
-		self.spellStats().clear();
+		self.spellStats.clear();
 	};
 
 };

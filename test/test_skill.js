@@ -1,29 +1,28 @@
 "use strict";
 
 describe('Skill', function() {
-	
-	var root = new RootViewModel();
-	var parent = root.characterTabViewModel().skillTree();
-
+	OtherStats.find = function() {
+		return {
+			proficiency: function() { return 2; }
+		};
+	}
 	describe('Bonus Label', function() {
 		it('should yield the modifier value (signed).', function() {
-			var s = new Skill(parent);
+			var s = new Skill();
 			s.name('Arcana');
 			s.modifier(4);
 			s.abilityScore('Wis');
-			s.root.characterTabViewModel().abilityScores().wis(11);
 			s.proficiency(true);
 			
-			s.bonusLabel().should.equal('+4 <i><small>(Wis)</small></i>');
+			s.bonusLabel().should.equal('+6 <i><small>(Wis)</small></i>');
 			
 			var s = new Skill(parent);
 			s.name('Arcana');
 			s.modifier(-4);
 			s.abilityScore('Wis');
-			s.root.characterTabViewModel().abilityScores().wis(11);
 			s.proficiency(true);
 
-			s.bonusLabel().should.equal('-4 <i><small>(Wis)</small></i>');		
+			s.bonusLabel().should.equal('-2 <i><small>(Wis)</small></i>');		
 		});
 	});
 	describe('Proficiency Label', function() {

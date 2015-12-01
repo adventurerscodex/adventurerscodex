@@ -17,6 +17,7 @@
 	<script src="charactersheet/bower_components/node-uuid/uuid.js" type="text/javascript"></script>
   <script src="charactersheet/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script> 
 
+  <script src="charactersheet/bin/socket.io-1.2.0.js"></script> 
 	<script src="charactersheet/bin/markdown.min.js"></script>
 	<script src="charactersheet/bin/knockout-file-bind.js" type="text/javascript"></script>
 	<script src="charactersheet/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
@@ -25,74 +26,77 @@
 
   <!-- Viewcharactersheet/charactersheet/models -->
 	<script src="charactersheet/characters/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/notes/app.js" type="text/javascript"></script>
 	<script src="charactersheet/charactersheet/ability_scores/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/profile/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/stats/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/feat_traits/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/equipped_items/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/skills/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/appearance/app.js" type="text/javascript"></script>
 	<script src="charactersheet/charactersheet/equipment/app.js" type="text/javascript"></script>
-	<script src="charactersheet/charactersheet/spells/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/equipped_items/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/feat_traits/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/notes/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/profile/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/skills/app.js" type="text/javascript"></script>
 	<script src="charactersheet/charactersheet/spell_slots/app.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/spell_stats/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/spells/app.js" type="text/javascript"></script>
+	<script src="charactersheet/charactersheet/stats/app.js" type="text/javascript"></script>
 	<script src="charactersheet/charactersheet/treasure/app.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/feats_prof/app.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/appearance/app.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/campaign/app.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/connection_manager/app.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/chat/app.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/connection_manager/app.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/enemies/app.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/feats_prof/app.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/saving_throws/app.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/spell_stats/app.js" type="text/javascript"></script>
   <!-- charactersheet/charactersheet/utilities -->
   <script src="charactersheet/charactersheet/utilities/character_manager.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/utilities/messenger.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/utilities/persistence_service.js" type="text/javascript"></script>
   <!-- charactersheet/charactersheet/models -->
-  <script src="charactersheet/charactersheet/models/player_types.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/ability_scores.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/appearance.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/character.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/chat_message.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/connection_manager.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/feat_traits.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/feats_prof.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/health.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/hit_dice.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/item.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/note.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/npc.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/feat_traits.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/feats_prof.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/other_stats.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/player_types.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/players.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/profile.js" type="text/javascript"></script>
+  <script src="charactersheet/charactersheet/models/saving_throws.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/skill.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/spell_slot.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/spell_stats.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/appearance.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/spell.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/players.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/health.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/hit_dice.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/profile.js" type="text/javascript"></script>
   <script src="charactersheet/charactersheet/models/treasure.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/other_stats.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/ability_scores.js" type="text/javascript"></script>
-  <script src="charactersheet/charactersheet/models/saving_throws.js" type="text/javascript"></script>
 
   <script>
     mocha.setup('bdd');
-    var messenger = new Messenger();
-    var players = new Players();
   </script>
-  <script src="test/test_app.js"></script>
   <script src="test/test_ability_scores.js"></script>
-  <script src="test/test_stats.js"></script>
-  <script src="test/test_profile.js"></script>
-  <script src="test/test_notes.js"></script>
+  <script src="test/test_app.js"></script>
+  <script src="test/test_appearance.js"></script>
+  <script src="test/test_chat.js"></script>
+  <script src="test/test_connection_manager.js"></script>
   <script src="test/test_equipment.js"></script>
-  <script src="test/test_skills.js"></script>
   <script src="test/test_feat_traits.js"></script>
-  <script src="test/test_spell_slots.js"></script>
-  <script src="test/test_treasure.js"></script>
   <script src="test/test_feats_profs.js"></script>
-  <script src="test/test_spells.js"></script>
-  <script src="test/test_spell_stats.js"></script>
-  <script src="test/test_players.js"></script>
   <script src="test/test_messenger.js"></script>
+  <script src="test/test_notes.js"></script>
+  <script src="test/test_players.js"></script>
+  <script src="test/test_profile.js"></script>
   <script src="test/test_skill.js"></script>
+  <script src="test/test_skills.js"></script>
+  <script src="test/test_spell_slots.js"></script>
+  <script src="test/test_spell_stats.js"></script>
+  <script src="test/test_spells.js"></script>
+  <script src="test/test_stats.js"></script>
+  <script src="test/test_treasure.js"></script>
   <script>
     mocha.checkLeaks();
     mocha.globals(['jQuery']);

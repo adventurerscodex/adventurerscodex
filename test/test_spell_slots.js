@@ -87,27 +87,5 @@ describe('Spell Slots View Model', function() {
 			p.slots().length.should.equal(0);
 		});
 	});
-
-	describe('Export', function() {
-		it('should yield an object with all the info supplied.', function() {
-			var p = new SpellSlotsViewModel();
-			p.clear();
-			p.slots().length.should.equal(0);
-			p.addSlot();
-			p.slots().length.should.equal(1);
-			var e = p.exportValues();
-			e.slots.length.should.equal(p.slots().length);
-		});
-	});
-	
-	describe('Import', function() {
-		it('should import an object with all the info supplied.', function() {
-			var p = new SpellSlotsViewModel();
-			p.slots().length.should.equal(0);
-			var slots = [{ level:10, maxSpellSlots: 0, usedSpellSlots: 4 }];
-			p.importValues({ slots: slots });
-			p.slots().length.should.equal(slots.length);
-		});
-	});
 });
 

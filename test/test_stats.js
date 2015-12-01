@@ -1,10 +1,10 @@
 "use strict";
 
-describe('Stats', function() {
+describe('Stats View Model', function() {
 	describe('Health', function() {
 		describe('Clear', function() {
 			it('should clear all the values in stats', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.damage(10);
 				stats.health.clear();
 				stats.health.damage().should.equal(0);
@@ -13,7 +13,7 @@ describe('Stats', function() {
 	
 		describe('Hitpoints', function() {
 			it('should calculate the correct remaining hitpoints', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(8);
@@ -23,7 +23,7 @@ describe('Stats', function() {
 	
 		describe('Total Hitpoints', function() {
 			it('should calculate the correct total hitpoints', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(0);
@@ -33,7 +33,7 @@ describe('Stats', function() {
 	
 		describe('Temp Hitpoints Remaining', function() {
 			it('should calculate the correct remaining temporary hitpoints', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(4);
@@ -43,7 +43,7 @@ describe('Stats', function() {
 	
 		describe('Regular Hitpoints Remaining', function() {
 			it('should calculate the correct remaining regular hitpoints', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(8);
@@ -53,7 +53,7 @@ describe('Stats', function() {
 	
 		describe('KO?', function() {
 			it('should calculate if the player is KO\'d', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(8);
@@ -65,7 +65,7 @@ describe('Stats', function() {
 
 		describe('Danger?', function() {
 			it('should calculate if the player is in danger health-wise', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(8);
@@ -77,7 +77,7 @@ describe('Stats', function() {
 
 		describe('Warning?', function() {
 			it('should calculate if the player\'s health is getting low.', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(8);
@@ -89,7 +89,7 @@ describe('Stats', function() {
 
 		describe('Progress Type?', function() {
 			it('should give the progress bar type for the hp bar', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(8);
@@ -103,7 +103,7 @@ describe('Stats', function() {
 
 		describe('Progress Label?', function() {
 			it('should give the progress bar label for the hp bar', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(13);
@@ -115,7 +115,7 @@ describe('Stats', function() {
 
 		describe('Export', function() {
 			it('should yield an object with all the info supplied.', function() {
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.maxHitpoints(10);
 				stats.health.tempHitpoints(5);
 				stats.health.damage(13);
@@ -133,7 +133,7 @@ describe('Stats', function() {
 					tempHitpoints: 5,
 					damage: 13
 				};
-				var stats = new Stats();
+				var stats = new StatsViewModel();
 				stats.health.importValues(val);
 				stats.health.maxHitpoints().should.equal(val.maxHitpoints);
 				stats.health.tempHitpoints().should.equal(val.tempHitpoints);

@@ -4,6 +4,7 @@ function CharacterAppearance() {
 	var self = this;
 	self.ps = PersistenceService.register(CharacterAppearance, self);
 	
+    self.characterId = ko.observable(null);
 	self.height = ko.observable('');
 	self.weight = ko.observable('');
 	self.hairColor = ko.observable('');
@@ -21,6 +22,7 @@ function CharacterAppearance() {
 	};
 	
 	self.importValues = function(values) {
+		self.characterId(values.characterId);
 		self.height(values.height);
 		self.weight(values.weight);
 		self.hairColor(values.hairColor);
@@ -30,6 +32,7 @@ function CharacterAppearance() {
 	
 	self.exportValues = function() {
 		return {
+			characterId: self.characterId(),
 			height: self.height(),
 			weight: self.weight(),
 			hairColor: self.hairColor(),
@@ -45,7 +48,12 @@ function CharacterAppearance() {
 
 //CRUD
 
-CharacterAppearance.find = function() {
-	return PersistenceService.findOne(CharacterAppearance);
+CharacterAppearance.findBy = function(characterId) {
+	var r = PersistenceService.findOne(CharacterAppearance);
+	if (!r) { r = []; }
+
+	return $.map(r, function(e, _) {
+		if (e.characterId === characterId) { return e; }
+	});
 };
 

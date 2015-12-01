@@ -3,18 +3,41 @@
 function PartyChatViewModel() {
 	var self = this;
 	
-	self.messenger = messenger;
-	self.players = players;
 	self.log = ko.observableArray([]);
 	self.message = ko.observable('');
 	self.id = null;
+	self._dummy = ko.observable(null);
 	
 	self.init = function() {
-		self.messenger.subscribe('data', 'chat', self.handleMessage);
-		self.players.onPlayerEnters(self.handleNewPlayer);
-		self.players.onPlayerLeaves(self.handlePlayerLeft);
-		self.id = getKey();
+		messenger.subscribe('data', 'chat', self.handleMessage);
+		players.onPlayerEnters(self.handleNewPlayer);
+		players.onPlayerLeaves(self.handlePlayerLeft);
+		self.id = CharacterManager.active;
+		
+		ConnectionManagerSignaler.changed.add(function() {
+			self._dummy.notifySubscribers();
+		});
 	};
+	
+	self.load = function() {
+	};
+	
+	self.unload = function() {
+	};
+	
+	self.connected = ko.computed(function() {
+		self._dummy();
+		try {
+			return ConnectionManager.find().connected();
+		} catch(err) {};
+	});
+
+	self._mainRoomId = ko.computed(function() {
+		self._dummy();
+		try {
+			return ConnectionManager.find().roomId();
+		} catch(err) {};
+	});
 		
 	//UI Methods
 	
@@ -24,10 +47,10 @@ function PartyChatViewModel() {
 			var msg = new ChatMessage();
 			msg.fromId(self.id);
 			msg.toId('all');
-			msg.from(self.parent.parent.playerTitle());
+			msg.from(Profile.find().characterName());
 			msg.to('');
 			msg.text(message);
-			self.messenger.sendDataMsg(self._mainRoomId(), 'chat', msg.exportValues());
+			messenger.sendDataMsg(self._mainRoomId(), 'chat', msg.exportValues());
 			self.message('');
 		}
 	};
@@ -75,11 +98,7 @@ function PartyChatViewModel() {
 	};
 	
 	//Private Methods
-	
-	self._mainRoomId = function() {
-		return self.parent.parent.defaultRoomId();
-	};
-	
+		
 	/** 
 	 * Returns the list of player names & id that are currently in the room.
 	 * TODO: get this information from the players module.

@@ -7,7 +7,7 @@
       //Check immediately. Skip loading page if necessary.
       "use strict";
       var loc = '';
-      if (localStorage['character.characterKeys'] === undefined || eval(localStorage['character.characterKeys']).length < 1) {
+      if (localStorage.Character === undefined || localStorage.Character.length < 1) {
         loc = '/characters';
       } else {
         loc = '/charactersheet';

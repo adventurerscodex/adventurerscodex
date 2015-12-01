@@ -13,6 +13,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bower_components/should/should.js', watched: false},
 			{pattern: 'charactersheet/bower_components/uri.js/src/URI.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/node-uuid/uuid.js', watched: false},
+			{pattern: 'charactersheet/bower_components/js-signals/dist/signals.min.js', watched: false},
 
 			{pattern: 'charactersheet/bin/socket.io-1.2.0.js', watched: false},
 			{pattern: 'charactersheet/bin/knockout-file-bind.js', watched: false},

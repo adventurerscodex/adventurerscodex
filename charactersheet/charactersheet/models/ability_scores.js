@@ -3,6 +3,8 @@
 function AbilityScores() {
     var self = this;
     self.ps = PersistenceService.register(AbilityScores, self);
+    
+    self.characterId = ko.observable(null);
 
     self.str =  ko.observable(18);
     self.strModifier = ko.computed(function(){
@@ -10,27 +12,27 @@ function AbilityScores() {
     });
 
     self.dex =  ko.observable(18);
-    self.dexModifier =  ko.computed(function(){
+    self.dexModifier = ko.computed(function(){
       return getStrModifier(self.dex());
     });
 
     self.con =  ko.observable(18);
-    self.conModifier =  ko.computed(function(){
+    self.conModifier = ko.computed(function(){
       return getStrModifier(self.con());
     });
 
     self.int =  ko.observable(18);
-    self.intModifier =  ko.computed(function(){
+    self.intModifier = ko.computed(function(){
       return getStrModifier(self.int());
     });
 
     self.wis =  ko.observable(18);
-    self.wisModifier =  ko.computed(function(){
+    self.wisModifier = ko.computed(function(){
       return getStrModifier(self.wis());
     });
 
     self.cha =  ko.observable(18);
-    self.chaModifier =  ko.computed(function(){
+    self.chaModifier = ko.computed(function(){
       return getStrModifier(self.cha());
     });
         
@@ -70,7 +72,8 @@ function AbilityScores() {
         self.cha(18);
     };
 
-    self.importValues = function(values) {    	
+    self.importValues = function(values) { 
+    	self.characterId(values.characterId);   	
         self.str(values.str);
         self.dex(values.dex);
         self.con(values.con);
@@ -81,6 +84,7 @@ function AbilityScores() {
 
     self.exportValues = function() {
         return {
+        	characterId: self.characterId(),
             str: self.str(),
             dex: self.dex(),
             con: self.con(),
@@ -96,6 +100,11 @@ function AbilityScores() {
     };
 };
 
-AbilityScores.find = function() {
-	return PersistenceService.findOne(AbilityScores);
+AbilityScores.findBy = function(characterId) {
+	var r = PersistenceService.findOne(AbilityScores);
+	if (!r) { r = []; }
+	
+	return $.map(r, function(e, _){
+		if (e.characterId === characterId) { return e; }
+	});
 };

@@ -1,5 +1,8 @@
 "use strict";
 
+var messenger;
+var players;
+
 /** 
  * The Root View Model for the application. All other view models are children of this view model.
  * This view model contains the global import/export functionality for player data as well as the 
@@ -7,12 +10,7 @@
  */
 function RootViewModel() {
 	var self = this;
-	
-	//Socket connection
-	self.messenger = messenger;
-	self.connected = ko.observable(false);
-	self.defaultRoomId = ko.observable(null);
-	
+		
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
 	
@@ -68,51 +66,64 @@ function RootViewModel() {
 	//UI Methods
     
     self.playerSummary = ko.computed(function() {
-    	// var summary = '';
-//     	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-//     		summary = self.characterTabViewModel().profileViewModel().characterSummary();
-//     	} else {
-//     		summary = self.dmTabViewModel().campaignViewModel().campaignSummary();
-//     	}
-//     	return summary;
+    	var summary = '';
+    	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+			try {
+				summary = Profile.find().characterSummary();
+			} catch(err) {};
+    	} else {
+			try {
+	    		summary = Campaign.find().campaignSummary();
+			} catch(err) {};
+    	}
+    	return summary;
     });
     
     self.playerTitle = ko.computed(function() {
-//     	var name = '';
-//     	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-//     		name = self.characterTabViewModel().profileViewModel().characterName();
-//     	} else {
-//     		name = self.dmTabViewModel().campaignViewModel().campaignName();
-//     	}
-//     	return name;
+    	var name = '';
+    	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+			try {
+    			name = Profile.find().characterName();
+			} catch(err) {};
+    	} else {
+			try {
+    			name = Campaign.find().campaignName();
+			} catch(err) {};
+    	}
+    	return name;
     });
     
     self.playerAuthor = ko.computed(function() {
-//     	var name = '';
-//     	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-//     		name = self.characterTabViewModel().profileViewModel().playerName();
-//     	} else {
-//     		name = self.dmTabViewModel().campaignViewModel().dmName();
-//     	}
-//     	return name;
+    	var name = '';
+    	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+			try {
+    			name = Profile.find().playerName();
+			} catch(err) {};
+    	} else {
+			try {
+    			name = Campaign.find().dmName();
+			} catch(err) {};
+    	}
+    	return name;
     });
     
     self.pageTitle = ko.computed(function() {
-//     	return self.playerTitle() + ' by ' + self.playerAuthor()
-//     		+ ' | Adventurer\'s Codex';
+    	return self.playerTitle() + ' by ' + self.playerAuthor()
+    		+ ' | Adventurer\'s Codex';
     });
 
 	//Public Methods
 	
-	self.key = function() {
-		return getKey('');
-	};
-
 	/**
 	 * Call Init on each sub-module.
 	 */
 	self.init = function() {
-		self.messenger.connect();
+		messenger = new Messenger();
+		players = new Players();
+	    messenger.connect();
+		
+		CharacterManager.changeCharacter(CharacterManager.getKey());
+	
 		self.characterTabViewModel().init();
 		self.dmTabViewModel().init();
 		self.partyTabViewModel().init();
@@ -239,7 +250,16 @@ function DmTabViewModel() {
 	self.enemiesViewModel = ko.observable(new EnemiesViewModel());
 	
 	self.init = function() {
-		//Put module init here.
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().init();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
 	};
 
     self.load = function() {
@@ -257,7 +277,16 @@ function DmTabViewModel() {
     };
     
     self.unload = function() {
-    
+    	var keys = Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().unload();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}    
     };
 
     self.clear = function() {
@@ -266,22 +295,49 @@ function DmTabViewModel() {
     };
 };
 
-function PartyTabViewModel(parent) {
+function PartyTabViewModel() {
 	var self = this;
 		
 	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
 	self.partyChatViewModel = ko.observable(new PartyChatViewModel());
 	
 	self.init = function() {
-		self.partyChatViewModel().init();
+    	var keys = Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().init();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
 	};
 	
 	self.load = function() {
-		//Put module load here.
+    	var keys = Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().load();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
 	};
 
     self.unload = function() {
-    
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().unload();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
     };
 
     self.clear = function() {
@@ -289,55 +345,52 @@ function PartyTabViewModel(parent) {
     };
 };
 
-
 function SettingsTabViewModel() {
 	var self = this;
 
 	self.init = function() {
-		//Put module init here.
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().init();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
 	};
 
 	self.load = function() {
-		//Put module load here.
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().load();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
 	};
 	
     self.unload = function() {
-    
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().unload();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
     };
 };
 
-var PlayerTypes = {
-	characterPlayerType: {
-		key: 'character',
-		visibleTabs: ['character', 'settings', 'party'],
-		defaultTab: 'character'
-	},
-	dmPlayerType: {
-		key: 'dm',
-		visibleTabs: ['dm', 'settings', 'party'],
-		defaultTab: 'dm'
-	}
-};
-
-/**
- * Do preflight checks.
- * - Has the user been here before?
- * - Do they have a character? Etc.
- * - Load a pre-existing character 
- * - Set up automatic saving.
- */
 var init = function(viewModel) {
-	//Set up the player type if it's the first time
-	var ptKey = playerTypeFromUrl();
-	if (ptKey) {
-		for (var i in Object.keys(PlayerTypes)) {
-			var type = PlayerTypes[Object.keys(PlayerTypes)[i]];
-			if (type.key === ptKey) {
-				viewModel.playerType(type);				
-			}
-		}    
-	}
 	//Load any saved state.
 	viewModel.init();
 	viewModel.load();
 };
+

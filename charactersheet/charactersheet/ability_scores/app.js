@@ -28,9 +28,11 @@ function AbilityScoresViewModel() {
 	};
 	
 	self.load = function() {
-		var scores = AbilityScores.find();
-		if (scores) {
-			self.abilityScores = scores;
+		var scores = AbilityScores.findBy(CharacterManager.active);
+		if (scores.length > 0) {
+			self.abilityScores = scores[0];
+		} else {
+			self.abilityScores.characterId(CharacterManager.active);
 		}
 		self.abilityScores.str.subscribe(self.abilityScores.save);
 		self.abilityScores.dex.subscribe(self.abilityScores.save);
