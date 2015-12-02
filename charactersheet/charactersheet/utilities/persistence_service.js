@@ -332,7 +332,7 @@ PersistenceService._save = function(key, inst) {
 
 PersistenceService._delete = function(key, id) {
 	var table = JSON.parse(localStorage[key]);
-	if (Object.keys(table).indexOf(id) > -1) {	
+	if (Object.keys(table).indexOf(String(id)) > -1) {	
 		delete table[id];
 	} else {
 		var msg = "No such element at index: " + id;
