@@ -9,19 +9,19 @@ var CharacterManager = {};
 
 CharacterManager.changeCharacter = function(characterId) {
 	var newChar = Character.findBy(characterId);
-	CharacterManagerSignaler.changing.dispatch(self.active, newChar);
-	CharacterManager.active = Character.findBy(characterId);
-	CharacterManagerSignaler.changed.dispatch(self.active);
+	if (newChar.length > 0) {
+		CharacterManagerSignaler.changing.dispatch(CharacterManager.activeCharacter(), newChar[0]);
+		Character.findAll().forEach(function(e, i, _) {
+			e.isActive(false);
+			e.save();
+		});
+		newChar[0].isActive(true);
+		CharacterManagerSignaler.changed.dispatch(CharacterManager.activeCharacter());
+	}
 };
 
 CharacterManager.activeCharacter = function() {
-	var r = $.map(Character.findAll(), function(e, _) {
-		if (e.isActive()) return e;
-	})[0];	
-	if (!r) {
-		r = CharacterManager.defaultCharacter();
-	}
-	return r;
+	return Character.findBy(CharacterManager.getKey())[0];
 };
 
 CharacterManager.defaultCharacter = function() {
@@ -31,8 +31,8 @@ CharacterManager.defaultCharacter = function() {
 };
 
 CharacterManager.keyIsValid = function (key) {
-	return Character.findAll().some(function(e) {
-		return e.key === key;
+	return Character.findAll().some(function(e, i, _) {
+		return e.key() === key;
 	});
 };
 
@@ -42,7 +42,7 @@ CharacterManager.keyIsValid = function (key) {
 CharacterManager.getKey = function() {
 	var key = keyFromUrl();
 	key = (key !== false && CharacterManager.keyIsValid(key)) ? key : 
-		CharacterManager.defaultCharacter().key;
+		CharacterManager.defaultCharacter().key();
 	return key;
 };
 

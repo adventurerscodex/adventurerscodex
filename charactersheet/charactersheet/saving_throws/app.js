@@ -23,6 +23,7 @@ function SavingThrowsViewModel() {
 		];
 		return $.map(savingThrows, function(e, _) {
 			var savingThrow = new SavingThrows();
+			e.characterId = CharacterManager.activeCharacter().key();
 			savingThrow.importValues(e);
 			return savingThrow;
 		});

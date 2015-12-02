@@ -7,28 +7,41 @@ function CharacterManagerViewModel() {
 
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
-    
     self.selectedCharacter = ko.observable();
     
 	self.characters = ko.observableArray([]);
-	self.defaultCharacter = ko.observable(null);
+	self.defaultCharacterKey = ko.observable(null);
 	
 	self.init = function() {
-		
 	};
 	
 	self.load = function() {
-		var chars = Character.findAll();
-		if (chars) {
-			self.characters(chars);
-			
-			for (var i = 0; i<chars.length; i++) {
-				if (chars[i].isDefault()) {
-					self.defaultCharacter(chars[i]);
-					break;
+		self.characters(Character.findAll());
+		var defaultKey = '';
+		try {
+			defaultKey = self.characters().filter(function(e, i, _) {
+				return e.isDefault();
+			})[0].key();
+		} catch(err) {};
+		self.defaultCharacterKey(defaultKey);
+		
+		//Subscriptions
+		self.characters().forEach(function(e, i, _) {
+			e.isDefault.subscribe(function() {
+				e.save();
+			});
+		});
+		self.defaultCharacterKey.subscribe(function() {
+			self.characters().forEach(function(e, i, _) {
+				if (self.defaultCharacterKey() === e.key()) {
+					e.isDefault(true);
+				} else {
+					e.isDefault(false);					
 				}
-			}
-		}
+				e.save();
+			});
+		});
+		
 	};
 	
 	self.unload = function() {

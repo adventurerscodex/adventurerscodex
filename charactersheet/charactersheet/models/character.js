@@ -41,22 +41,25 @@ function Character() {
 	self.playerSummary = ko.computed(function() {
 		var summ = '';
 		try {
-			summ = Profile.find().characterSummary();
+			summ = Profile.findBy(self.key())[0].characterSummary();
 		} catch(err) {};
+		return summ;
 	});
 	
 	self.playerAuthor = ko.computed(function() {
 		var summ = '';
 		try {
-			summ = Profile.find().characterSummary();
+			summ = Profile.findBy(self.key())[0].playerName();
 		} catch(err) {};
+		return summ;
 	});
 	
 	self.playerTitle = ko.computed(function() {
 		var summ = '';
 		try {
-			summ = Profile.find().characterSummary();
+			summ = Profile.findBy(self.key())[0].characterName();
 		} catch(err) {};
+		return summ;
 	});
 };
 
@@ -66,6 +69,6 @@ Character.findAll = function() {
 
 Character.findBy = function(characterId) {
 	return $.map(Character.findAll(), function(e, _) {
-		if (e.key === characterId) return e;
+		if (e.key() === characterId) return e;
 	});
 };

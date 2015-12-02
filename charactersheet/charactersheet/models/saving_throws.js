@@ -13,7 +13,10 @@ function SavingThrows() {
     
     self.proficiencyScore = function() {
     	var key = CharacterManager.activeCharacter().key();
-    	var profBonus = OtherStats.findBy(key)[0].proficiency();
+    	var profBonus = 0;
+    	try {
+    		OtherStats.findBy(key)[0].proficiency();
+		} catch(err) {};
 		return profBonus ? parseInt(profBonus) : 0;
 	};
 	

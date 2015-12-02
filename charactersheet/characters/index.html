@@ -90,7 +90,7 @@
           <div class="pull-right">
             <label class="" id="defaultLabel">Default
               <input type='radio' name='default' aria-describedby='defaultLabel'
-                data-bind='checked: $parent.defaultCharacter, attr: { value: key }'>
+                data-bind='checked: $parent.defaultCharacterKey, attr: { value: key }'>
             </label>
           </div>
         </div>
@@ -185,54 +185,54 @@
 	<script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
 
 <!-- ViewModels -->
-	<script src="/charactersheet/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/notes/app.js" type="text/javascript"></script>
 	<script src="/charactersheet/ability_scores/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/profile/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/equipped_items/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/stats/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/skills/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/spells/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/equipment/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/spell_slots/app.js" type="text/javascript"></script>
-  <script src="/charactersheet/spell_stats/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/feat_traits/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/treasure/app.js" type="text/javascript"></script>
-  <script src="/charactersheet/feats_prof/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/appearance/app.js" type="text/javascript"></script>
 	<script src="/charactersheet/campaign/app.js" type="text/javascript"></script>
 	<script src="/charactersheet/chat/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/equipment/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/equipped_items/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/feat_traits/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/notes/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/profile/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/skills/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/spell_slots/app.js" type="text/javascript"></script>
 	<script src="/charactersheet/spell_stats/app.js" type="text/javascript"></script>
-	<script src="/charactersheet/appearance/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/spells/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/stats/app.js" type="text/javascript"></script>
+	<script src="/charactersheet/treasure/app.js" type="text/javascript"></script>
   <script src="/charactersheet/connection_manager/app.js" type="text/javascript"></script>
   <script src="/charactersheet/enemies/app.js" type="text/javascript"></script>
+  <script src="/charactersheet/feats_prof/app.js" type="text/javascript"></script>
   <script src="/charactersheet/saving_throws/app.js" type="text/javascript"></script>
+  <script src="/charactersheet/spell_stats/app.js" type="text/javascript"></script>
   <script src="app.js" type="text/javascript"></script>
 
   <!-- Models -->
+	<script src="/charactersheet/models/appearance.js" type="text/javascript"></script>
+	<script src="/charactersheet/models/health.js" type="text/javascript"></script>
 	<script src="/charactersheet/models/item.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/chat_message.js" type="text/javascript"></script>
-	<script src="/charactersheet/models/spell.js" type="text/javascript"></script>
+	<script src="/charactersheet/models/other_stats.js" type="text/javascript"></script>
 	<script src="/charactersheet/models/players.js" type="text/javascript"></script>
 	<script src="/charactersheet/models/skill.js" type="text/javascript"></script>
 	<script src="/charactersheet/models/spell_slot.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/profile.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/spell_stats.js" type="text/javascript"></script>
-	<script src="/charactersheet/models/appearance.js" type="text/javascript"></script>
-	<script src="/charactersheet/models/health.js" type="text/javascript"></script>
-	<script src="/charactersheet/models/other_stats.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/hit_dice.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/spell_stats.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/treasure.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/profile.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/npc.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/note.js" type="text/javascript"></script>
+	<script src="/charactersheet/models/spell.js" type="text/javascript"></script>
   <script src="/charactersheet/models/ability_scores.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/character.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/chat_message.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/connection_manager.js" type="text/javascript"></script>
   <script src="/charactersheet/models/feat_traits.js" type="text/javascript"></script>
   <script src="/charactersheet/models/feats_prof.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/saving_throws.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/character.js" type="text/javascript"></script>
-  <script src="/charactersheet/models/connection_manager.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/hit_dice.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/note.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/npc.js" type="text/javascript"></script>
   <script src="/charactersheet/models/player_types.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/profile.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/profile.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/saving_throws.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/spell_stats.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/spell_stats.js" type="text/javascript"></script>
+  <script src="/charactersheet/models/treasure.js" type="text/javascript"></script>
 
   <script src="/charactersheet/utilities/messenger.js" type="text/javascript"></script>
   <script src="/charactersheet/utilities/character_manager.js" type="text/javascript"></script>
