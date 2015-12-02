@@ -5,15 +5,15 @@ function SpellStatsViewModel() {
 
 	self.spellStats = new SpellStats();
 
-	self.init = function() {
-	
-	};
+	self.init = function() {};
 
 	self.load = function() {
-		var stats = SpellStats.find();
-		if (stats) {
-			self.spellStats = stats;
+		var key = CharacterManager.activeCharacter().key();
+		var stats = SpellStats.findBy(key);
+		if (stats.length > 0) {
+			self.spellStats = stats[0];
 		}
+		self.spellStats.characterId(key);
 	};
 
 	self.unload = function() {

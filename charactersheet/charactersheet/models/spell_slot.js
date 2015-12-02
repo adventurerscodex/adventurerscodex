@@ -37,18 +37,6 @@ function Slot() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots()));
 	}, self);
 
-	self.incrUsed = function() {
-		if (self.usedSpellSlots() < self.maxSpellSlots()) {
-			self.usedSpellSlots(parseInt(self.usedSpellSlots()) + 1);
-		}
-	};
-
-	self.decrUsed = function() {
-		if (self.usedSpellSlots() > 0) {
-			self.usedSpellSlots(parseInt(self.usedSpellSlots()) - 1);
-		}
-	};
-
 	self.progressLabel = ko.computed(function() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots())) + '/' + parseInt(self.maxSpellSlots());
 	});
@@ -88,6 +76,8 @@ function Slot() {
 	};
 };
 
-Slot.findAll = function() {
-	return PersistenceService.findAll(Slot);
+Slot.findAllBy = function(characterId) {
+	return PersistenceService.findAll(Slot).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

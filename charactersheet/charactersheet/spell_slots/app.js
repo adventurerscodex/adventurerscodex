@@ -18,21 +18,18 @@ function SpellSlotsViewModel() {
 	self.sort = ko.observable(self.sorts['level asc']);
 	self.filter = ko.observable('');
 
-	self.init = function() {
-
-	};
+	self.init = function() {};
 	
 	self.load = function() {
-		var slots = Slot.findAll();
-		if (slots) {
-			self.slots(slots);
-		}
+		var slots = Slot.findAllBy(CharacterManager.activeCharacter().key());
+		self.slots(slots);
+		
 		self.blankSlot().level(self.slots().length + 1);
 		self.blankSlot().maxSpellSlots(1);	
 	};
 	
 	self.unload = function() {
- 		$.each(self.slots(), function(_, e) {
+ 		self.slots().forEach(function(e, i, _) {
 			e.save();
 		});
 	};
@@ -109,8 +106,11 @@ function SpellSlotsViewModel() {
     };
 	
 	self.addSlot = function() {
-		self.slots.push(self.blankSlot());
-		self.blankSlot().save();
+		var slot = self.blankSlot();
+		slot.characterId(CharacterManager.activeCharacter().key());
+		slot.save();
+		self.slots.push(slot);
+		
 		self.blankSlot(new Slot());
 		self.blankSlot().level(self.slots().length + 1);
 		self.blankSlot().maxSpellSlots(1);
@@ -122,7 +122,7 @@ function SpellSlotsViewModel() {
 	};
 	
 	self.resetSlots = function() {
-		$.map(self.slots(), function(slot, _) {
+		self.slots().forEach(function(slot, i, _) {
 			slot.usedSpellSlots(0);
 		});
 	};

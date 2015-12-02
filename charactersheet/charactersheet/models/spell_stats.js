@@ -41,6 +41,8 @@ function SpellStats() {
 	};
 };
 
-SpellStats.find = function() {
-	return PersistenceService.findOne(SpellStats);
+SpellStats.findBy = function(characterId) {
+	return PersistenceService.findAll(SpellStats).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

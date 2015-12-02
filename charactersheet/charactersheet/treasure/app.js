@@ -5,15 +5,14 @@ function TreasureViewModel() {
 
 	self.treasure = new Treasure();
 
-	self.init = function() {
-	
-	};
+	self.init = function() {};
 	
 	self.load = function() {
-		var t = Treasure.find();
-		if (t) {
-			self.treasure = t;
+		var t = Treasure.findBy(CharacterManager.activeCharacter().key());
+		if (t.length > 0) {
+			self.treasure = t[0];
 		}
+		self.treasure.characterId(CharacterManager.activeCharacter().key());
 	};
 	
 	self.unload = function() {

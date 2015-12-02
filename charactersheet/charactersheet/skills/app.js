@@ -33,8 +33,9 @@ function SkillsViewModel() {
 			{ name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: 0 },
 			{ name: 'Survival', abilityScore: 'Dex', proficency: false, modifier: 0 },
 		];
-		return $.map(skills, function(e, _) {
+		return skills.map(function(e, i, _) {
 			var skill = new Skill(self);
+			e.characterId = CharacterManager.activeCharacter().key();
 			skill.importValues(e);
 			return skill;
 		});
@@ -46,27 +47,31 @@ function SkillsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
     
-    self.init = function() {
+    self.init = function() {};
+    
+    self.load = function() {
+    	var skills = Skill.findAllBy(CharacterManager.activeCharacter().key());
+    
+    	if (skills.length === 0) {    	
+    		self.skills(self._defaultSkills());
+    		self.skills().forEach(function(e, i, _) {
+    			e.save();
+    		});
+    	} else {
+    		self.skills(skills);
+    	}
+
+    	//Subscriptions
 	    AbilityScoresSignaler.changed.add(function() {
-	    	$.each(self.skills(), function(_, e) {
+	    	self.skills().forEach(function(e, i, _) {
 	    		e.updateValues();
 	    	})
 	    });
 	    StatsSignaler.changed.add(function() {
-	    	$.each(self.skills(), function(_, e) {
+	    	self.skills().forEach(function(e, i, _) {
 	    		e.updateValues();
 	    	})
 	    });
-    };
-    
-    self.load = function() {
-    	var skills = Skill.findAll();
-    
-    	if (skills.length === 0) {    	
-    		self.skills(self._defaultSkills());
-    	} else {
-    		self.skills(skills);
-    	}
     };
     
     self.unload = function() {
@@ -139,12 +144,16 @@ function SkillsViewModel() {
 
 	//Manipulating skills
     self.addSkill = function() {
-        self.skills.push(self.blankSkill());
-        self.blankSkill(new Skill(self));
+    	var skill = self.blankSkill();
+    	skill.characterId(CharacterManager.activeCharacter().key());
+    	skill.save();
+        self.skills.push(skill);
+        self.blankSkill(new Skill());
     };
 
     self.removeSkill = function(skill) { 
-    	self.skills.remove(skill) 
+    	self.skills.remove(skill);
+    	skill.delete(); 
     };
 
     self.editSkill = function(skill) {
@@ -152,6 +161,8 @@ function SkillsViewModel() {
     };
     
     self.clear = function() {
-        self.skills([]);
+    	self.skills().forEach(function(e, i, _) {
+    		self.removeSkill(e);
+    	});
     };
 };

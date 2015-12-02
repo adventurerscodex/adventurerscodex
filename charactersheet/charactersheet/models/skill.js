@@ -17,14 +17,16 @@ function Skill() {
 	//UI Methods
 	
     self.proficiencyScore = function() {
-    	var profBonus = OtherStats.find().proficiency();
+    	var profBonus = OtherStats.findBy(
+    		CharacterManager.activeCharacter().key())[0].proficiency();
 		return profBonus ? parseInt(profBonus) : 0;
 	};
 	
 	self.abilityScoreModifier = function() {
     	var score = 0;
     	try {
-    		score = AbilityScores.find().modifierFor(self.abilityScore());
+    		score = AbilityScores.findBy(
+    			CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
 		} catch(err) {};
 		return parseInt(score);
 	};
@@ -85,6 +87,8 @@ function Skill() {
     };
 };
 
-Skill.findAll = function() {
-	return PersistenceService.findAll(Skill);
+Skill.findAllBy = function(characterId) {
+	return PersistenceService.findAll(Skill).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

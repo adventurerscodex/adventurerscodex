@@ -60,6 +60,8 @@ function Treasure() {
     };
 };
 
-Treasure.find = function() {
-	return PersistenceService.findOne(Treasure);
+Treasure.findBy = function(characterId) {
+	return PersistenceService.findAll(Treasure).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };
