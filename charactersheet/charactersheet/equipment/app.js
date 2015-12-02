@@ -125,7 +125,7 @@ function EquipmentViewModel() {
 	self.addItemButton = function() {
 		var item = new Item();
 		item.importValues(self.blankItem().exportValues());
-		self.equipment.push(item); 
+		self.addItem(item); 
 		self.blankItem().clear();
 	};
 	
@@ -151,7 +151,8 @@ function EquipmentViewModel() {
 	//Private Methods	
 
 	self.addItem = function(item) {
-		self.equipment.push(item); 
+		self.equipment.push(item);
+		item.characterId(CharacterManager.activeCharacter().key()); 
 		item.save();
 	};
 
