@@ -4,6 +4,7 @@ function Treasure() {
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
 
+	self.characterId = ko.observable(null);
     self.platinum =  ko.observable(0);
     self.gold = ko.observable(0);
     self.electrum = ko.observable(0);
@@ -33,6 +34,7 @@ function Treasure() {
     };
 
     self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
         self.platinum(values.platinum);
         self.gold(values.gold);
         self.electrum(values.electrum);
@@ -43,6 +45,7 @@ function Treasure() {
 
     self.exportValues = function() {
         return {
+        	characterId: self.characterId(),
             platinum: self.platinum(),
             gold: self.gold(),
             electrum: self.electrum(),

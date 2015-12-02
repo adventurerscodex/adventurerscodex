@@ -13,9 +13,8 @@ function AppearanceViewModel() {
 		var appear = CharacterAppearance.findBy(CharacterManager.activeCharacter().key());
 		if (appear.length > 0) {
 			self.appearance = appear[0];
-		} else {
-			self.appearance.characterId(CharacterManager.activeCharacter().key());
 		}
+		self.appearance.characterId(CharacterManager.activeCharacter().key());
 		
 	};
 	

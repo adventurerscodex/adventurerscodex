@@ -13,7 +13,14 @@ describe('Chat View Model', function() {
 	};
 	var messenger = new Messenger();
 	messenger.connect();
-
+	
+	CharacterManager.activeCharacter = function() {
+		return {
+			key: function() { return '1234'; },
+			connected: function() { return true; }
+		};
+	};
+		
 	describe('Send Message', function() {
 		it('should construct a message and send it', function() {
 			var p = new PartyChatViewModel();

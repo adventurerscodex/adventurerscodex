@@ -8,6 +8,7 @@ function Item() {
 	var self = this;
 	self.ps = PersistenceService.register(Item, self);
 	
+	self.characterId = ko.observable(null);
 	self.itemName = ko.observable('');	
 	self.itemType = ko.observable('');
 	self.itemIsEquippable = ko.observable(false);
@@ -28,6 +29,7 @@ function Item() {
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.itemName(values.itemName);
 		self.itemDesc(values.itemDesc);
 		self.itemQty(values.itemQty);
@@ -39,6 +41,7 @@ function Item() {
 	
 	self.exportValues = function() {
 		var values = {};
+        values.characterId = self.characterId();
 		values.itemName = self.itemName();
 		values.itemIsEquippable = self.itemIsEquippable();
 		values.itemDesc = self.itemDesc();

@@ -24,16 +24,16 @@ function AbilityScoresViewModel() {
 	
 	self.abilityScores = new AbilityScores();
 	
-	self.init = function() {
-	};
+	self.init = function() {};
 	
 	self.load = function() {
-		var scores = AbilityScores.findBy(CharacterManager.active);
+		var scores = AbilityScores.findBy(CharacterManager.activeCharacter().key());
 		if (scores.length > 0) {
 			self.abilityScores = scores[0];
-		} else {
-			self.abilityScores.characterId(CharacterManager.active);
 		}
+		self.abilityScores.characterId(CharacterManager.activeCharacter().key());
+
+		//Subscriptions
 		self.abilityScores.str.subscribe(self.abilityScores.save);
 		self.abilityScores.dex.subscribe(self.abilityScores.save);
 		self.abilityScores.con.subscribe(self.abilityScores.save);

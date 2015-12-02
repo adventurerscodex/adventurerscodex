@@ -4,6 +4,7 @@ function Profile() {
 	var self = this;
 	self.ps = PersistenceService.register(Profile, self);
 
+	self.characterId = ko.observable(null);
 	self.characterName =  ko.observable('');
 	self.playerName = ko.observable('');
 	self.race = ko.observable('');
@@ -46,6 +47,7 @@ function Profile() {
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.characterName(values.characterName);
 		self.playerName(values.playerName);
 		self.race(values.race);
@@ -60,6 +62,7 @@ function Profile() {
 	
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			characterName: self.characterName(), 
 			playerName: self.playerName(), 
 			race: self.race(), 
@@ -74,6 +77,8 @@ function Profile() {
 	};
 };
 
-Profile.find = function() {
-	return PersistenceService.findOne(Profile);
+Profile.findBy = function(characterId) {
+	return PersistenceService.findAll(Profile).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

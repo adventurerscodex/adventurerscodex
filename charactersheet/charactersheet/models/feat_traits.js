@@ -4,6 +4,7 @@ function FeaturesTraits() {
 	var self = this;
 	self.ps = PersistenceService.register(FeaturesTraits, self);
 
+	self.characterId = ko.observable(null);
 	self.background = ko.observable('');
 	self.ideals = ko.observable('');
 	self.flaws = ko.observable('');
@@ -21,6 +22,7 @@ function FeaturesTraits() {
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.background(values.background);
 		self.ideals(values.ideals);
 		self.flaws(values.flaws);
@@ -29,6 +31,7 @@ function FeaturesTraits() {
 
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			background: self.background(),
 			ideals: self.ideals(),
 			flaws: self.flaws(),
@@ -37,6 +40,8 @@ function FeaturesTraits() {
 	};
 };
 
-FeaturesTraits.find = function() {
-	return PersistenceService.findOne(FeaturesTraits);
+FeaturesTraits.findBy = function(characterId) {
+	return PersistenceService.findAll(FeaturesTraits).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

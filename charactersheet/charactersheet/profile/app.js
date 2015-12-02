@@ -1,5 +1,9 @@
 "use strict";
 
+var ProfileSignaler = {
+	changed: new signals.Signal()
+};
+
 function ProfileViewModel() {
 	var self = this;
 
@@ -10,10 +14,17 @@ function ProfileViewModel() {
 	};
 
 	self.load = function() {
-		var profile = Profile.find();
-		if (profile) {
-			self.profile = profile;
+		var profile = Profile.findBy(CharacterManager.activeCharacter().key());
+		if (profile.length > 0) {
+			self.profile = profile[0];
 		}
+		self.profile.characterId(CharacterManager.activeCharacter().key());
+		
+		//Subscriptions
+		self.profile.level.subscribe(function() {
+			self.profile.save();
+			ProfileSignaler.changed.dispatch();
+		});
 	};
 
 	self.unload = function() {

@@ -16,31 +16,38 @@ function StatsViewModel() {
 		return self.hitDiceList().length < 21;
 	});
 
-	self.init = function() {
-	
-	};
+	self.init = function() {};
 	
 	self.load = function() {
-		var health = Health.find();
-		if (health) {
-			self.health = health;
+		var health = Health.findBy(CharacterManager.activeCharacter().key());
+		if (health.length > 0) {
+			self.health = health[0];
 		}
-		var otherStats = OtherStats.find();
-		if (otherStats) {
-			self.otherStats = otherStats;
+		self.health.characterId(CharacterManager.activeCharacter().key());
+		
+		var otherStats = OtherStats.findBy(CharacterManager.activeCharacter().key());
+		if (otherStats.length > 0) {
+			self.otherStats = otherStats[0];
 		}
-		var hitDiceList = HitDice.findAll();
-		if (hitDiceList) {
+		self.otherStats.characterId(CharacterManager.activeCharacter().key());
+
+		var hitDiceList = HitDice.findAllBy(CharacterManager.activeCharacter().key());
+		if (hitDiceList.length > 0) {
 			self.hitDiceList(hitDiceList);
 		}
+		self.hitDiceList().forEach(function(e, i, _) {
+			e.characterId(CharacterManager.activeCharacter().key())
+		});
 		
+		//Subscriptions
 		self.otherStats.proficiency.subscribe(self.otherStats.save);
+		ProfileSignaler.changed.add(self.calculateHitDice);
 	};
 	
 	self.unload = function() {
 		self.health.save();
 		self.otherStats.save();
-		$.each(self.hitDiceList(), function(_, e) {
+		self.hitDiceList().forEach(function(e, i, _) {
 			e.save();
 		});
 	};
@@ -50,13 +57,21 @@ function StatsViewModel() {
 		self.otherStats.clear();
 	};
 		
-	self.addHitDice = function() {
-		self.hitDiceList.push(self.blankHitDice());
-		self.blankHitDice(new HitDice());
-	};
-	
-	self.removeHitDice = function() {
-		self.hitDiceList.remove(self.hitDiceList.pop());
+	self.calculateHitDice = function() {
+		var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+		var difference = parseInt(profile.level()) - self.hitDiceList().length;
+		var pushOrPop = difference > 0 ? 'push' : 'pop';
+		for (var i = 0; i < Math.abs(difference); i++) {
+			if (pushOrPop === 'push') {
+				var h = new HitDice();
+				h.characterId(CharacterManager.activeCharacter().key());
+				h.save();
+				self.hitDiceList.push(h);
+			} else {
+				var h = self.hitDiceList.pop();
+				h.delete();
+			}
+		}
 	};
 };
 

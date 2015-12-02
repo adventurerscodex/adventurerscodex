@@ -10,10 +10,11 @@ function FeaturesTraitsViewModel() {
 	};
 	
 	self.load = function() {
-		var ft = FeaturesTraits.find();
-		if (ft) {
-			self.featTraits = ft;
+		var ft = FeaturesTraits.findBy(CharacterManager.activeCharacter().key());
+		if (ft.length > 0) {
+			self.featTraits = ft[0];
 		}
+		self.featTraits.characterId(CharacterManager.activeCharacter().key())
 	};
 	
 	self.unload = function() {

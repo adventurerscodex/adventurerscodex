@@ -1,6 +1,7 @@
 function NPC() {
 	var self = this;
 
+	self.characterId = ko.observable(null);
 	self.profile = ko.observable(new Profile());
 	self.appearance = ko.observable(new CharacterAppearance());
 	self.health = ko.observable(new Health());
@@ -23,6 +24,7 @@ function NPC() {
 	};
 
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.profile().importValues(values.profile);
 		self.appearance().importValues(values.appearance);
 		self.health().importValues(values.health);
@@ -34,6 +36,7 @@ function NPC() {
 
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			profile: self.profile().exportValues(),
 			appearance: self.appearance().exportValues(),
 			health: self.health().exportValues(),

@@ -24,6 +24,7 @@ function Slot() {
 		'progress-bar-indigo'
 	];
 
+	self.characterId = ko.observable(null);
 	self.level = ko.observable(1);
 	self.maxSpellSlots = ko.observable(1);
 	self.usedSpellSlots = ko.observable(0);
@@ -63,6 +64,7 @@ function Slot() {
 	};
 
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.level(values.level);
 		self.maxSpellSlots(values.maxSpellSlots);
 		self.usedSpellSlots(values.usedSpellSlots);
@@ -70,6 +72,7 @@ function Slot() {
 
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			level: self.level(),
 			maxSpellSlots: self.maxSpellSlots(),
 			usedSpellSlots: self.usedSpellSlots(),

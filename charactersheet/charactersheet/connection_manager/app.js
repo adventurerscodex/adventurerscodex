@@ -12,17 +12,16 @@ function ConnectionManagerViewModel() {
 	self.connectionManager = new ConnectionManager();
 		
 	self.init = function() {
+		var cm = ConnectionManager.findBy(CharacterManager.activeCharacter().key());
+		cm.forEach(function(e,i,_) { e.delete(); });
 	};
 	
 	self.load = function() {
-		var cm = ConnectionManager.find();
-		if (cm) {
-			self.connectionManager = cm;
-			self.connectionManager.joinRoom();
-		}	
+		self.connectionManager.characterId(CharacterManager.activeCharacter().key());
 	};
 	
 	self.unload = function() {
-// 		self.connectionManager.save();
+ 		self.connectionManager.connected(false);
+ 		self.connectionManager.save();
 	};
 };

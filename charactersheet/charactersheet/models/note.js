@@ -4,6 +4,7 @@ function Note() {
 	var self = this;
 	self.ps = PersistenceService.register(Note, self);
 
+	self.characterId = ko.observable(null);
 	self.text = ko.observable('');
 
 	self.clear = function() {
@@ -11,11 +12,13 @@ function Note() {
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.text(values.text);
 	};
 	
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			text: self.text()
 		}
 	};
@@ -25,8 +28,10 @@ function Note() {
 	};
 };
 
-Note.find = function() {
-	return PersistenceService.findOne(Note);
+Note.findBy = function(characterId) {
+	return PersistenceService.findAll(Note).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };
 
 

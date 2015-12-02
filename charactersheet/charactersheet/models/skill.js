@@ -4,6 +4,7 @@ function Skill() {
     var self = this;
 	self.ps = PersistenceService.register(Skill, self);
     
+	self.characterId = ko.observable(null);
     self.name = ko.observable('');
     self.modifier = ko.observable(0);
     self.abilityScore = ko.observable('');
@@ -66,7 +67,8 @@ function Skill() {
     };
 
     self.importValues = function(values) {
-        self.name(values.name);
+     	self.characterId(values.characterId);   	
+    	self.name(values.name);
         self.abilityScore(values.abilityScore);
         self.modifier(values.modifier);
         self.proficiency(values.proficiency);
@@ -74,6 +76,7 @@ function Skill() {
 
     self.exportValues = function() {
         return {
+        	characterId: self.characterId(),
 			name: self.name(),
 			abilityScore: self.abilityScore(),
 			modifier: self.modifier(),

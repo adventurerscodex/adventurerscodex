@@ -49,11 +49,8 @@ function CharacterAppearance() {
 //CRUD
 
 CharacterAppearance.findBy = function(characterId) {
-	var r = PersistenceService.findOne(CharacterAppearance);
-	if (!r) { r = []; }
-
-	return $.map(r, function(e, _) {
-		if (e.characterId === characterId) { return e; }
+	return PersistenceService.findAll(CharacterAppearance).filter(function(e, i, _) {
+		return e.characterId() === characterId;
 	});
 };
 

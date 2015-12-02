@@ -4,6 +4,7 @@ function Spell() {
     var self = this;
 	self.ps = PersistenceService.register(Spell, self);
 
+	self.characterId = ko.observable(null);
     self.spellName = ko.observable('');
     self.spellType = ko.observable('');
     self.spellDmg = ko.observable('');
@@ -49,6 +50,7 @@ function Spell() {
     };
 
     self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
         self.spellName(values.spellName);
         self.spellType(values.spellType);
         self.spellDmg(values.spellDmg);
@@ -63,16 +65,17 @@ function Spell() {
 
     self.exportValues = function() {
         return {
-        spellName: self.spellName(),
-        spellType: self.spellType(),
-        spellDmg: self.spellDmg(),
-        spellSchool: self.spellSchool(),
-        spellLevel: self.spellLevel(),
-        spellDescription: self.spellDescription(),
-        spellCastingTime: self.spellCastingTime(),
-        spellRange: self.spellRange(),
-        spellComponents: self.spellComponents(),
-        spellDuration: self.spellDuration(),
+        	characterId: self.characterId(),
+			spellName: self.spellName(),
+			spellType: self.spellType(),
+			spellDmg: self.spellDmg(),
+			spellSchool: self.spellSchool(),
+			spellLevel: self.spellLevel(),
+			spellDescription: self.spellDescription(),
+			spellCastingTime: self.spellCastingTime(),
+			spellRange: self.spellRange(),
+			spellComponents: self.spellComponents(),
+			spellDuration: self.spellDuration(),
         }
     };
     

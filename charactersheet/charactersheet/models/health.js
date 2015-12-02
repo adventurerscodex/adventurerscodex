@@ -5,6 +5,7 @@ function Health() {
 	self.DANGER_THRESHOLD = 0.10;
 	self.WARNING_THRESHOLD = 0.30;
 	
+	self.characterId = ko.observable(null);
 	self.maxHitpoints = ko.observable(10);
 	self.tempHitpoints = ko.observable(0);
 	self.damage = ko.observable(0);
@@ -78,6 +79,7 @@ function Health() {
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.maxHitpoints(values.maxHitpoints);
 		self.tempHitpoints(values.tempHitpoints);
 		self.damage(values.damage);
@@ -85,6 +87,7 @@ function Health() {
 	
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			maxHitpoints: self.maxHitpoints(),
 			tempHitpoints: self.tempHitpoints(),
 			damage: self.damage()
@@ -96,6 +99,8 @@ function Health() {
 	};
 };
 
-Health.find = function() {
-	return PersistenceService.findOne(Health);
+Health.findBy = function(characterId) {
+	return PersistenceService.findAll(Health).filter(function(e,i,_) {
+		return e.characterId() === characterId;
+	});
 };

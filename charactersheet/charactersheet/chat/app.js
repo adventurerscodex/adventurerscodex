@@ -5,14 +5,12 @@ function PartyChatViewModel() {
 	
 	self.log = ko.observableArray([]);
 	self.message = ko.observable('');
-	self.id = null;
 	self._dummy = ko.observable(null);
 	
 	self.init = function() {
 		messenger.subscribe('data', 'chat', self.handleMessage);
 		players.onPlayerEnters(self.handleNewPlayer);
 		players.onPlayerLeaves(self.handlePlayerLeft);
-		self.id = CharacterManager.active;
 		
 		ConnectionManagerSignaler.changed.add(function() {
 			self._dummy.notifySubscribers();
@@ -20,23 +18,34 @@ function PartyChatViewModel() {
 	};
 	
 	self.load = function() {
+		var log = ChatMessage.findAllBy(CharacterManager.activeCharacter().key());
+		self.log(log);
 	};
 	
 	self.unload = function() {
+		$.map(self.log(), function(m, _) {
+			m.save();
+		});
 	};
 	
 	self.connected = ko.computed(function() {
 		self._dummy();
 		try {
-			return ConnectionManager.find().connected();
-		} catch(err) {};
+			return ConnectionManager.findBy(
+				CharacterManager.activeCharacter().key())[0].connected();
+		} catch(err) {
+			return false;
+		};
 	});
 
 	self._mainRoomId = ko.computed(function() {
 		self._dummy();
 		try {
-			return ConnectionManager.find().roomId();
-		} catch(err) {};
+			return ConnectionManager.findBy(
+				CharacterManager.activeCharacter().key())[0].roomId();
+		} catch(err) {
+			return false;
+		};
 	});
 		
 	//UI Methods
@@ -45,7 +54,7 @@ function PartyChatViewModel() {
 		var message = self.message().trim();
 		if (message !== '') {
 			var msg = new ChatMessage();
-			msg.fromId(self.id);
+			msg.fromId(CharacterManager.activeCharacter().key());
 			msg.toId('all');
 			msg.from(Profile.find().characterName());
 			msg.to('');
@@ -58,6 +67,7 @@ function PartyChatViewModel() {
 	self.handleMessage = function(msg) {
 		var message = new ChatMessage();
 		message.importValues(msg);
+		message.characterId(CharacterManager.activeCharacter().key());
 		//If the message is to you or the group.
 		if (message.toId() === self.id || message.toId().toLowerCase() === 'all') {
 			message.text(self.markdown(message.text()));

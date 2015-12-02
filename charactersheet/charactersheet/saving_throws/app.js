@@ -35,26 +35,29 @@ function SavingThrowsViewModel() {
     self.sort = ko.observable(self.sorts['name asc']);
     
     self.init = function() {
-// 	    AbilityScoresSignaler.changed.add(function() {
-// 	    	$.each(self.savingThrows(), function(_, e) {
-// 	    		e.updateValues();
-// 	    	})
-// 	    });
-// 	    StatsSignaler.changed.add(function() {
-// 	    	$.each(self.savingThrows(), function(_, e) {
-// 	    		e.updateValues();
-// 	    	})
-// 	    });
+	    AbilityScoresSignaler.changed.add(function() {
+	    	$.each(self.savingThrows(), function(_, e) {
+	    		e.updateValues();
+	    	})
+	    });
+	    StatsSignaler.changed.add(function() {
+	    	$.each(self.savingThrows(), function(_, e) {
+	    		e.updateValues();
+	    	})
+	    });
     };
     
     self.load = function() {
-		var st = SavingThrows.findAll();
+		var st = SavingThrows.findAllBy(CharacterManager.activeCharacter().key());
 		if (st.length === 0) {
     		self.savingThrows(self._defaultSavingThrows());
 		}
     	else {    	
 			self.savingThrows(st);
     	}
+    	self.savingThrows().forEach(function(e, i, _) {
+    		e.characterId(CharacterManager.activeCharacter().key());
+    	});
     };
     
     self.unload = function() {

@@ -2,6 +2,7 @@ function HitDice() {
 	var self = this;
 	self.ps = PersistenceService.register(HitDice, self);
 	
+	self.characterId = ko.observable(null);
 	self.hitDiceType = ko.observable('');
 	self.hitDiceUsed = ko.observable(false);
 	
@@ -11,12 +12,14 @@ function HitDice() {
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.hitDiceType(values.hitDiceType);
 		self.hitDiceUsed(values.hitDiceUsed);
 	};
 	
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			hitDiceType: self.hitDiceType(),
 			hitDiceUsed: self.hitDiceUsed()
 		}
@@ -24,6 +27,10 @@ function HitDice() {
 	
 	self.save = function() {
 		self.ps.save();
+	};
+	
+	self.delete = function() {
+		self.ps.delete();
 	};
 	
 	self.toggleHitDice = function() {
@@ -39,6 +46,9 @@ function HitDice() {
 	});
 };
 
-HitDice.findAll = function() {
-	return PersistenceService.findAll(HitDice);
+HitDice.findAllBy = function(characterId) {
+	return PersistenceService.findAll(HitDice).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };
+

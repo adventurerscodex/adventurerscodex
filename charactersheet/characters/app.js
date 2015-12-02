@@ -50,6 +50,7 @@ function CharacterManagerViewModel() {
 		if (!CharacterManager.defaultCharacter()) {
 			character.isDefault(true);
 		}
+		character.isActive(true);
 		character.save();
 		window.location = character.url();
 	};
@@ -63,6 +64,7 @@ function CharacterManagerViewModel() {
 		if (!CharacterManager.defaultCharacter()) {
 			character.isDefault(true);
 		}
+		character.isActive(true);
 		character.save();
 		window.location = character.url();
 	};

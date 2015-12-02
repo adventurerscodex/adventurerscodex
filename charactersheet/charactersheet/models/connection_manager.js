@@ -4,18 +4,19 @@ function ConnectionManager() {
 	var self = this;
 	self.ps = PersistenceService.register(ConnectionManager, self);
 	
+	self.characterId = ko.observable(null);
 	self.connected = ko.observable(false);
 	self.roomId = ko.observable(null);
 	
 	self.joinRoom = function() {
-		var roomId = self.roomId().trim();
-		if (roomId !== '') {
+		if (self.roomId() !== null) {
+			var roomId = self.roomId().trim();
 			messenger.join(roomId);
+			self.connected(true);
+			self.save();
+			ConnectionManagerSignaler.changed.dispatch();
+			ConnectionManagerSignaler.connected.dispatch();
 		}
-		self.connected(true);
-		self.save();
-		ConnectionManagerSignaler.changed.dispatch();
-		ConnectionManagerSignaler.connected.dispatch();
 	};
 	
 	self.createRoom = function() {
@@ -44,18 +45,22 @@ function ConnectionManager() {
 	
 	self.exportValues = function() {
 		return {
+        	characterId: self.characterId(),
 			connected: self.connected(),
 			roomId: self.roomId()
 		};
 	};
 	
 	self.importValues = function(values) {
+    	self.characterId(values.characterId);   	
 		self.connected(values.connected);
 		self.roomId(values.roomId);
 	};
 
 };
 
-ConnectionManager.find = function() {
-	return PersistenceService.findOne(ConnectionManager);
+ConnectionManager.findBy = function(characterId) {
+	return PersistenceService.findAll(ConnectionManager).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

@@ -101,10 +101,7 @@ function AbilityScores() {
 };
 
 AbilityScores.findBy = function(characterId) {
-	var r = PersistenceService.findOne(AbilityScores);
-	if (!r) { r = []; }
-	
-	return $.map(r, function(e, _){
-		if (e.characterId === characterId) { return e; }
+	return PersistenceService.findAll(AbilityScores).filter(function(e, i, _){
+		return e.characterId() === characterId;
 	});
 };
