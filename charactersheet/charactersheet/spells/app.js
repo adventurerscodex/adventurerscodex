@@ -106,8 +106,10 @@ function SpellbookViewModel() {
 
 	//Manipulating spells
     self.addSpell = function() {
-    	self.blankSpell().save();
-        self.spellbook.push(self.blankSpell());
+    	var spell = self.blankSpell();
+    	spell.characterId(CharacterManager.activeCharacter().key());
+    	spell.save();
+        self.spellbook.push(spell);
         self.blankSpell(new Spell());
     };
 
