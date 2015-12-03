@@ -33,35 +33,6 @@ PersistenceService.findAll = function(model) {
 };
 
 /**
- * Given a model class, return the first of the stored instances of that class.
- * 
- * Parameters
- * ----------
- *
- * model: The prototype for the type of model that is being searched for. 
- *
- * Returns
- * -------
- *
- * A single object of the desired type.
- *
- * Throws
- * ------
- *
- * If the list does not contain any items.
- *
- * Usage
- * -----
- * ```javascript
- * function Person() {...}
- * 
- * var people = PersistenceService.findOne(Person);```
- */
-PersistenceService.findOne = function(model) {
-	return PersistenceService.findAll(model)[0];
-};
-
-/**
  * Given a model class and an instance of that class, save the instance.
  *
  * Parameters
@@ -168,35 +139,6 @@ function PersistenceServiceToken(model, inst) {
 	*/
 	self.findAll = function() {
 		return PersistenceService.findAll(self.model);
-	};
-	
-	/**
-	 * Return the first of the stored instances of the configured class.
-	 * 
-	 * Returns
-	 * -------
-	 *
-	 * A single object of the desired type.
-	 *
-	 * Throws
-	 * ------
-	 *
-	 * If the list does not contain any items.
-	 *
-	 * Usage
-	 * -----
-	 * ```javascript
-	 * function Person() {
-	 * 		var self = this;
-	 * 		self.ps = PersistenceService.register(Person, self);
-	 * 		
-	 * 		self.findOne = function() {
-	 * 			var people = self.ps.findOne(Person);
-	 * 		}
-	 * }```
-	 */
-	self.findOne = function() {
-		return PersistenceService.findOne(self.model)[0];
 	};
 	
 	/**
