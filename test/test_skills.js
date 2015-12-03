@@ -1,6 +1,8 @@
 "use strict";
 
 describe('Skill Tree', function() {
+	var delShim = function() {};
+
 	describe('Add skill', function() {
 		it('should add a new skill to the list of skills', function() {
 			var p = new SkillsViewModel();
@@ -14,6 +16,7 @@ describe('Skill Tree', function() {
 		it('should remove a skill from the list of skills', function() {
 			var p = new SkillsViewModel();
 			p.skills().length.should.equal(0);
+			p.blankSkill().delete = delShim;
 			p.addSkill();
 			p.skills().length.should.equal(1);
 			p.removeSkill(p.skills().pop());
@@ -64,6 +67,7 @@ describe('Skill Tree', function() {
 		it('should clear all the values in skills.', function() {
 			var p = new SkillsViewModel();
 			var skills = [new Skill()];
+			skills[0].delete = delShim;
 			p.skills(skills);
 			p.skills().should.equal(skills);
 			p.clear();

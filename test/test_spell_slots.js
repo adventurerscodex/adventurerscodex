@@ -65,11 +65,12 @@ describe('Spell Slots View Model', function() {
 			var p = new SpellSlotsViewModel();
 			p.blankSlot().maxSpellSlots(5);
 			p.addSlot();
-			p.slots()[0].incrUsed();
 			p.blankSlot().maxSpellSlots(5);
 			p.addSlot();
-			p.slots()[1].incrUsed();
-			p.slots()[1].incrUsed();
+			
+			p.slots()[0].usedSpellSlots(1);
+			p.slots()[1].usedSpellSlots(1);
+			
 			p.resetSlots();
 			p.slots()[0].usedSpellSlots().should.equal(0);
 			p.slots()[1].usedSpellSlots().should.equal(0);

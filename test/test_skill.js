@@ -1,10 +1,10 @@
 "use strict";
 
 describe('Skill', function() {
-	OtherStats.find = function() {
-		return {
+	OtherStats.findBy = function(id) {
+		return [{
 			proficiency: function() { return 2; }
-		};
+		}];
 	}
 	describe('Bonus Label', function() {
 		it('should yield the modifier value (signed).', function() {
