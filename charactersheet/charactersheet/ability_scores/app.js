@@ -27,11 +27,12 @@ function AbilityScoresViewModel() {
 	self.init = function() {};
 	
 	self.load = function() {
-		var scores = AbilityScores.findBy(CharacterManager.activeCharacter().key());
+		var key = CharacterManager.activeCharacter().key();
+		var scores = AbilityScores.findBy(key);
 		if (scores.length > 0) {
 			self.abilityScores = scores[0];
 		}
-		self.abilityScores.characterId(CharacterManager.activeCharacter().key());
+		self.abilityScores.characterId(key);
 
 		//Subscriptions
 		self.abilityScores.str.subscribe(self.abilityScores.save);

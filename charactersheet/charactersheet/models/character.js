@@ -61,6 +61,14 @@ function Character() {
 		} catch(err) {};
 		return summ;
 	});
+	
+	self.saveToFile = function() {
+    	var string = JSON.stringify(self.exportValues());
+    	var filename = self.playerTitle();
+    	var blob = new Blob([string], {type: "application/json"});
+		saveAs(blob, filename);
+    };
+
 };
 
 Character.findAll = function() {
@@ -68,7 +76,7 @@ Character.findAll = function() {
 };
 
 Character.findBy = function(characterId) {
-	return $.map(Character.findAll(), function(e, _) {
+	return Character.findAll().filter(function(e, i, _) {
 		if (e.key() === characterId) return e;
 	});
 };

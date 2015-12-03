@@ -9,6 +9,7 @@ function Note() {
 
 	self.clear = function() {
 		self.text('');
+		self.save();
 	};
 	
 	self.importValues = function(values) {

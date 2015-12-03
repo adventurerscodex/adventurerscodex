@@ -82,22 +82,20 @@ function CharacterManagerViewModel() {
 		window.location = character.url();
 	};
 	
-	self.removeCharacter = function(character) {
-		var key = character.key();
-		//Delete old entries from local storage.
-		$.each(getLocalStorageEntries(), function(_, _key) {
-			if (_key.indexOf(key) !== -1) {
-				localStorage.removeItem(_key);
-			}
+	self.removeCharacter = function(character) {		
+		//Purge all entries for this char.
+		var tables = Object.keys(localStorage);
+		tables.forEach(function(table, iTable, _Table) {
+			PersistenceService._findAllObjs(table).forEach(function(item, iItem, _Item) {
+				if (item.data.characterId === character.key()) {
+					PersistenceService._delete(table, item.id);
+				}
+			});
 		});
-		self.character.remove(key);
-		if (self.defaultCharacter() === key) {
-			if (self.characterKeys().length > 0) {
-				self.defaultCharacter(self.characterKeys()[0]);
-			} else {
-				self.defaultCharacter('');
-			}
-		}		
+		
+		//Remove the character.
+		character.delete();
+		self.characters.remove(character);
 	};
 		
 	self.localStoragePercent = ko.computed(function() {

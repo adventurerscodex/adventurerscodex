@@ -23,7 +23,7 @@ function PartyChatViewModel() {
 	};
 	
 	self.unload = function() {
-		$.map(self.log(), function(m, _) {
+		self.log().map(function(m, i, _) {
 			m.save();
 		});
 	};
@@ -31,8 +31,8 @@ function PartyChatViewModel() {
 	self.connected = ko.computed(function() {
 		self._dummy();
 		try {
-			return ConnectionManager.findBy(
-				CharacterManager.activeCharacter().key())[0].connected();
+			var key = CharacterManager.activeCharacter().key();
+			return ConnectionManager.findBy(key)[0].connected();
 		} catch(err) {
 			return false;
 		};
@@ -41,8 +41,8 @@ function PartyChatViewModel() {
 	self._mainRoomId = ko.computed(function() {
 		self._dummy();
 		try {
-			return ConnectionManager.findBy(
-				CharacterManager.activeCharacter().key())[0].roomId();
+			var key = CharacterManager.activeCharacter().key();
+			return ConnectionManager.findBy(key)[0].roomId();
 		} catch(err) {
 			return false;
 		};
@@ -53,10 +53,16 @@ function PartyChatViewModel() {
 	self.sendMessage = function(formElement) {
 		var message = self.message().trim();
 		if (message !== '') {
+			var key = CharacterManager.activeCharacter().key();
+			var name = '';
+			try {
+				name = Profile.findBy(key)[0].characterName();
+			} catch(err) {};
+			
 			var msg = new ChatMessage();
-			msg.fromId(CharacterManager.activeCharacter().key());
+			msg.fromId(key);
 			msg.toId('all');
-			msg.from(Profile.find().characterName());
+			msg.from(name);
 			msg.to('');
 			msg.text(message);
 			messenger.sendDataMsg(self._mainRoomId(), 'chat', msg.exportValues());
@@ -104,19 +110,14 @@ function PartyChatViewModel() {
 	};
 	
 	self.clear = function() {
+		self.log().map(function(m, i, _) {
+			m.delete();
+		});
 		self.log([]);
 	};
 	
 	//Private Methods
 		
-	/** 
-	 * Returns the list of player names & id that are currently in the room.
-	 * TODO: get this information from the players module.
-	 */
-	self._playersInRoom = function() {
-		//return self.parent.
-	};
-
 	self.markdown = function(text) {
 		return markdown.toHTML(text).replace('<p>', '').replace('</p>', '');
 	};

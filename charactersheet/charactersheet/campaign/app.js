@@ -6,16 +6,11 @@ function CampaignViewModel() {
 	self.campaignName =  ko.observable('');
 	self.dmName = ko.observable('');
 	
-	self.init = function() {
+	self.init = function() {};
 	
-	};
+	self.load = function() {};
 	
-	self.load = function() {
-	};
-	
-	self.unload = function() {
-	
-	};
+	self.unload = function() {};
 
 	//UI Methods
 	

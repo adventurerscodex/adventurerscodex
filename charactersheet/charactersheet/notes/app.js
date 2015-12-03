@@ -8,11 +8,14 @@ function NotesViewModel() {
 	self.init = function() {};
 	
 	self.load = function() {
-		var note = Note.findBy(CharacterManager.activeCharacter().key());
+		var key = CharacterManager.activeCharacter().key();
+		var note = Note.findBy(key);
 		if (note.length > 0) {
 			self.note = note[0];
 		}
-		self.note.characterId(CharacterManager.activeCharacter().key());
+		self.note.characterId(key);
+		
+		self.note.text.subscribe(self.note.save);
 	};
 	
 	self.unload = function() {

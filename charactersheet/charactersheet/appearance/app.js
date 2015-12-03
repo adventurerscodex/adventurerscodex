@@ -10,12 +10,12 @@ function AppearanceViewModel() {
 	};
 	
 	self.load = function() {
-		var appear = CharacterAppearance.findBy(CharacterManager.activeCharacter().key());
+		var key = CharacterManager.activeCharacter().key();
+		var appear = CharacterAppearance.findBy(key);
 		if (appear.length > 0) {
 			self.appearance = appear[0];
 		}
-		self.appearance.characterId(CharacterManager.activeCharacter().key());
-		
+		self.appearance.characterId(key);
 	};
 	
 	self.unload = function() {

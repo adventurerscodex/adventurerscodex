@@ -122,10 +122,16 @@ function RootViewModel() {
 		players = new Players();
 	    messenger.connect();
 		
-		CharacterManager.changeCharacter(CharacterManager.getKey());
+		var character = Character.findBy(CharacterManager.getKey())[0];
+		self.playerType(character.playerType());
+		CharacterManager.changeCharacter(character.key());
 	
-		self.characterTabViewModel().init();
-		self.dmTabViewModel().init();
+ 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+			self.characterTabViewModel().init();
+ 		} 
+ 		if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
+			self.dmTabViewModel().init();
+ 		}
 		self.partyTabViewModel().init();
 		self.settingsTabViewModel().init();
 	};
@@ -136,25 +142,26 @@ function RootViewModel() {
 	self.load = function() {
  		self.activeTab(self.playerType().defaultTab);
  		
- 		self.characterTabViewModel().load();
- 		self.dmTabViewModel().load();
+ 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+ 			self.characterTabViewModel().load();
+ 		} 
+ 		if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
+ 			self.dmTabViewModel().load();
+ 		}
  		self.partyTabViewModel().load();
  		self.settingsTabViewModel().load();
 	};
 
 	self.unload = function() { 		
- 		self.characterTabViewModel().unload();
- 		self.dmTabViewModel().unload();
+ 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+ 			self.characterTabViewModel().unload();
+ 		} 
+ 		if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
+ 			self.dmTabViewModel().unload();
+ 		}
  		self.partyTabViewModel().unload();
  		self.settingsTabViewModel().unload();
 	};
-
-    self.saveToFile = function() {
-    	var string = JSON.stringify(self.exportValues());
-    	var filename = self.playerTitle();
-    	var blob = new Blob([string], {type: "application/json"});
-		saveAs(blob, filename);
-    };
 };
 
 /**
