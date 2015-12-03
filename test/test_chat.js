@@ -6,14 +6,6 @@ describe('Chat View Model', function() {
 		
 	describe('Send Message', function() {
 		it('should construct a message and send it', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: function() {
-						return 'Bob';
-					}
-				};
-			};
 			messenger = new Messenger();
 			messenger.connect();
 	
@@ -30,7 +22,6 @@ describe('Chat View Model', function() {
 			p.sendMessage();
 			msg.text.should.equal(text);
 			
-			Profile.find = f;
 			messenger = new Messenger();
 			CharacterManager.activeCharacter = c;
 		});
@@ -38,14 +29,6 @@ describe('Chat View Model', function() {
 
 	describe('Handle Message', function() {
 		it('should add messages to the log if they are to that person or all.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: function() {
-						return 'Bob';
-					}
-				};
-			};
 			messenger = new Messenger();
 			messenger.connect();
 	
@@ -68,7 +51,6 @@ describe('Chat View Model', function() {
 			p.handleMessage(msg);
 			p.log().length.should.equal(2);			
 
-			Profile.find = f;
 			var messenger = new Messenger();
 			CharacterManager.activeCharacter = c;
 		});
@@ -76,14 +58,6 @@ describe('Chat View Model', function() {
 	
 	describe('Clear', function() {
 		it('should clear all the messages in the chat.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: function() {
-						return 'Bob';
-					}
-				};
-			};
 			var messenger = new Messenger();
 			messenger.connect();
 	
@@ -102,7 +76,6 @@ describe('Chat View Model', function() {
 			p.clear();
 			p.log().length.should.equal(0);
 
-			Profile.find = f;
 			var messenger = new Messenger();
 			CharacterManager.activeCharacter = c;
 		});
@@ -110,14 +83,6 @@ describe('Chat View Model', function() {
 
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: function() {
-						return 'Bob';
-					}
-				};
-			};
 			var messenger = new Messenger();
 			messenger.connect();
 	
@@ -136,7 +101,6 @@ describe('Chat View Model', function() {
 			var e = p.exportValues();
 			e.log.length.should.equal(p.log().length);
 
-			Profile.find = f;
 			var messenger = new Messenger();
 			CharacterManager.activeCharacter = c;
 		});
@@ -144,14 +108,6 @@ describe('Chat View Model', function() {
 	
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: function() {
-						return 'Bob';
-					}
-				};
-			};
 			var messenger = new Messenger();
 			messenger.connect();
 	
@@ -175,7 +131,6 @@ describe('Chat View Model', function() {
 			p.importValues(e);
 			e.log.length.should.equal(p.log().length);
 
-			Profile.find = f;
 			var messenger = new Messenger();
 			CharacterManager.activeCharacter = c;
 		});

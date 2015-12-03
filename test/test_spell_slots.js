@@ -41,13 +41,6 @@ describe('Spell Slots View Model', function() {
 	
 	describe('Sort By', function() {
 		it('should sort the list of slots by given criteria', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var p = new SpellSlotsViewModel();
 			p.sortBy('level');
 			p.sort().should.equal(p.sorts['level desc']);
@@ -57,20 +50,11 @@ describe('Spell Slots View Model', function() {
 			p.sort().should.equal(p.sorts['maxSpellSlots asc']);
 			p.sortBy('maxSpellSlots');
 			p.sort().should.equal(p.sorts['maxSpellSlots desc']);
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 	
 	describe('Sort Arrow', function() {
 		it('should sort the list of slots by given criteria', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var p = new SpellSlotsViewModel();
 			p.sortBy('level');
 			p.sort().should.equal(p.sorts['level desc']);
@@ -80,8 +64,6 @@ describe('Spell Slots View Model', function() {
 			p.sort().should.equal(p.sorts['level asc']);
 			p.sortArrow('level').should.equal('glyphicon glyphicon-arrow-up');
 			p.sortArrow('maxSpellSlots').should.equal('');
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 	
@@ -133,13 +115,6 @@ describe('Spell Slots View Model', function() {
 
 	describe('Clear', function() {
 		it('should clear all the values in spell slots.', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var p = new SpellSlotsViewModel();
 			var slot = new Slot();
 			var slots = [slot];
@@ -147,8 +122,6 @@ describe('Spell Slots View Model', function() {
 			p.slots().should.equal(slots);
 			p.clear();
 			p.slots().length.should.equal(0);
-			
-			CharacterManager.activeCharacter = c;
 		});
 	});
 });

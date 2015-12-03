@@ -8,17 +8,8 @@ describe('SpellsViewModel', function(){
 
 	describe('Init', function() {
 		it('should init the module.', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var spellsVM = new SpellbookViewModel();
 			spellsVM.init();
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
     
@@ -140,33 +131,17 @@ describe('SpellsViewModel', function(){
 
 	describe('Clear', function() {
 		it('should clear all the values in the SpellbookViewModel', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var book = new SpellbookViewModel();
 			var spell = [new Spell()];
 			book.spellbook(spell);
 			book.spellbook().should.equal(spell);
 			book.clear();
 			book.spellbook().length.should.equal(0);
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Sort By', function() {
 		it('should sort the list of spells by given criteria', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var book = new SpellbookViewModel();
 			book.sortBy('spellName');
 			book.sort().should.equal(book.sorts['spellName desc']);
@@ -176,20 +151,11 @@ describe('SpellsViewModel', function(){
 			book.sort().should.equal(book.sorts['spellLevel asc']);
 			book.sortBy('spellLevel');
 			book.sort().should.equal(book.sorts['spellLevel desc']);
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Sort Arrow', function() {
 		it('should sort the list of skills by given criteria', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var book = new SpellbookViewModel();
 			book.sortBy('spellName');
 			book.sort().should.equal(book.sorts['spellName desc']);
@@ -208,8 +174,6 @@ describe('SpellsViewModel', function(){
 			book.sort().should.equal(book.sorts['spellLevel desc']);
 			book.sortArrow('spellName').should.equal('');
 			book.sortArrow('spellLevel').should.equal('glyphicon glyphicon-arrow-down');
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 });

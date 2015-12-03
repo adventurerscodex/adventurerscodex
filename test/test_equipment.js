@@ -123,32 +123,16 @@ describe('EquipmentViewModel', function(){
 
 	describe('Clear', function() {
 		it('should clear all the values in the equipment', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var p = new EquipmentViewModel();
 			var item = [new Item()];
 			p.equipment(item);
 			p.equipment().should.equal(item);
 			p.clear();
 			p.equipment().length.should.equal(0);
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 	describe('Sort By', function() {
 		it('should sort the list of spells by given criteria', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var eq = new EquipmentViewModel();
 			eq.sortBy('itemName');
 			eq.sort().should.equal(eq.sorts['itemName desc']);
@@ -158,20 +142,11 @@ describe('EquipmentViewModel', function(){
 			eq.sort().should.equal(eq.sorts['itemWeight asc']);
 			eq.sortBy('itemWeight');
 			eq.sort().should.equal(eq.sorts['itemWeight desc']);
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Sort Arrow', function() {
 		it('should sort the list of skills by given criteria', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var eq = new EquipmentViewModel();
 			eq.sortBy('itemName');
 			eq.sort().should.equal(eq.sorts['itemName desc']);
@@ -190,8 +165,6 @@ describe('EquipmentViewModel', function(){
 			eq.sort().should.equal(eq.sorts['itemWeight desc']);
 			eq.sortArrow('itemName').should.equal('');
 			eq.sortArrow('itemWeight').should.equal('glyphicon glyphicon-arrow-down');
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 });
