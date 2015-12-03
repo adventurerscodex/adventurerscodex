@@ -88,6 +88,8 @@ function Spell() {
     };
 };
 
-Spell.findAll = function() {
-	return PersistenceService.findAll(Spell);
+Spell.findAllBy =function(characterId) {
+	return PersistenceService.findAll(Spell).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };

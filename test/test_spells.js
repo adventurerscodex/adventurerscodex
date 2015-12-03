@@ -6,6 +6,50 @@ describe('SpellsViewModel', function(){
     PersistenceService._save = function(){};
     PersistenceService._delete = function(){};
 
+	describe('Init', function() {
+		it('should init the module.', function() {
+			var spellsVM = new SpellbookViewModel();
+			spellsVM.init();
+		});
+	});
+    
+	describe('Load', function() {
+		it('should load the data from the spells db.', function() {
+			Spell.findAllBy = function(key) { return [new Spell(), new Spell()]; };
+			var spellsVM = new SpellbookViewModel();
+			spellsVM.spellbook().length.should.equal(0);
+			spellsVM.load();
+			spellsVM.spellbook().length.should.equal(2);
+		});
+	});
+	
+	describe('Unload', function() {
+		it('should unload the data to the spells db.', function() {
+			//Shims
+			var saved = [false, false];
+			var spells = [new Spell(), new Spell()].map(function(e, i, _) {
+				e.save = function() { saved[i] = true; }
+				return e;
+			});
+			Spell.findAllBy = function(key) { return spells; };
+			
+			saved.forEach(function(e, i, _) {
+				e.should.equal(false);
+			});
+			//Test
+ 			var spellsVM = new SpellbookViewModel();
+ 			spellsVM.spellbook().length.should.equal(0);
+ 			spellsVM.load();
+  			spellsVM.spellbook().length.should.equal(2);
+ 			spellsVM.unload();
+  			spellsVM.spellbook().length.should.equal(2);
+  			
+ 			saved.forEach(function(e, i, _) {
+				e.should.equal(true);
+			});
+		});
+	});
+
 	describe('Add Spell', function() {
 		it('should add a new spell to the SpellbookViewModel', function() {
 			var book = new SpellbookViewModel();
@@ -13,6 +57,19 @@ describe('SpellsViewModel', function(){
 			book.spellbook().length.should.equal(0);
 			book.addSpell();
 			book.spellbook().length.should.equal(1);
+		});
+	});
+
+	describe('Edit Spell', function() {
+		it('should select a spell for editing.', function() {
+			var book = new SpellbookViewModel();
+			book.spellbook().length.should.equal(0);
+			book.addSpell();
+			book.spellbook().length.should.equal(1);
+			var spell = book.spellbook.pop();
+			book.editSpell(spell);
+			book.selecteditem().should.equal(spell)
+			
 		});
 	});
 
@@ -64,6 +121,16 @@ describe('SpellsViewModel', function(){
 			book.sort().should.equal(book.sorts['spellName asc']);
 			book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-up');
 			book.sortArrow('spellLevel').should.equal('');
+			//Numeric sort
+			book.sortBy('spellLevel');
+			book.sort().should.equal(book.sorts['spellLevel asc']);
+			book.sortArrow('spellName').should.equal('');
+			book.sortArrow('spellLevel').should.equal('glyphicon glyphicon-arrow-up');
+			book.sortBy('spellLevel');
+			book.sort().should.equal(book.sorts['spellLevel desc']);
+			book.sortArrow('spellName').should.equal('');
+			book.sortArrow('spellLevel').should.equal('glyphicon glyphicon-arrow-down');
+
 		});
 	});
 });
