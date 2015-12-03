@@ -1,30 +1,30 @@
 "use strict";
 
-var messenger = new Messenger();
-messenger.connect();
-
-describe('Players', function() {	
-
-	messenger._subscriptions = [];
-	messenger.subscribe = function(c, t, callback) {
-		messenger._subscriptions.push(callback);
-	};
-	
-	messenger._sendMgs = false;
-	messenger.sendDataMsg = function(t, ty, m) {
-		messenger._sendMgs = true;
-	};
-	
-	ConnectionManager.find = function() {
-		return {
-			roomId: function() {
-				return '123';
-			}
-		};
-	};
-	
+describe('Players', function() {		
 	describe('Init', function() {
-		it('should do basic setup.', function() {
+		it('should do basic setup.', function() {			
+			messenger = new Messenger();
+			messenger.connect();
+
+			messenger._subscriptions = [];
+			messenger.subscribe = function(c, t, callback) {
+				messenger._subscriptions.push(callback);
+			};
+	
+			messenger._sendMgs = false;
+			messenger.sendDataMsg = function(t, ty, m) {
+				messenger._sendMgs = true;
+			};
+	
+			ConnectionManager.find = function() {
+				return {
+					roomId: function() {
+						return '123';
+					}
+				};
+			};
+
+
 			var players = new Players();
 			players.init();
 			messenger._subscriptions.length.should.equal(3);
@@ -32,37 +32,107 @@ describe('Players', function() {
 			messenger._sendMgs.should.equal(false);
 			messenger.sendDataMsg('','','');
 			messenger._sendMgs.should.equal(true);			
+			
+			messenger = new Messenger();
 		});
 	});
 
 	describe('Unload', function() {
 		it('should do basic teardown.', function() {
+			var f = Profile.find;
+			Profile.find = function() {
+				return {
+					characterName: ko.observable('Bob')
+				}
+			};
+			messenger = new Messenger();
+			messenger.connect();
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
+			messenger._sendMgs = false;
+			messenger.sendDataMsg = function(t, ty, m) {
+				messenger._sendMgs = true;
+			};
+
 			var players = new Players();
 			players.init();
-			messenger._sendMgs = false;
 			messenger._sendMgs.should.equal(false);
 			players.unload();
 			messenger._sendMgs.should.equal(true);
+
+			messenger = new Messenger();
+			Profile.find = f;
+			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Say Hello', function() {
 		it('should say hello.', function() {
+			var f = Profile.find;
+			Profile.find = function() {
+				return {
+					characterName: ko.observable('Bob')
+				}
+			};
+			messenger = new Messenger();
+			messenger.connect();
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
+			messenger._sendMgs = false;
+			messenger.sendDataMsg = function(t, ty, m) {
+				messenger._sendMgs = true;
+			};
+
 			messenger._sendMgs = false;
 			var players = new Players();
 			messenger._sendMgs.should.equal(false);
 			players.sayHello();
 			messenger._sendMgs.should.equal(true);
+
+			messenger = new Messenger();
+			Profile.find = f;
+			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Say Goodbye', function() {
 		it('should say goodbye.', function() {
+			var f = Profile.find;
+			Profile.find = function() {
+				return {
+					characterName: ko.observable('Bob')
+				}
+			};
+			messenger = new Messenger();
+			messenger.connect();
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
+			messenger._sendMgs = false;
+			messenger.sendDataMsg = function(t, ty, m) {
+				messenger._sendMgs = true;
+			};
+
 			messenger._sendMgs = false;
 			var players = new Players();
 			messenger._sendMgs.should.equal(false);
 			players.sayGoodBye();
 			messenger._sendMgs.should.equal(true);
+
+			messenger = new Messenger();
+			Profile.find = f;
+			CharacterManager.activeCharacter = c;
 		});
 	});
 

@@ -30,10 +30,8 @@ function SpellbookViewModel() {
 	};
 	
 	self.load = function() {
-		var spells = Spell.findAll();
-		if (spells) {
-			self.spellbook(spells);
-		}
+		var key = CharacterManager.activeCharacter().key();
+		self.spellbook(Spell.findAllBy(key));
 	};
 	
 	self.unload = function() {

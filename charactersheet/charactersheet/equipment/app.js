@@ -31,7 +31,8 @@ function EquipmentViewModel() {
 	};
 	
 	self.load = function() {
-		self.equipment(Item.findAll());
+		var key = CharacterManager.activeCharacter().key();
+		self.equipment(Item.findAllBy(key));
 	};
 	
 	self.unload = function() {

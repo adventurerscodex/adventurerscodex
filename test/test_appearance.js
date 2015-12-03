@@ -1,6 +1,5 @@
 "use strict";
 
-
 describe('AppearanceViewModel', function() {
 	var appval = {
 			"height":"5'1\"",

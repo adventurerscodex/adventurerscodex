@@ -61,6 +61,8 @@ function Item() {
 	};
 };
 
-Item.findAll = function() {
-	return PersistenceService.findAll(Item);
+Item.findAllBy = function(characterId) {
+	return PersistenceService.findAll(Item).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
 };
