@@ -1,47 +1,77 @@
 "use strict";
 
-var vals = {
-	"background":"A background",
-	"ideals":"LOTS OF THEM",
-	"flaws":"not too many",
-	"bonds":"yes"
-};
+describe('Features and Traits View Model', function() {
 
+	var vals = {
+		"background":"A background",
+		"ideals":"LOTS OF THEM",
+		"flaws":"not too many",
+		"bonds":"yes"
+	};
 
-describe('FeaturesTraitsViewModel', function() {
+	describe('Save', function() {
+		it('should save the values.', function() {
+			var ft = new FeaturesTraits();
+			var saved = false;
+			ft.ps.save = function() { saved = true; };
+			
+			saved.should.equal(false);
+			ft.save();
+			saved.should.equal(true);			
+		});
+	});
+
 	describe('Clear', function() {
-		it('should clear all the valsues in ft', function() {
-			var p = new FeaturesTraitsViewModel();
-			p.background(vals.background);
-			p.background().should.equal(vals.background);
-			p.clear();
-			p.background().should.equal('');
+		it('should clear the values.', function() {
+			var ft = new FeaturesTraits();
+			ft.background('something something');
+			ft.background().should.equal('something something');
+			ft.clear();
+			ft.background().should.equal('');
+		});
+	});
+
+	describe('Import', function() {
+		it('should import the values.', function() {
+			var ft = new FeaturesTraits();
+			var e = {
+				background: 'something something'
+			};
+			ft.background().should.equal('');
+			ft.importValues(e);
+			ft.background().should.equal(e.background);
 		});
 	});
 
 	describe('Export', function() {
-		it('should yield an object with all the info supplied.', function() {
-			var p = new FeaturesTraitsViewModel();
-			p.background(vals.background);
-			p.ideals(vals.ideals);
-			p.bonds(vals.bonds);
-			p.flaws(vals.flaws);		
-			var a = p.exportValues();
-			a.background.should.equal(p.background());
-			a.ideals.should.equal(p.ideals());
-			a.flaws.should.equal(p.flaws());
-			a.bonds.should.equal(p.bonds());
+		it('should export the values.', function() {
+			var ft = new FeaturesTraits();
+			ft.background('something something');
+			ft.background().should.equal('something something');
+			var e = ft.exportValues();
+			ft.background().should.equal(e.background);
 		});
 	});
-	
-	describe('Import', function() {
-		it('should import an object with all the info supplied.', function() {
-			var p = new FeaturesTraitsViewModel();
-			p.importValues(vals);
-			p.background().should.equal(vals.background);
-			p.flaws().should.equal(vals.flaws);
-			p.bonds().should.equal(vals.bonds);
-			p.ideals().should.equal(vals.ideals);			
+
+	describe('Find All', function() {
+		it('should find all of the values in the db.', function() {
+			var key = '1234';
+			var _findAll = PersistenceService.findAll;
+		
+			PersistenceService.findAll = function(_) { return [new FeaturesTraits(), new FeaturesTraits()]; };
+			var r = FeaturesTraits.findBy(key);
+			r.length.should.equal(0);
+			
+			
+			var results = [new FeaturesTraits(), new FeaturesTraits()].map(function(e, i, _) {
+				e.characterId(key);
+				return e;
+			});
+			PersistenceService.findAll = function(_) { return results; };
+			var r = FeaturesTraits.findBy(key);
+			r.length.should.equal(2);
+			
+			PersistenceService.findAll = _findAll;
 		});
 	});
 });

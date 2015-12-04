@@ -1,99 +1,179 @@
 "use strict";
 
-describe('Spells', function(){
-  describe('Add Spell', function() {
-    it('should add a new spell to the spellbook', function() {
-      var book = new Spellbook();
-      book.clear();
-      book.spellbook().length.should.equal(0);
-      book.addSpell();
-      book.spellbook().length.should.equal(1);
-    });
-  });
+describe('SpellsViewModel', function(){
+    var messenger = new Messenger();
+    var players = new Players();
+    PersistenceService._save = function(){};
+    PersistenceService._delete = function(){};
 
-  describe('Remove Item', function() {
-    it('should remove a item from the spellbook', function() {
-      var book = new Spellbook();
-      book.clear();
-      book.spellbook().length.should.equal(0);
-      book.addSpell();
-      book.spellbook().length.should.equal(1);
-      book.removeSpell(book.spellbook().pop());
-      book.spellbook().length.should.equal(0);
-    });
-  });
+	describe('Init', function() {
+		it('should init the module.', function() {
+			var spellsVM = new SpellbookViewModel();
+			spellsVM.init();
+		});
+	});
+    
+	describe('Load', function() {
+		it('should load the data from the spells db.', function() {
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
 
-  describe('Clear', function() {
-    it('should clear all the values in the spellbook', function() {
-      var book = new Spellbook();
-      var spell = [new Spell()];
-      book.spellbook(spell);
-      book.spellbook().should.equal(spell);
-      book.clear();
-      book.spellbook().length.should.equal(0);
-    });
-  });
+			Spell.findAllBy = function(key) { return [new Spell(), new Spell()]; };
+			var spellsVM = new SpellbookViewModel();
+			spellsVM.spellbook().length.should.equal(0);
+			spellsVM.load();
+			spellsVM.spellbook().length.should.equal(2);
 
-  describe('Export', function() {
-    it('should return an object with the data given', function() {
-      var book = new Spellbook();
-      book.clear();
-      book.spellbook().length.should.equal(0);
-      book.addSpell(new Spell());
-      book.spellbook().length.should.equal(1);
-      var exportValues = book.exportValues();
-      exportValues.spellbook.length.should.equal(book.spellbook().length);
-    });
-  });
+			CharacterManager.activeCharacter = c;
+		});
+	});
+	
+	describe('Unload', function() {
+		it('should unload the data to the spells db.', function() {
+			//Shims
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
 
-  describe('Import', function() {
-    it('should import an object with the data given', function() {
-      var book = new Spellbook();
-      book.clear();
-      book.spellbook().length.should.equal(0);
-      var spell = [{
-        spellName: '',
-        spellType: '',
-        spellDmg: '',
-        spellSchool: '',
-        spellLevel: 1,
-        spellDescription: '',
-        spellCastingTime: '',
-        spellRange: '',
-        spellComponents: '',
-        spellDuration: ''
-      }];
-      book.importValues({ spellbook: spell });
-      book.spellbook().length.should.equal(spell.length);
-    });
-  });
+			var saved = [false, false];
+			var spells = [new Spell(), new Spell()].map(function(e, i, _) {
+				e.save = function() { saved[i] = true; }
+				return e;
+			});
+			Spell.findAllBy = function(key) { return spells; };
+			
+			saved.forEach(function(e, i, _) {
+				e.should.equal(false);
+			});
+			//Test
+ 			var spellsVM = new SpellbookViewModel();
+ 			spellsVM.spellbook().length.should.equal(0);
+ 			spellsVM.load();
+  			spellsVM.spellbook().length.should.equal(2);
+ 			spellsVM.unload();
+  			spellsVM.spellbook().length.should.equal(2);
+  			
+ 			saved.forEach(function(e, i, _) {
+				e.should.equal(true);
+			});
 
-  describe('Sort By', function() {
-    it('should sort the list of spells by given criteria', function() {
-      var book = new Spellbook();
-      book.sortBy('spellName');
-      book.sort().should.equal(book.sorts['spellName desc']);
-      book.sortBy('spellName');
-      book.sort().should.equal(book.sorts['spellName asc']);
-      book.sortBy('spellLevel');
-      book.sort().should.equal(book.sorts['spellLevel asc']);
-      book.sortBy('spellLevel');
-      book.sort().should.equal(book.sorts['spellLevel desc']);
-    });
-  });
+			CharacterManager.activeCharacter = c;
+		});
+	});
 
-  describe('Sort Arrow', function() {
-    it('should sort the list of skills by given criteria', function() {
-      var book = new Spellbook();
-      book.sortBy('spellName');
-      book.sort().should.equal(book.sorts['spellName desc']);
-      book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-down');
-      book.sortArrow('spellLevel').should.equal('');
-      book.sortBy('spellName');
-      book.sort().should.equal(book.sorts['spellName asc']);
-      book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-up');
-      book.sortArrow('spellLevel').should.equal('');
-    });
-  });
+	describe('Add Spell', function() {
+		it('should add a new spell to the SpellbookViewModel', function() {
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
 
+			var book = new SpellbookViewModel();
+			book.clear();
+			book.spellbook().length.should.equal(0);
+			book.addSpell();
+			book.spellbook().length.should.equal(1);
+
+			CharacterManager.activeCharacter = c;
+		});
+	});
+
+	describe('Edit Spell', function() {
+		it('should select a spell for editing.', function() {
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
+
+			var book = new SpellbookViewModel();
+			book.spellbook().length.should.equal(0);
+			book.addSpell();
+			book.spellbook().length.should.equal(1);
+			var spell = book.spellbook.pop();
+			book.editSpell(spell);
+			book.selecteditem().should.equal(spell)
+
+			CharacterManager.activeCharacter = c;
+		});
+	});
+
+	describe('Remove Item', function() {
+		it('should remove a item from the SpellbookViewModel', function() {
+			var c = CharacterManager.activeCharacter;
+			CharacterManager.activeCharacter = function() {
+				return {
+					key: function() { return '1234'; }
+				};
+			};
+
+			var book = new SpellbookViewModel();
+			book.clear();
+			book.spellbook().length.should.equal(0);
+			book.addSpell();
+			book.spellbook().length.should.equal(1);
+			book.removeSpell(book.spellbook().pop());
+			book.spellbook().length.should.equal(0);
+
+			CharacterManager.activeCharacter = c;
+		});
+	});
+
+	describe('Clear', function() {
+		it('should clear all the values in the SpellbookViewModel', function() {
+			var book = new SpellbookViewModel();
+			var spell = [new Spell()];
+			book.spellbook(spell);
+			book.spellbook().should.equal(spell);
+			book.clear();
+			book.spellbook().length.should.equal(0);
+		});
+	});
+
+	describe('Sort By', function() {
+		it('should sort the list of spells by given criteria', function() {
+			var book = new SpellbookViewModel();
+			book.sortBy('spellName');
+			book.sort().should.equal(book.sorts['spellName desc']);
+			book.sortBy('spellName');
+			book.sort().should.equal(book.sorts['spellName asc']);
+			book.sortBy('spellLevel');
+			book.sort().should.equal(book.sorts['spellLevel asc']);
+			book.sortBy('spellLevel');
+			book.sort().should.equal(book.sorts['spellLevel desc']);
+		});
+	});
+
+	describe('Sort Arrow', function() {
+		it('should sort the list of skills by given criteria', function() {
+			var book = new SpellbookViewModel();
+			book.sortBy('spellName');
+			book.sort().should.equal(book.sorts['spellName desc']);
+			book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-down');
+			book.sortArrow('spellLevel').should.equal('');
+			book.sortBy('spellName');
+			book.sort().should.equal(book.sorts['spellName asc']);
+			book.sortArrow('spellName').should.equal('glyphicon glyphicon-arrow-up');
+			book.sortArrow('spellLevel').should.equal('');
+			//Numeric sort
+			book.sortBy('spellLevel');
+			book.sort().should.equal(book.sorts['spellLevel asc']);
+			book.sortArrow('spellName').should.equal('');
+			book.sortArrow('spellLevel').should.equal('glyphicon glyphicon-arrow-up');
+			book.sortBy('spellLevel');
+			book.sort().should.equal(book.sorts['spellLevel desc']);
+			book.sortArrow('spellName').should.equal('');
+			book.sortArrow('spellLevel').should.equal('glyphicon glyphicon-arrow-down');
+		});
+	});
 });

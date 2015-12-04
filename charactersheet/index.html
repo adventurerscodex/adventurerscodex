@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script type="text/javascript">
+      //Check immediately. Skip loading page if necessary.
+      "use strict";
+      var loc = '';
+      if (localStorage.Character === undefined || localStorage.Character.length < 1) {
+        loc = '/characters';
+      } else {
+        loc = '/charactersheet';
+      }
+      window.location = loc;
+    </script>
+ </head>
+ <body>
+ </body>
+</html>

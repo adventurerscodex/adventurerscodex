@@ -6,10 +6,10 @@
     'specialAbilities': 'darkvision'
   };
 
-  describe('FeatsProfViewModel', function() {
+  describe('FeatsProf', function() {
     describe('Clear', function() {
       it('should clear all the values in it', function() {
-        var profFeats = new FeatsProfViewModel();
+        var profFeats = new FeatsProf();
         profFeats.feats(values.feats);
         profFeats.feats().should.equal(values.feats);
         profFeats.clear();
@@ -19,7 +19,7 @@
 
   describe('Import', function() {
     it('should import an object with all the info supplied.', function() {
-      var profFeats = new FeatsProfViewModel();
+      var profFeats = new FeatsProf();
       profFeats.importValues(values);
       profFeats.feats().should.equal(values.feats);
       profFeats.proficiencies().should.equal(values.proficiencies);
@@ -29,7 +29,7 @@
 
   describe('Export', function() {
     it('should yield an object with all the info supplied.', function() {
-      var profFeats = new FeatsProfViewModel();
+      var profFeats = new FeatsProf();
       profFeats.feats(values.feats);
       profFeats.proficiencies(values.proficiencies);
       profFeats.proficiencies(values.specialAbilities);
