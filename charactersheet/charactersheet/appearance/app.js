@@ -5,9 +5,7 @@ function AppearanceViewModel() {
 
 	self.appearance = new CharacterAppearance();
 	
-	self.init = function() {
-		//Do something.
-	};
+	self.init = function() {};
 	
 	self.load = function() {
 		var key = CharacterManager.activeCharacter().key();
