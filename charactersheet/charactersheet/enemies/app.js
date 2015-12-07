@@ -8,15 +8,20 @@ function EnemiesViewModel() {
 		self.enemies([]);
 	};
 
-	self.init = function() {
-	
-	};
+	self.init = function() {};
 	
 	self.load = function() {
+		var key = CharacterManager.activeCharacter().key();
+		self.enemies(NPC.findAllBy(key).map(function(e, i, _) {
+			e.load();
+			return e;
+		}));
 	};
 	
 	self.unload = function() {
-	
+		self.enemies().forEach(function(e, i, _) {
+			e.save();
+		});
 	};
 
 	//UI Methods
@@ -27,7 +32,7 @@ function EnemiesViewModel() {
 	});
 	
 	self.addEnemyButton = function() {
-		self.addEnemy();
+		self.addEnemy(self.selectedEnemy());
 	};
 	
 	self.removeEnemyButton = function(enemy) {
@@ -48,8 +53,9 @@ function EnemiesViewModel() {
 	
 	//Public Methods
 	
-	self.addEnemy = function() {
-		self.enemies.push(self.selectedEnemy());
+	self.addEnemy = function(enemy) {
+		enemy.characterId(CharacterManager.activeCharacter().key());
+		self.enemies.push(enemy);
 	};
 	
 	self.newEnemy = function() {
