@@ -36,15 +36,15 @@
       </thead>
       <tbody data-bind='foreach: filteredAndSortedEnemies'>
         <tr style="cursor:pointer;">
-          <td data-bind="text: profile().characterName, click: $parent.editEnemyButton"
+          <td data-bind="text: profile.characterName, click: $parent.editEnemyButton"
                href="#"
                data-toggle="modal"
                data-target="#viewEnemy"></td>
-          <td data-bind="text: profile().race, click: $parent.editEnemyButton"
+          <td data-bind="text: profile.race, click: $parent.editEnemyButton"
                href="#"
                data-toggle="modal"
                data-target="#viewEnemy"></td>
-          <td data-bind="with: health(),click: $parent.editEnemyButton"
+          <td data-bind="with: health, click: $parent.editEnemyButton"
                href="#"
                >
             <div class="row">
@@ -151,7 +151,7 @@
 
 <script id="enemiesModalTemplate" type="text/html">
   <div class="form-group"> 
-    <div class="container-fluid" data-bind="with: profile()">
+    <div class="container-fluid" data-bind="with: profile">
       <!-- Names -->
       <div class="row">
         <div class="col-sm-12 col-padded">
@@ -181,7 +181,7 @@
       </div>
     </div>
     <hr />
-    <div class="container-fluid" data-bind="with: appearance()">
+    <div class="container-fluid" data-bind="with: appearance">
       <h4>Appearance</h4>
       <div class="row">
         <div class="col-sm-6">
@@ -213,7 +213,7 @@
       </div>
     </div>
     <hr />
-    <div class="container-fluid" data-bind="with: health()">
+    <div class="container-fluid" data-bind="with: health">
       <h4>Health and Stats</h4>
       <div class="row">
         <div class="col-sm-6">
@@ -245,7 +245,7 @@
       </div>
     </div>
     <hr />
-    <div class="container-fluid" data-bind="with: abilityScores()">
+    <div class="container-fluid" data-bind="with: abilityScores">
       <h4>Ability Scores</h4>
       <div class="row">
         <div class="col-md-6 col-padded">
@@ -343,7 +343,7 @@
       </div>
     </div>
     <hr />
-    <div class="container-fluid" data-bind="with: treasure()">
+    <div class="container-fluid" data-bind="with: treasure">
       <h4>Treasure</h4>
       <div class="row row-padded">
         <div class="col-sm-6">
@@ -409,7 +409,7 @@
       </div>
     </div>
     <hr />
-    <div class="container-fluid" data-bind="with: notes()">
+    <div class="container-fluid" data-bind="with: notes">
       <h4>Notes</h4>
       <div class="row row-padded">
         <div class="col-md-12">
