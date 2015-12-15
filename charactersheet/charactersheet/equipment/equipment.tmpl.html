@@ -17,7 +17,7 @@
           <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th>Equip</th>
+          <th>Description</th>
           <th>
            <a data-toggle="modal"
             data-target="#addItem" href="#">
@@ -40,13 +40,10 @@
                   href="#"
                   data-toggle="modal"
                   data-target="#viewItem"></td>
-          <td>
-            <a data-bind="click: $parent.equipItemRowButton"
-              href="#">
-              <span class="glyphicon glyphicon glyphicon-transfer"></span>
-            </a>
-          </td>
-          <td>
+          <td data-bind="text: itemDesc, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>          <td>
             <a data-bind='click: $parent.removeItemButton' href="#">
               <i class="glyphicon glyphicon-remove"></i>
             </a>
@@ -111,7 +108,7 @@
           aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Item Details</h4>
+        <h4 class="modal-title">Details</h4>
       </div>
       <div data-bind="template: { name: 'itemModal', data: $data }"></div>
       <div class="modal-footer">
@@ -141,7 +138,7 @@
     <form class="form-horizontal">
       <div class="form-group">
        <label for="itemName"
-         class="col-sm-2 control-label">Item Name</label>
+         class="col-sm-2 control-label">Name</label>
        <div class="col-sm-10">
          <input type="text"
            class="form-control"
@@ -152,7 +149,7 @@
      </div>
      <div class="form-group">
        <label for="itemWeight"
-         class="col-sm-2 control-label">Weight(lbs)</label>
+         class="col-sm-2 control-label">Weight</label>
        <div class="col-sm-10">
          <input type="number"
                 class="form-control"
@@ -184,26 +181,6 @@
            min="0"
            class="form-control"
            data-bind="value: itemCost" />
-       </div>
-     </div>
-     <div class="form-group">
-       <label
-         class="col-sm-2 control-label">Equippable?</label>
-       <div class="col-sm-10">
-         <input
-           type="checkbox"
-           class="form-control"
-           data-bind="checked: itemIsEquippable" />
-       </div>
-     </div>
-     <div class="form-group" data-bind="visible: itemIsEquippable">
-       <label
-         class="col-sm-2 control-label">Body Part</label>
-       <div class="col-sm-10">
-         <input
-           type="text"
-           class="form-control"
-           data-bind="textInput: itemBodyLocation" />
        </div>
      </div>
      <div class="form-group">
