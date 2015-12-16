@@ -1,9 +1,4 @@
 <div class="panel panel-default">
-<!-- 
-  <div class="panel-heading">
-    <h2 class="panel-title">Features and Traits</h2>
-  </div>
- -->
   <div class="panel-body" data-bind="with: featTraits">
   <div class="panel-body">
     <div class="form-horizontal">
@@ -22,14 +17,14 @@
         </div>
         <div class="row">
           <div class="col-md-6 col-padded">
-          <label for="flawsArea">Flaws:</label>
-            <textarea id="flawsArea" class="form-control" rows="3"
-              data-bind="textInput: flaws"></textarea>
-          </div>
-          <div class="col-md-6 col-padded">
           <label for="bondsArea">Bonds:</label>
             <textarea id="bondsArea" class="form-control" rows="3"
               data-bind="textInput: bonds"></textarea>
+          </div>
+          <div class="col-md-6 col-padded">
+          <label for="flawsArea">Flaws:</label>
+            <textarea id="flawsArea" class="form-control" rows="3"
+              data-bind="textInput: flaws"></textarea>
           </div>
         </div>
       </div>
