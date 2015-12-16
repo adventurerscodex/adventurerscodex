@@ -21,7 +21,7 @@ function SavingThrowsViewModel() {
 			{ name: 'Wisdom', proficency: false, modifier: 0 },
 			{ name: 'Charisma', proficency: false, modifier: 0 }
 		];
-		return $.map(savingThrows, function(e, _) {
+		return savingThrows.map(function(e,i, _) {
 			var savingThrow = new SavingThrows();
 			e.characterId = CharacterManager.activeCharacter().key();
 			savingThrow.importValues(e);
