@@ -16,32 +16,32 @@ describe('Ability Scores', function() {
 			scores.str(abilities_fixture.str);
 			scores.str().should.equal(abilities_fixture.str);
 			scores.clear();
-			scores.str().should.equal(18);
+			scores.str().should.equal('');
 
 			scores.dex(abilities_fixture.dex);
 			scores.dex().should.equal(abilities_fixture.dex);
 			scores.clear();
-			scores.dex().should.equal(18);
+			scores.dex().should.equal('');
 
 			scores.con(abilities_fixture.con);
 			scores.con().should.equal(abilities_fixture.con);
 			scores.clear();
-			scores.con().should.equal(18);
+			scores.con().should.equal('');
 
 			scores.int(abilities_fixture.int);
 			scores.int().should.equal(abilities_fixture.int);
 			scores.clear();
-			scores.int().should.equal(18);
+			scores.int().should.equal('');
 
 			scores.wis(abilities_fixture.wis);
 			scores.wis().should.equal(abilities_fixture.wis);
 			scores.clear();
-			scores.wis().should.equal(18);
+			scores.wis().should.equal('');
 
 			scores.cha(abilities_fixture.cha);
 			scores.cha().should.equal(abilities_fixture.cha);
 			scores.clear();
-			scores.cha().should.equal(18);
+			scores.cha().should.equal('');
 		});
 	});
 
@@ -77,6 +77,15 @@ describe('Ability Scores', function() {
 		});
 	});
 
+	describe('isNumeric', function() {
+		it('should test if modifier is numeric', function() {
+			var actual = isNumeric(15);
+			actual.should.equal(true);
+			var actual = isNumeric('');
+			actual.should.equal(false);
+		});
+	});
+
 	describe('Get Modifier', function() {
 		it('should test if modifier is calculated correctly', function() {
 			var actual = getModifier(15);
@@ -100,25 +109,31 @@ describe('Ability Scores', function() {
 			actual.should.equal('+ 10');
 		});
 	});
-	
+
 	describe('Modifier For', function() {
 		it('given a string score, give the modifier', function() {
 			var abilityScore = new AbilityScores();
-			abilityScore.str().should.equal(18);
+			abilityScore.str().should.equal('');
+			abilityScore.str(18);
 			abilityScore.modifierFor('str').should.equal(4);
-			abilityScore.dex().should.equal(18);
+			abilityScore.dex().should.equal('');
+			abilityScore.dex(18);
 			abilityScore.modifierFor('dex').should.equal(4);
-			abilityScore.con().should.equal(18);
+			abilityScore.con().should.equal('');
+			abilityScore.con(18);
 			abilityScore.modifierFor('con').should.equal(4);
-			abilityScore.int().should.equal(18);
+			abilityScore.int().should.equal('');
+			abilityScore.int(18);
 			abilityScore.modifierFor('int').should.equal(4);
-			abilityScore.wis().should.equal(18);
+			abilityScore.wis().should.equal('');
+			abilityScore.wis(18);
 			abilityScore.modifierFor('wis').should.equal(4);
-			abilityScore.cha().should.equal(18);
+			abilityScore.cha().should.equal('');
+			abilityScore.cha(18);
 			abilityScore.modifierFor('cha').should.equal(4);
 		});
 	});
-	
+
 	describe('Save', function() {
 		it('should save the object and send a signal', function() {
 			var abilityScore = new AbilityScores();
@@ -128,23 +143,23 @@ describe('Ability Scores', function() {
 			abilityScore.ps.save = function() { saved = true; }
 			sent.should.equal(false);
 			saved.should.equal(false);
-			
+
 			abilityScore.save();
 			sent.should.equal(true);
 			saved.should.equal(true);
 		});
 	});
-	
+
 	describe('Find All', function() {
 		it('should return all entries from the db.', function() {
 			var key = '1234';
 			var _findAll = PersistenceService.findAll;
-		
+
 			PersistenceService.findAll = function(_) { return [new AbilityScores(), new AbilityScores()]; };
 			var r = AbilityScores.findBy(key);
 			r.length.should.equal(0);
-			
-			
+
+
 			var results = [new AbilityScores(), new AbilityScores()].map(function(e, i, _) {
 				e.characterId(key);
 				return e;
@@ -152,8 +167,8 @@ describe('Ability Scores', function() {
 			PersistenceService.findAll = function(_) { return results; };
 			var r = AbilityScores.findBy(key);
 			r.length.should.equal(2);
-			
+
 			PersistenceService.findAll = _findAll;
 		});
-	});	
+	});
 });
