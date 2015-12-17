@@ -77,6 +77,15 @@ describe('Ability Scores', function() {
 		});
 	});
 
+	describe('isNumeric', function() {
+		it('should test if modifier is numeric', function() {
+			var actual = isNumeric(15);
+			actual.should.equal(true);
+			var actual = isNumeric('');
+			actual.should.equal(false);
+		});
+	});
+
 	describe('Get Modifier', function() {
 		it('should test if modifier is calculated correctly', function() {
 			var actual = getModifier(15);
