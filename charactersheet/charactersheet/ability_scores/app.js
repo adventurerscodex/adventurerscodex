@@ -14,7 +14,7 @@ var getModifier = function(value){
 
 var getStrModifier = function(modifier){
   if (isNumeric(modifier) === false) {
-    return modifier
+    return ''
   }
   var modifier = getModifier(modifier);
   if (modifier >= 0){
