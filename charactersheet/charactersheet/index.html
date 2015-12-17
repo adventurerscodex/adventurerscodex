@@ -34,7 +34,7 @@
 <!--/.nav-collapse -->
 </div>
 </nav> 
-<div id='content' class='container-fluid'>
+<div id='content' class='container-fluid' data-bind="visible: ready">
 	<ul class="nav nav-tabs">
 		<li role="presentation" data-bind="click: activateCharacterTab, css: characterTabStatus"><a href="#character" aria-controls="character" role="tab" data-toggle="tab">Character Sheet</a></li>
 		<li role="presentation" data-bind="click: activateDMTab, css: dMTabStatus"><a href="#dm" aria-controls="dm" role="tab" data-toggle="tab">Game Sheet</a></li>
@@ -224,17 +224,17 @@
 	  
 	  window.viewModel = new RootViewModel();
 	  var viewModelEnd = new Date().getTime();
+
+	  ko.applyBindings(window.viewModel, $('#html')[0]);
+	  var docEnd = new Date().getTime();
 	  
     init(window.viewModel);
 	  var initEnd = new Date().getTime();
 
-	  ko.applyBindings(window.viewModel, $('#html')[0]);
-	  var docEnd = new Date().getTime();
-
     console.log('Profile\nTotal: ' + (docEnd - docStart)
       + '\nMake ViewModel: ' + (viewModelEnd - docStart)
-      + '\nInit ViewModel: ' + (initEnd - viewModelEnd) 
-      + '\nBindings Applied: ' + (docEnd - initEnd));
+      + '\nBindings Applied: ' + (docEnd - viewModelEnd)
+      + '\nInit ViewModel: ' + (initEnd - docEnd));
     //Setup automatic saving.
     window.onbeforeunload = window.viewModel.unload;
     //window.onblur = window.viewModel.unload;
