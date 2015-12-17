@@ -10,7 +10,13 @@ var players;
  */
 function RootViewModel() {
 	var self = this;
-		
+	
+	/**
+	 * Once the app is ready to be displayed and all data has been loaded,
+	 * and the init process has finished.
+ 	 */
+	self.ready = ko.observable(false);
+	
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
 	
@@ -150,6 +156,7 @@ function RootViewModel() {
  		}
  		self.partyTabViewModel().load();
  		self.settingsTabViewModel().load();
+ 		self.ready(true);
 	};
 
 	self.unload = function() { 		
