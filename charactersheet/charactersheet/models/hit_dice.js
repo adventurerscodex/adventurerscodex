@@ -37,7 +37,7 @@ function HitDice() {
 		self.hitDiceUsed(!self.hitDiceUsed())
 	};
 	
-	self.hitDiceIcon = ko.computed(function() {
+	self.hitDiceIcon = ko.pureComputed(function() {
 		var css = 'heart-full';
 		if (self.hitDiceUsed()) {
 			css = 'heart-empty';

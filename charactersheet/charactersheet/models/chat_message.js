@@ -11,7 +11,7 @@ function ChatMessage() {
 	self.fromId = ko.observable('');
 	self.text = ko.observable('');
 	
-	self.message = ko.computed(function () {
+	self.message = ko.pureComputed(function () {
 		var message = '';
 		if (self.from().trim() !== '') {
 			message += self.from() + ': ';

@@ -10,19 +10,19 @@ function Health() {
 	self.tempHitpoints = ko.observable(0);
 	self.damage = ko.observable(0);
 		
-	self.hitpoints = ko.computed(function() {
+	self.hitpoints = ko.pureComputed(function() {
 		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
 	}, self);
 	
-	self.totalHitpoints = ko.computed(function() {
+	self.totalHitpoints = ko.pureComputed(function() {
 		return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints()));
 	}, self);
 	
-	self.tempHitpointsRemaining = ko.computed(function() {
+	self.tempHitpointsRemaining = ko.pureComputed(function() {
 		return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
 	}, self);
 		
-	self.regularHitpointsRemaining = ko.computed(function() {
+	self.regularHitpointsRemaining = ko.pureComputed(function() {
 		if (self.tempHitpointsRemaining() > 0) {
 			return parseInt(self.maxHitpoints())
 		}
@@ -31,33 +31,33 @@ function Health() {
 
 	//Progress bar methods.
 		
-	self.isKnockedOut =  ko.computed(function() {
+	self.isKnockedOut =  ko.pureComputed(function() {
 		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= 0: false; 
 	}, self);
 		
-	self.isDangerous = ko.computed(function() {
+	self.isDangerous = ko.pureComputed(function() {
 		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD : false; 
 	}, self);
 	
-	self.isWarning = ko.computed(function() {
+	self.isWarning = ko.pureComputed(function() {
 		return true ? parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD : false; 
 	}, self);
 	
-	self.progressType = ko.computed(function() {
+	self.progressType = ko.pureComputed(function() {
 		var type = 'progress-bar-success';
 		if (self.isWarning()) type = 'progress-bar-warning';
 		if (self.isDangerous()) type = 'progress-bar-danger';
 		return type;
 	}, self);
 	
-	self.regularProgressWidth = ko.computed(function() {
+	self.regularProgressWidth = ko.pureComputed(function() {
 		if (self.isKnockedOut()) {
 			return '100%';
 		}
 		return (parseInt(self.regularHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
 	}, self);
 
-	self.tempProgressWidth = ko.computed(function() {
+	self.tempProgressWidth = ko.pureComputed(function() {
 		if (self.tempHitpointsRemaining() < 0) {
 			return '0%';
 		}
@@ -65,7 +65,7 @@ function Health() {
 	}, self);
 	
 	
-	self.progressLabel = ko.computed(function() {
+	self.progressLabel = ko.pureComputed(function() {
 		if (self.isKnockedOut()) {
 			return 'K.O.';
 		} 

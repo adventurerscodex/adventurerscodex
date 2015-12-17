@@ -201,7 +201,7 @@ PersistenceService._findAll = function(model) {
 	var objs = PersistenceService._findAllObjs(model.name);
 	var models = [];
 	if (PersistenceService.customImport) {
-		for (var i in objs) {
+		for (var i=0; i<objs.length; i++) {
 			var o = new model();
 			try {
 				o.importValues(objs[i].data);
@@ -218,7 +218,7 @@ PersistenceService._findAll = function(model) {
 		}
 	} else {
 		models = objs;
-	}
+	}	
 	return models;
 };
 

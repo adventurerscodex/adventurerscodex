@@ -10,7 +10,7 @@ function Campaign() {
 
 	//UI Methods
 	
-	self.campaignSummary = ko.computed(function() {
+	self.campaignSummary = ko.pureComputed(function() {
 		return self.campaignName() + ' by ' + self.dmName();
 	});
 	
