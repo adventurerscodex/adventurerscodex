@@ -31,7 +31,7 @@ function Skill() {
 		return parseInt(score);
 	};
 
-	self.bonus = ko.computed(function() {
+	self.bonus = ko.pureComputed(function() {
 		var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
 		if (self.proficiency()) {
 			bonus += self.proficiencyScore() + self.abilityScoreModifier();
@@ -41,7 +41,7 @@ function Skill() {
 		return bonus;
 	});
 
-	self.bonusLabel = ko.computed(function() {
+	self.bonusLabel = ko.pureComputed(function() {
 		var str = self.bonus() >= 0 ? 
 			'+' + self.bonus() : 
 			String(self.bonus());
@@ -50,7 +50,7 @@ function Skill() {
 		return str;
 	});
 	
-	self.proficiencyLabel = ko.computed(function() {
+	self.proficiencyLabel = ko.pureComputed(function() {
 		if (self.proficiency() === true) {
 			return 'glyphicon glyphicon-ok';
 		} 

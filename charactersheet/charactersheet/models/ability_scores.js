@@ -7,32 +7,32 @@ function AbilityScores() {
     self.characterId = ko.observable(null);
 
     self.str =  ko.observable(18);
-    self.strModifier = ko.computed(function(){
+    self.strModifier = ko.pureComputed(function(){
       return getStrModifier(self.str());
     });
 
     self.dex =  ko.observable(18);
-    self.dexModifier = ko.computed(function(){
+    self.dexModifier = ko.pureComputed(function(){
       return getStrModifier(self.dex());
     });
 
     self.con =  ko.observable(18);
-    self.conModifier = ko.computed(function(){
+    self.conModifier = ko.pureComputed(function(){
       return getStrModifier(self.con());
     });
 
     self.int =  ko.observable(18);
-    self.intModifier = ko.computed(function(){
+    self.intModifier = ko.pureComputed(function(){
       return getStrModifier(self.int());
     });
 
     self.wis =  ko.observable(18);
-    self.wisModifier = ko.computed(function(){
+    self.wisModifier = ko.pureComputed(function(){
       return getStrModifier(self.wis());
     });
 
     self.cha =  ko.observable(18);
-    self.chaModifier = ko.computed(function(){
+    self.chaModifier = ko.pureComputed(function(){
       return getStrModifier(self.cha());
     });
         

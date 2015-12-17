@@ -9,7 +9,7 @@ function Character() {
 	self.isDefault = ko.observable(false);
 	self.isActive = ko.observable(false);
 	
-	self.url = ko.computed(function() {
+	self.url = ko.pureComputed(function() {
 		return '/charactersheet/?key=' + self.key() 
 			+ '&playerType=' + self.playerType().key;
 	});
@@ -38,7 +38,7 @@ function Character() {
 		self.ps.delete();
 	};
 	
-	self.playerSummary = ko.computed(function() {
+	self.playerSummary = ko.pureComputed(function() {
 		var summ = '';
 		try {
 			summ = Profile.findBy(self.key())[0].characterSummary();
@@ -46,7 +46,7 @@ function Character() {
 		return summ;
 	});
 	
-	self.playerAuthor = ko.computed(function() {
+	self.playerAuthor = ko.pureComputed(function() {
 		var summ = '';
 		try {
 			summ = Profile.findBy(self.key())[0].playerName();
@@ -54,7 +54,7 @@ function Character() {
 		return summ;
 	});
 	
-	self.playerTitle = ko.computed(function() {
+	self.playerTitle = ko.pureComputed(function() {
 		var summ = '';
 		try {
 			summ = Profile.findBy(self.key())[0].characterName();

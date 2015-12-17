@@ -29,19 +29,19 @@ function Slot() {
 	self.maxSpellSlots = ko.observable(1);
 	self.usedSpellSlots = ko.observable(0);
 	
-	self.color = ko.computed(function() {
+	self.color = ko.pureComputed(function() {
 		return self.slotColors[self.level()-1];
 	});
 
-	self.spellSlots = ko.computed(function() {
+	self.spellSlots = ko.pureComputed(function() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots()));
 	}, self);
 
-	self.progressLabel = ko.computed(function() {
+	self.progressLabel = ko.pureComputed(function() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots())) + '/' + parseInt(self.maxSpellSlots());
 	});
 
-	self.progressWidth = ko.computed(function() {
+	self.progressWidth = ko.pureComputed(function() {
 		return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots())) / parseInt(self.maxSpellSlots());
 	});
 
