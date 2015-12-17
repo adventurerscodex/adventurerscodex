@@ -3,41 +3,41 @@
 function AbilityScores() {
     var self = this;
     self.ps = PersistenceService.register(AbilityScores, self);
-    
+
     self.characterId = ko.observable(null);
 
-    self.str =  ko.observable(18);
+    self.str =  ko.observable('');
     self.strModifier = ko.pureComputed(function(){
       return getStrModifier(self.str());
     });
 
-    self.dex =  ko.observable(18);
+    self.dex =  ko.observable('');
     self.dexModifier = ko.pureComputed(function(){
       return getStrModifier(self.dex());
     });
 
-    self.con =  ko.observable(18);
+    self.con =  ko.observable('');
     self.conModifier = ko.pureComputed(function(){
       return getStrModifier(self.con());
     });
 
-    self.int =  ko.observable(18);
+    self.int =  ko.observable('');
     self.intModifier = ko.pureComputed(function(){
       return getStrModifier(self.int());
     });
 
-    self.wis =  ko.observable(18);
+    self.wis =  ko.observable('');
     self.wisModifier = ko.pureComputed(function(){
       return getStrModifier(self.wis());
     });
 
-    self.cha =  ko.observable(18);
+    self.cha =  ko.observable('');
     self.chaModifier = ko.pureComputed(function(){
       return getStrModifier(self.cha());
     });
-        
+
     //Public Methods
-    
+
     self.modifierFor = function(score) {
 		var val = 0;
 		switch(score.toLowerCase()) {
@@ -64,16 +64,16 @@ function AbilityScores() {
     };
 
     self.clear = function() {
-        self.str(18);
-        self.dex(18);
-        self.con(18);
-        self.int(18);
-        self.wis(18);
-        self.cha(18);
+        self.str('');
+        self.dex('');
+        self.con('');
+        self.int('');
+        self.wis('');
+        self.cha('');
     };
 
-    self.importValues = function(values) { 
-    	self.characterId(values.characterId);   	
+    self.importValues = function(values) {
+    	self.characterId(values.characterId);
         self.str(values.str);
         self.dex(values.dex);
         self.con(values.con);
@@ -93,7 +93,7 @@ function AbilityScores() {
             cha: self.cha(),
         };
     };
-    
+
     self.save = function() {
     	self.ps.save();
     	AbilityScoresSignaler.changed.dispatch();
