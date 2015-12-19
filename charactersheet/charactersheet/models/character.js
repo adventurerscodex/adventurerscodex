@@ -63,7 +63,7 @@ function Character() {
 	});
 	
 	self.saveToFile = function() {
-    	var string = JSON.stringify(self.exportValues());
+    	var string = JSON.stringify(Character.exportChracter(self.key()));
     	var filename = self.playerTitle();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);
@@ -80,3 +80,37 @@ Character.findBy = function(characterId) {
 		if (e.key() === characterId) return e;
 	});
 };
+
+Character.exportChracter = function(characterId) {
+	var data = {};
+	PersistenceService.listAll().forEach(function(e1, i1, _1) {
+		var items = PersistenceService.findAll(window[e1]).filter(function(e2, i2, _2) {
+			var res = false;
+			try {
+				res = e2.characterId() === characterId;
+			} catch(err) {
+				try {
+					res = e2.key() === characterId;				
+				} catch(err) {}
+			}			
+			return res;
+		});
+		data[e1] = items.map(function(e, i, _) {
+			return e.exportValues();
+		});
+	});	
+	return data;
+}
+
+Character.importCharacter = function(data) {
+	var tableNames = Object.keys(data);
+	tableNames.forEach(function(e, i, _) {
+		var model = window[e];
+		data[e].forEach(function(e1, i1, _1) {
+			var inst = new model();
+			inst.importValues(e1);
+			PersistenceService.save(model, inst);
+		});
+	});
+};
+

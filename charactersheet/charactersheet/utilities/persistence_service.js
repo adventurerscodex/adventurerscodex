@@ -5,7 +5,8 @@
 var PersistenceService = {
 	customImport: true,
 	logErrors: false,
-	enableCompression: false
+	enableCompression: false,
+	master: '__master__'
 };
 	
 /**
@@ -77,6 +78,26 @@ PersistenceService.save = function(model, inst) {
 PersistenceService.delete = function(model, id) {
 	PersistenceService._delete(model.name, id);
 };
+
+PersistenceService.drop = function(table) {
+	PersistenceService._findAllObjs(table).forEach(function(e, i, _) {
+		PersistenceService._delete(table, e.id)
+	});
+};
+
+/**
+ * List all of the existing tables.
+ */
+PersistenceService.listAll = function() {
+	return PersistenceService._listAll();
+};
+
+PersistenceService.dropAll = function() {
+	PersistenceService.listAll().forEach(function(table, i1, _1) {
+		PersistenceService.drop(table);
+	});
+};
+
 
 /**
  * Register a given model as persisting. Typical usage of this class
@@ -270,6 +291,17 @@ PersistenceService._save = function(key, inst) {
 			throw msg;
 		}
 	}
+	//Update the master table.
+	var tables;
+	try {
+		tables = JSON.parse(localStorage[PersistenceService.master])
+	} catch(err) {
+		tables = [];
+	}
+	if (tables.indexOf(key) === -1) {
+		tables.push(key);
+		localStorage[PersistenceService.master] = JSON.stringify(tables);
+	}
 };
 
 PersistenceService._delete = function(key, id) {
@@ -286,3 +318,7 @@ PersistenceService._delete = function(key, id) {
 	}
 	localStorage[key] = JSON.stringify(table);
 };
+
+PersistenceService._listAll = function() {
+	return JSON.parse(localStorage[PersistenceService.master]);
+}

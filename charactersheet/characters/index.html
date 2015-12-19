@@ -242,7 +242,7 @@
     var messenger = new Messenger();
     var players = new Players();
     $(function(){ 
-      var character = new CharacterManagerViewModel();
+      var character = new CharactersViewModel();
       character.init();
       character.load();
       window.unload = character.unload;
