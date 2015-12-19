@@ -1,6 +1,10 @@
 "use strict";
 
-function CharacterManagerViewModel() {
+var CharactersSignaler = {
+	changed: new signals.Signal(),
+};
+
+function CharactersViewModel() {
 	var self = this;
 	
 	self.totalLocalStorage = 5; //MB
@@ -13,6 +17,9 @@ function CharacterManagerViewModel() {
 	self.defaultCharacterKey = ko.observable(null);
 	
 	self.init = function() {
+		CharactersSignaler.changed.add(function() {
+			self.load();
+		});
 	};
 	
 	self.load = function() {
@@ -65,6 +72,7 @@ function CharacterManagerViewModel() {
 		}
 		character.isActive(true);
 		character.save();
+		CharactersSignaler.changed.dispatch();
 		window.location = character.url();
 	};
 	
@@ -79,6 +87,7 @@ function CharacterManagerViewModel() {
 		}
 		character.isActive(true);
 		character.save();
+		CharactersSignaler.changed.dispatch();
 		window.location = character.url();
 	};
 	
@@ -96,6 +105,7 @@ function CharacterManagerViewModel() {
 		//Remove the character.
 		character.delete();
 		self.characters.remove(character);
+		CharactersSignaler.changed.dispatch();
 	};
 		
 	self.localStoragePercent = ko.computed(function() {
@@ -111,23 +121,7 @@ function CharacterManagerViewModel() {
 		var values = JSON.parse(atob(self.fileReader.result.substring(
 			length, self.fileReader.result.length)));
 		
-		//Set the default key to the new user's key. 
-		var key = uuid.v4(),
-			oldKey = self.defaultCharacterKey();
-		self.defaultCharacterKey(key);
-		
-		//Create a new Character.
-		var v = new RootViewModel();
-		v.importValues(values);
-		v.save();
-				
-		//Put everything back.
-		self.defaultCharacterKey(oldKey);
-		self.characterKeys.push(key);
-
-		//If there's no other characters, make this one default.
-		if (self.characterKeys().length === 1) {
-			self.defaultCharacterKey(key);
-		}
+		Character.importCharacter(values);
+		CharactersSignaler.changed.dispatch();
 	}; 
 };
