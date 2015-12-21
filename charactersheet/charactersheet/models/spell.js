@@ -31,10 +31,10 @@ function Spell() {
         'Concentration, 24 hours', 'Special',
         'Until dispelled']);
     self.spellComponentsOptions = ko.observableArray([
-        'S', 'V', 'V, S', 'V, S, M']);
+        'S', 'V', 'V, S', 'S, M', 'V, S, M']);
     self.spellRangeOptions = ko.observableArray([
         'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
-        '90 ft', '120 ft', '300 ft', '500 ft', '1 mile']);
+        '90 ft', '100 ft', '120 ft', '300 ft', '500 ft', '1 mile']);
 
     self.clear = function() {
         self.spellName('');

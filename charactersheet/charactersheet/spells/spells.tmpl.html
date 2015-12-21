@@ -140,7 +140,7 @@
               </div>
               <div class="form-group">
                 <label for="spellDmgSave"
-                       class="col-sm-2 control-label">Dmg</label>
+                       class="col-sm-2 control-label">Damage</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
@@ -262,27 +262,23 @@
                 <label for="spellSchool"
                        class="col-sm-2 control-label">School</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellSchool"
-                           placeholder="Evocation"
-                           data-bind="value: spellSchool">
+                  <select class="form-control"
+                          data-bind="options: spellSchoolOptions,
+                                     value: spellSchool"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellType"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellDmg"
-                           placeholder="Automatic"
-                           data-bind="value: spellType">
+                    <select class="form-control"
+                          data-bind="options: spellTypeOptions,
+                                     value: spellType"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellDmg"
-                       class="col-sm-2 control-label">Dmg</label>
+                       class="col-sm-2 control-label">Damage</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
@@ -295,44 +291,36 @@
                 <label for="spellCastingTime"
                        class="col-sm-2 control-label">Cast Time</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellCastingTime"
-                           placeholder="1 action"
-                           data-bind="value: spellCastingTime">
+                    <select class="form-control"
+                          data-bind="options: spellCastingTimeOptions,
+                                     value: spellCastingTime"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellRange"
                        class="col-sm-2 control-label">Range</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellRange"
-                           placeholder="120 Feet"
-                           data-bind="value: spellRange">
+                  <select class="form-control"        
+                          data-bind="options: spellRangeOptions,
+                                     value: spellRange"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellComponents"
                        class="col-sm-2 control-label">Components</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellComponents"
-                           placeholder="V, S"
-                           data-bind="value: spellComponents">
+                  <select class="form-control"
+                          data-bind="options: spellComponentsOptions,
+                                     value: spellComponents"></select>
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellDuration"
                        class="col-sm-2 control-label">Duration</label>
                   <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellDuration"
-                           placeholder="Instantaneous"
-                           data-bind="value: spellDuration">
+                    <select class="form-control"
+                          data-bind="options: spellDurationOptions,
+                                     value: spellDuration"></select>
                   </div>
               </div>
               <div class="form-group">
