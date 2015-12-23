@@ -41,7 +41,11 @@ function Character() {
 	self.playerSummary = ko.pureComputed(function() {
 		var summ = '';
 		try {
-			summ = Profile.findBy(self.key())[0].characterSummary();
+			if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+    			summ = Profile.findBy(self.key())[0].characterSummary();
+            } else {
+    			summ = Campaign.findBy(self.key())[0].campaignSummary();
+            }
 		} catch(err) {};
 		return summ;
 	});
@@ -49,7 +53,11 @@ function Character() {
 	self.playerAuthor = ko.pureComputed(function() {
 		var summ = '';
 		try {
-			summ = Profile.findBy(self.key())[0].playerName();
+			if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+			    summ = Profile.findBy(self.key())[0].playerName();
+            } else {
+			    summ = Campaign.findBy(self.key())[0].dmName();
+            }
 		} catch(err) {};
 		return summ;
 	});
@@ -57,7 +65,11 @@ function Character() {
 	self.playerTitle = ko.pureComputed(function() {
 		var summ = '';
 		try {
-			summ = Profile.findBy(self.key())[0].characterName();
+			if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+			    summ = Profile.findBy(self.key())[0].characterName();
+            } else {
+			    summ = Campaign.findBy(self.key())[0].campaignName();
+            }
 		} catch(err) {};
 		return summ;
 	});
