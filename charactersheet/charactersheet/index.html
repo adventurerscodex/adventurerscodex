@@ -14,13 +14,13 @@
     if (localStorage.Character === undefined || localStorage.Character.length < 1) {
       window.location = '/characters'
     }
-    </script> 
+    </script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top"> 
+<nav class="navbar navbar-default navbar-fixed-top">
 <div class="container-fluid">
 	<div class="navbar-header">
-		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a href='/' class="navbar-brand">Adventurer's Codex <sup class="beta">Beta!</sup> </a> 
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a href='/' class="navbar-brand">Adventurer's Codex <sup class="beta">Beta!</sup> </a>
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
@@ -28,12 +28,13 @@
 			<li><a href="/about">About</a></li>
 			<li><a href="/help">Help</a></li>
 			<li><a href="//blog.adventurerscodex.com">Blog</a></li>
+			<li><a href="https://tinyletter.com/adventurerscodex">Newsletter</a></li>
 		</ul>
 	</div>
 
 <!--/.nav-collapse -->
 </div>
-</nav> 
+</nav>
 <div id='content' class='container-fluid' data-bind="visible: ready">
 	<ul class="nav nav-tabs">
 		<li role="presentation" data-bind="click: activateCharacterTab, css: characterTabStatus"><a href="#character" aria-controls="character" role="tab" data-toggle="tab">Character Sheet</a></li>
@@ -44,7 +45,7 @@
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
 
-<!-- 
+<!--
         <img src="/images/logo-nav.png" height="35" style="margin-top:-12px;" />&nbsp;<h3 style="display:inline;">Profile &amp; Abilities</h3>
  -->
 			<div class="row">
@@ -103,7 +104,7 @@
 					</div>
 				</div>
 				<div class="col-md-8 col-sm-6 col-padded">
-<!-- 
+<!--
 					<div id="equippedItems" data-bind="template: { name: 'equipped_items.tmpl', templateUrl: 'equipped_items', data: equippedItemsViewModel }">
 					</div>
  -->
@@ -146,87 +147,87 @@
 		</div>
 <!-- End group Tab -->
 		<div role="tabpanel" class="tab-pane" id="settings" data-bind="with: settingsTabViewModel, css: settingsTabStatus">
-			Settings 
+			Settings
 		</div>
 
 <!-- End settings Tab -->
 	</div>
 </div>
-<script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script> 
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script> 
-<script src="/bower_components/knockout/dist/knockout.js" type="text/javascript"></script> 
-<script src="/bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script> 
-<script src="/bower_components/uri.js/src/URI.min.js" type="text/javascript"></script> 
-<script src="/bower_components/node-uuid/uuid.js" type="text/javascript"></script> 
-<script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script> 
+<script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
+<script src="/bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script>
+<script src="/bower_components/uri.js/src/URI.min.js" type="text/javascript"></script>
+<script src="/bower_components/node-uuid/uuid.js" type="text/javascript"></script>
+<script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script>
 
-<script src="/bin/markdown.min.js"></script> 
-<script src="/bin/socket.io-1.2.0.js"></script> 
+<script src="/bin/markdown.min.js"></script>
+<script src="/bin/socket.io-1.2.0.js"></script>
 <script src="/bin/knockout-file-bind.js" type="text/javascript"></script>
-<script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script> 
-<script src="/bin/knockout.localStorage.js" type="text/javascript"></script> 
-<script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script> 
+<script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
+<script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
+<script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
 <!-- ViewModels -->
-<script src="/characters/app.js" type="text/javascript"></script> 
-<script src="ability_scores/app.js" type="text/javascript"></script> 
-<script src="app.js" type="text/javascript"></script> 
-<script src="appearance/app.js" type="text/javascript"></script> 
-<script src="appearance/app.js" type="text/javascript"></script> 
-<script src="campaign/app.js" type="text/javascript"></script> 
-<script src="chat/app.js" type="text/javascript"></script> 
-<script src="connection_manager/app.js" type="text/javascript"></script> 
-<script src="enemies/app.js" type="text/javascript"></script> 
-<script src="enemies/app.js" type="text/javascript"></script> 
-<script src="equipment/app.js" type="text/javascript"></script> 
-<script src="feat_traits/app.js" type="text/javascript"></script> 
-<script src="feats_prof/app.js" type="text/javascript"></script> 
-<script src="notes/app.js" type="text/javascript"></script> 
-<script src="profile/app.js" type="text/javascript"></script> 
-<script src="saving_throws/app.js" type="text/javascript"></script> 
-<script src="skills/app.js" type="text/javascript"></script> 
-<script src="spell_slots/app.js" type="text/javascript"></script> 
-<script src="spell_stats/app.js" type="text/javascript"></script> 
-<script src="spells/app.js" type="text/javascript"></script> 
-<script src="stats/app.js" type="text/javascript"></script> 
-<script src="treasure/app.js" type="text/javascript"></script> 
+<script src="/characters/app.js" type="text/javascript"></script>
+<script src="ability_scores/app.js" type="text/javascript"></script>
+<script src="app.js" type="text/javascript"></script>
+<script src="appearance/app.js" type="text/javascript"></script>
+<script src="appearance/app.js" type="text/javascript"></script>
+<script src="campaign/app.js" type="text/javascript"></script>
+<script src="chat/app.js" type="text/javascript"></script>
+<script src="connection_manager/app.js" type="text/javascript"></script>
+<script src="enemies/app.js" type="text/javascript"></script>
+<script src="enemies/app.js" type="text/javascript"></script>
+<script src="equipment/app.js" type="text/javascript"></script>
+<script src="feat_traits/app.js" type="text/javascript"></script>
+<script src="feats_prof/app.js" type="text/javascript"></script>
+<script src="notes/app.js" type="text/javascript"></script>
+<script src="profile/app.js" type="text/javascript"></script>
+<script src="saving_throws/app.js" type="text/javascript"></script>
+<script src="skills/app.js" type="text/javascript"></script>
+<script src="spell_slots/app.js" type="text/javascript"></script>
+<script src="spell_stats/app.js" type="text/javascript"></script>
+<script src="spells/app.js" type="text/javascript"></script>
+<script src="stats/app.js" type="text/javascript"></script>
+<script src="treasure/app.js" type="text/javascript"></script>
 <!-- Models -->
-<script src="models/ability_scores.js" type="text/javascript"></script> 
-<script src="models/appearance.js" type="text/javascript"></script> 
-<script src="models/campaign.js" type="text/javascript"></script> 
-<script src="models/character.js" type="text/javascript"></script> 
-<script src="models/chat_message.js" type="text/javascript"></script> 
-<script src="models/connection_manager.js" type="text/javascript"></script> 
-<script src="models/feat_traits.js" type="text/javascript"></script> 
-<script src="models/feats_prof.js" type="text/javascript"></script> 
-<script src="models/health.js" type="text/javascript"></script> 
-<script src="models/hit_dice.js" type="text/javascript"></script> 
-<script src="models/item.js" type="text/javascript"></script> 
-<script src="models/note.js" type="text/javascript"></script> 
-<script src="models/npc.js" type="text/javascript"></script> 
-<script src="models/other_stats.js" type="text/javascript"></script> 
-<script src="models/player_types.js" type="text/javascript"></script> 
-<script src="models/players.js" type="text/javascript"></script> 
-<script src="models/profile.js" type="text/javascript"></script> 
-<script src="models/saving_throws.js" type="text/javascript"></script> 
-<script src="models/skill.js" type="text/javascript"></script> 
-<script src="models/spell_slot.js" type="text/javascript"></script> 
-<script src="models/spell_stats.js" type="text/javascript"></script> 
-<script src="models/spell.js" type="text/javascript"></script> 
-<script src="models/treasure.js" type="text/javascript"></script> 
+<script src="models/ability_scores.js" type="text/javascript"></script>
+<script src="models/appearance.js" type="text/javascript"></script>
+<script src="models/campaign.js" type="text/javascript"></script>
+<script src="models/character.js" type="text/javascript"></script>
+<script src="models/chat_message.js" type="text/javascript"></script>
+<script src="models/connection_manager.js" type="text/javascript"></script>
+<script src="models/feat_traits.js" type="text/javascript"></script>
+<script src="models/feats_prof.js" type="text/javascript"></script>
+<script src="models/health.js" type="text/javascript"></script>
+<script src="models/hit_dice.js" type="text/javascript"></script>
+<script src="models/item.js" type="text/javascript"></script>
+<script src="models/note.js" type="text/javascript"></script>
+<script src="models/npc.js" type="text/javascript"></script>
+<script src="models/other_stats.js" type="text/javascript"></script>
+<script src="models/player_types.js" type="text/javascript"></script>
+<script src="models/players.js" type="text/javascript"></script>
+<script src="models/profile.js" type="text/javascript"></script>
+<script src="models/saving_throws.js" type="text/javascript"></script>
+<script src="models/skill.js" type="text/javascript"></script>
+<script src="models/spell_slot.js" type="text/javascript"></script>
+<script src="models/spell_stats.js" type="text/javascript"></script>
+<script src="models/spell.js" type="text/javascript"></script>
+<script src="models/treasure.js" type="text/javascript"></script>
 <!-- Utilities -->
-<script src="utilities/character_manager.js" type="text/javascript"></script> 
-<script src="utilities/persistence_service.js" type="text/javascript"></script> 
-<script src="utilities/messenger.js" type="text/javascript"></script> 
+<script src="utilities/character_manager.js" type="text/javascript"></script>
+<script src="utilities/persistence_service.js" type="text/javascript"></script>
+<script src="utilities/messenger.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function(){
 	  var docStart = new Date().getTime();
-	  
+
 	  window.viewModel = new RootViewModel();
 	  var viewModelEnd = new Date().getTime();
 
 	  ko.applyBindings(window.viewModel, $('#html')[0]);
 	  var docEnd = new Date().getTime();
-	  
+
     init(window.viewModel);
 	  var initEnd = new Date().getTime();
 
@@ -238,6 +239,6 @@
     window.onbeforeunload = window.viewModel.unload;
     //window.onblur = window.viewModel.unload;
 	});
-	</script> 
+	</script>
 </body>
 </html>

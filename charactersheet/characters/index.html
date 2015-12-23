@@ -28,6 +28,7 @@
           <li><a href="/about">About</a></li>
           <li><a href="/help">Help</a></li>
           <li><a href="//blog.adventurerscodex.com">Blog</a></li>
+          <li><a href="https://tinyletter.com/adventurerscodex">Newsletter</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -175,7 +176,7 @@
 	<script src="/bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script>
 	<script src="/bower_components/uri.js/src/URI.min.js" type="text/javascript"></script>
 	<script src="/bower_components/node-uuid/uuid.js" type="text/javascript"></script>
-  <script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script> 
+  <script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script>
 
 	<script src="/bin/markdown.min.js"></script>
 	<script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
@@ -241,12 +242,12 @@
 	<script type="text/javascript">
     var messenger = new Messenger();
     var players = new Players();
-    $(function(){ 
+    $(function(){
       var character = new CharactersViewModel();
       character.init();
       character.load();
       window.unload = character.unload;
-      ko.applyBindings(character); 
+      ko.applyBindings(character);
     });</script>
  </body>
 </html>
