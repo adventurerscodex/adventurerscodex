@@ -28,6 +28,11 @@ body {
 	height:10px;
 }
 
+.spacer-lg {
+  height:23px;
+  width:23px;
+}
+
 .inline-left {
 	float:left;
 	display:inline;
