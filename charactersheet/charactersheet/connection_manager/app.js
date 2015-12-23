@@ -24,4 +24,11 @@ function ConnectionManagerViewModel() {
  		self.connectionManager.connected(false);
  		self.connectionManager.save();
 	};
+	
+	self.leaveRoomButton = function() {
+	    if (connectionManager.connected) {
+	        connectionManager.leaveRoom();
+	    }
+	};
+	
 };
