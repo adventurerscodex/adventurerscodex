@@ -1,12 +1,12 @@
 # Code of Conduct
 
-Those who contribute to Adventurer's Codex are part of a community intended for learning, and collaboration and has members with different backgrounds and perspectives from all over the greater San Diego area and beyond.
+Those who contribute to Adventurer's Codex are part of a community intended for learning, and collaboration and has members with different backgrounds and perspectives.
 
 Diversity is a huge strength, but it can also lead to communication issues and unhappiness. To that end, we have a few ground rules that we ask people to adhere to. This code applies equally to organizers as well as members.
 
 This isn't an exhaustive list of things that you can't do. Rather, take it in the spirit in which it's intended - a guide to make it easier to enrich all of us and the technical communities in which we participate.
 
-This code of conduct applies to all spaces managed by San Diego Python. This includes IRC, mailing lists, and events. In addition, violations of this code outside these spaces may affect a person's ability to participate within them.
+This code of conduct applies to all spaces managed by Adventurer's Codex. This includes IRC, mailing lists, and events. In addition, violations of this code outside these spaces may affect a person's ability to participate within them.
 
 
 ## Be friendly and patient.
