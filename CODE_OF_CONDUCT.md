@@ -46,3 +46,5 @@ Repeated harassment of others. In general, if someone asks you to stop, then sto
 
 When we disagree, try to understand why. Disagreements, both social and technical, happen all the time and we are no exception. It is important that we resolve disagreements and differing views constructively. Remember that we're different. Different people have different perspectives on issues. Being unable to understand why someone holds a viewpoint doesn't mean that they're wrong. Don't forget that it is human to err and blaming each other doesn't get us anywhere, rather offer to help resolving issues and to help learn from mistakes.
 If you have questions about this code of conduct, don't hesitate to contact the organizers.
+
+This Code of Conduct is adapted from the San Diego Python User Group Code of Conduct.
