@@ -19,6 +19,13 @@ function ConnectionManager() {
 		}
 	};
 	
+	self.leaveRoomButton = function() {
+	    if (messenger.connected) {
+	        messenger.leave(self._mainRoomId);
+            self.clear();
+	    }
+	};
+	
 	self.createRoom = function() {
 		self.roomId(messenger.create());
 		self.connected(true);
