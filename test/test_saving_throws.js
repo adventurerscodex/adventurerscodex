@@ -1,4 +1,4 @@
-describe('Saving Throws', function() {	
+describe('Saving Throws', function() {
 	describe('Bonus Label', function() {
 		it('should yield the modifier value (signed).', function() {
 			var c = CharacterManager.activeCharacter;
@@ -17,22 +17,22 @@ describe('Saving Throws', function() {
 			s.name('Wisdom');
 			s.modifier(4);
 			s.proficiency(true);
-			
+
 			s.modifierLabel().should.equal('+6');
-			
+
 			var s = new SavingThrows();
 			s.name('Arcana');
 			s.modifier(-4);
 			s.proficiency(true);
 
-			s.modifierLabel().should.equal('-2');	
-			
-			OtherStats.findBy = fb;	
+			s.modifierLabel().should.equal('-2');
+
+			OtherStats.findBy = fb;
 
 			CharacterManager.activeCharacter = c;
 		});
 	});
-	
+
 	describe('Ability Score Name', function() {
 		it('should return a 3 letter version of the name', function() {
 			var s = new SavingThrows();
@@ -40,7 +40,7 @@ describe('Saving Throws', function() {
 			s._abilityScore().should.equal('wis')
 		});
 	});
-	
+
 	describe('Proficiency Label', function() {
 		it('should yield the proficiency value (or none).', function() {
 			var c = CharacterManager.activeCharacter;
@@ -62,14 +62,14 @@ describe('Saving Throws', function() {
 			s.proficiency(true);
 
 			s.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
-			
+
 			var s = new SavingThrows(parent);
 			s.name('Wisdom');
 			s.modifier(-4);
 			s.proficiency(false);
 
-			s.proficiencyLabel().should.equal('');		
-			OtherStats.findBy = fb;	
+			s.proficiencyLabel().should.equal('');
+			OtherStats.findBy = fb;
 
 			CharacterManager.activeCharacter = c;
 		});
@@ -99,14 +99,14 @@ describe('Saving Throws', function() {
 			s.proficiency().should.equal(true);
 			s.clear();
 			s.name().should.equal('');
-			s.modifier().should.equal(0);
+			Should.not.exist(s.modifier());
 			s.proficiency().should.equal(false);
-			OtherStats.findBy = fb;	
+			OtherStats.findBy = fb;
 
 			CharacterManager.activeCharacter = c;
 		});
 	});
-	
+
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
 			var c = CharacterManager.activeCharacter;
@@ -134,12 +134,12 @@ describe('Saving Throws', function() {
 			e.name.should.equal(s.name());
 			e.modifier.should.equal(s.modifier());
 			e.proficiency.should.equal(s.proficiency());
-			OtherStats.findBy = fb;	
+			OtherStats.findBy = fb;
 
 			CharacterManager.activeCharacter = c;
 		});
 	});
-	
+
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var c = CharacterManager.activeCharacter;
@@ -161,8 +161,8 @@ describe('Saving Throws', function() {
 			e.name.should.equal(s.name());
 			e.modifier.should.equal(s.modifier());
 			e.proficiency.should.equal(s.proficiency());
-			OtherStats.findBy = fb;	
-			
+			OtherStats.findBy = fb;
+
 			CharacterManager.activeCharacter = c;
 		});
 	});

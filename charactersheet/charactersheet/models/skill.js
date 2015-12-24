@@ -32,7 +32,13 @@ function Skill() {
     		score = AbilityScores.findBy(
     			CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
 		} catch(err) {};
-		return parseInt(score);
+    if (score === null){
+      return null
+    }
+    else {
+      return parseInt(score);
+    }
+    console.log('score: ' + score);
 	};
 
 	self.bonus = ko.pureComputed(function() {
@@ -57,7 +63,6 @@ function Skill() {
         '+' + self.bonus() :
         String(self.bonus());
     }
-
 		str += ' <i><small>('
 				+ self.abilityScore() + ')</small></i>'
 		return str;

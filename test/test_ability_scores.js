@@ -16,32 +16,32 @@ describe('Ability Scores', function() {
 			scores.str(abilities_fixture.str);
 			scores.str().should.equal(abilities_fixture.str);
 			scores.clear();
-			scores.str().should.equal('');
+			Should.not.exist(scores.str());
 
 			scores.dex(abilities_fixture.dex);
 			scores.dex().should.equal(abilities_fixture.dex);
 			scores.clear();
-			scores.dex().should.equal('');
+			Should.not.exist(scores.dex());
 
 			scores.con(abilities_fixture.con);
 			scores.con().should.equal(abilities_fixture.con);
 			scores.clear();
-			scores.con().should.equal('');
+			Should.not.exist(scores.con());
 
 			scores.int(abilities_fixture.int);
 			scores.int().should.equal(abilities_fixture.int);
 			scores.clear();
-			scores.int().should.equal('');
+			Should.not.exists(scores.int());
 
 			scores.wis(abilities_fixture.wis);
 			scores.wis().should.equal(abilities_fixture.wis);
 			scores.clear();
-			scores.wis().should.equal('');
+			Should.not.exist(scores.wis());
 
 			scores.cha(abilities_fixture.cha);
 			scores.cha().should.equal(abilities_fixture.cha);
 			scores.clear();
-			scores.cha().should.equal('');
+			Should.not.exist(scores.cha());
 		});
 	});
 
@@ -113,22 +113,22 @@ describe('Ability Scores', function() {
 	describe('Modifier For', function() {
 		it('given a string score, give the modifier', function() {
 			var abilityScore = new AbilityScores();
-			abilityScore.str().should.equal('');
+			Should.not.exist(abilityScore.str());
 			abilityScore.str(18);
 			abilityScore.modifierFor('str').should.equal(4);
-			abilityScore.dex().should.equal('');
+			Should.not.exist(abilityScore.dex());
 			abilityScore.dex(18);
 			abilityScore.modifierFor('dex').should.equal(4);
-			abilityScore.con().should.equal('');
+			Should.not.exist(abilityScore.con());
 			abilityScore.con(18);
 			abilityScore.modifierFor('con').should.equal(4);
-			abilityScore.int().should.equal('');
+			Should.not.exist(abilityScore.int());
 			abilityScore.int(18);
 			abilityScore.modifierFor('int').should.equal(4);
-			abilityScore.wis().should.equal('');
+			Should.not.exist(abilityScore.wis());
 			abilityScore.wis(18);
 			abilityScore.modifierFor('wis').should.equal(4);
-			abilityScore.cha().should.equal('');
+			Should.not.exist(abilityScore.cha());
 			abilityScore.cha(18);
 			abilityScore.modifierFor('cha').should.equal(4);
 		});
