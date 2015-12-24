@@ -6,11 +6,11 @@ function SavingThrows() {
 
 	self.characterId = ko.observable(null);
     self.name = ko.observable('');
-    self.modifier = ko.observable(0);
+    self.modifier = ko.observable(null);
     self.proficiency = ko.observable(false);
-    
+
     //UI Methods
-    
+
     self.proficiencyScore = function() {
     	var key = CharacterManager.activeCharacter().key();
     	var profBonus = 0;
@@ -19,40 +19,51 @@ function SavingThrows() {
 		} catch(err) {};
 		return profBonus;
 	};
-	
+
 	self.abilityScoreModifier = function() {
-    	var score = 0;
+    	var score = null;
     	try {
 	    	var key = CharacterManager.activeCharacter().key();
     		score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
 		} catch(err) {};
-		return parseInt(score);
+    if (score === null){
+      return null
+    }
+    else {
+      return parseInt(score);
+    }
 	};
 
 	self.bonus = ko.pureComputed(function() {
-		var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
+		var bonus = self.modifier() ? parseInt(self.modifier()) : null;
 		if (self.proficiency()) {
 			bonus += self.proficiencyScore() + self.abilityScoreModifier();
-		} else { 
-			bonus += self.abilityScoreModifier(); 
+		} else if (self.abilityScoreModifier()) {
+			bonus += self.abilityScoreModifier();
 		}
+      else{
+        bonus = null
+      }
 		return bonus;
 	});
 
 	self.modifierLabel = ko.pureComputed(function() {
+    if (self.bonus() === null){
+      return ''
+    }
 		var str = self.bonus() >= 0 ? '+' + self.bonus() : String(self.bonus());
 		return str;
 	});
-	
+
 	self.proficiencyLabel = ko.pureComputed(function() {
 		if (self.proficiency() === true) {
 			return 'glyphicon glyphicon-ok';
-		} 
+		}
 		return '';
 	});
-	
+
 	//Utility Methods
-	
+
 	self._abilityScore = function() {
 		return self.name().toLowerCase().substring(0,3);
 	};
@@ -63,17 +74,17 @@ function SavingThrows() {
 
     self.clear = function() {
         self.name('');
-        self.modifier(0);
+        self.modifier(null);
         self.proficiency(false);
     };
-    
+
     self.updateValues = function() {
     	self.modifier.notifySubscribers();
     	self.proficiency.notifySubscribers();
     };
 
     self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
+    	self.characterId(values.characterId);
         self.name(values.name);
         self.modifier(values.modifier);
         self.proficiency(values.proficiency);
