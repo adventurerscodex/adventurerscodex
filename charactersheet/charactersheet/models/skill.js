@@ -17,9 +17,13 @@ function Skill() {
 	//UI Methods
 	
     self.proficiencyScore = function() {
-    	var profBonus = OtherStats.findBy(
+    	var key = CharacterManager.activeCharacter().key();
+    	var profBonus = 0;
+    	try{
+    	profBonus = OtherStats.findBy(
     		CharacterManager.activeCharacter().key())[0].proficiency();
-		return profBonus ? parseInt(profBonus) : 0;
+    	} catch(err){};
+		return profBonus;
 	};
 	
 	self.abilityScoreModifier = function() {
