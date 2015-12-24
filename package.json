@@ -26,7 +26,8 @@
   "scripts": {
     "postinstall": "bower install && cp -r charactersheet/bin/fonts charactersheet/bower_components/bootstrap-theme-bootswatch-flatly/fonts",
     "test": "grunt karma:test",
-    "coveralls": "grunt coveralls"
+    "coveralls": "grunt coveralls",
+    "deploy": "bash deploy.sh"
   },
   "dependencies": {
     "socket.io": "^1.3.7"
