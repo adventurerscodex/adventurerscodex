@@ -9,11 +9,16 @@ var isNumeric = function(n) {
 }
 
 var getModifier = function(value){
-  return Math.floor((value - 10) / 2);
+  if (isNumeric(value)){
+    return Math.floor((value - 10) / 2);
+  }
+  else {
+    return null
+  }
 };
 
 var getStrModifier = function(modifier){
-  if (isNumeric(modifier) === false) {
+  if (modifier === null) {
     return ''
   }
   var modifier = getModifier(modifier);

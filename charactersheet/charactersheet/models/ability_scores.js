@@ -6,32 +6,32 @@ function AbilityScores() {
 
     self.characterId = ko.observable(null);
 
-    self.str =  ko.observable('');
+    self.str =  ko.observable(null);
     self.strModifier = ko.pureComputed(function(){
       return getStrModifier(self.str());
     });
 
-    self.dex =  ko.observable('');
+    self.dex =  ko.observable(null);
     self.dexModifier = ko.pureComputed(function(){
       return getStrModifier(self.dex());
     });
 
-    self.con =  ko.observable('');
+    self.con =  ko.observable(null);
     self.conModifier = ko.pureComputed(function(){
       return getStrModifier(self.con());
     });
 
-    self.int =  ko.observable('');
+    self.int =  ko.observable(null);
     self.intModifier = ko.pureComputed(function(){
       return getStrModifier(self.int());
     });
 
-    self.wis =  ko.observable('');
+    self.wis =  ko.observable(null);
     self.wisModifier = ko.pureComputed(function(){
       return getStrModifier(self.wis());
     });
 
-    self.cha =  ko.observable('');
+    self.cha =  ko.observable(null);
     self.chaModifier = ko.pureComputed(function(){
       return getStrModifier(self.cha());
     });
@@ -39,7 +39,7 @@ function AbilityScores() {
     //Public Methods
 
     self.modifierFor = function(score) {
-		var val = 0;
+		var val = null;
 		switch(score.toLowerCase()) {
 			case 'str':
 				val = self.str();
@@ -64,12 +64,12 @@ function AbilityScores() {
     };
 
     self.clear = function() {
-        self.str('');
-        self.dex('');
-        self.con('');
-        self.int('');
-        self.wis('');
-        self.cha('');
+        self.str(null);
+        self.dex(null);
+        self.con(null);
+        self.int(null);
+        self.wis(null);
+        self.cha(null);
     };
 
     self.importValues = function(values) {
