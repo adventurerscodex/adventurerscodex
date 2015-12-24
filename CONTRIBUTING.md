@@ -3,7 +3,7 @@ How to Contribute to Charactersheet
 
 It's easy!
 
-First, check out the issues on the GitHub page. Once you have a feature, or bug in mind, fork this repo, clone your fork and create a branch.
+First, check out the issues on the GitHub page. If you're a new contributor, then you might want to check out the issues tagged `easy`. These are issues that are good for newcomers and others that aren't familiar with the application. Once you have a feature, or bug in mind, fork this repo, clone your fork and create a branch.
 
 The branch you create should have a name like this:
 	
@@ -29,16 +29,13 @@ automatically. Otherwise the conventions are listed below.
 
 Javascript
 ----------
-indent_size = space
-
-indent_size = 4
-
+    indent_size = space
+    indent_size = 4
 
 JSON, YAML, CSS, and HTML
 ------------------------------
-indent_style = space
-
-indent_size = 2
+    indent_style = space
+    indent_size = 2
 
 [ec]: http://editorconfig.org
 
@@ -63,33 +60,6 @@ myFunction = function() {
 **File Naming:** All files with multi-word names should be seperated with underscores (i.e. `node_modules` or `ability_scores`); hyphens are strongly discouraged.
 
 
-App.js File structure
----------------------
-
-When designing a module, the app.js file should be in the following format:
-
-1. The Knockout ViewModel for that module.
-2. Any jQuery plugins that need to be instantiated at page load. Please remember to wrap all of these functions in a jQuery document onload function.
-3. Any global functions. Be sure to use the variable assigned anonymous function syntax, as it is consistant with the knockout style functions syntax.
-
-Example `app.js` file:
-```javascript	
-"use strict";
-function BackpackViewModel() {
-	//Knockout ViewModel...
-}
-function ItemModel() {
-	//Data Model...
-}
-$(function() {
-	//Instantiate jQuery funcions...
-});
-someGlobalFunction = function() {
-	//...
-}
-```	
-
-
 Issues and Features
 ===================
 
@@ -104,16 +74,6 @@ jQuery for the async networking.
 Bootstrap for the styling.
 Mocha for unittesting
 Karma, Grunt, and Istanbul for measuring code converage.
-
-
-What should each module contain?
-================================
-
-Unless otherwise specified, every module should contain the following functionalities:
-
-- Import/Export of player data. The notable exception to this is the combat log. These functions should import a native javascript object and export one as well. It should be able to be called at any time and replace all the data that existed beforehand.
-- A function to clear all of the fields and delete the data.  
-- Should follow the basic structure defined below.
 
 
 Project Structure
