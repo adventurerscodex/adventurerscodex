@@ -27,22 +27,22 @@ function SavingThrows() {
     		score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
 		} catch(err) {};
     if (score === null){
-      return null
+        return null
     }
     else {
-      return parseInt(score);
+        return parseInt(score);
     }
 	};
 
 	self.bonus = ko.pureComputed(function() {
 		var bonus = self.modifier() ? parseInt(self.modifier()) : null;
 		if (self.proficiency()) {
-			bonus += self.proficiencyScore() + self.abilityScoreModifier();
+			  bonus += self.proficiencyScore() + self.abilityScoreModifier();
 		} else if (self.abilityScoreModifier()) {
-			bonus += self.abilityScoreModifier();
+			    bonus += self.abilityScoreModifier();
 		}
       else{
-        bonus = null
+          bonus = null
       }
 		return bonus;
 	});
