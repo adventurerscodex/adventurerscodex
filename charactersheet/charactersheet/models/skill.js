@@ -23,7 +23,7 @@ function Skill() {
     	profBonus = OtherStats.findBy(
     		CharacterManager.activeCharacter().key())[0].proficiency();
     	} catch(err){};
-		return profBonus;
+		return parseInt(profBonus);
 	};
 
 	self.abilityScoreModifier = function() {
@@ -38,7 +38,6 @@ function Skill() {
     else {
       return parseInt(score);
     }
-    console.log('score: ' + score);
 	};
 
 	self.bonus = ko.pureComputed(function() {
@@ -46,17 +45,17 @@ function Skill() {
 		if (self.proficiency()) {
 			bonus += self.proficiencyScore() + self.abilityScoreModifier();
 		} else if (self.abilityScoreModifier()){
-			bonus += self.abilityScoreModifier();
+			  bonus += self.abilityScoreModifier();
 		}
-     else{
-      bonus = null
+          else {
+              bonus = null
      }
 		return bonus;
 	});
 
 	self.bonusLabel = ko.pureComputed(function() {
     if (self.bonus() === null) {
-      var str = ''
+        var str = ''
     }
     else {
       var str = self.bonus() >= 0 ?
