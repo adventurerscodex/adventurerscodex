@@ -1,9 +1,4 @@
 <div class="panel panel-default bio">
-<!-- 
-  <div class="panel-heading">
-      <h2 class="panel-title">Skills</h2>
-  </div>
- -->
   <div class="panel-body">
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
@@ -86,12 +81,43 @@
               <div class="form-group">
                 <label for="abscore"
                        class="col-sm-2 control-label">Ability Score</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="abscore"
-                           placeholder="Int, Dex, etc."
-                           data-bind='textInput: blankSkill().abilityScore'>
+                  <div class="col-sm-10 btn-group form-group">
+                    <label class="btn btn-primary" 
+                    data-bind="css: { active: blankSkill().abilityScore() == 'Str'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Str" data-bind="checked: blankSkill().abilityScore"/>
+                      Str
+                    </label>
+                    <label class="btn btn-primary" 
+                    data-bind="css: { active: blankSkill().abilityScore() == 'Dex'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Dex" data-bind="checked: blankSkill().abilityScore"/>
+                      Dex
+                      </label>
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: blankSkill().abilityScore() == 'Con'}">
+                      <input type="radio" name="abilityScore" value="Con" style="display: none;"
+                      data-bind="checked: blankSkill().abilityScore"/>
+                      Con
+                      </label>
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: blankSkill().abilityScore() == 'Int'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Int" data-bind="checked: blankSkill().abilityScore"/>
+                      Int
+                      </label>
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: blankSkill().abilityScore() == 'Wis'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Wis" data-bind="checked: blankSkill().abilityScore"/>
+                      Wis
+                      </label>  
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: blankSkill().abilityScore() == 'Cha'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Cha" data-bind="checked: blankSkill().abilityScore"/>
+                      Cha
+                    </label>  
                   </div>
               </div>
               <div class="form-group">
@@ -181,11 +207,43 @@
               <div class="form-group">
                 <label for="abscore"
                        class="col-sm-2 control-label">Ability Score</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="abscore"
-                           data-bind='textInput: abilityScore'>
+                       <div class="col-sm-10 btn-group form-group">
+                    <label class="btn btn-primary" 
+                    data-bind="css: { active: abilityScore() == 'Str'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Str" data-bind="checked: abilityScore"/>
+                      Str
+                    </label>
+                    <label class="btn btn-primary" 
+                    data-bind="css: { active: abilityScore() == 'Dex'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Dex" data-bind="checked: abilityScore"/>
+                      Dex
+                      </label>
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: abilityScore() == 'Con'}">
+                      <input type="radio" name="abilityScore" value="Con" style="display: none;"
+                      data-bind="checked: abilityScore"/>
+                      Con
+                      </label>
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: abilityScore() == 'Int'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Int" data-bind="checked: abilityScore"/>
+                      Int
+                      </label>
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: abilityScore() == 'Wis'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Wis" data-bind="checked: abilityScore"/>
+                      Wis
+                      </label>  
+                    <label class="btn btn-primary"
+                    data-bind="css: { active: abilityScore() == 'Cha'}">
+                      <input type="radio" style="display: none;"
+                      name="abilityScore" value="Cha" data-bind="checked: abilityScore"/>
+                      Cha
+                    </label>  
                   </div>
               </div>
               <div class="form-group">
