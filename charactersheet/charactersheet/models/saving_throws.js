@@ -72,6 +72,10 @@ function SavingThrows() {
 		self.ps.save();
 	};
 
+    self.delete = function() {
+        self.ps.delete();
+    };
+
     self.clear = function() {
         self.name('');
         self.modifier(null);

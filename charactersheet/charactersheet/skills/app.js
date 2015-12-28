@@ -46,6 +46,7 @@ function SkillsViewModel() {
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
+    self.abilityScoreGroup = ko.observable('');
 
     self.init = function() {};
 
@@ -166,3 +167,4 @@ function SkillsViewModel() {
     	});
     };
 };
+
