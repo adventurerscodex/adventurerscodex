@@ -43,7 +43,7 @@ function SpellSlotsViewModel() {
     	var slots = self.slots();
     	
     	if (self.filter() !== '') {
-    		//skills = skills.filter(function(a) {});
+
     	}	
     	
     	return slots.sort(function(a, b) {
