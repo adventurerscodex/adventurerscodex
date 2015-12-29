@@ -18,7 +18,7 @@ var getModifier = function(value){
 };
 
 var getStrModifier = function(modifier){
-  if (modifier === null) {
+  if (modifier === null || modifier === "") {
     return ''
   }
   var modifier = getModifier(modifier);
