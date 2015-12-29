@@ -44,10 +44,6 @@
 	</ul>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
-
-<!--
-        <img src="/images/logo-nav.png" height="35" style="margin-top:-12px;" />&nbsp;<h3 style="display:inline;">Profile &amp; Abilities</h3>
- -->
 			<div class="row">
 				<div class="col-md-7 col-sm-12 col-padded">
 					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile', data: profileViewModel }">
@@ -57,10 +53,7 @@
 					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'appearance', data: appearanceViewModel }">
 					</div>
 				</div>
-<!--
-        </div>
-        <div class="row">
- -->
+				
 				<div class="col-md-4 col-sm-6 col-padded">
 					<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores', data: abilityScoresViewModel }">
 					</div>
@@ -104,10 +97,6 @@
 					</div>
 				</div>
 				<div class="col-md-8 col-sm-6 col-padded">
-<!--
-					<div id="equippedItems" data-bind="template: { name: 'equipped_items.tmpl', templateUrl: 'equipped_items', data: equippedItemsViewModel }">
-					</div>
- -->
 					<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'equipment', data: equipmentViewModel }">
 					</div>
 					<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells', data: spellbookViewModel }">
@@ -237,7 +226,6 @@
       + '\nInit ViewModel: ' + (initEnd - docEnd));
     //Setup automatic saving.
     window.onbeforeunload = window.viewModel.unload;
-    //window.onblur = window.viewModel.unload;
 	});
 	</script>
 </body>

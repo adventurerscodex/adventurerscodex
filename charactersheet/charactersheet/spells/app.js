@@ -49,7 +49,7 @@ function SpellbookViewModel() {
     	var spells = self.spellbook();
 
     	if (self.filter() !== '') {
-    		//spells = spells.filter(function(a) {});
+
     	}
 
     	return spells.sort(function(a, b) {

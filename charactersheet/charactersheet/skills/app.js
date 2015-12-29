@@ -89,7 +89,7 @@ function SkillsViewModel() {
     	var skills = self.skills();
 
     	if (self.filter() !== '') {
-    		//skills = skills.filter(function(a) {});
+    		
     	}
 
     	return skills.sort(function(a, b) {

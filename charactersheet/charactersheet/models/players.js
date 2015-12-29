@@ -22,7 +22,6 @@ function Players() {
 		messenger.subscribe('data', 'goodbye!', self.handleGoodBye);
 		messenger.subscribe('system', 'yay, welcome', function() {
 			setInterval(self.sayHello, self.SAY_HI_TIMER);
-//			setInterval(self._sweepRoom, self.SWEEP_TIMER);
 			self.sayHello();
 		});
 	};
@@ -124,19 +123,6 @@ function Players() {
 			callback(player);
 		});
 	};	
-	
-// 	self._sweepRoom = function() {
-// 		var inRoom = $.map(self.inRoom, function(e, _) {
-// 			var milliseconds = (new Date).getTime();
-// 			if (milliseconds < e.lastPing + self.PLAYER_EXPIRED_TIMEOUT) {
-// 				return e;
-// 			} else {
-// 				self._alertPlayerLeft(e);
-// 			}
-// 		});	
-// 		console.log(inRoom);
-// 		self.inRoom = inRoom;
-// 	};
 };
 
 function Player() {
