@@ -17,7 +17,7 @@ function SavingThrowsViewModel() {
 			{ name: 'Strength', proficency: false, modifier: null },
 			{ name: 'Dexterity', proficency: false, modifier: null },
 			{ name: 'Constitution', proficency: false, modifier: null },
-			{ name: 'Intellegence', proficency: false, modifier: null },
+			{ name: 'Intelligence', proficency: false, modifier: null },
 			{ name: 'Wisdom', proficency: false, modifier: null },
 			{ name: 'Charisma', proficency: false, modifier: null }
 		];
