@@ -48,7 +48,7 @@ function SavingThrows() {
 		return bonus;
 	});
 
-	self.modifierLabel = ko.computed(function() {
+	self.modifierLabel = ko.pureComputed(function() {
         if (self.bonus() === null){
             return ''
         }
