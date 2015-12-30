@@ -38,19 +38,20 @@ function SavingThrows() {
 		var bonus = self.modifier() ? parseInt(self.modifier()) : null;
 		if (self.proficiency()) {
 			  bonus += self.proficiencyScore() + self.abilityScoreModifier();
-		} else if (self.abilityScoreModifier()) {
+		} 
+        else if (self.abilityScoreModifier()) {
 			    bonus += self.abilityScoreModifier();
 		}
-      else{
-          bonus = null
+        else {
+          bonus = bonus != null ? bonus : null;
       }
 		return bonus;
 	});
 
-	self.modifierLabel = ko.pureComputed(function() {
-    if (self.bonus() === null){
-      return ''
-    }
+	self.modifierLabel = ko.computed(function() {
+        if (self.bonus() === null){
+            return ''
+        }
 		var str = self.bonus() >= 0 ? '+' + self.bonus() : String(self.bonus());
 		return str;
 	});
