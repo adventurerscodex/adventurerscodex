@@ -1,0 +1,16 @@
+/**
+ * Based upon http://lamb.cc/typograph/
+ */
+
+k-scale-type(position = 0)
+  +cache('scale_type', position)
+    font_size = unit(k-font-size-at-position(position), 'rem')
+    // We work with thirds
+    line_height = unit(_line_height / 2, '')
+    lines_req = font_size / line_height
+    lines_req = lines_req + 1 if lines_req % 1 > 0.5  // If line is too squishy
+    lines_req = ceil(lines_req) // Always ceil
+    font-size unit(round(font_size * _base_size/100 * 16), 'px')
+    font-size unit(font_size, 'rem')
+    line-height unit(round(lines_req * line_height * _base_size/100 * 16), 'px')
+    line-height unit(lines_req * line_height, 'rem')

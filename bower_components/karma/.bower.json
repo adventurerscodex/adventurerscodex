@@ -1,0 +1,14 @@
+{
+  "name": "karma",
+  "homepage": "https://github.com/nathankot/Karma.gs",
+  "version": "0.4.6",
+  "_release": "0.4.6",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.4.6",
+    "commit": "b6e27b198b399d87103c218fe18ee462060cdbad"
+  },
+  "_source": "git://github.com/nathankot/Karma.gs.git",
+  "_target": "~0.4.6",
+  "_originalSource": "karma"
+}
