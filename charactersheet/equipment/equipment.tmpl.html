@@ -1,0 +1,200 @@
+<div class="panel panel-default">
+<!-- 
+  <div class="panel-heading">
+	  <h2 class="panel-title">Equipment</h2>
+  </div>
+ -->
+  <div class="panel-body">
+    <table class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+        <tr>
+          <th data-bind="click: function(){sortBy('itemName');}">
+            Item
+            <span data-bind="css: sortArrow('itemName')"></span></th>
+          <th data-bind="click: function(){sortBy('itemQty');}">
+            Quantity
+            <span data-bind="css: sortArrow('itemQty')"></span></th>
+          <th data-bind="click: function(){sortBy('itemWeight');}">
+            Weight
+            <span data-bind="css: sortArrow('itemWeight')"></span></th>
+          <th>Description</th>
+          <th>
+           <a data-toggle="modal"
+            data-target="#addItem" href="#">
+              <i class="glyphicon glyphicon-plus"></i>
+           </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-bind='foreach: filteredAndSortedEquipment'>
+        <tr style="cursor:pointer;">
+          <td data-bind="text: itemName, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>
+          <td data-bind="text: itemQty, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>
+          <td data-bind="text: itemWeight, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>
+          <td data-bind="text: itemDesc, click: $parent.editItemButton"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>          <td>
+            <a data-bind='click: $parent.removeItemButton' href="#">
+              <i class="glyphicon glyphicon-remove"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- Add Modal -->
+<div class="modal fade"
+  data-bind="with: blankItem"
+  id="addItem"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="addItemLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Add an Item</h4>
+      </div>
+      <div data-bind="template: { name: 'itemModal', data: $data }"></div>
+      <div class="modal-footer">
+        <button type="button"
+          class="btn btn-default"
+          data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          data-dismiss="modal"
+          data-bind="click: $parent.addItemButton">
+          Add
+        </button>
+      </div>
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+  data-bind="with: selecteditem"
+  id="viewItem"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="viewSpellLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Details</h4>
+      </div>
+      <div data-bind="template: { name: 'itemModal', data: $data }"></div>
+      <div class="modal-footer">
+        <button type="button"
+          class="btn btn-danger"
+          data-dismiss="modal"
+          data-bind="click: $parent.removeItemModalButton">
+          Remove</button>
+        <button type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+          data-bind="click: $parent.equipItemButton, visible: itemIsEquippable">
+          Equip
+        </button>
+        <button type="button"
+          class="btn btn-primary"
+          data-dismiss="modal">
+          Done
+        </button>
+      </div>
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<script type="text/html" id="itemModal">
+  <div class="modal-body">
+    <form class="form-horizontal">
+      <div class="form-group">
+       <label for="itemName"
+         class="col-sm-2 control-label">Name</label>
+       <div class="col-sm-10">
+         <input type="text"
+           class="form-control"
+           id="itemName"
+           placeholder="Item Name"
+           data-bind='textInput: itemName'>
+       </div>
+     </div>
+     <div class="form-group">
+       <label for="itemWeight"
+         class="col-sm-2 control-label">Weight</label>
+       <div class="col-sm-10">
+         <input type="number"
+                class="form-control"
+                min="0"
+                max="5000"
+           placeholder="Item Weight"
+           data-bind='textInput: itemWeight'>
+       </div>
+     </div>
+     <div class="form-group">
+       <label for="itemQuantity"
+         class="col-sm-2 control-label">Quantity</label>
+       <div class="col-sm-10">
+         <input type="number"
+           class="form-control"
+           min="1"
+           max="5000"
+           id="itemQuantity"
+           placeholder="Item Quantity"
+           data-bind='textInput: itemQty'>
+       </div>
+     </div>
+     <div class="form-group">
+       <label
+         class="col-sm-2 control-label">Cost</label>
+       <div class="col-sm-10">
+         <input
+           type="number"
+           min="0"
+           class="form-control"
+           data-bind="value: itemCost" />
+       </div>
+     </div>
+     <div class="form-group">
+       <label for="itemDescription"
+         class="col-sm-2 control-label">Description</label>
+       <div class="col-sm-10">
+         <textarea type="password"
+           class="form-control"
+           id="itemDescription"
+           rows="4"
+           data-bind='textInput: itemDesc'>
+         </textarea>
+       </div>
+     </div>
+    </form>
+  </div>
+</script>
