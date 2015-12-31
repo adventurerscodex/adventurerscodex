@@ -1,0 +1,141 @@
+body {
+  padding-top: 80px;
+}
+
+.progress {
+  height:34px;
+}
+
+.row-padded {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.col-padded {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.table-ac-bordered tr {
+  border-bottom: thin solid #ecf0f1;
+} 
+
+.beta {
+  color:orange;
+}
+
+.spacer {
+	width:10px;
+	height:10px;
+}
+
+.spacer-lg {
+  height:23px;
+  width:23px;
+}
+
+.inline-left {
+	float:left;
+	display:inline;
+	width: 49%;
+}
+
+.inline-right {
+	float:right;
+	display:inline;
+	width: 49%
+}
+
+.tri {
+	margin-left:2%;
+	margin-right:2%;
+	width:30%;
+}
+
+.quad {
+	margin-left:2%;
+	margin-right:2%;
+	width:22%;
+}
+
+/**
+ * Additional Progress Bar Colors
+ */
+.progress-bar-blue {
+  background-color: #337ab7 !important;
+}
+.progress-bar-orange {
+  background-color: #f0ad4e !important;
+}
+.progress-bar-red {
+  background-color: #d9534f !important;
+}
+.progress-bar-green {
+  background-color: #5cb85c !important;
+}
+.progress-bar-purple {
+  background-color: purple !important;
+}
+.progress-bar-purple {
+  background-color: purple !important;
+}
+.progress-bar-teal {
+  background-color: #01DFD7 !important;
+}
+.progress-bar-yellow {
+  background-color: #D7DF01 !important;
+}
+.progress-bar-indigo {
+  background-color: #8000FF !important;
+}
+.progress-bar-brown {
+  background-color: #906713 !important;
+}
+.progress-bar-magenta {
+  background-color: #C82D78 !important;
+}
+.progress-bar-sky {
+  background-color: #71D4E8 !important;
+}
+.progress-bar-forest {
+  background-color: #2F972F !important;
+}
+
+
+/*******
+ * Experimental stuff
+ *******/
+
+.panel-heading {
+}
+.panel {
+  box-shadow: 2px 3px 0px 0px #ecf0f1;
+}
+
+div.hr {
+  height:80px;
+  background:url('/images/page-divider.png') no-repeat;
+  
+}
+
+.tab-pane {
+  padding-top:10px;
+}
+
+.heart-full {
+  cursor:pointer;
+  background: url('/images/d20-purple-30.png');
+  border: 1 1 1 1 solid #ecf0f1;
+  width:20px;
+  height:23px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.heart-empty {
+  cursor:pointer;
+  background: url('/images/heart-red-empty-20.png');
+  width:20px;
+  height:20px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
