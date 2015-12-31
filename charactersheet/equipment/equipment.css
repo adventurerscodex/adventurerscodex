@@ -1,0 +1,16 @@
+﻿.itemDesc {
+    text-indent: 15px;
+    margin: 15px;
+}
+.itemQty {
+    width: 5%;
+}
+.itemName {
+    width: 80%;
+
+}
+.itemWeight {
+    width: 5%;
+    text-align: right;
+}
+

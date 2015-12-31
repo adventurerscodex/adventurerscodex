@@ -1,4 +1,3 @@
-bower_components/
 coverage/
 build/
 .coveralls.yml

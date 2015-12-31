@@ -1,0 +1,36 @@
+_goldilocks ?= 30em
+_goldilocks_padding ?= 0.809em
+_grid_columns ?= 6
+_gutter_width ?= 1.2em
+_grid_expand_min_proportion ?= .2
+
+_base_size ?= 87.5%
+_1px = 1 / 16
+
+baby = s(
+  "screen and (max-width: %s)",
+  (_goldilocks + 4*_goldilocks_padding)
+)
+
+mummy = s(
+  "screen and (min-width: %s) and (max-width: %s)",
+  (_goldilocks + 4*_goldilocks_padding + _1px),
+  (_goldilocks*2 + 4*_goldilocks_padding)
+)
+
+daddy = s(
+  "screen and (min-width: %s)",
+  (_goldilocks + 4*_goldilocks_padding + _1px)
+)
+
+daddyOnly = s(
+  "screen and (min-width: %s)",
+  (_goldilocks*2 + 4*_goldilocks_padding + _1px)
+)
+
+babyAndMummy = s(
+  "screen and (max-width: %s)",
+  (_goldilocks*2 + 4*_goldilocks_padding)
+)
+
+_line_height ?= 1.6
