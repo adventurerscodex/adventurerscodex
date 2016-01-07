@@ -39,7 +39,7 @@ function Spell() {
 	self.spellDamageLabel = ko.pureComputed(function() {
 		var charKey = CharacterManager.activeCharacter().key();
 		var spellBonus = SpellStats.findBy(charKey)[0].spellAttackBonus();
-		if( self.spellType() === 'Attack' && (spellBonus != null || spellBonus != '') ){
+		if( self.spellType() === 'Attack' && (spellBonus != null && spellBonus != '' && spellBonus != 0) ){
 			return (self.spellDmg() + ' [Spell Bonus: +' + spellBonus + ']');
 		}
 		else{
