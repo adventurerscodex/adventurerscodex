@@ -1,5 +1,9 @@
 "use strict";
 
+var SpellStatsSignaler = {
+	changed: new signals.Signal()
+};
+
 function SpellStats() {
 	var self = this;
   	self.ps = PersistenceService.register(SpellStats, self);

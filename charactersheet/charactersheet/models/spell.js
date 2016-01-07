@@ -36,6 +36,16 @@ function Spell() {
         'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
         '90 ft', '100 ft', '120 ft', '300 ft', '500 ft', '1 mile']);
 
+	self.spellDamageLabel = ko.pureComputed(function() {
+		var charKey = CharacterManager.activeCharacter().key();
+		var spellBonus = SpellStats.findBy(charKey)[0].spellAttackBonus();
+		if( self.spellType() === 'Attack' && (spellBonus != null || spellBonus != '') ){
+			return (self.spellDmg() + ' [Spell Bonus: +' + spellBonus + ']');
+		}
+		else{
+			return self.spellDmg();
+		}
+	});
     self.clear = function() {
         self.spellName('');
         self.spellType('');
