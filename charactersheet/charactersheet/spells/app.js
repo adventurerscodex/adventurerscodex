@@ -21,7 +21,7 @@ function SpellbookViewModel() {
     self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
-
+	
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
 
