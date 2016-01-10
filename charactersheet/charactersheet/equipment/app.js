@@ -29,9 +29,7 @@ function EquipmentViewModel() {
 		var eqpLen = self.equipment().length;
 		if( eqpLen > 0 ){
 			for(var i = 0; i < eqpLen; i++){
-				try{
-					weightTotal += parseInt(self.equipment()[i].itemWeight());
-				} catch(err){}
+				weightTotal += self.equipment()[i].itemWeight() ? parseInt(self.equipment()[i].itemWeight()) : 0;
 			}
 			return ("Weight: " + weightTotal + " (lbs)");
 		}
