@@ -24,6 +24,20 @@ function EquipmentViewModel() {
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
 	
+	self.totalItemWeight = ko.pureComputed(function() {
+		var weightTotal = 0;
+		var eqpLen = self.equipment().length;
+		if( eqpLen > 0 ){
+			for(var i = 0; i < eqpLen; i++){
+				weightTotal += self.equipment()[i].itemWeight() ? parseInt(self.equipment()[i].itemWeight()) : 0;
+			}
+			return ("Weight: " + weightTotal + " (lbs)");
+		}
+		else{
+			return "Weight";
+		}
+	});
+
 	//Responders
 	
 	self.init = function() {
