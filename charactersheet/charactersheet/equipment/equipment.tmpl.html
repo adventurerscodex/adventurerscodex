@@ -9,7 +9,7 @@
           <th data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th data-bind="click: function(){sortBy('itemWeight');}">
+          <th data-bind="click: function(){sortBy('itemWeight');}, text: totalItemWeight">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
           <th>Description</th>
@@ -146,12 +146,15 @@
        <label for="itemWeight"
          class="col-sm-2 control-label">Weight</label>
        <div class="col-sm-10">
-         <input type="number"
-                class="form-control"
-                min="0"
-                max="5000"
-           placeholder="Item Weight"
-           data-bind='textInput: itemWeight'>
+         <div class="input-group">
+           <input type="number"
+                  class="form-control"
+                  min="0"
+                  max="5000"
+             placeholder="Item Weight"
+             data-bind='textInput: itemWeight'>
+             <span class="input-group-addon">Lbs.</span>
+         </div>
        </div>
      </div>
      <div class="form-group">
