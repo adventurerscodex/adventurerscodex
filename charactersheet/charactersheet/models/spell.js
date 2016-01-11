@@ -16,7 +16,7 @@ function Spell() {
     self.spellComponents = ko.observable('');
     self.spellDuration = ko.observable('');
     self.spellTypeOptions = ko.observableArray(
-        ['Attack', 'Savings Throw', 'Automatic']);
+        ['Attack Roll', 'Savings Throw', 'Automatic']);
     self.spellSchoolOptions = ko.observableArray([
         'Abjuration', 'Cantrip', 'Conjuration',
         'Divination', 'Enchantment', 'Evocation',
