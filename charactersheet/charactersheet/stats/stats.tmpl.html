@@ -15,7 +15,9 @@
     <div class="row row-padded">
       <div class="col-md-12 col-padded">
         <div class="input-group">
-          <span class="input-group-addon">Hit Dice
+          <span class="input-group-addon">Hit Dice Type:&nbsp;
+          <select data-bind="options: hitDiceOptions,
+                                     value: hitDiceType"></select>
           </span>
           <div class="form-control"data-bind="foreach: hitDiceList" >
             <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>

@@ -3,8 +3,8 @@ function HitDice() {
 	self.ps = PersistenceService.register(HitDice, self);
 	
 	self.characterId = ko.observable(null);
-	self.hitDiceType = ko.observable('');
 	self.hitDiceUsed = ko.observable(false);
+	self.hitDiceType = ko.observable('');
 	
 	self.clear = function() {
 		self.hitDiceType('');

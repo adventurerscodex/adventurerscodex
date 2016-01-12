@@ -11,11 +11,10 @@ function StatsViewModel() {
 	self.otherStats = ko.observable(new OtherStats());
 	self.blankHitDice = ko.observable(new HitDice());
 	self.hitDiceList = ko.observableArray([]);
-	
-	self.enableAdd = ko.computed(function(){
-		return self.hitDiceList().length < 21;
-	});
-
+	self.hitDiceType = ko.observable('');
+	self.hitDiceOptions = ko.observableArray(
+        ['D4', 'D6', 'D8', 'D10', 'D12', 'D20']);
+		
 	self.init = function() {};
 	
 	self.load = function() {
