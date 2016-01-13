@@ -7,7 +7,7 @@ var ProfileSignaler = {
 function ProfileViewModel() {
 	var self = this;
 
-	self.profile = new Profile();
+	self.profile = ko.observable(new Profile());
 
 	self.init = function() {
 		
@@ -16,24 +16,30 @@ function ProfileViewModel() {
 	self.load = function() {
 		var profile = Profile.findBy(CharacterManager.activeCharacter().key());
 		if (profile.length > 0) {
-			self.profile = profile[0];
+			self.profile(profile[0]);
+		} else {
+		    self.profile(new Profile());
 		}
-		self.profile.characterId(CharacterManager.activeCharacter().key());
+		self.profile().characterId(CharacterManager.activeCharacter().key());
 		
 		//Subscriptions
-		self.profile.level.subscribe(function() {
-			self.profile.save();
-			ProfileSignaler.changed.dispatch();
-		});
+		self.profile().level.subscribe(self.dataHasChanged);
+		self.profile().playerName.subscribe(self.dataHasChanged);
+		self.profile().characterName.subscribe(self.dataHasChanged);
 	};
 
 	self.unload = function() {
-		self.profile.save();
-	};	
+		self.profile().save();
+	};
+	
+	self.dataHasChanged = function() {
+		self.profile().save();
+		ProfileSignaler.changed.dispatch();
+	};
 	
 	//Public Methods
 
 	self.clear = function() {
-		self.profile.clear();
+		self.profile().clear();
 	};
 };

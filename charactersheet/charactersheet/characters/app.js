@@ -20,6 +20,9 @@ function CharactersViewModel() {
 		CharactersSignaler.changed.add(function() {
 			self.load();
 		});
+		ProfileSignaler.changed.add(function() {
+		    self.load();
+		});
 	};
 	
 	self.load = function() {
@@ -56,9 +59,13 @@ function CharactersViewModel() {
 			e.save();
 		});
 	};
+	
+	self.changeCharacter = function(character) {
+	    CharacterManager.changeCharacter(character.key());
+	};
 		
 	self.selectCharacter = function(character) {
-		self.selectedCharacter(character);
+		self.selectedCharacter(CharacterManager.activeCharacter());
 	};
 		
 	self.addCharacter = function() {

@@ -34,7 +34,7 @@ var getStrModifier = function(modifier){
 function AbilityScoresViewModel() {
 	var self = this;
 
-	self.abilityScores = new AbilityScores();
+	self.abilityScores = ko.observable(new AbilityScores());
 
 	self.init = function() {};
 
@@ -42,20 +42,27 @@ function AbilityScoresViewModel() {
 		var key = CharacterManager.activeCharacter().key();
 		var scores = AbilityScores.findBy(key);
 		if (scores.length > 0) {
-			self.abilityScores = scores[0];
+			self.abilityScores(scores[0]);
+		} else {
+		    self.abilityScores(new AbilityScores());
 		}
-		self.abilityScores.characterId(key);
+		self.abilityScores().characterId(key);
 
 		//Subscriptions
-		self.abilityScores.str.subscribe(self.abilityScores.save);
-		self.abilityScores.dex.subscribe(self.abilityScores.save);
-		self.abilityScores.con.subscribe(self.abilityScores.save);
-		self.abilityScores.int.subscribe(self.abilityScores.save);
-		self.abilityScores.wis.subscribe(self.abilityScores.save);
-		self.abilityScores.cha.subscribe(self.abilityScores.save);
+		self.abilityScores().str.subscribe(self.dataHasChanged);
+		self.abilityScores().dex.subscribe(self.dataHasChanged);
+		self.abilityScores().con.subscribe(self.dataHasChanged);
+		self.abilityScores().int.subscribe(self.dataHasChanged);
+		self.abilityScores().wis.subscribe(self.dataHasChanged);
+		self.abilityScores().cha.subscribe(self.dataHasChanged);
 	};
 
 	self.unload = function() {
-		self.abilityScores.save();
+		self.abilityScores().save();
+	};
+	
+	self.dataHasChanged = function() {
+        self.abilityScores().save();
+       	AbilityScoresSignaler.changed.dispatch();
 	};
 };

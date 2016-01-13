@@ -6,12 +6,7 @@
     <script type="text/javascript">
       //Check immediately. Skip loading page if necessary.
       "use strict";
-      var loc = '';
-      if (localStorage.Character === undefined || localStorage.Character.length < 1) {
-        loc = '/characters';
-      } else {
-        loc = '/charactersheet';
-      }
+      var loc = '/charactersheet';
       window.location = loc;
     </script>
  </head>
