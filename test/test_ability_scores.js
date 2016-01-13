@@ -135,17 +135,13 @@ describe('Ability Scores', function() {
 	});
 
 	describe('Save', function() {
-		it('should save the object and send a signal', function() {
+		it('should save the object', function() {
 			var abilityScore = new AbilityScores();
-			var sent = false;
 			var saved = false;
-			AbilityScoresSignaler.changed.add(function() { sent = true; });
 			abilityScore.ps.save = function() { saved = true; }
-			sent.should.equal(false);
 			saved.should.equal(false);
 
 			abilityScore.save();
-			sent.should.equal(true);
 			saved.should.equal(true);
 		});
 	});

@@ -47,17 +47,13 @@ describe('Other Stats', function() {
 	});
 	
 	describe('Save', function() {
-		it('should save the values to the local store and send a signal.', function() {
+		it('should save the values to the local store', function() {
 			var os = new OtherStats();
-			var sent = false;
 			var saved = false;
-			StatsSignaler.changed.add(function() { sent = true; });
 			os.ps.save = function() { saved = true; }
-			sent.should.equal(false);
 			saved.should.equal(false);
 			
 			os.save();
-			sent.should.equal(true);
 			saved.should.equal(true);
 		});
 	});

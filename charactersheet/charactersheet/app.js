@@ -153,6 +153,7 @@ function RootViewModel() {
         ProfileSignaler.changed.add(function() {
             self._dummy.valueHasMutated();
         });
+        self._dummy.valueHasMutated();
 	};
 	
 	/**
@@ -375,10 +376,13 @@ var init = function(viewModel) {
     messenger.connect();
     
     //Set up event handlers.
-    CharacterManagerSignaler.changing.add(function(oldChar, newChar) {
-        viewModel.unload();
+    CharacterManagerSignaler.changing.add(function() {
+        //Don't save an empty character.
+        if (CharacterManager.activeCharacter() && viewModel.ready()) { 
+            viewModel.unload();
+        } 
     });
-    CharacterManagerSignaler.changed.add(function(newChar) {
+    CharacterManagerSignaler.changed.add(function() {
         viewModel.init();
         viewModel.load();
     });
