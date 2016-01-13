@@ -4,23 +4,19 @@ function HitDice() {
 	
 	self.characterId = ko.observable(null);
 	self.hitDiceUsed = ko.observable(false);
-	self.hitDiceType = ko.observable('');
 	
 	self.clear = function() {
-		self.hitDiceType('');
 		self.hitDiceUsed(false);
 	};
 	
 	self.importValues = function(values) {
     	self.characterId(values.characterId);   	
-		self.hitDiceType(values.hitDiceType);
 		self.hitDiceUsed(values.hitDiceUsed);
 	};
 	
 	self.exportValues = function() {
 		return {
         	characterId: self.characterId(),
-			hitDiceType: self.hitDiceType(),
 			hitDiceUsed: self.hitDiceUsed()
 		}
 	};
