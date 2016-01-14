@@ -12,21 +12,21 @@ function HitDiceType() {
 	};
 
 	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
+    	self.characterId(values.characterId);
 		self.hitDiceType(values.hitDiceType);
 	};
-	
+
 	self.exportValues = function() {
 		return {
         	characterId: self.characterId(),
 			hitDiceType: self.hitDiceType()
 		}
 	};
-	
+
 	self.save = function() {
 		self.ps.save();
 	};
-	
+
 	self.delete = function() {
 		self.ps.delete();
 	};
