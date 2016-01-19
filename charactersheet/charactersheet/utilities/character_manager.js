@@ -9,7 +9,7 @@ var CharacterManager = {};
 
 CharacterManager.changeCharacter = function(characterId) {
 	var newChar = Character.findBy(characterId);
-	if (newChar.length > 0) {
+    try {
 	    CharacterManagerSignaler.changing.dispatch(
 	        CharacterManager.activeCharacter(), newChar[0]);
 		Character.findAll().forEach(function(e, i, _) {
@@ -20,7 +20,7 @@ CharacterManager.changeCharacter = function(characterId) {
 		newChar[0].save();
 		CharacterManagerSignaler.changed.dispatch(
 		    CharacterManager.activeCharacter());
-	}
+	} catch(err) {};
 };
 
 CharacterManager.activeCharacter = function() {
@@ -36,7 +36,6 @@ CharacterManager.activeCharacter = function() {
 CharacterManager.defaultCharacter = function() {
     try {
         return Character.findAll().filter(function(e, i, _) {
-            console.log(e);
             return e.isDefault();
         })[0];
     } catch(err) {

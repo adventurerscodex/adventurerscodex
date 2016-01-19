@@ -149,11 +149,15 @@ function RootViewModel() {
         }
         self.partyTabViewModel().init();
         self.charactersViewModel.init();
-                
+            
+        //Subscriptions   
         ProfileSignaler.changed.add(function() {
             self._dummy.valueHasMutated();
         });
         self._dummy.valueHasMutated();
+        CharactersSignaler.allRemoved.add(function() {
+            self.ready(false);
+        });
 	};
 	
 	/**

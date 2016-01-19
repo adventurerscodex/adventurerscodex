@@ -170,18 +170,31 @@
 </div>
 
 <!-- ko ifnot: ready -->
-<div id="wizard" class="container-fluid" 
-  data-bind="template: { 
-      name: 'wizard.tmpl', 
-      templateUrl: 'wizard', 
-      data: wizardViewModel }">
+<div id="wizard" class="container-fluid"
+  data-bind="with: wizardViewModel">
+  <h2>Create a new character</h2>
+  <div class="row row-padded">
+      <div data-bind="template: { 
+        name: 'wizard.tmpl', 
+        templateUrl: 'wizard', 
+        data: $data }"></div>
+  </div>
+  <!-- ko ifnot: complete -->
+  <div class="row row-padded">
+    <div class="col-sm-1">
+      <button data-bind="click: submit" type="submit"
+        class="btn btn-default">Next
+      </button>
+    </div>
+  </div>
+  <!-- /ko -->
 </div>
 <!-- /ko -->
   
 <!-- Switch Characters Modal -->
 <div class="modal fade" id="charactersModal" tabindex="-1" role="dialog" 
   aria-labelledby="charactersModalLabel"
-  data-bind="template: { 
+  data-bind="template: {
       name: 'characters.tmpl', 
       templateUrl: 'characters', 
       data: charactersViewModel }">
@@ -219,6 +232,7 @@
 </div>
 
 <!-- New Modal -->
+<!-- ko with: wizardViewModel -->
 <div class="modal fade" id="newModal" tabindex="-1" role="dialog" 
   aria-labelledby="newLabel">
   <div class="modal-dialog" role="document">
@@ -231,15 +245,24 @@
         <h4 class="modal-title" id="settingsLabel" 
           data-dismiss="modal">Create a new character</h4>
       </div>
-      <div class="modal-body"
-        data-bind="template: { 
-            name: 'wizard.tmpl', 
-            templateUrl: 'wizard', 
-            data: wizardViewModel }">
+      <div class="modal-body">
+        <div data-bind="template: { 
+          name: 'wizard.tmpl', 
+          templateUrl: 'wizard', 
+          data: $data }"></div>
       </div>
+      <!-- ko ifnot: complete -->
+      <div class="modal-footer">
+        <button data-bind="click: submit" type="submit"
+          data-dismiss="modal"
+          class="btn btn-primary">Create
+        </button>
+      </div>
+      <!-- /ko -->
     </div>
   </div> 
 </div>
+<!-- /ko -->
 
 <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
