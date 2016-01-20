@@ -7,9 +7,9 @@ var StatsSignaler = {
 function StatsViewModel() {
 	var self = this;
 	
-	self.health = new Health();
-	self.otherStats = new OtherStats();
-	self.blankHitDice = new HitDice();
+	self.health = ko.observable(new Health());
+	self.otherStats = ko.observable(new OtherStats());
+	self.blankHitDice = ko.observable(new HitDice());
 	self.hitDiceList = ko.observableArray([]);
 	
 	self.enableAdd = ko.computed(function(){
@@ -21,15 +21,19 @@ function StatsViewModel() {
 	self.load = function() {
 		var health = Health.findBy(CharacterManager.activeCharacter().key());
 		if (health.length > 0) {
-			self.health = health[0];
+			self.health(health[0]);
+		} else {
+		    self.health(new Health());
 		}
-		self.health.characterId(CharacterManager.activeCharacter().key());
+		self.health().characterId(CharacterManager.activeCharacter().key());
 		
 		var otherStats = OtherStats.findBy(CharacterManager.activeCharacter().key());
 		if (otherStats.length > 0) {
-			self.otherStats = otherStats[0];
+			self.otherStats(otherStats[0]);
+		} else {
+		    self.otherStats(new OtherStats());
 		}
-		self.otherStats.characterId(CharacterManager.activeCharacter().key());
+		self.otherStats().characterId(CharacterManager.activeCharacter().key());
 
 		var hitDiceList = HitDice.findAllBy(CharacterManager.activeCharacter().key());
 		if (hitDiceList.length > 0) {
@@ -40,21 +44,21 @@ function StatsViewModel() {
 		});
 		
 		//Subscriptions
-		self.otherStats.proficiency.subscribe(self.otherStats.save);
+		self.otherStats().proficiency.subscribe(self.dataHasChanged);
 		ProfileSignaler.changed.add(self.calculateHitDice);
 	};
 	
 	self.unload = function() {
-		self.health.save();
-		self.otherStats.save();
+		self.health().save();
+		self.otherStats().save();
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.save();
 		});
 	};
 
 	self.clear = function() {
-		self.health.clear();
-		self.otherStats.clear();
+		self.health().clear();
+		self.otherStats().clear();
 	};
 		
 	self.calculateHitDice = function() {
@@ -72,6 +76,11 @@ function StatsViewModel() {
 				h.delete();
 			}
 		}
+	};
+	
+	self.dataHasChanged = function() {
+	    self.otherStats().save();
+		StatsSignaler.changed.dispatch();
 	};
 };
 

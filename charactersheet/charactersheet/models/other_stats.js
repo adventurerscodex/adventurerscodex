@@ -41,7 +41,6 @@ function OtherStats() {
 
 	self.save = function() {
 		self.ps.save();
-		StatsSignaler.changed.dispatch();
 	};	
 };
 

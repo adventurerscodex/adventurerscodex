@@ -1,7 +1,14 @@
 "use strict";
 
 var CharactersSignaler = {
+    /**
+     * Sent when a character is changed.
+     */
 	changed: new signals.Signal(),
+	/**
+	 * Sent when all characters have been deleted.
+	 */ 
+	allRemoved: new signals.Signal()
 };
 
 function CharactersViewModel() {
@@ -19,6 +26,9 @@ function CharactersViewModel() {
 	self.init = function() {
 		CharactersSignaler.changed.add(function() {
 			self.load();
+		});
+		ProfileSignaler.changed.add(function() {
+		    self.load();
 		});
 	};
 	
@@ -56,9 +66,13 @@ function CharactersViewModel() {
 			e.save();
 		});
 	};
+	
+	self.changeCharacter = function(character) {
+	    CharacterManager.changeCharacter(character.key());
+	};
 		
 	self.selectCharacter = function(character) {
-		self.selectedCharacter(character);
+		self.selectedCharacter(CharacterManager.activeCharacter());
 	};
 		
 	self.addCharacter = function() {
@@ -106,6 +120,13 @@ function CharactersViewModel() {
 		character.delete();
 		self.characters.remove(character);
 		CharactersSignaler.changed.dispatch();
+		
+		if (self.characters().length === 0) {
+		    CharactersSignaler.allRemoved.dispatch();
+		} else {
+    		//Change the active character.
+	    	CharacterManager.changeCharacter(self.characters()[0].key());
+	    }
 	};
 		
 	self.localStoragePercent = ko.computed(function() {

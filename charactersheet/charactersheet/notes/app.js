@@ -3,7 +3,7 @@
 function NotesViewModel() {
 	var self = this;
 
-	self.note = new Note();
+	self.note = ko.observable(new Note());
 	
 	self.init = function() {};
 	
@@ -11,14 +11,17 @@ function NotesViewModel() {
 		var key = CharacterManager.activeCharacter().key();
 		var note = Note.findBy(key);
 		if (note.length > 0) {
-			self.note = note[0];
+			self.note(note[0]);
+		} else {
+		    self.note(new Note());
 		}
-		self.note.characterId(key);
+		self.note().characterId(key);
 		
-		self.note.text.subscribe(self.note.save);
+		//Subscriptions
+		self.note().text.subscribe(self.note.save);
 	};
 	
 	self.unload = function() {
-		self.note.save();
+		self.note().save();
 	};	
 };

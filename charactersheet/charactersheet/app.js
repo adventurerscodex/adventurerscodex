@@ -16,6 +16,7 @@ function RootViewModel() {
 	 * and the init process has finished.
  	 */
 	self.ready = ko.observable(false);
+	self._dummy = ko.observable(false);
 	
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
@@ -24,31 +25,34 @@ function RootViewModel() {
 	self.characterTabViewModel = ko.observable(new CharacterTabViewModel());
 	self.dmTabViewModel = ko.observable(new DmTabViewModel());
 	self.partyTabViewModel = ko.observable(new PartyTabViewModel());
-	self.settingsTabViewModel = ko.observable(new SettingsTabViewModel());
+	
+	self.wizardViewModel = new WizardViewModel();
+	self.charactersViewModel = new CharactersViewModel();
+	self.settingsViewModel = new SettingsViewModel();
 	
 	//Tab Properties
-	self.characterTabStatus = ko.computed(function() {
+	self.characterTabStatus = ko.pureComputed(function() {
 		if (self.playerType().visibleTabs.indexOf('character') > -1) {
 	    	return self.activeTab() === 'character' ? 'active' : '';
     	} else {
     		return 'hidden';
     	}
     }); 
-	self.dMTabStatus = ko.computed(function() {
+	self.dMTabStatus = ko.pureComputed(function() {
 		if (self.playerType().visibleTabs.indexOf('dm') > -1) {
 	    	return self.activeTab() === 'dm' ? 'active' : '';
     	} else {
     		return 'hidden';
     	}
     });
-	self.partyTabStatus = ko.computed(function() {
+	self.partyTabStatus = ko.pureComputed(function() {
 		if (self.playerType().visibleTabs.indexOf('party') > -1) {
 	    	return self.activeTab() === 'party' ? 'active' : '';
     	} else {
     		return 'hidden';
     	}
     });
-	self.settingsTabStatus = ko.computed(function() {
+	self.settingsTabStatus = ko.pureComputed(function() {
 		if (self.playerType().visibleTabs.indexOf('settings') > -1) {
 	    	return self.activeTab() === 'settings' ? 'active' : '';
     	} else {
@@ -71,52 +75,66 @@ function RootViewModel() {
 
 	//UI Methods
     
-    self.playerSummary = ko.computed(function() {
+    self.playerSummary = ko.pureComputed(function() {
+	    self._dummy();
     	var summary = '';
+    	var key = CharacterManager.activeCharacter().key();
     	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
 			try {
-				summary = Profile.find().characterSummary();
+				summary = Profile.findBy(key)[0].characterSummary();
 			} catch(err) {};
     	} else {
 			try {
-	    		summary = Campaign.find().campaignSummary();
+	    		summary = Campaign.findBy(key)[0].campaignSummary();
 			} catch(err) {};
     	}
     	return summary;
     });
     
-    self.playerTitle = ko.computed(function() {
+    self.playerTitle = ko.pureComputed(function() {
+	    self._dummy();
     	var name = '';
+    	var key = CharacterManager.activeCharacter().key();
     	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
 			try {
-    			name = Profile.find().characterName();
+    			name = Profile.findBy(key)[0].characterName();
 			} catch(err) {};
     	} else {
 			try {
-    			name = Campaign.find().campaignName();
+    			name = Campaign.findBy(key)[0].campaignName();
 			} catch(err) {};
     	}
     	return name;
     });
     
-    self.playerAuthor = ko.computed(function() {
+    self.playerAuthor = ko.pureComputed(function() {
+	    self._dummy();
     	var name = '';
+    	var key = CharacterManager.activeCharacter().key();
     	if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
 			try {
-    			name = Profile.find().playerName();
+    			name = Profile.findBy(key)[0].playerName();
 			} catch(err) {};
     	} else {
 			try {
-    			name = Campaign.find().dmName();
+    			name = Campaign.findBy(key)[0].dmName();
 			} catch(err) {};
     	}
     	return name;
     });
     
-    self.pageTitle = ko.computed(function() {
-    	return self.playerTitle() + ' by ' + self.playerAuthor()
-    		+ ' | Adventurer\'s Codex';
+    self.pageTitle = ko.pureComputed(function() {
+	    self._dummy();
+        try {
+        	return self.playerTitle() + ' by ' + self.playerAuthor()
+        		+ ' | Adventurer\'s Codex';
+        } catch(err) {}
     });
+    
+    self.showWizard = function() {
+        self.ready(false);
+        self.wizard(true);
+    };
 
 	//Public Methods
 	
@@ -124,50 +142,59 @@ function RootViewModel() {
 	 * Call Init on each sub-module.
 	 */
 	self.init = function() {
-		messenger = new Messenger();
-		players = new Players();
-	    messenger.connect();
-		
-		var character = Character.findBy(CharacterManager.getKey())[0];
-		self.playerType(character.playerType());
-		CharacterManager.changeCharacter(character.key());
-	
- 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-			self.characterTabViewModel().init();
- 		} 
- 		if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
-			self.dmTabViewModel().init();
- 		}
-		self.partyTabViewModel().init();
-		self.settingsTabViewModel().init();
+        var character = Character.findBy(
+            CharacterManager.activeCharacter().key())[0];
+        self.playerType(character.playerType());
+        
+        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+            self.characterTabViewModel().init();
+        } 
+        if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
+            self.dmTabViewModel().init();
+        }
+        self.partyTabViewModel().init();
+        self.charactersViewModel.init();
+            
+        //Subscriptions   
+        ProfileSignaler.changed.add(function() {
+            self._dummy.valueHasMutated();
+        });
+        self._dummy.valueHasMutated();
+        CharactersSignaler.allRemoved.add(function() {
+            self.ready(false);
+        });
 	};
 	
 	/**
 	 * Signal all modules to load their data.
 	 */
 	self.load = function() {
- 		self.activeTab(self.playerType().defaultTab);
- 		
- 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
- 			self.characterTabViewModel().load();
- 		} 
- 		if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
- 			self.dmTabViewModel().load();
- 		}
- 		self.partyTabViewModel().load();
- 		self.settingsTabViewModel().load();
- 		self.ready(true);
+	    if (CharacterManager.activeCharacter()) {
+            self.activeTab(self.playerType().defaultTab);
+    
+            if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+                self.characterTabViewModel().load();
+            } 
+            if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
+                self.dmTabViewModel().load();
+            }
+            self.partyTabViewModel().load();
+            self.charactersViewModel.load();
+            self.ready(true);
+        }
 	};
 
 	self.unload = function() { 		
- 		if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
- 			self.characterTabViewModel().unload();
- 		} 
- 		if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
- 			self.dmTabViewModel().unload();
- 		}
- 		self.partyTabViewModel().unload();
- 		self.settingsTabViewModel().unload();
+	    if (CharacterManager.activeCharacter()) {
+            if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+                self.characterTabViewModel().unload();
+            } 
+            if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
+                self.dmTabViewModel().unload();
+            }
+            self.partyTabViewModel().unload();
+            self.charactersViewModel.unload();
+        }
 	};
 };
 
@@ -182,7 +209,6 @@ function CharacterTabViewModel() {
 	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
 	self.statsViewModel = ko.observable(new StatsViewModel());
-	//self.equippedItemsViewModel = ko.observable(new EquippedItemsViewModel(self));
 	self.notesViewModel = ko.observable(new NotesViewModel());
     self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
@@ -198,61 +224,54 @@ function CharacterTabViewModel() {
     
 	self.init = function() {
     	//Init all viewModels.
-    	var keys =  Object.keys(self);
-    	for (var i in keys) {
-    		if (keys[i].indexOf('ViewModel') > -1) {
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
     			try {
-	    			self[keys[i]]().init();
+	    			self[key]().init();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    				throw "Module " + key + " failed to load.\n" + err;
     			}
     		}
-    	}
+    	});
 	};
 
     self.load = function() {
-    	//Init all viewModels.
-    	var keys =  Object.keys(self);
-    	for (var i in keys) {
-    		if (keys[i].indexOf('ViewModel') > -1) {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
     			try {
-	    			self[keys[i]]().load();
+	    			self[key]().load();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    				throw "Module " + key + " failed to load.\n" + err;
     			}
     		}
-    	}
+    	});
     };
     
     self.unload = function() {
     	//unload all viewModels.
-    	var keys =  Object.keys(self);
-    	for (var i in keys) {
-    		if (keys[i].indexOf('ViewModel') > -1) {
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
     			try {
-	    			self[keys[i]]().unload();
+    	    		self[key]().unload();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to unload.\n" + err;
+    				throw "Module " + key + " failed to unload.\n" + err;
     			}
     		}
-    	}
+    	});
     };
     
     self.clear = function() {
-    	self.profileViewModel().clear();
-    	self.appearanceViewModel().clear();
-    	self.note().clear();
-    	self.abilityScores().clear();
-    	self.stats().clear();
-    	self.featuresTraitsViewModel().clear();
-    	//self.equippedItemsViewModel().clear();
-    	self.equipmentViewModel().clear();
-    	self.spellSlotsViewModel().clear();
-        self.spellbook().clear();
-        self.treasure().clear();
-        self.skillTree().clear();
-        self.featsProf().clear();
-		self.savingThrows.clear();
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
     };
 };
 
@@ -359,52 +378,37 @@ function PartyTabViewModel() {
     };
 };
 
-function SettingsTabViewModel() {
-	var self = this;
-
-	self.init = function() {
-    	var keys =  Object.keys(self);
-    	for (var i in keys) {
-    		if (keys[i].indexOf('ViewModel') > -1) {
-    			try {
-	    			self[keys[i]]().init();
-    			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
-    			}
-    		}
-    	}
-	};
-
-	self.load = function() {
-    	var keys =  Object.keys(self);
-    	for (var i in keys) {
-    		if (keys[i].indexOf('ViewModel') > -1) {
-    			try {
-	    			self[keys[i]]().load();
-    			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
-    			}
-    		}
-    	}
-	};
-	
-    self.unload = function() {
-    	var keys =  Object.keys(self);
-    	for (var i in keys) {
-    		if (keys[i].indexOf('ViewModel') > -1) {
-    			try {
-	    			self[keys[i]]().unload();
-    			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
-    			}
-    		}
-    	}
-    };
-};
 
 var init = function(viewModel) {
-	//Load any saved state.
-	viewModel.init();
-	viewModel.load();
+    messenger = new Messenger();
+    players = new Players();
+    messenger.connect();
+    
+    //Set up event handlers.
+    CharacterManagerSignaler.changing.add(function() {
+        //Don't save an empty character.
+        if (CharacterManager.activeCharacter() && viewModel.ready()) { 
+            viewModel.unload();
+        } 
+    });
+    CharacterManagerSignaler.changed.add(function() {
+        viewModel.init();
+        viewModel.load();
+    });
+    
+    //Check if a character already exists.
+    if (CharacterManager.activeCharacter()) {
+        CharacterManager.changeCharacter(
+            CharacterManager.activeCharacter().key());
+    }
+};
+
+/**
+ * Times a given function's execution.
+ */
+var timeit = function(name, cb) {
+    var t = new Date().getTime();
+    cb();
+    console.log(name + ': ' + String(new Date().getTime() - t));
 };
 

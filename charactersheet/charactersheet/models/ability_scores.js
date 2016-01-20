@@ -96,7 +96,6 @@ function AbilityScores() {
 
     self.save = function() {
     	self.ps.save();
-    	AbilityScoresSignaler.changed.dispatch();
     };
 };
 

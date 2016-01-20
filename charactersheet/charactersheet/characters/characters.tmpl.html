@@ -1,0 +1,53 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content container-fluid">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button> 
+      <h4 class="modal-title" id="importModalLabel">
+        Characters and Games
+      </h4>
+    </div>
+    <div class="modal-body">
+      <div class='container-fluid'>
+        <table style="" data-bind='foreach: $data.characters' 
+          class="table table-hover table-ac-bordered">
+          <tr>
+            <td 
+              style="cursor:pointer;"
+              data-bind="click: $parent.changeCharacter"
+              data-dismiss="modal">        
+              <span data-bind='text: playerTitle'></span> 
+              <small>
+                by <span data-bind='text: playerAuthor'></span>
+                <br />
+                <i data-bind='text: playerSummary'></i>
+              </small>
+            </td>
+            <td>
+              <button class="close" 
+                data-bind="click: $parent.removeCharacter"
+                data-dismiss="modal">        
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class='pull-left'>
+        <p class="text-left">
+          You've used <span data-bind='text: localStoragePercent'></span>% of your total local space.
+        </p>
+        <p class="text-left">
+          Click <a href='/about#storage'>here</a> for more information.
+        </p>
+      </div>
+      <button type="button" class="btn btn-primary pull-right"
+        data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">Done</span>
+      </button> 
+    </div>
+  </div>
+</div>

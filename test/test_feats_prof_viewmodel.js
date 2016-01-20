@@ -22,9 +22,9 @@ describe('Feats Prof View Model', function() {
 			fp.characterId('1234');
 			FeatsProf.findBy = function(key) { return [ fp, new FeatsProf()]; };
 			var featsProfVM = new FeatsProfViewModel();
-			featsProfVM.featsProf.feats().should.equal('');
+			featsProfVM.featsProf().feats().should.equal('');
 			featsProfVM.load();
-			featsProfVM.featsProf.feats().should.equal('hi');
+			featsProfVM.featsProf().feats().should.equal('hi');
 
 			CharacterManager.activeCharacter = c;
 		});

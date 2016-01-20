@@ -75,7 +75,8 @@ function Character() {
 	});
 	
 	self.saveToFile = function() {
-    	var string = JSON.stringify(Character.exportChracter(self.key()));
+    	var string = JSON.stringify(Character.exportChracter(self.key()), 
+    	    null, 2); //Pretty print
     	var filename = self.playerTitle();
     	var blob = new Blob([string], {type: "application/json"});
 		saveAs(blob, filename);

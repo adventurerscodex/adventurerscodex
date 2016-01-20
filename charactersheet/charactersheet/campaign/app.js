@@ -7,7 +7,7 @@ var CampaignSignaler = {
 function CampaignViewModel() {
 	var self = this;
 	
-	self.campaign = new Campaign();
+	self.campaign = ko.observable(new Campaign());
 		
 	self.init = function() {};
 	
@@ -15,12 +15,14 @@ function CampaignViewModel() {
 		var key = CharacterManager.activeCharacter().key();
 		var cam = Campaign.findBy(key);
 		if (cam.length > 0) {
-			self.campaign = cam[0];
+			self.campaign(cam[0]);
+		} else {
+		    self.campaign(new Campaign());
 		}
-		self.campaign.characterId(key);
+		self.campaign().characterId(key);
 	};
 	
 	self.unload = function() {
-		self.campaign.save();
+		self.campaign().save();
 	};
 };

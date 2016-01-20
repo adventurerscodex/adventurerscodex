@@ -12,10 +12,10 @@ describe('SpellStats', function() {
 	describe('Clear', function() {
 		it('should clear all the values', function() {
 			var pc_stats = new SpellStatsViewModel();
-			pc_stats.spellStats.spellcastingAbility('INT');
-			pc_stats.spellStats.spellcastingAbility().should.equal('INT');
+			pc_stats.spellStats().spellcastingAbility('INT');
+			pc_stats.spellStats().spellcastingAbility().should.equal('INT');
 			pc_stats.clear();
-			pc_stats.spellStats.spellcastingAbility().should.equal('');
+			pc_stats.spellStats().spellcastingAbility().should.equal('');
 		});
 	});
 });

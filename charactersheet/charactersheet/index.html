@@ -2,45 +2,76 @@
 <html id='html'>
 <head>
 	<title data-bind='text: pageTitle'></title>
-	<meta charset="utf-8">
+	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<link rel="apple-touch-icon" href="/images/logo-full-icon.png">
 	<link rel="icon" type="image/png" href="/images/logo-full.png">
 	<link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
 	<link href="/site.css" rel="stylesheet">
-	<script type="text/javascript">
-    //Check immediately. Skip loading page if necessary.
-    if (localStorage.Character === undefined || localStorage.Character.length < 1) {
-      window.location = '/characters'
-    }
-    </script>
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-static-top">
 <div class="container-fluid">
 	<div class="navbar-header">
-		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button> <a href='/' class="navbar-brand">Adventurer's Codex <sup class="beta">Beta!</sup> </a>
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" 
+		  data-target="#navbar" aria-expanded="false" aria-controls="navbar"> 
+		  <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> 
+		  <span class="icon-bar"></span><span class="icon-bar"></span> 
+		</button> 
+		<a href='/' class="navbar-brand">Adventurer's Codex 
+		  <sup class="beta">Beta!</sup>
+		</a>
 	</div>
 	<div id="navbar" class="collapse navbar-collapse">
 		<ul class="nav navbar-nav">
-			<li><a href="/characters">Characters and Games</a></li>
-			<li><a href="/about">About</a></li>
-			<li><a href="/help">Help</a></li>
-			<li><a href="//blog.adventurerscodex.com">Blog</a></li>
-			<li><a href="https://tinyletter.com/adventurerscodex">Newsletter</a></li>
+			<li><a href="//adventurerscodex.com/blog">Blog</a></li>
+			<li><a href="//tinyletter.com/adventurerscodex">Newsletter</a></li>
 		</ul>
 	</div>
 
 <!--/.nav-collapse -->
 </div>
 </nav>
-<div id='content' class='container-fluid' data-bind="visible: ready">
+<div id='content' class='container-fluid' data-bind="if: ready">
+  <div id="characters" class="container-fluid" style="padding-top:10px;padding-bottom:10px;"> 
+    <div class="row">
+      <div class="col-sm-1">
+        <img data-binds="attr: { src: profileViewModel.profileImage }" 
+          src="/images/blank-profile.png" class="img-circle" />
+      </div>
+      <div class="col-sm-10" style="margin-top:-20px;">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 data-bind='text: playerTitle'></h2>
+            <i data-bind='text: ""'></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <i class="small underline"><a class="" data-toggle="modal" 
+              data-target="#newModal" href="#">New</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal" 
+              data-target="#charactersModal" href="#">Characters and Games</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal" 
+              data-target="#exportModal" 
+              data-bind="click: charactersViewModel.selectCharacter" 
+              href="#">Export</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal" 
+              data-target="#settingsModal" href="#">Settings</a></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spacer"></div>
 	<ul class="nav nav-tabs">
 		<li role="presentation" data-bind="click: activateCharacterTab, css: characterTabStatus"><a href="#character" aria-controls="character" role="tab" data-toggle="tab">Character Sheet</a></li>
 		<li role="presentation" data-bind="click: activateDMTab, css: dMTabStatus"><a href="#dm" aria-controls="dm" role="tab" data-toggle="tab">Game Sheet</a></li>
 		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Your Party</a></li>
-		<li role="presentation" data-bind="click: activateSettingsTab, css: settingsTabStatus"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
 	</ul>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
@@ -135,13 +166,87 @@
 			</div>
 		</div>
 <!-- End group Tab -->
-		<div role="tabpanel" class="tab-pane" id="settings" data-bind="with: settingsTabViewModel, css: settingsTabStatus">
-			Settings
-		</div>
-
-<!-- End settings Tab -->
 	</div>
 </div>
+
+<!-- ko ifnot: ready -->
+<div id="wizard" class="container-fluid"
+  data-bind="with: wizardViewModel">
+  <div data-bind="template: { 
+    name: 'wizard.tmpl', 
+    templateUrl: 'wizard', 
+    data: $data }"></div>
+</div>
+<!-- /ko -->
+  
+<!-- Switch Characters Modal -->
+<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog" 
+  aria-labelledby="charactersModalLabel"
+  data-bind="template: {
+      name: 'characters.tmpl', 
+      templateUrl: 'characters', 
+      data: charactersViewModel }">
+</div>
+
+<!-- Export Modal -->
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" 
+  data-bind="with: charactersViewModel.selectedCharacter"
+  aria-labelledby="exportModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+      </div>
+      <div class="modal-body">
+        <p>Save your character to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+        <p>Note: Safari users will need to save the contents of the page.</p>
+      <!-- Add export form. -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>      
+      </div>
+    </div>
+  </div>
+</div>
+  
+<!-- Settings Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" 
+  aria-labelledby="settingsLabel" 
+  data-bind="template: { 
+      name: 'settings.tmpl', 
+      templateUrl: 'settings', 
+      data: settingsViewModel }">
+</div>
+
+<!-- New Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" 
+  aria-labelledby="newLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" 
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="settingsLabel" 
+          data-dismiss="modal">Create a new character</h4>
+      </div>
+      <div class="modal-body">
+        <p>If you play more than one character per game, or if you
+        play multiple games, you're in luck! You can have
+        multiple characters and switch between them at any time!</p>
+      </div>
+      <div class="modal-footer">
+        <button data-bind="click: showWizard" 
+          data-dismiss="modal" type="submit"
+          class="btn btn-primary">Make a new character
+        </button>
+      </div>
+    </div>
+  </div> 
+</div>
+
 <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
@@ -157,7 +262,7 @@
 <script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
 <script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
 <!-- ViewModels -->
-<script src="/characters/app.js" type="text/javascript"></script>
+<script src="characters/app.js" type="text/javascript"></script>
 <script src="ability_scores/app.js" type="text/javascript"></script>
 <script src="app.js" type="text/javascript"></script>
 <script src="appearance/app.js" type="text/javascript"></script>
@@ -173,12 +278,14 @@
 <script src="notes/app.js" type="text/javascript"></script>
 <script src="profile/app.js" type="text/javascript"></script>
 <script src="saving_throws/app.js" type="text/javascript"></script>
+<script src="settings/app.js" type="text/javascript"></script>
 <script src="skills/app.js" type="text/javascript"></script>
 <script src="spell_slots/app.js" type="text/javascript"></script>
 <script src="spell_stats/app.js" type="text/javascript"></script>
 <script src="spells/app.js" type="text/javascript"></script>
 <script src="stats/app.js" type="text/javascript"></script>
 <script src="treasure/app.js" type="text/javascript"></script>
+<script src="wizard/app.js" type="text/javascript"></script>
 <!-- Models -->
 <script src="models/ability_scores.js" type="text/javascript"></script>
 <script src="models/appearance.js" type="text/javascript"></script>
@@ -214,16 +321,16 @@
 	  window.viewModel = new RootViewModel();
 	  var viewModelEnd = new Date().getTime();
 
-	  ko.applyBindings(window.viewModel, $('#html')[0]);
-	  var docEnd = new Date().getTime();
-
     init(window.viewModel);
 	  var initEnd = new Date().getTime();
 
+	  ko.applyBindings(window.viewModel, $('#html')[0]);
+	  var docEnd = new Date().getTime();
+
     console.log('Profile\nTotal: ' + (docEnd - docStart)
       + '\nMake ViewModel: ' + (viewModelEnd - docStart)
-      + '\nBindings Applied: ' + (docEnd - viewModelEnd)
-      + '\nInit ViewModel: ' + (initEnd - docEnd));
+      + '\nInit ViewModel: ' + (initEnd - viewModelEnd)
+      + '\nBindings Applied: ' + (docEnd - initEnd));
     //Setup automatic saving.
     window.onbeforeunload = window.viewModel.unload;
 	});
