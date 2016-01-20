@@ -130,6 +130,11 @@ function RootViewModel() {
         		+ ' | Adventurer\'s Codex';
         } catch(err) {}
     });
+    
+    self.showWizard = function() {
+        self.ready(false);
+        self.wizard(true);
+    };
 
 	//Public Methods
 	
