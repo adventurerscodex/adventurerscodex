@@ -7,15 +7,17 @@ var StatsSignaler = {
 function StatsViewModel() {
 	var self = this;
 	
+<<<<<<< HEAD
 	self.health = ko.observable(new Health());
 	self.otherStats = ko.observable(new OtherStats());
 	self.blankHitDice = ko.observable(new HitDice());
+=======
+	self.health = new Health();
+	self.otherStats = new OtherStats();
+>>>>>>> 45826ca59ab9190c0190ef7714cbed2d5f40dfa4
 	self.hitDiceList = ko.observableArray([]);
-	
-	self.enableAdd = ko.computed(function(){
-		return self.hitDiceList().length < 21;
-	});
-
+	self.hitDiceType = new HitDiceType();
+		
 	self.init = function() {};
 	
 	self.load = function() {
@@ -42,6 +44,11 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
+		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
+		if(hitDiceType.length > 0){
+			self.hitDiceType = hitDiceType[0];
+		}
+		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
 		
 		//Subscriptions
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
@@ -54,11 +61,18 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.save();
 		});
+		self.hitDiceType.save();
 	};
 
 	self.clear = function() {
+<<<<<<< HEAD
 		self.health().clear();
 		self.otherStats().clear();
+=======
+		self.health.clear();
+		self.otherStats.clear();
+		self.hitDiceType.clear();
+>>>>>>> 45826ca59ab9190c0190ef7714cbed2d5f40dfa4
 	};
 		
 	self.calculateHitDice = function() {

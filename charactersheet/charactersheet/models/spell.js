@@ -85,7 +85,7 @@ function Spell() {
 			spellCastingTime: self.spellCastingTime(),
 			spellRange: self.spellRange(),
 			spellComponents: self.spellComponents(),
-			spellDuration: self.spellDuration(),
+			spellDuration: self.spellDuration()
         }
     };
     

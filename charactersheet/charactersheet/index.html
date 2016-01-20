@@ -8,6 +8,7 @@
 	<link rel="apple-touch-icon" href="/images/logo-full-icon.png">
 	<link rel="icon" type="image/png" href="/images/logo-full.png">
 	<link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
+	<link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 	<link href="/site.css" rel="stylesheet">
 </head>
 <body>
@@ -84,7 +85,7 @@
 					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'appearance', data: appearanceViewModel }">
 					</div>
 				</div>
-				
+
 				<div class="col-md-4 col-sm-6 col-padded">
 					<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores', data: abilityScoresViewModel }">
 					</div>
@@ -254,13 +255,14 @@
 <script src="/bower_components/uri.js/src/URI.min.js" type="text/javascript"></script>
 <script src="/bower_components/node-uuid/uuid.js" type="text/javascript"></script>
 <script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script>
-
+<script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/bin/markdown.min.js"></script>
 <script src="/bin/socket.io-1.2.0.js"></script>
 <script src="/bin/knockout-file-bind.js" type="text/javascript"></script>
 <script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
 <script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
 <script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
+<script src="/bin/knockout_boostrap_select_bind.js" type="text/javascript"></script>
 <!-- ViewModels -->
 <script src="characters/app.js" type="text/javascript"></script>
 <script src="ability_scores/app.js" type="text/javascript"></script>
@@ -297,6 +299,7 @@
 <script src="models/feats_prof.js" type="text/javascript"></script>
 <script src="models/health.js" type="text/javascript"></script>
 <script src="models/hit_dice.js" type="text/javascript"></script>
+<script src="models/hit_dice_type.js" type="text/javascript"></script>
 <script src="models/item.js" type="text/javascript"></script>
 <script src="models/note.js" type="text/javascript"></script>
 <script src="models/npc.js" type="text/javascript"></script>

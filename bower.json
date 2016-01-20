@@ -29,7 +29,9 @@
     "node-uuid": "~1.4.3",
     "socket.io": "~1.3.7",
     "bootstrap-theme-bootswatch-flatly": "~1.0.2",
-    "js-signals": "~1.0.0"
+    "js-signals": "~1.0.0",
+    "select2": "~4.0.1",
+    "bootstrap-select": "~1.9.3"
   },
   "resolutions": {
     "webcomponentsjs": "~0.5.4"
