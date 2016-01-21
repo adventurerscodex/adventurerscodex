@@ -145,6 +145,14 @@ div.hr {
 	overflow:hidden;
 }
 
+.no-padding {
+  padding:0px;
+}
+
+.no-border {
+  border:none;
+}
+
 .underline {
   text-decoration: underline;
 }

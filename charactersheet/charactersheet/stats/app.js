@@ -7,14 +7,9 @@ var StatsSignaler = {
 function StatsViewModel() {
 	var self = this;
 	
-<<<<<<< HEAD
 	self.health = ko.observable(new Health());
 	self.otherStats = ko.observable(new OtherStats());
 	self.blankHitDice = ko.observable(new HitDice());
-=======
-	self.health = new Health();
-	self.otherStats = new OtherStats();
->>>>>>> 45826ca59ab9190c0190ef7714cbed2d5f40dfa4
 	self.hitDiceList = ko.observableArray([]);
 	self.hitDiceType = new HitDiceType();
 		
@@ -65,14 +60,9 @@ function StatsViewModel() {
 	};
 
 	self.clear = function() {
-<<<<<<< HEAD
 		self.health().clear();
 		self.otherStats().clear();
-=======
-		self.health.clear();
-		self.otherStats.clear();
 		self.hitDiceType.clear();
->>>>>>> 45826ca59ab9190c0190ef7714cbed2d5f40dfa4
 	};
 		
 	self.calculateHitDice = function() {

@@ -8,9 +8,12 @@ function ProfileViewModel() {
 	var self = this;
 
 	self.profile = ko.observable(new Profile());
-
+    
 	self.init = function() {
-		
+		//Subscriptions
+		self.profile().level.subscribe(self.dataHasChanged);
+		self.profile().playerName.subscribe(self.dataHasChanged);
+		self.profile().characterName.subscribe(self.dataHasChanged);
 	};
 
 	self.load = function() {
@@ -21,11 +24,6 @@ function ProfileViewModel() {
 		    self.profile(new Profile());
 		}
 		self.profile().characterId(CharacterManager.activeCharacter().key());
-		
-		//Subscriptions
-		self.profile().level.subscribe(self.dataHasChanged);
-		self.profile().playerName.subscribe(self.dataHasChanged);
-		self.profile().characterName.subscribe(self.dataHasChanged);
 	};
 
 	self.unload = function() {

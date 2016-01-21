@@ -28,7 +28,7 @@ function RootViewModel() {
 	
 	self.wizardViewModel = new WizardViewModel();
 	self.charactersViewModel = new CharactersViewModel();
-	self.settingsViewModel = new SettingsViewModel();
+	self.settingsViewModel = ko.observable(new SettingsViewModel());
 	
 	//Tab Properties
 	self.characterTabStatus = ko.pureComputed(function() {
@@ -154,7 +154,7 @@ function RootViewModel() {
         }
         self.partyTabViewModel().init();
         self.charactersViewModel.init();
-            
+        self.settingsViewModel().init();  
         //Subscriptions   
         ProfileSignaler.changed.add(function() {
             self._dummy.valueHasMutated();
@@ -180,6 +180,7 @@ function RootViewModel() {
             }
             self.partyTabViewModel().load();
             self.charactersViewModel.load();
+            self.settingsViewModel().load();  
             self.ready(true);
         }
 	};
@@ -194,6 +195,7 @@ function RootViewModel() {
             }
             self.partyTabViewModel().unload();
             self.charactersViewModel.unload();
+            self.settingsViewModel().unload();  
         }
 	};
 };
@@ -206,6 +208,7 @@ function RootViewModel() {
 function CharacterTabViewModel() {
 	var self = this;
 
+    self.playerInfoViewModel = ko.observable(new PlayerInfoViewModel());
 	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
 	self.statsViewModel = ko.observable(new StatsViewModel());
@@ -392,8 +395,13 @@ var init = function(viewModel) {
         } 
     });
     CharacterManagerSignaler.changed.add(function() {
-        viewModel.init();
-        viewModel.load();
+        try {
+            viewModel.init();
+            viewModel.load();
+        } catch(err) {
+            console.log(err)
+            throw err
+        }
     });
     
     //Check if a character already exists.
