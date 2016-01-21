@@ -9,7 +9,11 @@
         data-dismiss="modal">Settings</h4>
     </div>
     <div class="modal-body">
-      <p>Nothing here.</p>
+      <div data-bind="template: {
+        name: 'player_info.tmpl',
+        templateUrl: 'player_info',
+        data: playerInfoViewModel
+      }"></div>
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary" 

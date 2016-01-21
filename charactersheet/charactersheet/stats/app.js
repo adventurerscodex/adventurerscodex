@@ -58,6 +58,7 @@ function StatsViewModel() {
 	self.clear = function() {
 		self.health().clear();
 		self.otherStats().clear();
+		self.hitDiceType.clear();
 	};
 		
 	self.calculateHitDice = function() {
