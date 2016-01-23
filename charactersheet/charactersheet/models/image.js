@@ -5,6 +5,8 @@ function ImageModel() {
     self.ps = PersistenceService.register(ImageModel, self);
     
 	self.characterId = ko.observable(null);
+	self.ps.unique('characterId');
+	
     /**
      * The image data.
      */
@@ -41,7 +43,6 @@ function ImageModel() {
 	self.resize = function() {
 	    var compData = ImageModel.resizeImageData(
 	        self.dataUrl(), self.height(), self.width())
-	    console.log(self.dataUrl().length - compData.length);
 	    self.imageUrl(compData);
 	    self.save();
 	};

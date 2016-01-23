@@ -1,5 +1,31 @@
 "use strict";
 
+function Constraints() {
+    var self = this;
+    
+    self._constraints = [];
+    
+    /**
+     * Registers that a given field should be unique.
+     */
+    self.unique = function(value) {
+        self._constraints.push(['unique', value])
+    };
+    
+    /**
+     * Checks if a given value is under a given constraint.
+     */
+    self.is = function(key, val) {
+        for (var i = 0; i<self._constraints.length; i++) {
+            var obj = self._constraints[i];
+            if (obj[0] === key && obj[1] === val) {
+                return true;
+            }
+        }
+        return false;
+    };
+};
+
 //=========================== PersistenceService ==============================
 
 var PersistenceService = {
@@ -50,7 +76,7 @@ PersistenceService.findAll = function(model) {
  * PersistenceService.save(Person, new Person());```
  */
 PersistenceService.save = function(model, inst) {
-	PersistenceService._save(model.name, inst);
+	PersistenceService._save(model.name, inst, null);
 };
 
 /**
@@ -137,7 +163,8 @@ function PersistenceServiceToken(model, inst) {
 	
 	self.model = model;
 	self.inst = inst;
-
+	self.constraints = new Constraints();
+	
    /**
 	* Return all of the stored instances of the configured class.
 	* 
@@ -178,7 +205,7 @@ function PersistenceServiceToken(model, inst) {
 	 * }```
 	 */
 	self.save = function() {
-		PersistenceService.save(self.model, self.inst);
+		PersistenceService._save(self.model, self.inst, self.constraints);
 	};
 	
 	/**
@@ -243,7 +270,7 @@ PersistenceService._findAll = function(model) {
 	return models;
 };
 
-PersistenceService._save = function(key, inst) {
+PersistenceService._save = function(key, inst, constraints) {
 	//Export the instance's data.
 	var data;
 	if (PersistenceService.customImport) {
@@ -268,15 +295,21 @@ PersistenceService._save = function(key, inst) {
 		table = {};
 	}
 	//Make an id if one doesn't exist.
+	//If the item should be unique, then check if it already exists first.
 	var id = inst.__id;
 	if (id === undefined || id === null) {
-		var indecies = Object.keys(table);
-		indecies.sort(function(a,b){return parseInt(b)-parseInt(a)});
-		
-		id = indecies[0] ? parseInt(indecies[0]) + 1 : 0;
-		inst.__id = id;
+	    //Check unique.
+	    id = PersistenceService._getUniqueIndexFor(table, data, constraints)
+	    if (id === undefined || id === null) {
+            var indecies = Object.keys(table);
+    	    //Make new index.
+            indecies.sort(function(a,b){return parseInt(b)-parseInt(a)});
+        
+            id = indecies[0] ? parseInt(indecies[0]) + 1 : 0;
+            inst.__id = id;
+        }
 	}
-	table[id] = data;
+    table[id] = data;	
 	try {
 		localStorage[key] = JSON.stringify(table);
 	} catch(err) {
@@ -322,3 +355,54 @@ PersistenceService._delete = function(key, id) {
 PersistenceService._listAll = function() {
 	return JSON.parse(localStorage[PersistenceService.master]);
 }
+
+/**
+ * If an item with that unique constraint exists, return it's index else null.
+ */
+PersistenceService._getUniqueIndexFor = function(table, data, constraints) {
+    var tableKeys = Object.keys(table);
+    var uniqueKeys = [];
+    //Find the unique keys.
+    try {
+        var firstItem = table[tableKeys[0]];
+        var itemKeys = Object.keys(firstItem);
+        for (var i = 0; i<itemKeys.length; i++) {
+            if (constraints.is('unique', itemKeys[i]) {
+                uniqueKeys.push(itemKeys[i]);
+            }
+        }
+    } catch(err) {
+        return null;
+    }
+    
+    if (uniqueKeys.length === 0) {
+        return null;
+    }
+    
+    //Check if a unique item exists.
+    var uniqueVals = [];
+    for (var i = 0; i<tableKeys.length; i++) {
+        var item = table[tableKeys[i]];
+        for (var j = 0; j<uniqueKeys.length; j++) {
+            var itemKey = uniqueKeys[j];
+            var notInside = uniqueVals.some(function(e, k, _) {
+                return e.key !== itemKey || e.val !== item[itemKey]
+            });
+            if (notInside) {
+                uniqueVals.push({ 
+                    id: tableKeys[i],
+                    val: item[itemKey],
+                    key: uniqueKeys[j]
+                });
+            }
+        }
+    }
+    //See if the data matches.
+    var matches = uniqueVals.filter(function(e, i, _) {
+        return data[e.key] === e.val;
+    });
+    if (matches.length > 0) {
+        return matches[0].id;
+    }
+    return null;
+};

@@ -11,9 +11,6 @@ function PlayerInfoViewModel() {
     self.image = ko.observable(new ImageModel());
     
 	self.init = function() {
-		//Subscriptions
-		self.image().dataUrl.subscribe(self.dataHasChanged);
-		self.playerInfo().email.subscribe(self.dataHasChanged);		
 	};
 
 	self.load = function() {
@@ -32,6 +29,9 @@ function PlayerInfoViewModel() {
 		    self.playerInfo(new PlayerInfo());
 		}
 		self.playerInfo().characterId(CharacterManager.activeCharacter().key());
+		//Subscriptions
+		self.image().dataUrl.subscribe(self.dataHasChanged);
+		self.playerInfo().email.subscribe(self.dataHasChanged);		
 	};
 
 	self.unload = function() {
