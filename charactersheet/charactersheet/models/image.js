@@ -5,7 +5,6 @@ function ImageModel() {
     self.ps = PersistenceService.register(ImageModel, self);
     
 	self.characterId = ko.observable(null);
-	self.ps.unique('characterId');
 	
     /**
      * The image data.
@@ -102,5 +101,6 @@ ImageModel.resizeImageData = function(dataUrl, max_height, max_width) {
 
     //preview.appendChild(canvas); // do the actual resized preview
   
-  return canvas.toDataURL("image/jpeg"); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+    var data = canvas.toDataURL("image/jpeg"); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+    return data.length < 10 ? dataUrl : data;
 }
