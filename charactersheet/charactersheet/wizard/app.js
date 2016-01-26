@@ -6,6 +6,8 @@ function WizardViewModel() {
     self.STEPS = ['type', 'info'];
     
     self.type = ko.observable();
+    self.playerInfo = ko.observable(new PlayerInfo());
+    
     self.profile = ko.observable(new Profile());
     self.campaign = ko.observable(new Campaign());
     self.currentStep = ko.observable(0);
@@ -117,8 +119,11 @@ function WizardViewModel() {
 		character.save();
 		
 		self.campaign().characterId(character.key());
-        self.campaign().save();    
+        self.campaign().save();
         
+        self.playerInfo().characterId(character.key());    
+        self.playerInfo().save();
+
         return character;    
     };
 
@@ -135,6 +140,10 @@ function WizardViewModel() {
 		
 		self.profile().characterId(character.key());
         self.profile().save();    
+
+        self.playerInfo().characterId(character.key());    
+        self.playerInfo().save();
+
         return character;    
     };
 };

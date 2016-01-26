@@ -31,12 +31,31 @@
                     data: $data }"></div>
             </div>
           </div>
+          <div class="row">
+          <h4>Optional</h4>
+          <p><i>If you use Gravatar, enter your email here. If you don't
+          know what that is, then don't worry.</i></p>
+            <div class="col-md-12">
+              <div class="container-fluid" data-bind="template: {
+                    name: 'player_info.tmpl', 
+                    templateUrl: 'player_info', 
+                    data: $data }"></div>
+            </div>
+          </div>
           <!-- /ko -->
           <!-- DM -->
           <!-- ko if: showCampaign -->
           <h3>What's your campaign called?</h3>
           <p><i>Go ahead and tell us some basic information about your campaign, 
           and yourself.</i></p>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="container-fluid" data-bind="template: {
+                    name: 'player_info.tmpl', 
+                    templateUrl: 'player_info', 
+                    data: $data }"></div>
+            </div>
+          </div>
           <div class="container-fluid" data-bind="template: {
                     name: 'campaign.tmpl', 
                     templateUrl: 'campaign', 

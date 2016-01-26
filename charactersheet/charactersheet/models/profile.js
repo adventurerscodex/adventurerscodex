@@ -72,7 +72,7 @@ function Profile() {
 			gender: self.gender(),
 			age: self.age(),
 			level: self.level(),
-			exp: self.exp()
+			exp: self.exp(),
 		}
 	};
 };

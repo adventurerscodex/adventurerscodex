@@ -15,11 +15,24 @@
     <div class="row row-padded">
       <div class="col-md-12 col-padded">
         <div class="input-group">
-          <span class="input-group-addon">Hit Dice
+          <span class="input-group-addon">Hit Dice:&nbsp;
+<!-- 
+          <select data-bind="options: hitDiceOptions,
+                                     value: hitDiceType"></select>
+ -->
           </span>
           <div class="form-control"data-bind="foreach: hitDiceList" >
             <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>
           </div>
+<!-- 
+          <span class="input-group-addon">
+              <select data-bind="value: hitDiceType.hitDiceType, 
+              selectPicker: hitDiceType.hitDiceType, 
+              selectPickerOptions: { 
+                optionsArray: hitDiceType.hitDiceOptions
+              }"></select>
+           </span>
+ -->
         </div>
       </div>
     </div>
@@ -31,11 +44,11 @@
             <td class="col-md-1"></td>
             <td class="col-md-6 text-right">
               <span class="form-control">Max HP:</span>
-            </td> 
+            </td>
             <td class="col-md-5">
               <input type="number" class="form-control  text-left" aria-describedby="basic-addon2"
-                data-bind='textInput: health.maxHitpoints' min="0">          
-            </td>           
+                data-bind='textInput: health.maxHitpoints' min="0">
+            </td>
           </tr>
           <tr>
             <td class="text-center">
@@ -43,20 +56,20 @@
             </td>
             <td class="text-right">
               <span class="form-control">Damage:</span>
-            </td> 
+            </td>
             <td>
               <input type="number" class="form-control text-left" aria-describedby="basic-addon2"
-                data-bind='textInput: health.damage' min="0">          
-            </td>           
+                data-bind='textInput: health.damage' min="0">
+            </td>
           </tr>
           <tr>
             <td></td>
             <td class=" text-right">
               <span class="form-control">HP:</span>
-            </td> 
+            </td>
             <td class="text-left">
-              <span class="form-control" data-bind='text: health.hitpoints'>          
-            </td>           
+              <span class="form-control" data-bind='text: health.hitpoints'>
+            </td>
           </tr>
         </table>
       </div>
