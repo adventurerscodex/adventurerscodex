@@ -41,6 +41,11 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
+		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
+		if(hitDiceType.length > 0){
+			self.hitDiceType = hitDiceType[0];
+		}
+		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
 		
 		//Subscriptions
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
@@ -53,6 +58,7 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.save();
 		});
+		self.hitDiceType.save();
 	};
 
 	self.clear = function() {
