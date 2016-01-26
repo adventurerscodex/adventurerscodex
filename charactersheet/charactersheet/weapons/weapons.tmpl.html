@@ -1,0 +1,386 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+        <tr>
+          <th data-bind="click: function(){sortBy('weaponName');}">
+            Weapon
+            <span data-bind="css: sortArrow('weaponName')"></span>
+          </th>
+          <th data-bind="click: function(){sortBy('weaponDmg');}">
+            Damage
+            <span data-bind="css: sortArrow('weaponDmg')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponType');}">
+            Type
+            <span data-bind="css: sortArrow('weaponType')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponRange');}">
+            Range
+            <span data-bind="css: sortArrow('weaponRange')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponDamageType');}">
+            Damage Type
+            <span data-bind="css: sortArrow('weaponDamageType')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponProperty');}">
+            Property
+            <span data-bind="css: sortArrow('weaponProperty')"></span>
+          </th>
+          <th>
+            <a data-toggle="modal"
+               data-target="#addWeapon" href="#">
+              <i class="glyphicon glyphicon-plus"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-bind='foreach: filteredAndSortedWeapons'>
+        <tr style="cursor:pointer;">
+          <td data-bind="text: weaponName, click: $parent.editWeapon"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewWeapon"></td>
+          <td data-bind="text: weaponDmg, click: $parent.editWeapon"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewWeapon"></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: weaponType, click: $parent.editWeapon"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewWeapon"></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: weaponRange, click: $parent.editWeapon"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewWeapon"></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: weaponDamageType, click: $parent.editWeapon"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewWeapon"></td>
+          <td data-bind="text: weaponProperty, click: $parent.editWeapon"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewWeapon"></td>
+          <td>
+            <a data-bind="click: $parent.removeWeapon" href="#">
+              <i class="glyphicon glyphicon-remove">
+              </i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+    <!-- Add Modal -->
+    <div class="modal fade"
+         id="addWeapon"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="addWeaponLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"
+                id="addWeaponLabel">Add a weapon to your arsenal.</h4>
+        </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="weaponName"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="weaponName"
+                         placeholder="Short Sword"
+                         data-bind='textInput: blankWeapon().weaponName'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponDmg"
+                       class="col-sm-2 control-label">Damage</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponDmg"
+                           placeholder="1D4"
+                           data-bind='textInput: blankWeapon().weaponDmg'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponType"
+                       class="col-sm-2 control-label">Type</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: blankWeapon().weaponTypeOptions,
+                                     value: blankWeapon().weaponType"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponHandedness"
+                       class="col-sm-2 control-label">Handedness</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: blankWeapon().weaponHandednessOptions,
+                                     value: blankWeapon().weaponHandedness"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponProficiency"
+                       class="col-sm-2 control-label">Proficiency</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: blankWeapon().weaponProficiencyOptions,
+                                     value: blankWeapon().weaponProficiency"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponPrice"
+                       class="col-sm-2 control-label">Price</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponPrice"
+                           placeholder="5"
+                           data-bind='textInput: blankWeapon().weaponPrice'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponWeight"
+                       class="col-sm-2 control-label">Weight</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponWeight"
+                           placeholder="6"
+                           data-bind='textInput: blankWeapon().weaponWeight'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponRange"
+                       class="col-sm-2 control-label">Range</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponRange"
+                           placeholder="Melee"
+                           data-bind='textInput: blankWeapon().weaponRange'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponSize"
+                       class="col-sm-2 control-label">Size</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: blankWeapon().weaponSizeOptions,
+                                     value: blankWeapon().weaponSize"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponDamageType"
+                       class="col-sm-2 control-label">Damage Type</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: blankWeapon().weaponDamageTypeOptions,
+                                     value: blankWeapon().weaponDamageType"></select>
+                  </div>
+              </div>
+                <div class="form-group">
+                <label for="weaponProperty"
+                       class="col-sm-2 control-label">Property</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: blankWeapon().weaponPropertyOptions,
+                                     value: blankWeapon().weaponProperty"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponDescription"
+                       class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea type="password"
+                              class="form-control"
+                              id="weaponDescription"
+                              rows="4"
+                              placeholder="A sword...that is short..."
+                              data-bind='textInput: blankWeapon().weaponDescription'>
+                    </textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-default"
+                        data-dismiss="modal">Cancel</button>
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bind='click: addWeapon'
+                        data-dismiss="modal">Add</button>
+              </div>
+            </form>
+          </div> <!-- Modal Body -->
+        </div> <!-- Modal Content -->
+      </div> <!-- Modal Dialog -->
+    </div> <!-- Modal Fade -->
+
+    <!-- ViewEdit Modal -->
+    <div data-bind="with: selecteditem">
+    <div class="modal fade"
+         id="viewWeapon"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="viewWeaponLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title"
+                id="viewWeaponLabel">View a weapon to your arsenal.</h4>
+        </div>
+          <div class="modal-body">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="weaponName"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="weaponName"
+                         placeholder="Short Sword"
+                         data-bind='textInput: weaponName'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponDmg"
+                       class="col-sm-2 control-label">Damage</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponDmg"
+                           placeholder="1D4"
+                           data-bind='textInput: weaponDmg'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponType"
+                       class="col-sm-2 control-label">Type</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: weaponTypeOptions,
+                                     value: weaponType"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponHandedness"
+                       class="col-sm-2 control-label">Handedness</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: weaponHandednessOptions,
+                                     value: weaponHandedness"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponProficiency"
+                       class="col-sm-2 control-label">Proficiency</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: weaponProficiencyOptions,
+                                     value: weaponProficiency"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponPrice"
+                       class="col-sm-2 control-label">Price</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponPrice"
+                           placeholder="5 Gold"
+                           data-bind='textInput: weaponPrice'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponWeight"
+                       class="col-sm-2 control-label">Weight</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponWeight"
+                           placeholder="6"
+                           data-bind='textInput: weaponWeight'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponRange"
+                       class="col-sm-2 control-label">Range</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="weaponRange"
+                           placeholder="Melee"
+                           data-bind='textInput: weaponRange'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponSize"
+                       class="col-sm-2 control-label">Size</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: weaponSizeOptions,
+                                     value: weaponSize"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponDamageType"
+                       class="col-sm-2 control-label">Damage Type</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: weaponDamageTypeOptions,
+                                     value: weaponDamageType"></select>
+                  </div>
+                  </div>
+                <div class="form-group">
+                <label for="weaponProperty"
+                       class="col-sm-2 control-label">Property</label>
+                  <div class="col-sm-10">
+                  <select class="form-control"
+                          data-bind="options: weaponPropertyOptions,
+                                     value: weaponProperty"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponDescription"
+                       class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea type="password"
+                              class="form-control"
+                              id="weaponDescription"
+                              rows="4"
+                              placeholder="A sword...that is short..."
+                              data-bind='textInput: weaponDescription'>
+                    </textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </form>
+          </div> <!-- Modal Body -->
+        </div> <!-- Modal Content -->
+      </div> <!-- Modal Dialog -->
+    </div> <!-- Modal Fade -->
+    </div> <!-- End with statement -->
+</div> <!-- Panel -->
+

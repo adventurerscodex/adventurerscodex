@@ -28,7 +28,7 @@ function Weapon() {
     self.weaponPropertyOptions = ko.observableArray(
         ['Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading',
          'Range', 'Reach', 'Special', 'Thrown', 'Versatile']);
-     self.weaponDamageOptions = ko.observableArray(
+     self.weaponDamageTypeOptions = ko.observableArray(
          ['Bludgeoning', 'Piercing', 'Slashing']);
          
     self.clear = function() {
@@ -89,7 +89,7 @@ function Weapon() {
     };
 };
 
-Spell.findAllBy =function(characterId) {
+Weapon.findAllBy =function(characterId) {
 	return PersistenceService.findAll(Weapon).filter(function(e, i, _) {
 		return e.characterId() === characterId;
 	});
