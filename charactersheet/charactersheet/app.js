@@ -866,7 +866,7 @@ function PartyTabViewModel() {
     			try {
 	    			self[keys[i]]().init();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    				throw "Module " + keys[i] + " failed to init.\n" + err;
     			}
     		}
     	}
@@ -892,7 +892,7 @@ function PartyTabViewModel() {
     			try {
 	    			self[keys[i]]().unload();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    				throw "Module " + keys[i] + " failed to unload.\n" + err;
     			}
     		}
     	}
