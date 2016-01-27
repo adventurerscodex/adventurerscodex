@@ -34,7 +34,7 @@ function Spell() {
         'S', 'V', 'V, S', 'S, M', 'V, S, M']);
     self.spellRangeOptions = ko.observableArray([
         'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
-        '90 ft', '100 ft', '120 ft', '300 ft', '500 ft', '1 mile']);
+        '90 ft', '100 ft', '120 ft', '150 ft', '300 ft', '500 ft', '1 mile']);
 
 	self.spellDamageLabel = ko.pureComputed(function() {
 		var charKey = CharacterManager.activeCharacter().key();
@@ -60,7 +60,7 @@ function Spell() {
     };
 
     self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
+    	self.characterId(values.characterId);
         self.spellName(values.spellName);
         self.spellType(values.spellType);
         self.spellDmg(values.spellDmg);
@@ -88,11 +88,11 @@ function Spell() {
 			spellDuration: self.spellDuration()
         }
     };
-    
+
     self.save = function() {
     	self.ps.save();
     };
-    
+
     self.delete = function() {
     	self.ps.delete();
     };
