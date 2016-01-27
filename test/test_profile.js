@@ -9,6 +9,7 @@ describe('Profile View Model', function() {
 			"religion":"",
 			"typeClass":"Wizard",
 			"alignment":"Good",
+			"diety":"Tempus",
 			"gender":"Male",
 			"age":"233",
 			"height":"5'1\"",
