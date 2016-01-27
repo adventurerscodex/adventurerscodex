@@ -208,25 +208,25 @@ function RootViewModel() {
 function CharacterTabViewModel() {
 	var self = this;
 
-    self.playerImageViewModel = ko.observable(new PlayerImageViewModel());
-    self.playerInfoViewModel = ko.observable(new PlayerInfoViewModel());
-	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
-	self.statsViewModel = ko.observable(new StatsViewModel());
 	self.notesViewModel = ko.observable(new NotesViewModel());
-    self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
-    self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
-    self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
-    self.equipmentViewModel = ko.observable(new EquipmentViewModel());
-    self.spellbookViewModel = ko.observable(new SpellbookViewModel());
-    self.skillsViewModel = ko.observable(new SkillsViewModel());
-    self.treasureViewModel = ko.observable(new TreasureViewModel());
-    self.featsProfViewModel = ko.observable(new FeatsProfViewModel());
+	self.profileViewModel = ko.observable(new ProfileViewModel());
 	self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
 	self.spellStatsViewModel = ko.observable(new SpellStatsViewModel());
-    self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
-    self.weaponsViewModel = ko.observable(new WeaponsViewModel());
+	self.statsViewModel = ko.observable(new StatsViewModel());
+    self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
     self.armorViewModel = ko.observable(new ArmorViewModel());
+    self.equipmentViewModel = ko.observable(new EquipmentViewModel());
+    self.featsProfViewModel = ko.observable(new FeatsProfViewModel());
+    self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
+    self.playerImageViewModel = ko.observable(new PlayerImageViewModel());
+    self.playerInfoViewModel = ko.observable(new PlayerInfoViewModel());
+    self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
+    self.skillsViewModel = ko.observable(new SkillsViewModel());
+    self.spellbookViewModel = ko.observable(new SpellbookViewModel());
+    self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
+    self.treasureViewModel = ko.observable(new TreasureViewModel());
+    self.weaponsViewModel = ko.observable(new WeaponsViewModel());
     
 	self.init = function() {
     	//Init all viewModels.
@@ -336,9 +336,11 @@ function DmTabViewModel() {
 
 function PartyTabViewModel() {
 	var self = this;
-		
-	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
+	
+	self.connectionManagerViewModel = ko.observable(
+	    new ConnectionManagerViewModel());
 	self.partyChatViewModel = ko.observable(new PartyChatViewModel());
+	self.playerSummaryViewModel = ko.observable(new PlayerSummaryViewModel());
 	
 	self.init = function() {
     	var keys = Object.keys(self);
@@ -347,7 +349,7 @@ function PartyTabViewModel() {
     			try {
 	    			self[keys[i]]().init();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    				throw "Module " + keys[i] + " failed to init.\n" + err;
     			}
     		}
     	}
@@ -373,7 +375,7 @@ function PartyTabViewModel() {
     			try {
 	    			self[keys[i]]().unload();
     			} catch(err) {
-    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    				throw "Module " + keys[i] + " failed to unload.\n" + err;
     			}
     		}
     	}
