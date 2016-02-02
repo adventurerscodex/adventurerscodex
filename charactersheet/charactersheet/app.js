@@ -3,44 +3,102 @@
 var messenger;
 var players;
 
-/** 
+/**
  * The Root View Model for the application. All other view models are children of this view model.
- * This view model contains the global import/export functionality for player data as well as the 
+ * This view model contains the global import/export functionality for player data as well as the
  * UI helpers for page layout and design.
  */
 function RootViewModel() {
 	var self = this;
-	
+
 	/**
 	 * Once the app is ready to be displayed and all data has been loaded,
 	 * and the init process has finished.
  	 */
 	self.ready = ko.observable(false);
 	self._dummy = ko.observable(false);
-	
+
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
-	
-	//Child View Models
-	self.characterTabViewModel = ko.observable(new CharacterTabViewModel());
-	self.dmTabViewModel = ko.observable(new DmTabViewModel());
-	self.partyTabViewModel = ko.observable(new PartyTabViewModel());
-	
+
+	//Player Child View Models
+	self.profileTabViewModel   = ko.observable(new ProfileTabViewModel());
+	self.statsTabViewModel     = ko.observable(new StatsTabViewModel());
+	self.skillsTabViewModel    = ko.observable(new SkillsTabViewModel());
+	self.spellsTabViewModel    = ko.observable(new SpellsTabViewModel());
+	self.equipmentTabViewModel = ko.observable(new EquipmentTabViewModel());
+	self.inventoryTabViewModel = ko.observable(new InventoryTabViewModel());
+	self.notesTabViewModel     = ko.observable(new NotesTabViewModel());
+	self.partyTabViewModel     = ko.observable(new PartyTabViewModel());
+
+	//DM Child View Models
+	self.campaignTabViewModel  = ko.observable(new CampaignTabViewModel());
+	self.enemiesTabViewModel   = ko.observable(new EnemiesTabViewModel());
+
 	self.wizardViewModel = new WizardViewModel();
 	self.charactersViewModel = new CharactersViewModel();
 	self.settingsViewModel = ko.observable(new SettingsViewModel());
-	
+
 	//Tab Properties
-	self.characterTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('character') > -1) {
-	    	return self.activeTab() === 'character' ? 'active' : '';
-    	} else {
-    		return 'hidden';
-    	}
-    }); 
-	self.dMTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('dm') > -1) {
-	    	return self.activeTab() === 'dm' ? 'active' : '';
+	self.profileTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('profile') > -1) {
+			return self.activeTab() === 'profile' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.statsTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('stats') > -1) {
+			return self.activeTab() === 'stats' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.skillsTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('skills') > -1) {
+			return self.activeTab() === 'skills' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.spellsTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('spells') > -1) {
+			return self.activeTab() === 'spells' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.equipmentTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('equipment') > -1) {
+			return self.activeTab() === 'equipment' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.inventoryTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('inventory') > -1) {
+			return self.activeTab() === 'inventory' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.notesTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('notes') > -1) {
+			return self.activeTab() === 'notes' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.enemiesTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('enemies') > -1) {
+			return self.activeTab() === 'enemies' ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	});
+	self.campaignTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('campaign') > -1) {
+	    	return self.activeTab() === 'campaign' ? 'active' : '';
     	} else {
     		return 'hidden';
     	}
@@ -60,11 +118,32 @@ function RootViewModel() {
     	}
     });
 
-	self.activateCharacterTab = function() {
-		self.activeTab('character');
+	self.activateProfileTab = function() {
+		self.activeTab('profile');
 	};
-	self.activateDMTab = function() {
-		self.activeTab('dm');
+	self.activateStatsTab = function() {
+		self.activeTab('stats');
+	};
+	self.activateSkillsTab = function() {
+		self.activeTab('skills');
+	};
+	self.activateSpellsTab = function() {
+		self.activeTab('spells');
+	};
+	self.activateEquipmentTab = function() {
+		self.activeTab('equipment');
+	};
+	self.activateInventoryTab = function() {
+		self.activeTab('inventory');
+	};
+	self.activateNotesTab = function() {
+		self.activeTab('notes');
+	};
+	self.activateEnemiesTab = function() {
+		self.activeTab('enemies');
+	};
+	self.activateCampaignTab = function() {
+		self.activeTab('campaign');
 	};
 	self.activatePartyTab = function() {
 		self.activeTab('party');
@@ -74,7 +153,7 @@ function RootViewModel() {
 	};
 
 	//UI Methods
-    
+
     self.playerSummary = ko.pureComputed(function() {
 	    self._dummy();
     	var summary = '';
@@ -90,7 +169,7 @@ function RootViewModel() {
     	}
     	return summary;
     });
-    
+
     self.playerTitle = ko.pureComputed(function() {
 	    self._dummy();
     	var name = '';
@@ -106,7 +185,7 @@ function RootViewModel() {
     	}
     	return name;
     });
-    
+
     self.playerAuthor = ko.pureComputed(function() {
 	    self._dummy();
     	var name = '';
@@ -122,7 +201,7 @@ function RootViewModel() {
     	}
     	return name;
     });
-    
+
     self.pageTitle = ko.pureComputed(function() {
 	    self._dummy();
         try {
@@ -130,14 +209,14 @@ function RootViewModel() {
         		+ ' | Adventurer\'s Codex';
         } catch(err) {}
     });
-    
+
     self.showWizard = function() {
         self.ready(false);
         self.wizard(true);
     };
 
 	//Public Methods
-	
+
 	/**
 	 * Call Init on each sub-module.
 	 */
@@ -145,17 +224,25 @@ function RootViewModel() {
         var character = Character.findBy(
             CharacterManager.activeCharacter().key())[0];
         self.playerType(character.playerType());
-        
+
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-            self.characterTabViewModel().init();
-        } 
+			self.profileTabViewModel().init();
+			self.statsTabViewModel().init();
+			self.skillsTabViewModel().init();
+			self.spellsTabViewModel().init();
+			self.equipmentTabViewModel().init();
+			self.inventoryTabViewModel().init();
+			self.notesTabViewModel().init();
+			self.partyTabViewModel().init();
+        }
         if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
-            self.dmTabViewModel().init();
+			self.campaignTabViewModel().init();
+			self.enemiesTabViewModel().init();
         }
         self.partyTabViewModel().init();
         self.charactersViewModel.init();
-        self.settingsViewModel().init();  
-        //Subscriptions   
+        self.settingsViewModel().init();
+        //Subscriptions
         ProfileSignaler.changed.add(function() {
             self._dummy.valueHasMutated();
         });
@@ -164,70 +251,70 @@ function RootViewModel() {
             self.ready(false);
         });
 	};
-	
+
 	/**
 	 * Signal all modules to load their data.
 	 */
 	self.load = function() {
 	    if (CharacterManager.activeCharacter()) {
             self.activeTab(self.playerType().defaultTab);
-    
+
             if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-                self.characterTabViewModel().load();
-            } 
+				self.profileTabViewModel().load();
+				self.statsTabViewModel().load();
+				self.skillsTabViewModel().load();
+				self.spellsTabViewModel().load();
+				self.equipmentTabViewModel().load();
+				self.inventoryTabViewModel().load();
+				self.notesTabViewModel().load();
+				self.partyTabViewModel().load();
+            }
             if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
-                self.dmTabViewModel().load();
+				self.campaignTabViewModel().load();
+				self.enemiesTabViewModel().load();
             }
             self.partyTabViewModel().load();
             self.charactersViewModel.load();
-            self.settingsViewModel().load();  
+            self.settingsViewModel().load();
             self.ready(true);
         }
 	};
 
-	self.unload = function() { 		
+	self.unload = function() {
 	    if (CharacterManager.activeCharacter()) {
             if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-                self.characterTabViewModel().unload();
-            } 
+				self.profileTabViewModel().unload();
+				self.statsTabViewModel().unload();
+				self.skillsTabViewModel().unload();
+				self.spellsTabViewModel().unload();
+				self.equipmentTabViewModel().unload();
+				self.inventoryTabViewModel().unload();
+				self.notesTabViewModel().unload();
+				self.partyTabViewModel().unload();
+            }
             if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
-                self.dmTabViewModel().unload();
+				self.campaignTabViewModel().unload();
+				self.enemiesTabViewModel().unload();
             }
             self.partyTabViewModel().unload();
             self.charactersViewModel.unload();
-            self.settingsViewModel().unload();  
+            self.settingsViewModel().unload();
         }
 	};
 };
 
 /**
- * This view model contains all the relevant child view models for the character
- * tab. This should contain any child view models that relate to a player character
- * or to their character sheet.
+ * This view model contains the player's profile information.
  */
-function CharacterTabViewModel() {
+function ProfileTabViewModel() {
 	var self = this;
 
-    self.playerImageViewModel = ko.observable(new PlayerImageViewModel());
-    self.playerInfoViewModel = ko.observable(new PlayerInfoViewModel());
-	self.profileViewModel = ko.observable(new ProfileViewModel());
-	self.appearanceViewModel = ko.observable(new AppearanceViewModel());
-	self.statsViewModel = ko.observable(new StatsViewModel());
-	self.notesViewModel = ko.observable(new NotesViewModel());
-    self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
+	self.profileViewModel		 = ko.observable(new ProfileViewModel());
+	self.appearanceViewModel 	 = ko.observable(new AppearanceViewModel());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
-    self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
-    self.equipmentViewModel = ko.observable(new EquipmentViewModel());
-    self.spellbookViewModel = ko.observable(new SpellbookViewModel());
-    self.skillsViewModel = ko.observable(new SkillsViewModel());
-    self.treasureViewModel = ko.observable(new TreasureViewModel());
-    self.featsProfViewModel = ko.observable(new FeatsProfViewModel());
-	self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
-	self.spellStatsViewModel = ko.observable(new SpellStatsViewModel());
-    self.savingThrowsViewModel = ko.observable(new SavingThrowsViewModel());
-    self.weaponsViewModel = ko.observable(new WeaponsViewModel());
-    self.armorViewModel = ko.observable(new ArmorViewModel());
-    
+	self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
+	self.playerInfoViewModel     = ko.observable(new PlayerInfoViewModel());
+
 	self.init = function() {
     	//Init all viewModels.
     	Object.keys(self).forEach(function(key, i, _) {
@@ -253,7 +340,7 @@ function CharacterTabViewModel() {
     		}
     	});
     };
-    
+
     self.unload = function() {
     	//unload all viewModels.
     	Object.keys(self).forEach(function(key, i, _) {
@@ -266,7 +353,7 @@ function CharacterTabViewModel() {
     		}
     	});
     };
-    
+
     self.clear = function() {
     	//clear all viewModels.
     	Object.keys(self).forEach(function(key, i, _) {
@@ -281,13 +368,445 @@ function CharacterTabViewModel() {
     };
 };
 
-function DmTabViewModel() {
+/**
+ * This view model contains the player's stats information.
+ */
+function StatsTabViewModel() {
 	var self = this;
-	
+
+	self.statsViewModel 		= ko.observable(new StatsViewModel());
+	self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
+	self.savingThrowsViewModel  = ko.observable(new SavingThrowsViewModel());
+	self.spellStatsViewModel    = ko.observable(new SpellStatsViewModel());
+
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+
+/**
+ * This view model contains the player's skills information.
+ */
+function SkillsTabViewModel() {
+	var self = this;
+
+    self.featsProfViewModel = ko.observable(new FeatsProfViewModel());
+    self.skillsViewModel    = ko.observable(new SkillsViewModel());
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+
+/**
+ * This view model contains the player's spells information.
+ */
+function SpellsTabViewModel() {
+	var self = this;
+
+    self.spellbookViewModel  = ko.observable(new SpellbookViewModel());
+	self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+
+/**
+ * This view model contains the player's equipment information.
+ */
+function EquipmentTabViewModel() {
+	var self = this;
+
+	self.weaponsViewModel = ko.observable(new WeaponsViewModel());
+    self.armorViewModel = ko.observable(new ArmorViewModel());
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+
+/**
+ * This view model contains the player's inventory information.
+ */
+function InventoryTabViewModel() {
+	var self = this;
+
+	self.equipmentViewModel = ko.observable(new EquipmentViewModel());
+    self.treasureViewModel  = ko.observable(new TreasureViewModel());
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+
+/**
+ * This view model contains the player's notes information.
+ */
+function NotesTabViewModel() {
+	var self = this;
+
 	self.notesViewModel = ko.observable(new NotesViewModel());
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+
+/**
+ * This view model contains the DM's campaign information.
+ */
+function CampaignTabViewModel() {
+	var self = this;
+
 	self.campaignViewModel = ko.observable(new CampaignViewModel());
+
+	self.init = function() {
+    	//Init all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().init();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+	};
+
+    self.load = function() {
+    	//Load all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+	    			self[key]().load();
+    			} catch(err) {
+    				throw "Module " + key + " failed to load.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.unload = function() {
+    	//unload all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().unload();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+
+    self.clear = function() {
+    	//clear all viewModels.
+    	Object.keys(self).forEach(function(key, i, _) {
+    		if (key.indexOf('ViewModel') > -1) {
+    			try {
+    	    		self[key]().clear();
+    			} catch(err) {
+    				throw "Module " + key + " failed to unload.\n" + err;
+    			}
+    		}
+    	});
+    };
+};
+function EnemiesTabViewModel() {
+	var self = this;
+
 	self.enemiesViewModel = ko.observable(new EnemiesViewModel());
-	
+
 	self.init = function() {
     	var keys =  Object.keys(self);
     	for (var i in keys) {
@@ -314,7 +833,7 @@ function DmTabViewModel() {
     		}
     	}
     };
-    
+
     self.unload = function() {
     	var keys = Object.keys(self);
     	for (var i in keys) {
@@ -325,7 +844,7 @@ function DmTabViewModel() {
     				throw "Module " + keys[i] + " failed to load.\n" + err;
     			}
     		}
-    	}    
+    	}
     };
 
     self.clear = function() {
@@ -336,10 +855,10 @@ function DmTabViewModel() {
 
 function PartyTabViewModel() {
 	var self = this;
-		
+
 	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
-	self.partyChatViewModel = ko.observable(new PartyChatViewModel());
-	
+	self.partyChatViewModel         = ko.observable(new PartyChatViewModel());
+
 	self.init = function() {
     	var keys = Object.keys(self);
     	for (var i in keys) {
@@ -352,7 +871,7 @@ function PartyTabViewModel() {
     		}
     	}
 	};
-	
+
 	self.load = function() {
     	var keys = Object.keys(self);
     	for (var i in keys) {
@@ -389,13 +908,13 @@ var init = function(viewModel) {
     messenger = new Messenger();
     players = new Players();
     messenger.connect();
-    
+
     //Set up event handlers.
     CharacterManagerSignaler.changing.add(function() {
         //Don't save an empty character.
-        if (CharacterManager.activeCharacter() && viewModel.ready()) { 
+        if (CharacterManager.activeCharacter() && viewModel.ready()) {
             viewModel.unload();
-        } 
+        }
     });
     CharacterManagerSignaler.changed.add(function() {
         try {
@@ -406,7 +925,7 @@ var init = function(viewModel) {
             throw err
         }
     });
-    
+
     //Check if a character already exists.
     if (CharacterManager.activeCharacter()) {
         CharacterManager.changeCharacter(
@@ -422,4 +941,3 @@ var timeit = function(name, cb) {
     cb();
     console.log(name + ': ' + String(new Date().getTime() - t));
 };
-
