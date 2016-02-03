@@ -1,9 +1,5 @@
 "use strict";
 
-var PlayerInfoSignaler = {
-	changed: new signals.Signal()
-};
-
 function PlayerInfoViewModel() {
 	var self = this;
 
@@ -30,7 +26,7 @@ function PlayerInfoViewModel() {
 	
 	self.dataHasChanged = function() {
 		self.playerInfo().save();
-		PlayerInfoSignaler.changed.dispatch();
+		Notifications.playerInfo.changed.dispatch();
 	};
 	
 	//Public Methods

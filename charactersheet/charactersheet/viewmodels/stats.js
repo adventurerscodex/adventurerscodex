@@ -1,9 +1,5 @@
 "use strict";
 
-var StatsSignaler = {
-	changed: new signals.Signal()
-};
-
 function StatsViewModel() {
 	var self = this;
 	
@@ -49,7 +45,7 @@ function StatsViewModel() {
 		
 		//Subscriptions
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
-		ProfileSignaler.changed.add(self.calculateHitDice);
+		Notifications.profile.changed.add(self.calculateHitDice);
 	};
 	
 	self.unload = function() {
@@ -84,7 +80,7 @@ function StatsViewModel() {
 	
 	self.dataHasChanged = function() {
 	    self.otherStats().save();
-		StatsSignaler.changed.dispatch();
+		Notifications.stats.changed.dispatch();
 	};
 };
 

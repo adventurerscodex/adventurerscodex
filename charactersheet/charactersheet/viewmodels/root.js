@@ -241,13 +241,19 @@ function RootViewModel() {
         }
         self.partyTabViewModel().init();
         self.charactersViewModel.init();
+<<<<<<< HEAD
         self.settingsViewModel().init();
         //Subscriptions
         ProfileSignaler.changed.add(function() {
+=======
+        self.settingsViewModel().init();  
+        //Subscriptions   
+        Notifications.profile.changed.add(function() {
+>>>>>>> Converts to new notifications paradigm
             self._dummy.valueHasMutated();
         });
         self._dummy.valueHasMutated();
-        CharactersSignaler.allRemoved.add(function() {
+        Notifications.characters.allRemoved.add(function() {
             self.ready(false);
         });
 	};
@@ -910,13 +916,13 @@ var init = function(viewModel) {
     messenger.connect();
 
     //Set up event handlers.
-    CharacterManagerSignaler.changing.add(function() {
+    Notifications.characterManager.changing.add(function() {
         //Don't save an empty character.
         if (CharacterManager.activeCharacter() && viewModel.ready()) {
             viewModel.unload();
         }
     });
-    CharacterManagerSignaler.changed.add(function() {
+    Notifications.characterManager.changed.add(function() {
         try {
             viewModel.init();
             viewModel.load();

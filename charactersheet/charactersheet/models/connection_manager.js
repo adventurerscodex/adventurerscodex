@@ -14,8 +14,8 @@ function ConnectionManager() {
 			messenger.join(roomId);
 			self.connected(true);
 			self.save();
-			ConnectionManagerSignaler.changed.dispatch();
-			ConnectionManagerSignaler.connected.dispatch();
+			Notifications.connectionManager.changed.dispatch();
+			Notifications.connectionManager.connected.dispatch();
 		}
 	};
 	
@@ -30,16 +30,16 @@ function ConnectionManager() {
 		self.roomId(messenger.create());
 		self.connected(true);
 		self.save();
-		ConnectionManagerSignaler.changed.dispatch();
-		ConnectionManagerSignaler.connected.dispatch();
+		Notifications.connectionManager.changed.dispatch();
+		Notifications.connectionManager.connected.dispatch();
 	};
 	
 	self.clear = function() {
 		self.connected(false);
 		self.roomId(null);
 		self.save();
-		ConnectionManagerSignaler.changed.dispatch();
-		ConnectionManagerSignaler.disconnected.dispatch();
+		Notifications.connectionManager.changed.dispatch();
+		Notifications.connectionManager.disconnected.dispatch();
 	};
 
 	self.save = function() {

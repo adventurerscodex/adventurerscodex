@@ -1,9 +1,5 @@
 "use strict";
 
-var CampaignSignaler = {
-	changed: new signals.Signal()
-};
-
 function CampaignViewModel() {
 	var self = this;
 	

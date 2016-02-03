@@ -62,12 +62,12 @@ function SkillsViewModel() {
     	}
 
     	//Subscriptions
-	    AbilityScoresSignaler.changed.add(function() {
+	    Notifications.abilityScores.changed.add(function() {
 	    	self.skills().forEach(function(e, i, _) {
 	    		e.updateValues();
 	    	})
 	    });
-	    StatsSignaler.changed.add(function() {
+	    Notifications.stats.changed.add(function() {
 	    	self.skills().forEach(function(e, i, _) {
 	    		e.updateValues();
 	    	})

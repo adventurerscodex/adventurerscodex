@@ -1,9 +1,5 @@
 "use strict";
 
-var ProfileSignaler = {
-	changed: new signals.Signal()
-};
-
 function ProfileViewModel() {
 	var self = this;
 
@@ -32,7 +28,7 @@ function ProfileViewModel() {
 	
 	self.dataHasChanged = function() {
 		self.profile().save();
-		ProfileSignaler.changed.dispatch();
+		Notifications.profile.changed.dispatch();
 	};
 	
 	//Public Methods
