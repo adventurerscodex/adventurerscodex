@@ -10,4 +10,31 @@ describe('Armor', function() {
             armor.armorName().should.equal('');
         });
     });
+    
+    describe('Import', function() {
+        it('should import all the data from a fixture', function() {
+            var armor = new Armor();
+            armor.importValues(ArmorFixture);
+            armor.armorName().should.equal(ArmorFixture.armorName);
+        });
+    });
+
+    describe('Import', function() {
+        it('should import all the data from a fixture', function() {
+            var armor = new Armor();
+            armor.importValues(ArmorFixture);
+            armor.armorName().should.equal(ArmorFixture.armorName);
+            armor.exportValues().armorName.should.equal(ArmorFixture.armorName);
+        });
+    });
+
+    describe('Proficiency Label', function() {
+        it('', function() {
+            var armor = new Armor();
+            armor.armorProficiency(true);
+            armor.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
+            armor.clear();
+            armor.proficiencyLabel().should.equal('');
+        });
+    });
 });
