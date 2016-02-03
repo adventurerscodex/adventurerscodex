@@ -30,3 +30,9 @@ var SpellStatsFixture = {
 var ArmorFixture = {
     armorName: 'shield of stuff'
 };
+
+var CampaignFixture = {
+    campaignName: 'Hoard of the Dragon Queen',
+    dmName: 'Brian Schrader',
+    campaignSummary: 'Hoard of the Dragon Queen by Brian Schrader'
+};

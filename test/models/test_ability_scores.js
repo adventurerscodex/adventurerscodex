@@ -124,37 +124,4 @@ describe('Ability Scores', function() {
 			abilityScore.modifierFor('cha').should.equal(4);
 		});
 	});
-
-	describe('Save', function() {
-		it('should save the object', function() {
-			var abilityScore = new AbilityScores();
-			var saved = false;
-			abilityScore.ps.save = function() { saved = true; }
-			saved.should.equal(false);
-
-			abilityScore.save();
-			saved.should.equal(true);
-		});
-	});
-
-	describe('Find All', function() {
-		it('should return all entries from the db.', function() {
-			var key = '1234';
-			var _findAll = PersistenceService.findAll;
-
-			PersistenceService.findAll = function(_) { return [new AbilityScores(), new AbilityScores()]; };
-			var r = AbilityScores.findBy(key);
-			r.length.should.equal(0);
-
-			var results = [new AbilityScores(), new AbilityScores()].map(function(e, i, _) {
-				e.characterId(key);
-				return e;
-			});
-			PersistenceService.findAll = function(_) { return results; };
-			var r = AbilityScores.findBy(key);
-			r.length.should.equal(2);
-
-			PersistenceService.findAll = _findAll;
-		});
-	});
 });
