@@ -12,7 +12,7 @@ function PartyChatViewModel() {
 		players.onPlayerEnters(self.handleNewPlayer);
 		players.onPlayerLeaves(self.handlePlayerLeft);
 		
-		ConnectionManagerSignaler.changed.add(function() {
+		Notifications.connectionManager.changed.add(function() {
 			self._dummy.notifySubscribers();
 		});
 	};

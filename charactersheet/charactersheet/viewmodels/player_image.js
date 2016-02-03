@@ -1,9 +1,5 @@
 "use strict";
 
-var PlayerImageSignaler = {
-	changed: new signals.Signal()
-};
-
 function PlayerImageViewModel() {
 	var self = this;
 
@@ -23,7 +19,7 @@ function PlayerImageViewModel() {
 
 		//Subscriptions
 		self.image().dataUrl.subscribe(self.dataHasChanged);
-		PlayerInfoSignaler.changed.add(self.checkImage);
+		Notifications.playerInfo.changed.add(self.checkImage);
 	};
 
 	self.unload = function() {
@@ -39,7 +35,7 @@ function PlayerImageViewModel() {
         return false;
 
 		self.image().save();
-		PlayerImageSignaler.changed.dispatch();
+		Notifications.playerImage.changed.dispatch();
 	};
 	
 	/**
@@ -52,7 +48,7 @@ function PlayerImageViewModel() {
             var email = info[0].email();
             if (email) {
                 self.image().imageUrl(info[0].gravatarUrl());
-                PlayerImageSignaler.changed.dispatch();
+                Notifications.playerImage.changed.dispatch();
             }
         } catch(err) {};
         return false;

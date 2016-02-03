@@ -19,8 +19,8 @@ function PlayerSummaryViewModel() {
         players.onPlayerEnters(self.whois);    
         players.onPlayerLeaves(self.removePlayer);
         
-        ProfileSignaler.changed.add(self.whoami);   
-        StatsSignaler.changed.add(self.whoami);   
+        Notifications.profile.changed.add(self.whoami);   
+        Notifications.stats.changed.add(self.whoami);   
     };
     
     self.unload = function() {

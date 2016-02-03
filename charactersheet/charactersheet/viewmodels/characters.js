@@ -1,16 +1,5 @@
 "use strict";
 
-var CharactersSignaler = {
-    /**
-     * Sent when a character is changed.
-     */
-	changed: new signals.Signal(),
-	/**
-	 * Sent when all characters have been deleted.
-	 */ 
-	allRemoved: new signals.Signal()
-};
-
 function CharactersViewModel() {
 	var self = this;
 	
@@ -24,10 +13,10 @@ function CharactersViewModel() {
 	self.defaultCharacterKey = ko.observable(null);
 	
 	self.init = function() {
-		CharactersSignaler.changed.add(function() {
+		Notifications.characters.changed.add(function() {
 			self.load();
 		});
-		ProfileSignaler.changed.add(function() {
+		Notifications.profile.changed.add(function() {
 		    self.load();
 		});
 	};
@@ -86,7 +75,7 @@ function CharactersViewModel() {
 		}
 		character.isActive(true);
 		character.save();
-		CharactersSignaler.changed.dispatch();
+		Notifications.characters.changed.dispatch();
 		window.location = character.url();
 	};
 	
@@ -101,7 +90,7 @@ function CharactersViewModel() {
 		}
 		character.isActive(true);
 		character.save();
-		CharactersSignaler.changed.dispatch();
+		Notifications.characters.changed.dispatch();
 		window.location = character.url();
 	};
 	
@@ -119,10 +108,10 @@ function CharactersViewModel() {
 		//Remove the character.
 		character.delete();
 		self.characters.remove(character);
-		CharactersSignaler.changed.dispatch();
+		Notifications.characters.changed.dispatch();
 		
 		if (self.characters().length === 0) {
-		    CharactersSignaler.allRemoved.dispatch();
+		    Notifications.characters.allRemoved.dispatch();
 		} else {
     		//Change the active character.
 	    	CharacterManager.changeCharacter(self.characters()[0].key());
@@ -143,6 +132,6 @@ function CharactersViewModel() {
 			length, self.fileReader.result.length)));
 		
 		Character.importCharacter(values);
-		CharactersSignaler.changed.dispatch();
+		Notifications.characters.changed.dispatch();
 	}; 
 };

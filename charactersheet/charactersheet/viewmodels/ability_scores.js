@@ -1,9 +1,5 @@
 "use strict";
 
-var AbilityScoresSignaler = {
-	changed: new signals.Signal()
-};
-
 var isNumeric = function(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
 }
@@ -63,6 +59,6 @@ function AbilityScoresViewModel() {
 	
 	self.dataHasChanged = function() {
         self.abilityScores().save();
-       	AbilityScoresSignaler.changed.dispatch();
+       	Notifications.abilityScores.changed.dispatch();
 	};
 };

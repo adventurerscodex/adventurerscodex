@@ -36,12 +36,12 @@ function SavingThrowsViewModel() {
     self.sort = ko.observable(self.sorts['name asc']);
 
     self.init = function() {
-	    AbilityScoresSignaler.changed.add(function() {
+	    Notifications.abilityScores.changed.add(function() {
 	    	$.each(self.savingThrows(), function(_, e) {
 	    		e.updateValues();
 	    	})
 	    });
-	    StatsSignaler.changed.add(function() {
+	    Notifications.stats.changed.add(function() {
 	    	$.each(self.savingThrows(), function(_, e) {
 	    		e.updateValues();
 	    	})

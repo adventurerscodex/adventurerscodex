@@ -1,11 +1,5 @@
 "use strict";
 
-var ConnectionManagerSignaler = {
-	connected: new signals.Signal(),
-	disconnected: new signals.Signal(),
-	changed: new signals.Signal()
-};
-
 function ConnectionManagerViewModel() {
 	var self = this;
 	
