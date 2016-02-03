@@ -20,9 +20,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bin/koExternalTemplateEngine_all.min.js', watched: false},
 			{pattern: 'charactersheet/bin/markdown.min.js', watched: false},
 			//Stuff to test.
-			'charactersheet/**/app.js',
-			'charactersheet/*/utilities/*.js',
-			'charactersheet/*/models/*.js',
+			'charactersheet/charactersheet/**/*.js',
             'test/**/*.js',
             'test/*.js'
         ],  
@@ -31,9 +29,7 @@ module.exports = function(config) {
         reporters: ['progress', 'coverage'],
         preprocessors: { 
         	//'*/app.js': ['coverage'],
-        	'charactersheet/**/app.js': ['coverage'],
-        	'charactersheet/*/utilities/*.js': ['coverage'],
-        	'charactersheet/*/models/*.js': ['coverage'],
+        	'charactersheet/charactersheet/**/*.js': ['coverage'],
         	'test/**/*.js': ['coverage'],
         	},
         coverageReporter: {
