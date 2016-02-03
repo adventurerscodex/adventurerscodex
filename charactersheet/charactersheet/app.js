@@ -391,6 +391,7 @@ var init = function(viewModel) {
     messenger = new Messenger();
     players = new Players();
     messenger.connect();
+	players.init();
     
     //Set up event handlers.
     CharacterManagerSignaler.changing.add(function() {

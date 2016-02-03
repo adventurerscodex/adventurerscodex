@@ -25,13 +25,6 @@ describe('EquipmentViewModel', function(){
 	describe('Unload', function() {
 		it('should unload the data to the items db.', function() {
 			//Shims
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-
 			var saved = [false, false];
 			var items = [new Item(), new Item()].map(function(e, i, _) {
 				e.save = function() { saved[i] = true; }
