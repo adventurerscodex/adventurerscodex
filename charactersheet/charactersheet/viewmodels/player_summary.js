@@ -33,7 +33,8 @@ function PlayerSummaryViewModel() {
      * Once a player enters the room, we need to ask who they are.
      */
     self.whois = function(player) {
-        var roomId = ConnectionManager.find().roomId();
+        var key = CharacterManager.activeCharacter().key();
+        var roomId = ConnectionManager.findBy(key)[0].roomId();
         messenger.sendDataMsg(roomId, self._getWhoisId(player.id), {})
     };
     
@@ -41,7 +42,8 @@ function PlayerSummaryViewModel() {
      * When I receive a 'whois me' message, respond to it.
      */
     self.whoami = function() {
-        var roomId = ConnectionManager.find().roomId();
+        var key = CharacterManager.activeCharacter().key();
+        var roomId = ConnectionManager.findBy(key)[0].roomId();
         messenger.sendDataMsg(roomId, 'iam', self._getPlayerData())
     };
     
@@ -62,6 +64,7 @@ function PlayerSummaryViewModel() {
             });
         } else {
             //Add a new one.
+            console.log(self.playerSummaries());
             self.playerSummaries.push(player);
         }
     };

@@ -1,45 +1,36 @@
 "use strict";
 
-var abilities_fixture = {
-	'str': 12,
-	'dex': 13,
-	'con': 14,
-	'int': 16,
-	'wis': 15,
-	'cha': 18
-};
-
 describe('Ability Scores', function() {
 	describe('Clear', function() {
 		it('should clear all the values in it', function() {
 			var scores = new AbilityScores();
-			scores.str(abilities_fixture.str);
-			scores.str().should.equal(abilities_fixture.str);
+			scores.str(AbilitiesFixture.str);
+			scores.str().should.equal(AbilitiesFixture.str);
 			scores.clear();
 			Should.not.exist(scores.str());
 
-			scores.dex(abilities_fixture.dex);
-			scores.dex().should.equal(abilities_fixture.dex);
+			scores.dex(AbilitiesFixture.dex);
+			scores.dex().should.equal(AbilitiesFixture.dex);
 			scores.clear();
 			Should.not.exist(scores.dex());
 
-			scores.con(abilities_fixture.con);
-			scores.con().should.equal(abilities_fixture.con);
+			scores.con(AbilitiesFixture.con);
+			scores.con().should.equal(AbilitiesFixture.con);
 			scores.clear();
 			Should.not.exist(scores.con());
 
-			scores.int(abilities_fixture.int);
-			scores.int().should.equal(abilities_fixture.int);
+			scores.int(AbilitiesFixture.int);
+			scores.int().should.equal(AbilitiesFixture.int);
 			scores.clear();
 			Should.not.exists(scores.int());
 
-			scores.wis(abilities_fixture.wis);
-			scores.wis().should.equal(abilities_fixture.wis);
+			scores.wis(AbilitiesFixture.wis);
+			scores.wis().should.equal(AbilitiesFixture.wis);
 			scores.clear();
 			Should.not.exist(scores.wis());
 
-			scores.cha(abilities_fixture.cha);
-			scores.cha().should.equal(abilities_fixture.cha);
+			scores.cha(AbilitiesFixture.cha);
+			scores.cha().should.equal(AbilitiesFixture.cha);
 			scores.clear();
 			Should.not.exist(scores.cha());
 		});
@@ -48,25 +39,25 @@ describe('Ability Scores', function() {
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var scores = new AbilityScores();
-			scores.importValues(abilities_fixture);
-			scores.str().should.equal(abilities_fixture.str);
-			scores.dex().should.equal(abilities_fixture.dex);
-			scores.con().should.equal(abilities_fixture.con);
-			scores.int().should.equal(abilities_fixture.int);
-			scores.wis().should.equal(abilities_fixture.wis);
-			scores.cha().should.equal(abilities_fixture.cha);
+			scores.importValues(AbilitiesFixture);
+			scores.str().should.equal(AbilitiesFixture.str);
+			scores.dex().should.equal(AbilitiesFixture.dex);
+			scores.con().should.equal(AbilitiesFixture.con);
+			scores.int().should.equal(AbilitiesFixture.int);
+			scores.wis().should.equal(AbilitiesFixture.wis);
+			scores.cha().should.equal(AbilitiesFixture.cha);
 		});
 	});
 
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
 			var scores = new AbilityScores();
-			scores.str(abilities_fixture.str);
-			scores.dex(abilities_fixture.dex);
-			scores.con(abilities_fixture.con);
-			scores.int(abilities_fixture.int);
-			scores.wis(abilities_fixture.wis);
-			scores.cha(abilities_fixture.cha);
+			scores.str(AbilitiesFixture.str);
+			scores.dex(AbilitiesFixture.dex);
+			scores.con(AbilitiesFixture.con);
+			scores.int(AbilitiesFixture.int);
+			scores.wis(AbilitiesFixture.wis);
+			scores.cha(AbilitiesFixture.cha);
 			var exported = scores.exportValues();
 			exported.str.should.equal(scores.str());
 			exported.dex.should.equal(scores.dex());
@@ -154,7 +145,6 @@ describe('Ability Scores', function() {
 			PersistenceService.findAll = function(_) { return [new AbilityScores(), new AbilityScores()]; };
 			var r = AbilityScores.findBy(key);
 			r.length.should.equal(0);
-
 
 			var results = [new AbilityScores(), new AbilityScores()].map(function(e, i, _) {
 				e.characterId(key);
