@@ -70,38 +70,38 @@ describe('Players', function() {
 		});
 	});
 
-	describe('Say Hello', function() {
-		it('should say hello.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: ko.observable('Bob')
-				}
-			};
-			messenger = new Messenger();
-			messenger.connect();
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			messenger._sendMgs = false;
-			messenger.sendDataMsg = function(t, ty, m) {
-				messenger._sendMgs = true;
-			};
-
-			messenger._sendMgs = false;
-			var players = new Players();
-			messenger._sendMgs.should.equal(false);
-			players.sayHello();
-			messenger._sendMgs.should.equal(true);
-
-			messenger = new Messenger();
-			Profile.find = f;
-			CharacterManager.activeCharacter = c;
-		});
-	});
+// 	describe('Say Hello', function() {
+// 		it('should say hello.', function() {
+// 			var f = Profile.find;
+// 			Profile.find = function() {
+// 				return {
+// 					characterName: ko.observable('Bob')
+// 				}
+// 			};
+// 			messenger = new Messenger();
+// 			messenger.connect();
+// 			var c = CharacterManager.activeCharacter;
+// 			CharacterManager.activeCharacter = function() {
+// 				return {
+// 					key: function() { return '1234'; }
+// 				};
+// 			};
+// 			messenger._sendMgs = false;
+// 			messenger.sendDataMsg = function(t, ty, m) {
+// 				messenger._sendMgs = true;
+// 			};
+// 
+// 			messenger._sendMgs = false;
+// 			var players = new Players();
+// 			messenger._sendMgs.should.equal(false);
+// 			players.sayHello();
+// 			messenger._sendMgs.should.equal(true);
+// 
+// 			messenger = new Messenger();
+// 			Profile.find = f;
+// 			CharacterManager.activeCharacter = c;
+// 		});
+// 	});
 
 	describe('Say Goodbye', function() {
 		it('should say goodbye.', function() {

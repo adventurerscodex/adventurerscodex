@@ -26,3 +26,7 @@ var SpellStatsFixture = {
     "spellSaveDc":3,
     "spellAttackBonus":4,
 };
+
+var ArmorFixture = {
+    armorName: 'shield of stuff'
+};
