@@ -41,7 +41,7 @@
       <div class="col-sm-1" data-bind="template: {
         name: 'player_image.tmpl',
         templateUrl: 'player_image',
-        data: characterTabViewModel().playerImageViewModel()
+        data: profileTabViewModel().playerImageViewModel()
       }">
       </div>
       <div class="col-sm-10" style="margin-top:-20px;">
@@ -73,100 +73,131 @@
   </div>
   <div class="spacer"></div>
 	<ul class="nav nav-tabs">
-		<li role="presentation" data-bind="click: activateCharacterTab, css: characterTabStatus"><a href="#character" aria-controls="character" role="tab" data-toggle="tab">Character Sheet</a></li>
-		<li role="presentation" data-bind="click: activateDMTab, css: dMTabStatus"><a href="#dm" aria-controls="dm" role="tab" data-toggle="tab">Game Sheet</a></li>
-		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Your Party</a></li>
+		<li role="presentation" data-bind="click: activateProfileTab, css: profileTabStatus"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+		<li role="presentation" data-bind="click: activateStatsTab, css: statsTabStatus"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
+		<li role="presentation" data-bind="click: activateSkillsTab, css: skillsTabStatus"><a href="#skills" aria-controls="skills" role="tab" data-toggle="tab">Skills</a></li>
+		<li role="presentation" data-bind="click: activateSpellsTab, css: spellsTabStatus"><a href="#spells" aria-controls="spells" role="tab" data-toggle="tab">Spells</a></li>
+		<li role="presentation" data-bind="click: activateEquipmentTab, css: equipmentTabStatus"><a href="#equipment" aria-controls="equipment" role="tab" data-toggle="tab">Weapons and Armor</a></li>
+		<li role="presentation" data-bind="click: activateInventoryTab, css: inventoryTabStatus"><a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">Inventory</a></li>
+		<li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
+		<li role="presentation" data-bind="click: activateCampaignTab, css: campaignTabStatus"><a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a></li>
+		<li role="presentation" data-bind="click: activateEnemiesTab, css: enemiesTabStatus"><a href="#enemies" aria-controls="enemies" role="tab" data-toggle="tab">Enemies</a></li>
+		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Party Chat</a></li>
 	</ul>
 	<div class="tab-content">
-		<div role="tabpanel" class="tab-pane" id="character" data-bind="with: characterTabViewModel, css: characterTabStatus">
+		<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
 			<div class="row">
 				<div class="col-md-7 col-sm-12 col-padded">
 					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'profile', data: profileViewModel }">
 					</div>
 				</div>
-				<div class="col-md-5 col-sm-6 col-padded">
+				<div class="col-md-5 col-sm-12 col-padded">
 					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'appearance', data: appearanceViewModel }">
 					</div>
 				</div>
-
-				<div class="col-md-4 col-sm-6 col-padded">
-					<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores', data: abilityScoresViewModel }">
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 col-padded">
-					<div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'feats_prof', data: featsProfViewModel }">
-					</div>
-				</div>
-				<div class="col-md-4 col-sm-6 col-padded">
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-padded">
 					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'feat_traits', data: featuresTraitsViewModel }">
 					</div>
 				</div>
 			</div>
-			<img src="/images/heart.png" height="35" style="margin-top:-12px;" />&nbsp;
-			<h3 style="display:inline;">
-				Health &amp; Stats
-			</h3>
-      <hr />
-			<div class="row">
-				<div class="col-md-8">
-					<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats', data: statsViewModel }">
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'spell_stats', data: spellStatsViewModel }">
-					</div>
-				</div>
-			</div>
-			<img src="/images/shield.png" height="35" style="margin-top:-12px;" />&nbsp;
-			<h3 style="display:inline;">
-				Equipment, Skills, &amp; Treasure
-			</h3>
-      <hr />
-			<div class="row">
-				<div class="col-md-4 col-sm-6 col-padded">
-					<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'spell_slots', data: spellSlotsViewModel }">
-					</div>
-					<div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'saving_throws', data: savingThrowsViewModel }">
-					</div>
-					<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'skills', data: skillsViewModel }">
-					</div>
-				</div>
-				<div class="col-md-8 col-sm-6 col-padded">
-					<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'equipment', data: equipmentViewModel }">
-					</div>
-					<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells', data: spellbookViewModel }">
-					</div>
-					<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'treasure', data: treasureViewModel }">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-6 col-padded">
-					<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'weapons', data: weaponsViewModel }">
-					</div>
-				</div>
-				<div class="col-sm-6 col-padded">
-					<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'armor', data: armorViewModel }">
-					</div>
-			</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 col-padded">
-					<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes', data: notesViewModel }">
-					</div>
+		</div>
+<!-- End Profile Tab -->
+	<div role="tabpanel" class="tab-pane" id="stats" data-bind="with: statsTabViewModel, css: statsTabStatus">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-padded">
+				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats', data: statsViewModel }">
 				</div>
 			</div>
 		</div>
-<!-- End Character Tab -->
-		<div role="tabpanel" class="tab-pane" id="dm" data-bind="with: dmTabViewModel, css: dMTabStatus">
-			<div data-bind="template: { name: 'campaign.tmpl', templateUrl: 'campaign', data: campaignViewModel }">
+		<div class="row">
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores', data: abilityScoresViewModel }">
+				</div>
 			</div>
-			<div data-bind="template: { name: 'enemies.tmpl', templateUrl: 'enemies', data: enemiesViewModel }">
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'spell_stats', data: spellStatsViewModel }">
+				</div>
 			</div>
-			<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes', data: notesViewModel }">
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'saving_throws', data: savingThrowsViewModel }">
+				</div>
 			</div>
 		</div>
-<!-- End dm Tab -->
+	</div>
+<!-- End Stats Tab -->
+	<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'feats_prof', data: featsProfViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'skills', data: skillsViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Skills Tab -->
+	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells', data: spellbookViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'spell_slots', data: spellSlotsViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Spells Tab -->
+	<div role="tabpanel" class="tab-pane" id="equipment" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'weapons', data: weaponsViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'armor', data: armorViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Equipment Tab -->
+	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'equipment', data: equipmentViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'treasure', data: treasureViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Inventory Tab -->
+	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
+		<div class="row">
+			<div class="col-sm-12 col-padded">
+				<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes', data: notesViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Notes Tab -->
+	<div role="tabpanel" class="tab-pane" id="campaign" data-bind="with: campaignTabViewModel, css: campaignTabStatus">
+		<div data-bind="template: { name: 'campaign.tmpl', templateUrl: 'campaign', data: campaignViewModel }">
+		</div>
+	</div>
+<!-- End Campaign Tab -->
+	<div role="tabpanel" class="tab-pane" id="enemies" data-bind="with: enemiesTabViewModel, css: enemiesTabStatus">
+		<div data-bind="template: { name: 'enemies.tmpl', templateUrl: 'enemies', data: enemiesViewModel }">
+		</div>
+	</div>
+<!-- End Enemies Tab -->
 		<div role="tabpanel" class="tab-pane" id="party" data-bind="with: partyTabViewModel, css: partyTabStatus">
 			<div data-bind="template: { name: 'connection_manager.tmpl', templateUrl: 'connection_manager', data: connectionManagerViewModel }">
 			</div>

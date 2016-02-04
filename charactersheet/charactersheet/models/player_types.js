@@ -3,12 +3,12 @@
 var PlayerTypes = {
 	characterPlayerType: {
 		key: 'character',
-		visibleTabs: ['character', 'settings', 'party'],
-		defaultTab: 'character'
+		visibleTabs: ['profile', 'stats', 'skills', 'spells', 'equipment', 'inventory', 'notes', 'settings', 'party'],
+		defaultTab: 'profile'
 	},
 	dmPlayerType: {
 		key: 'dm',
-		visibleTabs: ['dm', 'settings', 'party'],
-		defaultTab: 'dm'
+		visibleTabs: ['campaign', 'enemies', 'settings', 'party'],
+		defaultTab: 'campaign'
 	}
 };
