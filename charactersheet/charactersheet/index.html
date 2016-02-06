@@ -41,7 +41,7 @@
       <div class="col-sm-1" data-bind="template: {
         name: 'player_image.tmpl',
         templateUrl: 'templates',
-        data: characterTabViewModel().playerImageViewModel()
+        data: profileTabViewModel().playerImageViewModel()
       }">
       </div>
       <div class="col-sm-10" style="margin-top:-20px;">
@@ -91,15 +91,14 @@
 					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
 					</div>
 				</div>
-<<<<<<< HEAD
 				<div class="col-md-5 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'appearance', data: appearanceViewModel }">
+					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates', data: appearanceViewModel }">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'feat_traits', data: featuresTraitsViewModel }">
+					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates', data: featuresTraitsViewModel }">
 					</div>
 				</div>
 			</div>
@@ -108,21 +107,21 @@
 	<div role="tabpanel" class="tab-pane" id="stats" data-bind="with: statsTabViewModel, css: statsTabStatus">
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-padded">
-				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'stats', data: statsViewModel }">
+				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'templates', data: statsViewModel }">
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4 col-sm-12 col-padded">
-				<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'ability_scores', data: abilityScoresViewModel }">
+				<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'templates', data: abilityScoresViewModel }">
 				</div>
 			</div>
 			<div class="col-md-4 col-sm-12 col-padded">
-				<div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'spell_stats', data: spellStatsViewModel }">
+				<div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates', data: spellStatsViewModel }">
 				</div>
 			</div>
 			<div class="col-md-4 col-sm-12 col-padded">
-				<div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'saving_throws', data: savingThrowsViewModel }">
+				<div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'templates', data: savingThrowsViewModel }">
 				</div>
 			</div>
 		</div>
@@ -131,11 +130,11 @@
 	<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'feats_prof', data: featsProfViewModel }">
+				<div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates', data: featsProfViewModel }">
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'skills', data: skillsViewModel }">
+				<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates', data: skillsViewModel }">
 				</div>
 			</div>
 		</div>
@@ -144,11 +143,11 @@
 	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'spells', data: spellbookViewModel }">
+				<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'templates', data: spellbookViewModel }">
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'spell_slots', data: spellSlotsViewModel }">
+				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
 				</div>
 			</div>
 		</div>
@@ -157,11 +156,11 @@
 	<div role="tabpanel" class="tab-pane" id="equipment" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'weapons', data: weaponsViewModel }">
+				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates', data: weaponsViewModel }">
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'armor', data: armorViewModel }">
+				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates', data: armorViewModel }">
 				</div>
 			</div>
 		</div>
@@ -170,11 +169,11 @@
 	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'equipment', data: equipmentViewModel }">
+				<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'templates', data: equipmentViewModel }">
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'treasure', data: treasureViewModel }">
+				<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'templates', data: treasureViewModel }">
 				</div>
 			</div>
 		</div>
@@ -183,19 +182,19 @@
 	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
 		<div class="row">
 			<div class="col-sm-12 col-padded">
-				<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'notes', data: notesViewModel }">
+				<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates', data: notesViewModel }">
 				</div>
 			</div>
 		</div>
 	</div>
 <!-- End Notes Tab -->
 	<div role="tabpanel" class="tab-pane" id="campaign" data-bind="with: campaignTabViewModel, css: campaignTabStatus">
-		<div data-bind="template: { name: 'campaign.tmpl', templateUrl: 'campaign', data: campaignViewModel }">
+		<div data-bind="template: { name: 'campaign.tmpl', templateUrl: 'templates', data: campaignViewModel }">
 		</div>
 	</div>
 <!-- End Campaign Tab -->
 	<div role="tabpanel" class="tab-pane" id="enemies" data-bind="with: enemiesTabViewModel, css: enemiesTabStatus">
-		<div data-bind="template: { name: 'enemies.tmpl', templateUrl: 'enemies', data: enemiesViewModel }">
+		<div data-bind="template: { name: 'enemies.tmpl', templateUrl: 'templates', data: enemiesViewModel }">
 		</div>
 	</div>
 <!-- End Enemies Tab -->
@@ -204,8 +203,10 @@
 			</div>
 			<div data-bind="template: { name: 'chat.tmpl', templateUrl: 'templates', data: partyChatViewModel }">
 			</div>
-			<div data-bind="template: { name: 'player_summary.tmpl', templateUrl: 'templates', data: playerSummaryViewModel }">
+			<!-- 
+<div data-bind="template: { name: 'player_summary.tmpl', templateUrl: 'templates', data: playerSummaryViewModel }">
 			</div>
+ -->
 		</div>
 <!-- End group Tab -->
 	</div>

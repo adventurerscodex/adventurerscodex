@@ -241,15 +241,7 @@ function RootViewModel() {
         }
         self.partyTabViewModel().init();
         self.charactersViewModel.init();
-<<<<<<< HEAD
-        self.settingsViewModel().init();
-        //Subscriptions
-        ProfileSignaler.changed.add(function() {
-=======
-        self.settingsViewModel().init();  
-        //Subscriptions   
         Notifications.profile.changed.add(function() {
->>>>>>> Converts to new notifications paradigm
             self._dummy.valueHasMutated();
         });
         self._dummy.valueHasMutated();
