@@ -56,10 +56,12 @@ function Players() {
 	 */
 	self.sayHello = function() {
 		var player = new Player();
-		player.name = Profile.find().characterName();
-		player.id = CharacterManager.activeCharacter();
+		var key = CharacterManager.activeCharacter().key();
+		player.name = Profile.findBy(key)[0].characterName();
+		player.id = CharacterManager.activeCharacter().key();
 
-		messenger.sendDataMsg(ConnectionManager.find().roomId(), 'hello?', player);
+		messenger.sendDataMsg(ConnectionManager.findBy(key)[0].roomId(),
+		    'hello?', player);
 	};
 	
 	/**
@@ -122,7 +124,7 @@ function Players() {
 		$.each(self._onPlayerEnters, function(_, callback) {
 			callback(player);
 		});
-	};	
+	};
 };
 
 function Player() {

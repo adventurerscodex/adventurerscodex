@@ -1,16 +1,11 @@
 "use strict";
 
-var CharacterManagerSignaler = {
-	changing: new signals.Signal(),
-	changed: new signals.Signal() 
-};
-
 var CharacterManager = {};
 
 CharacterManager.changeCharacter = function(characterId) {
 	var newChar = Character.findBy(characterId);
     try {
-	    CharacterManagerSignaler.changing.dispatch(
+	    Notifications.characterManager.changing.dispatch(
 	        CharacterManager.activeCharacter(), newChar[0]);
 		Character.findAll().forEach(function(e, i, _) {
 			e.isActive(false);
@@ -18,7 +13,7 @@ CharacterManager.changeCharacter = function(characterId) {
 		});
 		newChar[0].isActive(true);
 		newChar[0].save();
-		CharacterManagerSignaler.changed.dispatch(
+		Notifications.characterManager.changed.dispatch(
 		    CharacterManager.activeCharacter());
 	} catch(err) {};
 };

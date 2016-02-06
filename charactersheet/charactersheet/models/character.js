@@ -18,7 +18,13 @@ function Character() {
 		self.key(values.key);
 		self.isDefault(values.isDefault);
 		self.isActive(values.isActive);
-		self.playerType(values.playerType);
+		
+		var keys = Object.keys(PlayerTypes);
+		for (var i=0;i<keys.length;i++) {
+		    if (PlayerTypes[keys[i]].key === values.playerType.key) {
+		        self.playerType(PlayerTypes[keys[i]])
+		    }
+		}
 	};
 	
 	self.exportValues = function() {

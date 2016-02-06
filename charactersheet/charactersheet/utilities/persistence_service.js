@@ -6,7 +6,8 @@ var PersistenceService = {
 	customImport: true,
 	logErrors: false,
 	enableCompression: false,
-	master: '__master__'
+	master: '__master__',
+	storage: localStorage
 };
 	
 /**
@@ -209,7 +210,7 @@ PersistenceService._findAllObjs = function(key) {
 	var res = [];
 	var all = [];
 	try {
-		all = JSON.parse(localStorage[key]);
+		all = JSON.parse(PersistenceService.storage[key]);
 	} catch(err) {};
 	
 	for (var i in all) {
@@ -263,7 +264,7 @@ PersistenceService._save = function(key, inst) {
 	//Save the data.
 	var table;
 	try {
-		table = JSON.parse(localStorage[key]);
+		table = JSON.parse(PersistenceService.storage[key]);
 	} catch(err) {
 		table = {};
 	}
@@ -278,7 +279,7 @@ PersistenceService._save = function(key, inst) {
 	}
 	table[id] = data;
 	try {
-		localStorage[key] = JSON.stringify(table);
+		PersistenceService.storage[key] = JSON.stringify(table);
 	} catch(err) {
 		var msg = "Storage quota exceeded."
 		if (!PersistenceService.enableCompression) {
@@ -294,18 +295,18 @@ PersistenceService._save = function(key, inst) {
 	//Update the master table.
 	var tables;
 	try {
-		tables = JSON.parse(localStorage[PersistenceService.master])
+		tables = JSON.parse(PersistenceService.storage[PersistenceService.master])
 	} catch(err) {
 		tables = [];
 	}
 	if (tables.indexOf(key) === -1) {
 		tables.push(key);
-		localStorage[PersistenceService.master] = JSON.stringify(tables);
+		PersistenceService.storage[PersistenceService.master] = JSON.stringify(tables);
 	}
 };
 
 PersistenceService._delete = function(key, id) {
-	var table = JSON.parse(localStorage[key]);
+	var table = JSON.parse(PersistenceService.storage[key]);
 	if (Object.keys(table).indexOf(String(id)) > -1) {	
 		delete table[id];
 	} else {
@@ -316,9 +317,9 @@ PersistenceService._delete = function(key, id) {
 			throw msg;
 		}
 	}
-	localStorage[key] = JSON.stringify(table);
+	PersistenceService.storage[key] = JSON.stringify(table);
 };
 
 PersistenceService._listAll = function() {
-	return JSON.parse(localStorage[PersistenceService.master]);
+	return JSON.parse(PersistenceService.storage[PersistenceService.master]);
 }
