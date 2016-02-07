@@ -10,6 +10,8 @@ function StatsViewModel() {
 	self.hitDiceType = ko.observable('');
 	self.hitDiceOptions = ko.observableArray(
         ['D4', 'D6', 'D8', 'D10', 'D12', 'D20']);
+	self.deathSaveSuccessList = ko.observableArray([]);
+	self.deathSaveFailureList = ko.observableArray([]);
 		
 	self.init = function() {};
 	
@@ -37,12 +39,37 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
+
 // 		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
 // 		if(hitDiceType.length > 0){
 // 			self.hitDiceType = hitDiceType[0];
 // 		}
 // 		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
 		
+		var deathSaveSuccessList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
+		if (deathSaveSuccessList.length > 0) {
+			self.deathSaveSuccessList(deathSaveSuccessList);
+		}
+		else{
+			for(i=0; i<2;i++)
+				self.deathSaveSuccessList.push(new DeathSave());
+		}
+		self.deathSaveSuccessList().forEach(function(e, i, _) {
+			e.characterId(CharacterManager.activeCharacter().key())
+		});
+
+		var deathSaveFailureList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
+		if (deathSaveFailureList.length > 0) {
+			self.deathSaveFailureList(deathSaveFailureList);
+		}
+		else{
+			for(i=0; i<2;i++)
+				self.deathSaveFailureList.push(new DeathSave());
+		}
+		self.deathSaveFailureList().forEach(function(e, i, _) {
+			e.characterId(CharacterManager.activeCharacter().key())
+		});
+
 		//Subscriptions
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
 		Notifications.profile.changed.add(self.calculateHitDice);
