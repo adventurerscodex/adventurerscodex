@@ -7,10 +7,6 @@
             Armor
             <span data-bind="css: sortArrow('armorName')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('armorBonus');}">
-            AC Bonus
-            <span data-bind="css: sortArrow('armorBonus')"></span>
-          </th>
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorType');}">
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
@@ -38,10 +34,6 @@
       <tbody data-bind='foreach: filteredAndSortedArmors'>
         <tr style="cursor:pointer;">
           <td data-bind="text: armorName, click: $parent.editArmor"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewArmor"></td>
-          <td data-bind="text: armorBonus, click: $parent.editArmor"
                href="#"
                data-toggle="modal"
                data-target="#viewArmor"></td>
