@@ -36,7 +36,8 @@
 <!--/.nav-collapse -->
 </div>
 </nav>
-<div id='content' class='container-fluid' data-bind="if: ready">
+<!-- ko if: ready -->
+<div id='content' class='container-fluid'>
   <div id="characters" class="container-fluid" style="padding-top:10px;padding-bottom:10px;">
     <div class="row">
       <div class="col-sm-1" data-bind="template: {
@@ -212,6 +213,7 @@
 <!-- End group Tab -->
 	</div>
 </div>
+<!-- /ko -->
 
 <!-- ko ifnot: ready -->
 <div id="wizard" class="container-fluid"
