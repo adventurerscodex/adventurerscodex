@@ -6,6 +6,7 @@ function Spell() {
 
 	self.characterId = ko.observable(null);
     self.spellName = ko.observable('');
+    self.spellPrepared = ko.observable(false);
     self.spellType = ko.observable('');
     self.spellDmg = ko.observable('');
     self.spellSchool = ko.observable('');
@@ -46,8 +47,10 @@ function Spell() {
 			return self.spellDmg();
 		}
 	});
+
     self.clear = function() {
         self.spellName('');
+        self.spellPrepared = ko.observable(false);
         self.spellType('');
         self.spellDmg('');
         self.spellSchool('');
@@ -62,6 +65,7 @@ function Spell() {
     self.importValues = function(values) {
     	self.characterId(values.characterId);
         self.spellName(values.spellName);
+        self.spellPrepared(values.spellPrepared);
         self.spellType(values.spellType);
         self.spellDmg(values.spellDmg);
         self.spellSchool(values.spellSchool);
@@ -77,6 +81,7 @@ function Spell() {
         return {
         	characterId: self.characterId(),
 			spellName: self.spellName(),
+            spellPrepared: self.spellPrepared(),
 			spellType: self.spellType(),
 			spellDmg: self.spellDmg(),
 			spellSchool: self.spellSchool(),
