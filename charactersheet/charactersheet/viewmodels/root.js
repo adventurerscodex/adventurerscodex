@@ -16,6 +16,7 @@ function RootViewModel() {
 	 * and the init process has finished.
  	 */
 	self.ready = ko.observable(false);
+	self.wizard = ko.observable(false);
 	self._dummy = ko.observable(false);
 
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);

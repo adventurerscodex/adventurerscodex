@@ -5,8 +5,6 @@ function CharactersViewModel() {
 	
 	self.totalLocalStorage = 5; //MB
 
-    self.fileContents = ko.observable();
-    self.fileReader = new FileReader();
     self.selectedCharacter = ko.observable();
     
 	self.characters = ko.observableArray([]);
@@ -123,15 +121,4 @@ function CharactersViewModel() {
 		var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
 		return (used / self.totalLocalStorage * 100).toFixed(2);
 	});
-	
-	self.importFromFile = function() {
-		//The first comma in the result file string is the last
-		//character in the string before the actual json data
-		var length = self.fileReader.result.indexOf(",") + 1
-		var values = JSON.parse(atob(self.fileReader.result.substring(
-			length, self.fileReader.result.length)));
-		
-		Character.importCharacter(values);
-		Notifications.characters.changed.dispatch();
-	}; 
 };
