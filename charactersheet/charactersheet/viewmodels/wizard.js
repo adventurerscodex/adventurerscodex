@@ -8,6 +8,9 @@ function WizardViewModel() {
     self.type = ko.observable();
     self.playerInfo = ko.observable(new PlayerInfo());
     
+    self.fileContents = ko.observable();
+    self.fileReader = new FileReader();
+
     self.profile = ko.observable(new Profile());
     self.campaign = ko.observable(new Campaign());
     self.currentStep = ko.observable(0);
@@ -88,6 +91,21 @@ function WizardViewModel() {
         self.profile(new Profile());
         self.campaign(new Campaign());    
     };
+    
+	self.importFromFile = function() {
+		//The first comma in the result file string is the last
+		//character in the string before the actual json data
+		var length = self.fileReader.result.indexOf(",") + 1
+		var values = JSON.parse(atob(self.fileReader.result.substring(
+			length, self.fileReader.result.length)));
+
+		var character = Character.importCharacter(values);
+		Notifications.characters.changed.dispatch();
+
+        CharacterManager.changeCharacter(character.key());
+        self.clear();
+        self.currentStep(0);
+	}; 
     
     //Private Methods
     

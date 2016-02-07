@@ -122,6 +122,7 @@ Character.exportChracter = function(characterId) {
 }
 
 Character.importCharacter = function(data) {
+	var character = null;
 	var tableNames = Object.keys(data);
 	tableNames.forEach(function(e, i, _) {
 		var model = window[e];
@@ -129,7 +130,11 @@ Character.importCharacter = function(data) {
 			var inst = new model();
 			inst.importValues(e1);
 			PersistenceService.save(model, inst);
+			
+			if (e.toLowerCase() === 'character') {
+			    character = inst;
+			}
 		});
 	});
+	return character;
 };
-
