@@ -142,11 +142,11 @@
 <!-- End Skills Tab -->
 	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
 		<div class="row">
-			<div class="col-md-6 col-sm-12 col-padded">
+			<div class="col-md-8 col-sm-12 col-padded">
 				<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'templates', data: spellbookViewModel }">
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-12 col-padded">
+			<div class="col-md-4 col-sm-12 col-padded">
 				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
 				</div>
 			</div>
@@ -203,7 +203,7 @@
 			</div>
 			<div data-bind="template: { name: 'chat.tmpl', templateUrl: 'templates', data: partyChatViewModel }">
 			</div>
-			<!-- 
+			<!--
 <div data-bind="template: { name: 'player_summary.tmpl', templateUrl: 'templates', data: playerSummaryViewModel }">
 			</div>
  -->

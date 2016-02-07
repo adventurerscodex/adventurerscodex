@@ -6,6 +6,8 @@ function SpellbookViewModel() {
     self.sorts = {
 	  'spellName asc': { field: 'spellName', direction: 'asc'},
 	  'spellName desc': { field: 'spellName', direction: 'desc'},
+    'spellPrepared asc': { field: 'spellPrepared', direction: 'asc'},
+    'spellPrepared desc': { field: 'spellPrepared', direction: 'desc'},
 	  'spellType asc': { field: 'spellType', direction: 'asc'},
 	  'spellType desc': { field: 'spellType', direction: 'desc'},
 	  'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
@@ -21,19 +23,19 @@ function SpellbookViewModel() {
     self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
-	
+
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
 
 	self.init = function() {
-	
+
 	};
-	
+
 	self.load = function() {
 		var key = CharacterManager.activeCharacter().key();
 		self.spellbook(Spell.findAllBy(key));
 	};
-	
+
 	self.unload = function() {
  		$.each(self.spellbook(), function(_, e) {
 			e.save();
@@ -111,9 +113,9 @@ function SpellbookViewModel() {
         self.blankSpell(new Spell());
     };
 
-    self.removeSpell = function(spell) { 
-    	self.spellbook.remove(spell) 
-    	spell.delete();	
+    self.removeSpell = function(spell) {
+    	self.spellbook.remove(spell)
+    	spell.delete();
     };
 
     self.editSpell = function(spell) {
