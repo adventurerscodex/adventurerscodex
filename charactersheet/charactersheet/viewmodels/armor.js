@@ -10,8 +10,6 @@ function ArmorViewModel() {
     self.sorts = {
 	  'armorName asc': { field: 'armorName', direction: 'asc'},
 	  'armorName desc': { field: 'armorName', direction: 'desc'},
-	  'armorBonus asc': { field: 'armorBonus', direction: 'asc'},
-	  'armorBonus desc': { field: 'armorBonus', direction: 'desc'},
 	  'armorType asc': { field: 'armorType', direction: 'asc'},
 	  'armorType desc': { field: 'armorType', direction: 'desc'},
 	  'armorDexBonus asc': { field: 'armorDexBonus', direction: 'asc'},

@@ -7,7 +7,6 @@ function Armor() {
     self.characterId = ko.observable(null);
     self.armorName = ko.observable('');
     self.armorType = ko.observable('');
-    self.armorBonus = ko.observable('');
     self.armorProficiency = ko.observable(false);
     self.armorPrice = ko.observable('');
     self.armorWeight = ko.observable('');
@@ -26,7 +25,6 @@ function Armor() {
     self.clear = function() {
         self.armorName('');
         self.armorType('');
-        self.armorBonus('');
         self.armorProficiency(false);
         self.armorPrice('');
         self.armorWeight('');
@@ -39,7 +37,6 @@ function Armor() {
         self.characterId(values.characterId);
         self.armorName(values.armorName);
         self.armorType(values.armorType);
-        self.armorBonus(values.armorBonus);
         self.armorProficiency(values.armorProficiency);
         self.armorPrice(values.armorPrice);
         self.armorWeight(values.armorWeight);
@@ -53,7 +50,6 @@ function Armor() {
             characterId: self.characterId(),
             armorName: self.armorName(),
             armorType: self.armorType(),
-            armorBonus: self.armorBonus(),
             armorProficiency: self.armorProficiency(),
             armorPrice: self.armorPrice(),
             armorWeight: self.armorWeight(),
