@@ -2,6 +2,7 @@
 
 var messenger;
 var players;
+var playerSummaryService;
 
 /**
  * The Root View Model for the application. All other view models are children of this view model.
@@ -23,14 +24,15 @@ function RootViewModel() {
 	self.activeTab = ko.observable(self.playerType().defaultTab);
 
 	//Player Child View Models
-	self.profileTabViewModel   = ko.observable(new ProfileTabViewModel());
-	self.statsTabViewModel     = ko.observable(new StatsTabViewModel());
-	self.skillsTabViewModel    = ko.observable(new SkillsTabViewModel());
-	self.spellsTabViewModel    = ko.observable(new SpellsTabViewModel());
-	self.equipmentTabViewModel = ko.observable(new EquipmentTabViewModel());
-	self.inventoryTabViewModel = ko.observable(new InventoryTabViewModel());
-	self.notesTabViewModel     = ko.observable(new NotesTabViewModel());
-	self.partyTabViewModel     = ko.observable(new PartyTabViewModel());
+	self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
+	self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
+	self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());
+	self.spellsTabViewModel        = ko.observable(new SpellsTabViewModel());
+	self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
+	self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
+	self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
+	self.partyTabViewModel         = ko.observable(new PartyTabViewModel());
+	self.playerSummaryTabViewModel = ko.observable(new PlayerSummaryTabViewModel());
 
 	//DM Child View Models
 	self.campaignTabViewModel  = ko.observable(new CampaignTabViewModel());
@@ -111,6 +113,13 @@ function RootViewModel() {
     		return 'hidden';
     	}
     });
+	self.playerSummaryTabStatus = ko.pureComputed(function() {
+		if (self.playerType().visibleTabs.indexOf('players') > -1) {
+	    	return self.activeTab() === 'players' ? 'active' : '';
+    	} else {
+    		return 'hidden';
+    	}
+    });
 	self.settingsTabStatus = ko.pureComputed(function() {
 		if (self.playerType().visibleTabs.indexOf('settings') > -1) {
 	    	return self.activeTab() === 'settings' ? 'active' : '';
@@ -148,6 +157,9 @@ function RootViewModel() {
 	};
 	self.activatePartyTab = function() {
 		self.activeTab('party');
+	};
+	self.activatePlayerSummaryTab = function() {
+		self.activeTab('players');
 	};
 	self.activateSettingsTab = function() {
 		self.activeTab('settings');
@@ -239,6 +251,7 @@ function RootViewModel() {
         if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
 			self.campaignTabViewModel().init();
 			self.enemiesTabViewModel().init();
+			self.playerSummaryTabViewModel().init();
         }
         self.partyTabViewModel().init();
         self.charactersViewModel.init();
@@ -271,6 +284,7 @@ function RootViewModel() {
             if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
 				self.campaignTabViewModel().load();
 				self.enemiesTabViewModel().load();
+			    self.playerSummaryTabViewModel().load();
             }
             self.partyTabViewModel().load();
             self.charactersViewModel.load();
@@ -294,6 +308,7 @@ function RootViewModel() {
             if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
 				self.campaignTabViewModel().unload();
 				self.enemiesTabViewModel().unload();
+			    self.playerSummaryTabViewModel().unload();
             }
             self.partyTabViewModel().unload();
             self.charactersViewModel.unload();
@@ -903,10 +918,64 @@ function PartyTabViewModel() {
 };
 
 
+function PlayerSummaryTabViewModel() {
+	var self = this;
+
+	self.playerSummaryViewModel = ko.observable(new PlayerSummaryViewModel());
+
+	self.init = function() {
+    	var keys = Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().init();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to init.\n" + err;
+    			}
+    		}
+    	}
+	};
+
+	self.load = function() {
+    	var keys = Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().load();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to load.\n" + err;
+    			}
+    		}
+    	}
+	};
+
+    self.unload = function() {
+    	var keys =  Object.keys(self);
+    	for (var i in keys) {
+    		if (keys[i].indexOf('ViewModel') > -1) {
+    			try {
+	    			self[keys[i]]().unload();
+    			} catch(err) {
+    				throw "Module " + keys[i] + " failed to unload.\n" + err;
+    			}
+    		}
+    	}
+    };
+
+    self.clear = function() {
+    	self.partyChatViewModel().clear();
+    };
+};
+
+
 var init = function(viewModel) {
     messenger = new Messenger();
-    players = new Players();
+    players = new PlayersService();
+    playerSummaryService = new PlayerSummaryService();
+    
     messenger.connect();
+    players.init();
+    playerSummaryService.init();
 
     //Set up event handlers.
     Notifications.characterManager.changing.add(function() {

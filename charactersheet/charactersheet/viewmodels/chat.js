@@ -9,8 +9,8 @@ function PartyChatViewModel() {
 	
 	self.init = function() {
 		messenger.subscribe('data', 'chat', self.handleMessage);
-		players.onPlayerEnters(self.handleNewPlayer);
-		players.onPlayerLeaves(self.handlePlayerLeft);
+        Notifications.connectedPlayers.playerEntered.add(self.handleNewPlayer);
+		Notifications.connectedPlayers.playerLeft.add(self.handlePlayerLeft);
 		
 		Notifications.connectionManager.changed.add(function() {
 			self._dummy.notifySubscribers();
