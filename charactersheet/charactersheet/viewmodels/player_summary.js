@@ -1,9 +1,5 @@
 "use strict";
 
-/**
- * A module that listens for changes in the Profile and Campaign models
- * and summarizes the data, then sends it over the wire.
- */
 function PlayerSummaryViewModel() {
     var self = this;
     

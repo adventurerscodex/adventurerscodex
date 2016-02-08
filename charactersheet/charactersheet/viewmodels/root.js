@@ -246,7 +246,6 @@ function RootViewModel() {
 			self.equipmentTabViewModel().init();
 			self.inventoryTabViewModel().init();
 			self.notesTabViewModel().init();
-			self.partyTabViewModel().init();
         }
         if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
 			self.campaignTabViewModel().init();

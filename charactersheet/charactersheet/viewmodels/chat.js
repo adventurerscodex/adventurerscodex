@@ -8,10 +8,7 @@ function PartyChatViewModel() {
 	self._dummy = ko.observable(null);
 	
 	self.init = function() {
-		messenger.subscribe('data', 'chat', self.handleMessage);
-        Notifications.connectedPlayers.playerEntered.add(self.handleNewPlayer);
-		Notifications.connectedPlayers.playerLeft.add(self.handlePlayerLeft);
-		
+		messenger.subscribe('data', 'chat', self.handleMessage);		
 		Notifications.connectionManager.changed.add(function() {
 			self._dummy.notifySubscribers();
 		});
@@ -54,10 +51,7 @@ function PartyChatViewModel() {
 		var message = self.message().trim();
 		if (message !== '') {
 			var key = CharacterManager.activeCharacter().key();
-			var name = '';
-			try {
-				name = Profile.findBy(key)[0].characterName();
-			} catch(err) {};
+			var name = PlayerSummary.findBy(key).characterName();
 			
 			var msg = new ChatMessage();
 			msg.fromId(key);
@@ -80,23 +74,8 @@ function PartyChatViewModel() {
 			self.log.push(message);
 		}
 	};
-	
-	self.handleNewPlayer = function(player) {
-		var message = new ChatMessage();
-		message.text('<i><small>' + player.name + ' has entered the room.</small></i>');
-		self.log.push(message);
-	};
-
-	self.handlePlayerLeft = function(player) {
-		var message = new ChatMessage();
-		message.text('<i><small>' + player.name + ' has left the room.</small></i>');
-		self.log.push(message);
-	};
-		
+			
 	self.clear = function() {
-		self.log().map(function(m, i, _) {
-			m.delete();
-		});
 		self.log([]);
 	};
 	
