@@ -2,7 +2,7 @@
 
 describe('SpellsViewModel', function(){
     var messenger = new Messenger();
-    var players = new Players();
+    var players = new PlayersService();
     PersistenceService._save = function(){};
     PersistenceService._delete = function(){};
 
