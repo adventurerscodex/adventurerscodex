@@ -76,8 +76,7 @@ function PlayersService() {
 	 */
 	self.sayGoodBye = function() {
 		var player = new Player();
-		player.name = Profile.find().characterName();
-		player.id = CharacterManager.activeCharacter();
+		player.id = CharacterManager.activeCharacter().key();
 		messenger.sendDataMsg(
 		    ConnectionManager.find().roomId(), 'goodbye!', player);
 	};
@@ -98,7 +97,7 @@ function PlayersService() {
 
 function Player() {
 	var self = this;
-	
 	self.id = '';	
 	self.lastPing = 0;
 };
+
