@@ -25,7 +25,7 @@ describe('Players', function() {
 			};
 
 
-			var players = new Players();
+			var players = new PlayersService();
 			players.init();
 			messenger._subscriptions.length.should.equal(3);
 			messenger._sendMgs = false;
@@ -58,7 +58,7 @@ describe('Players', function() {
 				messenger._sendMgs = true;
 			};
 
-			var players = new Players();
+			var players = new PlayersService();
 			players.init();
 			messenger._sendMgs.should.equal(false);
 			players.unload();
@@ -125,7 +125,7 @@ describe('Players', function() {
 			};
 
 			messenger._sendMgs = false;
-			var players = new Players();
+			var players = new PlayersService();
 			messenger._sendMgs.should.equal(false);
 			players.sayGoodBye();
 			messenger._sendMgs.should.equal(true);
@@ -138,7 +138,7 @@ describe('Players', function() {
 
 	describe('HandleHello', function() {
 		it('should receive a hello message and add the player to it\'s list.', function() {
-			var players = new Players();
+			var players = new PlayersService();
 			var p = new Player();
 			p.name = 'Bob';
 			p.id = '12324';
@@ -159,7 +159,7 @@ describe('Players', function() {
 
 	describe('AlertPlayerEnter', function() {
 		it('should receive a message when a player is added to it\'s list.', function() {
-			var players = new Players();
+			var players = new PlayersService();
 			var p = new Player();
 			p.name = 'Bob';
 			p.id = '12324';
@@ -173,7 +173,7 @@ describe('Players', function() {
 
 	describe('HandleGoodbye', function() {
 		it('should receive a goodbye message and add the player to it\'s list.', function() {
-			var players = new Players();
+			var players = new PlayersService();
 			var p = new Player();
 			p.name = 'Bob';
 			p.id = '12324';
@@ -185,7 +185,7 @@ describe('Players', function() {
 
 	describe('AlertPlayerLeaves', function() {
 		it('should receive a message when a player is removed from it\'s list.', function() {
-			var players = new Players();
+			var players = new PlayersService();
 			var p = new Player();
 			p.name = 'Bob';
 			p.id = '12324';
@@ -193,7 +193,7 @@ describe('Players', function() {
 				player.should.deepEqual(p);
 			});
 			players.handleHello(p);
-			var p = new Player();
+			var p = new PlayerService();
 			p.name = 'ewew';
 			p.id = '3434';
 			players.handleHello(p);
