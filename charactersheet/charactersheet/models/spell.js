@@ -23,7 +23,7 @@ function Spell() {
         'Divination', 'Enchantment', 'Evocation',
         'Illusion', 'Necromancy', 'Transmutation']);
     self.spellCastingTimeOptions = ko.observableArray([
-        '1 action', '1 bonus action', '1 minute',
+        '1 action', '1 bonus action', '1 reaction', '1 minute',
         '10 minutes', '1 hour']);
     self.spellDurationOptions = ko.observableArray([
         'Instantaneous', '1 round', '1 min', '10 min', '1 hour', '8 hours',
