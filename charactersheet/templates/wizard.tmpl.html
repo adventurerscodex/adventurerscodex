@@ -1,0 +1,114 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="container">
+      <div class="center-block">
+        <!-- Character Type -->
+        <!-- ko if: showQuestion1 -->
+        <div class="text-center center-block">
+          <h3>What kind of player are you?</h3>
+          <p><i>Players participate in the game, while the Dungeon Master (DM)
+          tells the story that the players will experience.</i></p>
+          <div class="btn-group " role="group" aria-label="...">
+            <button type="button" class="btn btn-primary"
+              data-bind="click: setPlayerType">I'm a Player</button>
+            <button type="button" class="btn btn-default"
+              data-bind="click: setDMType">I'm a DM</button>
+          </div>
+         <div class="row row-padded">
+          <div class="center-block text-center">
+            <button type="button" class="btn btn-link"
+              data-toggle="modal" data-target="#importModal">
+                <i><small>Import an Existing Character</small></i>
+            </button>
+          </div>
+        </div> 
+       </div>
+        <!-- /ko -->
+        <!-- ko if: showQuestion2 -->
+        <div class="text-center center-block">
+          <!-- Player -->
+          <!-- ko if: showProfile -->
+          <h3>Let's get some information about you.</h3>
+          <p><i>Go ahead and tell us some basic information about your 
+          character, and yourself. Ask your DM if you need help.</i></p>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="container-fluid" data-bind="template: {
+                    name: 'profile.tmpl', 
+                    templateUrl: 'templates', 
+                    data: $data }"></div>
+            </div>
+          </div>
+          <div class="row">
+          <h4>Optional</h4>
+          <p><i>If you use Gravatar, enter your email here. If you don't
+          know what that is, then don't worry.</i></p>
+            <div class="col-md-12">
+              <div class="container-fluid" data-bind="template: {
+                    name: 'player_info.tmpl', 
+                    templateUrl: 'templates', 
+                    data: $data }"></div>
+            </div>
+          </div>
+          <!-- /ko -->
+          <!-- DM -->
+          <!-- ko if: showCampaign -->
+          <h3>What's your campaign called?</h3>
+          <p><i>Go ahead and tell us some basic information about your campaign, 
+          and yourself.</i></p>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="container-fluid" data-bind="template: {
+                    name: 'player_info.tmpl', 
+                    templateUrl: 'templates', 
+                    data: $data }"></div>
+            </div>
+          </div>
+          <div class="container-fluid" data-bind="template: {
+                    name: 'campaign.tmpl', 
+                    templateUrl: 'templates', 
+                    data: $data }"></div>
+          <!-- /ko -->
+          </div>
+        <!-- /ko -->
+      </div>
+    </div>
+    <div class="row row-padded">
+      <div class="col-md-6">
+        <!-- ko if: showPrevButton -->
+        <button data-bind="click: prevStep" type="button"
+          class="btn btn-default pull-right">Back
+        </button>
+        <!-- /ko -->        
+      </div>
+      <div class="col-md-6">
+        <!-- ko if: complete -->
+        <button data-bind="click: submit" type="submit"
+          class="btn btn-primary pull-left">Start Playing!
+        </button>
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Import Modal Form -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" 
+  aria-labelledby="importModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabel">Import</h4>
+      </div>
+      <div class="modal-body">
+        <p>If you've exported you character data before, you can import it here!</p>
+        <!-- Add import form. -->
+        <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
+      </div>
+    </div>
+  </div>
+</div>

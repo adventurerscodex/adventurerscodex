@@ -1,15 +1,403 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script type="text/javascript">
-      //Check immediately. Skip loading page if necessary.
-      "use strict";
-      var loc = '/charactersheet';
-      window.location = loc;
-    </script>
- </head>
- <body>
- </body>
+<html id='html'>
+<head>
+	<title data-bind='text: pageTitle'></title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<link rel="apple-touch-icon" href="/images/logo-full-icon.png">
+	<link rel="icon" type="image/png" href="/images/logo-full.png">
+	<link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
+	<link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
+	<link href="/site.css" rel="stylesheet">
+	<!-- <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet"> -->
+</head>
+<body>
+<nav class="navbar navbar-default navbar-static-top">
+<div class="container-fluid">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+		  data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		  <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+		  <span class="icon-bar"></span><span class="icon-bar"></span>
+		</button>
+		<a href='/' class="navbar-brand">Adventurer's Codex
+		  <sup class="beta">Beta!</sup>
+		</a>
+	</div>
+	<div id="navbar" class="collapse navbar-collapse">
+		<ul class="nav navbar-nav">
+			<li><a href="//adventurerscodex.com/blog">Blog</a></li>
+			<li><a href="//tinyletter.com/adventurerscodex">Newsletter</a></li>
+		</ul>
+	</div>
+
+<!--/.nav-collapse -->
+</div>
+</nav>
+<!-- ko if: ready -->
+<div id='content' class='container-fluid'>
+  <div id="characters" class="container-fluid" style="padding-top:10px;padding-bottom:10px;">
+    <div class="row">
+      <div class="col-sm-1" data-bind="template: {
+        name: 'player_image.tmpl',
+        templateUrl: 'templates',
+        data: profileTabViewModel().playerImageViewModel()
+      }">
+      </div>
+      <div class="col-sm-10" style="margin-top:-20px;">
+        <div class="row">
+          <div class="col-md-12">
+            <h2 data-bind='text: playerTitle'></h2>
+            <i data-bind='text: ""'></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <i class="small underline"><a class="" data-toggle="modal"
+              data-target="#newModal" href="#">New</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal"
+              data-target="#charactersModal" href="#">Characters and Games</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal"
+              data-target="#connectModal" href="#">Connect</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal"
+              data-target="#exportModal"
+              data-bind="click: charactersViewModel.selectCharacter"
+              href="#">Export</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal"
+              data-target="#settingsModal" href="#">Settings</a></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+	<ul class="nav nav-tabs">
+		<li role="presentation" data-bind="click: activateProfileTab, css: profileTabStatus"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+		<li role="presentation" data-bind="click: activateStatsTab, css: statsTabStatus"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
+		<li role="presentation" data-bind="click: activateSkillsTab, css: skillsTabStatus"><a href="#skills" aria-controls="skills" role="tab" data-toggle="tab">Skills</a></li>
+		<li role="presentation" data-bind="click: activateSpellsTab, css: spellsTabStatus"><a href="#spells" aria-controls="spells" role="tab" data-toggle="tab">Spells</a></li>
+		<li role="presentation" data-bind="click: activateEquipmentTab, css: equipmentTabStatus"><a href="#equipment" aria-controls="equipment" role="tab" data-toggle="tab">Weapons and Armor</a></li>
+		<li role="presentation" data-bind="click: activateInventoryTab, css: inventoryTabStatus"><a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">Inventory</a></li>
+		<li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
+		<li role="presentation" data-bind="click: activateCampaignTab, css: campaignTabStatus"><a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a></li>
+		<li role="presentation" data-bind="click: activateEnemiesTab, css: enemiesTabStatus"><a href="#enemies" aria-controls="enemies" role="tab" data-toggle="tab">Enemies</a></li>
+		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Chat</a></li>
+		<li role="presentation" data-bind="click: activatePlayerSummaryTab, css: playerSummaryTabStatus"><a href="#player" aria-controls="players" role="tab" data-toggle="tab">Players</a></li>
+	</ul>
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
+			<div class="row">
+				<div class="col-md-7 col-sm-12 col-padded">
+					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
+					</div>
+				</div>
+				<div class="col-md-5 col-sm-12 col-padded">
+					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates', data: appearanceViewModel }">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-padded">
+					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates', data: featuresTraitsViewModel }">
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- End Profile Tab -->
+	<div role="tabpanel" class="tab-pane" id="stats" data-bind="with: statsTabViewModel, css: statsTabStatus">
+		<div class="row">
+			<div class="col-md-12 col-sm-12 col-padded">
+				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'templates', data: statsViewModel }">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'templates', data: abilityScoresViewModel }">
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates', data: spellStatsViewModel }">
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'templates', data: savingThrowsViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Stats Tab -->
+	<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates', data: featsProfViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates', data: skillsViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Skills Tab -->
+	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
+		<div class="row">
+			<div class="col-md-8 col-sm-12 col-padded">
+				<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'templates', data: spellbookViewModel }">
+				</div>
+			</div>
+			<div class="col-md-4 col-sm-12 col-padded">
+				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Spells Tab -->
+	<div role="tabpanel" class="tab-pane" id="equipment" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates', data: weaponsViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates', data: armorViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Equipment Tab -->
+	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'templates', data: equipmentViewModel }">
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'templates', data: treasureViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Inventory Tab -->
+	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
+		<div class="row">
+			<div class="col-sm-12 col-padded">
+				<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates', data: notesViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- End Notes Tab -->
+	<div role="tabpanel" class="tab-pane" id="campaign" data-bind="with: campaignTabViewModel, css: campaignTabStatus">
+		<div data-bind="template: { name: 'campaign.tmpl', templateUrl: 'templates', data: campaignViewModel }">
+		</div>
+	</div>
+<!-- End Campaign Tab -->
+	<div role="tabpanel" class="tab-pane" id="enemies" data-bind="with: enemiesTabViewModel, css: enemiesTabStatus">
+		<div data-bind="template: { name: 'enemies.tmpl', templateUrl: 'templates', data: enemiesViewModel }">
+		</div>
+	</div>
+<!-- End Enemies Tab -->
+  <div role="tabpanel" class="tab-pane" id="party" data-bind="with: partyTabViewModel, css: partyTabStatus">
+    <div data-bind="template: { name: 'chat.tmpl', templateUrl: 'templates', data: partyChatViewModel }">
+    </div>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="players" data-bind="with: playerSummaryTabViewModel, css: playerSummaryTabStatus">
+    <div data-bind="template: { name: 'player_summary.tmpl', templateUrl: 'templates', data: playerSummaryViewModel }">
+    </div>
+  </div>
+</div>
+<!-- End group Tab -->
+	</div>
+</div>
+<!-- /ko -->
+
+<!-- ko ifnot: ready -->
+<div id="wizard" class="container-fluid"
+  data-bind="with: wizardViewModel">
+  <div data-bind="template: {
+    name: 'wizard.tmpl',
+    templateUrl: 'templates',
+    data: $data }"></div>
+</div>
+<!-- /ko -->
+
+<!-- Switch Characters Modal -->
+<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
+  aria-labelledby="charactersModalLabel"
+  data-bind="template: {
+      name: 'characters.tmpl',
+      templateUrl: 'templates',
+      data: charactersViewModel }">
+</div>
+
+<!-- Connect Modal -->
+<div class="modal fade" id="connectModal" tabindex="-1" role="dialog"
+  aria-labelledby="charactersModalLabel"
+  data-bind="template: {
+      name: 'connection_manager.tmpl',
+      templateUrl: 'templates',
+      data: connectionManagerViewModel }">
+</div>
+
+<!-- Export Modal -->
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
+  data-bind="with: charactersViewModel.selectedCharacter"
+  aria-labelledby="exportModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+      </div>
+      <div class="modal-body">
+        <p>Save your character to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+        <p>Note: Safari users will need to save the contents of the page.</p>
+      <!-- Add export form. -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog"
+  aria-labelledby="settingsLabel"
+  data-bind="template: {
+      name: 'settings.tmpl',
+      templateUrl: 'templates',
+      data: settingsViewModel }">
+</div>
+
+<!-- New Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog"
+  aria-labelledby="newLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="settingsLabel"
+          data-dismiss="modal">Create a new character</h4>
+      </div>
+      <div class="modal-body">
+        <p>If you play more than one character per game, or if you
+        play multiple games, you're in luck! You can have
+        multiple characters and switch between them at any time!</p>
+      </div>
+      <div class="modal-footer">
+        <button data-bind="click: showWizard"
+          data-dismiss="modal" type="submit"
+          class="btn btn-primary">Make a new character
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
+<script src="/bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script>
+<script src="/bower_components/uri.js/src/URI.min.js" type="text/javascript"></script>
+<script src="/bower_components/node-uuid/uuid.js" type="text/javascript"></script>
+<script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script>
+<script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" type="text/javascript"></script>
+<script src="/bower_components/knockout-file-bindings/knockout-file-bindings.js" type="text/javascript"></script>
+<script src="/bower_components/blueimp-md5/js/md5.min.js" type="text/javascript"></script>
+<!-- <script src="/bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script> -->
+<script src="/bin/markdown.min.js"></script>
+<script src="/bin/socket.io-1.2.0.js"></script>
+<script src="/bin/knockout-file-bind.js" type="text/javascript"></script>
+<script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
+<script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
+<script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
+<script src="/bin/knockout_boostrap_select_bind.js" type="text/javascript"></script>
+<!-- ViewModels -->
+<script src="viewmodels/ability_scores.js" type="text/javascript"></script>
+<script src="viewmodels/root.js" type="text/javascript"></script>
+<script src="viewmodels/appearance.js" type="text/javascript"></script>
+<script src="viewmodels/appearance.js" type="text/javascript"></script>
+<script src="viewmodels/armor.js" type="text/javascript"></script>
+<script src="viewmodels/campaign.js" type="text/javascript"></script>
+<script src="viewmodels/characters.js" type="text/javascript"></script>
+<script src="viewmodels/chat.js" type="text/javascript"></script>
+<script src="viewmodels/connection_manager.js" type="text/javascript"></script>
+<script src="viewmodels/enemies.js" type="text/javascript"></script>
+<script src="viewmodels/enemies.js" type="text/javascript"></script>
+<script src="viewmodels/equipment.js" type="text/javascript"></script>
+<script src="viewmodels/feat_traits.js" type="text/javascript"></script>
+<script src="viewmodels/feats_prof.js" type="text/javascript"></script>
+<script src="viewmodels/notes.js" type="text/javascript"></script>
+<script src="viewmodels/player_image.js" type="text/javascript"></script>
+<script src="viewmodels/player_info.js" type="text/javascript"></script>
+<script src="viewmodels/player_summary.js" type="text/javascript"></script>
+<script src="viewmodels/profile.js" type="text/javascript"></script>
+<script src="viewmodels/saving_throws.js" type="text/javascript"></script>
+<script src="viewmodels/settings.js" type="text/javascript"></script>
+<script src="viewmodels/skills.js" type="text/javascript"></script>
+<script src="viewmodels/spell_slots.js" type="text/javascript"></script>
+<script src="viewmodels/spell_stats.js" type="text/javascript"></script>
+<script src="viewmodels/spells.js" type="text/javascript"></script>
+<script src="viewmodels/stats.js" type="text/javascript"></script>
+<script src="viewmodels/treasure.js" type="text/javascript"></script>
+<script src="viewmodels/weapons.js" type="text/javascript"></script>
+<script src="viewmodels/wizard.js" type="text/javascript"></script>
+<!-- Models -->
+<script src="models/ability_scores.js" type="text/javascript"></script>
+<script src="models/appearance.js" type="text/javascript"></script>
+<script src="models/armor.js" type="text/javascript"></script>
+<script src="models/campaign.js" type="text/javascript"></script>
+<script src="models/character.js" type="text/javascript"></script>
+<script src="models/chat_message.js" type="text/javascript"></script>
+<script src="models/connection_manager.js" type="text/javascript"></script>
+<script src="models/feat_traits.js" type="text/javascript"></script>
+<script src="models/feats_prof.js" type="text/javascript"></script>
+<script src="models/health.js" type="text/javascript"></script>
+<script src="models/hit_dice_type.js" type="text/javascript"></script>
+<script src="models/hit_dice.js" type="text/javascript"></script>
+<script src="models/image.js" type="text/javascript"></script>
+<script src="models/item.js" type="text/javascript"></script>
+<script src="models/note.js" type="text/javascript"></script>
+<script src="models/npc.js" type="text/javascript"></script>
+<script src="models/other_stats.js" type="text/javascript"></script>
+<script src="models/player_info.js" type="text/javascript"></script>
+<script src="models/player_summary.js" type="text/javascript"></script>
+<script src="models/player_types.js" type="text/javascript"></script>
+<script src="models/profile.js" type="text/javascript"></script>
+<script src="models/saving_throws.js" type="text/javascript"></script>
+<script src="models/skill.js" type="text/javascript"></script>
+<script src="models/spell_slot.js" type="text/javascript"></script>
+<script src="models/spell_stats.js" type="text/javascript"></script>
+<script src="models/spell.js" type="text/javascript"></script>
+<script src="models/treasure.js" type="text/javascript"></script>
+<script src="models/weapon.js" type="text/javascript"></script>
+<!-- Services -->
+<script src="services/persistence_service.js" type="text/javascript"></script>
+<script src="services/player_summary_service.js" type="text/javascript"></script>
+<script src="services/players_service.js" type="text/javascript"></script>
+<!-- Utilities -->
+<script src="utilities/character_manager.js" type="text/javascript"></script>
+<script src="utilities/notifications.js" type="text/javascript"></script>
+<script src="utilities/messenger.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function(){
+	  window.viewModel = new RootViewModel();
+    init(window.viewModel);
+	  ko.applyBindings(window.viewModel, $('#html')[0]);
+    //Setup automatic saving.
+    window.onbeforeunload = Notifications.global.unload.dispatch;
+	});
+	</script>
+</body>
 </html>
