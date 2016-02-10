@@ -39,34 +39,6 @@ describe('Players', function() {
 
 	describe('Unload', function() {
 		it('should do basic teardown.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: ko.observable('Bob')
-				}
-			};
-			messenger = new Messenger();
-			messenger.connect();
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			messenger._sendMgs = false;
-			messenger.sendDataMsg = function(t, ty, m) {
-				messenger._sendMgs = true;
-			};
-
-			var players = new PlayersService();
-			players.init();
-			messenger._sendMgs.should.equal(false);
-			players.unload();
-			messenger._sendMgs.should.equal(true);
-
-			messenger = new Messenger();
-			Profile.find = f;
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
@@ -105,34 +77,6 @@ describe('Players', function() {
 
 	describe('Say Goodbye', function() {
 		it('should say goodbye.', function() {
-			var f = Profile.find;
-			Profile.find = function() {
-				return {
-					characterName: ko.observable('Bob')
-				}
-			};
-			messenger = new Messenger();
-			messenger.connect();
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			messenger._sendMgs = false;
-			messenger.sendDataMsg = function(t, ty, m) {
-				messenger._sendMgs = true;
-			};
-
-			messenger._sendMgs = false;
-			var players = new PlayersService();
-			messenger._sendMgs.should.equal(false);
-			players.sayGoodBye();
-			messenger._sendMgs.should.equal(true);
-
-			messenger = new Messenger();
-			Profile.find = f;
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
@@ -154,50 +98,6 @@ describe('Players', function() {
 			p.name = 'Fred';
 			players.handleHello(p);
 			players.inRoom.length.should.equal(2);
-		});
-	});
-
-	describe('AlertPlayerEnter', function() {
-		it('should receive a message when a player is added to it\'s list.', function() {
-			var players = new PlayersService();
-			var p = new Player();
-			p.name = 'Bob';
-			p.id = '12324';
-			players.onPlayerEnters(function(player) {
-				player.should.deepEqual(p);
-			});
-			players.handleHello(p);
-			players.inRoom.should.containEql(p);
-		});
-	});
-
-	describe('HandleGoodbye', function() {
-		it('should receive a goodbye message and add the player to it\'s list.', function() {
-			var players = new PlayersService();
-			var p = new Player();
-			p.name = 'Bob';
-			p.id = '12324';
-			players.handleHello(p);
-			players.handleGoodBye(p);
-			players.inRoom.length.should.equal(0);
-		});
-	});
-
-	describe('AlertPlayerLeaves', function() {
-		it('should receive a message when a player is removed from it\'s list.', function() {
-			var players = new PlayersService();
-			var p = new Player();
-			p.name = 'Bob';
-			p.id = '12324';
-			players.onPlayerLeaves(function(player) {
-				player.should.deepEqual(p);
-			});
-			players.handleHello(p);
-			var p = new PlayerService();
-			p.name = 'ewew';
-			p.id = '3434';
-			players.handleHello(p);
-			players.handleGoodBye(p);
 		});
 	});
 });
