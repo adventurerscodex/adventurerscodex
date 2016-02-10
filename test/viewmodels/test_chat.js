@@ -6,24 +6,6 @@ describe('Chat View Model', function() {
 		
 	describe('Send Message', function() {
 		it('should construct a message and send it', function() {
-			messenger = new Messenger();
-			messenger.connect();
-	
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; },
-				};
-			};
-
-			var p = new PartyChatViewModel();
-			var text = msg.text;
-			p.message(text);
-			p.sendMessage();
-			msg.text.should.equal(text);
-			
-			messenger = new Messenger();
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
