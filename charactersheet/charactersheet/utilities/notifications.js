@@ -13,7 +13,21 @@ var Notifications = {
      *****************************/
 
     global: { 
-        //TODO
+    
+        /**
+         * Called when the app should initialize.
+         */
+        init: new signals.Signal(),
+        
+        /**
+         * Called when the app should load it's data.
+         */
+        load: new signals.Signal(),
+    
+        /**
+         * Called when the app should unload it's data.
+         */
+        unload: new signals.Signal(),
     },
 
     characterManager: {

@@ -6,11 +6,18 @@ function PartyChatViewModel() {
 	self.log = ko.observableArray([]);
 	self.message = ko.observable('');
 	self._dummy = ko.observable(null);
+	self.connected = ko.observable(false);
 	
 	self.init = function() {
 		messenger.subscribe('data', 'chat', self.handleMessage);		
 		Notifications.connectionManager.changed.add(function() {
 			self._dummy.notifySubscribers();
+		});
+		Notifications.connectionManager.connected.add(function() {
+		    self.connected(true);
+		});
+		Notifications.connectionManager.disconnected.add(function() {
+		    self.connected(false);
 		});
 	};
 	
@@ -25,16 +32,6 @@ function PartyChatViewModel() {
 		});
 	};
 	
-	self.connected = ko.computed(function() {
-		self._dummy();
-		try {
-			var key = CharacterManager.activeCharacter().key();
-			return ConnectionManager.findBy(key)[0].connected();
-		} catch(err) {
-			return false;
-		};
-	});
-
 	self._mainRoomId = ko.computed(function() {
 		self._dummy();
 		try {

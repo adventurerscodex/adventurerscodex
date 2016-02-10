@@ -7,11 +7,15 @@ function PlayerInfo() {
     self.GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/'
        
     self.characterId = ko.observable(null);
-    self.email = ko.observable();
+    self.email = ko.observable('');
     
     self.gravatarUrl = function() {
-        var hash = md5(self.email().trim());
-        return self.GRAVATAR_BASE_URL + hash;
+        try {
+            var hash = md5(self.email().trim());
+            return self.GRAVATAR_BASE_URL + hash;
+        } catch(err) {
+            return '';
+        }
     };
     
     self.clear = function() {

@@ -19,6 +19,7 @@ function RootViewModel() {
 	self.ready = ko.observable(false);
 	self.wizard = ko.observable(false);
 	self._dummy = ko.observable(false);
+	self.connected = ko.observable(false);
 
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.activeTab = ko.observable(self.playerType().defaultTab);
@@ -37,10 +38,12 @@ function RootViewModel() {
 	//DM Child View Models
 	self.campaignTabViewModel  = ko.observable(new CampaignTabViewModel());
 	self.enemiesTabViewModel   = ko.observable(new EnemiesTabViewModel());
-
+    
+    //Misc
 	self.wizardViewModel = new WizardViewModel();
 	self.charactersViewModel = new CharactersViewModel();
 	self.settingsViewModel = ko.observable(new SettingsViewModel());
+	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
 
 	//Tab Properties
 	self.profileTabStatus = ko.pureComputed(function() {
@@ -107,22 +110,15 @@ function RootViewModel() {
     	}
     });
 	self.partyTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('party') > -1) {
+		if (self.playerType().visibleTabs.indexOf('party') > -1 && self.connected()) {
 	    	return self.activeTab() === 'party' ? 'active' : '';
     	} else {
     		return 'hidden';
     	}
     });
 	self.playerSummaryTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('players') > -1) {
+		if (self.playerType().visibleTabs.indexOf('players') > -1 && self.connected()) {
 	    	return self.activeTab() === 'players' ? 'active' : '';
-    	} else {
-    		return 'hidden';
-    	}
-    });
-	self.settingsTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('settings') > -1) {
-	    	return self.activeTab() === 'settings' ? 'active' : '';
     	} else {
     		return 'hidden';
     	}
@@ -160,9 +156,6 @@ function RootViewModel() {
 	};
 	self.activatePlayerSummaryTab = function() {
 		self.activeTab('players');
-	};
-	self.activateSettingsTab = function() {
-		self.activeTab('settings');
 	};
 
 	//UI Methods
@@ -253,7 +246,10 @@ function RootViewModel() {
 			self.playerSummaryTabViewModel().init();
         }
         self.partyTabViewModel().init();
+        self.connectionManagerViewModel().init();
         self.charactersViewModel.init();
+        
+        //Subscriptions
         Notifications.profile.changed.add(function() {
             self._dummy.valueHasMutated();
         });
@@ -261,6 +257,12 @@ function RootViewModel() {
         Notifications.characters.allRemoved.add(function() {
             self.ready(false);
         });
+		Notifications.connectionManager.connected.add(function() {
+		    self.connected(true);
+		});
+		Notifications.connectionManager.disconnected.add(function() {
+		    self.connected(false);
+		});
 	};
 
 	/**
@@ -278,7 +280,6 @@ function RootViewModel() {
 				self.equipmentTabViewModel().load();
 				self.inventoryTabViewModel().load();
 				self.notesTabViewModel().load();
-				self.partyTabViewModel().load();
             }
             if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
 				self.campaignTabViewModel().load();
@@ -286,6 +287,7 @@ function RootViewModel() {
 			    self.playerSummaryTabViewModel().load();
             }
             self.partyTabViewModel().load();
+            self.connectionManagerViewModel().load();
             self.charactersViewModel.load();
             self.settingsViewModel().load();
             self.ready(true);
@@ -302,7 +304,6 @@ function RootViewModel() {
 				self.equipmentTabViewModel().unload();
 				self.inventoryTabViewModel().unload();
 				self.notesTabViewModel().unload();
-				self.partyTabViewModel().unload();
             }
             if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
 				self.campaignTabViewModel().unload();
@@ -310,6 +311,7 @@ function RootViewModel() {
 			    self.playerSummaryTabViewModel().unload();
             }
             self.partyTabViewModel().unload();
+            self.connectionManagerViewModel().unload();
             self.charactersViewModel.unload();
             self.settingsViewModel().unload();
         }
@@ -869,7 +871,6 @@ function EnemiesTabViewModel() {
 function PartyTabViewModel() {
 	var self = this;
 
-	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
 	self.partyChatViewModel         = ko.observable(new PartyChatViewModel());
 
 	self.init = function() {
@@ -981,12 +982,15 @@ var init = function(viewModel) {
         //Don't save an empty character.
         if (CharacterManager.activeCharacter() && viewModel.ready()) {
             viewModel.unload();
+            Notifications.global.unload.dispatch();
         }
     });
     Notifications.characterManager.changed.add(function() {
         try {
             viewModel.init();
+            Notifications.global.init.dispatch();
             viewModel.load();
+            Notifications.global.load.dispatch();
         } catch(err) {
             console.log(err)
             throw err

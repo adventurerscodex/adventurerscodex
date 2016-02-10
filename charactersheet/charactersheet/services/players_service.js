@@ -11,7 +11,7 @@
 function PlayersService() {
 	var self = this;
 	
-	self.SAY_HI_TIMER = 10000;
+	self.SAY_HI_TIMER = 5000;
 	self.PLAYER_EXPIRED_TIMEOUT = 22000;
 	
 	self.inRoom = [];
@@ -23,6 +23,8 @@ function PlayersService() {
 			setInterval(self.sayHello, self.SAY_HI_TIMER);
 			self.sayHello();
 		});
+		
+		Notifications.global.unload.add(self.unload);
 	};
 	
 	self.unload = function() {
@@ -77,18 +79,18 @@ function PlayersService() {
 	self.sayGoodBye = function() {
 		var player = new Player();
 		player.id = CharacterManager.activeCharacter().key();
-		messenger.sendDataMsg(
-		    ConnectionManager.find().roomId(), 'goodbye!', player);
+		try {
+    		messenger.sendDataMsg(
+	    	    ConnectionManager.findBy(player.id)[0].roomId(), 'goodbye!', player);
+	    } catch(err) {};
 	};
 	
 	/**
 	 * When a goodbye is received, remove that player from the active list.
 	 */
 	self.handleGoodBye = function(player) {
-		self.inRoom = $.map(self.inRoom, function(p, _) {
-			if (p.id !== player.id) {
-				return p;
-			}
+		self.inRoom = self.inRoom.filter(function(p, i, _) {
+			return p.id !== player.id;
 		});
         Notifications.connectedPlayers.playerLeft.dispatch(player);
 	};

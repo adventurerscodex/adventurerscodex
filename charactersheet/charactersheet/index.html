@@ -62,6 +62,9 @@
               data-target="#charactersModal" href="#">Characters and Games</a></i>
             &nbsp;
             <i class="small underline"><a class="" data-toggle="modal"
+              data-target="#connectModal" href="#">Connect</a></i>
+            &nbsp;
+            <i class="small underline"><a class="" data-toggle="modal"
               data-target="#exportModal"
               data-bind="click: charactersViewModel.selectCharacter"
               href="#">Export</a></i>
@@ -84,7 +87,7 @@
 		<li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
 		<li role="presentation" data-bind="click: activateCampaignTab, css: campaignTabStatus"><a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a></li>
 		<li role="presentation" data-bind="click: activateEnemiesTab, css: enemiesTabStatus"><a href="#enemies" aria-controls="enemies" role="tab" data-toggle="tab">Enemies</a></li>
-		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Party Chat</a></li>
+		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Chat</a></li>
 		<li role="presentation" data-bind="click: activatePlayerSummaryTab, css: playerSummaryTabStatus"><a href="#player" aria-controls="players" role="tab" data-toggle="tab">Players</a></li>
 	</ul>
 	<div class="tab-content">
@@ -202,8 +205,6 @@
 	</div>
 <!-- End Enemies Tab -->
   <div role="tabpanel" class="tab-pane" id="party" data-bind="with: partyTabViewModel, css: partyTabStatus">
-    <div data-bind="template: { name: 'connection_manager.tmpl', templateUrl: 'templates', data: connectionManagerViewModel }">
-    </div>
     <div data-bind="template: { name: 'chat.tmpl', templateUrl: 'templates', data: partyChatViewModel }">
     </div>
   </div>
@@ -234,6 +235,15 @@
       name: 'characters.tmpl',
       templateUrl: 'templates',
       data: charactersViewModel }">
+</div>
+
+<!-- Connect Modal -->
+<div class="modal fade" id="connectModal" tabindex="-1" role="dialog"
+  aria-labelledby="charactersModalLabel"
+  data-bind="template: {
+      name: 'connection_manager.tmpl',
+      templateUrl: 'templates',
+      data: connectionManagerViewModel }">
 </div>
 
 <!-- Export Modal -->
@@ -386,7 +396,7 @@
     init(window.viewModel);
 	  ko.applyBindings(window.viewModel, $('#html')[0]);
     //Setup automatic saving.
-    window.onbeforeunload = window.viewModel.unload;
+    window.onbeforeunload = Notifications.global.unload.dispatch;
 	});
 	</script>
 </body>
