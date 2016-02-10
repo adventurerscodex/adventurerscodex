@@ -263,6 +263,7 @@ function RootViewModel() {
 		Notifications.connectionManager.disconnected.add(function() {
 		    self.connected(false);
 		});
+		Notifications.global.unload.add(self.unload);
 	};
 
 	/**
@@ -974,8 +975,6 @@ var init = function(viewModel) {
     playerSummaryService = new PlayerSummaryService();
     
     messenger.connect();
-    players.init();
-    playerSummaryService.init();
 
     //Set up event handlers.
     Notifications.characterManager.changing.add(function() {
@@ -995,6 +994,9 @@ var init = function(viewModel) {
             console.log(err)
             throw err
         }
+
+        players.init();
+        playerSummaryService.init();
     });
 
     //Check if a character already exists.
