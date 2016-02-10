@@ -6,14 +6,18 @@ function PartyChatViewModel() {
 	self.log = ko.observableArray([]);
 	self.message = ko.observable('');
 	self._dummy = ko.observable(null);
+	self.connected = ko.observable(false);
 	
 	self.init = function() {
-		messenger.subscribe('data', 'chat', self.handleMessage);
-		players.onPlayerEnters(self.handleNewPlayer);
-		players.onPlayerLeaves(self.handlePlayerLeft);
-		
+		messenger.subscribe('data', 'chat', self.handleMessage);		
 		Notifications.connectionManager.changed.add(function() {
 			self._dummy.notifySubscribers();
+		});
+		Notifications.connectionManager.connected.add(function() {
+		    self.connected(true);
+		});
+		Notifications.connectionManager.disconnected.add(function() {
+		    self.connected(false);
 		});
 	};
 	
@@ -28,16 +32,6 @@ function PartyChatViewModel() {
 		});
 	};
 	
-	self.connected = ko.computed(function() {
-		self._dummy();
-		try {
-			var key = CharacterManager.activeCharacter().key();
-			return ConnectionManager.findBy(key)[0].connected();
-		} catch(err) {
-			return false;
-		};
-	});
-
 	self._mainRoomId = ko.computed(function() {
 		self._dummy();
 		try {
@@ -54,10 +48,7 @@ function PartyChatViewModel() {
 		var message = self.message().trim();
 		if (message !== '') {
 			var key = CharacterManager.activeCharacter().key();
-			var name = '';
-			try {
-				name = Profile.findBy(key)[0].characterName();
-			} catch(err) {};
+			var name = PlayerSummary.findBy(key).characterName();
 			
 			var msg = new ChatMessage();
 			msg.fromId(key);
@@ -80,23 +71,8 @@ function PartyChatViewModel() {
 			self.log.push(message);
 		}
 	};
-	
-	self.handleNewPlayer = function(player) {
-		var message = new ChatMessage();
-		message.text('<i><small>' + player.name + ' has entered the room.</small></i>');
-		self.log.push(message);
-	};
-
-	self.handlePlayerLeft = function(player) {
-		var message = new ChatMessage();
-		message.text('<i><small>' + player.name + ' has left the room.</small></i>');
-		self.log.push(message);
-	};
-		
+			
 	self.clear = function() {
-		self.log().map(function(m, i, _) {
-			m.delete();
-		});
 		self.log([]);
 	};
 	

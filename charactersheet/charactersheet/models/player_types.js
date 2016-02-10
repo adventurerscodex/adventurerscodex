@@ -8,7 +8,7 @@ var PlayerTypes = {
 	},
 	dmPlayerType: {
 		key: 'dm',
-		visibleTabs: ['campaign', 'enemies', 'settings', 'party'],
+		visibleTabs: ['campaign', 'enemies', 'settings', 'party', 'players'],
 		defaultTab: 'campaign'
 	}
 };

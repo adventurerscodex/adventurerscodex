@@ -2,15 +2,15 @@
   <div class="panel-body">
     <div class="progress">
       <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: health.regularProgressWidth }, css: health.progressType,
+        data-bind="style: { width: health().regularProgressWidth }, css: health().progressType,
           text: health.progressLabel">
         <span class="sr-only"></span>
       </div>
       <div id="tempHitPoints" class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: health.tempProgressWidth }" aria-describedby="hitpointsCounter">
+        data-bind="style: { width: health().tempProgressWidth }" aria-describedby="hitpointsCounter">
         <span class="sr-only"></span>
       </div>
-      <span class="input-group-addon" id="hitpointsCounter">HP: <span data-bind="text: health.hitpoints"></span></span>
+      <span class="input-group-addon" id="hitpointsCounter">HP: <span data-bind="text: health().hitpoints"></span></span>
     </div>
     <div class="row row-padded">
       <div class="col-md-12 col-padded">
@@ -47,7 +47,7 @@
             </td>
             <td class="col-md-5">
               <input type="number" class="form-control  text-left" aria-describedby="basic-addon2"
-                data-bind='textInput: health.maxHitpoints' min="0">
+                data-bind='textInput: health().maxHitpoints' min="0">
             </td>
           </tr>
           <tr>
@@ -59,7 +59,7 @@
             </td>
             <td>
               <input type="number" class="form-control text-left" aria-describedby="basic-addon2"
-                data-bind='textInput: health.damage' min="0">
+                data-bind='textInput: health().damage' min="0">
             </td>
           </tr>
           <tr>
@@ -68,7 +68,7 @@
               <span class="form-control">HP:</span>
             </td>
             <td class="text-left">
-              <span class="form-control" data-bind='text: health.hitpoints'>
+              <span class="form-control" data-bind='text: health().hitpoints'>
             </td>
           </tr>
         </table>

@@ -8,6 +8,68 @@
 
 var Notifications = {
 
+    /*****************************
+     ***** Application Events ****
+     *****************************/
+
+    global: { 
+    
+        /**
+         * Called when the app should initialize.
+         */
+        init: new signals.Signal(),
+        
+        /**
+         * Called when the app should load it's data.
+         */
+        load: new signals.Signal(),
+    
+        /**
+         * Called when the app should unload it's data.
+         */
+        unload: new signals.Signal(),
+    },
+
+    characterManager: {
+        changing: new signals.Signal(),
+        changed: new signals.Signal() 
+    },
+
+    /*****************************
+     ** Messenger Service Events *
+     *****************************/
+
+    connectionManager: {
+        connected: new signals.Signal(),
+        disconnected: new signals.Signal(),
+        changed: new signals.Signal()
+    },
+
+    connectedPlayers: {
+        /**
+         * Called when a new player connects to the room
+         * @param Player model representing new player.
+         */
+        playerEntered: new signals.Signal(),
+        
+        /**
+         * Called when a new player leaves the room
+         * @param Player model representing the exiting player.
+         */
+        playerLeft: new signals.Signal(),
+    },
+    
+    playerSummary: {
+        /**
+         * Called when the list of player summaries has been updated.
+         */
+        changed: new signals.Signal(),  
+    },
+
+    /*****************************
+     **** Data Changed Events ****
+     *****************************/
+
     abilityScores: {
     	changed: new signals.Signal()
     },
@@ -19,12 +81,6 @@ var Notifications = {
     characters: {
         changed: new signals.Signal(),
         allRemoved: new signals.Signal()
-    },
-
-    connectionManager: {
-        connected: new signals.Signal(),
-        disconnected: new signals.Signal(),
-        changed: new signals.Signal()
     },
 
     playerImage: {
@@ -47,13 +103,7 @@ var Notifications = {
 	    changed: new signals.Signal()
     },
 
-    characterManager: {
-        changing: new signals.Signal(),
-        changed: new signals.Signal() 
-    },
-
     spellStats: {
 	    changed: new signals.Signal()
     },
-
 };
