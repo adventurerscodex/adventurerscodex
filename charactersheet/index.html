@@ -7,6 +7,9 @@
       //Check immediately. Skip loading page if necessary.
       "use strict";
       var loc = '/charactersheet';
+      if (!localStorage['Character']) {
+        loc = '/blog';
+      }
       window.location = loc;
     </script>
  </head>
