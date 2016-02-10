@@ -10,16 +10,26 @@ function PlayerSummaryService() {
     var self = this;
     
     self.playerSummaries = [];
+    self.checkInterval = null;
+    self.REFRESH_TIMER = 10000;
 
     self.init = function() {
         Notifications.connectedPlayers.playerEntered.add(self.whois);    
         Notifications.connectedPlayers.playerLeft.add(self.removePlayer);
         Notifications.profile.changed.add(self.whoami);   
         Notifications.stats.changed.add(self.whoami);       
+        Notifications.playerImage.changed.add(self.whoami);       
 
         var character = CharacterManager.activeCharacter();
         messenger.subscribe('data', self._getWhoisId(character.key()), self.whoami);
         messenger.subscribe('data', 'iam', self.addPlayer);
+        
+        //Refresh the data every few seconds.
+        self.checkInterval = setInterval(function() {
+            players.inRoom.forEach(function(e, i, _) {
+                self.whois(e);
+            });
+        }, self.REFRESH_TIMER);
     };
         
     //Messages Methods
@@ -37,14 +47,16 @@ function PlayerSummaryService() {
      * When I receive a 'whois me' message, respond to it.
      */
     self.whoami = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var roomId = ConnectionManager.findBy(key)[0].roomId();
+        try {
+            var key = CharacterManager.activeCharacter().key();
+            var roomId = ConnectionManager.findBy(key)[0].roomId();
         
-        //Only respond if you're a player.
-        var type = CharacterManager.activeCharacter().playerType().key;
-        if (type === PlayerTypes.characterPlayerType.key) {
-            messenger.sendDataMsg(roomId, 'iam', self._getPlayerData())
-        }
+            //Only respond if you're a player.
+            var type = CharacterManager.activeCharacter().playerType().key;
+            if (type === PlayerTypes.characterPlayerType.key) {
+                messenger.sendDataMsg(roomId, 'iam', self._getPlayerData())
+            }
+        } catch(err) {};
     };
     
     /**
@@ -55,16 +67,16 @@ function PlayerSummaryService() {
         player.importValues(data);
     
         var found = self.playerSummaries.some(function(e, i, _) {
-            player.characterId === e.characterId;
+            return player.id() === e.id();
         });
         
         if (found) {
             //Replace the existing one.
-            self.playerSummaries.forEach(function(e, i, players) {
-                if (player.characterId === e.characterId) {
-                    players[i] = player;
-                }
-            });
+            for(var i=0; i<self.playerSummaries.length;i++) {
+                if (player.id() === self.playerSummaries[i].id()) {
+                    self.playerSummaries[i] = player;
+                }            
+            }
         } else {
             //Add a new one.
             self.playerSummaries.push(player);
@@ -76,7 +88,9 @@ function PlayerSummaryService() {
      * Remove the player from our watch list.
      */ 
     self.removePlayer = function(player) {
-        self.playerSummaries.remove(player);
+        self.playerSummaries = self.playerSummaries.filter(function(e, i, _) {
+            return e.id() !== player.id;
+        });
         Notifications.playerSummary.changed.dispatch();
     };
     
