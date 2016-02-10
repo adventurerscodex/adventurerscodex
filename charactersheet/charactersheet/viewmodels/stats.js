@@ -44,7 +44,10 @@ function StatsViewModel() {
 // 		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
 		
 		//Subscriptions
+		self.health().maxHitpoints.subscribe(self.dataHasChanged);
+		self.health().damage.subscribe(self.dataHasChanged);
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
+		self.otherStats().ac.subscribe(self.dataHasChanged);
 		Notifications.profile.changed.add(self.calculateHitDice);
 	};
 	
@@ -80,6 +83,7 @@ function StatsViewModel() {
 	
 	self.dataHasChanged = function() {
 	    self.otherStats().save();
+	    self.health().save();
 		Notifications.stats.changed.dispatch();
 	};
 };
