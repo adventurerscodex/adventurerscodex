@@ -2,7 +2,7 @@
 
 function StatsViewModel() {
 	var self = this;
-	
+
 	self.health = ko.observable(new Health());
 	self.otherStats = ko.observable(new OtherStats());
 	self.blankHitDice = ko.observable(new HitDice());
@@ -12,9 +12,9 @@ function StatsViewModel() {
         ['D4', 'D6', 'D8', 'D10', 'D12', 'D20']);
 	self.deathSaveSuccessList = ko.observableArray([]);
 	self.deathSaveFailureList = ko.observableArray([]);
-		
+
 	self.init = function() {};
-	
+
 	self.load = function() {
 		var health = Health.findBy(CharacterManager.activeCharacter().key());
 		if (health.length > 0) {
@@ -23,7 +23,7 @@ function StatsViewModel() {
 		    self.health(new Health());
 		}
 		self.health().characterId(CharacterManager.activeCharacter().key());
-		
+
 		var otherStats = OtherStats.findBy(CharacterManager.activeCharacter().key());
 		if (otherStats.length > 0) {
 			self.otherStats(otherStats[0]);
@@ -45,13 +45,14 @@ function StatsViewModel() {
 // 			self.hitDiceType = hitDiceType[0];
 // 		}
 // 		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
-		
+
 		var deathSaveSuccessList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
 		if (deathSaveSuccessList.length > 0) {
-			self.deathSaveSuccessList(deathSaveSuccessList);
+			for(var i=0; i<3;i++)
+				self.deathSaveSuccessList.push(deathSaveSuccessList[i]);
 		}
 		else{
-			for(i=0; i<2;i++)
+			for(var i=0; i<3;i++)
 				self.deathSaveSuccessList.push(new DeathSave());
 		}
 		self.deathSaveSuccessList().forEach(function(e, i, _) {
@@ -60,10 +61,11 @@ function StatsViewModel() {
 
 		var deathSaveFailureList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
 		if (deathSaveFailureList.length > 0) {
-			self.deathSaveFailureList(deathSaveFailureList);
+			for(var i=3; i<6;i++)
+				self.deathSaveFailureList.push(deathSaveFailureList[i]);
 		}
 		else{
-			for(i=0; i<2;i++)
+			for(var i=0; i<3;i++)
 				self.deathSaveFailureList.push(new DeathSave());
 		}
 		self.deathSaveFailureList().forEach(function(e, i, _) {
@@ -77,11 +79,17 @@ function StatsViewModel() {
 		self.otherStats().ac.subscribe(self.dataHasChanged);
 		Notifications.profile.changed.add(self.calculateHitDice);
 	};
-	
+
 	self.unload = function() {
 		self.health().save();
 		self.otherStats().save();
 		self.hitDiceList().forEach(function(e, i, _) {
+			e.save();
+		});
+		self.deathSaveSuccessList().forEach(function(e, i, _) {
+			e.save();
+		});
+		self.deathSaveFailureList().forEach(function(e, i, _) {
 			e.save();
 		});
 	};
@@ -89,8 +97,14 @@ function StatsViewModel() {
 	self.clear = function() {
 		self.health().clear();
 		self.otherStats().clear();
+		self.deathSaveSuccessList().forEach(function(e, i, _) {
+			e.clear();
+		});
+		self.deathSaveFailureList().forEach(function(e, i, _) {
+			e.clear();
+		});
 	};
-		
+
 	self.calculateHitDice = function() {
 		var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
 		var difference = parseInt(profile.level()) - self.hitDiceList().length;
@@ -107,11 +121,10 @@ function StatsViewModel() {
 			}
 		}
 	};
-	
+
 	self.dataHasChanged = function() {
 	    self.otherStats().save();
 	    self.health().save();
 		Notifications.stats.changed.dispatch();
 	};
 };
-

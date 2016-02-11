@@ -15,24 +15,15 @@
     <div class="row row-padded">
       <div class="col-md-12 col-padded">
         <div class="input-group">
-          <span class="input-group-addon">Hit Dice:&nbsp;
-
-<!--           <select data-bind="options: hitDiceOptions,
-                             value: hitDiceType"></select> -->
-
-          </span>
+          <span class="input-group-addon">Hit Dice:</span>
           <div class="form-control"data-bind="foreach: hitDiceList" >
             <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>
           </div>
-<!-- 
-
 <!--           <span class="input-group-addon">
-              <select data-bind="value: hitDiceType.hitDiceType, 
-              selectPicker: hitDiceType.hitDiceType, 
+              <select data-bind="value: hitDiceType.hitDiceType,
+              selectPicker: hitDiceType.hitDiceType,
               selectPickerOptions: {optionsArray: hitDiceType.hitDiceOptions}"></select>
            </span> -->
-
- -->
         </div>
       </div>
     </div>
@@ -73,16 +64,17 @@
           </tr>
         </table>
     <!-- Death Saving throws -->
-        <div class="form-group">
-          <label class="control-label" for="savesSuccess">Successful</label>
-          <div id="savesSucces" data-bind="foreach: deathSaveSuccessList">
-            <input type="checkbox" value="deathSaveSuccess" data-bind="click: toggleSuccessDeathSave"/>
+        <div class="input-group">
+          <span class="input-group-addon">Success</span>
+          <div class="form-control" data-bind="foreach: deathSaveSuccessList">
+            <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveSuccess"/>
           </div>
         </div>
-        <div class="form-group">
-          <label class="control-label" for="savesFail">Failure</label>
-          <div id="savesFail" data-bind="foreach: deathSaveFailureList">
-            <input type="checkbox" value="deathSaveFailure" data-bind="click: toggleFailDeathSave"/>
+        <br>
+        <div class="input-group">
+          <span class="input-group-addon">Failure</span>
+          <div class="form-control" data-bind="foreach: deathSaveFailureList">
+            <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveFailure"/>
           </div>
         </div>
       </div>
