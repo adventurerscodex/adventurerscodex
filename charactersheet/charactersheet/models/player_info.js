@@ -4,7 +4,7 @@ function PlayerInfo() {
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);
     
-    self.GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/'
+    self.GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/{}?d=mm'
        
     self.characterId = ko.observable(null);
     self.email = ko.observable('');
@@ -12,7 +12,7 @@ function PlayerInfo() {
     self.gravatarUrl = function() {
         try {
             var hash = md5(self.email().trim());
-            return self.GRAVATAR_BASE_URL + hash;
+            return self.GRAVATAR_BASE_URL.replace('{}', hash);
         } catch(err) {
             return '';
         }

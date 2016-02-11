@@ -68,6 +68,14 @@ function PartyChatViewModel() {
 		//If the message is to you or the group.
 		if (message.toId() === self.id || message.toId().toLowerCase() === 'all') {
 			message.text(self.markdown(message.text()));
+			
+			try {
+    			var imageUrl = playerSummaryService.playerSummaries.filter(function(e, i, _) {
+	        	    return e.id() === message.fromId();
+			    })[0].profileImage();
+			    message.profileImageUrl(imageUrl);
+			} catch(err) {};
+			
 			self.log.push(message);
 		}
 	};
