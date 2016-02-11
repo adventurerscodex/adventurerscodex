@@ -26,11 +26,11 @@
           </div>
 <!-- 
 
-          <span class="input-group-addon">
+<!--           <span class="input-group-addon">
               <select data-bind="value: hitDiceType.hitDiceType, 
               selectPicker: hitDiceType.hitDiceType, 
               selectPickerOptions: {optionsArray: hitDiceType.hitDiceOptions}"></select>
-           </span>
+           </span> -->
 
  -->
         </div>
@@ -72,6 +72,19 @@
             </td>
           </tr>
         </table>
+    <!-- Death Saving throws -->
+        <div class="form-group">
+          <label class="control-label" for="savesSuccess">Successful</label>
+          <div id="savesSucces" data-bind="foreach: deathSaveSuccessList">
+            <input type="checkbox" value="deathSaveSuccess" data-bind="click: toggleSuccessDeathSave"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="savesFail">Failure</label>
+          <div id="savesFail" data-bind="foreach: deathSaveFailureList">
+            <input type="checkbox" value="deathSaveFailure" data-bind="click: toggleFailDeathSave"/>
+          </div>
+        </div>
       </div>
     <!--AC, Initiative, Speed-->
       <div data-bind="with: otherStats" class="col-md-7">
