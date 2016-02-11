@@ -4,7 +4,7 @@ function PlayerImageViewModel() {
 	var self = this;
 
     self.image = ko.observable(new ImageModel());
-    
+
 	self.init = function() {
 	};
 
@@ -25,7 +25,7 @@ function PlayerImageViewModel() {
 	self.unload = function() {
 		self.image().save();
 	};
-	
+
 	self.dataHasChanged = function() {
 	    //Remove the old email.
 		var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
@@ -37,10 +37,10 @@ function PlayerImageViewModel() {
 		self.image().save();
 		Notifications.playerImage.changed.dispatch();
 	};
-	
+
 	/**
-	 * Whenever the player's email changes, re-evaluate if/what image 
-	 * should be shown. 
+	 * Whenever the player's email changes, re-evaluate if/what image
+	 * should be shown.
 	 */
 	self.checkImage = function() {
 		var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
@@ -54,19 +54,19 @@ function PlayerImageViewModel() {
         } catch(err) {};
         return false;
 	};
-	
+
 	//Public Methods
 
 	self.clear = function() {
 		self.image().clear();
 	};
-	
+
 	self.imageBorderClass = ko.pureComputed(function() {
 	    return self.hasImage() ? 'no-border' : ''
 	});
-	
+
 	//Player Image Handlers
-	
+
 	self.hasImage = ko.computed(function() {
 	    if (self.image().hasData()) {
 	        return true;
@@ -74,7 +74,7 @@ function PlayerImageViewModel() {
 	        return false;
 	    }
 	});
-	
+
 	self.playerImageSrc = ko.computed(function() {
 	    if (self.image().hasData()) {
 	        return self.image().imageUrl();
