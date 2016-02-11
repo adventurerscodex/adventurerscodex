@@ -46,28 +46,25 @@ function StatsViewModel() {
 // 		}
 // 		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
 
-		var deathSaveSuccessList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
-		if (deathSaveSuccessList.length > 0) {
-			for(var i=0; i<3;i++)
-				self.deathSaveSuccessList.push(deathSaveSuccessList[i]);
+		var deathSaveList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
+		if (deathSaveList.length > 0) {
+			for(var i=0; i<3;i++){
+				self.deathSaveSuccessList.push(deathSaveList[i]);
+			}
+			for(var i=3; i<6;i++){
+				self.deathSaveFailureList.push(deathSaveList[i]);
+			}
 		}
 		else{
-			for(var i=0; i<3;i++)
+			for(var i=0; i<3;i++){
 				self.deathSaveSuccessList.push(new DeathSave());
+				self.deathSaveFailureList.push(new DeathSave());
+			}
 		}
+
 		self.deathSaveSuccessList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
-
-		var deathSaveFailureList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
-		if (deathSaveFailureList.length > 0) {
-			for(var i=3; i<6;i++)
-				self.deathSaveFailureList.push(deathSaveFailureList[i]);
-		}
-		else{
-			for(var i=0; i<3;i++)
-				self.deathSaveFailureList.push(new DeathSave());
-		}
 		self.deathSaveFailureList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
