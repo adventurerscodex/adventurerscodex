@@ -48,6 +48,7 @@ function PlayerImageViewModel() {
             var email = info[0].email();
             if (email) {
                 self.image().imageUrl(info[0].gravatarUrl());
+                self.image().save();
                 Notifications.playerImage.changed.dispatch();
             }
         } catch(err) {};

@@ -10,6 +10,7 @@ function ChatMessage() {
 	self.toId = ko.observable('');
 	self.fromId = ko.observable('');
 	self.text = ko.observable('');
+	self.profileImageUrl = ko.observable('');
 	
 	self.message = ko.pureComputed(function () {
 		var message = '';

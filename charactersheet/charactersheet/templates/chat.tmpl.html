@@ -6,6 +6,10 @@
 				  <ul class="list-group" style="overflow:auto; height: 200px;"
 				    data-bind="foreach: log, bottomsUp: {trim: 1000}">
 					  <li class="list-group-item">
+					    <!-- ko if: profileImageUrl -->
+              <img data-bind="attr: { src: profileImageUrl }" 
+                class="img-circle" width="15px" />&nbsp;&nbsp;
+              <!-- /ko -->
 					    <span data-bind="html: message"></span>
 					  </li>
 				  </ul>

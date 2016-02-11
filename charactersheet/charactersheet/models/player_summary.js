@@ -89,10 +89,12 @@ PlayerSummary.fromKey = function(key) {
     try {
         var image = ImageModel.findBy(key)[0];
         imageUrl = image.imageUrl();
-    } catch(err) {
+    } catch(err) {};
+    if (!imageUrl) {
         var info = PlayerInfo.findBy(key)[0];
-        imageUrl = info.gravatarUrl();
+        imageUrl = info.gravatarUrl();    
     }
+    
     summary.profileImage(imageUrl);
             
     return summary;
