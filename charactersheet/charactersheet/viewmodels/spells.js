@@ -6,8 +6,8 @@ function SpellbookViewModel() {
     self.sorts = {
 	  'spellName asc': { field: 'spellName', direction: 'asc'},
 	  'spellName desc': { field: 'spellName', direction: 'desc'},
-    'spellPrepared asc': { field: 'spellPrepared', direction: 'asc'},
-    'spellPrepared desc': { field: 'spellPrepared', direction: 'desc'},
+      'spellPrepared asc': { field: 'spellPrepared', direction: 'asc'},
+      'spellPrepared desc': { field: 'spellPrepared', direction: 'desc'},
 	  'spellType asc': { field: 'spellType', direction: 'asc'},
 	  'spellType desc': { field: 'spellType', direction: 'desc'},
 	  'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
@@ -26,6 +26,14 @@ function SpellbookViewModel() {
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
+
+    self.numberOfPrepared = ko.computed(function(){
+        var prepared = ko.utils.arrayFilter(self.spellbook(), function(spell) {
+            return spell.spellPrepared() === true;
+        });
+
+        return prepared.length;
+    });
 
 	self.init = function() {
 
