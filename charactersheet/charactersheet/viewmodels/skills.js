@@ -72,6 +72,9 @@ function SkillsViewModel() {
 	    		e.updateValues();
 	    	})
 	    });
+        self.skills().forEach(function(e, i, _) {
+            self.addNotifiers(e);
+        })
     };
 
     self.unload = function() {
@@ -89,7 +92,7 @@ function SkillsViewModel() {
     	var skills = self.skills();
 
     	if (self.filter() !== '') {
-    		
+
     	}
 
     	return skills.sort(function(a, b) {
@@ -147,6 +150,7 @@ function SkillsViewModel() {
     	var skill = self.blankSkill();
     	skill.characterId(CharacterManager.activeCharacter().key());
     	skill.save();
+    	self.addNotifiers(skill);
         self.skills.push(skill);
         self.blankSkill(new Skill());
     };
@@ -165,5 +169,17 @@ function SkillsViewModel() {
     		self.removeSkill(e);
     	});
     };
+
+    /**
+     * Given a skill, tell it to alert the Notifications of changes to itself.
+     */
+    self.addNotifiers = function(skill) {
+        var savefn = function() {
+            skill.save();
+            Notifications.skills.changed.dispatch();
+        };
+        skill.name.subscribe(savefn);
+        skill.bonus.subscribe(savefn);
+    }
 };
 
