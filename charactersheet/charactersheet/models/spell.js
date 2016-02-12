@@ -35,7 +35,7 @@ function Spell() {
         'S', 'V', 'V, S', 'S, M', 'V, M', 'V, S, M']);
     self.spellRangeOptions = ko.observableArray([
         'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
-        '90 ft', '100 ft', '120 ft', '150 ft', '300 ft', '500 ft', '1 mile']);
+        '90 ft', '100 ft', '120 ft', '150 ft', '300 ft', '500 ft', '1 mile','Special']);
 
 	self.spellDamageLabel = ko.pureComputed(function() {
 		var charKey = CharacterManager.activeCharacter().key();
