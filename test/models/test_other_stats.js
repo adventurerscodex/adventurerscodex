@@ -94,7 +94,7 @@ describe('Other Stats', function() {
 				e.characterId(key);
 				return e;
 			}));
-			var r = AbilityScores.findBy(key);
+			var r = OtherStats.findBy(key);
 			r.length.should.equal(1);
 
 		});
