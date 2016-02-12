@@ -75,6 +75,7 @@ function StatsViewModel() {
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
 		self.otherStats().ac.subscribe(self.dataHasChanged);
 		Notifications.profile.changed.add(self.calculateHitDice);
+	    Notifications.skills.changed.add(self.calculatePassiveWisdom);
 	};
 
 	self.unload = function() {
@@ -117,6 +118,13 @@ function StatsViewModel() {
 				h.delete();
 			}
 		}
+	};
+
+    /**
+     * Tells the other stats model to recalculate it's passive wisdom value.
+     */
+	self.calculatePassiveWisdom = function() {
+        self.otherStats().updateValues();
 	};
 
 	self.dataHasChanged = function() {

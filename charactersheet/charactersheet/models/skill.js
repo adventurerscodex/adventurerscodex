@@ -113,3 +113,14 @@ Skill.findAllBy = function(characterId) {
 		return e.characterId() === characterId;
 	});
 };
+
+/**
+ * Given a character id and a case insensitive skill name,
+ * return the relevant Skill(s).
+ */
+Skill.findAllByKeyAndName = function(characterId, skillName) {
+	return PersistenceService.findAll(Skill).filter(function(e, i, _) {
+		return (e.characterId() === characterId
+		    && e.name().toLowerCase() == skillName.toLowerCase());
+	});
+};
