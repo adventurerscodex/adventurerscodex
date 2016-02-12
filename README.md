@@ -5,7 +5,7 @@ Welcome to Adventurer&rsquo;s&nbsp;Codex <sup style="color:orange;">Beta!</sup><
 </div>
 
 [![Build Badge](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io.svg)](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io)
-[![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex.github.io/badge.svg?branch=master)](https://coveralls.io/github/adventurerscodex/adventurerscodex.github.io?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex.github.io/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex.github.io?branch=develop)
 
 A tool to help D&D 5e players keep their ducks in a row. 
 
