@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Ability Scores', function() {
+describe('Ability Scores Model', function() {
 	describe('Clear', function() {
 		it('should clear all the values in it', function() {
 			var scores = new AbilityScores();

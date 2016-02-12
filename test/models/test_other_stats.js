@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Other Stats', function() {
+describe('Other Stats Model', function() {
     //Clean up after each test.
     afterEach(function() {
         simple.restore();

@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Armor', function() {
+describe('Armor Model', function() {
     describe('Clear', function() {
         it('should clear all the data in it', function() {
             var armor = new Armor();
@@ -10,7 +10,7 @@ describe('Armor', function() {
             armor.armorName().should.equal('');
         });
     });
-    
+
     describe('Import', function() {
         it('should import all the data from a fixture', function() {
             var armor = new Armor();

@@ -1,18 +1,14 @@
-describe('Saving Throws', function() {
+describe('Saving Throws Model', function() {
+    //Clean up after each test.
+    afterEach(function() {
+        simple.restore();
+    });
+
 	describe('Bonus Label', function() {
 		it('should yield the modifier value (signed).', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            simple.mock(OtherStats, 'findBy').returnWith([{ proficiency: ko.observable(2)}]);
+
 			var s = new SavingThrows();
 			s.name('Wisdom');
 			s.modifier(4);
@@ -26,10 +22,6 @@ describe('Saving Throws', function() {
 			s.proficiency(true);
 
 			s.modifierLabel().should.equal('-2');
-
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
@@ -43,51 +35,26 @@ describe('Saving Throws', function() {
 
 	describe('Proficiency Label', function() {
 		it('should yield the proficiency value (or none).', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
-			var s = new SavingThrows(parent);
+			var s = new SavingThrows();
 			s.name('Wisdom');
 			s.modifier(4);
 			s.proficiency(true);
 
 			s.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
 
-			var s = new SavingThrows(parent);
+			var s = new SavingThrows();
 			s.name('Wisdom');
 			s.modifier(-4);
 			s.proficiency(false);
 
 			s.proficiencyLabel().should.equal('');
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 	describe('Clear', function() {
 		it('should clear all values', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new SavingThrows(parent);
 			s.name('Wisdom');
@@ -101,26 +68,12 @@ describe('Saving Throws', function() {
 			s.name().should.equal('');
 			Should.not.exist(s.modifier());
 			s.proficiency().should.equal(false);
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new SavingThrows();
 			s.name('Wisdom');
@@ -134,26 +87,12 @@ describe('Saving Throws', function() {
 			e.name.should.equal(s.name());
 			e.modifier.should.equal(s.modifier());
 			e.proficiency.should.equal(s.proficiency());
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new SavingThrows();
 			var e = { name: 'Wisdom', modifier: 3, proficiency: true };
@@ -161,9 +100,6 @@ describe('Saving Throws', function() {
 			e.name.should.equal(s.name());
 			e.modifier.should.equal(s.modifier());
 			e.proficiency.should.equal(s.proficiency());
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 });

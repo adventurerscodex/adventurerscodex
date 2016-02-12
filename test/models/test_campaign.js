@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Campaign', function() {
+describe('Campaign Model', function() {
     describe('Clear', function() {
         it('should clear all the data in it', function() {
             var campaign = new Campaign();
@@ -10,7 +10,7 @@ describe('Campaign', function() {
             campaign.campaignName().should.equal('');
         });
     });
-    
+
     describe('Import', function() {
         it('should import all the data from a fixture', function() {
             var campaign = new Campaign();

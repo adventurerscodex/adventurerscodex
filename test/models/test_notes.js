@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Notes', function() {
+describe('Notes Model', function() {
 	describe('Clear', function() {
 		it('should clear all the values in notes', function() {
 			var p = new Note();
@@ -22,7 +22,7 @@ describe('Notes', function() {
 			a.text.should.equal(p.text());
 		});
 	});
-	
+
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var val = {

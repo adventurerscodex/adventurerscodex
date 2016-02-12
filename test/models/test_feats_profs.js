@@ -1,5 +1,5 @@
 "use strict";
-describe('FeatsProf', function() {
+describe('FeatsProf Model', function() {
     describe('Clear', function() {
         it('should clear all the FeatsProfFixture in it', function() {
             var profFeats = new FeatsProf();

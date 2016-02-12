@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Item', function() {
+describe('Item Model', function() {
     //Clean up after each test.
     afterEach(function() {
         simple.restore();

@@ -9,7 +9,7 @@ describe('Slot Model', function() {
 			s.spellSlots().should.equal(3);
 		});
 	});
-	
+
 	describe('Spell Slots', function() {
 		it('should yield the number of total slots remaining.', function() {
 			var s = new Slot();
@@ -19,7 +19,7 @@ describe('Slot Model', function() {
 			s.spellSlots().should.equal(3);
 		});
 	});
-	
+
 	describe('Clear', function() {
 		it('should clear all values', function() {
 			var s = new Slot();
@@ -36,7 +36,7 @@ describe('Slot Model', function() {
 			s.usedSpellSlots().should.equal(0);
 		});
 	});
-	
+
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
 			var p = new Slot();
@@ -53,7 +53,7 @@ describe('Slot Model', function() {
 			e.usedSpellSlots.should.equal(10);
 		});
 	});
-	
+
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var slot = new Slot();
