@@ -14,23 +14,43 @@
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: filteredAndSortedSlots">
-				<tr class="row">
-					<td class="col-sm-1">
+				<tr class="row" style="cursor:pointer;">
+					<td class="col-sm-1" data-bind="click: $parent.editSlot"
+					href="#"
+          data-toggle="modal"
+          data-target="#viewSlot">
 					  <span data-bind="css: color" class="form-control" style="margin-top:10px;padding:0px;width:25px;height:25px;border-radius:40px;">
 					  </span>
-          </td>
-					<td class="col-sm-1">
+          			</td>
+					<td class="col-sm-1"
+					data-bind="click: $parent.editSlot"
+					href="#"
+          data-toggle="modal"
+          data-target="#viewSlot">
 					  <span class="text-center form-control" style="border:none;background:none;" data-bind="text: level">
 					  </span>
 					</td>
 					<td class="col-sm-9"> 
 					<div class="input-group">
-						<span class="input-group-addon"> <span data-bind="text: maxSpellSlots"></span> - </span> 
+						<span class="input-group-addon"
+						data-bind="click: $parent.editSlot"
+						href="#"
+            data-toggle="modal"
+            data-target="#viewSlot"> 
+              <span data-bind="text: maxSpellSlots" ></span> - </span> 
 						<input type="number" min="0" class="form-control" data-bind="attr: { max: maxSpellSlots }, value: usedSpellSlots" />
-						<span class="input-group-addon"> = <span data-bind="text: spellSlots"></span> </span> 
+						<span class="input-group-addon" 
+						data-bind="click: $parent.editSlot" 
+						href="#"
+            data-toggle="modal"
+            data-target="#viewSlot"> = <span data-bind="text: spellSlots"></span> </span> 
 					</div>
 					</td>
-					<td> <a data-bind="click: $parent.removeSlot" href="#"> <i class="glyphicon glyphicon-remove"> </i> </a> </td>
+					<td> 
+						<a data-bind="click: $parent.removeSlot" href="#"> 
+							<i class="glyphicon glyphicon-remove"> </i> 
+						</a> 
+					</td>
 				</tr>
 			</tbody>
 		</table>
