@@ -64,3 +64,27 @@ var WeaponFixture = {
     weaponProperty: null,
     weaponDescription: ''
 };
+
+var ProfileFixture = {
+    characterId: '1234',
+    playerName: 'Joe Blow',
+    characterName: 'Chrisopolis Jed',
+    race: 'Dragonborn',
+    gender: 'female',
+    level: 2,
+    typeClass: 'Wizard',
+};
+
+var NPCFixture = {
+    characterId: '1234',
+    npcId: '1234222',
+};
+
+var MessageFixture = {
+    'to': 'hi',
+    toId: 'hah',
+    from: 'dodo',
+    fromId: 'wooo',
+    text: 'test message'
+};
+

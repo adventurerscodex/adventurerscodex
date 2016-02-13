@@ -1,8 +1,8 @@
 "use strict";
 
-describe('Players', function() {		
+describe('Players', function() {
 	describe('Init', function() {
-		it('should do basic setup.', function() {			
+		it('should do basic setup.', function() {
 			messenger = new Messenger();
 			messenger.connect();
 
@@ -10,20 +10,11 @@ describe('Players', function() {
 			messenger.subscribe = function(c, t, callback) {
 				messenger._subscriptions.push(callback);
 			};
-	
+
 			messenger._sendMgs = false;
 			messenger.sendDataMsg = function(t, ty, m) {
 				messenger._sendMgs = true;
 			};
-	
-			ConnectionManager.find = function() {
-				return {
-					roomId: function() {
-						return '123';
-					}
-				};
-			};
-
 
 			var players = new PlayersService();
 			players.init();
@@ -31,8 +22,8 @@ describe('Players', function() {
 			messenger._sendMgs = false;
 			messenger._sendMgs.should.equal(false);
 			messenger.sendDataMsg('','','');
-			messenger._sendMgs.should.equal(true);			
-			
+			messenger._sendMgs.should.equal(true);
+
 			messenger = new Messenger();
 		});
 	});
@@ -62,13 +53,13 @@ describe('Players', function() {
 // 			messenger.sendDataMsg = function(t, ty, m) {
 // 				messenger._sendMgs = true;
 // 			};
-// 
+//
 // 			messenger._sendMgs = false;
 // 			var players = new Players();
 // 			messenger._sendMgs.should.equal(false);
 // 			players.sayHello();
 // 			messenger._sendMgs.should.equal(true);
-// 
+//
 // 			messenger = new Messenger();
 // 			Profile.find = f;
 // 			CharacterManager.activeCharacter = c;
