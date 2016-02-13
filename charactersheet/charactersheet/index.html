@@ -8,10 +8,10 @@
 	<link rel="apple-touch-icon" href="/images/logo-full-icon.png">
 	<link rel="icon" type="image/png" href="/images/logo-full.png">
 	<link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
-	<link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+  <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet">
+  <link href="/bower_components/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
 	<link href="/site.css" rel="stylesheet">
-	<!-- <link href="/bower_components/select2/dist/css/select2.min.css" rel="stylesheet"> -->
 </head>
 <body>
 <nav class="navbar navbar-default navbar-static-top">
@@ -315,7 +315,7 @@
 <script src="/bower_components/bootstrap-select/dist/js/bootstrap-select.min.js" type="text/javascript"></script>
 <script src="/bower_components/knockout-file-bindings/knockout-file-bindings.js" type="text/javascript"></script>
 <script src="/bower_components/blueimp-md5/js/md5.min.js" type="text/javascript"></script>
-<!-- <script src="/bower_components/select2/dist/js/select2.min.js" type="text/javascript"></script> -->
+<script src="/bower_components/select2/dist/js/select2.min.js"></script>
 <script src="/bin/markdown.min.js"></script>
 <script src="/bin/socket.io-1.2.0.js"></script>
 <script src="/bin/knockout-file-bind.js" type="text/javascript"></script>
@@ -391,6 +391,8 @@
 <script src="utilities/character_manager.js" type="text/javascript"></script>
 <script src="utilities/notifications.js" type="text/javascript"></script>
 <script src="utilities/messenger.js" type="text/javascript"></script>
+<!-- Bindings -->
+<script src="bindings/select2.js" type="text/javascript"></script>
 <script type="text/javascript">
 	$(function(){
 	  window.viewModel = new RootViewModel();
