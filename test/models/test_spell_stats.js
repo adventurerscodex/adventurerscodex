@@ -1,6 +1,6 @@
 "use strict";
 
-describe('SpellStats', function() {
+describe('SpellStats Model', function() {
 	describe('Clear', function() {
 		it('should clear all the values', function() {
 			var pc_stats = new SpellStats();

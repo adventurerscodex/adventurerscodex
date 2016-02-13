@@ -1,20 +1,17 @@
 "use strict";
 
-describe('Skill', function() {
+describe('Skill Model', function() {
+    //Clean up after each test.
+    afterEach(function() {
+        simple.restore();
+    });
+
 	describe('Bonus Label', function() {
 		it('should yield the modifier value (signed).', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            simple.mock(OtherStats, 'findBy').returnWith([{ proficiency: ko.observable(2) }]);
+
 			var s = new Skill();
 			s.name('Arcana');
 			s.modifier(4);
@@ -30,26 +27,11 @@ describe('Skill', function() {
 			s.proficiency(true);
 
 			s.bonusLabel().should.equal('-2 <i><small>(Wis)</small></i>');
-
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 	describe('Proficiency Label', function() {
 		it('should yield the proficiency value (or none).', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new Skill(parent);
 			s.name('Arcana');
@@ -64,25 +46,11 @@ describe('Skill', function() {
 			s.proficiency(false);
 
 			s.proficiencyLabel().should.equal('');
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 	describe('Clear', function() {
 		it('should clear all values', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new Skill(parent);
 			s.name('Arcana');
@@ -96,26 +64,12 @@ describe('Skill', function() {
 			s.name().should.equal('');
 			Should.not.exist(s.modifier());
 			s.proficiency().should.equal(false);
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Export', function() {
 		it('should yield an object with all the info supplied.', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new Skill(parent);
 			s.name('Arcana');
@@ -129,26 +83,12 @@ describe('Skill', function() {
 			e.name.should.equal(s.name());
 			e.modifier.should.equal(s.modifier());
 			e.proficiency.should.equal(s.proficiency());
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
-			var c = CharacterManager.activeCharacter;
-			CharacterManager.activeCharacter = function() {
-				return {
-					key: function() { return '1234'; }
-				};
-			};
-			var fb = OtherStats.findBy;
-			OtherStats.findBy = function(id) {
-				return [{
-					proficiency: function() { return 2; }
-				}];
-			}
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
 			var s = new Skill(parent);
 			var e = { name: 'Arcana', modifier: 3, proficiency: true };
@@ -156,9 +96,6 @@ describe('Skill', function() {
 			e.name.should.equal(s.name());
 			e.modifier.should.equal(s.modifier());
 			e.proficiency.should.equal(s.proficiency());
-			OtherStats.findBy = fb;
-
-			CharacterManager.activeCharacter = c;
 		});
 	});
 });

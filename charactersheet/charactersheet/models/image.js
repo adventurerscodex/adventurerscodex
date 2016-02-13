@@ -3,42 +3,42 @@
 function ImageModel() {
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);
-    
+
 	self.characterId = ko.observable(null);
-	
+
     /**
      * The image data.
      */
     self.imageUrl = ko.observable();
-    
+
     /**
-     * The raw image data. This is not saved and is compressed. For the 
+     * The raw image data. This is not saved and is compressed. For the
      * right sized image, use imageUrl.
      */
     self.dataUrl = ko.observable();
     self.height = ko.observable(80);
     self.width = ko.observable(80);
-    
+
     self.save = function() {
 		self.ps.save();
 	};
 
 	self.clear = function() {
-		self.dataUrl('');
+		self.imageUrl('');
 	};
-	
+
 	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
-    	self.imageUrl(values.imageUrl);   	
+    	self.characterId(values.characterId);
+    	self.imageUrl(values.imageUrl);
 	};
-	
+
 	self.exportValues = function() {
 		return {
         	characterId: self.characterId(),
         	imageUrl: self.imageUrl()
 		}
 	};
-	
+
 	self.resize = function() {
 	    var compData = ImageModel.resizeImageData(
 	        self.dataUrl(), self.height(), self.width())
@@ -66,7 +66,7 @@ ImageModel.findBy = function(characterId) {
 };
 
 /**
- * Given a dataURL for an uncompressed image, return the compressed 
+ * Given a dataURL for an uncompressed image, return the compressed
  * version of the URL.
  * Via: https://github.com/josefrichter/resize/blob/master/public/preprocess.js
  */
@@ -100,7 +100,7 @@ ImageModel.resizeImageData = function(dataUrl, max_height, max_width) {
     ctx.drawImage(img, 0, 0, width, height);
 
     //preview.appendChild(canvas); // do the actual resized preview
-  
+
     var data = canvas.toDataURL("image/jpeg"); // get the data from canvas as 70% JPG (can be also PNG, etc.)
     return data.length < 10 ? dataUrl : data;
 }

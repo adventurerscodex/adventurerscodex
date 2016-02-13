@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Other Stats', function() {
+describe('Other Stats Model', function() {
     //Clean up after each test.
     afterEach(function() {
         simple.restore();
@@ -94,7 +94,7 @@ describe('Other Stats', function() {
 				e.characterId(key);
 				return e;
 			}));
-			var r = AbilityScores.findBy(key);
+			var r = OtherStats.findBy(key);
 			r.length.should.equal(1);
 
 		});

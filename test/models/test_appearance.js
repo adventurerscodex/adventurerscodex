@@ -1,6 +1,6 @@
 "use strict";
 
-describe('Appearance', function() {
+describe('Appearance Model', function() {
 	describe('Clear', function() {
 		it('should clear all the values', function() {
 			var p = new CharacterAppearance();
@@ -23,7 +23,7 @@ describe('Appearance', function() {
 			p.skinColor().should.equal(a.skinColor);
 		});
 	});
-	
+
 	describe('Import', function() {
 		it('should import an object with all the info supplied.', function() {
 			var p = new CharacterAppearance();
