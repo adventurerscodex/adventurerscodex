@@ -82,7 +82,7 @@
 		<li role="presentation" data-bind="click: activateStatsTab, css: statsTabStatus"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
 		<li role="presentation" data-bind="click: activateSkillsTab, css: skillsTabStatus"><a href="#skills" aria-controls="skills" role="tab" data-toggle="tab">Skills</a></li>
 		<li role="presentation" data-bind="click: activateSpellsTab, css: spellsTabStatus"><a href="#spells" aria-controls="spells" role="tab" data-toggle="tab">Spells</a></li>
-		<li role="presentation" data-bind="click: activateEquipmentTab, css: equipmentTabStatus"><a href="#equipment" aria-controls="equipment" role="tab" data-toggle="tab">Weapons and Armor</a></li>
+		<li role="presentation" data-bind="click: activateEquipmentTab, css: equipmentTabStatus"><a href="#items" aria-controls="items" role="tab" data-toggle="tab">Weapons and Armor</a></li>
 		<li role="presentation" data-bind="click: activateInventoryTab, css: inventoryTabStatus"><a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">Inventory</a></li>
 		<li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
 		<li role="presentation" data-bind="click: activateCampaignTab, css: campaignTabStatus"><a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a></li>
@@ -159,7 +159,7 @@
 		</div>
 	</div>
 <!-- End Spells Tab -->
-	<div role="tabpanel" class="tab-pane" id="equipment" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
+	<div role="tabpanel" class="tab-pane" id="items" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-padded">
 				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates', data: weaponsViewModel }">
@@ -175,7 +175,7 @@
 	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="equipment" data-bind="template: { name: 'equipment.tmpl', templateUrl: 'templates', data: equipmentViewModel }">
+				<div data-bind="template: { name: 'items.tmpl', templateUrl: 'templates', data: itemsViewModel }">
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 col-padded">
@@ -334,8 +334,7 @@
 <script src="viewmodels/chat.js" type="text/javascript"></script>
 <script src="viewmodels/connection_manager.js" type="text/javascript"></script>
 <script src="viewmodels/enemies.js" type="text/javascript"></script>
-<script src="viewmodels/enemies.js" type="text/javascript"></script>
-<script src="viewmodels/equipment.js" type="text/javascript"></script>
+<script src="viewmodels/items.js" type="text/javascript"></script>
 <script src="viewmodels/feat_traits.js" type="text/javascript"></script>
 <script src="viewmodels/feats_prof.js" type="text/javascript"></script>
 <script src="viewmodels/notes.js" type="text/javascript"></script>
