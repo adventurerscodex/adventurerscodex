@@ -1,8 +1,8 @@
 "use strict";
 
-function EquipmentViewModel() {
+function ItemsViewModel() {
 	var self = this;
-	
+
     self.sorts = {
 	  'itemName asc': { field: 'itemName', direction: 'asc'},
 	  'itemName desc': { field: 'itemName', direction: 'desc'},
@@ -18,18 +18,18 @@ function EquipmentViewModel() {
 	  'itemBodyLocation desc': { field: 'itemBodyLocation', direction: 'desc'}
 	};
 
-	self.equipment = ko.observableArray([]);
+	self.items = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
 	self.selecteditem = ko.observable(new Item());
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
-	
+
 	self.totalItemWeight = ko.pureComputed(function() {
 		var weightTotal = 0;
-		var eqpLen = self.equipment().length;
+		var eqpLen = self.items().length;
 		if( eqpLen > 0 ){
 			for(var i = 0; i < eqpLen; i++){
-				weightTotal += self.equipment()[i].itemWeight() ? parseInt(self.equipment()[i].itemWeight()) : 0;
+				weightTotal += self.items()[i].itemWeight() ? parseInt(self.items()[i].itemWeight()) : 0;
 			}
 			return ("Weight: " + weightTotal + " (lbs)");
 		}
@@ -39,47 +39,47 @@ function EquipmentViewModel() {
 	});
 
 	//Responders
-	
+
 	self.init = function() {
 		//Do something.
 	};
-	
+
 	self.load = function() {
 		var key = CharacterManager.activeCharacter().key();
-		self.equipment(Item.findAllBy(key));
+		self.items(Item.findAllBy(key));
 	};
-	
+
 	self.unload = function() {
-		$.each(self.equipment(), function(_, e) {
+		$.each(self.items(), function(_, e) {
 			e.save();
 		});
 	};
-	
-	
+
+
 	/* UI Methods */
-	
+
 	/**
 	 * Filters and sorts the items for presentation in a table.
 	 */
     self.filteredAndSortedEquipment = ko.computed(function() {
-    	var equipment = self.equipment();
-    	
+    	var items = self.items();
+
     	if (self.filter() !== '') {
     		//items = items.filter(function(a) {});
-    	}	
-    	
-    	return equipment.sort(function(a, b) {
+    	}
+
+    	return items.sort(function(a, b) {
     		var asc = self.sort().direction === 'asc' ? true : false;
     		var res = null;
-    		
+
     		var aprop = a[self.sort().field]();
     		var bprop = b[self.sort().field]();
-    		
+
     		if (self.sort().numeric) {
 				aprop = parseInt(a[self.sort().field]());
 				bprop = parseInt(b[self.sort().field]());
     		}
-    		
+
     		if (asc) {
 	    		res = aprop > bprop ? 1 : -1;
     		} else {
@@ -88,7 +88,7 @@ function EquipmentViewModel() {
     		return res;
     	});
     });
-    
+
     /**
      * Determines whether a column should have an up/down/no arrow for sorting.
      */
@@ -114,68 +114,53 @@ function EquipmentViewModel() {
 			sort = self.sorts[columnName+' desc'];
 		} else {
 			sort = self.sorts[columnName+' asc'];
-		}	
+		}
 		self.sort(sort);
 	};
 
 	//Manipulating items
-	self.equipItemButton = function() {
-		self.removeItem(self.selecteditem())
-		self.equipItem(self.selecteditem());
-	};
-
-	self.equipItemRowButton = function(item) {
-		self.removeItem(item)
-		self.equipItem(item);
-	};
-	
 	self.removeItemModalButton = function() {
 		self.removeItem(self.selecteditem());
 	};
-	
+
 	self.removeItemButton = function(item) {
 		self.removeItem(item);
 	};
-	
+
 	self.addItemButton = function() {
 		var item = new Item();
 		item.importValues(self.blankItem().exportValues());
-		self.addItem(item); 
+		self.addItem(item);
 		self.blankItem().clear();
 	};
-	
+
 	self.editItemButton = function(item) {
 		self.editItem(item);
 	};
-	
+
 	//Public Methods
-	
-	self.addToEquipment = function(item) {
+
+	self.addToItems = function(item) {
 		self.addItem(item);
-	};
-	
-	self.equipItem = function(item) {
-		self.removeItem(item);
-		self.parent.equippedItemsViewModel().equipItem(item);	
 	};
 
 	self.clear = function() {
-		self.equipment([]);
+		self.items([]);
 	};
-		
-	//Private Methods	
+
+	//Private Methods
 
 	self.addItem = function(item) {
-		self.equipment.push(item);
-		item.characterId(CharacterManager.activeCharacter().key()); 
+		self.items.push(item);
+		item.characterId(CharacterManager.activeCharacter().key());
 		item.save();
 	};
 
 	self.removeItem = function(item) {
-		self.equipment.remove(item);
+		self.items.remove(item);
 		item.delete();
 	};
-	
+
 	self.editItem = function(item) {
 		self.selecteditem(item);
 	};
