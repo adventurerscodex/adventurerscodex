@@ -29,7 +29,7 @@ function RootViewModel() {
 	self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
 	self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());
 	self.spellsTabViewModel        = ko.observable(new SpellsTabViewModel());
-	self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
+	self.equipmentTabViewModel    = ko.observable(new EquipmentTabViewModel());
 	self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
 	self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 	self.partyTabViewModel         = ko.observable(new PartyTabViewModel());
@@ -38,7 +38,7 @@ function RootViewModel() {
 	//DM Child View Models
 	self.campaignTabViewModel  = ko.observable(new CampaignTabViewModel());
 	self.enemiesTabViewModel   = ko.observable(new EnemiesTabViewModel());
-    
+
     //Misc
 	self.wizardViewModel = new WizardViewModel();
 	self.charactersViewModel = new CharactersViewModel();
@@ -248,7 +248,7 @@ function RootViewModel() {
         self.partyTabViewModel().init();
         self.connectionManagerViewModel().init();
         self.charactersViewModel.init();
-        
+
         //Subscriptions
         Notifications.profile.changed.add(function() {
             self._dummy.valueHasMutated();
@@ -302,7 +302,7 @@ function RootViewModel() {
 				self.statsTabViewModel().unload();
 				self.skillsTabViewModel().unload();
 				self.spellsTabViewModel().unload();
-				self.equipmentTabViewModel().unload();
+				self.itemsViewModel().unload();
 				self.inventoryTabViewModel().unload();
 				self.notesTabViewModel().unload();
             }
@@ -641,7 +641,7 @@ function EquipmentTabViewModel() {
 function InventoryTabViewModel() {
 	var self = this;
 
-	self.equipmentViewModel = ko.observable(new EquipmentViewModel());
+	self.itemsViewModel = ko.observable(new ItemsViewModel());
     self.treasureViewModel  = ko.observable(new TreasureViewModel());
 
 	self.init = function() {
@@ -973,7 +973,7 @@ var init = function(viewModel) {
     messenger = new Messenger();
     players = new PlayersService();
     playerSummaryService = new PlayerSummaryService();
-    
+
     messenger.connect();
 
     //Set up event handlers.
