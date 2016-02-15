@@ -7,13 +7,13 @@ Welcome to Adventurer&rsquo;s&nbsp;Codex <sup style="color:orange;">Beta!</sup><
 [![Build Badge](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io.svg)](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io)
 [![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex.github.io/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex.github.io?branch=develop)
 
-A tool to help D&D 5e players keep their ducks in a row. 
+A tool to help D&D 5e players keep their ducks in a row.
 
 
 What is it?
 ===========
 
-Charactersheet is a project that aims to take the friction out of some aspects of playing D&D while not removing the classic elements of the game. Unlike other tools, this project is not aiming to automate elements like rolling dice, or leveling up. We've found that tools trying to make the game simpler, actually make it harder for players by forcing them to play by-the-book. There's usually no regard for house rules. 
+Charactersheet is a project that aims to take the friction out of some aspects of playing D&D while not removing the classic elements of the game. Unlike other tools, this project is not aiming to automate elements like rolling dice, or leveling up. We've found that tools trying to make the game simpler, actually make it harder for players by forcing them to play by-the-book. There's usually no regard for house rules.
 
 Charactersheet's goal is to make the game more immersive, and bring it into the 21st century.
 
@@ -47,7 +47,7 @@ Keep track of your campaign easily with rich text, searchable notes.
 
 Prepare enemies and terrain ahead of time, and be ready for that encounter.
 
-Do you have an important NPC that you want to bring to life? Make them a character sheet and get all of the advantages of Adventurer’s Codex that your players do. 
+Do you have an important NPC that you want to bring to life? Make them a character sheet and get all of the advantages of Adventurer’s Codex that your players do.
 
 
 For Parties
@@ -66,7 +66,7 @@ Certain actions only make sense during certain times of day. With our day-night 
 Where's my data stored?
 =======================
 
-Here's the cool part: all your data is stored on your local machine! There's no server that's keeping a log of your characters, your adventures, or your party! 
+Here's the cool part: all your data is stored on your local machine! There's no server that's keeping a log of your characters, your adventures, or your party!
 
 Charactersheet uses HTML Local Storage to ensure that all your data is stored locally. Data may be *sent through* our servers, but it's never *stored on* them.
 
@@ -74,18 +74,24 @@ Charactersheet uses HTML Local Storage to ensure that all your data is stored lo
 Installation
 ============
 
-Installing charactersheet is pretty simple. 
+Installing charactersheet is pretty simple.
 
         mkdir charactersheet
         git clone https://github.com/charactersheet/charactersheet.git charactersheet
-        cd charactersheet 
-        npm install 
+        cd charactersheet
+        npm install
         npm test
 
 That's it! If everything is green, then you're good to go!
 
 
+Have questions or just wanna chat?
+=====================
+
+Join the conversations at: https://gitter.im/Sonictherocketman/adventurerscodex
+
+
 How can I contribute?
 =====================
 
-You should check out our `CONTRIBUTING.md`! We'd love the help! 
+You should check out our `CONTRIBUTING.md`! We'd love the help!
