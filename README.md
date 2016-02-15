@@ -85,7 +85,7 @@ Installing charactersheet is pretty simple.
 That's it! If everything is green, then you're good to go!
 
 
-Have questions or just wanna chat?
+Have questions or just want to chat?
 =====================
 
 Join the conversations at: https://gitter.im/Sonictherocketman/adventurerscodex
