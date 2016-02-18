@@ -17,6 +17,7 @@ function Weapon() {
     self.weaponDamageType = ko.observable('');
     self.weaponProperty = ko.observable('');
     self.weaponDescription = ko.observable('');
+    self.weaponQuantity = ko.observable('')
     self.weaponProficiencyOptions = ko.observableArray(
         ['Simple', 'Martial', 'Improvised', 'Nonlethal', 'Exotic']);
     self.weaponHandednessOptions = ko.observableArray(
@@ -28,8 +29,9 @@ function Weapon() {
     self.weaponPropertyOptions = ko.observableArray(
         ['Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading',
          'Range', 'Reach', 'Special', 'Thrown', 'Versatile']);
-     self.weaponDamageTypeOptions = ko.observableArray(
+    self.weaponDamageTypeOptions = ko.observableArray(
          ['Bludgeoning', 'Piercing', 'Slashing']);
+
          
     self.clear = function() {
         self.weaponName('');
@@ -44,6 +46,7 @@ function Weapon() {
         self.weaponDamageType('');
         self.weaponProperty('');
         self.weaponDescription('');
+        self.weaponQuantity('');
     };
 
     self.importValues = function(values) {
@@ -60,6 +63,7 @@ function Weapon() {
         self.weaponDamageType(values.weaponDamageType);
         self.weaponProperty(values.weaponProperty);
         self.weaponDescription(values.weaponDescription);
+        self.weaponQuantity(values.weaponQuantity);
     };
 
     self.exportValues = function() {
@@ -76,7 +80,8 @@ function Weapon() {
 			weaponSize: self.weaponSize(),
 			weaponDamageType: self.weaponDamageType(),
             weaponProperty: self.weaponProperty(),
-            weaponDescription: self.weaponDescription()
+            weaponDescription: self.weaponDescription(),
+            weaponQuantity: self.weaponQuantity()
         }
     };
 
