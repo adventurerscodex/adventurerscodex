@@ -31,7 +31,6 @@
     "bootstrap-theme-bootswatch-flatly": "~1.0.2",
     "js-signals": "~1.0.0",
     "select2": "3.x",
-    "select2-bootstrap-css": "~1.4.6",
     "knockout-file-bindings": "~1.0.2",
     "cryptojs": "*",
     "blueimp-md5": "~2.1.0"
