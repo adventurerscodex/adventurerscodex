@@ -19,7 +19,10 @@ function WeaponsViewModel() {
 	  'weaponDamageType asc': { field: 'weaponDamageType', direction: 'asc'},
 	  'weaponDamageType desc': { field: 'weaponDamageType', direction: 'desc'},
 	  'weaponProperty asc': { field: 'weaponProperty', direction: 'asc'},
-	  'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'}
+	  'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'},
+	  'weaponQuantity asc': { field: 'weaponQuantity', direction: 'asc'},
+	  'weaponQuantity desc': { field: 'weaponQuantity', direction: 'desc'}
+
 	};
 
     self.filter = ko.observable('');	
