@@ -2,14 +2,15 @@
   <div class="panel-body">
     <div class="progress">
       <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: health().regularProgressWidth }, css: health().progressType">
-        <span data-bind="text: health().progressLabel" style="position: absolute;display: block;width: 100%;color: black;"></span>
-        </span>
+        data-bind="style: { width: health().regularProgressWidth }, css: health().progressType,
+          text: health.progressLabel">
+        <span class="sr-only"></span>
       </div>
       <div id="tempHitPoints" class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0"
         data-bind="style: { width: health().tempProgressWidth }" aria-describedby="hitpointsCounter">
         <span class="sr-only"></span>
       </div>
+      <span class="input-group-addon" id="hitpointsCounter">HP: <span data-bind="text: health().hitpoints"></span></span>
     </div>
     <div class="row row-padded">
       <div class="col-md-12 col-padded">
