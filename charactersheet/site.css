@@ -13,7 +13,7 @@
 
 .table-ac-bordered tr {
   border-bottom: thin solid #ecf0f1;
-} 
+}
 
 .beta {
   color:orange;
@@ -110,7 +110,7 @@
 div.hr {
   height:80px;
   background:url('/images/page-divider.png') no-repeat;
-  
+
 }
 
 .tab-pane {
