@@ -6,8 +6,8 @@ function SpellbookViewModel() {
     self.sorts = {
 	  'spellName asc': { field: 'spellName', direction: 'asc'},
 	  'spellName desc': { field: 'spellName', direction: 'desc'},
-      'spellPrepared asc': { field: 'spellPrepared', direction: 'asc'},
-      'spellPrepared desc': { field: 'spellPrepared', direction: 'desc'},
+      'spellPrepared asc': { field: 'spellPrepared', direction: 'asc', booleanType: true},
+      'spellPrepared desc': { field: 'spellPrepared', direction: 'desc', booleanType: true},
 	  'spellType asc': { field: 'spellType', direction: 'asc'},
 	  'spellType desc': { field: 'spellType', direction: 'desc'},
 	  'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
@@ -54,6 +54,9 @@ function SpellbookViewModel() {
 
 	/**
 	 * Filters and sorts the spells for presentation in a table.
+     * Boolean sort logic inspired by:
+     * http://stackoverflow.com/
+     * questions/17387435/javascript-sort-array-of-objects-by-a-boolean-property
 	 */
     self.filteredAndSortedSpells = ko.computed(function() {
     	var spells = self.spellbook();
@@ -74,12 +77,22 @@ function SpellbookViewModel() {
 				bprop = parseInt(b[self.sort().field]());
     		}
 
-    		if (asc) {
-	    		res = aprop > bprop ? 1 : -1;
-    		} else {
-	    		res = aprop < bprop ? 1 : -1;
-    		}
-    		return res;
+            if (asc) {
+                if (self.sort().booleanType) {
+                    res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
+                }
+                else {
+                    res = aprop > bprop ? 1 : -1;
+                }
+            } else {
+                if (self.sort().booleanType) {
+                    res = (aprop === bprop) ? 0 : bprop ? -1 : 1;
+                }
+                else {
+                    res = aprop < bprop ? 1 : -1;
+                }
+            }
+            return res;
     	});
     });
 
