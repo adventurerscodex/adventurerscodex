@@ -34,25 +34,30 @@
       <tbody data-bind='foreach: filteredAndSortedArmors'>
         <tr style="cursor:pointer;">
           <td data-bind="text: armorName, click: $parent.editArmor"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewArmor"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: armorType, click: $parent.editArmor"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewArmor"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: armorDexBonus, click: $parent.editArmor"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewArmor"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: armorCheckPenalty, click: $parent.editArmor"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewArmor"></td>
+              href="#"
+              data-toggle="modal"
+              data-target="#viewArmor"></td>
+          <td class="hidden-sm hidden-xs"
+              data-bind="text: armorType, click: $parent.editArmor"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewArmor"></td>
+          <td class="hidden-sm hidden-xs"
+              data-bind="text: armorDexBonus, click: $parent.editArmor"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewArmor"></td>
+          <td class="hidden-sm hidden-xs"
+              data-bind="text: armorCheckPenalty, click: $parent.editArmor"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewArmor"></td>
           <td data-bind="click: $parent.editArmor"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewArmor"><span data-bind="css: proficiencyLabel"></span></td>
+              href="#"
+              data-toggle="modal"
+              data-target="#viewArmor">
+                <span data-bind="css: proficiencyLabel"></span>
+          </td>
           <td>
             <a data-bind="click: $parent.removeArmor" href="#">
               <i class="glyphicon glyphicon-remove">
@@ -100,7 +105,8 @@
                   <div class="col-sm-10">
                   <select class="form-control"
                           data-bind="options: blankArmor().armorTypeOptions,
-                                     value: blankArmor().armorType"></select>
+                                     value: blankArmor().armorType,
+                                     select2: {theme: 'classic'}"></select>
                   </div>
               </div>
               <div class="form-group">
@@ -223,7 +229,8 @@
                   <div class="col-sm-10">
                   <select class="form-control"
                           data-bind="options: armorTypeOptions,
-                                     value: armorType"></select>
+                                     value: armorType,
+                                     select2: {theme: 'classic'}"></select>
                   </div>
               </div>
               <div class="form-group">
