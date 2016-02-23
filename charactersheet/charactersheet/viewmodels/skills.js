@@ -8,8 +8,8 @@ function SkillsViewModel() {
 	  'name desc': { field: 'name', direction: 'desc'},
 	  'modifier asc': { field: 'modifier', direction: 'asc'},
 	  'modifier desc': { field: 'modifier', direction: 'desc'},
-	  'proficiency asc': { field: 'proficiency', direction: 'asc'},
-	  'proficiency desc': { field: 'proficiency', direction: 'desc'}
+	  'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
+	  'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
 	};
 
 	self._defaultSkills = function() {
@@ -107,11 +107,21 @@ function SkillsViewModel() {
 				bprop = parseInt(b[self.sort().field]());
     		}
 
-    		if (asc) {
-	    		res = aprop > bprop ? 1 : -1;
-    		} else {
-	    		res = aprop < bprop ? 1 : -1;
-    		}
+            if (asc) {
+                if (self.sort().booleanType) {
+                    res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
+                }
+                else {
+                    res = aprop > bprop ? 1 : -1;
+                }
+            } else {
+                if (self.sort().booleanType) {
+                    res = (aprop === bprop) ? 0 : bprop ? -1 : 1;
+                }
+                else {
+                    res = aprop < bprop ? 1 : -1;
+                }
+            }
     		return res;
     	});
     });

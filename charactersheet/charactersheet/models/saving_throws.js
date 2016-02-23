@@ -38,7 +38,7 @@ function SavingThrows() {
 		var bonus = self.modifier() ? parseInt(self.modifier()) : null;
 		if (self.proficiency()) {
 			  bonus += self.proficiencyScore() + self.abilityScoreModifier();
-		} 
+		}
         else if (self.abilityScoreModifier()) {
 			    bonus += self.abilityScoreModifier();
 		}

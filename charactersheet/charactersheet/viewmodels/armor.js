@@ -16,22 +16,22 @@ function ArmorViewModel() {
 	  'armorDexBonus desc': { field: 'armorDexBonus', direction: 'desc'},
 	  'armorCheckPenalty asc': { field: 'armorCheckPenalty', direction: 'asc'},
 	  'armorCheckPenalty desc': { field: 'armorCheckPenalty', direction: 'desc'},
-	  'armorProficiency asc': { field: 'armorProficiency', direction: 'asc'},
-	  'armorProficiency desc': { field: 'armorProficiency', direction: 'desc'}
+	  'armorProficiency asc': { field: 'armorProficiency', direction: 'asc', booleanType: true},
+	  'armorProficiency desc': { field: 'armorProficiency', direction: 'desc', booleanType: true}
 	};
 
-    self.filter = ko.observable('');	
+    self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['armorName asc']);
 
 	self.init = function() {
-	
+
 	};
-	
+
 	self.load = function() {
 		var key = CharacterManager.activeCharacter().key();
 		self.armors(Armor.findAllBy(key));
 	};
-	
+
 	self.unload = function() {
  		$.each(self.armors(), function(_, e) {
 			e.save();
@@ -61,11 +61,21 @@ function ArmorViewModel() {
 				bprop = parseInt(b[self.sort().field]());
     		}
 
-    		if (asc) {
-	    		res = aprop > bprop ? 1 : -1;
-    		} else {
-	    		res = aprop < bprop ? 1 : -1;
-    		}
+            if (asc) {
+                if (self.sort().booleanType) {
+                    res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
+                }
+                else {
+                    res = aprop > bprop ? 1 : -1;
+                }
+            } else {
+                if (self.sort().booleanType) {
+                    res = (aprop === bprop) ? 0 : bprop ? -1 : 1;
+                }
+                else {
+                    res = aprop < bprop ? 1 : -1;
+                }
+            }
     		return res;
     	});
     });
@@ -108,9 +118,9 @@ function ArmorViewModel() {
         self.blankArmor(new Armor());
     };
 
-    self.removeArmor = function(armor) { 
-    	self.armors.remove(armor) 
-    	armor.delete();	
+    self.removeArmor = function(armor) {
+    	self.armors.remove(armor)
+    	armor.delete();
     };
 
     self.editArmor = function(armor) {
