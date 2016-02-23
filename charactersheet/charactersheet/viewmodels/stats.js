@@ -7,9 +7,7 @@ function StatsViewModel() {
 	self.otherStats = ko.observable(new OtherStats());
 	self.blankHitDice = ko.observable(new HitDice());
 	self.hitDiceList = ko.observableArray([]);
-	self.hitDiceType = ko.observable('');
-	self.hitDiceOptions = ko.observableArray(
-        ['D4', 'D6', 'D8', 'D10', 'D12', 'D20']);
+	self.hitDiceType = ko.observable(new HitDiceType());
 	self.deathSaveSuccessList = ko.observableArray([]);
 	self.deathSaveFailureList = ko.observableArray([]);
 
@@ -40,11 +38,14 @@ function StatsViewModel() {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
 
-// 		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
-// 		if(hitDiceType.length > 0){
-// 			self.hitDiceType = hitDiceType[0];
-// 		}
-// 		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
+		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
+		if(hitDiceType.length > 0){
+			self.hitDiceType = hitDiceType[0];
+		}
+		else {
+			self.hitDiceType = ko.observable(new HitDiceType());
+		}
+		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
 
 		var deathSaveList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
 		if (deathSaveList.length > 0) {
@@ -90,6 +91,7 @@ function StatsViewModel() {
 		self.deathSaveFailureList().forEach(function(e, i, _) {
 			e.save();
 		});
+		self.hitDiceType().save();
 	};
 
 	self.clear = function() {
@@ -101,6 +103,7 @@ function StatsViewModel() {
 		self.deathSaveFailureList().forEach(function(e, i, _) {
 			e.clear();
 		});
+		self.hitDiceType.clear();
 	};
 
 	self.calculateHitDice = function() {
