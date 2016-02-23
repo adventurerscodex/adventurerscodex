@@ -4,7 +4,6 @@ function HitDice() {
 
 	self.characterId = ko.observable(null);
 	self.hitDiceUsed = ko.observable(false);
-	self.hitDiceType = ko.observable('');
 
 	self.clear = function() {
 		self.hitDiceUsed(false);
