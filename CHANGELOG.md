@@ -1,3 +1,16 @@
+version 0.0.3 (2/24/2016)
+
+* added select2 bindings to dropdowns
+* implemented select2 to option dropdowns
+* chat improvements (profile pic)
+* added death saves
+* added hit dice type
+* added boolean sorting (i.e. spell slots)
+* spells slots now editable
+* added passive wisdom
+* added total of prepared spells
+* various bug fixes
+
 version 0.0.2 (2/9/2016)
 
 * drag and drop profile pictures with option gravatar config
