@@ -29,7 +29,7 @@ function RootViewModel() {
 	self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
 	self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());
 	self.spellsTabViewModel        = ko.observable(new SpellsTabViewModel());
-	self.equipmentTabViewModel    = ko.observable(new EquipmentTabViewModel());
+	self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
 	self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
 	self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 	self.partyTabViewModel         = ko.observable(new PartyTabViewModel());
@@ -302,7 +302,7 @@ function RootViewModel() {
 				self.statsTabViewModel().unload();
 				self.skillsTabViewModel().unload();
 				self.spellsTabViewModel().unload();
-				self.itemsViewModel().unload();
+				self.equipmentTabViewModel().unload();
 				self.inventoryTabViewModel().unload();
 				self.notesTabViewModel().unload();
             }

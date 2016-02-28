@@ -40,14 +40,16 @@ function StatsViewModel() {
 
 		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
 		if(hitDiceType.length > 0){
-			self.hitDiceType = hitDiceType[0];
+			self.hitDiceType(hitDiceType[0]);
 		}
 		else {
-			self.hitDiceType = ko.observable(new HitDiceType());
+			self.hitDiceType(new HitDiceType());
 		}
-		self.hitDiceType.characterId(CharacterManager.activeCharacter().key());
+		self.hitDiceType().characterId(CharacterManager.activeCharacter().key());
 
 		var deathSaveList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
+		self.deathSaveSuccessList([]);
+		self.deathSaveFailureList([]);
 		if (deathSaveList.length > 0) {
 			for(var i=0; i<3;i++){
 				self.deathSaveSuccessList.push(deathSaveList[i]);
