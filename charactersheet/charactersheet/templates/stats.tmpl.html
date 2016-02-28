@@ -20,8 +20,8 @@
             <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>
           </div>
           <span class="input-group-addon">
-              <select data-bind="options: hitDiceType.hitDiceOptions,
-                         value: hitDiceType.hitDiceType,
+              <select data-bind="options: hitDiceType().hitDiceOptions,
+                         value: hitDiceType().hitDiceType,
                          select2: {theme: 'classic'}"></select>
            </span>
         </div>
