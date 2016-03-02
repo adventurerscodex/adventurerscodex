@@ -1,5 +1,8 @@
-# Version Deployment
+# Dependencies
+- Has to be run on mac or linux
+- For Mac: ```brew install gnu-tar --with-default-names```
 
+# Version Deployment
 - Update Changelog
 - Create new version tag on develop
 - Clone repo
