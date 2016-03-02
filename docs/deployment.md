@@ -9,7 +9,7 @@
 - Run the following:
 
 ```bash 
-$ npm deploy
+$ npm run deploy
 $ git add -f bower_components
 $ git add .
 $ git commit -am "{{Useful message here}}"
