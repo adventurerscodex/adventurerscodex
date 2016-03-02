@@ -1,3 +1,10 @@
+version 0.0.3.1 (3/1/2016)
+
+* fixed critical bug for hit dice type preventing users from using the application in some cases
+* fixed character switching bug
+* fixed savings throws bug
+
+
 version 0.0.3 (2/24/2016)
 
 * added select2 bindings to dropdowns
