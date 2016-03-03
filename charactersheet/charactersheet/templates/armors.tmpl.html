@@ -122,13 +122,22 @@
               <div class="form-group">
                 <label for="armorPrice"
                        class="col-sm-2 control-label">Price</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="armorPrice"
-                           placeholder="5"
-                           data-bind='textInput: blankArmor().armorPrice'>
-                  </div>
+                <div class="col-sm-10">
+        					<div class="input-group">
+        						<input type="text"
+        							   class="form-control"
+                         style="height:100%;padding:18px;"
+        							   id="armorPrice"
+        							   placeholder="5"
+        							   data-bind='textInput: blankArmor().armorPrice'>
+        					   <span class="input-group-addon">
+        							<select class="form-control"
+        							data-bind="options: currencyDenominationList,
+        							value: blankArmor().armorCurrencyDenomination,
+        							select2: {theme: 'classic'}"></select>
+        						</span>
+        					</div>
+				          </div>
               </div>
               <div class="form-group">
                 <label for="armorWeight"
@@ -246,13 +255,22 @@
               <div class="form-group">
                 <label for="armorPrice"
                        class="col-sm-2 control-label">Price</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="armorPrice"
-                           placeholder="5"
-                           data-bind='textInput: armorPrice'>
-                  </div>
+                <div class="col-sm-10">
+        					<div class="input-group">
+        						<input type="text"
+        							   class="form-control"
+                         style="height:100%;padding:18px;"
+        							   id="armorPrice"
+        							   placeholder="5"
+        							   data-bind='textInput: armorPrice'>
+        					   <span class="input-group-addon">
+        							<select class="form-control"
+        							data-bind="options: $parent.currencyDenominationList,
+        							value: armorCurrencyDenomination,
+        							select2: {theme: 'classic'}"></select>
+        						</span>
+        					</div>
+				        </div>
               </div>
               <div class="form-group">
                 <label for="armorWeight"
@@ -312,4 +330,3 @@
     </div> <!-- Modal Fade -->
     </div> <!-- End with statement -->
 </div> <!-- Panel -->
-

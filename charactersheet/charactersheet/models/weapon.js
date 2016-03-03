@@ -11,6 +11,7 @@ function Weapon() {
     self.weaponHandedness = ko.observable('');
     self.weaponProficiency = ko.observable('');
     self.weaponPrice = ko.observable('');
+	self.weaponCurrencyDenomination = ko.observable('');
     self.weaponWeight = ko.observable('');
     self.weaponRange = ko.observable('');
     self.weaponSize = ko.observable('');
@@ -32,7 +33,7 @@ function Weapon() {
     self.weaponDamageTypeOptions = ko.observableArray(
          ['Bludgeoning', 'Piercing', 'Slashing']);
 
-         
+
     self.clear = function() {
         self.weaponName('');
         self.weaponType('');
@@ -47,6 +48,7 @@ function Weapon() {
         self.weaponProperty('');
         self.weaponDescription('');
         self.weaponQuantity('');
+		self.weaponCurrencyDenomination('');
     };
 
     self.importValues = function(values) {
@@ -64,6 +66,7 @@ function Weapon() {
         self.weaponProperty(values.weaponProperty);
         self.weaponDescription(values.weaponDescription);
         self.weaponQuantity(values.weaponQuantity);
+		self.weaponCurrencyDenomination(values.weaponCurrencyDenomination);
     };
 
     self.exportValues = function() {
@@ -81,7 +84,8 @@ function Weapon() {
 			weaponDamageType: self.weaponDamageType(),
             weaponProperty: self.weaponProperty(),
             weaponDescription: self.weaponDescription(),
-            weaponQuantity: self.weaponQuantity()
+            weaponQuantity: self.weaponQuantity(),
+			weaponCurrencyDenomination: self.weaponCurrencyDenomination()
         }
     };
 

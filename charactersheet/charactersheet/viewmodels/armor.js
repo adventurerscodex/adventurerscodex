@@ -6,6 +6,8 @@ function ArmorViewModel() {
     self.selecteditem = ko.observable();
     self.blankArmor = ko.observable(new Armor());
     self.armors = ko.observableArray([]);
+    self.currencyDenominationList = ko.observableArray([
+	    'PP', 'GP', 'SP', 'EP', 'CP']);
 
     self.sorts = {
 	  'armorName asc': { field: 'armorName', direction: 'asc'},
