@@ -7,9 +7,9 @@
 function Item() {
 	var self = this;
 	self.ps = PersistenceService.register(Item, self);
-	
+
 	self.characterId = ko.observable(null);
-	self.itemName = ko.observable('');	
+	self.itemName = ko.observable('');
 	self.itemType = ko.observable('');
 	self.itemIsEquippable = ko.observable(false);
 	self.itemBodyLocation = ko.observable('');
@@ -17,7 +17,8 @@ function Item() {
 	self.itemQty = ko.observable(0);
 	self.itemWeight = ko.observable(0);
 	self.itemCost = ko.observable(0);
-	
+	self.itemCurrencyDenomination = ko.observable('');
+
 	self.clear = function() {
 		self.itemName('');
 		self.itemDesc('');
@@ -26,10 +27,11 @@ function Item() {
 		self.itemIsEquippable(false);
 		self.itemBodyLocation('');
 		self.itemCost(0);
+		self.itemCurrencyDenomination('');
 	};
-	
+
 	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
+    	self.characterId(values.characterId);
 		self.itemName(values.itemName);
 		self.itemDesc(values.itemDesc);
 		self.itemQty(values.itemQty);
@@ -37,8 +39,9 @@ function Item() {
 		self.itemBodyLocation(values.itemBodyLocation);
 		self.itemWeight(values.itemWeight);
 		self.itemCost(values.itemCost);
+		self.itemCurrencyDenomination(values.itemCurrencyDenomination);
 	};
-	
+
 	self.exportValues = function() {
 		var values = {};
         values.characterId = self.characterId();
@@ -49,13 +52,14 @@ function Item() {
 		values.itemQty = self.itemQty();
 		values.itemWeight = self.itemWeight();
 		values.itemCost = self.itemCost();
+		values.itemCurrencyDenomination = self.itemCurrencyDenomination();
 		return values;
 	};
-	
+
 	self.save = function() {
 		self.ps.save();
 	};
-	
+
 	self.delete = function() {
 		self.ps.delete();
 	};

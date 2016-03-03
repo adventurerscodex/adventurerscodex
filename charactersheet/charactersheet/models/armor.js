@@ -9,13 +9,14 @@ function Armor() {
     self.armorType = ko.observable('');
     self.armorProficiency = ko.observable(false);
     self.armorPrice = ko.observable('');
+	self.armorCurrencyDenomination = ko.observable('');
     self.armorWeight = ko.observable('');
     self.armorDexBonus = ko.observable('');
     self.armorCheckPenalty = ko.observable('');
     self.armorDescription = ko.observable('');
     self.armorTypeOptions = ko.observableArray(
         ['Light', 'Medium', 'Heavy', 'Shields']);
-         
+
     self.proficiencyLabel = ko.pureComputed(function() {
         if (self.armorProficiency() === true) {
             return 'glyphicon glyphicon-ok';
@@ -31,6 +32,7 @@ function Armor() {
         self.armorDexBonus('');
         self.armorCheckPenalty('');
         self.armorDescription('');
+        self.armorCurrencyDenomination('');
     };
 
     self.importValues = function(values) {
@@ -43,6 +45,7 @@ function Armor() {
         self.armorDexBonus(values.armorDexBonus);
         self.armorCheckPenalty(values.armorCheckPenalty);
         self.armorDescription(values.armorDescription);
+        self.armorCurrencyDenomination(values.armorCurrencyDenomination);
     };
 
     self.exportValues = function() {
@@ -55,7 +58,8 @@ function Armor() {
             armorWeight: self.armorWeight(),
             armorDexBonus: self.armorDexBonus(),
             armorCheckPenalty: self.armorCheckPenalty(),
-            armorDescription: self.armorDescription()
+            armorDescription: self.armorDescription(),
+            armorCurrencyDenomination: self.armorCurrencyDenomination()
         }
     };
 

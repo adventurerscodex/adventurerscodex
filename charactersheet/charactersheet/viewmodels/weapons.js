@@ -6,6 +6,8 @@ function WeaponsViewModel() {
     self.selecteditem = ko.observable();
     self.blankWeapon = ko.observable(new Weapon());
     self.weapons = ko.observableArray([]);
+	self.currencyDenominationList = ko.observableArray([
+		'PP', 'GP', 'SP', 'EP', 'CP']);
 
     self.sorts = {
 	  'weaponName asc': { field: 'weaponName', direction: 'asc'},
@@ -25,18 +27,18 @@ function WeaponsViewModel() {
 
 	};
 
-    self.filter = ko.observable('');	
+    self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['weaponName asc']);
 
 	self.init = function() {
-	
+
 	};
-	
+
 	self.load = function() {
 		var key = CharacterManager.activeCharacter().key();
 		self.weapons(Weapon.findAllBy(key));
 	};
-	
+
 	self.unload = function() {
  		$.each(self.weapons(), function(_, e) {
 			e.save();
@@ -113,9 +115,9 @@ function WeaponsViewModel() {
         self.blankWeapon(new Weapon());
     };
 
-    self.removeWeapon = function(weapon) { 
-    	self.weapons.remove(weapon) 
-    	weapon.delete();	
+    self.removeWeapon = function(weapon) {
+    	self.weapons.remove(weapon)
+    	weapon.delete();
     };
 
     self.editWeapon = function(weapon) {
