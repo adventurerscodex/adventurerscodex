@@ -8,6 +8,7 @@ function Spell() {
     self.spellName = ko.observable('');
     self.spellPrepared = ko.observable(false);
     self.spellType = ko.observable('');
+    self.spellSaveAttr = ko.observable('');
     self.spellDmg = ko.observable('');
     self.spellSchool = ko.observable('');
     self.spellLevel = ko.observable(1);
@@ -18,6 +19,8 @@ function Spell() {
     self.spellDuration = ko.observable('');
     self.spellTypeOptions = ko.observableArray(
         ['Attack Roll', 'Savings Throw', 'Automatic']);
+    self.spellSaveAttrOptions = ko.observableArray(
+        ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha']);
     self.spellSchoolOptions = ko.observableArray([
         'Abjuration', 'Cantrip', 'Conjuration',
         'Divination', 'Enchantment', 'Evocation',
@@ -52,6 +55,7 @@ function Spell() {
         self.spellName('');
         self.spellPrepared = ko.observable(false);
         self.spellType('');
+        self.spellSaveAttr('');
         self.spellDmg('');
         self.spellSchool('');
         self.spellLevel('');
@@ -67,6 +71,7 @@ function Spell() {
         self.spellName(values.spellName);
         self.spellPrepared(values.spellPrepared);
         self.spellType(values.spellType);
+        self.spellSaveAttr(values.spellSaveAttr);
         self.spellDmg(values.spellDmg);
         self.spellSchool(values.spellSchool);
         self.spellLevel(values.spellLevel);
@@ -83,6 +88,7 @@ function Spell() {
 			spellName: self.spellName(),
             spellPrepared: self.spellPrepared(),
 			spellType: self.spellType(),
+            spellSaveAttr: self.spellSaveAttr(),
 			spellDmg: self.spellDmg(),
 			spellSchool: self.spellSchool(),
 			spellLevel: self.spellLevel(),
