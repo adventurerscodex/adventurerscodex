@@ -56,60 +56,22 @@ function SpellbookViewModel() {
 	 * Filters and sorts the spells for presentation in a table.
 	 */
     self.filteredAndSortedSpells = ko.computed(function() {
-    	var spells = self.spellbook();
-
-    	if (self.filter() !== '') {
-
-    	}
-
-    	return spells.sort(function(a, b) {
-    		var asc = self.sort().direction === 'asc' ? true : false;
-    		var res = null;
-
-    		var aprop = a[self.sort().field]();
-    		var bprop = b[self.sort().field]();
-
-    		if (self.sort().numeric) {
-				aprop = parseInt(a[self.sort().field]());
-				bprop = parseInt(b[self.sort().field]());
-    		}
-
-    		if (asc) {
-	    		res = aprop > bprop ? 1 : -1;
-    		} else {
-	    		res = aprop < bprop ? 1 : -1;
-    		}
-    		return res;
-    	});
+        return SortService.sortAndFilter(self.spellbook(), self.sort(), null);
     });
 
     /**
      * Determines whether a column should have an up/down/no arrow for sorting.
      */
     self.sortArrow = function(columnName) {
-    	var sort = self.sort();
-    	var arrow = '';
-    	if (columnName === sort.field) {
-			if (sort.direction === 'asc') {
-				arrow = 'glyphicon glyphicon-arrow-up';
-			} else {
-				arrow = 'glyphicon glyphicon-arrow-down';
-			}
-    	}
-    	return arrow;
+        return SortService.sortArrow(columnName, self.sort());
     };
 
 	/**
 	 * Given a column name, determine the current sort type & order.
 	 */
 	self.sortBy = function(columnName) {
-		var sort = null
-		if (self.sort().field === columnName && self.sort().direction === 'asc') {
-			sort = self.sorts[columnName+' desc'];
-		} else {
-			sort = self.sorts[columnName+' asc'];
-		}
-		self.sort(sort);
+		self.sort(SortService.sortForName(self.sort(),
+		    columnName, self.sorts));
 	};
 
 	//Manipulating spells
