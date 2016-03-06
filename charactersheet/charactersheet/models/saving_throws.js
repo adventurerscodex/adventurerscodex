@@ -50,7 +50,7 @@ function SavingThrows() {
 
 	self.modifierLabel = ko.pureComputed(function() {
         if (self.bonus() === null){
-            return ''
+            return '+ 0'
         }
 		var str = self.bonus() >= 0 ? '+' + self.bonus() : String(self.bonus());
 		return str;
