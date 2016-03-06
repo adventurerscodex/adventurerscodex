@@ -79,7 +79,7 @@
 
             <div class="col-md-4 col-padded">
               <div class="input-group">
-                <span class="input-group-addon" id="basic-addon2">Proficiency</span>
+                <span class="input-group-addon" id="basic-addon2">Proficiency Bonus</span>
                 <input type="number" class="form-control" aria-describedby="basic-addon2"
                   data-bind='textInput: otherStats().proficiency' min="0">
               </div>
@@ -113,7 +113,7 @@
             </div>
             <div class="col-md-4 col-padded">
                 <div class="input-group">
-                  <span class="input-group-addon">Success</span>
+                  <span class="input-group-addon">Death Save Successes</span>
                   <div class="form-control" data-bind="foreach: deathSaveSuccessList">
                     <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveSuccess"/>
                   </div>
@@ -133,7 +133,7 @@
               <br>
               <div class="col-md-4 col-padded">
                 <div class="input-group">
-                  <span class="input-group-addon">Failure</span>
+                  <span class="input-group-addon">Death Save Failures&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   <div class="form-control" data-bind="foreach: deathSaveFailureList">
                     <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveFailure"/>
                   </div>
