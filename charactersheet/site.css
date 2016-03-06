@@ -156,3 +156,7 @@ div.hr {
 .underline {
   text-decoration: underline;
 }
+
+textarea.dark-area {
+  background-color: #ecf0f1;
+}
