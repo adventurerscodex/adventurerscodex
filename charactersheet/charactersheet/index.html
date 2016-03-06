@@ -305,6 +305,27 @@
   </div>
 </div>
 
+<!-- Import Modal Form -->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog"
+  aria-labelledby="importModalLabel" data-bind="with: wizardViewModel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content container-fluid">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="importModalLabel">Import</h4>
+      </div>
+      <div class="modal-body">
+        <p>If you've exported you character data before, you can import it here!</p>
+        <!-- Add import form. -->
+        <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
