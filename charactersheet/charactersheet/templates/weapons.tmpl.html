@@ -7,10 +7,14 @@
             Weapon
             <span data-bind="css: sortArrow('weaponName')"></span>
           </th>
+          <th data-bind="click: function(){sortBy('weaponHit');}">
+            To Hit
+            <span data-bind="css: sortArrow('weaponHit')"></span>
+          </th>            
           <th data-bind="click: function(){sortBy('weaponDmg');}">
             Damage
             <span data-bind="css: sortArrow('weaponDmg')"></span>
-          </th>
+          </th>        
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponType');}">
             Type
             <span data-bind="css: sortArrow('weaponType')"></span>
@@ -27,12 +31,6 @@
             Property
             <span data-bind="css: sortArrow('weaponProperty')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('weaponQuantity');}">
-            Quantity
-            <span data-bind="css: sortArrow('weaponQuantity')"></span>
-          </th>
-
-
           <th>
             <a data-toggle="modal"
                data-target="#addWeapon" href="#">
@@ -47,10 +45,14 @@
               href="#"
               data-toggle="modal"
               data-target="#viewWeapon"></td>
+          <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewWeapon"></td>                     
           <td data-bind="text: weaponDmg, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
-              data-target="#viewWeapon"></td>
+              data-target="#viewWeapon"></td>       
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponType, click: $parent.editWeapon"
               href="#"
@@ -70,11 +72,6 @@
               href="#"
               data-toggle="modal"
               data-target="#viewWeapon"></td>
-          <td data-bind="text: weaponQuantity, click: $parent.editWeapon"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewWeapon"></td>
-
           <td>
             <a data-bind="click: $parent.removeWeapon" href="#">
               <i class="glyphicon glyphicon-remove">
@@ -126,6 +123,17 @@
                            placeholder="1D4"
                            data-bind='textInput: blankWeapon().weaponDmg'>
                   </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponHit"
+                       class="col-sm-2 control-label">Magical Modifier</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="weaponHit"
+                         placeholder="Place hit bonus here"
+                         data-bind='textInput: blankWeapon().weaponHit'>
+                </div>
               </div>
               <div class="form-group">
                 <label for="weaponType"
@@ -313,6 +321,17 @@
                            data-bind='textInput: weaponDmg'>
                   </div>
               </div>
+              <div class="form-group">
+                <label for="weaponHit"
+                       class="col-sm-2 control-label">Magical Modifier</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="weaponHit"
+                         placeholder="Place hit bonus here"
+                         data-bind='textInput: weaponHit'>
+                </div>
+              </div>              
               <div class="form-group">
                 <label for="weaponType"
                        class="col-sm-2 control-label">Type</label>
