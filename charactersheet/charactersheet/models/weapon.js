@@ -3,7 +3,7 @@
 function Weapon() {
     var self = this;
 	self.ps = PersistenceService.register(Weapon, self);
-
+    self._dummy = ko.observable(null);
 	self.characterId = ko.observable(null);
     self.weaponName = ko.observable('');
     self.weaponType = ko.observable('');
@@ -12,13 +12,14 @@ function Weapon() {
     self.weaponProficiency = ko.observable('');
     self.weaponPrice = ko.observable('');
 	self.weaponCurrencyDenomination = ko.observable('');
+    self.weaponHit = ko.observable('');
     self.weaponWeight = ko.observable('');
     self.weaponRange = ko.observable('');
     self.weaponSize = ko.observable('');
     self.weaponDamageType = ko.observable('');
     self.weaponProperty = ko.observable('');
     self.weaponDescription = ko.observable('');
-    self.weaponQuantity = ko.observable('')
+    self.weaponQuantity = ko.observable('');
     self.weaponProficiencyOptions = ko.observableArray(
         ['Simple', 'Martial', 'Improvised', 'Nonlethal', 'Exotic']);
     self.weaponHandednessOptions = ko.observableArray(
@@ -33,6 +34,91 @@ function Weapon() {
     self.weaponDamageTypeOptions = ko.observableArray(
          ['Bludgeoning', 'Piercing', 'Slashing']);
 
+
+    self.updateValues = function() {
+        self._dummy.notifySubscribers();
+    };
+
+    self.proficiencyScore = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var profBonus = 0;
+        try{
+            profBonus = OtherStats.findBy(
+                CharacterManager.activeCharacter().key())[0].proficiency();
+        } catch(err){};
+        return parseInt(profBonus);
+    };
+
+    self.strAbilityScoreModifier = function() {
+        var score = null;
+        try {
+            score = AbilityScores.findBy(
+                CharacterManager.activeCharacter().key())[0].modifierFor('Str');
+        } catch(err) {};
+        if (score === null){
+          return null
+        }
+        else {
+          return parseInt(score);
+        }
+    };
+
+    self.dexAbilityScoreModifier = function() {
+        var score = null;
+        try {
+            score = AbilityScores.findBy(
+                CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
+        } catch(err) {};
+        if (score === null){
+          return null
+        }
+        else {
+          return parseInt(score);
+        }
+    };
+
+    self.abilityScoreBonus = ko.pureComputed(function() {
+        self._dummy();
+        if(self.weaponType() === 'Ranged'){
+            return self.dexAbilityScoreModifier();
+        }
+        else{
+            if(self.weaponProperty() === 'Finesse'){
+                var dexBonus = self.dexAbilityScoreModifier();
+                var strBonus = self.strAbilityScoreModifier();
+
+                if(dexBonus){
+                    return dexBonus > strBonus ? dexBonus : strBonus; 
+                }
+                else{
+                    return strBonus ? strBonus:0;
+                }
+            }
+            else{
+                return self.strAbilityScoreModifier();
+            }
+        }
+    });
+
+    self.hitBonusLabel = ko.pureComputed(function() {
+        self._dummy();
+        var totalBonus = 0;
+        var abilityScoreBonus = self.abilityScoreBonus();
+        var proficiencyBonus = self.proficiencyScore();
+        var weaponHit = parseInt(self.weaponHit());
+
+        if(abilityScoreBonus){
+            totalBonus += abilityScoreBonus;
+        }
+        if(proficiencyBonus){
+            totalBonus += proficiencyBonus;
+        }
+        if(weaponHit){
+            totalBonus += weaponHit;
+        }
+
+        return totalBonus ? ('+' + totalBonus):'+0';
+    });
 
     self.clear = function() {
         self.weaponName('');
@@ -49,6 +135,7 @@ function Weapon() {
         self.weaponDescription('');
         self.weaponQuantity('');
 		self.weaponCurrencyDenomination('');
+        self.weaponHit('');
     };
 
     self.importValues = function(values) {
@@ -67,6 +154,7 @@ function Weapon() {
         self.weaponDescription(values.weaponDescription);
         self.weaponQuantity(values.weaponQuantity);
 		self.weaponCurrencyDenomination(values.weaponCurrencyDenomination);
+        self.weaponHit(values.weaponHit);
     };
 
     self.exportValues = function() {
@@ -85,7 +173,8 @@ function Weapon() {
             weaponProperty: self.weaponProperty(),
             weaponDescription: self.weaponDescription(),
             weaponQuantity: self.weaponQuantity(),
-			weaponCurrencyDenomination: self.weaponCurrencyDenomination()
+			weaponCurrencyDenomination: self.weaponCurrencyDenomination(),
+            weaponHit: self.weaponHit()
         }
     };
 
