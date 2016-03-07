@@ -1,3 +1,13 @@
+version 0.0.4 (3/6/2016)
+
+* various UI updates
+* adds select2 tags
+* adds weapon "to-hit" calculations
+* various bug fixes
+* fixes an issue where view was not scrollable after making a new character
+* adds currency types for item cost
+
+
 version 0.0.3.1 (3/1/2016)
 
 * fixed critical bug for hit dice type preventing users from using the application in some cases
