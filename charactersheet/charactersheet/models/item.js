@@ -14,7 +14,7 @@ function Item() {
 	self.itemIsEquippable = ko.observable(false);
 	self.itemBodyLocation = ko.observable('');
 	self.itemDesc = ko.observable('');
-	self.itemQty = ko.observable(0);
+	self.itemQty = ko.observable(1);
 	self.itemWeight = ko.observable(0);
 	self.itemCost = ko.observable(0);
 	self.itemCurrencyDenomination = ko.observable('');
