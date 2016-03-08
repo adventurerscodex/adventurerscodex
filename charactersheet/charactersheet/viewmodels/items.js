@@ -29,13 +29,13 @@ function ItemsViewModel() {
 	self.totalItemWeight = ko.pureComputed(function() {
 		var weightTotal = 0;
 		var eqpLen = self.items().length;
-		if( eqpLen > 0 ){
-			for(var i = 0; i < eqpLen; i++){
-				weightTotal += self.items()[i].itemWeight() ? parseInt(self.items()[i].itemWeight()) : 0;
+		if (eqpLen > 0) {
+			for (var i = 0; i < eqpLen; i++) {
+				weightTotal += self.items()[i].totalWeight();
 			}
 			return ("Weight: " + weightTotal + " (lbs)");
 		}
-		else{
+		else {
 			return "Weight";
 		}
 	});
