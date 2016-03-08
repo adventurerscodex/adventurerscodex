@@ -4,7 +4,7 @@ function ProfileViewModel() {
 	var self = this;
 
 	self.profile = ko.observable(new Profile());
-    
+
 	self.init = function() {
 	};
 
@@ -25,13 +25,14 @@ function ProfileViewModel() {
 
 	self.unload = function() {
 		self.profile().save();
+		self.profile(new Profile());
 	};
-	
+
 	self.dataHasChanged = function() {
 		self.profile().save();
 		Notifications.profile.changed.dispatch();
 	};
-	
+
 	//Public Methods
 
 	self.clear = function() {
