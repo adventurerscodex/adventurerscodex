@@ -62,25 +62,20 @@ function SkillsViewModel() {
     	}
 
     	//Subscriptions
-	    Notifications.abilityScores.changed.add(function() {
-	    	self.skills().forEach(function(e, i, _) {
-	    		e.updateValues();
-	    	})
-	    });
-	    Notifications.stats.changed.add(function() {
-	    	self.skills().forEach(function(e, i, _) {
-	    		e.updateValues();
-	    	})
-	    });
+	    Notifications.abilityScores.changed.add(self.dataHasChanged);
+	    Notifications.stats.changed.add(self.dataHasChanged);
         self.skills().forEach(function(e, i, _) {
             self.addNotifiers(e);
         })
     };
 
     self.unload = function() {
-    	$.each(self.skills(), function(_, e) {
+    	self.skills().forEach(function(e, i, _) {
     		e.save();
     	});
+    	self.skills([]);
+    	Notifications.abilityScores.changed.remove(self.dataHasChanged);
+    	Notifications.stats.changed.remove(self.dataHasChanged);
     };
 
 	/* UI Methods */
@@ -143,5 +138,11 @@ function SkillsViewModel() {
         skill.name.subscribe(savefn);
         skill.bonus.subscribe(savefn);
     }
+
+    self.dataHasChanged = function() {
+        self.skills().forEach(function(e, i, _) {
+            e.updateValues();
+        })
+    };
 };
 
