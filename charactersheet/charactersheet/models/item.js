@@ -19,6 +19,13 @@ function Item() {
 	self.itemCost = ko.observable(0);
 	self.itemCurrencyDenomination = ko.observable('');
 
+	self.totalWeight = ko.pureComputed(function() {
+	    if (self.itemQty() && self.itemWeight()) {
+            return parseInt(self.itemQty()) * parseFloat(self.itemWeight());
+	    }
+	    return 0;
+	});
+
 	self.clear = function() {
 		self.itemName('');
 		self.itemDesc('');
