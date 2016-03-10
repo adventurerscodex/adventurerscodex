@@ -3,6 +3,10 @@
 function Armor() {
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
+	self.mapping = {
+	    ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
+	        'save', 'delete', 'proficiencyLabel']
+	};
 
     self.characterId = ko.observable(null);
     self.armorName = ko.observable('');
@@ -23,44 +27,18 @@ function Armor() {
         }
         return '';
     });
+
     self.clear = function() {
-        self.armorName('');
-        self.armorType('');
-        self.armorProficiency(false);
-        self.armorPrice('');
-        self.armorWeight('');
-        self.armorDexBonus('');
-        self.armorCheckPenalty('');
-        self.armorDescription('');
-        self.armorCurrencyDenomination('');
+        var values = new Armor().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.armorName(values.armorName);
-        self.armorType(values.armorType);
-        self.armorProficiency(values.armorProficiency);
-        self.armorPrice(values.armorPrice);
-        self.armorWeight(values.armorWeight);
-        self.armorDexBonus(values.armorDexBonus);
-        self.armorCheckPenalty(values.armorCheckPenalty);
-        self.armorDescription(values.armorDescription);
-        self.armorCurrencyDenomination(values.armorCurrencyDenomination);
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            armorName: self.armorName(),
-            armorType: self.armorType(),
-            armorProficiency: self.armorProficiency(),
-            armorPrice: self.armorPrice(),
-            armorWeight: self.armorWeight(),
-            armorDexBonus: self.armorDexBonus(),
-            armorCheckPenalty: self.armorCheckPenalty(),
-            armorDescription: self.armorDescription(),
-            armorCurrencyDenomination: self.armorCurrencyDenomination()
-        }
+        return ko.mapping.toJS(self, self.mapping);
     };
 
     self.save = function() {

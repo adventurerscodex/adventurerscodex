@@ -3,7 +3,11 @@
 function CharacterAppearance() {
 	var self = this;
 	self.ps = PersistenceService.register(CharacterAppearance, self);
-	
+	self.mapping = {
+	    ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
+	        'save']
+	};
+
     self.characterId = ko.observable(null);
 	self.height = ko.observable('');
 	self.weight = ko.observable('');
@@ -12,38 +16,23 @@ function CharacterAppearance() {
 	self.skinColor = ko.observable('');
 
 	//Public Methods
-	
-	self.clear = function() {
-		self.height('');
-		self.weight('');
-		self.hairColor('');
-		self.eyeColor('');
-		self.skinColor('');
-	};
-	
-	self.importValues = function(values) {
-		self.characterId(values.characterId);
-		self.height(values.height);
-		self.weight(values.weight);
-		self.hairColor(values.hairColor);
-		self.eyeColor(values.eyeColor);
-		self.skinColor(values.skinColor);
-	};
-	
-	self.exportValues = function() {
-		return {
-			characterId: self.characterId(),
-			height: self.height(),
-			weight: self.weight(),
-			hairColor: self.hairColor(),
-			eyeColor: self.eyeColor(),
-			skinColor: self.skinColor()
-		}
-	};
-			
-	self.save = function() {
-		self.ps.save();
-	};
+
+    self.clear = function() {
+        var values = new CharacterAppearance().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
+
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
+
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
+
+    self.save = function() {
+    	self.ps.save();
+    };
 };
 
 //CRUD

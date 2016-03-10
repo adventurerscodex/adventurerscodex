@@ -5,6 +5,9 @@
  */
 function PlayerSummary() {
     var self = this;
+    self.mapping = {
+	    ignore: ['clear', 'importValues', 'exportValues']
+    };
 
     self.id = ko.observable(null);
     self.playerType = ko.observable();
@@ -20,34 +23,17 @@ function PlayerSummary() {
     self.remainingHealth = ko.observable();
     self.ac = ko.observable();
 
+    self.clear = function() {
+        var values = new Item().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
+
     self.importValues = function(values) {
-        self.id(values.id);
-        self.playerType(values.playerType);
-
-        self.playerName(values.playerName);
-        self.characterName(values.characterName);
-        self.level(values.level);
-        self.profileImage(values.profileImage);
-
-        self.totalHealth(values.totalHealth);
-        self.remainingHealth(values.remainingHealth);
-        self.ac(values.ac);
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            id: self.id(),
-            playerType: self.playerType(),
-
-            playerName: self.playerName(),
-            characterName: self.characterName(),
-            level: self.level(),
-            profileImage: self.profileImage(),
-
-            totalHealth: self.totalHealth(),
-            remainingHealth: self.remainingHealth(),
-            ac: self.ac(),
-        };
+        return ko.mapping.toJS(self, self.mapping);
     };
 };
 

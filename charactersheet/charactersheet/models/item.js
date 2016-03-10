@@ -7,6 +7,10 @@
 function Item() {
 	var self = this;
 	self.ps = PersistenceService.register(Item, self);
+    self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+	        'totalWeight', 'delete']
+    };
 
 	self.characterId = ko.observable(null);
 	self.itemName = ko.observable('');
@@ -26,42 +30,18 @@ function Item() {
 	    return 0;
 	});
 
-	self.clear = function() {
-		self.itemName('');
-		self.itemDesc('');
-		self.itemQty('');
-		self.itemWeight('');
-		self.itemIsEquippable(false);
-		self.itemBodyLocation('');
-		self.itemCost(0);
-		self.itemCurrencyDenomination('');
-	};
+    self.clear = function() {
+        var values = new Item().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);
-		self.itemName(values.itemName);
-		self.itemDesc(values.itemDesc);
-		self.itemQty(values.itemQty);
-		self.itemIsEquippable(values.itemIsEquippable);
-		self.itemBodyLocation(values.itemBodyLocation);
-		self.itemWeight(values.itemWeight);
-		self.itemCost(values.itemCost);
-		self.itemCurrencyDenomination(values.itemCurrencyDenomination);
-	};
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.exportValues = function() {
-		var values = {};
-        values.characterId = self.characterId();
-		values.itemName = self.itemName();
-		values.itemIsEquippable = self.itemIsEquippable();
-		values.itemDesc = self.itemDesc();
-		values.itemBodyLocation = self.itemBodyLocation();
-		values.itemQty = self.itemQty();
-		values.itemWeight = self.itemWeight();
-		values.itemCost = self.itemCost();
-		values.itemCurrencyDenomination = self.itemCurrencyDenomination();
-		return values;
-	};
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
 
 	self.save = function() {
 		self.ps.save();

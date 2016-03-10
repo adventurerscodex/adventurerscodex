@@ -1,6 +1,13 @@
 function Health() {
 	var self = this;
 	self.ps = PersistenceService.register(Health, self);
+	self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+	        'DANGER_THRESHOLD', 'WARNING_THRESHOLD', 'hitpoints', 'totalHitpoints',
+	        'tempHitpointsRemaining', 'regularHitpointsRemaining', 'hitpointsText',
+	        'isKnockedOut', 'isDangerous', 'isWarning', 'progressType', 'regularProgressWidth',
+	        'tempProgressWidth', 'progressLabel']
+	};
 
 	self.DANGER_THRESHOLD = 0.10;
 	self.WARNING_THRESHOLD = 0.30;
@@ -81,27 +88,18 @@ function Health() {
 		return '';
 	}, self);
 
-	self.clear = function() {
-		self.maxHitpoints(0);
-		self.tempHitpoints(0);
-		self.damage(0);
-	};
+    self.clear = function() {
+        var values = new Health().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);
-		self.maxHitpoints(values.maxHitpoints);
-		self.tempHitpoints(values.tempHitpoints);
-		self.damage(values.damage);
-	};
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.exportValues = function() {
-		return {
-        	characterId: self.characterId(),
-			maxHitpoints: self.maxHitpoints(),
-			tempHitpoints: self.tempHitpoints(),
-			damage: self.damage()
-		}
-	};
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
 
 	self.save = function() {
 		self.ps.save();
