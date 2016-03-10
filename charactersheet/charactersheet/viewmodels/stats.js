@@ -37,6 +37,8 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
+        
+        self.calculateHitDice()
 
 		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
 		if(hitDiceType.length > 0){
@@ -72,7 +74,7 @@ function StatsViewModel() {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
 
-		//Subscriptions
+       	//Subscriptions
 		self.health().maxHitpoints.subscribe(self.dataHasChanged);
 		self.health().damage.subscribe(self.dataHasChanged);
 		self.otherStats().proficiency.subscribe(self.dataHasChanged);
@@ -94,6 +96,7 @@ function StatsViewModel() {
 			e.save();
 		});
 		self.hitDiceType().save();
+        self.clear();
 	};
 
 	self.clear = function() {
@@ -105,11 +108,12 @@ function StatsViewModel() {
 		self.deathSaveFailureList().forEach(function(e, i, _) {
 			e.clear();
 		});
-		self.hitDiceType.clear();
+        self.hitDiceList([]);
 	};
 
 	self.calculateHitDice = function() {
 		var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        
 		var difference = parseInt(profile.level()) - self.hitDiceList().length;
 		var pushOrPop = difference > 0 ? 'push' : 'pop';
 		for (var i = 0; i < Math.abs(difference); i++) {

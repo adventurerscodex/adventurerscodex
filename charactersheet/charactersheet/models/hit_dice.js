@@ -31,6 +31,7 @@ function HitDice() {
 
 	self.toggleHitDice = function() {
 		self.hitDiceUsed(!self.hitDiceUsed())
+        self.save()
 	};
 
 	self.hitDiceIcon = ko.pureComputed(function() {
