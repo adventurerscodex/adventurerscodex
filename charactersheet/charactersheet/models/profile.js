@@ -3,6 +3,10 @@
 function Profile() {
 	var self = this;
 	self.ps = PersistenceService.register(Profile, self);
+    self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+	        'characterSummary']
+    };
 
 	self.characterId = ko.observable(null);
 	self.characterName =  ko.observable('');
@@ -34,51 +38,18 @@ function Profile() {
 		self.ps.save();
 	};
 
-	self.clear = function() {
-		self.characterName('');
-		self.playerName('');
-		self.race('');
-		self.religion('');
-		self.typeClass('');
-		self.alignment('');
-		self.diety('');
-		self.gender('');
-		self.age('');
-		self.level('1');
-		self.exp('0');
-	};
+    self.clear = function() {
+        var values = new Profile().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);
-		self.characterName(values.characterName);
-		self.playerName(values.playerName);
-		self.race(values.race);
-		self.religion(values.religion);
-		self.typeClass(values.typeClass);
-		self.alignment(values.alignment);
-		self.diety(values.diety);
-		self.gender(values.gender);
-		self.age(values.age);
-		self.level(values.level);
-		self.exp(values.exp);
-	};
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.exportValues = function() {
-		return {
-        	characterId: self.characterId(),
-			characterName: self.characterName(),
-			playerName: self.playerName(),
-			race: self.race(),
-			religion: self.religion(),
-			typeClass: self.typeClass(),
-			alignment: self.alignment(),
-			diety: self.diety(),
-			gender: self.gender(),
-			age: self.age(),
-			level: self.level(),
-			exp: self.exp(),
-		}
-	};
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
 };
 
 Profile.findBy = function(characterId) {

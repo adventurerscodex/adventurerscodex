@@ -3,34 +3,27 @@
 function FeatsProf() {
 	var self = this;
 	self.ps = PersistenceService.register(FeatsProf, self);
+	self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+	};
 
 	self.characterId = ko.observable(null);
 	self.feats = ko.observable('');
 	self.proficiencies = ko.observable('');
 	self.specialAbilities = ko.observable('');
 
-	self.clear = function() {
-		self.feats('');
-    	self.proficiencies('');
-    	self.specialAbilities('');
-  	};
-  	
+    self.clear = function() {
+        var values = new FeatsProf().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
-		self.feats(values.feats);
-		self.proficiencies(values.proficiencies);
-		self.specialAbilities(values.specialAbilities);
-	};
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.exportValues = function() {
-		return {
-        	characterId: self.characterId(),
-			feats: self.feats(),
-			proficiencies: self.proficiencies(),
-			specialAbilities: self.specialAbilities()
-		}
-	};  	
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
 
   	self.save = function() {
   		self.ps.save();

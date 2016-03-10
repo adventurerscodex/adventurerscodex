@@ -3,6 +3,9 @@
 function FeaturesTraits() {
 	var self = this;
 	self.ps = PersistenceService.register(FeaturesTraits, self);
+	self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+	};
 
 	self.characterId = ko.observable(null);
 	self.background = ko.observable('');
@@ -14,30 +17,18 @@ function FeaturesTraits() {
 		self.ps.save();
 	};
 
-	self.clear = function() {
-		self.background('');
-		self.ideals('');
-		self.flaws('');
-		self.bonds('');
-	};
-	
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
-		self.background(values.background);
-		self.ideals(values.ideals);
-		self.flaws(values.flaws);
-		self.bonds(values.bonds);
-	};
+    self.clear = function() {
+        var values = new FeaturesTraits().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.exportValues = function() {
-		return {
-        	characterId: self.characterId(),
-			background: self.background(),
-			ideals: self.ideals(),
-			flaws: self.flaws(),
-			bonds: self.bonds(),
-		}
-	};
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
+
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
 };
 
 FeaturesTraits.findBy = function(characterId) {
