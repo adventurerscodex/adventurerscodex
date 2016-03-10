@@ -33,7 +33,7 @@ function Skill() {
     			CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
 		} catch(err) {};
     if (score === null){
-      return null
+      return null 
     }
     else {
       return parseInt(score);
@@ -48,7 +48,7 @@ function Skill() {
 			  bonus += self.abilityScoreModifier();
 		}
           else {
-              bonus = null
+              bonus = 0
      }
 		return bonus;
 	});
