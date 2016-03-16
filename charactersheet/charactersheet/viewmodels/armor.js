@@ -32,12 +32,14 @@ function ArmorViewModel() {
 	self.load = function() {
 		var key = CharacterManager.activeCharacter().key();
 		self.armors(Armor.findAllBy(key));
+		Notifications.abilityScores.changed.add(self.valueHasChanged);
 	};
 
 	self.unload = function() {
  		$.each(self.armors(), function(_, e) {
 			e.save();
 		});
+		Notifications.abilityScores.changed.remove(self.valueHasChanged);
 	};
 	/* UI Methods */
 
@@ -83,5 +85,11 @@ function ArmorViewModel() {
 
     self.clear = function() {
         self.armors([]);
+    };
+
+    self.valueHasChanged = function() {
+    	self.armors().forEach(function(e, i, _) {
+    		e.updateValues();
+    	})    	
     };
 };
