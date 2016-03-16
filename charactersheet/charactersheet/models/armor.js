@@ -9,17 +9,20 @@ function Armor() {
 	};
 
     self.characterId = ko.observable(null);
+    self._dummy = ko.observable(null);
     self.armorName = ko.observable('');
     self.armorType = ko.observable('');
     self.armorProficiency = ko.observable(false);
     self.armorPrice = ko.observable('');
 	self.armorCurrencyDenomination = ko.observable('');
     self.armorWeight = ko.observable('');
-    self.armorDexBonus = ko.observable('');
-    self.armorCheckPenalty = ko.observable('');
+    self.armorClass = ko.observable('');
+    self.armorStealth = ko.observable('');
     self.armorDescription = ko.observable('');
     self.armorTypeOptions = ko.observableArray(
         ['Light', 'Medium', 'Heavy', 'Shields']);
+    self.armorStealthOptions = ko.observableArray(
+        ['Advantage', 'Normal', 'Disadvantage']);
 
     self.proficiencyLabel = ko.pureComputed(function() {
         if (self.armorProficiency() === true) {
@@ -48,6 +51,58 @@ function Armor() {
     self.delete = function() {
         self.ps.delete();
     };
+
+    self.updateValues = function() {
+        self._dummy.notifySubscribers();
+    };
+
+    self.dexAbilityScoreModifier = function() {
+        self._dummy();
+        var score = null;
+        try {
+            score = AbilityScores.findBy(
+                CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
+        } catch(err) {};
+
+        if (score === null){
+          return null;
+        }
+        else {
+          return parseInt(score);
+        }
+    };
+
+    self.abilityScoreBonus = ko.pureComputed(function() {
+        self._dummy();
+        var dexAbilityScore = self.dexAbilityScoreModifier();
+        if(dexAbilityScore){
+            if(self.armorType() === 'Light'){
+                return dexAbilityScore;
+            }
+            else if(self.armorType() === 'Medium'){
+                return dexAbilityScore >= 2 ? 2 : dexAbilityScore;
+            }
+        }
+        else{
+            return 0;
+        }
+    });
+
+    self.armorClassLabel = ko.pureComputed(function() {
+        self._dummy();
+        var totalBonus = 0;
+        var abilityScoreBonus = self.abilityScoreBonus();
+        var armorClass = parseInt(self.armorClass());
+
+        if(abilityScoreBonus){
+            totalBonus += abilityScoreBonus;
+        }
+        if(armorClass){
+            totalBonus += armorClass;
+        }
+
+        return totalBonus;
+    });
 };
 
 Armor.findAllBy =function(characterId) {

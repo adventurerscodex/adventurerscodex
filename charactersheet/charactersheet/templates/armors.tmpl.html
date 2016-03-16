@@ -12,12 +12,8 @@
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorDexBonus');}">
-            Dex Bonus
+            Armor Class
             <span data-bind="css: sortArrow('armorDexBonus')"></span>
-          </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorCheckPenalty');}">
-            AC Penalty
-            <span data-bind="css: sortArrow('armorCheckPenalty')"></span>
           </th>
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorProficiency');}">
             Proficiency
@@ -43,12 +39,7 @@
               data-toggle="modal"
               data-target="#viewArmor"></td>
           <td class="hidden-sm hidden-xs"
-              data-bind="text: armorDexBonus, click: $parent.editArmor"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewArmor"></td>
-          <td class="hidden-sm hidden-xs"
-              data-bind="text: armorCheckPenalty, click: $parent.editArmor"
+              data-bind="text: armorClass, click: $parent.editArmor"
               href="#"
               data-toggle="modal"
               data-target="#viewArmor"></td>
@@ -151,25 +142,24 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="armorDexBonus"
-                       class="col-sm-2 control-label">Dex Bonus</label>
+                <label for="armorClass"
+                       class="col-sm-2 control-label">Armor Class</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
-                           id="armorDexBonus"
+                           id="armorClass"
                            placeholder="3"
-                           data-bind='textInput: blankArmor().armorDexBonus'>
+                           data-bind='textInput: blankArmor().armorClass'>
                   </div>
               </div>
               <div class="form-group">
                 <label for="armorSize"
-                       class="col-sm-2 control-label">AC Penalty</label>
+                       class="col-sm-2 control-label">Stealth</label>
                   <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         id="armorCheckPenalty"
-                         placeholder="3"
-                         data-bind='textInput: blankArmor().armorCheckPenalty'>
+                  <select class="form-control"
+                          data-bind="options: blankArmor().armorStealthOptions,
+                                     value: blankArmor().armorStealth,
+                                     select2: {theme: 'classic'}"></select>
                   </div>
               </div>
               <div class="form-group">
@@ -284,25 +274,24 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="armorDexBonus"
-                       class="col-sm-2 control-label">Dex Bonus</label>
+                <label for="armorClass"
+                       class="col-sm-2 control-label">Armor Class</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
-                           id="armorDexBonus"
+                           id="armorClass"
                            placeholder="3"
-                           data-bind='textInput: armorDexBonus'>
+                           data-bind='textInput: armorClass'>
                   </div>
               </div>
               <div class="form-group">
                 <label for="armorSize"
-                       class="col-sm-2 control-label">AC Penalty</label>
+                       class="col-sm-2 control-label">Stealth</label>
                   <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         id="armorCheckPenalty"
-                         placeholder="3"
-                         data-bind='textInput: armorCheckPenalty'>
+                  <select class="form-control"
+                          data-bind="options: armorStealthOptions,
+                                     value: armorStealth,
+                                     select2: {theme: 'classic'}"></select>
                   </div>
               </div>
               <div class="form-group">
