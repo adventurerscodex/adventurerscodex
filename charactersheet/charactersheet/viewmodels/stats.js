@@ -97,6 +97,8 @@ function StatsViewModel() {
 		});
 		self.hitDiceType().save();
         self.clear();
+		Notifications.profile.changed.remove(self.calculateHitDice);
+	    Notifications.skills.changed.remove(self.calculatePassiveWisdom);
 	};
 
 	self.clear = function() {
