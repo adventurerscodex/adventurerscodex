@@ -5,7 +5,7 @@ function Armor() {
     self.ps = PersistenceService.register(Armor, self);
 	self.mapping = {
 	    ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
-	        'save', 'delete', 'proficiencyLabel']
+	        'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus']
 	};
 
     self.characterId = ko.observable(null);
