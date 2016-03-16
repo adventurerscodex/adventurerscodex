@@ -7,12 +7,12 @@ describe('Player Summary View Model', function() {
     });
 
     describe('Instance Methods', function() {
-        describe('Init', function() {
+        describe('Load', function() {
             it('should subscribe to playerSummary notifications.', function() {
                 var summ = new PlayerSummaryViewModel();
 
                 var notifySpy = simple.mock(Notifications.playerSummary.changed, 'add');
-                summ.init();
+                summ.load();
 
                 notifySpy.called.should.equal(true);
             });
