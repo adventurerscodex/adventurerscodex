@@ -19,8 +19,8 @@ describe('Armor Model', function() {
         });
     });
 
-    describe('Import', function() {
-        it('should import all the data from a fixture', function() {
+    describe('Export', function() {
+        it('should export all the data from a fixture', function() {
             var armor = new Armor();
             armor.importValues(ArmorFixture);
             armor.armorName().should.equal(ArmorFixture.armorName);
