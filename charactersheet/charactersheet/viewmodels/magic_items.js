@@ -43,6 +43,15 @@ function MagicItemsViewModel() {
         }
     });
 
+    self.chargesDisplay = ko.pureComputed(function(){
+        if(self.magicItemMaxCharges() === 0){
+            return "N/A"
+        }
+        else {
+          return self.magicItemCharges()
+        }
+    });
+
     self.init = function() {
 
     };
@@ -58,7 +67,7 @@ function MagicItemsViewModel() {
       });
     };
 
-    self.filteredAndSortedSpells = ko.computed(function() {
+    self.filteredAndSortedMagicItems = ko.computed(function() {
         return SortService.sortAndFilter(self.magicItems(), self.sort(), null);
     });
 
