@@ -62,16 +62,16 @@ function MagicItem() {
     };
 
     self.save = function() {
-      self.ps.save();
+        self.ps.save();
     };
 
     self.delete = function() {
-      self.ps.delete();
+        self.ps.delete();
     };
 };
 
 MagicItem.findAllBy =function(characterId) {
-  return PersistenceService.findAll(MagicItem).filter(function(e, i, _) {
-    return e.characterId() === characterId;
+    return PersistenceService.findAll(MagicItem).filter(function(e, i, _) {
+        return e.characterId() === characterId;
   });
 };
