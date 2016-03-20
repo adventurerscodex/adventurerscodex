@@ -11,7 +11,7 @@
             Charges
             <span data-bind="css: sortArrow('magicItemCharges')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('magicItemAttuned');}">
+          <th data-bind="visible: noneAttuned() === false, click: function(){sortBy('magicItemAttuned');}">
             Attuned
             <span data-bind="css: sortArrow('magicItemAttuned')"></span>
           </th>
@@ -37,10 +37,7 @@
               href="#"
               data-toggle="modal"
               data-target="#viewMagicItem"></td>
-          <td data-bind="click: $parent.editItem"
-              data-toggle="modal"
-              data-target="#viewMagicItem"
-              href="#">
+          <td data-bind="visible: $parent.noneAttuned() === false">
             <div data-bind="visible: magicItemRequiresAttunement() == true">
               <input data-bind="checked: magicItemAttuned"
                      type="checkbox"
@@ -52,7 +49,7 @@
           <td data-bind="text: magicItemWeight, click: $parent.editItem"
                   href="#"
                   data-toggle="modal"
-                  data-target="#viewItem"></td>
+                  data-target="#viewMagicItem"></td>
           <td>
             <a data-bind="click: $parent.removeItem" href="#">
               <i class="glyphicon glyphicon-remove">

@@ -27,8 +27,14 @@ function MagicItemsViewModel() {
         var attuned = ko.utils.arrayFilter(self.magicItems(), function(item) {
             return item.magicItemAttuned() === true;
         });
-
         return attuned.length;
+    });
+
+    self.noneAttuned = ko.computed(function(){
+        var numberAttuned = ko.utils.arrayFilter(self.magicItems(), function(item){
+            return item.magicItemRequiresAttunement() === true;
+        });
+        return numberAttuned.length === 0;
     });
 
     self.totalMagicItemWeight = ko.pureComputed(function() {
