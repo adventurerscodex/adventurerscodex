@@ -37,11 +37,17 @@
               href="#"
               data-toggle="modal"
               data-target="#viewMagicItem"></td>
-          <td>
-            <input data-bind="checked: magicItemAttuned, enable: magicItemRequiresAttunement"
-                   type="checkbox"
-                   href="#">
-            </input>
+          <td data-bind="click: $parent.editItem"
+              data-toggle="modal"
+              data-target="#viewMagicItem"
+              href="#">
+            <div data-bind="visible: magicItemRequiresAttunement() == true">
+              <input data-bind="checked: magicItemAttuned"
+                     type="checkbox"
+                     href="#">
+
+              </input>
+            </div>
           </td>
           <td data-bind="text: magicItemWeight, click: $parent.editItem"
                   href="#"
