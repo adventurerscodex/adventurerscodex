@@ -15,6 +15,10 @@
             Attuned
             <span data-bind="css: sortArrow('magicItemAttuned')"></span>
           </th>
+          <th data-bind="click: function(){sortBy('magicItemWeight');}, text: totalMagicItemWeight">
+            Weight
+            <span data-bind="css: sortArrow('magicItemWeight')"></span>
+          </th>
           <th>
             <a data-toggle="modal"
                data-target="#addMagicItem" href="#">
@@ -39,6 +43,10 @@
                    href="#">
             </input>
           </td>
+          <td data-bind="text: magicItemWeight, click: $parent.editItem"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#viewItem"></td>
           <td>
             <a data-bind="click: $parent.removeItem" href="#">
               <i class="glyphicon glyphicon-remove">

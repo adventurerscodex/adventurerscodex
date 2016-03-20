@@ -8,6 +8,8 @@ function MagicItemsViewModel() {
     'magicItemName desc': { field: 'magicItemName', direction: 'desc'},
     'magicItemMaxCharges asc': { field: 'magicItemMaxCharges', direction: 'asc', numeric: true},
     'magicItemMaxCharges desc': { field: 'magicItemMaxCharges', direction: 'desc', numeric: true},
+    'magicItemWeight asc': { field: 'magicItemWeight', direction: 'asc', numeric: true},
+    'magicItemWeight desc': { field: 'magicItemWeight', direction: 'desc', numeric: true},
     'magicItemCharges asc': { field: 'magicItemCharges', direction: 'asc', numeric: true},
     'magicItemCharges desc': { field: 'magicItemCharges', direction: 'desc', numeric: true},
     'magicItemAttuned asc': { field: 'magicItemAttuned', direction: 'asc', booleanType: true},
@@ -34,21 +36,12 @@ function MagicItemsViewModel() {
         var itemLength = self.magicItems().length;
         if (itemLength > 0) {
             for (var i = 0; i < itemLength; i++) {
-              weightTotal += self.magicItems()[i].magicItemWeight();
+              weightTotal += parseFloat(self.magicItems()[i].magicItemWeight());
             }
             return ("Weight: " + weightTotal + " (lbs)");
         }
         else {
             return "Weight";
-        }
-    });
-
-    self.chargesDisplay = ko.pureComputed(function(){
-        if(self.magicItemMaxCharges() === 0){
-            return "N/A"
-        }
-        else {
-          return self.magicItemCharges()
         }
     });
 
