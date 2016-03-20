@@ -21,6 +21,15 @@ function MagicItem() {
         ['Uncommon', 'Common', 'Rare', 'Rarity Varies',
          'Very Rare', 'Legendary']);
 
+    self.chargesDisplay = ko.pureComputed(function(){
+        if(self.magicItemMaxCharges() == 0){
+            return "N/A"
+        }
+        else {
+            return self.magicItemCharges()
+        }
+    });
+
     self.clear = function() {
         self.magicItemName('');
         self.magicItemType('');
