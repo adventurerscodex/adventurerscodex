@@ -65,6 +65,18 @@ var WeaponFixture = {
     weaponDescription: ''
 };
 
+var MagicItemFixture = {
+    magicItemName: 'Dagger of venom',
+    magicItemType: 'Wondrous Item',
+    magicItemRarity: 'Very Rare',
+    magicItemRequiresAttunement: true,
+    magicItemAttuned: false,
+    magicItemMaxCharges: 3,
+    magicItemCharges: 1,
+    magicItemWeight: 5,
+    magicItemDescription: 'Deadly dagger'
+};
+
 var ProfileFixture = {
     characterId: '1234',
     playerName: 'Joe Blow',

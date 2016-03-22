@@ -642,7 +642,8 @@ function InventoryTabViewModel() {
 	var self = this;
 
 	self.itemsViewModel = ko.observable(new ItemsViewModel());
-    self.treasureViewModel  = ko.observable(new TreasureViewModel());
+    self.treasureViewModel = ko.observable(new TreasureViewModel());
+    self.magicitemsViewModel = ko.observable(new MagicItemsViewModel());
 
 	self.init = function() {
     	//Init all viewModels.
