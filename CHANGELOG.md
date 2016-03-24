@@ -1,3 +1,11 @@
+version 0.0.5 (3/23/2016)
+
+* add magic items module
+* rename columns armor module
+* fixes boolean sorting
+* fixes hit dice bug
+* various bug fixes and code improvements
+
 version 0.0.4 (3/6/2016)
 
 * various UI updates
