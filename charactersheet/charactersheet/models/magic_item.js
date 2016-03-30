@@ -14,12 +14,8 @@ function MagicItem() {
     self.magicItemCharges = ko.observable(0);
     self.magicItemWeight = ko.observable(0);
     self.magicItemDescription = ko.observable('');
-    self.magicItemTypeOptions = ko.observableArray(
-        ['Armor', 'Sword', 'Rod', 'Ring', 'Staff',
-         'Wand', 'Potion', 'Wondrous Item']);
-    self.magicItemRarityOptions = ko.observableArray(
-        ['Uncommon', 'Common', 'Rare', 'Rarity Varies',
-         'Very Rare', 'Legendary']);
+    self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
+    self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
     self.chargesDisplay = ko.pureComputed(function(){
         if(self.magicItemMaxCharges() == 0){

@@ -21,18 +21,17 @@ function Weapon() {
     self.weaponDescription = ko.observable('');
     self.weaponQuantity = ko.observable('');
     self.weaponProficiencyOptions = ko.observableArray(
-        ['Simple', 'Martial', 'Improvised', 'Nonlethal', 'Exotic']);
+        Fixtures.weapon.weaponProficiencyOptions);
     self.weaponHandednessOptions = ko.observableArray(
-        ['Light', 'One-Handed', 'Two-Handed']);
+        Fixtures.weapon.weaponHandednessOptions);
     self.weaponTypeOptions = ko.observableArray(
-        ['Melee', 'Ranged']);
+        Fixtures.weapon.weaponTypeOptions);
     self.weaponSizeOptions = ko.observableArray(
-        ['Small', 'Medium', 'Large']);
+        Fixtures.weapon.weaponSizeOptions);
     self.weaponPropertyOptions = ko.observableArray(
-        ['Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading',
-         'Range', 'Reach', 'Special', 'Thrown', 'Versatile']);
+        Fixtures.weapon.weaponPropertyOptions);
     self.weaponDamageTypeOptions = ko.observableArray(
-         ['Bludgeoning', 'Piercing', 'Slashing']);
+        Fixtures.weapon.weaponDamageTypeOptions);
 
 
     self.updateValues = function() {

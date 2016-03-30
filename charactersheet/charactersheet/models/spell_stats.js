@@ -9,8 +9,8 @@ function SpellStats() {
 	self.spellSaveDc = ko.observable(0);
 	self.spellAttackBonus = ko.observable(0);
 
-	self.spellcastingAbilityOptions = ko.observableArray([
-		'INT', 'WIS', 'CHA']);
+	self.spellcastingAbilityOptions = ko.observableArray(
+		Fixtures.spellStats.spellcastingAbilityOptions);
 
 	//Public Methods
 

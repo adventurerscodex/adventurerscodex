@@ -17,28 +17,13 @@ function Spell() {
     self.spellRange = ko.observable('');
     self.spellComponents = ko.observable('');
     self.spellDuration = ko.observable('');
-    self.spellTypeOptions = ko.observableArray(
-        ['Attack Roll', 'Savings Throw', 'Automatic']);
-    self.spellSaveAttrOptions = ko.observableArray(
-        ['Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha']);
-    self.spellSchoolOptions = ko.observableArray([
-        'Abjuration', 'Cantrip', 'Conjuration',
-        'Divination', 'Enchantment', 'Evocation',
-        'Illusion', 'Necromancy', 'Transmutation']);
-    self.spellCastingTimeOptions = ko.observableArray([
-        '1 action', '1 bonus action', '1 reaction', '1 minute',
-        '10 minutes', '1 hour']);
-    self.spellDurationOptions = ko.observableArray([
-        'Instantaneous', '1 round', '1 min', '10 min', '1 hour', '8 hours',
-        '24 hours', '10 days', 'Concentration, 1 min',
-        'Concentration, 10 min', 'Concentration, 1 hour',
-        'Concentration, 24 hours', 'Special',
-        'Until dispelled']);
-    self.spellComponentsOptions = ko.observableArray([
-        'S', 'V', 'V, S', 'S, M', 'V, M', 'V, S, M']);
-    self.spellRangeOptions = ko.observableArray([
-        'Self', 'Touch', '5 ft', '10 ft', '30 ft', '60 ft',
-        '90 ft', '100 ft', '120 ft', '150 ft', '300 ft', '500 ft', '1 mile','Special']);
+    self.spellTypeOptions = ko.observableArray(Fixtures.spell.spellTypeOptions);
+    self.spellSaveAttrOptions = ko.observableArray(Fixtures.spell.spellSaveAttrOptions);
+    self.spellSchoolOptions = ko.observableArray(Fixtures.spell.spellSchoolOptions);
+    self.spellCastingTimeOptions = ko.observableArray(Fixtures.spell.spellCastingTimeOptions);
+    self.spellDurationOptions = ko.observableArray(Fixtures.spell.spellDurationOptions);
+    self.spellComponentsOptions = ko.observableArray(Fixtures.spell.spellComponentsOptions);
+    self.spellRangeOptions = ko.observableArray(Fixtures.spell.spellRangeOptions);
 
 	self.spellDamageLabel = ko.pureComputed(function() {
 		var charKey = CharacterManager.activeCharacter().key();

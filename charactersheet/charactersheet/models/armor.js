@@ -19,10 +19,8 @@ function Armor() {
     self.armorClass = ko.observable('');
     self.armorStealth = ko.observable('');
     self.armorDescription = ko.observable('');
-    self.armorTypeOptions = ko.observableArray(
-        ['Light', 'Medium', 'Heavy', 'Shields']);
-    self.armorStealthOptions = ko.observableArray(
-        ['Advantage', 'Normal', 'Disadvantage']);
+    self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
+    self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
 
     self.proficiencyLabel = ko.pureComputed(function() {
         if (self.armorProficiency() === true) {

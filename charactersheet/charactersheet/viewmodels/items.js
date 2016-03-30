@@ -21,8 +21,7 @@ function ItemsViewModel() {
 	self.items = ko.observableArray([]);
 	self.blankItem = ko.observable(new Item());
 	self.selecteditem = ko.observable(new Item());
-	self.currencyDenominationList = ko.observableArray([
-		'PP', 'GP', 'SP', 'EP', 'CP']);
+	self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 	self.sort = ko.observable(self.sorts['itemName asc']);
 	self.filter = ko.observable('');
 
