@@ -127,17 +127,16 @@ div.hr {
 
 .heart-full {
   cursor:pointer;
-  background: url('/images/d20-purple-30.png');
-  border: 1 1 1 1 solid #ecf0f1;
+  background: url('/images/d20-blue-20x20.png');
   width:20px;
-  height:23px;
+  height:20px;
   display: inline-block;
   padding: 0 0 0 0px;
 }
 
 .heart-empty {
   cursor:pointer;
-  background: url('/images/heart-red-empty-20.png');
+  background: url('/images/d20-grey20x20.png');
   width:20px;
   height:20px;
   display: inline-block;
