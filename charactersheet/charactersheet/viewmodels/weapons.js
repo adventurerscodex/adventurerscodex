@@ -6,8 +6,7 @@ function WeaponsViewModel() {
     self.selecteditem = ko.observable();
     self.blankWeapon = ko.observable(new Weapon());
     self.weapons = ko.observableArray([]);
-	self.currencyDenominationList = ko.observableArray([
-		'PP', 'GP', 'SP', 'EP', 'CP']);
+	self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
 	  'weaponName asc': { field: 'weaponName', direction: 'asc'},
