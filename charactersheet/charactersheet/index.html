@@ -174,21 +174,17 @@
 <!-- End Equipment Tab -->
 	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
 		<div class="row">
-			<div class="col-md-6 col-sm-12 col-padded">
+			<div class="col-md-6 col-sm-12">
 				<div data-bind="template: { name: 'items.tmpl', templateUrl: 'templates', data: itemsViewModel }">
 				</div>
 			</div>
 			<div class="col-md-6 col-sm-12 col-padded">
 				<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'templates', data: treasureViewModel }">
-				</div>
-			</div>
-		</div>
-    <div class="row">
-      <div class="col-md-6 col-sm-12 col-md-offset-6 col-padded">
+			  </div>
         <div data-bind="template: { name: 'magic_items.tmpl', templateUrl: 'templates', data: magicitemsViewModel }">
         </div>
-      </div>
-	  </div>
+			</div>
+		</div>
   </div>
 <!-- End Inventory Tab -->
 	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
