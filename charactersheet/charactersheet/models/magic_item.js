@@ -6,8 +6,8 @@ function MagicItem() {
 
     self.characterId = ko.observable(null);
     self.magicItemName = ko.observable('');
-    self.magicItemType = ko.observableArray('');
-    self.magicItemRarity = ko.observableArray('');
+    self.magicItemType = ko.observable('');
+    self.magicItemRarity = ko.observable('');
     self.magicItemRequiresAttunement = ko.observable(false);
     self.magicItemAttuned = ko.observable(false);
     self.magicItemMaxCharges = ko.observable(0);
@@ -26,44 +26,23 @@ function MagicItem() {
         }
     });
 
+    self.mapping = {
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+                 'delete', 'chargesDisplay', 'magicItemTypeOptions',
+                 'magicItemRarityOptions']
+    };
+
     self.clear = function() {
-        self.magicItemName('');
-        self.magicItemType('');
-        self.magicItemRarity('');
-        self.magicItemRequiresAttunement(false);
-        self.magicItemAttuned(false);
-        self.magicItemMaxCharges(0);
-        self.magicItemCharges(0);
-        self.magicItemWeight(0);
-        self.magicItemDescription('');
+        var values = new MagicItem().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.magicItemName(values.magicItemName);
-        self.magicItemType(values.magicItemType);
-        self.magicItemRarity(values.magicItemRarity);
-        self.magicItemRequiresAttunement(values.magicItemRequiresAttunement)
-        self.magicItemAttuned(values.magicItemAttuned);
-        self.magicItemMaxCharges(values.magicItemMaxCharges);
-        self.magicItemCharges(values.magicItemCharges);
-        self.magicItemWeight(values.magicItemWeight);
-        self.magicItemDescription(values.magicItemDescription);
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            magicItemName: self.magicItemName(),
-            magicItemType: self.magicItemType(),
-            magicItemRarity: self.magicItemRarity(),
-            magicItemRequiresAttunement: self.magicItemRequiresAttunement(),
-            magicItemAttuned: self.magicItemAttuned(),
-            magicItemMaxCharges: self.magicItemMaxCharges(),
-            magicItemCharges: self.magicItemCharges(),
-            magicItemWeight: self.magicItemWeight(),
-            magicItemDescription: self.magicItemDescription(),
-        }
+        return ko.mapping.toJS(self, self.mapping);
     };
 
     self.save = function() {
