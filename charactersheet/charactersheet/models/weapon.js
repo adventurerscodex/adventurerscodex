@@ -39,13 +39,6 @@ function Weapon() {
         self._dummy.notifySubscribers();
     };
 
-    /**
-     * The 'To Hit' Table Header should have a
-     */
-	self.toHitTooltipText = ko.pureComputed(function() {
-	    return "To Hit = Proficiency Bonus + Modifier + Finesse Bonus"
-	});
-
     self.proficiencyScore = function() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
