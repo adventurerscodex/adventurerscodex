@@ -45,9 +45,14 @@
                href="#"
                data-toggle="modal"
                data-target="#viewSpell"></td>
+          <!-- ko if: spellLevel() != 0 -->
           <td><input data-bind="checked: spellPrepared"
                      type="checkbox"
                      href="#"></input></td>
+          <!-- /ko -->
+          <!-- ko if: spellLevel() == 0 -->
+          <td></td>
+          <!-- /ko -->
           <td data-bind="text: spellLevel, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
