@@ -87,7 +87,7 @@ function Weapon() {
                 var strBonus = self.strAbilityScoreModifier();
 
                 if(dexBonus){
-                    return dexBonus > strBonus ? dexBonus : strBonus; 
+                    return dexBonus > strBonus ? dexBonus : strBonus;
                 }
                 else{
                     return strBonus ? strBonus:0;

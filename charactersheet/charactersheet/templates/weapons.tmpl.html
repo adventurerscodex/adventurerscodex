@@ -10,11 +10,11 @@
           <th data-bind="click: function(){sortBy('weaponHit');}">
             To Hit
             <span data-bind="css: sortArrow('weaponHit')"></span>
-          </th>            
+          </th>
           <th data-bind="click: function(){sortBy('weaponDmg');}">
             Damage
             <span data-bind="css: sortArrow('weaponDmg')"></span>
-          </th>        
+          </th>
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponType');}">
             Type
             <span data-bind="css: sortArrow('weaponType')"></span>
@@ -48,11 +48,11 @@
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
-              data-target="#viewWeapon"></td>                     
+              data-target="#viewWeapon"></td>
           <td data-bind="text: weaponDmg, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
-              data-target="#viewWeapon"></td>       
+              data-target="#viewWeapon"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponType, click: $parent.editWeapon"
               href="#"
@@ -331,7 +331,7 @@
                          placeholder="Place hit bonus here"
                          data-bind='textInput: weaponHit'>
                 </div>
-              </div>              
+              </div>
               <div class="form-group">
                 <label for="weaponType"
                        class="col-sm-2 control-label">Type</label>

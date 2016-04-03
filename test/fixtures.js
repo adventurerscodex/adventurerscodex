@@ -100,3 +100,34 @@ var MessageFixture = {
     text: 'test message'
 };
 
+var SortServiceFixture = {
+    data: [
+        {
+            name: ko.observable('Abe'),
+            age: ko.observable(1),
+            dead: ko.observable(true)
+        },
+        {
+            name: ko.observable('Roxanne'),
+            age: ko.observable(2),
+            dead: ko.observable(false)
+        },
+        {
+            name: ko.observable('John'),
+            age: ko.observable(13),
+            dead: ko.observable(true)
+        },
+        {
+            name: ko.observable('Tiff'),
+            age: ko.observable(133),
+            dead: ko.observable(false)
+        },
+        {
+            name: ko.observable('Nate'),
+            age: ko.observable(12),
+            dead: ko.observable(true)
+        },
+    ]
+
+}
+

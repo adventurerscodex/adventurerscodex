@@ -40,7 +40,7 @@ function WeaponsViewModel() {
 	    Notifications.abilityScores.changed.add(self.valueHasChanged);
 	    Notifications.stats.changed.add(self.valueHasChanged);
 	};
-	
+
 	self.unload = function() {
  		$.each(self.weapons(), function(_, e) {
 			e.save();
@@ -94,6 +94,6 @@ function WeaponsViewModel() {
     self.valueHasChanged = function() {
     	self.weapons().forEach(function(e, i, _) {
     		e.updateValues();
-    	})    	
+    	})
     };
 };
