@@ -37,7 +37,7 @@ function StatsViewModel() {
 		self.hitDiceList().forEach(function(e, i, _) {
 			e.characterId(CharacterManager.activeCharacter().key())
 		});
-        
+
         self.calculateHitDice()
 
 		var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
@@ -96,7 +96,6 @@ function StatsViewModel() {
 			e.save();
 		});
 		self.hitDiceType().save();
-        self.clear();
 		Notifications.profile.changed.remove(self.calculateHitDice);
 	    Notifications.skills.changed.remove(self.calculatePassiveWisdom);
 	};
@@ -115,7 +114,7 @@ function StatsViewModel() {
 
 	self.calculateHitDice = function() {
 		var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
-        
+
 		var difference = parseInt(profile.level()) - self.hitDiceList().length;
 		var pushOrPop = difference > 0 ? 'push' : 'pop';
 		for (var i = 0; i < Math.abs(difference); i++) {
