@@ -35,9 +35,9 @@ function HitDice() {
 	};
 
 	self.hitDiceIcon = ko.pureComputed(function() {
-		var css = 'heart-full';
+		var css = 'dice-full';
 		if (self.hitDiceUsed()) {
-			css = 'heart-empty';
+			css = 'dice-empty';
 		}
 		return css;
 	});
