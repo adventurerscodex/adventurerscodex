@@ -39,6 +39,13 @@ function Weapon() {
         self._dummy.notifySubscribers();
     };
 
+    /**
+     * The 'To Hit' Table Header should have a
+     */
+	self.toHitTooltipText = ko.pureComputed(function() {
+	    return "To Hit = Proficiency Bonus + Modifier + Finesse Bonus"
+	});
+
     self.proficiencyScore = function() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
@@ -88,7 +95,7 @@ function Weapon() {
                 var strBonus = self.strAbilityScoreModifier();
 
                 if(dexBonus){
-                    return dexBonus > strBonus ? dexBonus : strBonus; 
+                    return dexBonus > strBonus ? dexBonus : strBonus;
                 }
                 else{
                     return strBonus ? strBonus:0;

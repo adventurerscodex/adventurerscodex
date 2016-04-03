@@ -32,19 +32,14 @@ var SortService = {
 				bprop = parseInt(b[sort.field]());
     		}
 
-            if (asc) {
-                if (sort.booleanType) {
-                    res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
-                }
-                else {
-                    res = aprop > bprop ? 1 : -1;
-                }
+            if (asc && sort.booleanType) {
+                res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
+            } else if (asc) {
+                res = aprop > bprop ? 1 : -1;
+            } else if (!asc && sort.booleanType) {
+                res = (aprop === bprop) ? 0 : aprop ? 1 : -1;
             } else {
-                if (asc) {
-                    res = aprop > bprop ? 1 : -1;
-                } else {
-                    res = aprop < bprop ? 1 : -1;
-                }
+                res = aprop < bprop ? 1 : -1;
             }
     		return res;
     	});
