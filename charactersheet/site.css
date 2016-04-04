@@ -167,3 +167,13 @@ div.hr {
 textarea.dark-area {
   background-color: #ecf0f1;
 }
+
+.alert {
+  min-height: 43px;
+  line-height: 12px;
+  margin-bottom:10px;
+}
+
+.alert .close {
+  top:-7px;
+}
