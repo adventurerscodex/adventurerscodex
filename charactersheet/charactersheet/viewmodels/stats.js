@@ -130,16 +130,33 @@ function StatsViewModel() {
 		}
 	};
 
+	self.resetHitDice = function(){
+			var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+			var level = profile.level();
+			var restoredHitDice = Math.floor(level / 2);
+
+			console.log(restoredHitDice);
+
+			ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
+					if (hitDice.hitDiceUsed() === true){
+							if (restoredHitDice !== 0){
+								hitDice.hitDiceUsed(false);
+								restoredHitDice -= 1;
+							}
+					}
+			});
+	};
+
     /**
      * Tells the other stats model to recalculate it's passive wisdom value.
      */
 	self.calculatePassiveWisdom = function() {
-        self.otherStats().updateValues();
+      self.otherStats().updateValues();
 	};
 
 	self.dataHasChanged = function() {
 	    self.otherStats().save();
 	    self.health().save();
-		Notifications.stats.changed.dispatch();
+			Notifications.stats.changed.dispatch();
 	};
 };
