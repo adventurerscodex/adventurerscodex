@@ -135,8 +135,6 @@ function StatsViewModel() {
 			var level = profile.level();
 			var restoredHitDice = Math.floor(level / 2);
 
-			console.log(restoredHitDice);
-
 			ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
 					if (hitDice.hitDiceUsed() === true){
 							if (restoredHitDice !== 0){
