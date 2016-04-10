@@ -13,8 +13,8 @@ function PlayerSummary() {
     self.playerType = ko.observable();
 
     //Profile
-    self.playerName = ko.observable();
-    self.characterName = ko.observable();
+    self.playerName = ko.observable('');
+    self.characterName = ko.observable('');
     self.level = ko.observable();
     self.profileImage = ko.observable();
 
@@ -24,7 +24,7 @@ function PlayerSummary() {
     self.ac = ko.observable();
 
     self.clear = function() {
-        var values = new Item().exportValues();
+        var values = new PlayerSummary().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
     };
 

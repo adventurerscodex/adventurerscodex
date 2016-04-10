@@ -3,22 +3,22 @@
 function Character() {
 	var self = this;
 	self.ps = PersistenceService.register(Character, self);
-	
+
 	self.key = ko.observable(null);
 	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
 	self.isDefault = ko.observable(false);
 	self.isActive = ko.observable(false);
-	
+
 	self.url = ko.pureComputed(function() {
-		return '/charactersheet/?key=' + self.key() 
+		return '/charactersheet/?key=' + self.key()
 			+ '&playerType=' + self.playerType().key;
 	});
-	
+
 	self.importValues = function(values) {
 		self.key(values.key);
 		self.isDefault(values.isDefault);
 		self.isActive(values.isActive);
-		
+
 		var keys = Object.keys(PlayerTypes);
 		for (var i=0;i<keys.length;i++) {
 		    if (PlayerTypes[keys[i]].key === values.playerType.key) {
@@ -26,7 +26,7 @@ function Character() {
 		    }
 		}
 	};
-	
+
 	self.exportValues = function() {
 		return {
 			key: self.key(),
@@ -35,15 +35,15 @@ function Character() {
 			playerType: self.playerType()
 		};
 	};
-	
+
 	self.save = function() {
 		self.ps.save();
-	}; 
-	
+	};
+
 	self.delete = function() {
 		self.ps.delete();
 	};
-	
+
 	self.playerSummary = ko.pureComputed(function() {
 		var summ = '';
 		try {
@@ -55,7 +55,7 @@ function Character() {
 		} catch(err) {};
 		return summ;
 	});
-	
+
 	self.playerAuthor = ko.pureComputed(function() {
 		var summ = '';
 		try {
@@ -67,7 +67,7 @@ function Character() {
 		} catch(err) {};
 		return summ;
 	});
-	
+
 	self.playerTitle = ko.pureComputed(function() {
 		var summ = '';
 		try {
@@ -79,9 +79,9 @@ function Character() {
 		} catch(err) {};
 		return summ;
 	});
-	
+
 	self.saveToFile = function() {
-    	var string = JSON.stringify(Character.exportChracter(self.key()), 
+    	var string = JSON.stringify(Character.exportChracter(self.key()),
     	    null, 2); //Pretty print
     	var filename = self.playerTitle();
     	var blob = new Blob([string], {type: "application/json"});
@@ -109,15 +109,15 @@ Character.exportChracter = function(characterId) {
 				res = e2.characterId() === characterId;
 			} catch(err) {
 				try {
-					res = e2.key() === characterId;				
+					res = e2.key() === characterId;
 				} catch(err) {}
-			}			
+			}
 			return res;
 		});
 		data[e1] = items.map(function(e, i, _) {
 			return e.exportValues();
 		});
-	});	
+	});
 	return data;
 }
 
@@ -130,7 +130,7 @@ Character.importCharacter = function(data) {
 			var inst = new model();
 			inst.importValues(e1);
 			PersistenceService.save(model, inst);
-			
+
 			if (e.toLowerCase() === 'character') {
 			    character = inst;
 			}
