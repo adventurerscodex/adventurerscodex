@@ -1,6 +1,10 @@
 "use strict";
 
 describe('Stats View Model', function() {
+	//Clean up after each test.
+  afterEach(function() {
+      simple.restore();
+  });
 	describe('health()', function() {
 		describe('Clear', function() {
 			it('should clear all the values in stats', function() {
