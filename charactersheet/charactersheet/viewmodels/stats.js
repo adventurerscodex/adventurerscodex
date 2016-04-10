@@ -130,24 +130,30 @@ function StatsViewModel() {
 		}
 	};
 
+	/**
+	 * Reset the hit dice to an unused state up to the floor of half of the
+	 * character's level.
+	 *
+	 * This will be used primarily for long rest resets.
+	 */
 	self.resetHitDice = function(){
-			var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
-			var level = profile.level();
-			var restoredHitDice = Math.floor(level / 2);
+		var profile = Profile.findBy(CharacterManager.activeCharacter().key()[0]);
+		var level = profile.level();
+		var restoredHitDice = Math.floor(level / 2);
 
-			ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
-					if (hitDice.hitDiceUsed() === true){
-							if (restoredHitDice !== 0){
-								hitDice.hitDiceUsed(false);
-								restoredHitDice -= 1;
-							}
-					}
-			});
+		ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
+			if (hitDice.hitDiceUsed() === true){
+				if (restoredHitDice !== 0){
+						hitDice.hitDiceUsed(false);
+						restoredHitDice -= 1;
+				}
+			}
+		});
 	};
 
-    /**
-     * Tells the other stats model to recalculate it's passive wisdom value.
-     */
+  /**
+   * Tells the other stats model to recalculate it's passive wisdom value.
+   */
 	self.calculatePassiveWisdom = function() {
       self.otherStats().updateValues();
 	};
