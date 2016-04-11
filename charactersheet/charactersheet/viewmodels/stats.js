@@ -11,6 +11,9 @@ function StatsViewModel() {
 	self.deathSaveSuccessList = ko.observableArray([]);
 	self.deathSaveFailureList = ko.observableArray([]);
 
+  var msg = 'Dexterity Bonus'
+  self.initiativeTooltip = ko.observable(msg);
+
 	self.init = function() {};
 
 	self.load = function() {

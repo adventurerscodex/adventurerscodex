@@ -11,16 +11,20 @@ function OtherStats() {
 	self.inspiration = ko.observable(0);
 	self.proficiency = ko.observable(0);
 
-    /**
-     * Calculates passive wisdom based on the formula:
-     * 10 + Perception Skill Bonus.
-     */
-    self.passiveWisdom = ko.pureComputed(function() {
-        self._passiveWisdomDummy();
-        var key = CharacterManager.activeCharacter().key();
-        var perceptionSkill = Skill.findAllByKeyAndName(key, 'perception');
-        return 10 + perceptionSkill[0].bonus();
-    });
+  var msg = 'Calculated Value:  10 + your perception bonus'
+  self.passiveWisdomTooltip = ko.observable(msg);
+
+  /**
+   * Calculates passive wisdom based on the formula:
+   * 10 + Perception Skill Bonus.
+   */
+  self.passiveWisdom = ko.pureComputed(function() {
+      self._passiveWisdomDummy();
+      var key = CharacterManager.activeCharacter().key();
+      var perceptionSkill = Skill.findAllByKeyAndName(key, 'perception');
+      return 10 + perceptionSkill[0].bonus();
+  });
+
 	self._passiveWisdomDummy = ko.observable(null);
 
     /**
