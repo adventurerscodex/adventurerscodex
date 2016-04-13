@@ -10,13 +10,13 @@ ARCHIVE="project.tar.gz"
 
 set -e;
 
-# Do setup. 
-npm install; 
-npm test; 
+# Do setup.
+npm install;
+npm test;
 
 # Archive and remove the project files.
 shopt -s extglob
-tar --remove-files -zcvf $ARCHIVE !(charactersheet);
+tar --remove-files -zcvf $ARCHIVE !(charactersheet|docs);
 shopt -u extglob
 
 # Extract the project.
