@@ -36,7 +36,7 @@ Fixtures = {
         spellDurationOptions : [
 	        'Instantaneous', '1 round', '1 min', '10 min', '1 hour', '8 hours',
 	        '24 hours', '10 days', 'Concentration, 1 min',
-	        'Concentration, 10 min', 'Concentration, 1 hour',
+	        'Concentration, 10 min', 'Concentration, 1 hour', 'Concentration, 8 hours',
 	        'Concentration, 24 hours', 'Special',
 	        'Until dispelled'],
         spellComponentsOptions : [
