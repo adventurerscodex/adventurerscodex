@@ -4,7 +4,7 @@
 
 # Version Deployment
 - Update Changelog
-- Create new version tag on develop
+- Create new version tag on develop (mark as pre-release)
 - Clone repo
 - Delete old master locally if it exists
 - Create new branch off of develop called master

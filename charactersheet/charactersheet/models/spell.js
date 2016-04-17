@@ -3,6 +3,10 @@
 function Spell() {
     var self = this;
 	self.ps = PersistenceService.register(Spell, self);
+    self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+	        'spellDamageLabel', 'delete']
+    };
 
 	self.characterId = ko.observable(null);
     self.spellName = ko.observable('');
@@ -37,52 +41,16 @@ function Spell() {
 	});
 
     self.clear = function() {
-        self.spellName('');
-        self.spellPrepared = ko.observable(false);
-        self.spellType('');
-        self.spellSaveAttr('');
-        self.spellDmg('');
-        self.spellSchool('');
-        self.spellLevel('');
-        self.spellDescription('');
-        self.spellCastingTime('');
-        self.spellRange('');
-        self.spellComponents('');
-        self.spellDuration('');
+        var values = new Spell().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
-    	self.characterId(values.characterId);
-        self.spellName(values.spellName);
-        self.spellPrepared(values.spellPrepared);
-        self.spellType(values.spellType);
-        self.spellSaveAttr(values.spellSaveAttr);
-        self.spellDmg(values.spellDmg);
-        self.spellSchool(values.spellSchool);
-        self.spellLevel(values.spellLevel);
-        self.spellDescription(values.spellDescription);
-        self.spellCastingTime(values.spellCastingTime);
-        self.spellRange(values.spellRange);
-        self.spellComponents(values.spellComponents);
-        self.spellDuration(values.spellDuration);
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-        	characterId: self.characterId(),
-			spellName: self.spellName(),
-            spellPrepared: self.spellPrepared(),
-			spellType: self.spellType(),
-            spellSaveAttr: self.spellSaveAttr(),
-			spellDmg: self.spellDmg(),
-			spellSchool: self.spellSchool(),
-			spellLevel: self.spellLevel(),
-			spellDescription: self.spellDescription(),
-			spellCastingTime: self.spellCastingTime(),
-			spellRange: self.spellRange(),
-			spellComponents: self.spellComponents(),
-			spellDuration: self.spellDuration()
-        }
+        return ko.mapping.toJS(self, self.mapping);
     };
 
     self.save = function() {

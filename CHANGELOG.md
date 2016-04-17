@@ -1,3 +1,13 @@
+version 0.0.6 (4/6/2016)
+
+* various bug fixes and improvements
+* fixes hit dice icon
+* fixes issue with sorting
+* fixes issue with saving armor and stats 
+* cleaner UI for cantrips
+* reset button for spell slots
+
+
 version 0.0.5 (3/23/2016)
 
 * add magic items module

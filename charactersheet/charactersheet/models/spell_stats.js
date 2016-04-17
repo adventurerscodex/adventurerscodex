@@ -3,6 +3,9 @@
 function SpellStats() {
 	var self = this;
   	self.ps = PersistenceService.register(SpellStats, self);
+	self.mapping = {
+	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+    };
 
 	self.characterId = ko.observable(null);
 	self.spellcastingAbility = ko.observable('');
@@ -15,27 +18,18 @@ function SpellStats() {
 	//Public Methods
 
 	self.clear = function() {
-		self.spellcastingAbility('');
-		self.spellSaveDc(0);
-		self.spellAttackBonus(0);
-	};
+        var values = new SpellStats().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
-		self.spellcastingAbility(values.spellcastingAbility);
-		self.spellSaveDc(values.spellSaveDc);	
-		self.spellAttackBonus(values.spellAttackBonus);
-	};
+    self.importValues = function(values) {
+        ko.mapping.fromJS(values, self.mapping, self);
+    };
 
-	self.exportValues = function() {
-		return {
-        	characterId: self.characterId(),
-			spellcastingAbility: self.spellcastingAbility(),
-			spellSaveDc: self.spellSaveDc(),
-			spellAttackBonus: self.spellAttackBonus(),	
-		}
-	};
-	
+    self.exportValues = function() {
+        return ko.mapping.toJS(self, self.mapping);
+    };
+
 	self.save = function() {
 		self.ps.save();
 	};

@@ -1,6 +1,10 @@
 "use strict";
 
 describe('Stats View Model', function() {
+	//Clean up after each test.
+  afterEach(function() {
+      simple.restore();
+  });
 	describe('health()', function() {
 		describe('Clear', function() {
 			it('should clear all the values in stats', function() {
@@ -10,7 +14,7 @@ describe('Stats View Model', function() {
 				stats.health().damage().should.equal(0);
 			});
 		});
-	
+
 		describe('Hitpoints', function() {
 			it('should calculate the correct remaining hitpoints', function() {
 				var stats = new StatsViewModel();
@@ -20,7 +24,7 @@ describe('Stats View Model', function() {
 				stats.health().hitpoints().should.equal(7);
 			});
 		});
-	
+
 		describe('Total Hitpoints', function() {
 			it('should calculate the correct total hitpoints', function() {
 				var stats = new StatsViewModel();
@@ -30,7 +34,7 @@ describe('Stats View Model', function() {
 				stats.health().hitpoints().should.equal(15);
 			});
 		});
-	
+
 		describe('Temp Hitpoints Remaining', function() {
 			it('should calculate the correct remaining temporary hitpoints', function() {
 				var stats = new StatsViewModel();
@@ -40,7 +44,7 @@ describe('Stats View Model', function() {
 				stats.health().tempHitpointsRemaining().should.equal(1);
 			});
 		});
-	
+
 		describe('Regular Hitpoints Remaining', function() {
 			it('should calculate the correct remaining regular hitpoints', function() {
 				var stats = new StatsViewModel();
@@ -50,7 +54,7 @@ describe('Stats View Model', function() {
 				stats.health().regularHitpointsRemaining().should.equal(7);
 			});
 		});
-	
+
 		describe('KO?', function() {
 			it('should calculate if the player is KO\'d', function() {
 				var stats = new StatsViewModel();
@@ -125,7 +129,7 @@ describe('Stats View Model', function() {
 				e.damage.should.equal(13);
 			});
 		});
-		
+
 		describe('Import', function() {
 			it('should import an object with all the info supplied.', function() {
 				var val = {
@@ -138,6 +142,38 @@ describe('Stats View Model', function() {
 				stats.health().maxHitpoints().should.equal(val.maxHitpoints);
 				stats.health().tempHitpoints().should.equal(val.tempHitpoints);
 				stats.health().damage().should.equal(val.damage);
+			});
+		});
+	});
+
+	describe('HitDice', function() {
+		describe('resetHitDice', function() {
+			var msg = 'should set hit dice to unused up to the floor of 1/2 of level'
+			it(msg, function() {
+				simple.mock(
+						CharacterManager, 'activeCharacter').callFn(
+								MockCharacterManager.activeCharacter)
+
+				var stats = new StatsViewModel();
+
+				var hitDice1 = new HitDice();
+				hitDice1.hitDiceUsed(true);
+
+				var hitDice2 = new HitDice();
+				hitDice2.hitDiceUsed(true);
+
+				var hitDice3 = new HitDice();
+				hitDice3.hitDiceUsed(true);
+
+				simple.mock(Profile, 'findBy').returnWith(
+					{'level': function() { return 2 } } )
+
+				stats.hitDiceList([hitDice1, hitDice2, hitDice3]);
+				stats.resetHitDice();
+
+				hitDice1.hitDiceUsed().should.equal(false);
+				hitDice2.hitDiceUsed().should.equal(true);
+				hitDice3.hitDiceUsed().should.equal(true);
 			});
 		});
 	});
