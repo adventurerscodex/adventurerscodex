@@ -45,6 +45,16 @@ function RootViewModel() {
 	self.settingsViewModel = ko.observable(new SettingsViewModel());
 	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
 
+    //Tooltips
+    self.profileTooltip = ko.observable('Profile');
+    self.statsTooltip = ko.observable('Stats');
+    self.skillsTooltip = ko.observable('Skills');
+    self.spellsTooltip = ko.observable('Spells');
+    self.weaponsAndArmorTooltip = ko.observable('Weapons and Armor');
+    self.backpackTooltip = ko.observable('Backpack');
+    self.notesTooltip = ko.observable('Notes');
+    self.chatTooltip = ko.observable('Chat');
+
 	//Tab Properties
 	self.profileTabStatus = ko.pureComputed(function() {
 		if (self.playerType().visibleTabs.indexOf('profile') > -1) {
