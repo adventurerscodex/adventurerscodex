@@ -158,49 +158,6 @@ function RootViewModel() {
 		self.activeTab('players');
 	};
 
-	//Tab shortcut Methods
-	self.tabShortcut = function(data, event) {
-		var type = event.target.type;
-		var trigger = (event.target.id === '') &&
-			(type !== 'number' && type !== 'text' && type !== 'textarea');
-		if(trigger){
-			var char = String.fromCharCode(event.which);
-			var cb = self.hotkeys[char];
-			if(typeof cb === 'function'){
-				cb();
-			}
-		}
-		return true;
-	};
-
-	self.hotkeys = {
-		'shift 1': function() {
-			self.activateProfileTab();
-		},
-		2: function() {
-			self.activateStatsTab();
-		},
-		3: function() {
-			self.activateSkillsTab();
-		},
-		4: function() {
-			self.activateSpellsTab();
-		},
-		5: function() {
-			self.activateEquipmentTab();
-		},
-		6: function() {
-			self.activateInventoryTab();
-		},
-		7: function() {
-			self.activateNotesTab();
-		},
-		8: function() {
-			if(self.partyTabStatus() !== 'hidden'){
-				self.activatePartyTab();
-			}
-		}
-	};
 	//UI Methods
 
     self.playerSummary = ko.pureComputed(function() {

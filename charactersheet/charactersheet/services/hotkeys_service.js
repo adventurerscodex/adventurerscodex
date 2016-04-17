@@ -8,10 +8,10 @@ var HotkeysService = {
 	hotkeyHandler : function(data, event) {
 		var keypressIsInBody = event.target.tagName.toLowerCase() === 'body';
 		if(keypressIsInBody){
-			var metaKey = HotkeysService.determineMetakey(event);
+			var metaKey = HotkeysService._determineMetakey(event);
 
 			var alphaNumericKey = String.fromCharCode(event.which);
-			var cb = HotkeysService.callbackFromKeys(metaKey, alphaNumericKey);
+			var cb = HotkeysService._callbackFromKeys(metaKey, alphaNumericKey);
 
 			if(typeof cb === 'function'){
 				cb();
@@ -22,7 +22,7 @@ var HotkeysService = {
 
 	_hotkeys : {},
 
-	callbackFromKeys : function(metakey, alphaNumeric) {
+	_callbackFromKeys : function(metakey, alphaNumeric) {
 		if(metakey){
 			var key = metakey + ' ' + alphaNumeric;
 			return HotkeysService._hotkeys[key];
@@ -41,7 +41,7 @@ var HotkeysService = {
 		};
 	},
 
-	determineMetakey : function(event){
+	_determineMetakey : function(event){
 			if(event.ctrlKey){
 				return 'ctrl';
 			}
