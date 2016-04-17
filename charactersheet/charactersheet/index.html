@@ -13,7 +13,8 @@
 	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
 	<link href="/site.css" rel="stylesheet">
 </head>
-<body>
+<body  data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
+
 <nav class="navbar navbar-default navbar-static-top">
 <div class="container-fluid">
 	<div class="navbar-header">
@@ -346,6 +347,7 @@
 <script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
 <script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
 <script src="/bin/knockout_boostrap_select_bind.js" type="text/javascript"></script>
+<script src="/bin/knockout.AC_hotkeys.js" type="text/javascript"></script>
 <script src="/bin/knockout.mapping.js" type="text/javascript"></script>
 <script src="/bin/tooltip_bind.js" type="text/javascript"></script>
 <script src="/bin/select2.js" type="text/javascript"></script>
@@ -411,6 +413,7 @@
 <script src="models/treasure.js" type="text/javascript"></script>
 <script src="models/weapon.js" type="text/javascript"></script>
 <!-- Services -->
+<script src="services/hotkeys_service.js" type="text/javascript"></script>
 <script src="services/persistence_service.js" type="text/javascript"></script>
 <script src="services/player_summary_service.js" type="text/javascript"></script>
 <script src="services/players_service.js" type="text/javascript"></script>

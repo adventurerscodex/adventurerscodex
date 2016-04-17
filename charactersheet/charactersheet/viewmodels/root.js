@@ -264,8 +264,19 @@ function RootViewModel() {
 		    self.connected(false);
 		});
 		Notifications.global.unload.add(self.unload);
+		HotkeysService.registerHotkey('1', self.activateProfileTab);
+		HotkeysService.registerHotkey('2', self.activateStatsTab);
+		HotkeysService.registerHotkey('3', self.activateSkillsTab);
+		HotkeysService.registerHotkey('4', self.activateSpellsTab);
+		HotkeysService.registerHotkey('5', self.activateEquipmentTab);
+		HotkeysService.registerHotkey('6', self.activateInventoryTab);
+		HotkeysService.registerHotkey('7', self.activateNotesTab);
+		HotkeysService.registerHotkey('8', function() {
+    		if(self.partyTabStatus() !== 'hidden'){
+      			self.activatePartyTab();
+    		}
+		});
 	};
-
 	/**
 	 * Signal all modules to load their data.
 	 */
