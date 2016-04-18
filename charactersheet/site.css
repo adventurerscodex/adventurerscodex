@@ -127,18 +127,18 @@ div.hr {
 
 .dice-full {
   cursor:pointer;
-  background: url('/images/d20-blue-20x20.png');
-  width:20px;
-  height:23px;
+  background: url('/images/dice-twenty-faces-twenty.svg');
+  width:24px;
+  height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
 }
 
 .dice-empty {
   cursor:pointer;
-  background: url('/images/d20-grey20x20.png');
-  width:20px;
-  height:23px;
+  background: url('/images/dice-twenty-faces-twenty-clear.svg');
+  width:24px;
+  height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
 }
