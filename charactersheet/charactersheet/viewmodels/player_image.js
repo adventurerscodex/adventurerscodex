@@ -24,6 +24,7 @@ function PlayerImageViewModel() {
 
 	self.unload = function() {
 		self.image().save();
+        self.image(new ImageModel());
 	};
 
 	self.dataHasChanged = function() {

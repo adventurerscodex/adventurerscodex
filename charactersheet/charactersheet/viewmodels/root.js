@@ -87,10 +87,10 @@ function RootViewModel() {
 		return self._tabIsVisible('campaign');
     });
 	self.partyTabStatus = ko.pureComputed(function() {
-		return self._tabIsVisible('party');
+		return self._tabIsVisibleAndConnected('party');
     });
 	self.playerSummaryTabStatus = ko.pureComputed(function() {
-		return self._tabIsVisible('players');
+		return self._tabIsVisibleAndConnected('players');
     });
 
 	self.activateProfileTab = function() {
@@ -303,6 +303,14 @@ function RootViewModel() {
 
 	self._tabIsVisible = function(tabName) {
 		if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
+			return self.activeTab() === tabName ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
+	};
+
+	self._tabIsVisibleAndConnected = function(tabName) {
+		if (self.playerType().visibleTabs.indexOf(tabName) > -1 && self.connected()) {
 			return self.activeTab() === tabName ? 'active' : '';
 		} else {
 			return 'hidden';
