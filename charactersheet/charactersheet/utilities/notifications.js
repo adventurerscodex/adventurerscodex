@@ -30,6 +30,32 @@ var Notifications = {
         unload: new signals.Signal(),
     },
 
+    userNotification: {
+        /**
+         * Notifies the user of changes.
+         * REQUIRES: message parameter
+         */
+        infoNotification: new signals.Signal(),
+
+        /**
+         * Notifies the user of a successful action.
+         * REQUIRES: message parameter
+         */
+        successNotification: new signals.Signal(),
+
+        /**
+         * Notifies the user of a warning.
+         * REQUIRES: message parameter
+         */
+        warningNotification: new signals.Signal(),
+
+        /**
+         * Notifies the user of something critical.
+         * REQUIRES: message parameter
+         */
+        dangerNotification: new signals.Signal(),
+    },
+
     characterManager: {
         changing: new signals.Signal(),
         changed: new signals.Signal()

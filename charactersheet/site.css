@@ -171,3 +171,43 @@ div.hr {
 textarea.dark-area {
   background-color: #ecf0f1;
 }
+
+
+/**
+ * Alerts
+ */
+
+.alert {
+  min-height: 43px;
+  line-height: 16px;
+  margin-bottom:10px;
+}
+
+.alert-warning {
+  background-color: #fad79e;
+  color: #925d07;
+}
+
+.alert-danger {
+  background-color: #f7c1bb;
+  color: #9f1f14;
+}
+
+.alert-info {
+  background-color: #bedef4;
+  color: #1b6698;
+}
+
+.alert-success {
+  background-color: #d2f9f1;
+  color: #128770;
+}
+
+.alert .close {
+  top:-7px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+

@@ -41,6 +41,7 @@ function RootViewModel() {
 
     //Misc
 	self.wizardViewModel = new WizardViewModel();
+	self.userNotificationViewModel = new UserNotificationViewModel();
 	self.charactersViewModel = new CharactersViewModel();
 	self.settingsViewModel = ko.observable(new SettingsViewModel());
 	self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
@@ -258,6 +259,7 @@ function RootViewModel() {
         self.partyTabViewModel().init();
         self.connectionManagerViewModel().init();
         self.charactersViewModel.init();
+        self.userNotificationViewModel.init();
 
         //Subscriptions
         Notifications.profile.changed.add(function() {
@@ -309,6 +311,7 @@ function RootViewModel() {
 			    self.playerSummaryTabViewModel().load();
             }
             self.partyTabViewModel().load();
+            self.userNotificationViewModel.load();
             self.connectionManagerViewModel().load();
             self.charactersViewModel.load();
             self.settingsViewModel().load();
@@ -334,6 +337,7 @@ function RootViewModel() {
             }
             self.partyTabViewModel().unload();
             self.connectionManagerViewModel().unload();
+            self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.settingsViewModel().unload();
         }
