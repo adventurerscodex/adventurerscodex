@@ -41,39 +41,43 @@
 <div id='content' class='container-fluid'>
   <div id="characters" class="container-fluid" style="padding-top:10px;padding-bottom:10px;">
     <div class="row">
-      <div class="col-sm-1" data-bind="template: {
-        name: 'player_image.tmpl',
-        templateUrl: 'templates',
-        data: profileTabViewModel().playerImageViewModel()
-      }">
-      </div>
-      <div class="col-sm-7" style="margin-top:-20px;">
+      <div class="col-sm-8">
         <div class="row">
-          <div class="col-md-12">
-            <h2 data-bind='text: playerTitle'></h2>
-            <i data-bind='text: ""'></i>
+          <div class="col-padded col-xs-2" data-bind="template: {
+            name: 'player_image.tmpl',
+            templateUrl: 'templates',
+            data: profileTabViewModel().playerImageViewModel()
+          }">
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#newModal" href="#">New</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#charactersModal" href="#">Characters and Games</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#connectModal" href="#">Connect</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#exportModal"
-              data-bind="click: charactersViewModel.selectCharacter"
-              href="#">Export</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#settingsModal" href="#">Settings</a></i>
+          <div class="col-padded col-xs-10" style="margin-top:-20px;">
+            <div class="row">
+              <div class="col-md-12">
+                <h2 data-bind='text: playerTitle'></h2>
+                <i data-bind='text: ""'></i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#newModal" href="#">New</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#charactersModal" href="#">Characters and Games</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#connectModal" href="#">Connect</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#exportModal"
+                  data-bind="click: charactersViewModel.selectCharacter"
+                  href="#">Export</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#settingsModal" href="#">Settings</a></i>
+              </div>
+            </div>
           </div>
-        </div>
+          </div>
       </div>
       <div class="col-sm-4" data-bind="template: {
         name: 'user_notifications.tmpl',

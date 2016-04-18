@@ -11,9 +11,9 @@ var SortService = {
      * filter return a subset of the data that applies to the given criteria.
      * For more information regarding sorts/filters and what format they
      * should take see: SortService.defaultSort, SortService.defaultFilter
-     * param data: an iterable piece of data to be sorted and filtered.
-     * param sort: a sort to apply.
-     * param filter: a filter to apply.
+     * @param data: an iterable piece of data to be sorted and filtered.
+     * @param sort: a sort to apply.
+     * @param filter: a filter to apply.
      */
     sortAndFilter: function(data, sort, filter) {
     	if (filter) {
