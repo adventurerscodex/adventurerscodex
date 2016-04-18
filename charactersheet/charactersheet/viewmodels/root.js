@@ -235,10 +235,23 @@ function RootViewModel() {
 	//Public Methods
 
 	/**
-	 * Call Init on each sub-module, and set up various notifications.
+	 * Call Init on each sub-module.
 	 */
 	self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
+        self.profileTabViewModel().init();
+        self.statsTabViewModel().init();
+        self.skillsTabViewModel().init();
+        self.spellsTabViewModel().init();
+        self.equipmentTabViewModel().init();
+        self.inventoryTabViewModel().init();
+        self.notesTabViewModel().init();
+        self.campaignTabViewModel().init();
+        self.enemiesTabViewModel().init();
+        self.playerSummaryTabViewModel().init();
+        self.partyTabViewModel().init();
+        self.connectionManagerViewModel().init();
+        self.charactersViewModel.init();
+        self.userNotificationViewModel.init();
 
         //Subscriptions
         Notifications.profile.changed.add(function() {
