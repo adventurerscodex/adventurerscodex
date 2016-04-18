@@ -60,81 +60,37 @@ function RootViewModel() {
 
 	//Tab Properties
 	self.profileTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('profile') > -1) {
-			return self.activeTab() === 'profile' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('profile');
 	});
 	self.statsTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('stats') > -1) {
-			return self.activeTab() === 'stats' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('stats');
 	});
 	self.skillsTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('skills') > -1) {
-			return self.activeTab() === 'skills' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('skills');
 	});
 	self.spellsTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('spells') > -1) {
-			return self.activeTab() === 'spells' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('spells');
 	});
 	self.equipmentTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('equipment') > -1) {
-			return self.activeTab() === 'equipment' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('equipment');
 	});
 	self.inventoryTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('inventory') > -1) {
-			return self.activeTab() === 'inventory' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('inventory');
 	});
 	self.notesTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('notes') > -1) {
-			return self.activeTab() === 'notes' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('notes');
 	});
 	self.enemiesTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('enemies') > -1) {
-			return self.activeTab() === 'enemies' ? 'active' : '';
-		} else {
-			return 'hidden';
-		}
+		return self._tabIsVisible('enemies');
 	});
 	self.campaignTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('campaign') > -1) {
-	    	return self.activeTab() === 'campaign' ? 'active' : '';
-    	} else {
-    		return 'hidden';
-    	}
+		return self._tabIsVisible('campaign');
     });
 	self.partyTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('party') > -1 && self.connected()) {
-	    	return self.activeTab() === 'party' ? 'active' : '';
-    	} else {
-    		return 'hidden';
-    	}
+		return self._tabIsVisible('party');
     });
 	self.playerSummaryTabStatus = ko.pureComputed(function() {
-		if (self.playerType().visibleTabs.indexOf('players') > -1 && self.connected()) {
-	    	return self.activeTab() === 'players' ? 'active' : '';
-    	} else {
-    		return 'hidden';
-    	}
+		return self._tabIsVisible('players');
     });
 
 	self.activateProfileTab = function() {
@@ -341,5 +297,15 @@ function RootViewModel() {
             self.charactersViewModel.unload();
             self.settingsViewModel().unload();
         }
+	};
+
+	//Private Methods
+
+	self._tabIsVisible = function(tabName) {
+		if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
+			return self.activeTab() === tabName ? 'active' : '';
+		} else {
+			return 'hidden';
+		}
 	};
 };
