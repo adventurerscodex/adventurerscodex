@@ -250,9 +250,6 @@ PersistenceService._save = function(key, inst) {
 	if (PersistenceService.customImport) {
 		try {
 			data = inst.exportValues();
-			if (!data.characterId && !data.key) {
-			    console.log("MISSING ID " + JSON.stringify(data));
-			}
 		} catch(err) {
 			var msg = "Export of " + key + " failed.";
 			if (PersistenceService.logErrors) {
