@@ -21,7 +21,9 @@ function RootViewModel() {
 	self._dummy = ko.observable(false);
 	self.connected = ko.observable(false);
 
-	self.playerType = ko.observable(PlayerTypes.characterPlayerType);
+	self.playerType = function() {
+        return CharacterManager.activeCharacter().playerType();
+	};
 	self.activeTab = ko.observable(self.playerType().defaultTab);
 
 	//Player Child View Models
@@ -228,6 +230,8 @@ function RootViewModel() {
     });
 
     self.showWizard = function() {
+        //Unload the prior character.
+        Notifications.global.unload.dispatch();
         self.ready(false);
         self.wizard(true);
     };
@@ -311,6 +315,7 @@ function RootViewModel() {
             self.charactersViewModel.load();
             self.settingsViewModel().load();
             self.ready(true);
+            self._dummy.valueHasMutated();
         }
 	};
 
