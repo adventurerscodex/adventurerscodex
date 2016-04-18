@@ -1,6 +1,6 @@
 "use strict"
 /*
- * A utility class that provides helpers for parsing 
+ * A utility class that provides helpers for parsing
  * input keys and registers new [hotkey, function] combinations.
 */
 
@@ -34,11 +34,18 @@ var HotkeysService = {
 
 	registerHotkey : function(hotkey, callback){
 		if(HotkeysService._hotkeys[hotkey]){
-			throw('Existing hotkey: ' + hotkey);
+            throw('Existing hotkey: ' + hotkey);
 		}
 		if (callback){
 			HotkeysService._hotkeys[hotkey] = callback;
 		};
+	},
+
+    /**
+     * Flush all registered hotkeys.
+     */
+	flushHotkeys : function() {
+	    HotkeysService._hotkeys = {};
 	},
 
 	_determineMetakey : function(event){
