@@ -24,7 +24,7 @@ function RootViewModel() {
 	self.playerType = function() {
         return CharacterManager.activeCharacter().playerType();
 	};
-	self.activeTab = ko.observable(self.playerType().defaultTab);
+	self.activeTab = ko.observable();
 
 	//Player Child View Models
 	self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
