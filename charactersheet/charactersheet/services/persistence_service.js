@@ -9,14 +9,14 @@ var PersistenceService = {
 	master: '__master__',
 	storage: localStorage
 };
-	
+
 /**
  * Given a model class, return all of the stored instances of that class.
- * 
+ *
  * Parameters
  * ----------
  *
- * model: The prototype for the type of model that is being searched for. 
+ * model: The prototype for the type of model that is being searched for.
  *
  * Returns
  * -------
@@ -27,7 +27,7 @@ var PersistenceService = {
  * -----
  * ```javascript
  * function Person() {...}
- * 
+ *
  * var people = PersistenceService.findAll(Person);```
  */
 PersistenceService.findAll = function(model) {
@@ -41,7 +41,7 @@ PersistenceService.findAll = function(model) {
  * ----------
  *
  * inst: The object you would like to persist.
- * model: The prototype function that created the inst variable. 
+ * model: The prototype function that created the inst variable.
  *
  * Usage
  * -----
@@ -61,8 +61,8 @@ PersistenceService.save = function(model, inst) {
  * ----------
  *
  * model: The prototype function for a given object type.
- * id: The index of the variable to be deleted. This value can be found in 
- * 	its the __id property. 
+ * id: The index of the variable to be deleted. This value can be found in
+ * 	its the __id property.
  *
  * Usage
  * -----
@@ -104,11 +104,11 @@ PersistenceService.dropAll = function() {
  * Register a given model as persisting. Typical usage of this class
  * will mean that this should be the only method needed from this class.
  * Once registered, use the PersistenceServiceToken API for shortcut methods.
- * 
+ *
  * Parameters
  * ----------
  *
- * model: The prototype function that created the inst variable. 
+ * model: The prototype function that created the inst variable.
  * inst: The object you would like to persist.
  *
  * Returns
@@ -125,8 +125,8 @@ PersistenceService.dropAll = function() {
  * }```
  */
 PersistenceService.register = function(model, inst) {
-	return new PersistenceServiceToken(model, inst);	
-};	
+	return new PersistenceServiceToken(model, inst);
+};
 
 //======================= PersistenceServiceToken =============================
 
@@ -135,13 +135,13 @@ PersistenceService.register = function(model, inst) {
  */
 function PersistenceServiceToken(model, inst) {
 	var self = this;
-	
+
 	self.model = model;
 	self.inst = inst;
 
    /**
 	* Return all of the stored instances of the configured class.
-	* 
+	*
 	* Returns
 	* -------
 	*
@@ -153,7 +153,7 @@ function PersistenceServiceToken(model, inst) {
 	* function Person() {
 	* 		var self = this;
 	* 		self.ps = PersistenceService.register(Person, self);
-	* 		
+	*
 	* 		self.findAll = function() {
 	* 			var people = self.ps.findAll(Person);
 	* 		};
@@ -162,7 +162,7 @@ function PersistenceServiceToken(model, inst) {
 	self.findAll = function() {
 		return PersistenceService.findAll(self.model);
 	};
-	
+
 	/**
 	 * Save the instance.
 	 *
@@ -172,7 +172,7 @@ function PersistenceServiceToken(model, inst) {
 	 * function Person() {
 	 * 		var self = this;
 	 * 		self.ps = PersistenceService.register(Person, self);
-	 * 		
+	 *
 	 * 		self.save = function() {
 	 * 			var people = self.ps.save();
 	 * 		}
@@ -181,7 +181,7 @@ function PersistenceServiceToken(model, inst) {
 	self.save = function() {
 		PersistenceService.save(self.model, self.inst);
 	};
-	
+
 	/**
 	 * Delete the instance.
 	 *
@@ -191,7 +191,7 @@ function PersistenceServiceToken(model, inst) {
 	 * function Person() {
 	 * 		var self = this;
 	 * 		self.ps = PersistenceService.register(Person, self);
-	 * 		
+	 *
 	 * 		self.delete = function() {
 	 * 			var people = self.ps.delete();
 	 * 		}
@@ -212,7 +212,7 @@ PersistenceService._findAllObjs = function(key) {
 	try {
 		all = JSON.parse(PersistenceService.storage[key]);
 	} catch(err) {};
-	
+
 	for (var i in all) {
 		res.push({ id: i, data: all[i] });
 	}
@@ -240,7 +240,7 @@ PersistenceService._findAll = function(model) {
 		}
 	} else {
 		models = objs;
-	}	
+	}
 	return models;
 };
 
@@ -257,7 +257,7 @@ PersistenceService._save = function(key, inst) {
 			} else {
 				throw msg;
 			}
-		}	
+		}
 	} else {
 		data = JSON.stringify(inst);
 	}
@@ -273,7 +273,7 @@ PersistenceService._save = function(key, inst) {
 	if (id === undefined || id === null) {
 		var indecies = Object.keys(table);
 		indecies.sort(function(a,b){return parseInt(b)-parseInt(a)});
-		
+
 		id = indecies[0] ? parseInt(indecies[0]) + 1 : 0;
 		inst.__id = id;
 	}
@@ -285,7 +285,7 @@ PersistenceService._save = function(key, inst) {
 		if (!PersistenceService.enableCompression) {
 			msg += " Try enabling compression for more storage."
 		}
-		
+
 		if (PersistenceService.logErrors) {
 			console.log(msg);
 		} else {
@@ -307,7 +307,7 @@ PersistenceService._save = function(key, inst) {
 
 PersistenceService._delete = function(key, id) {
 	var table = JSON.parse(PersistenceService.storage[key]);
-	if (Object.keys(table).indexOf(String(id)) > -1) {	
+	if (Object.keys(table).indexOf(String(id)) > -1) {
 		delete table[id];
 	} else {
 		var msg = "No such element at index: " + id;
