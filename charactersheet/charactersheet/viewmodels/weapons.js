@@ -45,6 +45,10 @@ function WeaponsViewModel() {
  		$.each(self.weapons(), function(_, e) {
 			e.save();
 		});
+		
+		self.weapons([]);
+		Notifications.abilityScores.changed.remove(self.valueHasChanged);
+	    Notifications.stats.changed.remove(self.valueHasChanged);
 	};
 	/* UI Methods */
 
