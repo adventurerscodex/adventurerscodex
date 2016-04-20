@@ -1,7 +1,26 @@
 Fixtures = {
 	general : {
 		currencyDenominationList : [
-			'PP', 'GP', 'SP', 'EP', 'CP']
+			'PP', 'GP', 'SP', 'EP', 'CP'],
+		colorList: [
+			'progress-bar-forest',
+			'progress-bar-sky',
+			'progress-bar-orange',
+			'progress-bar-red',
+			'progress-bar-purple',
+			'progress-bar-teal',
+			'progress-bar-indigo',
+			'progress-bar-brown',
+			'progress-bar-yellow',
+			'progress-bar-magenta',
+			'progress-bar-green',
+			'progress-bar-blue',
+			'progress-bar-red',
+			'progress-bar-purple',
+			'progress-bar-teal',
+			'progress-bar-blue',
+			'progress-bar-indigo'
+		]
 	},
 	armor : {
 		armorTypeOptions : [
