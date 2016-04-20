@@ -3,6 +3,12 @@
 function Weapon() {
     var self = this;
 	self.ps = PersistenceService.register(Weapon, self);
+    self.mapping = {
+        ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
+            'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
+            'hitBonusLabel', 'delete', '_dummy', 'updateValues']
+    };
+	
     self._dummy = ko.observable(null);
 	self.characterId = ko.observable(null);
     self.weaponName = ko.observable('');
@@ -119,62 +125,18 @@ function Weapon() {
         return totalBonus ? ('+' + totalBonus):'+0';
     });
 
+
     self.clear = function() {
-        self.weaponName('');
-        self.weaponType('');
-        self.weaponDmg('');
-        self.weaponHandedness('');
-        self.weaponProficiency('');
-        self.weaponPrice('');
-        self.weaponWeight('');
-        self.weaponRange('');
-        self.weaponSize('');
-        self.weaponDamageType('');
-        self.weaponProperty('');
-        self.weaponDescription('');
-        self.weaponQuantity('');
-		self.weaponCurrencyDenomination('');
-        self.weaponHit('');
+        var values = new Weapon().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
-    	self.characterId(values.characterId);
-        self.weaponName(values.weaponName);
-        self.weaponType(values.weaponType);
-        self.weaponDmg(values.weaponDmg);
-        self.weaponHandedness(values.weaponHandedness);
-        self.weaponProficiency(values.weaponProficiency);
-        self.weaponPrice(values.weaponPrice);
-        self.weaponWeight(values.weaponWeight);
-        self.weaponRange(values.weaponRange);
-        self.weaponSize(values.weaponSize);
-        self.weaponDamageType(values.weaponDamageType);
-        self.weaponProperty(values.weaponProperty);
-        self.weaponDescription(values.weaponDescription);
-        self.weaponQuantity(values.weaponQuantity);
-		self.weaponCurrencyDenomination(values.weaponCurrencyDenomination);
-        self.weaponHit(values.weaponHit);
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-        	characterId: self.characterId(),
-			weaponName: self.weaponName(),
-			weaponType: self.weaponType(),
-			weaponDmg: self.weaponDmg(),
-			weaponHandedness: self.weaponHandedness(),
-			weaponProficiency: self.weaponProficiency(),
-			weaponPrice: self.weaponPrice(),
-			weaponWeight: self.weaponWeight(),
-			weaponRange: self.weaponRange(),
-			weaponSize: self.weaponSize(),
-			weaponDamageType: self.weaponDamageType(),
-            weaponProperty: self.weaponProperty(),
-            weaponDescription: self.weaponDescription(),
-            weaponQuantity: self.weaponQuantity(),
-			weaponCurrencyDenomination: self.weaponCurrencyDenomination(),
-            weaponHit: self.weaponHit()
-        }
+        return ko.mapping.toJS(self, self.mapping);
     };
 
     self.save = function() {
