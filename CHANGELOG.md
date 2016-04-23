@@ -1,3 +1,12 @@
+version 0.0.7 (4/21/2016)
+
+* adds new icons for tabs
+* adds new power user shortcuts
+* adds missing spell duration option
+* various other icon improvements
+* various code fixes
+
+
 version 0.0.6 (4/6/2016)
 
 * various bug fixes and improvements
