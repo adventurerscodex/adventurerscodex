@@ -1,15 +1,15 @@
 <div class="panel panel-default">
 	<div class='panel-body'>
-		<div class="progress" data-bind="{ foreach: dailyFeatures, visible: dailyFeatures().length > 0 }">
+		<!-- <div class="progress" data-bind="{ foreach: dailyFeatures, visible: dailyFeatures().length > 0 }">
 			<div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: progressWidth() * $parent.maxBarWidth() + '%' }, css: color">
 				<span class="sr-only"></span>
 			</div>
-		</div>
+		</div> -->
 		<table id='dailyFeaturesTable' class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr class="row">
 					<th colspan="2" class="text-center">Daily Feature</th>
-					<th class="col-sm-2"></th>
+					<!-- <th class="col-sm-2"></th> -->
 					<th class="col-sm-8"></th>
 					<th class="col-sm-1"> Reset </th>
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="glyphicon glyphicon-plus"></i> </a> </th>
@@ -48,7 +48,11 @@
             data-target="#viewDailyFeature"> = <span data-bind="text: currentFeaturesAvailable"></span> </span>
 					</div>
 					</td>
-					<td>
+					<td class="col-sm-1" style="vertical-align:middle;"> <!--Refresh -->
+						<a data-bind="click: $parent.removeDailyFeature" href="#">
+							<i class="glyphicon glyphicon-refresh"> </i>
+						</a>
+					<td class="col-sm-1" style="vertical-align:middle;"> <!--Remove -->
 						<a data-bind="click: $parent.removeDailyFeature" href="#">
 							<i class="glyphicon glyphicon-remove"> </i>
 						</a>
@@ -139,6 +143,7 @@
 					</h4>
 				</div>
 				<div class="modal-body">
+					<form class="form-horizontal">
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-10">
@@ -152,8 +157,7 @@
 						</div>
 					</div>
 					<div class="form-group">
-					<label for="abscore"
-								 class="col-sm-2 control-label">Resets on...</label>
+					<label class="col-sm-2 control-label">Resets on...</label>
 						<div class="col-sm-10">
 							<div class="btn-group btn-group-justified" role="group">
 								<label class="btn btn-default"
@@ -179,7 +183,7 @@
 								</textarea>
 							</div>
 					</div>
-					</div>
+
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
 					</div>
