@@ -13,8 +13,7 @@
 	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
 	<link href="/site.css" rel="stylesheet">
 </head>
-<body  data-bind="event: {keypress: tabShortcut}">
-
+<body  data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
 <nav class="navbar navbar-default navbar-static-top">
 <div class="container-fluid">
 	<div class="navbar-header">
@@ -41,55 +40,104 @@
 <div id='content' class='container-fluid'>
   <div id="characters" class="container-fluid" style="padding-top:10px;padding-bottom:10px;">
     <div class="row">
-      <div class="col-sm-1" data-bind="template: {
-        name: 'player_image.tmpl',
+      <div class="col-sm-8">
+        <div class="row">
+          <div class="col-padded col-xs-2" data-bind="template: {
+            name: 'player_image.tmpl',
+            templateUrl: 'templates',
+            data: profileTabViewModel().playerImageViewModel()
+          }">
+          </div>
+          <div class="col-padded col-xs-10" style="margin-top:-20px;">
+            <div class="row">
+              <div class="col-md-12">
+                <h2 data-bind='text: playerTitle'></h2>
+                <i data-bind='text: ""'></i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#newModal" href="#">New</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#charactersModal" href="#">Characters and Games</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#connectModal" href="#">Connect</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#exportModal"
+                  data-bind="click: charactersViewModel.selectCharacter"
+                  href="#">Export</a></i>
+                &nbsp;
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#settingsModal" href="#">Settings</a></i>
+              </div>
+            </div>
+          </div>
+          </div>
+      </div>
+      <div class="col-sm-4" data-bind="template: {
+        name: 'user_notifications.tmpl',
         templateUrl: 'templates',
-        data: profileTabViewModel().playerImageViewModel()
+        data: userNotificationViewModel
       }">
       </div>
-      <div class="col-sm-10" style="margin-top:-20px;">
-        <div class="row">
-          <div class="col-md-12">
-            <h2 data-bind='text: playerTitle'></h2>
-            <i data-bind='text: ""'></i>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#newModal" href="#">New</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#charactersModal" href="#">Characters and Games</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#connectModal" href="#">Connect</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#exportModal"
-              data-bind="click: charactersViewModel.selectCharacter"
-              href="#">Export</a></i>
-            &nbsp;
-            <i class="small underline"><a class="" data-toggle="modal"
-              data-target="#settingsModal" href="#">Settings</a></i>
-          </div>
-        </div>
       </div>
     </div>
   </div>
   <div class="spacer"></div>
 	<ul class="nav nav-tabs">
-		<li role="presentation" data-bind="click: activateProfileTab, css: profileTabStatus"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-		<li role="presentation" data-bind="click: activateStatsTab, css: statsTabStatus"><a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">Stats</a></li>
-		<li role="presentation" data-bind="click: activateSkillsTab, css: skillsTabStatus"><a href="#skills" aria-controls="skills" role="tab" data-toggle="tab">Skills</a></li>
-		<li role="presentation" data-bind="click: activateSpellsTab, css: spellsTabStatus"><a href="#spells" aria-controls="spells" role="tab" data-toggle="tab">Spells</a></li>
-		<li role="presentation" data-bind="click: activateEquipmentTab, css: equipmentTabStatus"><a href="#items" aria-controls="items" role="tab" data-toggle="tab">Weapons and Armor</a></li>
-		<li role="presentation" data-bind="click: activateInventoryTab, css: inventoryTabStatus"><a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">Inventory</a></li>
-		<li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus"><a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">Notes</a></li>
-		<li role="presentation" data-bind="click: activateCampaignTab, css: campaignTabStatus"><a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a></li>
-		<li role="presentation" data-bind="click: activateEnemiesTab, css: enemiesTabStatus"><a href="#enemies" aria-controls="enemies" role="tab" data-toggle="tab">Enemies</a></li>
-		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus"><a href="#party" aria-controls="party" role="tab" data-toggle="tab">Chat</a></li>
-		<li role="presentation" data-bind="click: activatePlayerSummaryTab, css: playerSummaryTabStatus"><a href="#player" aria-controls="players" role="tab" data-toggle="tab">Players</a></li>
+		<li role="presentation" data-bind="click: activateProfileTab, tooltip: { title: profileTooltip }, css: profileTabStatus">
+      <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/overlord-helm.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateStatsTab, tooltip: { title: statsTooltip }, css: statsTabStatus">
+      <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/weight-lifting-up.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateSkillsTab, , tooltip: { title: skillsTooltip }, css: skillsTabStatus">
+      <a href="#skills" aria-controls="skills" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/jump-across.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateSpellsTab, tooltip: { title: spellsTooltip }, css: spellsTabStatus">
+      <a href="#spells" aria-controls="spells" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/fire-tail.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateEquipmentTab, tooltip: { title: weaponsAndArmorTooltip }, css: equipmentTabStatus">
+      <a href="#items" aria-controls="items" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/battle-gear.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateInventoryTab, tooltip: { title: backpackTooltip }, css: inventoryTabStatus">
+      <a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/knapsack.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateNotesTab, tooltip: { title: notesTooltip }, css: notesTabStatus">
+      <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activateCampaignTab, css: campaignTabStatus">
+      <a href="#campaign" aria-controls="campaign" role="tab" data-toggle="tab">Campaign</a>
+    </li>
+		<li role="presentation" data-bind="click: activateEnemiesTab, css: enemiesTabStatus">
+      <a href="#enemies" aria-controls="enemies" role="tab" data-toggle="tab">Enemies</a>
+    </li>
+		<li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus, tooltip: {title: chatTooltip }">
+      <a href="#party" aria-controls="party" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/conversation.svg"></img>
+      </a>
+    </li>
+		<li role="presentation" data-bind="click: activatePlayerSummaryTab, css: playerSummaryTabStatus">
+      <a href="#player" aria-controls="players" role="tab" data-toggle="tab">Players</a>
+    </li>
 	</ul>
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
@@ -155,6 +203,12 @@
 			</div>
 			<div class="col-md-4 col-sm-12 col-padded">
 				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-sm-12 col-padded">
+				<div id="daily_features" data-bind="template: {name: 'daily_features.tmpl', templateUrl: 'templates', data: dailyFeatureViewModel }">
 				</div>
 			</div>
 		</div>
@@ -355,31 +409,43 @@
 <script src="viewmodels/ability_scores.js" type="text/javascript"></script>
 <script src="viewmodels/root.js" type="text/javascript"></script>
 <script src="viewmodels/appearance.js" type="text/javascript"></script>
-<script src="viewmodels/appearance.js" type="text/javascript"></script>
 <script src="viewmodels/armor.js" type="text/javascript"></script>
+<script src="viewmodels/campaign_tab.js" type="text/javascript"></script>
 <script src="viewmodels/campaign.js" type="text/javascript"></script>
 <script src="viewmodels/characters.js" type="text/javascript"></script>
+<script src="viewmodels/party_tab.js" type="text/javascript"></script>
 <script src="viewmodels/chat.js" type="text/javascript"></script>
 <script src="viewmodels/connection_manager.js" type="text/javascript"></script>
+<script src="viewmodels/daily_features.js" type="text/javascript"></script>
+<script src="viewmodels/equipment_tab.js" type="text/javascript"></script>
+<script src="viewmodels/enemies_tab.js" type="text/javascript"></script>
 <script src="viewmodels/enemies.js" type="text/javascript"></script>
+<script src="viewmodels/inventory_tab.js" type="text/javascript"></script>
 <script src="viewmodels/items.js" type="text/javascript"></script>
 <script src="viewmodels/feat_traits.js" type="text/javascript"></script>
 <script src="viewmodels/feats_prof.js" type="text/javascript"></script>
 <script src="viewmodels/magic_items.js" type="text/javascript"></script>
+<script src="viewmodels/notes_tab.js" type="text/javascript"></script>
 <script src="viewmodels/notes.js" type="text/javascript"></script>
 <script src="viewmodels/player_image.js" type="text/javascript"></script>
 <script src="viewmodels/player_info.js" type="text/javascript"></script>
+<script src="viewmodels/player_summary_tab.js" type="text/javascript"></script>
 <script src="viewmodels/player_summary.js" type="text/javascript"></script>
+<script src="viewmodels/profile_tab.js" type="text/javascript"></script>
 <script src="viewmodels/profile.js" type="text/javascript"></script>
 <script src="viewmodels/saving_throws.js" type="text/javascript"></script>
 <script src="viewmodels/settings.js" type="text/javascript"></script>
+<script src="viewmodels/skills_tab.js" type="text/javascript"></script>
 <script src="viewmodels/skills.js" type="text/javascript"></script>
 <script src="viewmodels/spell_slots.js" type="text/javascript"></script>
 <script src="viewmodels/spell_stats.js" type="text/javascript"></script>
+<script src="viewmodels/spells_tab.js" type="text/javascript"></script>
 <script src="viewmodels/spells.js" type="text/javascript"></script>
+<script src="viewmodels/stats_tab.js" type="text/javascript"></script>
 <script src="viewmodels/stats.js" type="text/javascript"></script>
 <script src="viewmodels/treasure.js" type="text/javascript"></script>
 <script src="viewmodels/weapons.js" type="text/javascript"></script>
+<script src="viewmodels/user_notification.js" type="text/javascript"></script>
 <script src="viewmodels/wizard.js" type="text/javascript"></script>
 <!-- Models -->
 <script src="models/ability_scores.js" type="text/javascript"></script>
@@ -389,6 +455,7 @@
 <script src="models/character.js" type="text/javascript"></script>
 <script src="models/chat_message.js" type="text/javascript"></script>
 <script src="models/connection_manager.js" type="text/javascript"></script>
+<script src="models/daily_feature.js" type="text/javascript"></script>
 <script src="models/death_save.js" type="text/javascript"></script>
 <script src="models/feat_traits.js" type="text/javascript"></script>
 <script src="models/feats_prof.js" type="text/javascript"></script>
@@ -411,8 +478,10 @@
 <script src="models/spell_stats.js" type="text/javascript"></script>
 <script src="models/spell.js" type="text/javascript"></script>
 <script src="models/treasure.js" type="text/javascript"></script>
+<script src="models/user_notification.js" type="text/javascript"></script>
 <script src="models/weapon.js" type="text/javascript"></script>
 <!-- Services -->
+<script src="services/hotkeys_service.js" type="text/javascript"></script>
 <script src="services/persistence_service.js" type="text/javascript"></script>
 <script src="services/player_summary_service.js" type="text/javascript"></script>
 <script src="services/players_service.js" type="text/javascript"></script>
@@ -422,6 +491,9 @@
 <script src="utilities/notifications.js" type="text/javascript"></script>
 <script src="utilities/messenger.js" type="text/javascript"></script>
 <script src="utilities/fixtures.js" type="text/javascript"></script>
+<script src="utilities/view_model_utilities.js" type="text/javascript"></script>
+<!-- Init -->
+<script src="init.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	$(function(){

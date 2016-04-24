@@ -3,6 +3,15 @@
 function PlayerImageViewModel() {
 	var self = this;
 
+    /**
+     * KO File Drag binding places new image data here, it
+     * is moved to the `image` property on change.
+     */
+    self.dropzone = ko.observable(new ImageModel());
+
+    /**
+     * The image data that is displayed. The image is fed from the dropzone.
+     */
     self.image = ko.observable(new ImageModel());
 
 	self.init = function() {
@@ -15,15 +24,16 @@ function PlayerImageViewModel() {
 		} else {
 		    self.image(new ImageModel());
 		}
-		self.image().characterId(CharacterManager.activeCharacter().key());
 
 		//Subscriptions
+		self.dropzone.subscribe(self.fetchImageFromDropzone);
 		self.image().dataUrl.subscribe(self.dataHasChanged);
 		Notifications.playerInfo.changed.add(self.checkImage);
 	};
 
 	self.unload = function() {
 		self.image().save();
+		Notifications.playerInfo.changed.remove(self.checkImage);
 	};
 
 	self.dataHasChanged = function() {
@@ -32,7 +42,7 @@ function PlayerImageViewModel() {
         try {
             info[0].clear();
         } catch(err) {};
-        return false;
+        //return false;
 
 		self.image().save();
 		Notifications.playerImage.changed.dispatch();
@@ -53,6 +63,15 @@ function PlayerImageViewModel() {
             }
         } catch(err) {};
         return false;
+	};
+
+
+	/**
+	 * When called this handler migrates the data from
+	 * `self.dropzone` to `self.image`.
+	 */
+	self.fetchImageFromDropzone = function() {
+        self.image().dataUrl(self.dropzone().dataUrl());
 	};
 
 	//Public Methods

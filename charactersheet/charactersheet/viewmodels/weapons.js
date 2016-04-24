@@ -13,17 +13,12 @@ function WeaponsViewModel() {
 	  'weaponName desc': { field: 'weaponName', direction: 'desc'},
 	  'weaponDmg asc': { field: 'weaponDmg', direction: 'asc'},
 	  'weaponDmg desc': { field: 'weaponDmg', direction: 'desc'},
-	  'weaponType asc': { field: 'weaponType', direction: 'asc'},
-	  'weaponType desc': { field: 'weaponType', direction: 'desc'},
 	  'weaponRange asc': { field: 'weaponRange', direction: 'asc'},
 	  'weaponRange desc': { field: 'weaponRange', direction: 'desc'},
 	  'weaponDamageType asc': { field: 'weaponDamageType', direction: 'asc'},
 	  'weaponDamageType desc': { field: 'weaponDamageType', direction: 'desc'},
 	  'weaponProperty asc': { field: 'weaponProperty', direction: 'asc'},
-	  'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'},
-	  'weaponQuantity asc': { field: 'weaponQuantity', direction: 'asc'},
-	  'weaponQuantity desc': { field: 'weaponQuantity', direction: 'desc'}
-
+	  'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'}
 	};
 
     self.filter = ko.observable('');
@@ -45,6 +40,10 @@ function WeaponsViewModel() {
  		$.each(self.weapons(), function(_, e) {
 			e.save();
 		});
+		
+		self.weapons([]);
+		Notifications.abilityScores.changed.remove(self.valueHasChanged);
+	    Notifications.stats.changed.remove(self.valueHasChanged);
 	};
 	/* UI Methods */
 

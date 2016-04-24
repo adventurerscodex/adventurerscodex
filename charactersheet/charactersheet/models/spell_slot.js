@@ -4,31 +4,13 @@ function Slot() {
 	var self = this;
 	self.ps = PersistenceService.register(Slot, self);
 
-	self.slotColors = [
-		'progress-bar-forest',
-		'progress-bar-sky',
-		'progress-bar-orange',
-		'progress-bar-red',
-		'progress-bar-purple',
-		'progress-bar-teal',
-		'progress-bar-indigo',
-		'progress-bar-brown',
-		'progress-bar-yellow',
-		'progress-bar-magenta',
-		'progress-bar-green',
-		'progress-bar-blue',
-		'progress-bar-red',
-		'progress-bar-purple',
-		'progress-bar-teal',
-		'progress-bar-blue',
-		'progress-bar-indigo'
-	];
+	self.slotColors = Fixtures.general.colorList;
 
 	self.characterId = ko.observable(null);
 	self.level = ko.observable(1);
 	self.maxSpellSlots = ko.observable(1);
 	self.usedSpellSlots = ko.observable(0);
-	
+
 	self.color = ko.pureComputed(function() {
 		return self.slotColors[self.level()-1];
 	});
@@ -52,7 +34,7 @@ function Slot() {
 	};
 
 	self.importValues = function(values) {
-    	self.characterId(values.characterId);   	
+    	self.characterId(values.characterId);
 		self.level(values.level);
 		self.maxSpellSlots(values.maxSpellSlots);
 		self.usedSpellSlots(values.usedSpellSlots);
@@ -66,11 +48,11 @@ function Slot() {
 			usedSpellSlots: self.usedSpellSlots(),
 		}
 	};
-	
+
 	self.save = function() {
 		self.ps.save();
 	};
-	
+
 	self.delete = function() {
 		self.ps.delete();
 	};

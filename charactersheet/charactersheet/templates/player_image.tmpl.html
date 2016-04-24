@@ -1,14 +1,14 @@
-<div class="circular-profile no-padding" 
-  data-bind="fileDrag: image, attr: {
+<div class="circular-profile no-padding"
+  data-bind="fileDrag: dropzone, attr: {
     height: playerImageHeight,
     width: playerImageWidth,
   }, css: imageBorderClass">
   <div class="image-upload-preview text-center">
     <!-- ko if: hasImage -->
     <img class="img-circle"
-      data-bind="attr: { 
+      data-bind="attr: {
         src: playerImageSrc,
-        height: playerImageHeight,  
+        height: playerImageHeight,
       }, visible: playerImageSrc">
     <!-- /ko -->
     <!-- ko ifnot: hasImage -->
@@ -17,7 +17,7 @@
     <!-- /ko -->
   </div>
   <div class="image-upload-input">
-    <input type="file" style="display:none;" 
-      data-bind="fileInput: image">
+    <input type="file" style="display:none;"
+      data-bind="fileInput: dropzone">
   </div>
 </div>
