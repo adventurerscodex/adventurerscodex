@@ -58,7 +58,7 @@ function SavingThrows() {
 
 	self.proficiencyLabel = ko.pureComputed(function() {
 		if (self.proficiency() === true) {
-			return 'glyphicon glyphicon-ok';
+			return 'fa fa-check';
 		}
 		return '';
 	});

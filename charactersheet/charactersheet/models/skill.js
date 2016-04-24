@@ -33,7 +33,7 @@ function Skill() {
     			CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
 		} catch(err) {};
     if (score === null){
-      return null 
+      return null
     }
     else {
       return parseInt(score);
@@ -69,7 +69,7 @@ function Skill() {
 
 	self.proficiencyLabel = ko.pureComputed(function() {
 		if (self.proficiency() === true) {
-			return 'glyphicon glyphicon-ok';
+			return 'fa fa-check';
 		}
 		return '';
 	});
