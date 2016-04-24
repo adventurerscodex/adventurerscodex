@@ -38,7 +38,7 @@ describe('Skill Model', function() {
 			s.modifier(4);
 			s.proficiency(true);
 
-			s.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
+			s.proficiencyLabel().should.equal('fa fa-check');
 
 			var s = new Skill(parent);
 			s.name('Arcana');

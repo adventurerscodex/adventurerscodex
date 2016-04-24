@@ -210,3 +210,10 @@ textarea.dark-area {
   display: inline-block;
 }
 
+.fa-color {
+  color:#2c3e50;
+}
+
+.fa-color:hover {
+  color:#e74c3c;
+}

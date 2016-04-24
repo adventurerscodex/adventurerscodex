@@ -25,7 +25,7 @@ function Armor() {
 
     self.proficiencyLabel = ko.pureComputed(function() {
         if (self.armorProficiency() === true) {
-            return 'glyphicon glyphicon-ok';
+            return 'fa fa-check';
         }
         return '';
     });
