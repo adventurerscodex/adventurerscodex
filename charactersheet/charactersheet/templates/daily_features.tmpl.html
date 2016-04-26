@@ -9,11 +9,9 @@
 			<thead>
 				<tr class="row">
 					<th colspan="2" class="text-center">Daily Feature</th>
-					<!-- <th class="col-sm-2"></th> -->
 					<th class="col-sm-1">Max</th> <!-- Max -->
-					<th class="col-sm-1">Used</th> <!-- Used -->
-					<th class="col-sm-2"></th> <!-- Up/down -->
-					<th class="col-sm-1"> Reset </th>
+					<th class="col-sm-3 text-center">Used</th> <!-- Up/down -->
+					<th class="col-sm-1">Reset</th>
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="glyphicon glyphicon-plus"></i> </a> </th>
 				</tr>
 			</thead>
@@ -34,17 +32,15 @@
 					  <span class="text-center form-control" style="border:none;background:none;" data-bind="text: featureName">
 					  </span>
 					</td>
-					<td class="col-sm-1">
+					<td class="col-sm-1" style="vertical-align:middle;">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
-					<td class="col-sm-1">
-						<span data-bind="text: featureUsed" ></span>
-					</td>
-					<td class="col-sm-3">
-						<div class="btn-group" role="group">
+					<td class="col-sm-4" style="text-align:center;">
+						<div class="input-group" style="background-color:#DCE4EC;margin:0px 14px;">
   							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
   								<i class="glyphicon glyphicon-chevron-up"> </i>
   							</button>
+  							<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
   							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
   								<i class="glyphicon glyphicon-chevron-down"> </i>
   							</button>
