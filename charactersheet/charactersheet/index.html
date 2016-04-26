@@ -184,14 +184,18 @@
 <!-- End Stats Tab -->
 	<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
 		<div class="row">
-			<div class="col-md-6 col-sm-12 col-padded">
-				<div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates', data: featsProfViewModel }">
-				</div>
-			</div>
+      <div class="col-md-6 col-sm-12 col-padded">
+        <div id="daily_features" data-bind="template: {name: 'daily_features.tmpl', templateUrl: 'templates', data: dailyFeatureViewModel }">
+        </div>
+          <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates', data: featsProfViewModel }">
+        </div>
+    </div>
 			<div class="col-md-6 col-sm-12 col-padded">
 				<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates', data: skillsViewModel }">
 				</div>
 			</div>
+<!--       <div class="col-md-6 col-sm-12 col-padded">
+      </div> -->
 		</div>
 	</div>
 <!-- End Skills Tab -->
@@ -203,12 +207,6 @@
 			</div>
 			<div class="col-md-4 col-sm-12 col-padded">
 				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="daily_features" data-bind="template: {name: 'daily_features.tmpl', templateUrl: 'templates', data: dailyFeatureViewModel }">
 				</div>
 			</div>
 		</div>
@@ -401,7 +399,6 @@
 <script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
 <script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
 <script src="/bin/knockout_boostrap_select_bind.js" type="text/javascript"></script>
-<script src="/bin/knockout.AC_hotkeys.js" type="text/javascript"></script>
 <script src="/bin/knockout.mapping.js" type="text/javascript"></script>
 <script src="/bin/tooltip_bind.js" type="text/javascript"></script>
 <script src="/bin/select2.js" type="text/javascript"></script>

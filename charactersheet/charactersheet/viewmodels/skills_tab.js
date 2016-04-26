@@ -6,8 +6,9 @@
 function SkillsTabViewModel() {
 	var self = this;
 
-    self.featsProfViewModel = ko.observable(new FeatsProfViewModel());
-    self.skillsViewModel    = ko.observable(new SkillsViewModel());
+    self.featsProfViewModel    = ko.observable(new FeatsProfViewModel());
+    self.skillsViewModel       = ko.observable(new SkillsViewModel());
+    self.dailyFeatureViewModel = ko.observable(new DailyFeatureViewModel());
 
 	self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
