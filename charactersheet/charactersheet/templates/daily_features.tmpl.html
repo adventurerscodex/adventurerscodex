@@ -1,0 +1,198 @@
+<div class="panel panel-default">
+	<div class='panel-body'>
+		<!-- <div class="progress" data-bind="{ foreach: dailyFeatures, visible: dailyFeatures().length > 0 }">
+			<div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: progressWidth() * $parent.maxBarWidth() + '%' }, css: color">
+				<span class="sr-only"></span>
+			</div>
+		</div> -->
+		<table id='dailyFeaturesTable' class="table table-responsive table-ac-bordered table-hover">
+			<thead>
+				<tr>
+					<th class="col-sm-3">Daily Feature</th>
+					<th class="col-sm-1">Max</th> <!-- Max -->
+					<th class="col-sm-3">Used</th> <!-- Up/down -->
+					<th class="col-sm-1">Reset</th>
+					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
+				</tr>
+			</thead>
+			<tbody data-bind="foreach: dailyFeatures">
+				<tr style="cursor:pointer;">
+					<td data-bind="click: $parent.editDailyFeature"
+					href="#"
+					class="col-sm-2 feature-row"
+          data-toggle="modal"
+          data-target="#viewDailyFeature">
+					  <span data-bind="css: color" class="form-control pull-left color-picker-item">
+					  </span>
+					<span
+					href="#"
+          data-toggle="modal"
+          data-target="#viewDailyFeature" data-bind="text: featureName">
+					  </span>
+					</td>
+					<td class="col-sm-1" style="vertical-align:middle;">
+						<span data-bind="text: featureMaxUses" ></span>
+					</td>
+					<td class="col-sm-4" style="text-align:center;">
+						<div class="input-group" style="background-color:#DCE4EC;">
+  							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
+  								<i class="fa fa-plus fa-color"> </i>
+  							</button>
+  							<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
+  							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
+  								<i class="fa fa-minus fa-color"> </i>
+  							</button>
+						</div>
+					</td>
+
+					<td class="col-sm-1" style="vertical-align:middle;"> <!--Refresh -->
+						<a data-bind="click: $parent.refreshDailyFeature" href="#">
+							<i class="fa fa-refresh fa-color"> </i>
+						</a>
+					<td class="col-sm-1" style="vertical-align:middle;"> <!--Remove -->
+						<a data-bind="click: $parent.removeDailyFeature" href="#">
+							<i class="fa fa-trash-o fa-color-hover"> </i>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- <input data-bind="click: resetSlots"
+		       class="btn btn-default"
+		       type="button" value="Reset"> -->
+	</div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addDailyFeatures" tabindex="-1" role="dialog" aria-labelledby="addDailyFeatureLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+				<h4 class="modal-title" id="addDailyFeaturelLabel">
+					Add a Daily Feature.
+				</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" data-bind='textInput: blankDailyFeature().featureName'>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="bonus" class="col-sm-2 control-label">Max</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" id="max" min="1" data-bind='textInput: blankDailyFeature().featureMaxUses'>
+						</div>
+					</div>
+					<div class="form-group">
+					<label
+								 class="col-sm-2 control-label">Resets on...</label>
+						<div class="col-sm-10">
+							<div class="btn-group btn-group-justified" role="group">
+							<label class="btn btn-default"
+							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'short'}">
+								<input type="radio" style="display: none;"
+								name="featureResetsOnShort" value="short" data-bind="checked: blankDailyFeature().featureResetsOn"/>
+								Short Rest
+							</label>
+							<label class="btn btn-default"
+							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'long'}">
+								<input type="radio" style="display: none;"
+								name="featureResetsOnLong" value="long" data-bind="checked: blankDailyFeature().featureResetsOn"/>
+								Long Rest
+								</label>
+						</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="featureDescription" class="col-sm-2 control-label">Description</label>
+							<div class="col-sm-10">
+								<textarea type="password" class="form-control" id="featureDescription"
+													rows="4" placeholder="You shoot fire from ..." data-bind='textInput: blankDailyFeature().featureDescription'>
+								</textarea>
+							</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> <button type="button" class="btn btn-primary" data-bind='click: addDailyFeature' data-dismiss="modal">Add</button>
+					</div>
+				</form>
+			</div>
+
+<!-- Modal Body -->
+		</div>
+<!-- Modal Content -->
+	</div>
+<!-- Modal Dialog -->
+</div>
+<!-- Modal Fade -->
+<!-- ViewEdit Modal -->
+<div data-bind="with: selecteditem">
+	<div class="modal fade" id="viewDailyFeature" tabindex="-1" role="dialog" aria-labelledby="viewDailyFeatureLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+					<h4 class="modal-title" id="addSlotLabel">
+						Edit Daily Feature
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" id="name" data-bind='textInput: featureName'>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="bonus" class="col-sm-2 control-label">Max</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" id="max" min="1" data-bind='textInput: featureMaxUses'>
+						</div>
+					</div>
+					<div class="form-group">
+					<label class="col-sm-2 control-label">Resets on...</label>
+						<div class="col-sm-10">
+							<div class="btn-group btn-group-justified" role="group">
+								<label class="btn btn-default"
+								data-bind="css: { active: featureResetsOn() == 'short'}">
+									<input type="radio" style="display: none;"
+									name="featureResetsOnShort" value="short" data-bind="checked: featureResetsOn"/>
+									Short Rest
+								</label>
+								<label class="btn btn-default"
+								data-bind="css: { active: featureResetsOn() == 'long'}">
+									<input type="radio" style="display: none;"
+									name="featureResetsOnLong" value="long" data-bind="checked: featureResetsOn"/>
+									Long Rest
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="featureDescription" class="col-sm-2 control-label">Description</label>
+							<div class="col-sm-10">
+								<textarea type="password" class="form-control" id="featureDescription"
+													rows="4" placeholder="You shoot fire from ..." data-bind='textInput: featureDescription'>
+								</textarea>
+							</div>
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+					</div>
+				</form>
+			</div>
+
+<!-- Modal Body -->
+		</div>
+<!-- Modal Content -->
+	</div>
+<!-- Modal Dialog -->
+</div>
+<!-- Modal Fade -->
+</div>
+<!-- End with statement -->

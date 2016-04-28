@@ -32,7 +32,7 @@ describe('Armor Model', function() {
         it('', function() {
             var armor = new Armor();
             armor.armorProficiency(true);
-            armor.proficiencyLabel().should.equal('glyphicon glyphicon-ok');
+            armor.proficiencyLabel().should.equal('fa fa-check');
             armor.clear();
             armor.proficiencyLabel().should.equal('');
         });
