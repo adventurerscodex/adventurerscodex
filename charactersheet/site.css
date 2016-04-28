@@ -214,6 +214,23 @@ textarea.dark-area {
   color:#2c3e50;
 }
 
-.fa-color:hover {
+.fa-color-hover {
+  color:#2c3e50;
+}
+
+.fa-color-hover:hover {
   color:#e74c3c;
+}
+
+.feature-row span {
+  line-height: 3em;
+}
+
+.color-picker-item {
+  margin:10px;
+  padding-right:0px;
+  width:25px;
+  height:25px;
+  border-radius:40px;
+
 }
