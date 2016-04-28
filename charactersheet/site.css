@@ -239,3 +239,8 @@ textarea.dark-area {
   padding:15px;
   line-height:0.7em;
 }
+
+.hit-dice-list-empty-fill {
+  padding:15px;
+  line-height:1.5em;
+}
