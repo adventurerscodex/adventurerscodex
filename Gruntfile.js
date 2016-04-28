@@ -6,7 +6,9 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
 	eslint: {
-		target: ['charactersheet/charactersheet/**.js']
+		target: [
+    		'charactersheet/charactersheet/*/*.js',
+    		'charactersheet/charactersheet/*.js']
 	},
     karma: {
       test: {

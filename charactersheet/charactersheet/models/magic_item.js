@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function MagicItem() {
     var self = this;
@@ -19,10 +19,10 @@ function MagicItem() {
 
     self.chargesDisplay = ko.pureComputed(function(){
         if(self.magicItemMaxCharges() == 0){
-            return "N/A"
+            return 'N/A';
         }
         else {
-            return self.magicItemCharges()
+            return self.magicItemCharges();
         }
     });
 
@@ -52,10 +52,10 @@ function MagicItem() {
     self.delete = function() {
         self.ps.delete();
     };
-};
+}
 
 MagicItem.findAllBy =function(characterId) {
     return PersistenceService.findAll(MagicItem).filter(function(e, i, _) {
         return e.characterId() === characterId;
-  });
+    });
 };

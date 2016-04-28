@@ -1,13 +1,13 @@
 function HitDiceType() {
-	var self = this;
-	self.ps = PersistenceService.register(HitDiceType, self);
+    var self = this;
+    self.ps = PersistenceService.register(HitDiceType, self);
     self.mapping = {
-	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
     };
 
-	self.characterId = ko.observable(null);
-	self.hitDiceType = ko.observable('');
-	self.hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
+    self.characterId = ko.observable(null);
+    self.hitDiceType = ko.observable('');
+    self.hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
 
     self.clear = function() {
         var values = new HitDiceType().exportValues();
@@ -22,17 +22,17 @@ function HitDiceType() {
         return ko.mapping.toJS(self, self.mapping);
     };
 
-	self.save = function() {
-		self.ps.save();
-	};
+    self.save = function() {
+        self.ps.save();
+    };
 
-	self.delete = function() {
-		self.ps.delete();
-	};
-};
+    self.delete = function() {
+        self.ps.delete();
+    };
+}
 
 HitDiceType.findAllBy = function(characterId) {
-	return PersistenceService.findAll(HitDiceType).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(HitDiceType).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };

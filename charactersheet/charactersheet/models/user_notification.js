@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 
 function UserNotification() {
-	var self = this;
+    var self = this;
 
     self.characterId = ko.observable(null);
-	self.type = ko.observable('');
-	self.message = ko.observable('');
-	self.visible = ko.observable(true);
+    self.type = ko.observable('');
+    self.message = ko.observable('');
+    self.visible = ko.observable(true);
 
-	self.alertClass = ko.pureComputed(function() {
+    self.alertClass = ko.pureComputed(function() {
         return 'alert-' + self.type;
-	});
+    });
 
-	self.toggleVisible = function() {
-	    self.visible(!self.visible());
-	};
-};
+    self.toggleVisible = function() {
+        self.visible(!self.visible());
+    };
+}
 
 UserNotification.notificationWithTypeAndMessage = function(type, message) {
     var notification = new UserNotification();

@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 
 function CharacterAppearance() {
-	var self = this;
-	self.ps = PersistenceService.register(CharacterAppearance, self);
-	self.mapping = {
-	    ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
-	        'save']
-	};
+    var self = this;
+    self.ps = PersistenceService.register(CharacterAppearance, self);
+    self.mapping = {
+        ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
+            'save']
+    };
 
     self.characterId = ko.observable(null);
-	self.height = ko.observable('');
-	self.weight = ko.observable('');
-	self.hairColor = ko.observable('');
-	self.eyeColor = ko.observable('');
-	self.skinColor = ko.observable('');
+    self.height = ko.observable('');
+    self.weight = ko.observable('');
+    self.hairColor = ko.observable('');
+    self.eyeColor = ko.observable('');
+    self.skinColor = ko.observable('');
 
-	//Public Methods
+    //Public Methods
 
     self.clear = function() {
         var values = new CharacterAppearance().exportValues();
@@ -31,15 +31,15 @@ function CharacterAppearance() {
     };
 
     self.save = function() {
-    	self.ps.save();
+        self.ps.save();
     };
-};
+}
 
 //CRUD
 
 CharacterAppearance.findBy = function(characterId) {
-	return PersistenceService.findAll(CharacterAppearance).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(CharacterAppearance).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };
 

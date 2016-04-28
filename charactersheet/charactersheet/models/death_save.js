@@ -1,13 +1,13 @@
 function DeathSave() {
-	var self = this;
-	self.ps = PersistenceService.register(DeathSave, self);
-	self.mapping = {
-	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete']
-	};
+    var self = this;
+    self.ps = PersistenceService.register(DeathSave, self);
+    self.mapping = {
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete']
+    };
 
-	self.characterId = ko.observable(null);
-	self.deathSaveSuccess = ko.observable(false);
-	self.deathSaveFailure = ko.observable(false);
+    self.characterId = ko.observable(null);
+    self.deathSaveSuccess = ko.observable(false);
+    self.deathSaveFailure = ko.observable(false);
 
     self.clear = function() {
         var values = new DeathSave().exportValues();
@@ -22,17 +22,17 @@ function DeathSave() {
         return ko.mapping.toJS(self, self.mapping);
     };
 
-	self.save = function() {
-		self.ps.save();
-	};
+    self.save = function() {
+        self.ps.save();
+    };
 
-	self.delete = function() {
-		self.ps.delete();
-	};
-};
+    self.delete = function() {
+        self.ps.delete();
+    };
+}
 
 DeathSave.findAllBy = function(characterId) {
-	return PersistenceService.findAll(DeathSave).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(DeathSave).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };

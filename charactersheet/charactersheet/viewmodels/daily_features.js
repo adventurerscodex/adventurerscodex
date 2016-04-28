@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
 function DailyFeatureViewModel() {
-	var self = this;
+    var self = this;
 
   self.sorts = {
 	  'featureName asc': { field: 'featureName', direction: 'asc'},
@@ -99,4 +99,5 @@ function DailyFeatureViewModel() {
 	self.clear = function() {
 		self.dailyFeatures([]);
 	};
+
 };

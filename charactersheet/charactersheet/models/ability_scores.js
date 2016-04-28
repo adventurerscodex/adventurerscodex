@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function AbilityScores() {
     var self = this;
@@ -13,59 +13,59 @@ function AbilityScores() {
 
     self.str =  ko.observable(null);
     self.strModifier = ko.pureComputed(function(){
-      return getStrModifier(self.str());
+        return getStrModifier(self.str());
     });
 
     self.dex =  ko.observable(null);
     self.dexModifier = ko.pureComputed(function(){
-      return getStrModifier(self.dex());
+        return getStrModifier(self.dex());
     });
 
     self.con =  ko.observable(null);
     self.conModifier = ko.pureComputed(function(){
-      return getStrModifier(self.con());
+        return getStrModifier(self.con());
     });
 
     self.int =  ko.observable(null);
     self.intModifier = ko.pureComputed(function(){
-      return getStrModifier(self.int());
+        return getStrModifier(self.int());
     });
 
     self.wis =  ko.observable(null);
     self.wisModifier = ko.pureComputed(function(){
-      return getStrModifier(self.wis());
+        return getStrModifier(self.wis());
     });
 
     self.cha =  ko.observable(null);
     self.chaModifier = ko.pureComputed(function(){
-      return getStrModifier(self.cha());
+        return getStrModifier(self.cha());
     });
 
     //Public Methods
 
     self.modifierFor = function(score) {
-		var val = null;
-		switch(score.toLowerCase()) {
-			case 'str':
-				val = self.str();
-				break;
-			case'dex':
-				val = self.dex();
-				break;
-			case'con':
-				val = self.con();
-				break;
-			case'int':
-				val = self.int();
-				break;
-			case'wis':
-				val = self.wis();
-				break;
-			case'cha':
-				val = self.cha();
-				break;
-		}
-		return getModifier(val);
+        var val = null;
+        switch(score.toLowerCase()) {
+        case 'str':
+            val = self.str();
+            break;
+        case'dex':
+            val = self.dex();
+            break;
+        case'con':
+            val = self.con();
+            break;
+        case'int':
+            val = self.int();
+            break;
+        case'wis':
+            val = self.wis();
+            break;
+        case'cha':
+            val = self.cha();
+            break;
+        }
+        return getModifier(val);
     };
 
     self.clear = function() {
@@ -82,12 +82,12 @@ function AbilityScores() {
     };
 
     self.save = function() {
-    	self.ps.save();
+        self.ps.save();
     };
-};
+}
 
 AbilityScores.findBy = function(characterId) {
-	return PersistenceService.findAll(AbilityScores).filter(function(e, i, _){
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(AbilityScores).filter(function(e, i, _){
+        return e.characterId() === characterId;
+    });
 };

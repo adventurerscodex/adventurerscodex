@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 function PlayerInfo() {
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);
     
-    self.GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/{}?d=mm'
+    self.GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/{}?d=mm';
        
     self.characterId = ko.observable(null);
     self.email = ko.observable('');
@@ -37,10 +37,10 @@ function PlayerInfo() {
             email: self.email()
         };
     };
-};
+}
 
 PlayerInfo.findBy = function(characterId) {
-	return PersistenceService.findAll(PlayerInfo).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(PlayerInfo).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };

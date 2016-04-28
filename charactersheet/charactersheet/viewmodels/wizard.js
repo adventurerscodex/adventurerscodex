@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function WizardViewModel() {
     var self = this;
@@ -76,12 +76,12 @@ function WizardViewModel() {
      * Saves the newly created character to the database and alerts
      * the rest of the application.
      */
-    self.submit = function() {		
-		if (self._isDM()) {
-		    var character = self._saveDM();
-		} else {
-		    var character = self._savePlayer();
-		}
+    self.submit = function() {        
+        if (self._isDM()) {
+            var character = self._saveDM();
+        } else {
+            var character = self._savePlayer();
+        }
         CharacterManager.changeCharacter(character.key());
         self.clear();
         self.currentStep(0);
@@ -92,20 +92,20 @@ function WizardViewModel() {
         self.campaign(new Campaign());    
     };
     
-	self.importFromFile = function() {
-		//The first comma in the result file string is the last
-		//character in the string before the actual json data
-		var length = self.fileReader.result.indexOf(",") + 1
-		var values = JSON.parse(atob(self.fileReader.result.substring(
-			length, self.fileReader.result.length)));
+    self.importFromFile = function() {
+        //The first comma in the result file string is the last
+        //character in the string before the actual json data
+        var length = self.fileReader.result.indexOf(",") + 1
+        var values = JSON.parse(atob(self.fileReader.result.substring(
+            length, self.fileReader.result.length)));
 
-		var character = Character.importCharacter(values);
-		Notifications.characters.changed.dispatch();
+        var character = Character.importCharacter(values);
+        Notifications.characters.changed.dispatch();
 
         CharacterManager.changeCharacter(character.key());
         self.clear();
         self.currentStep(0);
-	}; 
+    }; 
     
     //Private Methods
     
@@ -126,17 +126,17 @@ function WizardViewModel() {
     };
     
     self._saveDM = function() {
-		var character = new Character();
-		character.key(uuid.v4());
-		character.playerType(self.type());
-		
-		if (!CharacterManager.defaultCharacter()) {
-			character.isDefault(true);
-		}
- 		character.isActive(true);
-		character.save();
-		
-		self.campaign().characterId(character.key());
+        var character = new Character();
+        character.key(uuid.v4());
+        character.playerType(self.type());
+        
+        if (!CharacterManager.defaultCharacter()) {
+            character.isDefault(true);
+        }
+         character.isActive(true);
+        character.save();
+        
+        self.campaign().characterId(character.key());
         self.campaign().save();
         
         self.playerInfo().characterId(character.key());    
@@ -146,17 +146,17 @@ function WizardViewModel() {
     };
 
     self._savePlayer = function() {
-		var character = new Character();
-		character.key(uuid.v4());
-		character.playerType(self.type());
-		
-		if (!CharacterManager.defaultCharacter()) {
-			character.isDefault(true);
-		}
- 		character.isActive(true);
-		character.save();
-		
-		self.profile().characterId(character.key());
+        var character = new Character();
+        character.key(uuid.v4());
+        character.playerType(self.type());
+        
+        if (!CharacterManager.defaultCharacter()) {
+            character.isDefault(true);
+        }
+         character.isActive(true);
+        character.save();
+        
+        self.profile().characterId(character.key());
         self.profile().save();    
 
         self.playerInfo().characterId(character.key());    

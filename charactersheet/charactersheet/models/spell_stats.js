@@ -1,23 +1,23 @@
-"use strict";
+'use strict';
 
 function SpellStats() {
-	var self = this;
-  	self.ps = PersistenceService.register(SpellStats, self);
-	self.mapping = {
-	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+    var self = this;
+    self.ps = PersistenceService.register(SpellStats, self);
+    self.mapping = {
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
     };
 
-	self.characterId = ko.observable(null);
-	self.spellcastingAbility = ko.observable('');
-	self.spellSaveDc = ko.observable(0);
-	self.spellAttackBonus = ko.observable(0);
+    self.characterId = ko.observable(null);
+    self.spellcastingAbility = ko.observable('');
+    self.spellSaveDc = ko.observable(0);
+    self.spellAttackBonus = ko.observable(0);
 
-	self.spellcastingAbilityOptions = ko.observableArray(
-		Fixtures.spellStats.spellcastingAbilityOptions);
+    self.spellcastingAbilityOptions = ko.observableArray(
+        Fixtures.spellStats.spellcastingAbilityOptions);
 
-	//Public Methods
+    //Public Methods
 
-	self.clear = function() {
+    self.clear = function() {
         var values = new SpellStats().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
     };
@@ -30,13 +30,13 @@ function SpellStats() {
         return ko.mapping.toJS(self, self.mapping);
     };
 
-	self.save = function() {
-		self.ps.save();
-	};
-};
+    self.save = function() {
+        self.ps.save();
+    };
+}
 
 SpellStats.findBy = function(characterId) {
-	return PersistenceService.findAll(SpellStats).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(SpellStats).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };

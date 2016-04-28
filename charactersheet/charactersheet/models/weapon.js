@@ -1,23 +1,23 @@
-"use strict";
+'use strict';
 
 function Weapon() {
     var self = this;
-	self.ps = PersistenceService.register(Weapon, self);
+    self.ps = PersistenceService.register(Weapon, self);
     self.mapping = {
         ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
             'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
             'hitBonusLabel', 'delete', '_dummy', 'updateValues']
     };
-	
+
     self._dummy = ko.observable(null);
-	self.characterId = ko.observable(null);
+    self.characterId = ko.observable(null);
     self.weaponName = ko.observable('');
     self.weaponType = ko.observable('');
     self.weaponDmg = ko.observable('');
     self.weaponHandedness = ko.observable('');
     self.weaponProficiency = ko.observable('');
     self.weaponPrice = ko.observable('');
-	self.weaponCurrencyDenomination = ko.observable('');
+    self.weaponCurrencyDenomination = ko.observable('');
     self.weaponHit = ko.observable('');
     self.weaponWeight = ko.observable('');
     self.weaponRange = ko.observable('');
@@ -50,7 +50,7 @@ function Weapon() {
         try{
             profBonus = OtherStats.findBy(
                 CharacterManager.activeCharacter().key())[0].proficiency();
-        } catch(err){};
+        } catch(err) { /*Ignore*/ }
         return parseInt(profBonus);
     };
 
@@ -59,12 +59,12 @@ function Weapon() {
         try {
             score = AbilityScores.findBy(
                 CharacterManager.activeCharacter().key())[0].modifierFor('Str');
-        } catch(err) {};
+        } catch(err) { /*Ignore*/ }
         if (score === null){
-          return null
+            return null;
         }
         else {
-          return parseInt(score);
+            return parseInt(score);
         }
     };
 
@@ -73,12 +73,12 @@ function Weapon() {
         try {
             score = AbilityScores.findBy(
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
-        } catch(err) {};
+        } catch(err) { /*Ignore*/ }
         if (score === null){
-          return null
+            return null;
         }
         else {
-          return parseInt(score);
+            return parseInt(score);
         }
     };
 
@@ -140,16 +140,16 @@ function Weapon() {
     };
 
     self.save = function() {
-    	self.ps.save();
+        self.ps.save();
     };
 
     self.delete = function() {
-    	self.ps.delete();
+        self.ps.delete();
     };
-};
+}
 
 Weapon.findAllBy =function(characterId) {
-	return PersistenceService.findAll(Weapon).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(Weapon).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };
