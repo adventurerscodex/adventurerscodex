@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * This view model is responsible for responding to and displaying

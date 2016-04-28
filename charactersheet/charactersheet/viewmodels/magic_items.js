@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function MagicItemsViewModel() {
     var self = this;

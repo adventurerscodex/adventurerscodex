@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 function Armor() {
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
-	self.mapping = {
-	    ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
-	        'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus'],
-	    include: ['armorClass']
-	};
+    self.mapping = {
+        ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
+            'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus'],
+        include: ['armorClass']
+    };
 
     self.characterId = ko.observable(null);
     self._dummy = ko.observable(null);
@@ -15,7 +15,7 @@ function Armor() {
     self.armorType = ko.observable('');
     self.armorProficiency = ko.observable(false);
     self.armorPrice = ko.observable('');
-	self.armorCurrencyDenomination = ko.observable('');
+    self.armorCurrencyDenomination = ko.observable('');
     self.armorWeight = ko.observable('');
     self.armorClass = ko.observable('');
     self.armorStealth = ko.observable('');
@@ -61,13 +61,13 @@ function Armor() {
         try {
             score = AbilityScores.findBy(
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
-        } catch(err) {};
+        } catch(err) { /*Ignore*/ }
 
         if (score === null){
-          return null;
+            return null;
         }
         else {
-          return parseInt(score);
+            return parseInt(score);
         }
     };
 
@@ -102,7 +102,7 @@ function Armor() {
 
         return totalBonus;
     });
-};
+}
 
 Armor.findAllBy =function(characterId) {
     return PersistenceService.findAll(Armor).filter(function(e, i, _) {

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * A central repository of signals used in Adventurer's Codex
@@ -97,11 +97,11 @@ var Notifications = {
      *****************************/
 
     abilityScores: {
-    	changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     campaign: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     characters: {
@@ -110,15 +110,15 @@ var Notifications = {
     },
 
     playerImage: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     playerInfo: {
-    	changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     profile: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     settings: {
@@ -126,14 +126,14 @@ var Notifications = {
     },
 
     stats: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     skills: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     spellStats: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 };

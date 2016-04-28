@@ -1,16 +1,16 @@
-"use strict;"
+'use strict';
 
 function FeatsProf() {
-	var self = this;
-	self.ps = PersistenceService.register(FeatsProf, self);
-	self.mapping = {
-	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
-	};
+    var self = this;
+    self.ps = PersistenceService.register(FeatsProf, self);
+    self.mapping = {
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+    };
 
-	self.characterId = ko.observable(null);
-	self.feats = ko.observable('');
-	self.proficiencies = ko.observable('');
-	self.specialAbilities = ko.observable('');
+    self.characterId = ko.observable(null);
+    self.feats = ko.observable('');
+    self.proficiencies = ko.observable('');
+    self.specialAbilities = ko.observable('');
 
     self.clear = function() {
         var values = new FeatsProf().exportValues();
@@ -25,14 +25,13 @@ function FeatsProf() {
         return ko.mapping.toJS(self, self.mapping);
     };
 
-  	self.save = function() {
-  		self.ps.save();
-  	};
-
-};
+    self.save = function() {
+        self.ps.save();
+    };
+}
 
 FeatsProf.findBy = function(characterId) {
-	return PersistenceService.findAll(FeatsProf).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(FeatsProf).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };

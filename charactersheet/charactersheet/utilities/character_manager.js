@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 
 var CharacterManager = {};
 
 CharacterManager.changeCharacter = function(characterId) {
-	var newChar = Character.findBy(characterId);
+    var newChar = Character.findBy(characterId);
     try {
-	    Notifications.characterManager.changing.dispatch(
-	        CharacterManager.activeCharacter(), newChar[0]);
-		Character.findAll().forEach(function(e, i, _) {
-			e.isActive(false);
-			e.save();
-		});
-		newChar[0].isActive(true);
-		newChar[0].save();
-		Notifications.characterManager.changed.dispatch(
-		    CharacterManager.activeCharacter());
-	} catch(err) {};
+        Notifications.characterManager.changing.dispatch(
+            CharacterManager.activeCharacter(), newChar[0]);
+        Character.findAll().forEach(function(e, i, _) {
+            e.isActive(false);
+            e.save();
+        });
+        newChar[0].isActive(true);
+        newChar[0].save();
+        Notifications.characterManager.changed.dispatch(
+            CharacterManager.activeCharacter());
+    } catch(err) { /*Ignore*/ }
 };
 
 CharacterManager.activeCharacter = function() {

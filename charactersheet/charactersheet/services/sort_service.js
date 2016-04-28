@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * A utility class that provides helpers for sorting, filtering, and
@@ -16,21 +16,21 @@ var SortService = {
      * @param filter: a filter to apply.
      */
     sortAndFilter: function(data, sort, filter) {
-    	if (filter) {
+        if (filter) {
             //TODO
-    	}
+        }
 
-    	return data.sort(function(a, b) {
-    		var asc = sort.direction === 'asc' ? true : false;
-    		var res = null;
+        return data.sort(function(a, b) {
+            var asc = sort.direction === 'asc' ? true : false;
+            var res = null;
 
-    		var aprop = a[sort.field]();
-    		var bprop = b[sort.field]();
+            var aprop = a[sort.field]();
+            var bprop = b[sort.field]();
 
-    		if (sort.numeric) {
-				aprop = parseInt(a[sort.field]());
-				bprop = parseInt(b[sort.field]());
-    		}
+            if (sort.numeric) {
+                aprop = parseInt(a[sort.field]());
+                bprop = parseInt(b[sort.field]());
+            }
 
             if (asc && sort.booleanType) {
                 res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
@@ -41,8 +41,8 @@ var SortService = {
             } else {
                 res = aprop < bprop ? 1 : -1;
             }
-    		return res;
-    	});
+            return res;
+        });
     },
 
     /**
@@ -51,15 +51,15 @@ var SortService = {
      * appropriate sort direction.
      */
     sortArrow: function(columnName, sort) {
-    	var arrow = '';
-    	if (columnName === sort.field) {
-			if (sort.direction === 'asc') {
-				arrow = 'glyphicon glyphicon-arrow-up';
-			} else {
-				arrow = 'glyphicon glyphicon-arrow-down';
-			}
-    	}
-    	return arrow;
+        var arrow = '';
+        if (columnName === sort.field) {
+            if (sort.direction === 'asc') {
+                arrow = 'glyphicon glyphicon-arrow-up';
+            } else {
+                arrow = 'glyphicon glyphicon-arrow-down';
+            }
+        }
+        return arrow;
     },
 
     /**
@@ -67,12 +67,12 @@ var SortService = {
      * of all possible sorts, return the sort for the given column.
      */
     sortForName: function(sort, columnName, allSorts) {
- 		var newSort;
- 		if (sort.field === columnName && sort.direction === 'asc') {
-			newSort = allSorts[columnName+' desc'];
-		} else {
-			newSort = allSorts[columnName+' asc'];
-		}
-		return newSort;
+         var newSort;
+         if (sort.field === columnName && sort.direction === 'asc') {
+            newSort = allSorts[columnName+' desc'];
+        } else {
+            newSort = allSorts[columnName+' asc'];
+        }
+        return newSort;
     }
 };
