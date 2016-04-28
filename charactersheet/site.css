@@ -232,5 +232,15 @@ textarea.dark-area {
   width:25px;
   height:25px;
   border-radius:40px;
+}
 
+.hit-dice-list {
+  height:100%;
+  padding:15px;
+  line-height:0.7em;
+}
+
+.hit-dice-list-empty-fill {
+  padding:15px;
+  line-height:1.5em;
 }
