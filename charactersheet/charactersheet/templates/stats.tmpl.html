@@ -17,8 +17,14 @@
       <div class="col-md-12 col-padded">
         <div class="input-group">
           <span class="input-group-addon">Hit Dice:</span>
-          <div style="height:100%;padding:15px;" class="form-control" data-bind="foreach: hitDiceList" >
-            <span data-bind="attr: { id: $index, name: $index }, css: hitDiceIcon, click: toggleHitDice"></span>
+          <div class="form-control hit-dice-list">
+            <!-- ko foreach: hitDiceList -->
+            <span data-bind="attr: { id: $index, name: $index },
+              css: hitDiceIcon, click: toggleHitDice"></span>
+            <!-- /ko -->
+            <!-- ko if: hitDiceList().length == 0 -->
+            <span class="hit-dice-list-empty-fill">&nbsp;</span>
+            <!-- /ko -->
           </div>
           <span class="input-group-addon">
               <select data-bind="options: hitDiceType().hitDiceOptions,
