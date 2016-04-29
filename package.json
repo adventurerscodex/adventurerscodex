@@ -21,7 +21,8 @@
     "karma-mocha": "~0.2.0",
     "karma-phantomjs-launcher": "^0.2.1",
     "mocha": "^2.3.3",
-    "phantomjs": "~1.9.18"
+    "phantomjs": "~1.9.18",
+    "serve": "^1.4.0"
   },
   "scripts": {
     "postinstall": "bower install && cp -r charactersheet/bin/fonts charactersheet/bower_components/bootstrap-theme-bootswatch-flatly/fonts",
