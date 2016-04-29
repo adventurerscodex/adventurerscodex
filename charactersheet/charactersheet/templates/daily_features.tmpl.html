@@ -10,7 +10,7 @@
 				<tr>
 					<th class="col-sm-3">Daily Feature</th>
 					<th class="col-sm-1">Max</th> <!-- Max -->
-					<th class="col-sm-3">Used</th> <!-- Up/down -->
+					<th class="col-sm-3 text-center">Used</th> <!-- Up/down -->
 					<th class="col-sm-1">Reset</th>
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
 				</tr>
@@ -33,15 +33,19 @@
 					<td class="col-sm-1" style="vertical-align:middle;">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
-					<td class="col-sm-4" style="text-align:center;">
-						<div class="input-group" style="background-color:#DCE4EC;">
-  							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
-  								<i class="fa fa-plus fa-color"> </i>
-  							</button>
-  							<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
-  							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
-  								<i class="fa fa-minus fa-color"> </i>
-  							</button>
+					<td class="col-sm-3">
+						<div class="=container-fluid">
+							<div class="center-block">
+								<div  style="background-color:#DCE4EC;" class="input-group">
+									<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
+										<i class="fa fa-plus fa-color"> </i>
+									</button>
+									<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
+									<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
+										<i class="fa fa-minus fa-color"> </i>
+									</button>
+								</div>
+							</div>
 						</div>
 					</td>
 

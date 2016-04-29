@@ -25,7 +25,7 @@ function DailyFeatureViewModel() {
 		if (dailyFeatures.length > 0) {
 			self.dailyFeatures(dailyFeatures);
 		} else {
-			self.dailyFeatures(new DailyFeature());
+			self.dailyFeatures([]);
 		}
 
 	};
@@ -96,7 +96,7 @@ function DailyFeatureViewModel() {
 		if(used !== 0){
 			dailyFeature.featureUsed(used - 1);
 		}
-	};	
+	};
 
 	self.clear = function() {
 		self.dailyFeatures([]);
