@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Image Model', function() {
     //Clean up after each test.
@@ -61,10 +61,10 @@ describe('Image Model', function() {
             ImageModel.findBy('someid').length.should.equal(0);
 
             //Filled
-			simple.mock(PersistenceService, 'findAll').returnWith([new ImageModel(), new ImageModel()].map(function(e, i, _) {
-				e.characterId('');
-				return e;
-			}));
+            simple.mock(PersistenceService, 'findAll').returnWith([new ImageModel(), new ImageModel()].map(function(e, i, _) {
+                e.characterId('');
+                return e;
+            }));
             ImageModel.findBy('someid').length.should.equal(0);
 
         });

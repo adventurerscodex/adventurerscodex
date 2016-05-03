@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 describe('FeatsProf Model', function() {
     describe('Clear', function() {
         it('should clear all the FeatsProfFixture in it', function() {

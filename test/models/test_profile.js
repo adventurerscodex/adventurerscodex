@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Profile Model', function() {
     //Clean up after each test.
@@ -66,10 +66,10 @@ describe('Profile Model', function() {
             Profile.findBy('someid').length.should.equal(0);
 
             //Filled
-			simple.mock(PersistenceService, 'findAll').returnWith([new Profile(), new Profile()].map(function(e, i, _) {
-				e.characterId('someid');
-				return e;
-			}));
+            simple.mock(PersistenceService, 'findAll').returnWith([new Profile(), new Profile()].map(function(e, i, _) {
+                e.characterId('someid');
+                return e;
+            }));
             Profile.findBy('someid').length.should.equal(2);
 
         });

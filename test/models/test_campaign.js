@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Campaign Model', function() {
     describe('Clear', function() {

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Player Summary View Model', function() {
     //Clean up after each test.

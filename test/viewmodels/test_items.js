@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Equipment View Model', function(){
     //Clean up after each test.
@@ -6,11 +6,11 @@ describe('Equipment View Model', function(){
         simple.restore();
     });
 
-	describe('Instance Methods', function() {
+    describe('Instance Methods', function() {
         describe('Load', function() {
             it('should load items to the equipment', function() {
                 simple.mock(Item, 'findAllBy').returnWith([new Item(), new Item()]);
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var p = new ItemsViewModel();
                 p.items().length.should.equal(0);
@@ -21,7 +21,7 @@ describe('Equipment View Model', function(){
 
         describe('Unload', function() {
             it('should unload the data to the items db.', function() {
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var items = [new Item(), new Item()].map(function(e, i, _) {
                     e._spy = simple.mock(e, 'save');
@@ -41,7 +41,7 @@ describe('Equipment View Model', function(){
 
         describe('Total Item Weight', function() {
             it('should return a string with the total weight of all items.', function() {
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
                 var items = [new Item(), new Item()].map(function(e, i, _) {
                     e.itemWeight(5);
                     return e;
@@ -50,7 +50,7 @@ describe('Equipment View Model', function(){
                 var p = new ItemsViewModel();
                 p.totalItemWeight().should.equal('Weight');
 
-                var p = new ItemsViewModel();
+                p = new ItemsViewModel();
                 p.items(items);
                 p.items().length.should.equal(2);
                 p.totalItemWeight().should.equal('Weight: 10 (lbs)');
@@ -59,7 +59,7 @@ describe('Equipment View Model', function(){
 
         describe('Add Item', function() {
             it('should add a new item to the equipment', function() {
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var p = new ItemsViewModel();
                 p.clear();
@@ -71,7 +71,7 @@ describe('Equipment View Model', function(){
 
         describe('Edit Item', function() {
             it('should select a item for editing.', function() {
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var eq = new ItemsViewModel();
                 eq.items().length.should.equal(0);
@@ -79,13 +79,13 @@ describe('Equipment View Model', function(){
                 eq.items().length.should.equal(1);
                 var item = eq.items.pop();
                 eq.editItem(item);
-                eq.selecteditem().should.equal(item)
+                eq.selecteditem().should.equal(item);
             });
         });
 
         describe('Remove Item', function() {
             it('should remove a item from the equipment', function() {
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var p = new ItemsViewModel();
                 p.clear();

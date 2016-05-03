@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 describe('WeaponsViewModel', function(){
 
     describe('Add Weapon', function() {
         it('should add a weapon to weapons', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var weapons = new WeaponsViewModel();
             weapons.clear();
@@ -16,7 +16,7 @@ describe('WeaponsViewModel', function(){
 
     describe('Edit Weapon', function() {
         it('should select a weapon for editing.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var weapons = new WeaponsViewModel();
             weapons.weapons().length.should.equal(0);
@@ -24,13 +24,13 @@ describe('WeaponsViewModel', function(){
             weapons.weapons().length.should.equal(1);
             var weapon = weapons.weapons.pop();
             weapons.editWeapon(weapon);
-            weapons.selecteditem().should.equal(weapon)
+            weapons.selecteditem().should.equal(weapon);
         });
     });
 
     describe('Remove Weapon', function() {
         it('should remove a weapon from the WeaponsViewModel', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var weapons = new WeaponsViewModel();
             weapons.clear();
