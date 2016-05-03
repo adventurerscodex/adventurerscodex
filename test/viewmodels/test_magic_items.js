@@ -31,18 +31,18 @@ describe('Magic Items View Model', function(){
 
     describe('Clear', function() {
         it('should clear all the values in the MagicItemsViewModel', function() {
-          var magicItems = new MagicItemsViewModel();
-          var magicItem= [new MagicItem()];
-          magicItems.magicItems(magicItem);
-          magicItems.magicItems().should.equal(magicItem);
-          magicItems.clear();
-          magicItems.magicItems().length.should.equal(0);
+            var magicItems = new MagicItemsViewModel();
+            var magicItem= [new MagicItem()];
+            magicItems.magicItems(magicItem);
+            magicItems.magicItems().should.equal(magicItem);
+            magicItems.clear();
+            magicItems.magicItems().length.should.equal(0);
         });
     });
 
     describe('Remove Item', function() {
         it('should remove an item from the MagicItemsViewModel', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var magicItems = new MagicItemsViewModel();
             magicItems.clear();
@@ -56,7 +56,7 @@ describe('Magic Items View Model', function(){
 
     describe('Edit Item', function() {
         it('should select a magic item for editing.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var magicItems = new MagicItemsViewModel();
             magicItems.magicItems().length.should.equal(0);
@@ -64,13 +64,13 @@ describe('Magic Items View Model', function(){
             magicItems.magicItems().length.should.equal(1);
             var magicItem = magicItems.magicItems.pop();
             magicItems.editItem(magicItem);
-            magicItems.selecteditem().should.equal(magicItem)
+            magicItems.selecteditem().should.equal(magicItem);
         });
     });
 
     describe('Add Item', function() {
         it('should add a new magic item to magic items', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var magicItems = new MagicItemsViewModel();
             magicItems.clear();
@@ -82,7 +82,7 @@ describe('Magic Items View Model', function(){
 
     describe('Total Item Weight', function() {
         it('should return a string with the total weight of all magic items.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter)
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var items = [new MagicItem(), new MagicItem()].map(function(e, i, _) {
                 e.magicItemWeight(5);
                 return e;
@@ -91,7 +91,7 @@ describe('Magic Items View Model', function(){
             var magicItems = new MagicItemsViewModel();
             magicItems.totalMagicItemWeight().should.equal('Weight');
 
-            var magicItems = new MagicItemsViewModel();
+            magicItems = new MagicItemsViewModel();
             magicItems.magicItems(items);
             magicItems.magicItems().length.should.equal(2);
             magicItems.totalMagicItemWeight().should.equal('Weight: 10 (lbs)');

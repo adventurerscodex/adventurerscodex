@@ -8,6 +8,7 @@ module.exports = function(grunt) {
 	eslint: {
 		target: [
     		'charactersheet/charactersheet/*/*.js',
+    		'test/*/*.js',
     		'charactersheet/charactersheet/*.js']
 	},
     karma: {

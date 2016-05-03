@@ -1,4 +1,4 @@
-describe('Saving Throws View Model', function() {	
+describe('Saving Throws View Model', function() {    
 
 });
 

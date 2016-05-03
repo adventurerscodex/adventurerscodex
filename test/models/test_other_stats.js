@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Other Stats Model', function() {
     //Clean up after each test.
@@ -74,7 +74,7 @@ describe('Other Stats Model', function() {
             it('should save the values to the local store', function() {
                 var os = new OtherStats();
                 var saved = false;
-                os.ps.save = function() { saved = true; }
+                os.ps.save = function() { saved = true; };
                 saved.should.equal(false);
 
                 os.save();
@@ -83,20 +83,20 @@ describe('Other Stats Model', function() {
         });
     });
 
-	describe('FindBy', function() {
-		it('should find the other stats module from the db.', function() {
-			var key = '1234';
-			simple.mock(PersistenceService, 'findAll').returnWith([new OtherStats()]);
-			var r = OtherStats.findBy(key);
-			r.length.should.equal(0);
+    describe('FindBy', function() {
+        it('should find the other stats module from the db.', function() {
+            var key = '1234';
+            simple.mock(PersistenceService, 'findAll').returnWith([new OtherStats()]);
+            var r = OtherStats.findBy(key);
+            r.length.should.equal(0);
 
-			simple.mock(PersistenceService, 'findAll').returnWith([new OtherStats()].map(function(e, i, _) {
-				e.characterId(key);
-				return e;
-			}));
-			var r = OtherStats.findBy(key);
-			r.length.should.equal(1);
+            simple.mock(PersistenceService, 'findAll').returnWith([new OtherStats()].map(function(e, i, _) {
+                e.characterId(key);
+                return e;
+            }));
+            r = OtherStats.findBy(key);
+            r.length.should.equal(1);
 
-		});
-	});
+        });
+    });
 });

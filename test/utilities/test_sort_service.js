@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Sort Service', function() {
     //Clean up after each test.

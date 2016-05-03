@@ -123,11 +123,14 @@ Character.exportChracter = function(characterId) {
 Character.importCharacter = function(data) {
     var character = null;
     var tableNames = Object.keys(data);
+    var characterId = uuid.v4();
     tableNames.forEach(function(e, i, _) {
         var model = window[e];
         data[e].forEach(function(e1, i1, _1) {
             var inst = new model();
+            e1 = Character._changeIdForData(characterId, e1);
             inst.importValues(e1);
+
             PersistenceService.save(model, inst);
 
             if (e.toLowerCase() === 'character') {
@@ -136,4 +139,19 @@ Character.importCharacter = function(data) {
         });
     });
     return character;
+};
+
+/**
+ * Given a json serialized model, attempt to change the character id value.
+ * @param characterId {string} The new Id for the data.
+ * @param data {object} The data containing an id to change.
+ * @returns the same data with a new id.
+ */
+Character._changeIdForData = function(characterId, data) {
+    if (Object.keys(data).indexOf('characterId') > -1) {
+        data['characterId'] = characterId;
+    } else if (Object.keys(data).indexOf('key') > -1) {
+        data['key'] = characterId;
+    }
+    return data;
 };

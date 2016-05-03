@@ -7,12 +7,12 @@ var AppearanceFixture = {
 };
 
 var AbilitiesFixture = {
-	'str': 12,
-	'dex': 13,
-	'con': 14,
-	'int': 16,
-	'wis': 15,
-	'cha': 18
+    'str': 12,
+    'dex': 13,
+    'con': 14,
+    'int': 16,
+    'wis': 15,
+    'cha': 18
 };
 
 var FeatsProfFixture = {
@@ -131,3 +131,23 @@ var SortServiceFixture = {
 
 }
 
+var CharacterFixture = {
+    "key": "18c286fa-3ce6-49e9-99cc-4710118915ff",
+    "isDefault": true,
+    "isActive": true,
+    "playerType": {
+        "key": "character",
+        "visibleTabs": [
+            "profile",
+            "stats",
+            "skills",
+            "spells",
+            "equipment",
+            "inventory",
+            "notes",
+            "settings",
+            "party"
+        ],
+        "defaultTab": "profile"
+    }
+};

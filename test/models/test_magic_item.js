@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Magic Item Model', function() {
     describe('Clear', function() {
