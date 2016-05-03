@@ -126,21 +126,21 @@ describe('Equipment View Model', function(){
                 var eq = new ItemsViewModel();
                 eq.sortBy('itemName');
                 eq.sort().should.equal(eq.sorts['itemName desc']);
-                eq.sortArrow('itemName').should.equal('glyphicon glyphicon-arrow-down');
+                eq.sortArrow('itemName').should.equal('fa fa-arrow-down fa-color');
                 eq.sortArrow('itemWeight').should.equal('');
                 eq.sortBy('itemName');
                 eq.sort().should.equal(eq.sorts['itemName asc']);
-                eq.sortArrow('itemName').should.equal('glyphicon glyphicon-arrow-up');
+                eq.sortArrow('itemName').should.equal('fa fa-arrow-up fa-color');
                 eq.sortArrow('itemWeight').should.equal('');
                 //Numeric sort
                 eq.sortBy('itemWeight');
                 eq.sort().should.equal(eq.sorts['itemWeight asc']);
                 eq.sortArrow('itemName').should.equal('');
-                eq.sortArrow('itemWeight').should.equal('glyphicon glyphicon-arrow-up');
+                eq.sortArrow('itemWeight').should.equal('fa fa-arrow-up fa-color');
                 eq.sortBy('itemWeight');
                 eq.sort().should.equal(eq.sorts['itemWeight desc']);
                 eq.sortArrow('itemName').should.equal('');
-                eq.sortArrow('itemWeight').should.equal('glyphicon glyphicon-arrow-down');
+                eq.sortArrow('itemWeight').should.equal('fa fa-arrow-down fa-color');
             });
         });
     });

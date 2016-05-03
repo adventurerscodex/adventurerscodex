@@ -54,9 +54,9 @@ var SortService = {
     	var arrow = '';
     	if (columnName === sort.field) {
 			if (sort.direction === 'asc') {
-				arrow = 'glyphicon glyphicon-arrow-up';
+				arrow = 'fa fa-arrow-up fa-color';
 			} else {
-				arrow = 'glyphicon glyphicon-arrow-down';
+				arrow = 'fa fa-arrow-down fa-color';
 			}
     	}
     	return arrow;
