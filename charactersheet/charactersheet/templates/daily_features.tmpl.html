@@ -1,51 +1,46 @@
 <div class="panel panel-default">
 	<div class='panel-body'>
-		<!-- <div class="progress" data-bind="{ foreach: dailyFeatures, visible: dailyFeatures().length > 0 }">
-			<div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: progressWidth() * $parent.maxBarWidth() + '%' }, css: color">
-				<span class="sr-only"></span>
-			</div>
-		</div> -->
 		<table id='dailyFeaturesTable' class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr>
-					<th class="col-sm-3">Daily Feature</th>
-					<th class="col-sm-1">Max</th> <!-- Max -->
+					<th class="col-sm-2" data-bind="click: function(){sortBy('featureName');}">Daily Feature
+            <i data-bind="css: sortArrow('featureName')"></i>
+          </th>
+          <!-- <th class="col-sm-2"></th> -->
+					<th class="col-sm-1" data-bind="click: function(){sortBy('featureMaxUses');}">Max
+            <i data-bind="css: sortArrow('featureMaxUses')"></i>
+          </th> <!-- Max -->
 					<th class="col-sm-3 text-center">Used</th> <!-- Up/down -->
 					<th class="col-sm-1">Reset</th>
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
 				</tr>
 			</thead>
-			<tbody data-bind="foreach: dailyFeatures">
+			<tbody data-bind="foreach: filteredAndSortedDailyFeatures">
 				<tr style="cursor:pointer;">
 					<td data-bind="click: $parent.editDailyFeature"
 					href="#"
-					class="col-sm-2 feature-row"
+					class="col-sm-3 feature-row"
           data-toggle="modal"
           data-target="#viewDailyFeature">
-					  <span data-bind="css: color" class="form-control pull-left color-picker-item">
-					  </span>
-					<span
-					href="#"
-          data-toggle="modal"
-          data-target="#viewDailyFeature" data-bind="text: featureName">
+            <span data-bind="css: color" class="form-control pull-left color-picker-item"></span>
+  					<span
+  					href="#"
+            data-toggle="modal"
+            data-target="#viewDailyFeature" data-bind="text: featureName">
 					  </span>
 					</td>
 					<td class="col-sm-1" style="vertical-align:middle;">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
 					<td class="col-sm-3">
-						<div class="=container-fluid">
-							<div class="center-block">
-								<div  style="background-color:#DCE4EC;" class="input-group">
-									<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
-										<i class="fa fa-plus fa-color"> </i>
-									</button>
-									<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
-									<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
-										<i class="fa fa-minus fa-color"> </i>
-									</button>
-								</div>
-							</div>
+						<div  style="background-color:#DCE4EC;float: none;margin: 0 auto;" class="input-group">
+							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
+								<i class="fa fa-plus fa-color"> </i>
+							</button>
+							<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
+							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
+								<i class="fa fa-minus fa-color"> </i>
+							</button>
 						</div>
 					</td>
 
@@ -61,9 +56,6 @@
 				</tr>
 			</tbody>
 		</table>
-		<!-- <input data-bind="click: resetSlots"
-		       class="btn btn-default"
-		       type="button" value="Reset"> -->
 	</div>
 </div>
 

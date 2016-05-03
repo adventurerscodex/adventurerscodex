@@ -3,19 +3,17 @@
 function DailyFeatureViewModel() {
 	var self = this;
 
-    // self.sorts = {
-	//   'level asc': { field: 'level', direction: 'asc', numeric: true},
-	//   'level desc': { field: 'level', direction: 'desc', numeric: true},
-	//   'maxSpellSlots asc': { field: 'maxSpellSlots', direction: 'asc', numeric: true},
-	//   'maxSpellSlots desc': { field: 'maxSpellSlots', direction: 'desc', numeric: true},
-	//   'usedSpellSlots asc': { field: 'usedSpellSlots', direction: 'asc', numeric: true},
-	//   'usedSpellSlots desc': { field: 'usedSpellSlots', direction: 'desc', numeric: true}
-	// };
+  self.sorts = {
+	  'featureName asc': { field: 'featureName', direction: 'asc'},
+	  'featureName desc': { field: 'featureName', direction: 'desc'},
+	  'featureMaxUses asc': { field: 'featureMaxUses', direction: 'asc', numeric: true},
+	  'featureMaxUses desc': { field: 'featureMaxUses', direction: 'desc', numeric: true}
+	};
 
 	self.dailyFeatures = ko.observableArray([]);
 	self.blankDailyFeature = ko.observable(new DailyFeature());
 	self.selecteditem = ko.observable(null);
-	// self.sort = ko.observable(self.sorts['level asc']);
+	self.sort = ko.observable(self.sorts['featureName asc']);
 	self.filter = ko.observable('');
 
 	self.init = function() {};
@@ -41,24 +39,24 @@ function DailyFeatureViewModel() {
 	/**
 	 * Filters and sorts the daily features for presentation in a table.
 	 */
-    // self.filteredAndSortedDailyFeatures = ko.computed(function() {
-    //     return SortService.sortAndFilter(self.dailyFeatures(), self.sort(), null);
-    // });
+    self.filteredAndSortedDailyFeatures = ko.computed(function() {
+        return SortService.sortAndFilter(self.dailyFeatures(), self.sort(), null);
+    });
 
     /**
      * Determines whether a column should have an up/down/no arrow for sorting.
      */
-    // self.sortArrow = function(columnName) {
-    //     return SortService.sortArrow(columnName, self.sort());
-    // };
+    self.sortArrow = function(columnName) {
+        return SortService.sortArrow(columnName, self.sort());
+    };
 
 	/**
 	 * Given a column name, determine the current sort type & order.
 	 */
-	// self.sortBy = function(columnName) {
-	// 	self.sort(SortService.sortForName(self.sort(),
-	// 	    columnName, self.sorts));
-	// };
+	self.sortBy = function(columnName) {
+		self.sort(SortService.sortForName(self.sort(),
+		    columnName, self.sorts));
+	};
 
 	//Manipulating daily features
 
