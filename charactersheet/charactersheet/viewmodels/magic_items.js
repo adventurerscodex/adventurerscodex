@@ -1,20 +1,20 @@
-"use strict";
+'use strict';
 
 function MagicItemsViewModel() {
     var self = this;
 
     self.sorts = {
-    'magicItemName asc': { field: 'magicItemName', direction: 'asc'},
-    'magicItemName desc': { field: 'magicItemName', direction: 'desc'},
-    'magicItemMaxCharges asc': { field: 'magicItemMaxCharges', direction: 'asc', numeric: true},
-    'magicItemMaxCharges desc': { field: 'magicItemMaxCharges', direction: 'desc', numeric: true},
-    'magicItemWeight asc': { field: 'magicItemWeight', direction: 'asc', numeric: true},
-    'magicItemWeight desc': { field: 'magicItemWeight', direction: 'desc', numeric: true},
-    'magicItemCharges asc': { field: 'magicItemCharges', direction: 'asc', numeric: true},
-    'magicItemCharges desc': { field: 'magicItemCharges', direction: 'desc', numeric: true},
-    'magicItemAttuned asc': { field: 'magicItemAttuned', direction: 'asc', booleanType: true},
-    'magicItemAttuned desc': { field: 'magicItemAttuned', direction: 'desc', booleanType: true},
-  };
+        'magicItemName asc': { field: 'magicItemName', direction: 'asc'},
+        'magicItemName desc': { field: 'magicItemName', direction: 'desc'},
+        'magicItemMaxCharges asc': { field: 'magicItemMaxCharges', direction: 'asc', numeric: true},
+        'magicItemMaxCharges desc': { field: 'magicItemMaxCharges', direction: 'desc', numeric: true},
+        'magicItemWeight asc': { field: 'magicItemWeight', direction: 'asc', numeric: true},
+        'magicItemWeight desc': { field: 'magicItemWeight', direction: 'desc', numeric: true},
+        'magicItemCharges asc': { field: 'magicItemCharges', direction: 'asc', numeric: true},
+        'magicItemCharges desc': { field: 'magicItemCharges', direction: 'desc', numeric: true},
+        'magicItemAttuned asc': { field: 'magicItemAttuned', direction: 'asc', booleanType: true},
+        'magicItemAttuned desc': { field: 'magicItemAttuned', direction: 'desc', booleanType: true}
+    };
 
     self.selecteditem = ko.observable();
     self.blankMagicItem = ko.observable(new MagicItem());
@@ -42,12 +42,12 @@ function MagicItemsViewModel() {
         var itemLength = self.magicItems().length;
         if (itemLength > 0) {
             for (var i = 0; i < itemLength; i++) {
-              weightTotal += parseFloat(self.magicItems()[i].magicItemWeight());
+                weightTotal += parseFloat(self.magicItems()[i].magicItemWeight());
             }
-            return ("Weight: " + weightTotal + " (lbs)");
+            return ('Weight: ' + weightTotal + ' (lbs)');
         }
         else {
-            return "Weight";
+            return 'Weight';
         }
     });
 
@@ -61,9 +61,9 @@ function MagicItemsViewModel() {
     };
 
     self.unload = function() {
-      $.each(self.magicItems(), function(_, e) {
-          e.save();
-      });
+        $.each(self.magicItems(), function(_, e) {
+            e.save();
+        });
     };
 
     self.filteredAndSortedMagicItems = ko.computed(function() {
@@ -95,7 +95,7 @@ function MagicItemsViewModel() {
     };
 
     self.removeItem = function(item) {
-        self.magicItems.remove(item)
+        self.magicItems.remove(item);
         item.delete();
     };
 
@@ -106,4 +106,4 @@ function MagicItemsViewModel() {
     self.clear = function() {
         self.magicItems([]);
     };
-};
+}

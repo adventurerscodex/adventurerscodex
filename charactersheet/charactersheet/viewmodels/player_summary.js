@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 function PlayerSummaryViewModel() {
     var self = this;
@@ -19,4 +19,4 @@ function PlayerSummaryViewModel() {
         var summs = playerSummaryService.playerSummaries;
         self.playerSummaries(summs);
     };
-};
+}

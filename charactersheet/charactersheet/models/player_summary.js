@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * A simple representation of a player to be sent over the wire.
@@ -6,7 +6,7 @@
 function PlayerSummary() {
     var self = this;
     self.mapping = {
-	    ignore: ['clear', 'importValues', 'exportValues']
+        ignore: ['clear', 'importValues', 'exportValues']
     };
 
     self.id = ko.observable(null);
@@ -35,7 +35,7 @@ function PlayerSummary() {
     self.exportValues = function() {
         return ko.mapping.toJS(self, self.mapping);
     };
-};
+}
 
 PlayerSummary.findBy = function(characterId) {
     return PlayerSummary.fromKey(characterId);
@@ -75,7 +75,7 @@ PlayerSummary.fromKey = function(key) {
     try {
         var image = ImageModel.findBy(key)[0];
         imageUrl = image.imageUrl();
-    } catch(err) {};
+    } catch(err) { /*Ignore*/ }
     if (!imageUrl) {
         var info = PlayerInfo.findBy(key)[0];
         imageUrl = info.gravatarUrl();

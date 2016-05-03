@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
 
-	self.characterId = ko.observable(null);
+    self.characterId = ko.observable(null);
     self.name = ko.observable('');
     self.modifier = ko.observable(null);
     self.proficiency = ko.observable(false);
@@ -12,66 +12,66 @@ function SavingThrows() {
     //UI Methods
 
     self.proficiencyScore = function() {
-    	var key = CharacterManager.activeCharacter().key();
-    	var profBonus = 0;
-    	try {
-    		profBonus = parseInt(OtherStats.findBy(key)[0].proficiency());
-		} catch(err) {};
-		return profBonus;
-	};
+        var key = CharacterManager.activeCharacter().key();
+        var profBonus = 0;
+        try {
+            profBonus = parseInt(OtherStats.findBy(key)[0].proficiency());
+        } catch(err) { /*Ignore*/ }
+        return profBonus;
+    };
 
-	self.abilityScoreModifier = function() {
-    	var score = null;
-    	try {
-	    	var key = CharacterManager.activeCharacter().key();
-    		score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
-		} catch(err) {};
-    if (score === null){
-        return null
-    }
-    else {
-        return parseInt(score);
-    }
-	};
-
-	self.bonus = ko.pureComputed(function() {
-		var bonus = self.modifier() ? parseInt(self.modifier()) : null;
-		if (self.proficiency()) {
-			  bonus += self.proficiencyScore() + self.abilityScoreModifier();
-		}
-        else if (self.abilityScoreModifier()) {
-			    bonus += self.abilityScoreModifier();
-		}
-        else {
-          bonus = bonus != null ? bonus : null;
-      }
-		return bonus;
-	});
-
-	self.modifierLabel = ko.pureComputed(function() {
-        if (self.bonus() === null){
-            return '+ 0'
+    self.abilityScoreModifier = function() {
+        var score = null;
+        try {
+            var key = CharacterManager.activeCharacter().key();
+            score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
+        } catch(err) { /*Ignore*/ }
+        if (score === null){
+            return null;
         }
-		var str = self.bonus() >= 0 ? '+' + self.bonus() : String(self.bonus());
-		return str;
-	});
+        else {
+            return parseInt(score);
+        }
+    };
 
-	self.proficiencyLabel = ko.pureComputed(function() {
-		if (self.proficiency() === true) {
-			return 'fa fa-check';
-		}
-		return '';
-	});
+    self.bonus = ko.pureComputed(function() {
+        var bonus = self.modifier() ? parseInt(self.modifier()) : null;
+        if (self.proficiency()) {
+            bonus += self.proficiencyScore() + self.abilityScoreModifier();
+        }
+        else if (self.abilityScoreModifier()) {
+            bonus += self.abilityScoreModifier();
+        }
+        else {
+            bonus = bonus != null ? bonus : null;
+        }
+        return bonus;
+    });
 
-	//Utility Methods
+    self.modifierLabel = ko.pureComputed(function() {
+        if (self.bonus() === null){
+            return '+ 0';
+        }
+        var str = self.bonus() >= 0 ? '+' + self.bonus() : String(self.bonus());
+        return str;
+    });
 
-	self._abilityScore = function() {
-		return self.name().toLowerCase().substring(0,3);
-	};
+    self.proficiencyLabel = ko.pureComputed(function() {
+        if (self.proficiency() === true) {
+            return 'fa fa-check';
+        }
+        return '';
+    });
 
-	self.save = function() {
-		self.ps.save();
-	};
+    //Utility Methods
+
+    self._abilityScore = function() {
+        return self.name().toLowerCase().substring(0,3);
+    };
+
+    self.save = function() {
+        self.ps.save();
+    };
 
     self.delete = function() {
         self.ps.delete();
@@ -84,12 +84,12 @@ function SavingThrows() {
     };
 
     self.updateValues = function() {
-    	self.modifier.notifySubscribers();
-    	self.proficiency.notifySubscribers();
+        self.modifier.notifySubscribers();
+        self.proficiency.notifySubscribers();
     };
 
     self.importValues = function(values) {
-    	self.characterId(values.characterId);
+        self.characterId(values.characterId);
         self.name(values.name);
         self.modifier(values.modifier);
         self.proficiency(values.proficiency);
@@ -97,16 +97,16 @@ function SavingThrows() {
 
     self.exportValues = function() {
         return {
-        	characterId: self.characterId(),
-			name: self.name(),
-			modifier: self.modifier(),
-			proficiency: self.proficiency(),
-		}
+            characterId: self.characterId(),
+            name: self.name(),
+            modifier: self.modifier(),
+            proficiency: self.proficiency()
+        };
     };
-};
+}
 
 SavingThrows.findAllBy = function(characterId) {
-	return PersistenceService.findAll(SavingThrows).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(SavingThrows).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };

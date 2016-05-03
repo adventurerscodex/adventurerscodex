@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 function PartyTabViewModel() {
-	var self = this;
+    var self = this;
 
-	self.partyChatViewModel = ko.observable(new PartyChatViewModel());
+    self.partyChatViewModel = ko.observable(new PartyChatViewModel());
 
-	self.init = function() {
+    self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
-	};
+    };
 
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
@@ -20,4 +20,4 @@ function PartyTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

@@ -21,8 +21,7 @@ var init = function(viewModel) {
         try {
             Notifications.global.load.dispatch();
         } catch(err) {
-            console.log(err)
-            throw err
+            throw err;
         }
 
         players.init();

@@ -1,21 +1,21 @@
-"use strict";
+'use strict';
 
 function FeaturesTraits() {
-	var self = this;
-	self.ps = PersistenceService.register(FeaturesTraits, self);
-	self.mapping = {
-	    ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
-	};
+    var self = this;
+    self.ps = PersistenceService.register(FeaturesTraits, self);
+    self.mapping = {
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+    };
 
-	self.characterId = ko.observable(null);
-	self.background = ko.observable('');
-	self.ideals = ko.observable('');
-	self.flaws = ko.observable('');
-	self.bonds = ko.observable('');
+    self.characterId = ko.observable(null);
+    self.background = ko.observable('');
+    self.ideals = ko.observable('');
+    self.flaws = ko.observable('');
+    self.bonds = ko.observable('');
 
-	self.save = function() {
-		self.ps.save();
-	};
+    self.save = function() {
+        self.ps.save();
+    };
 
     self.clear = function() {
         var values = new FeaturesTraits().exportValues();
@@ -29,10 +29,10 @@ function FeaturesTraits() {
     self.exportValues = function() {
         return ko.mapping.toJS(self, self.mapping);
     };
-};
+}
 
 FeaturesTraits.findBy = function(characterId) {
-	return PersistenceService.findAll(FeaturesTraits).filter(function(e, i, _) {
-		return e.characterId() === characterId;
-	});
+    return PersistenceService.findAll(FeaturesTraits).filter(function(e, i, _) {
+        return e.characterId() === characterId;
+    });
 };
