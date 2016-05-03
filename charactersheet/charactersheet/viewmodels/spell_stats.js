@@ -26,4 +26,4 @@ function SpellStatsViewModel() {
         self.spellStats().clear();
     };
 
-};
+}

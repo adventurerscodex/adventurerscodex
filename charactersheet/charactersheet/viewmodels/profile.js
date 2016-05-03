@@ -38,4 +38,4 @@ function ProfileViewModel() {
     self.clear = function() {
         self.profile().clear();
     };
-};
+}

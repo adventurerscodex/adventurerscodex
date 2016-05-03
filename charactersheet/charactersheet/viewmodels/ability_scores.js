@@ -1,30 +1,30 @@
 'use strict';
 
 var isNumeric = function(n) {
-  return !isNaN(parseFloat(n)) && isFinite(n);
-}
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
 
 var getModifier = function(value){
-  if (isNumeric(value)){
-    return Math.floor((value - 10) / 2);
-  }
-  else {
-    return null
-  }
+    if (isNumeric(value)){
+        return Math.floor((value - 10) / 2);
+    }
+    else {
+        return null;
+    }
 };
 
 var getStrModifier = function(modifier){
-  if (modifier === null || modifier === "") {
-    return ''
-  }
-  var modifier = getModifier(modifier);
-  if (modifier >= 0){
-    modifier = '+ ' + modifier;
-  }
-  else{
-    modifier = '- ' + Math.abs(modifier);
-  }
-   return modifier;
+    if (modifier === null || modifier === '') {
+        return '';
+    }
+    modifier = getModifier(modifier);
+    if (modifier >= 0){
+        modifier = '+ ' + modifier;
+    }
+    else{
+        modifier = '- ' + Math.abs(modifier);
+    }
+    return modifier;
 };
 
 function AbilityScoresViewModel() {
@@ -56,9 +56,9 @@ function AbilityScoresViewModel() {
     self.unload = function() {
         self.abilityScores().save();
     };
-    
+
     self.dataHasChanged = function() {
         self.abilityScores().save();
-           Notifications.abilityScores.changed.dispatch();
+        Notifications.abilityScores.changed.dispatch();
     };
-};
+}

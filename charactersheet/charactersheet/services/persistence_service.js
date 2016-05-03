@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-console:0*/
 
 //=========================== PersistenceService ==============================
 
@@ -82,7 +83,7 @@ PersistenceService.delete = function(model, id) {
 
 PersistenceService.drop = function(table) {
     PersistenceService._findAllObjs(table).forEach(function(e, i, _) {
-        PersistenceService._delete(table, e.id)
+        PersistenceService._delete(table, e.id);
     });
 };
 
@@ -200,7 +201,7 @@ function PersistenceServiceToken(model, inst) {
     self.delete = function() {
         PersistenceService.delete(self.model, self.inst.__id);
     };
-};
+}
 
 //=============================================================================
 //============================= Private Methods ===============================
@@ -229,7 +230,7 @@ PersistenceService._findAll = function(model) {
                 o.importValues(objs[i].data);
                 o.__id = objs[i].id;
             } catch(err) {
-                var msg = "Import of " + model.name + " at index " + i + " failed.";
+                var msg = 'Import of ' + model.name + ' at index ' + i + ' failed.';
                 if (PersistenceService.logErrors) {
                     console.log(msg);
                 } else {
@@ -251,7 +252,7 @@ PersistenceService._save = function(key, inst) {
         try {
             data = inst.exportValues();
         } catch(err) {
-            var msg = "Export of " + key + " failed.";
+            var msg = 'Export of ' + key + ' failed.';
             if (PersistenceService.logErrors) {
                 console.log(msg);
             } else {
@@ -272,7 +273,7 @@ PersistenceService._save = function(key, inst) {
     var id = inst.__id;
     if (id === undefined || id === null) {
         var indecies = Object.keys(table);
-        indecies.sort(function(a,b){return parseInt(b)-parseInt(a)});
+        indecies.sort(function(a,b){return parseInt(b)-parseInt(a);});
 
         id = indecies[0] ? parseInt(indecies[0]) + 1 : 0;
         inst.__id = id;
@@ -281,21 +282,21 @@ PersistenceService._save = function(key, inst) {
     try {
         PersistenceService.storage[key] = JSON.stringify(table);
     } catch(err) {
-        var msg = "Storage quota exceeded."
+        var errmsg = 'Storage quota exceeded.';
         if (!PersistenceService.enableCompression) {
-            msg += " Try enabling compression for more storage."
+            errmsg += ' Try enabling compression for more storage.';
         }
 
         if (PersistenceService.logErrors) {
-            console.log(msg);
+            console.log(errmsg);
         } else {
-            throw msg;
+            throw errmsg;
         }
     }
     //Update the master table.
     var tables;
     try {
-        tables = JSON.parse(PersistenceService.storage[PersistenceService.master])
+        tables = JSON.parse(PersistenceService.storage[PersistenceService.master]);
     } catch(err) {
         tables = [];
     }
@@ -310,7 +311,7 @@ PersistenceService._delete = function(key, id) {
     if (Object.keys(table).indexOf(String(id)) > -1) {
         delete table[id];
     } else {
-        var msg = "No such element at index: " + id;
+        var msg = 'No such element at index: ' + id;
         if (PersistenceService.logErrors) {
             console.log(msg);
         } else {
@@ -322,4 +323,4 @@ PersistenceService._delete = function(key, id) {
 
 PersistenceService._listAll = function() {
     return JSON.parse(PersistenceService.storage[PersistenceService.master]);
-}
+};

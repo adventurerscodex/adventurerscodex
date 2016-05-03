@@ -32,6 +32,6 @@ function TreasureViewModel() {
     self.exportValues = function() {
         return {
             treasure: self.treasure().exportValues()
-        }
+        };
     };
-};
+}

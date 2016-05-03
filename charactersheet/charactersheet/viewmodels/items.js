@@ -4,18 +4,18 @@ function ItemsViewModel() {
     var self = this;
 
     self.sorts = {
-      'itemName asc': { field: 'itemName', direction: 'asc'},
-      'itemName desc': { field: 'itemName', direction: 'desc'},
-      'itemIsEquippable asc': { field: 'itemIsEquippable', direction: 'asc'},
-      'itemIsEquippable desc': { field: 'itemIsEquippable', direction: 'desc'},
-      'itemQty asc': { field: 'itemQty', direction: 'asc', numeric: true},
-      'itemQty desc': { field: 'itemQty', direction: 'desc', numeric: true},
-      'itemWeight asc': { field: 'itemWeight', direction: 'asc', numeric: true},
-      'itemWeight desc': { field: 'itemWeight', direction: 'desc', numeric: true},
-      'itemCost asc': { field: 'itemCost', direction: 'asc', numeric: true},
-      'itemCost desc': { field: 'itemCost', direction: 'desc', numeric: true},
-      'itemBodyLocation asc': { field: 'itemBodyLocation', direction: 'asc'},
-      'itemBodyLocation desc': { field: 'itemBodyLocation', direction: 'desc'}
+        'itemName asc': { field: 'itemName', direction: 'asc'},
+        'itemName desc': { field: 'itemName', direction: 'desc'},
+        'itemIsEquippable asc': { field: 'itemIsEquippable', direction: 'asc'},
+        'itemIsEquippable desc': { field: 'itemIsEquippable', direction: 'desc'},
+        'itemQty asc': { field: 'itemQty', direction: 'asc', numeric: true},
+        'itemQty desc': { field: 'itemQty', direction: 'desc', numeric: true},
+        'itemWeight asc': { field: 'itemWeight', direction: 'asc', numeric: true},
+        'itemWeight desc': { field: 'itemWeight', direction: 'desc', numeric: true},
+        'itemCost asc': { field: 'itemCost', direction: 'asc', numeric: true},
+        'itemCost desc': { field: 'itemCost', direction: 'desc', numeric: true},
+        'itemBodyLocation asc': { field: 'itemBodyLocation', direction: 'asc'},
+        'itemBodyLocation desc': { field: 'itemBodyLocation', direction: 'desc'}
     };
 
     self.items = ko.observableArray([]);
@@ -32,10 +32,10 @@ function ItemsViewModel() {
             for (var i = 0; i < eqpLen; i++) {
                 weightTotal += self.items()[i].totalWeight();
             }
-            return ("Weight: " + weightTotal + " (lbs)");
+            return ('Weight: ' + weightTotal + ' (lbs)');
         }
         else {
-            return "Weight";
+            return 'Weight';
         }
     });
 
@@ -127,4 +127,4 @@ function ItemsViewModel() {
     self.editItem = function(item) {
         self.selecteditem(item);
     };
-};
+}

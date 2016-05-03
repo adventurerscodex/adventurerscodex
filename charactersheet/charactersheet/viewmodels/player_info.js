@@ -35,4 +35,4 @@ function PlayerInfoViewModel() {
         self.playerInfo().clear();
     };
     
-};
+}

@@ -19,4 +19,4 @@ function PlayerSummaryViewModel() {
         var summs = playerSummaryService.playerSummaries;
         self.playerSummaries(summs);
     };
-};
+}

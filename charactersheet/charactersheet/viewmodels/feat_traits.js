@@ -16,10 +16,10 @@ function FeaturesTraitsViewModel() {
         } else {
             self.featTraits(new FeaturesTraits());
         }
-        self.featTraits().characterId(CharacterManager.activeCharacter().key())
+        self.featTraits().characterId(CharacterManager.activeCharacter().key());
     };
     
     self.unload = function() {
         self.featTraits().save();
     };
-};
+}

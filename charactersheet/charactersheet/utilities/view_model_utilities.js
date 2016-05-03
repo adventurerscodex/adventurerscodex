@@ -18,7 +18,7 @@ var ViewModelUtilities = {
                 try {
                     vm[keys[i]]()[property]();
                 } catch(err) {
-                    throw "Module " + keys[i] + " failed to load.\n" + err;
+                    throw 'Module ' + keys[i] + ' failed to load.\n' + err;
                 }
             }
         }
@@ -30,7 +30,7 @@ var ViewModelUtilities = {
      * @param {object ViewModel} A view model containing other view models.
      */
     initSubViewModels : function(vm) {
-        ViewModelUtilities.callOnSubViewModels(vm, 'init')
+        ViewModelUtilities.callOnSubViewModels(vm, 'init');
     },
 
     /**
@@ -39,7 +39,7 @@ var ViewModelUtilities = {
      * @param {object ViewModel} A view model containing other view models.
      */
     loadSubViewModels : function(vm) {
-        ViewModelUtilities.callOnSubViewModels(vm, 'load')
+        ViewModelUtilities.callOnSubViewModels(vm, 'load');
     },
 
     /**
@@ -48,7 +48,7 @@ var ViewModelUtilities = {
      * @param {object ViewModel} A view model containing other view models.
      */
     unloadSubViewModels : function(vm) {
-        ViewModelUtilities.callOnSubViewModels(vm, 'unload')
+        ViewModelUtilities.callOnSubViewModels(vm, 'unload');
     },
 
     /**
@@ -57,6 +57,6 @@ var ViewModelUtilities = {
      * @param {object ViewModel} A view model containing other view models.
      */
     clearSubViewModels : function(vm) {
-        ViewModelUtilities.callOnSubViewModels(vm, 'clear')
+        ViewModelUtilities.callOnSubViewModels(vm, 'clear');
     }
 };

@@ -25,4 +25,4 @@ function AppearanceViewModel() {
     self.clear = function() {
         self.appearance().clear();
     };
-};
+}

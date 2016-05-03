@@ -25,4 +25,4 @@ function InventoryTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

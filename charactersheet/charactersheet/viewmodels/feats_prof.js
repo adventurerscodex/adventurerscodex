@@ -20,4 +20,4 @@ function FeatsProfViewModel() {
     self.unload = function() {
         self.featsProf().save();
     };
-};
+}

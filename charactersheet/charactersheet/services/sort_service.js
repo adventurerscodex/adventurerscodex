@@ -67,8 +67,8 @@ var SortService = {
      * of all possible sorts, return the sort for the given column.
      */
     sortForName: function(sort, columnName, allSorts) {
-         var newSort;
-         if (sort.field === columnName && sort.direction === 'asc') {
+        var newSort;
+        if (sort.field === columnName && sort.direction === 'asc') {
             newSort = allSorts[columnName+' desc'];
         } else {
             newSort = allSorts[columnName+' asc'];

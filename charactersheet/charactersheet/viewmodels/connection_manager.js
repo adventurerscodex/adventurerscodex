@@ -17,8 +17,8 @@ function ConnectionManagerViewModel() {
     };
 
     self.unload = function() {
-         self.connectionManager().connected(false);
-         self.connectionManager().save();
+        self.connectionManager().connected(false);
+        self.connectionManager().save();
     };
 
     self.leaveRoomButton = function() {
@@ -27,4 +27,4 @@ function ConnectionManagerViewModel() {
         }
     };
 
-};
+}

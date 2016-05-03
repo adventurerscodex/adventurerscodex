@@ -27,4 +27,4 @@ function ProfileTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

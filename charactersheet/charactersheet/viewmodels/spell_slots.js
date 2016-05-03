@@ -4,12 +4,12 @@ function SpellSlotsViewModel() {
     var self = this;
 
     self.sorts = {
-      'level asc': { field: 'level', direction: 'asc', numeric: true},
-      'level desc': { field: 'level', direction: 'desc', numeric: true},
-      'maxSpellSlots asc': { field: 'maxSpellSlots', direction: 'asc', numeric: true},
-      'maxSpellSlots desc': { field: 'maxSpellSlots', direction: 'desc', numeric: true},
-      'usedSpellSlots asc': { field: 'usedSpellSlots', direction: 'asc', numeric: true},
-      'usedSpellSlots desc': { field: 'usedSpellSlots', direction: 'desc', numeric: true}
+        'level asc': { field: 'level', direction: 'asc', numeric: true},
+        'level desc': { field: 'level', direction: 'desc', numeric: true},
+        'maxSpellSlots asc': { field: 'maxSpellSlots', direction: 'asc', numeric: true},
+        'maxSpellSlots desc': { field: 'maxSpellSlots', direction: 'desc', numeric: true},
+        'usedSpellSlots asc': { field: 'usedSpellSlots', direction: 'asc', numeric: true},
+        'usedSpellSlots desc': { field: 'usedSpellSlots', direction: 'desc', numeric: true}
     };
 
     self.slots = ko.observableArray([]);
@@ -29,7 +29,7 @@ function SpellSlotsViewModel() {
     };
 
     self.unload = function() {
-         self.slots().forEach(function(e, i, _) {
+        self.slots().forEach(function(e, i, _) {
             e.save();
         });
     };
@@ -92,4 +92,4 @@ function SpellSlotsViewModel() {
     self.clear = function() {
         self.slots([]);
     };
-};
+}

@@ -20,4 +20,4 @@ function PlayerSummaryTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

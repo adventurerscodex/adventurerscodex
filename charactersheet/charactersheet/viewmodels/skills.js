@@ -4,12 +4,12 @@ function SkillsViewModel() {
     var self = this;
 
     self.sorts = {
-      'name asc': { field: 'name', direction: 'asc'},
-      'name desc': { field: 'name', direction: 'desc'},
-      'modifier asc': { field: 'modifier', direction: 'asc'},
-      'modifier desc': { field: 'modifier', direction: 'desc'},
-      'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
-      'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'modifier asc': { field: 'modifier', direction: 'asc'},
+        'modifier desc': { field: 'modifier', direction: 'desc'},
+        'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
+        'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
     };
 
     self._defaultSkills = function() {
@@ -31,7 +31,7 @@ function SkillsViewModel() {
             { name: 'Religion', abilityScore: 'Int', proficency: false, modifier: null },
             { name: 'Sleight of Hand', abilityScore: 'Dex', proficency: false, modifier: null },
             { name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: null },
-            { name: 'Survival', abilityScore: 'Wis', proficency: false, modifier: null },
+            { name: 'Survival', abilityScore: 'Wis', proficency: false, modifier: null }
         ];
         return skills.map(function(e, i, _) {
             var skill = new Skill(self);
@@ -66,7 +66,7 @@ function SkillsViewModel() {
         Notifications.stats.changed.add(self.dataHasChanged);
         self.skills().forEach(function(e, i, _) {
             self.addNotifiers(e);
-        })
+        });
     };
 
     self.unload = function() {
@@ -137,12 +137,12 @@ function SkillsViewModel() {
         };
         skill.name.subscribe(savefn);
         skill.bonus.subscribe(savefn);
-    }
+    };
 
     self.dataHasChanged = function() {
         self.skills().forEach(function(e, i, _) {
             e.updateValues();
-        })
+        });
     };
-};
+}
 

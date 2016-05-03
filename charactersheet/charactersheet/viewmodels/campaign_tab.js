@@ -23,4 +23,4 @@ function CampaignTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

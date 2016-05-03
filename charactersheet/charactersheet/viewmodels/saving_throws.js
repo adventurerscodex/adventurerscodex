@@ -4,12 +4,12 @@ function SavingThrowsViewModel() {
     var self = this;
 
     self.sorts = {
-      'name asc': { field: 'name', direction: 'asc'},
-      'name desc': { field: 'name', direction: 'desc'},
-      'modifier asc': { field: 'modifier', direction: 'asc'},
-      'modifier desc': { field: 'modifier', direction: 'desc'},
-      'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
-      'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'modifier asc': { field: 'modifier', direction: 'asc'},
+        'modifier desc': { field: 'modifier', direction: 'desc'},
+        'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
+        'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
     };
 
     self._defaultSavingThrows = function() {
@@ -39,12 +39,12 @@ function SavingThrowsViewModel() {
         Notifications.abilityScores.changed.add(function() {
             $.each(self.savingThrows(), function(_, e) {
                 e.updateValues();
-            })
+            });
         });
         Notifications.stats.changed.add(function() {
             $.each(self.savingThrows(), function(_, e) {
                 e.updateValues();
-            })
+            });
         });
     };
 
@@ -64,7 +64,7 @@ function SavingThrowsViewModel() {
     self.unload = function() {
         $.each(self.savingThrows(), function(_, e) {
             e.save();
-        })
+        });
     };
 
     /* UI Methods */
@@ -110,4 +110,4 @@ function SavingThrowsViewModel() {
     self.clear = function() {
         self.savingThrows([]);
     };
-};
+}
