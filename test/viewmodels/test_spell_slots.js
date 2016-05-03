@@ -18,7 +18,7 @@ describe('Spell Slots View Model', function() {
 			CharacterManager.activeCharacter = c;
 		});
 	});
-	
+
 	describe('Remove Slot', function() {
 		it('should remove a slot from the list of slots', function() {
 			var c = CharacterManager.activeCharacter;
@@ -33,12 +33,12 @@ describe('Spell Slots View Model', function() {
 			p.addSlot();
 			p.slots().length.should.equal(1);
 			p.removeSlot(p.slots().pop());
-			p.slots().length.should.equal(0);			
+			p.slots().length.should.equal(0);
 
 			CharacterManager.activeCharacter = c;
 		});
 	});
-	
+
 	describe('Sort By', function() {
 		it('should sort the list of slots by given criteria', function() {
 			var p = new SpellSlotsViewModel();
@@ -52,21 +52,21 @@ describe('Spell Slots View Model', function() {
 			p.sort().should.equal(p.sorts['maxSpellSlots desc']);
 		});
 	});
-	
+
 	describe('Sort Arrow', function() {
 		it('should sort the list of slots by given criteria', function() {
 			var p = new SpellSlotsViewModel();
 			p.sortBy('level');
 			p.sort().should.equal(p.sorts['level desc']);
-			p.sortArrow('level').should.equal('glyphicon glyphicon-arrow-down');
+			p.sortArrow('level').should.equal('fa fa-arrow-down fa-color');
 			p.sortArrow('maxSpellSlots').should.equal('');
 			p.sortBy('level');
 			p.sort().should.equal(p.sorts['level asc']);
-			p.sortArrow('level').should.equal('glyphicon glyphicon-arrow-up');
+			p.sortArrow('level').should.equal('fa fa-arrow-up fa-color');
 			p.sortArrow('maxSpellSlots').should.equal('');
 		});
 	});
-	
+
 	describe('Max Slot Width', function() {
 		it('should return the width of the slot bar as a percent.', function() {
 			var c = CharacterManager.activeCharacter;
@@ -81,12 +81,12 @@ describe('Spell Slots View Model', function() {
 			p.addSlot();
 			p.addSlot();
 			p.addSlot();
-			p.maxSlotWidth().should.equal(25);			
+			p.maxSlotWidth().should.equal(25);
 
 			CharacterManager.activeCharacter = c;
 		});
 	});
-	
+
 	describe('Reset Slots', function() {
 		it('should reset all slot counts to 0.', function() {
 			var c = CharacterManager.activeCharacter;
@@ -101,10 +101,10 @@ describe('Spell Slots View Model', function() {
 			p.addSlot();
 			p.blankSlot().maxSpellSlots(5);
 			p.addSlot();
-			
+
 			p.slots()[0].usedSpellSlots(1);
 			p.slots()[1].usedSpellSlots(1);
-			
+
 			p.resetSlots();
 			p.slots()[0].usedSpellSlots().should.equal(0);
 			p.slots()[1].usedSpellSlots().should.equal(0);
@@ -125,4 +125,3 @@ describe('Spell Slots View Model', function() {
 		});
 	});
 });
-
