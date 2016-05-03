@@ -81,11 +81,11 @@ describe('Skill Tree', function() {
 			var p = new SkillsViewModel();
 			p.sortBy('name');
 			p.sort().should.equal(p.sorts['name desc']);
-			p.sortArrow('name').should.equal('glyphicon glyphicon-arrow-down');
+			p.sortArrow('name').should.equal('fa fa-arrow-down fa-color');
 			p.sortArrow('modifier').should.equal('');
 			p.sortBy('name');
 			p.sort().should.equal(p.sorts['name asc']);
-			p.sortArrow('name').should.equal('glyphicon glyphicon-arrow-up');
+			p.sortArrow('name').should.equal('fa fa-arrow-up fa-color');
 			p.sortArrow('modifier').should.equal('');
 		});
 	});
@@ -102,4 +102,3 @@ describe('Skill Tree', function() {
 		});
 	});
 });
-
