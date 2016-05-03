@@ -39,4 +39,17 @@ describe('Character Model', function() {
             deleted.should.equal(true);
         });
     });
+
+    describe('Change Id For Data', function() {
+        it('should change the value of the character id or key property in a given json model.', function() {
+            var newId = '987654321';
+            WeaponFixture.characterId.should.not.equal(newId);
+            var newWeapon = Character._changeIdForData(newId, WeaponFixture);
+            newWeapon.characterId.should.equal(newId);
+
+            CharacterFixture.key.should.not.equal(newId);
+            var newChar = Character._changeIdForData(newId, CharacterFixture);
+            newChar.key.should.equal(newId);
+        });
+    });
 });

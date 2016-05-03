@@ -131,3 +131,23 @@ var SortServiceFixture = {
 
 }
 
+var CharacterFixture = {
+    "key": "18c286fa-3ce6-49e9-99cc-4710118915ff",
+    "isDefault": true,
+    "isActive": true,
+    "playerType": {
+        "key": "character",
+        "visibleTabs": [
+            "profile",
+            "stats",
+            "skills",
+            "spells",
+            "equipment",
+            "inventory",
+            "notes",
+            "settings",
+            "party"
+        ],
+        "defaultTab": "profile"
+    }
+};
