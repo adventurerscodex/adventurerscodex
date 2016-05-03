@@ -51,15 +51,15 @@ var SortService = {
      * appropriate sort direction.
      */
     sortArrow: function(columnName, sort) {
-    	var arrow = '';
-    	if (columnName === sort.field) {
-			if (sort.direction === 'asc') {
-				arrow = 'fa fa-arrow-up fa-color';
-			} else {
-				arrow = 'fa fa-arrow-down fa-color';
-			}
-    	}
-    	return arrow;
+        var arrow = '';
+        if (columnName === sort.field) {
+            if (sort.direction === 'asc') {
+                arrow = 'fa fa-arrow-up fa-color';
+            } else {
+                arrow = 'fa fa-arrow-down fa-color';
+            }
+        }
+        return arrow;
     },
 
     /**
