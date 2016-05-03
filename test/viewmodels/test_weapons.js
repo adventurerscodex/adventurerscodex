@@ -54,7 +54,7 @@ describe('WeaponsViewModel', function(){
     });
 
     describe('Sort By', function() {
-        it('should sort the list of spells by given criteria', function() {
+        it('should sort the list of weapons by given criteria', function() {
             var weapons = new WeaponsViewModel();
             weapons.sortBy('weaponName');
             weapons.sort().should.equal(weapons.sorts['weaponName desc']);
@@ -70,7 +70,7 @@ describe('WeaponsViewModel', function(){
     });
 
     describe('Sort Arrow', function() {
-        it('should sort the list of skills by given criteria', function() {
+        it('should sort the list of weapons by given criteria', function() {
             var weapons = new WeaponsViewModel();
             weapons.sortBy('weaponName');
             weapons.sort().should.equal(weapons.sorts['weaponName desc']);
