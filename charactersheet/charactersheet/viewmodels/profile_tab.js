@@ -1,20 +1,20 @@
-"use strict";
+'use strict';
 
 /**
  * This view model contains the player's profile information.
  */
 function ProfileTabViewModel() {
-	var self = this;
+    var self = this;
 
-	self.profileViewModel		 = ko.observable(new ProfileViewModel());
-	self.appearanceViewModel 	 = ko.observable(new AppearanceViewModel());
+    self.profileViewModel         = ko.observable(new ProfileViewModel());
+    self.appearanceViewModel      = ko.observable(new AppearanceViewModel());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
-	self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
-	self.playerInfoViewModel     = ko.observable(new PlayerInfoViewModel());
+    self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
+    self.playerInfoViewModel     = ko.observable(new PlayerInfoViewModel());
 
-	self.init = function() {
+    self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
-	};
+    };
 
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
@@ -27,4 +27,4 @@ function ProfileTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 function ImageModel() {
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);
 
-	self.characterId = ko.observable(null);
+    self.characterId = ko.observable(null);
 
     /**
      * The image data.
@@ -20,31 +20,31 @@ function ImageModel() {
     self.width = ko.observable(80);
 
     self.save = function() {
-		self.ps.save();
-	};
+        self.ps.save();
+    };
 
-	self.clear = function() {
-		self.imageUrl('');
-	};
+    self.clear = function() {
+        self.imageUrl('');
+    };
 
-	self.importValues = function(values) {
-    	self.characterId(values.characterId);
-    	self.imageUrl(values.imageUrl);
-	};
+    self.importValues = function(values) {
+        self.characterId(values.characterId);
+        self.imageUrl(values.imageUrl);
+    };
 
-	self.exportValues = function() {
-		return {
-        	characterId: self.characterId(),
-        	imageUrl: self.imageUrl()
-		}
-	};
+    self.exportValues = function() {
+        return {
+            characterId: self.characterId(),
+            imageUrl: self.imageUrl()
+        };
+    };
 
-	self.resize = function() {
-	    var compData = ImageModel.resizeImageData(
-	        self.dataUrl(), self.height(), self.width())
-	    self.imageUrl(compData);
-	    self.save();
-	};
+    self.resize = function() {
+        var compData = ImageModel.resizeImageData(
+            self.dataUrl(), self.height(), self.width());
+        self.imageUrl(compData);
+        self.save();
+    };
     self.dataUrl.subscribe(self.resize);
 
     /**
@@ -57,7 +57,7 @@ function ImageModel() {
             return false;
         }
     });
-};
+}
 
 ImageModel.findBy = function(characterId) {
     return PersistenceService.findAll(ImageModel).filter(function(e, i, _) {
@@ -96,11 +96,11 @@ ImageModel.resizeImageData = function(dataUrl, max_height, max_width) {
     // resize the canvas and draw the image data into it
     canvas.width = width;
     canvas.height = height;
-    var ctx = canvas.getContext("2d");
+    var ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, width, height);
 
     //preview.appendChild(canvas); // do the actual resized preview
 
-    var data = canvas.toDataURL("image/jpeg"); // get the data from canvas as 70% JPG (can be also PNG, etc.)
+    var data = canvas.toDataURL('image/jpeg'); // get the data from canvas as 70% JPG (can be also PNG, etc.)
     return data.length < 10 ? dataUrl : data;
-}
+};

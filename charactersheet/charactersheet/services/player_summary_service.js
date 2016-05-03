@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * A service that listens for new players from the PlayerService
@@ -54,9 +54,9 @@ function PlayerSummaryService() {
             //Only respond if you're a player.
             var type = CharacterManager.activeCharacter().playerType().key;
             if (type === PlayerTypes.characterPlayerType.key) {
-                messenger.sendDataMsg(roomId, 'iam', self._getPlayerData())
+                messenger.sendDataMsg(roomId, 'iam', self._getPlayerData());
             }
-        } catch(err) {};
+        } catch(err) { /*Ignore*/ }
     };
     
     /**
@@ -111,4 +111,4 @@ function PlayerSummaryService() {
         return 'whois+' + key;
     };
 
-};
+}

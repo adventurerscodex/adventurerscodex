@@ -1,16 +1,16 @@
-"use strict";
+'use strict';
 
 /**
  * This view model contains the DM's campaign information.
  */
 function CampaignTabViewModel() {
-	var self = this;
+    var self = this;
 
-	self.campaignViewModel = ko.observable(new CampaignViewModel());
+    self.campaignViewModel = ko.observable(new CampaignViewModel());
 
-	self.init = function() {
+    self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
-	};
+    };
 
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
@@ -23,4 +23,4 @@ function CampaignTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

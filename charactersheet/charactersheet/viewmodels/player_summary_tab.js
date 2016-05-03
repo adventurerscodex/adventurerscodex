@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
 function PlayerSummaryTabViewModel() {
-	var self = this;
+    var self = this;
 
-	self.playerSummaryViewModel = ko.observable(new PlayerSummaryViewModel());
+    self.playerSummaryViewModel = ko.observable(new PlayerSummaryViewModel());
 
-	self.init = function() {
+    self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
-	};
+    };
 
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
@@ -20,4 +20,4 @@ function PlayerSummaryTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

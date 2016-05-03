@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * This view model is responsible for responding to and displaying
@@ -10,10 +10,10 @@ function UserNotificationViewModel() {
     self.notifications = ko.observableArray([]);
 
     self.init = function() {
-        Notifications.userNotification.infoNotification.add(self.addInfoNotification)
-        Notifications.userNotification.successNotification.add(self.addSuccessNotification)
-        Notifications.userNotification.warningNotification.add(self.addWarningNotification)
-        Notifications.userNotification.dangerNotification.add(self.addDangerNotification)
+        Notifications.userNotification.infoNotification.add(self.addInfoNotification);
+        Notifications.userNotification.successNotification.add(self.addSuccessNotification);
+        Notifications.userNotification.warningNotification.add(self.addWarningNotification);
+        Notifications.userNotification.dangerNotification.add(self.addDangerNotification);
     };
 
     self.load = function() {};
@@ -46,4 +46,4 @@ function UserNotificationViewModel() {
             UserNotification.notificationWithTypeAndMessage('danger', message));
     };
 
-};
+}

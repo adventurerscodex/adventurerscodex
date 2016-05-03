@@ -1,18 +1,18 @@
-"use strict";
+'use strict';
 
 /**
  * This view model contains the player's inventory information.
  */
 function InventoryTabViewModel() {
-	var self = this;
+    var self = this;
 
-	self.itemsViewModel = ko.observable(new ItemsViewModel());
+    self.itemsViewModel = ko.observable(new ItemsViewModel());
     self.treasureViewModel = ko.observable(new TreasureViewModel());
     self.magicitemsViewModel = ko.observable(new MagicItemsViewModel());
 
-	self.init = function() {
+    self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
-	};
+    };
 
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
@@ -25,4 +25,4 @@ function InventoryTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

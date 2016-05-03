@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 /**
  * A central repository of signals used in Adventurer's Codex
@@ -27,7 +27,7 @@ var Notifications = {
         /**
          * Called when the app should unload it's data.
          */
-        unload: new signals.Signal(),
+        unload: new signals.Signal()
     },
 
     userNotification: {
@@ -53,7 +53,7 @@ var Notifications = {
          * Notifies the user of something critical.
          * REQUIRES: message parameter
          */
-        dangerNotification: new signals.Signal(),
+        dangerNotification: new signals.Signal()
     },
 
     characterManager: {
@@ -82,14 +82,14 @@ var Notifications = {
          * Called when a new player leaves the room
          * @param Player model representing the exiting player.
          */
-        playerLeft: new signals.Signal(),
+        playerLeft: new signals.Signal()
     },
 
     playerSummary: {
         /**
          * Called when the list of player summaries has been updated.
          */
-        changed: new signals.Signal(),
+        changed: new signals.Signal()
     },
 
     /*****************************
@@ -97,11 +97,11 @@ var Notifications = {
      *****************************/
 
     abilityScores: {
-    	changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     campaign: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     characters: {
@@ -110,15 +110,15 @@ var Notifications = {
     },
 
     playerImage: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     playerInfo: {
-    	changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     profile: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     settings: {
@@ -126,14 +126,14 @@ var Notifications = {
     },
 
     stats: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     skills: {
-	    changed: new signals.Signal()
+        changed: new signals.Signal()
     },
 
     spellStats: {
-	    changed: new signals.Signal()
-    },
+        changed: new signals.Signal()
+    }
 };

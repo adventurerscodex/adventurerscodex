@@ -1,16 +1,16 @@
-"use strict";
+'use strict';
 
 /**
  * This view model contains the player's notes information.
  */
 function NotesTabViewModel() {
-	var self = this;
+    var self = this;
 
-	self.notesViewModel = ko.observable(new NotesViewModel());
+    self.notesViewModel = ko.observable(new NotesViewModel());
 
-	self.init = function() {
+    self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
-	};
+    };
 
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
@@ -23,4 +23,4 @@ function NotesTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}
