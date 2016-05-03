@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('NPC Model', function() {
     //Clean up after each test.
@@ -67,10 +67,10 @@ describe('NPC Model', function() {
             NPC.findAllBy('someid').length.should.equal(0);
 
             //Filled
-			simple.mock(PersistenceService, 'findAll').returnWith([new NPC(), new NPC()].map(function(e, i, _) {
-				e.characterId('someid');
-				return e;
-			}));
+            simple.mock(PersistenceService, 'findAll').returnWith([new NPC(), new NPC()].map(function(e, i, _) {
+                e.characterId('someid');
+                return e;
+            }));
             NPC.findAllBy('someid').length.should.equal(2);
 
         });

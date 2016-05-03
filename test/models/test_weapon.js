@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Weapon Model', function() {
     //Clean up after each test.
@@ -62,10 +62,10 @@ describe('Weapon Model', function() {
             Weapon.findAllBy('someid').length.should.equal(0);
 
             //Filled
-			simple.mock(PersistenceService, 'findAll').returnWith([new Weapon(), new Weapon()].map(function(e, i, _) {
-				e.characterId('someid');
-				return e;
-			}));
+            simple.mock(PersistenceService, 'findAll').returnWith([new Weapon(), new Weapon()].map(function(e, i, _) {
+                e.characterId('someid');
+                return e;
+            }));
             Weapon.findAllBy('someid').length.should.equal(2);
 
         });

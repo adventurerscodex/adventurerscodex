@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('User Notifications Model', function() {
     //Clean up after each test.
@@ -8,8 +8,8 @@ describe('User Notifications Model', function() {
 
     describe('notificationWithTypeAndMessage', function() {
         it('should return a notification with a given type and message.', function() {
-            var type = "warning";
-            var message = "hi";
+            var type = 'warning';
+            var message = 'hi';
             var notification = UserNotification.notificationWithTypeAndMessage(type, message);
 
             notification.type.should.equal(type);
@@ -19,11 +19,11 @@ describe('User Notifications Model', function() {
 
     describe('Alert Class', function() {
         it('should return the correct alert class for a given alert type', function() {
-            var type = "warning";
-            var message = "hi";
+            var type = 'warning';
+            var message = 'hi';
             var notification = UserNotification.notificationWithTypeAndMessage(type, message);
 
-            notification.alertClass().should.equal('alert-warning')
+            notification.alertClass().should.equal('alert-warning');
         });
     });
 

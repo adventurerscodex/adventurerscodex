@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Player Info Model', function() {
     //Clean up after each test.
@@ -67,10 +67,10 @@ describe('Player Info Model', function() {
             PlayerInfo.findBy('someid').length.should.equal(0);
 
             //Filled
-			simple.mock(PersistenceService, 'findAll').returnWith([new PlayerInfo(), new PlayerInfo()].map(function(e, i, _) {
-				e.characterId('someid');
-				return e;
-			}));
+            simple.mock(PersistenceService, 'findAll').returnWith([new PlayerInfo(), new PlayerInfo()].map(function(e, i, _) {
+                e.characterId('someid');
+                return e;
+            }));
             PlayerInfo.findBy('someid').length.should.equal(2);
 
         });

@@ -7,12 +7,12 @@ var AppearanceFixture = {
 };
 
 var AbilitiesFixture = {
-	'str': 12,
-	'dex': 13,
-	'con': 14,
-	'int': 16,
-	'wis': 15,
-	'cha': 18
+    'str': 12,
+    'dex': 13,
+    'con': 14,
+    'int': 16,
+    'wis': 15,
+    'cha': 18
 };
 
 var FeatsProfFixture = {

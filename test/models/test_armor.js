@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 describe('Armor Model', function() {
     describe('Clear', function() {
