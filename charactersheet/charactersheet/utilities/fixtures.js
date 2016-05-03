@@ -30,15 +30,15 @@ Fixtures = {
     },
     hitDiceType : {
         hitDiceOptions : [
-        'D4', 'D6', 'D8', 'D10', 'D12', 'D20']
+            'D4', 'D6', 'D8', 'D10', 'D12', 'D20']
     },
     magicItem : {
         magicItemTypeOptions : [
             'Armor', 'Sword', 'Rod', 'Ring', 'Staff',
-             'Wand', 'Potion', 'Wondrous Item'],
-         magicItemRarityOptions : [
-             'Uncommon', 'Common', 'Rare', 'Rarity Varies',
-             'Very Rare', 'Legendary']
+            'Wand', 'Potion', 'Wondrous Item'],
+        magicItemRarityOptions : [
+            'Uncommon', 'Common', 'Rare', 'Rarity Varies',
+            'Very Rare', 'Legendary']
     },
     spell : {
         spellTypeOptions : [
@@ -66,7 +66,7 @@ Fixtures = {
     },
     spellStats : {
         spellcastingAbilityOptions: [
-        'INT', 'WIS', 'CHA']
+            'INT', 'WIS', 'CHA']
     },
     weapon : {
         weaponProficiencyOptions : [
@@ -79,8 +79,8 @@ Fixtures = {
             'Small', 'Medium', 'Large'],
         weaponPropertyOptions : [
             'Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading',
-             'Range', 'Reach', 'Special', 'Thrown', 'Versatile'],
-         weaponDamageTypeOptions : [
-             'Bludgeoning', 'Piercing', 'Slashing']
+            'Range', 'Reach', 'Special', 'Thrown', 'Versatile'],
+        weaponDamageTypeOptions : [
+            'Bludgeoning', 'Piercing', 'Slashing']
     }
-}
+};

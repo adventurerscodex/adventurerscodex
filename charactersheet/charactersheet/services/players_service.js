@@ -94,12 +94,12 @@ function PlayersService() {
         });
         Notifications.connectedPlayers.playerLeft.dispatch(player);
     };
-};
+}
 
 
 function Player() {
     var self = this;
     self.id = '';    
     self.lastPing = 0;
-};
+}
 

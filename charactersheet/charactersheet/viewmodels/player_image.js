@@ -81,7 +81,7 @@ function PlayerImageViewModel() {
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
-        return self.hasImage() ? 'no-border' : ''
+        return self.hasImage() ? 'no-border' : '';
     });
 
     //Player Image Handlers
@@ -117,4 +117,4 @@ function PlayerImageViewModel() {
             return '';
         }
     });
-};
+}

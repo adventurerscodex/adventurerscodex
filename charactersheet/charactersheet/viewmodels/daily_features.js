@@ -31,7 +31,7 @@ function DailyFeatureViewModel() {
     };
 
     self.unload = function() {
-         self.dailyFeatures().forEach(function(e, i, _) {
+        self.dailyFeatures().forEach(function(e, i, _) {
             e.save();
         });
     };
@@ -63,7 +63,7 @@ function DailyFeatureViewModel() {
     //Manipulating daily features
 
     self.editDailyFeature = function(dailyFeature) {
-      self.selecteditem(dailyFeature);
+        self.selecteditem(dailyFeature);
     };
 
     self.addDailyFeature = function() {
@@ -101,4 +101,4 @@ function DailyFeatureViewModel() {
     self.clear = function() {
         self.dailyFeatures([]);
     };
-};
+}

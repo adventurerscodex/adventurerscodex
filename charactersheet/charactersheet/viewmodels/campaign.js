@@ -21,4 +21,4 @@ function CampaignViewModel() {
     self.unload = function() {
         self.campaign().save();
     };
-};
+}

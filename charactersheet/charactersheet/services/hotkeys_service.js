@@ -1,4 +1,4 @@
-"use strict"
+'use strict';
 /*
  * A utility class that provides helpers for parsing
  * input keys and registers new [hotkey, function] combinations.
@@ -38,7 +38,7 @@ var HotkeysService = {
         }
         if (callback){
             HotkeysService._hotkeys[hotkey] = callback;
-        };
+        }
     },
 
     /**
@@ -49,15 +49,15 @@ var HotkeysService = {
     },
 
     _determineMetakey : function(event){
-            if(event.ctrlKey){
-                return 'ctrl';
-            }
-            else if(event.shiftKey){
-                return 'shift';
-            }
+        if(event.ctrlKey){
+            return 'ctrl';
+        }
+        else if(event.shiftKey){
+            return 'shift';
+        }
             else{
-                return '';
-            }
+            return '';
+        }
     }
 
 };

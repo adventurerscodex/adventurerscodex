@@ -69,4 +69,4 @@ function EnemiesViewModel() {
     self.editEnemy = function(enemy) {
         self.selectedEnemy(enemy);
     };
-};
+}

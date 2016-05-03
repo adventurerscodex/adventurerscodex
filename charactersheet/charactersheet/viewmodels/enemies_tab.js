@@ -20,5 +20,5 @@ function EnemiesTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}
 

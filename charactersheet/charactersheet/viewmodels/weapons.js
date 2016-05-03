@@ -9,16 +9,16 @@ function WeaponsViewModel() {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
-      'weaponName asc': { field: 'weaponName', direction: 'asc'},
-      'weaponName desc': { field: 'weaponName', direction: 'desc'},
-      'weaponDmg asc': { field: 'weaponDmg', direction: 'asc'},
-      'weaponDmg desc': { field: 'weaponDmg', direction: 'desc'},
-      'weaponRange asc': { field: 'weaponRange', direction: 'asc'},
-      'weaponRange desc': { field: 'weaponRange', direction: 'desc'},
-      'weaponDamageType asc': { field: 'weaponDamageType', direction: 'asc'},
-      'weaponDamageType desc': { field: 'weaponDamageType', direction: 'desc'},
-      'weaponProperty asc': { field: 'weaponProperty', direction: 'asc'},
-      'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'}
+        'weaponName asc': { field: 'weaponName', direction: 'asc'},
+        'weaponName desc': { field: 'weaponName', direction: 'desc'},
+        'weaponDmg asc': { field: 'weaponDmg', direction: 'asc'},
+        'weaponDmg desc': { field: 'weaponDmg', direction: 'desc'},
+        'weaponRange asc': { field: 'weaponRange', direction: 'asc'},
+        'weaponRange desc': { field: 'weaponRange', direction: 'desc'},
+        'weaponDamageType asc': { field: 'weaponDamageType', direction: 'asc'},
+        'weaponDamageType desc': { field: 'weaponDamageType', direction: 'desc'},
+        'weaponProperty asc': { field: 'weaponProperty', direction: 'asc'},
+        'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'}
     };
 
     self.filter = ko.observable('');
@@ -37,7 +37,7 @@ function WeaponsViewModel() {
     };
 
     self.unload = function() {
-         $.each(self.weapons(), function(_, e) {
+        $.each(self.weapons(), function(_, e) {
             e.save();
         });
         
@@ -79,7 +79,7 @@ function WeaponsViewModel() {
     };
 
     self.removeWeapon = function(weapon) {
-        self.weapons.remove(weapon)
+        self.weapons.remove(weapon);
         weapon.delete();
     };
 
@@ -93,6 +93,6 @@ function WeaponsViewModel() {
     self.valueHasChanged = function() {
         self.weapons().forEach(function(e, i, _) {
             e.updateValues();
-        })
+        });
     };
-};
+}

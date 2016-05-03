@@ -54,7 +54,7 @@ function PlayerSummaryService() {
             //Only respond if you're a player.
             var type = CharacterManager.activeCharacter().playerType().key;
             if (type === PlayerTypes.characterPlayerType.key) {
-                messenger.sendDataMsg(roomId, 'iam', self._getPlayerData())
+                messenger.sendDataMsg(roomId, 'iam', self._getPlayerData());
             }
         } catch(err) { /*Ignore*/ }
     };
@@ -111,4 +111,4 @@ function PlayerSummaryService() {
         return 'whois+' + key;
     };
 
-};
+}

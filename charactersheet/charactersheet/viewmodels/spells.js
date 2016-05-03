@@ -4,20 +4,20 @@ function SpellbookViewModel() {
     var self = this;
 
     self.sorts = {
-      'spellName asc': { field: 'spellName', direction: 'asc'},
-      'spellName desc': { field: 'spellName', direction: 'desc'},
-      'spellPrepared asc': { field: 'spellPrepared', direction: 'asc', booleanType: true},
-      'spellPrepared desc': { field: 'spellPrepared', direction: 'desc', booleanType: true},
-      'spellType asc': { field: 'spellType', direction: 'asc'},
-      'spellType desc': { field: 'spellType', direction: 'desc'},
-      'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
-      'spellDmg desc': { field: 'spellDmg', direction: 'desc'},
-      'spellLevel asc': { field: 'spellLevel', direction: 'asc', numeric: true},
-      'spellLevel desc': { field: 'spellLevel', direction: 'desc', numeric: true},
-      'spellCastingTime asc': { field: 'spellCastingTime', direction: 'asc'},
-      'spellCastingTime desc': { field: 'spellCastingTime', direction: 'desc'},
-      'spellRange asc': { field: 'spellRange', direction: 'asc'},
-      'spellRange desc': { field: 'spellRange', direction: 'desc'}
+        'spellName asc': { field: 'spellName', direction: 'asc'},
+        'spellName desc': { field: 'spellName', direction: 'desc'},
+        'spellPrepared asc': { field: 'spellPrepared', direction: 'asc', booleanType: true},
+        'spellPrepared desc': { field: 'spellPrepared', direction: 'desc', booleanType: true},
+        'spellType asc': { field: 'spellType', direction: 'asc'},
+        'spellType desc': { field: 'spellType', direction: 'desc'},
+        'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
+        'spellDmg desc': { field: 'spellDmg', direction: 'desc'},
+        'spellLevel asc': { field: 'spellLevel', direction: 'asc', numeric: true},
+        'spellLevel desc': { field: 'spellLevel', direction: 'desc', numeric: true},
+        'spellCastingTime asc': { field: 'spellCastingTime', direction: 'asc'},
+        'spellCastingTime desc': { field: 'spellCastingTime', direction: 'desc'},
+        'spellRange asc': { field: 'spellRange', direction: 'asc'},
+        'spellRange desc': { field: 'spellRange', direction: 'desc'}
     };
 
     self.selecteditem = ko.observable();
@@ -45,7 +45,7 @@ function SpellbookViewModel() {
     };
 
     self.unload = function() {
-         $.each(self.spellbook(), function(_, e) {
+        $.each(self.spellbook(), function(_, e) {
             e.save();
         });
     };
@@ -87,7 +87,7 @@ function SpellbookViewModel() {
     };
 
     self.removeSpell = function(spell) {
-        self.spellbook.remove(spell)
+        self.spellbook.remove(spell);
         spell.delete();
     };
 
@@ -98,5 +98,5 @@ function SpellbookViewModel() {
     self.clear = function() {
         self.spellbook([]);
     };
-};
+}
 

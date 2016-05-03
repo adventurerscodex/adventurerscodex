@@ -25,5 +25,5 @@ function SkillsTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}
 

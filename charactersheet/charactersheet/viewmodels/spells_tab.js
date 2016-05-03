@@ -24,4 +24,4 @@ function SpellsTabViewModel() {
     self.clear = function() {
         ViewModelUtilities.clearSubViewModels(self);
     };
-};
+}

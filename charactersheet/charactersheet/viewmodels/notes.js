@@ -24,4 +24,4 @@ function NotesViewModel() {
     self.unload = function() {
         self.note().save();
     };    
-};
+}

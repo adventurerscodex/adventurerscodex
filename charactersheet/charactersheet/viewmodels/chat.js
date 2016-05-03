@@ -39,7 +39,7 @@ function PartyChatViewModel() {
             return ConnectionManager.findBy(key)[0].roomId();
         } catch(err) {
             return false;
-        };
+        }
     });
         
     //UI Methods
@@ -89,4 +89,4 @@ function PartyChatViewModel() {
     self.markdown = function(text) {
         return markdown.toHTML(text).replace('<p>', '').replace('</p>', '');
     };
-};
+}

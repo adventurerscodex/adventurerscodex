@@ -11,8 +11,8 @@ function StatsViewModel() {
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
 
-  var msg = 'Dexterity Bonus'
-  self.initiativeTooltip = ko.observable(msg);
+    var msg = 'Dexterity Bonus';
+    self.initiativeTooltip = ko.observable(msg);
 
     self.init = function() {};
 
@@ -38,10 +38,10 @@ function StatsViewModel() {
             self.hitDiceList(hitDiceList);
         }
         self.hitDiceList().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key())
+            e.characterId(CharacterManager.activeCharacter().key());
         });
 
-        self.calculateHitDice()
+        self.calculateHitDice();
 
         var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
         if(hitDiceType.length > 0){
@@ -59,22 +59,22 @@ function StatsViewModel() {
             for(var i=0; i<3;i++){
                 self.deathSaveSuccessList.push(deathSaveList[i]);
             }
-            for(var i=3; i<6;i++){
-                self.deathSaveFailureList.push(deathSaveList[i]);
+            for(var j=3; j<6;j++){
+                self.deathSaveFailureList.push(deathSaveList[j]);
             }
         }
         else{
-            for(var i=0; i<3;i++){
+            for(var k=0; k<3;k++){
                 self.deathSaveSuccessList.push(new DeathSave());
                 self.deathSaveFailureList.push(new DeathSave());
             }
         }
 
         self.deathSaveSuccessList().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key())
+            e.characterId(CharacterManager.activeCharacter().key());
         });
         self.deathSaveFailureList().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key())
+            e.characterId(CharacterManager.activeCharacter().key());
         });
 
            //Subscriptions
@@ -121,13 +121,14 @@ function StatsViewModel() {
         var difference = parseInt(profile.level()) - self.hitDiceList().length;
         var pushOrPop = difference > 0 ? 'push' : 'pop';
         for (var i = 0; i < Math.abs(difference); i++) {
+            var h;
             if (pushOrPop === 'push') {
-                var h = new HitDice();
+                h = new HitDice();
                 h.characterId(CharacterManager.activeCharacter().key());
                 h.save();
                 self.hitDiceList.push(h);
             } else {
-                var h = self.hitDiceList.pop();
+                h = self.hitDiceList.pop();
                 h.delete();
             }
         }
@@ -147,8 +148,8 @@ function StatsViewModel() {
         ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
             if (hitDice.hitDiceUsed() === true){
                 if (restoredHitDice !== 0){
-                        hitDice.hitDiceUsed(false);
-                        restoredHitDice -= 1;
+                    hitDice.hitDiceUsed(false);
+                    restoredHitDice -= 1;
                 }
             }
         });
@@ -158,12 +159,12 @@ function StatsViewModel() {
    * Tells the other stats model to recalculate it's passive wisdom value.
    */
     self.calculatePassiveWisdom = function() {
-      self.otherStats().updateValues();
+        self.otherStats().updateValues();
     };
 
     self.dataHasChanged = function() {
         self.otherStats().save();
         self.health().save();
-            Notifications.stats.changed.dispatch();
+        Notifications.stats.changed.dispatch();
     };
-};
+}

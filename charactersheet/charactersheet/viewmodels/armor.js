@@ -9,16 +9,16 @@ function ArmorViewModel() {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
-      'armorName asc': { field: 'armorName', direction: 'asc'},
-      'armorName desc': { field: 'armorName', direction: 'desc'},
-      'armorType asc': { field: 'armorType', direction: 'asc'},
-      'armorType desc': { field: 'armorType', direction: 'desc'},
-      'armorDexBonus asc': { field: 'armorDexBonus', direction: 'asc'},
-      'armorDexBonus desc': { field: 'armorDexBonus', direction: 'desc'},
-      'armorCheckPenalty asc': { field: 'armorCheckPenalty', direction: 'asc'},
-      'armorCheckPenalty desc': { field: 'armorCheckPenalty', direction: 'desc'},
-      'armorProficiency asc': { field: 'armorProficiency', direction: 'asc', booleanType: true},
-      'armorProficiency desc': { field: 'armorProficiency', direction: 'desc', booleanType: true}
+        'armorName asc': { field: 'armorName', direction: 'asc'},
+        'armorName desc': { field: 'armorName', direction: 'desc'},
+        'armorType asc': { field: 'armorType', direction: 'asc'},
+        'armorType desc': { field: 'armorType', direction: 'desc'},
+        'armorDexBonus asc': { field: 'armorDexBonus', direction: 'asc'},
+        'armorDexBonus desc': { field: 'armorDexBonus', direction: 'desc'},
+        'armorCheckPenalty asc': { field: 'armorCheckPenalty', direction: 'asc'},
+        'armorCheckPenalty desc': { field: 'armorCheckPenalty', direction: 'desc'},
+        'armorProficiency asc': { field: 'armorProficiency', direction: 'asc', booleanType: true},
+        'armorProficiency desc': { field: 'armorProficiency', direction: 'desc', booleanType: true}
     };
 
     self.filter = ko.observable('');
@@ -35,7 +35,7 @@ function ArmorViewModel() {
     };
 
     self.unload = function() {
-         $.each(self.armors(), function(_, e) {
+        $.each(self.armors(), function(_, e) {
             e.save();
         });
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
@@ -74,7 +74,7 @@ function ArmorViewModel() {
     };
 
     self.removeArmor = function(armor) {
-        self.armors.remove(armor)
+        self.armors.remove(armor);
         armor.delete();
     };
 
@@ -89,6 +89,6 @@ function ArmorViewModel() {
     self.valueHasChanged = function() {
         self.armors().forEach(function(e, i, _) {
             e.updateValues();
-        })        
+        });        
     };
-};
+}

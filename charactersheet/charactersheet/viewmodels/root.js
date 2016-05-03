@@ -239,7 +239,7 @@ function RootViewModel() {
         HotkeysService.registerHotkey('7', self.activateNotesTab);
         HotkeysService.registerHotkey('8', function() {
             if(self.partyTabStatus() !== 'hidden'){
-                  self.activatePartyTab();
+                self.activatePartyTab();
             }
         });
     };
@@ -316,4 +316,4 @@ function RootViewModel() {
             return 'hidden';
         }
     };
-};
+}

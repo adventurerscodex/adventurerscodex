@@ -121,4 +121,4 @@ function CharactersViewModel() {
         var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
         return (used / self.totalLocalStorage * 100).toFixed(2);
     });
-};
+}

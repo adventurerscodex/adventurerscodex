@@ -12,7 +12,7 @@ function SettingsViewModel() {
                 try {
                     self[keys[i]]().init();
                 } catch(err) {
-                    throw "Module " + keys[i] + " failed to init.\n" + err;
+                    throw 'Module ' + keys[i] + ' failed to init.\n' + err;
                 }
             }
         }
@@ -25,7 +25,7 @@ function SettingsViewModel() {
                 try {
                     self[keys[i]]().load();
                 } catch(err) {
-                    throw "Module " + keys[i] + " failed to load.\n" + err;
+                    throw 'Module ' + keys[i] + ' failed to load.\n' + err;
                 }
             }
         }
@@ -38,9 +38,9 @@ function SettingsViewModel() {
                 try {
                     self[keys[i]]().unload();
                 } catch(err) {
-                    throw "Module " + keys[i] + " failed to unload.\n" + err;
+                    throw 'Module ' + keys[i] + ' failed to unload.\n' + err;
                 }
             }
         }
     };
-};
+}
