@@ -244,3 +244,33 @@ textarea.dark-area {
   padding:15px;
   line-height:1.5em;
 }
+
+.input-select2-addon {
+  height:100%;
+  padding:18px;
+}
+
+.chat-style {
+  overflow:auto;
+  height: 300px;
+}
+
+.chat-profile-image {
+  margin-top:-5px;
+  margin-bottom:-5px;
+}
+
+.col-content-vertical {
+  vertical-align:middle;
+}
+
+.daily-feature-used-slots {
+  background-color:#DCE4EC;
+  float: none;
+  margin: 0 auto;
+}
+
+.used-slot-span {
+  padding:10px 15px;
+  font-size:15px;
+}
