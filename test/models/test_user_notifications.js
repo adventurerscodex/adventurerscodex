@@ -12,8 +12,8 @@ describe('User Notifications Model', function() {
             var message = 'hi';
             var notification = UserNotification.notificationWithTypeAndMessage(type, message);
 
-            notification.type.should.equal(type);
-            notification.message.should.equal(message);
+            notification.type().should.equal(type);
+            notification.message().should.equal(message);
         });
     });
 
