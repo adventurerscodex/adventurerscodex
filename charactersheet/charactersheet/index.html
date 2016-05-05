@@ -39,7 +39,7 @@
 </nav>
 <!-- ko if: ready -->
 <div id='content' class='container-fluid'>
-  <div id="characters" class="container-fluid" style="padding-top:10px;padding-bottom:10px;">
+  <div id="characters" class="container-fluid characters-module-style">
     <div class="row">
       <div class="col-sm-8">
         <div class="row">
@@ -49,7 +49,7 @@
             data: profileTabViewModel().playerImageViewModel()
           }">
           </div>
-          <div class="col-padded col-xs-10" style="margin-top:-20px;">
+          <div class="col-padded col-xs-10 characters-player-name">
             <div class="row">
               <div class="col-md-12">
                 <h2 data-bind='text: playerTitle'></h2>

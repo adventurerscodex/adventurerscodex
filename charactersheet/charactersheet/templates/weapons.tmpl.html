@@ -36,7 +36,7 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedWeapons'>
-        <tr style="cursor:pointer;">
+        <tr class="clickable">
           <td data-bind="text: weaponName, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
@@ -163,8 +163,7 @@
                 <div class="col-sm-10">
         					<div class="input-group">
         						<input type="text"
-        							   class="form-control"
-                         style="height:100%;padding:18px;"
+        							   class="form-control input-select2-addon"
         							   id="weaponPrice"
         							   placeholder="5"
         							   data-bind='textInput: blankWeapon().weaponPrice'>
@@ -360,8 +359,7 @@
                 <div class="col-sm-10">
         					<div class="input-group">
         						<input type="text"
-        							   class="form-control"
-                         style="height:100%;padding:18px;"
+        							   class="form-control input-select2-addon"
         							   id="weaponPrice"
         							   placeholder="5"
         							   data-bind='textInput: weaponPrice'>

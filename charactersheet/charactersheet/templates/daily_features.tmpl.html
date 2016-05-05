@@ -16,7 +16,7 @@
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: filteredAndSortedDailyFeatures">
-				<tr style="cursor:pointer;">
+				<tr class="clickable">
 					<td data-bind="click: $parent.editDailyFeature"
 					href="#"
 					class="col-sm-3 feature-row"
@@ -29,26 +29,26 @@
             data-target="#viewDailyFeature" data-bind="text: featureName">
 					  </span>
 					</td>
-					<td class="col-sm-1" style="vertical-align:middle;">
+					<td class="col-content-vertical col-sm-1">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
 					<td class="col-sm-3">
-						<div  style="background-color:#DCE4EC;float: none;margin: 0 auto;" class="input-group">
+						<div  class="input-group daily-feature-used-slots">
 							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
 								<i class="fa fa-plus fa-color"> </i>
 							</button>
-							<span data-bind="text: featureUsed" style="padding:10px 15px;font-size:15px;"></span>
+							<span data-bind="text: featureUsed" class="used-slot-span"></span>
 							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
 								<i class="fa fa-minus fa-color"> </i>
 							</button>
 						</div>
 					</td>
 
-					<td class="col-sm-1" style="vertical-align:middle;"> <!--Refresh -->
+					<td class="col-content-vertical col-sm-1"> <!--Refresh -->
 						<a data-bind="click: $parent.refreshDailyFeature" href="#">
 							<i class="fa fa-refresh fa-color"> </i>
 						</a>
-					<td class="col-sm-1" style="vertical-align:middle;"> <!--Remove -->
+					<td class="col-sm-1 col-content-vertical"> <!--Remove -->
 						<a data-bind="click: $parent.removeDailyFeature" href="#">
 							<i class="fa fa-trash-o fa-color-hover"> </i>
 						</a>
@@ -90,13 +90,13 @@
 							<div class="btn-group btn-group-justified" role="group">
 							<label class="btn btn-default"
 							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'short'}">
-								<input type="radio" style="display: none;"
+								<input type="radio" class="hide-block"
 								name="featureResetsOnShort" value="short" data-bind="checked: blankDailyFeature().featureResetsOn"/>
 								Short Rest
 							</label>
 							<label class="btn btn-default"
 							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'long'}">
-								<input type="radio" style="display: none;"
+								<input type="radio" class="hide-block"
 								name="featureResetsOnLong" value="long" data-bind="checked: blankDailyFeature().featureResetsOn"/>
 								Long Rest
 								</label>
@@ -155,13 +155,13 @@
 							<div class="btn-group btn-group-justified" role="group">
 								<label class="btn btn-default"
 								data-bind="css: { active: featureResetsOn() == 'short'}">
-									<input type="radio" style="display: none;"
+									<input type="radio" class="hide-block"
 									name="featureResetsOnShort" value="short" data-bind="checked: featureResetsOn"/>
 									Short Rest
 								</label>
 								<label class="btn btn-default"
 								data-bind="css: { active: featureResetsOn() == 'long'}">
-									<input type="radio" style="display: none;"
+									<input type="radio" class="hide-block"
 									name="featureResetsOnLong" value="long" data-bind="checked: featureResetsOn"/>
 									Long Rest
 								</label>
