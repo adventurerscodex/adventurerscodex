@@ -16,7 +16,7 @@
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: filteredAndSortedDailyFeatures">
-				<tr style="cursor:pointer;">
+				<tr class="clickable">
 					<td data-bind="click: $parent.editDailyFeature"
 					href="#"
 					class="col-sm-3 feature-row"
@@ -44,7 +44,7 @@
 						</div>
 					</td>
 
-					<td class="col-sm-1 col-content-vertical"> <!--Refresh -->
+					<td class="col-content-vertical col-sm-1"> <!--Refresh -->
 						<a data-bind="click: $parent.refreshDailyFeature" href="#">
 							<i class="fa fa-refresh fa-color"> </i>
 						</a>
@@ -90,13 +90,13 @@
 							<div class="btn-group btn-group-justified" role="group">
 							<label class="btn btn-default"
 							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'short'}">
-								<input type="radio" style="display: none;"
+								<input type="radio" class="hide-block"
 								name="featureResetsOnShort" value="short" data-bind="checked: blankDailyFeature().featureResetsOn"/>
 								Short Rest
 							</label>
 							<label class="btn btn-default"
 							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'long'}">
-								<input type="radio" style="display: none;"
+								<input type="radio" class="hide-block"
 								name="featureResetsOnLong" value="long" data-bind="checked: blankDailyFeature().featureResetsOn"/>
 								Long Rest
 								</label>
@@ -155,13 +155,13 @@
 							<div class="btn-group btn-group-justified" role="group">
 								<label class="btn btn-default"
 								data-bind="css: { active: featureResetsOn() == 'short'}">
-									<input type="radio" style="display: none;"
+									<input type="radio" class="hide-block"
 									name="featureResetsOnShort" value="short" data-bind="checked: featureResetsOn"/>
 									Short Rest
 								</label>
 								<label class="btn btn-default"
 								data-bind="css: { active: featureResetsOn() == 'long'}">
-									<input type="radio" style="display: none;"
+									<input type="radio" class="hide-block"
 									name="featureResetsOnLong" value="long" data-bind="checked: featureResetsOn"/>
 									Long Rest
 								</label>

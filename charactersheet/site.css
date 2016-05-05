@@ -261,7 +261,7 @@ textarea.dark-area {
 }
 
 .col-content-vertical {
-  vertical-align:middle;
+  vertical-align:middle !important;
 }
 
 .daily-feature-used-slots {
@@ -273,4 +273,38 @@ textarea.dark-area {
 .used-slot-span {
   padding:10px 15px;
   font-size:15px;
+}
+
+.clickable {
+  cursor:pointer;
+}
+
+.hide-block {
+  display: none;
+}
+
+.player-image-style {
+  margin-top:7px;
+}
+
+.spell-slots-level {
+  border:none;
+  background:none;
+}
+
+.user-notification-height {
+  max-height:100px;
+}
+
+.characters-module-style {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.characters-player-name {
+  margin-top:-20px;
+}
+
+.stats-health-border {
+  border-right:1px solid #ecf0f1;
 }

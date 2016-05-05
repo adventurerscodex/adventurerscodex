@@ -13,9 +13,9 @@
             </tr>
           </thead>
           <tbody data-bind="foreach:playerSummaries">
-            <tr style="cursor:pointer;">
-              <td>       
-                <img data-bind="attr: { src: profileImage }" 
+            <tr class="clickable">
+              <td>
+                <img data-bind="attr: { src: profileImage }"
                   class="img-circle" width="40px" />&nbsp;&nbsp;
                 <span data-bind="text: characterName"></span>
               </td>
@@ -36,7 +36,7 @@
         <!-- ko if: playerSummaries().length === 0 -->
         <div class="container-fluid text-center">
           <h3>No players have joined the room.</h3>
-          <p>If you've just joined the room, it may take a couple of 
+          <p>If you've just joined the room, it may take a couple of
           seconds for all players to appear.</p>
         </div>
         <!-- /ko -->
