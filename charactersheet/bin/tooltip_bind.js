@@ -1,25 +1,25 @@
 +function(){
 
-    'use strict';
+  'use strict';
 
-    ko.bindingHandlers.tooltip = {
-        init: function(element, valueAccessor) {
-          var local = ko.utils.unwrapObservable(valueAccessor()),
-            options = {};
+  ko.bindingHandlers.tooltip = {
+    init: function(element, valueAccessor) {
+      var local = ko.utils.unwrapObservable(valueAccessor()),
+          options = {};
 
-          ko.utils.extend(options, ko.bindingHandlers.tooltip.options);
-          ko.utils.extend(options, local);
+      ko.utils.extend(options, ko.bindingHandlers.tooltip.options);
+      ko.utils.extend(options, local);
 
-          $(element).tooltip(options);
+      $(element).tooltip(options);
 
-          ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
-            $(element).tooltip('destroy');
-        });
-      },
-        options: {
-          placement: 'top',
-          trigger: 'hover'
-      }
-    };
+      ko.utils.domNodeDisposal.addDisposeCallback(element, function() {
+          $(element).tooltip("destroy");
+      });
+    },
+    options: {
+      placement: "top",
+      trigger: "hover"
+    }
+  };
 
 }();

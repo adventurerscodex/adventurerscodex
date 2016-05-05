@@ -1,8 +1,8 @@
 
 
 ko.bindingHandlers.selectPicker = {
-    init: function (element, valueAccessor, allBindingsAccessor) {
-        if ($(element).is('select')) {
+     init: function (element, valueAccessor, allBindingsAccessor) {
+         if ($(element).is('select')) {
              if (ko.isObservable(valueAccessor())) {
                  if ($(element).prop('multiple') && $.isArray(ko.utils.unwrapObservable(valueAccessor()))) {
                      // in the case of a multiple select where the valueAccessor() is an observableArray, call the default Knockout selectedOptions binding
@@ -14,9 +14,9 @@ ko.bindingHandlers.selectPicker = {
              }
              $(element).addClass('selectpicker').selectpicker();
          }
-    },
-    update: function (element, valueAccessor, allBindingsAccessor) {
-        if ($(element).is('select')) {
+     },
+     update: function (element, valueAccessor, allBindingsAccessor) {
+         if ($(element).is('select')) {
              var selectPickerOptions = allBindingsAccessor().selectPickerOptions;
              if (typeof selectPickerOptions !== 'undefined' && selectPickerOptions !== null) {
                  var options = selectPickerOptions.optionsArray,
@@ -47,5 +47,5 @@ ko.bindingHandlers.selectPicker = {
 
              $(element).selectpicker('refresh');
          }
-    }
-};
+     }
+ };
