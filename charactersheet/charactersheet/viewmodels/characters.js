@@ -2,14 +2,14 @@
 
 function CharactersViewModel() {
     var self = this;
-    
+
     self.totalLocalStorage = 5; //MB
 
     self.selectedCharacter = ko.observable();
-    
+
     self.characters = ko.observableArray([]);
     self.defaultCharacterKey = ko.observable(null);
-    
+
     self.init = function() {
         Notifications.characters.changed.add(function() {
             self.load();
@@ -18,7 +18,7 @@ function CharactersViewModel() {
             self.load();
         });
     };
-    
+
     self.load = function() {
         self.characters(Character.findAll());
         var defaultKey = '';
@@ -28,7 +28,7 @@ function CharactersViewModel() {
             })[0].key();
         } catch(err) { /*Ignore*/ }
         self.defaultCharacterKey(defaultKey);
-        
+
         //Subscriptions
         self.characters().forEach(function(e, i, _) {
             e.isDefault.subscribe(function() {
@@ -40,59 +40,57 @@ function CharactersViewModel() {
                 if (self.defaultCharacterKey() === e.key()) {
                     e.isDefault(true);
                 } else {
-                    e.isDefault(false);                    
+                    e.isDefault(false);
                 }
                 e.save();
             });
         });
-        
+
     };
-    
+
     self.unload = function() {
         $.each(self.characters(), function(_, e) {
             e.save();
         });
     };
-    
+
     self.changeCharacter = function(character) {
         CharacterManager.changeCharacter(character.key());
     };
-        
+
     self.selectCharacter = function(character) {
         self.selectedCharacter(CharacterManager.activeCharacter());
     };
-        
+
     self.addCharacter = function() {
         var character = new Character();
         character.key(uuid.v4());
         character.playerType(PlayerTypes.characterPlayerType);
-        
+
         self.characters.push(character);
         if (!CharacterManager.defaultCharacter()) {
             character.isDefault(true);
         }
-        character.isActive(true);
         character.save();
         Notifications.characters.changed.dispatch();
         window.location = character.url();
     };
-    
+
     self.addDM = function() {
         var character = new Character();
         character.key(uuid.v4());
         character.playerType(PlayerTypes.dmPlayerType);
-        
+
         self.characters.push(character);
         if (!CharacterManager.defaultCharacter()) {
             character.isDefault(true);
         }
-        character.isActive(true);
         character.save();
         Notifications.characters.changed.dispatch();
         window.location = character.url();
     };
-    
-    self.removeCharacter = function(character) {        
+
+    self.removeCharacter = function(character) {
         //Purge all entries for this char.
         var tables = Object.keys(localStorage);
         tables.forEach(function(table, iTable, _Table) {
@@ -102,12 +100,12 @@ function CharactersViewModel() {
                 }
             });
         });
-        
+
         //Remove the character.
         character.delete();
         self.characters.remove(character);
         Notifications.characters.changed.dispatch();
-        
+
         if (self.characters().length === 0) {
             Notifications.characters.allRemoved.dispatch();
         } else {
@@ -115,7 +113,7 @@ function CharactersViewModel() {
             CharacterManager.changeCharacter(self.characters()[0].key());
         }
     };
-        
+
     self.localStoragePercent = ko.computed(function() {
         var n = self.characters().lenth; //Force ko to recompute on change.
         var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
