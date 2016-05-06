@@ -134,7 +134,6 @@ function WizardViewModel() {
         if (!CharacterManager.defaultCharacter()) {
             character.isDefault(true);
         }
-        character.isActive(true);
         character.save();
 
         self.campaign().characterId(character.key());
@@ -154,7 +153,6 @@ function WizardViewModel() {
         if (!CharacterManager.defaultCharacter()) {
             character.isDefault(true);
         }
-        character.isActive(true);
         character.save();
 
         self.profile().characterId(character.key());
