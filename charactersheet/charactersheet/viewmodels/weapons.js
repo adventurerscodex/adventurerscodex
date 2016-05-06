@@ -11,6 +11,8 @@ function WeaponsViewModel() {
     self.sorts = {
         'weaponName asc': { field: 'weaponName', direction: 'asc'},
         'weaponName desc': { field: 'weaponName', direction: 'desc'},
+        'totalBonus asc': { field: 'totalBonus', direction: 'asc', numeric: true},
+        'totalBonus desc': { field: 'totalBonus', direction: 'desc', numeric: true},
         'weaponDmg asc': { field: 'weaponDmg', direction: 'asc'},
         'weaponDmg desc': { field: 'weaponDmg', direction: 'desc'},
         'weaponRange asc': { field: 'weaponRange', direction: 'asc'},
@@ -40,7 +42,7 @@ function WeaponsViewModel() {
         $.each(self.weapons(), function(_, e) {
             e.save();
         });
-        
+
         self.weapons([]);
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
         Notifications.stats.changed.remove(self.valueHasChanged);
