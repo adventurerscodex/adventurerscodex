@@ -7,9 +7,9 @@
             Weapon
             <span data-bind="css: sortArrow('weaponName')"></span>
           </th>
-          <th>
+          <th data-bind="click: function(){sortBy('totalBonus');}">
             To Hit
-            <span data-bind="css: sortArrow('weaponHit')"></span>
+            <span data-bind="css: sortArrow('totalBonus')"></span>
           </th>
           <th data-bind="click: function(){sortBy('weaponDmg');}">
             Damage
