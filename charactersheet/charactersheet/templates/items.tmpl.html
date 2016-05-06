@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedEquipment'>
-        <tr style="cursor:pointer;">
+        <tr class="clickable">
           <td data-bind="text: itemName, click: $parent.editItemButton"
                   href="#"
                   data-toggle="modal"
@@ -116,8 +116,7 @@
       		   <div class="input-group">
       			 <input type="number"
       			   min="0"
-      			   class="form-control"
-               style="height:100%;padding:18px;"
+      			   class="form-control input-select2-addon"
       			   data-bind="value: itemCost" />
       			 <span class="input-group-addon">
                <select class="form-control"
@@ -226,8 +225,7 @@
       		   <div class="input-group">
       			 <input type="number"
       			   min="0"
-      			   class="form-control"
-               style="height:100%;padding:18px;"
+      			   class="form-control input-select2-addon"
       			   data-bind="value: itemCost" />
       			 <span class="input-group-addon">
                <select class="form-control"

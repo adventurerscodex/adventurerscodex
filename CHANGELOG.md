@@ -1,3 +1,11 @@
+version 0.0.8 (5/4/2016)
+
+* updated iconography
+* fixes styling on some hitdice elements
+* various UI and performance tweaks
+* fixes issues importing the same characters more than once
+
+
 version 0.0.7 (4/21/2016)
 
 * adds new icons for tabs

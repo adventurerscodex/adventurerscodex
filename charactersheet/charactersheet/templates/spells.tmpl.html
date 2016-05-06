@@ -40,7 +40,7 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSpells'>
-        <tr style="cursor:pointer;">
+        <tr class="clickable">
           <td data-bind="text: spellName, click: $parent.editSpell"
                href="#"
                data-toggle="modal"
@@ -416,4 +416,3 @@
     </div> <!-- Modal Fade -->
     </div> <!-- End with statement -->
 </div> <!-- Panel -->
-

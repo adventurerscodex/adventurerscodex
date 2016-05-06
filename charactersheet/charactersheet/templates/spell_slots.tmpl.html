@@ -14,7 +14,7 @@
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: filteredAndSortedSlots">
-				<tr class="row" style="cursor:pointer;">
+				<tr class="row clickable">
 					<td class="col-sm-1" data-bind="click: $parent.editSlot"
 					href="#"
           data-toggle="modal"
@@ -27,7 +27,7 @@
 					href="#"
           data-toggle="modal"
           data-target="#viewSlot">
-					  <span class="text-center form-control" style="border:none;background:none;" data-bind="text: level">
+					  <span class="text-center form-control spell-slots-level" data-bind="text: level">
 					  </span>
 					</td>
 					<td class="col-sm-9">

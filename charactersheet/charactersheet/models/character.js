@@ -7,7 +7,6 @@ function Character() {
     self.key = ko.observable(null);
     self.playerType = ko.observable(PlayerTypes.characterPlayerType);
     self.isDefault = ko.observable(false);
-    self.isActive = ko.observable(false);
 
     self.url = ko.pureComputed(function() {
         return '/charactersheet/?key=' + self.key()
@@ -17,7 +16,6 @@ function Character() {
     self.importValues = function(values) {
         self.key(values.key);
         self.isDefault(values.isDefault);
-        self.isActive(values.isActive);
 
         var keys = Object.keys(PlayerTypes);
         for (var i=0;i<keys.length;i++) {
@@ -31,7 +29,6 @@ function Character() {
         return {
             key: self.key(),
             isDefault: self.isDefault(),
-            isActive: self.isActive(),
             playerType: self.playerType()
         };
     };

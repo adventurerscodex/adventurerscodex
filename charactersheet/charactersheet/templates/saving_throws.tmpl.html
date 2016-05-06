@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSavingThrows'>
-        <tr style="cursor:pointer;">
+        <tr class="clickable">
           <td data-bind="text: name, click: $parent.editSavingThrow"
                href="#"
                data-toggle="modal"
@@ -39,7 +39,7 @@
                data-target="#viewSavingThrow"> <span data-bind="css: proficiencyLabel"></span></td>
           <td>
             <a data-bind="click: $parent.removeSavingThrow" href="#">
-              <i class="fa fa-trash-o fa-color"></i>
+              <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
           </td>
         </tr>
@@ -180,4 +180,3 @@
     </div> <!-- Modal Fade -->
     </div> <!-- End with statement -->
 </div> <!-- Panel -->
-

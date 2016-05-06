@@ -3,12 +3,12 @@
 		<div class="form-horizontal">
 			<form data-bind="submit: sendMessage">
 			  <div class="container-fluid">
-				  <ul class="list-group" style="overflow:auto; height: 300px;"
+				  <ul class="list-group chat-style"
 				    data-bind="foreach: log, bottomsUp: {trim: 1000}">
 					  <li class="list-group-item">
 					    <!-- ko if: profileImageUrl -->
               <img data-bind="attr: { src: profileImageUrl }"
-                class="img-circle" width="25px" style="margin-top:-5px;margin-bottom:-5px;" />&nbsp;&nbsp;
+                class="img-circle chat-profile-image" width="25px"/>&nbsp;&nbsp;
               <!-- /ko -->
 					    <span data-bind="html: message"></span>
 					  </li>

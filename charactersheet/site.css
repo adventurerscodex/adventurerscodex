@@ -244,3 +244,67 @@ textarea.dark-area {
   padding:15px;
   line-height:1.5em;
 }
+
+.input-select2-addon {
+  height:100%;
+  padding:18px;
+}
+
+.chat-style {
+  overflow:auto;
+  height: 300px;
+}
+
+.chat-profile-image {
+  margin-top:-5px;
+  margin-bottom:-5px;
+}
+
+.col-content-vertical {
+  vertical-align:middle !important;
+}
+
+.daily-feature-used-slots {
+  background-color:#DCE4EC;
+  float: none;
+  margin: 0 auto;
+}
+
+.used-slot-span {
+  padding:10px 15px;
+  font-size:15px;
+}
+
+.clickable {
+  cursor:pointer;
+}
+
+.hide-block {
+  display: none;
+}
+
+.player-image-style {
+  margin-top:7px;
+}
+
+.spell-slots-level {
+  border:none;
+  background:none;
+}
+
+.user-notification-height {
+  max-height:100px;
+}
+
+.characters-module-style {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.characters-player-name {
+  margin-top:-20px;
+}
+
+.stats-health-border {
+  border-right:1px solid #ecf0f1;
+}

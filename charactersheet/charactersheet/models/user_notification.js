@@ -9,7 +9,7 @@ function UserNotification() {
     self.visible = ko.observable(true);
 
     self.alertClass = ko.pureComputed(function() {
-        return 'alert-' + self.type;
+        return 'alert-' + self.type();
     });
 
     self.toggleVisible = function() {
@@ -19,7 +19,7 @@ function UserNotification() {
 
 UserNotification.notificationWithTypeAndMessage = function(type, message) {
     var notification = new UserNotification();
-    notification.type = type;
-    notification.message = message;
+    notification.type(type);
+    notification.message(message);
     return notification;
 };

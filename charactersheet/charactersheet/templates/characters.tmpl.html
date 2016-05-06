@@ -3,21 +3,20 @@
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
-      </button> 
+      </button>
       <h4 class="modal-title" id="importModalLabel">
         Characters and Games
       </h4>
     </div>
     <div class="modal-body">
       <div class='container-fluid'>
-        <table style="" data-bind='foreach: $data.characters' 
+        <table data-bind='foreach: $data.characters'
           class="table table-hover table-ac-bordered">
           <tr>
-            <td 
-              style="cursor:pointer;"
+            <td class="clickable"
               data-bind="click: $parent.changeCharacter"
-              data-dismiss="modal">        
-              <span data-bind='text: playerTitle'></span> 
+              data-dismiss="modal">
+              <span data-bind='text: playerTitle'></span>
               <small>
                 by <span data-bind='text: playerAuthor'></span>
                 <br />
@@ -25,9 +24,9 @@
               </small>
             </td>
             <td>
-              <button class="close" 
+              <button class="close"
                 data-bind="click: $parent.removeCharacter"
-                data-dismiss="modal">        
+                data-dismiss="modal">
                   <span aria-hidden="true">&times;</span>
               </button>
             </td>
@@ -47,7 +46,7 @@
       <button type="button" class="btn btn-primary pull-right"
         data-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">Done</span>
-      </button> 
+      </button>
     </div>
   </div>
 </div>

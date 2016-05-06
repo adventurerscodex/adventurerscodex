@@ -6,7 +6,7 @@ function Weapon() {
     self.mapping = {
         ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
             'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
-            'hitBonusLabel', 'delete', '_dummy', 'updateValues']
+            'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues']
     };
 
     self._dummy = ko.observable(null);
@@ -105,22 +105,30 @@ function Weapon() {
         }
     });
 
-    self.hitBonusLabel = ko.pureComputed(function() {
+    self.totalBonus = ko.pureComputed(function() {
         self._dummy();
-        var totalBonus = 0;
+        var bonus = 0;
         var abilityScoreBonus = self.abilityScoreBonus();
         var proficiencyBonus = self.proficiencyScore();
         var weaponHit = parseInt(self.weaponHit());
 
         if(abilityScoreBonus){
-            totalBonus += abilityScoreBonus;
+            bonus += abilityScoreBonus;
         }
         if(proficiencyBonus){
-            totalBonus += proficiencyBonus;
+            bonus += proficiencyBonus;
         }
         if(weaponHit){
-            totalBonus += weaponHit;
+            bonus += weaponHit;
         }
+
+        return bonus;
+    });
+
+    self.hitBonusLabel = ko.pureComputed(function() {
+        self._dummy();
+
+        var totalBonus = self.totalBonus();
 
         return totalBonus ? ('+' + totalBonus):'+0';
     });

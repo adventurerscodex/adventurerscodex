@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSkills'>
-        <tr style="cursor:pointer;">
+        <tr class="clickable">
           <td data-bind="text: name, click: $parent.editSkill"
                href="#"
                data-toggle="modal"
@@ -47,7 +47,7 @@
       </tbody>
     </table>
     </div>
-    <!-- Add Modal -->
+    <!-- Add Modal  -->
     <div class="modal fade"
          id="addSkill"
          tabindex="-1"
@@ -86,37 +86,37 @@
                     <div class="btn-group btn-group-justified" role="group">
                     <label class="btn btn-default"
                     data-bind="css: { active: blankSkill().abilityScore() == 'Str'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Str" data-bind="checked: blankSkill().abilityScore"/>
                       Str
                     </label>
                     <label class="btn btn-default "
                     data-bind="css: { active: blankSkill().abilityScore() == 'Dex'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Dex" data-bind="checked: blankSkill().abilityScore"/>
                       Dex
                       </label>
                     <label class="btn btn-default "
                     data-bind="css: { active: blankSkill().abilityScore() == 'Con'}">
-                      <input type="radio" name="abilityScore" value="Con" style="display: none;"
+                      <input type="radio" name="abilityScore" value="Con" class="hide-block"
                       data-bind="checked: blankSkill().abilityScore"/>
                       Con
                       </label>
                     <label class="btn btn-default "
                     data-bind="css: { active: blankSkill().abilityScore() == 'Int'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Int" data-bind="checked: blankSkill().abilityScore"/>
                       Int
                       </label>
                     <label class="btn btn-default "
                     data-bind="css: { active: blankSkill().abilityScore() == 'Wis'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Wis" data-bind="checked: blankSkill().abilityScore"/>
                       Wis
                       </label>
                     <label class="btn btn-default "
                     data-bind="css: { active: blankSkill().abilityScore() == 'Cha'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Cha" data-bind="checked: blankSkill().abilityScore"/>
                       Cha
                     </label>
@@ -220,37 +220,37 @@
                     <div class="btn-group btn-group-justified" role="group">
                     <label class="btn btn-default"
                     data-bind="css: { active: abilityScore() == 'Str'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Str" data-bind="checked: abilityScore"/>
                       Str
                     </label>
                     <label class="btn btn-default"
                     data-bind="css: { active: abilityScore() == 'Dex'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Dex" data-bind="checked: abilityScore"/>
                       Dex
                       </label>
                     <label class="btn btn-default"
                     data-bind="css: { active: abilityScore() == 'Con'}">
-                      <input type="radio" name="abilityScore" value="Con" style="display: none;"
+                      <input type="radio" name="abilityScore" value="Con" class="hide-block"
                       data-bind="checked: abilityScore"/>
                       Con
                       </label>
                     <label class="btn btn-default"
                     data-bind="css: { active: abilityScore() == 'Int'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Int" data-bind="checked: abilityScore"/>
                       Int
                       </label>
                     <label class="btn btn-default"
                     data-bind="css: { active: abilityScore() == 'Wis'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Wis" data-bind="checked: abilityScore"/>
                       Wis
                       </label>
                     <label class="btn btn-default"
                     data-bind="css: { active: abilityScore() == 'Cha'}">
-                      <input type="radio" style="display: none;"
+                      <input type="radio" class="hide-block"
                       name="abilityScore" value="Cha" data-bind="checked: abilityScore"/>
                       Cha
                     </label>
@@ -282,4 +282,3 @@
     </div> <!-- Modal Fade -->
     </div> <!-- End with statement -->
 </div> <!-- Panel -->
-
