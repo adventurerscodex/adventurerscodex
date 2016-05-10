@@ -4,7 +4,8 @@ function DailyFeature() {
     var self = this;
     self.ps = PersistenceService.register(DailyFeature, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete']
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete',
+         'featureColors', 'currentFeaturesAvailable', 'progressLabel', 'dailyFeaturesProgressWidth']
     };
 
     self.featureColors = Fixtures.general.colorList;
