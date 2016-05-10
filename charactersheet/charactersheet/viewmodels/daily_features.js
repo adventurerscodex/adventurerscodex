@@ -60,6 +60,10 @@ function DailyFeatureViewModel() {
 
     //Manipulating daily features
 
+    self.maxFeatureWidth = function() {
+        return 100 / self.dailyFeatures().length;
+    };
+
     self.editDailyFeature = function(dailyFeature) {
         self.selecteditem(dailyFeature);
     };

@@ -28,7 +28,7 @@ function DailyFeature() {
         return (parseInt(self.featureMaxUses()) - parseInt(self.featureUsed())) + '/' + parseInt(self.featureMaxUses());
     });
 
-    self.progressWidth = ko.pureComputed(function() {
+    self.dailyFeaturesProgressWidth = ko.pureComputed(function() {
         return (parseInt(self.featureMaxUses()) - parseInt(self.featureUsed())) / parseInt(self.featureMaxUses());
     });
 
