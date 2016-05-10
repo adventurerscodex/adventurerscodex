@@ -268,10 +268,11 @@ textarea.dark-area {
   background-color:#DCE4EC;
   float: none;
   margin: 0 auto;
+  border-radius: 10px;
 }
 
 .used-slot-span {
-  padding:10px 15px;
+  padding:10px 12px;
   font-size:15px;
 }
 
