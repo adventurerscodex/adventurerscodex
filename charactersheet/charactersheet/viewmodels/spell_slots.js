@@ -89,6 +89,20 @@ function SpellSlotsViewModel() {
         });
     };
 
+    self.increaseUsage = function(spellSlots) {
+        var used = spellSlots.usedSpellSlots();
+        if(used !== parseInt(spellSlots.maxSpellSlots())){
+            spellSlots.usedSpellSlots(used + 1);
+        }
+    };
+
+    self.decreaseUsage = function(spellSlots) {
+        var used = spellSlots.usedSpellSlots();
+        if(used !== 0){
+            spellSlots.usedSpellSlots(used - 1);
+        }
+    };
+
     self.clear = function() {
         self.slots([]);
     };
