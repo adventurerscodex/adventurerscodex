@@ -105,7 +105,7 @@ describe('Daily Features View Model', function() {
             p.dailyFeatures()[0].featureUsed(1);
             p.dailyFeatures()[1].featureUsed(1);
 
-            p.resetdailyFeatures();
+            p.refreshDailyFeature();
             p.dailyFeatures()[0].featureUsed().should.equal(0);
             p.dailyFeatures()[1].featureUsed().should.equal(0);
 
