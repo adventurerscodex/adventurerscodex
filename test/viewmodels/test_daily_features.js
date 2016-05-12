@@ -88,7 +88,7 @@ describe('Daily Features View Model', function() {
     });
 
     describe('Reset dailyFeatures', function() {
-        it('should reset all daily features counts to 0.', function() {
+        it('should reset a daily features counts to 0.', function() {
             var c = CharacterManager.activeCharacter;
             CharacterManager.activeCharacter = function() {
                 return {
@@ -99,15 +99,11 @@ describe('Daily Features View Model', function() {
             var p = new DailyFeatureViewModel();
             p.blankDailyFeature().featureMaxUses(5);
             p.addDailyFeature();
-            p.blankDailyFeature().featureMaxUses(5);
-            p.addDailyFeature();
 
             p.dailyFeatures()[0].featureUsed(1);
-            p.dailyFeatures()[1].featureUsed(1);
 
-            p.refreshDailyFeature();
+            p.refreshDailyFeature(p.dailyFeatures()[0]);
             p.dailyFeatures()[0].featureUsed().should.equal(0);
-            p.dailyFeatures()[1].featureUsed().should.equal(0);
 
             CharacterManager.activeCharacter = c;
         });
