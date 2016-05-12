@@ -44,7 +44,7 @@ describe('Daily Feature Model', function() {
             s.featureMaxUses(0);
             s.featureUsed(0);
 
-            var vals = { level: 10, maxSpellSlots: 3, usedSpellSlots: 1 };
+            var vals = { featureMaxUses: 3, featureUsed: 1 };
             s.importValues(vals);
             s.featureUsed().should.equal(vals.featureUsed);
             s.featureMaxUses().should.equal(vals.featureMaxUses);

@@ -102,12 +102,12 @@ describe('Daily Features View Model', function() {
             p.blankDailyFeature().featureMaxUses(5);
             p.addDailyFeature();
 
-            p.dailyFeatures()[0].usedSpelldailyFeatures(1);
-            p.dailyFeatures()[1].usedSpelldailyFeatures(1);
+            p.dailyFeatures()[0].featureUsed(1);
+            p.dailyFeatures()[1].featureUsed(1);
 
             p.resetdailyFeatures();
-            p.dailyFeatures()[0].usedSpelldailyFeatures().should.equal(0);
-            p.dailyFeatures()[1].usedSpelldailyFeatures().should.equal(0);
+            p.dailyFeatures()[0].featureUsed().should.equal(0);
+            p.dailyFeatures()[1].featureUsed().should.equal(0);
 
             CharacterManager.activeCharacter = c;
         });
