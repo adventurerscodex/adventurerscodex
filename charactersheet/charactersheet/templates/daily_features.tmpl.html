@@ -1,12 +1,16 @@
 <div class="panel panel-default">
 	<div class='panel-body'>
+    <div class="progress" data-bind="{ foreach: dailyFeatures, visible: dailyFeatures().length > 0 }">
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: dailyFeaturesProgressWidth() * $parent.maxFeatureWidth() + '%' }, css: color">
+        <span class="sr-only"></span>
+      </div>
+    </div>
 		<table id='dailyFeaturesTable' class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr>
 					<th class="col-sm-2" data-bind="click: function(){sortBy('featureName');}">Daily Feature
             <i data-bind="css: sortArrow('featureName')"></i>
           </th>
-          <!-- <th class="col-sm-2"></th> -->
 					<th class="col-sm-1" data-bind="click: function(){sortBy('featureMaxUses');}">Max
             <i data-bind="css: sortArrow('featureMaxUses')"></i>
           </th> <!-- Max -->
@@ -29,7 +33,11 @@
             data-target="#viewDailyFeature" data-bind="text: featureName">
 					  </span>
 					</td>
-					<td class="col-content-vertical col-sm-1">
+					<td class="col-content-vertical col-sm-1" data-bind="click: $parent.editDailyFeature"
+          href="#"
+          class="col-sm-3 feature-row"
+          data-toggle="modal"
+          data-target="#viewDailyFeature">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
 					<td class="col-sm-3">

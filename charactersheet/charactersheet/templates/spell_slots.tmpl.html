@@ -8,45 +8,44 @@
 		<table id='spellSlotsTable' class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr class="row">
-					<th colspan="2" class="text-center">Spell Slots</th>
-					<th class="col-sm-7"> <a class="col-sm-offset-11" href="#" data-bind="click: resetSlots"><i class="fa fa-refresh fa-color"></i> </a></th>
+					<th class="col-sm-3">Spell Slots</th>
+          <th class="col-sm-1">Level</th>
+          <th class="col-sm-1">Max</th>
+					<th class="col-sm-6 text-center">Used <a class="pull-right" href="#" data-bind="click: resetSlots"><i class="fa fa-refresh fa-color"></i> </a></th>
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addSpellSlot" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
 				</tr>
 			</thead>
 			<tbody data-bind="foreach: filteredAndSortedSlots">
 				<tr class="row clickable">
-					<td class="col-sm-1" data-bind="click: $parent.editSlot"
+					<td class="col-sm-1 col-content-vertical" data-bind="click: $parent.editSlot"
 					href="#"
           data-toggle="modal"
           data-target="#viewSlot">
 					  <span data-bind="css: color" class="form-control color-picker-item" >
 					  </span>
-          			</td>
-					<td class="col-sm-1"
-					data-bind="click: $parent.editSlot"
+    			</td>
+					<td class="col-sm-1 col-content-vertical"
+					data-bind="click: $parent.editSlot, text: level"
 					href="#"
           data-toggle="modal"
-          data-target="#viewSlot">
-					  <span class="text-center form-control spell-slots-level" data-bind="text: level">
-					  </span>
-					</td>
-					<td class="col-sm-9">
-					<div class="input-group">
-						<span class="input-group-addon"
-						data-bind="click: $parent.editSlot"
-						href="#"
+          data-target="#viewSlot"></td>
+          <td class="col-sm-1 col-content-vertical"
+            data-bind="click: $parent.editSlot, text: maxSpellSlots"
+            href="#"
             data-toggle="modal"
-            data-target="#viewSlot">
-              <span data-bind="text: maxSpellSlots" ></span> - </span>
-						<input type="number" min="0" class="form-control" data-bind="attr: { max: maxSpellSlots }, value: usedSpellSlots" />
-						<span class="input-group-addon"
-						data-bind="click: $parent.editSlot"
-						href="#"
-            data-toggle="modal"
-            data-target="#viewSlot"> = <span data-bind="text: spellSlots"></span> </span>
-					</div>
+            data-target="#viewSlot"></td>
+					<td class="col-sm-4">
+  					<div class="input-group daily-feature-used-slots">
+  							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
+  								<i class="fa fa-plus fa-color"> </i>
+  							</button>
+  							<span data-bind="text: usedSpellSlots" class="used-slot-span"></span>
+  							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
+  								<i class="fa fa-minus fa-color"> </i>
+  							</button>
+  					</div>
 					</td>
-					<td>
+					<td class="col-content-vertical">
 						<a data-bind="click: $parent.removeSlot" href="#">
 							<i class="fa fa-trash-o fa-color-hover"> </i>
 						</a>
