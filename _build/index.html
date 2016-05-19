@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>mr-doc</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/cayman.css">
+    <link rel="stylesheet" href="css/prism.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">mr-doc</h1>
+      <h2 class="project-tagline">A tool to help D&amp;D 5e players keep their ducks in a row.</h2><a href="https://npmjs.com/package/Chractersheet" target="_blank" class="btn">View on npm</a>
+    </section>
+    <section data-spy="scroll" data-target=".scrollspy" class="main-content">
+      <div class="row">
+        <div class="col-md-3 col-xs-3 bs-docs-sidebar">
+          <ul id="sidebar" class="nav nav-stacked fixed">
+            <li class="active"><a href="index.html">Main
+                <ul class="nav nav-stacked">
+                </ul></a></li>
+            <li><a href="init.js.html">init.js</a></li>
+            <li><a href="models/ability_scores.js.html">models/ability_scores.js</a></li>
+            <li><a href="models/appearance.js.html">models/appearance.js</a></li>
+            <li><a href="models/armor.js.html">models/armor.js</a></li>
+            <li><a href="models/campaign.js.html">models/campaign.js</a></li>
+            <li><a href="models/character.js.html">models/character.js</a></li>
+            <li><a href="models/chat_message.js.html">models/chat_message.js</a></li>
+            <li><a href="models/connection_manager.js.html">models/connection_manager.js</a></li>
+            <li><a href="models/death_save.js.html">models/death_save.js</a></li>
+            <li><a href="models/feat_traits.js.html">models/feat_traits.js</a></li>
+            <li><a href="models/feats_prof.js.html">models/feats_prof.js</a></li>
+            <li><a href="models/health.js.html">models/health.js</a></li>
+            <li><a href="models/hit_dice.js.html">models/hit_dice.js</a></li>
+            <li><a href="models/hit_dice_type.js.html">models/hit_dice_type.js</a></li>
+            <li><a href="models/image.js.html">models/image.js</a></li>
+            <li><a href="models/item.js.html">models/item.js</a></li>
+            <li><a href="models/magic_item.js.html">models/magic_item.js</a></li>
+            <li><a href="models/note.js.html">models/note.js</a></li>
+            <li><a href="models/npc.js.html">models/npc.js</a></li>
+            <li><a href="models/other_stats.js.html">models/other_stats.js</a></li>
+            <li><a href="models/player_info.js.html">models/player_info.js</a></li>
+            <li><a href="models/player_summary.js.html">models/player_summary.js</a></li>
+            <li><a href="models/player_types.js.html">models/player_types.js</a></li>
+            <li><a href="models/profile.js.html">models/profile.js</a></li>
+            <li><a href="models/saving_throws.js.html">models/saving_throws.js</a></li>
+            <li><a href="models/skill.js.html">models/skill.js</a></li>
+            <li><a href="models/spell.js.html">models/spell.js</a></li>
+            <li><a href="models/spell_slot.js.html">models/spell_slot.js</a></li>
+            <li><a href="models/spell_stats.js.html">models/spell_stats.js</a></li>
+            <li><a href="models/treasure.js.html">models/treasure.js</a></li>
+            <li><a href="models/user_notification.js.html">models/user_notification.js</a></li>
+            <li><a href="models/weapon.js.html">models/weapon.js</a></li>
+            <li><a href="services/chat_service.js.html">services/chat_service.js</a></li>
+            <li><a href="services/hotkeys_service.js.html">services/hotkeys_service.js</a></li>
+            <li><a href="services/persistence_service.js.html">services/persistence_service.js</a></li>
+            <li><a href="services/player_summary_service.js.html">services/player_summary_service.js</a></li>
+            <li><a href="services/players_service.js.html">services/players_service.js</a></li>
+            <li><a href="services/sort_service.js.html">services/sort_service.js</a></li>
+            <li><a href="utilities/character_manager.js.html">utilities/character_manager.js</a></li>
+            <li><a href="utilities/fixtures.js.html">utilities/fixtures.js</a></li>
+            <li><a href="utilities/messenger.js.html">utilities/messenger.js</a></li>
+            <li><a href="utilities/notifications.js.html">utilities/notifications.js</a></li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <section id="Main" class="readme"><div style="background-color:#2c3e50;">
+<h1 style="text-align: center; margin-top: 0.0em; margin-bottom: 0.5em; padding-bottom:0.3em; font-size: 29px; font-family: HelveticaNeue-Bold; page-break-inside: avoid; page-break-after: avoid; color: rgb(51, 51, 51); font-style: normal; color:white;">
+<center><img class="tl-email-image" data-id="455053" height="100" src="http://gallery.tinyletterapp.com/c0e1ae00b92e2d758f243a5a1eecefd66836c060/images/3cd93e95-2382-429d-b599-b6368f2ca9cf.png" style="padding-top: 10px; width: 100px; max-width: 100px;" width="100" /></center>
+Welcome to Adventurer&rsquo;s&nbsp;Codex <sup style="color:orange;">Beta!</sup></h1>
+</div>
+<p><a href="https://travis-ci.org/adventurerscodex/adventurerscodex.github.io"><img src="https://travis-ci.org/adventurerscodex/adventurerscodex.github.io.svg" alt="Build Badge"></a>
+<a href="https://coveralls.io/github/adventurerscodex/adventurerscodex.github.io?branch=develop"><img src="https://coveralls.io/repos/github/adventurerscodex/adventurerscodex.github.io/badge.svg?branch=develop" alt="Coverage Status"></a>
+<a href="https://gitter.im/Sonictherocketman/adventurerscodex"><img src="https://img.shields.io/gitter/room/nwjs/nw.js.svg" alt="Gitter"></a></p>
+<p>A tool to help D&amp;D 5e players keep their ducks in a row.</p>
+<h1>What is it?</h1>
+<p>Charactersheet is a project that aims to take the friction out of some aspects of playing D&amp;D while not removing the classic elements of the game. Unlike other tools, this project is not aiming to automate elements like rolling dice, or leveling up. We've found that tools trying to make the game simpler, actually make it harder for players by forcing them to play by-the-book. There's usually no regard for house rules.</p>
+<p>Charactersheet's goal is to make the game more immersive, and bring it into the 21st century.</p>
+<h1>Features</h1>
+<p>BETA NOTICE: Not all features are implemented, but they will be soon!</p>
+<p>Adventurer’s Codex is a tool to help you as players or as the Dungeon Master keep track of your game and characters. The best part is that as more of your party uses it, the app gets even better! But remember, you don’t need the whole group to use it for you to reap the benefits!</p>
+<h2>For players</h2>
+<p>Access to your character’s stats, skills, spells, and more in an easy, intuitive interface.</p>
+<p>Quickly find the information you need with searchable, filterable tables making it easier to find and use those spur of the moment abilites.</p>
+<p>Make multiple characters and play them at the same time! Do you control a host of minions, or henchmen? Give them each a character sheet and bring them to life!</p>
+<p>Leveling up can be complex, and there's a lot of things to update. We provide some recommendations when you reach the next level to help you get past the pesky numbers and back to the game.</p>
+<p>Need a long rest? We can help with that too. With our auto-long-rest feature, you’ll be sure to get all the benefits of a good night sleep.</p>
+<h2>For DMs</h2>
+<p>Keep track of your campaign easily with rich text, searchable notes.</p>
+<p>Prepare enemies and terrain ahead of time, and be ready for that encounter.</p>
+<p>Do you have an important NPC that you want to bring to life? Make them a character sheet and get all of the advantages of Adventurer’s Codex that your players do.</p>
+<h2>For Parties</h2>
+<p>Once more than one of your party members starts using Adventurer’s Codex, then you’ll really start to see the benefits.</p>
+<p>See what you’re up against! The DM can present pictures of enemies, and terrain to players. This helps the DM paint a better picture of events so the players will be able to better visualize their situation.</p>
+<p>Have you ever been betrayed by a player not respecting what their character shouldn’t know? We’ve all been there. It’s hard to separate player-knowledge from character-knowledge, so we’ve made something to help! With private chat, you can talk directly to the player you want to talk with, and be sure there’ll be no eavesdropping.</p>
+<p>Certain actions only make sense during certain times of day. With our day-night feature, you’ll always know the current time and weather of the land. The DM can configure the precise time, day, and weather instantly so that the players will always be aware of the changing seasons.</p>
+<h1>Where's my data stored?</h1>
+<p>Here's the cool part: all your data is stored on your local machine! There's no server that's keeping a log of your characters, your adventures, or your party!</p>
+<p>Charactersheet uses HTML Local Storage to ensure that all your data is stored locally. Data may be <em>sent through</em> our servers, but it's never <em>stored on</em> them.</p>
+<h1>Installation</h1>
+<p>Installing charactersheet is pretty simple.</p>
+<pre><code>    mkdir charactersheet
+    git clone https://github.com/charactersheet/charactersheet.git charactersheet
+    cd charactersheet
+    npm install
+    npm test
+</code></pre>
+<p>That's it! If everything is green, then you're good to go!</p>
+<h1>Have questions or just want to chat?</h1>
+<p>Join the conversations at: https://gitter.im/Sonictherocketman/adventurerscodex</p>
+<h1>How can I contribute?</h1>
+<p>You should check out our <code>CONTRIBUTING.md</code>! We'd love the help!</p>
+</section>
+          <div class="footer site-footer">
+            <div class="span site-footer-owner"><a href="https://github.com/mr-doc/mr-doc-theme-cayman">Cayman</a> is maintained by <a href="https://github.com/iwatakeshi">iwatakeshi</a>.</div>
+            <div class="span site-footer-credits">This page was generated by <a href="https://github.com/mr-doc/mr-doc">Mr. Doc</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/affix.js"></script>
+    <script src="js/dropdown.js"></script>
+    <script src="js/scrollspy.js"></script>
+    <script src="js/prism.js"></script>
+    <script src="js/prism-bash.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('body').scrollspy({
+          target: ".bs-docs-sidebar",
+          offset: 40
+        });
+        $('#sidebar').affix({
+          offset:{
+            bottom:60,
+            top: 60
+          }
+        }) 
+      });
+    </script>
+  </body>
+</html>

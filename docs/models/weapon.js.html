@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Adventurer's Codex</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" type="text/css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="../css/cayman.css">
+    <link rel="stylesheet" href="../css/prism.css">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Adventurer's Codex</h1>
+      <h2 class="project-tagline">A tool to help D&amp;D 5e players keep their ducks in a row.</h2><a href="https://npmjs.com/package/Chractersheet" target="_blank" class="btn">View on npm</a>
+    </section>
+    <section data-spy="scroll" data-target=".scrollspy" class="main-content">
+      <div class="row">
+        <div class="col-md-3 col-xs-3 bs-docs-sidebar">
+          <ul id="sidebar" class="nav nav-stacked fixed">
+            <li><a href="../index.html">Main</a></li>
+            <li><a href="../models/ability_scores.js.html">models/ability_scores.js</a></li>
+            <li><a href="../models/appearance.js.html">models/appearance.js</a></li>
+            <li><a href="../models/armor.js.html">models/armor.js</a></li>
+            <li><a href="../models/campaign.js.html">models/campaign.js</a></li>
+            <li><a href="../models/character.js.html">models/character.js</a></li>
+            <li><a href="../models/chat_message.js.html">models/chat_message.js</a></li>
+            <li><a href="../models/connection_manager.js.html">models/connection_manager.js</a></li>
+            <li><a href="../models/death_save.js.html">models/death_save.js</a></li>
+            <li><a href="../models/feat_traits.js.html">models/feat_traits.js</a></li>
+            <li><a href="../models/feats_prof.js.html">models/feats_prof.js</a></li>
+            <li><a href="../models/health.js.html">models/health.js</a></li>
+            <li><a href="../models/hit_dice.js.html">models/hit_dice.js</a></li>
+            <li><a href="../models/hit_dice_type.js.html">models/hit_dice_type.js</a></li>
+            <li><a href="../models/image.js.html">models/image.js</a></li>
+            <li><a href="../models/item.js.html">models/item.js</a></li>
+            <li><a href="../models/magic_item.js.html">models/magic_item.js</a></li>
+            <li><a href="../models/note.js.html">models/note.js</a></li>
+            <li><a href="../models/npc.js.html">models/npc.js</a></li>
+            <li><a href="../models/other_stats.js.html">models/other_stats.js</a></li>
+            <li><a href="../models/player_info.js.html">models/player_info.js</a></li>
+            <li><a href="../models/player_summary.js.html">models/player_summary.js</a></li>
+            <li><a href="../models/player_types.js.html">models/player_types.js</a></li>
+            <li><a href="../models/profile.js.html">models/profile.js</a></li>
+            <li><a href="../models/saving_throws.js.html">models/saving_throws.js</a></li>
+            <li><a href="../models/skill.js.html">models/skill.js</a></li>
+            <li><a href="../models/spell.js.html">models/spell.js</a></li>
+            <li><a href="../models/spell_slot.js.html">models/spell_slot.js</a></li>
+            <li><a href="../models/spell_stats.js.html">models/spell_stats.js</a></li>
+            <li><a href="../models/treasure.js.html">models/treasure.js</a></li>
+            <li><a href="../models/user_notification.js.html">models/user_notification.js</a></li>
+            <li class="active"><a href="../models/weapon.js.html">models/weapon.js
+                <ul class="nav nav-stacked">
+                </ul></a></li>
+            <li><a href="../services/persistence_service.js.html">services/persistence_service.js</a></li>
+            <li><a href="../services/player_summary_service.js.html">services/player_summary_service.js</a></li>
+            <li><a href="../services/players_service.js.html">services/players_service.js</a></li>
+            <li><a href="../services/sort_service.js.html">services/sort_service.js</a></li>
+            <li><a href="../utilities/character_manager.js.html">utilities/character_manager.js</a></li>
+            <li><a href="../utilities/fixtures.js.html">utilities/fixtures.js</a></li>
+            <li><a href="../utilities/messenger.js.html">utilities/messenger.js</a></li>
+            <li><a href="../utilities/notifications.js.html">utilities/notifications.js</a></li>
+          </ul>
+        </div>
+        <div class="col-md-9">
+          <div class="description"></div>
+          <pre><code class="language-javascript">&quot;use strict&quot;;
+
+function Weapon() {
+    var self = this;
+	self.ps = PersistenceService.register(Weapon, self);
+    self._dummy = ko.observable(null);
+	self.characterId = ko.observable(null);
+    self.weaponName = ko.observable('');
+    self.weaponType = ko.observable('');
+    self.weaponDmg = ko.observable('');
+    self.weaponHandedness = ko.observable('');
+    self.weaponProficiency = ko.observable('');
+    self.weaponPrice = ko.observable('');
+	self.weaponCurrencyDenomination = ko.observable('');
+    self.weaponHit = ko.observable('');
+    self.weaponWeight = ko.observable('');
+    self.weaponRange = ko.observable('');
+    self.weaponSize = ko.observable('');
+    self.weaponDamageType = ko.observable('');
+    self.weaponProperty = ko.observable('');
+    self.weaponDescription = ko.observable('');
+    self.weaponQuantity = ko.observable('');
+    self.weaponProficiencyOptions = ko.observableArray(
+        Fixtures.weapon.weaponProficiencyOptions);
+    self.weaponHandednessOptions = ko.observableArray(
+        Fixtures.weapon.weaponHandednessOptions);
+    self.weaponTypeOptions = ko.observableArray(
+        Fixtures.weapon.weaponTypeOptions);
+    self.weaponSizeOptions = ko.observableArray(
+        Fixtures.weapon.weaponSizeOptions);
+    self.weaponPropertyOptions = ko.observableArray(
+        Fixtures.weapon.weaponPropertyOptions);
+    self.weaponDamageTypeOptions = ko.observableArray(
+        Fixtures.weapon.weaponDamageTypeOptions);
+
+
+    self.updateValues = function() {
+        self._dummy.notifySubscribers();
+    };
+
+    self.proficiencyScore = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var profBonus = 0;
+        try{
+            profBonus = OtherStats.findBy(
+                CharacterManager.activeCharacter().key())[0].proficiency();
+        } catch(err){};
+        return parseInt(profBonus);
+    };
+
+    self.strAbilityScoreModifier = function() {
+        var score = null;
+        try {
+            score = AbilityScores.findBy(
+                CharacterManager.activeCharacter().key())[0].modifierFor('Str');
+        } catch(err) {};
+        if (score === null){
+          return null
+        }
+        else {
+          return parseInt(score);
+        }
+    };
+
+    self.dexAbilityScoreModifier = function() {
+        var score = null;
+        try {
+            score = AbilityScores.findBy(
+                CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
+        } catch(err) {};
+        if (score === null){
+          return null
+        }
+        else {
+          return parseInt(score);
+        }
+    };
+
+    self.abilityScoreBonus = ko.pureComputed(function() {
+        self._dummy();
+        if(self.weaponType() === 'Ranged'){
+            return self.dexAbilityScoreModifier();
+        }
+        else{
+            if(self.weaponProperty() === 'Finesse'){
+                var dexBonus = self.dexAbilityScoreModifier();
+                var strBonus = self.strAbilityScoreModifier();
+
+                if(dexBonus){
+                    return dexBonus &gt; strBonus ? dexBonus : strBonus;
+                }
+                else{
+                    return strBonus ? strBonus:0;
+                }
+            }
+            else{
+                return self.strAbilityScoreModifier();
+            }
+        }
+    });
+
+    self.hitBonusLabel = ko.pureComputed(function() {
+        self._dummy();
+        var totalBonus = 0;
+        var abilityScoreBonus = self.abilityScoreBonus();
+        var proficiencyBonus = self.proficiencyScore();
+        var weaponHit = parseInt(self.weaponHit());
+
+        if(abilityScoreBonus){
+            totalBonus += abilityScoreBonus;
+        }
+        if(proficiencyBonus){
+            totalBonus += proficiencyBonus;
+        }
+        if(weaponHit){
+            totalBonus += weaponHit;
+        }
+
+        return totalBonus ? ('+' + totalBonus):'+0';
+    });
+
+    self.clear = function() {
+        self.weaponName('');
+        self.weaponType('');
+        self.weaponDmg('');
+        self.weaponHandedness('');
+        self.weaponProficiency('');
+        self.weaponPrice('');
+        self.weaponWeight('');
+        self.weaponRange('');
+        self.weaponSize('');
+        self.weaponDamageType('');
+        self.weaponProperty('');
+        self.weaponDescription('');
+        self.weaponQuantity('');
+		self.weaponCurrencyDenomination('');
+        self.weaponHit('');
+    };
+
+    self.importValues = function(values) {
+    	self.characterId(values.characterId);
+        self.weaponName(values.weaponName);
+        self.weaponType(values.weaponType);
+        self.weaponDmg(values.weaponDmg);
+        self.weaponHandedness(values.weaponHandedness);
+        self.weaponProficiency(values.weaponProficiency);
+        self.weaponPrice(values.weaponPrice);
+        self.weaponWeight(values.weaponWeight);
+        self.weaponRange(values.weaponRange);
+        self.weaponSize(values.weaponSize);
+        self.weaponDamageType(values.weaponDamageType);
+        self.weaponProperty(values.weaponProperty);
+        self.weaponDescription(values.weaponDescription);
+        self.weaponQuantity(values.weaponQuantity);
+		self.weaponCurrencyDenomination(values.weaponCurrencyDenomination);
+        self.weaponHit(values.weaponHit);
+    };
+
+    self.exportValues = function() {
+        return {
+        	characterId: self.characterId(),
+			weaponName: self.weaponName(),
+			weaponType: self.weaponType(),
+			weaponDmg: self.weaponDmg(),
+			weaponHandedness: self.weaponHandedness(),
+			weaponProficiency: self.weaponProficiency(),
+			weaponPrice: self.weaponPrice(),
+			weaponWeight: self.weaponWeight(),
+			weaponRange: self.weaponRange(),
+			weaponSize: self.weaponSize(),
+			weaponDamageType: self.weaponDamageType(),
+            weaponProperty: self.weaponProperty(),
+            weaponDescription: self.weaponDescription(),
+            weaponQuantity: self.weaponQuantity(),
+			weaponCurrencyDenomination: self.weaponCurrencyDenomination(),
+            weaponHit: self.weaponHit()
+        }
+    };
+
+    self.save = function() {
+    	self.ps.save();
+    };
+
+    self.delete = function() {
+    	self.ps.delete();
+    };
+};
+
+Weapon.findAllBy =function(characterId) {
+	return PersistenceService.findAll(Weapon).filter(function(e, i, _) {
+		return e.characterId() === characterId;
+	});
+};</code></pre>
+          <div class="footer site-footer">
+            <div class="span site-footer-owner"><a href="https://github.com/mr-doc/mr-doc-theme-cayman">Cayman</a> is maintained by <a href="https://github.com/iwatakeshi">iwatakeshi</a>.</div>
+            <div class="span site-footer-credits">This page was generated by <a href="https://github.com/mr-doc/mr-doc">Mr. Doc</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/affix.js"></script>
+    <script src="../js/dropdown.js"></script>
+    <script src="../js/scrollspy.js"></script>
+    <script src="../js/prism.js"></script>
+    <script src="../js/prism-bash.js"></script>
+    <script>
+      $(document).ready(function(){
+        $('body').scrollspy({
+          target: ".bs-docs-sidebar",
+          offset: 40
+        });
+        $('#sidebar').affix({
+          offset:{
+            bottom:60,
+            top: 60
+          }
+        }) 
+      });
+    </script>
+  </body>
+</html>
