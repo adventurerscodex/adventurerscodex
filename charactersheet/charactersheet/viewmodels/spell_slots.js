@@ -28,7 +28,7 @@ function SpellSlotsViewModel() {
         self.blankSlot().maxSpellSlots(1);
 
         //Notifications
-        Notifications.events.longRest.add(self.resetOnLongRest)
+        Notifications.events.longRest.add(self.resetOnLongRest);
     };
 
     self.unload = function() {
