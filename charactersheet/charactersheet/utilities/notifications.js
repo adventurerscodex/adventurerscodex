@@ -93,6 +93,23 @@ var Notifications = {
     },
 
     /*****************************
+     ****** In Game Events *******
+     *****************************/
+
+    events: {
+
+        /**
+         * Fired whenever a short rest is activated.
+         */
+        shortRest: new signals.Signal(),
+
+        /**
+         * Fired whenever a long rest is activated.
+         */
+        longRest: new signals.Signal()
+    },
+
+    /*****************************
      **** Data Changed Events ****
      *****************************/
 
