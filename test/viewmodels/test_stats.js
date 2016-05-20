@@ -166,7 +166,7 @@ describe('Stats View Model', function() {
                 hitDice3.hitDiceUsed(true);
 
                 simple.mock(Profile, 'findBy').returnWith(
-                    {'level': function() { return 2; } } );
+                    [{'level': function() { return 2; } }] );
 
                 stats.hitDiceList([hitDice1, hitDice2, hitDice3]);
                 stats.resetHitDice();

@@ -60,3 +60,9 @@ DailyFeature.findAllBy = function(characterId) {
         return e.characterId() === characterId;
     });
 };
+
+DailyFeature.REST_VALUES = {
+    SHORT_REST: 'short',
+    LONG_REST: 'long'
+};
+
