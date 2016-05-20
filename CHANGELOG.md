@@ -1,3 +1,11 @@
+version 0.0.9 (5/19/2016)
+* Adds action toolbar
+* fixed an issue with character creation
+* adds visualization to Daily Features Bar
+* Add hover over color red to remove icons
+* various code improvements
+* various enhancements for Tablet users
+
 version 0.0.8 (5/4/2016)
 
 * updated iconography
