@@ -138,6 +138,14 @@ Character.importCharacter = function(data) {
     return character;
 };
 
+Character.importFromFileDB = function(data) {
+    var character = Character.importCharacter(data);
+    Notifications.characters.changed.dispatch();
+
+    CharacterManager.changeCharacter(character.key());
+    $('#importModal').modal('hide');
+};
+
 /**
  * Given a json serialized model, attempt to change the character id value.
  * @param characterId {string} The new Id for the data.
