@@ -116,7 +116,7 @@ function WizardViewModel() {
             CharacterManager.changeCharacter(character.key());
             $('#importModal').modal('hide');
         }).error(function(err) {
-            console.log("There was an issue")
+            //TODO: Alert user of error
         });
     };
 
