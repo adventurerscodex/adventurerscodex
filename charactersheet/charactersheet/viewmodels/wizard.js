@@ -108,6 +108,18 @@ function WizardViewModel() {
         self.currentStep(0);
     };
 
+    WizardViewModel.importRemoteFile = function(files) {
+        $.getJSON(files[0].link).done(function(data) {
+            var character = Character.importCharacter(data);
+            Notifications.characters.changed.dispatch();
+
+            CharacterManager.changeCharacter(character.key());
+            $('#importModal').modal('hide');
+        }).error(function(err) {
+            //TODO: Alert user of error
+        });
+    };
+
     //Private Methods
 
     self._isPlayer = function() {
