@@ -77,13 +77,15 @@ function StatsViewModel() {
             e.characterId(CharacterManager.activeCharacter().key());
         });
 
-           //Subscriptions
+        //Subscriptions
         self.health().maxHitpoints.subscribe(self.dataHasChanged);
         self.health().damage.subscribe(self.dataHasChanged);
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().ac.subscribe(self.dataHasChanged);
+
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.skills.changed.add(self.calculatePassiveWisdom);
+        Notifications.events.longRest.add(self.resetOnLongRest);
     };
 
     self.unload = function() {
@@ -101,6 +103,7 @@ function StatsViewModel() {
         self.hitDiceType().save();
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.skills.changed.remove(self.calculatePassiveWisdom);
+        Notifications.events.longRest.remove(self.resetOnLongRest);
     };
 
     self.clear = function() {
@@ -135,13 +138,22 @@ function StatsViewModel() {
     };
 
     /**
+     * Fired when a long rest notification is recieved.
+     * Resets health and hit dice.
+     */
+    self.resetOnLongRest = function() {
+        self.resetHitDice();
+        self.health().damage(0);
+    };
+
+    /**
      * Reset the hit dice to an unused state up to the floor of half of the
      * character's level.
      *
      * This will be used primarily for long rest resets.
      */
     self.resetHitDice = function(){
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key()[0]);
+        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
         var level = profile.level();
         var restoredHitDice = Math.floor(level / 2);
 
@@ -161,6 +173,8 @@ function StatsViewModel() {
     self.calculatePassiveWisdom = function() {
         self.otherStats().updateValues();
     };
+
+    /* Utility Methods */
 
     self.dataHasChanged = function() {
         self.otherStats().save();

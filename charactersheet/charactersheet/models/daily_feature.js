@@ -12,7 +12,7 @@ function DailyFeature() {
 
     self.characterId = ko.observable(null);
     self.featureName = ko.observable('');
-    self.featureMaxUses = ko.observable(1);
+    self.featureMaxUses = ko.observable(0);
     self.featureUsed = ko.observable(0);
     self.featureResetsOn = ko.observable('');
     self.featureDescription = ko.observable('');
@@ -60,3 +60,9 @@ DailyFeature.findAllBy = function(characterId) {
         return e.characterId() === characterId;
     });
 };
+
+DailyFeature.REST_VALUES = {
+    SHORT_REST: 'short',
+    LONG_REST: 'long'
+};
+

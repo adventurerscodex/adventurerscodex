@@ -27,6 +27,8 @@ function RootViewModel() {
     self.activeTab = ko.observable();
 
     //Player Child View Models
+    self.actionsToolbarViewModel = ko.observable(new ActionsToolbarViewModel());
+
     self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
     self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
     self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());

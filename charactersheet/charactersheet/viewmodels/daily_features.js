@@ -26,12 +26,17 @@ function DailyFeatureViewModel() {
             self.dailyFeatures([]);
         }
 
+        //Notifications
+        Notifications.events.shortRest.add(self.resetShortRestFeatures);
+        Notifications.events.longRest.add(self.resetLongRestFeatures);
     };
 
     self.unload = function() {
         self.dailyFeatures().forEach(function(e, i, _) {
             e.save();
         });
+        Notifications.events.longRest.remove(self.resetShortRestFeatures);
+        Notifications.events.shortRest.remove(self.resetShortRestFeatures);
     };
 
     /* UI Methods */
@@ -59,6 +64,28 @@ function DailyFeatureViewModel() {
     };
 
     //Manipulating daily features
+
+    /**
+     * Resets all short-rest features.
+     */
+    self.resetShortRestFeatures = function() {
+        ko.utils.arrayForEach(self.dailyFeatures(), function(feature) {
+            if (feature.featureResetsOn() === DailyFeature.REST_VALUES.SHORT_REST) {
+                feature.featureUsed(0);
+            }
+        });
+    };
+
+    /**
+     * Resets all long-rest features.
+     */
+    self.resetLongRestFeatures = function() {
+        ko.utils.arrayForEach(self.dailyFeatures(), function(feature) {
+            if (feature.featureResetsOn() === DailyFeature.REST_VALUES.LONG_REST) {
+                feature.featureUsed(0);
+            }
+        });
+    };
 
     self.maxFeatureWidth = function() {
         return 100 / self.dailyFeatures().length;

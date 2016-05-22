@@ -26,12 +26,16 @@ function SpellSlotsViewModel() {
 
         self.blankSlot().level(self.slots().length + 1);
         self.blankSlot().maxSpellSlots(1);
+
+        //Notifications
+        Notifications.events.longRest.add(self.resetOnLongRest);
     };
 
     self.unload = function() {
         self.slots().forEach(function(e, i, _) {
             e.save();
         });
+        Notifications.events.longRest.remove(self.resetOnLongRest);
     };
 
     /* UI Methods */
@@ -57,6 +61,16 @@ function SpellSlotsViewModel() {
         self.sort(SortService.sortForName(self.sort(),
             columnName, self.sorts));
     };
+
+    /**
+     * Resets all slots on a long-rest.
+     */
+    self.resetOnLongRest = function() {
+        ko.utils.arrayForEach(self.slots(), function(slot) {
+            slot.usedSpellSlots(0);
+        });
+    };
+
 
     //Manipulating spell slots
     self.maxSlotWidth = function() {

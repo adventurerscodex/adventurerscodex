@@ -10,16 +10,6 @@ describe('Slot Model', function() {
         });
     });
 
-    describe('Spell Slots', function() {
-        it('should yield the number of total slots remaining.', function() {
-            var s = new Slot();
-            s.maxSpellSlots(4);
-            s.usedSpellSlots(1);
-
-            s.spellSlots().should.equal(3);
-        });
-    });
-
     describe('Clear', function() {
         it('should clear all values', function() {
             var s = new Slot();
@@ -68,4 +58,3 @@ describe('Slot Model', function() {
         });
     });
 });
-
