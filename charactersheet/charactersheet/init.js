@@ -54,8 +54,8 @@ var init = function(viewModel) {
         // file types, such as "video" or "images" in the list. For more information,
         // see File types below. By default, all extensions are allowed.
         extensions: ['.json']
-};
+    };
 
     var button = Dropbox.createChooseButton(dropboxConfigOptions);
-    document.getElementById("dropbox-container").appendChild(button);
+    document.getElementById('dropbox-container').appendChild(button);
 };
