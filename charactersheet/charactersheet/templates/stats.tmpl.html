@@ -38,7 +38,36 @@
 	<!--Health items -->
     <div class="row row-padded">
       <div class="col-md-4 col-padded stats-health-border">
-        <table class="table table-responsive table-ac-bordered">
+        <table class="table table-responsive">
+          <tr>
+            <td class="col-md-4 text-right">
+              <span class="form-control">Max HP:</span>
+            </td>
+            <td class="col-md-3">
+              <input type="number" class="form-control  text-center" aria-describedby="basic-addon2"
+                data-bind='textInput: health().maxHitpoints' min="0">
+            </td>
+          </tr>
+          <tr>
+            <td class="col-md-4 text-right">
+              <span class="form-control">Damage:</span>
+            </td>
+            <td>
+              <div class="input-group daily-feature-used-slots">
+                  <button type="button" class="btn btn-default" data-bind="click: increaseDamage">
+                    <i class="fa fa-plus fa-color"> </i>
+                  </button>
+                  <span data-bind="text: health().damage" class="used-slot-span"></span>
+                  <button type="button" class="btn btn-default" data-bind="click: decreaseDamage">
+                    <i class="fa fa-minus fa-color"> </i>
+                  </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+
+        <!-- <table class="table table-responsive table-ac-bordered">
           <tr>
             <td class="col-md-1"></td>
             <td class="col-md-6 text-right">
@@ -70,7 +99,7 @@
               <span class="form-control" data-bind='text: health().hitpoints'>
             </td>
           </tr>
-        </table>
+        </table> -->
       </div>
 
     <!--AC, Initiative, Speed-->
