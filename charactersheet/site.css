@@ -1,3 +1,8 @@
+#content {
+  max-width: 1800px;
+}
+
+
 .progress {
   height:34px;
 }
@@ -66,11 +71,8 @@
  * Additional Progress Bar Colors
  */
 div.progress-text {
-  z-index: 100;
   line-height: 2.5em;
   position: absolute;
-  width: 100%;
-  text-align: center;
 }
 
 .progress-bar-blue {
