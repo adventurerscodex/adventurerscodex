@@ -11,8 +11,8 @@ function Health() {
             'tempProgressWidth', 'progressLabel']
     };
 
-    self.DANGER_THRESHOLD = 0.10;
-    self.WARNING_THRESHOLD = 0.30;
+    self.DANGER_THRESHOLD = 0.30;
+    self.WARNING_THRESHOLD = 0.50;
 
     self.characterId = ko.observable(null);
     self.maxHitpoints = ko.observable(10);
