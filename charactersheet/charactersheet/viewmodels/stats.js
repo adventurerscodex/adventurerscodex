@@ -160,6 +160,10 @@ function StatsViewModel() {
         }
     };
 
+    self.resetDamage = function() {
+        self.health().damage(0);
+    };
+
     /**
      * Reset the hit dice to an unused state up to the floor of half of the
      * character's level.

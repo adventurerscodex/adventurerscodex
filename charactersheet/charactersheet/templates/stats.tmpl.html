@@ -19,7 +19,7 @@
             id="hitpointsCounter" data-bind="text: hitpointsText">
           </div>
         </div>
-        <table class="table table-responsive">
+        <table class="table table-responsive table-ac-bordered table-hover">
           <thead>
             <tr>
               <th class="col-md-2"></th>
@@ -29,12 +29,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr data-toggle="modal" data-target="#viewHealth">
-              <td class="col-content-vertical clickable"><b>Hit Points:</b></td>
-                <td class="col-content-vertical">
-                  <input type="number" class="text-center"
-                    data-bind='textInput: health().maxHitpoints' min="0">
-                </td>
+            <tr>
+              <td class="col-content-vertical clickable"
+                data-toggle="modal" data-target="#viewHealth"><b>Hit Points:</b></td>
+              <td class="col-content-vertical text-center clickable"
+                data-toggle="modal" data-target="#viewHealth">
+                  <span data-bind="text: health().maxHitpoints"></span>
+              </td>
               <td>
                 <div class="input-group daily-feature-used-slots">
                     <button type="button" class="btn btn-default" data-bind="click: increaseDamage">
@@ -47,7 +48,9 @@
                 </div>
               </td>
               <td class="text-center col-content-vertical">
-                <i class="fa fa-refresh fa-color"> </i>
+                <a data-bind="click: resetDamage" href="#">
+                  <i class="fa fa-refresh fa-color"> </i>
+                </a>
               </td>
             </tr>
           </tbody>
@@ -159,7 +162,7 @@
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Max HP</label>
 						<div class="col-sm-10">
-              <input type="number" class="text-center"
+              <input type="number" class="form-control"
                 data-bind='textInput: health().maxHitpoints' min="0">
 						</div>
 					</div>
@@ -172,7 +175,7 @@
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Temporary HP</label>
 						<div class="col-sm-10">
-              <input type="number" class="text-center"
+              <input type="number" class="form-control"
                 data-bind='textInput: health().tempHitpoints' min="0">
 						</div>
 					</div>
@@ -188,4 +191,3 @@
 <!-- Modal Dialog -->
 </div>
 <!-- Modal Fade -->
-

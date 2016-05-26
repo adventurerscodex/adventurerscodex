@@ -20,27 +20,34 @@ function Health() {
     self.damage = ko.observable(0);
 
     self.hitpoints = ko.pureComputed(function() {
-        if(self.maxHitpoints() && self.damage())
+        if(self.maxHitpoints() && self.damage() && self.tempHitpoints())
             return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
-        else if(self.maxHitpoints() && !self.damage())
+        else if(self.maxHitpoints() && !self.damage() && self.tempHitpoints())
             return parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints());
         else
             return '';
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
-        return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints()));
+        if(self.tempHitpoints()){
+            return (self.tempHitpoints() + self.maxHitpoints());
+        }
+        else{
+            return self.maxHitpoints();
+        }
     }, self);
 
     self.tempHitpointsRemaining = ko.pureComputed(function() {
-        return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
+        if(self.tempHitpoints()){
+            return (self.tempHitpoints() - self.damage());
+        }
     }, self);
 
     self.regularHitpointsRemaining = ko.pureComputed(function() {
         if (self.tempHitpointsRemaining() > 0) {
-            return parseInt(self.maxHitpoints());
+            return self.maxHitpoints();
         }
-        return (parseInt(self.maxHitpoints()) - ((self.damage() ? parseInt(self.damage()) : 0) - parseInt(self.tempHitpoints())));
+        return (self.maxHitpoints() - ((self.damage() ? self.damage() : 0) - self.tempHitpoints()));
     }, self);
 
     //Progress bar methods.
