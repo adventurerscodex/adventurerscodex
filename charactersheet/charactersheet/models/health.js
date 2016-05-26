@@ -21,15 +21,15 @@ function Health() {
 
     self.hitpoints = ko.pureComputed(function() {
         if(self.maxHitpoints() && self.damage() && self.tempHitpoints())
-            return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
+            return (self.maxHitpoints() + self.tempHitpoints()) - self.damage();
         else if(self.maxHitpoints() && !self.damage() && self.tempHitpoints())
-            return parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints());
+            return self.maxHitpoints() + self.tempHitpoints();
         else
-            return '';
+            return 0;
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
-        if(self.tempHitpoints()){
+        if(self.tempHitpoints() && self.tempHitpoints()){
             return (self.tempHitpoints() + self.maxHitpoints());
         }
         else{
@@ -40,6 +40,9 @@ function Health() {
     self.tempHitpointsRemaining = ko.pureComputed(function() {
         if(self.tempHitpoints()){
             return (self.tempHitpoints() - self.damage());
+        }
+        else{
+            return 0;
         }
     }, self);
 
@@ -61,11 +64,11 @@ function Health() {
     }, self);
 
     self.isDangerous = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD ? true : false;
+        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= self.DANGER_THRESHOLD ? true : false;
     }, self);
 
     self.isWarning = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD ? true : false;
+        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= self.WARNING_THRESHOLD ? true : false;
     }, self);
 
     self.progressType = ko.pureComputed(function() {
