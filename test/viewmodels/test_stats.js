@@ -86,7 +86,7 @@ describe('Stats View Model', function() {
                 stats.health().tempHitpoints(5);
                 stats.health().damage(8);
                 stats.health().isWarning().should.equal(false);
-                stats.health().damage(13);
+                stats.health().damage(8);
                 stats.health().isWarning().should.equal(true);
             });
         });
@@ -98,9 +98,9 @@ describe('Stats View Model', function() {
                 stats.health().tempHitpoints(5);
                 stats.health().damage(8);
                 stats.health().progressType().should.equal('progress-bar-success');
-                stats.health().damage(13);
+                stats.health().damage(8);
                 stats.health().progressType().should.equal('progress-bar-warning');
-                stats.health().damage(14);
+                stats.health().damage(10);
                 stats.health().progressType().should.equal('progress-bar-danger');
             });
         });
