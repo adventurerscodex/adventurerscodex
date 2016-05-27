@@ -84,7 +84,7 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(8);
+                stats.health().damage(6);
                 stats.health().isWarning().should.equal(false);
                 stats.health().damage(8);
                 stats.health().isWarning().should.equal(true);
@@ -96,11 +96,11 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(8);
+                stats.health().damage(6);
                 stats.health().progressType().should.equal('progress-bar-success');
                 stats.health().damage(8);
                 stats.health().progressType().should.equal('progress-bar-warning');
-                stats.health().damage(10);
+                stats.health().damage(11);
                 stats.health().progressType().should.equal('progress-bar-danger');
             });
         });
