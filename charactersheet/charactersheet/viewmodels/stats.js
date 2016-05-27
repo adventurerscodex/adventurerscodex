@@ -147,14 +147,14 @@ function StatsViewModel() {
     };
 
     self.increaseDamage = function() {
-        var used = self.health().damage();
+        var used = parseInt(self.health().damage());
         if(used !== parseInt(self.health().maxHitpoints())){
             self.health().damage(used + 1);
         }
     };
 
     self.decreaseDamage = function() {
-        var used = self.health().damage();
+        var used = parseInt(self.health().damage());
         if(used !== 0){
             self.health().damage(used - 1);
         }
