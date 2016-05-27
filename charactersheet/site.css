@@ -327,3 +327,18 @@ textarea.dark-area {
 	margin-right:10px;
 	line-height: 3.6em
 }
+/*
+ * The following CSS is to fix the modal on tablets.
+ * Modal Fix Start
+ */
+body {
+  padding-right: 0px !important
+}
+
+.modal-open {
+  overflow-y: auto;
+}
+
+/*
+ * Modal Fix End
+ */
