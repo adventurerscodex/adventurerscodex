@@ -146,6 +146,24 @@ function StatsViewModel() {
         self.health().damage(0);
     };
 
+    self.increaseDamage = function() {
+        var used = parseInt(self.health().damage());
+        if(used !== parseInt(self.health().maxHitpoints())){
+            self.health().damage(used + 1);
+        }
+    };
+
+    self.decreaseDamage = function() {
+        var used = parseInt(self.health().damage());
+        if(used !== 0){
+            self.health().damage(used - 1);
+        }
+    };
+
+    self.resetDamage = function() {
+        self.health().damage(0);
+    };
+
     /**
      * Reset the hit dice to an unused state up to the floor of half of the
      * character's level.

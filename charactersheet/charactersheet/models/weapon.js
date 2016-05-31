@@ -16,16 +16,16 @@ function Weapon() {
     self.weaponDmg = ko.observable('');
     self.weaponHandedness = ko.observable('');
     self.weaponProficiency = ko.observable('');
-    self.weaponPrice = ko.observable('');
+    self.weaponPrice = ko.observable(0);
     self.weaponCurrencyDenomination = ko.observable('');
-    self.weaponHit = ko.observable('');
-    self.weaponWeight = ko.observable('');
+    self.weaponHit = ko.observable(0);
+    self.weaponWeight = ko.observable(1);
     self.weaponRange = ko.observable('');
     self.weaponSize = ko.observable('');
     self.weaponDamageType = ko.observable('');
     self.weaponProperty = ko.observable('');
     self.weaponDescription = ko.observable('');
-    self.weaponQuantity = ko.observable('');
+    self.weaponQuantity = ko.observable(1);
     self.weaponProficiencyOptions = ko.observableArray(
         Fixtures.weapon.weaponProficiencyOptions);
     self.weaponHandednessOptions = ko.observableArray(
@@ -38,7 +38,6 @@ function Weapon() {
         Fixtures.weapon.weaponPropertyOptions);
     self.weaponDamageTypeOptions = ko.observableArray(
         Fixtures.weapon.weaponDamageTypeOptions);
-
 
     self.updateValues = function() {
         self._dummy.notifySubscribers();
