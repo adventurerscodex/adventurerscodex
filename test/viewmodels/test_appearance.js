@@ -13,11 +13,11 @@ describe('Appearance', function() {
             simple.mock(CharacterAppearance, 'findKey').returnWith([app]);
             var a = new AppearanceViewModel();
 
-            a.appearance.should.equal(app);
+            a.appearance().should.equal(app);
             app.height('6ft');
 
             a.load();
-            a.appearance.height.should.equal('6ft');
+            a.appearance().height().should.equal('6ft');
         });
     });
 
@@ -36,7 +36,7 @@ describe('Appearance', function() {
         it('should clear values of the model', function() {
             var app = new CharacterAppearance();
             var a   = new AppearanceViewModel();
-            app.height('6ft');
+            app().height('6ft');
             a.appearance(app);
 
             a.clear();
