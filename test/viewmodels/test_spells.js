@@ -1,8 +1,6 @@
 'use strict';
 
 describe('SpellsViewModel', function(){
-    var messenger = new Messenger();
-    var players = new PlayersService();
     PersistenceService._save = function(){};
     PersistenceService._delete = function(){};
 
