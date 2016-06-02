@@ -9,12 +9,13 @@ describe('Appearance', function() {
     describe('Load', function() {
         it('should load values from database', function() {
             var app = new CharacterAppearance();
-            app.height('6ft');
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             simple.mock(CharacterAppearance, 'findKey').returnWith([app]);
             var a = new AppearanceViewModel();
 
-            a.appearance.should.equal(new CharacterAppearance());
+            a.appearance.should.equal(app);
+            app.height('6ft');
+
             a.load();
             a.appearance.height.should.equal('6ft');
         });
@@ -40,7 +41,8 @@ describe('Appearance', function() {
 
             a.clear();
 
-            a.appearance.should.equal(new CharacterAppearance());
+            app = new CharacterAppearance();
+            a.appearance.should.equal(app);
         });
     });
 });
