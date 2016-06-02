@@ -15,13 +15,13 @@
             Damage
             <span data-bind="css: sortArrow('weaponDmg')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponRange');}">
-            Range
-            <span data-bind="css: sortArrow('weaponRange')"></span>
-          </th>
           <th class="hidden-sm hidden-xs hidden-md" data-bind="click: function(){sortBy('weaponDamageType');}">
             Damage Type
             <span data-bind="css: sortArrow('weaponDamageType')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponRange');}">
+            Range
+            <span data-bind="css: sortArrow('weaponRange')"></span>
           </th>
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('weaponProperty');}">
             Property
@@ -49,13 +49,13 @@
               href="#"
               data-toggle="modal"
               data-target="#viewWeapon"></td>
-          <td class="hidden-sm hidden-xs"
-              data-bind="text: weaponRange, click: $parent.editWeapon"
+          <td class="hidden-sm hidden-xs hidden-md"
+              data-bind="text: weaponDamageType, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
               data-target="#viewWeapon"></td>
-          <td class="hidden-sm hidden-xs hidden-md"
-              data-bind="text: weaponDamageType, click: $parent.editWeapon"
+          <td class="hidden-sm hidden-xs"
+              data-bind="text: weaponRange, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
               data-target="#viewWeapon"></td>
@@ -120,7 +120,8 @@
                 <label for="weaponHit"
                        class="col-sm-2 control-label">Magical Modifier</label>
                 <div class="col-sm-10">
-                  <input type="text"
+                  <input type="number"
+                         min="0"
                          class="form-control"
                          id="weaponHit"
                          placeholder="Place hit bonus here"
@@ -162,7 +163,8 @@
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
         					<div class="input-group">
-        						<input type="text"
+        						<input type="number"
+                         min="0"
         							   class="form-control input-select2-addon"
         							   id="weaponPrice"
         							   placeholder="5"
@@ -181,7 +183,8 @@
                 <label for="weaponWeight"
                        class="col-sm-2 control-label">Weight</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
+                           min="0"
                            class="form-control"
                            id="weaponWeight"
                            placeholder="6"
@@ -233,7 +236,8 @@
                 <label for="weaponQuantity"
                        class="col-sm-2 control-label">Quantity</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
+                           min="0"
                            class="form-control"
                            id="weaponQuantity"
                            placeholder="1"
@@ -316,7 +320,8 @@
                 <label for="weaponHit"
                        class="col-sm-2 control-label">Magical Modifier</label>
                 <div class="col-sm-10">
-                  <input type="text"
+                  <input type="number"
+                         min="0"
                          class="form-control"
                          id="weaponHit"
                          placeholder="Place hit bonus here"
@@ -358,7 +363,8 @@
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
         					<div class="input-group">
-        						<input type="text"
+        						<input type="number"
+                         min="0"
         							   class="form-control input-select2-addon"
         							   id="weaponPrice"
         							   placeholder="5"
@@ -376,7 +382,8 @@
                 <label for="weaponWeight"
                        class="col-sm-2 control-label">Weight</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
+                           min="0"
                            class="form-control"
                            id="weaponWeight"
                            placeholder="6"
@@ -429,7 +436,8 @@
                 <label for="weaponQuantity"
                        class="col-sm-2 control-label">Quantity</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
+                           min="0"
                            class="form-control"
                            id="weaponQuantity"
                            placeholder="1"

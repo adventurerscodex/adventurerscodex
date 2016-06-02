@@ -11,8 +11,8 @@ function Health() {
             'tempProgressWidth', 'progressLabel']
     };
 
-    self.DANGER_THRESHOLD = 0.10;
-    self.WARNING_THRESHOLD = 0.30;
+    self.DANGER_THRESHOLD = 0.30;
+    self.WARNING_THRESHOLD = 0.50;
 
     self.characterId = ko.observable(null);
     self.maxHitpoints = ko.observable(10);
@@ -20,12 +20,22 @@ function Health() {
     self.damage = ko.observable(0);
 
     self.hitpoints = ko.pureComputed(function() {
-        if(self.maxHitpoints() && self.damage())
-            return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
-        else if(self.maxHitpoints() && !self.damage())
-            return parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints());
-        else
-            return '';
+        if(self.tempHitpoints()){
+            if(self.maxHitpoints() && self.damage())
+                return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
+            else if(self.maxHitpoints() && !self.damage())
+                return parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints());
+            else
+                return '';
+        }
+        else{
+            if(self.maxHitpoints() && self.damage())
+                return parseInt(self.maxHitpoints()) - parseInt(self.damage());
+            else if(self.maxHitpoints() && !self.damage())
+                return parseInt(self.maxHitpoints());
+            else
+                return '';
+        }
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
