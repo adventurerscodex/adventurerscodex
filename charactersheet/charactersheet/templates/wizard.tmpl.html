@@ -11,8 +11,6 @@
           <div class="btn-group " role="group" aria-label="...">
             <button type="button" class="btn btn-primary"
               data-bind="click: setPlayerType">I'm a Player</button>
-            <button type="button" class="btn btn-default"
-              data-bind="click: setDMType">I'm a DM</button>
           </div>
          <div class="row row-padded">
           <div class="center-block text-center">
@@ -51,25 +49,6 @@
             </div>
           </div>
           <!-- /ko -->
-          <!-- DM -->
-          <!-- ko if: showCampaign -->
-          <h3>What's your campaign called?</h3>
-          <p><i>Go ahead and tell us some basic information about your campaign,
-          and yourself.</i></p>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="container-fluid" data-bind="template: {
-                    name: 'player_info.tmpl',
-                    templateUrl: 'templates',
-                    data: $data }"></div>
-            </div>
-          </div>
-          <div class="container-fluid" data-bind="template: {
-                    name: 'campaign.tmpl',
-                    templateUrl: 'templates',
-                    data: $data }"></div>
-          <!-- /ko -->
-          </div>
         <!-- /ko -->
       </div>
     </div>
