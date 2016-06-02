@@ -14,7 +14,7 @@ describe('Appearance', function() {
             simple.mock(CharacterAppearance, 'findKey').returnWith([app]);
             var a = new AppearanceViewModel();
 
-            a.appearance.height.should.equal('');
+            a.appearance.should.equal(null);
             a.load();
             a.appearance.height.should.equal('6ft');
         });
@@ -40,7 +40,7 @@ describe('Appearance', function() {
 
             a.clear();
 
-            a.appearance.height.should.equal('');
+            a.appearance.should.equal(null);
         });
     });
 });
