@@ -33,7 +33,7 @@ describe('Appearance', function() {
     });
 
     describe('Clear', function() {
-        it('should clear values of the model', function() {
+        it('should clear the values of the model', function() {
             var app = new CharacterAppearance();
             var a   = new AppearanceViewModel();
             app().height('6ft');
