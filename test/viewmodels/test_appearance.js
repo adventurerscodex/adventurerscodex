@@ -25,7 +25,6 @@ describe('Appearance', function() {
     describe('Unload', function() {
         it('should save values to the database', function() {
             var app = new AppearanceViewModel();
-
             var notifySpy = simple.mock(self.appearance(), 'save()');
 
             app.unload();
@@ -35,15 +34,12 @@ describe('Appearance', function() {
 
     describe('Clear', function() {
         it('should clear the values of the model', function() {
-            var app = new CharacterAppearance();
             var a   = new AppearanceViewModel();
-            app().height('6ft');
-            a.appearance(app);
+            var notifySpy = simple.mock(appearance(), 'clear');
 
             a.clear();
 
-            app = new CharacterAppearance();
-            a.appearance().should.equal(app);
+            notifySpy.called.should.equal(true);
         });
     });
 });
