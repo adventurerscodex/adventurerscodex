@@ -42,7 +42,7 @@ describe('Appearance', function() {
             a.clear();
 
             app = new CharacterAppearance();
-            a.appearance.should.equal(app);
+            a.appearance().should.equal(app);
         });
     });
 });
