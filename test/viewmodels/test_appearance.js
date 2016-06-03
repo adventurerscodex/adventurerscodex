@@ -13,8 +13,8 @@ describe('Appearance', function() {
             simple.mock(CharacterAppearance, 'findKey').returnWith([app]);
             var a = new AppearanceViewModel();
 
-            a.appearance().should.equal(app);
-            app.height('6ft');
+            //a.appearance().should.equal(app);
+            app().height('6ft');
 
             a.load();
             a.appearance().height().should.equal('6ft');
@@ -25,9 +25,9 @@ describe('Appearance', function() {
         it('should save values to the database', function() {
             var app = new AppearanceViewModel();
 
-            var notifySpy = simple.mock(self.appearance, 'save');
+            var notifySpy = simple.mock(self.appearance(), 'save');
 
-            app.unload();
+            app().unload();
             notifySpy.called.should.equal(true);
         });
     });
