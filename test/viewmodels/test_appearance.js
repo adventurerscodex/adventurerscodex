@@ -20,6 +20,15 @@ describe('Appearance', function() {
             a.load();
             a.appearance().height().should.equal('6ft');
         });
+
+        it('should not load values from database', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            simple.mock(CharacterAppearance, 'findBy').returnWith([]);
+            var a = new AppearanceViewModel();
+
+            a.load();
+            a.appearance().characterId().should.equal('1234');
+        });
     });
 
     describe('Unload', function() {
