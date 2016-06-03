@@ -36,7 +36,7 @@ describe('Appearance', function() {
     describe('Clear', function() {
         it('should clear the values of the model', function() {
             var a   = new AppearanceViewModel();
-            var notifySpy = simple.mock(a.appearance, 'clear');
+            var notifySpy = simple.mock(a.appearance(), 'clear');
 
             a.clear();
 
