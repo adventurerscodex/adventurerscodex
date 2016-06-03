@@ -14,7 +14,7 @@ describe('Appearance', function() {
             var a = new AppearanceViewModel();
 
             //a.appearance().should.equal(app);
-            app().height('6ft');
+            app.height('6ft');
 
             a.load();
             a.appearance().height().should.equal('6ft');
@@ -25,7 +25,7 @@ describe('Appearance', function() {
         it('should save values to the database', function() {
             var app = new AppearanceViewModel();
 
-            var notifySpy = simple.mock(self.appearance(), 'save');
+            var notifySpy = simple.mock(self.appearance(), 'save()');
 
             app().unload();
             notifySpy.called.should.equal(true);
