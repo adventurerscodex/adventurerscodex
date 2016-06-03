@@ -25,9 +25,10 @@ describe('Appearance', function() {
     describe('Unload', function() {
         it('should save values to the database', function() {
             var app = new AppearanceViewModel();
-            var notifySpy = simple.mock(self.appearance(), 'save()');
+            var notifySpy = simple.mock(app.appearance, 'save');
 
             app.unload();
+            
             notifySpy.called.should.equal(true);
         });
     });
@@ -35,7 +36,7 @@ describe('Appearance', function() {
     describe('Clear', function() {
         it('should clear the values of the model', function() {
             var a   = new AppearanceViewModel();
-            var notifySpy = simple.mock(appearance(), 'clear');
+            var notifySpy = simple.mock(a.appearance, 'clear');
 
             a.clear();
 
