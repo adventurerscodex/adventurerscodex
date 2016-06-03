@@ -1,0 +1,44 @@
+'use strict';
+
+/**
+ * plus-minus component
+ * A useful 2 button component for incrementing/decrementing a value.
+ * @param value {observable} an observable in which to save the value
+ * @param min {int: Optional} the minimum value. Default: 100000
+ * @param max {int: Optional} the maximum value. Default: 0
+ * Usage:
+ * <plus-minus params="value: myValue, min: 0, max: 10"></plus-minus>
+ */
+ko.components.register('plus-minus', {
+    viewModel: function(params) {
+        var self = this;
+
+        self.value = params.value;
+        self.max = params.max || ko.observable(1000000);
+        self.min = params.min || ko.observable(0);
+
+        self.increase = function() {
+            if (self.value() < self.max()) {
+                self.value(self.value() + 1);
+            }
+        };
+
+        self.decrease = function() {
+            if (self.value() > self.min()) {
+                self.value(self.value() - 1);
+            }
+        };
+    },
+    template: '\
+    <div  class="input-group">\
+        <button type="button" class="btn btn-default" \
+            data-bind="click: increase">\
+                <i class="fa fa-plus fa-color"> </i>\
+        </button>\
+        <span data-bind="text: value" class="used-slot-span"></span>\
+        <button type="button" class="btn btn-default" \
+        data-bind="click: decrease">\
+            <i class="fa fa-minus fa-color"> </i>\
+        </button>\
+    </div>'
+});
