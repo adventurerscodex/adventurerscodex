@@ -11,26 +11,28 @@
  *
  * Note: This template adapts the button size based on the device size.
  */
+function PlusMinusComponentViewModel(params) {
+    var self = this;
+
+    self.value = params.value;
+    self.max = params.max || ko.observable(1000000);
+    self.min = params.min || ko.observable(0);
+
+    self.increase = function() {
+        if (self.value() < parseInt(self.max())) {
+            self.value(self.value() + 1);
+        }
+    };
+
+    self.decrease = function() {
+        if (self.value() > parseInt(self.min())) {
+            self.value(self.value() - 1);
+        }
+    };
+}
+
 ko.components.register('plus-minus', {
-    viewModel: function(params) {
-        var self = this;
-
-        self.value = params.value;
-        self.max = params.max || ko.observable(1000000);
-        self.min = params.min || ko.observable(0);
-
-        self.increase = function() {
-            if (self.value() < parseInt(self.max())) {
-                self.value(self.value() + 1);
-            }
-        };
-
-        self.decrease = function() {
-            if (self.value() > parseInt(self.min())) {
-                self.value(self.value() - 1);
-            }
-        };
-    },
+    viewModel: PlusMinusComponentViewModel,
     template: '\
     <div class="visible-lg-inline-block input-group ac-plus-minus">\
       <div>\
