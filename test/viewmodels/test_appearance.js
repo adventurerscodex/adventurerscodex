@@ -25,10 +25,10 @@ describe('Appearance', function() {
     describe('Unload', function() {
         it('should save values to the database', function() {
             var app = new AppearanceViewModel();
-            var notifySpy = simple.mock(app.appearance, 'save');
+            var notifySpy = simple.mock(app.appearance(), 'save');
 
             app.unload();
-            
+
             notifySpy.called.should.equal(true);
         });
     });
