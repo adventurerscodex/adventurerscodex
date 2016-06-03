@@ -113,20 +113,6 @@ function DailyFeatureViewModel() {
         dailyFeature.featureUsed(0);
     };
 
-    self.increaseUsage = function(dailyFeature) {
-        var used = dailyFeature.featureUsed();
-        if(used !== parseInt(dailyFeature.featureMaxUses())){
-            dailyFeature.featureUsed(used + 1);
-        }
-    };
-
-    self.decreaseUsage = function(dailyFeature) {
-        var used = dailyFeature.featureUsed();
-        if(used !== 0){
-            dailyFeature.featureUsed(used - 1);
-        }
-    };
-
     self.clear = function() {
         self.dailyFeatures([]);
     };

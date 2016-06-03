@@ -8,6 +8,8 @@
  * @param max {int: Optional} the maximum value. Default: 0
  * Usage:
  * <plus-minus params="value: myValue, min: 0, max: 10"></plus-minus>
+ *
+ * Note: This template adapts the button size based on the device size.
  */
 ko.components.register('plus-minus', {
     viewModel: function(params) {
@@ -18,19 +20,20 @@ ko.components.register('plus-minus', {
         self.min = params.min || ko.observable(0);
 
         self.increase = function() {
-            if (self.value() < self.max()) {
+            if (self.value() < parseInt(self.max())) {
                 self.value(self.value() + 1);
             }
         };
 
         self.decrease = function() {
-            if (self.value() > self.min()) {
+            if (self.value() > parseInt(self.min())) {
                 self.value(self.value() - 1);
             }
         };
     },
     template: '\
-    <div  class="input-group">\
+    <div class="visible-lg-inline-block input-group ac-plus-minus">\
+      <div>\
         <button type="button" class="btn btn-default" \
             data-bind="click: increase">\
                 <i class="fa fa-plus fa-color"> </i>\
@@ -40,5 +43,19 @@ ko.components.register('plus-minus', {
         data-bind="click: decrease">\
             <i class="fa fa-minus fa-color"> </i>\
         </button>\
+      </div>\
+    </div> \
+    <div class="hidden-lg input-group ac-plus-minus">\
+      <div>\
+        <button type="button" class="btn btn-default btn-sm" \
+            data-bind="click: increase">\
+                <i class="fa fa-plus fa-color"> </i>\
+        </button>\
+        <span data-bind="text: value" class="used-slot-span"></span>\
+        <button type="button" class="btn btn-default btn-sm" \
+        data-bind="click: decrease">\
+            <i class="fa fa-minus fa-color"> </i>\
+        </button>\
+      </div>\
     </div>'
 });

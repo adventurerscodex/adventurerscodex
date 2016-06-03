@@ -275,7 +275,12 @@ textarea.dark-area {
   vertical-align:middle !important;
 }
 
-.daily-feature-used-slots {
+.ac-plus-minus {
+  width: 100%;
+  text-align: center;
+}
+.ac-plus-minus div {
+  display:inline-block;
   background-color:#DCE4EC;
   float: none;
   margin: 0 auto;

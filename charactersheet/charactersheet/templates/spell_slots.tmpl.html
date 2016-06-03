@@ -35,15 +35,8 @@
             data-toggle="modal"
             data-target="#viewSlot"></td>
 					<td class="col-sm-4">
-  					<div class="input-group daily-feature-used-slots">
-  							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
-  								<i class="fa fa-plus fa-color"> </i>
-  							</button>
-  							<span data-bind="text: usedSpellSlots" class="used-slot-span"></span>
-  							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
-  								<i class="fa fa-minus fa-color"> </i>
-  							</button>
-  					</div>
+            <plus-minus params="value: usedSpellSlots,
+              max: maxSpellSlots"></plus-minus>
 					</td>
 					<td class="col-content-vertical">
 						<a data-bind="click: $parent.removeSlot" href="#">
