@@ -28,7 +28,7 @@ describe('Appearance', function() {
 
             var notifySpy = simple.mock(self.appearance(), 'save()');
 
-            app().unload();
+            app.unload();
             notifySpy.called.should.equal(true);
         });
     });
