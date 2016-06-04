@@ -30,7 +30,7 @@ ko.bindingHandlers.contenteditable = {
         if (value.text()) {
             $(element).text(value.text());
         } else {
-            $(element).text(ko.utils.unwrapObservable(value.placeholder));
+            $(element).html(ko.utils.unwrapObservable(value.placeholder));
         }
     }
 };
