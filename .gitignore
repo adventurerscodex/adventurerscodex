@@ -1,3 +1,6 @@
+_build*
+docs/*/
+docs/*.html
 bower_components/
 coverage/
 build/
