@@ -1,6 +1,10 @@
 'use strict';
 
 describe('ArmorViewModel', function(){
+    //Clean up after each test.
+    afterEach(function() {
+        simple.restore();
+    });
 
     describe('Add Armor', function() {
         it('should add an armor to armors', function() {
@@ -96,33 +100,33 @@ describe('ArmorViewModel', function(){
 
     describe('Load', function() {
         it('should load values from db', function() {
-          simple.mock(Armor, 'findAllBy').returnWith([new Armor(), new Armor()]);
-          simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            simple.mock(Armor, 'findAllBy').returnWith([new Armor(), new Armor()]);
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
-          var armors = new ArmorViewModel();
-          armors.armors().length.should.equal(0);
-          armors.load();
-          armors.armors().length.should.equal(2);
+            var armors = new ArmorViewModel();
+            armors.armors().length.should.equal(0);
+            armors.load();
+            armors.armors().length.should.equal(2);
         });
     });
 
-    // describe('Unload', function() {
-    //     it('should unload the data to the items db.', function() {
-    //         simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-    //
-    //         var armors = [new Armor(), new Armor()].map(function(e, i, _) {
-    //             e._spy = simple.mock(e, 'save');
-    //             return e;
-    //         });
-    //
-    //         var armors = new ArmorViewModel();
-    //         armors.armors(armors);
-    //         armors.unload();
-    //         armors.armors().length.should.equal(2);
-    //
-    //         armors.armors().forEach(function(e, i, _) {
-    //             e._spy.called.should.equal(true);
-    //         });
-    //     });
-    // });
+    describe('Unload', function() {
+        it('should unload the data to the items db.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var armors = [new Armor(), new Armor()].map(function(e, i, _) {
+                e._spy = simple.mock(e, 'save');
+                return e;
+            });
+
+            var armors = new ArmorViewModel();
+            armors.armors(armors);
+            armors.unload();
+            armors.armors().length.should.equal(2);
+
+            armors.armors().forEach(function(e, i, _) {
+                e._spy.called.should.equal(true);
+            });
+        });
+    });
 });
