@@ -89,6 +89,6 @@ function ArmorViewModel() {
     self.valueHasChanged = function() {
         self.armors().forEach(function(e, i, _) {
             e.updateValues();
-        });        
+        });
     };
 }
