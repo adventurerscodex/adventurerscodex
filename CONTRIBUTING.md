@@ -3,7 +3,7 @@ How to Contribute to Charactersheet
 
 It's easy!
 
-To get started with setting up your development environment, head over to [Getting Started](/docs/getting-started.md).
+To get started with setting up your development environment, head over to [Getting Started](docs/getting_started.md).
 
 Code Conventions
 ===========
