@@ -16,7 +16,7 @@ npm test;
 
 # Archive and remove the project files.
 shopt -s extglob
-tar --remove-files -zcvf $ARCHIVE !(charactersheet|docs);
+tar --remove-files -zcvf $ARCHIVE !(charactersheet);
 shopt -u extglob
 
 # Extract the project.
