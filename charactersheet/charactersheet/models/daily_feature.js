@@ -5,7 +5,8 @@ function DailyFeature() {
     self.ps = PersistenceService.register(DailyFeature, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete',
-         'featureColors', 'currentFeaturesAvailable', 'progressLabel', 'dailyFeaturesProgressWidth']
+         'featureColors', 'currentFeaturesAvailable', 'progressLabel',
+         'dailyFeaturesProgressWidth', 'mapping']
     };
 
     self.featureColors = Fixtures.general.colorList;
@@ -65,4 +66,3 @@ DailyFeature.REST_VALUES = {
     SHORT_REST: 'short',
     LONG_REST: 'long'
 };
-

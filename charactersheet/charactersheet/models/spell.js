@@ -5,7 +5,7 @@ function Spell() {
     self.ps = PersistenceService.register(Spell, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'spellDamageLabel', 'delete']
+            'spellDamageLabel', 'delete', 'mapping']
     };
 
     self.characterId = ko.observable(null);

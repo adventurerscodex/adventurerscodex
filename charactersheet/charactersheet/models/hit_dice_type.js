@@ -2,7 +2,8 @@ function HitDiceType() {
     var self = this;
     self.ps = PersistenceService.register(HitDiceType, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+                'mapping']
     };
 
     self.characterId = ko.observable(null);

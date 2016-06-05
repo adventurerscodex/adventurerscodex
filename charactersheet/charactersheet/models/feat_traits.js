@@ -4,7 +4,8 @@ function FeaturesTraits() {
     var self = this;
     self.ps = PersistenceService.register(FeaturesTraits, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save']
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+                'mapping']
     };
 
     self.characterId = ko.observable(null);
