@@ -41,15 +41,7 @@
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
 					<td class="col-sm-3">
-						<div  class="input-group daily-feature-used-slots">
-							<button type="button" class="btn btn-default" data-bind="click: $parent.increaseUsage">
-								<i class="fa fa-plus fa-color"> </i>
-							</button>
-							<span data-bind="text: featureUsed" class="used-slot-span"></span>
-							<button type="button" class="btn btn-default" data-bind="click: $parent.decreaseUsage">
-								<i class="fa fa-minus fa-color"> </i>
-							</button>
-						</div>
+            <plus-minus params="value: featureUsed, max: featureMaxUses"></plus-minus>
 					</td>
 
 					<td class="col-content-vertical col-sm-1"> <!--Refresh -->
