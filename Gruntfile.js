@@ -12,9 +12,9 @@ module.exports = function(grunt) {
     		'charactersheet/charactersheet/*.js']
 	},
     karma: {
-      test: {
-        configFile: 'karma.conf.js'
-      }
+        test: {
+            configFile: 'karma.conf.js'
+        }
     },
 	coveralls: {
 		options: {
