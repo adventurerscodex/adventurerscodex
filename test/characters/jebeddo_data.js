@@ -1094,5 +1094,5 @@ var jebeddo_data = {
             "__id": "7"
         }
     ],
-    "DailyFeature": [],
+    "DailyFeature": []
 };
