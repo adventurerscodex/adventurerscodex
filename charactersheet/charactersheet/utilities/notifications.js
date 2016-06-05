@@ -62,37 +62,6 @@ var Notifications = {
     },
 
     /*****************************
-     ** Messenger Service Events *
-     *****************************/
-
-    connectionManager: {
-        connected: new signals.Signal(),
-        disconnected: new signals.Signal(),
-        changed: new signals.Signal()
-    },
-
-    connectedPlayers: {
-        /**
-         * Called when a new player connects to the room
-         * @param Player model representing new player.
-         */
-        playerEntered: new signals.Signal(),
-
-        /**
-         * Called when a new player leaves the room
-         * @param Player model representing the exiting player.
-         */
-        playerLeft: new signals.Signal()
-    },
-
-    playerSummary: {
-        /**
-         * Called when the list of player summaries has been updated.
-         */
-        changed: new signals.Signal()
-    },
-
-    /*****************************
      ****** In Game Events *******
      *****************************/
 

@@ -3,11 +3,6 @@
  * and set up the environment.
  */
 var init = function(viewModel) {
-    messenger = new Messenger();
-    players = new PlayersService();
-    playerSummaryService = new PlayerSummaryService();
-
-    messenger.connect();
     viewModel.init();
 
     //Set up event handlers.
@@ -23,9 +18,6 @@ var init = function(viewModel) {
         } catch(err) {
             throw err;
         }
-
-        players.init();
-        playerSummaryService.init();
     });
 
     //Check if a character already exists.
