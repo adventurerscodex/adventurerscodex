@@ -29,7 +29,7 @@ function MagicItem() {
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
                  'delete', 'chargesDisplay', 'magicItemTypeOptions',
-                 'magicItemRarityOptions']
+                 'magicItemRarityOptions', 'mapping']
     };
 
     self.clear = function() {

@@ -5,7 +5,7 @@ function Profile() {
     self.ps = PersistenceService.register(Profile, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'characterSummary'],
+            'characterSummary', 'mapping'],
         include: ['background']
     };
 

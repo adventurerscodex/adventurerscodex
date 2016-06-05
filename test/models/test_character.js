@@ -98,8 +98,12 @@ describe('Character Model', function() {
 
             var key = jebeddo_data['Character'][0].key;
             var data = Character.exportCharacter(key);
-            JSON.stringify(data).should.equal(JSON.stringify(jebeddo_data));
+            var list_data = JSON.stringify(data).split(',');
+            var list_expected = JSON.stringify(jebeddo_data).split(',');
 
+            list_data.forEach(function(item, idx, _) {
+                item.should.equal(list_expected[idx]);
+            });
         });
     });
 
