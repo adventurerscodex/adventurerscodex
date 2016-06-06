@@ -5,7 +5,7 @@ module.exports = function(config) {
         frameworks: ['mocha'],
         files: [
         	//Frameworks and includes.
-		  	{pattern: 'charactersheet/bower_components/mocha/mocha.js', watched: false},
+		  {pattern: 'charactersheet/bower_components/mocha/mocha.js', watched: false},
 			{pattern: 'charactersheet/bower_components/jquery/dist/jquery.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/bootstrap/dist/js/bootstrap.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/knockout/dist/knockout.js', watched: false},
