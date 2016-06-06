@@ -12,7 +12,6 @@ function WizardViewModel() {
     self.fileReader = new FileReader();
 
     self.profile = ko.observable(new Profile());
-    self.campaign = ko.observable(new Campaign());
     self.currentStep = ko.observable(0);
 
     //UI Handlers
@@ -33,17 +32,8 @@ function WizardViewModel() {
         return self.currentStep() > 0 && self._isPlayer();
     });
 
-    self.showCampaign = ko.pureComputed(function() {
-        return self.currentStep() > 0 && self._isDM();
-    });
-
     self.setPlayerType = function() {
         self.type(PlayerTypes.characterPlayerType);
-        self.nextStep();
-    };
-
-    self.setDMType = function() {
-        self.type(PlayerTypes.dmPlayerType);
         self.nextStep();
     };
 
@@ -65,9 +55,6 @@ function WizardViewModel() {
         if (self._isPlayer()) {
             complete = (self.profile().characterName() &&
                 self.profile().playerName());
-        } else if (self._isDM()) {
-            complete = (self.campaign().campaignName() &&
-                self.campaign().dmName());
         }
         return self.currentStep() > 0 && complete;
     });
@@ -78,11 +65,7 @@ function WizardViewModel() {
      */
     self.submit = function() {
         var character;
-        if (self._isDM()) {
-            character = self._saveDM();
-        } else {
-            character = self._savePlayer();
-        }
+        character = self._savePlayer();
         CharacterManager.changeCharacter(character.key());
         self.clear();
         self.currentStep(0);
@@ -90,7 +73,6 @@ function WizardViewModel() {
 
     self.clear = function() {
         self.profile(new Profile());
-        self.campaign(new Campaign());
     };
 
     self.importFromFile = function() {
@@ -128,33 +110,6 @@ function WizardViewModel() {
         } catch(err) {
             return false;
         }
-    };
-
-    self._isDM = function() {
-        try {
-            return self.type().key === PlayerTypes.dmPlayerType.key;
-        } catch(err) {
-            return false;
-        }
-    };
-
-    self._saveDM = function() {
-        var character = new Character();
-        character.key(uuid.v4());
-        character.playerType(self.type());
-
-        if (!CharacterManager.defaultCharacter()) {
-            character.isDefault(true);
-        }
-        character.save();
-
-        self.campaign().characterId(character.key());
-        self.campaign().save();
-
-        self.playerInfo().characterId(character.key());
-        self.playerInfo().save();
-
-        return character;
     };
 
     self._savePlayer = function() {

@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Character Model
+ * @author Brian Schrader
+ *
+ * A model of a character and their associated key. This model sits at the
+ * top of the relational model of data for Adventurer's Codex and also provides
+ * a few convenience methods for fetching common data regarding a character.
+ */
 function Character() {
     var self = this;
     self.ps = PersistenceService.register(Character, self);
@@ -7,11 +15,6 @@ function Character() {
     self.key = ko.observable(null);
     self.playerType = ko.observable(PlayerTypes.characterPlayerType);
     self.isDefault = ko.observable(false);
-
-    self.url = ko.pureComputed(function() {
-        return '/charactersheet/?key=' + self.key()
-            + '&playerType=' + self.playerType().key;
-    });
 
     self.importValues = function(values) {
         self.key(values.key);
@@ -41,44 +44,47 @@ function Character() {
         self.ps.delete();
     };
 
+    /**
+     * A summary of the given character. Looks to an active Profile
+     * for the data.
+     * @returns summary {string} describes the character.
+     */
     self.playerSummary = ko.pureComputed(function() {
         var summ = '';
         try {
-            if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-                summ = Profile.findBy(self.key())[0].characterSummary();
-            } else {
-                summ = Campaign.findBy(self.key())[0].campaignSummary();
-            }
+            summ = Profile.findBy(self.key())[0].characterSummary();
         } catch(err) { /*Ignore*/ }
         return summ;
     });
 
+    /**
+     * The author of the given character. Looks to an active Profile
+     * for the data.
+     * @returns summary {string} an author for the character.
+     */
     self.playerAuthor = ko.pureComputed(function() {
         var summ = '';
         try {
-            if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-                summ = Profile.findBy(self.key())[0].playerName();
-            } else {
-                summ = Campaign.findBy(self.key())[0].dmName();
-            }
+            summ = Profile.findBy(self.key())[0].playerName();
         } catch(err) { /*Ignore*/ }
         return summ;
     });
 
+    /**
+     * The title of the given character. Looks to an active Profile
+     * for the data.
+     * @returns summary {string} a title for the character.
+     */
     self.playerTitle = ko.pureComputed(function() {
         var summ = '';
         try {
-            if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-                summ = Profile.findBy(self.key())[0].characterName();
-            } else {
-                summ = Campaign.findBy(self.key())[0].campaignName();
-            }
+            summ = Profile.findBy(self.key())[0].characterName();
         } catch(err) { /*Ignore*/ }
         return summ;
     });
 
     self.saveToFile = function() {
-        var string = JSON.stringify(Character.exportChracter(self.key()),
+        var string = JSON.stringify(Character.exportCharacter(self.key()),
             null, 2); //Pretty print
         var filename = self.playerTitle();
         var blob = new Blob([string], {type: 'application/json'});
@@ -96,7 +102,7 @@ Character.findBy = function(characterId) {
     });
 };
 
-Character.exportChracter = function(characterId) {
+Character.exportCharacter = function(characterId) {
     var data = {};
     PersistenceService.listAll().forEach(function(e1, i1, _1) {
         var items = PersistenceService.findAll(window[e1]).filter(function(e2, i2, _2) {

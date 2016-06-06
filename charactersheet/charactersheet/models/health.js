@@ -8,7 +8,7 @@ function Health() {
             'DANGER_THRESHOLD', 'WARNING_THRESHOLD', 'hitpoints', 'totalHitpoints',
             'tempHitpointsRemaining', 'regularHitpointsRemaining', 'hitpointsText',
             'isKnockedOut', 'isDangerous', 'isWarning', 'progressType', 'regularProgressWidth',
-            'tempProgressWidth', 'progressLabel']
+            'tempProgressWidth', 'progressLabel', 'mapping']
     };
 
     self.DANGER_THRESHOLD = 0.30;

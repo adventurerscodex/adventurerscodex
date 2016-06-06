@@ -5,11 +5,13 @@ function Profile() {
     self.ps = PersistenceService.register(Profile, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'characterSummary']
+            'characterSummary', 'mapping'],
+        include: ['background']
     };
 
     self.characterId = ko.observable(null);
     self.characterName =  ko.observable('');
+    self.background = ko.observable('');
     self.playerName = ko.observable('');
     self.race = ko.observable('');
     self.religion = ko.observable('');

@@ -37,15 +37,9 @@
                   <span data-bind="text: health().maxHitpoints"></span>
               </td>
               <td>
-                <div class="input-group daily-feature-used-slots">
-                    <button type="button" class="btn btn-default" data-bind="click: increaseDamage">
-                      <i class="fa fa-plus fa-color"> </i>
-                    </button>
-                    <span data-bind="text: health().damage" class="used-slot-span"></span>
-                    <button type="button" class="btn btn-default" data-bind="click: decreaseDamage">
-                      <i class="fa fa-minus fa-color"> </i>
-                    </button>
-                </div>
+                <plus-minus params="value: health().damage,
+                  max: health().maxHitpoints">
+                  </plus-minus>
               </td>
               <td class="text-center col-content-vertical">
                 <a data-bind="click: resetDamage" href="#">

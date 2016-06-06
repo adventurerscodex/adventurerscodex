@@ -76,20 +76,6 @@ function CharactersViewModel() {
         window.location = character.url();
     };
 
-    self.addDM = function() {
-        var character = new Character();
-        character.key(uuid.v4());
-        character.playerType(PlayerTypes.dmPlayerType);
-
-        self.characters.push(character);
-        if (!CharacterManager.defaultCharacter()) {
-            character.isDefault(true);
-        }
-        character.save();
-        Notifications.characters.changed.dispatch();
-        window.location = character.url();
-    };
-
     self.removeCharacter = function(character) {
         //Purge all entries for this char.
         var tables = Object.keys(localStorage);

@@ -14,7 +14,6 @@ describe('Appearance', function() {
             simple.mock(CharacterAppearance, 'findBy').returnWith([app]);
             var a = new AppearanceViewModel();
 
-            //a.appearance().should.equal(app);
             app.height('6ft');
 
             a.load();

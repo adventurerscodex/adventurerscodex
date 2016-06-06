@@ -4,6 +4,7 @@ function ProfileViewModel() {
     var self = this;
 
     self.profile = ko.observable(new Profile());
+    self.placeholderText = '<i>Character Name</i>';
 
     self.init = function() {
     };
