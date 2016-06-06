@@ -119,14 +119,41 @@ describe('ArmorViewModel', function(){
                 return e;
             });
 
-            var armors = new ArmorViewModel();
-            armors.armors(armors);
-            armors.unload();
-            armors.armors().length.should.equal(2);
+            var armorsVM = new ArmorViewModel();
+            armorsVM.armors(armors);
+            armorsVM.unload();
+            armorsVM.armors().length.should.equal(2);
 
-            armors.armors().forEach(function(e, i, _) {
+            armorsVM.armors().forEach(function(e, i, _) {
                 e._spy.called.should.equal(true);
             });
+        });
+    });
+
+    describe('Value Has changed', function() {
+        it('should know when the value chagnes.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var armors = [new Armor(), new Armor()].map(function(e, i, _) {
+                e._spy = simple.mock(e, 'updateValues');
+                return e;
+            });
+
+            var armorsVM = new ArmorViewModel();
+            armorsVM.armors(armors);
+            armorsVM.valueHasChanged();
+            armorsVM.armors().length.should.equal(2);
+
+            armorsVM.armors().forEach(function(e, i, _) {
+                e._spy.called.should.equal(true);
+            });
+        });
+    });
+
+    describe('Init', function() {
+        it('should init the module.', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.init();
         });
     });
 });
