@@ -26,7 +26,7 @@ describe('NotesViewModel', function(){
             notesVM.note().text().should.equal('test');
         });
 
-        it('should not load values from database', function() {
+        it('should not load values from database.', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             simple.mock(CharacterAppearance, 'findBy').returnWith([]);
             var notesVM = new NotesViewModel();
