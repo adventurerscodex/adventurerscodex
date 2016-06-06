@@ -151,7 +151,7 @@ describe('ArmorViewModel', function(){
     });
 
     describe('Init', function() {
-        it('should init the module.', function() {
+        it('should init the module', function() {
             var armorsVM = new ArmorViewModel();
             armorsVM.init();
         });
