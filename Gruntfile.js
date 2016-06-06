@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 	},
     karma: {
         test: {
-          configFile: 'karma.conf.js'
+            configFile: 'karma.conf.js'
         }
     },
 	coveralls: {

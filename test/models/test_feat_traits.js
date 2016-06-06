@@ -1,10 +1,17 @@
 'use strict';
 
-describe('Features Traits Model', function() {
+describe('Features and Traits Model', function() {
     //Clean up after each test.
     afterEach(function() {
         simple.restore();
     });
+    
+    var vals = {
+        'background':'A background',
+        'ideals':'LOTS OF THEM',
+        'flaws':'not too many',
+        'bonds':'yes'
+    };
 
     describe('Save', function() {
         it('should save the values.', function() {
@@ -21,8 +28,8 @@ describe('Features Traits Model', function() {
     describe('Clear', function() {
         it('should clear the values.', function() {
             var ft = new FeaturesTraits();
-            ft.background('some background');
-            ft.background().should.equal('some background');
+            ft.background('something something');
+            ft.background().should.equal('something something');
             ft.clear();
             ft.background().should.equal('');
         });
@@ -32,7 +39,7 @@ describe('Features Traits Model', function() {
         it('should import the values.', function() {
             var ft = new FeaturesTraits();
             var e = {
-                background: 'some background'
+                background: 'something something'
             };
             ft.background().should.equal('');
             ft.importValues(e);
@@ -43,27 +50,32 @@ describe('Features Traits Model', function() {
     describe('Export', function() {
         it('should export the values.', function() {
             var ft = new FeaturesTraits();
-            ft.background('some background');
-            ft.background().should.equal('some background');
+            ft.background('something something');
+            ft.background().should.equal('something something');
             var e = ft.exportValues();
             ft.background().should.equal(e.background);
         });
     });
 
-    describe('Find By', function() {
+    describe('Find All', function() {
         it('should find all of the values in the db.', function() {
             var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new FeaturesTraits()]);
+            var _findAll = PersistenceService.findAll;
+
+            PersistenceService.findAll = function(_) { return [new FeaturesTraits(), new FeaturesTraits()]; };
             var r = FeaturesTraits.findBy(key);
             r.length.should.equal(0);
 
 
-            simple.mock(PersistenceService, 'findAll').returnWith([new FeaturesTraits()].map(function(e, i, _) {
+            var results = [new FeaturesTraits(), new FeaturesTraits()].map(function(e, i, _) {
                 e.characterId(key);
                 return e;
-            }));
+            });
+            PersistenceService.findAll = function(_) { return results; };
             r = FeaturesTraits.findBy(key);
-            r.length.should.equal(1);
+            r.length.should.equal(2);
+
+            PersistenceService.findAll = _findAll;
         });
     });
 });
