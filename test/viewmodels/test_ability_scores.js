@@ -58,4 +58,38 @@ describe('AbilityScoresViewModel', function(){
             notifySpy2.called.should.equal(true);
         });
     });
+
+    describe('isNumeric', function() {
+        it('checks if input is a number', function() {
+            var falseResponse = isNumeric('a');
+
+            var trueResponse  = isNumeric(15);
+
+            falseResponse.should.equal(false);
+            trueResponse.should.equal(true);
+        });
+    });
+
+    describe('getModifier', function() {
+        it('returns ability score modifier', function() {
+            var successMod = getModifier(20);
+
+            var failureMod = getModifier('a');
+
+            successMod.should.equal(5);
+            Should.not.exist(failureMod);
+        });
+    });
+
+    describe('getStrModifier', function() {
+        it('returns str modifier', function() {
+            var blankString = getStrModifier(null);
+            var positiveValue = getStrModifier(20);
+            var negativeValue = getStrModifier(-5);
+
+            positiveValue.should.equal('+ 5');
+            negativeValue.should.equal('- 8');
+            blankString.should.equal('');
+        });
+    });
 });

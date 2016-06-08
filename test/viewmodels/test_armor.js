@@ -119,12 +119,12 @@ describe('ArmorViewModel', function(){
                 return e;
             });
 
-            var armors = new ArmorViewModel();
-            armors.armors(armors);
-            armors.unload();
-            armors.armors().length.should.equal(2);
+            var armorsVM = new ArmorViewModel();
+            armorsVM.armors(armors);
+            armorsVM.unload();
+            armorsVM.armors().length.should.equal(2);
 
-            armors.armors().forEach(function(e, i, _) {
+            armorsVM.armors().forEach(function(e, i, _) {
                 e._spy.called.should.equal(true);
             });
         });
