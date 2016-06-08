@@ -1,78 +1,49 @@
 'use strict';
 
-describe('Features and Traits View Model', function() {
+describe('FeaturesTraitsViewModel', function(){
+    //Clean up after each test.
+    afterEach(function() {
+        simple.restore();
+    });
 
-    var vals = {
-        'background':'A background',
-        'ideals':'LOTS OF THEM',
-        'flaws':'not too many',
-        'bonds':'yes'
-    };
-
-    describe('Save', function() {
-        it('should save the values.', function() {
-            var ft = new FeaturesTraits();
-            var saved = false;
-            ft.ps.save = function() { saved = true; };
-
-            saved.should.equal(false);
-            ft.save();
-            saved.should.equal(true);
+    describe('Init', function() {
+        it('should init the module', function() {
+            var featsVM = new FeaturesTraitsViewModel();
+            featsVM.init();
         });
     });
 
-    describe('Clear', function() {
-        it('should clear the values.', function() {
-            var ft = new FeaturesTraits();
-            ft.background('something something');
-            ft.background().should.equal('something something');
-            ft.clear();
-            ft.background().should.equal('');
+    describe('Load', function() {
+        it('should load values from db', function() {
+            var feat = new FeaturesTraits();
+            simple.mock(FeaturesTraits, 'findBy').returnWith([feat]);
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var featsVM = new FeaturesTraitsViewModel();
+            feat.ideals('test');
+
+            featsVM.load();
+            featsVM.featTraits().ideals().should.equal('test');
+        });
+
+        it('should not load values from database.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            simple.mock(FeaturesTraits, 'findBy').returnWith([]);
+            var featsVM = new FeaturesTraitsViewModel();
+
+            featsVM.load();
+            featsVM.featTraits().characterId().should.equal('1234');
         });
     });
 
-    describe('Import', function() {
-        it('should import the values.', function() {
-            var ft = new FeaturesTraits();
-            var e = {
-                background: 'something something'
-            };
-            ft.background().should.equal('');
-            ft.importValues(e);
-            ft.background().should.equal(e.background);
-        });
-    });
+    describe('Unload', function() {
+        it('should save values to the database', function() {
+            var featsVM = new FeaturesTraitsViewModel();
+            var notifySpy = simple.mock(featsVM.featTraits(), 'save');
 
-    describe('Export', function() {
-        it('should export the values.', function() {
-            var ft = new FeaturesTraits();
-            ft.background('something something');
-            ft.background().should.equal('something something');
-            var e = ft.exportValues();
-            ft.background().should.equal(e.background);
-        });
-    });
+            featsVM.unload();
 
-    describe('Find All', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            var _findAll = PersistenceService.findAll;
-
-            PersistenceService.findAll = function(_) { return [new FeaturesTraits(), new FeaturesTraits()]; };
-            var r = FeaturesTraits.findBy(key);
-            r.length.should.equal(0);
-
-
-            var results = [new FeaturesTraits(), new FeaturesTraits()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            });
-            PersistenceService.findAll = function(_) { return results; };
-            r = FeaturesTraits.findBy(key);
-            r.length.should.equal(2);
-
-            PersistenceService.findAll = _findAll;
+            notifySpy.called.should.equal(true);
         });
     });
 });
-
