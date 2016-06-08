@@ -1,3 +1,13 @@
+@import url(/css/font-awesome.min.css);
+@import url("http://fonts.googleapis.com/css?family=Roboto:500,300");
+
+body {
+  font-family: "Roboto", Helvetica, sans-serif;
+  font-size: 12pt;
+  font-weight: 300;
+  line-height: 1.75em;
+}
+
 #content {
   max-width: 1800px;
 }
