@@ -89,12 +89,12 @@ describe('Magic Items View Model', function(){
             });
 
             var magicItems = new MagicItemsViewModel();
-            magicItems.totalMagicItemWeight().should.equal('Weight');
+            magicItems.totalMagicItemWeight().should.equal('0 (lbs)');
 
             magicItems = new MagicItemsViewModel();
             magicItems.magicItems(items);
             magicItems.magicItems().length.should.equal(2);
-            magicItems.totalMagicItemWeight().should.equal('Weight: 10 (lbs)');
+            magicItems.totalMagicItemWeight().should.equal('10 (lbs)');
         });
     });
 });

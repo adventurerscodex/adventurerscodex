@@ -9,7 +9,7 @@
           <th data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th data-bind="click: function(){sortBy('itemWeight');}, text: totalItemWeight">
+          <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
           <th>Description</th>
@@ -46,7 +46,12 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> <!-- end panel body -->
+  <div class="container-fluid panel-footer">
+     <span class="pull-right">Total weight:&nbsp;
+      <span data-bind="text: totalItemWeight"></span>
+    </span>
+  </div> <!-- end panel footer -->
 </div>
 
 

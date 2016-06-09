@@ -44,10 +44,10 @@ function MagicItemsViewModel() {
             for (var i = 0; i < itemLength; i++) {
                 weightTotal += parseFloat(self.magicItems()[i].magicItemWeight());
             }
-            return ('Weight: ' + weightTotal + ' (lbs)');
+            return weightTotal + ' (lbs)';
         }
         else {
-            return 'Weight';
+            return '0 (lbs)';
         }
     });
 

@@ -156,4 +156,22 @@ describe('ArmorViewModel', function(){
             armorsVM.init();
         });
     });
+
+    describe('Total Item Weight', function() {
+        it('should return a string with the total weight of all items.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var items = [new Armor(), new Armor()].map(function(e, i, _) {
+                e.armorWeight(5);
+                return e;
+            });
+
+            var armorsVM = new ArmorViewModel();
+            armorsVM.totalWeight().should.equal('0 (lbs)');
+
+            armorsVM = new ArmorViewModel();
+            armorsVM.armors(items);
+            armorsVM.armors().length.should.equal(2);
+            armorsVM.totalWeight().should.equal('10 (lbs)');
+        });
+    });
 });
