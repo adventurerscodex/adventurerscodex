@@ -48,12 +48,12 @@ describe('Equipment View Model', function(){
                 });
 
                 var p = new ItemsViewModel();
-                p.totalItemWeight().should.equal('Weight');
+                p.totalItemWeight().should.equal('0 (lbs)');
 
                 p = new ItemsViewModel();
                 p.items(items);
                 p.items().length.should.equal(2);
-                p.totalItemWeight().should.equal('Weight: 10 (lbs)');
+                p.totalItemWeight().should.equal('10 (lbs)');
             });
         });
 

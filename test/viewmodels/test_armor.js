@@ -119,12 +119,12 @@ describe('ArmorViewModel', function(){
                 return e;
             });
 
-            var armors = new ArmorViewModel();
-            armors.armors(armors);
-            armors.unload();
-            armors.armors().length.should.equal(2);
+            var armorsVM = new ArmorViewModel();
+            armorsVM.armors(armors);
+            armorsVM.unload();
+            armorsVM.armors().length.should.equal(2);
 
-            armors.armors().forEach(function(e, i, _) {
+            armorsVM.armors().forEach(function(e, i, _) {
                 e._spy.called.should.equal(true);
             });
         });
@@ -154,6 +154,24 @@ describe('ArmorViewModel', function(){
         it('should init the module', function() {
             var armorsVM = new ArmorViewModel();
             armorsVM.init();
+        });
+    });
+
+    describe('Total Item Weight', function() {
+        it('should return a string with the total weight of all items.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var items = [new Armor(), new Armor()].map(function(e, i, _) {
+                e.armorWeight(5);
+                return e;
+            });
+
+            var armorsVM = new ArmorViewModel();
+            armorsVM.totalWeight().should.equal('0 (lbs)');
+
+            armorsVM = new ArmorViewModel();
+            armorsVM.armors(items);
+            armorsVM.armors().length.should.equal(2);
+            armorsVM.totalWeight().should.equal('10 (lbs)');
         });
     });
 });

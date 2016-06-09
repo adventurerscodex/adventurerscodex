@@ -47,6 +47,16 @@ function WeaponsViewModel() {
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
         Notifications.stats.changed.remove(self.valueHasChanged);
     };
+
+    self.totalWeight = ko.pureComputed(function() {
+        var weight = 0;
+        if(self.weapons().length > 0){
+            $.each(self.weapons(), function(_, e) {
+                weight += e.weaponWeight() ? parseInt(e.weaponWeight()) : 0;
+            });
+        }
+        return weight + ' (lbs)';
+    });
     /* UI Methods */
 
     /**

@@ -40,6 +40,16 @@ function ArmorViewModel() {
         });
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
     };
+
+    self.totalWeight = ko.pureComputed(function() {
+        var weight = 0;
+        if(self.armors().length > 0) {
+            $.each(self.armors(), function(_, e) {
+                weight += e.armorWeight() ? parseInt(e.armorWeight()) : 0;
+            });
+        }
+        return weight + ' (lbs)';
+    });
     /* UI Methods */
 
     /**
