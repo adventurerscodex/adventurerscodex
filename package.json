@@ -30,7 +30,7 @@
   },
   "scripts": {
     "postinstall": "bower install && cp -r charactersheet/bin/fonts charactersheet/bower_components/bootstrap-theme-bootswatch-flatly/fonts",
-    "test": "grunt eslint && grunt karma:test;",
+    "test": "grunt eslint && grunt karma:test",
     "coveralls": "grunt coveralls",
     "deploy": "bash deploy.sh",
     "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\""
