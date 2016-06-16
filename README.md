@@ -86,6 +86,17 @@ Installing charactersheet is pretty simple.
 That's it! If everything is green, then you're good to go!
 
 
+Running
+============
+
+Now we only need to install a module called "serve" for serving our files and run it.
+
+        npm install serve -g
+        cd charactersheet && serve
+
+You can now start your new adventures!
+
+
 Have questions or just want to chat?
 =====================
 
