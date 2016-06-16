@@ -10,9 +10,9 @@ ARCHIVE="project.tar.gz"
 
 set -e;
 
-# Do setup. 
-npm install; 
-npm test; 
+# Do setup.
+npm install;
+npm test;
 
 # Archive and remove the project files.
 shopt -s extglob

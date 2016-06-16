@@ -36,19 +36,12 @@ function RootViewModel() {
     self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
     self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
-    self.partyTabViewModel         = ko.observable(new PartyTabViewModel());
-    self.playerSummaryTabViewModel = ko.observable(new PlayerSummaryTabViewModel());
-
-    //DM Child View Models
-    self.campaignTabViewModel  = ko.observable(new CampaignTabViewModel());
-    self.enemiesTabViewModel   = ko.observable(new EnemiesTabViewModel());
 
     //Misc
     self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
     self.settingsViewModel = ko.observable(new SettingsViewModel());
-    self.connectionManagerViewModel = ko.observable(new ConnectionManagerViewModel());
 
     //Tooltips
     self.profileTooltip = ko.observable('Profile');
@@ -58,7 +51,6 @@ function RootViewModel() {
     self.weaponsAndArmorTooltip = ko.observable('Weapons and Armor');
     self.backpackTooltip = ko.observable('Backpack');
     self.notesTooltip = ko.observable('Notes');
-    self.chatTooltip = ko.observable('Chat');
 
     //Tab Properties
     self.profileTabStatus = ko.pureComputed(function() {
@@ -82,18 +74,6 @@ function RootViewModel() {
     self.notesTabStatus = ko.pureComputed(function() {
         return self._tabIsVisible('notes');
     });
-    self.enemiesTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisible('enemies');
-    });
-    self.campaignTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisible('campaign');
-    });
-    self.partyTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisibleAndConnected('party');
-    });
-    self.playerSummaryTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisibleAndConnected('players');
-    });
 
     self.activateProfileTab = function() {
         self.activeTab('profile');
@@ -116,18 +96,6 @@ function RootViewModel() {
     self.activateNotesTab = function() {
         self.activeTab('notes');
     };
-    self.activateEnemiesTab = function() {
-        self.activeTab('enemies');
-    };
-    self.activateCampaignTab = function() {
-        self.activeTab('campaign');
-    };
-    self.activatePartyTab = function() {
-        self.activeTab('party');
-    };
-    self.activatePlayerSummaryTab = function() {
-        self.activeTab('players');
-    };
 
     //UI Methods
 
@@ -138,10 +106,6 @@ function RootViewModel() {
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
                 summary = Profile.findBy(key)[0].characterSummary();
-            } catch(err) { /*Ignore*/ }
-        } else {
-            try {
-                summary = Campaign.findBy(key)[0].campaignSummary();
             } catch(err) { /*Ignore*/ }
         }
         return summary;
@@ -155,10 +119,6 @@ function RootViewModel() {
             try {
                 name = Profile.findBy(key)[0].characterName();
             } catch(err) { /*Ignore*/ }
-        } else {
-            try {
-                name = Campaign.findBy(key)[0].campaignName();
-            } catch(err) { /*Ignore*/ }
         }
         return name;
     });
@@ -170,10 +130,6 @@ function RootViewModel() {
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
                 name = Profile.findBy(key)[0].playerName();
-            } catch(err) { /*Ignore*/ }
-        } else {
-            try {
-                name = Campaign.findBy(key)[0].dmName();
             } catch(err) { /*Ignore*/ }
         }
         return name;
@@ -207,11 +163,6 @@ function RootViewModel() {
         self.equipmentTabViewModel().init();
         self.inventoryTabViewModel().init();
         self.notesTabViewModel().init();
-        self.campaignTabViewModel().init();
-        self.enemiesTabViewModel().init();
-        self.playerSummaryTabViewModel().init();
-        self.partyTabViewModel().init();
-        self.connectionManagerViewModel().init();
         self.charactersViewModel.init();
         self.userNotificationViewModel.init();
 
@@ -223,12 +174,6 @@ function RootViewModel() {
         Notifications.characters.allRemoved.add(function() {
             self.ready(false);
         });
-        Notifications.connectionManager.connected.add(function() {
-            self.connected(true);
-        });
-        Notifications.connectionManager.disconnected.add(function() {
-            self.connected(false);
-        });
         Notifications.global.load.add(self.load);
         Notifications.global.unload.add(self.unload);
 
@@ -239,11 +184,6 @@ function RootViewModel() {
         HotkeysService.registerHotkey('5', self.activateEquipmentTab);
         HotkeysService.registerHotkey('6', self.activateInventoryTab);
         HotkeysService.registerHotkey('7', self.activateNotesTab);
-        HotkeysService.registerHotkey('8', function() {
-            if(self.partyTabStatus() !== 'hidden'){
-                self.activatePartyTab();
-            }
-        });
     };
 
     /**
@@ -262,14 +202,7 @@ function RootViewModel() {
                 self.inventoryTabViewModel().load();
                 self.notesTabViewModel().load();
             }
-            if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
-                self.campaignTabViewModel().load();
-                self.enemiesTabViewModel().load();
-                self.playerSummaryTabViewModel().load();
-            }
-            self.partyTabViewModel().load();
             self.userNotificationViewModel.load();
-            self.connectionManagerViewModel().load();
             self.charactersViewModel.load();
             self.settingsViewModel().load();
             self.ready(true);
@@ -288,13 +221,6 @@ function RootViewModel() {
                 self.inventoryTabViewModel().unload();
                 self.notesTabViewModel().unload();
             }
-            if (self.playerType().key === PlayerTypes.dmPlayerType.key) {
-                self.campaignTabViewModel().unload();
-                self.enemiesTabViewModel().unload();
-                self.playerSummaryTabViewModel().unload();
-            }
-            self.partyTabViewModel().unload();
-            self.connectionManagerViewModel().unload();
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.settingsViewModel().unload();

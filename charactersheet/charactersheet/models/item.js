@@ -9,7 +9,7 @@ function Item() {
     self.ps = PersistenceService.register(Item, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'totalWeight', 'delete']
+            'totalWeight', 'delete', 'mapping']
     };
 
     self.characterId = ko.observable(null);

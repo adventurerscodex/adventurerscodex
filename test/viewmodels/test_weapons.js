@@ -93,4 +93,22 @@ describe('WeaponsViewModel', function(){
             weapons.sortArrow('weaponProperty').should.equal('fa fa-arrow-up fa-color');
         });
     });
+
+    describe('Total Item Weight', function() {
+        it('should return a string with the total weight of all items.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var items = [new Weapon(), new Weapon()].map(function(e, i, _) {
+                e.weaponWeight(5);
+                return e;
+            });
+
+            var weapons = new WeaponsViewModel();
+            weapons.totalWeight().should.equal('0 (lbs)');
+
+            weapons = new WeaponsViewModel();
+            weapons.weapons(items);
+            weapons.weapons().length.should.equal(2);
+            weapons.totalWeight().should.equal('10 (lbs)');
+        });
+    });
 });

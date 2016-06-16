@@ -4,3 +4,4 @@
 * [macro1](https://github.com/macro1)
 * [nuubduud](https://github.com/nuubduud)
 * [bmolparia](https://github.com/bmolparia)
+* [valterlima](https://github.com/valterlima)

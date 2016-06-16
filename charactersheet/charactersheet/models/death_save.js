@@ -2,7 +2,8 @@ function DeathSave() {
     var self = this;
     self.ps = PersistenceService.register(DeathSave, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete']
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete',
+                'mapping']
     };
 
     self.characterId = ko.observable(null);

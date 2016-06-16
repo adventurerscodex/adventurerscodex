@@ -5,7 +5,7 @@ module.exports = function(config) {
         frameworks: ['mocha'],
         files: [
         	//Frameworks and includes.
-		  	{pattern: 'charactersheet/bower_components/mocha/mocha.js', watched: false},
+		  {pattern: 'charactersheet/bower_components/mocha/mocha.js', watched: false},
 			{pattern: 'charactersheet/bower_components/jquery/dist/jquery.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/bootstrap/dist/js/bootstrap.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/knockout/dist/knockout.js', watched: false},
@@ -16,7 +16,6 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bower_components/js-signals/dist/signals.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/simple-mock/index.js', watched: false},
 			{pattern: 'charactersheet/bower_components/blueimp-md5/js/md5.min.js', watched: false},
-
 			{pattern: 'charactersheet/bin/socket.io-1.2.0.js', watched: false},
 			{pattern: 'charactersheet/bin/knockout-file-bind.js', watched: false},
 			{pattern: 'charactersheet/bin/koExternalTemplateEngine_all.min.js', watched: false},
@@ -28,7 +27,6 @@ module.exports = function(config) {
             'test/*.js'
         ],
         browsers: ['PhantomJS'],
-
         reporters: ['progress', 'coverage'],
         preprocessors: {
         	//'*/app.js': ['coverage'],

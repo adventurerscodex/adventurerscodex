@@ -3,7 +3,12 @@
   'use strict';
 
   ko.bindingHandlers.tooltip = {
+    isTouch: function isTouchDevice(){
+        return true == ("ontouchstart" in window ||
+            window.DocumentTouch && document instanceof DocumentTouch);
+    },
     init: function(element, valueAccessor) {
+      if (ko.bindingHandlers.tooltip.isTouch()) return;
       var local = ko.utils.unwrapObservable(valueAccessor()),
           options = {};
 

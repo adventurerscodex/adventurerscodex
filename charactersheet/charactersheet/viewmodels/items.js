@@ -32,10 +32,10 @@ function ItemsViewModel() {
             for (var i = 0; i < eqpLen; i++) {
                 weightTotal += self.items()[i].totalWeight();
             }
-            return ('Weight: ' + weightTotal + ' (lbs)');
+            return weightTotal  + ' (lbs)';
         }
         else {
-            return 'Weight';
+            return '0 (lbs)';
         }
     });
 
