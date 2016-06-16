@@ -184,19 +184,40 @@
 <!-- End Stats Tab -->
 	<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
 		<div class="row">
-      <div class="col-md-6 col-sm-12 col-padded">
-        <div id="daily_features" data-bind="template: {name: 'daily_features.tmpl', templateUrl: 'templates', data: dailyFeatureViewModel }">
-        </div>
-          <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates', data: featsProfViewModel }">
-        </div>
-    </div>
-			<div class="col-md-6 col-sm-12 col-padded">
-				<div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates', data: skillsViewModel }">
-				</div>
+			<div class="col-sm-4 hidden-xs col-padded">
+        <img alt="A sword in stone" src="/images/sword-spin.svg" />
 			</div>
-<!--       <div class="col-md-6 col-sm-12 col-padded">
-      </div> -->
+			<div class="col-sm-8 col-xs-12 col-padded">
+			  <div class="h2">
+			    Daily Features<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
+			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			  </div>
+        <div id="daily_features" data-bind="template: { name: 'daily_features.tmpl', templateUrl: 'templates', data: dailyFeatureViewModel }">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+			  <div class="h2">
+			    Skills and Features<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
+			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			  </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-padded">
+        <div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates', data: skillsViewModel }">
+        </div>
+      </div>
+      <div class="col-sm-8 col-padded">
+        <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates', data: featsProfViewModel }">
+      </div>
 		</div>
+	</div>
 	</div>
 <!-- End Skills Tab -->
 	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
@@ -223,13 +244,33 @@
 <!-- End Spells Tab -->
 	<div role="tabpanel" class="tab-pane" id="items" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
 		<div class="row">
-			<div class="col-md-6 col-sm-12 col-padded">
+			<div class="col-sm-4 hidden-xs col-padded">
+        <img alt="A sword in stone" src="/images/spinning-sword.svg" />
+			</div>
+			<div class="col-sm-8 col-xs-12 col-padded">
+			  <div class="h2">
+			    Weapons<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
+			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			  </div>
 				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates', data: weaponsViewModel }">
 				</div>
 			</div>
-			<div class="col-md-6 col-sm-12 col-padded">
+    </div>
+    <div class="row">
+			<div class="col-sm-8 col-xs-12 col-padded">
+			  <div class="h2">
+			    Armor<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
+			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			  </div>
 				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates', data: armorViewModel }">
 				</div>
+			</div>
+			<div class="col-sm-4 hidden-xs col-padded">
+        <img alt="A sword in stone" src="/images/checked-shield.svg" />
 			</div>
 		</div>
 	</div>
