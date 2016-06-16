@@ -120,32 +120,4 @@ describe('Daily Features View Model', function() {
             p.dailyFeatures().length.should.equal(0);
         });
     });
-
-    describe('Increase usage', function() {
-        it('should increase the usage field value.', function() {
-            var p = new DailyFeatureViewModel();
-            var df = new DailyFeature();
-            var dailyFeatures = [df];
-            df.featureMaxUses(10);
-            df.featureUsed(1);
-            p.dailyFeatures(dailyFeatures);
-            p.increaseUsage(dailyFeatures[0]);
-
-            p.dailyFeatures()[0].featureUsed().should.equal(2);
-        });
-    });
-
-    describe('Decrease usage', function() {
-        it('should decrease the usage field value.', function() {
-            var p = new DailyFeatureViewModel();
-            var df = new DailyFeature();
-            var dailyFeatures = [df];
-            df.featureMaxUses(10);
-            df.featureUsed(1);
-            p.dailyFeatures(dailyFeatures);
-            p.decreaseUsage(dailyFeatures[0]);
-
-            p.dailyFeatures()[0].featureUsed().should.equal(0);
-        });
-    });
 });
