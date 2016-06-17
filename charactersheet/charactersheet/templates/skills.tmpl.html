@@ -3,6 +3,7 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
+          <th></th>
           <th data-bind="click: function(){sortBy('name');}">
             Skill
             <span data-bind="css: sortArrow('name')"></span>
@@ -11,21 +12,15 @@
             Modifier
             <span data-bind="css: sortArrow('modifier')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('proficiency');}">
-            Proficient
-            <span data-bind="css: sortArrow('proficiency')"></span>
-          </th>
-          <th>
-            <a data-toggle="modal"
-               data-target="#addSkill" href="#">
-              <i class="fa fa-plus fa-color"></i>
-            </a>
-          </th>
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSkills'>
         <tr class="clickable">
-          <td data-bind="text: name, click: $parent.editSkill"
+          <td data-bind="click: $parent.editSkill"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSkill"> <span data-bind="css: proficiencyLabel"></span></td>
+           <td data-bind="text: name, click: $parent.editSkill"
                href="#"
                data-toggle="modal"
                data-target="#viewSkill"></td>
@@ -33,16 +28,6 @@
                href="#"
                data-toggle="modal"
                data-target="#viewSkill"></td>
-          <td data-bind="click: $parent.editSkill"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSkill"> <span data-bind="css: proficiencyLabel"></span></td>
-          <td>
-            <a data-bind="click: $parent.removeSkill" href="#">
-              <i class="fa fa-trash-o fa-color-hover">
-              </i>
-            </a>
-          </td>
         </tr>
       </tbody>
     </table>
