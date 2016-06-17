@@ -333,8 +333,12 @@ textarea.dark-area {
 	line-height: 3.6em
 }
 
-.table-no-margin {
+table.table-no-margin {
   margin-bottom: 0px;
+}
+
+table.table-no-margin tbody td {
+  padding-top:13px;
 }
 /*
  * The following CSS is to fix the modal on tablets.

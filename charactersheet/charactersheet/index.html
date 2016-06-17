@@ -8,10 +8,10 @@
 	<link rel="apple-touch-icon" href="/images/logo-full-icon.png">
 	<link rel="icon" type="image/png" href="/images/logo-full.png">
 	<link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
+  <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"></script>
+	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
   <link href="/bower_components/select2/select2.css" rel="stylesheet">
   <link href="/bin/select2-bootstrap-flatly.css" rel="stylesheet">
-	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
-  <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet"></script>
 	<link href="/site.css" rel="stylesheet">
 </head>
 <body  data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
@@ -92,11 +92,6 @@
     </div>
   <div class="spacer"></div>
 	<ul class="nav nav-tabs tabs">
-		<li role="presentation" data-bind="click: activateProfileTab, tooltip: { title: profileTooltip }, css: profileTabStatus">
-      <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-        <img class="tab-icon" src="/images/tab_icons/overlord-helm.svg"></img>
-      </a>
-    </li>
 		<li role="presentation" data-bind="click: activateStatsTab, tooltip: { title: statsTooltip }, css: statsTabStatus">
       <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">
         <img class="tab-icon" src="/images/tab_icons/weight-lifting-up.svg"></img>
@@ -127,6 +122,11 @@
         <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img>
       </a>
     </li>
+		<li role="presentation" data-bind="click: activateProfileTab, tooltip: { title: profileTooltip }, css: profileTabStatus">
+      <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+        <img class="tab-icon" src="/images/tab_icons/overlord-helm.svg"></img>
+      </a>
+    </li>
     <!-- Right tabs -->
 		<li role="presentation" data-bind="with: actionsToolbarViewModel" class="secondary-nav">
       <button class="btn btn-sm btn-primary" data-toggle="collapse"
@@ -140,51 +140,64 @@
 	</ul>
 	<div class="tab-content">
   <div data-bind="template : { name: 'actions_toolbar.tmpl', templateUrl: 'templates', data: actionsToolbarViewModel }"></div>
-		<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
-  			<div class="row">
-				<div class="col-md-7 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
-					</div>
-				</div>
-				<div class="col-md-5 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates', data: appearanceViewModel }">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates', data: featuresTraitsViewModel }">
-					</div>
-				</div>
-			</div>
-		</div>
-<!-- End Profile Tab -->
 	<div role="tabpanel" class="tab-pane" id="stats" data-bind="with: statsTabViewModel, css: statsTabStatus">
 		<div class="row">
-			<div class="col-md-12 col-sm-12 col-padded">
+			<div class="col-sm-4 hidden-xs">
+			  <img alt="A heart icon" src="/images/nested-hearts.svg">
+      </div>
+			<div class="col-sm-8 col-padded">
+			  <div class="h2">
+			    Health and Hit Dice<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas.</small>
+			  </div>
 				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'templates', data: statsViewModel }">
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-4 col-sm-12 col-padded">
+			<div class="col-sm-12 col-padded">
+			  <div class="h2">
+			    Saving Throws, Ability Scores, and Other Stats<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas.Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas.</small>
+			  </div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12 col-padded">
 				<div data-bind="template: { name: 'ability.tmpl', templateUrl: 'templates', data: abilityScoresViewModel }">
 				</div>
 			</div>
-			<div class="col-md-4 col-sm-12 col-padded">
-				<div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates', data: spellStatsViewModel }">
-				</div>
-			</div>
-			<div class="col-md-4 col-sm-12 col-padded">
+		</div>
+		<div class="row">
+			<div class="col-sm-4 col-padded">
 				<div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'templates', data: savingThrowsViewModel }">
 				</div>
 			</div>
-		</div>
-	</div>
+			<div class="col-sm-8 col-padded">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12 col-padded">
+                <div id="other_stats" data-bind="template: { name: 'other_stats.tmpl', templateUrl: 'templates', data: statsViewModel }">
+               </div>
+              </div>
+              <div class="col-sm-12 col-padded">
+                <div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates', data: spellStatsViewModel }">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- End Stats Tab -->
 	<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
 		<div class="row">
-			<div class="col-sm-4 hidden-xs col-padded">
+			<div class="col-sm-4 hidden-xs">
         <img alt="A sword in stone" src="/images/sword-spin.svg" />
 			</div>
 			<div class="col-sm-8 col-xs-12 col-padded">
@@ -222,7 +235,7 @@
 <!-- End Skills Tab -->
 	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
 		<div class="row">
-			<div class="col-sm-4 col-padded">
+			<div class="col-sm-4 hidden-xs">
 				<img src="/images/enlightenment.svg" alt="Spells image"/>
 			</div>
 			<div class="col-sm-8 col-padded">
@@ -254,7 +267,7 @@
 <!-- End Spells Tab -->
 	<div role="tabpanel" class="tab-pane" id="items" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
 		<div class="row">
-			<div class="col-sm-4 hidden-xs col-padded">
+			<div class="col-sm-4 hidden-xs">
         <img alt="A sword in stone" src="/images/spinning-sword.svg" />
 			</div>
 			<div class="col-sm-8 col-xs-12 col-padded">
@@ -279,7 +292,7 @@
 				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates', data: armorViewModel }">
 				</div>
 			</div>
-			<div class="col-sm-4 hidden-xs col-padded">
+			<div class="col-sm-4 hidden-xs">
         <img alt="A sword in stone" src="/images/checked-shield.svg" />
 			</div>
 		</div>
@@ -287,7 +300,7 @@
 <!-- End Equipment Tab -->
 	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-4 hidden-xs">
 			<img src="/images/shiny-purse.svg" alt="Inventory tab"/>
 			</div>
 			<div class="col-sm-8 col-padded">
@@ -308,11 +321,11 @@
 				</div>
 			</div>
 	<div class="row">
-		<div class="col-sm-7 col-padded">
+		<div class="col-md-7 col-sm-12 col-padded">
 			<div data-bind="template: { name: 'items.tmpl', templateUrl: 'templates', data: itemsViewModel }">
 			</div>
 		</div>
-		<div class="col-sm-5">
+		<div class="col-md-5 col-sm-12">
 			<div data-bind="template: { name: 'magic_items.tmpl', templateUrl: 'templates', data: magicitemsViewModel }">
 			</div>
 		</div>
@@ -323,12 +336,37 @@
 	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
 		<div class="row">
 			<div class="col-sm-12 col-padded">
+			  <div class="h2">
+			    Notes<br />
+			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
+			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			  </div>
 				<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates', data: notesViewModel }">
 				</div>
 			</div>
 		</div>
 	</div>
 <!-- End Notes Tab -->
+	<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
+  			<div class="row">
+				<div class="col-md-7 col-sm-12 col-padded">
+					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
+					</div>
+				</div>
+				<div class="col-md-5 col-sm-12 col-padded">
+					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates', data: appearanceViewModel }">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-padded">
+					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates', data: featuresTraitsViewModel }">
+					</div>
+				</div>
+			</div>
+		</div>
+<!-- End Profile Tab -->
 </div>
 <!-- End group Tab -->
 	</div>

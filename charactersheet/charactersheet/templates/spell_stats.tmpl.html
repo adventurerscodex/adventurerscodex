@@ -1,42 +1,28 @@
-<div class="panel panel-default">
-  <div class="panel-body" data-bind="with: spellStats">
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Spell Casting Ability</span>
-          <input class="form-control"
-                 type="text"
-                 data-bind="value: spellcastingAbility,
+<!-- ko with: spellStats -->
+<div class="row">
+	<div class="col-sm-6 col-padded">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Spell Attack Bonus</span>
+			<input type="number" class="form-control" min="0" max="15" data-bind='textInput: spellAttackBonus'>
+		</div>
+	</div>
+	<div class="col-sm-6 col-padded">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Spell Save DC</span>
+			<input type="number" class="form-control" min="0" max="30" data-bind='textInput: spellSaveDc'>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-padded">
+		<div class="input-group">
+			<span class="input-group-addon" id="basic-addon2">Spell Casting Ability</span>
+			<input class="form-control" type="text" data-bind="value: spellcastingAbility,
                             select2: {theme: 'classic',
                                       tags: spellcastingAbilityOptions,
-                                      maximumSelectionSize: 1}"></input>
-
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Spell Save DC</span>
-          <input type="number"
-                 class="form-control"
-                 min="0"
-                 max="30"
-                 data-bind='textInput: spellSaveDc'>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Spell Attack Bonus</span>
-          <input type="number"
-                 class="form-control"
-                 min="0"
-                 max="15"
-                 data-bind='textInput: spellAttackBonus'>
-        </div>
-      </div>
-    </div>
-  </div>
+                                      maximumSelectionSize: 1}">
+			</input>
+		</div>
+	</div>
 </div>
+<!-- /ko -->
