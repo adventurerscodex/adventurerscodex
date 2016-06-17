@@ -105,6 +105,7 @@ Character.findBy = function(characterId) {
 Character.exportCharacter = function(characterId) {
     var data = {};
     PersistenceService.listAll().forEach(function(e1, i1, _1) {
+        if (window[e1] === undefined) return; //Checks for deleted models.
         var items = PersistenceService.findAll(window[e1]).filter(function(e2, i2, _2) {
             var res = false;
             try {
