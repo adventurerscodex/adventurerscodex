@@ -19,7 +19,7 @@ var jebeddo_data = {
                     "settings",
                     "party"
                 ],
-                "defaultTab": "profile"
+                "defaultTab": "stats"
             }
         }
     ],

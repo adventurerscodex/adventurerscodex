@@ -156,7 +156,7 @@ var CharacterFixture = {
             'settings',
             'party'
         ],
-        'defaultTab': 'profile'
+        'defaultTab': 'stats'
     }
 };
 
