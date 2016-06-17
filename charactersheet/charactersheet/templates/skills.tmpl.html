@@ -3,7 +3,10 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th></th>
+          <th data-bind="click: function(){sortBy('proficiency');}">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span data-bind="css: sortArrow('proficiency')"></span>
+          </th>
           <th data-bind="click: function(){sortBy('name');}">
             Skill
             <span data-bind="css: sortArrow('name')"></span>

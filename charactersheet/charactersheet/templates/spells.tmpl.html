@@ -3,7 +3,10 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th></th>
+          <th class="hidden-xs" data-bind="click: function(){sortBy('spellPrepared');}">
+            <span class="glyphicon glyphicon-check"></span>
+            <span data-bind="css: sortArrow('spellPrepared')"></span>
+          </th>
           <th data-bind="click: function(){sortBy('spellName');}">
             Spell
             <span data-bind="css: sortArrow('spellName')"></span>
