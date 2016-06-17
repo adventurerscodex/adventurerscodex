@@ -3,6 +3,10 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
+          <th data-bind="click: function(){sortBy('proficiency');}">
+            <span class="glyphicon glyphicon-ok"></span>
+            <span data-bind="css: sortArrow('proficiency')"></span>
+          </th>
           <th data-bind="click: function(){sortBy('name');}">
             Saving Throw
             <span data-bind="css: sortArrow('name')"></span>
@@ -11,20 +15,14 @@
             Modifier
             <span data-bind="css: sortArrow('modifier')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('proficiency');}">
-            Proficient
-            <span data-bind="css: sortArrow('proficiency')"></span>
-          </th>
-          <th>
-            <a data-toggle="modal"
-               data-target="#addSavingThrow" href="#">
-              <i class="fa fa-plus fa-color"></i>
-            </a>
-          </th>
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSavingThrows'>
         <tr class="clickable">
+          <td data-bind="click: $parent.editSavingThrow"
+               href="#"
+               data-toggle="modal"
+               data-target="#viewSavingThrow"> <span data-bind="css: proficiencyLabel"></span></td>
           <td data-bind="text: name, click: $parent.editSavingThrow"
                href="#"
                data-toggle="modal"
@@ -33,15 +31,6 @@
                href="#"
                data-toggle="modal"
                data-target="#viewSavingThrow"></td>
-          <td data-bind="click: $parent.editSavingThrow"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSavingThrow"> <span data-bind="css: proficiencyLabel"></span></td>
-          <td>
-            <a data-bind="click: $parent.removeSavingThrow" href="#">
-              <i class="fa fa-trash-o fa-color-hover"></i>
-            </a>
-          </td>
         </tr>
       </tbody>
     </table>
