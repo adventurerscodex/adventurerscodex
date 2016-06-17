@@ -177,13 +177,13 @@ function RootViewModel() {
         Notifications.global.load.add(self.load);
         Notifications.global.unload.add(self.unload);
 
-        HotkeysService.registerHotkey('1', self.activateProfileTab);
-        HotkeysService.registerHotkey('2', self.activateStatsTab);
-        HotkeysService.registerHotkey('3', self.activateSkillsTab);
-        HotkeysService.registerHotkey('4', self.activateSpellsTab);
-        HotkeysService.registerHotkey('5', self.activateEquipmentTab);
-        HotkeysService.registerHotkey('6', self.activateInventoryTab);
-        HotkeysService.registerHotkey('7', self.activateNotesTab);
+        HotkeysService.registerHotkey('1', self.activateStatsTab);
+        HotkeysService.registerHotkey('2', self.activateSkillsTab);
+        HotkeysService.registerHotkey('3', self.activateSpellsTab);
+        HotkeysService.registerHotkey('4', self.activateEquipmentTab);
+        HotkeysService.registerHotkey('5', self.activateInventoryTab);
+        HotkeysService.registerHotkey('6', self.activateNotesTab);
+        HotkeysService.registerHotkey('7', self.activateProfileTab);
     };
 
     /**

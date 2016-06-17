@@ -1,0 +1,61 @@
+<!--AC, Initiative, Speed-->
+ <div class="row">
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">AC</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().ac' min="10">
+     </div>
+   </div>
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Proficiency Bonus</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().proficiency' min="0">
+     </div>
+   </div>
+ </div>
+ <div class="row">
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2" data-bind="tooltip: { title: initiativeTooltip }">Initiative</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().initiative'>
+     </div>
+   </div>
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Inspiration</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().inspiration' min="0">
+     </div>
+   </div>
+ </div>
+ <div class="row">
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Speed</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().speed' min="0">
+     </div>
+   </div>
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Passive Wisdom</span> <span class="input-group-addon" id="basic-addon3" data-bind="text: otherStats().passiveWisdom"></span>
+     </div>
+   </div>
+ </div>
+<!-- Death Saving throws -->
+ <div class="row">
+   <div class="col-lg-6 col-md-12 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon">Death Save Successes</span>
+       <div class="form-control" data-bind="foreach: deathSaveSuccessList">
+         <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveSuccess" />
+       </div>
+     </div>
+   </div>
+   <div class="col-lg-6 col-md-12 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon">Death Save Failures&nbsp;&nbsp;&nbsp;&nbsp;</span>
+       <div class="form-control" data-bind="foreach: deathSaveFailureList">
+         <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveFailure" />
+       </div>
+     </div>
+   </div>
+ </div>
