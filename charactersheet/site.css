@@ -332,6 +332,10 @@ textarea.dark-area {
 	margin-right:10px;
 	line-height: 3.6em
 }
+
+.table-no-margin {
+  margin-bottom: 0px;
+}
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
