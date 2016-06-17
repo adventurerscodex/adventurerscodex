@@ -222,18 +222,28 @@
 <!-- End Skills Tab -->
 	<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
 		<div class="row">
-			<div class="col-sm-4">
-				<img src="/images/book-storm.svg" alt="Spells image"/>
+			<div class="col-sm-4 col-padded">
+				<img src="/images/enlightenment.svg" alt="Spells image"/>
 			</div>
 			<div class="col-sm-8 col-padded">
 				<div class="h2">
-					Spell slots<br/>
+					Spell Slots<br/>
 					<small>Adds spell slots based on class and level</small>
 				</div>
 				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-12 col-padded">
+				<div class="h2">
+					Spells<br/>
+					<small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
+			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
+			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+				</div>
+      </div>
+    </div>
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-padded">
 				<div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'templates', data: spellbookViewModel }">
