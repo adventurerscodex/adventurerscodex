@@ -1,110 +1,131 @@
 <div class="panel panel-default bio">
   <div class="panel-body" data-bind="with: abilityScores">
-    <div class='hidden-sm hidden-xs'> 
-      <div class='spacer-lg'></div>
-    </div>
     <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Strength
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <input type="number" class="form-control"
-                 aria-describedby="basic-addon2"
-                 data-bind='textInput: str'
-                 min="1"
-                 max="30" />
-          <span class="input-group-addon"
-                data-bind="text: strModifier"></span>
-        </div>
-      </div>
+      <table class="table table-responsive table-hover table-no-margin">
+        <thead>
+          <tr>
+            <th width="16%" class="text-center">Strength</th>
+            <th width="16%" class="text-center">Dexterity</th>
+            <th width="16%" class="text-center">Constitution</th>
+            <th width="16%" class="text-center">Intelligence</th>
+            <th width="16%" class="text-center">Wisdom</th>
+            <th width="16%" class="text-center">Charisma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="clickable">
+            <td href="#" class="text-center"
+                data-toggle="modal"
+                data-target="#editAbilityScores">
+              <span data-bind='text: str'></span>
+              <sup>
+                <span class="badge" data-bind="text: strModifier"></span>
+              </sup>
+            </td>
+            <td href="#" class="text-center"
+                data-toggle="modal"
+                data-target="#editAbilityScores">
+              <span data-bind='text: dex'></span>
+              <sup>
+                <span class="badge" data-bind="text: dexModifier"></span>
+              </sup>
+            </td>
+            <td href="#" class="text-center"
+                data-toggle="modal"
+                data-target="#editAbilityScores">
+              <span data-bind='text: con'></span>
+              <sup>
+                <span class="badge" data-bind="text: conModifier"></span>
+              </sup>
+            </td>
+            <td href="#" class="text-center"
+                data-toggle="modal"
+                data-target="#editAbilityScores">
+              <span data-bind='text: int'></span>
+              <sup>
+                <span class="badge" data-bind="text: intModifier"></span>
+              </sup>
+            </td>
+            <td href="#" class="text-center"
+                data-toggle="modal"
+                data-target="#editAbilityScores">
+              <span data-bind='text: wis'></span>
+              <sup>
+                <span class="badge" data-bind="text: wisModifier"></span>
+              </sup>
+            </td>
+            <td href="#" class="text-center"
+                data-toggle="modal"
+                data-target="#editAbilityScores">
+              <span data-bind='text: cha'></span>
+              <sup>
+                <span class="badge" data-bind="text: chaModifier"></span>
+              </sup>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group ">
-          <span class="input-group-addon" id="basic-addon2">Dexterity
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <input type="number"
-                 class="form-control"
-                 aria-describedby="basic-addon2"
-                 min="1"
-                 max="30"
-                 data-bind='textInput: dex' />
-          <span class="input-group-addon"
-                data-bind="text: dexModifier"></span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group ">
-          <span class="input-group-addon" id="basic-addon2">Constitution
-          </span>
-          <input type="number"
-                 class="form-control"
-                 aria-describedby="basic-addon2"
-                 min="1"
-                 max="30"
-                 data-bind='textInput: con' />
-          <span class="input-group-addon"
-                data-bind="text: conModifier"></span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group ">
-          <span class="input-group-addon" id="basic-addon2">Intelligence
-            &nbsp;
-          </span>
-          <input type="number"
-                 class="form-control"
-                 aria-describedby="basic-addon2"
-                 min="1"
-                 max="30"
-                 data-bind='textInput: int' />
-          <span class="input-group-addon"
-                data-bind="text: intModifier"></span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-padded">
-        <div class="input-group ">
-          <span class="input-group-addon" id="basic-addon2">Wisdom
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          </span>
-          <input type="number"
-                 class="form-control"
-                 aria-describedby="basic-addon2"
-                 min="1"
-                 max="30"
-                 data-bind='textInput: wis' />
-          <span class="input-group-addon"
-                data-bind="text: wisModifier"></span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-padded">
-           <div class="input-group ">
-            <span class="input-group-addon" id="basic-addon2">Charisma
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            </span>
-            <input type="number"
-                   class="form-control"
-                   aria-describedby="basic-addon2"
-                   min="1"
-                   max="30"
-                   data-bind='textInput: cha' />
-          <span class="input-group-addon"
-                data-bind="text: chaModifier"></span>
-            </div>
-        </div>
-      </div>
-    <div class='hidden-sm hidden-xs'> 
-      <div class='spacer-lg'></div>
-    </div>
+
+    <!-- Add Modal -->
+    <div class="modal fade" id="editAbilityScores" tabindex="-1" role="dialog">
+    	<div class="modal-dialog" role="document">
+    		<div class="modal-content">
+    			<div class="modal-header">
+    				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+    				<h4 class="modal-title">
+    					Edit Ability Scores
+    				</h4>
+    			</div>
+    			<div class="modal-body">
+    				<form class="form-horizontal">
+    					<div class="form-group">
+    						<label class="col-sm-2 control-label">Strength</label>
+    						<div class="col-sm-10">
+    							<input type="text" class="form-control" min="1"
+                    data-bind='textInput: str'>
+    						</div>
+    					</div>
+    					<div class="form-group">
+    						<label class="col-sm-2 control-label">Dexterity</label>
+    						<div class="col-sm-10">
+    							<input type="text" class="form-control" min="1"
+                   data-bind='textInput: dex'>
+    						</div>
+    					</div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Constitution</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" min="1"
+                  data-bind='textInput: con'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Intelligence</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" min="1"
+                  data-bind='textInput: int'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Wisom</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" min="1"
+                    data-bind='textInput: wis'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Charisma</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" min="1"
+                    data-bind='textInput: cha'>
+                </div>
+              </div>
+    					<div class="modal-footer">
+    						<button type="button" class="btn btn-primary"
+                  data-dismiss="modal">Done</button>
+    					</div>
+    				</form>
+    			</div>
   </div>
 </div>
