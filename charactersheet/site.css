@@ -167,6 +167,10 @@ div.hr {
   padding:0px;
 }
 
+.no-top-margin {
+  margin-top:0px;
+}
+
 .no-border {
   border:none;
 }
