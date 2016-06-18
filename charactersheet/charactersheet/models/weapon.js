@@ -7,7 +7,7 @@ function Weapon() {
         ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
             'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
             'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',            'mapping']
-        };
+    };
 
     self._dummy = ko.observable(null);
     self.characterId = ko.observable(null);
