@@ -336,15 +336,7 @@ var jebeddo_data = {
     "HitDiceType": [
         {
             "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "hitDiceType": "D4",
-            "hitDiceOptions": [
-                "D4",
-                "D6",
-                "D8",
-                "D10",
-                "D12",
-                "D20"
-            ]
+            "hitDiceType": "D4"
         }
     ],
     "AbilityScores": [
@@ -398,12 +390,7 @@ var jebeddo_data = {
             "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
             "spellcastingAbility": "WIS",
             "spellSaveDc": "13",
-            "spellAttackBonus": "5",
-            "spellcastingAbilityOptions": [
-                "INT",
-                "WIS",
-                "CHA"
-            ]
+            "spellAttackBonus": "5"
         }
     ],
     "FeatsProf": [
@@ -452,79 +439,6 @@ var jebeddo_data = {
             "spellRange": "30 ft",
             "spellComponents": "V, S",
             "spellDuration": "Instantaneous",
-            "spellTypeOptions": [
-                "Attack Roll",
-                "Savings Throw",
-                "Automatic"
-            ],
-            "spellSaveAttrOptions": [
-                "Str",
-                "Dex",
-                "Con",
-                "Int",
-                "Wis",
-                "Cha"
-            ],
-            "spellSchoolOptions": [
-                "Abjuration",
-                "Cantrip",
-                "Conjuration",
-                "Divination",
-                "Enchantment",
-                "Evocation",
-                "Illusion",
-                "Necromancy",
-                "Transmutation"
-            ],
-            "spellCastingTimeOptions": [
-                "1 action",
-                "1 bonus action",
-                "1 reaction",
-                "1 minute",
-                "10 minutes",
-                "1 hour"
-            ],
-            "spellDurationOptions": [
-                "Instantaneous",
-                "1 round",
-                "1 min",
-                "10 min",
-                "1 hour",
-                "8 hours",
-                "24 hours",
-                "10 days",
-                "Concentration, 1 min",
-                "Concentration, 10 min",
-                "Concentration, 1 hour",
-                "Concentration, 8 hours",
-                "Concentration, 24 hours",
-                "Special",
-                "Until dispelled"
-            ],
-            "spellComponentsOptions": [
-                "S",
-                "V",
-                "V, S",
-                "S, M",
-                "V, M",
-                "V, S, M"
-            ],
-            "spellRangeOptions": [
-                "Self",
-                "Touch",
-                "5 ft",
-                "10 ft",
-                "30 ft",
-                "60 ft",
-                "90 ft",
-                "100 ft",
-                "120 ft",
-                "150 ft",
-                "300 ft",
-                "500 ft",
-                "1 mile",
-                "Special"
-            ],
             "__id": "57"
         },
         {
@@ -541,79 +455,6 @@ var jebeddo_data = {
             "spellRange": "30 ft",
             "spellComponents": "V, S",
             "spellDuration": "10 min",
-            "spellTypeOptions": [
-                "Attack Roll",
-                "Savings Throw",
-                "Automatic"
-            ],
-            "spellSaveAttrOptions": [
-                "Str",
-                "Dex",
-                "Con",
-                "Int",
-                "Wis",
-                "Cha"
-            ],
-            "spellSchoolOptions": [
-                "Abjuration",
-                "Cantrip",
-                "Conjuration",
-                "Divination",
-                "Enchantment",
-                "Evocation",
-                "Illusion",
-                "Necromancy",
-                "Transmutation"
-            ],
-            "spellCastingTimeOptions": [
-                "1 action",
-                "1 bonus action",
-                "1 reaction",
-                "1 minute",
-                "10 minutes",
-                "1 hour"
-            ],
-            "spellDurationOptions": [
-                "Instantaneous",
-                "1 round",
-                "1 min",
-                "10 min",
-                "1 hour",
-                "8 hours",
-                "24 hours",
-                "10 days",
-                "Concentration, 1 min",
-                "Concentration, 10 min",
-                "Concentration, 1 hour",
-                "Concentration, 8 hours",
-                "Concentration, 24 hours",
-                "Special",
-                "Until dispelled"
-            ],
-            "spellComponentsOptions": [
-                "S",
-                "V",
-                "V, S",
-                "S, M",
-                "V, M",
-                "V, S, M"
-            ],
-            "spellRangeOptions": [
-                "Self",
-                "Touch",
-                "5 ft",
-                "10 ft",
-                "30 ft",
-                "60 ft",
-                "90 ft",
-                "100 ft",
-                "120 ft",
-                "150 ft",
-                "300 ft",
-                "500 ft",
-                "1 mile",
-                "Special"
-            ],
             "__id": "58"
         },
         {
@@ -630,79 +471,6 @@ var jebeddo_data = {
             "spellRange": "Self",
             "spellComponents": "V, S",
             "spellDuration": "Instantaneous",
-            "spellTypeOptions": [
-                "Attack Roll",
-                "Savings Throw",
-                "Automatic"
-            ],
-            "spellSaveAttrOptions": [
-                "Str",
-                "Dex",
-                "Con",
-                "Int",
-                "Wis",
-                "Cha"
-            ],
-            "spellSchoolOptions": [
-                "Abjuration",
-                "Cantrip",
-                "Conjuration",
-                "Divination",
-                "Enchantment",
-                "Evocation",
-                "Illusion",
-                "Necromancy",
-                "Transmutation"
-            ],
-            "spellCastingTimeOptions": [
-                "1 action",
-                "1 bonus action",
-                "1 reaction",
-                "1 minute",
-                "10 minutes",
-                "1 hour"
-            ],
-            "spellDurationOptions": [
-                "Instantaneous",
-                "1 round",
-                "1 min",
-                "10 min",
-                "1 hour",
-                "8 hours",
-                "24 hours",
-                "10 days",
-                "Concentration, 1 min",
-                "Concentration, 10 min",
-                "Concentration, 1 hour",
-                "Concentration, 8 hours",
-                "Concentration, 24 hours",
-                "Special",
-                "Until dispelled"
-            ],
-            "spellComponentsOptions": [
-                "S",
-                "V",
-                "V, S",
-                "S, M",
-                "V, M",
-                "V, S, M"
-            ],
-            "spellRangeOptions": [
-                "Self",
-                "Touch",
-                "5 ft",
-                "10 ft",
-                "30 ft",
-                "60 ft",
-                "90 ft",
-                "100 ft",
-                "120 ft",
-                "150 ft",
-                "300 ft",
-                "500 ft",
-                "1 mile",
-                "Special"
-            ],
             "__id": "59"
         },
         {
@@ -719,79 +487,6 @@ var jebeddo_data = {
             "spellRange": "120 ft",
             "spellComponents": "V, S",
             "spellDuration": "1 hour",
-            "spellTypeOptions": [
-                "Attack Roll",
-                "Savings Throw",
-                "Automatic"
-            ],
-            "spellSaveAttrOptions": [
-                "Str",
-                "Dex",
-                "Con",
-                "Int",
-                "Wis",
-                "Cha"
-            ],
-            "spellSchoolOptions": [
-                "Abjuration",
-                "Cantrip",
-                "Conjuration",
-                "Divination",
-                "Enchantment",
-                "Evocation",
-                "Illusion",
-                "Necromancy",
-                "Transmutation"
-            ],
-            "spellCastingTimeOptions": [
-                "1 action",
-                "1 bonus action",
-                "1 reaction",
-                "1 minute",
-                "10 minutes",
-                "1 hour"
-            ],
-            "spellDurationOptions": [
-                "Instantaneous",
-                "1 round",
-                "1 min",
-                "10 min",
-                "1 hour",
-                "8 hours",
-                "24 hours",
-                "10 days",
-                "Concentration, 1 min",
-                "Concentration, 10 min",
-                "Concentration, 1 hour",
-                "Concentration, 8 hours",
-                "Concentration, 24 hours",
-                "Special",
-                "Until dispelled"
-            ],
-            "spellComponentsOptions": [
-                "S",
-                "V",
-                "V, S",
-                "S, M",
-                "V, M",
-                "V, S, M"
-            ],
-            "spellRangeOptions": [
-                "Self",
-                "Touch",
-                "5 ft",
-                "10 ft",
-                "30 ft",
-                "60 ft",
-                "90 ft",
-                "100 ft",
-                "120 ft",
-                "150 ft",
-                "300 ft",
-                "500 ft",
-                "1 mile",
-                "Special"
-            ],
             "__id": "60"
         },
         {
@@ -808,79 +503,6 @@ var jebeddo_data = {
             "spellRange": "60 ft",
             "spellComponents": "V",
             "spellDuration": "Instantaneous",
-            "spellTypeOptions": [
-                "Attack Roll",
-                "Savings Throw",
-                "Automatic"
-            ],
-            "spellSaveAttrOptions": [
-                "Str",
-                "Dex",
-                "Con",
-                "Int",
-                "Wis",
-                "Cha"
-            ],
-            "spellSchoolOptions": [
-                "Abjuration",
-                "Cantrip",
-                "Conjuration",
-                "Divination",
-                "Enchantment",
-                "Evocation",
-                "Illusion",
-                "Necromancy",
-                "Transmutation"
-            ],
-            "spellCastingTimeOptions": [
-                "1 action",
-                "1 bonus action",
-                "1 reaction",
-                "1 minute",
-                "10 minutes",
-                "1 hour"
-            ],
-            "spellDurationOptions": [
-                "Instantaneous",
-                "1 round",
-                "1 min",
-                "10 min",
-                "1 hour",
-                "8 hours",
-                "24 hours",
-                "10 days",
-                "Concentration, 1 min",
-                "Concentration, 10 min",
-                "Concentration, 1 hour",
-                "Concentration, 8 hours",
-                "Concentration, 24 hours",
-                "Special",
-                "Until dispelled"
-            ],
-            "spellComponentsOptions": [
-                "S",
-                "V",
-                "V, S",
-                "S, M",
-                "V, M",
-                "V, S, M"
-            ],
-            "spellRangeOptions": [
-                "Self",
-                "Touch",
-                "5 ft",
-                "10 ft",
-                "30 ft",
-                "60 ft",
-                "90 ft",
-                "100 ft",
-                "120 ft",
-                "150 ft",
-                "300 ft",
-                "500 ft",
-                "1 mile",
-                "Special"
-            ],
             "__id": "61"
         },
         {
@@ -897,79 +519,6 @@ var jebeddo_data = {
             "spellRange": "30 ft",
             "spellComponents": "V, S",
             "spellDuration": "1 hour",
-            "spellTypeOptions": [
-                "Attack Roll",
-                "Savings Throw",
-                "Automatic"
-            ],
-            "spellSaveAttrOptions": [
-                "Str",
-                "Dex",
-                "Con",
-                "Int",
-                "Wis",
-                "Cha"
-            ],
-            "spellSchoolOptions": [
-                "Abjuration",
-                "Cantrip",
-                "Conjuration",
-                "Divination",
-                "Enchantment",
-                "Evocation",
-                "Illusion",
-                "Necromancy",
-                "Transmutation"
-            ],
-            "spellCastingTimeOptions": [
-                "1 action",
-                "1 bonus action",
-                "1 reaction",
-                "1 minute",
-                "10 minutes",
-                "1 hour"
-            ],
-            "spellDurationOptions": [
-                "Instantaneous",
-                "1 round",
-                "1 min",
-                "10 min",
-                "1 hour",
-                "8 hours",
-                "24 hours",
-                "10 days",
-                "Concentration, 1 min",
-                "Concentration, 10 min",
-                "Concentration, 1 hour",
-                "Concentration, 8 hours",
-                "Concentration, 24 hours",
-                "Special",
-                "Until dispelled"
-            ],
-            "spellComponentsOptions": [
-                "S",
-                "V",
-                "V, S",
-                "S, M",
-                "V, M",
-                "V, S, M"
-            ],
-            "spellRangeOptions": [
-                "Self",
-                "Touch",
-                "5 ft",
-                "10 ft",
-                "30 ft",
-                "60 ft",
-                "90 ft",
-                "100 ft",
-                "120 ft",
-                "150 ft",
-                "300 ft",
-                "500 ft",
-                "1 mile",
-                "Special"
-            ],
             "__id": "62"
         }
     ],
@@ -986,18 +535,6 @@ var jebeddo_data = {
             "armorClass": "13",
             "armorStealth": "Normal",
             "armorDescription": "",
-            "armorTypeOptions": [
-                "Light",
-                "Medium",
-                "Heavy",
-                "Shields"
-            ],
-            "armorStealthOptions": [
-                "Advantage",
-                "Normal",
-                "Disadvantage"
-            ],
-            "armorClassLabel": 15,
             "__id": "2"
         },
         {
@@ -1012,18 +549,6 @@ var jebeddo_data = {
             "armorClass": "2",
             "armorStealth": "Normal",
             "armorDescription": "",
-            "armorTypeOptions": [
-                "Light",
-                "Medium",
-                "Heavy",
-                "Shields"
-            ],
-            "armorStealthOptions": [
-                "Advantage",
-                "Normal",
-                "Disadvantage"
-            ],
-            "armorClassLabel": 4,
             "__id": "3"
         }
     ],
@@ -1053,44 +578,6 @@ var jebeddo_data = {
             "weaponProperty": "Ammunition",
             "weaponDescription": "",
             "weaponQuantity": "1",
-            "weaponProficiencyOptions": [
-                "Simple",
-                "Martial",
-                "Improvised",
-                "Nonlethal",
-                "Exotic"
-            ],
-            "weaponHandednessOptions": [
-                "Light",
-                "One-Handed",
-                "Two-Handed"
-            ],
-            "weaponTypeOptions": [
-                "Melee",
-                "Ranged"
-            ],
-            "weaponSizeOptions": [
-                "Small",
-                "Medium",
-                "Large"
-            ],
-            "weaponPropertyOptions": [
-                "Ammunition",
-                "Finesse",
-                "Heavy",
-                "Light",
-                "Loading",
-                "Range",
-                "Reach",
-                "Special",
-                "Thrown",
-                "Versatile"
-            ],
-            "weaponDamageTypeOptions": [
-                "Bludgeoning",
-                "Piercing",
-                "Slashing"
-            ],
             "__id": "7"
         }
     ],
