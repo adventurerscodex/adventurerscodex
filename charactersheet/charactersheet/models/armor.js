@@ -5,7 +5,8 @@ function Armor() {
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {
         ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
-            'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus'],
+            'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus',
+            'armorTypeOptions', 'armorStealthOptions'],
         include: ['armorClass']
     };
 

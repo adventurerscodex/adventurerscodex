@@ -4,9 +4,13 @@ function Weapon() {
     var self = this;
     self.ps = PersistenceService.register(Weapon, self);
     self.mapping = {
-        ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
-            'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
-            'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',            'mapping']
+        ignore: ['ps', 'mapping', 'clear', 'proficiencyScore',
+            'strAbilityScoreModifier', 'dexAbilityScoreModifier',
+            'exportValues', 'importValues', 'save', 'abilityScoreBonus',
+            'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
+            'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
+            'weaponTypeOptions', 'weaponSizeOptions', 'weaponPropertyOptions',
+            'weaponDamageTypeOptions']
     };
 
     self._dummy = ko.observable(null);
