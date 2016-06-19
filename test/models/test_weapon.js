@@ -90,17 +90,6 @@ describe('Weapon Model', function() {
         });
     });
 
-    // describe('Proficiency Score', function() {
-    //     it('should get proficiency score from other stats', function() {
-    //         var weap = new Weapon();
-    //         simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-    //         simple.mock(AbilityScores, 'findBy').returnWith([{ strBonus: ko.observable(4)}]);
-    //
-    //         var strBonus = weap.strAbilityScoreModifier();
-    //         strBonus.should.equal(4);
-    //     });
-    // });
-
     describe('Ability Score Bonus', function() {
         it('should get ability score bonus for ranged', function() {
             var weap = new Weapon();
