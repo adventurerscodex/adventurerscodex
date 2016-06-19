@@ -6,8 +6,7 @@ function Weapon() {
     self.mapping = {
         ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
             'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
-            'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
-            'mapping']
+            'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',            'mapping']
     };
 
     self._dummy = ko.observable(null);
@@ -27,6 +26,7 @@ function Weapon() {
     self.weaponProperty = ko.observable('');
     self.weaponDescription = ko.observable('');
     self.weaponQuantity = ko.observable(1);
+
     self.weaponProficiencyOptions = ko.observableArray(
         Fixtures.weapon.weaponProficiencyOptions);
     self.weaponHandednessOptions = ko.observableArray(
