@@ -129,8 +129,13 @@ function Weapon() {
         self._dummy();
 
         var totalBonus = self.totalBonus();
-
-        return totalBonus ? ('+' + totalBonus):'+0';
+        if(totalBonus) {
+            return totalBonus >= 0 ? ('+ ' + totalBonus) : '- ' +
+            Math.abs(totalBonus);
+        }
+        else {
+            return '+ 0';
+        }
     });
 
 
