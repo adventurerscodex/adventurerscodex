@@ -1,3 +1,12 @@
+version 0.0.11 (06/19/2016)
+* Changes location of and adds remaining total weight calculations to relevant modules.
+* Fix testing/installation issue on Windows
+* App-Wide UI redesign (it looks nice now)
+* Fixed a bug with exporting characters
+* reduced the size of character data
+* fixed issue with Weapon modifiers
+* fixed issue with hotkeys not firing
+
 version 0.0.10 (6/7/2016)
 
 * Adds icons for treasure and fixes max size on larger devices
