@@ -4,10 +4,13 @@ function Weapon() {
     var self = this;
     self.ps = PersistenceService.register(Weapon, self);
     self.mapping = {
-        ignore: ['ps', 'mapping', 'clear', 'proficiencyScore', 'strAbilityScoreModifier',
-            'dexAbilityScoreModifier', 'exportValues', 'importValues', 'save', 'abilityScoreBonus',
+        ignore: ['ps', 'mapping', 'clear', 'proficiencyScore',
+            'strAbilityScoreModifier', 'dexAbilityScoreModifier',
+            'exportValues', 'importValues', 'save', 'abilityScoreBonus',
             'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
-            'mapping']
+            'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
+            'weaponTypeOptions', 'weaponSizeOptions', 'weaponPropertyOptions',
+            'weaponDamageTypeOptions']
     };
 
     self._dummy = ko.observable(null);
@@ -27,6 +30,7 @@ function Weapon() {
     self.weaponProperty = ko.observable('');
     self.weaponDescription = ko.observable('');
     self.weaponQuantity = ko.observable(1);
+
     self.weaponProficiencyOptions = ko.observableArray(
         Fixtures.weapon.weaponProficiencyOptions);
     self.weaponHandednessOptions = ko.observableArray(
@@ -129,8 +133,13 @@ function Weapon() {
         self._dummy();
 
         var totalBonus = self.totalBonus();
-
-        return totalBonus ? ('+' + totalBonus):'+0';
+        if(totalBonus) {
+            return totalBonus >= 0 ? ('+ ' + totalBonus) : '- ' +
+            Math.abs(totalBonus);
+        }
+        else {
+            return '+ 0';
+        }
     });
 
 

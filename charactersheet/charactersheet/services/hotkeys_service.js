@@ -6,7 +6,8 @@
 
 var HotkeysService = {
     hotkeyHandler : function(data, event) {
-        var keypressIsInBody = event.target.tagName.toLowerCase() === 'body';
+        var keypressIsInBody = event.target.tagName.toLowerCase() !== 'input' &&
+            event.target.tagName.toLowerCase() !== 'textarea';
         if(keypressIsInBody){
             var metaKey = HotkeysService._determineMetakey(event);
 

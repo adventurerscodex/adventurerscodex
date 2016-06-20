@@ -55,7 +55,7 @@
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h2" data-bind="contenteditable: {
+                <div class="h3" data-bind="contenteditable: {
                   text: profile().characterName,
                   placeholder: placeholderText
                 }"></div>
@@ -146,10 +146,11 @@
 			  <img alt="A heart icon" src="/images/nested-hearts.svg">
       </div>
 			<div class="col-sm-8 col-padded">
-			  <div class="h2">
-			    Health and Hit Dice<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas.</small>
+			  <div class="h3">
+			    Hit Points and Hit Dice<br />
+			    <small>Click on your max Hit Points, when you level up,
+			    to increase them. Reminder: Hit Dice are based on your level: one
+			    dice per level.</small>
 			  </div>
 				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'templates', data: statsViewModel }">
 				</div>
@@ -157,11 +158,13 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12 col-padded">
-			  <div class="h2">
-			    Saving Throws, Ability Scores, and Other Stats<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas.Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas.</small>
+			  <div class="h3">
+			    Ability Scores, Saving Throws, and Other Stats<br />
+			    <small>Click on your Ability Scores to edit them.
+			    Saving Throw modifiers automatically include your Ability
+			    Score modifier and Proficiency Bonus. Your Passive Wisdom is also
+			    calculated automatically based on your Wisdom.
+			    </small>
 			  </div>
 			</div>
 		</div>
@@ -201,11 +204,10 @@
         <img alt="A sword in stone" src="/images/sword-spin.svg" />
 			</div>
 			<div class="col-sm-8 col-xs-12 col-padded">
-			  <div class="h2">
+			  <div class="h3">
 			    Daily Features<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
-			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			    <small>These are features who's charges are restored whenever
+			    you take a short or long rest; for example, Dragon Breath.</small>
 			  </div>
         <div id="daily_features" data-bind="template: { name: 'daily_features.tmpl', templateUrl: 'templates', data: dailyFeatureViewModel }">
         </div>
@@ -213,11 +215,10 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-			  <div class="h2">
-			    Skills and Features<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
-			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			  <div class="h3">
+			    Skills, Feats, and Features<br />
+			    <small>Your Skills take into account your Ability Score modifiers
+			    and Proficiency Bonus.</small>
 			  </div>
       </div>
     </div>
@@ -239,9 +240,10 @@
 				<img src="/images/enlightenment.svg" alt="Spells image"/>
 			</div>
 			<div class="col-sm-8 col-padded">
-				<div class="h2">
+				<div class="h3">
 					Spell Slots<br/>
-					<small>Adds spell slots based on class and level</small>
+					<small>These slots are automatically refilled after a long rest. Click
+					on a slot to edit it.</small>
 				</div>
 				<div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates', data: spellSlotsViewModel }">
 				</div>
@@ -249,11 +251,11 @@
 		</div>
 		<div class="row">
 			<div class="col-sm-12 col-padded">
-				<div class="h2">
+				<div class="h3">
 					Spells<br/>
-					<small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
-			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+					<small>Check the bottom of the list for a count of your
+					prepared spells. You can sort your spells by clicking on the
+					headers.</small>
 				</div>
       </div>
     </div>
@@ -271,11 +273,10 @@
         <img alt="A sword in stone" src="/images/spinning-sword.svg" />
 			</div>
 			<div class="col-sm-8 col-xs-12 col-padded">
-			  <div class="h2">
+			  <div class="h3">
 			    Weapons<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
-			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			    <small>A weapon's To Hit bonus is automatically calculated based
+			    on its type.</small>
 			  </div>
 				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates', data: weaponsViewModel }">
 				</div>
@@ -283,11 +284,10 @@
     </div>
     <div class="row">
 			<div class="col-sm-8 col-xs-12 col-padded">
-			  <div class="h2">
+			  <div class="h3">
 			    Armor<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
-			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			    <small>Your Armor doesn't automatically influence your
+			    Armor Class...yet.</small>
 			  </div>
 				<div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates', data: armorViewModel }">
 				</div>
@@ -304,9 +304,9 @@
 			<img src="/images/shiny-purse.svg" alt="Inventory tab"/>
 			</div>
 			<div class="col-sm-8 col-padded">
-				<div class="h2">
+				<div class="h3">
 					Treasure<br/>
-					<small>Store all your expensive items here! Also, keep records of all your currencies here.</small>
+					<small>“This should be in a museum!” -Indiana Jones</small>
 				</div>
 				<div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'templates', data: treasureViewModel }">
 				</div>
@@ -314,9 +314,9 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-padded">
-					<div class="h2">
+					<div class="h3">
 						Inventory &amp; Magic Items <br/>
-						<small>Add your backpack items and magic items here!</small>
+						<small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
 					</div>
 				</div>
 			</div>
@@ -336,11 +336,9 @@
 	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
 		<div class="row">
 			<div class="col-sm-12 col-padded">
-			  <div class="h2">
+			  <div class="h3">
 			    Notes<br />
-			    <small>Sit id illum rerum rem quod quos. Neque fugiat deleniti
-			    voluptas. Deleniti dolor at rerum et et consectetur quia laborum.
-			    Rerum voluptates maxime maxime aliquid ducimus.</small>
+			    <small>“Consult the Book of Armaments!” -King Arthur</small>
 			  </div>
 				<div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates', data: notesViewModel }">
 				</div>

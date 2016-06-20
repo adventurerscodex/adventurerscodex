@@ -5,7 +5,7 @@ function SpellStats() {
     self.ps = PersistenceService.register(SpellStats, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-                'mapping']
+                'mapping', 'spellcastingAbilityOptions']
     };
 
     self.characterId = ko.observable(null);
