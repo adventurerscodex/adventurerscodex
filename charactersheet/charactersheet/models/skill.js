@@ -56,9 +56,8 @@ function Skill() {
     self.bonusLabel = ko.pureComputed(function() {
         var str = '';
         if (self.bonus() !== null) {
-            str = self.bonus() >= 0 ?
-        '+' + self.bonus() :
-        String(self.bonus());
+            str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' +
+            Math.abs(self.bonus());
         }
         str += ' <i><small>('
                 + self.abilityScore() + ')</small></i>';
