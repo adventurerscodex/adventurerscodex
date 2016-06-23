@@ -344,6 +344,10 @@ table.table-no-margin {
 table.table-no-margin tbody td {
   padding-top:13px;
 }
+
+div.h3 small {
+  color: #6f7d88;
+}
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start

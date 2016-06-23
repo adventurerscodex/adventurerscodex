@@ -52,7 +52,7 @@ function SavingThrows() {
         if (self.bonus() === null){
             return '+ 0';
         }
-        var str = self.bonus() >= 0 ? '+' + self.bonus() : String(self.bonus());
+        var str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' + Math.abs(self.bonus());
         return str;
     });
 

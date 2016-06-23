@@ -3,18 +3,32 @@
   <div class="panel-body">
     <div class="form-horizontal">
       <div class="form-group">
-        <div class="">
-          <label for="proficiencies">Proficiencies and Languages:</label>
-          <textarea id="proficiencies" class="form-control dark-area" rows="6"
-             data-bind="textInput: proficiencies"></textarea>
-          <br />
-          <label for="feats">Feats:</label>
-          <textarea id="feats" class="form-control dark-area" rows="6"
-            data-bind="textInput: feats"></textarea>
-          <br />
-          <label for="specialAbilities">Features:</label>
-          <textarea id="specialAbilities" class="form-control dark-area" rows="6"
-            data-bind="textInput: specialAbilities"></textarea>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="h4">Proficiencies and Languages:</div>
+            <textarea id="proficiencies" class="form-control dark-area"
+               data-bind="textInput: proficiencies" rows="5"
+               placeholder="Proficiency: Martial weapons&#10;Languages: Common, Elvish">
+            </textarea>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="h4">Feats:</div>
+            <textarea id="feats" class="form-control dark-area"
+              data-bind="textInput: feats" rows="5"
+              placeholder="Crossbow Expert:
+Being within 5 feet of a hostile creature doesn’t impose disadvantage on your ranged attack rolls.">
+            </textarea>
+          </div>
+          </div>
+          <div class="row">
+          <div class="col-sm-12">
+            <div class="h4">Features:</div>
+            <textarea id="specialAbilities" class="form-control dark-area"
+              data-bind="textInput: specialAbilities" rows="5"
+              placeholder="-Difficult terrain doesn’t slow your group’s travel.
+-Your group can’t become lost except by magical means."></textarea>
+          </div>
+          </div>
         </div>
       </div>
     </div>
