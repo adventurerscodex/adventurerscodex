@@ -1,9 +1,10 @@
 <div class="panel panel-default bio">
   <div class="panel-body" data-bind="with: abilityScores">
-    <div class="row">
+    <div class="row" href="#" data-toggle="modal"
+      data-target="#editAbilityScores" title="Click to edit Ability Scores.">
       <table class="table table-responsive table-hover table-no-margin">
         <thead>
-          <tr>
+          <tr class="clickable">
             <th width="16%" class="text-center">Strength</th>
             <th width="16%" class="text-center">Dexterity</th>
             <th width="16%" class="text-center">Constitution</th>
@@ -14,49 +15,37 @@
         </thead>
         <tbody>
           <tr class="clickable">
-            <td href="#" class="text-center"
-                data-toggle="modal"
-                data-target="#editAbilityScores">
+            <td class="text-center">
               <span data-bind='text: str'></span>
               <sup>
                 <span class="badge" data-bind="text: strModifier"></span>
               </sup>
             </td>
-            <td href="#" class="text-center"
-                data-toggle="modal"
-                data-target="#editAbilityScores">
+            <td class="text-center">
               <span data-bind='text: dex'></span>
               <sup>
                 <span class="badge" data-bind="text: dexModifier"></span>
               </sup>
             </td>
-            <td href="#" class="text-center"
-                data-toggle="modal"
-                data-target="#editAbilityScores">
+            <td class="text-center">
               <span data-bind='text: con'></span>
               <sup>
                 <span class="badge" data-bind="text: conModifier"></span>
               </sup>
             </td>
-            <td href="#" class="text-center"
-                data-toggle="modal"
-                data-target="#editAbilityScores">
+            <td class="text-center">
               <span data-bind='text: int'></span>
               <sup>
                 <span class="badge" data-bind="text: intModifier"></span>
               </sup>
             </td>
-            <td href="#" class="text-center"
-                data-toggle="modal"
-                data-target="#editAbilityScores">
+            <td class="text-center">
               <span data-bind='text: wis'></span>
               <sup>
                 <span class="badge" data-bind="text: wisModifier"></span>
               </sup>
             </td>
-            <td href="#" class="text-center"
-                data-toggle="modal"
-                data-target="#editAbilityScores">
+            <td class="text-center">
               <span data-bind='text: cha'></span>
               <sup>
                 <span class="badge" data-bind="text: chaModifier"></span>

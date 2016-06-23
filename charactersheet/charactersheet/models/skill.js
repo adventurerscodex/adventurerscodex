@@ -32,12 +32,8 @@ function Skill() {
             score = AbilityScores.findBy(
                 CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
         } catch(err) { /*Ignore*/ }
-        if (score === null){
-            return null;
-        }
-        else {
-            return parseInt(score);
-        }
+
+        return score ? parseInt(score) : 0;
     };
 
     self.bonus = ko.pureComputed(function() {
@@ -47,18 +43,17 @@ function Skill() {
         } else if (self.abilityScoreModifier()){
             bonus += self.abilityScoreModifier();
         }
-          else {
-            bonus = 0;
-        }
+
         return bonus;
     });
 
     self.bonusLabel = ko.pureComputed(function() {
-        var str = '';
-        if (self.bonus() !== null) {
+        var str = '+ 0';
+        if (self.bonus()) {
             str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' +
             Math.abs(self.bonus());
         }
+        
         str += ' <i><small>('
                 + self.abilityScore() + ')</small></i>';
         return str;

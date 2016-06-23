@@ -3,23 +3,27 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('magicItemName');}">
+          <th data-bind="click: function(){sortBy('magicItemName');}" width="20%">
             Magic Item
             <span data-bind="css: sortArrow('magicItemName')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('magicItemCharges');}">
+          <th data-bind="click: function(){sortBy('magicItemCharges');}" width="9%">
             Charges
             <span data-bind="css: sortArrow('magicItemCharges')"></span>
           </th>
-          <th data-bind="visible: noneAttuned() === false, click: function(){sortBy('magicItemAttuned');}">
+          <th data-bind="visible: noneAttuned() === false, click: function(){sortBy('magicItemAttuned');}"
+            width="9%">
             Attuned
             <span data-bind="css: sortArrow('magicItemAttuned')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('magicItemWeight');}">
+          <th data-bind="click: function(){sortBy('magicItemWeight');}" width="9%">
             Weight
             <span data-bind="css: sortArrow('magicItemWeight')"></span>
           </th>
-          <th>
+          <th width="48%">
+            Description
+          </th>
+          <th width="5%">
             <a data-toggle="modal"
                data-target="#addMagicItem" href="#">
               <i class="fa fa-plus fa-color"></i>
@@ -42,14 +46,19 @@
               <input data-bind="checked: magicItemAttuned"
                      type="checkbox"
                      href="#">
-
               </input>
             </div>
           </td>
           <td data-bind="text: magicItemWeight, click: $parent.editItem"
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#viewMagicItem"></td>
+              href="#"
+              data-toggle="modal"
+              data-target="#viewMagicItem">
+          </td>
+          <td data-bind="text: magicItemDescription, click: $parent.editItem"
+              href="#" class="hidden-sm hidden-xs"
+              data-toggle="modal"
+              data-target="#viewMagicItem">
+          </td>
           <td>
             <a data-bind="click: $parent.removeItem" href="#">
               <i class="fa fa-trash-o fa-color-hover">
