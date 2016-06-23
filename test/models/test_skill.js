@@ -18,7 +18,7 @@ describe('Skill Model', function() {
             s.abilityScore('Wis');
             s.proficiency(true);
 
-            s.bonusLabel().should.equal('+6 <i><small>(Wis)</small></i>');
+            s.bonusLabel().should.equal('+ 6 <i><small>(Wis)</small></i>');
 
             s = new Skill(parent);
             s.name('Arcana');
@@ -26,7 +26,7 @@ describe('Skill Model', function() {
             s.abilityScore('Wis');
             s.proficiency(true);
 
-            s.bonusLabel().should.equal('-2 <i><small>(Wis)</small></i>');
+            s.bonusLabel().should.equal('- 2 <i><small>(Wis)</small></i>');
         });
     });
     describe('Proficiency Label', function() {
@@ -99,4 +99,3 @@ describe('Skill Model', function() {
         });
     });
 });
-
