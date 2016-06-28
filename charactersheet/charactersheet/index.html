@@ -124,7 +124,7 @@
     </li>
 		<li role="presentation" data-bind="click: activateProfileTab, tooltip: { title: profileTooltip }, css: profileTabStatus">
       <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
-        <img class="tab-icon" src="/images/tab_icons/overlord-helm.svg"></img>
+        <img class="tab-icon" src="/images/tab_icons/read.svg"></img>
       </a>
     </li>
     <!-- Right tabs -->
@@ -148,7 +148,7 @@
 			<div class="col-sm-8 col-padded">
 			  <div class="h3">
 			    Hit Points and Hit Dice<br />
-			    <small>Click on your max Hit Points, when you level up,
+			    <small>Click on your Hit Points, when you level up,
 			    to increase them. Reminder: Hit Dice are based on your level: one
 			    dice per level.</small>
 			  </div>
@@ -301,7 +301,7 @@
 	<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
 		<div class="row">
 			<div class="col-sm-4 hidden-xs">
-			<img src="/images/shiny-purse.svg" alt="Inventory tab"/>
+				<img src="/images/shiny-purse.svg" alt="Inventory tab"/>
 			</div>
 			<div class="col-sm-8 col-padded">
 				<div class="h3">
@@ -313,24 +313,24 @@
 			</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-12 col-padded">
+				<div class="col-sm-8 col-padded">
 					<div class="h3">
 						Inventory &amp; Magic Items <br/>
 						<small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
 					</div>
+					<div data-bind="template: { name: 'magic_items.tmpl', templateUrl: 'templates', data: magicitemsViewModel }">
+					</div>
+				</div>
+				<div class="col-sm-4 hidden-xs">
+					<img src="/images/magic-lamp.svg" alt="Inventory tab"/>
 				</div>
 			</div>
-	<div class="row">
-		<div class="col-md-7 col-sm-12 col-padded">
-			<div data-bind="template: { name: 'items.tmpl', templateUrl: 'templates', data: itemsViewModel }">
+			<div class="row">
+				<div class="col-sm-12 col-padded">
+					<div data-bind="template: { name: 'items.tmpl', templateUrl: 'templates', data: itemsViewModel }">
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="col-md-5 col-sm-12">
-			<div data-bind="template: { name: 'magic_items.tmpl', templateUrl: 'templates', data: magicitemsViewModel }">
-			</div>
-		</div>
-
-		</div>
   </div>
 <!-- End Inventory Tab -->
 	<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
@@ -583,5 +583,15 @@
     window.onbeforeunload = Notifications.global.unload.dispatch;
 	});
 	</script>
+
+	<script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-79735521-1', 'auto');
+    ga('send', 'pageview');
+  </script>
 </body>
 </html>

@@ -14,14 +14,14 @@ describe('Saving Throws Model', function() {
             s.modifier(4);
             s.proficiency(true);
 
-            s.modifierLabel().should.equal('+6');
+            s.modifierLabel().should.equal('+ 6');
 
             s = new SavingThrows();
             s.name('Arcana');
             s.modifier(-4);
             s.proficiency(true);
 
-            s.modifierLabel().should.equal('-2');
+            s.modifierLabel().should.equal('- 2');
         });
     });
 
@@ -103,4 +103,3 @@ describe('Saving Throws Model', function() {
         });
     });
 });
-
