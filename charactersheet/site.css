@@ -2,6 +2,11 @@
   max-width: 1800px;
 }
 
+.brand-icon {
+  margin-top: -5px;
+  margin-right: 10px;
+}
+
 
 .progress {
   height:34px;
