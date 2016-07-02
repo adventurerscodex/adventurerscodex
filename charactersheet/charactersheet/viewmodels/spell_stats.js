@@ -5,7 +5,11 @@ function SpellStatsViewModel() {
 
     self.spellStats = ko.observable(new SpellStats());
 
-    self.init = function() {};
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.spellStats().save();
+        });
+    };
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();

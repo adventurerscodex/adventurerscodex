@@ -84,6 +84,9 @@ function Character() {
     });
 
     self.saveToFile = function() {
+        //Notify all apps to save their data.
+        Notifications.global.save.dispatch();
+        //Write the file.
         var string = JSON.stringify(Character.exportCharacter(self.key()),
             null, 2); //Pretty print
         var filename = self.playerTitle();

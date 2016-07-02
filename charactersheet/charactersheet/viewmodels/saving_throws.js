@@ -46,6 +46,11 @@ function SavingThrowsViewModel() {
                 e.updateValues();
             });
         });
+        Notifications.global.save.add(function() {
+            self.savingThrows().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
     };
 
     self.load = function() {

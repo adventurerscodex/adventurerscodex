@@ -32,7 +32,11 @@ function AbilityScoresViewModel() {
 
     self.abilityScores = ko.observable(new AbilityScores());
 
-    self.init = function() {};
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.abilityScores().save();
+        });
+    };
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();

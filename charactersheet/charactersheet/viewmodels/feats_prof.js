@@ -2,11 +2,15 @@
 
 function FeatsProfViewModel() {
     var self = this;
-    
+
     self.featsProf = ko.observable(new FeatsProf());
-    
-    self.init = function() {};
-    
+
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.featsProf().save();
+        });
+    };
+
     self.load = function() {
         var fp = FeatsProf.findBy(CharacterManager.activeCharacter().key());
         if (fp.length > 0) {
@@ -16,7 +20,7 @@ function FeatsProfViewModel() {
         }
         self.featsProf().characterId(CharacterManager.activeCharacter().key());
     };
-    
+
     self.unload = function() {
         self.featsProf().save();
     };

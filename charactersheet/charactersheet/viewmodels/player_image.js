@@ -15,6 +15,9 @@ function PlayerImageViewModel() {
     self.image = ko.observable(new ImageModel());
 
     self.init = function() {
+        Notifications.global.save.add(function() {
+            self.image().save();
+        });
     };
 
     self.load = function() {
