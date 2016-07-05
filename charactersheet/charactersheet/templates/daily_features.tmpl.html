@@ -19,7 +19,8 @@
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
 				</tr>
 			</thead>
-			<tbody data-bind="foreach: filteredAndSortedDailyFeatures">
+			<tbody>
+			<!-- ko foreach: filteredAndSortedDailyFeatures -->
 				<tr class="clickable">
 					<td data-bind="click: $parent.editDailyFeature"
 					href="#"
@@ -54,6 +55,16 @@
 						</a>
 					</td>
 				</tr>
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedDailyFeatures().length == 0 -->
+        <tr class="clickable">
+          <td data-toggle="modal" data-target="#addDailyFeatures" href="#"
+            colspan="6" class="text-center">
+            <i class="fa fa-plus fa-color"></i>
+            Add a new daily feature
+          </td>
+        </tr>
+      <!-- /ko -->
 			</tbody>
 		</table>
 	</div>

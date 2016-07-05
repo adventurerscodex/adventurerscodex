@@ -27,7 +27,8 @@
           </th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: filteredAndSortedArmors'>
+      <tbody>
+      <!-- ko foreach: filteredAndSortedArmors -->
         <tr class="clickable">
           <td data-bind="text: armorName, click: $parent.editArmor"
               href="#"
@@ -56,11 +57,21 @@
             </a>
           </td>
         </tr>
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedArmors().length == 0 -->
+        <tr class="clickable">
+          <td data-toggle="modal" data-target="#addArmor" href="#"
+            colspan="5" class="text-center">
+            <i class="fa fa-plus fa-color"></i>
+            Add a new armor
+          </td>
+        </tr>
+      <!-- /ko -->
       </tbody>
     </table>
     </div> <!-- end panel body -->
     <div class="container-fluid panel-footer">
-       <span class="pull-right">Total weight:&nbsp;
+      <span class="pull-right">Total weight:&nbsp;
         <span data-bind="text: totalWeight"></span>
       </span>
     </div> <!-- end panel footer -->

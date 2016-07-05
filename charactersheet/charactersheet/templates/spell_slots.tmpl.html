@@ -15,7 +15,8 @@
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addSpellSlot" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
 				</tr>
 			</thead>
-			<tbody data-bind="foreach: filteredAndSortedSlots">
+			<tbody>
+			<!-- ko foreach: filteredAndSortedSlots -->
 				<tr class="row clickable">
 					<td class="col-sm-1 col-content-vertical" data-bind="click: $parent.editSlot"
 					href="#"
@@ -44,7 +45,17 @@
 						</a>
 					</td>
 				</tr>
-			</tbody>
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedSlots().length == 0 -->
+        <tr class="clickable">
+          <td data-toggle="modal" data-target="#addSpellSlot" href="#"
+            colspan="6" class="text-center">
+            <i class="fa fa-plus fa-color"></i>
+            Add a new spell slot
+          </td>
+        </tr>
+      <!-- /ko -->
+      </tbody>
 		</table>
 	</div>
 </div>
