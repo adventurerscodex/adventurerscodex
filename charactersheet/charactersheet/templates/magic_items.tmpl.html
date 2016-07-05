@@ -31,16 +31,17 @@
           </th>
         </tr>
       </thead>
-      <tbody data-bind='foreach: filteredAndSortedMagicItems'>
+      <tbody>
+      <!-- ko foreach: filteredAndSortedMagicItems -->
         <tr class="clickable">
           <td data-bind="text: magicItemName, click: $parent.editItem"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewMagicItem"></td>
+            href="#"
+            data-toggle="modal"
+            data-target="#viewMagicItem"></td>
           <td data-bind="text: chargesDisplay, click: $parent.editItem"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewMagicItem"></td>
+            href="#"
+            data-toggle="modal"
+            data-target="#viewMagicItem"></td>
           <td data-bind="visible: $parent.noneAttuned() === false">
             <div data-bind="visible: magicItemRequiresAttunement() == true">
               <input data-bind="checked: magicItemAttuned"
@@ -55,10 +56,10 @@
               data-target="#viewMagicItem">
           </td>
           <td data-bind="text: magicItemDescription, click: $parent.editItem"
-              href="#" class="hidden-sm hidden-xs"
-              data-toggle="modal"
-              data-target="#viewMagicItem">
-          </td>
+            href="#" class="hidden-sm hidden-xs"
+            data-toggle="modal"
+            data-target="#viewMagicItem">
+         </td>
           <td>
             <a data-bind="click: $parent.removeItem" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -66,6 +67,16 @@
             </a>
           </td>
         </tr>
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedMagicItems().length == 0 -->
+        <tr class="clickable">
+          <td data-toggle="modal" data-target="#addMagicItem" href="#"
+            colspan="6" class="text-center">
+            <i class="fa fa-plus fa-color"></i>
+            Add a new magic item
+          </td>
+        </tr>
+      <!-- /ko -->
       </tbody>
     </table>
     </div> <!-- end panel body -->
