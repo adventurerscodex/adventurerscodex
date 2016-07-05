@@ -4,7 +4,7 @@
 var jebeddo_data = {
     "Character": [
         {
-            "key": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "key": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "isDefault": true,
             "playerType": {
                 "key": "character",
@@ -25,8 +25,8 @@ var jebeddo_data = {
     ],
     "Profile": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "characterName": "Arlion Yeltoris",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "characterName": "Arlion YeltorisÂ ",
             "background": "",
             "playerName": "Brian Schrader",
             "race": "Wood Elf",
@@ -36,137 +36,291 @@ var jebeddo_data = {
             "typeClass": "Druid",
             "gender": "Male",
             "age": "126",
-            "level": "1",
+            "level": "9",
             "exp": "0"
         }
     ],
     "PlayerInfo": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "email": ""
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "email": "brian@brianschrader.c"
         }
     ],
     "Skill": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Acrobatics",
             "abilityScore": "Dex",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Animal Handling",
             "abilityScore": "Wis",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Arcana",
             "abilityScore": "Int",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Athletics",
             "abilityScore": "Str",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Deception",
             "abilityScore": "Cha",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "History",
             "abilityScore": "Int",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Insight",
             "abilityScore": "Wis",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Intimidation",
             "abilityScore": "Cha",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Investigation",
             "abilityScore": "Int",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Medicine",
             "abilityScore": "Wis",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Nature",
             "abilityScore": "Int",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Perception",
             "abilityScore": "Wis",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Performance",
             "abilityScore": "Cha",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Persuasion",
             "abilityScore": "Cha",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Religion",
             "abilityScore": "Int",
             "modifier": null,
             "proficiency": true
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Sleight of Hand",
             "abilityScore": "Dex",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Stealth",
             "abilityScore": "Dex",
             "modifier": null
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "name": "Survival",
             "abilityScore": "Wis",
             "modifier": null,
             "proficiency": true
         }
     ],
+    "CharacterAppearance": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "height": "5'3\"",
+            "weight": "106",
+            "hairColor": "Brown",
+            "eyeColor": "Hazel",
+            "skinColor": "Copper"
+        }
+    ],
+    "FeaturesTraits": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "background": "- I was partaking of communal living in accordance with the dictates of a religious order\n- The leader of my community had something wise to say on every topic, and I am eager to share that wisdom.",
+            "ideals": "- Emotions must not cloud your sense of what's right and wrong.",
+            "flaws": "- I let my need to win arguments above friendship and harmony.",
+            "bonds": "- I have entered seclusion because I loved someone I could not have."
+        }
+    ],
+    "ImageModel": [],
+    "Health": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "maxHitpoints": "9",
+            "tempHitpoints": 0,
+            "damage": "1"
+        }
+    ],
+    "OtherStats": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "ac": "13",
+            "initiative": 0,
+            "speed": "35",
+            "inspiration": 0,
+            "proficiency": "2"
+        }
+    ],
+    "DeathSave": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "deathSaveSuccess": false,
+            "deathSaveFailure": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "deathSaveSuccess": false,
+            "deathSaveFailure": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "deathSaveSuccess": false,
+            "deathSaveFailure": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "deathSaveSuccess": false,
+            "deathSaveFailure": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "deathSaveSuccess": false,
+            "deathSaveFailure": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "deathSaveSuccess": false,
+            "deathSaveFailure": false
+        }
+    ],
+    "HitDiceType": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceType": "D4"
+        }
+    ],
+    "AbilityScores": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "str": "12",
+            "dex": "15",
+            "con": "13",
+            "int": "13",
+            "wis": "16",
+            "cha": "12"
+        }
+    ],
+    "SavingThrows": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "name": "Charisma",
+            "modifier": null
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "name": "Constitution",
+            "modifier": null
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "name": "Dexterity",
+            "modifier": null
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "name": "Intelligence",
+            "modifier": null,
+            "proficiency": true
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "name": "Strength",
+            "modifier": null
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "name": "Wisdom",
+            "modifier": null,
+            "proficiency": true
+        }
+    ],
+    "SpellStats": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "spellcastingAbility": "WIS",
+            "spellSaveDc": "13",
+            "spellAttackBonus": "5"
+        }
+    ],
+    "FeatsProf": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "feats": "",
+            "proficiencies": "Longsword\nShortsword\nShort bow\nLongbow\n\nMask of the Wild\n----------------------\nYou can attempt to hide even when only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomenon.\n\nArmor (not metal)\n-----------------------\nLight/Medium Armor\nShields\n\nWeapons\n------------\nClubs, Daggers, darts, javelins, maces, quarterstaff, scimitars, sickles, slings, spears\n\nTools\n-------\nHerbalism\n\nLanguages\n--------------\n- Druidic (you can leave messages for others and people can detect them with a DC15 Wisdom check but they can't decipher it w/o magic)\n- Common\n\n",
+            "specialAbilities": ""
+        }
+    ],
+    "Treasure": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "platinum": 0,
+            "gold": "70",
+            "electrum": 0,
+            "silver": 0,
+            "copper": 0,
+            "misc": ""
+        }
+    ],
+    "Note": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "text": "Dawn of the first Day\n--------------------------\n\n- We find ourselves in a cave, guarded by spider-creatures\n- 'Famandan' asks for the supply train\n- When pressured she throws her compatriot off the cliff.\n- Afterward, Illieana, commander of the outpost demands that we be her slaves.\n- \"What have you done with my wife?!\" - Alex yells.\n- \"You will soon learn the ways of the drow.\"\n- Drow warriors surround us.\n- Spiders surround Illeana.\n- Sold to the under dark\n\nThe Morning After\n------------------------\n\n- "
+        }
+    ],
     "Item": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Backpack",
             "itemType": "",
             "itemIsEquippable": false,
@@ -178,7 +332,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "GP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Bedroll",
             "itemType": "",
             "itemIsEquippable": false,
@@ -190,7 +344,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "GP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Tinderbox",
             "itemType": "",
             "itemIsEquippable": false,
@@ -202,7 +356,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "CP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Mess Kit",
             "itemType": "",
             "itemIsEquippable": false,
@@ -214,7 +368,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "CP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Torches",
             "itemType": "",
             "itemIsEquippable": false,
@@ -226,7 +380,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "CP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Rations",
             "itemType": "",
             "itemIsEquippable": false,
@@ -238,7 +392,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "SP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Waterskin",
             "itemType": "",
             "itemIsEquippable": false,
@@ -250,7 +404,7 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "SP"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "itemName": "Hemp Rope",
             "itemType": "",
             "itemIsEquippable": false,
@@ -262,171 +416,47 @@ var jebeddo_data = {
             "itemCurrencyDenomination": "GP"
         }
     ],
-    "CharacterAppearance": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "height": "5'3\"",
-            "weight": "106",
-            "hairColor": "Brown",
-            "eyeColor": "Hazel",
-            "skinColor": "Copper"
-        }
-    ],
-    "FeaturesTraits": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "background": "- I was partaking of communal living in accordance with the dictates of a religious order\n- The leader of my community had something wise to say on every topic, and I am eager to share that wisdom.",
-            "ideals": "- Emotions must not cloud your sense of what's right and wrong.",
-            "flaws": "- I let my need to win arguments above friendship and harmony.",
-            "bonds": "- I have entered seclusion because I loved someone I could not have."
-        }
-    ],
-    "ImageModel": [],
-    "Health": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "maxHitpoints": "9",
-            "tempHitpoints": 0,
-            "damage": "1",
-            "__id": "6"
-        }
-    ],
-    "OtherStats": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "ac": "13",
-            "initiative": 0,
-            "speed": "35",
-            "inspiration": 0,
-            "proficiency": "2"
-        }
-    ],
-    "DeathSave": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "deathSaveSuccess": false,
-            "deathSaveFailure": false
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "deathSaveSuccess": false,
-            "deathSaveFailure": false
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "deathSaveSuccess": false,
-            "deathSaveFailure": false
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "deathSaveSuccess": false,
-            "deathSaveFailure": false
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "deathSaveSuccess": false,
-            "deathSaveFailure": false
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "deathSaveSuccess": false,
-            "deathSaveFailure": false
-        }
-    ],
-    "HitDiceType": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "hitDiceType": "D4"
-        }
-    ],
-    "AbilityScores": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "str": "12",
-            "dex": "15",
-            "con": "13",
-            "int": "13",
-            "wis": "16",
-            "cha": "12",
-            "__id": "6"
-        }
-    ],
-    "SavingThrows": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "name": "Charisma",
-            "modifier": null
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "name": "Constitution",
-            "modifier": null
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "name": "Dexterity",
-            "modifier": null
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "name": "Intelligence",
-            "modifier": null,
-            "proficiency": true
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "name": "Strength",
-            "modifier": null
-        },
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "name": "Wisdom",
-            "modifier": null,
-            "proficiency": true
-        }
-    ],
-    "SpellStats": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "spellcastingAbility": "WIS",
-            "spellSaveDc": "13",
-            "spellAttackBonus": "5"
-        }
-    ],
-    "FeatsProf": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "feats": "",
-            "proficiencies": "Longsword\nShortsword\nShort bow\nLongbow\n\nMask of the Wild\n----------------------\nYou can attempt to hide even when only lightly obscured by foliage, heavy rain, falling snow, mist, and other natural phenomenon.\n\nArmor (not metal)\n-----------------------\nLight/Medium Armor\nShields\n\nWeapons\n------------\nClubs, Daggers, darts, javelins, maces, quarterstaff, scimitars, sickles, slings, spears\n\nTools\n-------\nHerbalism\n\nLanguages\n--------------\n- Druidic (you can leave messages for others and people can detect them with a DC15 Wisdom check but they can't decipher it w/o magic)\n- Common\n\n",
-            "specialAbilities": ""
-        }
-    ],
-    "Treasure": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "platinum": 0,
-            "gold": "70",
-            "electrum": 0,
-            "silver": 0,
-            "copper": 0,
-            "misc": ""
-        }
-    ],
-    "Note": [
-        {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
-            "text": "Dawn of the first Day\n--------------------------\n\n- We find ourselves in a cave, guarded by spider-creatures\n- 'Famandan' asks for the supply train\n- When pressured she throws her compatriot off the cliff.\n- Afterward, Illieana, commander of the outpost demands that we be her slaves.\n- \"What have you done with my wife?!\" - Alex yells.\n- \"You will soon learn the ways of the drow.\"\n- Drow warriors surround us.\n- Spiders surround Illeana.\n- Sold to the under dark\n\nThe Morning After\n------------------------\n\n- "
-        }
-    ],
     "HitDice": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "hitDiceUsed": false
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "hitDiceUsed": false
         }
     ],
     "Spell": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "spellName": "Druidcraft",
             "spellPrepared": false,
             "spellType": "Attack Roll",
@@ -434,15 +464,14 @@ var jebeddo_data = {
             "spellDmg": "N/A",
             "spellSchool": "Transmutation",
             "spellLevel": "0",
-            "spellDescription": "Whispering to the spirits of nature, you create one of the following effects within range:\n• You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb\nfor clear skies, a cloud for rain, falling snowflakes for\nsnow, and so on. This effect persists for 1 round.\n• You instantly make a flower blossom, a seed pod open,\nor a leaf bud bloom.\n• You create an instantaneous, harmless sensory effect,\nsuch as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.\n• You instantly light or snuff out a candle, a torch, or a small campfire.",
+            "spellDescription": "Whispering to the spirits of nature, you create one of the following effects within range:\nâ¢ You create a tiny, harmless sensory effect that predicts what the weather will be at your location for the next 24 hours. The effect might manifest as a golden orb\nfor clear skies, a cloud for rain, falling snowflakes for\nsnow, and so on. This effect persists for 1 round.\nâ¢ You instantly make a flower blossom, a seed pod open,\nor a leaf bud bloom.\nâ¢ You create an instantaneous, harmless sensory effect,\nsuch as falling leaves, a puff of wind, the sound of a small animal, or the faint odor of skunk. The effect must fit in a 5-foot cube.\nâ¢ You instantly light or snuff out a candle, a torch, or a small campfire.",
             "spellCastingTime": "1 action",
             "spellRange": "30 ft",
             "spellComponents": "V, S",
-            "spellDuration": "Instantaneous",
-            "__id": "57"
+            "spellDuration": "Instantaneous"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "spellName": "Produce Flame",
             "spellPrepared": false,
             "spellType": "Attack Roll",
@@ -450,15 +479,14 @@ var jebeddo_data = {
             "spellDmg": "1d8",
             "spellSchool": "Conjuration",
             "spellLevel": "0",
-            "spellDescription": "A flickering flame appears in your hand. The flame remains there for the duration and harms neither you nor your equipment. The flame sheds bright light in a 10-foot radius and dim light for an additional 10 feet. The spell ends if you dismiss it as an action or if you cast it again.\nYou can also attack with the flame, although doing so ends the spell. When you cast this spell, or as an action on a later turn, you can hurl the flame at a creature within 30 feet of you. Make a ranged spell attack. On a hit, the target takes 1d8 fire damage.\nThis spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+            "spellDescription": "A flickering flame appears in your hand. The flame remains there for the duration and harms neither you nor your equipment. The flame sheds bright light in a 10-foot radius and dim light for an additional 10 feet. The spell ends if you dismiss it as an action or if you cast it again.\nYou can also attack with the flame, although doing so ends the spell. When you cast this spell, or as an action on a later turn, you can hurl the flame at a creature within 30 feet of you. Make a ranged spell attack. On a hit, the target takes 1d8 fire damage.\nThis spellâs damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
             "spellCastingTime": "1 action",
             "spellRange": "30 ft",
             "spellComponents": "V, S",
-            "spellDuration": "10 min",
-            "__id": "58"
+            "spellDuration": "10 min"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "spellName": "Thunderwave",
             "spellPrepared": false,
             "spellType": "Savings Throw",
@@ -466,15 +494,14 @@ var jebeddo_data = {
             "spellDmg": "2d8",
             "spellSchool": "Evocation",
             "spellLevel": 1,
-            "spellDescription": "15-ft Cube\n\nA wave of thunderous force sweeps out from you. Each creature in a 15-foot cube originating from you must make a Constitution saving throw. On a failed save, a creature takes 2d8 thunder damage and is pushed 10 feet away from you. On a successful save, the creature takes half as much damage and isn’t pushed.\nIn addition, unsecured objects that are completely within the area of effect are automatically pushed 10 feet away from you by the spell’s effect, and the spell emits a thunderous boom audible out to 300 feet.\nAtHigherLevels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
+            "spellDescription": "15-ft Cube\n\nA wave of thunderous force sweeps out from you. Each creature in a 15-foot cube originating from you must make a Constitution saving throw. On a failed save, a creature takes 2d8 thunder damage and is pushed 10 feet away from you. On a successful save, the creature takes half as much damage and isnât pushed.\nIn addition, unsecured objects that are completely within the area of effect are automatically pushed 10 feet away from you by the spellâs effect, and the spell emits a thunderous boom audible out to 300 feet.\nAtHigherLevels. When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
             "spellCastingTime": "1 action",
             "spellRange": "Self",
             "spellComponents": "V, S",
-            "spellDuration": "Instantaneous",
-            "__id": "59"
+            "spellDuration": "Instantaneous"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "spellName": "Fog Cloud",
             "spellPrepared": false,
             "spellType": "Automatic",
@@ -486,11 +513,10 @@ var jebeddo_data = {
             "spellCastingTime": "1 action",
             "spellRange": "120 ft",
             "spellComponents": "V, S",
-            "spellDuration": "1 hour",
-            "__id": "60"
+            "spellDuration": "1 hour"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "spellName": "Jump",
             "spellPrepared": false,
             "spellType": "Automatic",
@@ -498,15 +524,14 @@ var jebeddo_data = {
             "spellDmg": "N/A",
             "spellSchool": "Transmutation",
             "spellLevel": 1,
-            "spellDescription": "You touch a creature. The creature’s jump distance is tripled until the spell ends.\n",
+            "spellDescription": "You touch a creature. The creatureâs jump distance is tripled until the spell ends.\n",
             "spellCastingTime": "1 action",
             "spellRange": "60 ft",
             "spellComponents": "V",
-            "spellDuration": "Instantaneous",
-            "__id": "61"
+            "spellDuration": "Instantaneous"
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "spellName": "Charm Person",
             "spellPrepared": false,
             "spellType": "Automatic",
@@ -518,13 +543,12 @@ var jebeddo_data = {
             "spellCastingTime": "1 action",
             "spellRange": "30 ft",
             "spellComponents": "V, S",
-            "spellDuration": "1 hour",
-            "__id": "62"
+            "spellDuration": "1 hour"
         }
     ],
     "Armor": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "_dummy": null,
             "armorName": "Leather Armor",
             "armorType": "Light",
@@ -535,10 +559,10 @@ var jebeddo_data = {
             "armorClass": "13",
             "armorStealth": "Normal",
             "armorDescription": "",
-            "__id": "2"
+            "armorClassLabel": 15
         },
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "_dummy": null,
             "armorName": "Shield",
             "armorType": "Light",
@@ -549,20 +573,32 @@ var jebeddo_data = {
             "armorClass": "2",
             "armorStealth": "Normal",
             "armorDescription": "",
-            "__id": "3"
+            "armorClassLabel": 4
         }
     ],
     "Slot": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "level": 2,
+            "maxSpellSlots": 1,
+            "usedSpellSlots": 0
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "level": "0",
-            "maxSpellSlots": "2",
-            "usedSpellSlots": 1
+            "maxSpellSlots": "4",
+            "usedSpellSlots": 0
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "level": "1",
+            "maxSpellSlots": 1,
+            "usedSpellSlots": 0
         }
     ],
     "Weapon": [
         {
-            "characterId": "507a7252-4128-43d3-bd38-b264f9b493f5",
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
             "weaponName": "Longbow",
             "weaponType": "Ranged",
             "weaponDmg": "1d8",
@@ -570,16 +606,43 @@ var jebeddo_data = {
             "weaponProficiency": "Simple",
             "weaponPrice": "50",
             "weaponCurrencyDenomination": "GP",
-            "weaponHit": "",
+            "weaponHit": "10",
             "weaponWeight": "2",
             "weaponRange": "150/600",
             "weaponSize": "Large",
             "weaponDamageType": "Piercing",
             "weaponProperty": "Ammunition",
             "weaponDescription": "",
-            "weaponQuantity": "1",
-            "__id": "7"
+            "weaponQuantity": "1"
         }
     ],
-    "DailyFeature": []
+    "DailyFeature": [
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "featureName": "Lay on Hands",
+            "featureMaxUses": "3",
+            "featureUsed": 0,
+            "featureResetsOn": "",
+            "featureDescription": "",
+            "color": "progress-bar-yellow"
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "featureName": "Dragon Breath",
+            "featureMaxUses": "3",
+            "featureUsed": 0,
+            "featureResetsOn": "",
+            "featureDescription": "",
+            "color": "progress-bar-purple"
+        },
+        {
+            "characterId": "dd21a4c7-91f7-4eb7-b282-f07b149942c5",
+            "featureName": "Dark Vision ",
+            "featureMaxUses": "3",
+            "featureUsed": 0,
+            "featureResetsOn": "",
+            "featureDescription": "",
+            "color": "progress-bar-red"
+        }
+    ]
 };
