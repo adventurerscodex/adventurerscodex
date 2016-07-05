@@ -4,8 +4,11 @@ function PlayerInfoViewModel() {
     var self = this;
 
     self.playerInfo = ko.observable(new PlayerInfo());
-    
+
     self.init = function() {
+        Notifications.global.save.add(function() {
+            self.playerInfo().save();
+        });
     };
 
     self.load = function() {
@@ -17,22 +20,22 @@ function PlayerInfoViewModel() {
         }
         self.playerInfo().characterId(CharacterManager.activeCharacter().key());
         //Subscriptions
-        self.playerInfo().email.subscribe(self.dataHasChanged);        
+        self.playerInfo().email.subscribe(self.dataHasChanged);
     };
 
     self.unload = function() {
         self.playerInfo().save();
     };
-    
+
     self.dataHasChanged = function() {
         self.playerInfo().save();
         Notifications.playerInfo.changed.dispatch();
     };
-    
+
     //Public Methods
 
     self.clear = function() {
         self.playerInfo().clear();
     };
-    
+
 }

@@ -16,7 +16,13 @@ function DailyFeatureViewModel() {
     self.sort = ko.observable(self.sorts['featureName asc']);
     self.filter = ko.observable('');
 
-    self.init = function() {};
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.dailyFeatures().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
+    };
 
     self.load = function() {
         var dailyFeatures = DailyFeature.findAllBy(CharacterManager.activeCharacter().key());

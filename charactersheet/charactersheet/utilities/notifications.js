@@ -25,6 +25,11 @@ var Notifications = {
         load: new signals.Signal(),
 
         /**
+         * Called when the app should save it's data.
+         */
+        save: new signals.Signal(),
+
+        /**
          * Called when the app should unload it's data.
          */
         unload: new signals.Signal()

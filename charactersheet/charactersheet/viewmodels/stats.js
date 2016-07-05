@@ -14,7 +14,22 @@ function StatsViewModel() {
     var msg = 'Dexterity Bonus';
     self.initiativeTooltip = ko.observable(msg);
 
-    self.init = function() {};
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.health().save();
+            self.otherStats().save();
+            self.hitDiceList().forEach(function(e, i, _) {
+                e.save();
+            });
+            self.hitDiceType().save();
+            self.deathSaveSuccessList().forEach(function(e, i, _) {
+                e.save();
+            });
+            self.deathSaveFailureList().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
+    };
 
     self.load = function() {
         var health = Health.findBy(CharacterManager.activeCharacter().key());

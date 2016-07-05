@@ -36,7 +36,11 @@ function SpellbookViewModel() {
     });
 
     self.init = function() {
-
+        Notifications.global.save.add(function() {
+            self.spellbook().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
     };
 
     self.load = function() {

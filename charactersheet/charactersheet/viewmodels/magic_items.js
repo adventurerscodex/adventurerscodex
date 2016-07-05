@@ -52,7 +52,11 @@ function MagicItemsViewModel() {
     });
 
     self.init = function() {
-
+        Notifications.global.save.add(function() {
+            self.magicItems().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
     };
 
     self.load = function() {
