@@ -7,6 +7,9 @@ function ProfileViewModel() {
     self.placeholderText = '<i>Character Name</i>';
 
     self.init = function() {
+        Notifications.global.save.add(function() {
+            self.profile().save();
+        });
     };
 
     self.load = function() {

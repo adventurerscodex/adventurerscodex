@@ -5,8 +5,12 @@ function TreasureViewModel() {
 
     self.treasure = ko.observable(new Treasure());
 
-    self.init = function() {};
-    
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.treasure().save();
+        });
+    };
+
     self.load = function() {
         var t = Treasure.findBy(CharacterManager.activeCharacter().key());
         if (t.length > 0) {
@@ -16,7 +20,7 @@ function TreasureViewModel() {
         }
         self.treasure().characterId(CharacterManager.activeCharacter().key());
     };
-    
+
     self.unload = function() {
         self.treasure().save();
     };

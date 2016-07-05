@@ -25,7 +25,11 @@ function ArmorViewModel() {
     self.sort = ko.observable(self.sorts['armorName asc']);
 
     self.init = function() {
-
+        Notifications.global.save.add(function() {
+            self.armors().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
     };
 
     self.load = function() {

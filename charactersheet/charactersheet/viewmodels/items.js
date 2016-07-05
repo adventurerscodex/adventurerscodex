@@ -42,7 +42,11 @@ function ItemsViewModel() {
     //Responders
 
     self.init = function() {
-        //Do something.
+        Notifications.global.save.add(function() {
+            self.items().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
     };
 
     self.load = function() {

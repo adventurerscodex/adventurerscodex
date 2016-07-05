@@ -27,7 +27,11 @@ function WeaponsViewModel() {
     self.sort = ko.observable(self.sorts['weaponName asc']);
 
     self.init = function() {
-
+        Notifications.global.save.add(function() {
+            self.weapons().forEach(function(e, i, _) {
+                e.save();
+            });
+        });
     };
 
     self.load = function() {
