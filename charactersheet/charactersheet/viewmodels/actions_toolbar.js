@@ -17,12 +17,12 @@ function ActionsToolbarViewModel() {
 
     self.shortRestButton = function() {
         Notifications.events.shortRest.dispatch();
-        Notifications.userNotification.infoNotification.dispatch('Short Rest Complete');
+        Notifications.userNotification.infoNotification.dispatch(Fixtures.resting.shortRestMessage);
     };
 
     self.longRestButton = function() {
         Notifications.events.longRest.dispatch();
-        Notifications.userNotification.infoNotification.dispatch('Long Rest Complete');
+        Notifications.userNotification.infoNotification.dispatch(Fixtures.resting.longRestMessage);
     };
 
     self.arrowIconClass = ko.pureComputed(function() {

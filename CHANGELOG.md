@@ -1,3 +1,13 @@
+version 0.0.12 (07/05/2016)
+* **Huge!** Fixes an issue where importing a character would lose data
+* **Huge!** Fixes an issue where exporting a character would lose data
+* Fixed the size of huge images on large screens
+* Adds a helper to empty tables
+* Made resting notification messages more helpful
+* Adds Google Analytics
+* Various code fixes
+* Added a shiny new icon in the navbar
+
 version 0.0.11 (06/19/2016)
 * Changes location of and adds remaining total weight calculations to relevant modules.
 * Fix testing/installation issue on Windows
