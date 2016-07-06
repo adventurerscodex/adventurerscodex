@@ -3,6 +3,10 @@
 function OtherStats() {
     var self = this;
     self.ps = PersistenceService.register(OtherStats, self);
+    self.mapping = { ignore: ['ps', 'mapping', 'importValues', 'exportValues',
+        'clear', 'save', 'passiveWisdom', 'updateValues', 'passiveWisdomTooltip',
+        'msg', '_passiveWisdomDummy']
+    };
 
     self.characterId = ko.observable(null);
     self.ac = ko.observable(10);
@@ -10,6 +14,8 @@ function OtherStats() {
     self.speed = ko.observable(0);
     self.inspiration = ko.observable(0);
     self.proficiency = ko.observable(0);
+    self.level = ko.observable(0);
+    self.experience = ko.observable(0);
 
     var msg = 'Calculated Value:  10 + your perception bonus';
     self.passiveWisdomTooltip = ko.observable(msg);
@@ -36,31 +42,16 @@ function OtherStats() {
 
 
     self.clear = function() {
-        self.ac(10);
-        self.initiative(0);
-        self.speed(0);
-        self.proficiency(0);
-        self.inspiration(0);
+        var values = new OtherStats().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.ac(values.ac);
-        self.initiative(values.initiative);
-        self.speed(values.speed);
-        self.inspiration(values.inspiration);
-        self.proficiency(values.proficiency);
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            ac: self.ac(),
-            initiative: self.initiative(),
-            speed: self.speed(),
-            inspiration: self.inspiration(),
-            proficiency: self.proficiency()
-        };
+        return ko.mapping.toJS(self, self.mapping);
     };
 
     self.save = function() {
