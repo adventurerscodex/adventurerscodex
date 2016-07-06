@@ -1,4 +1,4 @@
-version 0.0.12 (06/19/2016)
+version 0.0.12 (07/05/2016)
 * **Huge!** Fixes an issue where importing a character would lose data
 * **Huge!** Fixes an issue where exporting a character would lose data
 * Fixed the size of huge images on large screens
