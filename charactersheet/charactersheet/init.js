@@ -31,6 +31,6 @@ var init = function(viewModel) {
     }
 
     // //Initialize dropbox integrations.
-    // var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
-    // document.getElementById('dropbox-container').appendChild(button);
+    var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
+    document.getElementById('dropbox-container').appendChild(button);
 };
