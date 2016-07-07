@@ -17,6 +17,13 @@
   padding-bottom: 5px;
 }
 
+.no-top-bottom-padding {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
 .well-no-padding {
   margin-bottom:0px;
 }
