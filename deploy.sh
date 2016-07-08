@@ -28,3 +28,6 @@ rm -rf deploy*
 
 # Make CNAME File
 echo "$DOMAIN" > CNAME
+
+# Remove Travis file to stop failing master builds.
+rm .travis.yml
