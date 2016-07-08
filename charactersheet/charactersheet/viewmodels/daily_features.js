@@ -87,7 +87,8 @@ function DailyFeatureViewModel() {
      */
     self.resetLongRestFeatures = function() {
         ko.utils.arrayForEach(self.dailyFeatures(), function(feature) {
-            if (feature.featureResetsOn() === DailyFeature.REST_VALUES.LONG_REST) {
+            if (feature.featureResetsOn() === DailyFeature.REST_VALUES.LONG_REST ||
+                feature.featureResetsOn() === DailyFeature.REST_VALUES.SHORT_REST) {
                 feature.featureUsed(0);
             }
         });
