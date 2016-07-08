@@ -19,14 +19,14 @@ function PlusMinusComponentViewModel(params) {
     self.min = params.min || ko.observable(0);
 
     self.increase = function() {
-        if (self.value() < parseInt(self.max())) {
-            self.value(self.value() + 1);
+        if (parseInt(self.value()) < parseInt(self.max())) {
+            self.value(parseInt(self.value()) + 1);
         }
     };
 
     self.decrease = function() {
-        if (self.value() > parseInt(self.min())) {
-            self.value(self.value() - 1);
+        if (parseInt(self.value()) > parseInt(self.min())) {
+            self.value(parseInt(self.value()) - 1);
         }
     };
 }
