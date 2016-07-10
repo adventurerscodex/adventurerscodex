@@ -155,9 +155,8 @@
 			<div class="col-sm-8 col-lg-9 col-padded">
 			  <div class="h3">
 			    Hit Points and Hit Dice<br />
-			    <small>Click on your Hit Points, when you level up,
-			    to increase them. Reminder: Hit Dice are based on your level: one
-			    dice per level.</small>
+			    <small>Click on your max Hit Points to increase them when you level
+             up. Click on a die icon to track expended hit dice.</small>
 			  </div>
 				<div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'templates', data: statsViewModel }">
 				</div>
@@ -166,11 +165,11 @@
 		<div class="row">
 			<div class="col-sm-12 col-padded">
 			  <div class="h3">
-			    Ability Scores, Saving Throws, and Other Stats<br />
-			    <small>Click on your Ability Scores to edit them.
-			    Saving Throw modifiers automatically include your Ability
-			    Score modifier and Proficiency Bonus. Your Passive Wisdom is also
-			    calculated automatically based on your Wisdom.
+			    Ability Scores, Savings Throw, and Other Stats<br />
+			    <small>Click on your Ability Scores to add or edit them. Savings
+            Throw modifiers automatically include your Ability Score modifier
+            and Proficiency Bonus. Your Passive Wisdom is also calculated
+             automatically based on your Wisdom.
 			    </small>
 			  </div>
 			</div>
@@ -260,9 +259,8 @@
 			<div class="col-sm-12 col-padded">
 				<div class="h3">
 					Spells<br/>
-					<small>Check the bottom of the list for a count of your
-					prepared spells. You can sort your spells by clicking on the
-					headers.</small>
+					<small>You can sort your spells by clicking on the headers. View the
+            bottom of the list for a count of your prepared spells.</small>
 				</div>
       </div>
     </div>
@@ -282,8 +280,9 @@
 			<div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
 			  <div class="h3">
 			    Weapons<br />
-			    <small>A weapon's To Hit bonus is automatically calculated based
-			    on its type.</small>
+			    <small>A weapon's To Hit bonus is automatically calculated based on
+             your Strength, Dexterity and your weapon's magical modifier
+             and property.</small>
 			  </div>
 				<div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates', data: weaponsViewModel }">
 				</div>
