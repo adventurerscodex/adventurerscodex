@@ -30,7 +30,7 @@ var init = function(viewModel) {
             CharacterManager.activeCharacter().key());
     }
 
-    //Initialize dropbox integrations.
+    // //Initialize dropbox integrations.
     var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
     document.getElementById('dropbox-container').appendChild(button);
 };
