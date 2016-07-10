@@ -105,6 +105,8 @@ function DailyFeatureViewModel() {
     self.addDailyFeature = function() {
         var dailyFeature = self.blankDailyFeature();
         dailyFeature.characterId(CharacterManager.activeCharacter().key());
+        dailyFeature.color(Fixtures.general.colorList[self.dailyFeatures().length
+          % Fixtures.general.colorList.length]);
         dailyFeature.save();
         self.dailyFeatures.push(dailyFeature);
 

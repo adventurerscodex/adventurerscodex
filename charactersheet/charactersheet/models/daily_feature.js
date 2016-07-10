@@ -17,11 +17,8 @@ function DailyFeature() {
     self.featureUsed = ko.observable(0);
     self.featureResetsOn = ko.observable('');
     self.featureDescription = ko.observable('');
-
-    self.color = ko.pureComputed(function() {
-        return self.featureColors[Math.floor((Math.random() * 10) + 1)];
-    });
-
+    self.color = ko.observable('');
+    
     self.currentFeaturesAvailable = ko.pureComputed(function() {
         return ( parseInt( self.featureMaxUses() ) - parseInt( self.featureUsed() ) );
     });
