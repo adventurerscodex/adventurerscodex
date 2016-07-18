@@ -360,6 +360,18 @@ table.table-no-margin tbody td {
 div.h3 small {
   color: #6f7d88;
 }
+
+
+.ability-score-input {
+  width: 65px;
+}
+
+.modal-footer-ability-scores {
+  padding: 15px;
+  text-align: left;
+  border-top: 1px solid #e5e5e5;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start

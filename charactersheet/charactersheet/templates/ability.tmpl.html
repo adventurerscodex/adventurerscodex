@@ -58,10 +58,14 @@
 
     <!-- Add Modal -->
     <div class="modal fade" id="editAbilityScores" tabindex="-1" role="dialog">
-    	<div class="modal-dialog" role="document">
+    	<div class="modal-dialog modal-sm" role="document">
     		<div class="modal-content">
     			<div class="modal-header">
-    				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+    				<button type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"> <span aria-hidden="true">&times;</span>
+            </button>
     				<h4 class="modal-title">
     					Edit Ability Scores
     				</h4>
@@ -69,51 +73,68 @@
     			<div class="modal-body">
     				<form class="form-horizontal">
     					<div class="form-group">
-    						<label class="col-sm-2 control-label">Strength</label>
-    						<div class="col-sm-10">
-    							<input type="text" class="form-control" min="1"
-                    data-bind='textInput: str'>
+    						<label class="col-xs-7 pull-left">Strength</label>
+    						<div class="col-xs-5">
+    							<input type="number"
+                         class="form-control ability-score-input pull-left"
+                         min="0"
+                         data-bind='textInput: str'>
     						</div>
     					</div>
     					<div class="form-group">
-    						<label class="col-sm-2 control-label">Dexterity</label>
-    						<div class="col-sm-10">
-    							<input type="text" class="form-control" min="1"
-                   data-bind='textInput: dex'>
+    						<label class="col-xs-7 pull-left">Dexterity</label>
+    						<div class="col-xs-5">
+    							<input type="number"
+                         class="form-control ability-score-input"
+                         min="0"
+                         data-bind='textInput: dex'>
     						</div>
     					</div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">Constitution</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" min="1"
-                  data-bind='textInput: con'>
+                <label class="col-xs-7 pull-left">Constitution</label>
+                <div class="col-xs-5">
+                  <input type="number"
+                         class="form-control ability-score-input"
+                         min="0"
+                         data-bind='textInput: con'>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">Intelligence</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" min="1"
-                  data-bind='textInput: int'>
+                <label class="col-xs-7 pull-left">Intelligence</label>
+                <div class="col-xs-5">
+                  <input type="number"
+                         class="form-control ability-score-input"
+                         min="0"
+                         data-bind='textInput: int'>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">Wisom</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" min="1"
-                    data-bind='textInput: wis'>
+                <label class="col-xs-7 pull-left">Wisdom</label>
+                <div class="col-xs-5">
+                  <input type="number"
+                         class="form-control ability-score-input"
+                         min="0"
+                         data-bind='textInput: wis'>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">Charisma</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" min="1"
-                    data-bind='textInput: cha'>
+                <label class="col-xs-7 pull-left">Charisma</label>
+                <div class="col-xs-5">
+                  <input type="number"
+                         class="form-control ability-score-input"
+                         min="0"
+                         data-bind='textInput: cha'>
                 </div>
               </div>
-    					<div class="modal-footer">
-    						<button type="button" class="btn btn-primary"
-                  data-dismiss="modal">Done</button>
-    					</div>
+              <div class="modal-footer-ability-scores">
+                <div class="form-group">
+                  <div class="col-xs-offset-7 col-xs-5">
+        						<button type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal">Done</button>
+                  </div>
+                 </div>
+              </div>
     				</form>
     			</div>
   </div>
