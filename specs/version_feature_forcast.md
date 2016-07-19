@@ -12,7 +12,7 @@ Pull Requests are welcome.
 
 ## Version Forecast
 
-Per-major version, what features would we like to have added? Note: **big fixes do not count toward feature lists**. We all need to work toward fixing bugs, but barring anything major, they are not the planned focus of new feature releases.
+Per-major version, what features would we like to have added? Note: **bug fixes do not count toward feature lists**. We all need to work toward fixing bugs, but barring anything major, they are not the planned focus of new feature releases.
 
 
 ### v1.0
