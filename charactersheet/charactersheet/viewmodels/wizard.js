@@ -20,13 +20,7 @@
 function WizardViewModel() {
     var self = this;
 
-    /**
-     * A key:value store of all possible steps by name.
-     */
-    self.steps = Fixtures.wizard.steps;
-
     self.previousSteps = ko.observableArray([]);
-
     self.currentStep = ko.observable(null);
 
     /**
@@ -39,7 +33,9 @@ function WizardViewModel() {
 
     self.init = function() { };
 
-    self.load = function() { };
+    self.load = function() {
+        self.goForward();
+    };
 
     self.unload = function() { };
 
@@ -58,7 +54,7 @@ function WizardViewModel() {
      */
     self.goForward = function() {
         var nextStepDescriptor = self._determineStepAfterStep(
-            self.currentStep(), self.steps);
+            self.currentStep());
 
         if (nextStepDescriptor.terminate) {
             self.terminate();
@@ -66,10 +62,10 @@ function WizardViewModel() {
         } else if (!nextStepDescriptor.viewModel) {
             self._isComplete(true);
             return;
-        };
+        }
 
         self.previousSteps.push(self.currentStep());
-        self.currentStep(nextStep);
+        self.currentStep(nextStepDescriptor.viewModel);
 
         self._initializeStep(self.currentStep());
     };
@@ -81,7 +77,7 @@ function WizardViewModel() {
      * on the current step.
      */
     self.goBackward = function() {
-        if (self.previousSteps().length === 0) { return; };
+        if (self.previousSteps().length === 0) { return; }
 
         self._deinitializeStep(self.currentStep());
 
@@ -135,7 +131,7 @@ function WizardViewModel() {
     };
 
     self.previousButton = function() {
-        self.goBackward()
+        self.goBackward();
     };
 
     self.finishButton = function() {
@@ -155,25 +151,30 @@ function WizardViewModel() {
     };
 
     /**
-     * Given a step, and all the possible future steps,
-     * use it's results to determine the next step in the sequence.
+     * Given a step use it's results to determine the next step in the sequence.
      *
+     * @params currentStep {viewModel} The current view model object.
      * @returns {NextStepDescriptor} Returns a descriptor of what to do next.
      */
-    self._determineStepAfterStep = function(currentStep, steps) {
+    self._determineStepAfterStep = function(currentStep) {
         var nextStep = null;
-        var results = currentStep().results();
-        if (currentStep.identifier() === 'WizardIntroStep') {
-            if (results().PlayerType === 'import') {
-                nextStep = new NextStepDescriptor(null, true);
-            } else if (results().PlayerType === 'player') {
-                nextStep = new NextStepDescriptor(/*TODO*/);
+        if (!currentStep) {
+            return new NextStepDescriptor(new WizardIntroStepViewModel(), false);
+        }
+
+        var results = currentStep.results();
+        if (currentStep.IDENTIFIER === 'WizardIntroStep') {
+            if (results()['import']) {
+                return new NextStepDescriptor(null, true);
+            } else if (results()['PlayerType'] === 'player') {
+                return new NextStepDescriptor(null, true);
+            } else {
+                throw "Assertion Failure: Unknown Result Type";
             }
         }
 
         //TODO Add more steps here.
 
-        return nextStep;
     };
 }
 
@@ -189,4 +190,4 @@ function WizardViewModel() {
 function NextStepDescriptor(viewModel, terminate) {
     this.viewModel = viewModel || null;
     this.terminate = terminate || false;
-};
+}

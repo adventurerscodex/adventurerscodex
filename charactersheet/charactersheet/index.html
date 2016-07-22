@@ -387,7 +387,7 @@
 <div id="wizard" class="container-fluid"
   data-bind="with: wizardViewModel">
   <div data-bind="template: {
-    name: 'wizard_intro_step.tmpl',
+    name: 'wizard.tmpl',
     templateUrl: 'templates',
     data: $data }"></div>
 </div>
@@ -456,30 +456,6 @@
           data-dismiss="modal" type="submit"
           class="btn btn-primary">Make a new character
         </button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Import Modal Form -->
-<div class="modal fade" id="importModal" tabindex="-1" role="dialog"
-  aria-labelledby="importModalLabel" data-bind="with: wizardViewModel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content container-fluid">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="importModalLabel">Import</h4>
-      </div>
-      <div class="modal-body">
-        <p>If you've exported you character data before, you can import it here!</p>
-        <!-- Add import form. -->
-        <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
-				<br>
-				<p>Or import it from your Dropbox!</p>
-					<!-- <div id="dropbox-container"></div> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
       </div>
     </div>
   </div>

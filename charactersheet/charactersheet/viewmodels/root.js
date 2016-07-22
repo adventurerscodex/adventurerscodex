@@ -38,7 +38,7 @@ function RootViewModel() {
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
     //Misc
-    self.wizardViewModel = new WizardIntroStepViewModel();
+    self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
     self.settingsViewModel = ko.observable(new SettingsViewModel());
@@ -166,6 +166,8 @@ function RootViewModel() {
         self.charactersViewModel.init();
         self.userNotificationViewModel.init();
 
+        self.wizardViewModel.init();
+
         //Subscriptions
         Notifications.profile.changed.add(function() {
             self._dummy.valueHasMutated();
@@ -190,7 +192,9 @@ function RootViewModel() {
      * Signal all modules to load their data.
      */
     self.load = function() {
-        if (CharacterManager.activeCharacter()) {
+        if (!self.ready()) {
+            self.wizardViewModel.load();
+        } else if (CharacterManager.activeCharacter()) {
             self.activeTab(self.playerType().defaultTab);
 
             if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
@@ -224,6 +228,7 @@ function RootViewModel() {
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.settingsViewModel().unload();
+            self.wizardViewModel.unload();
         }
     };
 
