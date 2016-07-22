@@ -38,7 +38,7 @@ function RootViewModel() {
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
     //Misc
-    self.wizardViewModel = new WizardViewModel();
+    self.wizardViewModel = new WizardIntroStepViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
     self.settingsViewModel = ko.observable(new SettingsViewModel());

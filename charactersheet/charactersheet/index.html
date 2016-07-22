@@ -387,7 +387,7 @@
 <div id="wizard" class="container-fluid"
   data-bind="with: wizardViewModel">
   <div data-bind="template: {
-    name: 'wizard.tmpl',
+    name: 'wizard_intro_step.tmpl',
     templateUrl: 'templates',
     data: $data }"></div>
 </div>
@@ -476,7 +476,7 @@
         <input type="file" id="file" name="file" data-bind="file: { data: fileContents, reader: fileReader }"/>
 				<br>
 				<p>Or import it from your Dropbox!</p>
-					<div id="dropbox-container"></div>
+					<!-- <div id="dropbox-container"></div> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bind="click: importFromFile" data-dismiss="modal">Import</button>
@@ -542,6 +542,7 @@
 <script src="viewmodels/weapons.js" type="text/javascript"></script>
 <script src="viewmodels/user_notification.js" type="text/javascript"></script>
 <script src="viewmodels/wizard.js" type="text/javascript"></script>
+<script src="viewmodels/wizard_intro_step.js" type="text/javascript"></script
 <!-- Models -->
 <script src="models/ability_scores.js" type="text/javascript"></script>
 <script src="models/appearance.js" type="text/javascript"></script>
