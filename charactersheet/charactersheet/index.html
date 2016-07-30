@@ -358,23 +358,26 @@
 	</div>
 <!-- End Notes Tab -->
 	<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
-  			<div class="row">
-				<div class="col-md-7 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
-					</div>
-				</div>
-				<div class="col-md-5 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates', data: appearanceViewModel }">
-					</div>
-				</div>
+		<div class="row">
+			<div class="col-sm-4 hidden-xs">
+				<img src="/images/standing-man-3.svg" alt="Profile tab" style="width:100%;"/>
 			</div>
-			<div class="row">
-				<div class="col-md-12 col-sm-12 col-padded">
-					<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates', data: featuresTraitsViewModel }">
-					</div>
+			<div class="col-sm-8 col-padded">
+				<div class="h3">
+					Profile<br />
+					<small>Lorem ipsum or whatever it's called...</small>
+				</div>
+				<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
 				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-sm-12 col-padded">
+				<div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates', data: featuresTraitsViewModel }">
+				</div>
+			</div>
+		</div>
+	</div>
 <!-- End Profile Tab -->
 </div>
 <!-- End group Tab -->
