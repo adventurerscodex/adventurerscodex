@@ -4,7 +4,7 @@ function WizardIntroStepViewModel() {
     var self = this;
 
     self.TEMPLATE_FILE = 'wizard_intro_step.tmpl';
-    self.IDENTIFIER = 'WizardIntroStep'
+    self.IDENTIFIER = 'WizardIntroStep';
 
     self.ready = ko.observable(false);
 
@@ -26,8 +26,12 @@ function WizardIntroStepViewModel() {
 
     self.load = function() {
         //Initialize dropbox integrations.
-        var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
-        document.getElementById('dropbox-container').appendChild(button);
+        //var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
+        //document.getElementById('dropbox-container').appendChild(button);
+
+        //Set default value to player atm.
+        self.setPlayerType('player');
+        self.ready(true);
     };
 
     self.unload = function() {};

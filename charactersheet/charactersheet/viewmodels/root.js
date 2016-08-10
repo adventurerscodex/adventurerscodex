@@ -169,6 +169,9 @@ function RootViewModel() {
         self.wizardViewModel.init();
 
         //Subscriptions
+        Notifications.wizard.completed.add(function() {
+            self.ready(true);
+        });
         Notifications.profile.changed.add(function() {
             self._dummy.valueHasMutated();
         });

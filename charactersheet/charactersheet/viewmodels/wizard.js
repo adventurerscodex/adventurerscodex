@@ -22,6 +22,7 @@ function WizardViewModel() {
 
     self.previousSteps = ko.observableArray([]);
     self.currentStep = ko.observable(null);
+    self.nextStep = ko.observable(null);
 
     /**
      * A marker than the wizard is complete and that the
@@ -29,11 +30,14 @@ function WizardViewModel() {
      */
     self._isComplete = ko.observable(false);
 
+    self._currentStepReadySubscription = null;
+
     // View Model Methods
 
     self.init = function() { };
 
     self.load = function() {
+        self.getNextStep();
         self.goForward();
     };
 
@@ -53,20 +57,18 @@ function WizardViewModel() {
      * the it is immediately done.
      */
     self.goForward = function() {
-        var nextStepDescriptor = self._determineStepAfterStep(
-            self.currentStep());
-
+        var nextStepDescriptor = self.nextStep();
         if (nextStepDescriptor.terminate) {
             self.terminate();
             return;
-        } else if (!nextStepDescriptor.viewModel) {
-            self._isComplete(true);
-            return;
         }
 
-        self.previousSteps.push(self.currentStep());
-        self.currentStep(nextStepDescriptor.viewModel);
+        // Don't push empty steps.
+        if (self.currentStep()) {
+            self.previousSteps.push(self.currentStep());
+        }
 
+        self.currentStep(nextStepDescriptor.viewModel);
         self._initializeStep(self.currentStep());
     };
 
@@ -87,6 +89,15 @@ function WizardViewModel() {
         self._initializeStep(self.currentStep());
     };
 
+
+    self.getNextStep = function() {
+        var nextStepDescriptor = self._determineStepAfterStep(self.currentStep());
+        if (!nextStepDescriptor.viewModel) {
+            self._isComplete(true);
+        }
+        self.nextStep(nextStepDescriptor);
+    };
+
     /**
      * When called, immediately terminate the wizard and notify the
      * system of successful completion.
@@ -97,6 +108,7 @@ function WizardViewModel() {
         if (character) {
             CharacterManager.changeCharacter(character.key());
         }
+        Notifications.wizard.completed.dispatch();
     };
 
     /**
@@ -107,16 +119,29 @@ function WizardViewModel() {
         character.key(uuid.v4());
         character.save();
 
+        var profile = new Profile();
+        var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
+            return step.IDENTIFIER === 'WizardProfileStep';
+        });
+        profile.importValues(profileStepViewModel[0].results);
+        profile.characterId(character.key());
+        profile.save();
+
+        var playerInfo = new PlayerInfo();
+        playerInfo.characterId(character.key());
+        playerInfo.save();
+
+
         //TODO: Save the results of all child steps.
     };
 
     // UI Helper Methods
 
     self.shouldShowNextButton = ko.pureComputed(function() {
-        return self.currentStep().ready();
+        return self.currentStep().ready() && !self.shouldShowFinishButton();
     });
 
-    self.shouldShowPreviousButton = ko.pureComputed(function() {
+    self.shouldShowBackButton = ko.pureComputed(function() {
         return self.previousSteps().length != 0;
     });
 
@@ -130,7 +155,7 @@ function WizardViewModel() {
         self.goForward();
     };
 
-    self.previousButton = function() {
+    self.backButton = function() {
         self.goBackward();
     };
 
@@ -142,12 +167,20 @@ function WizardViewModel() {
     // Private Methods
 
     self._initializeStep = function(step) {
+        //Set the determination to occur when the current step is deemed ready.
+        self._currentStepReadySubscription = step.ready.subscribe(self.getNextStep);
+
         step.init();
         step.load();
     };
 
     self._deinitializeStep = function(step) {
         step.unload();
+        self._currentStepReadySubscription.dispose();
+    };
+
+    self.allSteps = function() {
+        return self.previousSteps().concat([self.currentStep()]);
     };
 
     /**
@@ -164,13 +197,17 @@ function WizardViewModel() {
 
         var results = currentStep.results();
         if (currentStep.IDENTIFIER === 'WizardIntroStep') {
-            if (results()['import']) {
+            if (results['import']) {
                 return new NextStepDescriptor(null, true);
-            } else if (results()['PlayerType'] === 'player') {
-                return new NextStepDescriptor(null, true);
+            } else if (results['PlayerType'] === 'player') {
+                return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
             } else {
                 throw "Assertion Failure: Unknown Result Type";
             }
+        }
+
+        if (currentStep.IDENTIFIER === 'WizardProfileStep') {
+            return new NextStepDescriptor(null, true);
         }
 
         //TODO Add more steps here.
