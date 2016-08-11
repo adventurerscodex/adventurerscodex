@@ -41,7 +41,9 @@ function WizardViewModel() {
         self.goForward();
     };
 
-    self.unload = function() { };
+    self.unload = function() {
+        self.reset();
+    };
 
     // Step Management Methods
 
@@ -112,6 +114,20 @@ function WizardViewModel() {
     };
 
     /**
+     * Resets the wizard back to the first step.
+     */
+    self.reset = function() {
+        self.previousSteps([]);
+        self.currentStep(null);
+        self.nextStep(null);
+        self._isComplete(false);
+        self._currentStepReadySubscription = null;
+
+        self.getNextStep();
+        self.goForward();
+    };
+
+    /**
      * Progress through all previous and current steps and save their data.
      */
     self.save = function() {
@@ -164,6 +180,7 @@ function WizardViewModel() {
     self.finishButton = function() {
         self.save();
         self.terminate();
+        self.reset();
     };
 
     // Private Methods

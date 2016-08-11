@@ -190,9 +190,10 @@ function RootViewModel() {
         //Once init-ed, we can check for a character to load, if any.
         var character = Character.findAll()[0];
         if (character) {
+            //Switching characters will fire the load notification.
             CharacterManager.changeCharacter(character.key());
         } else {
-            // If no current character exists, fire the load process anyway.
+            //If no current character exists, fire the load process anyway.
             Notifications.global.load.dispatch();
         }
     };
