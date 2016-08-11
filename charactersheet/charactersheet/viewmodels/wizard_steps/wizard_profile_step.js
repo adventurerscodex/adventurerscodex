@@ -56,7 +56,7 @@ function WizardProfileStepViewModel() {
             alignment: self.alignment(),
             gender: self.gender(),
             diety: self.diety(),
-            level: self.level(),
+            level: self.level() || 1,
             exp: self.exp()
         };
     });
