@@ -104,11 +104,11 @@ function WizardViewModel() {
      */
     self.terminate = function() {
         // Newest character will be at the back.
+        Notifications.wizard.completed.dispatch();
         var character = Character.findAll().reverse()[0];
         if (character) {
             CharacterManager.changeCharacter(character.key());
         }
-        Notifications.wizard.completed.dispatch();
     };
 
     /**
@@ -123,8 +123,10 @@ function WizardViewModel() {
         var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
             return step.IDENTIFIER === 'WizardProfileStep';
         });
-        profile.importValues(profileStepViewModel[0].results);
-        profile.characterId(character.key());
+
+        var data = profileStepViewModel[0].results();
+        data.characterId = character.key();
+        profile.importValues(data);
         profile.save();
 
         var playerInfo = new PlayerInfo();
@@ -138,7 +140,7 @@ function WizardViewModel() {
     // UI Helper Methods
 
     self.shouldShowNextButton = ko.pureComputed(function() {
-        return self.currentStep().ready() && !self.shouldShowFinishButton();
+        return self.currentStep() && self.currentStep().ready() && !self.shouldShowFinishButton();
     });
 
     self.shouldShowBackButton = ko.pureComputed(function() {
