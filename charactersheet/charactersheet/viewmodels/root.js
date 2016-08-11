@@ -17,7 +17,6 @@ function RootViewModel() {
      * and the init process has finished.
       */
     self.ready = ko.observable(false);
-    self.wizard = ko.observable(false);
     self._dummy = ko.observable(false);
     self.connected = ko.observable(false);
 
@@ -145,9 +144,10 @@ function RootViewModel() {
 
     self.showWizard = function() {
         //Unload the prior character.
-        Notifications.global.unload.dispatch();
+        if (CharacterManager.activeCharacter()) {
+            Notifications.global.unload.dispatch();
+        }
         self.ready(false);
-        self.wizard(true);
     };
 
     //Public Methods
@@ -169,15 +169,12 @@ function RootViewModel() {
         self.wizardViewModel.init();
 
         //Subscriptions
-        Notifications.wizard.completed.add(function() {
-            self.ready(true);
-        });
         Notifications.profile.changed.add(function() {
             self._dummy.valueHasMutated();
         });
         self._dummy.valueHasMutated();
         Notifications.characters.allRemoved.add(function() {
-            self.ready(false);
+            self.showWizard();
         });
         Notifications.global.load.add(self.load);
         Notifications.global.unload.add(self.unload);
@@ -189,15 +186,22 @@ function RootViewModel() {
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
+
+        //Once init-ed, we can check for a character to load, if any.
+        var character = Character.findAll()[0];
+        if (character) {
+            CharacterManager.changeCharacter(character.key());
+        } else {
+            // If no current character exists, fire the load process anyway.
+            Notifications.global.load.dispatch();
+        }
     };
 
     /**
      * Signal all modules to load their data.
      */
     self.load = function() {
-        if (!self.ready()) {
-            self.wizardViewModel.load();
-        } else if (CharacterManager.activeCharacter()) {
+        if (CharacterManager.activeCharacter()) {
             self.activeTab(self.playerType().defaultTab);
 
             if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
@@ -212,8 +216,10 @@ function RootViewModel() {
             self.userNotificationViewModel.load();
             self.charactersViewModel.load();
             self.settingsViewModel().load();
-            self.ready(true);
             self._dummy.valueHasMutated();
+            self.ready(true);
+        } else {
+            self.wizardViewModel.load();
         }
     };
 
@@ -236,6 +242,10 @@ function RootViewModel() {
     };
 
     //Private Methods
+
+    self._hasAtLeastOneCharacter = function() {
+        return Character.findAll().length > 0;
+    };
 
     self._tabIsVisible = function(tabName) {
         if (self.playerType().visibleTabs.indexOf(tabName) > -1) {

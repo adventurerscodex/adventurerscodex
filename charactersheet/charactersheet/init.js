@@ -7,8 +7,6 @@ var init = function(viewModel) {
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
 
-    viewModel.init();
-
     //Set up event handlers.
     Notifications.characterManager.changing.add(function() {
         //Don't save an empty character.
@@ -24,10 +22,6 @@ var init = function(viewModel) {
         }
     });
 
-    //Check if a character already exists.
-    if (CharacterManager.activeCharacter()) {
-        CharacterManager.changeCharacter(
-            CharacterManager.activeCharacter().key());
-    }
-
+    // Initialize the View Model
+    viewModel.init();
 };
