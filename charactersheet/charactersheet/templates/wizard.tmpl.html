@@ -23,6 +23,13 @@
           </button>
         </div>
         <!-- /ko -->
+        <!-- ko if: shouldShowStartButton -->
+        <div class="col-2-xs col-xs-offset-9">
+          <button data-bind="click: nextButton" class="btn btn-primary">
+            Get Started
+          </button>
+        </div>
+        <!-- /ko -->
         <!-- ko if: shouldShowFinishButton -->
         <div class="col-2-xs col-xs-offset-9">
           <button data-bind="click: finishButton" class="btn btn-primary">

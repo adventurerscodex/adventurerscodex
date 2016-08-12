@@ -81,6 +81,8 @@ function WizardViewModel() {
      * on the current step.
      */
     self.goBackward = function() {
+        // In case it's the final step, clear the flag.
+        if (self._isComplete()) { self._isComplete(false); }
         if (self.previousSteps().length === 0) { return; }
 
         self._deinitializeStep(self.currentStep());
@@ -89,6 +91,7 @@ function WizardViewModel() {
         self.currentStep(previousStep);
 
         self._initializeStep(self.currentStep());
+        self.getNextStep();
     };
 
 
@@ -155,8 +158,15 @@ function WizardViewModel() {
 
     // UI Helper Methods
 
+    self.shouldShowStartButton =  ko.pureComputed(function() {
+        return self.previousSteps().length === 0;
+    });
+
     self.shouldShowNextButton = ko.pureComputed(function() {
-        return self.currentStep() && self.currentStep().ready() && !self.shouldShowFinishButton();
+        return self.currentStep()
+            && self.currentStep().ready()
+            && !self.shouldShowFinishButton()
+            && !self.shouldShowStartButton();
     });
 
     self.shouldShowBackButton = ko.pureComputed(function() {
@@ -226,7 +236,7 @@ function WizardViewModel() {
         }
 
         if (currentStep.IDENTIFIER === 'WizardProfileStep') {
-            return new NextStepDescriptor(null, true);
+            return new NextStepDescriptor(null, false);
         }
 
         //TODO Add more steps here.
