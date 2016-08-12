@@ -1,91 +1,117 @@
-<div class="panel panel-default bio">
-  <div class="panel-body">
-  	<!-- Names -->
-	  <div class="row">
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Character Name</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: characterName' />
-        </div>
-      </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Player Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon2"
-              data-bind='textInput: playerName' />
+<div class="row">
+  <div class="col-xs-12">
+    <!-- Begin About Section -->
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-11 col-xs-12">
+        <div class="h1">Who are you?<br />
+          <small>Are you a barbarian warmonger? A wandering cleric? A misunderstood sorcerer? </small>
         </div>
       </div>
     </div>
-
-	  <div class="row">
-      <div class="col-md-6 col-padded">
-    	  <div class="input-group">
-	      	<span class="input-group-addon" id="basic-addon2">Alignment</span>
-      		<input type="text" class="form-control" aria-describedby="basic-addon2"
-		      	data-bind='textInput: alignment'>
-  	    </div>
-	    </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Diety</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: diety'>
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-7 col-xs-12">
+        <div class="h3">Tell us about yourself.<br />
+          <small>Before we can create your character, we just need a few bits of information.</small>
         </div>
+        <!-- Names -->
+        <div class="row">
+          <div class="col-md-12 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Character Name</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: characterName' />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Player Name</span>
+                <input type="text" class="form-control" aria-describedby="basic-addon2"
+                  data-bind='textInput: playerName' />
+            </div>
+          </div>
+        </div>
+        <div class="h3">Anything else?<br />
+          <small>You can always fill in this stuff later, but it's good to get it out of the way now.</small>
+        </div>
+        <p></p>
+        <div class="row">
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Alignment</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: alignment'>
+            </div>
+          </div>
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Diety</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: diety'>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <!-- Race, Gender, Class, Alignment -->
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Race</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: race'>
+            </div>
+          </div>
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Class</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: typeClass'>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Gender</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: gender'>
+            </div>
+          </div>
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Age</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="1500"
+                     data-bind='textInput: age'>
+            </div>
+          </div>
+        </div>
+        <div class="h3">Starting Mid-Adventure?<br />
+          <small>Add your existing level and experience points if you want, if not we're guessing you're just starting out.</small>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Level</span>
+              <input type="number" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: level'>
+            </div>
+          </div>
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Experience</span>
+              <input type="number" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: exp'>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 hidden-xs">
+        <img src="/images/logo-full-circle.png" width="100%">
       </div>
     </div>
-	  <div class="row">
-	  <!-- Race, Gender, Class, Alignment -->
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Race</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: race'>
-        </div>
-      </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Class</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: typeClass'>
-        </div>
-      </div>
-    </div>
-	  <div class="row">
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Gender</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: gender'>
-        </div>
-      </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Age</span>
-          <input type="number"
-                 class="form-control"
-                 aria-describedby="basic-addon2"
-                 min="1"
-                 max="1500"
-                 data-bind='textInput: age'>
-        </div>
-      </div>
-  	</div>
-	  <div class="row">
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Level</span>
-          <input type="number" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: level'>
-        </div>
-      </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-		      <span class="input-group-addon" id="basic-addon2">Experience</span>
-		      <input type="number" class="form-control" aria-describedby="basic-addon2"
-			      data-bind='textInput: exp'>
-	      </div>
-	    </div>
-	  </div>
-	</div>
+  </div>
 </div>
