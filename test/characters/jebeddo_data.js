@@ -1,5 +1,6 @@
 'use strict';
 /*eslint quotes: 0 */
+/*eslint indent: 0 */
 
 var jebeddo_data = {
   "Character": [

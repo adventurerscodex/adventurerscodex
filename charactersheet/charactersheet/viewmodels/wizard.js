@@ -231,7 +231,7 @@ function WizardViewModel() {
             } else if (results['PlayerType'] === 'player') {
                 return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
             } else {
-                throw "Assertion Failure: Unknown Result Type";
+                throw 'Assertion Failure: Unknown Result Type';
             }
         }
 
