@@ -63,7 +63,7 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="h3" data-bind="contenteditable: {
-                  text: profile().characterName,
+                  text: characterName,
                   placeholder: placeholderText
                 }"></div>
               </div>
@@ -369,6 +369,8 @@
 				</div>
 				<div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates', data: profileViewModel }">
 				</div>
+        <div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates', data: appearanceViewModel }">
+        </div>
 			</div>
 		</div>
 		<div class="row">

@@ -14,8 +14,6 @@ function OtherStats() {
     self.speed = ko.observable(0);
     self.inspiration = ko.observable(0);
     self.proficiency = ko.observable(0);
-    self.level = ko.observable(0);
-    self.experience = ko.observable(0);
 
     var msg = 'Calculated Value:  10 + your perception bonus';
     self.passiveWisdomTooltip = ko.observable(msg);
