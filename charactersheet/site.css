@@ -1,5 +1,14 @@
 #content {
   max-width: 1800px;
+  font-family: "Lato", sans-serif;
+}
+
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+  font-family: 'IM Fell English SC', serif;
+}
+
+small {
+  font-family: "Lato", sans-serif;
 }
 
 .brand-icon {
