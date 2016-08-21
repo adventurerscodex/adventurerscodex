@@ -4,7 +4,7 @@
 # author: Brian Schrader
 # since: 2015-12-23
 
-DOMAIN="adventurerscodex.com"
+DOMAIN="app.adventurerscodex.com"
 ARCHIVE="project.tar.gz"
 
 
