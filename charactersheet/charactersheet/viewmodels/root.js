@@ -176,6 +176,24 @@ function RootViewModel() {
         Notifications.characters.allRemoved.add(function() {
             self.showWizard();
         });
+
+
+        //Set up event handlers.
+        Notifications.characterManager.changing.add(function() {
+            //Don't save an empty character.
+            if (CharacterManager.activeCharacter() && self.ready()) {
+                Notifications.global.unload.dispatch();
+            }
+        });
+
+        Notifications.characterManager.changed.add(function() {
+            try {
+                Notifications.global.load.dispatch();
+            } catch(err) {
+                throw err;
+            }
+        });
+
         Notifications.global.load.add(self.load);
         Notifications.global.unload.add(self.unload);
 

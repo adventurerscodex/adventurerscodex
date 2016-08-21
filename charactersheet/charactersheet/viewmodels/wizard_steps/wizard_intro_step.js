@@ -56,7 +56,6 @@ function WizardIntroStepViewModel() {
             length, self.fileReader.result.length)));
 
         var character = Character.importCharacter(values);
-        self.clear();
 
         self._setImportReady(character.key());
     };
@@ -78,6 +77,7 @@ function WizardIntroStepViewModel() {
      */
     self._setImportReady = function(characterId) {
         self.results({ 'import': characterId });
+        self.ready(false);
         self.ready(true);
     };
 

@@ -48,23 +48,11 @@ function WizardViewModel() {
     // Step Management Methods
 
     /**
-     * If possible, progresses to the next step based on the results of the
-     * current step, and initializes that step. The method also pushes the
+     * If possible, progresses to the next step. The method also pushes the
      * previous step onto the list of previous steps.
-     *
-     * Side effect: If no next step exists, the _isComplete attribute
-     * is set to true.
-     *
-     * Side effect: If a step should cause the wizard to terminate, then
-     * the it is immediately done.
      */
     self.goForward = function() {
         var nextStepDescriptor = self.nextStep();
-        if (nextStepDescriptor.terminate) {
-            self.terminate();
-            return;
-        }
-
         // Don't push empty steps.
         if (self.currentStep()) {
             self.previousSteps.push(self.currentStep());
@@ -95,10 +83,27 @@ function WizardViewModel() {
     };
 
 
+    /**
+     * Fetches the next step based on the results of the current step,
+     * and initializes that step.
+     *
+     * Side effect: If no next step exists, the _isComplete attribute
+     * is set to true.
+     *
+     * Side effect: If a step should cause the wizard to terminate, then
+     * the it is immediately done.
+    */
     self.getNextStep = function() {
+        // Do not progress if the step isn't ready.
+        if (self.currentStep() && !self.currentStep().ready()) { return; }
+
         var nextStepDescriptor = self._determineStepAfterStep(self.currentStep());
         if (!nextStepDescriptor.viewModel) {
             self._isComplete(true);
+        }
+        if (nextStepDescriptor.terminate) {
+            self.terminate();
+            return;
         }
         self.nextStep(nextStepDescriptor);
     };
@@ -109,7 +114,7 @@ function WizardViewModel() {
      */
     self.terminate = function() {
         // Newest character will be at the back.
-        Notifications.wizard.completed.dispatch();
+        //Notifications.wizard.completed.dispatch();
         var character = Character.findAll().reverse()[0];
         if (character) {
             CharacterManager.changeCharacter(character.key());
