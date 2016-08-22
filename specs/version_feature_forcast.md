@@ -24,10 +24,11 @@ Per-major version, what features would we like to have added? Note: **bug fixes 
 
 ### v1.1
 
-- Autofilling Templates during character creation
+- Autofilling spells and weapons.
 - An enhanced wizard with more steps to guide people through (or a Skip button which creates an empty char)
 - Better Profile Image management/options
 - Planning for DM tools (not implementation)
+- Status modifiers for players (see: #645)
 
 
 ### v1.2
@@ -37,7 +38,6 @@ Per-major version, what features would we like to have added? Note: **bug fixes 
   - Encounter management (enemies, and items per encounter)
   - A log (notes)
 - Planning for Syncing Services (maybe backend implementation)
-- Status modifiers for players (see: #645)
 
 
 ### v1.3
@@ -46,6 +46,7 @@ Per-major version, what features would we like to have added? Note: **bug fixes 
   - player summaries
   - chat (group and 1-to-1)
 - A new "combat module" which would need to be spec-ed out, but basically it shows the current enemies from the Encounter and the current players (the DM could see stats for all/some?)
+- Autofilling templates for character creation
 
 
 ### v1.4
