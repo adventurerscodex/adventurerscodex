@@ -4,7 +4,7 @@
 Welcome to Adventurer&rsquo;s&nbsp;Codex <sup style="color:orange;">Beta!</sup></h1>
 </div>
 
-[![Build Badge](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io.svg)](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io)
+[![Build Status](https://travis-ci.org/adventurerscodex/adventurerscodex.svg?branch=develop)](https://travis-ci.org/adventurerscodex/adventurerscodex)
 [![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex.github.io/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex.github.io?branch=develop)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sonictherocketman/adventurerscodex)
 
