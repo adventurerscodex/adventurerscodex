@@ -1,71 +1,43 @@
 <div class="row">
-  <div class="col-xs-12">
-    <div class="container">
-      <div class="center-block">
-        <!-- Character Type -->
-        <!-- ko if: showQuestion1 -->
-        <div class="text-center center-block">
-          <h3>What kind of player are you?</h3>
-          <p><i>Players participate in the game, while the Dungeon Master (DM)
-          tells the story that the players will experience.</i></p>
-          <div class="btn-group " role="group" aria-label="...">
-            <button type="button" class="btn btn-primary"
-              data-bind="click: setPlayerType">I'm a Player</button>
-          </div>
-         <div class="row row-padded">
-          <div class="center-block text-center">
-            <button type="button" class="btn btn-link"
-              data-toggle="modal" data-target="#importModal">
-                <i><small>Import an Existing Character</small></i>
-            </button>
-          </div>
-        </div>
-       </div>
-        <!-- /ko -->
-        <!-- ko if: showQuestion2 -->
-        <div class="text-center center-block">
-          <!-- Player -->
-          <!-- ko if: showProfile -->
-          <h3>Let's get some information about you.</h3>
-          <p><i>Go ahead and tell us some basic information about your
-          character, and yourself. Ask your DM if you need help.</i></p>
-          <div class="row">
-            <div class="col-md-12">
-              <div class="container-fluid" data-bind="template: {
-                    name: 'wizard_profile.tmpl',
-                    templateUrl: 'templates',
-                    data: $data }"></div>
-            </div>
-          </div>
-          <div class="row">
-          <h4>Optional</h4>
-          <p><i>If you use Gravatar, enter your email here. If you don't
-          know what that is, then don't worry.</i></p>
-            <div class="col-md-12">
-              <div class="container-fluid" data-bind="template: {
-                    name: 'player_info.tmpl',
-                    templateUrl: 'templates',
-                    data: $data }"></div>
-            </div>
-          </div>
-          <!-- /ko -->
+  <div class="col-sm-offset-1 col-sm-11 col-xs-12">
+    <div class="container-fluid">
+      <!-- ko with: currentStep -->
+			<div data-bind="template: {
+			    data: $data,
+			    name: TEMPLATE_FILE,
+			    templateUrl: 'templates'
+			  }"></div>
+      <!-- /ko -->
+			<hr />
+      <div class="spacer"></div>
+      <div class="row">
+        <!-- ko if: shouldShowBackButton -->
+        <div class="col-xs-2 col-sm-offset-1">
+          <button data-bind="click: backButton" class="btn btn-default">
+            Back
+          </button>
         </div>
         <!-- /ko -->
-      </div>
-    </div>
-    <div class="row row-padded">
-      <div class="col-md-6">
-        <!-- ko if: showPrevButton -->
-        <button data-bind="click: prevStep" type="button"
-          class="btn btn-default pull-right">Back
-        </button>
+        <!-- ko if: shouldShowNextButton -->
+        <div class="col-2-xs col-sm-offset-7 col-xs-offset-10">
+          <button data-bind="click: nextButton" class="btn btn-primary">
+            Next
+          </button>
+        </div>
         <!-- /ko -->
-      </div>
-      <div class="col-md-6">
-        <!-- ko if: complete -->
-        <button data-bind="click: submit" type="submit"
-          class="btn btn-primary pull-left">Start Playing!
-        </button>
+        <!-- ko if: shouldShowStartButton -->
+        <div class="col-2-xs col-sm-offset-7 col-xs-offset-10">
+          <button data-bind="click: nextButton" class="btn btn-primary">
+            Get Started
+          </button>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: shouldShowFinishButton -->
+        <div class="col-2-xs col-sm-offset-7 col-xs-offset-10">
+          <button data-bind="click: finishButton" class="btn btn-primary">
+            Finish
+          </button>
+        </div>
         <!-- /ko -->
       </div>
     </div>
