@@ -30,6 +30,11 @@
             Property
             <span data-bind="css: sortArrow('weaponProperty')"></span>
           </th>
+          <th class="hidden-sm hidden-xs"
+            data-bind="click: function(){sortBy('weaponQuantity');}">
+            Quantity
+            <span data-bind="css: sortArrow('weaponQuantity')"></span>
+          </th>
           <th>
             <a data-toggle="modal"
                data-target="#addWeapon" href="#">
@@ -63,6 +68,11 @@
               data-target="#viewWeapon"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponProperty, click: $parent.editWeapon"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewWeapon"></td>
+          <td class="hidden-sm hidden-xs"
+              data-bind="text: weaponQuantity, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
               data-target="#viewWeapon"></td>
