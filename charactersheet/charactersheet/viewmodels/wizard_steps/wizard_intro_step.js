@@ -41,8 +41,13 @@ function WizardIntroStepViewModel() {
 
     self.toggleWellOpen = function() {
         self.wellOpen(!self.wellOpen());
-        var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
-        document.getElementById('dropbox-container').appendChild(button);
+
+        //Make sure only one dropbox button is created
+        var dropboxContainer = document.getElementById('dropbox-container');
+        if(dropboxContainer.childNodes.length < 1){
+            var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
+            dropboxContainer.appendChild(button);
+        }
     };
 
     self.arrowIconClass = ko.pureComputed(function() {
