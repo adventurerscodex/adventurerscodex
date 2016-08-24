@@ -26,8 +26,7 @@ function WizardIntroStepViewModel() {
 
     self.load = function() {
         //Initialize dropbox integrations.
-        //var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
-        //document.getElementById('dropbox-container').appendChild(button);
+
 
         //Set default value to player atm.
         self.setPlayerType('player');
@@ -42,6 +41,8 @@ function WizardIntroStepViewModel() {
 
     self.toggleWellOpen = function() {
         self.wellOpen(!self.wellOpen());
+        var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
+        document.getElementById('dropbox-container').appendChild(button);
     };
 
     self.arrowIconClass = ko.pureComputed(function() {
