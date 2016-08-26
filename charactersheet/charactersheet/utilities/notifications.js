@@ -126,5 +126,12 @@ var Notifications = {
 
     spellStats: {
         changed: new signals.Signal()
+    },
+
+    wizard: {
+        /**
+         * Dispatched when the Wizard has completed making a character.
+         */
+        completed: new signals.Signal()
     }
 };
