@@ -1,3 +1,13 @@
+version 1.0 (08/27/2016)
+* Significant UI Refresh
+  * All new design for charactersheet and intro wizard.
+* The triumphant return of the quantity field to the weapons table.
+* Fixes criteria for Daily Features resetting on short rest
+* Fixes issue with stepper UI.
+* Fixes issue where Daily Features colors would repeat.
+* Minor Text Fixes
+* Increases application testing
+
 version 0.0.12 (07/05/2016)
 * **Huge!** Fixes an issue where importing a character would lose data
 * **Huge!** Fixes an issue where exporting a character would lose data
