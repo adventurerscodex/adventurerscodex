@@ -36,7 +36,8 @@
    </div>
    <div class="col-md-6 col-padded">
      <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Passive Wisdom</span> <span class="input-group-addon" id="basic-addon3" data-bind="text: otherStats().passiveWisdom"></span>
+       <span class="input-group-addon" id="basic-addon2">Passive Wisdom</span>
+         <span class="input-group-addon" id="basic-addon3" data-bind="text: otherStats().passiveWisdom"></span>
      </div>
    </div>
  </div>
@@ -56,6 +57,23 @@
        <div class="form-control" data-bind="foreach: deathSaveFailureList">
          <input type="checkbox" data-bind="attr: { id: $index, name: $index }, checked: deathSaveFailure" />
        </div>
+     </div>
+   </div>
+ </div>
+ <!--  Level and exp -->
+ <div class="row">
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Level</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2"
+        data-bind='textInput: level' min="0">
+     </div>
+   </div>
+   <div class="col-md-6 col-padded">
+     <div class="input-group">
+       <span class="input-group-addon" id="basic-addon2">Experience</span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2"
+        data-bind='textInput: experience' min="0">
      </div>
    </div>
  </div>

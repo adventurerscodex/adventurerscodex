@@ -10,6 +10,8 @@ function StatsViewModel() {
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
+    self.level = ko.observable('');
+    self.experience = ko.observable('');
 
     var msg = 'Dexterity Bonus';
     self.initiativeTooltip = ko.observable(msg);
@@ -77,12 +79,17 @@ function StatsViewModel() {
             for(var j=3; j<6;j++){
                 self.deathSaveFailureList.push(deathSaveList[j]);
             }
-        }
-        else{
+        } else{
             for(var k=0; k<3;k++){
                 self.deathSaveSuccessList.push(new DeathSave());
                 self.deathSaveFailureList.push(new DeathSave());
             }
+        }
+
+        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        if (profile) {
+            self.level(profile.level());
+            self.experience(profile.exp());
         }
 
         self.deathSaveSuccessList().forEach(function(e, i, _) {
@@ -97,6 +104,8 @@ function StatsViewModel() {
         self.health().damage.subscribe(self.dataHasChanged);
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().ac.subscribe(self.dataHasChanged);
+        self.level.subscribe(self.dataHasChanged);
+        self.experience.subscribe(self.dataHasChanged);
 
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.skills.changed.add(self.calculatePassiveWisdom);
@@ -199,5 +208,12 @@ function StatsViewModel() {
         self.otherStats().save();
         self.health().save();
         Notifications.stats.changed.dispatch();
+
+        //Save level and exp in profile model
+        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        profile.level(self.level());
+        profile.exp(self.experience());
+        profile.save();
+        Notifications.profile.changed.dispatch();
     };
 }

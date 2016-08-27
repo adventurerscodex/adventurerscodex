@@ -1,5 +1,5 @@
 <div class="panel panel-default bio">
-  <div class="panel-body" data-bind="with: profile">
+  <div class="panel-body">
   	<!-- Names -->
 	  <div class="row">
       <div class="col-md-6 col-padded">
@@ -51,7 +51,7 @@
         </div>
       </div>
     </div>
-	  <div class="row">
+    <div class="row">
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Gender</span>
@@ -61,31 +61,27 @@
       </div>
       <div class="col-md-6 col-padded">
         <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Alignment</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: alignment'>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-padded">
+        <div class="input-group">
+          <span class="input-group-addon" id="basic-addon2">Religion</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: religion'>
+        </div>
+      </div>
+      <div class="col-md-6 col-padded">
+        <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Age</span>
-          <input type="number"
-                 class="form-control"
-                 aria-describedby="basic-addon2"
-                 min="1"
-                 max="1500"
-                 data-bind='textInput: age'>
+          <input type="text" class="form-control" aria-describedby="basic-addon2"
+            data-bind='textInput: age'>
         </div>
       </div>
-  	</div>
-	  <div class="row">
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Level</span>
-          <input type="number" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: level'>
-        </div>
-      </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-		      <span class="input-group-addon" id="basic-addon2">Experience</span>
-		      <input type="number" class="form-control" aria-describedby="basic-addon2"
-			      data-bind='textInput: exp'>
-	      </div>
-	    </div>
-	  </div>
+    </div>
 	</div>
 </div>
