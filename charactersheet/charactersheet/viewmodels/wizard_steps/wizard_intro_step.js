@@ -19,15 +19,14 @@ function WizardIntroStepViewModel() {
 
     self.fileContents = ko.observable();
     self.fileReader = new FileReader();
+    self.character = null;
+    self.fromRemoteFile = false;
 
     // View Model Methods
 
     self.init = function() { };
 
     self.load = function() {
-        //Initialize dropbox integrations.
-
-
         //Set default value to player atm.
         self.setPlayerType('player');
         self.ready(true);
@@ -57,20 +56,24 @@ function WizardIntroStepViewModel() {
     self.importFromFile = function() {
         //The first comma in the result file string is the last
         //character in the string before the actual json data
-        var length = self.fileReader.result.indexOf(',') + 1;
-        var values = JSON.parse(atob(self.fileReader.result.substring(
-            length, self.fileReader.result.length)));
+        if(!self.fromRemoteFile){
+            var length = self.fileReader.result.indexOf(',') + 1;
+            var values = JSON.parse(atob(self.fileReader.result.substring(
+                length, self.fileReader.result.length)));
+            var character = Character.importCharacter(values);
 
-        var character = Character.importCharacter(values);
+            self._setImportReady(character.key());
+        }
+        else {
+            self._setImportReady(self.character.key());
+        }
 
-        self._setImportReady(character.key());
     };
 
     WizardIntroStepViewModel.importRemoteFile = function(files) {
         $.getJSON(files[0].link).done(function(data) {
-            var character = Character.importCharacter(data);
-            // CharacterManager.changeCharacter(character.key());
-            self._setImportReady(character.key());
+            self.fromRemoteFile = true;
+            self.character = Character.importCharacter(data);
         }).error(function(err) {
             //TODO: Alert user of error
         });
