@@ -4,7 +4,7 @@
 Welcome to Adventurer&rsquo;s&nbsp;Codex <sup style="color:orange;">Beta!</sup></h1>
 </div>
 
-[![Build Badge](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io.svg)](https://travis-ci.org/adventurerscodex/adventurerscodex.github.io)
+[![Build Status](https://travis-ci.org/adventurerscodex/adventurerscodex.svg?branch=develop)](https://travis-ci.org/adventurerscodex/adventurerscodex)
 [![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex.github.io/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex.github.io?branch=develop)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sonictherocketman/adventurerscodex)
 
@@ -14,96 +14,49 @@ A tool to help D&D 5e players keep their ducks in a row.
 What is it?
 ===========
 
-Charactersheet is a project that aims to take the friction out of some aspects of playing D&D while not removing the classic elements of the game. Unlike other tools, this project is not aiming to automate elements like rolling dice, or leveling up. We've found that tools trying to make the game simpler, actually make it harder for players by forcing them to play by-the-book. There's usually no regard for house rules.
+A fun, easy to use, Open Source tool for tabletop RPG players to manage their characters, campaigns, and parties. Our goal is to help you focus more on the game by bringing your paper character sheets into the 21st century.
 
-Charactersheet's goal is to make the game more immersive, and bring it into the 21st century.
-
-
-Features
-========
-
-BETA NOTICE: Not all features are implemented, but they will be soon!
-
-Adventurer’s Codex is a tool to help you as players or as the Dungeon Master keep track of your game and characters. The best part is that as more of your party uses it, the app gets even better! But remember, you don’t need the whole group to use it for you to reap the benefits!
+Check out the [site][ac], or follow our [blog][blog].
 
 
-For players
+FOR PLAYERS
 -----------
 
-Access to your character’s stats, skills, spells, and more in an easy, intuitive interface.
-
-Quickly find the information you need with searchable, filterable tables making it easier to find and use those spur of the moment abilites.
-
-Make multiple characters and play them at the same time! Do you control a host of minions, or henchmen? Give them each a character sheet and bring them to life!
-
-Leveling up can be complex, and there's a lot of things to update. We provide some recommendations when you reach the next level to help you get past the pesky numbers and back to the game.
-
-Need a long rest? We can help with that too. With our auto-long-rest feature, you’ll be sure to get all the benefits of a good night sleep.
+Keep track of you character's equipment, skills, spells, saving throws, and more. Say goodbye to that eraser-marked character sheet, and say hello to the future!
 
 
-For DMs
+FOR DMS
 -------
 
-Keep track of your campaign easily with rich text, searchable notes.
+Manage your campaign by keeping track of enemies, and friendly NPCs, as well as any notes, maps, custom items, and whatever else you've created!
 
-Prepare enemies and terrain ahead of time, and be ready for that encounter.
-
-Do you have an important NPC that you want to bring to life? Make them a character sheet and get all of the advantages of Adventurer’s Codex that your players do.
+**Coming soon...**
 
 
-For Parties
------------
+FOR ENTIRE PARTIES
+------------------
 
-Once more than one of your party members starts using Adventurer’s Codex, then you’ll really start to see the benefits.
+Take advantage of innovative features like group chat, advanced time-tracking, terrain visualizations, custom item sets, and a combat management tool!
 
-See what you’re up against! The DM can present pictures of enemies, and terrain to players. This helps the DM paint a better picture of events so the players will be able to better visualize their situation.
+**Coming soon...**
 
-Have you ever been betrayed by a player not respecting what their character shouldn’t know? We’ve all been there. It’s hard to separate player-knowledge from character-knowledge, so we’ve made something to help! With private chat, you can talk directly to the player you want to talk with, and be sure there’ll be no eavesdropping.
+Getting Started
+===============
 
-Certain actions only make sense during certain times of day. With our day-night feature, you’ll always know the current time and weather of the land. The DM can configure the precise time, day, and weather instantly so that the players will always be aware of the changing seasons.
-
-
-
-Where's my data stored?
-=======================
-
-Here's the cool part: all your data is stored on your local machine! There's no server that's keeping a log of your characters, your adventures, or your party!
-
-Charactersheet uses HTML Local Storage to ensure that all your data is stored locally. Data may be *sent through* our servers, but it's never *stored on* them.
-
-
-Installation
-============
-
-Installing charactersheet is pretty simple.
-
-        mkdir charactersheet
-        git clone https://github.com/charactersheet/charactersheet.git charactersheet
-        cd charactersheet
-        npm install
-        npm test
-
-That's it! If everything is green, then you're good to go!
-
-
-Running
-============
-
-Now we only need to install a module called "serve" for serving our files and run it.
-
-        npm install serve -g
-        cd charactersheet && serve
-
-You can now start your new adventures!
+Adventurer's Codex is hosted at [adventurerscodex.com](https://adventurerscodex.com), and you can use the app for free there. If you're looking to host the application yourself, either locally or on a server, then checkout our [Getting Started][gs] instructions.
 
 
 Have questions or just want to chat?
 =====================
 
-Join the conversations at: https://gitter.im/Sonictherocketman/adventurerscodex
+Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventurerscodex)
 
 
 How can I contribute?
 =====================
 
 You should check out our `CONTRIBUTING.md`! We'd love the help!
+
+[blog]: https://adventurerscodex.com/blog.html
+[ac]: https://adventurerscodex.com
+[gs]: https://github.com/adventurerscodex/adventurerscodex/blob/develop/docs/getting_started.md#getting-started

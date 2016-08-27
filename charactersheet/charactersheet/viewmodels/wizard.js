@@ -1,133 +1,264 @@
 'use strict';
 
+/**
+ * This view model contains the root implementation of the wizard.
+ * Each individual view inside the wizard must conform to the following
+ * list of properties and methods in order to be presented by the wizard.
+ *
+ *  WizardStepViewModels
+ *      - ready { must be callable and return true/false } Indicates
+ *      whether or not the view model has the required data.
+ *      - results { an array-like object of results } Should contain the
+ *      relevant results in order to determine the next step.
+ *
+ * This view model uses the above properties to determine how/when to allow
+ * the user to move through the process.
+ *
+ * To add steps: add an entry to the Fixtures.wizard.steps settings.
+ *
+ */
 function WizardViewModel() {
     var self = this;
 
-    self.STEPS = ['type', 'info'];
-
-    self.type = ko.observable();
-    self.playerInfo = ko.observable(new PlayerInfo());
-
-    self.fileContents = ko.observable();
-    self.fileReader = new FileReader();
-
-    self.profile = ko.observable(new Profile());
-    self.currentStep = ko.observable(0);
-
-    //UI Handlers
-
-    self.showPrevButton = ko.pureComputed(function() {
-        return self.currentStep() > 0;
-    });
-
-    self.showQuestion1 = ko.pureComputed(function() {
-        return self.currentStep() === 0;
-    });
-
-    self.showQuestion2 = ko.pureComputed(function() {
-        return self.currentStep() === 1;
-    });
-
-    self.showProfile = ko.pureComputed(function() {
-        return self.currentStep() > 0 && self._isPlayer();
-    });
-
-    self.setPlayerType = function() {
-        self.type(PlayerTypes.characterPlayerType);
-        self.nextStep();
-    };
-
-    //Step Management
-
-    self.nextStep = function() {
-        self.currentStep(self.currentStep() + 1);
-    };
-
-    self.prevStep = function() {
-        self.currentStep(self.currentStep() - 1);
-    };
+    self.previousSteps = ko.observableArray([]);
+    self.currentStep = ko.observable(null);
+    self.nextStep = ko.observable(null);
 
     /**
-     * Returns if all of the required data is entered.
+     * A marker than the wizard is complete and that the
+     * finish button should be visible.
      */
-    self.complete = ko.pureComputed(function() {
-        var complete = false;
-        if (self._isPlayer()) {
-            complete = (self.profile().characterName() &&
-                self.profile().playerName());
+    self._isComplete = ko.observable(false);
+
+    self._currentStepReadySubscription = null;
+
+    // View Model Methods
+
+    self.init = function() { };
+
+    self.load = function() {
+        self.getNextStep();
+        self.goForward();
+    };
+
+    self.unload = function() {
+        self.reset();
+    };
+
+    // Step Management Methods
+
+    /**
+     * If possible, progresses to the next step. The method also pushes the
+     * previous step onto the list of previous steps.
+     */
+    self.goForward = function() {
+        var nextStepDescriptor = self.nextStep();
+        // Don't push empty steps.
+        if (self.currentStep()) {
+            self.previousSteps.push(self.currentStep());
         }
-        return self.currentStep() > 0 && complete;
-    });
+
+        self.currentStep(nextStepDescriptor.viewModel);
+        self._initializeStep(self.currentStep());
+    };
 
     /**
-     * Saves the newly created character to the database and alerts
-     * the rest of the application.
+     * If possible, reverts the steps by 1. This method allows the
+     * current step to unload before loading the previous step.
+     * **Warning** This method wil destroy any information saved
+     * on the current step.
      */
-    self.submit = function() {
-        var character;
-        character = self._savePlayer();
-        CharacterManager.changeCharacter(character.key());
-        self.clear();
-        self.currentStep(0);
+    self.goBackward = function() {
+        // In case it's the final step, clear the flag.
+        if (self._isComplete()) { self._isComplete(false); }
+        if (self.previousSteps().length === 0) { return; }
+
+        self._deinitializeStep(self.currentStep());
+
+        var previousStep = self.previousSteps.pop();
+        self.currentStep(previousStep);
+
+        self._initializeStep(self.currentStep());
+        self.getNextStep();
     };
 
-    self.clear = function() {
-        self.profile(new Profile());
+
+    /**
+     * Fetches the next step based on the results of the current step,
+     * and initializes that step.
+     *
+     * Side effect: If no next step exists, the _isComplete attribute
+     * is set to true.
+     *
+     * Side effect: If a step should cause the wizard to terminate, then
+     * the it is immediately done.
+    */
+    self.getNextStep = function() {
+        // Do not progress if the step isn't ready.
+        if (self.currentStep() && !self.currentStep().ready()) { return; }
+
+        var nextStepDescriptor = self._determineStepAfterStep(self.currentStep());
+        if (!nextStepDescriptor.viewModel) {
+            self._isComplete(true);
+        }
+        if (nextStepDescriptor.terminate) {
+            self.terminate();
+            return;
+        }
+        self.nextStep(nextStepDescriptor);
     };
 
-    self.importFromFile = function() {
-        //The first comma in the result file string is the last
-        //character in the string before the actual json data
-        var length = self.fileReader.result.indexOf(',') + 1;
-        var values = JSON.parse(atob(self.fileReader.result.substring(
-            length, self.fileReader.result.length)));
-
-        var character = Character.importCharacter(values);
-        Notifications.characters.changed.dispatch();
-
-        CharacterManager.changeCharacter(character.key());
-        self.clear();
-        self.currentStep(0);
-    };
-
-    WizardViewModel.importRemoteFile = function(files) {
-        $.getJSON(files[0].link).done(function(data) {
-            var character = Character.importCharacter(data);
-            Notifications.characters.changed.dispatch();
-
+    /**
+     * When called, immediately terminate the wizard and notify the
+     * system of successful completion.
+     */
+    self.terminate = function() {
+        // Newest character will be at the back.
+        //Notifications.wizard.completed.dispatch();
+        var character = Character.findAll().reverse()[0];
+        if (character) {
             CharacterManager.changeCharacter(character.key());
-            $('#importModal').modal('hide');
-        }).error(function(err) {
-            //TODO: Alert user of error
-        });
-    };
-
-    //Private Methods
-
-    self._isPlayer = function() {
-        try {
-            return self.type().key === PlayerTypes.characterPlayerType.key;
-        } catch(err) {
-            return false;
         }
     };
 
-    self._savePlayer = function() {
+    /**
+     * Resets the wizard back to the first step.
+     */
+    self.reset = function() {
+        self.previousSteps([]);
+        self.currentStep(null);
+        self.nextStep(null);
+        self._isComplete(false);
+        self._currentStepReadySubscription = null;
+
+        self.getNextStep();
+        self.goForward();
+    };
+
+    /**
+     * Progress through all previous and current steps and save their data.
+     */
+    self.save = function() {
         var character = new Character();
         character.key(uuid.v4());
-        character.playerType(self.type());
-
-        if (!CharacterManager.defaultCharacter()) {
-            character.isDefault(true);
-        }
         character.save();
 
-        self.profile().characterId(character.key());
-        self.profile().save();
+        var profile = new Profile();
+        var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
+            return step.IDENTIFIER === 'WizardProfileStep';
+        });
 
-        self.playerInfo().characterId(character.key());
-        self.playerInfo().save();
+        var data = profileStepViewModel[0].results();
+        data.characterId = character.key();
+        profile.importValues(data);
+        profile.save();
 
-        return character;
+        var playerInfo = new PlayerInfo();
+        playerInfo.characterId(character.key());
+        playerInfo.save();
+
+
+        //TODO: Save the results of all child steps.
     };
+
+    // UI Helper Methods
+
+    self.shouldShowStartButton =  ko.pureComputed(function() {
+        return self.previousSteps().length === 0;
+    });
+
+    self.shouldShowNextButton = ko.pureComputed(function() {
+        return self.currentStep()
+            && self.currentStep().ready()
+            && !self.shouldShowFinishButton()
+            && !self.shouldShowStartButton();
+    });
+
+    self.shouldShowBackButton = ko.pureComputed(function() {
+        return self.previousSteps().length != 0;
+    });
+
+    self.shouldShowFinishButton = ko.pureComputed(function() {
+        return self._isComplete();
+    });
+
+    // Button Methods
+
+    self.nextButton = function() {
+        self.goForward();
+    };
+
+    self.backButton = function() {
+        self.goBackward();
+    };
+
+    self.finishButton = function() {
+        self.save();
+        self.terminate();
+        self.reset();
+    };
+
+    // Private Methods
+
+    self._initializeStep = function(step) {
+        //Set the determination to occur when the current step is deemed ready.
+        self._currentStepReadySubscription = step.ready.subscribe(self.getNextStep);
+
+        step.init();
+        step.load();
+    };
+
+    self._deinitializeStep = function(step) {
+        step.unload();
+        self._currentStepReadySubscription.dispose();
+    };
+
+    self.allSteps = function() {
+        return self.previousSteps().concat([self.currentStep()]);
+    };
+
+    /**
+     * Given a step use it's results to determine the next step in the sequence.
+     *
+     * @params currentStep {viewModel} The current view model object.
+     * @returns {NextStepDescriptor} Returns a descriptor of what to do next.
+     */
+    self._determineStepAfterStep = function(currentStep) {
+        var nextStep = null;
+        if (!currentStep) {
+            return new NextStepDescriptor(new WizardIntroStepViewModel(), false);
+        }
+
+        var results = currentStep.results();
+        if (currentStep.IDENTIFIER === 'WizardIntroStep') {
+            if (results['import']) {
+                return new NextStepDescriptor(null, true);
+            } else if (results['PlayerType'] === 'player') {
+                return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
+            } else {
+                throw 'Assertion Failure: Unknown Result Type';
+            }
+        }
+
+        if (currentStep.IDENTIFIER === 'WizardProfileStep') {
+            return new NextStepDescriptor(null, false);
+        }
+
+        //TODO Add more steps here.
+
+    };
+}
+
+
+/**
+ * This model describes the next step to be taken and the various options
+ * that are allowed.
+ *
+ * @param viewModel {object or null} an step view model to progress to if provided.
+ * @param terminate {boolean} whether or not to terminate the wizard and return to
+ * the main application.
+ */
+function NextStepDescriptor(viewModel, terminate) {
+    this.viewModel = viewModel || null;
+    this.terminate = terminate || false;
 }
