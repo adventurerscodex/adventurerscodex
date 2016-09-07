@@ -381,6 +381,15 @@ div.h3 small {
   border-top: 1px solid #e5e5e5;
 }
 
+ul.footer-icons li {
+  margin: 0px 10px;
+  display:inline;
+}
+
+.social-media {
+  color: #798d8f;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
