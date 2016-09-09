@@ -7,9 +7,7 @@ function PlayerImageViewModel() {
      * KO File Drag binding places new image data here, it
      * is moved to the `imageData` property on change.
      */
-    self.dropzone = ko.observable({
-        dataURL: ko.observable()
-    });
+    self.dropzone = ko.observable();
 
     /**
      * The image data that is displayed. The image is fed from the dropzone.
@@ -29,13 +27,19 @@ function PlayerImageViewModel() {
             self.imageData(image[0].imageUrl() || '');
         }
 
-        //Subscriptions
+        //Create a new dropzone, and subscribe to changes.
+        self.dropzone = ko.observable({
+            dataURL: ko.observable()
+        });
         self.dropzone().dataURL.subscribe(self.dropzoneHasChanged);
+
+        //Subscriptions
         Notifications.playerInfo.changed.add(self.emailHasChanged);
     };
 
     self.unload = function() {
         self.saveData();
+        self.clear();
         Notifications.playerInfo.changed.remove(self.emailHasChanged);
     };
 
@@ -44,10 +48,14 @@ function PlayerImageViewModel() {
      */
     self.dropzoneHasChanged = function() {
         var dropzoneData = self.dropzone().dataURL();
-        if (dropzoneData) {
-            self.imageData(dropzoneData);
-            self.saveData();
-            self._clearDropzone();
+        if (!dropzoneData) { return; }
+
+        self.imageData(dropzoneData);
+
+        // Alert the user if the save failed.
+        if (!self.saveData()) {
+            alert('This image is too large to save in your storage.\n'
+                + 'Please select a smaller image to use.');
         }
     };
 
@@ -62,28 +70,35 @@ function PlayerImageViewModel() {
         }
     };
 
+    /**
+     * Attempts to save the current user's image data.
+     * Note: Upon an unsuccessful save, the image data is reverted to
+     * the previous value.
+     * @returns whether or not the save was successful.
+     */
     self.saveData = function() {
         var results = ImageModel.findBy(CharacterManager.activeCharacter().key());
         var image = results.length > 0 ? results[0] : new ImageModel();
 
         image.characterId(CharacterManager.activeCharacter().key());
+
+        var oldImageData = image.imageUrl();
         image.imageUrl(self.imageData());
 
         try {
             image.save();
         } catch(err) {
-            alert('This image is too large to save in your storage.\n'
-            + 'We will show it for now, but we will not save the image.');
+            self.imageData(oldImageData);
+            image.imageUrl(oldImageData);
+            image.save();
+            return false;
         }
+        return true;
     };
 
     //Public Methods
 
     self.clear = function() {
-        var results = ImageModel.findBy(CharacterManager.activeCharacter().key());
-        if (results.length > 0) {
-            results[0].clear();
-        }
         self.imageData('');
     };
 
