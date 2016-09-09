@@ -84,7 +84,7 @@ Fixtures = {
             'Bludgeoning', 'Piercing', 'Slashing']
     },
     resting : {
-        shortRestMessage : 'Your spell slots and daily features have been restored.',
+        shortRestMessage : 'Your daily features have been restored.',
         longRestMessage : 'Your hit dice, spell slots, hit points, ' +
             'and daily features have been restored.'
     }
