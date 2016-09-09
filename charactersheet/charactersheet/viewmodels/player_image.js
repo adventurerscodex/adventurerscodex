@@ -5,82 +5,86 @@ function PlayerImageViewModel() {
 
     /**
      * KO File Drag binding places new image data here, it
-     * is moved to the `image` property on change.
+     * is moved to the `imageData` property on change.
      */
-    self.dropzone = ko.observable(new ImageModel());
+    self.dropzone = ko.observable({
+        dataURL: ko.observable()
+    });
 
     /**
      * The image data that is displayed. The image is fed from the dropzone.
      */
-    self.image = ko.observable(new ImageModel());
+    self.imageData = ko.observable('');
+
+    self.height = ko.observable(80);
+    self.width = ko.observable(80);
 
     self.init = function() {
-        Notifications.global.save.add(function() {
-            self.image().save();
-        });
+        Notifications.global.save.add(self.saveData);
     };
 
     self.load = function() {
         var image = ImageModel.findBy(CharacterManager.activeCharacter().key());
         if (image.length > 0) {
-            self.image(image[0]);
-        } else {
-            self.image(new ImageModel());
+            self.imageData(image[0].imageUrl() || '');
         }
 
         //Subscriptions
-        self.dropzone.subscribe(self.fetchImageFromDropzone);
-        self.image().dataUrl.subscribe(self.dataHasChanged);
-        Notifications.playerInfo.changed.add(self.checkImage);
+        self.dropzone().dataURL.subscribe(self.dropzoneHasChanged);
+        Notifications.playerInfo.changed.add(self.emailHasChanged);
     };
 
     self.unload = function() {
-        self.image().save();
-        Notifications.playerInfo.changed.remove(self.checkImage);
-    };
-
-    self.dataHasChanged = function() {
-        //Remove the old email.
-        var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
-        try {
-            info[0].clear();
-        } catch(err) { /*Ignore*/ }
-        //return false;
-
-        self.image().save();
-        Notifications.playerImage.changed.dispatch();
+        self.saveData();
+        Notifications.playerInfo.changed.remove(self.emailHasChanged);
     };
 
     /**
-     * Whenever the player's email changes, re-evaluate if/what image
-     * should be shown.
+     * Whenever the dropzone changes, then use the value of that, then clear it.
      */
-    self.checkImage = function() {
-        var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
-        try {
-            var email = info[0].email();
-            if (email) {
-                self.image().imageUrl(info[0].gravatarUrl());
-                self.image().save();
-                Notifications.playerImage.changed.dispatch();
-            }
-        } catch(err) { /*Ignore*/ }
-        return false;
+    self.dropzoneHasChanged = function() {
+        var dropzoneData = self.dropzone().dataURL();
+        if (dropzoneData) {
+            self.imageData(dropzoneData);
+            self.saveData();
+            self._clearDropzone();
+        }
     };
 
-
     /**
-     * When called this handler migrates the data from
-     * `self.dropzone` to `self.image`.
+     * Whenever the player's email changes, if a valid gravatar email
+     * is found, use that.
      */
-    self.fetchImageFromDropzone = function() {
-        self.image().dataUrl(self.dropzone().dataUrl());
+    self.emailHasChanged = function() {
+        if (self._playerHasValidGravatarImage()) {
+            self.imageData(self._getGravatarURL());
+            self.saveData();
+        }
+    };
+
+    self.saveData = function() {
+        var results = ImageModel.findBy(CharacterManager.activeCharacter().key());
+        var image = results.length > 0 ? results[0] : new ImageModel();
+
+        image.characterId(CharacterManager.activeCharacter().key());
+        image.imageUrl(self.imageData());
+
+        try {
+            image.save();
+        } catch(err) {
+            alert('This image is too large to save in your storage.\n'
+            + 'We will show it for now, but we will not save the image.');
+        }
     };
 
     //Public Methods
 
     self.clear = function() {
-        self.image().clear();
+        var results = ImageModel.findBy(CharacterManager.activeCharacter().key());
+        if (results.length > 0) {
+            results[0].clear();
+        }
+        self.imageData('');
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
@@ -90,34 +94,31 @@ function PlayerImageViewModel() {
     //Player Image Handlers
 
     self.hasImage = ko.computed(function() {
-        if (self.image().hasData()) {
-            return true;
-        } else {
-            return false;
-        }
+        return self.imageData().length > 0;
     });
 
     self.playerImageSrc = ko.computed(function() {
-        if (self.image().hasData()) {
-            return self.image().imageUrl();
-        } else {
-            return '';
-        }
+        return self.imageData();
     });
 
-    self.playerImageHeight = ko.computed(function() {
-        if (self.image().hasData()) {
-            return self.image().height();
-        } else {
-            return '';
-        }
-    });
+    // Private Methods
 
-    self.playerImageWidth = ko.computed(function() {
-        if (self.image().hasData()) {
-            return self.image().width();
-        } else {
-            return '';
-        }
-    });
+    self._playerHasValidGravatarImage = function() {
+        var email = self._getGravatarURL();
+        return email ? true: false;
+    };
+
+    self._getGravatarURL = function() {
+        var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
+        try {
+            var email = info[0].email();
+            if (email) {
+                return info[0].gravatarUrl();
+            }
+        } catch(err) { /*Ignore*/ }
+    };
+
+    self._clearDropzone = function() {
+        self.dropzone().dataURL('');
+    };
 }

@@ -32,6 +32,9 @@ describe('ProfileTabViewModel', function(){
 
     describe('Unload', function() {
         it('should unload the sub view models', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(
+                MockCharacterManager.activeCharacter);
+
             var vm = new ProfileTabViewModel();
             var notifySpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels');
 
