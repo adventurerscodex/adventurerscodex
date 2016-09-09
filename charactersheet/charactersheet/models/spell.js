@@ -35,7 +35,7 @@ function Spell() {
     self.spellDamageLabel = ko.pureComputed(function() {
         var charKey = CharacterManager.activeCharacter().key();
 
-        if( self.spellType() === 'Attack' ){
+        if( self.spellType() === 'Attack Roll' ){
             var spellBonus = SpellStats.findBy(charKey)[0] ? SpellStats.findBy(charKey)[0].spellAttackBonus() : 0;
             return (self.spellDmg() + ' [Spell Bonus: +' + spellBonus + ']');
         }
