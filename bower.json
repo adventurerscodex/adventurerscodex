@@ -36,6 +36,9 @@
     "blueimp-md5": "~2.1.0",
     "font-awesome": "~4.6.1"
   },
+  "resolutions": {
+    "webcomponentsjs": "~0.5.4"
+  },
   "devDependencies": {
     "simple-mock": "~0.6.0"
   }
