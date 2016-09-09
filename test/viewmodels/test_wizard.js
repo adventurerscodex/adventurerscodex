@@ -202,6 +202,7 @@ describe('Wizard ViewModel', function(){
             step.terminate.should.equal(false);
             Should.exist(step.viewModel);
         });
+
         it('should determine the next step given an "import" intro step.', function() {
             var wizard = new WizardViewModel();
             var currentStep = new WizardIntroStepViewModel();
@@ -232,6 +233,7 @@ describe('Wizard ViewModel', function(){
                 (true).should.equal(true);
             }
         });
+
         it('should determine the next step given a profile step.', function() {
             var wizard = new WizardViewModel();
             var currentStep = new WizardProfileStepViewModel();
@@ -239,12 +241,23 @@ describe('Wizard ViewModel', function(){
 
             var step = wizard._determineStepAfterStep(currentStep);
             step.terminate.should.equal(false);
-            Should.not.exist(step.viewModel);
+            Should.exist(step.viewModel);
         });
-
         it('should do nothing given an incorrect current step.', function() {
             var wizard = new WizardViewModel();
             var currentStep = new WizardProfileStepViewModel();
+            simple.mock(currentStep, 'results').callFn(function() {});
+            currentStep.IDENTIFIER = 'SOME INVALID ID';
+
+            var step = wizard._determineStepAfterStep(currentStep);
+            Should.not.exist(step);
+        });
+
+        // Ability Scores
+
+         it('should move forward given an correct current step.', function() {
+            var wizard = new WizardViewModel();
+            var currentStep = new WizardAbilityScoresStepViewModel();
             simple.mock(currentStep, 'results').callFn(function() {});
             currentStep.IDENTIFIER = 'SOME INVALID ID';
 
