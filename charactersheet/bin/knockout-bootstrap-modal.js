@@ -19,15 +19,13 @@ ko.bindingHandlers.modal = {
         var openOrClosed = ko.utils.unwrapObservable(value.open);
         var callback = ko.utils.unwrapObservable(value.callback);
 
-        $(element).modal();
+        ko.bindingHandlers.modal.toggle(openOrClosed, element);
 
         if (callback) {
             // Register callbacks.
             $(element).on('hidden.bs.modal', callback);
             $(element).on('shown.bs.modal', callback);
         }
-
-        ko.bindingHandlers.modal.toggle(openOrClosed, element);
     },
 
     update: function(element, valueAccessor) {
