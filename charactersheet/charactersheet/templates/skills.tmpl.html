@@ -28,7 +28,8 @@
         </tr>
       </tbody>
     </table>
-    </div>
+  </div> <!-- Panel Body -->
+</div> <!-- Panel -->
     <!-- ViewEdit Modal -->
     <div data-bind="with: selecteditem">
     <div class="modal fade" id="viewSkill" tabindex="-1" role="dialog"
@@ -42,9 +43,9 @@
             </button>
             <h4 class="modal-title" id="addSkillLabel"
               data-bind="text: name"></h4>
-        </div>
+          </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" onsubmit="return false">
               <div class="form-group">
                 <label for="modifier" class="col-sm-2 control-label">
                   Modifier
@@ -69,16 +70,14 @@
                            data-bind="checked: proficiency">
                   </div>
               </div>
-              </div>
+              </div><!-- Modal Body -->
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-primary"
                         data-dismiss="modal">Done</button>
-              </div>
+              </div> <!-- Modal Footer -->
             </form>
-          </div> <!-- Modal Body -->
-        </div> <!-- Modal Content -->
-      </div> <!-- Modal Dialog -->
-    </div> <!-- Modal Fade -->
+          </div> <!-- Modal Content -->
+        </div> <!-- Modal Dialog -->
+      </div> <!-- Modal Fade -->
     </div> <!-- End with statement -->
-</div> <!-- Panel -->

@@ -73,7 +73,7 @@ describe('Spell Model', function() {
             });
 
             var ft = new Spell();
-            ft.spellType('Attack');
+            ft.spellType('Attack Roll');
             ft.spellDmg('1D4');
             ft.spellDamageLabel().should.equal('1D4 [Spell Bonus: +3]');
 
