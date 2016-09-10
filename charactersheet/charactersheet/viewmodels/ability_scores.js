@@ -31,6 +31,8 @@ function AbilityScoresViewModel() {
     var self = this;
 
     self.abilityScores = ko.observable(new AbilityScores());
+    self.modalStatus = ko.observable(false);
+    self.firstModalElementHasFocus = ko.observable(false);
 
     self.init = function() {
         Notifications.global.save.add(function() {
@@ -64,5 +66,18 @@ function AbilityScoresViewModel() {
     self.dataHasChanged = function() {
         self.abilityScores().save();
         Notifications.abilityScores.changed.dispatch();
+    };
+
+    // Modal Methods
+
+    self.openModal = function() {
+        self.modalStatus(true);
+         // Alert the modal even if the value didn't technically change.
+        self.modalStatus.valueHasMutated();
+    };
+
+    self.modalFinishedAnimating = function() {
+        self.firstModalElementHasFocus(true);
+        self.firstModalElementHasFocus.valueHasMutated();
     };
 }
