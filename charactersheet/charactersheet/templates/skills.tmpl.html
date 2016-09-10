@@ -31,9 +31,12 @@
   </div> <!-- Panel Body -->
 </div> <!-- Panel -->
     <!-- ViewEdit Modal -->
-    <div data-bind="with: selecteditem">
-    <div class="modal fade" id="viewSkill" tabindex="-1" role="dialog"
-         aria-labelledby="viewSkillLabel">
+  <div class="modal fade" tabindex="-1" role="dialog"
+       aria-labelledby="viewSkillLabel"
+       data-bind="modal: {
+          open: selecteditem,
+          callback: modalFinishedAnimating
+        }, with: selecteditem">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -53,7 +56,8 @@
                   <div class="col-sm-10">
                     <div class="input-group">
                       <input type="number" class="form-control" id="modifier"
-                             data-bind="value: modifier" />
+                             data-bind="value: modifier,
+                              hasFocus: $parent.modifierHasFocus" />
                       <span class="input-group-addon">Total:
                         <span data-bind="text: bonus"></span>
                       </span>

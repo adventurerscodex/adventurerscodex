@@ -108,7 +108,16 @@ function SkillsViewModel() {
             columnName, self.sorts));
     };
 
+    // Modal Methods
+
+    self.modifierHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+    };
+
     //Manipulating skills
+
     self.addSkill = function() {
         var skill = self.blankSkill();
         skill.characterId(CharacterManager.activeCharacter().key());
