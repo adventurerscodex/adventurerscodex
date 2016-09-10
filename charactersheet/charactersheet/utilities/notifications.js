@@ -87,6 +87,10 @@ var Notifications = {
      **** Data Changed Events ****
      *****************************/
 
+    actionsToolbar: {
+        toggle: new signals.Signal()
+    },
+
     abilityScores: {
         changed: new signals.Signal()
     },
