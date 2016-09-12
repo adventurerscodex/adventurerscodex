@@ -20,7 +20,7 @@
       <tbody data-bind='foreach: filteredAndSortedSkills'>
         <tr class="clickable" data-bind="click: $parent.editSkill">
           <td>
-            <span data-bind="css: proficiencyLabel"></span>
+            <prof-marker params="proficiencyType: proficiencyType"></prof-marker>
           </td>
           <td data-bind="text: name"></td>
           <td data-bind="html: bonusLabel"></td>
@@ -75,16 +75,19 @@
                       </label>
                       <label class="btn btn-default"
                              data-bind="css: { active: proficiencyType() == 'half'}">
+                        <prof-marker params="proficiencyType: 'half'"></prof-marker>
                         <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
                              name="halfProficient" value="half"/>Half
                       </label>
                       <label class="btn btn-default"
                              data-bind="css: { active: proficiencyType() == 'proficient'}">
-                       <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
+                        <prof-marker params="proficiencyType: 'proficient'"></prof-marker>
+                        <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
                               name="proficient" value="proficient"/>Proficient
                       </label>
                       <label class="btn btn-default"
                              data-bind="css: { active: proficiencyType() == 'expertise'}">
+                        <prof-marker params="proficiencyType: 'expertise'"></prof-marker>
                         <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
                                name="expertise" value="expertise"/>Expertise
                       </label>
