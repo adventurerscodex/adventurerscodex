@@ -396,3 +396,30 @@ body {
 /*
  * Modal Fix End
  */
+
+
+.ui-autocomplete {
+    z-index: 1051;
+}
+
+ul.ui-autocomplete {
+    margin: 0;
+    padding-left: 0;
+    border-color: #aaa;
+    border-radius: 0px 0px 4px 4px;
+    box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+}
+
+ul.ui-autocomplete li {
+    list-style: none;
+    display: list-item;
+    background-image: none;
+    min-height: 1em;
+    font-size: 15px;
+}
+
+
+ul.ui-autocomplete .ui-state-active {
+    background: #2c3e50;
+    color: #fff;
+}
