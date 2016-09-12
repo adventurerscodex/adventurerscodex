@@ -60,16 +60,35 @@
                     </div>
                   </div>
               </div>
+
               <div class="form-group">
-                <label for="proficiency"
-                       class="col-sm-2 control-label">Proficiency</label>
+                <label class="col-sm-2 control-label">Proficiency</label>
                   <div class="col-sm-10">
-                    <input type="checkbox"
-                           class="form-control"
-                           id="proficiency"
-                           data-bind="checked: proficiency">
+                    <div class="btn-group btn-group-justified" role="group">
+                      <label class="btn btn-default"
+                             data-bind="css: { active: proficiencyType() == 'not'}">
+                        <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
+                               name="notProficient" value="not"/>None
+                      </label>
+                      <label class="btn btn-default"
+                             data-bind="css: { active: proficiencyType() == 'half'}">
+                        <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
+                             name="halfProficient" value="half"/>Half
+                      </label>
+                      <label class="btn btn-default"
+                             data-bind="css: { active: proficiencyType() == 'proficient'}">
+                       <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
+                              name="proficient" value="proficient"/>Proficient
+                      </label>
+                      <label class="btn btn-default"
+                             data-bind="css: { active: proficiencyType() == 'expertise'}">
+                        <input type="radio" class="hide-block" data-bind="checked: proficiencyType"
+                               name="expertise" value="expertise"/>Expertise
+                      </label>
+                    </div>
                   </div>
-              </div>
+               </div>
+
               </div><!-- Modal Body -->
               <div class="modal-footer">
                 <button type="button"
