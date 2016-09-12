@@ -10,6 +10,7 @@ function Slot() {
     self.level = ko.observable(1);
     self.maxSpellSlots = ko.observable(1);
     self.usedSpellSlots = ko.observable(0);
+    self.resetsOn = ko.observable()
 
     self.color = ko.pureComputed(function() {
         return self.slotColors[self.level()-1];
@@ -38,6 +39,7 @@ function Slot() {
         self.level(values.level);
         self.maxSpellSlots(values.maxSpellSlots);
         self.usedSpellSlots(values.usedSpellSlots);
+        self.resetsOn(values.resetsOn);
     };
 
     self.exportValues = function() {
@@ -45,7 +47,8 @@ function Slot() {
             characterId: self.characterId(),
             level: self.level(),
             maxSpellSlots: self.maxSpellSlots(),
-            usedSpellSlots: self.usedSpellSlots()
+            usedSpellSlots: self.usedSpellSlots(),
+            resetsOn: self.resetsOn()
         };
     };
 
@@ -63,3 +66,9 @@ Slot.findAllBy = function(characterId) {
         return e.characterId() === characterId;
     });
 };
+
+Slot.REST_TYPE = {
+    SHORT_REST: 'short',
+    LONG_REST: 'long'
+};
+
