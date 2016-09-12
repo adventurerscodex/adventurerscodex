@@ -56,14 +56,17 @@ describe('Skill Model', function() {
             s.name('Arcana');
             s.modifier(4);
             s.proficiency(true);
+            s.proficiencyType('expertise');
 
             s.name().should.equal('Arcana');
             s.modifier().should.equal(4);
             s.proficiency().should.equal(true);
+            s.proficiencyType().should.equal('expertise');
             s.clear();
             s.name().should.equal('');
             Should.not.exist(s.modifier());
             s.proficiency().should.equal(false);
+            s.proficiencyType().should.equal('');
         });
     });
 
@@ -75,14 +78,17 @@ describe('Skill Model', function() {
             s.name('Arcana');
             s.modifier(4);
             s.proficiency(true);
+            s.proficiencyType('expertise');
 
             s.name().should.equal('Arcana');
             s.modifier().should.equal(4);
             s.proficiency().should.equal(true);
+            s.proficiencyType().should.equal('expertise');
             var e = s.exportValues();
             e.name.should.equal(s.name());
             e.modifier.should.equal(s.modifier());
             e.proficiency.should.equal(s.proficiency());
+            e.proficiencyType.should.equal(s.proficiencyType());
         });
     });
 
@@ -91,11 +97,12 @@ describe('Skill Model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var s = new Skill(parent);
-            var e = { name: 'Arcana', modifier: 3, proficiency: true };
+            var e = { name: 'Arcana', modifier: 3, proficiency: true , proficiencyType: 'expertise'};
             s.importValues(e);
             e.name.should.equal(s.name());
             e.modifier.should.equal(s.modifier());
             e.proficiency.should.equal(s.proficiency());
+            e.proficiencyType.should.equal(s.proficiencyType());
         });
     });
 });

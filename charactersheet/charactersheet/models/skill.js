@@ -9,6 +9,7 @@ function Skill() {
     self.modifier = ko.observable(null);
     self.abilityScore = ko.observable('');
     self.proficiency = ko.observable(false);
+    self.proficiencyType = ko.observable('');
 
     self.updateValues = function() {
         self.modifier.notifySubscribers();
@@ -23,6 +24,12 @@ function Skill() {
             profBonus = OtherStats.findBy(
             CharacterManager.activeCharacter().key())[0].proficiency();
         } catch(err) { /* Ignore */}
+        profBonus = parseInt(profBonus);
+        if (self.proficiencyType() === 'half') {
+            profBonus = Math.floor(profBonus / 2);
+        } else if (self.proficiencyType() === 'expertise'){
+            profBonus = profBonus * 2;
+        }
         return parseInt(profBonus);
     };
 
@@ -53,10 +60,22 @@ function Skill() {
             str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' +
             Math.abs(self.bonus());
         }
-        
+
         str += ' <i><small>('
                 + self.abilityScore() + ')</small></i>';
         return str;
+    });
+
+    self.isProficient = ko.computed(function() {
+        if (self.proficiencyType() === 'not'){
+            self.proficiency(false);
+        } else if (self.proficiencyType() === 'half'){
+            self.proficiency(true);
+        } else if (self.proficiencyType() === 'proficient'){
+            self.proficiency(true);
+        } else if (self.proficiencyType() === 'expertise'){
+            self.proficiency(true);
+        }
     });
 
     self.proficiencyLabel = ko.pureComputed(function() {
@@ -79,6 +98,7 @@ function Skill() {
         self.abilityScore('');
         self.modifier(null);
         self.proficiency(false);
+        self.proficiencyType('');
     };
 
     self.importValues = function(values) {
@@ -87,6 +107,7 @@ function Skill() {
         self.abilityScore(values.abilityScore);
         self.modifier(values.modifier);
         self.proficiency(values.proficiency);
+        self.proficiencyType(values.proficiencyType);
     };
 
     self.exportValues = function() {
@@ -95,7 +116,8 @@ function Skill() {
             name: self.name(),
             abilityScore: self.abilityScore(),
             modifier: self.modifier(),
-            proficiency: self.proficiency()
+            proficiency: self.proficiency(),
+            proficiencyType: self.proficiencyType()
         };
     };
 }
