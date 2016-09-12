@@ -10,7 +10,7 @@ function Slot() {
     self.level = ko.observable(1);
     self.maxSpellSlots = ko.observable(1);
     self.usedSpellSlots = ko.observable(0);
-    self.resetsOn = ko.observable()
+    self.resetsOn = ko.observable();
 
     self.color = ko.pureComputed(function() {
         return self.slotColors[self.level()-1];
