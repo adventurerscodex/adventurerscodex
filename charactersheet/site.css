@@ -16,6 +16,11 @@ small {
   margin-right: 10px;
 }
 
+.close-check {
+  margin-left: -5px;
+  margin-right: -8px
+}
+
 
 .progress {
   height:34px;
