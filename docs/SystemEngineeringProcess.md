@@ -35,15 +35,21 @@ Example:
 __5. Risk Assesment__
 
 
-### FAS: Feature Application Specification
+# FAS: Feature Application Specification
+The FAS contains mocks of features to come and how they will function.
+Example:
+> <insert image/>
+* When a player is clicked, a modal will pop up with the player details and options.
+* The "Inventory" option will replace the content of the modal to display the player's inventory.
+* etc...
 
 
-
-### FDS: Feature Design Specification
-
-
-
-### API Interface Specification
+# FDS: Feature Design Specification
+The FDS contains diagrams of the flow of information and data models.
 
 
-### FITS: Feature Integration Test Specification
+# API Interface Specification
+API interface specifications provide the specification for an API. Those specifications include method names, variable names, data types, data sizes, validation errors, input objects, output objects, etc.
+
+# FITS: Feature Integration Test Specification
+The FITS provides a detailed specification on how to test the feature.
