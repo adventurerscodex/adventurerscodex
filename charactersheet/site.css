@@ -238,6 +238,13 @@ textarea.dark-area {
   color: #128770;
 }
 
+.coin-input {
+  padding-right: 10px;
+}
+.coin-input input {
+  min-width: 75px;
+}
+
 .alert .close {
   top:-7px;
 }
