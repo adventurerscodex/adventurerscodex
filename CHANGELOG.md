@@ -1,3 +1,9 @@
+version 1.0.1 (09/10/2016)
+* Fixed issue with spell attack bonuses
+* Minor text fixes
+* Fixed issue with skills modal reloading on enter key press
+* **Huge!** Hotkey now owrks on actions toolbar
+
 version 1.0 (08/27/2016)
 * Significant UI Refresh
   * All new design for charactersheet and intro wizard.

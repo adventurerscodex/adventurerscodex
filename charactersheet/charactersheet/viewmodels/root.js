@@ -26,7 +26,7 @@ function RootViewModel() {
     self.activeTab = ko.observable();
 
     //Player Child View Models
-    self.actionsToolbarViewModel = ko.observable(new ActionsToolbarViewModel());
+    self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
 
     self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
     self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
@@ -94,6 +94,9 @@ function RootViewModel() {
     };
     self.activateNotesTab = function() {
         self.activeTab('notes');
+    };
+    self.toggleWell = function() {
+        Notifications.actionsToolbar.toggle.dispatch();
     };
 
     //UI Methods
@@ -165,6 +168,7 @@ function RootViewModel() {
         self.notesTabViewModel().init();
         self.charactersViewModel.init();
         self.userNotificationViewModel.init();
+        self.actionsToolbarViewModel().init();
 
         self.wizardViewModel.init();
 
@@ -204,6 +208,8 @@ function RootViewModel() {
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
+        HotkeysService.registerHotkey('8', self.toggleWell);
+
 
         //Once init-ed, we can check for a character to load, if any.
         var character = Character.findAll()[0];
@@ -233,6 +239,7 @@ function RootViewModel() {
                 self.notesTabViewModel().load();
             }
             self.userNotificationViewModel.load();
+            self.actionsToolbarViewModel().load();
             self.charactersViewModel.load();
             self.settingsViewModel().load();
             self._dummy.valueHasMutated();
@@ -254,6 +261,7 @@ function RootViewModel() {
                 self.notesTabViewModel().unload();
             }
             self.userNotificationViewModel.unload();
+            self.actionsToolbarViewModel().unload();
             self.charactersViewModel.unload();
             self.settingsViewModel().unload();
             self.wizardViewModel.unload();
