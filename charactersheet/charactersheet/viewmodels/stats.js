@@ -107,6 +107,7 @@ function StatsViewModel() {
         self.level.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
 
+        Notifications.profile.changed.add(self.calculateProficiencyLabel);
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.skills.changed.add(self.calculatePassiveWisdom);
         Notifications.events.longRest.add(self.resetOnLongRest);
@@ -125,6 +126,8 @@ function StatsViewModel() {
             e.save();
         });
         self.hitDiceType().save();
+
+        Notifications.profile.changed.remove(self.calculateProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.skills.changed.remove(self.calculatePassiveWisdom);
         Notifications.events.longRest.remove(self.resetOnLongRest);
@@ -201,6 +204,13 @@ function StatsViewModel() {
     self.calculatePassiveWisdom = function() {
         self.otherStats().updateValues();
     };
+
+    /**
+    * Tells otherStats to run proficiencyLabel method
+    */
+    self.calculateProficiencyLabel = function() {
+        self.otherStats().updateValues();
+    }
 
     /* Utility Methods */
 

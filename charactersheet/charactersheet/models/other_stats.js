@@ -32,10 +32,26 @@ function OtherStats() {
     self._passiveWisdomDummy = ko.observable(null);
 
     /**
+    * Calculates user's proficiency based on this formula:
+    * ceil(level / 4) + 1
+    */
+    self.proficiencyLabel = ko.pureComputed(function() {
+      self._proficiencyLabelDummy();
+      var key = CharacterManager.activeCharacter().key();
+      var level = Profile.findBy(key)[0].level();
+      level = level ? parseInt(level) : 0;
+      var proficiency = parseInt(self.proficiency()) ? parseInt(self.proficiency()) : 0;
+      return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
+    })
+
+    self._proficiencyLabelDummy = ko.observable(null);
+
+    /**
      * Reevaluate all computed variables.
      */
     self.updateValues = function() {
         self._passiveWisdomDummy.valueHasMutated();
+        self._proficiencyLabelDummy.valueHasMutated();
     };
 
 
