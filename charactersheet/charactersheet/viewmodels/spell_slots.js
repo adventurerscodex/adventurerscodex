@@ -35,6 +35,7 @@ function SpellSlotsViewModel() {
 
         //Notifications
         Notifications.events.longRest.add(self.resetOnLongRest);
+        Notifications.events.shortRest.add(self.resetShortRest);
     };
 
     self.unload = function() {
@@ -68,6 +69,8 @@ function SpellSlotsViewModel() {
             columnName, self.sorts));
     };
 
+    //Manipulating slots
+
     /**
      * Resets all slots on a long-rest.
      */
@@ -77,8 +80,19 @@ function SpellSlotsViewModel() {
         });
     };
 
+    /**
+     * Resets all short-rest slot.
+     */
+    self.resetShortRest = function() {
+        ko.utils.arrayForEach(self.slots(), function(slot) {
+            if (slot.resetsOn() === Slot.REST_TYPE.SHORT_REST) {
+                slot.usedSpellSlots(0);
+            }
+        });
+    };
 
     //Manipulating spell slots
+
     self.maxSlotWidth = function() {
         return 100 / self.slots().length;
     };
