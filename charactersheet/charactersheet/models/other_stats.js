@@ -5,7 +5,7 @@ function OtherStats() {
     self.ps = PersistenceService.register(OtherStats, self);
     self.mapping = { ignore: ['ps', 'mapping', 'importValues', 'exportValues',
         'clear', 'save', 'passiveWisdom', 'updateValues', 'passiveWisdomTooltip',
-        'msg', '_passiveWisdomDummy']
+        'msg', '_passiveWisdomDummy', '_proficiencyLabelDummy', 'proficiencyLabel']
     };
 
     self.characterId = ko.observable(null);
@@ -36,13 +36,13 @@ function OtherStats() {
     * ceil(level / 4) + 1
     */
     self.proficiencyLabel = ko.pureComputed(function() {
-      self._proficiencyLabelDummy();
-      var key = CharacterManager.activeCharacter().key();
-      var level = Profile.findBy(key)[0].level();
-      level = level ? parseInt(level) : 0;
-      var proficiency = parseInt(self.proficiency()) ? parseInt(self.proficiency()) : 0;
-      return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
-    })
+        self._proficiencyLabelDummy();
+        var key = CharacterManager.activeCharacter().key();
+        var level = Profile.findBy(key)[0].level();
+        level = level ? parseInt(level) : 0;
+        var proficiency = parseInt(self.proficiency()) ? parseInt(self.proficiency()) : 0;
+        return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
+    });
 
     self._proficiencyLabelDummy = ko.observable(null);
 

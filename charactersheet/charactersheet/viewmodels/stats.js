@@ -210,7 +210,7 @@ function StatsViewModel() {
     */
     self.calculateProficiencyLabel = function() {
         self.otherStats().updateValues();
-    }
+    };
 
     /* Utility Methods */
 
