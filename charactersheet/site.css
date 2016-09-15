@@ -16,6 +16,11 @@ small {
   margin-right: 10px;
 }
 
+.footer {
+  padding-top:30px;
+  background-color: #ecf0f1;
+  padding-bottom: 20px;
+}
 
 .progress {
   height:34px;
@@ -388,6 +393,7 @@ ul.footer-icons li {
 
 .social-media {
   color: #798d8f;
+  font-size: 1.5em;
 }
 
 /*
