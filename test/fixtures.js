@@ -66,6 +66,7 @@ var WeaponFixture = {
     weaponProficiency: false,
     weaponPrice: 23,
     weaponWeight: 23,
+    weaponHit: 0,
     weaponRange: '2ft',
     weaponSize: 'large',
     weaponDamageType: 'slash',
