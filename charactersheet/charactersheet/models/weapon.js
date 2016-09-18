@@ -10,7 +10,8 @@ function Weapon() {
             'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
             'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
             'weaponTypeOptions', 'weaponSizeOptions', 'weaponPropertyOptions',
-            'weaponDamageTypeOptions']
+            'weaponDamageTypeOptions'],
+            include: ['weaponHit']
     };
 
     self._dummy = ko.observable(null);
