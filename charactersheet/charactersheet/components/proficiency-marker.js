@@ -14,14 +14,14 @@
 function ProficiencyTypeComponentViewModel(params) {
     var self = this;
 
-    self.proficiencyType = params.proficiencyType;
+    self.proficiency = params.proficiency;
 
     /**
      * Given a type of proficiency, returns the HTML containing a
      * relevant icon for that type.
      */
     self.profTypeHTML = ko.computed(function() {
-        var type = ko.utils.unwrapObservable(self.proficiencyType);
+        var type = ko.utils.unwrapObservable(self.proficiency);
 
         try {
             type = type.toLowerCase();
