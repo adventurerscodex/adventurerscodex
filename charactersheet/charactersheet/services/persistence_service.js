@@ -8,6 +8,7 @@ var PersistenceService = {
     logErrors: false,
     enableCompression: false,
     master: '__master__',
+    version: '__version__',
     storage: localStorage
 };
 
@@ -53,6 +54,27 @@ PersistenceService.findAll = function(model) {
  */
 PersistenceService.save = function(model, inst) {
     PersistenceService._save(model.name, inst);
+};
+
+/**
+ * Persist a given database object.
+ *
+ * Parameters
+ * ----------
+ *
+ * key:
+ * id:
+ * object:
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * function Person() {...}
+ *
+ * PersistenceService.save(Person, new Person());```
+ */
+PersistenceService.saveObj = function(key, id, object) {
+    PersistenceService._saveObj(key, id, object);
 };
 
 /**
@@ -128,6 +150,50 @@ PersistenceService.dropAll = function() {
 PersistenceService.register = function(model, inst) {
     return new PersistenceServiceToken(model, inst);
 };
+
+
+/**
+ * Migrate will go through the list of given migrations and
+ * determine if migrations should be applied based on the app
+ * version number.
+ *
+ * Parameters
+ * ----------
+ *
+ * migrations: list of migraton objects
+ * version: current app version number
+ *
+ * Usage
+ * -----
+ *
+ *
+ *
+ */
+PersistenceService.migrate = function(migrations, version) {
+    var databaseVersion = PersistenceService.getVersion();
+
+    if(version !== databaseVersion) {
+        var migrationsToRun = migrations.filter(function(e, i, _){
+            return PersistenceService._shouldApplyMigration(version, databaseVersion, e);
+        });
+
+        migrationsToRun.forEach(function(e, i, _) {
+            PersistenceService._applyMigration(e);
+        });
+
+        PersistenceService._setVersion(version);
+    }
+};
+
+
+/**
+ *
+ *
+ */
+PersistenceService.getVersion = function() {
+    return PersistenceService.storage[PersistenceService.version];
+};
+
 
 //======================= PersistenceServiceToken =============================
 
@@ -278,33 +344,45 @@ PersistenceService._save = function(key, inst) {
         id = indecies[0] ? parseInt(indecies[0]) + 1 : 0;
         inst.__id = id;
     }
-    table[id] = data;
-    try {
-        PersistenceService.storage[key] = JSON.stringify(table);
-    } catch(err) {
-        var errmsg = 'Storage quota exceeded.';
-        if (!PersistenceService.enableCompression) {
-            errmsg += ' Try enabling compression for more storage.';
-        }
 
-        if (PersistenceService.logErrors) {
-            console.log(errmsg);
-        } else {
-            throw errmsg;
-        }
-    }
-    //Update the master table.
-    var tables;
-    try {
-        tables = JSON.parse(PersistenceService.storage[PersistenceService.master]);
-    } catch(err) {
-        tables = [];
-    }
-    if (tables.indexOf(key) === -1) {
-        tables.push(key);
-        PersistenceService.storage[PersistenceService.master] = JSON.stringify(tables);
-    }
+    PersistenceService._saveObj(key, id, data);
 };
+
+PersistenceService._saveObj = function(key, id, object) {
+  //Save the data.
+  var table;
+  try {
+      table = JSON.parse(PersistenceService.storage[key]);
+  } catch(err) {
+      table = {};
+  }
+  table[id] = object;
+  try {
+      PersistenceService.storage[key] = JSON.stringify(table);
+  } catch(err) {
+      var errmsg = 'Storage quota exceeded.';
+      if (!PersistenceService.enableCompression) {
+          errmsg += ' Try enabling compression for more storage.';
+      }
+
+      if (PersistenceService.logErrors) {
+          console.log(errmsg);
+      } else {
+          throw errmsg;
+      }
+  }
+  //Update the master table.
+  var tables;
+  try {
+      tables = JSON.parse(PersistenceService.storage[PersistenceService.master]);
+  } catch(err) {
+      tables = [];
+  }
+  if (tables.indexOf(key) === -1) {
+      tables.push(key);
+      PersistenceService.storage[PersistenceService.master] = JSON.stringify(tables);
+  }
+}
 
 PersistenceService._delete = function(key, id) {
     var table = JSON.parse(PersistenceService.storage[key]);
@@ -323,4 +401,55 @@ PersistenceService._delete = function(key, id) {
 
 PersistenceService._listAll = function() {
     return JSON.parse(PersistenceService.storage[PersistenceService.master]);
+};
+
+PersistenceService._applyMigration = function(migration) {
+    var oldStorage = PersistenceService.storage;
+    try {
+        migration.migrate();
+    } catch(err) {
+        // Rollback database in case of error with migration
+        PersistenceService.storage = oldStorage;
+        var msg = 'Migration failed on ' + migration.name;
+        console.log(msg);
+        throw msg;
+    }
+};
+
+PersistenceService._setVersion = function(appVersion) {
+    return PersistenceService.storage[PersistenceService.version] = appVersion;
+};
+
+PersistenceService._shouldApplyMigration = function(appVersion, dbVersion, migration) {
+    //It is already assumed that the dbVersion and appVersion are different.
+    //Check the simple case first.
+    if (appVersion === migration.version) {
+        return true;
+    }
+
+    //LEGACY: The db has no version number.
+    if (!dbVersion) {
+        return true;
+    }
+
+    //Parse the versions.
+    var appVersionNumbers = appVersion.split('.').map(function(e, i, _) {
+        return parseInt(e);
+    });
+    var dbVersionNumbers = dbVersion.split('.').map(function(e, i, _) {
+        return parseInt(e);
+    });
+
+    //Compare versions
+    for (i in appVersionNumbers) {
+        try {
+            if (appVersionNumbers[i] > dbVersionNumbers[i]) {
+                return true;
+            }
+        } catch(err) {
+            //The db version has no index for the given index.
+            return true;
+        }
+    }
+    return false;
 };
