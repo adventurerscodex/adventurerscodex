@@ -1245,6 +1245,7 @@
       "weaponProficiency": "Simple",
       "weaponPrice": "2 sp",
       "weaponWeight": "4 lbs",
+      "weaponHit": "0",
       "weaponRange": "None",
       "weaponSize": "Small",
       "weaponDamageType": "Bludgeoning",
