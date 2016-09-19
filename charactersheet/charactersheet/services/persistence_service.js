@@ -349,40 +349,41 @@ PersistenceService._save = function(key, inst) {
 };
 
 PersistenceService._saveObj = function(key, id, object) {
-  //Save the data.
-  var table;
-  try {
-      table = JSON.parse(PersistenceService.storage[key]);
-  } catch(err) {
-      table = {};
-  }
-  table[id] = object;
-  try {
-      PersistenceService.storage[key] = JSON.stringify(table);
-  } catch(err) {
-      var errmsg = 'Storage quota exceeded.';
-      if (!PersistenceService.enableCompression) {
-          errmsg += ' Try enabling compression for more storage.';
-      }
+    //Save the data.
+    var table;
+    try {
+        table = JSON.parse(PersistenceService.storage[key]);
+    } catch(err) {
+        table = {};
+    }
+    table[id] = object;
+    try {
+        PersistenceService.storage[key] = JSON.stringify(table);
+    } catch(err) {
+        var errmsg = 'Storage quota exceeded.';
+        if (!PersistenceService.enableCompression) {
+            errmsg += ' Try enabling compression for more storage.';
+        }
 
-      if (PersistenceService.logErrors) {
-          console.log(errmsg);
-      } else {
-          throw errmsg;
-      }
-  }
-  //Update the master table.
-  var tables;
-  try {
-      tables = JSON.parse(PersistenceService.storage[PersistenceService.master]);
-  } catch(err) {
-      tables = [];
-  }
-  if (tables.indexOf(key) === -1) {
-      tables.push(key);
-      PersistenceService.storage[PersistenceService.master] = JSON.stringify(tables);
-  }
-}
+        if (PersistenceService.logErrors) {
+            console.log(errmsg);
+        } else {
+            throw errmsg;
+        }
+    }
+
+    //Update the master table.
+    var tables;
+    try {
+        tables = JSON.parse(PersistenceService.storage[PersistenceService.master]);
+    } catch(err) {
+        tables = [];
+    }
+    if (tables.indexOf(key) === -1) {
+        tables.push(key);
+        PersistenceService.storage[PersistenceService.master] = JSON.stringify(tables);
+    }
+};
 
 PersistenceService._delete = function(key, id) {
     var table = JSON.parse(PersistenceService.storage[key]);
@@ -404,12 +405,15 @@ PersistenceService._listAll = function() {
 };
 
 PersistenceService._applyMigration = function(migration) {
-    var oldStorage = PersistenceService.storage;
+    //Clone local storage.
+    var oldStorage = {};
+    PersistenceService._copyObjectUsingKeys(localStorage, oldStorage);
+
     try {
-        migration.migrate();
+        migration.migration();
     } catch(err) {
         // Rollback database in case of error with migration
-        PersistenceService.storage = oldStorage;
+        PersistenceService._copyObjectUsingKeys(oldStorage, localStorage);
         var msg = 'Migration failed on ' + migration.name;
         console.log(msg);
         throw msg;
@@ -452,4 +456,10 @@ PersistenceService._shouldApplyMigration = function(appVersion, dbVersion, migra
         }
     }
     return false;
+};
+
+PersistenceService._copyObjectUsingKeys = function(objA, objB) {
+    Object.keys(objA).forEach(function(key, i, _) {
+        objB[key] = objA[key];
+    });
 };
