@@ -13,6 +13,36 @@ var PersistenceService = {
 };
 
 /**
+ * Given a table name, return all of the stored data objects in the table.
+ *
+ * Parameters
+ * ----------
+ *
+ * key: The string name of the table. This usually is the name of the model.
+ *
+ * Returns
+ * -------
+ *
+ * A list of raw data objects from the table.
+ *
+ * Note
+ * ----
+ *
+ * The objects returned by this method are raw objects containing an `id` and
+ * a data property. The raw `data` property contains the record's data.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * function Person() {...}
+ *
+ * var people = PersistenceService.findAllObjs('Person');```
+ */
+PersistenceService.findAllObjs = function(key) {
+    return PersistenceService._findAllObjs(key);
+};
+
+/**
  * Given a model class, return all of the stored instances of that class.
  *
  * Parameters
