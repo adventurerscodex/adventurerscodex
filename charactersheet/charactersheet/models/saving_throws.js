@@ -15,7 +15,8 @@ function SavingThrows() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
         try {
-            profBonus = parseInt(OtherStats.findBy(key)[0].proficiency());
+            profBonus = OtherStats.findBy(
+                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /*Ignore*/ }
         return profBonus;
     };

@@ -21,7 +21,7 @@ function Skill() {
         var profBonus = 0;
         try{
             profBonus = OtherStats.findBy(
-            CharacterManager.activeCharacter().key())[0].proficiency();
+                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /* Ignore */}
         return parseInt(profBonus);
     };
@@ -53,7 +53,7 @@ function Skill() {
             str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' +
             Math.abs(self.bonus());
         }
-        
+
         str += ' <i><small>('
                 + self.abilityScore() + ')</small></i>';
         return str;
