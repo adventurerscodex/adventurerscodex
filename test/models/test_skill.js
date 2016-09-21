@@ -10,7 +10,7 @@ describe('Skill Model', function() {
         it('should yield the modifier value (signed).', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiency: ko.observable(2) }]);
+            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
 
             var s = new Skill();
             s.name('Arcana');

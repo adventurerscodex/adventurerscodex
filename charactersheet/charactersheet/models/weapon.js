@@ -54,7 +54,7 @@ function Weapon() {
         var profBonus = 0;
         try{
             profBonus = OtherStats.findBy(
-                CharacterManager.activeCharacter().key())[0].proficiency();
+                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /*Ignore*/ }
         return parseInt(profBonus);
     };
