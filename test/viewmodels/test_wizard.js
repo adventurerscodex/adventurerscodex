@@ -255,7 +255,7 @@ describe('Wizard ViewModel', function(){
 
         // Ability Scores
 
-         it('should move forward given an correct current step.', function() {
+        it('should move forward given an correct current step.', function() {
             var wizard = new WizardViewModel();
             var currentStep = new WizardAbilityScoresStepViewModel();
             simple.mock(currentStep, 'results').callFn(function() {});
