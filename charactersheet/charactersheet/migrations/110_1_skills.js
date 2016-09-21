@@ -9,7 +9,7 @@ var migration_110_1_skills = {
     version: '1.1.0',
     migration: function() {
         var skills = PersistenceService.findAllObjs('Skill');
-        for (i in skills) {
+        for (var i in skills) {
             var id = skills[i].id;
             var skill = skills[i].data;
 

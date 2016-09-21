@@ -238,3 +238,17 @@ var mock_134_migration = {
 
     }
 };
+
+var skillDataFixture = [
+    {
+        id: 0,
+        data: {
+            proficiency: true
+        }
+    }, {
+        id: 1,
+        data: {
+            proficiency: false
+        }
+    }
+];
