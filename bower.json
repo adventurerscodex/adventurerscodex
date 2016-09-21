@@ -34,7 +34,8 @@
     "knockout-file-bindings": "~1.0.2",
     "cryptojs": "*",
     "blueimp-md5": "~2.1.0",
-    "font-awesome": "~4.6.1"
+    "font-awesome": "~4.6.1",
+    "jquery-ui": "^1.12.0"
   },
   "resolutions": {
     "webcomponentsjs": "~0.5.4"
