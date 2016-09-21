@@ -91,17 +91,17 @@
                   href="#">Export</a></i>
               </div>
             </div>
+            <div class="row row-padded">
+              <div class="col-xs-12">
+                <div data-bind="template: {
+                  name: 'status_line.tmpl',
+                  templateUrl: 'templates',
+                  data: statusLineViewModel
+                 }"></div>
+              </div>
+            </div>
           </div>
           </div>
-        <div class="row">
-          <div class="col-sm-offset-2 col-sm-10 col-xs-12">
-            <div data-bind="template: {
-              name: 'status_line.tmpl',
-              templateUrl: 'templates',
-              data: statusLineViewModel
-             }"></div>
-          </div>
-        </div>
       </div>
       <div class="col-sm-4" data-bind="template: {
         name: 'user_notifications.tmpl',

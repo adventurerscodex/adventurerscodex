@@ -8,10 +8,6 @@ function TotalWeightStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Encumbrance';
-    self.statusValues = {
-        warning: { name: 'encumbered', type: 'warning' },
-        danger: { name: 'really encumbered', type: 'danger' }
-    }
     self.carryCapacity = Fixtures.carryCapacity;
 
     self.init = function() {
@@ -44,25 +40,36 @@ function TotalWeightStatusServiceComponent() {
             weight += e.totalWeight();
         });
 
+        // Skip the rest if there's nothing to say.
+        if (weight === 0) { return }
+
         var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
         if (!status) {
             status = new Status();
             status.characterId(key);
             status.identifier(self.statusIdentifier);
-            status.save();
         }
 
-        if (weight <= carryCapacity.light) {
-            status.delete();
-        } else if (weight <= carryCapacity.medium) {
-            status.name(self.statusValues.warning.name);
-            status.type(self.statusValues.warning.type);
-            status.save();
-        } else {
-            status.name(self.statusValues.danger.name);
-            status.type(self.statusValues.danger.type);
-            status.save();
-        }
+        status.name(self.getDescription(weight));
+        status.type(self.getType(scores.str(), weight));
+
+        status.save();
         Notifications.status.changed.dispatch();
+    };
+
+    self.getDescription = function(weight) {
+        return 'carrying ' + String(weight) + 'lbs';
+    };
+
+    self.getType = function(strength, weight) {
+        var carryCapacity = self.carryCapacity[strength];
+        if (weight <= carryCapacity.light) {
+            return 'info';
+        } else if (weight <= carryCapacity.medium) {
+            return 'warning';
+        } else {
+            return 'danger';
+        }
+
     };
 }
