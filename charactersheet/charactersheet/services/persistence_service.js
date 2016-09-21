@@ -8,7 +8,38 @@ var PersistenceService = {
     logErrors: false,
     enableCompression: false,
     master: '__master__',
+    version: '__version__',
     storage: localStorage
+};
+
+/**
+ * Given a table name, return all of the stored data objects in the table.
+ *
+ * Parameters
+ * ----------
+ *
+ * key: The string name of the table. This usually is the name of the model.
+ *
+ * Returns
+ * -------
+ *
+ * A list of raw data objects from the table.
+ *
+ * Note
+ * ----
+ *
+ * The objects returned by this method are raw objects containing an `id` and
+ * a data property. The raw `data` property contains the record's data.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * function Person() {...}
+ *
+ * var people = PersistenceService.findAllObjs('Person');```
+ */
+PersistenceService.findAllObjs = function(key) {
+    return PersistenceService._findAllObjs(key);
 };
 
 /**
@@ -53,6 +84,27 @@ PersistenceService.findAll = function(model) {
  */
 PersistenceService.save = function(model, inst) {
     PersistenceService._save(model.name, inst);
+};
+
+/**
+ * Persist a given database object.
+ *
+ * Parameters
+ * ----------
+ *
+ * key:
+ * id:
+ * object:
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * function Person() {...}
+ *
+ * PersistenceService.save(Person, new Person());```
+ */
+PersistenceService.saveObj = function(key, id, object) {
+    PersistenceService._saveObj(key, id, object);
 };
 
 /**
@@ -128,6 +180,49 @@ PersistenceService.dropAll = function() {
 PersistenceService.register = function(model, inst) {
     return new PersistenceServiceToken(model, inst);
 };
+
+
+/**
+ * Migrate will go through the list of given migrations and
+ * determine if migrations should be applied based on the app
+ * version number.
+ *
+ * Parameters
+ * ----------
+ *
+ * migrations: list of migraton objects
+ * version: current app version number
+ *
+ * Usage
+ * -----
+ *
+ *
+ *
+ */
+PersistenceService.migrate = function(migrations, version) {
+    var databaseVersion = PersistenceService.getVersion();
+
+    if(version !== databaseVersion) {
+        var migrationsToRun = migrations.filter(function(e, i, _){
+            return PersistenceService._shouldApplyMigration(version, databaseVersion, e);
+        });
+
+        migrationsToRun.forEach(function(e, i, _) {
+            PersistenceService._applyMigration(e);
+        });
+
+        PersistenceService._setVersion(version);
+    }
+};
+
+
+/**
+ * Returns the current database version.
+ */
+PersistenceService.getVersion = function() {
+    return PersistenceService.storage[PersistenceService.version];
+};
+
 
 //======================= PersistenceServiceToken =============================
 
@@ -207,6 +302,10 @@ function PersistenceServiceToken(model, inst) {
 //============================= Private Methods ===============================
 //=============================================================================
 
+PersistenceService._setVersion = function(appVersion) {
+    return PersistenceService.storage[PersistenceService.version] = appVersion;
+};
+
 PersistenceService._findAllObjs = function(key) {
     var res = [];
     var all = [];
@@ -278,7 +377,19 @@ PersistenceService._save = function(key, inst) {
         id = indecies[0] ? parseInt(indecies[0]) + 1 : 0;
         inst.__id = id;
     }
-    table[id] = data;
+
+    PersistenceService._saveObj(key, id, data);
+};
+
+PersistenceService._saveObj = function(key, id, object) {
+    //Save the data.
+    var table;
+    try {
+        table = JSON.parse(PersistenceService.storage[key]);
+    } catch(err) {
+        table = {};
+    }
+    table[id] = object;
     try {
         PersistenceService.storage[key] = JSON.stringify(table);
     } catch(err) {
@@ -293,6 +404,7 @@ PersistenceService._save = function(key, inst) {
             throw errmsg;
         }
     }
+
     //Update the master table.
     var tables;
     try {
@@ -323,4 +435,63 @@ PersistenceService._delete = function(key, id) {
 
 PersistenceService._listAll = function() {
     return JSON.parse(PersistenceService.storage[PersistenceService.master]);
+};
+
+// Migration Methods
+
+PersistenceService._applyMigration = function(migration) {
+    //Clone local storage.
+    var oldStorage = {};
+    PersistenceService._copyObjectUsingKeys(localStorage, oldStorage);
+
+    try {
+        migration.migration();
+    } catch(err) {
+        // Rollback database in case of error with migration
+        PersistenceService._copyObjectUsingKeys(oldStorage, localStorage);
+        var msg = 'Migration failed on ' + migration.name;
+        console.log(msg);
+        throw msg;
+    }
+};
+
+PersistenceService._shouldApplyMigration = function(appVersion, dbVersion, migration) {
+    //LEGACY: The db has no version number.
+    if (!dbVersion) {
+        dbVersion = '0.0.0';
+    }
+
+    var appAndDBVerionsDiffer = PersistenceService._compareVersions(appVersion, dbVersion);
+    var migrationVersionHigherThanDB = PersistenceService._compareVersions(migration.version, dbVersion);
+    var migrationVersionLowerOrEqualApp = !PersistenceService._compareVersions(migration.version, appVersion);
+
+    return appAndDBVerionsDiffer && migrationVersionHigherThanDB && migrationVersionLowerOrEqualApp;
+};
+
+PersistenceService._compareVersions = function(version1, version2) {
+    //Parse the versions.
+    var version1Numbers = version1.split('.').map(function(e, i, _) {
+        return parseInt(e);
+    });
+    var version2Numbers = version2.split('.').map(function(e, i, _) {
+        return parseInt(e);
+    });
+
+    //If any part of version 1 is higher than any part of version 2, return true.
+    for (var i in version1Numbers) {
+        if (version2Numbers[i] === undefined) {
+            return true;
+        }
+
+        if (version1Numbers[i] > version2Numbers[i]) {
+            return true;
+        }
+    }
+    return false;
+};
+
+PersistenceService._copyObjectUsingKeys = function(objA, objB) {
+    Object.keys(objA).forEach(function(key, i, _) {
+        objB[key] = objA[key];
+    });
 };

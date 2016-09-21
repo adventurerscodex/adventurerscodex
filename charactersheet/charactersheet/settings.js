@@ -4,6 +4,11 @@
 var Settings = {
 
     /**
+     * Application's version number.
+     * Used to determine which migration scripts to run.
+     */
+    version: '1.0.2',
+    /**
      * A series of values to always ignore when mapping KO Objects.
      */
     mappingAlwaysIgnore: ['__id'],
