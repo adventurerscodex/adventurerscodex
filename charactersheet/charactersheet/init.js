@@ -16,6 +16,12 @@ var init = function(viewModel) {
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
 
+    // Set default status service components.
+    StatusService.configuration.components = [
+        new TotalWeightStatusServiceComponent()
+    ];
+    StatusService.sharedService(); // Prime the service.
+
     // Initialize the View Model
     viewModel.init();
 };

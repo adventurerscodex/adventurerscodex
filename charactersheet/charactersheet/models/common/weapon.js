@@ -46,6 +46,11 @@ function Weapon() {
         self._dummy.notifySubscribers();
     };
 
+    self.totalWeight = ko.computed(function() {
+        var weight = parseInt(self.weaponQuantity()) * parseInt(self.weaponWeight());
+        return weight ? weight : 0;
+    });
+
     self.proficiencyScore = function() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
