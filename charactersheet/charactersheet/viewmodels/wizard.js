@@ -143,6 +143,8 @@ function WizardViewModel() {
         character.key(uuid.v4());
         character.save();
 
+        // Profile
+
         var profile = new Profile();
         var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
             return step.IDENTIFIER === 'WizardProfileStep';
@@ -157,6 +159,17 @@ function WizardViewModel() {
         playerInfo.characterId(character.key());
         playerInfo.save();
 
+        // Ability Scores
+
+        var abilityScoresStepViewModel = self.allSteps().filter(function(step, idx, _) {
+            return step.IDENTIFIER === 'WizardAbilityScoresStep';
+        });
+
+        var abilityScores = new AbilityScores();
+        var abData = abilityScoresStepViewModel[0].results();
+        abData.characterId = character.key();
+        abilityScores.importValues(abData);
+        abilityScores.save();
 
         //TODO: Save the results of all child steps.
     };
@@ -241,11 +254,14 @@ function WizardViewModel() {
         }
 
         if (currentStep.IDENTIFIER === 'WizardProfileStep') {
+            return new NextStepDescriptor(new WizardAbilityScoresStepViewModel(), false);
+        }
+
+        if (currentStep.IDENTIFIER === 'WizardAbilityScoresStep') {
             return new NextStepDescriptor(null, false);
         }
 
         //TODO Add more steps here.
-
     };
 }
 
