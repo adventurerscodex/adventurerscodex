@@ -1,7 +1,7 @@
 {
   "name": "Chractersheet",
   "description": "A tool to help D&D 5e players keep their ducks in a row.",
-  "version": "0.0.1",
+  "version": "1.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/charactersheet/charactersheet"
@@ -24,7 +24,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "load-grunt-tasks": "^3.5.0",
     "mocha": "^2.3.3",
-    "phantomjs": "~1.9.18",
+    "phantomjs-prebuilt": "~1.9.18",
     "mr-doc": "^3.2.1",
     "mr-doc-theme-cayman": "^1.4.1",
     "serve": "^1.4.0"
