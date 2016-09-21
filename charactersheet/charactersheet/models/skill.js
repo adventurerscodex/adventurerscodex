@@ -65,17 +65,6 @@ function Skill() {
         return str;
     });
 
-    self.isProficient = ko.computed(function() {
-        if (self.proficiency() === 'half'){
-            return true;
-        } else if (self.proficiency() === 'proficient'){
-            return true;
-        } else if (self.proficiency() === 'expertise'){
-            return true;
-        }
-        return false;
-    });
-
     self.save = function() {
         self.ps.save();
     };
@@ -105,7 +94,7 @@ function Skill() {
             name: self.name(),
             abilityScore: self.abilityScore(),
             modifier: self.modifier(),
-            proficiency: self.proficiency(),
+            proficiency: self.proficiency()
         };
     };
 }

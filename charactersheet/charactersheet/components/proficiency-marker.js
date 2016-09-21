@@ -45,7 +45,7 @@ ProficiencyTypeComponentViewModel.EXPERT_TEMPLATE = '\
     <span data-bind="css: proficiencyLabel" class="fa fa-check"></span>';
 
 ProficiencyTypeComponentViewModel.NORMAL_TEMPLATE = '\
-    <span data-bind="css: proficiencyLabel" class="fa fa-check"></span>';;
+    <span data-bind="css: proficiencyLabel" class="fa fa-check"></span>';
 
 ProficiencyTypeComponentViewModel.HALF_TEMPLATE = '\
     <span data-bind="css: proficiencyLabel" class="fa fa-adjust"></span>';

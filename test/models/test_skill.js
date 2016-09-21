@@ -16,7 +16,7 @@ describe('Skill Model', function() {
             s.name('Arcana');
             s.modifier(4);
             s.abilityScore('Wis');
-            s.proficiency(true);
+            s.proficiency('proficient');
 
             s.bonusLabel().should.equal('+ 6 <i><small>(Wis)</small></i>');
 
@@ -32,20 +32,28 @@ describe('Skill Model', function() {
     describe('Proficiency Label', function() {
         it('should yield the proficiency value (or none).', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
 
             var s = new Skill(parent);
             s.name('Arcana');
             s.modifier(4);
-            s.proficiency(true);
+            s.proficiency('proficient');
 
-            s.proficiencyLabel().should.equal('fa fa-check');
+            s.proficiencyScore().should.equal(2);
 
             s = new Skill(parent);
             s.name('Arcana');
             s.modifier(-4);
-            s.proficiency(false);
+            s.proficiency('half');
 
-            s.proficiencyLabel().should.equal('');
+            s.proficiencyScore().should.equal(1);
+
+            s = new Skill(parent);
+            s.name('Arcana');
+            s.modifier(-4);
+            s.proficiency('expertise');
+
+            s.proficiencyScore().should.equal(4);
         });
     });
     describe('Clear', function() {
@@ -55,18 +63,15 @@ describe('Skill Model', function() {
             var s = new Skill(parent);
             s.name('Arcana');
             s.modifier(4);
-            s.proficiency(true);
-            s.proficiencyType('expertise');
+            s.proficiency('proficient');
 
             s.name().should.equal('Arcana');
             s.modifier().should.equal(4);
-            s.proficiency().should.equal(true);
-            s.proficiencyType().should.equal('expertise');
+            s.proficiency().should.equal('proficient');
             s.clear();
             s.name().should.equal('');
             Should.not.exist(s.modifier());
-            s.proficiency().should.equal(false);
-            s.proficiencyType().should.equal('');
+            s.proficiency().should.equal('');
         });
     });
 
@@ -78,17 +83,14 @@ describe('Skill Model', function() {
             s.name('Arcana');
             s.modifier(4);
             s.proficiency(true);
-            s.proficiencyType('expertise');
 
             s.name().should.equal('Arcana');
             s.modifier().should.equal(4);
             s.proficiency().should.equal(true);
-            s.proficiencyType().should.equal('expertise');
             var e = s.exportValues();
             e.name.should.equal(s.name());
             e.modifier.should.equal(s.modifier());
             e.proficiency.should.equal(s.proficiency());
-            e.proficiencyType.should.equal(s.proficiencyType());
         });
     });
 
@@ -102,7 +104,6 @@ describe('Skill Model', function() {
             e.name.should.equal(s.name());
             e.modifier.should.equal(s.modifier());
             e.proficiency.should.equal(s.proficiency());
-            e.proficiencyType.should.equal(s.proficiencyType());
         });
     });
 });
