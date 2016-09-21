@@ -29,11 +29,16 @@ function ArmorViewModel() {
                 e.save();
             });
         });
+        self.armors.subscribe(function() {
+            Notifications.armor.changed.dispatch();
+        });
     };
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         self.armors(Armor.findAllBy(key));
+
+        //Subscriptions
         Notifications.abilityScores.changed.add(self.valueHasChanged);
     };
 
@@ -134,8 +139,8 @@ function ArmorViewModel() {
     };
 
     self.removeArmor = function(armor) {
-        self.armors.remove(armor);
         armor.delete();
+        self.armors.remove(armor);
     };
 
     self.editArmor = function(armor) {

@@ -31,13 +31,13 @@ function TotalWeightStatusServiceComponent() {
 
         var weight = 0;
         Armor.findAllBy(key).forEach(function(e, i, _) {
-            weight += e.armorWeight();
+            weight += parseInt(e.armorWeight());
         });
         Weapon.findAllBy(key).forEach(function(e, i, _) {
-            weight += e.totalWeight();
+            weight += parseInt(e.totalWeight());
         });
         Item.findAllBy(key).forEach(function(e, i, _) {
-            weight += e.totalWeight();
+            weight += parseInt(e.totalWeight());
         });
 
         // Skip the rest if there's nothing to say.
@@ -58,7 +58,7 @@ function TotalWeightStatusServiceComponent() {
     };
 
     self.getDescription = function(weight) {
-        return 'carrying ' + String(weight) + 'lbs';
+        return 'carrying ~' + String(weight) + 'lbs';
     };
 
     self.getType = function(strength, weight) {
