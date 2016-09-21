@@ -91,5 +91,11 @@ Fixtures = {
     // List all migrations that should be applied
     migration : {
         scripts : []
+    },
+    wizardProfile: {
+        classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
+            'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
+        races : ['Dwarf', 'Elf', 'Halfling', 'Human', 'Dragonborn', 'Gnome',
+            'Half-Elf', 'Half-Orc', 'Tiefling']
     }
 };
