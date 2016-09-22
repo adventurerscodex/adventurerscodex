@@ -81,7 +81,6 @@ function ArmorViewModel() {
         self.shouldShowDisclaimer(false);
     };
 
-    // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -105,7 +104,13 @@ function ArmorViewModel() {
         self.editFirstModalElementHasFocus(true);
     };
 
-    /* UI Methods */
+    self.modifierHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+        self.selecteditem().save();
+        Notifications.armor.changed.dispatch();
+    };
 
     /**
      * Filters and sorts the armors for presentation in a table.

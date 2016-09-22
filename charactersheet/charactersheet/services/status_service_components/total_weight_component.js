@@ -15,6 +15,7 @@ function TotalWeightStatusServiceComponent() {
         Notifications.armor.changed.add(self.dataHasChanged);
         Notifications.weapon.changed.add(self.dataHasChanged);
         Notifications.item.changed.add(self.dataHasChanged);
+        Notifications.magicItem.changed.add(self.dataHasChanged);
         self.dataHasChanged();  //Calculate the first one.
     };
 
@@ -39,9 +40,9 @@ function TotalWeightStatusServiceComponent() {
         Item.findAllBy(key).forEach(function(e, i, _) {
             weight += parseInt(e.totalWeight());
         });
-
-        // Skip the rest if there's nothing to say.
-        if (weight === 0) { return }
+        MagicItem.findAllBy(key).forEach(function(e, i, _) {
+            weight += parseInt(e.magicItemWeight());
+        });
 
         var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
         if (!status) {
@@ -58,12 +59,17 @@ function TotalWeightStatusServiceComponent() {
     };
 
     self.getDescription = function(weight) {
+        if (weight === 0) {
+            return 'carrying nothing';
+        }
         return 'carrying ~' + String(weight) + 'lbs';
     };
 
     self.getType = function(strength, weight) {
         var carryCapacity = self.carryCapacity[strength];
-        if (weight <= carryCapacity.light) {
+        if (weight === 0) {
+            return 'default';
+        } else if (weight <= carryCapacity.light) {
             return 'info';
         } else if (weight <= carryCapacity.medium) {
             return 'warning';

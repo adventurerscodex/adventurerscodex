@@ -230,8 +230,18 @@ function WeaponsViewModel() {
         }
         return weight + ' (lbs)';
     });
+
     /* UI Methods */
 
+    // Modal Methods
+
+    self.modifierHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+        self.selecteditem().save();
+        Notifications.weapon.changed.dispatch();
+    };
     /**
      * Filters and sorts the weaponss for presentation in a table.
      */

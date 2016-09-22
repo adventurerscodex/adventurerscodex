@@ -11,8 +11,13 @@
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
-          <th class="hidden-sm hidden-xs">
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorDexBonus');}">
             Armor Class
+            <span data-bind="css: sortArrow('armorDexBonus')"></span>
+          </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorProficiency');}">
+            Proficiency
+            <span data-bind="css: sortArrow('armorProficiency')"></span>
           </th>
           <th>
             <a data-toggle="modal"
@@ -25,12 +30,9 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedArmors -->
         <tr class="clickable">
-          <td data-bind="click: $parent.editArmor"
+          <td data-bind="text: armorName, click: $parent.editArmor"
               href="#"
-              data-target="#viewArmor">
-              <span data-bind="text: armorName"></span>&nbsp;
-              <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
-              </span></td>
+              data-target="#viewArmor"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: armorType, click: $parent.editArmor"
               href="#"
@@ -39,6 +41,11 @@
               data-bind="text: armorClass, click: $parent.editArmor"
               href="#"
               data-target="#viewArmor"></td>
+          <td data-bind="click: $parent.editArmor"
+              href="#"
+              data-target="#viewArmor">
+                <span data-bind="css: proficiencyLabel"></span>
+          </td>
           <td>
             <a data-bind="click: $parent.removeArmor" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -80,7 +87,8 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="addArmorLabel">Add an armor piece to your armory.</h4>
+            <h4 class="modal-title"
+                id="addArmorLabel">Add an armor price to your armory.</h4>
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
@@ -93,7 +101,7 @@
                          id="armorName"
                          placeholder="Chain Mail"
                          data-bind='textInput: blankArmor().armorName, autocomplete: { source: armorsPrePopFilter,
-                            onselect: populateArmor }, hasFocus: firstModalElementHasFocus'>
+                            onselect: populateArmor }'>
                 </div>
               </div>
               <div class="form-group">
@@ -107,12 +115,13 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="armorMagicalModifier"
-                       class="col-sm-2 control-label">Magical Modifier</label>
+                <label for="armorProficiency"
+                       class="col-sm-2 control-label">Proficiency</label>
                   <div class="col-sm-10">
-                  <input type="number" class="form-control"
-                         id="armorMagicalModifier"
-                         data-bind='textInput: blankArmor().armorMagicalModifier'>
+                    <input type="checkbox"
+                           class="form-control"
+                           id="armorProficiency"
+                           data-bind='checked: blankArmor().armorProficiency'>
                   </div>
               </div>
               <div class="form-group">
@@ -222,10 +231,10 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="viewArmorLabel">View an armor piece from your armory.</h4>
+            <h4 class="modal-title"
+                id="viewArmorLabel">View an armor piece from your armory.</h4>
         </div>
           <div class="modal-body">
-
             <!-- Begin Tabs -->
             <ul class="nav nav-tabs tabs">
               <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
@@ -244,7 +253,7 @@
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="armorModalPreview">
                 <div class="h3">
                   <span data-bind="text: armorName"></span>&nbsp;
-                  <small data-bind="text: armorSummaryLabel"></small>
+                  <small data-bind="text: acLabel"></small>
                 </div>
 
                 <hr />
@@ -280,8 +289,7 @@
                              class="form-control"
                              id="armorName"
                              placeholder="Chain Mail"
-                             data-bind='textInput: armorName,
-                              hasFocus: $parent.editFirstModalElementHasFocus'>
+                             data-bind='textInput: armorName'>
                     </div>
                   </div>
                   <div class="form-group">
@@ -295,12 +303,13 @@
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="armorMagicalModifier"
-                           class="col-sm-2 control-label">Magical Modifier</label>
+                    <label for="armorProficiency"
+                           class="col-sm-2 control-label">Proficiency</label>
                       <div class="col-sm-10">
-                      <input type="number" class="form-control"
-                             id="armorMagicalModifier"
-                             data-bind='textInput: armorMagicalModifier'>
+                        <input type="checkbox"
+                               class="form-control"
+                               id="armorProficiency"
+                               data-bind='checked: armorProficiency'>
                       </div>
                   </div>
                   <div class="form-group">

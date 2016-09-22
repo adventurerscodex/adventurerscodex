@@ -116,6 +116,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    magicItem: {
+        changed: new signals.Signal()
+    },
+
     playerImage: {
         changed: new signals.Signal()
     },
