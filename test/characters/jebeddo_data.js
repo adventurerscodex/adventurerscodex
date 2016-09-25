@@ -957,5 +957,6 @@ var jebeddo_data = {
       "featureDescription": "d8",
       "color": "progress-bar-indigo"
     }
-  ]
+  ],
+  "__version__":"1.0.2"
 };

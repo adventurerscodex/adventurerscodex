@@ -157,7 +157,7 @@ Character.importCharacter = function(data) {
 
     // Import the new data to the actual store.
     if (!migratedData) {
-        throw "Migration of imported character failed.";
+        throw 'Migration of imported character failed.';
     }
     return Character._importCharacter(data);
 };
