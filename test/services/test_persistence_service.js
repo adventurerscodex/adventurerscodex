@@ -113,7 +113,8 @@ describe('Persistence Service', function() {
 //                 PersistenceService.findAllObjs('Skill').forEach(function(e, i, _) {
 //                     e.data.name.should.equal('Test');
 //                 });
-//            });
+//             });
+>>>>>>> Removes failing test. Needs rethinking.
             it('should apply a given migration and catch errors', function() {
                 PersistenceService.storage.Skill = MockLocalStorage.Skill;
                 try {
