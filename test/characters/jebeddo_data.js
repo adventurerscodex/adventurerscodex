@@ -958,5 +958,5 @@ var jebeddo_data = {
       "color": "progress-bar-indigo"
     }
   ],
-  "__version__":"1.0.2"
+  "__version__":"1.1.0"
 };

@@ -8,7 +8,7 @@ function Skill() {
     self.name = ko.observable('');
     self.modifier = ko.observable(null);
     self.abilityScore = ko.observable('');
-    self.proficiency = ko.observable(false);
+    self.proficiency = ko.observable('');
 
     self.updateValues = function() {
         self.modifier.notifySubscribers();
@@ -23,6 +23,12 @@ function Skill() {
             profBonus = OtherStats.findBy(
                 CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /* Ignore */}
+        profBonus = parseInt(profBonus);
+        if (self.proficiency() === 'half') {
+            profBonus = Math.floor(profBonus / 2);
+        } else if (self.proficiency() === 'expertise'){
+            profBonus = profBonus * 2;
+        }
         return parseInt(profBonus);
     };
 
@@ -59,13 +65,6 @@ function Skill() {
         return str;
     });
 
-    self.proficiencyLabel = ko.pureComputed(function() {
-        if (self.proficiency() === true) {
-            return 'fa fa-check';
-        }
-        return '';
-    });
-
     self.save = function() {
         self.ps.save();
     };
@@ -78,7 +77,7 @@ function Skill() {
         self.name('');
         self.abilityScore('');
         self.modifier(null);
-        self.proficiency(false);
+        self.proficiency('');
     };
 
     self.importValues = function(values) {

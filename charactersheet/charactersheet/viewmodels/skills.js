@@ -14,24 +14,24 @@ function SkillsViewModel() {
 
     self._defaultSkills = function() {
         var skills = [
-            { name: 'Acrobatics', abilityScore: 'Dex', proficency: false, modifier: null },
-            { name: 'Animal Handling', abilityScore: 'Wis', proficency: false, modifier: null },
-            { name: 'Arcana', abilityScore: 'Int', proficency: false, modifier: null },
-            { name: 'Athletics', abilityScore: 'Str', proficency: false, modifier: null },
-            { name: 'Deception', abilityScore: 'Cha', proficency: false, modifier: null },
-            { name: 'History', abilityScore: 'Int', proficency: false, modifier: null },
-            { name: 'Insight', abilityScore: 'Wis', proficency: false, modifier: null },
-            { name: 'Intimidation', abilityScore: 'Cha', proficency: false, modifier: null },
-            { name: 'Investigation', abilityScore: 'Int', proficency: false, modifier: null },
-            { name: 'Medicine', abilityScore: 'Wis', proficency: false, modifier: null },
-            { name: 'Nature', abilityScore: 'Int', proficency: false, modifier: null },
-            { name: 'Perception', abilityScore: 'Wis', proficency: false, modifier: null },
-            { name: 'Performance', abilityScore: 'Cha', proficency: false, modifier: null },
-            { name: 'Persuasion', abilityScore: 'Cha', proficency: false, modifier: null },
-            { name: 'Religion', abilityScore: 'Int', proficency: false, modifier: null },
-            { name: 'Sleight of Hand', abilityScore: 'Dex', proficency: false, modifier: null },
-            { name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: null },
-            { name: 'Survival', abilityScore: 'Wis', proficency: false, modifier: null }
+            { name: 'Acrobatics', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Animal Handling', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Arcana', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not' },
+            { name: 'Athletics', abilityScore: 'Str', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Deception', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'History', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Insight', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Intimidation', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Investigation', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Medicine', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Nature', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Perception', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Performance', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Persuasion', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Religion', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Sleight of Hand', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
+            { name: 'Survival', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'}
         ];
         return skills.map(function(e, i, _) {
             var skill = new Skill(self);

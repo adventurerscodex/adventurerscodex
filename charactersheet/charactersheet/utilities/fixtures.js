@@ -90,7 +90,9 @@ Fixtures = {
     },
     // List all migrations that should be applied
     migration : {
-        scripts : []
+        scripts : [
+            migration_110_1_skills
+        ]
     },
     wizardProfile: {
         classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
