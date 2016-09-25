@@ -114,7 +114,6 @@ describe('Persistence Service', function() {
 //                     e.data.name.should.equal('Test');
 //                 });
 //             });
->>>>>>> Removes failing test. Needs rethinking.
             it('should apply a given migration and catch errors', function() {
                 PersistenceService.storage.Skill = MockLocalStorage.Skill;
                 try {
