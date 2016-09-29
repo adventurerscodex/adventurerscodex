@@ -3,8 +3,15 @@
  * and set up the environment.
  */
 var init = function(viewModel) {
-    //Always ignore values in this list when mapping.
+    // Always ignore values in this list when mapping.
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
+
+    // Import static data
+    $.getJSON('https://adventurerscodex.com/data/SRD/spells.json',
+        function(data) {
+            DataRepository.spells = data;
+        }
+      );
 
     // Run migration
     PersistenceService.migrate(Fixtures.migration.scripts, Settings.version);

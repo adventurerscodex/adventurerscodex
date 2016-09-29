@@ -23,6 +23,9 @@ function SpellbookViewModel() {
     self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
+    self.spellsPrepop = Fixtures.spellList.spellNames;
+    self.modalOpen = ko.observable(false);
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
@@ -52,6 +55,13 @@ function SpellbookViewModel() {
         $.each(self.spellbook(), function(_, e) {
             e.save();
         });
+    };
+
+    self.populateSpell = function(label, value) {
+        var spell = DataRepository.spells[label];
+
+        self.blankSpell().importValues(spell);
+        self.shouldShowDisclaimer(true);
     };
 
     /* UI Methods */
@@ -103,4 +113,3 @@ function SpellbookViewModel() {
         self.spellbook([]);
     };
 }
-
