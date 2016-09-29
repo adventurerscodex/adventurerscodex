@@ -159,7 +159,8 @@ Character.importCharacter = function(data) {
     if (!migratedData) {
         throw 'Migration of imported character failed.';
     }
-    return Character._importCharacter(data);
+    delete migratedData.__version__;
+    return Character._importCharacter(migratedData);
 };
 
 Character._importCharacter = function(data) {
