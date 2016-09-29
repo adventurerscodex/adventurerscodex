@@ -8,7 +8,7 @@ var migration_110_2_spells = {
     version: '1.1.0',
     migration: function() {
         var spells = PersistenceService.findAllObjs('Spell');
-        for (i in spells) {
+        for (var i in spells) {
             var id = spells[i].id;
             var spell = spells[i].data;
 
@@ -70,6 +70,6 @@ var migration_110_2_spells = {
                 spell.spellRange = '500 feet';
             }
             PersistenceService.saveObj('Spell', id, spell);
-         }
-     }
- };
+        }
+    }
+};

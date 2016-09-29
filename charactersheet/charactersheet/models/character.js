@@ -124,10 +124,46 @@ Character.exportCharacter = function(characterId) {
             return e.exportValues();
         });
     });
+    data.__version__ = Settings.version;
     return data;
 };
 
+
+/**
+ * Perform a full import of a character's data to the database.
+ * This involves running migrations on the new character in compliance
+ * with the version of data in the running application database.
+ *
+ * @throws If the migration/re-export process did not return a valid data set.
+ *
+ * WARNING: This method's process is NOT THREADSAFE. To perform it's function
+ * this method *MUST* shim the current PersistenceService.storage. Until it is
+ * finished, the current database pointer will not be pointing to the
+ * app's data store
+ */
 Character.importCharacter = function(data) {
+    var migratedData = null;
+    //Get the version from the data and clean up the data file.
+    var version = String(data.__version___);
+    delete data.__version__;
+
+    // Import to a temp store and migrate, then export.
+    PersistenceService.withTemporaryDataStore({}, function() {
+        PersistenceService._setVersion(version);
+        var character = Character._injectCharacter(data);
+        PersistenceService.migrate(Fixtures.migration.scripts, Settings.version);
+        migratedData = Character.exportCharacter(character.key);
+    });
+
+    // Import the new data to the actual store.
+    if (!migratedData) {
+        throw 'Migration of imported character failed.';
+    }
+    delete migratedData.__version__;
+    return Character._importCharacter(migratedData);
+};
+
+Character._importCharacter = function(data) {
     var character = null;
     var tableNames = Object.keys(data);
     var characterId = uuid.v4();
@@ -142,6 +178,31 @@ Character.importCharacter = function(data) {
 
             if (e.toLowerCase() === 'character') {
                 character = inst;
+            }
+        });
+    });
+    return character;
+};
+
+/**
+ * Given an exported character data set, inject it in a raw form into the
+ * current data store without mapping to models.
+ * @returns a raw data object for the character that was just imported.
+ *
+ * NOTE: Since mapping operations typically determine indicies for stored
+ * objects, and no mapping is performed, the indicies from the exported
+ * character data is used.
+ */
+Character._injectCharacter = function(data) {
+    var character = null;
+    var tableNames = Object.keys(data);
+    var characterId = uuid.v4();
+    tableNames.forEach(function(table, i, _) {
+        data[table].forEach(function(obj, idx, _1) {
+            PersistenceService.saveObj(table, idx, obj);
+
+            if (table.toLowerCase() === 'character') {
+                character = obj;
             }
         });
     });

@@ -223,6 +223,23 @@ PersistenceService.getVersion = function() {
     return PersistenceService.storage[PersistenceService.version];
 };
 
+/**
+ * Perform a series of operations against a temporary data store. Useful for
+ * running migrations or copy operations.
+ * All errors thrown in the callback block are silenced.
+ *
+ * WARNING: This method is not threadsafe. All persistence operations
+ * are against the current global data store.
+ */
+PersistenceService.withTemporaryDataStore = function(store, callback) {
+    var _storage = PersistenceService.storage;
+    PersistenceService.storage = store;
+    try {
+        callback();
+    } catch(err) { /* Ignore */ }
+    PersistenceService.storage = _storage;
+};
+
 
 //======================= PersistenceServiceToken =============================
 

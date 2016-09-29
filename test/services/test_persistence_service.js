@@ -108,12 +108,12 @@ describe('Persistence Service', function() {
         });
 
         describe('Apply Migrations', function() {
-            it('should apply a given migration and catch errors', function() {
-                var result = PersistenceService._applyMigration(mock_110_migration);
-                PersistenceService.findAllObjs('Skill').forEach(function(e, i, _) {
-                    e.data.name.should.equal('Test');
-                });
-            });
+//            it('should apply a given migration and catch errors', function() {
+//                 var result = PersistenceService._applyMigration(mock_110_migration);
+//                 PersistenceService.findAllObjs('Skill').forEach(function(e, i, _) {
+//                     e.data.name.should.equal('Test');
+//                 });
+//             });
             it('should apply a given migration and catch errors', function() {
                 PersistenceService.storage.Skill = MockLocalStorage.Skill;
                 try {
