@@ -70,6 +70,6 @@ var migration_110_2_spells = {
                 spell.spellRange = '500 feet';
             }
             PersistenceService.saveObj('Spell', id, spell);
-         }
-     }
- };
+        }
+    }
+};
