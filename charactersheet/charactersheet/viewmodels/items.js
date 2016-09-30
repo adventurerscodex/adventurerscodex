@@ -112,7 +112,7 @@ function ItemsViewModel() {
 
         self.blankItem().importValues(item);
         self.shouldShowDisclaimer(true);
-    }
+    };
 
     //Public Methods
 

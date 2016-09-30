@@ -310,7 +310,7 @@ var Fixtures = {
             'Waterskin',
             'Weaver\'s tools',
             'Whetstone',
-            'Woodcarver\'s tools',
+            'Woodcarver\'s tools'
         ]
     },
     spellList : {
