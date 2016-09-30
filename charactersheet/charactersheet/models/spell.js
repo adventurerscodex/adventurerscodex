@@ -8,7 +8,8 @@ function Spell() {
             'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
             'spellSaveAttrOptions', 'spellSchoolOptions',
             'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions']
+            'spellComponentsOptions', 'spellRangeOptions'],
+        include: ['spellDmgType', 'spellMaterialComponents', 'isRitual', 'characterId']
     };
 
     self.characterId = ko.observable(null);
@@ -17,6 +18,7 @@ function Spell() {
     self.spellType = ko.observable('');
     self.spellSaveAttr = ko.observable('');
     self.spellDmg = ko.observable('');
+    self.spellDmgType = ko.observable('');
     self.spellSchool = ko.observable('');
     self.spellLevel = ko.observable(1);
     self.spellDescription = ko.observable('');
@@ -24,6 +26,8 @@ function Spell() {
     self.spellRange = ko.observable('');
     self.spellComponents = ko.observable('');
     self.spellDuration = ko.observable('');
+    self.spellMaterialComponents = ko.observable('');
+    self.isRitual = ko.observable(false);
     self.spellTypeOptions = ko.observableArray(Fixtures.spell.spellTypeOptions);
     self.spellSaveAttrOptions = ko.observableArray(Fixtures.spell.spellSaveAttrOptions);
     self.spellSchoolOptions = ko.observableArray(Fixtures.spell.spellSchoolOptions);

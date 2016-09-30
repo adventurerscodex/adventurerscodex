@@ -127,7 +127,9 @@
                          class="form-control"
                          id="spellName"
                          placeholder="Magic Missile"
-                         data-bind="textInput: blankSpell().spellName">
+                         data-bind="textInput: blankSpell().spellName,
+                          autocomplete: { source: spellsPrepop,
+                            onselect: populateSpell }">
                 </div>
               </div>
               <div class="form-group">
@@ -257,6 +259,14 @@
                         class="btn btn-primary"
                         data-bind='click: addSpell'
                         data-dismiss="modal">Add</button>
+                <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+                  <sm><i>This data is distributed under the
+                    <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                      target='_blank'>
+                      OGL</a><br/>
+                      Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                    </i><sm>
+                </p>
               </div>
             </form>
           </div> <!-- Modal Body -->
