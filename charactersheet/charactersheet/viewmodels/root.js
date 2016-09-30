@@ -266,6 +266,8 @@ function RootViewModel() {
             self.settingsViewModel().unload();
             self.wizardViewModel.unload();
         }
+
+        self._purgeStrayDBEntries();
     };
 
     //Private Methods
@@ -288,5 +290,25 @@ function RootViewModel() {
         } else {
             return 'hidden';
         }
+    };
+
+    /**
+     * Clear stray db entries. Entries that are either belonging to a
+     * non-existant or null character are removed.
+     */
+    self._purgeStrayDBEntries = function() {
+        var activeIDs = PersistenceService.findAll(Character).map(function(character, _i, _) {
+            return  character.key();
+        });
+        PersistenceService.listAll().forEach(function(table, idx, _) {
+            if (!window[table] || table === 'Character') { return; }
+            PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
+                var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
+                var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;
+                if (expiredID || invalidID) {
+                    PersistenceService.delete(window[table], e1.id);
+                }
+            });
+        });
     };
 }

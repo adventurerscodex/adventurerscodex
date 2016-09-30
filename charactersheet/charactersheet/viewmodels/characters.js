@@ -77,16 +77,6 @@ function CharactersViewModel() {
     };
 
     self.removeCharacter = function(character) {
-        //Purge all entries for this char.
-        var tables = Object.keys(localStorage);
-        tables.forEach(function(table, iTable, _Table) {
-            PersistenceService._findAllObjs(table).forEach(function(item, iItem, _Item) {
-                if (item.data.characterId === character.key()) {
-                    PersistenceService._delete(table, item.id);
-                }
-            });
-        });
-
         //Remove the character.
         character.delete();
         self.characters.remove(character);
