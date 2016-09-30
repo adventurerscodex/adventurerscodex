@@ -1,4 +1,5 @@
 'use strict';
 var DataRepository = {
-    spells : null
+    spells : null,
+    items : null
 };

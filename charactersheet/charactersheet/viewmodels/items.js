@@ -24,6 +24,8 @@ function ItemsViewModel() {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
+    self.shouldShowDisclaimer = ko.observable(false);
+    self.itemsPrepop = Fixtures.itemsList.itemNames;
 
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;
@@ -104,6 +106,13 @@ function ItemsViewModel() {
     self.editItemButton = function(item) {
         self.editItem(item);
     };
+
+    self.populateItem = function(label, value) {
+        var item = DataRepository.items[label];
+
+        self.blankItem().importValues(item);
+        self.shouldShowDisclaimer(true);
+    }
 
     //Public Methods
 
