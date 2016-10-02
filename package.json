@@ -24,7 +24,7 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "load-grunt-tasks": "^3.5.0",
     "mocha": "^2.3.3",
-    "phantomjs-prebuilt": "~2.1.2",
+    "phantomjs": "~1.9.18",
     "mr-doc": "^3.2.1",
     "mr-doc-theme-cayman": "^1.4.1",
     "serve": "^1.4.0"
