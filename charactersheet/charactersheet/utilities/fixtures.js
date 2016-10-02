@@ -166,7 +166,8 @@ var Fixtures = {
     migration : {
         scripts : [
             migration_110_1_skills,
-            migration_110_2_spells
+            migration_110_2_spells,
+            migration_110_3_stats
         ]
     },
     wizardProfile: {

@@ -465,6 +465,7 @@ PersistenceService._applyMigration = function(migration) {
         migration.migration();
     } catch(err) {
         // Rollback database in case of error with migration
+        throw err
         PersistenceService._copyObjectUsingKeys(oldStorage, localStorage);
         var msg = 'Migration failed on ' + migration.name;
         console.log(msg);

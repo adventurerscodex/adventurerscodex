@@ -13,7 +13,7 @@ var migration_110_3_stats = {
             var id = stats[i].id;
             var stat = stats[i].data;
 
-            stat.proficiency = 0
+            spell.proficiency = 0
 
             PersistenceService.saveObj('OtherStats', id, stat);
         }
