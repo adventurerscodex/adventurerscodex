@@ -13,6 +13,12 @@ var init = function(viewModel) {
         }
       );
 
+    $.getJSON('https://adventurerscodex.com/data/SRD/items.json',
+        function(data) {
+            DataRepository.items = data;
+        }
+      );
+
     // Run migration
     PersistenceService.migrate(Fixtures.migration.scripts, Settings.version);
 

@@ -20,10 +20,12 @@ function ItemsViewModel() {
 
     self.items = ko.observableArray([]);
     self.blankItem = ko.observable(new Item());
-    self.selecteditem = ko.observable(new Item());
+    self.selecteditem = ko.observable();
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
+    self.shouldShowDisclaimer = ko.observable(false);
+    self.itemsPrepop = Fixtures.itemsList.itemNames;
 
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;
@@ -60,6 +62,10 @@ function ItemsViewModel() {
         });
     };
 
+    // Modal methods
+    self.modalFinishedAnimating = function() {
+        self.shouldShowDisclaimer(false);
+    };
 
     /* UI Methods */
 
@@ -103,6 +109,13 @@ function ItemsViewModel() {
 
     self.editItemButton = function(item) {
         self.editItem(item);
+    };
+
+    self.populateItem = function(label, value) {
+        var item = DataRepository.items[label];
+
+        self.blankItem().importValues(item);
+        self.shouldShowDisclaimer(true);
     };
 
     //Public Methods

@@ -64,6 +64,11 @@ function SpellbookViewModel() {
         self.shouldShowDisclaimer(true);
     };
 
+    // Modal methods
+    self.modalFinishedAnimating = function() {
+        self.shouldShowDisclaimer(false);
+    };
+
     /* UI Methods */
 
     /**
