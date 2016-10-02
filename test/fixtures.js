@@ -252,3 +252,15 @@ var skillDataFixture = [
         }
     }
 ];
+
+var spellDataFixture = [
+    {
+        id: 0,
+        data: {
+            spellType: 'Attack Roll',
+            spellSchool: 'Cantrip',
+            spellDuration: '1 min',
+            spellRange: '5 ft'
+        }
+    }
+];
