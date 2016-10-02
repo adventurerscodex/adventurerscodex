@@ -20,7 +20,7 @@ function ItemsViewModel() {
 
     self.items = ko.observableArray([]);
     self.blankItem = ko.observable(new Item());
-    self.selecteditem = ko.observable(new Item());
+    self.selecteditem = ko.observable();
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
@@ -62,6 +62,10 @@ function ItemsViewModel() {
         });
     };
 
+    // Modal methods
+    self.modalFinishedAnimating = function() {
+        self.shouldShowDisclaimer(false);
+    };
 
     /* UI Methods */
 

@@ -25,21 +25,14 @@
       <!-- ko foreach: filteredAndSortedEquipment -->
         <tr class="clickable">
           <td data-bind="text: itemName, click: $parent.editItemButton"
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#viewItem"></td>
+                  href="#"></td>
           <td data-bind="text: itemQty, click: $parent.editItemButton"
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#viewItem"></td>
+                  href="#"></td>
           <td data-bind="text: itemWeight, click: $parent.editItemButton"
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#viewItem"></td>
+                  href="#"></td>
           <td data-bind="text: itemDesc, click: $parent.editItemButton"
-                  href="#"
-                  data-toggle="modal"
-                  data-target="#viewItem"></td>          <td>
+                  href="#"></td>
+          <td>
             <a data-bind='click: $parent.removeItemButton' href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
@@ -48,8 +41,8 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedEquipment().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addItem" href="#"
-            colspan="6" class="text-center">
+          <td href="#" data-toggle="modal"
+           data-target="#addItem" colspan="6" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new item
           </td>
@@ -68,10 +61,8 @@
 
 <!-- Add Modal -->
 <div class="modal fade"
-  id="addItem"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="addItemLabel">
+  id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
+  data-bind="modal: { callback: modalFinishedAnimating }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -185,10 +176,8 @@
 
 <!-- ViewEdit Modal -->
 <div class="modal fade"
-  data-bind="with: selecteditem"
-  id="viewItem"
-  tabindex="-1"
-  role="dialog"
+  data-bind="modal: { open: selecteditem, callback: modalFinishedAnimating },
+  with: selecteditem" id="viewItem" tabindex="-1" role="dialog"
   aria-labelledby="viewSpellLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

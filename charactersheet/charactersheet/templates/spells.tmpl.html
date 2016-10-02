@@ -51,29 +51,17 @@
           <td></td>
           <!-- /ko -->
           <td data-bind="text: spellName, click: $parent.editSpell"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSpell"></td>
+               href="#"></td>
           <td data-bind="text: spellLevel, click: $parent.editSpell"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSpell"></td>
+               href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSpell"></td>
+               href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellDamageLabel, click: $parent.editSpell"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSpell"></td>
+               href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellCastingTime, click: $parent.editSpell"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSpell"></td>
+               href="#"></td>
           <td data-bind="text: spellRange, click: $parent.editSpell"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSpell"></td>
+               href="#"></td>
           <td>
             <a data-bind="click: $parent.removeSpell" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -84,8 +72,8 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedSpells().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addSpell" href="#"
-            colspan="8" class="text-center">
+          <td href="#" data-toggle="modal"
+            data-target="#addSpell" colspan="8" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new spell
           </td>
@@ -104,7 +92,8 @@
          id="addSpell"
          tabindex="-1"
          role="dialog"
-         aria-labelledby="addSpellLabel">
+         aria-labelledby="addSpellLabel"
+         data-bind="modal: { callback: modalFinishedAnimating }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -275,11 +264,12 @@
     </div> <!-- Modal Fade -->
 
     <!-- ViewEdit Modal -->
-    <div data-bind="with: selecteditem">
     <div class="modal fade"
          id="viewSpell"
          tabindex="-1"
          role="dialog"
+         data-bind="modal: { open: selecteditem, callback: modalFinishedAnimating },
+          with: selecteditem"
          aria-labelledby="viewSpellLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -435,5 +425,4 @@
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
     </div> <!-- Modal Fade -->
-    </div> <!-- End with statement -->
 </div> <!-- Panel -->
