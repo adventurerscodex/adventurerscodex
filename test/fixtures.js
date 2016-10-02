@@ -252,3 +252,12 @@ var skillDataFixture = [
         }
     }
 ];
+
+var statDataFixture = [
+    {
+        id: 0,
+        data: {
+            proficiency: 7
+        }
+    }
+];
