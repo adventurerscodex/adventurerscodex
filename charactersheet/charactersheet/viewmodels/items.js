@@ -25,7 +25,6 @@ function ItemsViewModel() {
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
     self.shouldShowDisclaimer = ko.observable(false);
-    self.itemsPrepop = Fixtures.itemsList.itemNames;
 
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;
@@ -89,6 +88,15 @@ function ItemsViewModel() {
     self.sortBy = function(columnName) {
         self.sort(SortService.sortForName(self.sort(),
             columnName, self.sorts));
+    };
+
+    self.itemsPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.items ? Object.keys(DataRepository.items) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
     };
 
     //Manipulating items

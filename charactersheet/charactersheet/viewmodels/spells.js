@@ -23,7 +23,6 @@ function SpellbookViewModel() {
     self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
-    self.spellsPrepop = Fixtures.spellList.spellNames;
     self.modalOpen = ko.observable(false);
     self.shouldShowDisclaimer = ko.observable(false);
 
@@ -94,6 +93,15 @@ function SpellbookViewModel() {
     self.sortBy = function(columnName) {
         self.sort(SortService.sortForName(self.sort(),
             columnName, self.sorts));
+    };
+
+    self.spellsPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.spells ? Object.keys(DataRepository.spells) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
     };
 
     //Manipulating spells
