@@ -13,6 +13,10 @@
 
 ```bash 
 $ npm run deploy
+```
+- Test locally
+- Run the following:
+```bash
 $ git add -f bower_components
 $ git add .
 $ git commit -am "{{Useful message here}}"
