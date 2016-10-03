@@ -30,4 +30,7 @@ function SpellStatsViewModel() {
         self.spellStats().clear();
     };
 
+    self.setSpellCastingAbility = function(label, value) {
+        self.spellStats().spellcastingAbility(label);
+    };
 }
