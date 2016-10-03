@@ -1,3 +1,18 @@
+version 1.1.0 (10/02/2016)
+* Adds proficiency auto-calculation
+* Spell slots reset on short/long rest
+* Removes modifier label on skills and savings throws
+* Minor text fixes
+* Added footer
+* Fixed license
+* Adds jQuery autocomplete binding
+* Add migration engine
+* Add KO binding for modals
+* Add new ability score step for wizard
+* Adds new proficiency types
+* Add data cleanup
+* Spells auto complete
+* Items auto complete
 version 1.0.1 (09/10/2016)
 * Fixed issue with spell attack bonuses
 * Minor text fixes
