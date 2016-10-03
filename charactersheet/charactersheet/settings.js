@@ -36,5 +36,22 @@ var Settings = {
         // file types, such as "video" or "images" in the list. For more information,
         // see File types below. By default, all extensions are allowed.
         extensions: ['.json']
-    }
+    },
+
+    /**
+     * A set of Data Repository URLs and Keys. Each item in this list should
+     * contain both a URL and a Key.
+     *
+     * These values are fetched during initialization and the fetched values
+     * are set to DataRepository[key].
+     */
+    srdDataRepositoryLocations: [
+        {
+            key: 'items',
+            url: 'https://adventurerscodex.com/data/SRD/items.json'
+        }, {
+            key: 'spells',
+            url: 'https://adventurerscodex.com/data/SRD/spells.json'
+        }
+    ]
 };

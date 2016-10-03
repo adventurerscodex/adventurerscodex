@@ -7,17 +7,11 @@ var init = function(viewModel) {
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
     // Import static data
-    $.getJSON('https://adventurerscodex.com/data/SRD/spells.json',
-        function(data) {
-            DataRepository.spells = data;
-        }
-      );
-
-    $.getJSON('https://adventurerscodex.com/data/SRD/items.json',
-        function(data) {
-            DataRepository.items = data;
-        }
-      );
+    Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
+        $.getJSON(location.url, function(data) {
+            DataRepository[location.key] = data;
+        });
+    });
 
     // Run migration
     PersistenceService.migrate(Fixtures.migration.scripts, Settings.version);
