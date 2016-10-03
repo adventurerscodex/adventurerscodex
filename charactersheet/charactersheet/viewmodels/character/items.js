@@ -159,11 +159,13 @@ function ItemsViewModel() {
         self.items.push(item);
         item.characterId(CharacterManager.activeCharacter().key());
         item.save();
+        Notifications.item.changed.dispatch();
     };
 
     self.removeItem = function(item) {
         self.items.remove(item);
         item.delete();
+        Notifications.item.changed.dispatch();
     };
 
     self.editItem = function(item) {

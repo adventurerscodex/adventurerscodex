@@ -24,6 +24,9 @@ function CharacterRootViewModel() {
 
     self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
 
+    // Services
+    self.statusLineService = StatusService.sharedService();
+
     //Tooltips
     self.profileTooltip = ko.observable('Profile');
     self.statsTooltip = ko.observable('Stats');
@@ -134,6 +137,8 @@ function CharacterRootViewModel() {
      */
     self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
+
+        self.statusLineService.init();
 
         //Subscriptions
         Notifications.profile.changed.add(function() {
