@@ -52,8 +52,15 @@
           <!-- /ko -->
           <td data-bind="text: spellName, click: $parent.editSpell"
                href="#"></td>
+
+          <!-- ko if: spellLevel() != 0 -->
           <td data-bind="text: spellLevel, click: $parent.editSpell"
                href="#"></td>
+          <!-- /ko -->
+          <!-- ko if: spellLevel() == 0 -->
+          <td data-bind="text: 'Cantrip', click: $parent.editSpell"
+               href="#"></td>
+          <!-- /ko -->
           <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
                href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellDamageLabel, click: $parent.editSpell"
