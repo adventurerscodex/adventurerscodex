@@ -70,6 +70,7 @@ function SkillsViewModel() {
         //Subscriptions
         Notifications.abilityScores.changed.add(self.dataHasChanged);
         Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.profile.changed.add(self.dataHasChanged);
         self.skills().forEach(function(e, i, _) {
             self.addNotifiers(e);
         });
@@ -82,6 +83,7 @@ function SkillsViewModel() {
         self.skills([]);
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
         Notifications.stats.changed.remove(self.dataHasChanged);
+        Notifications.profile.changed.remove(self.dataHasChanged);
     };
 
     /* UI Methods */
@@ -160,4 +162,3 @@ function SkillsViewModel() {
         });
     };
 }
-
