@@ -101,12 +101,9 @@ function SpellSlotsViewModel() {
       return maxSlots;
     };
 
-
     self.maxSlotWidth = function(availableSlots) {
-
         var maxSlots = self.maxAvailableSlots()
         availableSlots = parseInt(availableSlots)
-
         return (100 * availableSlots) / maxSlots;
     };
 
