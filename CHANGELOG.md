@@ -1,3 +1,6 @@
+version 1.1.1 (10/04/2016)
+* fixes issue with Proficiency Calculations not updating or providing invalid modifiers. 
+
 version 1.1.0 (10/02/2016)
 * Adds proficiency auto-calculation
 * Spell slots reset on short/long rest
