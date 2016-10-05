@@ -4,6 +4,7 @@ function Skill() {
     var self = this;
     self.ps = PersistenceService.register(Skill, self);
 
+    self._dummy = ko.observable(null);
     self.characterId = ko.observable(null);
     self.name = ko.observable('');
     self.modifier = ko.observable(null);
@@ -11,12 +12,13 @@ function Skill() {
     self.proficiency = ko.observable('');
 
     self.updateValues = function() {
-        self.modifier.notifySubscribers();
+        self._dummy.notifySubscribers();
     };
 
     //UI Methods
 
     self.proficiencyScore = function() {
+        self._dummy();
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
         try{
@@ -24,15 +26,21 @@ function Skill() {
                 CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /* Ignore */}
         profBonus = parseInt(profBonus);
+
         if (self.proficiency() === 'half') {
-            profBonus = Math.floor(profBonus / 2);
-        } else if (self.proficiency() === 'expertise'){
-            profBonus = profBonus * 2;
+            return Math.floor(profBonus / 2);
+        } else if (self.proficiency() === 'expertise') {
+            return profBonus * 2;
+        } else if (self.proficiency() === 'proficient') {
+            return profBonus;
         }
-        return parseInt(profBonus);
+
+        // Will get to here if proficiency is null or empty
+        return 0;
     };
 
     self.abilityScoreModifier = function() {
+        self._dummy();
         var score = null;
         try {
             score = AbilityScores.findBy(
@@ -43,6 +51,7 @@ function Skill() {
     };
 
     self.bonus = ko.pureComputed(function() {
+        self._dummy();
         var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
         if (self.proficiency()) {
             bonus += self.proficiencyScore() + self.abilityScoreModifier();
@@ -54,6 +63,7 @@ function Skill() {
     });
 
     self.bonusLabel = ko.pureComputed(function() {
+        self._dummy();
         var str = '+ 0';
         if (self.bonus()) {
             str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' +
