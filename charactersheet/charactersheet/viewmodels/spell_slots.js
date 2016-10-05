@@ -93,8 +93,21 @@ function SpellSlotsViewModel() {
 
     //Manipulating spell slots
 
-    self.maxSlotWidth = function() {
-        return 100 / self.slots().length;
+    self.maxAvailableSlots = function() {
+        var maxSlots = 0;
+        self.slots().forEach(function(e, i, _) {
+            maxSlots = maxSlots + parseInt(e.maxSpellSlots())
+      });
+      return maxSlots;
+    };
+
+
+    self.maxSlotWidth = function(availableSlots) {
+
+        var maxSlots = self.maxAvailableSlots()
+        availableSlots = parseInt(availableSlots)
+
+        return (100 * availableSlots) / maxSlots;
     };
 
     self.editSlot = function(slot) {
