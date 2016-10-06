@@ -108,7 +108,7 @@ function SpellSlotsViewModel() {
     };
 
     self.currentWidthForSlot =  function(progressWidth, maxSlots) {
-      return (progressWidth * self.maxSlotWidth(maxSlots)+ '%');
+        return (progressWidth * self.maxSlotWidth(maxSlots)+ '%');
     };
 
     self.editSlot = function(slot) {
