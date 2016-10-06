@@ -101,15 +101,13 @@ function SpellSlotsViewModel() {
         return maxSlots;
     };
 
-    self.maxSlotWidth = function(availableSlots) {
+    self.currentSlotWidth =  function(progressWidth, maxSlotsForLevel) {
         var maxSlots = self.maxAvailableSlots();
-        availableSlots = parseInt(availableSlots);
-        return (100 * availableSlots) / maxSlots;
+        maxSlotsForLevel = parseInt(maxSlotsForLevel);
+        var maxSlotWidth = (100 * maxSlotsForLevel) / maxSlots;
+        return (progressWidth * maxSlotWidth+ '%');
     };
 
-    self.currentWidthForSlot =  function(progressWidth, maxSlots) {
-        return (progressWidth * self.maxSlotWidth(maxSlots)+ '%');
-    };
 
     self.editSlot = function(slot) {
         self.selecteditem(slot);
