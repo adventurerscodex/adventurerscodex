@@ -7,7 +7,7 @@ var Settings = {
      * Application's version number.
      * Used to determine which migration scripts to run.
      */
-    version: '1.1.0',
+    version: '1.2.0',
     /**
      * A series of values to always ignore when mapping KO Objects.
      */

@@ -142,20 +142,50 @@ var Fixtures = {
         spellcastingAbilityOptions: [
             'INT', 'WIS', 'CHA']
     },
-    weapon : {
-        weaponProficiencyOptions : [
-            'Simple', 'Martial', 'Improvised', 'Nonlethal', 'Exotic'],
-        weaponHandednessOptions : [
-            'Light', 'One-Handed', 'Two-Handed'],
-        weaponTypeOptions : [
-            'Melee', 'Ranged'],
-        weaponSizeOptions : [
-            'Small', 'Medium', 'Large'],
-        weaponPropertyOptions : [
-            'Ammunition', 'Finesse', 'Heavy', 'Light', 'Loading',
-            'Range', 'Reach', 'Special', 'Thrown', 'Versatile'],
-        weaponDamageTypeOptions : [
-            'Bludgeoning', 'Piercing', 'Slashing']
+    weapon: {
+        weaponDamageTypeOptions: [
+            "",
+            "bludgeoning",
+            "piercing",
+            "slashing"
+        ],
+        weaponHandednessOptions: [
+            "One or Two Handed",
+            "One-Handed",
+            "Two-Handed"
+        ],
+        weaponProficiencyOptions: [
+            "Martial",
+            "Simple"
+        ],
+        weaponPropertyOptions: [
+            "",
+            "Ammunition",
+            "Ammunition and Heavy",
+            "Ammunition and Loading",
+            "Ammunition, Loading and Heavy",
+            "Finesse",
+            "Finesse and Reach",
+            "Finesse and Thrown",
+            "Finesse, Light and Thrown",
+            "Heavy",
+            "Heavy and Reach",
+            "Light",
+            "Light and Finesse",
+            "Light and Thrown",
+            "Light, Ammunition, and Loading",
+            "Ranged, Ammunition, and Loading",
+            "Reach and Special",
+            "Special and Thrown",
+            "Thrown",
+            "Thrown and Versatile",
+            "Versatile"
+        ],
+        weaponTypeOptions: [
+            "Melee",
+            "Randed",
+            "Ranged"
+        ]
     },
     resting : {
         shortRestMessage : 'Your daily features, and relevant spell slots have been restored.',
@@ -165,9 +195,12 @@ var Fixtures = {
     // List all migrations that should be applied
     migration : {
         scripts : [
+            // v1.1
             migration_110_1_skills,
             migration_110_2_spells,
-            migration_110_3_stats
+            migration_110_3_stats,
+            // v1.2
+            migration_120_1_weapons
         ]
     },
     wizardProfile: {
