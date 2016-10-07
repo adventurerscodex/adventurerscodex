@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 	<div class='panel-body'>
 		<div class="progress" data-bind="{ foreach: slots, visible: slots().length > 0 }">
-			<div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: progressWidth() * $parent.maxSlotWidth() + '%' }, css: color">
+			<div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: $parent.currentSlotWidth(progressWidth(),maxSpellSlots()) }, css: color">
 				<span class="sr-only"></span>
 			</div>
 		</div>
