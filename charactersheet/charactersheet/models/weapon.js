@@ -11,7 +11,7 @@ function Weapon() {
             'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
             'weaponTypeOptions', 'weaponSizeOptions', 'weaponPropertyOptions',
             'weaponDamageTypeOptions'],
-        include: ['weaponHit']
+        include: ['weaponHit', 'characterId']
     };
 
     self._dummy = ko.observable(null);

@@ -55,6 +55,9 @@ var Settings = {
         }, {
             key: 'armors',
             url: 'https://adventurerscodex.com/data/SRD/armor.json'
+        }, {
+            key: 'weapons',
+            url: 'https://adventurerscodex.com/data/SRD/weapons.json'
         }
     ]
 };
