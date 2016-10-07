@@ -144,47 +144,47 @@ var Fixtures = {
     },
     weapon: {
         weaponDamageTypeOptions: [
-            "",
-            "bludgeoning",
-            "piercing",
-            "slashing"
+            '',
+            'bludgeoning',
+            'piercing',
+            'slashing'
         ],
         weaponHandednessOptions: [
-            "One or Two Handed",
-            "One-Handed",
-            "Two-Handed"
+            'One or Two Handed',
+            'One-Handed',
+            'Two-Handed'
         ],
         weaponProficiencyOptions: [
-            "Martial",
-            "Simple"
+            'Martial',
+            'Simple'
         ],
         weaponPropertyOptions: [
-            "",
-            "Ammunition",
-            "Ammunition and Heavy",
-            "Ammunition and Loading",
-            "Ammunition, Loading and Heavy",
-            "Finesse",
-            "Finesse and Reach",
-            "Finesse and Thrown",
-            "Finesse, Light and Thrown",
-            "Heavy",
-            "Heavy and Reach",
-            "Light",
-            "Light and Finesse",
-            "Light and Thrown",
-            "Light, Ammunition, and Loading",
-            "Ranged, Ammunition, and Loading",
-            "Reach and Special",
-            "Special and Thrown",
-            "Thrown",
-            "Thrown and Versatile",
-            "Versatile"
+            '',
+            'Ammunition',
+            'Ammunition and Heavy',
+            'Ammunition and Loading',
+            'Ammunition, Loading and Heavy',
+            'Finesse',
+            'Finesse and Reach',
+            'Finesse and Thrown',
+            'Finesse, Light and Thrown',
+            'Heavy',
+            'Heavy and Reach',
+            'Light',
+            'Light and Finesse',
+            'Light and Thrown',
+            'Light, Ammunition, and Loading',
+            'Ranged, Ammunition, and Loading',
+            'Reach and Special',
+            'Special and Thrown',
+            'Thrown',
+            'Thrown and Versatile',
+            'Versatile'
         ],
         weaponTypeOptions: [
-            "Melee",
-            "Randed",
-            "Ranged"
+            'Melee',
+            'Randed',
+            'Ranged'
         ]
     },
     resting : {
