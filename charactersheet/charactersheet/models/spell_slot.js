@@ -71,4 +71,3 @@ Slot.REST_TYPE = {
     SHORT_REST: 'short',
     LONG_REST: 'long'
 };
-

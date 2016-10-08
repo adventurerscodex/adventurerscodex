@@ -67,7 +67,7 @@ describe('Spell Slots View Model', function() {
         });
     });
 
-    describe('Max Slot Width', function() {
+    describe('Current Slot Width', function() {
         it('should return the width of the slot bar as a percent.', function() {
             var c = CharacterManager.activeCharacter;
             CharacterManager.activeCharacter = function() {
@@ -81,7 +81,7 @@ describe('Spell Slots View Model', function() {
             p.addSlot();
             p.addSlot();
             p.addSlot();
-            p.maxSlotWidth().should.equal(25);
+            p.currentSlotWidth(1,1).should.equal('25%');
 
             CharacterManager.activeCharacter = c;
         });
