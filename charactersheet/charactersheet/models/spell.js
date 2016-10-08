@@ -48,6 +48,14 @@ function Spell() {
         }
     });
 
+    self.spellLevelLabel = ko.pureComputed(function() {
+        if(parseInt(self.spellLevel()) === 0){
+            return 'Cantrip';
+        } else {
+            return self.spellLevel();
+        }
+    });
+
     self.clear = function() {
         var values = new Spell().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
