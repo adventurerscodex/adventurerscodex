@@ -8,7 +8,7 @@ function Spell() {
             'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
             'spellSaveAttrOptions', 'spellSchoolOptions',
             'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions'],
+            'spellComponentsOptions', 'spellRangeOptions', 'spellLevelLabel'],
         include: ['spellDmgType', 'spellMaterialComponents', 'isRitual', 'characterId']
     };
 
@@ -45,6 +45,14 @@ function Spell() {
         }
         else{
             return self.spellDmg();
+        }
+    });
+
+    self.spellLevelLabel = ko.computed(function() {
+        if(parseInt(self.spellLevel()) === 0){
+            return 'Cantrip';
+        } else {
+            return self.spellLevel();
         }
     });
 

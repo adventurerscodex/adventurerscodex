@@ -82,6 +82,19 @@ describe('Spell Model', function() {
         });
     });
 
+    describe('Spell Level Label', function() {
+        it('should return the correct label', function() {
+            var cantrip = new Spell();
+            cantrip.spellLevel(0);
+            cantrip.spellLevelLabel().should.equal('Cantrip');
+
+            var spell = new Spell();
+            spell.spellLevel(1);
+            spell.spellLevelLabel().should.equal(1);
+        });
+    });
+
+
     describe('Find All', function() {
         it('should find all of the values in the db.', function() {
             var key = '1234';
