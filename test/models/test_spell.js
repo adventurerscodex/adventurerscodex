@@ -62,6 +62,20 @@ describe('Spell Model', function() {
         });
     });
 
+    describe('Spell Name Label', function() {
+        it('should return the correct label', function() {
+            var ritual = new Spell();
+            ritual.spellName('Identify');
+            ritual.isRitual(true);
+            ritual.spellNameLabel().should.equal('Identify (ritual)');
+
+            var spell = new Spell();
+            spell.spellName('Magic Missile');
+            spell.isRitual(false);
+            spell.spellNameLabel().should.equal('Magic Missile');
+        });
+    });
+
     describe('Spell Damage Label', function() {
         it('should return the correct label', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);

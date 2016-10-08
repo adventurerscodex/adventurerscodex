@@ -8,7 +8,7 @@ function Spell() {
             'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
             'spellSaveAttrOptions', 'spellSchoolOptions',
             'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions'],
+            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel'],
         include: ['spellDmgType', 'spellMaterialComponents', 'isRitual', 'characterId']
     };
 
@@ -35,6 +35,14 @@ function Spell() {
     self.spellDurationOptions = ko.observableArray(Fixtures.spell.spellDurationOptions);
     self.spellComponentsOptions = ko.observableArray(Fixtures.spell.spellComponentsOptions);
     self.spellRangeOptions = ko.observableArray(Fixtures.spell.spellRangeOptions);
+
+    self.spellNameLabel = ko.pureComputed(function() {
+        if(self.isRitual() === true){
+            return (self.spellName() + ' (ritual)' );
+        } else {
+            return self.spellName();
+        }
+    });
 
     self.spellDamageLabel = ko.pureComputed(function() {
         var charKey = CharacterManager.activeCharacter().key();
