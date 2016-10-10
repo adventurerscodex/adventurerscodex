@@ -38,7 +38,7 @@ function Spell() {
 
     self.spellNameLabel = ko.pureComputed(function() {
         if(self.isRitual() === true){
-            return (self.spellName() + ' (ritual)' );
+            return (self.spellName() + ' (Ritual)' );
         } else {
             return self.spellName();
         }

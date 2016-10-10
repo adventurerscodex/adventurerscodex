@@ -67,7 +67,7 @@ describe('Spell Model', function() {
             var ritual = new Spell();
             ritual.spellName('Identify');
             ritual.isRitual(true);
-            ritual.spellNameLabel().should.equal('Identify (ritual)');
+            ritual.spellNameLabel().should.equal('Identify (Ritual)');
 
             var spell = new Spell();
             spell.spellName('Magic Missile');
