@@ -124,11 +124,19 @@
               <div class="form-group">
                 <label for="spellPrepared"
                        class="col-sm-2 control-label">Prepared</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-4">
                     <input type="checkbox"
                            class="form-control"
                            id="spellPrepared"
                            data-bind='checked: blankSpell().spellPrepared'>
+                  </div>
+                <label for="spellIsRitual"
+                       class="col-sm-2 control-label">Ritual</label>
+                  <div class="col-sm-4">
+                    <input type="checkbox"
+                           class="form-control"
+                           id="spellIsRitual"
+                           data-bind='checked: blankSpell().isRitual'>
                   </div>
               </div>
               <div class="form-group">
@@ -218,6 +226,17 @@
                   </div>
               </div>
               <div class="form-group">
+                <label for="spellMaterialComponents"
+                       class="col-sm-2 control-label">Material Components</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellMaterialComponents"
+                           placeholder="Feather"
+                           data-bind="textInput: blankSpell().spellMaterialComponents">
+                  </div>
+              </div>
+              <div class="form-group">
                 <label for="spellDuration"
                        class="col-sm-2 control-label">Duration</label>
                   <div class="col-sm-10">
@@ -299,11 +318,19 @@
               <div class="form-group">
                 <label for="spellPrepared"
                        class="col-sm-2 control-label">Prepared</label>
-                  <div class="col-sm-10">
+                  <div class="col-sm-4">
                     <input type="checkbox"
                            class="form-control"
                            id="spellPrepared"
                            data-bind='checked: spellPrepared'>
+                  </div>
+                <label for="spellIsRitual"
+                       class="col-sm-2 control-label">Ritual</label>
+                  <div class="col-sm-4">
+                    <input type="checkbox"
+                           class="form-control"
+                           id="spellIsRitual"
+                           data-bind='checked: isRitual'>
                   </div>
               </div>
               <div class="form-group">
@@ -390,6 +417,17 @@
                           data-bind="options: spellComponentsOptions,
                                      value: spellComponents,
                                      select2: {theme: 'classic'}"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="spellMaterialComponents"
+                       class="col-sm-2 control-label">Material Components</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellMaterialComponents"
+                           placeholder="Feather"
+                           data-bind="textInput: spellMaterialComponents">
                   </div>
               </div>
               <div class="form-group">
