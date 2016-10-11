@@ -7,7 +7,7 @@ function Armor() {
         ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
             'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus',
             'armorTypeOptions', 'armorStealthOptions'],
-        include: ['armorClass']
+        include: ['armorClass', 'characterId']
     };
 
     self.characterId = ko.observable(null);
