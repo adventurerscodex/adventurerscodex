@@ -145,9 +145,9 @@ var Fixtures = {
     weapon: {
         weaponDamageTypeOptions: [
             '',
-            'bludgeoning',
-            'piercing',
-            'slashing'
+            'Bludgeoning',
+            'Piercing',
+            'Slashing'
         ],
         weaponHandednessOptions: [
             'One or Two Handed',
