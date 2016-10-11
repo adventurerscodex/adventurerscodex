@@ -9,7 +9,7 @@ function Weapon() {
             'exportValues', 'importValues', 'save', 'abilityScoreBonus',
             'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
             'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
-            'weaponTypeOptions', 'weaponPropertyOptions',
+            'weaponTypeOptions', 'weaponSize', 'weaponPropertyOptions',
             'weaponDamageTypeOptions'],
         include: ['weaponHit', 'characterId']
     };
