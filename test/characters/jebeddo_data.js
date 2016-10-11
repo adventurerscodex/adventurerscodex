@@ -580,7 +580,6 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Medium",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Range",
       "weaponDescription": ""
@@ -597,7 +596,6 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Small",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
       "weaponDescription": ""
@@ -613,7 +611,6 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Small",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
       "weaponDescription": ""
@@ -630,7 +627,6 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Small",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
       "weaponDescription": "",
@@ -648,7 +644,6 @@ var jebeddo_data = {
       "weaponHit": "1",
       "weaponWeight": "",
       "weaponRange": "Radiant Damage",
-      "weaponSize": "Small",
       "weaponDamageType": "Slashing",
       "weaponProperty": "Light",
       "weaponDescription": "",
