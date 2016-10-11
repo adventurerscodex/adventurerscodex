@@ -24,9 +24,33 @@ describe('Skill Model', function() {
             s.name('Arcana');
             s.modifier(-4);
             s.abilityScore('Wis');
-            s.proficiency(true);
+            s.proficiency('proficient');
 
             s.bonusLabel().should.equal('- 2 <i><small>(Wis)</small></i>');
+
+            s = new Skill(parent);
+            s.name('Arcana');
+            s.modifier(2);
+            s.abilityScore('Wis');
+            s.proficiency('not');
+
+            s.bonusLabel().should.equal('+ 2 <i><small>(Wis)</small></i>');
+
+            s = new Skill(parent);
+            s.name('Arcana');
+            s.modifier(2);
+            s.abilityScore('Wis');
+            s.proficiency('half');
+
+            s.bonusLabel().should.equal('+ 3 <i><small>(Wis)</small></i>');
+
+            s = new Skill(parent);
+            s.name('Arcana');
+            s.modifier(2);
+            s.abilityScore('Wis');
+            s.proficiency('expertise');
+
+            s.bonusLabel().should.equal('+ 6 <i><small>(Wis)</small></i>');
         });
     });
     describe('Proficiency Label', function() {
