@@ -66,6 +66,99 @@ PersistenceService.findAll = function(model) {
     return PersistenceService._findAll(model);
 };
 
+
+
+/**
+ * Given a model class, return all of the stored instances that match a given
+ * filter function.
+ *
+ * Notes
+ * -----
+ *
+ * The element values passed to the provided filter function are unmapped, raw
+ * Javascript data objects.
+ *
+ * Parameters
+ * ----------
+ *
+ * model: The prototype for the type of model that is being searched for.
+ * filterFn: A function, taking an element and its index that returns true if
+ * the element should be included in the result.
+ *
+ * Returns
+ * -------
+ *
+ * A list of objects of the desired type.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * var skills = PersistenceService.findFiltered(Skill, function(skill, idx) {
+ *   return skill.characterId == characterId;
+ * }); ```
+ */
+PersistenceService.findFiltered = function(model, filterFn) {
+    return PersistenceService._findFiltered(model, filterFn);
+};
+
+
+/**
+ * Given a model class, return all of the stored instances that match a given
+ * filter criteria.
+ *
+ * Parameters
+ * ----------
+ *
+ * model: The prototype for the type of model that is being searched for.
+ * property: A static property of the data object to compare with the given value.
+ * value: A value which matches the desired object's property value.
+ *
+ * Returns
+ * -------
+ *
+ * A list of objects of the desired type, which match the criteria.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * var skills = PersistenceService.findBy(Skill, 'characterId', '1234');
+ * ```
+ */
+PersistenceService.findBy = function(model, property, value) {
+    return PersistenceService._findFiltered(model, function(element, idx) {
+        return element[property] === value;
+    });
+};
+
+/**
+ * Given a model class, return the first instance of the stored mapped models that
+ * match a given filter criteria.
+ *
+ * Parameters
+ * ----------
+ *
+ * model: The prototype for the type of model that is being searched for.
+ * property: A static property of the data object to compare with the given value.
+ * value: A value which matches the desired object's property value.
+ *
+ * Returns
+ * -------
+ *
+ * The first object to match the criteria.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * var skills = PersistenceService.findFirstBy(Skill, 'characterId', '1234');
+ * ```
+ */
+PersistenceService.findFirstBy = function(model, property, value) {
+    return PersistenceService._findFiltered(model, function(element, idx) {
+        return element[property] === value;
+    })[0];
+};
+
+
 /**
  * Given a model class and an instance of that class, save the instance.
  *
@@ -336,8 +429,23 @@ PersistenceService._findAllObjs = function(key) {
     return res;
 };
 
+
 PersistenceService._findAll = function(model) {
     var objs = PersistenceService._findAllObjs(model.name);
+    return PersistenceService._mapModels(objs, model);
+};
+
+
+PersistenceService._findFiltered = function(model, filterFn) {
+    var objs = PersistenceService._findAllObjs(model.name);
+    var filtered = objs.filter(function (element, idx, _) {
+        return filterFn(element.data, idx);
+    });
+    return PersistenceService._mapModels(filtered, model);
+};
+
+
+PersistenceService._mapModels = function(objs, model) {
     var models = [];
     if (PersistenceService.customImport) {
         for (var i=0; i<objs.length; i++) {
@@ -360,6 +468,7 @@ PersistenceService._findAll = function(model) {
     }
     return models;
 };
+
 
 PersistenceService._save = function(key, inst) {
     //Export the instance's data.
