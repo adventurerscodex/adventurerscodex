@@ -7,6 +7,7 @@ function ArmorViewModel() {
     self.blankArmor = ko.observable(new Armor());
     self.armors = ko.observableArray([]);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.sorts = {
         'armorName asc': { field: 'armorName', direction: 'asc'},
@@ -54,6 +55,29 @@ function ArmorViewModel() {
         }
         return weight + ' (lbs)';
     });
+
+    /* Modal Methods */
+
+    self.armorsPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    self.populateArmor = function(label, value) {
+        var armor = DataRepository.armors[label];
+
+        self.blankArmor().importValues(armor);
+        self.shouldShowDisclaimer(true);
+    };
+
+    self.modalFinishedAnimating = function() {
+        self.shouldShowDisclaimer(false);
+    };
+
     /* UI Methods */
 
     /**
