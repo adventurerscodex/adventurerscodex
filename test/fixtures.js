@@ -272,3 +272,18 @@ var spellDataFixture = [
         }
     }
 ];
+
+
+var weaponDataFixture = [
+    {
+        id: 0,
+        data: {
+            weaponHandedness: 'Light',
+        }
+    }, {
+        id: 1,
+        data: {
+            weaponHandedness: 'Heavy',
+        }
+    }
+];
