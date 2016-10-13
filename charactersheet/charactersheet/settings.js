@@ -52,6 +52,9 @@ var Settings = {
         }, {
             key: 'spells',
             url: 'https://adventurerscodex.com/data/SRD/spells.json'
+        }, {
+            key: 'armors',
+            url: 'https://adventurerscodex.com/data/SRD/armor.json'
         }
     ]
 };
