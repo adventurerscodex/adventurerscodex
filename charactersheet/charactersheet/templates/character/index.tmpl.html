@@ -1,0 +1,283 @@
+<ul class="nav nav-tabs tabs">
+  <li role="presentation" data-bind="click: activateStatsTab, tooltip: { title: statsTooltip }, css: statsTabStatus">
+    <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/weight-lifting-up.svg"></img>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateSkillsTab, , tooltip: { title: skillsTooltip }, css: skillsTabStatus">
+    <a href="#skills" aria-controls="skills" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/jump-across.svg"></img>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateSpellsTab, tooltip: { title: spellsTooltip }, css: spellsTabStatus">
+    <a href="#spells" aria-controls="spells" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/fire-tail.svg"></img>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateEquipmentTab, tooltip: { title: weaponsAndArmorTooltip }, css: equipmentTabStatus">
+    <a href="#items" aria-controls="items" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/battle-gear.svg"></img>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateInventoryTab, tooltip: { title: backpackTooltip }, css: inventoryTabStatus">
+    <a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/knapsack.svg"></img>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateNotesTab, tooltip: { title: notesTooltip }, css: notesTabStatus">
+    <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateProfileTab, tooltip: { title: profileTooltip }, css: profileTabStatus">
+    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+      <img class="tab-icon" src="/images/tab_icons/read.svg"></img>
+    </a>
+  </li>
+  <!-- Right tabs -->
+  <li role="presentation" data-bind="with: actionsToolbarViewModel" class="secondary-nav">
+    <button class="btn btn-sm btn-primary" data-toggle="collapse"
+      data-bind="click: toggleWellOpen"
+      data-target="#actionsCollapse" aria-expanded="false"
+      aria-controls="actionsCollapse">
+        Actions
+        <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
+    </button>
+  </li>
+</ul>
+<div class="tab-content">
+<div data-bind="template : { name: 'actions_toolbar.tmpl', templateUrl: 'templates/character', data: actionsToolbarViewModel }"></div>
+<div role="tabpanel" class="tab-pane" id="stats" data-bind="with: statsTabViewModel, css: statsTabStatus">
+  <div class="row">
+    <div class="col-sm-4 col-lg-3 hidden-xs">
+      <img alt="A heart icon" src="/images/nested-hearts.svg">
+    </div>
+    <div class="col-sm-8 col-lg-9 col-padded">
+      <div class="h3">
+        Hit Points and Hit Dice<br />
+        <small>Click on your max Hit Points to increase them when you level
+           up. Click on a die icon to track expended hit dice.</small>
+      </div>
+      <div id="stats" data-bind="template: { name: 'stats.tmpl', templateUrl: 'templates/character', data: statsViewModel }">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div class="h3">
+        Ability Scores, Savings Throw, and Other Stats<br />
+        <small>Click on your Ability Scores to add or edit them. Savings
+          Throw modifiers automatically include your Ability Score modifier
+          and Proficiency Bonus. Your Passive Wisdom is also calculated
+           automatically based on your Wisdom.
+        </small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div data-bind="template: { name: 'ability.tmpl', templateUrl: 'templates/character', data: abilityScoresViewModel }">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-padded">
+      <div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'templates/character', data: savingThrowsViewModel }">
+      </div>
+    </div>
+    <div class="col-sm-8 col-padded">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-12 col-padded">
+              <div id="other_stats" data-bind="template: { name: 'other_stats.tmpl', templateUrl: 'templates/character', data: statsViewModel }">
+             </div>
+            </div>
+            <div class="col-sm-12 col-padded">
+              <div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates/character', data: spellStatsViewModel }">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Stats Tab -->
+<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
+  <div class="row">
+    <div class="col-sm-4 col-lg-3 hidden-xs">
+      <img alt="A sword in stone" src="/images/sword-spin.svg" />
+    </div>
+    <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
+      <div class="h3">
+        Daily Features<br />
+        <small>These are features who's charges are restored whenever
+        you take a short or long rest; for example, Dragon Breath.</small>
+      </div>
+      <div id="daily_features" data-bind="template: { name: 'daily_features.tmpl', templateUrl: 'templates/character', data: dailyFeatureViewModel }">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="h3">
+        Skills, Feats, and Features<br />
+        <small>Your Skills take into account your Ability Score modifiers
+        and Proficiency Bonus.</small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4 col-padded">
+      <div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates/character', data: skillsViewModel }">
+      </div>
+    </div>
+    <div class="col-sm-8 col-padded">
+      <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates/character', data: featsProfViewModel }">
+    </div>
+  </div>
+</div>
+</div>
+<!-- End Skills Tab -->
+<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
+  <div class="row">
+    <div class="col-sm-4 col-lg-3 hidden-xs">
+      <img src="/images/enlightenment.svg" alt="Spells image"/>
+    </div>
+    <div class="col-sm-8 col-lg-9 col-padded">
+      <div class="h3">
+        Spell Slots<br/>
+        <small>These slots are automatically refilled after a long rest. Click
+        on a slot to edit it.</small>
+      </div>
+      <div id="spell_slots" data-bind="template: { name: 'spell_slots.tmpl', templateUrl: 'templates/character', data: spellSlotsViewModel }">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div class="h3">
+        Spells<br/>
+        <small>You can sort your spells by clicking on the headers. View the
+          bottom of the list for a count of your prepared spells.</small>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-sm-12 col-padded">
+      <div id="spells" data-bind="template: { name: 'spells.tmpl', templateUrl: 'templates/character', data: spellbookViewModel }">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Spells Tab -->
+<div role="tabpanel" class="tab-pane" id="items" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
+  <div class="row">
+    <div class="col-sm-4 col-lg-3 hidden-xs">
+      <img alt="A sword in stone" src="/images/spinning-sword.svg" />
+    </div>
+    <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
+      <div class="h3">
+        Weapons<br />
+        <small>A weapon's To Hit bonus is automatically calculated based on
+           your Strength, Dexterity and your weapon's magical modifier
+           and property.</small>
+      </div>
+      <div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates/character', data: weaponsViewModel }">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
+      <div class="h3">
+        Armor<br />
+        <small>Your Armor doesn't automatically influence your
+        Armor Class...yet.</small>
+      </div>
+      <div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates/character', data: armorViewModel }">
+      </div>
+    </div>
+    <div class="col-sm-4 col-lg-3 hidden-xs">
+      <img alt="A sword in stone" src="/images/checked-shield.svg" />
+    </div>
+  </div>
+</div>
+<!-- End Equipment Tab -->
+<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
+  <div class="row">
+    <div class="col-sm-4 col-lg-3 hidden-xs">
+      <img src="/images/misc_icons/locked-chest.svg" alt="Inventory tab"/>
+    </div>
+    <div class="col-sm-8 col-lg-9 col-padded">
+      <div class="h3">
+        Treasure &amp; Magic Items<br/>
+        <small>“This should be in a museum!” -Indiana Jones</small>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-padded">
+          <div data-bind="template: { name: 'treasure.tmpl', templateUrl: 'templates/character', data: treasureViewModel }">
+          </div>
+        </div>
+        <div class="col-sm-12 col-padded">
+          <div data-bind="template: { name: 'magic_items.tmpl', templateUrl: 'templates/character', data: magicitemsViewModel }">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-8 col-lg-9 col-padded">
+        <div class="h3">
+          Inventory<br/>
+          <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-padded">
+        <div data-bind="template: { name: 'items.tmpl', templateUrl: 'templates/character', data: itemsViewModel }">
+        </div>
+      </div>
+    </div>
+</div>
+<!-- End Inventory Tab -->
+<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
+  <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div class="h3">
+        Notes<br />
+        <small>“Consult the Book of Armaments!” -King Arthur</small>
+      </div>
+      <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates/character', data: notesViewModel }">
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Notes Tab -->
+<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
+  <div class="row">
+    <div class="col-sm-4 hidden-xs">
+      <img src="/images/standing-man-3.svg" alt="Profile tab" style="width:100%;"/>
+    </div>
+    <div class="col-sm-8 col-padded">
+      <div class="h3">
+        Profile<br />
+        <small>This stuff doesn't change very often!</small>
+      </div>
+      <div data-bind="template: { name: 'profile.tmpl', templateUrl: 'templates/character', data: profileViewModel }">
+      </div>
+      <div data-bind="template: { name: 'appearance.tmpl', templateUrl: 'templates/character', data: appearanceViewModel }">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div data-bind="template: { name: 'feat_traits.tmpl', templateUrl: 'templates/character', data: featuresTraitsViewModel }">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
