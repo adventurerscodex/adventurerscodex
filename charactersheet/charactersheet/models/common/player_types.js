@@ -11,6 +11,7 @@ var PlayerTypes = {
             SpellsTabViewModel, EquipmentTabViewModel, InventoryTabViewModel,
             NotesTabViewModel
         ],
+        rootViewModel: CharacterRootViewModel,
         defaultTab: 'stats'
     }
 };
