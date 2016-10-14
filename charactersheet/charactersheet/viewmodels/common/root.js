@@ -23,10 +23,14 @@ function AdventurersCodexViewModel() {
 
     //UI Methods
 
+    self.playerType = function() {
+        return CharacterManager.activeCharacter().playerType();
+    };
+
     self.showWizard = function() {
         //Unload the prior character.
         if (CharacterManager.activeCharacter()) {
-            Notifications.global.unload.dispatch();
+            self.unload();
         }
         self.ready(false);
     };
@@ -43,41 +47,17 @@ function AdventurersCodexViewModel() {
         self.wizardViewModel.init();
 
         //Subscriptions
-        Notifications.characters.allRemoved.add(function() {
-            self.showWizard();
-        });
+        Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
+        Notifications.characterManager.changing.add(self._handleChangingCharacter);
+        Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
-        Notifications.characterManager.changing.add(function() {
-            //Don't save an empty character.
-            if (CharacterManager.activeCharacter() && self.ready()) {
-                Notifications.global.unload.dispatch();
-            }
-        });
-
-        Notifications.characterManager.changed.add(function() {
-            try {
-                Notifications.global.load.dispatch();
-            } catch(err) {
-                throw err;
-            }
-        });
-
-        Notifications.global.load.add(self.load);
-        Notifications.global.unload.add(self.unload);
-
-        //Once init-ed, we can check for a character to load, if any.
         var character = Character.findAll()[0];
         if (character) {
-            // Init the correct view model for each type.
-            var vm = character.playerType().rootViewModel;
-            self.childRootViewModel(new vm());
-            self.childRootViewModel().init();
-
             //Switching characters will fire the load notification.
             CharacterManager.changeCharacter(character.key());
         } else {
             //If no current character exists, fire the load process anyway.
-            Notifications.global.load.dispatch();
+            self.load();
         }
     };
 
@@ -109,6 +89,33 @@ function AdventurersCodexViewModel() {
     };
 
     //Private Methods
+
+    self._setNewCharacter = function(character) {
+        // Init the correct view model for each type.
+        var vm = character.playerType().rootViewModel;
+        self.childRootViewModel(new vm());
+        self.childRootViewModel().init();
+    };
+
+    self._handleAllCharactersRemoved = function() {
+        self.showWizard();
+    };
+
+    self._handleChangingCharacter = function() {
+        //Don't save an empty character.
+        if (CharacterManager.activeCharacter() && self.ready()) {
+            self.unload();
+        }
+    };
+
+    self._handleChangedCharacter = function() {
+        self._setNewCharacter(CharacterManager.activeCharacter());
+        try {
+            self.load();
+        } catch(err) {
+            throw err;
+        }
+    };
 
     self._hasAtLeastOneCharacter = function() {
         return Character.findAll().length > 0;

@@ -3,6 +3,7 @@
 function CharacterRootViewModel() {
     var self = this;
 
+    self.TEMPLATE_FILE = 'character/index.tmpl';
     self.playerType = function() {
         return CharacterManager.activeCharacter().playerType();
     };

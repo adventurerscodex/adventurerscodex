@@ -6,12 +6,14 @@ var PlayerTypes = {
         visibleTabs: [
             'profile', 'stats', 'skills', 'spells', 'equipment',
             'inventory', 'notes', 'settings', 'party'],
-        tabViewModels: [
-            ProfileTabViewModel, StatsTabViewModel, SkillsTabViewModel,
-            SpellsTabViewModel, EquipmentTabViewModel, InventoryTabViewModel,
-            NotesTabViewModel
-        ],
         rootViewModel: CharacterRootViewModel,
         defaultTab: 'stats'
+    },
+    dmPlayerType: {
+        key: 'dm',
+        visibleTabs: [],
+        tabViewModels: [],
+        rootViewModel: DMRootViewModel,
+        defaultTab: null
     }
 };
