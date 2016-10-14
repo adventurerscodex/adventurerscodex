@@ -53,6 +53,7 @@
     <div class="row">
       <div class="col-sm-8">
         <div class="row">
+          <!-- ko if: playerType().key == 'player' -->
           <!-- ko with: childRootViewModel -->
           <div class="col-padded col-xs-2" data-bind="template: {
             name: 'player_image.tmpl',
@@ -60,7 +61,9 @@
             data: profileTabViewModel().playerImageViewModel()
           }"></div>
           <!-- /ko -->
+          <!-- /ko -->
           <div class="col-padded col-xs-10 characters-player-name">
+          <!-- ko if: playerType().key == 'player' -->
           <!-- ko with: childRootViewModel -->
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
@@ -71,6 +74,7 @@
                 }"></div>
               </div>
             </div>
+            <!-- /ko -->
             <!-- /ko -->
             <!-- /ko -->
             <div class="row">
@@ -102,7 +106,7 @@
       </div>
     </div>
     <div class="spacer"></div>
-    <div data-bind="template: { name: 'index.tmpl', templateUrl: 'templates/character', data: childRootViewModel }"></div>
+    <div data-bind="template: { name: childRootViewModel().TEMPLATE_FILE, templateUrl: 'templates', data: childRootViewModel }"></div>
 	</div>
 </div>
 <!-- Footer -->
@@ -226,7 +230,6 @@
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="/bower_components/knockout/dist/knockout.js" type="text/javascript"></script>
 <script src="/bower_components/file-saver.js/FileSaver.js" type="text/javascript"></script>
-<script src="/bower_components/uri.js/src/URI.min.js" type="text/javascript"></script>
 <script src="/bower_components/node-uuid/uuid.js" type="text/javascript"></script>
 <script src="/bower_components/js-signals/dist/signals.min.js" type="text/javascript"></script>
 <script src="/bower_components/knockout-file-bindings/knockout-file-bindings.js" type="text/javascript"></script>
@@ -234,12 +237,8 @@
 <script src="/bower_components/select2/select2.min.js"></script>
 <!-- Bindings -->
 <script src="/bin/markdown.min.js"></script>
-<script src="/bin/socket.io-1.2.0.js"></script>
 <script src="/bin/knockout-file-bind.js" type="text/javascript"></script>
 <script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
-<script src="/bin/knockout.localStorage.js" type="text/javascript"></script>
-<script src="/bin/knockout.bottomsUp.js" type="text/javascript"></script>
-<script src="/bin/knockout_boostrap_select_bind.js" type="text/javascript"></script>
 <script src="/bin/knockout.mapping.js" type="text/javascript"></script>
 <script src="/bin/tooltip_bind.js" type="text/javascript"></script>
 <script src="/bin/select2.js" type="text/javascript"></script>
@@ -282,9 +281,12 @@
 <script src="viewmodels/common/settings.js" type="text/javascript"></script>
 <script src="viewmodels/common/user_notification.js" type="text/javascript"></script>
 <script src="viewmodels/common/wizard_steps/wizard_ability_scores_step.js" type="text/javascript"></script>
+<script src="viewmodels/common/wizard_steps/wizard_campaign_step.js" type="text/javascript"></script>
+<script src="viewmodels/common/wizard_steps/wizard_player_type_step.js" type="text/javascript"></script>
 <script src="viewmodels/common/wizard_steps/wizard_intro_step.js" type="text/javascript"></script>
 <script src="viewmodels/common/wizard_steps/wizard_profile_step.js" type="text/javascript"></script>
 <script src="viewmodels/common/wizard.js" type="text/javascript"></script>
+<script src="viewmodels/dm/dm_root.js" type="text/javascript"></script>
 <!-- Models -->
 <script src="models/character/ability_scores.js" type="text/javascript"></script>
 <script src="models/character/appearance.js" type="text/javascript"></script>
