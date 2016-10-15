@@ -151,7 +151,7 @@ function WizardViewModel() {
         character.playerType(playerType);
         character.save();
 
-        if (playerType == 'player') {
+        if (playerType.key == 'character') {
             // Profile
 
             var profile = new Profile();
@@ -267,7 +267,7 @@ function WizardViewModel() {
         }
 
         if (currentStep.IDENTIFIER === 'WizardPlayerTypeStep') {
-            if (results.playerType === 'player') {
+            if (results.playerType.key === 'character') {
                 return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
             } else {
                 return new NextStepDescriptor(new WizardCampaignStepViewModel(), false);

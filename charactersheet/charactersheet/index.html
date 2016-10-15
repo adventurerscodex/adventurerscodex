@@ -53,8 +53,8 @@
     <div class="row">
       <div class="col-sm-8">
         <div class="row">
-          <!-- ko if: playerType().key == 'player' -->
           <!-- ko with: childRootViewModel -->
+          <!-- ko if: playerType().key == 'character' -->
           <div class="col-padded col-xs-2" data-bind="template: {
             name: 'player_image.tmpl',
             templateUrl: 'templates/character',
@@ -63,8 +63,8 @@
           <!-- /ko -->
           <!-- /ko -->
           <div class="col-padded col-xs-10 characters-player-name">
-          <!-- ko if: playerType().key == 'player' -->
-          <!-- ko with: childRootViewModel -->
+            <!-- ko with: childRootViewModel -->
+            <!-- ko if: playerType().key == 'character' -->
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12">
@@ -106,7 +106,13 @@
       </div>
     </div>
     <div class="spacer"></div>
-    <div data-bind="template: { name: childRootViewModel().TEMPLATE_FILE, templateUrl: 'templates', data: childRootViewModel }"></div>
+    <!-- ko with: childRootViewModel -->
+		<div data-bind="template: {
+		    data: $data,
+		    name: TEMPLATE_FILE,
+		    templateUrl: 'templates'
+			}"></div>
+      <!-- /ko -->
 	</div>
 </div>
 <!-- Footer -->
