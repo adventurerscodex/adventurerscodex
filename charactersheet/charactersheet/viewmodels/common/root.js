@@ -13,6 +13,7 @@ function AdventurersCodexViewModel() {
      * and the init process has finished.
       */
     self.ready = ko.observable(false);
+    self._dummy = ko.observable();
 
     // View Models
     self.childRootViewModel = ko.observable();
@@ -22,10 +23,6 @@ function AdventurersCodexViewModel() {
     self.settingsViewModel = ko.observable(new SettingsViewModel());
 
     //UI Methods
-
-    self.playerType = function() {
-        return CharacterManager.activeCharacter().playerType();
-    };
 
     self.showWizard = function() {
         //Unload the prior character.
@@ -74,6 +71,7 @@ function AdventurersCodexViewModel() {
         } else {
             self.wizardViewModel.load();
         }
+        self._dummy.valueHasMutated();
     };
 
     self.unload = function() {
