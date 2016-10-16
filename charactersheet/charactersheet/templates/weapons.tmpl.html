@@ -106,6 +106,7 @@
          id="addWeapon"
          tabindex="-1"
          role="dialog"
+         data-bind="modal: { callback: modalFinishedAnimating }"
          aria-labelledby="addWeaponLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -129,7 +130,10 @@
                          class="form-control"
                          id="weaponName"
                          placeholder="Short Sword"
-                         data-bind='textInput: blankWeapon().weaponName'>
+                         data-bind='textInput: blankWeapon().weaponName, autocomplete: {
+                          source: weaponsPrePopFilter,
+                          onselect: populateWeapon
+                        }'>
                 </div>
               </div>
               <div class="form-group">
@@ -224,16 +228,6 @@
                   </div>
               </div>
               <div class="form-group">
-                <label for="weaponSize"
-                       class="col-sm-2 control-label">Size</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankWeapon().weaponSizeOptions,
-                                     value: blankWeapon().weaponSize,
-                                     select2: {theme: 'classic'}"></select>
-                  </div>
-              </div>
-              <div class="form-group">
                 <label for="weaponDamageType"
                        class="col-sm-2 control-label">Damage Type</label>
                   <div class="col-sm-10">
@@ -285,6 +279,14 @@
                         class="btn btn-primary"
                         data-bind='click: addWeapon'
                         data-dismiss="modal">Add</button>
+                <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+                  <sm><i>This data is distributed under the
+                    <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                      target='_blank'>
+                      OGL</a><br/>
+                      Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                    </i><sm>
+                </p>
               </div>
             </form>
           </div> <!-- Modal Body -->

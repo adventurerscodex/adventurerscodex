@@ -198,7 +198,6 @@ OtherStatsFixture = {
   'proficiency': '2'
 };
 
-
 var MockLocalStorage = {
     __master__: "[\"Character\",\"Profile\",\"PlayerInfo\",\"Skill\",\"Item\",\"CharacterAppearance\",\"FeaturesTraits\",\"Health\",\"OtherStats\",\"DeathSave\",\"HitDiceType\",\"AbilityScores\",\"SavingThrows\",\"SpellStats\",\"FeatsProf\",\"Treasure\",\"Note\",\"HitDice\",\"Spell\",\"Armor\",\"Slot\",\"Weapon\",\"DailyFeature\",\"ImageModel\"]",
     Skill: "{\"18\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Acrobatics\",\"abilityScore\":\"Dex\",\"modifier\":null},\"19\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Animal Handling\",\"abilityScore\":\"Wis\",\"modifier\":null},\"20\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Arcana\",\"abilityScore\":\"Int\",\"modifier\":null},\"21\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Athletics\",\"abilityScore\":\"Str\",\"modifier\":null},\"22\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Deception\",\"abilityScore\":\"Cha\",\"modifier\":null},\"23\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"History\",\"abilityScore\":\"Int\",\"modifier\":null},\"24\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Insight\",\"abilityScore\":\"Wis\",\"modifier\":null},\"25\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Intimidation\",\"abilityScore\":\"Cha\",\"modifier\":null},\"26\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Investigation\",\"abilityScore\":\"Int\",\"modifier\":null},\"27\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Medicine\",\"abilityScore\":\"Wis\",\"modifier\":null},\"28\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Nature\",\"abilityScore\":\"Int\",\"modifier\":null},\"29\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Perception\",\"abilityScore\":\"Wis\",\"modifier\":null},\"30\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Performance\",\"abilityScore\":\"Cha\",\"modifier\":null},\"31\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Persuasion\",\"abilityScore\":\"Cha\",\"modifier\":null},\"32\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Religion\",\"abilityScore\":\"Int\",\"modifier\":null},\"33\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Sleight of Hand\",\"abilityScore\":\"Dex\",\"modifier\":null},\"34\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Stealth\",\"abilityScore\":\"Dex\",\"modifier\":null},\"35\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Survival\",\"abilityScore\":\"Wis\",\"modifier\":null}}"
@@ -270,6 +269,21 @@ var spellDataFixture = [
             spellSchool: 'Cantrip',
             spellDuration: '1 min',
             spellRange: '5 ft'
+        }
+    }
+];
+
+
+var weaponDataFixture = [
+    {
+        id: 0,
+        data: {
+            weaponHandedness: 'Light',
+        }
+    }, {
+        id: 1,
+        data: {
+            weaponHandedness: 'Heavy',
         }
     }
 ];
