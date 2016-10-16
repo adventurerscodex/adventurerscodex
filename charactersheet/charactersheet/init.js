@@ -14,7 +14,7 @@ var init = function(viewModel) {
     });
 
     // Run migration
-    PersistenceService.migrate(Fixtures.migration.scripts, Settings.version);
+    PersistenceService.migrate(Migrations.scripts, Settings.version);
 
     // Initialize the View Model
     viewModel.init();

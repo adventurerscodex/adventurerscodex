@@ -192,17 +192,6 @@ var Fixtures = {
         longRestMessage : 'Your hit dice, spell slots, hit points, ' +
               'and daily features have been restored.'
     },
-    // List all migrations that should be applied
-    migration : {
-        scripts : [
-            // v1.1
-            migration_110_1_skills,
-            migration_110_2_spells,
-            migration_110_3_stats,
-            // v1.2
-            migration_120_1_weapons
-        ]
-    },
     wizardProfile: {
         classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
               'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
