@@ -19,6 +19,7 @@ function MagicItemsViewModel() {
     self.selecteditem = ko.observable();
     self.blankMagicItem = ko.observable(new MagicItem());
     self.magicItems = ko.observableArray([]);
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['magicItemName asc']);
@@ -70,6 +71,18 @@ function MagicItemsViewModel() {
         });
     };
 
+    self.populateMagicItems = function(label, value) {
+        var magicItems = DataRepository.magicItems[label];
+
+        self.blankMagicItem().importValues(magicItems);
+        self.shouldShowDisclaimer(true);
+    };
+
+    // Modal methods
+    self.modalFinishedAnimating = function() {
+        self.shouldShowDisclaimer(false);
+    };
+
     self.filteredAndSortedMagicItems = ko.computed(function() {
         return SortService.sortAndFilter(self.magicItems(), self.sort(), null);
     });
@@ -89,7 +102,16 @@ function MagicItemsViewModel() {
             columnName, self.sorts));
     };
 
-    //Manipulating spells
+    self.magicItemsPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    //Manipulating magic items
     self.addItem = function() {
         var item = self.blankMagicItem();
         item.characterId(CharacterManager.activeCharacter().key());

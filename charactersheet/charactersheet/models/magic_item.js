@@ -4,6 +4,13 @@ function MagicItem() {
     var self = this;
     self.ps = PersistenceService.register(MagicItem, self);
 
+    self.mapping = {
+        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
+                 'delete', 'chargesDisplay', 'magicItemTypeOptions',
+                 'magicItemRarityOptions', 'mapping'],
+        include: ['characterId', 'magicItemAttuned']
+    };
+
     self.characterId = ko.observable(null);
     self.magicItemName = ko.observable('');
     self.magicItemType = ko.observable('');
@@ -25,12 +32,6 @@ function MagicItem() {
             return self.magicItemCharges();
         }
     });
-
-    self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-                 'delete', 'chargesDisplay', 'magicItemTypeOptions',
-                 'magicItemRarityOptions', 'mapping']
-    };
 
     self.clear = function() {
         var values = new MagicItem().exportValues();
