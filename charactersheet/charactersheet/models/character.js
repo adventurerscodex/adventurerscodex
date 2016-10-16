@@ -151,7 +151,7 @@ Character.importCharacter = function(data) {
     PersistenceService.withTemporaryDataStore({}, function() {
         PersistenceService._setVersion(version);
         var character = Character._injectCharacter(data);
-        PersistenceService.migrate(Fixtures.migration.scripts, Settings.version);
+        PersistenceService.migrate(Migrations.scripts, Settings.version);
         migratedData = Character.exportCharacter(character.key);
     });
 
