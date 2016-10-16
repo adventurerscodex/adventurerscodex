@@ -35,12 +35,50 @@ var Fixtures = {
             'D4', 'D6', 'D8', 'D10', 'D12', 'D20']
     },
     magicItem : {
-        magicItemTypeOptions : [
-            'Armor', 'Sword', 'Rod', 'Ring', 'Staff',
-            'Wand', 'Potion', 'Wondrous Item'],
-        magicItemRarityOptions : [
-            'Uncommon', 'Common', 'Rare', 'Rarity Varies',
-            'Very Rare', 'Legendary']
+        magicItemTypeOptions: [
+            'Armor',
+            'Armor (chain shirt)',
+            'Armor (light or medium or heavy)',
+            'Armor (medium or heavy but not hide)',
+            'Armor (plate)',
+            'Armor (scale mail)',
+            'Armor (shield)',
+            'Armor (studded leather)',
+            'Potion',
+            'Ring',
+            'Rod',
+            'Scroll',
+            'Staff',
+            'Sword',
+            'Wand',
+            'Weapon (any axe or sword)',
+            'Weapon (any axe)',
+            'Weapon (any sword that deals slashing damage)',
+            'Weapon (any sword)',
+            'Weapon (any)',
+            'Weapon (arrow)',
+            'Weapon (dagger)',
+            'Weapon (javelin)',
+            'Weapon (longbow)',
+            'Weapon (longsword)',
+            'Weapon (mace)',
+            'Weapon (maul)',
+            'Weapon (scimitar)',
+            'Weapon (trident)',
+            'Weapon (warhammer)',
+            'Wondrous item'
+        ],
+        magicItemRarityOptions: [
+            'Common',
+            'Legendary',
+            'Rare',
+            'Rarity By Figurine',
+            'Rarity Varies',
+            'Uncommon',
+            'Varies',
+            'Very Rare',
+            'Very Rare Or Legendary'
+        ]
     },
     spell : {
         spellTypeOptions : [

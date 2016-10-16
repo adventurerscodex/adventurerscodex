@@ -58,6 +58,9 @@ var Settings = {
         }, {
             key: 'weapons',
             url: 'https://adventurerscodex.com/data/SRD/weapons.json'
+        }, {
+            key: 'magicItems',
+            url: 'https://adventurerscodex.com/data/SRD/magic_items.json'
         }
     ]
 };

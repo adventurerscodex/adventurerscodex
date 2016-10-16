@@ -90,7 +90,8 @@
          id="addMagicItem"
          tabindex="-1"
          role="dialog"
-         aria-labelledby="addMagicItemLabel">
+         aria-labelledby="addMagicItemLabel"
+         data-bind="modal: { callback: modalFinishedAnimating }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -113,7 +114,9 @@
                          class="form-control"
                          id="magicItemName"
                          placeholder="Dagger of Venom"
-                         data-bind='textInput: blankMagicItem().magicItemName'>
+                         data-bind='textInput: blankMagicItem().magicItemName,
+                         autocomplete: { source: magicItemsPrePopFilter,
+                         onselect: populateMagicItems }'>
                 </div>
               </div>
               <div class="form-group">
@@ -220,6 +223,14 @@
                         class="btn btn-primary"
                         data-bind='click: addItem'
                         data-dismiss="modal">Add</button>
+                <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+                  <sm><i>This data is distributed under the
+                    <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                      target='_blank'>
+                      OGL</a><br/>
+                      Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                    </i><sm>
+                </p>
               </div>
             </form>
           </div> <!-- Modal Body -->
