@@ -7,6 +7,7 @@ function WeaponsViewModel() {
     self.blankWeapon = ko.observable(new Weapon());
     self.weapons = ko.observableArray([]);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.sorts = {
         'weaponName asc': { field: 'weaponName', direction: 'asc'},
@@ -85,6 +86,28 @@ function WeaponsViewModel() {
     self.sortBy = function(columnName) {
         self.sort(SortService.sortForName(self.sort(),
             columnName, self.sorts));
+    };
+
+    /* Modal Methods */
+
+    self.populateWeapon = function(label, value) {
+        var weapon = DataRepository.weapons[label];
+
+        self.blankWeapon().importValues(weapon);
+        self.shouldShowDisclaimer(true);
+    };
+
+    self.modalFinishedAnimating = function() {
+        self.shouldShowDisclaimer(false);
+    };
+
+    self.weaponsPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
     };
 
     //Manipulating weapons

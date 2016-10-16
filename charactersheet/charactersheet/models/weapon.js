@@ -9,9 +9,9 @@ function Weapon() {
             'exportValues', 'importValues', 'save', 'abilityScoreBonus',
             'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
             'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
-            'weaponTypeOptions', 'weaponSizeOptions', 'weaponPropertyOptions',
+            'weaponTypeOptions', 'weaponSize', 'weaponPropertyOptions',
             'weaponDamageTypeOptions'],
-        include: ['weaponHit']
+        include: ['weaponHit', 'characterId']
     };
 
     self._dummy = ko.observable(null);
@@ -26,7 +26,6 @@ function Weapon() {
     self.weaponHit = ko.observable(0);
     self.weaponWeight = ko.observable(1);
     self.weaponRange = ko.observable('');
-    self.weaponSize = ko.observable('');
     self.weaponDamageType = ko.observable('');
     self.weaponProperty = ko.observable('');
     self.weaponDescription = ko.observable('');
@@ -38,8 +37,6 @@ function Weapon() {
         Fixtures.weapon.weaponHandednessOptions);
     self.weaponTypeOptions = ko.observableArray(
         Fixtures.weapon.weaponTypeOptions);
-    self.weaponSizeOptions = ko.observableArray(
-        Fixtures.weapon.weaponSizeOptions);
     self.weaponPropertyOptions = ko.observableArray(
         Fixtures.weapon.weaponPropertyOptions);
     self.weaponDamageTypeOptions = ko.observableArray(
