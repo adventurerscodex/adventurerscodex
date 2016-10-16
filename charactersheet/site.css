@@ -214,6 +214,10 @@ div.hr {
   width: 35px;
 }
 
+.action-bar-icon {
+  width: 2em;
+}
+
 textarea.dark-area {
   background-color: #ecf0f1;
 }
