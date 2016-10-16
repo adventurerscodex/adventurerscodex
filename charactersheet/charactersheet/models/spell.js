@@ -9,7 +9,8 @@ function Spell() {
             'spellSaveAttrOptions', 'spellSchoolOptions',
             'spellCastingTimeOptions', 'spellDurationOptions',
             'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel'],
-        include: ['spellDmgType', 'spellMaterialComponents', 'isRitual', 'characterId']
+        include: ['spellDmgType', 'spellMaterialComponents', 'isRitual',
+            'characterId', 'spellPrepared']
     };
 
     self.characterId = ko.observable(null);
