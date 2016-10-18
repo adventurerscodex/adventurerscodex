@@ -352,7 +352,7 @@
     init(window.viewModel);
 	  ko.applyBindings(window.viewModel, $('#html')[0]);
     //Setup automatic saving.
-    window.onbeforeunload = Notifications.global.unload.dispatch;
+    window.onbeforeunload = viewModel.unload;
 	});
 	</script>
 
