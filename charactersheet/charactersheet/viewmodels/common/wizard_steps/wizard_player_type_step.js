@@ -13,6 +13,7 @@ function WizardPlayerTypeStepViewModel() {
     self.init = function() { };
 
     self.load = function() {
+        self.playerType(null);
     };
 
     self.unload = function() {};
