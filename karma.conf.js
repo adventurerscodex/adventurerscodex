@@ -21,6 +21,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bin/koExternalTemplateEngine_all.min.js', watched: false},
 			{pattern: 'charactersheet/bin/markdown.min.js', watched: false},
 			{pattern: 'charactersheet/bin/knockout.mapping.js', watched: false},
+			{pattern: 'charactersheet/bin/knockout-mapping-autoignore.js', watched: false},
 			//Stuff to test.
 			'charactersheet/charactersheet/**/*root.js',
 			'charactersheet/charactersheet/**/*.js',
