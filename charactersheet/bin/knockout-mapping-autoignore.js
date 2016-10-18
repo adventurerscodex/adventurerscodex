@@ -7,9 +7,12 @@
  *
  * Usage:
  *
- *   var mapping = {
+ *  function MyModel() {
+ *   this.mapping = {
  *       include: ['name', 'address', 'zip code']
  *   });
+ *   var fullMapping = ko.mapping.autoignore(this, this.mapping);
+ *  }
  */
 ko.mapping.autoignore = function(obj, config) {
     var includes = config.include || [];
