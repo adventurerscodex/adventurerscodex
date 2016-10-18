@@ -8,10 +8,10 @@
  * This binding also has an optional field for a callback
  * once the animation has completed.
  *
- * Note: The callback is called when the modal is both opened and closed.
  *
  * Usage:
- * <div data-bind="modal: { open: myObservable, callback: myFunction }"></div>
+ * <div data-bind="modal: { open: myObservable, onOpen: myFunction,
+ *      onClosed: myOtherFunction }"></div>
  */
 ko.bindingHandlers.modal = {
     init: function(element, valueAccessor, allBindingsAccessor) {
