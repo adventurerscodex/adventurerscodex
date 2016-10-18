@@ -65,6 +65,15 @@ function Spell() {
         }
     });
 
+    self.spellSummaryLabel = ko.pureComputed(function() {
+        var header = parseInt(self.spellLevel()) !== 0 ? 'Level ' : '';
+        return self.spellSchool() + ', ' + header + self.spellLevelLabel();
+    });
+
+    self.spellDescriptionHTML = ko.pureComputed(function() {
+        return self.spellDescription().replace('\n', '<br /><br />');
+    });
+
     self.clear = function() {
         var values = new Spell().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);

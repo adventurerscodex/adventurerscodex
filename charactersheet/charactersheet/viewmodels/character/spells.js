@@ -25,6 +25,8 @@ function SpellbookViewModel() {
     self.spellbook = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.previewTabStatus = ko.observable('active');
+    self.editTabStatus = ko.observable('');
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
@@ -68,8 +70,26 @@ function SpellbookViewModel() {
     };
 
     // Modal methods
-    self.modalFinishedAnimating = function() {
+
+    self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+        self.previewTabStatus.valueHasMutated();
+        self.previewTabStatus.valueHasMutated();
+    };
+
+    self.selectPreviewTab = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
+
+    self.selectEditTab = function() {
+        self.editTabStatus('active');
+        self.previewTabStatus('');
     };
 
     /* UI Methods */
