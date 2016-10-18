@@ -10,26 +10,24 @@
  *
  *
  * Usage:
- * <div data-bind="modal: { open: myObservable, onOpen: myFunction,
- *      onClosed: myOtherFunction }"></div>
+ * <div data-bind="modal: { open: myObservable, onopen: myFunction,
+ *      onclose: myOtherFunction }"></div>
  */
 ko.bindingHandlers.modal = {
     init: function(element, valueAccessor, allBindingsAccessor) {
         var value = valueAccessor();
         var openOrClosed = ko.utils.unwrapObservable(value.open);
-        var onOpen = ko.utils.unwrapObservable(value.onOpen);
-        var onClosed = ko.utils.unwrapObservable(value.onClosed);
+        var onopen = ko.utils.unwrapObservable(value.onopen);
+        var onclose = ko.utils.unwrapObservable(value.onclose);
 
         ko.bindingHandlers.modal.toggle(openOrClosed, element);
 
-        if (onOpen) {
-            // Register callbacks.
-            $(element).on('shown.bs.modal', onOpen);
+        if (onopen) {
+            $(element).on('shown.bs.modal', onopen);
         }
 
-        if (onClosed) {
-            // Register callbacks.
-            $(element).on('hidden.bs.modal', onClosed);
+        if (onclose) {
+            $(element).on('hidden.bs.modal', onclose);
         }
     },
 
