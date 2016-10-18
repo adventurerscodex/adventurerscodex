@@ -22,6 +22,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bin/markdown.min.js', watched: false},
 			{pattern: 'charactersheet/bin/knockout.mapping.js', watched: false},
 			//Stuff to test.
+			'charactersheet/charactersheet/**/*root.js',
 			'charactersheet/charactersheet/**/*.js',
             'test/**/*.js',
             'test/*.js'
