@@ -8,7 +8,8 @@ function Spell() {
             'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
             'spellSaveAttrOptions', 'spellSchoolOptions',
             'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel'],
+            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel',
+            'spellLevelLabel'],
         include: ['spellDmgType', 'spellMaterialComponents', 'isRitual',
             'characterId', 'spellPrepared']
     };
@@ -96,7 +97,7 @@ function Spell() {
     };
 }
 
-Spell.findAllBy =function(characterId) {
+Spell.findAllBy = function(characterId) {
     return PersistenceService.findAll(Spell).filter(function(e, i, _) {
         return e.characterId() === characterId;
     });
