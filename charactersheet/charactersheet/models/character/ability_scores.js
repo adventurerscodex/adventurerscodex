@@ -4,9 +4,7 @@ function AbilityScores() {
     var self = this;
     self.ps = PersistenceService.register(AbilityScores, self);
     self.mapping = {
-        ignore: ['ps', 'mapping', 'strModifier', 'dexModifier', 'conModifier',
-            'intModifier', 'wisModifier', 'chaModifier', 'modifierFor', 'clear',
-            'exportValues', 'importValues', 'save']
+        include: ['characterId', 'str', 'dex', 'con', 'int', 'wis', 'cha']
     };
 
     self.characterId = ko.observable(null);
@@ -70,15 +68,18 @@ function AbilityScores() {
 
     self.clear = function() {
         var values = new AbilityScores().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
