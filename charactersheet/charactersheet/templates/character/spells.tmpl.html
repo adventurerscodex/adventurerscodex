@@ -82,7 +82,10 @@
       </tbody>
     </table>
   </div>
-    <div class="container-fluid panel-footer">
+  <div class="container-fluid panel-footer">
+     <span class="pull-left">Total Spells:&nbsp;
+      <span data-bind="text: numberOfSpells"></span>
+    </span>
        <span class="pull-right">Spells prepared:&nbsp;
         <span data-bind="text: numberOfPrepared"></span>
       </span>
@@ -93,7 +96,7 @@
          tabindex="-1"
          role="dialog"
          aria-labelledby="addSpellLabel"
-         data-bind="modal: { callback: modalFinishedAnimating }">
+         data-bind="modal: { onopen: modalFinishedAnimating }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -287,7 +290,7 @@
          id="viewSpell"
          tabindex="-1"
          role="dialog"
-         data-bind="modal: { open: selecteditem, callback: modalFinishedAnimating },
+         data-bind="modal: { open: selecteditem, onopen: modalFinishedAnimating },
           with: selecteditem"
          aria-labelledby="viewSpellLabel">
       <div class="modal-dialog" role="document">

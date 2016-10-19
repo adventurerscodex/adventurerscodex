@@ -143,34 +143,47 @@ function WizardViewModel() {
         character.key(uuid.v4());
         character.save();
 
-        // Profile
+        var typeStepViewModel = self.allSteps().filter(function(step, idx, _) {
+            return step.IDENTIFIER === 'WizardPlayerTypeStep';
+        })[0];
 
-        var profile = new Profile();
-        var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
-            return step.IDENTIFIER === 'WizardProfileStep';
-        });
+        var playerType = typeStepViewModel.results().playerType;
+        character.playerType(playerType);
+        character.save();
 
-        var data = profileStepViewModel[0].results();
-        data.characterId = character.key();
-        profile.importValues(data);
-        profile.save();
+        if (playerType.key == 'character') {
+            // Profile
 
-        var playerInfo = new PlayerInfo();
-        playerInfo.characterId(character.key());
-        playerInfo.save();
+            var profile = new Profile();
+            var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
+                return step.IDENTIFIER === 'WizardProfileStep';
+            });
 
-        // Ability Scores
+            var data = profileStepViewModel[0].results();
+            data.characterId = character.key();
+            profile.importValues(data);
+            profile.save();
 
-        var abilityScoresStepViewModel = self.allSteps().filter(function(step, idx, _) {
-            return step.IDENTIFIER === 'WizardAbilityScoresStep';
-        });
+            var playerInfo = new PlayerInfo();
+            playerInfo.characterId(character.key());
+            playerInfo.save();
 
-        var abilityScores = new AbilityScores();
-        var abData = abilityScoresStepViewModel[0].results();
-        abData.characterId = character.key();
-        abilityScores.importValues(abData);
-        abilityScores.save();
+            // Ability Scores
 
+            var abilityScoresStepViewModel = self.allSteps().filter(function(step, idx, _) {
+                return step.IDENTIFIER === 'WizardAbilityScoresStep';
+            });
+
+            var abilityScores = new AbilityScores();
+            var abData = abilityScoresStepViewModel[0].results();
+            abData.characterId = character.key();
+            abilityScores.importValues(abData);
+            abilityScores.save();
+        } else if (playerType == 'dm') {
+            // Campaign
+
+            //TODO
+        }
         //TODO: Save the results of all child steps.
     };
 
@@ -247,9 +260,17 @@ function WizardViewModel() {
             if (results['import']) {
                 return new NextStepDescriptor(null, true);
             } else if (results['PlayerType'] === 'player') {
-                return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
+                return new NextStepDescriptor(new WizardPlayerTypeStepViewModel(), false);
             } else {
                 throw 'Assertion Failure: Unknown Result Type';
+            }
+        }
+
+        if (currentStep.IDENTIFIER === 'WizardPlayerTypeStep') {
+            if (results.playerType.key === 'character') {
+                return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
+            } else {
+                return new NextStepDescriptor(new WizardCampaignStepViewModel(), false);
             }
         }
 
@@ -258,6 +279,10 @@ function WizardViewModel() {
         }
 
         if (currentStep.IDENTIFIER === 'WizardAbilityScoresStep') {
+            return new NextStepDescriptor(null, false);
+        }
+
+        if (currentStep.IDENTIFIER === 'WizardCampaignStep') {
             return new NextStepDescriptor(null, false);
         }
 

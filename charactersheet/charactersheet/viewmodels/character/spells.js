@@ -37,6 +37,10 @@ function SpellbookViewModel() {
         return prepared.length;
     });
 
+    self.numberOfSpells = ko.computed(function() {
+        return self.spellbook() ? self.spellbook().length : 0;
+    });
+
     self.init = function() {
         Notifications.global.save.add(function() {
             self.spellbook().forEach(function(e, i, _) {
