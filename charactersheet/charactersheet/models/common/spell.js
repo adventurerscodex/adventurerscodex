@@ -72,7 +72,7 @@ function Spell() {
     });
 
     self.spellDescriptionHTML = ko.pureComputed(function() {
-        return self.spellDescription().replace(/\n/g, '<br /><br />');
+        return self.spellDescription().replace(/\n/g, '<br />');
     });
 
     self.clear = function() {
