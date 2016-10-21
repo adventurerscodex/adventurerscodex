@@ -3,7 +3,7 @@
 function EncounterTabViewModel() {
     var self = this;
 
-    self.encounterViewModel = ko.observable();
+    self.encounterViewModel = ko.observable(new EncounterViewModel());
 
     //Public Methods
 
