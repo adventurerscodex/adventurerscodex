@@ -64,6 +64,23 @@
             <!-- /ko -->
           </div>
         </div>
+        <div class="input-group">
+          <span class="input-group-addon">Death Save Successes</span>
+           <div class="form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
+            <span class="ds-success-full"
+                  data-bind="attr: { id: $index, name: $index }, click: deathSaveSuccessHandler,
+                  css: deathSaveSuccessIcon"></span>
+          </div>
+
+          <span class="input-group-addon">Death Save Failures</span>
+          <div class="form-control hit-dice-list"
+               data-bind="foreach: deathSaveFailureList">
+            <span class="ds-failure-full"
+                  data-bind="attr: { id: $index, name: $index }, click: deathSaveFailureHandler,
+                  css: deathSaveFailureIcon"></span>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>
