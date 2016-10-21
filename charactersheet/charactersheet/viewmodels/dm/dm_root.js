@@ -11,7 +11,8 @@ function DMRootViewModel() {
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
     //Player Child View Models
-    // TODO: Add
+    self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
+        // TODO: Add
 
     //Tooltips
     // TODO: Add
