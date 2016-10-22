@@ -79,7 +79,7 @@ function SpellbookViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
-        self.previewTabStatus.valueHasMutated();
+        self.editTabStatus.valueHasMutated();
     };
 
     self.selectPreviewTab = function() {
