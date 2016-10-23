@@ -3,9 +3,9 @@
 function EncounterViewModel() {
     var self = this;
 
-    self.encounterDetailViewModel = ko.observable();
     self.selectedEncounter = ko.observable();
     self.encounters = ko.observableArray();
+    self._encounterDetailViewModel = ko.observable();
 
     self.init = function() {
 
@@ -19,24 +19,38 @@ function EncounterViewModel() {
 
     };
 
-    self.encounterWasSelected = function(encounter) {
+    // UI Methods
+
+    self.encounterDetailViewModel = ko.pureComputed(function() {
         var newEncounter = self.selectedEncounter();
         self._deinitializeDetailViewModel();
-        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
+        self._encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
         self._initializeDetailViewModel();
+        return self._encounterDetailViewModel();
+    });
+
+    self.addTopLevelEncounter = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var encounter = new Encounter();
+        encounter.characterId(key);
+        encounter.name('A new encounter');
+        encounter.save();
+
+        // Reload Encounters
+        self.encounters(self._getTopLevelEncounters());
     };
 
     // TODO: Manage Encounter Methods
 
     // Private Methods
 
-    self._initializeDetailViewModel = function() {
-        self.encounterDetailViewModel().init();
-        self.encounterDetailViewModel().load();
+    self._initializeDetailViewModel = function(vm) {
+        self._encounterDetailViewModel().init();
+        self._encounterDetailViewModel().load();
     };
 
-    self._deinitializeDetailViewModel = function() {
-        self.encounterDetailViewModel().unload();
+    self._deinitializeDetailViewModel = function(vm) {
+        self._encounterDetailViewModel().unload();
     };
 
     self._getTopLevelEncounters = function() {
