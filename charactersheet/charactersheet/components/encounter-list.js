@@ -19,18 +19,27 @@ function EncounterListComponentViewModel(params) {
     self.encounters = params.encounters || ko.observableArray();
     self.selectedEncounter = params.selectedEncounter || ko.observable();
     self.levels = params.levels || 5;
+
+    self.selectEncounter = function(encounter) {
+        self.selectedEncounter(encounter);
+    };
 }
 
 ko.components.register('encounter-list', {
     viewModel: EncounterListComponentViewModel,
     template: '\
-        <div data-bind="foreach: encounters" style="margin-left: 10px;">\
-            <span data-bind="text: name"></span>\
-            <!-- ko if: $parent.levels > 0 -->\
-            <encounter-list params="encounters: getChildren(), \
-                levels: $parent.levels - 1, \
-                selectedEncounter: $parent.selectedEncounter"></encounter-list>\
-            <!-- /ko -->\
+        <div data-bind="foreach: encounters">\
+            <ul class="list-group">\
+                <li class="list-group-item">\
+                    <span data-bind="text: name, \
+                        click: $parent.selectEncounter"></span>\
+                    <!-- ko if: $parent.levels > 0 -->\
+                    <encounter-list params="encounters: getChildren(), \
+                        levels: $parent.levels - 1, \
+                        selectedEncounter: $parent.selectedEncounter"></encounter-list>\
+                    <!-- /ko -->\
+                </div>\
+            </div>\
         </div>\
     '
 });

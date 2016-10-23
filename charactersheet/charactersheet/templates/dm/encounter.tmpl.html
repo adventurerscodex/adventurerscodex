@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="h2">
+      Encounters<br/>
+      <small>Create and manage events and sections of your campaign. Group encounters under a common topic, or...</small>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="panel-heading">
+              <div class="h4">
+                Encounters
+                <div class="pull-right">
+                  <span class="glyphicon glyphicon-plus" data-bind="click: addTopLevelEncounter"></span>
+                </div>
+              </div>
+            </div>
+            <encounter-list params="encounters: encounters,
+              selectedEncounter: selectedEncounter"></encounter-list>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
