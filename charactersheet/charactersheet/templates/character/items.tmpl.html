@@ -83,7 +83,7 @@
              <input type="text"
                class="form-control"
                id="itemName"
-               placeholder="Item Name"
+               placeholder="Rations"
                data-bind='textInput: blankItem().itemName,
                  autocomplete: { source: itemsPrePopFilter, onselect: populateItem }'>
            </div>
@@ -141,6 +141,7 @@
              <textarea type="password"
                class="form-control"
                id="itemDescription"
+               placeholder="Rations consist of..."
                rows="4"
                data-bind='textInput: blankItem().itemDesc'>
              </textarea>
@@ -188,7 +189,7 @@
           aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Details</h4>
+        <h4 class="modal-title">View an item in your inventory</h4>
       </div>
       <div class="modal-body">
         <form class="form-horizontal">
@@ -199,7 +200,7 @@
              <input type="text"
                class="form-control"
                id="itemName"
-               placeholder="Item Name"
+               placeholder="Rations"
                data-bind='textInput: itemName'>
            </div>
          </div>
@@ -256,6 +257,7 @@
              <textarea type="password"
                class="form-control"
                id="itemDescription"
+               placeholder="Rations consist of..."
                rows="4"
                data-bind='textInput: itemDesc'>
              </textarea>
@@ -264,11 +266,6 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button"
-          class="btn btn-danger"
-          data-dismiss="modal"
-          data-bind="click: $parent.removeItemModalButton">
-          Remove</button>
         <button type="button"
           class="btn btn-primary"
           data-dismiss="modal">
