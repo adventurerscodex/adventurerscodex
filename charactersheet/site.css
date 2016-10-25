@@ -424,6 +424,11 @@ ul.footer-icons li {
   font-size: 1.5em;
 }
 
+.preview-modal-overflow {
+  height: 225px;
+  overflow-y: auto;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
