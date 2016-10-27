@@ -55,8 +55,9 @@ Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventure
 How can I contribute?
 =====================
 
-You should check out our `CONTRIBUTING.md`! We'd love the help!
+You should check out our [Contributing][contributing] wiki! We'd love the help!
 
 [blog]: https://adventurerscodex.com/blog.html
 [ac]: https://adventurerscodex.com
-[gs]: https://github.com/adventurerscodex/adventurerscodex/blob/develop/docs/getting_started.md#getting-started
+[gs]: https://github.com/adventurerscodex/adventurerscodex/wiki/Getting-Started
+[contributing]: https://github.com/adventurerscodex/adventurerscodex/wiki/Contributing
