@@ -234,6 +234,13 @@ textarea.dark-area {
   background-color: #ecf0f1;
 }
 
+.table-cell-overflow-hide {
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  overflow: hidden;
+  max-width:1px;
+}
+
 /**
  * Alerts
  */
