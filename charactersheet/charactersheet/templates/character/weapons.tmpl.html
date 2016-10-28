@@ -7,10 +7,6 @@
             Weapon
             <span data-bind="css: sortArrow('weaponName')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('totalBonus');}">
-            To Hit
-            <span data-bind="css: sortArrow('totalBonus')"></span>
-          </th>
           <th data-bind="click: function(){sortBy('weaponDmg');}">
             Damage
             <span data-bind="css: sortArrow('weaponDmg')"></span>
@@ -46,14 +42,15 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedWeapons -->
         <tr class="clickable">
-          <td data-bind="text: weaponName, click: $parent.editWeapon"
+          <td data-bind="click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
-              data-target="#viewWeapon"></td>
-          <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewWeapon"></td>
+              data-target="#viewWeapon">
+              <span data-bind="text: weaponName">
+              </span>
+              <span data-bind="text: hitBonusLabel" class="badge">
+              </span>
+          </td>
           <td data-bind="text: weaponDmg, click: $parent.editWeapon"
               href="#"
               data-toggle="modal"
@@ -87,7 +84,7 @@
       <!-- ko if: filteredAndSortedWeapons().length == 0 -->
         <tr class="clickable">
           <td data-toggle="modal" data-target="#addWeapon" href="#"
-            colspan="7" class="text-center">
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new weapon
           </td>
@@ -414,16 +411,6 @@
                            id="weaponRange"
                            placeholder="25/100"
                            data-bind='textInput: weaponRange'>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponSize"
-                       class="col-sm-2 control-label">Size</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: weaponSizeOptions,
-                                     value: weaponSize,
-                                     select2: {theme: 'classic'}"></select>
                   </div>
               </div>
               <div class="form-group">

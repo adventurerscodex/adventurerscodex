@@ -4,14 +4,10 @@ function Weapon() {
     var self = this;
     self.ps = PersistenceService.register(Weapon, self);
     self.mapping = {
-        ignore: ['ps', 'mapping', 'clear', 'proficiencyScore',
-            'strAbilityScoreModifier', 'dexAbilityScoreModifier',
-            'exportValues', 'importValues', 'save', 'abilityScoreBonus',
-            'hitBonusLabel', 'totalBonus', 'delete', '_dummy', 'updateValues',
-            'mapping', 'weaponProficiencyOptions', 'weaponHandednessOptions',
-            'weaponTypeOptions', 'weaponSize', 'weaponPropertyOptions',
-            'weaponDamageTypeOptions'],
-        include: ['weaponHit', 'characterId']
+        include: ['weaponHit', 'characterId', 'weaponName', 'weaponType', 'weaponDmg',
+        'weaponHandedness', 'weaponProficiency', 'weaponPrice', 'weaponCurrencyDenomination',
+        'weaponWeight', 'weaponRange', 'weaponDamageType', 'weaponProperty',
+        'weaponDescription', 'weaponQuantity']
     };
 
     self._dummy = ko.observable(null);
@@ -147,11 +143,13 @@ function Weapon() {
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
