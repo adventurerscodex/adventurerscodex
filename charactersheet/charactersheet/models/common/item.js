@@ -6,6 +6,9 @@
  */
 function Item() {
     var self = this;
+
+    self.DESCRIPTION_MAX_LENGTH = 200;
+
     self.ps = PersistenceService.register(Item, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
@@ -29,6 +32,12 @@ function Item() {
             return parseInt(self.itemQty()) * parseFloat(self.itemWeight());
         }
         return 0;
+    });
+
+    self.shortDescription = ko.pureComputed(function() {
+        if (self.itemDesc()) {
+            return self.itemDesc().substring(0, self.DESCRIPTION_MAX_LENGTH);
+        }
     });
 
     self.clear = function() {
