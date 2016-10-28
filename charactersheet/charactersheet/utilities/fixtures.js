@@ -221,7 +221,6 @@ var Fixtures = {
         ],
         weaponTypeOptions: [
             'Melee',
-            'Randed',
             'Ranged'
         ]
     },

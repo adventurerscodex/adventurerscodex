@@ -2,6 +2,10 @@
 
 function Weapon() {
     var self = this;
+
+    self.FINESSE = 'finesse';
+    self.RANGED = 'ranged';
+
     self.ps = PersistenceService.register(Weapon, self);
     self.mapping = {
         include: ['weaponHit', 'characterId', 'weaponName', 'weaponType', 'weaponDmg',
@@ -82,22 +86,19 @@ function Weapon() {
 
     self.abilityScoreBonus = ko.pureComputed(function() {
         self._dummy();
-        if(self.weaponType() === 'Ranged'){
+        if (self.weaponType().toLowerCase() === self.RANGED){
             return self.dexAbilityScoreModifier();
-        }
-        else{
-            if(self.weaponProperty() === 'Finesse'){
+        } else{
+            if (self.weaponProperty().toLowerCase().indexOf(self.FINESSE) >= 0){
                 var dexBonus = self.dexAbilityScoreModifier();
                 var strBonus = self.strAbilityScoreModifier();
 
                 if(dexBonus){
                     return dexBonus > strBonus ? dexBonus : strBonus;
-                }
-                else{
+                } else{
                     return strBonus ? strBonus:0;
                 }
-            }
-            else{
+            } else{
                 return self.strAbilityScoreModifier();
             }
         }
@@ -127,15 +128,25 @@ function Weapon() {
         self._dummy();
 
         var totalBonus = self.totalBonus();
-        if(totalBonus) {
+        if (totalBonus) {
             return totalBonus >= 0 ? ('+ ' + totalBonus) : '- ' +
             Math.abs(totalBonus);
-        }
-        else {
+        } else {
             return '+ 0';
         }
     });
 
+    self.magicalModifierLabel = ko.pureComputed(function() {
+        self._dummy();
+
+        var magicalModifier = self.weaponHit();
+        if (magicalModifier) {
+            return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
+            Math.abs(magicalModifier);
+        } else {
+            return '+ 0';
+        }
+    });
 
     self.clear = function() {
         var values = new Weapon().exportValues();
