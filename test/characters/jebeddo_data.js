@@ -583,7 +583,8 @@ var jebeddo_data = {
       "weaponRange": "",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Range",
-      "weaponDescription": ""
+      "weaponDescription": "",
+      "weaponQuantity": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
@@ -599,7 +600,8 @@ var jebeddo_data = {
       "weaponRange": "",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
-      "weaponDescription": ""
+      "weaponDescription": "",
+      "weaponQuantity": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
@@ -609,12 +611,14 @@ var jebeddo_data = {
       "weaponHandedness": "One-Handed",
       "weaponProficiency": "Simple",
       "weaponPrice": "",
+      "weaponCurrencyDenomination": "PP",
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
-      "weaponDescription": ""
+      "weaponDescription": "",
+      "weaponQuantity": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
