@@ -214,6 +214,18 @@ div.hr {
   width: 35px;
 }
 
+.tab-subtext {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.tab-subtext:hover {
+  color: #2c3e50;
+}
+.tab-subtext:focus {
+  color: #2c3e50;
+}
+
 .action-bar-icon {
   width: 2em;
 }
@@ -410,6 +422,11 @@ ul.footer-icons li {
 .social-media {
   color: #798d8f;
   font-size: 1.5em;
+}
+
+.preview-modal-overflow {
+  height: 225px;
+  overflow-y: auto;
 }
 
 /*

@@ -96,7 +96,7 @@
          tabindex="-1"
          role="dialog"
          aria-labelledby="addSpellLabel"
-         data-bind="modal: { onopen: modalFinishedAnimating }">
+         data-bind="modal: { onopen: modalFinishedOpening }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -290,8 +290,11 @@
          id="viewSpell"
          tabindex="-1"
          role="dialog"
-         data-bind="modal: { open: selecteditem, onopen: modalFinishedAnimating },
-          with: selecteditem"
+         data-bind="modal: {
+          open: selecteditem,
+          onopen: modalFinishedOpening,
+          onclose: modalFinishedClosing
+        }"
          aria-labelledby="viewSpellLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -306,162 +309,201 @@
                 id="addSpellLabel">View a spell in your spellbook.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
-              <div class="form-group">
-                <label for="spellName"
-                       class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         id="spellName"
-                         placeholder="Magic Missile"
-                         data-bind="value: spellName">
+            <!-- Begin Tabs -->
+            <ul class="nav nav-tabs tabs">
+              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+                <a href="#spellsModalPreview" aria-controls="spellsModalPreview" role="tab" data-toggle="tab">
+                    <b>Preview</b>
+                </a>
+              </li>
+              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+                <a href="#spellsModalEdit" aria-controls="spellsModalEdit" role="tab" data-toggle="tab">
+                    <b>Edit</b>
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content" data-bind="with: selecteditem">
+              <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
+                <div class="h3">
+                  <span data-bind="text: spellNameLabel"></span>&nbsp;
+                  <small data-bind="text: spellSummaryLabel"></small>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: spellType"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: spellCastingTime"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: spellRange"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: spellComponents"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Duration:</b>&nbsp;<span data-bind="text: spellDuration"></span></div>
+                </div>
+                <hr />
+                <h4>Description</h4>
+                <div class="row row-padded">
+                  <div class="col-xs-12 col-padded">
+                    <div data-bind="html: spellDescriptionHTML"
+                         class="preview-modal-overflow"></div>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="spellPrepared"
-                       class="col-sm-2 control-label">Prepared</label>
-                  <div class="col-sm-4">
-                    <input type="checkbox"
-                           class="form-control"
-                           id="spellPrepared"
-                           data-bind='checked: spellPrepared'>
-                  </div>
-                <label for="spellIsRitual"
-                       class="col-sm-2 control-label">Ritual</label>
-                  <div class="col-sm-4">
-                    <input type="checkbox"
-                           class="form-control"
-                           id="spellIsRitual"
-                           data-bind='checked: isRitual'>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="spellLevel"
-                       class="col-sm-2 control-label">Level</label>
-                  <div class="col-sm-10">
-                    <input type="number"
-                           class="form-control"
-                           id="spellLevel"
-                           min="1"
-                           max="9"
-                           placeholder="1"
-                           data-bind="value: spellLevel">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="spellSchool"
-                       class="col-sm-2 control-label">School</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: spellSchoolOptions,
-                                     value: spellSchool,
-                                     select2: {theme: 'classic'}"></select>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="spellType"
-                       class="col-sm-2 control-label">Type</label>
-                  <div class="col-sm-10">
-                    <select class="form-control"
-                          data-bind="options: spellTypeOptions,
-                                     value: spellType,
-                                     select2: {theme: 'classic'}"></select>
-                  </div>
-              </div>
-              <div data-bind="visible: spellType() == 'Savings Throw'">
-                <div class="form-group">
-                  <label for="spellType"
-                         class="col-sm-2 control-label">Save Attr</label>
+              <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="spellName"
+                           class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
-                    <select class="form-control"
-                            data-bind="options: spellSaveAttrOptions,
-                                       value: spellSaveAttr,
-                                       select2: {theme: 'classic'}"></select>
+                      <input type="text"
+                             class="form-control"
+                             id="spellName"
+                             placeholder="Magic Missile"
+                             data-bind="value: spellName">
                     </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="spellDmg"
-                       class="col-sm-2 control-label">Damage</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellDmg"
-                           placeholder="1d4 + 1"
-                           data-bind="value: spellDmg">
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="spellCastingTime"
-                       class="col-sm-2 control-label">Cast Time</label>
-                  <div class="col-sm-10">
-                    <select class="form-control"
-                          data-bind="options: spellCastingTimeOptions,
-                                     value: spellCastingTime,
-                                     select2: {theme: 'classic'}"></select>
+                  <div class="form-group">
+                    <label for="spellPrepared"
+                           class="col-sm-2 control-label">Prepared</label>
+                      <div class="col-sm-4">
+                        <input type="checkbox"
+                               class="form-control"
+                               id="spellPrepared"
+                               data-bind='checked: spellPrepared'>
+                      </div>
+                    <label for="spellIsRitual"
+                           class="col-sm-2 control-label">Ritual</label>
+                      <div class="col-sm-4">
+                        <input type="checkbox"
+                               class="form-control"
+                               id="spellIsRitual"
+                               data-bind='checked: isRitual'>
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="spellRange"
-                       class="col-sm-2 control-label">Range</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: spellRangeOptions,
-                                     value: spellRange,
-                                     select2: {theme: 'classic'}"></select>
+                  <div class="form-group">
+                    <label for="spellLevel"
+                           class="col-sm-2 control-label">Level</label>
+                      <div class="col-sm-10">
+                        <input type="number"
+                               class="form-control"
+                               id="spellLevel"
+                               min="1"
+                               max="9"
+                               placeholder="1"
+                               data-bind="value: spellLevel">
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="spellComponents"
-                       class="col-sm-2 control-label">Components</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: spellComponentsOptions,
-                                     value: spellComponents,
-                                     select2: {theme: 'classic'}"></select>
+                  <div class="form-group">
+                    <label for="spellSchool"
+                           class="col-sm-2 control-label">School</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: spellSchoolOptions,
+                                         value: spellSchool,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="spellMaterialComponents"
-                       class="col-sm-2 control-label">Material Components</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="spellMaterialComponents"
-                           placeholder="Feather"
-                           data-bind="textInput: spellMaterialComponents">
+                  <div class="form-group">
+                    <label for="spellType"
+                           class="col-sm-2 control-label">Type</label>
+                      <div class="col-sm-10">
+                        <select class="form-control"
+                              data-bind="options: spellTypeOptions,
+                                         value: spellType,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="spellDuration"
-                       class="col-sm-2 control-label">Duration</label>
-                  <div class="col-sm-10">
-                    <select class="form-control"
-                          data-bind="options: spellDurationOptions,
-                                     value: spellDuration,
-                                     select2: {theme: 'classic'}"></select>
+                  <div data-bind="visible: spellType() == 'Savings Throw'">
+                    <div class="form-group">
+                      <label for="spellType"
+                             class="col-sm-2 control-label">Save Attr</label>
+                        <div class="col-sm-10">
+                        <select class="form-control"
+                                data-bind="options: spellSaveAttrOptions,
+                                           value: spellSaveAttr,
+                                           select2: {theme: 'classic'}"></select>
+                        </div>
+                    </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="spellDescription"
-                       class="col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea type="password"
-                              class="form-control"
-                              id="spellDescription"
-                              placeholder="You create three glowing ..."
-                              data-bind="value: spellDescription"
-                              rows="4">
-                    </textarea>
+                  <div class="form-group">
+                    <label for="spellDmg"
+                           class="col-sm-2 control-label">Damage</label>
+                      <div class="col-sm-10">
+                        <input type="text"
+                               class="form-control"
+                               id="spellDmg"
+                               placeholder="1d4 + 1"
+                               data-bind="value: spellDmg">
+                      </div>
                   </div>
+                  <div class="form-group">
+                    <label for="spellCastingTime"
+                           class="col-sm-2 control-label">Cast Time</label>
+                      <div class="col-sm-10">
+                        <select class="form-control"
+                              data-bind="options: spellCastingTimeOptions,
+                                         value: spellCastingTime,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="spellRange"
+                           class="col-sm-2 control-label">Range</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: spellRangeOptions,
+                                         value: spellRange,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="spellComponents"
+                           class="col-sm-2 control-label">Components</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: spellComponentsOptions,
+                                         value: spellComponents,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="spellMaterialComponents"
+                           class="col-sm-2 control-label">Material Components</label>
+                      <div class="col-sm-10">
+                        <input type="text"
+                               class="form-control"
+                               id="spellMaterialComponents"
+                               placeholder="Feather"
+                               data-bind="textInput: spellMaterialComponents">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="spellDuration"
+                           class="col-sm-2 control-label">Duration</label>
+                      <div class="col-sm-10">
+                        <select class="form-control"
+                              data-bind="options: spellDurationOptions,
+                                         value: spellDuration,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="spellDescription"
+                           class="col-sm-2 control-label">Description</label>
+                      <div class="col-sm-10">
+                        <textarea type="password"
+                                  class="form-control"
+                                  id="spellDescription"
+                                  placeholder="You create three glowing ..."
+                                  data-bind="value: spellDescription"
+                                  rows="4">
+                        </textarea>
+                      </div>
+                  </div>
+                </form>
               </div>
-              <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
-              </div>
-            </form>
+            </div> <!-- End Tab Content -->
+            <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal">Done</button>
+            </div>
           </div> <!-- Modal Body -->
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->

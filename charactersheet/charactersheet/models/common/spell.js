@@ -8,7 +8,8 @@ function Spell() {
             'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
             'spellSaveAttrOptions', 'spellSchoolOptions',
             'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel'],
+            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel',
+            'spellLevelLabel'],
         include: ['spellDmgType', 'spellMaterialComponents', 'isRitual',
             'characterId', 'spellPrepared']
     };
@@ -65,6 +66,15 @@ function Spell() {
         }
     });
 
+    self.spellSummaryLabel = ko.pureComputed(function() {
+        var header = parseInt(self.spellLevel()) !== 0 ? 'Level ' : '';
+        return self.spellSchool() + ', ' + header + self.spellLevelLabel();
+    });
+
+    self.spellDescriptionHTML = ko.pureComputed(function() {
+        return self.spellDescription().replace(/\n/g, '<br />');
+    });
+
     self.clear = function() {
         var values = new Spell().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
@@ -87,7 +97,7 @@ function Spell() {
     };
 }
 
-Spell.findAllBy =function(characterId) {
+Spell.findAllBy = function(characterId) {
     return PersistenceService.findAll(Spell).filter(function(e, i, _) {
         return e.characterId() === characterId;
     });
