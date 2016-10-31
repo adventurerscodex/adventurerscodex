@@ -7,7 +7,7 @@ function SpellsTabViewModel() {
     var self = this;
 
     self.actionsToolbarViewModel = ko.observable(new ActionsToolbarViewModel());
-
+    self.spellStatsViewModel    = ko.observable(new SpellStatsViewModel());
     self.spellbookViewModel  = ko.observable(new SpellbookViewModel());
     self.spellSlotsViewModel = ko.observable(new SpellSlotsViewModel());
 
