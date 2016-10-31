@@ -20,6 +20,8 @@ function MagicItemsViewModel() {
     self.blankMagicItem = ko.observable(new MagicItem());
     self.magicItems = ko.observableArray([]);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.previewTabStatus = ko.observable('active');
+    self.editTabStatus = ko.observable('');
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['magicItemName asc']);
@@ -79,8 +81,25 @@ function MagicItemsViewModel() {
     };
 
     // Modal methods
-    self.modalFinishedAnimating = function() {
+    self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+        self.previewTabStatus.valueHasMutated();
+        self.editTabStatus.valueHasMutated();
+    };
+
+    self.selectPreviewTab = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
+
+    self.selectEditTab = function() {
+        self.editTabStatus('active');
+        self.previewTabStatus('');
     };
 
     self.filteredAndSortedMagicItems = ko.computed(function() {

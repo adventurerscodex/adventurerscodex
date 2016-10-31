@@ -100,4 +100,35 @@ describe('Magic Item Model', function() {
             magicItem.exportValues().magicItemDescription.should.equal(MagicItemFixture.magicItemDescription);
         });
     });
+
+    describe('Magic Item Weight Label', function() {
+        it('should return the correct label', function() {
+            var magicItem = new MagicItem();
+            magicItem.magicItemWeight(10);
+            magicItem.magicItemWeightLabel().should.equal('10 lbs.');
+        });
+    });
+
+    describe('Magic Item Description Label', function() {
+        it('should return the correct label', function() {
+            var magicItem = new MagicItem();
+            magicItem.magicItemDescription('This thing is cool.\n');
+            magicItem.magicItemDescriptionHTML().should.equal('This thing is cool.<br />');
+        });
+    });
+
+    describe('Magic Item Name Label', function() {
+        it('should return the correct label', function() {
+            var magicItem = new MagicItem();
+            magicItem.magicItemName('Staff of the Python');
+            magicItem.magicItemAttuned(true);
+            magicItem.magicItemNameLabel().should.equal('Staff of the Python (Attuned)');
+
+            var magicItemNotAttuned = new MagicItem();
+            magicItemNotAttuned.magicItemName('Dragon Slayer');
+            magicItemNotAttuned.magicItemAttuned(false);
+            magicItemNotAttuned.magicItemNameLabel().should.equal('Dragon Slayer');
+        });
+    });
+
 });
