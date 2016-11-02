@@ -207,7 +207,22 @@ describe('Weapon Model', function() {
             weap.weaponHit();
 
             var totalBonus = weap.magicalModifierLabel();
-            totalBonus.should.equal('+ 0');
+            totalBonus.should.equal('');
+        });
+    });
+
+    describe('Apply Magical Modifier Label', function() {
+        it('should return true if there is a magicalModifierLabel', function() {
+            var weap = new Weapon();
+            weap.weaponHit(2);
+
+            weap.applyMagicalModifierLabel().should.equal(true);
+        });
+        it('should return false if there is on magicalModifierLabel', function() {
+            var weap = new Weapon();
+            weap.weaponHit(0);
+
+            weap.applyMagicalModifierLabel().should.equal(false);
         });
     });
 });
