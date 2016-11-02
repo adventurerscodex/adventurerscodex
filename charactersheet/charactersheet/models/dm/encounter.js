@@ -13,7 +13,7 @@ function Encounter() {
 
     // General Encounter Properties.
     self.characterId = ko.observable();
-    self.encounterId = ko.observable();
+    self.encounterId = ko.observable(uuid.v4());
     self.name = ko.observable();
     self.locale = ko.observable();
     self.notes = ko.observable();

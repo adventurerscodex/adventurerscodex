@@ -12,15 +12,79 @@
               <div class="h4">
                 Encounters
                 <div class="pull-right">
-                  <span class="glyphicon glyphicon-plus" data-bind="click: addTopLevelEncounter"></span>
+                  <span class="glyphicon glyphicon-plus" data-bind="click: openAddModal"></span>
                 </div>
               </div>
             </div>
             <encounter-list params="encounters: encounters,
               selectedEncounter: selectedEncounter"></encounter-list>
-            </div>
           </div>
         </div>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <div data-bind="template: {
+          name: 'encounter_detail.tmpl',
+          templateUrl: 'templates/dm',
+          data: encounterDetailViewModel
+        }"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: modalEncounter,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }, with: modalEncounter">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"> <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          Add a new Encounter
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="form-group">
+            <div class="row row-padded">
+              <label for="encounter.name" class="col-sm-3 control-label">
+                Encounter Name
+              </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id=""
+                       data-bind="value: name,
+                        hasFocus: $parent.nameHasFocus" />
+              </div>
+            </div>
+            <div class="row row-padded">
+              <label for="encounter.locale" class="col-sm-3 control-label">
+                Locale
+              </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id=""
+                       data-bind="value: locale" />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-xs-offset-7 col-xs-5">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bind="click: $parent.addTopLevelEncounter"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
