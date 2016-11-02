@@ -33,6 +33,22 @@ function MagicItem() {
         }
     });
 
+    self.magicItemDescriptionHTML = ko.pureComputed(function() {
+        return self.magicItemDescription().replace(/\n/g, '<br />');
+    });
+
+    self.magicItemNameLabel = ko.pureComputed(function() {
+        if(self.magicItemAttuned() === true){
+            return (self.magicItemName() + ' (Attuned)' );
+        } else {
+            return self.magicItemName();
+        }
+    });
+
+    self.magicItemWeightLabel = ko.pureComputed(function() {
+        return self.magicItemWeight() + ' lbs.'
+    });
+
     self.clear = function() {
         var values = new MagicItem().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
