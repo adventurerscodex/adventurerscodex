@@ -38,6 +38,10 @@ function Encounter() {
         self.ps.save();
     };
 
+    self.delete = function() {
+        self.ps.delete();
+    };
+
     self.clear = function() {
         var values = new Encounter().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
