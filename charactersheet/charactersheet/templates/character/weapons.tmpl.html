@@ -52,7 +52,7 @@
               data-target="#viewWeapon">
               <span data-bind="text: weaponName">
               </span>&nbsp;
-              <span data-bind="text: magicalModifierLabel" class="badge">
+              <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
