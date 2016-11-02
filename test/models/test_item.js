@@ -66,5 +66,22 @@ describe('Item Model', function() {
             r.length.should.equal(2);
         });
     });
+
+    describe('Item Weight Label', function() {
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemWeight(10);
+            item.itemWeightLabel().should.equal('10 lbs.');
+        });
+    });
+
+    describe('Item Description Label', function() {
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemDesc('This thing is cool.\n');
+            item.itemDescriptionHTML().should.equal('This thing is cool.<br />');
+        });
+    });
+
 });
 
