@@ -48,15 +48,27 @@ function Encounter() {
         }
     };
 
+    /**
+     *
+     */
+    self.alertParentOfLostChild = function() {
+        if (!self.parent()) { return; }
+        var parent = PersistenceService.findFirstBy(Encounter, 'encounterId', self.parent());
+        if (parent.children().indexOf(self.encounterId()) > -1) {
+            parent.children.remove(self.encounterId());
+            parent.save();
+        }
+    };
+
     self.save = function() {
         self.ps.save();
     };
 
     self.delete = function() {
+        self.alertParentOfLostChild();
         self.getChildren().forEach(function(child, idx, _) {
             child.delete();
         });
-
         self.ps.delete();
     };
 
