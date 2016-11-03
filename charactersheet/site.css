@@ -60,6 +60,10 @@ small {
   border-bottom: thin solid #ecf0f1;
 }
 
+.no-bottom-margin {
+  margin-bottom: 0px;
+}
+
 .beta {
   color:orange;
 }
