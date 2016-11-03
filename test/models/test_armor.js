@@ -37,4 +37,25 @@ describe('Armor Model', function() {
             armor.proficiencyLabel().should.equal('');
         });
     });
+
+    describe('Armor Weight Label', function() {
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorWeight(10);
+            armor.armorWeightLabel().should.equal('10 lbs.');
+        });
+    });
+
+    describe('Armor Description Label', function() {
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorDescription('This thing is cool.\n');
+            armor.armorDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var armor2 = new Armor();
+            armor2.armorDescription('');
+            armor2.armorDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
+        });
+    });
 });
