@@ -18,6 +18,9 @@ function Encounter() {
     self.locale = ko.observable();
     self.notes = ko.observable();
 
+    //Collapse Properties
+    self.isOpen = ko.observable(true);
+
     // Related Encounter IDs
     self.parent = ko.observable();
     self.children = ko.observableArray([]);
@@ -33,6 +36,14 @@ function Encounter() {
         });
 
     };
+
+    self.toggleIsOpen = function() {
+        self.isOpen(!self.isOpen());
+    };
+
+    self.arrowIconClass = ko.pureComputed(function() {
+        return self.isOpen() ? 'fa fa-caret-down' : 'fa fa-caret-right';
+    });
 
     /**
      * If the current encounter contains a parent, then check if it's parent

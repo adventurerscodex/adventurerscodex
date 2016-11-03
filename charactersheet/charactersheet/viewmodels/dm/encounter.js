@@ -10,9 +10,6 @@ function EncounterViewModel() {
     self._encounterDetailViewModel = ko.observable();
 
     self.init = function() {
-        self.selectedEncounter.subscribe(function() {
-            console.log('changed');
-        });
     };
 
     self.load = function() {
@@ -21,7 +18,9 @@ function EncounterViewModel() {
     };
 
     self.unload = function() {
-
+        self.encounters().forEach(function(encounter, idx, _) {
+            encounter.save();
+        });
     };
 
     // UI Methods
