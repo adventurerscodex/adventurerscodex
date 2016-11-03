@@ -17,17 +17,20 @@
               </div>
             </div>
             <encounter-list params="encounters: encounters,
-              selectedEncounter: selectedEncounter, ondelete: deleteEncounter">
+              selectedEncounter: selectedEncounter, ondelete: deleteEncounter,
+              onadd: openAddModalWithParent">
             </encounter-list>
           </div>
         </div>
       </div>
       <div class="col-xs-12 col-sm-8">
+        <!-- ko if: encounterDetailViewModel() -->
         <div data-bind="template: {
           name: 'encounter_detail.tmpl',
           templateUrl: 'templates/dm',
           data: encounterDetailViewModel
         }"></div>
+        <!-- /ko -->
       </div>
     </div>
   </div>
@@ -80,7 +83,7 @@
               <div class="col-xs-offset-7 col-xs-5">
                 <button type="button"
                         class="btn btn-primary"
-                        data-bind="click: $parent.addTopLevelEncounter"
+                        data-bind="click: $parent.addEncounter"
                         data-dismiss="modal">Done</button>
               </div>
             </div>

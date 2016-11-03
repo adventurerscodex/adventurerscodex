@@ -37,25 +37,23 @@ function EncounterViewModel() {
         }
 
         var newEncounter = self.selectedEncounter();
+        if (!newEncounter) { return null; }
+
         self._encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
         self._initializeDetailViewModel();
 
         return self._encounterDetailViewModel;
     });
 
-    /**
-     * Removes a given encounter from the database. This method is given to the
-     * EncounterList Component as the `ondelete` callback. The component will
-     * take care of removing the element from the UI.
-     */
-    self.deleteEncounter = function(encounter) {
-        encounter.delete();
-    };
-
     // Modal Methods
 
     self.openAddModal = function() {
         self.modalEncounter(new Encounter());
+    };
+
+    self.openAddModalWithParent = function(parent) {
+        self.modalEncounter(new Encounter());
+        self.modalEncounter().parent(parent.encounterId());
     };
 
     self.modalFinishedOpening = function() {
@@ -66,10 +64,16 @@ function EncounterViewModel() {
         self.modalEncounter(null);
     };
 
-    self.addTopLevelEncounter = function() {
+    // Manage Encounter Methods
+
+    self.addEncounter = function() {
         var key = CharacterManager.activeCharacter().key();
         var encounter = self.modalEncounter();
         encounter.characterId(key);
+        if (encounter.parent()) {
+            encounter.alertParentOfNewChild();
+        }
+
         encounter.save();
 
         // Reload Encounters
@@ -77,7 +81,15 @@ function EncounterViewModel() {
         self.selectedEncounter(encounter);
     };
 
-    // TODO: Manage Encounter Methods
+    /**
+     * Removes a given encounter from the database. This method is given to the
+     * EncounterList Component as the `ondelete` callback. The component will
+     * take care of removing the element from the UI.
+     */
+    self.deleteEncounter = function(encounter) {
+        encounter.delete();
+        self.encounters(self._getTopLevelEncounters());
+    };
 
     // Private Methods
 
