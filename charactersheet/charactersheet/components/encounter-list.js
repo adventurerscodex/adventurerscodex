@@ -74,6 +74,9 @@ ko.components.register('encounter-list', {
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectEncounter">\
+                <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
+                <i data-bind="css: arrowIconClass, click: toggleIsOpen" aria-hidden="true"></i>&nbsp; \
+                <!-- /ko -->\
                 <span data-bind="text: name"></span>\
                 <span class="pull-right"> \
                     <!-- ko if: $parent.levels > 0 -->\
@@ -84,7 +87,7 @@ ko.components.register('encounter-list', {
                         data-bind="click: $parent.deleteEncounter"></span>\
                 </span> \
             </a>\
-            <div class="row">\
+            <div class="row" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
                     <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
                     <encounter-list params="encounters: getChildren(), \
