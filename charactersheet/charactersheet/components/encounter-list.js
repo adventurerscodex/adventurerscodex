@@ -12,9 +12,11 @@
  * the currently selected encounter. Default is 5.
  *
  * Events:
- * @param ondelete {Function} A callback function that takes 1 parameter. This
- * callback is invoked when an encounter has been removed from the UI. The only
- * parameter is the encounter object that was removed.
+ * @param onadd {Function} A callback that takes 1 parameter. This callback is
+ * invoked when a new encounter has been added. The parameter is the parent
+ * of the new encounter if it exists.
+ * @param ondelete {Function} A callback function that takes 1 parameter. The only
+ * parameter is the encounter object that is to be removed.
  *
  * Note: This binding recursively uses itself to render it's children.
  */
@@ -24,20 +26,33 @@ function EncounterListComponentViewModel(params) {
     self.encounters = params.encounters || ko.observableArray();
     self.selectedEncounter = params.selectedEncounter || ko.observable();
     self.ondelete = params.ondelete;
-    self.levels = params.levels || 5;
+    self.onadd = params.onadd;
+
+    if (params.levels !== null && params.levels !== undefined) {
+        self.levels = params.levels;
+    } else {
+        self.levels = 4;
+    }
 
     self.selectEncounter = function(encounter) {
         self.selectedEncounter(encounter);
     };
 
     /**
-     * Removes a given encounter from the UI and fires the `ondelete` callback
-     * to the responder.
+     * Fires the `ondelete` callback to the responder.
      */
     self.deleteEncounter = function(encounter) {
-        self.encounters.remove(encounter);
         if (self.ondelete) {
             self.ondelete(encounter);
+        }
+    };
+
+    /**
+     * Fires the `onadd` callback to the responder.
+     */
+    self.addEncounter = function(parent) {
+        if (self.onadd) {
+            self.onadd(parent);
         }
     };
 
@@ -45,7 +60,10 @@ function EncounterListComponentViewModel(params) {
      * Returns the correct active css for a given encounter.
      */
     self.isActiveCSS = function(encounter) {
-        return encounter.encounterId() === self.selectedEncounter().encounterId() ? 'active' : '';
+        var selected = self.selectedEncounter();
+        if (selected) {
+            return encounter.encounterId() === selected.encounterId() ? 'active' : '';
+        }
     };
 }
 
@@ -57,14 +75,26 @@ ko.components.register('encounter-list', {
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectEncounter">\
                 <span data-bind="text: name"></span>\
-                <span class="glyphicon glyphicon-trash pull-right" \
-                    data-bind="click: $parent.deleteEncounter"></span>\
-                <!-- ko if: $parent.levels > 0  && children.length > 0 -->\
-                <encounter-list params="encounters: getChildren(), \
-                    levels: $parent.levels - 1, \
-                    selectedEncounter: $parent.selectedEncounter"></encounter-list>\
+                <!-- ko if: $parent.levels > 0 -->\
+                <span class="pull-right"> \
+                    <span class="glyphicon glyphicon-plus" \
+                        data-bind="click: $parent.addEncounter"></span>&nbsp;&nbsp; \
+                    <span class="glyphicon glyphicon-trash" \
+                        data-bind="click: $parent.deleteEncounter"></span>\
+                </span> \
                 <!-- /ko -->\
             </a>\
+            <div class="row">\
+                <div class="col-sm-offset-1 col-sm-11">\
+                    <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
+                    <encounter-list params="encounters: getChildren(), \
+                        levels: $parent.levels - 1, \
+                        selectedEncounter: $parent.selectedEncounter, \
+                        onadd: $parent.onadd, \
+                        ondelete: $parent.ondelete"></encounter-list>\
+                    <!-- /ko -->\
+                </div>\
+            </div>\
         </div>\
     '
 });
