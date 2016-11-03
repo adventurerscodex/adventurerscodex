@@ -75,14 +75,14 @@ ko.components.register('encounter-list', {
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectEncounter">\
                 <span data-bind="text: name"></span>\
-                <!-- ko if: $parent.levels > 0 -->\
                 <span class="pull-right"> \
+                    <!-- ko if: $parent.levels > 0 -->\
                     <span class="glyphicon glyphicon-plus" \
                         data-bind="click: $parent.addEncounter"></span>&nbsp;&nbsp; \
+                    <!-- /ko -->\
                     <span class="glyphicon glyphicon-trash" \
                         data-bind="click: $parent.deleteEncounter"></span>\
                 </span> \
-                <!-- /ko -->\
             </a>\
             <div class="row">\
                 <div class="col-sm-offset-1 col-sm-11">\
