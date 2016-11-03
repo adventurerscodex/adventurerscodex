@@ -70,7 +70,7 @@ function EncounterListComponentViewModel(params) {
 ko.components.register('encounter-list', {
     viewModel: EncounterListComponentViewModel,
     template: '\
-        <div data-bind="foreach: encounters" class="list-group">\
+        <div data-bind="foreach: encounters" class="list-group no-bottom-margin">\
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectEncounter">\
