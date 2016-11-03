@@ -9,6 +9,7 @@
 function EncounterDetailViewModel(encounter) {
     var self = this;
 
+    self.encounterId = encounter.encounterId;
     self.name = encounter.name;
     self.locale = encounter.locale;
     // TODO: Add Fields Here.
@@ -37,7 +38,15 @@ function EncounterDetailViewModel(encounter) {
     };
 
     self.unload = function() {
+        self.save();
         ViewModelUtilities.unloadSubViewModels(self);
+    };
+
+    self.save = function() {
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        encounter.name(self.name());
+        encounter.locale(self.locale());
+        encounter.save();
     };
 
     /* UI Methods */
@@ -54,6 +63,7 @@ function EncounterDetailViewModel(encounter) {
 
     self.modalFinishedClosing = function() {
         self.openModal(false);
+        self.save();
     };
 
     /* Private Methods */
