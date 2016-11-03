@@ -34,11 +34,29 @@ function Encounter() {
 
     };
 
+    /**
+     * If the current encounter contains a parent, then check if it's parent
+     * knows. If the parent isn't aware that it has a child, it could get really
+     * awkward at dinner-time.
+     */
+    self.alertParentOfNewChild = function() {
+        if (!self.parent()) { return; }
+        var parent = PersistenceService.findFirstBy(Encounter, 'encounterId', self.parent());
+        if (parent.children().indexOf(self.encounterId()) === -1) {
+            parent.children.push(self.encounterId());
+            parent.save();
+        }
+    };
+
     self.save = function() {
         self.ps.save();
     };
 
     self.delete = function() {
+        self.getChildren().forEach(function(child, idx, _) {
+            child.delete();
+        });
+
         self.ps.delete();
     };
 
