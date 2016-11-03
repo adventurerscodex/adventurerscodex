@@ -5,7 +5,7 @@
  */
 function CombatSection() {
     var self = this;
-    self.ps = PersistenceService.register(Encounter, self);
+    self.ps = PersistenceService.register(CombatSection, self);
 
     // General Encounter Properties.
     self.characterId = ko.observable();
