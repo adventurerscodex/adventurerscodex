@@ -7,12 +7,14 @@ function EncounterViewModel() {
     self.nameHasFocus = ko.observable(false);
     self.selectedEncounter = ko.observable();
     self.encounters = ko.observableArray();
-    self._encounterDetailViewModel = ko.observable();
+    self.encounterDetailViewModel = ko.observable();
 
     self.init = function() {
     };
 
     self.load = function() {
+        self.selectedEncounter.subscribe(self.setEncounterDetailViewModel);
+
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(self.encounters()[0]);
     };
@@ -26,23 +28,21 @@ function EncounterViewModel() {
     // UI Methods
 
     /**
-     * Returns the current internal encounter detail view model, if the encounter
+     * Sets the current encounter detail view model, if the encounter
      * changes then it deinitializes the old value and spins up a new
      * EncounterDetailViewModel with the value of the current encounter.
      */
-    self.encounterDetailViewModel = ko.pureComputed(function() {
-        if (self._encounterDetailViewModel()) {
+    self.setEncounterDetailViewModel = function() {
+        if (self.encounterDetailViewModel()) {
             self._deinitializeDetailViewModel();
         }
 
         var newEncounter = self.selectedEncounter();
         if (!newEncounter) { return null; }
 
-        self._encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
+        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
         self._initializeDetailViewModel();
-
-        return self._encounterDetailViewModel;
-    });
+    };
 
     // Modal Methods
 
@@ -93,12 +93,12 @@ function EncounterViewModel() {
     // Private Methods
 
     self._initializeDetailViewModel = function(vm) {
-        self._encounterDetailViewModel().init();
-        self._encounterDetailViewModel().load();
+        self.encounterDetailViewModel().init();
+        self.encounterDetailViewModel().load();
     };
 
     self._deinitializeDetailViewModel = function(vm) {
-        self._encounterDetailViewModel().unload();
+        self.encounterDetailViewModel().unload();
     };
 
     self._getTopLevelEncounters = function() {

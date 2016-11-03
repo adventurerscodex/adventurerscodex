@@ -60,7 +60,7 @@ function Encounter() {
     };
 
     /**
-     *
+     * If the node has a parent, remove itself from it's parent's custody.
      */
     self.alertParentOfLostChild = function() {
         if (!self.parent()) { return; }
