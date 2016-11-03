@@ -80,6 +80,11 @@ describe('Item Model', function() {
             var item = new Item();
             item.itemDesc('This thing is cool.\n');
             item.itemDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var item2 = new Item();
+            item2.itemDesc('');
+            item2.itemDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
         });
     });
 
