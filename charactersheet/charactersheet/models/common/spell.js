@@ -72,7 +72,11 @@ function Spell() {
     });
 
     self.spellDescriptionHTML = ko.pureComputed(function() {
-        return self.spellDescription().replace(/\n/g, '<br />');
+        if (self.spellDescription()){
+            return self.spellDescription().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
     });
 
     self.clear = function() {

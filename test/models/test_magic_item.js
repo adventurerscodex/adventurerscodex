@@ -114,6 +114,11 @@ describe('Magic Item Model', function() {
             var magicItem = new MagicItem();
             magicItem.magicItemDescription('This thing is cool.\n');
             magicItem.magicItemDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var magicItem2 = new MagicItem();
+            magicItem2.magicItemDescription('');
+            magicItem2.magicItemDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
         });
     });
 
