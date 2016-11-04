@@ -15,21 +15,31 @@
         </div>
         <!-- Names -->
         <div class="row">
-          <div class="col-md-12 col-padded">
+          <div class="col-md-10 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Character Name</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
-                data-bind='textInput: characterName' />
+                <input type="text" class="form-control" aria-describedby="basic-addon2"
+                  data-bind='textInput: characterName, valueUpdate: "afterkeydown",
+                  css: { errorinputfield: characterName.hasError }' />
             </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: characterName.hasError, text: characterName.validationMessage,
+              css: { errormessagetext: characterName.hasError }'> </span>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 col-padded">
+          <div class="col-md-10 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Player Name</span>
                 <input type="text" class="form-control" aria-describedby="basic-addon2"
-                  data-bind='textInput: playerName' />
+                  data-bind='textInput: playerName, valueUpdate: "afterkeydown",
+                  css: { errorinputfield: playerName.hasError }' />
             </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: playerName.hasError, text: playerName.validationMessage,
+              css: { errormessagetext: playerName.hasError }'> </span>
           </div>
         </div>
         <div class="h3">Anything else?<br />

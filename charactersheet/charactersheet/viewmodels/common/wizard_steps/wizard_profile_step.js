@@ -19,8 +19,8 @@ function WizardProfileStepViewModel() {
 
     // View Properties
 
-    self.characterName = ko.observable();
-    self.playerName = ko.observable();
+    self.characterName = ko.observable().extend({ required: "Please enter a character name" });;
+    self.playerName = ko.observable().extend({ required: "Please enter a player name" });;
     self.race = ko.observable();
     self.typeClass = ko.observable();
     self.alignment = ko.observable();
