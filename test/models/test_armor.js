@@ -46,6 +46,14 @@ describe('Armor Model', function() {
         });
     });
 
+    describe('Armor AC Label', function() {
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorClass('15');
+            armor.acLabel().should.equal('AC 15');
+        });
+    });
+
     describe('Armor Description Label', function() {
         it('should return the correct label', function() {
             var armor = new Armor();

@@ -31,6 +31,10 @@ function Armor() {
         return '';
     });
 
+    self.acLabel = ko.pureComputed(function() {
+        return 'AC ' + self.armorClass();
+    });
+
     self.armorDescriptionHTML = ko.pureComputed(function() {
         if (self.armorDescription()){
             return self.armorDescription().replace(/\n/g, '<br />');
