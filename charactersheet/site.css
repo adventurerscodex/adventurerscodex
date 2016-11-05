@@ -475,10 +475,9 @@ ul.ui-autocomplete .ui-state-active {
 /*
  * Data validation CSS
  */
-.errorinputfield {
-  border: 2px solid red;
-}
 
 .errormessagetext {
-  color: red;
+  color: #ca2f2b;
+  font-weight: 600;
+  vertical-align: -webkit-baseline-middle;
 }

@@ -19,12 +19,11 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Character Name</span>
                 <input type="text" class="form-control" aria-describedby="basic-addon2"
-                  data-bind='textInput: characterName, valueUpdate: "afterkeydown",
-                  css: { errorinputfield: characterName.hasError }' />
+                  data-bind='textInput: characterName, valueUpdate: "afterkeydown"' />
             </div>
           </div>
           <div class="col-md-2 col-padded">
-            <span data-bind='visible: characterName.hasError, text: characterName.validationMessage,
+            <span data-bind='visible: characterName.hasError, html: characterName.validationMessage,
               css: { errormessagetext: characterName.hasError }'> </span>
           </div>
         </div>
@@ -33,12 +32,11 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Player Name</span>
                 <input type="text" class="form-control" aria-describedby="basic-addon2"
-                  data-bind='textInput: playerName, valueUpdate: "afterkeydown",
-                  css: { errorinputfield: playerName.hasError }' />
+                  data-bind='textInput: playerName, valueUpdate: "afterkeydown"' />
             </div>
           </div>
           <div class="col-md-2 col-padded">
-            <span data-bind='visible: playerName.hasError, text: playerName.validationMessage,
+            <span data-bind='visible: playerName.hasError, html: playerName.validationMessage,
               css: { errormessagetext: playerName.hasError }'> </span>
           </div>
         </div>
