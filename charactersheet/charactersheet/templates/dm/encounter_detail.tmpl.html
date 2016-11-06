@@ -1,8 +1,9 @@
 <div class="panel panel-default">
   <div class="panel-body">
     <div class="panel-heading">
-      <div class="h4">
-        <span data-bind="text: name"></span>
+      <div class="h3">
+        <span data-bind="text: name"></span>&nbsp;
+        <small data-bind="text: encounterLocation"></small>
         <div class="pull-right">
           <button class="btn btn-sm btn-default" data-bind="click: toggleModal">
             Edit
@@ -57,18 +58,23 @@
               </div>
             </div>
             <div class="row row-padded">
-              <label for="encounter.locale" class="col-sm-3 control-label">
-                Locale
+              <label for="encounter.location" class="col-sm-3 control-label">
+                Location
               </label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id=""
-                       data-bind="value: locale" />
+                <input type="text" class="form-control"
+                       data-bind="value: encounterLocation" />
               </div>
             </div>
           </div>
           <!-- Encounter Section Show/Hide -->
           <!-- ko foreach: { data: sections, as: 'section' } -->
           <!-- ko if: $parent[section.property]() -->
+          <hr />
+          <div class="h4">
+            Which sections would you like to include?<br />
+            <small>You can always change these later</small>
+          </div>
           <div class="row row-padded">
             <label for="encounter.locale" class="col-sm-3 control-label"
               data-bind="text: $parent[section.property]().name">
