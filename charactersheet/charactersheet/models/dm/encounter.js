@@ -7,7 +7,7 @@ function Encounter() {
     var self = this;
     self.ps = PersistenceService.register(Encounter, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'name', 'locale', 'notes',
+        include: ['characterId', 'encounterId', 'name', 'encounterLocation', 'notes',
             'parent', 'children']
     };
 
@@ -15,7 +15,7 @@ function Encounter() {
     self.characterId = ko.observable();
     self.encounterId = ko.observable(uuid.v4());
     self.name = ko.observable();
-    self.locale = ko.observable();
+    self.encounterLocation = ko.observable();
     self.notes = ko.observable();
 
     //Collapse Properties
