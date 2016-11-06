@@ -66,4 +66,64 @@ describe('Armor Model', function() {
                 '<div class="h3"><small>Add a description via the edit tab.</small></div>');
         });
     });
+
+    describe('Apply Magical Modifier Label', function() {
+        it('should return true if there is a magicalModifierLabel', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(2);
+
+            armor.applyMagicalModifierLabel().should.equal(true);
+        });
+        it('should return false if there is on magicalModifierLabel', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(0);
+
+            armor.applyMagicalModifierLabel().should.equal(false);
+        });
+    });
+
+    describe('Magical Modifier Label', function() {
+        it('should return a label of magical modifier', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(2);
+
+            armor.magicalModifierLabel().should.equal('+ 2');
+        });
+        it('should return a label of magical modifier', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(-2);
+
+            armor.magicalModifierLabel().should.equal('- 2');
+        });
+        it('should return a label of magical modifier', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(0);
+
+            armor.magicalModifierLabel().should.equal('');
+        });
+    });
+
+    describe('Armor Summary Label', function() {
+        it('should return a summary label', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(2);
+            armor.armorClass(14);
+
+            armor.armorSummaryLabel().should.equal('+ 2, AC 14');
+        });
+        it('should return a summary label', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(-2);
+            armor.armorClass(14);
+
+            armor.armorSummaryLabel().should.equal('- 2, AC 14');
+        });
+        it('should return a summary label', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(0);
+            armor.armorClass(14);
+
+            armor.armorSummaryLabel().should.equal('AC 14');
+        });
+    });
 });

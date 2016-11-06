@@ -4,23 +4,24 @@ function Armor() {
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {
-        ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
-            'save', 'delete', 'proficiencyLabel', 'abilityScoreBonus',
-            'armorTypeOptions', 'armorStealthOptions'],
-        include: ['armorClass', 'characterId']
+        include: ['characterId', 'armorName', 'armorType', 'armorProficiency',
+                  'armorPrice', 'armorMagicalModifier', 'armorCurrencyDenomination',
+                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription']
     };
 
-    self.characterId = ko.observable(null);
     self._dummy = ko.observable(null);
+    self.characterId = ko.observable(null);
     self.armorName = ko.observable('');
     self.armorType = ko.observable('');
     self.armorProficiency = ko.observable(false);
     self.armorPrice = ko.observable('');
+    self.armorMagicalModifier = ko.observable(0);
     self.armorCurrencyDenomination = ko.observable('');
     self.armorWeight = ko.observable('');
     self.armorClass = ko.observable('');
     self.armorStealth = ko.observable('');
     self.armorDescription = ko.observable('');
+
     self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
 
@@ -43,21 +44,52 @@ function Armor() {
         }
     });
 
+    self.magicalModifierLabel = ko.pureComputed(function() {
+        self._dummy();
+
+        var magicalModifier = self.armorMagicalModifier();
+        if (magicalModifier != 0) {
+            return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
+            Math.abs(magicalModifier);
+        } else {
+            return '';
+        }
+    });
+
+    self.armorSummaryLabel = ko.pureComputed(function() {
+        if (self.armorMagicalModifier() != 0){
+            return self.magicalModifierLabel() + ', ' + self.acLabel();
+        } else {
+            return self.acLabel();
+        }
+    });
+
+    self.applyMagicalModifierLabel = ko.pureComputed(function() {
+        if (self.magicalModifierLabel() !== '' ){
+            return true;
+        } else {
+            return false;
+        }
+    });
+
     self.armorWeightLabel = ko.pureComputed(function() {
         return self.armorWeight() + ' lbs.'
     });
 
     self.clear = function() {
         var values = new Armor().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
