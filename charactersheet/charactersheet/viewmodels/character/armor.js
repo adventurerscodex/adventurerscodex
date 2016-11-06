@@ -8,6 +8,8 @@ function ArmorViewModel() {
     self.armors = ko.observableArray([]);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.previewTabStatus = ko.observable('active');
+    self.editTabStatus = ko.observable('');
 
     self.sorts = {
         'armorName asc': { field: 'armorName', direction: 'asc'},
@@ -76,6 +78,28 @@ function ArmorViewModel() {
 
     self.modalFinishedAnimating = function() {
         self.shouldShowDisclaimer(false);
+    };
+
+    // Modal methods
+    self.modalFinishedOpening = function() {
+        self.shouldShowDisclaimer(false);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+        self.previewTabStatus.valueHasMutated();
+        self.editTabStatus.valueHasMutated();
+    };
+
+    self.selectPreviewTab = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
+
+    self.selectEditTab = function() {
+        self.editTabStatus('active');
+        self.previewTabStatus('');
     };
 
     /* UI Methods */

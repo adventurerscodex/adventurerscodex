@@ -31,6 +31,22 @@ function Armor() {
         return '';
     });
 
+    self.acLabel = ko.pureComputed(function() {
+        return 'AC ' + self.armorClass();
+    });
+
+    self.armorDescriptionHTML = ko.pureComputed(function() {
+        if (self.armorDescription()){
+            return self.armorDescription().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
+    });
+
+    self.armorWeightLabel = ko.pureComputed(function() {
+        return self.armorWeight() + ' lbs.'
+    });
+
     self.clear = function() {
         var values = new Armor().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
