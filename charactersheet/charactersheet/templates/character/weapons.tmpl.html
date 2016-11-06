@@ -52,7 +52,7 @@
               data-target="#viewWeapon">
               <span data-bind="text: weaponName">
               </span>&nbsp;
-              <span data-bind="text: magicalModifierLabel" class="badge">
+              <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
@@ -156,7 +156,7 @@
                 <label for="weaponHit"
                        class="col-sm-2 control-label">Magical Modifier</label>
                 <div class="col-sm-10">
-                  <input type="number" min="0" class="form-control"
+                  <input type="number" class="form-control"
                          id="weaponHit"
                          placeholder="Place hit bonus here"
                          data-bind='textInput: blankWeapon().weaponHit'>
@@ -346,7 +346,7 @@
                 <label for="weaponHit"
                        class="col-sm-2 control-label">Magical Modifier</label>
                 <div class="col-sm-10">
-                  <input type="number" min="0" class="form-control"
+                  <input type="number" class="form-control"
                          id="weaponHit"
                          placeholder="Place hit bonus here"
                          data-bind='textInput: weaponHit'>

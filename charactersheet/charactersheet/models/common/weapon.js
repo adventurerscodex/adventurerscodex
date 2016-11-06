@@ -144,7 +144,15 @@ function Weapon() {
             return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
             Math.abs(magicalModifier);
         } else {
-            return '+ 0';
+            return '';
+        }
+    });
+
+    self.applyMagicalModifierLabel = ko.pureComputed(function() {
+        if (self.magicalModifierLabel() !== '' ){
+            return true;
+        } else {
+            return false;
         }
     });
 

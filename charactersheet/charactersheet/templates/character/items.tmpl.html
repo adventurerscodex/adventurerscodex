@@ -62,7 +62,7 @@
 <!-- Add Modal -->
 <div class="modal fade"
   id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
-  data-bind="modal: { onopen: modalFinishedAnimating }">
+  data-bind="modal: { onopen: modalFinishedOpening }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -177,9 +177,15 @@
 
 <!-- ViewEdit Modal -->
 <div class="modal fade"
-  data-bind="modal: { open: selecteditem, onopen: modalFinishedAnimating },
-  with: selecteditem" id="viewItem" tabindex="-1" role="dialog"
-  aria-labelledby="viewSpellLabel">
+     data-bind="modal: {
+       open: selecteditem,
+       onopen: modalFinishedOpening,
+       onclose: modalFinishedClosing
+      }"
+     id="viewItem"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="viewSpellLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -192,86 +198,127 @@
         <h4 class="modal-title">View an item in your inventory</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
-          <div class="form-group">
-           <label for="itemName"
-             class="col-sm-2 control-label">Name</label>
-           <div class="col-sm-10">
-             <input type="text"
-               class="form-control"
-               id="itemName"
-               placeholder="Rations"
-               data-bind='textInput: itemName'>
-           </div>
-         </div>
-         <div class="form-group">
-           <label for="itemWeight"
-             class="col-sm-2 control-label">Weight</label>
-           <div class="col-sm-10">
-             <div class="input-group">
-               <input type="number"
-                      class="form-control"
-                      min="0"
-                      max="5000"
-                 placeholder="Item Weight"
-                 data-bind='textInput: itemWeight'>
-                 <span class="input-group-addon">lbs.</span>
-             </div>
-           </div>
-         </div>
-         <div class="form-group">
-           <label for="itemQuantity"
-             class="col-sm-2 control-label">Quantity</label>
-           <div class="col-sm-10">
-             <input type="number"
-               class="form-control"
-               min="0"
-               max="5000"
-               id="itemQuantity"
-               placeholder="Item Quantity"
-               data-bind='textInput: itemQty'>
-           </div>
-         </div>
-         <div class="form-group">
-           <label
-             class="col-sm-2 control-label">Cost</label>
-           <div class="col-sm-10">
-      		   <div class="input-group">
-      			 <input type="number"
-      			   min="0"
-      			   class="form-control input-select2-addon"
-      			   data-bind="value: itemCost" />
-      			 <span class="input-group-addon">
-               <select class="form-control"
-      						data-bind="options: $parent.currencyDenominationList,
-      						value: itemCurrencyDenomination,
-      						select2: {theme: 'classic'}"></select>
-              </span>
-      		   </div>
-    	      </div>
-         </div>
-         <div class="form-group">
-           <label for="itemDescription"
-             class="col-sm-2 control-label">Description</label>
-           <div class="col-sm-10">
-             <textarea type="password"
-               class="form-control"
-               id="itemDescription"
-               placeholder="Rations consist of..."
-               rows="4"
-               data-bind='textInput: itemDesc'>
-             </textarea>
-           </div>
-         </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button"
-          class="btn btn-primary"
-          data-dismiss="modal">
-          Done
-        </button>
-      </div>
+        <!-- Begin Tabs -->
+        <ul class="nav nav-tabs tabs">
+          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#magicItemsModalPreview" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
+                <b>Preview</b>
+            </a>
+          </li>
+          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#magicItemsModalEdit" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
+                <b>Edit</b>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-bind="with: selecteditem">
+          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="itemsModalPreview">
+            <div class="h3">
+              <span data-bind="text: itemName"></span>&nbsp;
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel"></span></div>
+              <div class="col-sm-6 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty"></span></div>
+            </div>
+            <hr />
+            <h4>Description</h4>
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="html: itemDescriptionHTML"
+                     class="preview-modal-overflow">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal">Done</button>
+            </div>
+          </div> <!-- End Preview Tab -->
+          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="itemName"
+                       class="col-sm-2 control-label">Name
+                </label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         id="itemName"
+                         placeholder="Rations"
+                         data-bind='textInput: itemName'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="itemWeight"
+                       class="col-sm-2 control-label">Weight</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <input type="number"
+                           class="form-control"
+                           min="0"
+                           max="5000"
+                           placeholder="Item Weight"
+                           data-bind='textInput: itemWeight'>
+                    <span class="input-group-addon">lbs.</span>
+                  </div>
+                 </div>
+              </div>
+              <div class="form-group">
+                <label for="itemQuantity"
+                       class="col-sm-2 control-label">Quantity</label>
+                <div class="col-sm-10">
+                  <input type="number"
+                         class="form-control"
+                         min="0"
+                         max="5000"
+                         id="itemQuantity"
+                         placeholder="Item Quantity"
+                         data-bind='textInput: itemQty'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Cost</label>
+                  <div class="col-sm-10">
+          		      <div class="input-group">
+          			      <input type="number"
+          			             min="0"
+          			             class="form-control input-select2-addon"
+          			             data-bind="value: itemCost" />
+          			      <span class="input-group-addon">
+                      <select class="form-control"
+          					         	data-bind="options: $parent.currencyDenominationList,
+          						                 value: itemCurrencyDenomination,
+          						                 select2: {theme: 'classic'}"></select>
+                      </span>
+          		      </div>
+        	        </div>
+              </div>
+              <div class="form-group">
+                <label for="itemDescription"
+                       class="col-sm-2 control-label">Description</label>
+                <div class="col-sm-10">
+                  <textarea type="password"
+                            class="form-control"
+                            id="itemDescription"
+                            placeholder="Rations consist of..."
+                            rows="4"
+                            data-bind='textInput: itemDesc'>
+                  </textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal">
+                  Done
+                </button>
+              </div>
+            </form>
+          </div> <!-- End Edit Tab -->
+        </div> <!-- End Content -->
+      </div> <!-- End Modal Body -->
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
