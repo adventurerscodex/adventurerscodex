@@ -65,6 +65,10 @@ function EncounterListComponentViewModel(params) {
             return encounter.encounterId() === selected.encounterId() ? 'active' : '';
         }
     };
+
+    self.isSelected = function(encounter) {
+        return self.selectedEncounter().encounterId() === encounter.encounterId() ? true : false;
+    };
 }
 
 ko.components.register('encounter-list', {
@@ -78,6 +82,7 @@ ko.components.register('encounter-list', {
                 <i data-bind="css: arrowIconClass, click: toggleIsOpen" aria-hidden="true"></i>&nbsp; \
                 <!-- /ko -->\
                 <span data-bind="text: name"></span>\
+                <!-- ko if: $parent.isSelected($data) -->\
                 <span class="pull-right"> \
                     <!-- ko if: $parent.levels > 0 -->\
                     <span class="glyphicon glyphicon-plus" \
@@ -86,6 +91,7 @@ ko.components.register('encounter-list', {
                     <span class="glyphicon glyphicon-trash" \
                         data-bind="click: $parent.deleteEncounter"></span>\
                 </span> \
+                <!-- /ko -->\
             </a>\
             <div class="row" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
