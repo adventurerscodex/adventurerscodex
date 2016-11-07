@@ -20,6 +20,9 @@ function EncounterViewModel() {
     };
 
     self.unload = function() {
+        if (self.encounterDetailViewModel()) {
+            self.encounterDetailViewModel().unload();
+        }
         self.encounters().forEach(function(encounter, idx, _) {
             encounter.save();
         });
