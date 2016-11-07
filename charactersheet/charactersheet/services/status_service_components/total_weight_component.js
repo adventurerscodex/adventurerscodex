@@ -8,7 +8,6 @@ function TotalWeightStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Encumbrance';
-    self.carryCapacity = Fixtures.carryCapacity;
 
     self.init = function() {
         Notifications.profile.changed.add(self.dataHasChanged);
@@ -27,8 +26,6 @@ function TotalWeightStatusServiceComponent() {
         var key = CharacterManager.activeCharacter().key();
         var scores = AbilityScores.findBy(key)[0];
         if (!scores || !scores.str()) { return }
-
-        var carryCapacity = self.carryCapacity[scores.str()];
 
         var weight = 0;
         Armor.findAllBy(key).forEach(function(e, i, _) {
@@ -66,16 +63,14 @@ function TotalWeightStatusServiceComponent() {
     };
 
     self.getType = function(strength, weight) {
-        var carryCapacity = self.carryCapacity[strength];
         if (weight === 0) {
             return 'default';
-        } else if (weight <= carryCapacity.light) {
+        } else if (weight < strength * 5) {
             return 'info';
-        } else if (weight <= carryCapacity.medium) {
+        } else if (weight < strength * 10) {
             return 'warning';
         } else {
             return 'danger';
         }
-
     };
 }
