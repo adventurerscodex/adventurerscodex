@@ -70,6 +70,12 @@ function ItemsViewModel() {
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
+
+        // Just in case data was changed.
+        self.items().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.item.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {

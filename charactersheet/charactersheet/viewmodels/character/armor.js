@@ -77,10 +77,6 @@ function ArmorViewModel() {
         self.shouldShowDisclaimer(true);
     };
 
-    self.modalFinishedAnimating = function() {
-        self.shouldShowDisclaimer(false);
-    };
-
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -91,6 +87,12 @@ function ArmorViewModel() {
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
+
+        // Just in case data was changed.
+        self.armors().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.armor.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -105,12 +107,6 @@ function ArmorViewModel() {
     };
 
     self.modifierHasFocus = ko.observable(false);
-
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
-        self.selecteditem().save();
-        Notifications.armor.changed.dispatch();
-    };
 
     /**
      * Filters and sorts the armors for presentation in a table.

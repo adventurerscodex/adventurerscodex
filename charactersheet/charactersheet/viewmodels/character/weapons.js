@@ -233,15 +233,6 @@ function WeaponsViewModel() {
 
     /* UI Methods */
 
-    // Modal Methods
-
-    self.modifierHasFocus = ko.observable(false);
-
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
-        self.selecteditem().save();
-        Notifications.weapon.changed.dispatch();
-    };
     /**
      * Filters and sorts the weaponss for presentation in a table.
      */
@@ -266,6 +257,8 @@ function WeaponsViewModel() {
 
     /* Modal Methods */
 
+    self.modifierHasFocus = ko.observable(false);
+
     self.populateWeapon = function(label, value) {
         var weapon = DataRepository.weapons[label];
 
@@ -282,6 +275,11 @@ function WeaponsViewModel() {
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
+        // Just in case data has changed.
+        self.weapons().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.weapon.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
