@@ -8,7 +8,7 @@ describe('EncounterDetailViewModel', function(){
 
     describe('Load', function() {
         it('should load encounter\'s data', function() {
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), []);
             var setupSpy = simple.mock(vm, '_setupSectionVMs').callFn(function() {});
             var initSpy = simple.mock(ViewModelUtilities, 'initSubViewModels').callFn(function() {});
             var loadSpy = simple.mock(ViewModelUtilities, 'loadSubViewModels').callFn(function() {});
@@ -28,7 +28,7 @@ describe('EncounterDetailViewModel', function(){
     describe('Unload', function() {
         it('should unload encounter\'s data', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), []);
             var saveSpy = simple.mock(vm, 'save').callFn(function() {});
             var unloadSpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels').callFn(function() {});
 
@@ -44,7 +44,7 @@ describe('EncounterDetailViewModel', function(){
 
     describe('modalFinishedOpening', function() {
         it('should set the focus of the open modal', function() {
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), []);
             vm.modalFinishedOpening();
             vm.nameHasFocus().should.equal(true);
         });
@@ -52,7 +52,7 @@ describe('EncounterDetailViewModel', function(){
 
     describe('modalFinishedClosing', function() {
         it('should clear the value of the modal open var and save', function() {
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), []);
             var saveSpy = simple.mock(vm, 'save').callFn(function() {});
             vm.modalFinishedClosing();
             vm.openModal().should.equal(false);
@@ -62,7 +62,7 @@ describe('EncounterDetailViewModel', function(){
 
     describe('toggleModal', function() {
         it('should toggle the value of the openModal Var', function() {
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), []);
             vm.openModal().should.equal(false);
             vm.toggleModal();
             vm.openModal().should.equal(true);
@@ -75,7 +75,9 @@ describe('EncounterDetailViewModel', function(){
 
     describe('_setupSectionVMs', function() {
         it('should create child view models for each section and initialize them.', function() {
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), [
+                { property: 'combatSectionViewModel', vm: CombatSectionViewModel, model: CombatSection }
+            ]);
             simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, attr, value) {
                 return new model();
             });
@@ -91,7 +93,7 @@ describe('EncounterDetailViewModel', function(){
         });
         it('should create child view models for each section and initialize them.', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            var vm = new EncounterDetailViewModel(new Encounter());
+            var vm = new EncounterDetailViewModel(new Encounter(), []);
             simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, attr, value) {
                 return new model();
             });

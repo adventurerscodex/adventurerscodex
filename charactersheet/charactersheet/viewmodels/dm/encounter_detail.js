@@ -6,19 +6,14 @@
  * is given the encounter it will display. When the user selects another
  * encounter to focus on, the current encounter is cleaned up.
  */
-function EncounterDetailViewModel(encounter) {
+function EncounterDetailViewModel(encounter, allSections) {
     var self = this;
 
     self.encounterId = encounter.encounterId;
     self.name = encounter.name;
-    self.locale = encounter.locale;
-
-    /* Encounter Sections */
-
-    self.sections = [
-        { property: 'combatSectionViewModel', vm: CombatSectionViewModel, model: CombatSection },
-        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
-    ];
+    self.encounterLocation = encounter.encounterLocation;
+    self.sections = allSections;
+    // TODO: Add Fields Here.
 
     self.combatSectionViewModel = ko.observable();
     self.notesSectionViewModel = ko.observable();
@@ -45,9 +40,11 @@ function EncounterDetailViewModel(encounter) {
 
     self.save = function() {
         var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
-        encounter.name(self.name());
-        encounter.locale(self.locale());
-        encounter.save();
+        if (encounter) {
+            encounter.name(self.name());
+            encounter.encounterLocation(self.encounterLocation());
+            encounter.save();
+        }
     };
 
     /* UI Methods */
