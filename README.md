@@ -8,7 +8,7 @@ Welcome to Adventurer&rsquo;s&nbsp;Codex</h1>
 [![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex?branch=develop)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sonictherocketman/adventurerscodex)
 
-A tool to help D&D 5e players keep their ducks in a row.
+Experience the next step in tabletop D&D
 
 
 What is it?
