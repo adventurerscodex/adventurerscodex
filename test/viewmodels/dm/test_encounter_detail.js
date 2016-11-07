@@ -75,7 +75,6 @@ describe('EncounterDetailViewModel', function(){
 
     describe('_setupSectionVMs', function() {
         it('should create child view models for each section and initialize them.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new EncounterDetailViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, attr, value) {
                 return new model();
@@ -83,9 +82,12 @@ describe('EncounterDetailViewModel', function(){
 
             vm.sections.forEach(function(section, idx, _) {
                 Should.not.exist(vm[section.property]());
+            });
+            vm.sections.forEach(function(section, idx, _) {
                 vm._setupSectionVMs();
                 Should.exist(vm[section.property]());
             });
+
         });
         it('should create child view models for each section and initialize them.', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
