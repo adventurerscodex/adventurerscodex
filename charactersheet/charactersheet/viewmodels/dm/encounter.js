@@ -86,6 +86,9 @@ function EncounterViewModel() {
         if (encounter.parent()) {
             encounter.alertParentOfNewChild();
         }
+        if (!encounter.name()) {
+            encounter.name('Untitled Encounter');
+        }
 
         encounter.save();
 
@@ -102,6 +105,7 @@ function EncounterViewModel() {
     self.deleteEncounter = function(encounter) {
         encounter.delete();
         self.encounters(self._getTopLevelEncounters());
+        self.selectedEncounter(self.encounters()[0]);
     };
 
     /* Private Methods */
@@ -133,7 +137,7 @@ function EncounterViewModel() {
      * a query by encounter id.
      */
     self._setupSectionVMs = function(encounter) {
-        var key = self.selectedEncounter().encounterId();
+        var key = encounter.encounterId();
         self.sections.forEach(function(section, idx, _) {
             var relevantModel = PersistenceService.findFirstBy(section.model, 'encounterId', key);
             var childViewModel = new section.vm(encounter, relevantModel);

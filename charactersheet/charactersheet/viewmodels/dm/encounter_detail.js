@@ -39,9 +39,11 @@ function EncounterDetailViewModel(encounter, allSections) {
 
     self.save = function() {
         var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
-        encounter.name(self.name());
-        encounter.encounterLocation(self.encounterLocation());
-        encounter.save();
+        if (encounter) {
+            encounter.name(self.name());
+            encounter.encounterLocation(self.encounterLocation());
+            encounter.save();
+        }
     };
 
     /* UI Methods */
