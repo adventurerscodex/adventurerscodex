@@ -67,6 +67,7 @@ function EncounterListComponentViewModel(params) {
     };
 
     self.isSelected = function(encounter) {
+        if (!self.selectedEncounter()) { return false; }
         return self.selectedEncounter().encounterId() === encounter.encounterId() ? true : false;
     };
 }
