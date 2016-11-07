@@ -12,12 +12,14 @@ function EncounterViewModel() {
     /* Encounter Sections */
 
     self.sections = [
-        { property: 'combatSectionViewModel', vm: CombatSectionViewModel, model: CombatSection }
+        { property: 'combatSectionViewModel', vm: CombatSectionViewModel, model: CombatSection },
+        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
     ];
 
     /* Modal Section View Models */
 
     self.combatSectionViewModel = ko.observable();
+    self.notesSectionViewModel = ko.observable();
 
     /* Public Methods */
 
