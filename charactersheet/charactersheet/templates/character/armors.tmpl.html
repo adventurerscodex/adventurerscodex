@@ -30,9 +30,12 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedArmors -->
         <tr class="clickable">
-          <td data-bind="text: armorName, click: $parent.editArmor"
+          <td data-bind="click: $parent.editArmor"
               href="#"
-              data-target="#viewArmor"></td>
+              data-target="#viewArmor">
+              <span data-bind="text: armorName"></span>&nbsp;
+              <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
+              </span></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: armorType, click: $parent.editArmor"
               href="#"
@@ -112,6 +115,15 @@
                           data-bind="options: blankArmor().armorTypeOptions,
                                      value: blankArmor().armorType,
                                      select2: {theme: 'classic'}"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="armorMagicalModifier"
+                       class="col-sm-2 control-label">Magical Modifier</label>
+                  <div class="col-sm-10">
+                  <input type="number" class="form-control"
+                         id="armorMagicalModifier"
+                         data-bind='textInput: blankArmor().armorMagicalModifier'>
                   </div>
               </div>
               <div class="form-group">
@@ -254,7 +266,7 @@
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="armorModalPreview">
                 <div class="h3">
                   <span data-bind="text: armorName"></span>&nbsp;
-                  <small data-bind="text: acLabel"></small>
+                  <small data-bind="text: armorSummaryLabel"></small>
                 </div>
 
                 <hr />
@@ -301,6 +313,15 @@
                               data-bind="options: armorTypeOptions,
                                          value: armorType,
                                          select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="armorMagicalModifier"
+                           class="col-sm-2 control-label">Magical Modifier</label>
+                      <div class="col-sm-10">
+                      <input type="number" class="form-control"
+                             id="armorMagicalModifier"
+                             data-bind='textInput: armorMagicalModifier'>
                       </div>
                   </div>
                   <div class="form-group">
