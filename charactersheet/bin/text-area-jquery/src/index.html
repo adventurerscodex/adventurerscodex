@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>jquery.textarea-markdown-editor</title>
+
+<script src="./jquery.js"></script>
+<script src="./marked.min.js"></script>
+<script src="./jquery.textarea-markdown-editor.js"></script>
+
+<script>
+  $(function(){
+    var $editor = $('#editor');
+    var $preview = $('#preview');
+
+    $editor.markdownEditor({
+      onInsertedList: function(){ console.log("inserted list"); },
+      onInsertedTable: function(){ console.log("inserted table"); },
+      onInsertedCodeblock: function(){ console.log("inserted codeblock"); },
+      onMadeTable: function(){ console.log("made table"); },
+      onSortedTable: function(){ console.log("sorted table"); }
+    }).focus();
+
+   t= setInterval(function(){
+      $preview.html(marked($editor[0].value));
+    }, 1000);
+  });
+</script>
+
+<style>
+  h1 {
+    font-size: 24px;
+  }
+
+  main{
+    width: 960px;
+  }
+  main:after{
+    clear: both;
+    content: '';
+    display: table;
+  }
+  #editor {
+    width: 400px;
+    height: 400px;
+    float: left;
+  }
+  #preview {
+    width: 400px;
+    float: left;
+    margin-left: 20px;
+    padding: 20px;
+    border: 1px solid #eaeaea;
+    font-size: 12px;
+  }
+  header, footer{
+    margin: 20px 0;
+  }
+
+  pre {
+    background: #fafafa;
+    padding: 5px 10px;
+  }
+
+  table td, table th{
+    border: 1px solid #eaeaea;
+  }
+
+  #preview > ul {
+    padding-left: 20px;
+  }
+</style>
+
+</head>
+<body>
+
+<header>
+  <h1>jquery.textarea-markdown-editor DEMO</h1>
+</header>
+
+<main>
+<textarea id="editor">
+* list1
+* list2
+    * list2-1
+    * list2-2
+* [ ] checkbox
+* [x] checked
+
+| h1 | H2 | H3 |
+
+```
+
+4x3
+
+:2x2
+
+2x2:
+
+:2x2:
+
+Name, Age,
+John Due, 44,
+Daniel Bob, 28,
+John Smith,99, :smile:
+Lisa, 18, F
+
+|  | price |
+|---|---|
+| a | 100 |
+| b | 200 |
+| c | 300 |
+| | =SUM |
+
+</textarea>
+
+<div id="preview"></div>
+</main>
+
+<footer>
+  <a href="https://github.com/ttakuru88/jquery.textarea-markdown-editor">https://github.com/ttakuru88/jquery.textarea-markdown-editor</a>
+</footer>
+
+</body>
+</html>
