@@ -71,7 +71,7 @@ ko.components.register('markdown-edit-preview', {
         <div class="form-horizontal">\
           <div class="form-group">\
             <textarea class="form-control dark-area" rows="20"\
-              data-bind="value: text, markdownEditor: true, \
+              data-bind="textInput: text, markdownEditor: true, \
                   attr: { placeholder: placeholder }"></textarea>\
           </div>\
         </div>\
