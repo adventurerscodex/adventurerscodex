@@ -98,6 +98,19 @@ function DailyFeatureViewModel() {
         return 100 / self.dailyFeatures().length;
     };
 
+    // Modal Methods
+
+    self.modifierHasFocus = ko.observable(false);
+    self.editHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+    };
+
+    self.editModalOpen = function() {
+        self.editHasFocus(true);
+    };
+
     self.editDailyFeature = function(dailyFeature) {
         self.selecteditem(dailyFeature);
     };

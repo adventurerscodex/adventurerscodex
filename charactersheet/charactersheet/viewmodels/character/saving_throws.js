@@ -96,6 +96,14 @@ function SavingThrowsViewModel() {
             columnName, self.sorts));
     };
 
+    // Modal Methods
+
+    self.modifierHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+    };
+
     //Manipulating savingThrows
     self.addsavingThrow = function() {
         self.blankSavingThrow().save();
