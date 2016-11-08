@@ -8,6 +8,7 @@
  * @param text {observable} an observable in which to save the value
  * @param rows {int: Optional} The number of default rows in the edit text area.
  * The default is 20.
+ * @param placeholder {observable|text} Text that should display as the placeholder.
  * Usage:
  * <markdown-edit-preview params="text: myValue, rows: 15"></markdown-edit-preview>
  */
@@ -16,7 +17,8 @@ function MarkdownEditPreviewComponentViewModel(params) {
 
     self.text = params.text;
     self.rows = params.rows || ko.observable(20);
-    self.min = params.min || ko.observable(0);
+    self.placeholder = params.placeholder || ko.observable();
+    self.previewHeight = params.previewHeight || ko.observable(0);
 
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -32,6 +34,11 @@ function MarkdownEditPreviewComponentViewModel(params) {
         self.editTabStatus('active');
         self.previewTabStatus('');
     };
+
+    // Select the default tab.
+    if (ko.unwrap(params.defaultActiveTab) === 'edit') {
+        self.selectEditTab();
+    }
 }
 
 ko.components.register('markdown-edit-preview', {
@@ -51,17 +58,21 @@ ko.components.register('markdown-edit-preview', {
       </li>\
     </ul>\
     <div class="tab-content">\
-      <div role="tabpanel" data-bind="css: previewTabStatus"\
+      <div role="tabpanel" data-bind="css: previewTabStatus" \
         class="tab-pane">\
-        <div data-bind="markdownPreview: text"></div>\
+            <div class="row row-padded">\
+                <div class="col-xs-12 col-padded">\
+                    <div data-bind="markdownPreview: text"></div>\
+                </div>\
+            </div>\
       </div>\
-      <div role="tabpanel" data-bind="css: editTabStatus"\
+      <div role="tabpanel" data-bind="css: editTabStatus" \
         class="tab-pane">\
         <div class="form-horizontal">\
           <div class="form-group">\
             <textarea class="form-control dark-area" rows="20"\
-              placeholder="Captain\'s Log..."\
-              data-bind="value: text, markdownEditor: true"></textarea>\
+              data-bind="value: text, markdownEditor: true, \
+                  attr: { placeholder: placeholder }"></textarea>\
           </div>\
         </div>\
       </div>\
