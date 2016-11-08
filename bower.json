@@ -35,7 +35,8 @@
     "cryptojs": "*",
     "blueimp-md5": "~2.1.0",
     "font-awesome": "~4.6.1",
-    "jquery-ui": "^1.12.0"
+    "jquery-ui": "^1.12.0",
+    "simplemde": "^1.11.2"
   },
   "resolutions": {
     "webcomponentsjs": "~0.5.4"
