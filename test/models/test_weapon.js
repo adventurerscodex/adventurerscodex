@@ -247,4 +247,24 @@ describe('Weapon Model', function() {
         });
     });
 
+    describe('Weapon Range Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponRange('20/60');
+            weapon.weaponRangeLabel().should.equal('20/60 ft.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponRange('');
+            weapon.weaponProperty('');
+            weapon.weaponRangeLabel().should.equal('5 ft.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponRange('');
+            weapon.weaponProperty('Thrown and Reach');
+            weapon.weaponRangeLabel().should.equal('10 ft.');
+        });
+    });
+
 });

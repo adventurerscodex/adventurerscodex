@@ -136,6 +136,21 @@ function Weapon() {
         }
     });
 
+    self.weaponRangeLabel = ko.pureComputed(function() {
+        if(self.weaponRange()){
+            return self.weaponRange() + ' ft.';
+        }
+        if(self.weaponProperty()){
+            if(self.weaponProperty().toLowerCase().indexOf('reach') !== -1){
+                return '10 ft.';
+            } else {
+                return '5 ft.';
+            }
+        } else {
+            return '5 ft.';
+        }
+    });
+
     self.magicalModifierLabel = ko.pureComputed(function() {
         self._dummy();
 
