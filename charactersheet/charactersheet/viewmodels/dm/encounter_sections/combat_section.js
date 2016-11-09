@@ -35,4 +35,10 @@ function CombatSectionViewModel(parentEncounter, combatSection) {
     self.unload = function() {
     };
 
+    self.save = function() {
+        console.log('SAVING');
+    };
+    self.delete = function() {
+        console.log('DELETEING');
+    };
 }

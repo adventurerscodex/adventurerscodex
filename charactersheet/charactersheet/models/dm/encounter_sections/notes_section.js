@@ -14,6 +14,7 @@ function NotesSection() {
     // General Encounter Properties.
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
+    self.name = ko.observable('Notes');
 
     self.notes = ko.observable('');
     self.visible = ko.observable(false);
