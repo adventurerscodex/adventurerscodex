@@ -95,6 +95,7 @@ function EncounterViewModel() {
         // Reload Encounters
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(encounter);
+        self.encounterDetailViewModel().save();
     };
 
     /**
@@ -106,6 +107,7 @@ function EncounterViewModel() {
         encounter.delete();
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(self.encounters()[0]);
+        self.encounterDetailViewModel().delete();
     };
 
     /* Private Methods */
