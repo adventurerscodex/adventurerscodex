@@ -1,15 +1,8 @@
 <div class="panel panel-default bio">
   <div class="panel-body">
 	<!-- Notes -->
-	<div class="panel-body" data-bind="with: note">
-		<div class="form-horizontal">
-			<div class="form-group">
-				<div class="">
-					<textarea class="form-control dark-area" rows="20" id="text"
-						placeholder="Captain's Log..." data-bind="textInput: text"></textarea>
-				</div>
-			</div>
-		</div>
-	</div>
+	<div class="panel-body">
+    <markdown-edit-preview params="text: note().text, rows: 15, previewHeight: 200,
+      placeholder: 'Captain\'s Log...', defaultActiveTab: 'edit'"></markdown-edit-preview>
   </div>
 </div>
