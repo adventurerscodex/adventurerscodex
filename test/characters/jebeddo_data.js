@@ -660,7 +660,6 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "armorName": "Studded Leather Armor",
       "armorType": "Light",
-      "armorProficiency": true,
       "armorPrice": "",
       "armorMagicalModifier": "",
       "armorCurrencyDenomination": "PP",

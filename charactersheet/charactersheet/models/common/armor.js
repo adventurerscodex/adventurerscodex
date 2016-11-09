@@ -4,7 +4,7 @@ function Armor() {
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {
-        include: ['characterId', 'armorName', 'armorType', 'armorProficiency',
+        include: ['characterId', 'armorName', 'armorType',
                   'armorPrice', 'armorMagicalModifier', 'armorCurrencyDenomination',
                   'armorWeight', 'armorClass', 'armorStealth', 'armorDescription']
     };
@@ -13,7 +13,6 @@ function Armor() {
     self.characterId = ko.observable(null);
     self.armorName = ko.observable('');
     self.armorType = ko.observable('');
-    self.armorProficiency = ko.observable(false);
     self.armorPrice = ko.observable('');
     self.armorMagicalModifier = ko.observable(0);
     self.armorCurrencyDenomination = ko.observable('');
@@ -24,13 +23,6 @@ function Armor() {
 
     self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
-
-    self.proficiencyLabel = ko.pureComputed(function() {
-        if (self.armorProficiency() === true) {
-            return 'fa fa-check';
-        }
-        return '';
-    });
 
     self.acLabel = ko.pureComputed(function() {
         return 'AC ' + self.armorClass();
