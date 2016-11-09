@@ -250,18 +250,19 @@ describe('Weapon Model', function() {
     describe('Weapon Range Label', function() {
         it('should return the correct label', function() {
             var weapon = new Weapon();
+            weapon.weaponType('Ranged');
             weapon.weaponRange('20/60');
             weapon.weaponRangeLabel().should.equal('20/60 ft.');
         });
         it('should return the correct label', function() {
             var weapon = new Weapon();
-            weapon.weaponRange('');
+            weapon.weaponType('Melee');
             weapon.weaponProperty('');
             weapon.weaponRangeLabel().should.equal('5 ft.');
         });
         it('should return the correct label', function() {
             var weapon = new Weapon();
-            weapon.weaponRange('');
+            weapon.weaponType('Melee');
             weapon.weaponProperty('Thrown and Reach');
             weapon.weaponRangeLabel().should.equal('10 ft.');
         });

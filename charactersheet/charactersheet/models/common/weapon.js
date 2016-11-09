@@ -137,17 +137,23 @@ function Weapon() {
     });
 
     self.weaponRangeLabel = ko.pureComputed(function() {
-        if(self.weaponRange()){
-            return self.weaponRange() + ' ft.';
-        }
-        if(self.weaponProperty()){
-            if(self.weaponProperty().toLowerCase().indexOf('reach') !== -1){
-                return '10 ft.';
+        if (self.weaponType().toLowerCase() === 'ranged'){
+            if(self.weaponRange()) {
+                return self.weaponRange() + ' ft.';
             } else {
-                return '5 ft.';
+                return self.weaponRange();
             }
-        } else {
-            return '5 ft.';
+        }
+        if (self.weaponType().toLowerCase() === 'melee') {
+            if (self.weaponProperty()) {
+                if(self.weaponProperty().toLowerCase().indexOf('reach') !== -1) {
+                    return '10 ft.';
+                } else {
+                    return '5 ft.';
+                }
+            } else {
+                return '5 ft.'
+            }
         }
     });
 
