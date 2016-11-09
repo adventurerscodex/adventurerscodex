@@ -9,6 +9,18 @@ function EncounterViewModel() {
     self.encounters = ko.observableArray();
     self.encounterDetailViewModel = ko.observable();
 
+    /* Encounter Sections */
+
+    self.sections = [
+        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
+    ];
+
+    /* Modal Section View Models */
+
+    self.notesSectionViewModel = ko.observable();
+
+    /* Public Methods */
+
     self.init = function() {
     };
 
@@ -28,7 +40,7 @@ function EncounterViewModel() {
         });
     };
 
-    // UI Methods
+    /* UI Methods */
 
     /**
      * Sets the current encounter detail view model, if the encounter
@@ -43,7 +55,7 @@ function EncounterViewModel() {
         var newEncounter = self.selectedEncounter();
         if (!newEncounter) { return null; }
 
-        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
+        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter, self.sections));
         self._initializeDetailViewModel();
     };
 
@@ -51,11 +63,13 @@ function EncounterViewModel() {
 
     self.openAddModal = function() {
         self.modalEncounter(new Encounter());
+        self._setupSectionVMs(self.modalEncounter());
     };
 
     self.openAddModalWithParent = function(parent) {
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
+        self._setupSectionVMs(self.modalEncounter());
     };
 
     self.modalFinishedOpening = function() {
@@ -66,7 +80,7 @@ function EncounterViewModel() {
         self.modalEncounter(null);
     };
 
-    // Manage Encounter Methods
+    /* Manage Encounter Methods */
 
     self.addEncounter = function() {
         var key = CharacterManager.activeCharacter().key();
@@ -75,12 +89,16 @@ function EncounterViewModel() {
         if (encounter.parent()) {
             encounter.alertParentOfNewChild();
         }
+        if (!encounter.name()) {
+            encounter.name('Untitled Encounter');
+        }
 
         encounter.save();
 
         // Reload Encounters
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(encounter);
+        self.encounterDetailViewModel().save();
     };
 
     /**
@@ -91,9 +109,11 @@ function EncounterViewModel() {
     self.deleteEncounter = function(encounter) {
         encounter.delete();
         self.encounters(self._getTopLevelEncounters());
+        self.selectedEncounter(self.encounters()[0]);
+        self.encounterDetailViewModel().delete();
     };
 
-    // Private Methods
+    /* Private Methods */
 
     self._initializeDetailViewModel = function(vm) {
         self.encounterDetailViewModel().init();
@@ -112,4 +132,27 @@ function EncounterViewModel() {
         });
 
     };
+
+    /**
+     * Using the list of sections, sets the value of the child
+     * section view models.
+     * Sections are identified using their properties set in the sections list,
+     * and are instantiated with 2 parameters being the current encounter, and
+     * the view model's data model object (if it exists, or null)  that matched
+     * a query by encounter id.
+     */
+    self._setupSectionVMs = function(encounter) {
+        var key = encounter.encounterId();
+        self.sections.forEach(function(section, idx, _) {
+            var relevantModel = PersistenceService.findFirstBy(section.model, 'encounterId', key);
+            var childViewModel = new section.vm(encounter, relevantModel);
+            try {
+                self[section.property](childViewModel);
+            } catch (err) {
+                throw "Unable to set child view models for "+section.property
+                    +". You probably forgot to add the property to the detail VM.\n"+err
+            }
+        });
+    };
+
 }

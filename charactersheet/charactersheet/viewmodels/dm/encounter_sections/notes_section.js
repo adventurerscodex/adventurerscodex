@@ -8,7 +8,7 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
     /**
      * REQUIRED: Whether or not the given encounter section should be displayed.
      */
-    self.visible = ko.observable(true);
+    self.visible = ko.observable(false);
 
     /**
      * REQUIRED: The template name relative to the encounter_sections.
@@ -25,7 +25,11 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
     /**
      * Call Init on each sub-module.
      */
-    self.init = function() { };
+    self.init = function() {
+        Notifications.global.save.add(function() {
+            self.save();
+        });
+    };
 
     /**
      * Signal all modules to load their data.
@@ -39,6 +43,7 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
             notes.save();
         } else {
             self.notes(notesSection.notes());
+            self.visibile(notesSection.visibile());
         }
     };
 
@@ -50,7 +55,25 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
         }
 
         notes.notes(self.notes());
+        notes.visibile(self.visibile());
 
         notes.save();
     };
+
+    self.save = function() {
+      var notes = PersistenceService.findFirstBy(NotesSection,
+          'encounterId', parentEncounter.encounterId());
+      if (notes) {
+        notes.notes(self.notes());
+        notes.visibile(self.visibile());
+
+        notes.save();
+      }
+    };
+
+    self.delete = function() {
+        var notes = PersistenceService.findFirstBy(NotesSection,
+            'encounterId', parentEncounter.encounterId());
+        notes.delete();
+    }
 }

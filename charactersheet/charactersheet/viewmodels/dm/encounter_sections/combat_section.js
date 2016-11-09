@@ -34,4 +34,5 @@ function CombatSectionViewModel(parentEncounter, combatSection) {
 
     self.unload = function() {
     };
+
 }
