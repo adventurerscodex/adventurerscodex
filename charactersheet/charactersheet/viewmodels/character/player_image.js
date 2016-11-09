@@ -26,6 +26,7 @@ function PlayerImageViewModel() {
             self.image(image[0]);
         } else {
             self.image(new ImageModel());
+            self.image().characterId(CharacterManager.activeCharacter().key());
         }
 
         //Subscriptions
