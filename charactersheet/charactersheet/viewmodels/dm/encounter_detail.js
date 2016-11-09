@@ -43,7 +43,12 @@ function EncounterDetailViewModel(encounter, allSections) {
             encounter.name(self.name());
             encounter.encounterLocation(self.encounterLocation());
             encounter.save();
+            ViewModelUtilities.callOnSubViewModels(self, 'save');
         }
+    };
+
+    self.delete = function() {
+        ViewModelUtilities.callOnSubViewModels(self, 'delete');
     };
 
     /* UI Methods */
