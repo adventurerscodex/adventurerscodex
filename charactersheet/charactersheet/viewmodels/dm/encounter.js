@@ -61,12 +61,14 @@ function EncounterViewModel() {
     self.openAddModal = function() {
         self.modalEncounter(new Encounter());
         self._setupSectionVMs(self.modalEncounter());
+        self._initializeDetailViewModel();
     };
 
     self.openAddModalWithParent = function(parent) {
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
         self._setupSectionVMs(self.modalEncounter());
+        self._initializeDetailViewModel();
     };
 
     self.modalFinishedOpening = function() {
