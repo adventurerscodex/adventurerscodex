@@ -58,7 +58,7 @@
           <div class="col-padded col-xs-2" data-bind="template: {
             name: 'player_image.tmpl',
             templateUrl: 'templates/character',
-            data: profileTabViewModel().playerImageViewModel()
+            data: playerImageViewModel
           }"></div>
           <!-- /ko -->
           <!-- /ko -->
@@ -89,9 +89,6 @@
                   data-target="#exportModal"
                   data-bind="click: charactersViewModel.selectCharacter"
                   href="#">Export</a></i>
-                &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#settingsModal" href="#">Settings</a></i>
               </div>
             </div>
           </div>
@@ -191,15 +188,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- Settings Modal -->
-<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog"
-  aria-labelledby="settingsLabel"
-  data-bind="template: {
-      name: 'settings.tmpl',
-      templateUrl: 'templates/common',
-      data: settingsViewModel }">
 </div>
 
 <!-- New Modal -->

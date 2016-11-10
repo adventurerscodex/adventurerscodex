@@ -9,8 +9,6 @@ function ProfileTabViewModel() {
     self.profileViewModel        = ko.observable(new ProfileViewModel());
     self.appearanceViewModel     = ko.observable(new AppearanceViewModel());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
-    self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
-    self.playerInfoViewModel     = ko.observable(new PlayerInfoViewModel());
 
     self.init = function() {
         ViewModelUtilities.initSubViewModels(self);

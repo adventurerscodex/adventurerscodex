@@ -3,122 +3,117 @@
 function PlayerImageViewModel() {
     var self = this;
 
-    /**
-     * KO File Drag binding places new image data here, it
-     * is moved to the `image` property on change.
-     */
-    self.dropzone = ko.observable(new ImageModel());
+    self.openModal = ko.observable(false);
 
-    /**
-     * The image data that is displayed. The image is fed from the dropzone.
-     */
-    self.image = ko.observable(new ImageModel());
+    self.imageUrl = ko.observable('');
+    self.email = ko.observable('');
+    self.height = ko.observable(80);
+    self.width = ko.observable(80);
+
+    self.firstFieldHasFocus = ko.observable(false);
 
     self.init = function() {
-        Notifications.global.save.add(function() {
-            self.image().save();
-        });
+        Notifications.global.save.add(self.save);
     };
 
     self.load = function() {
-        var image = ImageModel.findBy(CharacterManager.activeCharacter().key());
-        if (image.length > 0) {
-            self.image(image[0]);
+        var key = CharacterManager.activeCharacter().key();
+        var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
+        if (image && image.imageUrl()) {
+            self.imageUrl(image.imageUrl());
         } else {
-            self.image(new ImageModel());
-            self.image().characterId(CharacterManager.activeCharacter().key());
+            var image = new ImageModel();
+            image.characterId(key);
+            image.save();
+        }
+
+        var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
+        if (info) {
+            self.email(info.email());
+        } else {
+            var info = new PlayerInfo();
+            info.characterId(key);
+            info.save();
         }
 
         //Subscriptions
-        self.dropzone.subscribe(self.fetchImageFromDropzone);
-        self.image().dataUrl.subscribe(self.dataHasChanged);
-        Notifications.playerInfo.changed.add(self.checkImage);
+        self.email.subscribe(self.dataHasChanged);
+        self.imageUrl.subscribe(self.dataHasChanged);
+        Notifications.playerInfo.changed.add(self.dataHasChanged);
     };
 
     self.unload = function() {
-        self.image().save();
+        self.save();
         Notifications.playerInfo.changed.remove(self.checkImage);
     };
 
     self.dataHasChanged = function() {
-        //Remove the old email.
-        var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
-        try {
-            info[0].clear();
-        } catch(err) { /*Ignore*/ }
-        //return false;
-
-        self.image().save();
+        self.save();
         Notifications.playerImage.changed.dispatch();
-    };
-
-    /**
-     * Whenever the player's email changes, re-evaluate if/what image
-     * should be shown.
-     */
-    self.checkImage = function() {
-        var info = PlayerInfo.findBy(CharacterManager.activeCharacter().key());
-        try {
-            var email = info[0].email();
-            if (email) {
-                self.image().imageUrl(info[0].gravatarUrl());
-                self.image().save();
-                Notifications.playerImage.changed.dispatch();
-            }
-        } catch(err) { /*Ignore*/ }
-        return false;
-    };
-
-
-    /**
-     * When called this handler migrates the data from
-     * `self.dropzone` to `self.image`.
-     */
-    self.fetchImageFromDropzone = function() {
-        self.image().dataUrl(self.dropzone().dataUrl());
     };
 
     //Public Methods
 
     self.clear = function() {
-        self.image().clear();
+        self.imageUrl('');
+        self.email('');
+    };
+
+    self.save = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
+        if (info) {
+            info.email(self.email());
+            info.save();
+        }
+        var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
+        if (image) {
+            image.imageUrl(self.imageUrl());
+            image.save();
+        }
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
-        return self.hasImage() ? 'no-border' : '';
+        return self.playerImageSrc().length ? 'no-border' : 'dashed-border';
     });
 
     //Player Image Handlers
 
-    self.hasImage = ko.computed(function() {
-        if (self.image().hasData()) {
-            return true;
-        } else {
-            return false;
+    self.playerImageSrc = ko.pureComputed(function() {
+        if (self.imageUrl()) {
+            return self.imageUrl();
         }
+
+        var url = self._getEmailUrl();
+        if (self.email() && url) {
+            return url;
+        }
+
+        return '';
     });
 
-    self.playerImageSrc = ko.computed(function() {
-        if (self.image().hasData()) {
-            return self.image().imageUrl();
-        } else {
-            return '';
-        }
-    });
+    /* Modal Methods */
 
-    self.playerImageHeight = ko.computed(function() {
-        if (self.image().hasData()) {
-            return self.image().height();
-        } else {
-            return '';
-        }
-    });
+    self.toggleModal = function() {
+        self.openModal(!self.openModal());
+    };
 
-    self.playerImageWidth = ko.computed(function() {
-        if (self.image().hasData()) {
-            return self.image().width();
-        } else {
-            return '';
+    self.modalFinishedOpening = function() {
+        self.firstFieldHasFocus(true);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.openModal(false);
+        self.firstFieldHasFocus(false);
+    };
+
+    /* Private Methods */
+
+    self._getEmailUrl = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
+        if (info) {
+            return info.gravatarUrl();
         }
-    });
+    }
 }

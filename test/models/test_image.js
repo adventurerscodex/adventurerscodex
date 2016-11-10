@@ -46,14 +46,6 @@ describe('Image Model', function() {
             });
         });
     });
-    describe('Resize Image Data', function() {
-        it('should return a data url of the compressed image, or if the' +
-             'conversion fails, it should return the original image.', function() {
-            //Should Fail.
-            var comp = ImageModel.resizeImageData(ImageFixture.dataUrl, 100, 100);
-            comp.should.equal(ImageFixture.dataUrl);
-        });
-    });
     describe('Find By', function() {
         it('Should return a list of image models matching the given id.', function() {
             //Empty

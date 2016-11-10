@@ -1,23 +1,76 @@
-<div class="circular-profile no-padding"
-  data-bind="fileDrag: dropzone, attr: {
-    height: playerImageHeight,
-    width: playerImageWidth,
-  }, css: imageBorderClass">
+<div class="circular-profile no-padding" style="cursor: pointer;"
+  data-bind="click: toggleModal,
+    attr: {
+      height: height,
+      width: width,
+    },
+    css: imageBorderClass">
   <div class="image-upload-preview text-center">
-    <!-- ko if: hasImage -->
+    <!-- ko if: playerImageSrc -->
     <img class="img-circle"
       data-bind="attr: {
         src: playerImageSrc,
-        height: playerImageHeight,
-      }, visible: playerImageSrc">
+        height: height,
+        width: width,
+      }">
     <!-- /ko -->
-    <!-- ko ifnot: hasImage -->
+    <!-- ko ifnot: playerImageSrc -->
     <div class="text-muted player-image-style">
-      Drop a profile pic here</div>
+      <small>Click to add a picture</small>
+    </div>
     <!-- /ko -->
   </div>
-  <div class="image-upload-input">
-    <input type="file" class="hide-block"
-      data-bind="fileInput: dropzone">
-  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   aria-labelledby="viewSkillLabel"
+   data-bind="modal: {
+      open: openModal,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="addSkillLabel">
+          Edit your Profile Image
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="h4">Enter one of the following.</div><br />
+          <div class="form-group">
+            <!-- Image URL -->
+            <label for="spellName"
+                   class="col-sm-4 control-label">Profile Image Link</label>
+            <div class="col-sm-8">
+              <input type="text"
+                     class="form-control"
+                     data-bind="value: imageUrl, hasFocus: firstFieldHasFocus">
+            </div>
+          </div>
+          <div class="form-group">
+            <!-- Gravatar -->
+            <label for="spellName"
+                   class="col-sm-4 control-label">Gravatar Email</label>
+            <div class="col-sm-8">
+              <input type="text"
+                     class="form-control"
+                     data-bind="value: email">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal">Done</button>
+          </div> <!-- Modal Footer -->
+        </form>
+      </div> <!-- Modal Content -->
+    </div> <!-- Modal Dialog -->
+  </div> <!-- Modal Fade -->
 </div>
