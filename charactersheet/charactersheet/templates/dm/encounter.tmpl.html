@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-8">
-        <!-- ko if: encounterDetailViewModel() -->
+        <!-- ko if: selectedEncounter -->
         <div data-bind="template: {
           name: 'encounter_detail.tmpl',
           templateUrl: 'templates/dm',
@@ -85,18 +85,16 @@
             Which sections would you like to include?<br />
             <small>You can always change these later</small>
           </div>
-          <!-- ko foreach: { data: sections, as: 'section' } -->
-          <!-- ko if: $parent[section.property]() -->
+          <!-- ko foreach: { data: visibilityViewModels } -->
           <div class="row row-padded">
             <label class="col-sm-3 control-label"
-              data-bind="text: $parent[section.property]().name">
+              data-bind="text: name">
             </label>
             <div class="col-sm-8">
               <input type="checkbox" class="form-control" id=""
-                     data-bind="checked: $parent[section.property]().visible" />
+                     data-bind="checked: visible" />
             </div>
           </div>
-          <!-- /ko -->
           <!-- /ko -->
           <div class="modal-footer">
             <div class="form-group">

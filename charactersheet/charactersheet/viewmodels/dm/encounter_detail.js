@@ -15,7 +15,6 @@ function EncounterDetailViewModel(encounter, allSections) {
     self.sections = allSections;
     // TODO: Add Fields Here.
 
-    self.combatSectionViewModel = ko.observable();
     self.notesSectionViewModel = ko.observable();
     // TODO: Add more sections...
 
@@ -44,7 +43,12 @@ function EncounterDetailViewModel(encounter, allSections) {
             encounter.name(self.name());
             encounter.encounterLocation(self.encounterLocation());
             encounter.save();
+            ViewModelUtilities.callOnSubViewModels(self, 'save');
         }
+    };
+
+    self.delete = function() {
+        ViewModelUtilities.callOnSubViewModels(self, 'delete');
     };
 
     /* UI Methods */

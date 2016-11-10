@@ -18,6 +18,7 @@ describe('NotesSectionViewModel', function(){
         it('should load notes model', function() {
             var notes = new NotesSection();
             notes.notes('blah');
+            notes.visible(false);
             var vm = new NotesSectionViewModel(new Encounter(), notes);
 
             vm.load();
@@ -36,6 +37,7 @@ describe('NotesSectionViewModel', function(){
         it('should unload model', function() {
             var vm = new NotesSectionViewModel(new Encounter(), new NotesSection());
             vm.notes('asd');
+            vm.visible(false);
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
 
             vm.unload();

@@ -76,7 +76,7 @@ describe('EncounterDetailViewModel', function(){
     describe('_setupSectionVMs', function() {
         it('should create child view models for each section and initialize them.', function() {
             var vm = new EncounterDetailViewModel(new Encounter(), [
-                { property: 'combatSectionViewModel', vm: CombatSectionViewModel, model: CombatSection }
+                { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
             ]);
             simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, attr, value) {
                 return new model();

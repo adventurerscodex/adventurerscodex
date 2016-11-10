@@ -8,17 +8,16 @@ function EncounterViewModel() {
     self.selectedEncounter = ko.observable();
     self.encounters = ko.observableArray();
     self.encounterDetailViewModel = ko.observable();
+    self.visibilityViewModels = ko.observableArray([]);
 
     /* Encounter Sections */
 
     self.sections = [
-        { property: 'combatSectionViewModel', vm: CombatSectionViewModel, model: CombatSection },
         { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
     ];
 
     /* Modal Section View Models */
 
-    self.combatSectionViewModel = ko.observable();
     self.notesSectionViewModel = ko.observable();
 
     /* Public Methods */
@@ -66,12 +65,14 @@ function EncounterViewModel() {
     self.openAddModal = function() {
         self.modalEncounter(new Encounter());
         self._setupSectionVMs(self.modalEncounter());
+        self._initializeVisibilityViewModel();
     };
 
     self.openAddModalWithParent = function(parent) {
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
         self._setupSectionVMs(self.modalEncounter());
+        self._initializeVisibilityViewModel();
     };
 
     self.modalFinishedOpening = function() {
@@ -80,6 +81,7 @@ function EncounterViewModel() {
 
     self.modalFinishedClosing = function() {
         self.modalEncounter(null);
+        self._deinitializeVisibilityViewModel()
     };
 
     /* Manage Encounter Methods */
@@ -100,6 +102,7 @@ function EncounterViewModel() {
         // Reload Encounters
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(encounter);
+        self.encounterDetailViewModel().save();
     };
 
     /**
@@ -111,11 +114,25 @@ function EncounterViewModel() {
         encounter.delete();
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(self.encounters()[0]);
+        self.encounterDetailViewModel().delete();
     };
 
     /* Private Methods */
 
-    self._initializeDetailViewModel = function(vm) {
+    self._initializeVisibilityViewModel = function() {
+        self.visibilityViewModels(self.sections.map(function(section, idx, _){
+            var visibilityViewModel = new EncounterSectionVisibilityViewModel(section.model);
+            visibilityViewModel.init();
+            visibilityViewModel.load();
+            return visibilityViewModel;
+        }));
+    };
+
+    self._deinitializeVisibilityViewModel = function() {
+        self.visibilityViewModels([]);
+    };
+
+    self._initializeDetailViewModel = function() {
         self.encounterDetailViewModel().init();
         self.encounterDetailViewModel().load();
     };
