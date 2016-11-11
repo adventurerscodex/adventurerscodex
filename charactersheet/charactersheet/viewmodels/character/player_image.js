@@ -5,6 +5,7 @@ function PlayerImageViewModel() {
 
     self.openModal = ko.observable(false);
 
+    self.imageSource = ko.observable();
     self.imageUrl = ko.observable('');
     self.email = ko.observable('');
     self.height = ko.observable(80);
@@ -36,9 +37,19 @@ function PlayerImageViewModel() {
             info.save();
         }
 
+        var playerImageSource = PersistenceService.findFirstBy(PlayerImage, 'characterId', key);
+        if (playerImageSource) {
+            self.imageSource(playerImageSource.imageSource());
+        }else {
+            var playerImageSource = new PlayerImage();
+            playerImageSource.characterId(key);
+            playerImageSource.save();
+        }
+
         //Subscriptions
         self.email.subscribe(self.dataHasChanged);
         self.imageUrl.subscribe(self.dataHasChanged);
+        self.imageSource.subscribe(self.dataHasChanged);
         Notifications.playerInfo.changed.add(self.dataHasChanged);
     };
 
@@ -71,6 +82,12 @@ function PlayerImageViewModel() {
             image.imageUrl(self.imageUrl());
             image.save();
         }
+
+        var playerImageSource = PersistenceService.findFirstBy(PlayerImage, 'characterId', key);
+        if (playerImageSource) {
+            playerImageSource.imageSource(self.imageSource());
+            playerImageSource.save();
+        }
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
@@ -80,12 +97,12 @@ function PlayerImageViewModel() {
     //Player Image Handlers
 
     self.playerImageSrc = ko.pureComputed(function() {
-        if (self.imageUrl()) {
+        if (self.imageSource() == 'link') {
             return self.imageUrl();
         }
 
         var url = self._getEmailUrl();
-        if (self.email() && url) {
+        if (self.imageSource() == 'email') {
             return url;
         }
 
