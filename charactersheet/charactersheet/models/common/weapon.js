@@ -144,8 +144,28 @@ function Weapon() {
             return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
             Math.abs(magicalModifier);
         } else {
-            return '+ 0';
+            return '';
         }
+    });
+
+    self.applyMagicalModifierLabel = ko.pureComputed(function() {
+        if (self.magicalModifierLabel() !== '' ){
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    self.weaponDescriptionHTML = ko.pureComputed(function() {
+        if (self.weaponDescription()){
+            return self.weaponDescription().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
+    });
+
+    self.weaponWeightLabel = ko.pureComputed(function() {
+        return self.weaponWeight() + ' lbs.'
     });
 
     self.clear = function() {

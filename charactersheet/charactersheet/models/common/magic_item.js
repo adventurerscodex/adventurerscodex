@@ -34,7 +34,11 @@ function MagicItem() {
     });
 
     self.magicItemDescriptionHTML = ko.pureComputed(function() {
-        return self.magicItemDescription().replace(/\n/g, '<br />');
+        if (self.magicItemDescription()){
+            return self.magicItemDescription().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
     });
 
     self.magicItemNameLabel = ko.pureComputed(function() {

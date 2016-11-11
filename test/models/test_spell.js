@@ -76,6 +76,19 @@ describe('Spell Model', function() {
         });
     });
 
+    describe('Spell Description Label', function() {
+        it('should return the correct label', function() {
+            var spell = new Spell();
+            spell.spellDescription('This thing is cool.\n');
+            spell.spellDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var spell2 = new Spell();
+            spell2.spellDescription('');
+            spell2.spellDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
+        });
+    });
+
     describe('Spell Damage Label', function() {
         it('should return the correct label', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);

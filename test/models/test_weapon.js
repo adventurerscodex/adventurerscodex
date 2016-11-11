@@ -207,7 +207,44 @@ describe('Weapon Model', function() {
             weap.weaponHit();
 
             var totalBonus = weap.magicalModifierLabel();
-            totalBonus.should.equal('+ 0');
+            totalBonus.should.equal('');
         });
     });
+
+    describe('Apply Magical Modifier Label', function() {
+        it('should return true if there is a magicalModifierLabel', function() {
+            var weap = new Weapon();
+            weap.weaponHit(2);
+
+            weap.applyMagicalModifierLabel().should.equal(true);
+        });
+        it('should return false if there is on magicalModifierLabel', function() {
+            var weap = new Weapon();
+            weap.weaponHit(0);
+
+            weap.applyMagicalModifierLabel().should.equal(false);
+        });
+    });
+
+    describe('Weapon Description Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponDescription('This thing is cool.\n');
+            weapon.weaponDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var weapon2 = new Weapon();
+            weapon2.weaponDescription('');
+            weapon2.weaponDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
+        });
+    });
+
+    describe('Weapon Weight Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight(10);
+            weapon.weaponWeightLabel().should.equal('10 lbs.');
+        });
+    });
+
 });

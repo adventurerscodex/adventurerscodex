@@ -8,6 +8,8 @@ function WeaponsViewModel() {
     self.weapons = ko.observableArray([]);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.previewTabStatus = ko.observable('active');
+    self.editTabStatus = ko.observable('');
 
     self.sorts = {
         'weaponName asc': { field: 'weaponName', direction: 'asc'},
@@ -97,8 +99,25 @@ function WeaponsViewModel() {
         self.shouldShowDisclaimer(true);
     };
 
-    self.modalFinishedAnimating = function() {
+    self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+        self.previewTabStatus.valueHasMutated();
+        self.editTabStatus.valueHasMutated();
+    };
+
+    self.selectPreviewTab = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
+
+    self.selectEditTab = function() {
+        self.editTabStatus('active');
+        self.previewTabStatus('');
     };
 
     self.weaponsPrePopFilter = function(request, response) {
