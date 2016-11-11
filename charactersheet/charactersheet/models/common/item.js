@@ -40,6 +40,18 @@ function Item() {
         }
     });
 
+    self.itemDescriptionHTML = ko.pureComputed(function() {
+        if (self.itemDesc()){
+            return self.itemDesc().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
+    });
+
+    self.itemWeightLabel = ko.pureComputed(function() {
+        return self.itemWeight() + ' lbs.'
+    });
+
     self.clear = function() {
         var values = new Item().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);

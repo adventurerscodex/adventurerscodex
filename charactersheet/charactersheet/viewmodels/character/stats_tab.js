@@ -9,7 +9,6 @@ function StatsTabViewModel() {
     self.statsViewModel         = ko.observable(new StatsViewModel());
     self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
     self.savingThrowsViewModel  = ko.observable(new SavingThrowsViewModel());
-    self.spellStatsViewModel    = ko.observable(new SpellStatsViewModel());
 
 
     self.init = function() {
@@ -28,4 +27,3 @@ function StatsTabViewModel() {
         ViewModelUtilities.clearSubViewModels(self);
     };
 }
-

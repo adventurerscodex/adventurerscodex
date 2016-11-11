@@ -22,7 +22,7 @@ function NotesViewModel() {
         self.note().characterId(key);
 
         //Subscriptions
-        self.note().text.subscribe(self.note.save);
+        self.note().text.subscribe(self.note().save);
     };
 
     self.unload = function() {

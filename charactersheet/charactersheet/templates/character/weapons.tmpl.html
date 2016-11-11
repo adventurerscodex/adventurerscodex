@@ -48,20 +48,17 @@
         <tr class="clickable">
           <td data-bind="click: $parent.editWeapon"
               href="#"
-              data-toggle="modal"
               data-target="#viewWeapon">
               <span data-bind="text: weaponName">
               </span>&nbsp;
-              <span data-bind="text: magicalModifierLabel" class="badge">
+              <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
               href="#"
-              data-toggle="modal"
               data-target="#viewWeapon"></td>
           <td data-bind="text: weaponDmg, click: $parent.editWeapon"
               href="#"
-              data-toggle="modal"
               data-target="#viewWeapon"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponDamageType, click: $parent.editWeapon"
@@ -69,17 +66,14 @@
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponRange, click: $parent.editWeapon"
               href="#"
-              data-toggle="modal"
               data-target="#viewWeapon"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponProperty, click: $parent.editWeapon"
               href="#"
-              data-toggle="modal"
               data-target="#viewWeapon"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponQuantity, click: $parent.editWeapon"
               href="#"
-              data-toggle="modal"
               data-target="#viewWeapon"></td>
           <td>
             <a data-bind="click: $parent.removeWeapon" href="#">
@@ -111,7 +105,7 @@
          id="addWeapon"
          tabindex="-1"
          role="dialog"
-         data-bind="modal: { onopen: modalFinishedAnimating }"
+         data-bind="modal: { onopen: modalFinishedOpening }"
          aria-labelledby="addWeaponLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -156,7 +150,7 @@
                 <label for="weaponHit"
                        class="col-sm-2 control-label">Magical Modifier</label>
                 <div class="col-sm-10">
-                  <input type="number" min="0" class="form-control"
+                  <input type="number" class="form-control"
                          id="weaponHit"
                          placeholder="Place hit bonus here"
                          data-bind='textInput: blankWeapon().weaponHit'>
@@ -196,20 +190,20 @@
                 <label for="weaponPrice"
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
-        					<div class="input-group">
-        						<input type="number" min="0" class="form-control input-select2-addon"
-        							   id="weaponPrice"
-        							   placeholder="5"
-        							   data-bind='textInput: blankWeapon().weaponPrice'>
+                  <div class="input-group">
+                    <input type="number" min="0" class="form-control input-select2-addon"
+                         id="weaponPrice"
+                         placeholder="5"
+                         data-bind='textInput: blankWeapon().weaponPrice'>
                          <span data-bind="console.log($parent.id)"></span>
-        					   <span class="input-group-addon">
-        							<select class="form-control"
-        							data-bind="options: currencyDenominationList,
-        							value: blankWeapon().weaponCurrencyDenomination,
-        							select2: {theme: 'classic'}"></select>
-        						</span>
-        					</div>
-				        </div>
+                     <span class="input-group-addon">
+                      <select class="form-control"
+                      data-bind="options: currencyDenominationList,
+                      value: blankWeapon().weaponCurrencyDenomination,
+                      select2: {theme: 'classic'}"></select>
+                    </span>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="weaponWeight"
@@ -289,7 +283,7 @@
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
                       target='_blank'>
                       OGL</a><br/>
-                      Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                      Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
                     </i><sm>
                 </p>
               </div>
@@ -300,12 +294,16 @@
     </div> <!-- Modal Fade -->
 
     <!-- ViewEdit Modal -->
-    <div data-bind="with: selecteditem">
     <div class="modal fade"
          id="viewWeapon"
          tabindex="-1"
          role="dialog"
-         aria-labelledby="viewWeaponLabel">
+         aria-labelledby="viewWeaponLabel"
+         data-bind="modal: {
+           open: selecteditem,
+           onopen: modalFinishedOpening,
+           onclose: modalFinishedClosing
+        }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -319,162 +317,209 @@
                 id="viewWeaponLabel">View a weapon in your arsenal.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
-              <div class="form-group">
-                <label for="weaponName"
-                       class="col-sm-2 control-label">Name</label>
-                <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         id="weaponName"
-                         placeholder="Short Sword"
-                         data-bind='textInput: weaponName'>
+            <!-- Begin Tabs -->
+            <ul class="nav nav-tabs tabs">
+              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+                <a href="#weaponsModalPreview" aria-controls="weaponsModalPreview" role="tab" data-toggle="tab">
+                    <b>Preview</b>
+                </a>
+              </li>
+              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+                <a href="#weaponsModalEdit" aria-controls="weaponsModalEdit" role="tab" data-toggle="tab">
+                    <b>Edit</b>
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content" data-bind="with: selecteditem">
+              <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="weaponsModalPreview">
+                <div class="h3">
+                  <span data-bind="text: weaponName"></span>
+                  <small data-bind="text: magicalModifierLabel"></small>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponDmg"
-                       class="col-sm-2 control-label">Damage</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="weaponDmg"
-                           placeholder="1D4"
-                           data-bind='textInput: weaponDmg'>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponHit"
-                       class="col-sm-2 control-label">Magical Modifier</label>
-                <div class="col-sm-10">
-                  <input type="number" min="0" class="form-control"
-                         id="weaponHit"
-                         placeholder="Place hit bonus here"
-                         data-bind='textInput: weaponHit'>
+                <hr />
+                <div class="row">
+                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: weaponDmg"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: weaponRange"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: weaponType"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: weaponWeightLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: weaponDamageType"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Proficiency:</b>&nbsp;<span data-bind="text: weaponProficiency"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Handedness:</b>&nbsp;<span data-bind="text: weaponHandedness"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Property:</b>&nbsp;<span data-bind="text: weaponProperty"></span></div>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponType"
-                       class="col-sm-2 control-label">Type</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: weaponTypeOptions,
-                                     value: weaponType,
-                                     select2: {theme: 'classic'}"></select>
+                <hr />
+                <h4>Description</h4>
+                <div class="row row-padded">
+                  <div class="col-xs-12 col-padded">
+                    <div data-bind="html: weaponDescriptionHTML"
+                         class="preview-modal-overflow">
+                    </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponHandedness"
-                       class="col-sm-2 control-label">Handedness</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: weaponHandednessOptions,
-                                     value: weaponHandedness,
-                                     select2: {theme: 'classic'}"></select>
+                </div>
+                <div class="modal-footer">
+                  <button type="button"
+                          class="btn btn-primary"
+                          data-dismiss="modal">Done</button>
+                </div>
+              </div> <!-- End Preview Tab -->
+              <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="weaponsModalEdit">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="weaponName"
+                           class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text"
+                             class="form-control"
+                             id="weaponName"
+                             placeholder="Short Sword"
+                             data-bind='textInput: weaponName'>
+                    </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponProficiency"
-                       class="col-sm-2 control-label">Proficiency</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: weaponProficiencyOptions,
-                                     value: weaponProficiency,
-                                     select2: {theme: 'classic'}"></select>
+                  <div class="form-group">
+                    <label for="weaponDmg"
+                           class="col-sm-2 control-label">Damage</label>
+                      <div class="col-sm-10">
+                        <input type="text"
+                               class="form-control"
+                               id="weaponDmg"
+                               placeholder="1D4"
+                               data-bind='textInput: weaponDmg'>
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponPrice"
-                       class="col-sm-2 control-label">Price</label>
-                <div class="col-sm-10">
-        					<div class="input-group">
-        						<input type="number" min="0" class="form-control input-select2-addon"
-        							   id="weaponPrice"
-        							   placeholder="5"
-        							   data-bind='textInput: weaponPrice'>
-        					   <span class="input-group-addon">
-        							<select class="form-control"
-        							data-bind="options: $parent.currencyDenominationList,
-        							value: weaponCurrencyDenomination,
-        							select2: {theme: 'classic'}"></select>
-        						</span>
-        					</div>
-				        </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponWeight"
-                       class="col-sm-2 control-label">Weight</label>
-                  <div class="col-sm-10">
-                    <input type="number" min="0" class="form-control"
-                           id="weaponWeight"
-                           placeholder="6"
-                           data-bind='textInput: weaponWeight'>
+                  <div class="form-group">
+                    <label for="weaponHit"
+                           class="col-sm-2 control-label">Magical Modifier</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control"
+                             id="weaponHit"
+                             placeholder="Place hit bonus here"
+                             data-bind='textInput: weaponHit'>
+                    </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponRange"
-                       class="col-sm-2 control-label">Range</label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="weaponRange"
-                           placeholder="25/100"
-                           data-bind='textInput: weaponRange'>
+                  <div class="form-group">
+                    <label for="weaponType"
+                           class="col-sm-2 control-label">Type</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: weaponTypeOptions,
+                                         value: weaponType,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
                   </div>
-              </div>
-              <div class="form-group">
-                <label for="weaponDamageType"
-                       class="col-sm-2 control-label">Damage Type</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: weaponDamageTypeOptions,
-                                     value: weaponDamageType,
-                                     select2: {theme: 'classic'}"></select>
+                  <div class="form-group">
+                    <label for="weaponHandedness"
+                           class="col-sm-2 control-label">Handedness</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: weaponHandednessOptions,
+                                         value: weaponHandedness,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
                   </div>
+                  <div class="form-group">
+                    <label for="weaponProficiency"
+                           class="col-sm-2 control-label">Proficiency</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: weaponProficiencyOptions,
+                                         value: weaponProficiency,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
                   </div>
-                <div class="form-group">
-                <label for="weaponProperty"
-                       class="col-sm-2 control-label">Property</label>
-                  <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: weaponPropertyOptions,
-                                     value: weaponProperty,
-                                     select2: {theme: 'classic'}"></select>
+                  <div class="form-group">
+                    <label for="weaponPrice"
+                           class="col-sm-2 control-label">Price</label>
+                    <div class="col-sm-10">
+                      <div class="input-group">
+                        <input type="number" min="0" class="form-control input-select2-addon"
+                             id="weaponPrice"
+                             placeholder="5"
+                             data-bind='textInput: weaponPrice'>
+                         <span class="input-group-addon">
+                          <select class="form-control"
+                                  data-bind="options: $parent.currencyDenominationList,
+                                             value: weaponCurrencyDenomination,
+                                             select2: {theme: 'classic'}"></select>
+                        </span>
+                      </div>
+                    </div>
                   </div>
-              </div>
+                  <div class="form-group">
+                    <label for="weaponWeight"
+                           class="col-sm-2 control-label">Weight</label>
+                      <div class="col-sm-10">
+                        <input type="number" min="0" class="form-control"
+                               id="weaponWeight"
+                               placeholder="6"
+                               data-bind='textInput: weaponWeight'>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="weaponRange"
+                           class="col-sm-2 control-label">Range</label>
+                      <div class="col-sm-10">
+                        <input type="text"
+                               class="form-control"
+                               id="weaponRange"
+                               placeholder="25/100"
+                               data-bind='textInput: weaponRange'>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="weaponDamageType"
+                           class="col-sm-2 control-label">Damage Type</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: weaponDamageTypeOptions,
+                                         value: weaponDamageType,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
+                      </div>
+                    <div class="form-group">
+                    <label for="weaponProperty"
+                           class="col-sm-2 control-label">Property</label>
+                      <div class="col-sm-10">
+                      <select class="form-control"
+                              data-bind="options: weaponPropertyOptions,
+                                         value: weaponProperty,
+                                         select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
 
-              <div class="form-group">
-                <label for="weaponQuantity"
-                       class="col-sm-2 control-label">Quantity</label>
-                  <div class="col-sm-10">
-                    <input type="number" min="0" class="form-control"
-                           id="weaponQuantity"
-                           placeholder="1"
-                           data-bind='textInput: weaponQuantity'>
+                  <div class="form-group">
+                    <label for="weaponQuantity"
+                           class="col-sm-2 control-label">Quantity</label>
+                      <div class="col-sm-10">
+                        <input type="number" min="0" class="form-control"
+                               id="weaponQuantity"
+                               placeholder="1"
+                               data-bind='textInput: weaponQuantity'>
+                      </div>
                   </div>
-              </div>
 
-              <div class="form-group">
-                <label for="weaponDescription"
-                       class="col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea type="password"
-                              class="form-control"
-                              id="weaponDescription"
-                              rows="4"
-                              placeholder="A sword...that is short..."
-                              data-bind='textInput: weaponDescription'>
-                    </textarea>
+                  <div class="form-group">
+                    <label for="weaponDescription"
+                           class="col-sm-2 control-label">Description</label>
+                      <div class="col-sm-10">
+                        <textarea type="password"
+                                  class="form-control"
+                                  id="weaponDescription"
+                                  rows="4"
+                                  placeholder="A sword...that is short..."
+                                  data-bind='textInput: weaponDescription'>
+                        </textarea>
+                      </div>
                   </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
-              </div>
-            </form>
+                  <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal">Done</button>
+                  </div>
+                </form>
+              </div> <!-- End Edit Tab -->
+            </div> <!-- End Tab Content -->
           </div> <!-- Modal Body -->
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
     </div> <!-- Modal Fade -->
-    </div> <!-- End with statement -->
 </div> <!-- Panel -->

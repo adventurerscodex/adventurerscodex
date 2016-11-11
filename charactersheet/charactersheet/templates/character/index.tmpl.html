@@ -100,10 +100,6 @@
               <div id="other_stats" data-bind="template: { name: 'other_stats.tmpl', templateUrl: 'templates/character', data: statsViewModel }">
              </div>
             </div>
-            <div class="col-sm-12 col-padded">
-              <div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates/character', data: spellStatsViewModel }">
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -149,6 +145,10 @@
 <!-- End Skills Tab -->
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
   <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates/character', data: spellStatsViewModel }">
+      </div>
+    </div>
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img src="/images/enlightenment.svg" alt="Spells image"/>
     </div>

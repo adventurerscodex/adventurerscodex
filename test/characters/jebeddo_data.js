@@ -662,12 +662,12 @@ var jebeddo_data = {
       "armorType": "Light",
       "armorProficiency": true,
       "armorPrice": "",
+      "armorMagicalModifier": "",
       "armorCurrencyDenomination": "PP",
       "armorWeight": "",
       "armorClass": "12",
-      "armorDescription": "12",
-      "armorDexBonus": "3",
-      "armorCheckPenalty": ""
+      "armorStealth": "",
+      "armorDescription": "12"
     }
   ],
   "DeathSave": [
