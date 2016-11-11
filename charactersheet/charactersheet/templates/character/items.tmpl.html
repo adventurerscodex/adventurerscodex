@@ -12,7 +12,7 @@
           <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th>Description</th>
+          <th class="hidden-sm hidden-xs">Description</th>
           <th>
            <a data-toggle="modal"
             data-target="#addItem" href="#">
@@ -30,8 +30,8 @@
                   href="#"></td>
           <td data-bind="text: itemWeight, click: $parent.editItemButton"
                   href="#"></td>
-          <td data-bind="text: shortDescription, click: $parent.editItemButton"
-                  href="#"></td>
+          <td class="hidden-sm hidden-xs" data-bind="text: shortDescription,
+            click: $parent.editItemButton" href="#"></td>
           <td>
             <a data-bind='click: $parent.removeItemButton' href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
