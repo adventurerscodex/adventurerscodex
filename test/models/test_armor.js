@@ -28,16 +28,6 @@ describe('Armor Model', function() {
         });
     });
 
-    describe('Proficiency Label', function() {
-        it('', function() {
-            var armor = new Armor();
-            armor.armorProficiency(true);
-            armor.proficiencyLabel().should.equal('fa fa-check');
-            armor.clear();
-            armor.proficiencyLabel().should.equal('');
-        });
-    });
-
     describe('Armor Weight Label', function() {
         it('should return the correct label', function() {
             var armor = new Armor();
