@@ -51,12 +51,3 @@ function Note() {
         return words.slice(0, words.length - 2).join(" ");
     };
 };
-
-Note.findBy = function(characterId) {
-    return PersistenceService.findAll(Note).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
-
-
