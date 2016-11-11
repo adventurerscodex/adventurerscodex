@@ -8,7 +8,8 @@ function Note() {
     self.text = ko.observable('');
 
     self.headline = ko.pureComputed(function() {
-        var firstLine = self.text().split('\n')[0];
+        var text = self.text() || '';
+        var firstLine = text.split('\n')[0];
         if (firstLine.length > 35) {
             firstLine = self._getFirstWords(firstLine.substr(0, 35)) + '...';
         }
