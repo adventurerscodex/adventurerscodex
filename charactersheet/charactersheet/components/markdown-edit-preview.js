@@ -69,11 +69,9 @@ ko.components.register('markdown-edit-preview', {
       <div role="tabpanel" data-bind="css: editTabStatus" \
         class="tab-pane">\
         <div class="form-horizontal">\
-          <div class="form-group">\
-            <textarea class="form-control dark-area" rows="20"\
-              data-bind="textInput: text, markdownEditor: true, \
-                  attr: { placeholder: placeholder }"></textarea>\
-          </div>\
+          <textarea class="form-control dark-area" rows="20"\
+            data-bind="textInput: text, markdownEditor: true, \
+              attr: { placeholder: placeholder }"></textarea>\
         </div>\
       </div>\
     </div>'
