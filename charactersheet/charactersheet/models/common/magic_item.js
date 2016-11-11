@@ -2,8 +2,10 @@
 
 function MagicItem() {
     var self = this;
-    self.ps = PersistenceService.register(MagicItem, self);
 
+    self.DESCRIPTION_MAX_LENGTH = 145;
+
+    self.ps = PersistenceService.register(MagicItem, self);
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
                  'delete', 'chargesDisplay', 'magicItemTypeOptions',
@@ -38,6 +40,12 @@ function MagicItem() {
             return self.magicItemDescription().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
+    });
+
+    self.shortDescription = ko.pureComputed(function() {
+        if (self.magicItemDescription()) {
+            return self.magicItemDescription().substring(0, self.DESCRIPTION_MAX_LENGTH) + '...';
         }
     });
 
