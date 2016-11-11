@@ -1,7 +1,18 @@
 'use strict';
 
 /**
+ * This extender validates the input observeable that it is assigned to. Currently,
+ * this extender only checks for an empty value. There are two parts to fully
+ * implementing this extender:
  *
+ * 1. Adding the extender to an observeable.
+ *   a. ```self.str = ko.observable().extend({ required: "&#9679; Required" });```
+ * 2. Adding a display element to the UI that indicates the validation status.
+ *   b. ```<span data-bind='visible: str.hasError, html: str.validationMessage,
+ *           css: { errormessagetext: str.hasError }'> </span>```
+ *
+ * @param target: the observable to be validated
+ * @param overrideMessage: an _optional_ parameter to display a unique validation message
  */
 
 ko.extenders.required = function(target, overrideMessage) {
