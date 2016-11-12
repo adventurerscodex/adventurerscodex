@@ -5,14 +5,6 @@ function TreasureViewModel() {
 
     self.treasure = ko.observable(new Treasure());
 
-    self.totalWeight = ko.pureComputed(function() {
-        var weight = 0;
-        weight += parseInt(treasure().platinum())
-        weight += parseInt(treasure().gold())
-
-        return weight + ' (lbs)';
-    });
-
     self.init = function() {
         Notifications.global.save.add(function() {
             self.treasure().save();
