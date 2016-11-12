@@ -27,6 +27,23 @@ function Treasure() {
         return Math.round(total);
     });
 
+    self.totalWeight = ko.pureComputed(function() {
+        var weight = 0;
+        weight += parseInt(self.platinum());
+        weight += parseInt(self.gold());
+        weight += parseInt(self.electrum());
+        weight += parseInt(self.silver());
+        weight += parseInt(self.copper());
+
+        weight = Math.floor(weight / 50)
+
+        return weight;
+    });
+
+    self.totalWeightLabel = ko.pureComputed(function() {
+        return self.totalWeight() + ' (lbs)';
+    });
+
     self.clear = function() {
         var values = new Treasure().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
