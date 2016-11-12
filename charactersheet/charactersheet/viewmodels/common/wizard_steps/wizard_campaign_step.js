@@ -18,8 +18,8 @@ function WizardCampaignStepViewModel() {
 
     // View Properties
 
-    self.campaignName = ko.observable();
-    self.playerName = ko.observable();
+    self.campaignName = ko.observable().extend({ required: "&#9679; Required" });
+    self.playerName = ko.observable().extend({ required: "&#9679; Required" });
 
     // Wizard Step Methods
 

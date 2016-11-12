@@ -12,15 +12,14 @@ function WizardProfileStepViewModel() {
 
     self.init = function() { };
 
-    self.load = function() {
-    };
+    self.load = function() { };
 
-    self.unload = function() {};
+    self.unload = function() { };
 
     // View Properties
 
-    self.characterName = ko.observable();
-    self.playerName = ko.observable();
+    self.characterName = ko.observable().extend({ required: "&#9679; Required" });
+    self.playerName = ko.observable().extend({ required: "&#9679; Required" });
     self.race = ko.observable();
     self.typeClass = ko.observable();
     self.alignment = ko.observable();
