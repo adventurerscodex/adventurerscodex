@@ -6,8 +6,7 @@
           'gold': 2,
           'electrum': 3,
           'silver': 4,
-          'copper': 5,
-          'misc': 'trinkets'
+          'copper': 5
       };
 
       describe('Clear', function() {
@@ -37,11 +36,6 @@
               coins.treasure().copper().should.equal(treasure_fixture.copper);
               coins.treasure().clear();
               coins.treasure().copper().should.equal(0);
-
-              coins.treasure().misc(treasure_fixture.misc);
-              coins.treasure().misc().should.equal(treasure_fixture.misc);
-              coins.treasure().clear();
-              coins.treasure().misc().should.equal('');
           });
       });
 
@@ -54,7 +48,6 @@
               coins.treasure().electrum().should.equal(treasure_fixture.electrum);
               coins.treasure().silver().should.equal(treasure_fixture.silver);
               coins.treasure().copper().should.equal(treasure_fixture.copper);
-              coins.treasure().misc().should.equal(treasure_fixture.misc);
           });
       });
 
@@ -66,14 +59,12 @@
               coins.treasure().electrum(treasure_fixture.electrum);
               coins.treasure().silver(treasure_fixture.silver);
               coins.treasure().copper(treasure_fixture.copper);
-              coins.treasure().misc(treasure_fixture.misc);
               var exported = coins.treasure().exportValues();
               exported.platinum.should.equal(coins.treasure().platinum());
               exported.gold.should.equal(coins.treasure().gold());
               exported.electrum.should.equal(coins.treasure().electrum());
               exported.silver.should.equal(coins.treasure().silver());
               exported.copper.should.equal(coins.treasure().copper());
-              exported.misc.should.equal(coins.treasure().misc());
           });
       });
 

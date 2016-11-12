@@ -256,8 +256,7 @@ var jebeddo_data = {
       "gold": "388",
       "electrum": 0,
       "silver": "267",
-      "copper": "583",
-      "misc": "Carved stone pendant on a string. \nShard of obsidian + always feels warm\nCrumpled map, old socks,\n\nDiary with runes \nDiary with runes at another well - 100% Identical\n\nPurple handkerchief which turns to a hat\n\n Signet ring (small for orcs)\nWhetstone\nPigs blood\nFlask of lamp oil\n\nSmall vial of light blue liquid x2 -  Poison\nSmall packet with pink powder \n\nCut sword  with hilt  and white smoke in the \n\n"
+      "copper": "583"
     }
   ],
   "FeatsProf": [
