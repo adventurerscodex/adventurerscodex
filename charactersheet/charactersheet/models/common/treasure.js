@@ -3,6 +3,10 @@
 function Treasure() {
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
+    self.mapping = {
+        include: ['characterId', 'platinum', 'gold',
+                  'electrum', 'silver', 'copper']
+    };
 
     self.characterId = ko.observable(null);
     self.platinum =  ko.observable(0);
@@ -24,31 +28,19 @@ function Treasure() {
     });
 
     self.clear = function() {
-        self.platinum(0);
-        self.gold(0);
-        self.electrum(0);
-        self.silver(0);
-        self.copper(0);
+        var values = new Treasure().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.platinum(values.platinum);
-        self.gold(values.gold);
-        self.electrum(values.electrum);
-        self.silver(values.silver);
-        self.copper(values.copper);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            platinum: self.platinum(),
-            gold: self.gold(),
-            electrum: self.electrum(),
-            silver: self.silver(),
-            copper: self.copper()
-        };
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
