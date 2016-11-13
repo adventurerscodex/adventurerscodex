@@ -191,6 +191,22 @@ var Fixtures = {
             'Lawful evil',
             'Neutral evil',
             'Chaotic evil'
+        ],
+
+        backgroundOptions: [
+            'Acolyte',
+            'Charlatan',
+            'Criminal',
+            'Entertainer',
+            'Folk Hero',
+            'Guild Artisan',
+            'Hermit',
+            'Noble',
+            'Outlander',
+            'Sage',
+            'Sailor',
+            'Soldier',
+            'Urchin'
         ]
     },
     weapon: {
