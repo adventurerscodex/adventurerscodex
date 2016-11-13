@@ -32,6 +32,8 @@ function WizardProfileStepViewModel() {
     //Static Data
     self.raceList = Fixtures.wizardProfile.races;
     self.classList = Fixtures.wizardProfile.classes;
+    self.alignmentOptions = ko.observableArray(
+        Fixtures.profile.alignmentOptions);
 
     //Prepopulate methods
     self.populateRace = function(label, value) {
@@ -41,6 +43,10 @@ function WizardProfileStepViewModel() {
     self.populateClass = function(label, value) {
         self.typeClass(value);
     }
+
+    self.setAlignment = function(label, value) {
+        self.alignment(value);
+    };
 
     // Wizard Step Methods
 
