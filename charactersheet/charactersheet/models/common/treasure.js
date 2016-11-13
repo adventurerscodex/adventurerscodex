@@ -3,6 +3,10 @@
 function Treasure() {
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
+    self.mapping = {
+        include: ['characterId', 'platinum', 'gold',
+                  'electrum', 'silver', 'copper']
+    };
 
     self.characterId = ko.observable(null);
     self.platinum =  ko.observable(0);
@@ -10,49 +14,51 @@ function Treasure() {
     self.electrum = ko.observable(0);
     self.silver = ko.observable(0);
     self.copper = ko.observable(0);
-    self.misc = ko.observable('');
 
-    self.worth_in_gold = ko.computed(function(){
-        var adj_platinum = parseInt(self.platinum()) * 10;
-        var adj_gold = parseInt(self.gold());
-        var adj_electrum = parseInt(self.electrum()) / 2;
-        var adj_silver = parseInt(self.silver()) / 10;
-        var adj_copper = parseInt(self.copper()) / 100;
+    self.worthInGold = ko.computed(function(){
+        var adjPlatinum = parseInt(self.platinum()) * 10;
+        var adjGold = parseInt(self.gold());
+        var adjElectrum = parseInt(self.electrum()) / 2;
+        var adjSilver = parseInt(self.silver()) / 10;
+        var adjCopper = parseInt(self.copper()) / 100;
 
-        var total = adj_platinum + adj_gold + adj_electrum + adj_silver + adj_copper;
+        var total = adjPlatinum + adjGold + adjElectrum + adjSilver + adjCopper;
 
         return Math.round(total);
     });
 
+    self.totalWeight = ko.pureComputed(function() {
+        var weight = 0;
+
+        weight += self.platinum() ? parseInt(self.platinum()) : 0;
+        weight += self.gold() ? parseInt(self.gold()) : 0;
+        weight += self.electrum() ? parseInt(self.electrum()) : 0;
+        weight += self.silver() ? parseInt(self.silver()) : 0;;
+        weight += self.copper() ? parseInt(self.copper()) : 0;
+
+        weight = Math.floor(weight / 50)
+
+        return weight;
+    });
+
+    self.totalWeightLabel = ko.pureComputed(function() {
+        return self.totalWeight() + ' (lbs)';
+    });
+
     self.clear = function() {
-        self.platinum(0);
-        self.gold(0);
-        self.electrum(0);
-        self.silver(0);
-        self.copper(0);
-        self.misc('');
+        var values = new Treasure().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.platinum(values.platinum);
-        self.gold(values.gold);
-        self.electrum(values.electrum);
-        self.silver(values.silver);
-        self.copper(values.copper);
-        self.misc(values.misc);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            platinum: self.platinum(),
-            gold: self.gold(),
-            electrum: self.electrum(),
-            silver: self.silver(),
-            copper: self.copper(),
-            misc: self.misc()
-        };
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {

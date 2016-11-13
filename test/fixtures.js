@@ -86,6 +86,11 @@ var MagicItemFixture = {
     magicItemDescription: 'Deadly dagger'
 };
 
+var TreasureFixture = {
+    characterId: '123',
+    gold: 10
+}
+
 var ProfileFixture = {
     characterId: '1234',
     playerName: 'Joe Blow',
