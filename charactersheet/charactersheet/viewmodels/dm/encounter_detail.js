@@ -15,7 +15,7 @@ function EncounterDetailViewModel(encounter, allSections) {
     self.sections = allSections;
     // TODO: Add Fields Here.
 
-    self.combatSectionViewModel = ko.observable();
+    self.notesSectionViewModel = ko.observable();
     // TODO: Add more sections...
 
     self.openModal = ko.observable(false);
@@ -79,14 +79,14 @@ function EncounterDetailViewModel(encounter, allSections) {
      * a query by encounter id.
      */
     self._setupSectionVMs = function() {
-        var key = CharacterManager.activeCharacter().key();
         self.sections.forEach(function(section, idx, _) {
-            var relevantModel = PersistenceService.findFirstBy(section.model, 'encounterId', key);
+            var relevantModel = PersistenceService.findFirstBy(section.model,
+                'encounterId', self.encounterId());
             var childViewModel = new section.vm(encounter, relevantModel);
             try {
                 self[section.property](childViewModel);
             } catch (err) {
-                throw "Unable to set child view models for "+section.property
+                throw "Unable to set child view models for "+ section.property
                     +". You probably forgot to add the property to the detail VM.\n"+err
             }
         });
