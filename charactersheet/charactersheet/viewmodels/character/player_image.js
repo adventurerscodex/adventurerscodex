@@ -102,7 +102,7 @@ function PlayerImageViewModel() {
         }
 
         var url = self._getEmailUrl();
-        if (self.imageSource() == 'email') {
+        if (self.imageSource() == 'email' && self.email()) {
             return url;
         }
 
