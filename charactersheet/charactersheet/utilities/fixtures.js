@@ -180,6 +180,19 @@ var Fixtures = {
         spellcastingAbilityOptions: [
             'INT', 'WIS', 'CHA']
     },
+    profile: {
+        alignmentOptions: [
+            'Lawful good',
+            'Neutral good',
+            'Chaotic good',
+            'Lawful neutral',
+            'Neutral',
+            'Chaotic neutral',
+            'Lawful evil',
+            'Neutral evil',
+            'Chaotic evil'
+        ]
+    },
     weapon: {
         weaponDamageTypeOptions: [
             '',
