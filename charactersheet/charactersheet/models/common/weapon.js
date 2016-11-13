@@ -141,19 +141,22 @@ function Weapon() {
             if(self.weaponRange()) {
                 return self.weaponRange() + ' ft.';
             } else {
-                return self.weaponRange();
+                return '';
             }
-        }
-        if (self.weaponType().toLowerCase() === 'melee') {
+        } else if (self.weaponType().toLowerCase() === 'melee') {
+            var weaponRange = parseInt(self.weaponRange());
+            if (!weaponRange) {
+                weaponRange = 5;
+            }
             if (self.weaponProperty()) {
                 if(self.weaponProperty().toLowerCase().indexOf('reach') !== -1) {
-                    return '10 ft.';
-                } else {
-                    return '5 ft.';
+                    weaponRange += 5;
                 }
-            } else {
-                return '5 ft.'
             }
+            return weaponRange + ' ft.';
+
+        } else {
+            throw 'Weapon type not range or melee.';
         }
     });
 
