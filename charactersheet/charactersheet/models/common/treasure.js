@@ -15,25 +15,26 @@ function Treasure() {
     self.silver = ko.observable(0);
     self.copper = ko.observable(0);
 
-    self.worth_in_gold = ko.computed(function(){
-        var adj_platinum = parseInt(self.platinum()) * 10;
-        var adj_gold = parseInt(self.gold());
-        var adj_electrum = parseInt(self.electrum()) / 2;
-        var adj_silver = parseInt(self.silver()) / 10;
-        var adj_copper = parseInt(self.copper()) / 100;
+    self.worthInGold = ko.computed(function(){
+        var adjPlatinum = parseInt(self.platinum()) * 10;
+        var adjGold = parseInt(self.gold());
+        var adjElectrum = parseInt(self.electrum()) / 2;
+        var adjSilver = parseInt(self.silver()) / 10;
+        var adjCopper = parseInt(self.copper()) / 100;
 
-        var total = adj_platinum + adj_gold + adj_electrum + adj_silver + adj_copper;
+        var total = adjPlatinum + adjGold + adjElectrum + adjSilver + adjCopper;
 
         return Math.round(total);
     });
 
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
-        weight += parseInt(self.platinum());
-        weight += parseInt(self.gold());
-        weight += parseInt(self.electrum());
-        weight += parseInt(self.silver());
-        weight += parseInt(self.copper());
+
+        weight += self.platinum() ? parseInt(self.platinum()) : 0;
+        weight += self.gold() ? parseInt(self.gold()) : 0;
+        weight += self.electrum() ? parseInt(self.electrum()) : 0;
+        weight += self.silver() ? parseInt(self.silver()) : 0;;
+        weight += self.copper() ? parseInt(self.copper()) : 0;
 
         weight = Math.floor(weight / 50)
 

@@ -69,7 +69,7 @@ describe('Treasure Model', function() {
             var treasure = new Treasure();
             treasure.gold(15);
             treasure.electrum(2);
-            treasure.worth_in_gold().should.equal(16);
+            treasure.worthInGold().should.equal(16);
         });
     });
 

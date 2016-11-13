@@ -72,7 +72,7 @@
           it('should test if work in gold calculates correctly.', function() {
               var coins = new TreasureViewModel();
               coins.treasure().importValues(treasure_fixture);
-              coins.treasure().worth_in_gold().should.equal(14);
+              coins.treasure().worthInGold().should.equal(14);
           });
       });
   });
