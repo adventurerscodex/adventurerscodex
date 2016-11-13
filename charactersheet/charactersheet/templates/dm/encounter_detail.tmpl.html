@@ -16,7 +16,7 @@
     <!-- ko if: $parent[section.property]() -->
     <div data-bind="visible: $parent[section.property]().visible,
       template: {
-        name: 'combat_section.tmpl',
+        name: $parent[section.property]().template,
         templateUrl: 'templates/dm/encounter_sections',
         data: $parent[section.property]()
       }"></div>

@@ -11,12 +11,12 @@ function CombatSectionViewModel(parentEncounter, combatSection) {
     /**
      * REQUIRED: The template name relative to the encounter_sections.
      */
-    self.template = 'combat_section.tmpl'
+    self.template = 'combat_section.tmpl';
 
     /**
      * REQUIRED: The display name of the encounter section.
      */
-    self.name = 'Combat'
+    self.name = 'Combat';
 
     //Public Methods
 
