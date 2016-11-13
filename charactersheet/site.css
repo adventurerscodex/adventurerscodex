@@ -206,6 +206,11 @@ div.hr {
   border:none;
 }
 
+.dashed-border {
+  border-style: dashed;
+  border-color: lightgray;
+}
+
 .underline {
   text-decoration: underline;
 }
@@ -359,7 +364,9 @@ textarea.dark-area {
 }
 
 .player-image-style {
-  margin-top:7px;
+  margin-top:4px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .spell-slots-level {

@@ -58,7 +58,7 @@
           <div class="col-padded col-xs-2" data-bind="template: {
             name: 'player_image.tmpl',
             templateUrl: 'templates/character',
-            data: profileTabViewModel().playerImageViewModel()
+            data: playerImageViewModel
           }"></div>
           <!-- /ko -->
           <!-- /ko -->
@@ -89,9 +89,6 @@
                   data-target="#exportModal"
                   data-bind="click: charactersViewModel.selectCharacter"
                   href="#">Export</a></i>
-                &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#settingsModal" href="#">Settings</a></i>
               </div>
             </div>
           </div>
@@ -191,15 +188,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<!-- Settings Modal -->
-<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog"
-  aria-labelledby="settingsLabel"
-  data-bind="template: {
-      name: 'settings.tmpl',
-      templateUrl: 'templates/common',
-      data: settingsViewModel }">
 </div>
 
 <!-- New Modal -->
@@ -323,6 +311,7 @@
 <script src="models/common/magic_item.js" type="text/javascript"></script>
 <script src="models/common/note.js" type="text/javascript"></script>
 <script src="models/common/player_info.js" type="text/javascript"></script>
+<script src="models/common/player_image.js" type="text/javascript"></script>
 <script src="models/common/player_types.js" type="text/javascript"></script>
 <script src="models/common/spell.js" type="text/javascript"></script>
 <script src="models/common/treasure.js" type="text/javascript"></script>
