@@ -6,36 +6,32 @@
  * is given the encounter it will display. When the user selects another
  * encounter to focus on, the current encounter is cleaned up.
  */
-function EncounterDetailViewModel(encounter) {
+function EncounterDetailViewModel(encounter, allSections) {
     var self = this;
 
     self.encounterId = encounter.encounterId;
     self.name = encounter.name;
     self.encounterLocation = encounter.encounterLocation;
-    self.sections = allSections;
-    // TODO: Add Fields Here.
-
+    self.visibilityVMs = ko.observableArray([]);
 
     /* Encounter Sections */
 
-    self.sections = [
-        { property: 'notesSectionViewModel', vm: NotesSection },
-        { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSection }
-    ];
+    self.sections = allSections;
 
     self.notesSectionViewModel = ko.observable();
+    self.pointOfInterestSectionViewModel = ko.observable();
     // TODO: Add more sections...
 
     self.openModal = ko.observable(false);
     self.nameHasFocus = ko.observable(false);
 
-    //Public Methods
+    /* Public Methods */
 
     self.init = function() {
     };
 
     self.load = function() {
-        self._setupSectionVMs();
+        self._initializeSectionVMs();
         ViewModelUtilities.initSubViewModels(self);
         ViewModelUtilities.loadSubViewModels(self);
     };
@@ -63,6 +59,11 @@ function EncounterDetailViewModel(encounter) {
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+
+        // Modal will open.
+        if (self.openModal()) {
+            self._initializeVisibilityVMs();
+        }
     };
 
     /* Modal Methods */
@@ -74,6 +75,12 @@ function EncounterDetailViewModel(encounter) {
     self.modalFinishedClosing = function() {
         self.openModal(false);
         self.save();
+
+        self.visibilityVMs().forEach(function(vm, idx, _) {
+            vm.save();
+        });
+        Notifications.encounters.changed.dispatch();
+        self._deinitializeVisibilityVMs();
     };
 
     /* Private Methods */
@@ -86,7 +93,8 @@ function EncounterDetailViewModel(encounter) {
      * the view model's data model object (if it exists, or null)  that matched
      * a query by encounter id.
      */
-    self._setupSectionVMs = function() {
+    self._initializeSectionVMs = function() {
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
         self.sections.forEach(function(section, idx, _) {
             var childViewModel = new section.vm(encounter);
             try {
@@ -96,5 +104,21 @@ function EncounterDetailViewModel(encounter) {
                     +". You probably forgot to add the property to the detail VM.\n"+err
             }
         });
+    };
+
+    // Modal Visibility VMs
+
+    self._initializeVisibilityVMs = function() {
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        self.visibilityVMs(self.sections.map(function(section, idx, _) {
+            var visibilityViewModel = new EncounterSectionVisibilityViewModel(encounter, section.model);
+            visibilityViewModel.init();
+            visibilityViewModel.load();
+            return visibilityViewModel;
+        }));
+    };
+
+    self._deinitializeVisibilityVMs = function() {
+        self.visibilityVMs([]);
     };
 }

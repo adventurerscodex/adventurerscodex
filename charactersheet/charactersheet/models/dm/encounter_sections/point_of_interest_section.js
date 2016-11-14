@@ -2,7 +2,7 @@
 
 function PointOfInterestSection() {
     var self = this;
-    self.ps = PersistenceService.register(PointOfInterest, self);
+    self.ps = PersistenceService.register(PointOfInterestSection, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'visible', 'name']
     };

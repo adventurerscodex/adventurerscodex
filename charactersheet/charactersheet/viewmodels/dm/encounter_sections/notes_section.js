@@ -1,6 +1,6 @@
 'use strict';
 
-function NotesSectionViewModel(parentEncounter, notesSection) {
+function NotesSectionViewModel(parentEncounter) {
     var self = this;
 
     self.notes = ko.observable('');
@@ -14,6 +14,7 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
      * REQUIRED: The template name relative to the encounter_sections.
      */
     self.template = 'notes_section.tmpl';
+    self.encounterId = parentEncounter.encounterId;
 
     /**
      * REQUIRED: The display name of the encounter section.
@@ -29,27 +30,26 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
         Notifications.global.save.add(function() {
             self.save();
         });
+        Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
     /**
      * Signal all modules to load their data.
      */
     self.load = function() {
+        var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
         if (!notesSection) {
-            var notes = new NotesSection();
-            notes.characterId(CharacterManager.activeCharacter().key());
-            notes.encounterId(parentEncounter.encounterId());
-
-            notes.save();
-        } else {
-            self.notes(notesSection.notes());
-            self.visible(notesSection.visible());
+            notesSection = new NotesSection();
+            notesSection.characterId(CharacterManager.activeCharacter().key());
+            notesSection.encounterId(self.encounterId());
+            notesSection.save();
         }
+        self.notes(notesSection.notes());
+        self.visible(notesSection.visible());
     };
 
     self.unload = function() {
-        var notes = PersistenceService.findFirstBy(NotesSection,
-            'encounterId', parentEncounter.encounterId());
+        var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
         if (!notes) {
             notes = new NotesSection();
         }
@@ -61,19 +61,25 @@ function NotesSectionViewModel(parentEncounter, notesSection) {
     };
 
     self.save = function() {
-      var notes = PersistenceService.findFirstBy(NotesSection,
-          'encounterId', parentEncounter.encounterId());
-      if (notes) {
-        notes.notes(self.notes());
-        notes.visible(self.visible());
+        var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
+        if (notes) {
+            notes.notes(self.notes());
+            notes.visible(self.visible());
 
-        notes.save();
-      }
+            notes.save();
+        }
     };
 
     self.delete = function() {
-        var notes = PersistenceService.findFirstBy(NotesSection,
-            'encounterId', parentEncounter.encounterId());
+        var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
         notes.delete();
     }
+
+    /* Private Methods */
+
+    self._dataHasChanged = function() {
+        var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
+        self.notes(notesSection.notes());
+        self.visible(notesSection.visible());
+    };
 }
