@@ -6,7 +6,7 @@
  * is given the encounter it will display. When the user selects another
  * encounter to focus on, the current encounter is cleaned up.
  */
-function EncounterDetailViewModel(encounter, allSections) {
+function EncounterDetailViewModel(encounter) {
     var self = this;
 
     self.encounterId = encounter.encounterId;
@@ -14,6 +14,14 @@ function EncounterDetailViewModel(encounter, allSections) {
     self.encounterLocation = encounter.encounterLocation;
     self.sections = allSections;
     // TODO: Add Fields Here.
+
+
+    /* Encounter Sections */
+
+    self.sections = [
+        { property: 'notesSectionViewModel', vm: NotesSection },
+        { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSection }
+    ];
 
     self.notesSectionViewModel = ko.observable();
     // TODO: Add more sections...
@@ -80,9 +88,7 @@ function EncounterDetailViewModel(encounter, allSections) {
      */
     self._setupSectionVMs = function() {
         self.sections.forEach(function(section, idx, _) {
-            var relevantModel = PersistenceService.findFirstBy(section.model,
-                'encounterId', self.encounterId());
-            var childViewModel = new section.vm(encounter, relevantModel);
+            var childViewModel = new section.vm(encounter);
             try {
                 self[section.property](childViewModel);
             } catch (err) {

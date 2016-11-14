@@ -13,7 +13,8 @@ function EncounterViewModel() {
     /* Encounter Sections */
 
     self.sections = [
-        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
+        { model: NotesSection },
+        { model: PointOfInterestSection }
     ];
 
     /* Modal Section View Models */
@@ -56,7 +57,7 @@ function EncounterViewModel() {
         var newEncounter = self.selectedEncounter();
         if (!newEncounter) { return null; }
 
-        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter, self.sections));
+        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter));
         self._initializeDetailViewModel();
     };
 
