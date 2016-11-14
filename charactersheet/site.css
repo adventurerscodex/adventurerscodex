@@ -488,3 +488,55 @@ ul.ui-autocomplete .ui-state-active {
   font-weight: 600;
   vertical-align: -webkit-baseline-middle;
 }
+
+/*
+ * Spell School Icon CSS
+ */
+
+.abjuration {
+  background-image: url('/images/spell_icons/abjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.conjuration {
+  background-image: url('/images/spell_icons/conjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.divination {
+  background-image: url('/images/spell_icons/divination.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.enchantment {
+  background-image: url('/images/spell_icons/enchantment.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.evocation {
+  background-image: url('/images/spell_icons/evocation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.illusion {
+  background-image: url('/images/spell_icons/illusion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.necromancy {
+  background-image: url('/images/spell_icons/necromancy.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.transmutation {
+  background-image: url('/images/spell_icons/transmutation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
