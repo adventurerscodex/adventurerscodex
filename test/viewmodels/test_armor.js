@@ -64,12 +64,6 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorName desc']);
             armors.sortBy('armorType');
             armors.sort().should.equal(armors.sorts['armorType asc']);
-            armors.sortBy('armorDexBonus');
-            armors.sort().should.equal(armors.sorts['armorDexBonus asc']);
-            armors.sortBy('armorCheckPenalty');
-            armors.sort().should.equal(armors.sorts['armorCheckPenalty asc']);
-            armors.sortBy('armorProficiency');
-            armors.sort().should.equal(armors.sorts['armorProficiency asc']);
         });
     });
 
@@ -83,18 +77,6 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorType asc']);
             armors.sortArrow('armorType').should.equal('fa fa-arrow-up fa-color');
             armors.sortArrow('armorName').should.equal('');
-            armors.sortBy('armorDexBonus');
-            armors.sort().should.equal(armors.sorts['armorDexBonus asc']);
-            armors.sortArrow('armorDexBonus').should.equal('fa fa-arrow-up fa-color');
-            armors.sortArrow('armorType').should.equal('');
-            armors.sortBy('armorCheckPenalty');
-            armors.sort().should.equal(armors.sorts['armorCheckPenalty asc']);
-            armors.sortArrow('armorDexBonus').should.equal('');
-            armors.sortArrow('armorCheckPenalty').should.equal('fa fa-arrow-up fa-color');
-            armors.sortBy('armorProficiency');
-            armors.sort().should.equal(armors.sorts['armorProficiency asc']);
-            armors.sortArrow('armorCheckPenalty').should.equal('');
-            armors.sortArrow('armorProficiency').should.equal('fa fa-arrow-up fa-color');
         });
     });
 

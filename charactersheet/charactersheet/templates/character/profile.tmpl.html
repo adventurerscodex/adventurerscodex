@@ -13,7 +13,9 @@
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Background</span>
           <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: background' />
+            data-bind='textInput: background,
+              autocomplete: { source: backgroundOptions,
+              onselect: setBackground }' />
         </div>
       </div>
     </div>
@@ -23,7 +25,9 @@
     	  <div class="input-group">
 	      	<span class="input-group-addon" id="basic-addon2">Alignment</span>
       		<input type="text" class="form-control" aria-describedby="basic-addon2"
-		      	data-bind='textInput: alignment'>
+		      	data-bind='textInput: alignment,
+              autocomplete: { source: alignmentOptions,
+              onselect: setAlignment }'>
   	    </div>
 	    </div>
       <div class="col-md-6 col-padded">

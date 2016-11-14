@@ -12,15 +12,14 @@ function WizardProfileStepViewModel() {
 
     self.init = function() { };
 
-    self.load = function() {
-    };
+    self.load = function() { };
 
-    self.unload = function() {};
+    self.unload = function() { };
 
     // View Properties
 
-    self.characterName = ko.observable();
-    self.playerName = ko.observable();
+    self.characterName = ko.observable().extend({ required: "&#9679; Required" });
+    self.playerName = ko.observable().extend({ required: "&#9679; Required" });
     self.race = ko.observable();
     self.typeClass = ko.observable();
     self.alignment = ko.observable();
@@ -33,6 +32,8 @@ function WizardProfileStepViewModel() {
     //Static Data
     self.raceList = Fixtures.wizardProfile.races;
     self.classList = Fixtures.wizardProfile.classes;
+    self.alignmentOptions = ko.observableArray(
+        Fixtures.profile.alignmentOptions);
 
     //Prepopulate methods
     self.populateRace = function(label, value) {
@@ -42,6 +43,10 @@ function WizardProfileStepViewModel() {
     self.populateClass = function(label, value) {
         self.typeClass(value);
     }
+
+    self.setAlignment = function(label, value) {
+        self.alignment(value);
+    };
 
     // Wizard Step Methods
 

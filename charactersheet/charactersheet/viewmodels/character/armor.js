@@ -15,13 +15,7 @@ function ArmorViewModel() {
         'armorName asc': { field: 'armorName', direction: 'asc'},
         'armorName desc': { field: 'armorName', direction: 'desc'},
         'armorType asc': { field: 'armorType', direction: 'asc'},
-        'armorType desc': { field: 'armorType', direction: 'desc'},
-        'armorDexBonus asc': { field: 'armorDexBonus', direction: 'asc'},
-        'armorDexBonus desc': { field: 'armorDexBonus', direction: 'desc'},
-        'armorCheckPenalty asc': { field: 'armorCheckPenalty', direction: 'asc'},
-        'armorCheckPenalty desc': { field: 'armorCheckPenalty', direction: 'desc'},
-        'armorProficiency asc': { field: 'armorProficiency', direction: 'asc', booleanType: true},
-        'armorProficiency desc': { field: 'armorProficiency', direction: 'desc', booleanType: true}
+        'armorType desc': { field: 'armorType', direction: 'desc'}
     };
 
     self.filter = ko.observable('');

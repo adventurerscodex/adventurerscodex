@@ -18,6 +18,20 @@ function ProfileViewModel() {
     self.experience = ko.observable('');
 
 
+    self.alignmentOptions = ko.observableArray(
+        Fixtures.profile.alignmentOptions);
+
+    self.setAlignment = function(label, value) {
+        self.alignment(value);
+    };
+
+    self.backgroundOptions = ko.observableArray(
+        Fixtures.profile.backgroundOptions);
+
+    self.setBackground = function(label, value) {
+        self.background(value);
+    };
+
     self.init = function() {
         Notifications.global.save.add(function() {
             self.dataHasChanged();

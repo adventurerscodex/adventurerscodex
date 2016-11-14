@@ -21,6 +21,8 @@ function CharacterRootViewModel() {
     self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
+    self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
+
     //Tooltips
     self.profileTooltip = ko.observable('Profile');
     self.statsTooltip = ko.observable('Stats');

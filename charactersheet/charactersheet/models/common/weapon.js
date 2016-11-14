@@ -136,6 +136,30 @@ function Weapon() {
         }
     });
 
+    self.weaponRangeLabel = ko.pureComputed(function() {
+        if (self.weaponType().toLowerCase() === 'ranged'){
+            if(self.weaponRange()) {
+                return self.weaponRange() + ' ft.';
+            } else {
+                return '';
+            }
+        } else if (self.weaponType().toLowerCase() === 'melee') {
+            var weaponRange = parseInt(self.weaponRange());
+            if (!weaponRange) {
+                weaponRange = 5;
+            }
+            if (self.weaponProperty()) {
+                if(self.weaponProperty().toLowerCase().indexOf('reach') !== -1) {
+                    weaponRange += 5;
+                }
+            }
+            return weaponRange + ' ft.';
+
+        } else {
+            throw 'Weapon type not range or melee.';
+        }
+    });
+
     self.magicalModifierLabel = ko.pureComputed(function() {
         self._dummy();
 

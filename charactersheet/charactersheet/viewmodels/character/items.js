@@ -6,16 +6,10 @@ function ItemsViewModel() {
     self.sorts = {
         'itemName asc': { field: 'itemName', direction: 'asc'},
         'itemName desc': { field: 'itemName', direction: 'desc'},
-        'itemIsEquippable asc': { field: 'itemIsEquippable', direction: 'asc'},
-        'itemIsEquippable desc': { field: 'itemIsEquippable', direction: 'desc'},
         'itemQty asc': { field: 'itemQty', direction: 'asc', numeric: true},
         'itemQty desc': { field: 'itemQty', direction: 'desc', numeric: true},
         'itemWeight asc': { field: 'itemWeight', direction: 'asc', numeric: true},
         'itemWeight desc': { field: 'itemWeight', direction: 'desc', numeric: true},
-        'itemCost asc': { field: 'itemCost', direction: 'asc', numeric: true},
-        'itemCost desc': { field: 'itemCost', direction: 'desc', numeric: true},
-        'itemBodyLocation asc': { field: 'itemBodyLocation', direction: 'asc'},
-        'itemBodyLocation desc': { field: 'itemBodyLocation', direction: 'desc'}
     };
 
     self.items = ko.observableArray([]);

@@ -180,6 +180,35 @@ var Fixtures = {
         spellcastingAbilityOptions: [
             'INT', 'WIS', 'CHA']
     },
+    profile: {
+        alignmentOptions: [
+            'Lawful good',
+            'Neutral good',
+            'Chaotic good',
+            'Lawful neutral',
+            'Neutral',
+            'Chaotic neutral',
+            'Lawful evil',
+            'Neutral evil',
+            'Chaotic evil'
+        ],
+
+        backgroundOptions: [
+            'Acolyte',
+            'Charlatan',
+            'Criminal',
+            'Entertainer',
+            'Folk Hero',
+            'Guild Artisan',
+            'Hermit',
+            'Noble',
+            'Outlander',
+            'Sage',
+            'Sailor',
+            'Soldier',
+            'Urchin'
+        ]
+    },
     weapon: {
         weaponDamageTypeOptions: [
             '',

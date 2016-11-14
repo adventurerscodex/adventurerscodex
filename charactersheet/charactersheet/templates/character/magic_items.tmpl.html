@@ -20,7 +20,7 @@
             Weight
             <span data-bind="css: sortArrow('magicItemWeight')"></span>
           </th>
-          <th width="48%">
+          <th width="48%" class="hidden-sm hidden-xs">
             Description
           </th>
           <th width="5%">
@@ -52,7 +52,7 @@
               href="#"
               data-target="#viewMagicItem">
           </td>
-          <td data-bind="text: magicItemDescription, click: $parent.editItem"
+          <td data-bind="text: shortDescription, click: $parent.editItem"
             href="#" class="hidden-sm hidden-xs"
             data-target="#viewMagicItem">
          </td>
@@ -97,8 +97,7 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title"
-                id="addMagicItemLabel">Add a new magic item.</h4>
+            <h4 class="modal-title" id="addMagicItemLabel">Add a new Magic Item to your Inventory.</h4>
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
@@ -254,8 +253,7 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title"
-                id="viewMagicItemLabel">View a magic item.</h4>
+            <h4 class="modal-title" id="viewMagicItemLabel">View a Magic Item from your Inventory.</h4>
         </div>
           <div class="modal-body">
             <!-- Begin Tabs -->
