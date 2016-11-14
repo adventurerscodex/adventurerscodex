@@ -207,6 +207,33 @@ var Fixtures = {
             'Sailor',
             'Soldier',
             'Urchin'
+        ],
+
+        classOptions: [
+            'Barbarian',
+            'Bard',
+            'Cleric',
+            'Druid',
+            'Fighter',
+            'Monk',
+            'Paladin',
+            'Ranger',
+            'Rogue',
+            'Sorcerer',
+            'Warlock',
+            'Wizard'
+        ],
+
+        raceOptions: [
+            'Dwarf',
+            'Elf',
+            'Halfling',
+            'Human',
+            'Dragonborn',
+            'Gnome',
+            'Half-Elf',
+            'Half-Orc',
+            'Tiefling'
         ]
     },
     weapon: {
@@ -257,11 +284,5 @@ var Fixtures = {
         shortRestMessage : 'Your daily features, and relevant spell slots have been restored.',
         longRestMessage : 'Your hit dice, spell slots, hit points, ' +
               'and daily features have been restored.'
-    },
-    wizardProfile: {
-        classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
-              'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
-        races : ['Dwarf', 'Elf', 'Halfling', 'Human', 'Dragonborn', 'Gnome',
-              'Half-Elf', 'Half-Orc', 'Tiefling']
     }
 };
