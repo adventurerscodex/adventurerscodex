@@ -322,6 +322,7 @@
             </ul>
             <div class="tab-content" data-bind="with: selecteditem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
+                <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
                 <div class="h3">
                   <span data-bind="text: spellNameLabel"></span>&nbsp;
                   <small data-bind="text: spellSummaryLabel"></small>
@@ -342,6 +343,7 @@
                          class="preview-modal-overflow"></div>
                   </div>
                 </div>
+              </div>
               </div>
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
                 <form class="form-horizontal">

@@ -27,6 +27,7 @@ function SpellbookViewModel() {
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.spellSchoolIconCSS = ko.observable('');
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
@@ -78,6 +79,7 @@ function SpellbookViewModel() {
     self.modalFinishedClosing = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
+        self.spellSchoolIconCSS('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
     };
@@ -85,12 +87,20 @@ function SpellbookViewModel() {
     self.selectPreviewTab = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
+
     };
 
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
     };
+
+    self.determineSpellSchoolIcon = ko.computed(function() {
+        if (self.selecteditem() && self.selecteditem().spellSchool()) {
+            var spellSchool = self.selecteditem().spellSchool();
+            self.spellSchoolIconCSS(spellSchool.toLowerCase());
+        }
+    });
 
     /* UI Methods */
 
