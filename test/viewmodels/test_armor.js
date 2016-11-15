@@ -64,12 +64,6 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorName desc']);
             armors.sortBy('armorType');
             armors.sort().should.equal(armors.sorts['armorType asc']);
-            armors.sortBy('armorDexBonus');
-            armors.sort().should.equal(armors.sorts['armorDexBonus asc']);
-            armors.sortBy('armorCheckPenalty');
-            armors.sort().should.equal(armors.sorts['armorCheckPenalty asc']);
-            armors.sortBy('armorProficiency');
-            armors.sort().should.equal(armors.sorts['armorProficiency asc']);
         });
     });
 
@@ -83,18 +77,6 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorType asc']);
             armors.sortArrow('armorType').should.equal('fa fa-arrow-up fa-color');
             armors.sortArrow('armorName').should.equal('');
-            armors.sortBy('armorDexBonus');
-            armors.sort().should.equal(armors.sorts['armorDexBonus asc']);
-            armors.sortArrow('armorDexBonus').should.equal('fa fa-arrow-up fa-color');
-            armors.sortArrow('armorType').should.equal('');
-            armors.sortBy('armorCheckPenalty');
-            armors.sort().should.equal(armors.sorts['armorCheckPenalty asc']);
-            armors.sortArrow('armorDexBonus').should.equal('');
-            armors.sortArrow('armorCheckPenalty').should.equal('fa fa-arrow-up fa-color');
-            armors.sortBy('armorProficiency');
-            armors.sort().should.equal(armors.sorts['armorProficiency asc']);
-            armors.sortArrow('armorCheckPenalty').should.equal('');
-            armors.sortArrow('armorProficiency').should.equal('fa fa-arrow-up fa-color');
         });
     });
 
@@ -172,6 +154,33 @@ describe('ArmorViewModel', function(){
             armorsVM.armors(items);
             armorsVM.armors().length.should.equal(2);
             armorsVM.totalWeight().should.equal('10 (lbs)');
+        });
+    });
+
+    describe('Select Preview Tab', function() {
+        it('should switch to preview tab status', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.selectPreviewTab();
+            armorsVM.previewTabStatus().should.equal('active');
+            armorsVM.editTabStatus().should.equal('');
+        });
+    });
+
+    describe('Select Edit Tab', function() {
+        it('should switch to edit tab status', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.selectEditTab();
+            armorsVM.editTabStatus().should.equal('active');
+            armorsVM.previewTabStatus().should.equal('');
+        });
+    });
+
+    describe('Modal Finished Closing', function() {
+        it('should switch default state to preview', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.selectEditTab();
+            armorsVM.modalFinishedClosing();
+            armorsVM.previewTabStatus().should.equal('active');
         });
     });
 });

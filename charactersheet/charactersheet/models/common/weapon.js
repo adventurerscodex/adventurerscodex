@@ -136,6 +136,30 @@ function Weapon() {
         }
     });
 
+    self.weaponRangeLabel = ko.pureComputed(function() {
+        if (self.weaponType().toLowerCase() === 'ranged'){
+            if(self.weaponRange()) {
+                return self.weaponRange() + ' ft.';
+            } else {
+                return '';
+            }
+        } else if (self.weaponType().toLowerCase() === 'melee') {
+            var weaponRange = parseInt(self.weaponRange());
+            if (!weaponRange) {
+                weaponRange = 5;
+            }
+            if (self.weaponProperty()) {
+                if(self.weaponProperty().toLowerCase().indexOf('reach') !== -1) {
+                    weaponRange += 5;
+                }
+            }
+            return weaponRange + ' ft.';
+
+        } else {
+            throw 'Weapon type not range or melee.';
+        }
+    });
+
     self.magicalModifierLabel = ko.pureComputed(function() {
         self._dummy();
 
@@ -154,6 +178,18 @@ function Weapon() {
         } else {
             return false;
         }
+    });
+
+    self.weaponDescriptionHTML = ko.pureComputed(function() {
+        if (self.weaponDescription()){
+            return self.weaponDescription().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
+    });
+
+    self.weaponWeightLabel = ko.pureComputed(function() {
+        return self.weaponWeight() + ' lbs.'
     });
 
     self.clear = function() {

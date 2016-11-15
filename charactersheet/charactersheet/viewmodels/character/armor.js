@@ -8,18 +8,16 @@ function ArmorViewModel() {
     self.armors = ko.observableArray([]);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.previewTabStatus = ko.observable('active');
+    self.editTabStatus = ko.observable('');
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
 
     self.sorts = {
         'armorName asc': { field: 'armorName', direction: 'asc'},
         'armorName desc': { field: 'armorName', direction: 'desc'},
         'armorType asc': { field: 'armorType', direction: 'asc'},
-        'armorType desc': { field: 'armorType', direction: 'desc'},
-        'armorDexBonus asc': { field: 'armorDexBonus', direction: 'asc'},
-        'armorDexBonus desc': { field: 'armorDexBonus', direction: 'desc'},
-        'armorCheckPenalty asc': { field: 'armorCheckPenalty', direction: 'asc'},
-        'armorCheckPenalty desc': { field: 'armorCheckPenalty', direction: 'desc'},
-        'armorProficiency asc': { field: 'armorProficiency', direction: 'asc', booleanType: true},
-        'armorProficiency desc': { field: 'armorProficiency', direction: 'desc', booleanType: true}
+        'armorType desc': { field: 'armorType', direction: 'desc'}
     };
 
     self.filter = ko.observable('');
@@ -76,6 +74,30 @@ function ArmorViewModel() {
 
     self.modalFinishedAnimating = function() {
         self.shouldShowDisclaimer(false);
+    };
+
+    // Modal methods
+    self.modalFinishedOpening = function() {
+        self.shouldShowDisclaimer(false);
+        self.firstModalElementHasFocus(true);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+        self.previewTabStatus.valueHasMutated();
+        self.editTabStatus.valueHasMutated();
+    };
+
+    self.selectPreviewTab = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
+
+    self.selectEditTab = function() {
+        self.editTabStatus('active');
+        self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* UI Methods */

@@ -15,21 +15,29 @@
         </div>
         <!-- Names -->
         <div class="row">
-          <div class="col-md-12 col-padded">
+          <div class="col-md-10 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Character Name</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
-                data-bind='textInput: characterName' />
+                <input type="text" class="form-control" aria-describedby="basic-addon2"
+                  data-bind='textInput: characterName, valueUpdate: "afterkeydown"' />
             </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: characterName.hasError, html: characterName.validationMessage,
+              css: { errormessagetext: characterName.hasError }'> </span>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 col-padded">
+          <div class="col-md-10 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Player Name</span>
                 <input type="text" class="form-control" aria-describedby="basic-addon2"
-                  data-bind='textInput: playerName' />
+                  data-bind='textInput: playerName, valueUpdate: "afterkeydown"' />
             </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: playerName.hasError, html: playerName.validationMessage,
+              css: { errormessagetext: playerName.hasError }'> </span>
           </div>
         </div>
         <div class="h3">Anything else?<br />
@@ -41,7 +49,9 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Alignment</span>
               <input type="text" class="form-control" aria-describedby="basic-addon2"
-                data-bind='textInput: alignment'>
+                data-bind='textInput: alignment,
+                           autocomplete: { source: alignmentOptions,
+                           onselect: setAlignment }'>
             </div>
           </div>
           <div class="col-md-6 col-padded">
@@ -58,16 +68,16 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Race</span>
               <input type="text" class="form-control" aria-describedby="basic-addon2"
-                data-bind='textInput: race, autocomplete: { source: raceList,
-                  onselect: populateRace }'>
+                data-bind='textInput: race, autocomplete: { source: raceOptions,
+                  onselect: setRace }'>
             </div>
           </div>
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Class</span>
               <input type="text" class="form-control" aria-describedby="basic-addon2"
-                data-bind='textInput: typeClass, autocomplete: { source: classList,
-                  onselect: populateClass }'>
+                data-bind='textInput: typeClass, autocomplete: { source: classOptions,
+                  onselect: setClass }'>
             </div>
           </div>
         </div>

@@ -111,4 +111,32 @@ describe('WeaponsViewModel', function(){
             weapons.totalWeight().should.equal('10 (lbs)');
         });
     });
+
+    describe('Select Preview Tab', function() {
+        it('should switch to preview tab status', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.selectPreviewTab();
+            weapons.previewTabStatus().should.equal('active');
+            weapons.editTabStatus().should.equal('');
+        });
+    });
+
+    describe('Select Edit Tab', function() {
+        it('should switch to edit tab status', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.selectEditTab();
+            weapons.editTabStatus().should.equal('active');
+            weapons.previewTabStatus().should.equal('');
+        });
+    });
+
+    describe('Modal Finished Closing', function() {
+        it('should switch default state to preview', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.selectEditTab();
+            weapons.modalFinishedClosing();
+            weapons.previewTabStatus().should.equal('active');
+        });
+    });
+
 });

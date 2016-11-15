@@ -12,7 +12,7 @@
               text: progressLabel">
             <span class="sr-only"></span>
           </div>
-          <div id="tempHitPoints" class="progress-bar progress-bar-primary" role="progressbar" aria-valuemin="0"
+          <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar" aria-valuemin="0"
             data-bind="style: { width: tempProgressWidth }" aria-describedby="hitpointsCounter">
             <span class="sr-only"></span>
           </div>
@@ -41,7 +41,7 @@
               </td>
               <td>
                 <plus-minus params="value: health().damage,
-                  max: health().maxHitpoints">
+                  max: health().totalHitpoints">
                   </plus-minus>
               </td>
               <td class="text-center col-content-vertical">
@@ -77,8 +77,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
             aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-					<h4 class="modal-title" id="healthLabel">
-						Hit Points
+					<h4 class="modal-title" id="healthLabel"> Edit your Hit Points.
 					</h4>
 				</div>
 				<div class="modal-body">

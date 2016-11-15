@@ -106,8 +106,7 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title"
-                id="addSpellLabel">Add a spell to your spellbook.</h4>
+            <h4 class="modal-title" id="addSpellLabel">Add a Spell to your Spellbook.</h4>
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
@@ -306,8 +305,7 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title"
-                id="addSpellLabel">View a spell in your spellbook.</h4>
+            <h4 class="modal-title" id="addSpellLabel">View a Spell from your Spellbook.</h4>
         </div>
           <div class="modal-body">
             <!-- Begin Tabs -->
@@ -325,6 +323,7 @@
             </ul>
             <div class="tab-content" data-bind="with: selecteditem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
+                <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
                 <div class="h3">
                   <span data-bind="text: spellNameLabel"></span>&nbsp;
                   <small data-bind="text: spellSummaryLabel"></small>
@@ -345,6 +344,7 @@
                          class="preview-modal-overflow"></div>
                   </div>
                 </div>
+              </div>
               </div>
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
                 <form class="form-horizontal">

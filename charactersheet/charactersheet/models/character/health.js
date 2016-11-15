@@ -20,26 +20,14 @@ function Health() {
     self.damage = ko.observable(0);
 
     self.hitpoints = ko.pureComputed(function() {
-        if(self.tempHitpoints()){
-            if(self.maxHitpoints() && self.damage())
-                return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints())) - parseInt(self.damage());
-            else if(self.maxHitpoints() && !self.damage())
-                return parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints());
-            else
-                return '';
-        }
-        else{
-            if(self.maxHitpoints() && self.damage())
-                return parseInt(self.maxHitpoints()) - parseInt(self.damage());
-            else if(self.maxHitpoints() && !self.damage())
-                return parseInt(self.maxHitpoints());
-            else
-                return '';
-        }
+        var damage = self.damage() ? self.damage() : 0;
+        return self.totalHitpoints() - damage;
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
-        return (parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints()));
+        var maxHP = self.maxHitpoints() ? self.maxHitpoints() : 0;
+        var tempHP = self.tempHitpoints() ? self.tempHitpoints() : 0;
+        return parseInt(maxHP) + parseInt(tempHP);
     }, self);
 
     self.tempHitpointsRemaining = ko.pureComputed(function() {
@@ -73,8 +61,8 @@ function Health() {
 
     self.progressType = ko.pureComputed(function() {
         var type = 'progress-bar-success';
-        if (self.isWarning()) type = 'progress-bar-warning';
-        if (self.isDangerous()) type = 'progress-bar-danger';
+        if (self.isWarning()) { type = 'progress-bar-warning' };
+        if (self.isDangerous()) { type = 'progress-bar-danger' };
         return type;
     }, self);
 

@@ -206,6 +206,11 @@ div.hr {
   border:none;
 }
 
+.dashed-border {
+  border-style: dashed;
+  border-color: lightgray;
+}
+
 .underline {
   text-decoration: underline;
 }
@@ -359,7 +364,9 @@ textarea.dark-area {
 }
 
 .player-image-style {
-  margin-top:7px;
+  margin-top:4px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .spell-slots-level {
@@ -447,27 +454,89 @@ body {
 
 
 .ui-autocomplete {
-    z-index: 1051;
+  z-index: 1051;
 }
 
 ul.ui-autocomplete {
-    margin: 0;
-    padding-left: 0;
-    border-color: #aaa;
-    border-radius: 0px 0px 4px 4px;
-    box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+  margin: 0;
+  padding-left: 0;
+  border-color: #aaa;
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
 
 ul.ui-autocomplete li {
-    list-style: none;
-    display: list-item;
-    background-image: none;
-    min-height: 1em;
-    font-size: 15px;
+  list-style: none;
+  display: list-item;
+  background-image: none;
+  min-height: 1em;
+  font-size: 15px;
 }
 
 
 ul.ui-autocomplete .ui-state-active {
-    background: #2c3e50;
-    color: #fff;
+  background: #2c3e50;
+  color: #fff;
+}
+
+/*
+ * Data validation CSS
+ */
+
+.errormessagetext {
+  color: #ca2f2b;
+  font-weight: 600;
+  vertical-align: -webkit-baseline-middle;
+}
+
+/*
+ * Spell School Icon CSS
+ */
+
+.abjuration {
+  background-image: url('/images/spell_icons/abjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.conjuration {
+  background-image: url('/images/spell_icons/conjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.divination {
+  background-image: url('/images/spell_icons/divination.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.enchantment {
+  background-image: url('/images/spell_icons/enchantment.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.evocation {
+  background-image: url('/images/spell_icons/evocation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.illusion {
+  background-image: url('/images/spell_icons/illusion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.necromancy {
+  background-image: url('/images/spell_icons/necromancy.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.transmutation {
+  background-image: url('/images/spell_icons/transmutation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
 }

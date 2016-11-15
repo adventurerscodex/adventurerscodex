@@ -180,6 +180,62 @@ var Fixtures = {
         spellcastingAbilityOptions: [
             'INT', 'WIS', 'CHA']
     },
+    profile: {
+        alignmentOptions: [
+            'Lawful good',
+            'Neutral good',
+            'Chaotic good',
+            'Lawful neutral',
+            'Neutral',
+            'Chaotic neutral',
+            'Lawful evil',
+            'Neutral evil',
+            'Chaotic evil'
+        ],
+
+        backgroundOptions: [
+            'Acolyte',
+            'Charlatan',
+            'Criminal',
+            'Entertainer',
+            'Folk Hero',
+            'Guild Artisan',
+            'Hermit',
+            'Noble',
+            'Outlander',
+            'Sage',
+            'Sailor',
+            'Soldier',
+            'Urchin'
+        ],
+
+        classOptions: [
+            'Barbarian',
+            'Bard',
+            'Cleric',
+            'Druid',
+            'Fighter',
+            'Monk',
+            'Paladin',
+            'Ranger',
+            'Rogue',
+            'Sorcerer',
+            'Warlock',
+            'Wizard'
+        ],
+
+        raceOptions: [
+            'Dwarf',
+            'Elf',
+            'Halfling',
+            'Human',
+            'Dragonborn',
+            'Gnome',
+            'Half-Elf',
+            'Half-Orc',
+            'Tiefling'
+        ]
+    },
     weapon: {
         weaponDamageTypeOptions: [
             '',
@@ -228,11 +284,5 @@ var Fixtures = {
         shortRestMessage : 'Your daily features, and relevant spell slots have been restored.',
         longRestMessage : 'Your hit dice, spell slots, hit points, ' +
               'and daily features have been restored.'
-    },
-    wizardProfile: {
-        classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
-              'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
-        races : ['Dwarf', 'Elf', 'Halfling', 'Human', 'Dragonborn', 'Gnome',
-              'Half-Elf', 'Half-Orc', 'Tiefling']
     }
 };

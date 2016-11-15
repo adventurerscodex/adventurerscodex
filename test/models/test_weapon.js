@@ -225,4 +225,47 @@ describe('Weapon Model', function() {
             weap.applyMagicalModifierLabel().should.equal(false);
         });
     });
+
+    describe('Weapon Description Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponDescription('This thing is cool.\n');
+            weapon.weaponDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var weapon2 = new Weapon();
+            weapon2.weaponDescription('');
+            weapon2.weaponDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
+        });
+    });
+
+    describe('Weapon Weight Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight(10);
+            weapon.weaponWeightLabel().should.equal('10 lbs.');
+        });
+    });
+
+    describe('Weapon Range Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponType('Ranged');
+            weapon.weaponRange('20/60');
+            weapon.weaponRangeLabel().should.equal('20/60 ft.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponType('Melee');
+            weapon.weaponProperty('');
+            weapon.weaponRangeLabel().should.equal('5 ft.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponType('Melee');
+            weapon.weaponProperty('Thrown and Reach');
+            weapon.weaponRangeLabel().should.equal('10 ft.');
+        });
+    });
+
 });
