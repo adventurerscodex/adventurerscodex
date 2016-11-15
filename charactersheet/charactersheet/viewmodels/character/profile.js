@@ -17,19 +17,27 @@ function ProfileViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
+    //Static Data
+    self.alignmentOptions = Fixtures.profile.alignmentOptions;
+    self.backgroundOptions = Fixtures.profile.backgroundOptions;
+    self.classOptions = Fixtures.profile.classOptions;
+    self.raceOptions = Fixtures.profile.raceOptions;
 
-    self.alignmentOptions = ko.observableArray(
-        Fixtures.profile.alignmentOptions);
-
+    //Prepopulate methods
     self.setAlignment = function(label, value) {
         self.alignment(value);
     };
 
-    self.backgroundOptions = ko.observableArray(
-        Fixtures.profile.backgroundOptions);
-
     self.setBackground = function(label, value) {
         self.background(value);
+    };
+
+    self.setClass = function(label, value) {
+        self.typeClass(value);
+    };
+
+    self.setRace = function(label, value) {
+        self.race(value);
     };
 
     self.init = function() {
