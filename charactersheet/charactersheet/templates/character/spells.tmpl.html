@@ -121,7 +121,8 @@
                          placeholder="Magic Missile"
                          data-bind="textInput: blankSpell().spellName,
                           autocomplete: { source: spellsPrePopFilter,
-                            onselect: populateSpell }">
+                          onselect: populateSpell },
+                          hasFocus: firstModalElementHasFocus">
                 </div>
               </div>
               <div class="form-group">
@@ -355,7 +356,8 @@
                              class="form-control"
                              id="spellName"
                              placeholder="Magic Missile"
-                             data-bind="value: spellName">
+                             data-bind="textInput: spellName,
+                             hasFocus: $parent.editFirstModalElementHasFocus">
                     </div>
                   </div>
                   <div class="form-group">

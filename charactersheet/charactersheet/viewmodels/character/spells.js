@@ -27,6 +27,8 @@ function SpellbookViewModel() {
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['spellName asc']);
@@ -73,11 +75,13 @@ function SpellbookViewModel() {
 
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+        self.firstModalElementHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
+        self.firstModalElementHasFocus(false);
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
     };
@@ -90,6 +94,7 @@ function SpellbookViewModel() {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* UI Methods */
