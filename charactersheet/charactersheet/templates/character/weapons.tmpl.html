@@ -129,9 +129,8 @@
                          id="weaponName"
                          placeholder="Short Sword"
                          data-bind='textInput: blankWeapon().weaponName, autocomplete: {
-                          source: weaponsPrePopFilter,
-                          onselect: populateWeapon
-                        }'>
+                          source: weaponsPrePopFilter, onselect: populateWeapon},
+                          hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group">
@@ -370,7 +369,8 @@
                              class="form-control"
                              id="weaponName"
                              placeholder="Short Sword"
-                             data-bind='textInput: weaponName'>
+                             data-bind='textInput: weaponName,
+                             hasFocus: $parent.editFirstModalElementHasFocus'>
                     </div>
                   </div>
                   <div class="form-group">

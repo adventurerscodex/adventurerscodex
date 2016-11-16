@@ -61,12 +61,16 @@
 </div>
 
 <!-- Add Modal -->
-<div class="modal fade" id="addSpellSlot" tabindex="-1" role="dialog" aria-labelledby="addSpellSlotLabel">
+<div class="modal fade" id="addSpellSlot" tabindex="-1" role="dialog"
+	aria-labelledby="addSpellSlotLabel" data-bind="modal: {
+		onopen: modalFinishedAnimating}">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-				<h4 class="modal-title" id="addSkillLabel"> Add a new Spell Slot.
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span> </button>
+				<h4 class="modal-title" id="addSkillLabel">
+					Add a spell slot.
 				</h4>
 			</div>
 			<div class="modal-body">
@@ -74,7 +78,8 @@
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Level</label>
 						<div class="col-sm-10">
-							<input type="number" class="form-control" id="level" min="1" max="9" data-bind='textInput: blankSlot().level'>
+							<input type="number" class="form-control" id="level" min="1" max="9"
+								data-bind='textInput: blankSlot().level, hasFocus: modifierHasFocus'>
 						</div>
 					</div>
 					<div class="form-group">
@@ -118,8 +123,9 @@
 </div>
 <!-- Modal Fade -->
 <!-- ViewEdit Modal -->
-<div data-bind="with: selecteditem">
-	<div class="modal fade" id="viewSlot" tabindex="-1" role="dialog" aria-labelledby="viewSlotLabel">
+	<div class="modal fade" id="viewSlot" tabindex="-1" role="dialog"
+		aria-labelledby="viewSlotLabel" data-bind="modal: {
+			 onopen: editModalOpen}, with: selecteditem">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -132,7 +138,8 @@
 						<div class="form-group">
 							<label for="name" class="col-sm-2 control-label">Level</label>
 							<div class="col-sm-10">
-								<input type="number" class="form-control" id="name" min="1" max="9" data-bind="value: level">
+								<input type="number" class="form-control" id="name" min="1" max="9"
+									data-bind="value: level, hasFocus: $parent.editHasFocus">
 							</div>
 						</div>
 						<div class="form-group">
@@ -172,7 +179,5 @@
 <!-- Modal Content -->
 	</div>
 <!-- Modal Dialog -->
-</div>
-<!-- Modal Fade -->
 </div>
 <!-- End with statement -->

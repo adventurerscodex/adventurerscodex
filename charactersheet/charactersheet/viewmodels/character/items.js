@@ -21,6 +21,8 @@ function ItemsViewModel() {
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
 
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;
@@ -60,6 +62,7 @@ function ItemsViewModel() {
     // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+        self.firstModalElementHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
@@ -77,6 +80,7 @@ function ItemsViewModel() {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* UI Methods */
