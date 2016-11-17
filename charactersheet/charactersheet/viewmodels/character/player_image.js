@@ -5,7 +5,7 @@ function PlayerImageViewModel() {
 
     self.openModal = ko.observable(false);
 
-    self.imageSource = ko.observable();
+    self.imageSource = ko.observable('link');
     self.imageUrl = ko.observable('');
     self.email = ko.observable('');
     self.height = ko.observable(80);
@@ -40,7 +40,7 @@ function PlayerImageViewModel() {
         var playerImageSource = PersistenceService.findFirstBy(PlayerImage, 'characterId', key);
         if (playerImageSource) {
             self.imageSource(playerImageSource.imageSource());
-        }else {
+        } else {
             var playerImageSource = new PlayerImage();
             playerImageSource.characterId(key);
             playerImageSource.save();
@@ -55,7 +55,7 @@ function PlayerImageViewModel() {
 
     self.unload = function() {
         self.save();
-        Notifications.playerInfo.changed.remove(self.checkImage);
+        Notifications.playerInfo.changed.remove(self.dataHasChanged);
     };
 
     self.dataHasChanged = function() {
