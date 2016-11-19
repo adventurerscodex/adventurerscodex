@@ -7,6 +7,10 @@
             Armor
             <span data-bind="css: sortArrow('armorName')"></span>
           </th>
+          <th data-bind="click: function(){sortBy('armorEquipped');}">
+            Equipped
+            <span data-bind="css: sortArrow('armorEquipped')"></span>
+          </th>
           <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorType');}">
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
@@ -31,6 +35,11 @@
               <span data-bind="text: armorName"></span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span></td>
+          <td data-bind="click: $parent.editArmor"
+              href="#"
+              data-target="#viewArmor">
+            <span data-bind="css: armorEquippedLabel"></span>
+          </td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: armorType, click: $parent.editArmor"
               href="#"
@@ -164,6 +173,16 @@
                           data-bind="options: blankArmor().armorStealthOptions,
                                      value: blankArmor().armorStealth,
                                      select2: {theme: 'classic'}"></select>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="spellPrepared"
+                       class="col-sm-2 control-label">Equipped</label>
+                  <div class="col-sm-10">
+                    <input type="checkbox"
+                           class="form-control"
+                           id="armorEquipped"
+                           data-bind='checked: blankArmor().armorEquipped'>
                   </div>
               </div>
               <div class="form-group">
@@ -352,6 +371,16 @@
                               data-bind="options: armorStealthOptions,
                                          value: armorStealth,
                                          select2: {theme: 'classic'}"></select>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="spellPrepared"
+                           class="col-sm-2 control-label">Equipped</label>
+                      <div class="col-sm-10">
+                        <input type="checkbox"
+                               class="form-control"
+                               id="armorEquipped"
+                               data-bind='checked: armorEquipped'>
                       </div>
                   </div>
                   <div class="form-group">

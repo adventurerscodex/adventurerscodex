@@ -6,7 +6,8 @@ function Armor() {
     self.mapping = {
         include: ['characterId', 'armorName', 'armorType',
                   'armorPrice', 'armorMagicalModifier', 'armorCurrencyDenomination',
-                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription']
+                  'armorWeight', 'armorClass', 'armorEquipped', 'armorStealth',
+                  'armorDescription']
     };
 
     self._dummy = ko.observable(null);
@@ -18,11 +19,16 @@ function Armor() {
     self.armorCurrencyDenomination = ko.observable('');
     self.armorWeight = ko.observable('');
     self.armorClass = ko.observable('');
+    self.armorEquipped = ko.observable('');
     self.armorStealth = ko.observable('');
     self.armorDescription = ko.observable('');
 
     self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
+
+    self.armorEquippedLabel = ko.pureComputed(function() {
+        return self.armorEquipped() ? 'fa fa-check' : '';
+    });
 
     self.acLabel = ko.pureComputed(function() {
         return 'AC ' + self.armorClass();

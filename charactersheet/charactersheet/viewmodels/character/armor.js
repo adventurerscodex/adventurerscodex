@@ -17,7 +17,9 @@ function ArmorViewModel() {
         'armorName asc': { field: 'armorName', direction: 'asc'},
         'armorName desc': { field: 'armorName', direction: 'desc'},
         'armorType asc': { field: 'armorType', direction: 'asc'},
-        'armorType desc': { field: 'armorType', direction: 'desc'}
+        'armorType desc': { field: 'armorType', direction: 'desc'},
+        'armorEquipped asc': { field: 'armorEquipped', direction: 'asc', booleanType: true},
+        'armorEquipped desc': { field: 'armorEquipped', direction: 'desc', booleanType: true}
     };
 
     self.filter = ko.observable('');

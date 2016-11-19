@@ -36,6 +36,20 @@ describe('Armor Model', function() {
         });
     });
 
+    describe('Armor Equipped Label', function() {
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorEquipped(true);
+            armor.armorEquippedLabel().should.equal('fa fa-check');
+        });
+
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorEquipped(false);
+            armor.armorEquippedLabel().should.equal('');
+        });
+    });
+
     describe('Armor AC Label', function() {
         it('should return the correct label', function() {
             var armor = new Armor();

@@ -664,6 +664,7 @@ var jebeddo_data = {
       "armorCurrencyDenomination": "PP",
       "armorWeight": "",
       "armorClass": "12",
+      "armorEquipped": "",
       "armorStealth": "",
       "armorDescription": "12"
     }

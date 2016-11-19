@@ -64,6 +64,8 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorName desc']);
             armors.sortBy('armorType');
             armors.sort().should.equal(armors.sorts['armorType asc']);
+            armors.sortBy('armorEquipped');
+            armors.sort().should.equal(armors.sorts['armorEquipped asc']);
         });
     });
 
@@ -77,6 +79,11 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorType asc']);
             armors.sortArrow('armorType').should.equal('fa fa-arrow-up fa-color');
             armors.sortArrow('armorName').should.equal('');
+            armors.sortBy('armorEquipped');
+            armors.sort().should.equal(armors.sorts['armorEquipped asc']);
+            armors.sortArrow('armorEquipped').should.equal('fa fa-arrow-up fa-color');
+            armors.sortArrow('armorName').should.equal('');
+            armors.sortArrow('armorType').should.equal('');
         });
     });
 
