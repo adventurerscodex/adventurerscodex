@@ -14,7 +14,6 @@ function Profile() {
     self.background = ko.observable('');
     self.playerName = ko.observable('');
     self.race = ko.observable('');
-    self.religion = ko.observable('');
     self.alignment = ko.observable('');
     self.diety = ko.observable('');
     self.typeClass = ko.observable('');
