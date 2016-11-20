@@ -306,7 +306,11 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "spellcastingAbility": "CHA",
       "spellSaveDc": "14",
-      "spellAttackBonus": "7"
+      "spellAttackBonus": "7",
+      "spellsKnown": "6",
+      "spellsCantripsKnown": "8",
+      "spellsInvocationsKnown": "9",
+      "spellsMaxPrepared": "5"
     }
   ],
   "Slot": [

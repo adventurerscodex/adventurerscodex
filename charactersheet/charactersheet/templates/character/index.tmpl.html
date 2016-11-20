@@ -144,10 +144,6 @@
 <!-- End Skills Tab -->
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
   <div class="row">
-    <div class="col-sm-12 col-padded">
-      <div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates/character', data: spellStatsViewModel }">
-      </div>
-    </div>
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img src="/images/enlightenment.svg" alt="Spells image"/>
     </div>
@@ -162,6 +158,14 @@
     </div>
   </div>
   <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div class="h3">
+        Spell Stats<br/>
+        <small>Click to edit. In the future, these values will auto-calculate and auto-populate.</small>
+      </div>
+      <div id="spell_stats" data-bind="template: { name: 'spell_stats.tmpl', templateUrl: 'templates/character', data: spellStatsViewModel }">
+      </div>
+    </div>
     <div class="col-sm-12 col-padded">
       <div class="h3">
         Spells<br/>

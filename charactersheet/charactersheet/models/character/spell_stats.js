@@ -4,14 +4,19 @@ function SpellStats() {
     var self = this;
     self.ps = PersistenceService.register(SpellStats, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-                'mapping', 'spellcastingAbilityOptions']
+        include: ['characterId', 'spellcastingAbility', 'spellSaveDc',
+                  'spellAttackBonus', 'spellsKnown', 'spellsCantripsKnown',
+                  'spellsInvocationsKnown', 'spellsMaxPrepared']
     };
 
     self.characterId = ko.observable(null);
     self.spellcastingAbility = ko.observable('');
     self.spellSaveDc = ko.observable(0);
     self.spellAttackBonus = ko.observable(0);
+    self.spellsKnown = ko.observable(0);
+    self.spellsCantripsKnown = ko.observable(0);
+    self.spellsInvocationsKnown = ko.observable(0);
+    self.spellsMaxPrepared = ko.observable(0);
 
     self.spellcastingAbilityOptions = ko.observableArray(
         Fixtures.spellStats.spellcastingAbilityOptions);
@@ -20,15 +25,18 @@ function SpellStats() {
 
     self.clear = function() {
         var values = new SpellStats().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
