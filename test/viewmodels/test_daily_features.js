@@ -50,6 +50,10 @@ describe('Daily Features View Model', function() {
             p.sort().should.equal(p.sorts['featureMaxUses asc']);
             p.sortBy('featureMaxUses');
             p.sort().should.equal(p.sorts['featureMaxUses desc']);
+            p.sortBy('featureResetsOn');
+            p.sort().should.equal(p.sorts['featureResetsOn asc']);
+            p.sortBy('featureResetsOn');
+            p.sort().should.equal(p.sorts['featureResetsOn desc']);
         });
     });
 
@@ -64,6 +68,11 @@ describe('Daily Features View Model', function() {
             p.sort().should.equal(p.sorts['featureName asc']);
             p.sortArrow('featureName').should.equal('fa fa-arrow-up fa-color');
             p.sortArrow('featureMaxUses').should.equal('');
+            p.sortBy('featureResetsOn');
+            p.sort().should.equal(p.sorts['featureResetsOn asc']);
+            p.sortArrow('featureResetsOn').should.equal('fa fa-arrow-up fa-color');
+            p.sortArrow('featureMaxUses').should.equal('');
+            p.sortArrow('featureName').should.equal('');
         });
     });
 

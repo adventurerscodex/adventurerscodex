@@ -50,4 +50,30 @@ describe('Daily Feature Model', function() {
             s.featureMaxUses().should.equal(vals.featureMaxUses);
         });
     });
+
+    describe('Resets On Label', function() {
+        it('should return the correct label', function() {
+            var s = new DailyFeature();
+
+            s.featureResetsOn('long');
+            s.resetsOnLabel().should.equal('Long Rest');
+
+        });
+
+        it('should return the correct label', function() {
+            var s = new DailyFeature();
+
+            s.featureResetsOn('short');
+            s.resetsOnLabel().should.equal('Short Rest');
+
+        });
+
+        it('should return the correct label', function() {
+            var s = new DailyFeature();
+
+            s.featureResetsOn('');
+            s.resetsOnLabel().should.equal('None');
+
+        });
+    });
 });

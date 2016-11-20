@@ -7,7 +7,9 @@ function DailyFeatureViewModel() {
         'featureName asc': { field: 'featureName', direction: 'asc'},
         'featureName desc': { field: 'featureName', direction: 'desc'},
         'featureMaxUses asc': { field: 'featureMaxUses', direction: 'asc', numeric: true},
-        'featureMaxUses desc': { field: 'featureMaxUses', direction: 'desc', numeric: true}
+        'featureMaxUses desc': { field: 'featureMaxUses', direction: 'desc', numeric: true},
+        'featureResetsOn asc': { field: 'featureResetsOn', direction: 'asc'},
+        'featureResetsOn desc': { field: 'featureResetsOn', direction: 'desc'}
     };
 
     self.dailyFeatures = ko.observableArray([]);

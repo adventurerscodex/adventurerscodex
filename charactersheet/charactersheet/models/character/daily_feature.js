@@ -18,7 +18,19 @@ function DailyFeature() {
     self.featureResetsOn = ko.observable('');
     self.featureDescription = ko.observable('');
     self.color = ko.observable('');
-    
+
+    self.resetsOnLabel = ko.pureComputed(function(){
+        if(self.featureResetsOn() === 'long') {
+            return 'Long Rest';
+        } else if (self.featureResetsOn() === 'short') {
+            return 'Short Rest';
+        } else if (self.featureResetsOn() === '') {
+            return 'None';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    });
+
     self.currentFeaturesAvailable = ko.pureComputed(function() {
         return ( parseInt( self.featureMaxUses() ) - parseInt( self.featureUsed() ) );
     });
