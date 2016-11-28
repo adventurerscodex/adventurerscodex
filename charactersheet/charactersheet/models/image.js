@@ -9,15 +9,7 @@ function ImageModel() {
     /**
      * The image data.
      */
-    self.imageUrl = ko.observable();
-
-    /**
-     * The raw image data. This is not saved and is compressed. For the
-     * right sized image, use imageUrl.
-     */
-    self.dataUrl = ko.observable();
-    self.height = ko.observable(80);
-    self.width = ko.observable(80);
+    self.imageUrl = ko.observable('');
 
     self.save = function() {
         self.ps.save();
@@ -41,11 +33,10 @@ function ImageModel() {
 
     self.resize = function() {
         var compData = ImageModel.resizeImageData(
-            self.dataUrl(), self.height(), self.width());
+            self.imageUrl(), self.height(), self.width());
         self.imageUrl(compData);
         self.save();
     };
-    self.dataUrl.subscribe(self.resize);
 
     /**
      * Returns whether or not the image is empty.
