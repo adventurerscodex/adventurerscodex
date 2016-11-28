@@ -31,7 +31,6 @@ var jebeddo_data = {
       "background": "",
       "playerName": "Bhuvan",
       "race": "Half-Elf",
-      "religion": "",
       "alignment": "Chaotic Neutral",
       "diety": "Leira, Goddess of illusion",
       "typeClass": "Bard",

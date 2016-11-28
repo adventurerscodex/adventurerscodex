@@ -8,7 +8,6 @@ function ProfileViewModel() {
     self.background = ko.observable('');
     self.playerName = ko.observable('');
     self.race = ko.observable('');
-    self.religion = ko.observable('');
     self.alignment = ko.observable('');
     self.diety = ko.observable('');
     self.typeClass = ko.observable('');
@@ -54,7 +53,6 @@ function ProfileViewModel() {
             self.characterName(profile.characterName());
             self.background(profile.background());
             self.race(profile.race());
-            self.religion(profile.religion());
             self.alignment(profile.alignment());
             self.diety(profile.diety());
             self.typeClass(profile.typeClass());
@@ -69,7 +67,6 @@ function ProfileViewModel() {
         self.characterName.subscribe(self.dataHasChanged);
         self.background.subscribe(self.dataHasChanged);
         self.race.subscribe(self.dataHasChanged);
-        self.religion.subscribe(self.dataHasChanged);
         self.alignment.subscribe(self.dataHasChanged);
         self.diety.subscribe(self.dataHasChanged);
         self.typeClass.subscribe(self.dataHasChanged);
@@ -93,7 +90,6 @@ function ProfileViewModel() {
         profile.characterName(self.characterName());
         profile.background(self.background());
         profile.race(self.race());
-        profile.religion(self.religion());
         profile.alignment(self.alignment());
         profile.diety(self.diety());
         profile.typeClass(self.typeClass());
@@ -110,7 +106,6 @@ function ProfileViewModel() {
         self.background('');
         self.playerName('');
         self.race('');
-        self.religion('');
         self.alignment('');
         self.diety('');
         self.typeClass('');
