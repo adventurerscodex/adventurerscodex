@@ -104,6 +104,10 @@ var Notifications = {
         allRemoved: new signals.Signal()
     },
 
+    encounters: {
+        changed: new signals.Signal()
+    },
+
     playerImage: {
         changed: new signals.Signal()
     },
