@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="h2">
+      Encounters<br/>
+      <small>Create and manage events and sections of your campaign. Group encounters under a common topic, or...</small>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="panel-heading">
+              <div class="h4">
+                Encounters
+                <div class="pull-right">
+                  <span class="glyphicon glyphicon-plus" style="cursor:pointer;"
+                    data-bind="click: openAddModal"></span>
+                </div>
+              </div>
+            </div>
+            <encounter-list params="encounters: encounters,
+              selectedEncounter: selectedEncounter, ondelete: deleteEncounter,
+              onadd: openAddModalWithParent">
+            </encounter-list>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8">
+        <!-- ko if: selectedEncounter -->
+        <div data-bind="template: {
+          name: 'encounter_detail.tmpl',
+          templateUrl: 'templates/dm',
+          data: encounterDetailViewModel
+        }"></div>
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: modalEncounter,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"> <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          Add a new Encounter
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="form-group" data-bind="with: modalEncounter">
+            <div class="row row-padded">
+              <label for="encounter.name" class="col-sm-3 control-label">
+                Encounter Name
+              </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id=""
+                       data-bind="value: name,
+                        hasFocus: $parent.nameHasFocus" />
+              </div>
+            </div>
+            <div class="row row-padded">
+              <label for="encounter.location" class="col-sm-3 control-label">
+                Location
+              </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                       data-bind="value: encounterLocation" />
+              </div>
+            </div>
+          </div>
+          <!-- Encounter Section Show/Hide -->
+          <hr />
+          <div class="h4">
+            Which sections would you like to include?<br />
+            <small>You can always change these later</small>
+          </div>
+          <!-- ko foreach: { data: visibilityViewModels } -->
+          <div class="row row-padded">
+            <label class="col-sm-3 control-label"
+              data-bind="text: name">
+            </label>
+            <div class="col-sm-8">
+              <input type="checkbox" class="form-control" id=""
+                     data-bind="checked: visible" />
+            </div>
+          </div>
+          <!-- /ko -->
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-xs-offset-7 col-xs-5">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bind="click: addEncounter"
+                        data-dismiss="modal">Add</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

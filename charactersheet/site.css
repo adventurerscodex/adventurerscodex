@@ -43,10 +43,6 @@ small {
     padding-right: 5px;
 }
 
-.well-no-padding {
-  margin-bottom:0px;
-}
-
 .well-top-shadow {
   box-shadow: 0px 2px 2px -2px #888888 inset;
 }
@@ -58,6 +54,10 @@ small {
 
 .table-ac-bordered tr {
   border-bottom: thin solid #ecf0f1;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0px;
 }
 
 .beta {
