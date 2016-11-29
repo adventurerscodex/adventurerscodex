@@ -20,6 +20,7 @@ function EncounterDetailViewModel(encounter, allSections) {
 
     self.notesSectionViewModel = ko.observable();
     self.pointOfInterestSectionViewModel = ko.observable();
+    self.npcSectionViewModel = ko.observable();
     // TODO: Add more sections...
 
     self.openModal = ko.observable(false);

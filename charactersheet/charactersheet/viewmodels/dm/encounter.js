@@ -14,7 +14,8 @@ function EncounterViewModel() {
 
     self.sections = [
         { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
-        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
+        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection },
+        { property: 'npcSectionViewModel', vm: NPCSectionViewModel, model: NPCSection }
     ];
 
     /* Public Methods */
