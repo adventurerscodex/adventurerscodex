@@ -13,12 +13,9 @@ function EncounterViewModel() {
     /* Encounter Sections */
 
     self.sections = [
+        { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
         { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
     ];
-
-    /* Modal Section View Models */
-
-    self.notesSectionViewModel = ko.observable();
 
     /* Public Methods */
 
@@ -64,14 +61,12 @@ function EncounterViewModel() {
 
     self.openAddModal = function() {
         self.modalEncounter(new Encounter());
-        self._setupSectionVMs(self.modalEncounter());
         self._initializeVisibilityViewModel();
     };
 
     self.openAddModalWithParent = function(parent) {
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
-        self._setupSectionVMs(self.modalEncounter());
         self._initializeVisibilityViewModel();
     };
 
@@ -98,6 +93,9 @@ function EncounterViewModel() {
         }
 
         encounter.save();
+        self.visibilityViewModels().forEach(function(vm, idx, _) {
+            vm.save();
+        });
 
         // Reload Encounters
         self.encounters(self._getTopLevelEncounters());
@@ -120,8 +118,8 @@ function EncounterViewModel() {
     /* Private Methods */
 
     self._initializeVisibilityViewModel = function() {
-        self.visibilityViewModels(self.sections.map(function(section, idx, _){
-            var visibilityViewModel = new EncounterSectionVisibilityViewModel(section.model);
+        self.visibilityViewModels(self.sections.map(function(section, idx, _) {
+            var visibilityViewModel = new EncounterSectionVisibilityViewModel(self.modalEncounter(), section.model);
             visibilityViewModel.init();
             visibilityViewModel.load();
             return visibilityViewModel;
@@ -149,27 +147,4 @@ function EncounterViewModel() {
         });
 
     };
-
-    /**
-     * Using the list of sections, sets the value of the child
-     * section view models.
-     * Sections are identified using their properties set in the sections list,
-     * and are instantiated with 2 parameters being the current encounter, and
-     * the view model's data model object (if it exists, or null)  that matched
-     * a query by encounter id.
-     */
-    self._setupSectionVMs = function(encounter) {
-        var key = encounter.encounterId();
-        self.sections.forEach(function(section, idx, _) {
-            var relevantModel = PersistenceService.findFirstBy(section.model, 'encounterId', key);
-            var childViewModel = new section.vm(encounter, relevantModel);
-            try {
-                self[section.property](childViewModel);
-            } catch (err) {
-                throw "Unable to set child view models for "+section.property
-                    +". You probably forgot to add the property to the detail VM.\n"+err
-            }
-        });
-    };
-
 }
