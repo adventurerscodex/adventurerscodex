@@ -1,15 +1,9 @@
-<div class="panel panel-default bio">
-  <div class="panel-body">
-	<!-- Notes -->
-	<div class="panel-body">
-		<div class="form-horizontal">
-			<div class="form-group">
-				<div class="">
-					<textarea class="form-control dark-area" rows="20" id="text"
-						placeholder="The party enters a dark..." data-bind="textInput: notes"></textarea>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="h4">
+Notes
+</div>
+<div class="form-group">
+  <div class="">
+    <markdown-edit-preview params="text: notes, rows: 20,
+      placeholder: 'The party enters a dark...', defaultActiveTab: 'edit'"></markdown-edit-preview>
   </div>
 </div>

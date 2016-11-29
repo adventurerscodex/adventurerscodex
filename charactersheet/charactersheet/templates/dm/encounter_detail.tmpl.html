@@ -1,16 +1,16 @@
 <div class="panel panel-default">
-  <div class="panel-body">
-    <div class="panel-heading">
-      <div class="h3">
-        <span data-bind="text: name"></span>&nbsp;
-        <small data-bind="text: encounterLocation"></small>
-        <div class="pull-right">
-          <button class="btn btn-sm btn-default" data-bind="click: toggleModal">
-            Edit
-          </button>
-        </div>
+  <div class="panel-heading">
+    <div class="h3">
+      <span data-bind="text: name"></span>&nbsp;
+      <small data-bind="text: encounterLocation"></small>
+      <div class="pull-right">
+        <button class="btn btn-sm btn-default" data-bind="click: toggleModal">
+          Edit
+        </button>
       </div>
     </div>
+  </div>
+  <div class="panel-body">
     <!-- Encounter Sections -->
     <!-- ko foreach: { data: sections, as: 'section' } -->
     <!-- ko if: $parent[section.property]() -->
@@ -67,24 +67,22 @@
               </div>
             </div>
           </div>
-          <!-- Encounter Section Show/Hide -->
-          <!-- ko foreach: { data: sections, as: 'section' } -->
-          <!-- ko if: $parent[section.property]() -->
           <hr />
           <div class="h4">
             Which sections would you like to include?<br />
             <small>You can always change these later</small>
           </div>
+          <!-- Encounter Section Show/Hide -->
+          <!-- ko foreach: { data: visibilityVMs } -->
           <div class="row row-padded">
             <label for="encounter.locale" class="col-sm-3 control-label"
-              data-bind="text: $parent[section.property]().name">
+              data-bind="text: name">
             </label>
             <div class="col-sm-8">
               <input type="checkbox" class="form-control" id=""
-                     data-bind="checked: $parent[section.property]().visible" />
+                     data-bind="checked: visible" />
             </div>
           </div>
-          <!-- /ko -->
           <!-- /ko -->
           <div class="modal-footer">
             <div class="form-group">
