@@ -95,9 +95,9 @@
     </div> <!-- Modal Fade -->
 
     <!-- ViewEdit Modal -->
-    <div data-bind="with: selecteditem">
     <div class="modal fade" id="viewSavingThrow" tabindex="-1" role="dialog"
-         aria-labelledby="viewSavingThrowLabel">
+         aria-labelledby="viewSavingThrowLabel" data-bind="modal: {
+            onopen: modalFinishedAnimating}, with: selecteditem">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -117,7 +117,7 @@
                          class="form-control"
                          id="name"
                          placeholder="Archery"
-                         data-bind="value: name">
+                         data-bind="value: name, hasFocus: $parent.modifierHasFocus">
                 </div>
               </div>
               <div class="form-group">
@@ -155,5 +155,4 @@
           </div> <!-- Modal Body -->
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
-    </div> <!-- Modal Fade -->
     </div> <!-- End with statement -->

@@ -44,14 +44,18 @@
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Race</span>
           <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: race'>
+            data-bind='textInput: race,
+              autocomplete: { source: raceOptions,
+              onselect: setRace }'>
         </div>
       </div>
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Class</span>
           <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: typeClass'>
+            data-bind='textInput: typeClass,
+              autocomplete: { source: classOptions,
+              onselect: setClass }'>
         </div>
       </div>
     </div>
@@ -68,15 +72,6 @@
           <span class="input-group-addon" id="basic-addon2">Age</span>
           <input type="text" class="form-control" aria-describedby="basic-addon2"
             data-bind='textInput: age'>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Religion</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='textInput: religion'>
         </div>
       </div>
     </div>

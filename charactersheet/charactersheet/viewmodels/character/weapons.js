@@ -10,6 +10,8 @@ function WeaponsViewModel() {
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
 
     self.sorts = {
         'weaponName asc': { field: 'weaponName', direction: 'asc'},
@@ -101,6 +103,7 @@ function WeaponsViewModel() {
 
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+        self.firstModalElementHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
@@ -118,6 +121,7 @@ function WeaponsViewModel() {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     self.weaponsPrePopFilter = function(request, response) {

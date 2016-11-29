@@ -86,7 +86,8 @@
                id="itemName"
                placeholder="Rations"
                data-bind='textInput: blankItem().itemName,
-                 autocomplete: { source: itemsPrePopFilter, onselect: populateItem }'>
+                 autocomplete: { source: itemsPrePopFilter, onselect: populateItem },
+                 hasFocus: firstModalElementHasFocus'>
            </div>
          </div>
          <div class="form-group">
@@ -248,7 +249,8 @@
                          class="form-control"
                          id="itemName"
                          placeholder="Rations"
-                         data-bind='textInput: itemName'>
+                         data-bind='textInput: itemName,
+                          hasFocus: $parent.editFirstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group">

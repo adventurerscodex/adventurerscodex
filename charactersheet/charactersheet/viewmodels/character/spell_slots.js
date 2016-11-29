@@ -91,6 +91,19 @@ function SpellSlotsViewModel() {
         });
     };
 
+    // Modal Methods
+
+    self.modifierHasFocus = ko.observable(false);
+    self.editHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+    };
+
+    self.editModalOpen = function() {
+        self.editHasFocus(true);
+    };
+
     //Manipulating spell slots
 
     self.maxAvailableSlots = function() {

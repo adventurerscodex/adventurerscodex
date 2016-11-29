@@ -49,7 +49,7 @@ describe('Wizard Profile ViewModel', function(){
         it('should populate race', function() {
             var wizard = new WizardProfileStepViewModel();
 
-            wizard.populateRace('label', 'Elf');
+            wizard.setRace('label', 'Elf');
 
             wizard.race().should.equal('Elf');
         });
@@ -57,7 +57,7 @@ describe('Wizard Profile ViewModel', function(){
         it('should populate class', function() {
             var wizard = new WizardProfileStepViewModel();
 
-            wizard.populateClass('label', 'Wizard');
+            wizard.setClass('label', 'Wizard');
 
             wizard.typeClass().should.equal('Wizard');
         });

@@ -10,6 +10,8 @@ function ArmorViewModel() {
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
 
     self.sorts = {
         'armorName asc': { field: 'armorName', direction: 'asc'},
@@ -77,6 +79,7 @@ function ArmorViewModel() {
     // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
+        self.firstModalElementHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
@@ -94,6 +97,7 @@ function ArmorViewModel() {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* UI Methods */
