@@ -25,7 +25,37 @@ function TotalWeightStatusServiceComponent() {
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
         var scores = AbilityScores.findBy(key)[0];
-        if (!scores || !scores.str()) { return }
+        if (!scores || !scores.str()) {
+            self._removeStatus();
+        } else {
+            self._updateStatus();
+        }
+    };
+
+    self.getDescription = function(weight) {
+        if (weight === 0) {
+            return 'carrying nothing';
+        }
+        return 'carrying ~' + String(weight) + 'lbs';
+    };
+
+    self.getType = function(strength, weight) {
+        if (weight === 0) {
+            return 'default';
+        } else if (weight < strength * 5) {
+            return 'info';
+        } else if (weight < strength * 10) {
+            return 'warning';
+        } else {
+            return 'danger';
+        }
+    };
+
+    /* Private Methods */
+
+    self._updateStatus = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var scores = AbilityScores.findBy(key)[0];
 
         var weight = 0;
         Armor.findAllBy(key).forEach(function(e, i, _) {
@@ -55,22 +85,13 @@ function TotalWeightStatusServiceComponent() {
         Notifications.status.changed.dispatch();
     };
 
-    self.getDescription = function(weight) {
-        if (weight === 0) {
-            return 'carrying nothing';
+    self._removeStatus = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
+        if (status) {
+            status.delete();
+            Notifications.status.changed.dispatch();
         }
-        return 'carrying ~' + String(weight) + 'lbs';
     };
 
-    self.getType = function(strength, weight) {
-        if (weight === 0) {
-            return 'default';
-        } else if (weight < strength * 5) {
-            return 'info';
-        } else if (weight < strength * 10) {
-            return 'warning';
-        } else {
-            return 'danger';
-        }
-    };
 }
