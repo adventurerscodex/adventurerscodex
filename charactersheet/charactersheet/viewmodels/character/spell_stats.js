@@ -4,6 +4,8 @@ function SpellStatsViewModel() {
     var self = this;
 
     self.spellStats = ko.observable(new SpellStats());
+    self.modalStatus = ko.observable(false);
+    self.firstModalElementHasFocus = ko.observable(false);
 
     self.init = function() {
         Notifications.global.save.add(function() {
@@ -32,5 +34,18 @@ function SpellStatsViewModel() {
 
     self.setSpellCastingAbility = function(label, value) {
         self.spellStats().spellcastingAbility(label);
+    };
+
+    // Modal Methods
+
+    self.openModal = function() {
+        self.modalStatus(true);
+         // Alert the modal even if the value didn't technically change.
+        self.modalStatus.valueHasMutated();
+    };
+
+    self.modalFinishedAnimating = function() {
+        self.firstModalElementHasFocus(true);
+        self.firstModalElementHasFocus.valueHasMutated();
     };
 }
