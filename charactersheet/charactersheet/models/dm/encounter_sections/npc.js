@@ -38,4 +38,24 @@ function NPC() {
     self.delete = function() {
         self.ps.delete();
     };
+
+    // UI Methods
+
+    self.longDescription = ko.pureComputed(function() {
+        return self._plainTextDescription().substr(0, 200).trim() + '...';
+    });
+
+    self.shortDescription = ko.pureComputed(function() {
+        return self._plainTextDescription().substr(0, 100).trim() + '...';
+    });
+
+    // Private Methods
+
+    /**
+     * Returns the same text as the description, but without HTML/MD artifacts.
+     */
+    self._plainTextDescription = ko.pureComputed(function() {
+        var myString = self.description() || '';
+        return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
+    });
 }
