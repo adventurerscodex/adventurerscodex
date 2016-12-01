@@ -93,7 +93,7 @@
                          id="armorName"
                          placeholder="Chain Mail"
                          data-bind='textInput: blankArmor().armorName, autocomplete: { source: armorsPrePopFilter,
-                            onselect: populateArmor }'>
+                            onselect: populateArmor }, hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group">
@@ -280,7 +280,8 @@
                              class="form-control"
                              id="armorName"
                              placeholder="Chain Mail"
-                             data-bind='textInput: armorName'>
+                             data-bind='textInput: armorName,
+                              hasFocus: $parent.editFirstModalElementHasFocus'>
                     </div>
                   </div>
                   <div class="form-group">

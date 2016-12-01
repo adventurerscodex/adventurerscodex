@@ -8,7 +8,6 @@ function ProfileViewModel() {
     self.background = ko.observable('');
     self.playerName = ko.observable('');
     self.race = ko.observable('');
-    self.religion = ko.observable('');
     self.alignment = ko.observable('');
     self.diety = ko.observable('');
     self.typeClass = ko.observable('');
@@ -17,19 +16,27 @@ function ProfileViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
+    //Static Data
+    self.alignmentOptions = Fixtures.profile.alignmentOptions;
+    self.backgroundOptions = Fixtures.profile.backgroundOptions;
+    self.classOptions = Fixtures.profile.classOptions;
+    self.raceOptions = Fixtures.profile.raceOptions;
 
-    self.alignmentOptions = ko.observableArray(
-        Fixtures.profile.alignmentOptions);
-
+    //Prepopulate methods
     self.setAlignment = function(label, value) {
         self.alignment(value);
     };
 
-    self.backgroundOptions = ko.observableArray(
-        Fixtures.profile.backgroundOptions);
-
     self.setBackground = function(label, value) {
         self.background(value);
+    };
+
+    self.setClass = function(label, value) {
+        self.typeClass(value);
+    };
+
+    self.setRace = function(label, value) {
+        self.race(value);
     };
 
     self.init = function() {
@@ -46,7 +53,6 @@ function ProfileViewModel() {
             self.characterName(profile.characterName());
             self.background(profile.background());
             self.race(profile.race());
-            self.religion(profile.religion());
             self.alignment(profile.alignment());
             self.diety(profile.diety());
             self.typeClass(profile.typeClass());
@@ -61,7 +67,6 @@ function ProfileViewModel() {
         self.characterName.subscribe(self.dataHasChanged);
         self.background.subscribe(self.dataHasChanged);
         self.race.subscribe(self.dataHasChanged);
-        self.religion.subscribe(self.dataHasChanged);
         self.alignment.subscribe(self.dataHasChanged);
         self.diety.subscribe(self.dataHasChanged);
         self.typeClass.subscribe(self.dataHasChanged);
@@ -85,7 +90,6 @@ function ProfileViewModel() {
         profile.characterName(self.characterName());
         profile.background(self.background());
         profile.race(self.race());
-        profile.religion(self.religion());
         profile.alignment(self.alignment());
         profile.diety(self.diety());
         profile.typeClass(self.typeClass());
@@ -102,7 +106,6 @@ function ProfileViewModel() {
         self.background('');
         self.playerName('');
         self.race('');
-        self.religion('');
         self.alignment('');
         self.diety('');
         self.typeClass('');

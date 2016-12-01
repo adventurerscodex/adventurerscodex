@@ -18,7 +18,7 @@ var ViewModelUtilities = {
                 try {
                     vm[keys[i]]()[property]();
                 } catch(err) {
-                    throw 'Module ' + keys[i] + ' failed to load.\n' + err;
+                    throw 'Module ' + keys[i] + ' failed to ' + property + '.\n' + err;
                 }
             }
         }

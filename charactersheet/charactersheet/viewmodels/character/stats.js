@@ -212,6 +212,13 @@ function StatsViewModel() {
         self.otherStats().updateValues();
     };
 
+    // Modal methods
+    self.modifierHasFocus = ko.observable(false);
+
+    self.modalFinishedAnimating = function() {
+        self.modifierHasFocus(true);
+    };
+
     /* Utility Methods */
 
     self.dataHasChanged = function() {

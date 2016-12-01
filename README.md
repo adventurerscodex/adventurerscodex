@@ -8,7 +8,7 @@ Welcome to Adventurer&rsquo;s&nbsp;Codex</h1>
 [![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex?branch=develop)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sonictherocketman/adventurerscodex)
 
-Experience the next step in tabletop D&D
+Experience the next step in tabletop RPGs
 
 
 What is it?

@@ -111,7 +111,7 @@
                          placeholder="Dagger of Venom"
                          data-bind='textInput: blankMagicItem().magicItemName,
                          autocomplete: { source: magicItemsPrePopFilter,
-                         onselect: populateMagicItems }'>
+                         onselect: populateMagicItems }, hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group">
@@ -306,7 +306,8 @@
                              class="form-control"
                              id="magicItemName"
                              placeholder="Dagger of Venom"
-                             data-bind='textInput: magicItemName'>
+                             data-bind='textInput: magicItemName,
+                              hasFocus: $parent.editFirstModalElementHasFocus'>
                     </div>
                   </div>
                   <div class="form-group">

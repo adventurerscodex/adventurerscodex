@@ -1,7 +1,6 @@
 <div class="h4">
-  Points of Interest<br />
-  <small>Keep track of all of the interesting locations and
-    objects in the world.</small>
+  Non-Player Character<br />
+  <small>Keep track of all of the interesting characters in your world.</small>
 </div>
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead>
@@ -10,43 +9,55 @@
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('description');}" class="col-md-8">
+      <th data-bind="click: function(){sortBy('race');}" class="col-md-3">
+        Race
+        <span data-bind="css: sortArrow('race')"></span>
+      </th>
+      <th data-bind="click: function(){sortBy('description');}" class="col-md-5">
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
       <th class="col-md-1">
         <a data-toggle="modal"
-           data-target="#addPointOfInterest" href="#">
+           data-target="#addNPC" href="#">
           <i class="fa fa-plus fa-color"></i>
         </a>
       </th>
     </tr>
   </thead>
   <tbody>
-  <!-- ko foreach: filteredAndSortedPointsOfInterest -->
+  <!-- ko foreach: filteredAndSortedNpcs -->
     <tr class="clickable">
-      <td data-bind="text: name, click: $parent.editPointOfInterest"
+      <td data-bind="text: name, click: $parent.editNPC"
           href="#"
           data-toggle="modal"
-          data-target="#viewPointOfInterest"></td>
-      <td data-bind="text: description, click: $parent.editPointOfInterest"
+          data-target="#viewNPC"></td>
+      <td data-bind="text: race, click: $parent.editNPC"
           href="#"
           data-toggle="modal"
-          data-target="#viewPointOfInterest"></td>
+          data-target="#viewNPC"></td>
+      <td data-bind="text: shortDescription, click: $parent.editNPC"
+          href="#" class="hidden-md hidden-lg"
+          data-toggle="modal"
+          data-target="#viewNPC"></td>
+      <td data-bind="text: longDescription, click: $parent.editNPC"
+          href="#" class="hidden-sm hidden-xs"
+          data-toggle="modal"
+          data-target="#viewNPC"></td>
       <td>
-        <a data-bind="click: $parent.removePointOfInterest" href="#">
+        <a data-bind="click: $parent.removeNPC" href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>
         </a>
       </td>
     </tr>
     <!-- /ko -->
-    <!-- ko if: filteredAndSortedPointsOfInterest().length == 0 -->
+    <!-- ko if: filteredAndSortedNpcs().length == 0 -->
     <tr class="clickable">
-      <td data-toggle="modal" data-target="#addPointOfInterest" href="#"
+      <td data-toggle="modal" data-target="#addNPC" href="#"
         colspan="7" class="text-center">
         <i class="fa fa-plus fa-color"></i>
-        Add a new Point of Interest
+        Add a new NPC
       </td>
     </tr>
     <!-- /ko -->
@@ -55,7 +66,7 @@
 
 <!-- Add Modal -->
 <div class="modal fade"
-     id="addPointOfInterest"
+     id="addNPC"
      tabindex="-1"
      role="dialog">
   <div class="modal-dialog" role="document">
@@ -68,7 +79,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title"
-            id="addWeaponLabel">Add a new Point of Interest</h4>
+            id="addNpcLabel">Add a new NPC</h4>
     </div>
       <div class="modal-body">
         <form class="form-horizontal">
@@ -77,8 +88,17 @@
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
-                     placeholder="A Statue of a King"
-                     data-bind="textInput: blankPointOfInterest().name">
+                     placeholder="King Arthur"
+                     data-bind="textInput: blankNPC().name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Race</label>
+            <div class="col-sm-10">
+              <input type="text"
+                     class="form-control"
+                     placeholder="Human"
+                     data-bind="textInput: blankNPC().race">
             </div>
           </div>
           <div class="form-group">
@@ -86,14 +106,14 @@
               <div class="col-sm-10">
                 <textarea type="text"
                        class="form-control" rows="4"
-                       placeholder="It rises up from it's stone pillar..."
-                       data-bind='value: blankPointOfInterest().description'></textarea>
+                       placeholder="King Arthur is a benevolent..."
+                       data-bind='value: blankNPC().description'></textarea>
               </div>
           </div>
           <div class="modal-footer">
             <button type="button"
                     class="btn btn-primary"
-                    data-bind='click: addPointOfInterest'
+                    data-bind='click: addNPC'
                     data-dismiss="modal">Add</button>
           </div>
         </form>
@@ -121,7 +141,7 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">Edit a Point of Interest</h4>
+        <h4 class="modal-title">Edit an NPC</h4>
       </div>
       <div class="modal-body">
         <!-- Begin Tabs -->
@@ -141,6 +161,7 @@
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;
+              <small data-bind="text: race"></small>
             </div>
             <hr />
             <div class="row row-padded">
@@ -159,7 +180,7 @@
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal">
               <div class="form-group">
-                <label for="pointOfInterestName"
+                <label for="npcName"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
@@ -168,7 +189,16 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="pointInterestDescription"
+                <label class="col-sm-2 control-label">Race</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         placeholder="Human"
+                         data-bind="textInput: race">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="npcDescription"
                        class="col-sm-2 control-label">Description</label>
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
