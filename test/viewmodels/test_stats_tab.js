@@ -33,7 +33,7 @@ describe('StatsTabViewModel', function(){
     describe('Unload', function() {
         it('should unload the sub view models', function() {
             var vm = new StatsTabViewModel();
-            var notifySpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels');
+            var notifySpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels').returnWith({});
 
             vm.unload();
 
