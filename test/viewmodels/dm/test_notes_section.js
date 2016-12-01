@@ -19,6 +19,7 @@ describe('NotesSectionViewModel', function(){
             var notes = new NotesSection();
             notes.notes('blah');
             notes.visible(false);
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new NotesSectionViewModel(new Encounter(), notes);
 
             vm.load();
