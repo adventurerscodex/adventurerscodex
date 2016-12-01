@@ -17,7 +17,7 @@ var Utility = {
 /**
  * Strip a markdown string of all markup.
  */
-Utility.markdown.asPlaintext = function(myString) {
-    var myString = myString || '';
+Utility.markdown.asPlaintext = function(markdown) {
+    var myString = markdown || '';
     return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
 };

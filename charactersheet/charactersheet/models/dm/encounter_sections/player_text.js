@@ -4,11 +4,12 @@ function PlayerText() {
     var self = this;
     self.ps = PersistenceService.register(PlayerText, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'description']
+        include: ['characterId', 'encounterId', 'name', 'description']
     };
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
+    self.name = ko.observable();
     self.description = ko.observable();
 
     //Public Methods

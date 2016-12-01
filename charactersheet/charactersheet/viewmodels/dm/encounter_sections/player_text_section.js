@@ -19,6 +19,8 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.editTabStatus = ko.observable('');
 
     self.sorts = {
+        'name asc': { field: 'name', direction: 'asc' },
+        'name desc': { field: 'name', direction: 'desc' },
         'description asc': { field: 'description', direction: 'asc' },
         'description desc': { field: 'description', direction: 'desc' }
     };
