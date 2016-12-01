@@ -51,29 +51,23 @@ describe('Daily Feature Model', function() {
         });
     });
 
-    describe('Resets On Label', function() {
-        it('should return the correct label', function() {
+    describe('Resets On Img Source', function() {
+        it('should return the correct path for the image', function() {
             var s = new DailyFeature();
 
             s.featureResetsOn('long');
-            s.resetsOnLabel().should.equal('Long Rest');
+            s.resetsOnImgSource().should.equal('/images/camping-tent-blue.svg');
 
         });
 
-        it('should return the correct label', function() {
+        it('should return the correct path for the image', function() {
             var s = new DailyFeature();
 
             s.featureResetsOn('short');
-            s.resetsOnLabel().should.equal('Short Rest');
+            s.resetsOnImgSource().should.equal('/images/meditation-blue.svg');
 
         });
 
-        it('should return the correct label', function() {
-            var s = new DailyFeature();
 
-            s.featureResetsOn('');
-            s.resetsOnLabel().should.equal('None');
-
-        });
     });
 });
