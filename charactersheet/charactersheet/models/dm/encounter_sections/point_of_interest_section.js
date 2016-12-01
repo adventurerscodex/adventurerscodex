@@ -15,7 +15,7 @@ function PointOfInterestSection() {
     //Public Methods
 
     self.clear = function() {
-        var values = new AbilityScores().exportValues();
+        var values = new PointOfInterestSection().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };

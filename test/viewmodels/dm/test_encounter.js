@@ -67,7 +67,7 @@ describe('Encounter View Model', function() {
             var vm = new EncounterViewModel();
 
             var modalEncounterSpy = simple.mock(vm, 'modalEncounter').callFn(function() {});
-            simple.mock(vm, '_setupSectionVMs').callFn(function() {});
+            simple.mock(vm, '_initializeVisibilityViewModel').callFn(function() {});
 
             modalEncounterSpy.called.should.equal(false);
             vm.openAddModal();

@@ -1,21 +1,21 @@
 'use strict';
 
-function PointOfInterest() {
+function NPCSection() {
     var self = this;
-    self.ps = PersistenceService.register(PointOfInterest, self);
+    self.ps = PersistenceService.register(NPCSection, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'name', 'description']
+        include: ['characterId', 'encounterId', 'visible', 'name']
     };
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
-    self.name = ko.observable();
-    self.description = ko.observable();
+    self.name = ko.observable('NPC');
+    self.visible = ko.observable(false);
 
     //Public Methods
 
     self.clear = function() {
-        var values = new PointOfInterest().exportValues();
+        var values = new NPCSection().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };

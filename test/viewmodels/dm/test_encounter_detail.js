@@ -9,7 +9,7 @@ describe('EncounterDetailViewModel', function(){
     describe('Load', function() {
         it('should load encounter\'s data', function() {
             var vm = new EncounterDetailViewModel(new Encounter(), []);
-            var setupSpy = simple.mock(vm, '_setupSectionVMs').callFn(function() {});
+            var setupSpy = simple.mock(vm, '_initializeSectionVMs').callFn(function() {});
             var initSpy = simple.mock(ViewModelUtilities, 'initSubViewModels').callFn(function() {});
             var loadSpy = simple.mock(ViewModelUtilities, 'loadSubViewModels').callFn(function() {});
 
@@ -73,7 +73,7 @@ describe('EncounterDetailViewModel', function(){
 
     // Private Methods
 
-    describe('_setupSectionVMs', function() {
+    describe('_initializeSectionVMs', function() {
         it('should create child view models for each section and initialize them.', function() {
             var vm = new EncounterDetailViewModel(new Encounter(), [
                 { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
@@ -86,7 +86,7 @@ describe('EncounterDetailViewModel', function(){
                 Should.not.exist(vm[section.property]());
             });
             vm.sections.forEach(function(section, idx, _) {
-                vm._setupSectionVMs();
+                vm._initializeSectionVMs();
                 Should.exist(vm[section.property]());
             });
 
@@ -100,7 +100,7 @@ describe('EncounterDetailViewModel', function(){
 
             vm.sections.push({ property: 'fakeSectionViewModel', vm: function(){}, model: function(){} });
             try {
-                vm._setupSectionVMs();
+                vm._initializeSectionVMs();
                 (false).should.equal(true);
             } catch(err) {
                 (true).should.equal(true);
