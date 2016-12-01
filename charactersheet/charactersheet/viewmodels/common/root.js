@@ -20,7 +20,6 @@ function AdventurersCodexViewModel() {
     self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
-    self.settingsViewModel = ko.observable(new SettingsViewModel());
 
     //UI Methods
 
@@ -40,7 +39,6 @@ function AdventurersCodexViewModel() {
     self.init = function() {
         self.userNotificationViewModel.init();
         self.charactersViewModel.init();
-        self.settingsViewModel().init();
         self.wizardViewModel.init();
 
         //Subscriptions
@@ -66,7 +64,6 @@ function AdventurersCodexViewModel() {
             self.childRootViewModel().load();
             self.userNotificationViewModel.load();
             self.charactersViewModel.load();
-            self.settingsViewModel().load();
             self.ready(true);
         } else {
             self.wizardViewModel.load();
@@ -79,7 +76,6 @@ function AdventurersCodexViewModel() {
             self.childRootViewModel().unload();
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
-            self.settingsViewModel().unload();
             self.wizardViewModel.unload();
         }
 
