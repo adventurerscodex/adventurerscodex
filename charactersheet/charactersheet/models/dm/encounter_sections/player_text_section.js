@@ -1,22 +1,21 @@
 'use strict';
 
-function NPC() {
+function PlayerTextSection() {
     var self = this;
-    self.ps = PersistenceService.register(NPC, self);
+    self.ps = PersistenceService.register(PlayerTextSection, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'name', 'race', 'description']
+        include: ['characterId', 'encounterId', 'visible', 'name']
     };
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
-    self.name = ko.observable();
-    self.race = ko.observable();
-    self.description = ko.observable();
+    self.name = ko.observable('Read-Aloud Text');
+    self.visible = ko.observable(false);
 
     //Public Methods
 
     self.clear = function() {
-        var values = new NPC().exportValues();
+        var values = new PlayerTextSection().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };
@@ -38,14 +37,4 @@ function NPC() {
     self.delete = function() {
         self.ps.delete();
     };
-
-    // UI Methods
-
-    self.longDescription = ko.pureComputed(function() {
-        return Utility.markdown.asPlaintext(self.description()).substr(0, 200).trim() + '...';
-    });
-
-    self.shortDescription = ko.pureComputed(function() {
-        return Utility.markdown.asPlaintext(self.description()).substr(0, 100).trim() + '...';
-    });
 }
