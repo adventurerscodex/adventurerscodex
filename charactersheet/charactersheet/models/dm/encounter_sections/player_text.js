@@ -42,11 +42,20 @@ function PlayerText() {
 
     self.longDescription = ko.pureComputed(function() {
         if (!self.description()) { return ''; };
-        return Utility.markdown.asPlaintext(self.description()).substr(0, 200).trim() + '...';
+        return Utility.markdown.asPlaintext(self._formatStringToLength(self.description(), 200));
     });
 
     self.shortDescription = ko.pureComputed(function() {
         if (!self.description()) { return ''; };
-        return Utility.markdown.asPlaintext(self.description()).substr(0, 100).trim() + '...';
+        return Utility.markdown.asPlaintext(self._formatStringToLength(self.description(), 100));
     });
+
+    // Private Methods
+
+    self._formatStringToLength = function(string, length) {
+        if (string.length > length) {
+            return string.substr(0, length).trim() + '...';
+        }
+        return string;
+    };
 }
