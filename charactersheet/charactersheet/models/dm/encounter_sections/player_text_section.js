@@ -9,7 +9,7 @@ function PlayerTextSection() {
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
-    self.name = ko.observable('Player Text');
+    self.name = ko.observable('Read-Aloud Text');
     self.visible = ko.observable(false);
 
     //Public Methods

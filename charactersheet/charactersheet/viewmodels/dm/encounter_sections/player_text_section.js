@@ -154,12 +154,12 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var playerTexts = PersistenceService.findBy(PointOfInterest, 'encounterId', self.encounterId());
+        var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
         if (playerTexts) {
             self.playerTexts(playerTexts);
         }
 
-        var section = PersistenceService.findFirstBy(PointOfInterestSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findFirstBy(PlayerTextSection, 'encounterId', self.encounterId());
         if (!section) {
             section = new PointOfInterestSection();
             section.encounterId(self.encounterId());

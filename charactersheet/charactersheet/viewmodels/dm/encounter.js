@@ -29,6 +29,7 @@ function EncounterViewModel() {
 
         self.encounters(self._getTopLevelEncounters());
         self.selectedEncounter(self.encounters()[0]);
+        Notifications.encounters.changed.add(self._reloadEncounters);
     };
 
     self.unload = function() {
@@ -100,7 +101,7 @@ function EncounterViewModel() {
         });
 
         // Reload Encounters
-        self.encounters(self._getTopLevelEncounters());
+        self._reloadEncounters();
         self.selectedEncounter(encounter);
         self.encounterDetailViewModel().save();
     };
@@ -112,7 +113,7 @@ function EncounterViewModel() {
      */
     self.deleteEncounter = function(encounter) {
         encounter.delete();
-        self.encounters(self._getTopLevelEncounters());
+        self._reloadEncounters();
         self.selectedEncounter(self.encounters()[0]);
         self.encounterDetailViewModel().delete();
     };
@@ -148,5 +149,9 @@ function EncounterViewModel() {
             return !enc.parent();
         });
 
+    };
+
+    self._reloadEncounters = function() {
+        self.encounters(self._getTopLevelEncounters());
     };
 }

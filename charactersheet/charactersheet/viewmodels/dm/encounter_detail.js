@@ -81,8 +81,8 @@ function EncounterDetailViewModel(encounter, allSections) {
         self.visibilityVMs().forEach(function(vm, idx, _) {
             vm.save();
         });
-        Notifications.encounters.changed.dispatch();
         self._deinitializeVisibilityVMs();
+        Notifications.encounters.changed.dispatch();
     };
 
     /* Private Methods */

@@ -7,7 +7,7 @@
     <tr>
       <th data-bind="click: function(){sortBy('name');}">
         Name
-        <span data-bind="css: sortArrow('description')"></span>
+        <span data-bind="css: sortArrow('name')"></span>
       </th>
       <th data-bind="click: function(){sortBy('description');}">
         Description
@@ -144,12 +144,13 @@
         <div class="tab-content" data-bind="with: selecteditem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="row">
-              <div class="col-xs-12 col-padded">
+              <div class="col-xs-12">
                 <div class="h1" data-bind="text: name"></div>
               </div>
             </div>
+            <hr />
             <div class="row">
-              <div class="col-xs-12 col-padded">
+              <div class="col-xs-12">
                 <div data-bind="markdownPreview: description"
                      class="preview-modal-overflow">
                 </div>
