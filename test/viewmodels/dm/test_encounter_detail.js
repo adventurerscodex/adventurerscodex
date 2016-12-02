@@ -52,6 +52,7 @@ describe('EncounterDetailViewModel', function(){
 
     describe('modalFinishedClosing', function() {
         it('should clear the value of the modal open var and save', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new EncounterDetailViewModel(new Encounter(), []);
             var saveSpy = simple.mock(vm, 'save').callFn(function() {});
             vm.modalFinishedClosing();

@@ -19,6 +19,7 @@ function EncounterDetailViewModel(encounter, allSections) {
     self.sections = allSections;
 
     self.notesSectionViewModel = ko.observable();
+    self.playerTextSectionViewModel = ko.observable();
     self.pointOfInterestSectionViewModel = ko.observable();
     self.npcSectionViewModel = ko.observable();
     // TODO: Add more sections...
@@ -80,8 +81,8 @@ function EncounterDetailViewModel(encounter, allSections) {
         self.visibilityVMs().forEach(function(vm, idx, _) {
             vm.save();
         });
-        Notifications.encounters.changed.dispatch();
         self._deinitializeVisibilityVMs();
+        Notifications.encounters.changed.dispatch();
     };
 
     /* Private Methods */
