@@ -41,10 +41,12 @@ function PlayerText() {
     // UI Methods
 
     self.longDescription = ko.pureComputed(function() {
+        if (!self.description()) { return ''; };
         return Utility.markdown.asPlaintext(self.description()).substr(0, 200).trim() + '...';
     });
 
     self.shortDescription = ko.pureComputed(function() {
+        if (!self.description()) { return ''; };
         return Utility.markdown.asPlaintext(self.description()).substr(0, 100).trim() + '...';
     });
 }
