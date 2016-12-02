@@ -131,6 +131,7 @@ function StatsViewModel() {
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.skills.changed.remove(self.calculatePassiveWisdom);
         Notifications.events.longRest.remove(self.resetOnLongRest);
+        self.dataHasChanged();
     };
 
     self.clear = function() {

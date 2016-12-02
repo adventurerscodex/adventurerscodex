@@ -44,6 +44,7 @@
           <small>You can always fill in this stuff later, but it's good to get it out of the way now.</small>
         </div>
         <p></p>
+        <!-- Race, Gender, Class, Alignment -->
         <div class="row">
           <div class="col-md-6 col-padded">
             <div class="input-group">
@@ -63,7 +64,6 @@
           </div>
         </div>
         <div class="row">
-        <!-- Race, Gender, Class, Alignment -->
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Race</span>
@@ -98,6 +98,15 @@
                      min="1"
                      max="1500"
                      data-bind='textInput: age'>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Background</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                data-bind='textInput: background'>
             </div>
           </div>
         </div>
