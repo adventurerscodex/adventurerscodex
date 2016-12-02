@@ -58,18 +58,11 @@ function TotalWeightStatusServiceComponent() {
         var scores = AbilityScores.findBy(key)[0];
 
         var weight = 0;
-        Armor.findAllBy(key).forEach(function(e, i, _) {
-            weight += parseInt(e.armorWeight());
-        });
-        Weapon.findAllBy(key).forEach(function(e, i, _) {
-            weight += parseInt(e.totalWeight());
-        });
-        Item.findAllBy(key).forEach(function(e, i, _) {
-            weight += parseInt(e.totalWeight());
-        });
-        MagicItem.findAllBy(key).forEach(function(e, i, _) {
-            weight += parseInt(e.magicItemWeight());
-        });
+
+        weight += self._getWeightFor(Armor, 'armorWeight');
+        weight += self._getWeightFor(Weapon, 'totalWeight');
+        weight += self._getWeightFor(Item, 'totalWeight');
+        weight += self._getWeightFor(MagicItem, 'magicItemWeight');
 
         var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
         if (!status) {
@@ -92,6 +85,18 @@ function TotalWeightStatusServiceComponent() {
             status.delete();
             Notifications.status.changed.dispatch();
         }
+    };
+
+    self._getWeightFor = function(model, property)  {
+        var weight = 0;
+        var key = CharacterManager.activeCharacter().key();
+        PersistenceService.findBy(model, 'characterId', key).forEach(function(instance, idx, _) {
+            var weightValue = parseFloat(ko.unwrap(instance[property]));
+            if (weightValue) {
+                weight += weightValue;
+            }
+        });
+        return weight;
     };
 
 }
