@@ -7,7 +7,7 @@ function Monster() {
         include: ['characterId', 'encounterId', 'name', 'size', 'type', 'alignment',
         'armorClass', 'hitPoints', 'speed', 'abilityScores', 'savingThrows',
         'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
-        'conditionImmunities', 'languages', 'challenge', 'experience', 'description'];
+        'conditionImmunities', 'languages', 'challenge', 'experience', 'description']
     };
 
     self.characterId = ko.observable();
@@ -20,8 +20,8 @@ function Monster() {
     self.hitPoints = ko.observable();
     self.speed = ko.observable();
     self.abilityScores = ko.observableArray();
-    self.savingThrows = ko.observableArray();
-    self.skills = ko.observableArray();
+    self.savingThrows = ko.observable();
+    self.skills = ko.observable();
     self.senses = ko.observable();
     self.damageVulnerabilities = ko.observable();
     self.damageImmunities = ko.observable();
@@ -32,8 +32,10 @@ function Monster() {
     self.experience = ko.observable();
     self.description = ko.observable();
 
-    //Public Methods
+    //UI Methods
 
+
+    //Public Methods
     self.clear = function() {
         var values = new Monster().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);

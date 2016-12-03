@@ -23,6 +23,7 @@ function EncounterDetailViewModel(encounter, allSections) {
     self.playerTextSectionViewModel = ko.observable();
     self.pointOfInterestSectionViewModel = ko.observable();
     self.npcSectionViewModel = ko.observable();
+    self.monsterSectionViewModel = ko.observable();
     // TODO: Add more sections...
 
     self.openModal = ko.observable(false);
