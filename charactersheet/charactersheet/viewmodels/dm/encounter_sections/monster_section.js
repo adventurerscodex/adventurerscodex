@@ -118,14 +118,21 @@ function MonsterSectionViewModel(parentEncounter) {
         var monster = self.blankMonster();
         monster.characterId(CharacterManager.activeCharacter().key());
         monster.encounterId(self.encounterId());
+
+        // Add encounterId to each of the monster's ability score and save
+        monster.abilityScores().forEach(function(score, idx, _) {
+            score.encounterId(self.encounterId());
+            score.save();
+        })
+
         monster.save();
-        //add logic to create AS model for each stat entered
         self.monsters.push(monster);
         self.blankMonster(new Monster());
     };
 
     self.removeMonster = function(monster) {
         monster.delete();
+        //TODO: Do I have to delete the AbilityScores here?
         self.monsters.remove(monster);
     };
 
@@ -134,6 +141,22 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.toggleModal = function() {
+        var abilityScores = [
+            { name: 'Strength', encounterId: null, characterId: null, value: null},
+            { name: 'Dexterity', encounterId: null, characterId: null, value: null},
+            { name: 'Constitution', encounterId: null, characterId: null, value: null},
+            { name: 'Intelligence', encounterId: null, characterId: null, value: null},
+            { name: 'Wisdom', encounterId: null, characterId: null, value: null},
+            { name: 'Charisma', encounterId: null, characterId: null, value: null}
+        ];
+        self.blankMonster().abilityScores(
+            abilityScores.map(function(e, i, _) {
+                var abilityScore = new MonsterAbilityScore();
+                e.characterId = CharacterManager.activeCharacter().key();
+                abilityScore.importValues(e);
+                return abilityScore;
+            })
+        );
         self.openModal(!self.openModal());
     };
 

@@ -19,7 +19,9 @@ function Monster() {
     self.armorClass = ko.observable();
     self.hitPoints = ko.observable();
     self.speed = ko.observable();
-    self.abilityScores = ko.observableArray();
+    self.abilityScores = ko.observableArray([new MonsterAbilityScore(), new MonsterAbilityScore(),
+        new MonsterAbilityScore(), new MonsterAbilityScore(), new MonsterAbilityScore(),
+        new MonsterAbilityScore()]);
     self.savingThrows = ko.observable();
     self.skills = ko.observable();
     self.senses = ko.observable();
@@ -32,8 +34,14 @@ function Monster() {
     self.experience = ko.observable();
     self.description = ko.observable();
 
-    //UI Methods
+    // UI Stuff
+    self.markDownDescription = ko.pureComputed(function() {
+        return self.description() ? self.description() : '';
+    });
 
+    self.showComma = ko.pureComputed(function() {
+        return self.type() && self.alignment();
+    });
 
     //Public Methods
     self.clear = function() {
