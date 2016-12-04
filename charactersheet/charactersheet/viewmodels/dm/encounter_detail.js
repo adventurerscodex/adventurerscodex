@@ -18,6 +18,7 @@ function EncounterDetailViewModel(encounter, allSections) {
 
     self.sections = allSections;
 
+    self.environmentSectionViewModel = ko.observable();
     self.notesSectionViewModel = ko.observable();
     self.playerTextSectionViewModel = ko.observable();
     self.pointOfInterestSectionViewModel = ko.observable();
