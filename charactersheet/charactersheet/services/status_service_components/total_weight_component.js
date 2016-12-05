@@ -15,6 +15,7 @@ function TotalWeightStatusServiceComponent() {
         Notifications.weapon.changed.add(self.dataHasChanged);
         Notifications.item.changed.add(self.dataHasChanged);
         Notifications.magicItem.changed.add(self.dataHasChanged);
+        Notifications.treasure.changed.add(self.dataHasChanged);
         self.dataHasChanged();  //Calculate the first one.
     };
 
@@ -63,6 +64,7 @@ function TotalWeightStatusServiceComponent() {
         weight += self._getWeightFor(Weapon, 'totalWeight');
         weight += self._getWeightFor(Item, 'totalWeight');
         weight += self._getWeightFor(MagicItem, 'magicItemWeight');
+        weight += self._getWeightFor(Treasure, 'totalWeight');
 
         var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
         if (!status) {

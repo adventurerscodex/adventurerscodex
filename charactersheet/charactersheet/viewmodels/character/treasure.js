@@ -19,6 +19,13 @@ function TreasureViewModel() {
             self.treasure(new Treasure());
         }
         self.treasure().characterId(CharacterManager.activeCharacter().key());
+
+        //Notifications
+        self.treasure().platinum.subscribe(self._dataHasChanged);
+        self.treasure().gold.subscribe(self._dataHasChanged);
+        self.treasure().electrum.subscribe(self._dataHasChanged);
+        self.treasure().silver.subscribe(self._dataHasChanged);
+        self.treasure().copper.subscribe(self._dataHasChanged);
     };
 
     self.unload = function() {
@@ -29,13 +36,10 @@ function TreasureViewModel() {
         self.treasure().clear();
     };
 
-    self.importValues = function(values) {
-        self.treasure().importValues(values.treasure);
-    };
+    /* Private Methods */
 
-    self.exportValues = function() {
-        return {
-            treasure: self.treasure().exportValues()
-        };
-    };
+    self._dataHasChanged = function() {
+        self.treasure().save();
+        Notifications.treasure.changed.dispatch();
+    }
 }

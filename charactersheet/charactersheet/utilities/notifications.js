@@ -152,6 +152,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    treasure: {
+        changed: new signals.Signal()
+    },
+
     wizard: {
         /**
          * Dispatched when the Wizard has completed making a character.
