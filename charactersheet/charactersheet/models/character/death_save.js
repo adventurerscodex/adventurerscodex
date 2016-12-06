@@ -2,25 +2,61 @@ function DeathSave() {
     var self = this;
     self.ps = PersistenceService.register(DeathSave, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete',
-                'mapping']
+        include: [ 'characterId', 'deathSaveSuccess', 'deathSaveFailure' ]
     };
 
     self.characterId = ko.observable(null);
     self.deathSaveSuccess = ko.observable(false);
     self.deathSaveFailure = ko.observable(false);
 
+    self.deathSaveSuccessHandler = function() {
+        if(self.deathSaveSuccess() === true) {
+            self.deathSaveSuccess(false);
+        } else if (self.deathSaveSuccess() === false) {
+            self.deathSaveSuccess(true);
+        }
+    };
+
+    self.deathSaveFailureHandler = function() {
+        if(self.deathSaveFailure() === true) {
+            self.deathSaveFailure(false);
+        } else if (self.deathSaveFailure() === false) {
+            self.deathSaveFailure(true);
+        }
+    };
+
+    self.deathSaveSuccessIcon = ko.pureComputed(function() {
+        if (self.deathSaveSuccess() === true) {
+            var css = 'ds-success-full';
+        } else if (self.deathSaveSuccess() === false){
+            var css = 'ds-success-empty';
+        }
+        return css;
+    });
+
+    self.deathSaveFailureIcon = ko.pureComputed(function() {
+        if (self.deathSaveFailure() === true) {
+            var css = 'ds-failure-full';
+        } else if (self.deathSaveFailure() === false){
+            var css = 'ds-failure-empty';
+        }
+        return css;
+    });
+
     self.clear = function() {
+        var mapping = ko.mapping.autoignore(self, self.mapping);
         var values = new DeathSave().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {

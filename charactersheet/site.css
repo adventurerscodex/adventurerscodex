@@ -185,6 +185,42 @@ div.hr {
   padding: 0 0 0 0px;
 }
 
+.ds-failure-full {
+  cursor:pointer;
+  background: url('/images/harry-potter-skull.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-failure-empty {
+  cursor:pointer;
+  background: url('/images/harry-potter-skull-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-success-full {
+  cursor:pointer;
+  background: url('/images/hospital-cross.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-success-empty {
+  cursor:pointer;
+  background: url('/images/hospital-cross-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
 .circular-profile {
 	width: 80px;
 	height: 80px;
