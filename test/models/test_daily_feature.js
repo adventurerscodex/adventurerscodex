@@ -50,4 +50,24 @@ describe('Daily Feature Model', function() {
             s.featureMaxUses().should.equal(vals.featureMaxUses);
         });
     });
+
+    describe('Resets On Img Source', function() {
+        it('should return the correct path for the image', function() {
+            var s = new DailyFeature();
+
+            s.featureResetsOn('long');
+            s.resetsOnImgSource().should.equal('/images/camping-tent-blue.svg');
+
+        });
+
+        it('should return the correct path for the image', function() {
+            var s = new DailyFeature();
+
+            s.featureResetsOn('short');
+            s.resetsOnImgSource().should.equal('/images/meditation-blue.svg');
+
+        });
+
+
+    });
 });

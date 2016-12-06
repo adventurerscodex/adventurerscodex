@@ -6,7 +6,8 @@ function DailyFeature() {
     self.mapping = {
         ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete',
          'featureColors', 'currentFeaturesAvailable', 'progressLabel',
-         'dailyFeaturesProgressWidth', 'mapping']
+         'dailyFeaturesProgressWidth', 'mapping', 'resetsOnImgSource',
+         'needsResetsOnImg']
     };
 
     self.featureColors = Fixtures.general.colorList;
@@ -18,7 +19,21 @@ function DailyFeature() {
     self.featureResetsOn = ko.observable('');
     self.featureDescription = ko.observable('');
     self.color = ko.observable('');
-    
+
+    self.needsResetsOnImg = ko.pureComputed(function(){
+        return self.featureResetsOn() != '';
+    });
+
+    self.resetsOnImgSource = ko.pureComputed(function(){
+        if(self.featureResetsOn() === 'long') {
+            return '/images/camping-tent-blue.svg';
+        } else if (self.featureResetsOn() === 'short') {
+            return '/images/meditation-blue.svg';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    });
+
     self.currentFeaturesAvailable = ko.pureComputed(function() {
         return ( parseInt( self.featureMaxUses() ) - parseInt( self.featureUsed() ) );
     });

@@ -14,6 +14,9 @@
 					<th class="col-sm-1" data-bind="click: function(){sortBy('featureMaxUses');}">Max
             <i data-bind="css: sortArrow('featureMaxUses')"></i>
           </th> <!-- Max -->
+					<th class="col-sm-1" data-bind="click: function(){sortBy('featureResetsOn');}">Resets on
+            <i data-bind="css: sortArrow('featureResetsOn')"></i>
+          </th> <!-- Max -->
 					<th class="col-sm-3 text-center">Used</th> <!-- Up/down -->
 					<th class="col-sm-1">Reset</th>
 					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
@@ -40,6 +43,15 @@
           data-toggle="modal"
           data-target="#viewDailyFeature">
 						<span data-bind="text: featureMaxUses" ></span>
+					</td>
+					<td class="col-content-vertical col-sm-1" data-bind="click: $parent.editDailyFeature"
+          href="#"
+          class="col-sm-3 feature-row"
+          data-toggle="modal"
+          data-target="#viewDailyFeature">
+          	<!-- ko if: needsResetsOnImg -->
+						<img class="action-bar-icon" data-bind="attr: { 'src': resetsOnImgSource }"></img>
+						<!-- /ko -->
 					</td>
 					<td class="col-sm-3">
             <plus-minus params="value: featureUsed, max: featureMaxUses"></plus-minus>
@@ -106,13 +118,15 @@
 							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'short'}">
 								<input type="radio" class="hide-block"
 								name="featureResetsOnShort" value="short" data-bind="checked: blankDailyFeature().featureResetsOn"/>
-								Short Rest
+								<img class="action-bar-icon" src="/images/meditation.svg"></img>
+								&nbsp;&nbsp;&nbsp;Short Rest
 							</label>
 							<label class="btn btn-default"
 							data-bind="css: { active: blankDailyFeature().featureResetsOn() == 'long'}">
 								<input type="radio" class="hide-block"
 								name="featureResetsOnLong" value="long" data-bind="checked: blankDailyFeature().featureResetsOn"/>
-								Long Rest
+								<img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+								&nbsp;&nbsp;&nbsp;Long Rest
 								</label>
 						</div>
 						</div>
@@ -172,13 +186,15 @@
 								data-bind="css: { active: featureResetsOn() == 'short'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnShort" value="short" data-bind="checked: featureResetsOn"/>
-									Short Rest
+									<img class="action-bar-icon" src="/images/meditation.svg"></img>
+									&nbsp;&nbsp;&nbsp;Short Rest
 								</label>
 								<label class="btn btn-default"
 								data-bind="css: { active: featureResetsOn() == 'long'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnLong" value="long" data-bind="checked: featureResetsOn"/>
-									Long Rest
+									<img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+									&nbsp;&nbsp;&nbsp;Long Rest
 								</label>
 							</div>
 						</div>
