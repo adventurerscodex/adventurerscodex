@@ -1,9 +1,5 @@
 'use strict';
 
-/*
- * Model for notes section.
- */
-
 function EnvironmentSection() {
     var self = this;
     self.ps = PersistenceService.register(EnvironmentSection, self);

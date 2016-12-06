@@ -41,6 +41,4 @@ function Environment() {
     self.delete = function() {
         self.ps.delete();
     };
-
-    // UI Methods
 }

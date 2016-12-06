@@ -20,13 +20,13 @@
     <div role="tabpanel" data-bind="css: previewTabStatus" class="tab-pane">
       <div class="row row-padded">
         <div data-bind="col-xs-12">
-          <div class="row row-padded">
-            <div class="col-xs-12"><b>Terrain:</b>&nbsp;<span data-bind="text: terrain"></span></div>
-          </div>
           <div class="row">
-            <div class="col-xs-12"><b>Weather:</b>&nbsp;<span data-bind="text: weather"></span></div>
+            <div class="col-xs-12"><b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span></div>
           </div>
-          <hr />
+          <div class="row row-padded">
+            <div class="col-xs-12"><b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span></div>
+          </div>
+          <hr data-bind="visible: shouldShowDividingMarker"/>
           <div>
             <!-- ko if: imageUrl -->
             <img data-bind="attr: { src: imageUrl, width: imageWidth }, css: imageClass"
@@ -42,7 +42,7 @@
     <div role="tabpanel" data-bind="css: editTabStatus" class="tab-pane">
       <form class="form-horizontal">
         <div class="form-group">
-          <label class="col-sm-2 col-padded control-label">Image</label>
+          <label class="col-sm-2 col-padded control-label">Image Link</label>
           <div class="col-sm-10 col-padded">
             <input type="text"
                    class="form-control"

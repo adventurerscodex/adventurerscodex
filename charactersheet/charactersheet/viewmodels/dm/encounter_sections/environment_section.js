@@ -39,6 +39,11 @@ function EnvironmentSectionViewModel(parentEncounter) {
             self.terrain(environment.terrain());
             self.description(environment.description());
         }
+
+        // If there's no data to show, then prefer the edit tab.
+        if (!self.imageUrl() && !self.weather() && !self.terrain() && !self.description()) {
+            self.selectEditTab();
+        }
     };
 
     self.unload = function() {
@@ -67,6 +72,18 @@ function EnvironmentSectionViewModel(parentEncounter) {
     }
 
     /* UI Methods */
+
+    self.weatherLabel = ko.pureComputed(function() {
+        return self.weather() ? self.weather() : 'Unknown';
+    });
+
+    self.terrainLabel = ko.pureComputed(function() {
+        return self.terrain() ? self.terrain() : 'Unknown';
+    });
+
+    self.shouldShowDividingMarker = ko.pureComputed(function() {
+        return self.imageUrl() || self.description();
+    });
 
     self.selectPreviewTab = function() {
         self.previewTabStatus('active');
