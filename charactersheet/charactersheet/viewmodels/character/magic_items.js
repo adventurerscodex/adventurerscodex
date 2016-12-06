@@ -24,6 +24,7 @@ function MagicItemsViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.magicItemIconCSS = ko.observable('');
 
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['magicItemName asc']);
@@ -53,6 +54,14 @@ function MagicItemsViewModel() {
         }
         else {
             return '0 (lbs)';
+        }
+    });
+
+    self.determineMagicItemIcon = ko.computed(function() {
+        if (self.selecteditem() && self.selecteditem().magicItemType()) {
+            var magicItemType = self.selecteditem().magicItemType();
+            var cssClassName = magicItemType.split(" ")[0].toLowerCase() + "-magic-item-card";
+            self.magicItemIconCSS(cssClassName);
         }
     });
 

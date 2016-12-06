@@ -271,6 +271,7 @@
             </ul>
             <div class="tab-content" data-bind="with: selecteditem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="magicItemsModalPreview">
+              <div id="magicItemIcon" data-bind="css: $parent.magicItemIconCSS">
                 <div class="h3">
                   <span data-bind="text: magicItemNameLabel"></span>&nbsp;
                   <small data-bind="text: magicItemRarity"></small>
@@ -294,6 +295,7 @@
                   <button type="button"
                           class="btn btn-primary"
                           data-dismiss="modal">Done</button>
+                </div>
                 </div>
               </div> <!-- End Preview Tab -->
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">

@@ -540,3 +540,73 @@ ul.ui-autocomplete .ui-state-active {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+/*
+ * Magic Items Icon CSS
+ */
+
+.armor-magic-item-card {
+  background-image: url('/images/magic_items_icons/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.potion-magic-item-card {
+  background-image: url('/images/magic_items_icons/potion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ring-magic-item-card {
+  background-image: url('/images/magic_items_icons/ring.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rod-magic-item-card {
+  background-image: url('/images/magic_items_icons/rod.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.scroll-magic-item-card {
+  background-image: url('/images/magic_items_icons/scroll.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.staff-magic-item-card {
+  background-image: url('/images/magic_items_icons/staff.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.sword-magic-item-card {
+  background-image: url('/images/magic_items_icons/sword.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.armor-wand-item-card {
+  background-image: url('/images/magic_items_icons/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wand-magic-item-card {
+  background-image: url('/images/magic_items_icons/wand.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.weapon-magic-item-card {
+  background-image: url('/images/magic_items_icons/weapon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wondrous-magic-item-card {
+  background-image: url('/images/magic_items_icons/wondrous.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
