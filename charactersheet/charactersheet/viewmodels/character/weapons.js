@@ -68,6 +68,7 @@ function WeaponsViewModel() {
         }
         return weight + ' (lbs)';
     });
+
     /* UI Methods */
 
     /**
@@ -111,6 +112,11 @@ function WeaponsViewModel() {
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
+        // Just in case data has changed.
+        self.weapons().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.weapon.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -140,11 +146,13 @@ function WeaponsViewModel() {
         weapon.save();
         self.weapons.push(weapon);
         self.blankWeapon(new Weapon());
+        Notifications.weapon.changed.dispatch();
     };
 
     self.removeWeapon = function(weapon) {
         self.weapons.remove(weapon);
         weapon.delete();
+        Notifications.weapon.changed.dispatch();
     };
 
     self.editWeapon = function(weapon) {
@@ -153,10 +161,13 @@ function WeaponsViewModel() {
 
     self.clear = function() {
         self.weapons([]);
+        Notifications.weapon.changed.dispatch();
     };
+
     self.valueHasChanged = function() {
         self.weapons().forEach(function(e, i, _) {
             e.updateValues();
         });
+        Notifications.weapon.changed.dispatch();
     };
 }

@@ -29,11 +29,16 @@ function ArmorViewModel() {
                 e.save();
             });
         });
+        self.armors.subscribe(function() {
+            Notifications.armor.changed.dispatch();
+        });
     };
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         self.armors(Armor.findAllBy(key));
+
+        //Subscriptions
         Notifications.abilityScores.changed.add(self.valueHasChanged);
     };
 
@@ -72,11 +77,6 @@ function ArmorViewModel() {
         self.shouldShowDisclaimer(true);
     };
 
-    self.modalFinishedAnimating = function() {
-        self.shouldShowDisclaimer(false);
-    };
-
-    // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -87,6 +87,12 @@ function ArmorViewModel() {
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
+
+        // Just in case data was changed.
+        self.armors().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.armor.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -100,7 +106,7 @@ function ArmorViewModel() {
         self.editFirstModalElementHasFocus(true);
     };
 
-    /* UI Methods */
+    self.modifierHasFocus = ko.observable(false);
 
     /**
      * Filters and sorts the armors for presentation in a table.
@@ -134,8 +140,8 @@ function ArmorViewModel() {
     };
 
     self.removeArmor = function(armor) {
-        self.armors.remove(armor);
         armor.delete();
+        self.armors.remove(armor);
     };
 
     self.editArmor = function(armor) {

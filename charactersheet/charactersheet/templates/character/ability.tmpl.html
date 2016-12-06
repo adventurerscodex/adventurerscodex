@@ -72,7 +72,8 @@
                 data-dismiss="modal"
                 aria-label="Close"> <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title"> Edit your Ability Scores.
+        <h4 class="modal-title">
+          Edit Ability Scores
         </h4>
       </div>
       <div class="modal-body">
@@ -83,7 +84,7 @@
               <input type="number"
                      class="form-control ability-score-input pull-left"
                      min="0"
-                     data-bind='textInput: str,
+                     data-bind='value: str,
                       hasFocus: $parent.firstModalElementHasFocus'>
             </div>
           </div>
@@ -93,7 +94,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      min="0"
-                     data-bind='textInput: dex'>
+                     data-bind='value: dex'>
             </div>
           </div>
           <div class="form-group">
@@ -102,7 +103,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      min="0"
-                     data-bind='textInput: con'>
+                     data-bind='value: con'>
             </div>
           </div>
           <div class="form-group">
@@ -111,7 +112,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      min="0"
-                     data-bind='textInput: int'>
+                     data-bind='value: int'>
             </div>
           </div>
           <div class="form-group">
@@ -120,7 +121,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      min="0"
-                     data-bind='textInput: wis'>
+                     data-bind='value: wis'>
             </div>
           </div>
           <div class="form-group">
@@ -129,7 +130,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      min="0"
-                     data-bind='textInput: cha'>
+                     data-bind='value: cha'>
             </div>
           </div>
           <div class="modal-footer-ability-scores">
@@ -139,7 +140,7 @@
                         class="btn btn-primary"
                         data-dismiss="modal">Done</button>
               </div>
-            </div>
+             </div>
           </div>
         </form>
       </div>

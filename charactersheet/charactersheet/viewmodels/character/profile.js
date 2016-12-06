@@ -82,8 +82,6 @@ function ProfileViewModel() {
     };
 
     self.dataHasChanged = function() {
-        Notifications.profile.changed.dispatch();
-
         var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
         profile.level(self.level());
         profile.playerName(self.playerName());
@@ -97,6 +95,8 @@ function ProfileViewModel() {
         profile.age(self.age());
         profile.exp(self.experience());
         profile.save();
+
+        Notifications.profile.changed.dispatch();
     };
 
     //Public Methods

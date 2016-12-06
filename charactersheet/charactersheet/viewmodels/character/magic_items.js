@@ -102,6 +102,11 @@ function MagicItemsViewModel() {
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
+        // Just in case data was changed.
+        self.magicItems().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.magicItem.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -150,11 +155,13 @@ function MagicItemsViewModel() {
         item.save();
         self.magicItems.push(item);
         self.blankMagicItem(new MagicItem());
+        Notifications.magicItem.changed.dispatch();
     };
 
     self.removeItem = function(item) {
         self.magicItems.remove(item);
         item.delete();
+        Notifications.magicItem.changed.dispatch();
     };
 
     self.editItem = function(item) {
