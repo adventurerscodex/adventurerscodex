@@ -54,13 +54,11 @@
       <div class="col-sm-8">
         <div class="row">
           <!-- ko with: childRootViewModel -->
-          <!-- ko if: playerType().key == 'character' -->
           <div class="col-padded col-xs-2" data-bind="template: {
             name: 'player_image.tmpl',
-            templateUrl: 'templates/character',
+            templateUrl: 'templates/common',
             data: playerImageViewModel
           }"></div>
-          <!-- /ko -->
           <!-- /ko -->
           <div class="col-padded col-xs-10 characters-player-name">
             <!-- ko with: childRootViewModel -->
@@ -233,6 +231,7 @@
 <script src="/bower_components/jquery.textarea-markdown-editor/dist/marked.min.js"></script>
 <script src="/bower_components/jquery.textarea-markdown-editor/dist/jquery.textarea-markdown-editor.js"></script>
 <!-- Bindings -->
+<script src="/bin/date-format.js"></script>
 <script src="/bin/markdown.min.js"></script>
 <script src="/bin/knockout-file-bind.js" type="text/javascript"></script>
 <script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
@@ -277,6 +276,7 @@
 <script src="viewmodels/character/treasure.js" type="text/javascript"></script>
 <script src="viewmodels/character/weapons.js" type="text/javascript"></script>
 <script src="viewmodels/common/characters.js" type="text/javascript"></script>
+<script src="viewmodels/common/player_image.js" type="text/javascript"></script>
 <script src="viewmodels/common/root.js" type="text/javascript"></script>
 <script src="viewmodels/common/user_notification.js" type="text/javascript"></script>
 <script src="viewmodels/common/wizard_steps/wizard_ability_scores_step.js" type="text/javascript"></script>
@@ -286,6 +286,8 @@
 <script src="viewmodels/common/wizard_steps/wizard_profile_step.js" type="text/javascript"></script>
 <script src="viewmodels/common/wizard.js" type="text/javascript"></script>
 <script src="viewmodels/dm/dm_root.js" type="text/javascript"></script>
+<script src="viewmodels/dm/campaign_tab.js" type="text/javascript"></script>
+<script src="viewmodels/dm/overview.js" type="text/javascript"></script>
 <script src="viewmodels/dm/encounter_tab.js" type="text/javascript"></script>
 <script src="viewmodels/dm/encounter.js" type="text/javascript"></script>
 <script src="viewmodels/dm/encounter_detail.js" type="text/javascript"></script>
@@ -324,6 +326,7 @@
 <script src="models/common/treasure.js" type="text/javascript"></script>
 <script src="models/common/user_notification.js" type="text/javascript"></script>
 <script src="models/common/weapon.js" type="text/javascript"></script>
+<script src="models/dm/campaign.js" type="text/javascript"></script>
 <script src="models/dm/encounter.js" type="text/javascript"></script>
 <script src="models/dm/encounter_sections/combat_section.js" type="text/javascript"></script>
 <script src="models/dm/encounter_sections/notes_section.js" type="text/javascript"></script>

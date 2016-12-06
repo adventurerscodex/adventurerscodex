@@ -11,6 +11,8 @@ function DMRootViewModel() {
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
     //Player Child View Models
+    self.playerImageViewModel = ko.observable(new PlayerImageViewModel());
+    self.campaignTabViewModel = ko.observable(new CampaignTabViewModel());
     self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
         // TODO: Add
 
@@ -23,15 +25,21 @@ function DMRootViewModel() {
     //UI Methods
 
     self.playerSummary = ko.pureComputed(function() {
-        return 'Nothing here';
+        var key = CharacterManager.activeCharacter().key();
+        var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
+        return campaign.summary() ? campaign.summary() : '';
     });
 
     self.playerTitle = ko.pureComputed(function() {
-        return 'Nothing here';
+        var key = CharacterManager.activeCharacter().key();
+        var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
+        return campaign.name() ? campaign.name() : '';
     });
 
     self.playerAuthor = ko.pureComputed(function() {
-        return 'Nothing here';
+        var key = CharacterManager.activeCharacter().key();
+        var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
+        return campaign.playerName() ? campaign.playerName() : '';
     });
 
     self.pageTitle = ko.pureComputed(function() {
@@ -42,6 +50,25 @@ function DMRootViewModel() {
         } catch(err) { /*Ignore*/ }
     });
 
+    // Tab statuses
+
+    self.overviewTabStatus = ko.pureComputed(function() {
+        return self._tabIsVisible('overview');
+    });
+
+    self.encounterTabStatus = ko.pureComputed(function() {
+        return self._tabIsVisible('encounter');
+    });
+
+    self.activateOverviewTab = function() {
+        self.activeTab('overview');
+    };
+
+    self.activateEncounterTab = function() {
+        self.activeTab('encounter');
+    };
+
+
     //Public Methods
 
     /**
@@ -49,6 +76,9 @@ function DMRootViewModel() {
      */
     self.init = function() {
         ViewModelUtilities.initSubViewModels(self);
+
+        HotkeysService.registerHotkey('1', self.activateOverviewTab);
+        HotkeysService.registerHotkey('2', self.activateEncounterTab);
     };
 
     /**
@@ -62,6 +92,7 @@ function DMRootViewModel() {
 
     self.unload = function() {
         ViewModelUtilities.unloadSubViewModels(self);
+        HotkeysService.flushHotkeys();
     };
 
     //Private Methods
