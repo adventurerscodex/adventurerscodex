@@ -96,6 +96,19 @@ describe('Magic Items View Model', function(){
             magicItems.magicItems().length.should.equal(2);
             magicItems.totalMagicItemWeight().should.equal('10 (lbs)');
         });
+
+        it('should return 0 for weight if the weight is empty.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var items = [new MagicItem(), new MagicItem()].map(function(e, i, _) {
+                e.magicItemWeight('');
+                return e;
+            });
+
+            magicItems = new MagicItemsViewModel();
+            magicItems.magicItems(items);
+            magicItems.magicItems().length.should.equal(2);
+            magicItems.totalMagicItemWeight().should.equal('0 (lbs)');
+        });
     });
 
     describe('Select Preview Tab', function() {
