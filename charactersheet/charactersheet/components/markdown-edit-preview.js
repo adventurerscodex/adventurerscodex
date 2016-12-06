@@ -20,7 +20,7 @@ function MarkdownEditPreviewComponentViewModel(params) {
     self.placeholder = params.placeholder || ko.observable();
     self.previewHeight = params.previewHeight || ko.observable(0);
 
-    self.previewTabStatus = ko.observable('');
+    self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
 
     /* UI Methods */
@@ -35,11 +35,8 @@ function MarkdownEditPreviewComponentViewModel(params) {
         self.previewTabStatus('');
     };
 
-    // Select the default tab,
-    // or the preview tab if there's existing content.
-    if (ko.unwrap(self.text) || ko.unwrap(params.defaultActiveTab) === 'preview') {
-        self.selectPreviewTab();
-    } else {
+    // Select the default tab.
+    if (ko.unwrap(params.defaultActiveTab) === 'edit') {
         self.selectEditTab();
     }
 }
