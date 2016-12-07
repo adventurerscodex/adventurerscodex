@@ -49,7 +49,7 @@ function Item() {
     });
 
     self.itemWeightLabel = ko.pureComputed(function() {
-        return self.itemWeight() + ' lbs.'
+        return self.itemWeight() + ' lbs.';
     });
 
     self.clear = function() {

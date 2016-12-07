@@ -61,8 +61,8 @@ function Health() {
 
     self.progressType = ko.pureComputed(function() {
         var type = 'progress-bar-success';
-        if (self.isWarning()) { type = 'progress-bar-warning' };
-        if (self.isDangerous()) { type = 'progress-bar-danger' };
+        if (self.isWarning()) { type = 'progress-bar-warning'; }
+        if (self.isDangerous()) { type = 'progress-bar-danger'; }
         return type;
     }, self);
 

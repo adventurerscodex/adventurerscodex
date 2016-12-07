@@ -3,7 +3,7 @@
 function MonsterSectionViewModel(parentEncounter) {
     var self = this;
 
-    self.template = 'monster_section.tmpl'
+    self.template = 'monster_section.tmpl';
     self.encounterId = parentEncounter.encounterId;
     self.characterId = ko.observable();
 
@@ -46,16 +46,18 @@ function MonsterSectionViewModel(parentEncounter) {
         var monster = PersistenceService.findBy(Monster, 'encounterId', self.encounterId());
         if (monster) {
             self.monsters(monster);
+            self.monsters().forEach(function(monster, idx, _) {
+                var abilityScores = PersistenceService.findBy(MonsterAbilityScore,
+                    'monsterId', monster.monsterId());
+                monster.abilityScores(abilityScores);
+            });
         }
 
         var section = PersistenceService.findFirstBy(MonsterSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new MonsterSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
+        if (section) {
+            self.name(section.name());
+            self.visible(section.visible());
         }
-        self.name(section.name());
-        self.visible(section.visible());
     };
 
     self.unload = function() {
@@ -118,12 +120,14 @@ function MonsterSectionViewModel(parentEncounter) {
         var monster = self.blankMonster();
         monster.characterId(CharacterManager.activeCharacter().key());
         monster.encounterId(self.encounterId());
+        monster.monsterId(uuid.v4());
 
         // Add encounterId to each of the monster's ability score and save
         monster.abilityScores().forEach(function(score, idx, _) {
             score.encounterId(self.encounterId());
+            score.monsterId(monster.monsterId());
             score.save();
-        })
+        });
 
         monster.save();
         self.monsters.push(monster);
@@ -131,8 +135,10 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.removeMonster = function(monster) {
+        monster.abilityScores().forEach(function(score, idx, _) {
+            score.delete();
+        });
         monster.delete();
-        //TODO: Do I have to delete the AbilityScores here?
         self.monsters.remove(monster);
     };
 

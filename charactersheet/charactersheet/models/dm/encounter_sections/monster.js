@@ -4,14 +4,15 @@ function Monster() {
     var self = this;
     self.ps = PersistenceService.register(Monster, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'name', 'size', 'type', 'alignment',
-        'armorClass', 'hitPoints', 'speed', 'abilityScores', 'savingThrows',
+        include: ['characterId', 'encounterId', 'monsterId', 'name', 'size', 'type',
+        'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
         'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
         'conditionImmunities', 'languages', 'challenge', 'experience', 'description']
     };
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
+    self.monsterId = ko.observable();
     self.name = ko.observable();
     self.size = ko.observable();
     self.type = ko.observable();
@@ -61,6 +62,9 @@ function Monster() {
     };
 
     self.save = function() {
+        self.abilityScores().forEach(function(score, idx, _) {
+            score.save();
+        });
         self.ps.save();
     };
 

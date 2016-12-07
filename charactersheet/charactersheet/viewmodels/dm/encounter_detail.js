@@ -104,8 +104,8 @@ function EncounterDetailViewModel(encounter, allSections) {
             try {
                 self[section.property](childViewModel);
             } catch (err) {
-                throw "Unable to set child view models for "+ section.property
-                    +". You probably forgot to add the property to the detail VM.\n"+err
+                throw 'Unable to set child view models for '+ section.property
+                    +'. You probably forgot to add the property to the detail VM.\n' + err;
             }
         });
     };

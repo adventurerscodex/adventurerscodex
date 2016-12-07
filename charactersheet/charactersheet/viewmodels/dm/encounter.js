@@ -81,7 +81,7 @@ function EncounterViewModel() {
 
     self.modalFinishedClosing = function() {
         self.modalEncounter(null);
-        self._deinitializeVisibilityViewModel()
+        self._deinitializeVisibilityViewModel();
     };
 
     /* Manage Encounter Methods */

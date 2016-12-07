@@ -24,8 +24,8 @@ module.exports = function(config) {
 			//Stuff to test.
 			'charactersheet/charactersheet/**/*root.js',
 			'charactersheet/charactersheet/**/*.js',
-            'test/**/*.js',
-            'test/*.js'
+      'test/**/*.js',
+      'test/*.js'
         ],
         browsers: ['PhantomJS'],
         reporters: ['progress', 'coverage'],

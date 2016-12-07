@@ -41,12 +41,12 @@ function PlayerText() {
     // UI Methods
 
     self.longDescription = ko.pureComputed(function() {
-        if (!self.description()) { return ''; };
+        if (!self.description()) { return ''; }
         return Utility.markdown.asPlaintext(self._formatStringToLength(self.description(), 200));
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        if (!self.description()) { return ''; };
+        if (!self.description()) { return ''; }
         return Utility.markdown.asPlaintext(self._formatStringToLength(self.description(), 100));
     });
 
