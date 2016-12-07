@@ -1,0 +1,163 @@
+<div class="h3">
+  Treasure<br />
+  <small></small>
+</div>
+<table class="table table-responsive table-ac-bordered table-hover">
+  <thead>
+    <tr>
+      <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
+        Name
+        <span data-bind="css: sortArrow('name')"></span>
+      </th>
+      <th class="col-md-1">
+        <a data-toggle="modal"
+           data-target="#addNPC" href="#">
+          <i class="fa fa-plus fa-color"></i>
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <!-- ko foreach: filteredAndSortedTreasure -->
+    <tr class="clickable">
+      <td data-bind="text: nameLabel, click: $parent.editTreasure"
+          href="#"
+          data-toggle="modal"
+          data-target="#viewTreasure"></td>
+      <td>
+        <a data-bind="click: $parent.removeTreasure" href="#">
+          <i class="fa fa-trash-o fa-color-hover">
+          </i>
+        </a>
+      </td>
+    </tr>
+    <!-- /ko -->
+    <!-- ko if: filteredAndSortedTreasure().length == 0 -->
+    <tr class="clickable">
+      <td data-toggle="modal" data-target="#addTreasure" href="#"
+        colspan="7" class="text-center">
+        <i class="fa fa-plus fa-color"></i>
+        Add a new item.
+      </td>
+    </tr>
+    <!-- /ko -->
+  </tbody>
+</table>
+
+<!-- Add Modal -->
+<div class="modal fade"
+     id="addTreasure"
+     tabindex="-1"
+     role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"
+            id="addNpcLabel">Add a new item</h4>
+    </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text"
+                     class="form-control"
+                     placeholder="King Arthur"
+                     data-bind="textInput: blankTreasure().weaponName">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind='click: addTreasure'
+                    data-dismiss="modal">Add</button>
+          </div>
+        </form>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+     id="viewTreasure"
+     tabindex="-1"
+     role="dialog"
+     data-bind="modal: {
+      open: selecteditem,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit an NPC</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Begin Tabs -->
+        <ul class="nav nav-tabs tabs">
+          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
+                <b>Preview</b>
+            </a>
+          </li>
+          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
+                <b>Edit</b>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-bind="with: selecteditem">
+          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
+            <div class="h3">
+              <span data-bind="text: weaponName"></span>&nbsp;
+            </div>
+            <hr />
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: description"
+                     class="preview-modal-overflow">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal">Done</button>
+            </div>
+          </div> <!-- End Preview Tab -->
+          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="npcName"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         data-bind="textInput: name">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
