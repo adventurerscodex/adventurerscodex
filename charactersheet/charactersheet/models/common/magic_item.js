@@ -26,13 +26,6 @@ function MagicItem() {
     self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
     self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
-    self.magicItemTotalWeight = ko.pureComputed(function() {
-        if (self.magicItemWeight()) {
-            return parseFloat(self.magicItemWeight());
-        }
-        return 0;
-    });
-
     self.chargesDisplay = ko.pureComputed(function(){
         if(self.magicItemMaxCharges() == 0){
             return 'N/A';

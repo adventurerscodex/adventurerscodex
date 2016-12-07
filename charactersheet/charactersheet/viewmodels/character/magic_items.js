@@ -48,7 +48,9 @@ function MagicItemsViewModel() {
         var itemLength = self.magicItems().length;
         if (itemLength > 0) {
             for (var i = 0; i < itemLength; i++) {
-                weightTotal += self.magicItems()[i].magicItemTotalWeight();
+                weightTotal += self.magicItems()[i].magicItemWeight() ?
+                    parseFloat(self.magicItems()[i].magicItemWeight()) :
+                    0;
             }
             return weightTotal + ' (lbs)';
         }
