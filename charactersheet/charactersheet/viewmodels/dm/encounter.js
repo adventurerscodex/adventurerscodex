@@ -116,6 +116,7 @@ function EncounterViewModel() {
         self._reloadEncounters();
         self.selectedEncounter(self.encounters()[0]);
         self.encounterDetailViewModel().delete();
+        self.encounterDetailViewModel(null);
     };
 
     /* Private Methods */

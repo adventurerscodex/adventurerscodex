@@ -32,6 +32,12 @@
           data: encounterDetailViewModel
         }"></div>
         <!-- /ko -->
+        <!-- ko ifnot: encounterDetailViewModel -->
+        <div class="encounter-detail-place-holder well text-center"
+          style="cursor:pointer;" data-bind="click: openAddModal">
+          <p class="lead text-muted heading">Add a new encounter to get started.</p>
+        </div>
+        <!-- /ko -->
       </div>
     </div>
   </div>

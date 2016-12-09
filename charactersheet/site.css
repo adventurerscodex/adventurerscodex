@@ -436,6 +436,11 @@ ul.footer-icons li {
   overflow-y: auto;
 }
 
+.encounter-detail-place-holder {
+  height: 400px;
+  padding-top:175px;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
