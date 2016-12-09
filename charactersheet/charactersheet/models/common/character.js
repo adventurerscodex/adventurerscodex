@@ -144,7 +144,7 @@ Character.exportCharacter = function(characterId) {
 Character.importCharacter = function(data) {
     var migratedData = null;
     //Get the version from the data and clean up the data file.
-    var version = String(data.__version___);
+    var version = data.__version__ ? data.__version__.substr(0) : undefined;
     delete data.__version__;
 
     // Import to a temp store and migrate, then export.
