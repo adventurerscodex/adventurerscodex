@@ -20,7 +20,7 @@
         templateUrl: 'templates/dm/encounter_sections',
         data: $parent[section.property]()
       }"></div>
-      <hr />
+      <hr data-bind="visible: $parent[section.property]().visible" />
     <!-- /ko -->
     <!-- /ko -->
   </div>
