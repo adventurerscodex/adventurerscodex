@@ -551,3 +551,15 @@ ul.ui-autocomplete .ui-state-active {
   background-repeat: no-repeat;
   background-position: center;
 }
+
+/*
+ * Encounter Section Icon CSS
+ */
+
+.encounter-section-img {
+  height: 35px;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-right: 10px;
+  float: left;
+}
