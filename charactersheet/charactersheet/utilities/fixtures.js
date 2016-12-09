@@ -281,9 +281,10 @@ var Fixtures = {
         ]
     },
     resting : {
-        shortRestMessage : 'Your daily features, and relevant spell slots have been restored.',
+        shortRestMessage : 'Your tracked features, feats, traits and ' +
+              'relevant spell slots have been restored.',
         longRestMessage : 'Your hit dice, spell slots, hit points, ' +
-              'and daily features have been restored.'
+              'and tracked features, feats, and traits have been restored.'
     },
 
     wizardProfile: {
