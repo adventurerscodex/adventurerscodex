@@ -19,19 +19,27 @@ function TreasureSectionViewModel(parentEncounter) {
       EncounterItem, EncounterWeapon, EncounterMagicItem, EncounterArmor, EncounterCoins
     ];
 
-    self.blankTreasure = ko.observable(new EncounterWeapon());
+    self.blankTreasure = ko.observable(null);
     self.selecteditem = ko.observable();
+    self.itemType = ko.observable(null);
     self.openModal = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
+
+    self.armorShow = ko.observable(false);
+    self.coinsShow = ko.observable(false);
+    self.itemShow = ko.observable(false);
+    self.magicItemShow = ko.observable(false);
+    self.weaponShow = ko.observable(false);
 
     self.sorts = {
-        'name asc': { field: 'weaponName', direction: 'asc' },
-        'name desc': { field: 'weaponName', direction: 'desc' },
+        'nameLabel asc': { field: 'nameLabel', direction: 'asc' },
+        'nameLabel desc': { field: 'nameLabel', direction: 'desc' },
     };
 
     self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['name asc']);
+    self.sort = ko.observable(self.sorts['nameLabel asc']);
 
     /* Public Methods */
 
@@ -95,7 +103,7 @@ function TreasureSectionViewModel(parentEncounter) {
     /* UI Methods */
 
     /**
-     * Filters and sorts the weaponss for presentation in a table.
+     * Filters and sorts the weapons for presentation in a table.
      */
     self.filteredAndSortedTreasure = ko.computed(function() {
         return SortService.sortAndFilter(self.treasure(), self.sort(), null);
@@ -119,9 +127,42 @@ function TreasureSectionViewModel(parentEncounter) {
         var treasure = self.blankTreasure();
         treasure.characterId(CharacterManager.activeCharacter().key());
         treasure.encounterId(self.encounterId());
+        treasure.treasureType(self.itemType());
         treasure.save();
         self.treasure.push(treasure);
-        self.blankTreasure(new Treasure());
+        self.blankTreasure(null);
+        self.clearTreasureTemplates();
+    };
+
+    self.setTreasure = function() {
+        // Make sure no templates are showing when a new selection is made
+        self.clearTreasureTemplates();
+
+        // Based on selection, populate the treasure model
+        if (self.itemType() == 'armor') {
+            self.blankTreasure(new EncounterArmor());
+            self.armorShow(true);
+        } else if (self.itemType() == 'coins') {
+            self.blankTreasure(new EncounterCoins());
+            self.coinsShow(true);
+        } else if (self.itemType() == 'item') {
+            self.blankTreasure(new EncounterItem());
+            self.itemShow(true);
+        } else if (self.itemType() == 'magicItem') {
+            self.blankTreasure(new EncounterMagicItem());
+            self.magicItemShow(true);
+        } else if (self.itemType() == 'weapon') {
+            self.blankTreasure(new EncounterWeapon());
+            self.weaponShow(true);
+        }
+    };
+
+    self.clearTreasureTemplates = function() {
+        self.armorShow(false);
+        self.coinsShow(false);
+        self.itemShow(false);
+        self.magicItemShow(false);
+        self.weaponShow(false);
     };
 
     self.removeTreasure = function(treasure) {

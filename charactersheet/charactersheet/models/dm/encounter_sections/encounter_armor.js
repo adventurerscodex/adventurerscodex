@@ -5,11 +5,13 @@ function EncounterArmor() {
 
     self.ps = PersistenceService.register(EncounterArmor, self);
     self.mapping.include.push('encounterId');
+    self.mapping.include.push('treasureType');
 
     self.encounterId = ko.observable();
+    self.treasureType = ko.observable();
 
     self.nameLabel = ko.pureComputed(function() {
-        return self.weaponName();
+        return self.armorName();
     });
 
     return self;
