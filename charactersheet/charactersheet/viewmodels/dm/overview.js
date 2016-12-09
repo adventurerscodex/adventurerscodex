@@ -8,10 +8,12 @@ function CampaignOverviewViewModel() {
     self.notes = ko.observable();
     self.setting = ko.observable();
     self.createdDate = ko.observable();
+    self.name = ko.observable();
 
     /* Public Methods */
 
     self.init = function() {
+        Notifications.global.save.add(self.save);
     };
 
     self.load = function() {
@@ -19,8 +21,8 @@ function CampaignOverviewViewModel() {
         var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         if (overview) {
             self.playerName(overview.playerName());
-            self.createdDate(overview.createdDate());
             self.notes(overview.notes());
+            self.name(overview.name());
             self.setting(overview.setting());
             self.createdDate(new Date(overview.createdDate()));
         }
@@ -37,6 +39,22 @@ function CampaignOverviewViewModel() {
         overview.createdDate(self.createdDate());
         overview.notes(self.notes());
         overview.setting(self.setting());
+        overview.name(self.name());
+        overview.save();
+    };
+
+    self.save = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
+        if (!overview) {
+            overview = new Campaign();
+            overview.characterId(key);
+        }
+        overview.playerName(self.playerName());
+        overview.createdDate(self.createdDate());
+        overview.notes(self.notes());
+        overview.setting(self.setting());
+        overview.name(self.name());
         overview.save();
     };
 
@@ -44,6 +62,10 @@ function CampaignOverviewViewModel() {
 
     self.noteText = ko.pureComputed(function() {
         return self.notes() ? self.notes() : '';
+    });
+
+    self.placeholderText = ko.pureComputed(function() {
+        return 'A Story of Wonder';
     });
 
     self.timeSinceLabel = ko.pureComputed(function() {

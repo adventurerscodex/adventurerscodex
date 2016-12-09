@@ -14,9 +14,8 @@ function Campaign() {
     self.playerName = ko.observable();
     self.setting = ko.observable();
     self.name = ko.observable();
-    self.notes = ko.observable();
+    self.notes = ko.observable('');
     self.createdDate = ko.observable();
-
 
     self.save = function() {
         self.ps.save();

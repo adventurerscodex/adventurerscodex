@@ -75,6 +75,20 @@
             <!-- /ko -->
             <!-- /ko -->
             <!-- /ko -->
+            <!-- ko with: childRootViewModel -->
+            <!-- ko if: playerType().key == 'dm' -->
+            <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="h3" data-bind="contenteditable: {
+                  text: name,
+                  placeholder: placeholderText
+                }"></div>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- /ko -->
+            <!-- /ko -->
             <div class="row">
               <div class="col-md-12">
                 <i class="small underline"><a class="" data-toggle="modal"
