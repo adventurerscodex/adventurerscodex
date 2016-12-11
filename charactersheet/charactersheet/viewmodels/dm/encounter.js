@@ -5,8 +5,8 @@ function EncounterViewModel() {
 
     self.modalEncounter = ko.observable();
     self.nameHasFocus = ko.observable(false);
-    self.selectedEncounter = ko.observable();
-    self.encounters = ko.observableArray();
+    self.selectedCell = ko.observable();
+    self.encounterCells = ko.observableArray();
     self.encounterDetailViewModel = ko.observable();
     self.visibilityViewModels = ko.observableArray([]);
 
@@ -26,19 +26,19 @@ function EncounterViewModel() {
     };
 
     self.load = function() {
-        self.selectedEncounter.subscribe(self.setEncounterDetailViewModel);
+        self.selectedCell.subscribe(self.setEncounterDetailViewModel);
 
-        self.encounters(self._getTopLevelEncounters());
-        self.selectedEncounter(self.encounters()[0]);
-        Notifications.encounters.changed.add(self._reloadEncounters);
+        self.encounterCells(self._getEncounterCells());
+        self.selectedCell(self.encounterCells()[0]);
+        Notifications.encounters.changed.add(self.encounterCells.valueHasMutated);
     };
 
     self.unload = function() {
         if (self.encounterDetailViewModel()) {
             self.encounterDetailViewModel().unload();
         }
-        self.encounters().forEach(function(encounter, idx, _) {
-            encounter.save();
+        self.encounterCells().forEach(function(cell, idx, _) {
+            cell.save();
         });
     };
 
@@ -54,14 +54,15 @@ function EncounterViewModel() {
             self._deinitializeDetailViewModel();
         }
 
-        var newEncounter = self.selectedEncounter();
-        if (!newEncounter) { return null; }
+        var cell = self.selectedCell();
+        if (!cell) { return null; }
 
-        self.encounterDetailViewModel(new EncounterDetailViewModel(newEncounter, self.sections));
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId())
+        self.encounterDetailViewModel(new EncounterDetailViewModel(encounter, self.sections));
         self._initializeDetailViewModel();
     };
 
-    // Modal Methods
+    /* Modal Methods */
 
     self.openAddModal = function() {
         self.modalEncounter(new Encounter());
@@ -87,24 +88,33 @@ function EncounterViewModel() {
 
     self.addEncounter = function() {
         var key = CharacterManager.activeCharacter().key();
+
+        // Create the encounter.
         var encounter = self.modalEncounter();
         encounter.characterId(key);
-        if (encounter.parent()) {
-            encounter.alertParentOfNewChild();
-        }
+
         if (!encounter.name()) {
             encounter.name('Untitled Encounter');
         }
-
         encounter.save();
         self.visibilityViewModels().forEach(function(vm, idx, _) {
             vm.save();
         });
 
-        // Reload Encounters
-        self._reloadEncounters();
-        self.selectedEncounter(encounter);
-        self.encounterDetailViewModel().save();
+        // Add the cell to the UI.
+        if (encounter.parent()) {
+            var parent = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
+            parent.addChild(encounter);
+        } else {
+            self.encounterCells.push(new EncounterCellViewModel(encounter));
+        }
+
+        // Select the new encounter.
+        var cellToSelect = self._findCell(self.encounterCells(), 'encounterId', encounter.encounterId())
+        if (cellToSelect) {
+            self.selectedCell(cellToSelect);
+            self.encounterDetailViewModel().save();
+        }
     };
 
     /**
@@ -112,12 +122,29 @@ function EncounterViewModel() {
      * EncounterList Component as the `ondelete` callback. The component will
      * take care of removing the element from the UI.
      */
-    self.deleteEncounter = function(encounter) {
-        encounter.delete();
-        self._reloadEncounters();
-        self.selectedEncounter(self.encounters()[0]);
+    self.deleteEncounter = function(cell) {
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId())
+
+        var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
+        if (parentCell) {
+            parentCell.removeChild(cell);
+        }
+
+        var parentEncounter = PersistenceService.findFirstBy(Encounter, 'encounterId', encounter.parent());
+        if (parentEncounter) {
+            parentEncounter.removeChild(encounter.encounterId());
+            parentEncounter.save();
+        }
+
+        cell.delete();
+        if (!parentCell) {
+            self.encounterCells.remove(cell);
+        }
+
+
         self.encounterDetailViewModel().delete();
         self.encounterDetailViewModel(null);
+        self.selectedCell(self.encounterCells()[0]);
     };
 
     /* Private Methods */
@@ -132,6 +159,9 @@ function EncounterViewModel() {
     };
 
     self._deinitializeVisibilityViewModel = function() {
+        self.visibilityViewModels().forEach(function(vm, idx, _) {
+           vm.unload();
+        });
         self.visibilityViewModels([]);
     };
 
@@ -144,16 +174,30 @@ function EncounterViewModel() {
         self.encounterDetailViewModel().unload();
     };
 
-    self._getTopLevelEncounters = function() {
+    self._getEncounterCells = function() {
         var key = CharacterManager.activeCharacter().key();
         var allEncounters = PersistenceService.findBy(Encounter, 'characterId', key);
-        return allEncounters.filter(function(enc, idx, _) {
+        var topLevel = allEncounters.filter(function(enc, idx, _) {
             return !enc.parent();
         });
-
+        return topLevel.map(function(enc, idx, _) {
+            return new EncounterCellViewModel(enc);
+        });
     };
 
-    self._reloadEncounters = function() {
-        self.encounters(self._getTopLevelEncounters());
+    self._findCell = function(cells, property, id) {
+        var cell = null;
+        for (var i=0; i<cells.length; i++) {
+            if (id === cells[i][property]()) {
+                cell = cells[i];
+            } else {
+                cell = self._findCell(cells[i].children(), property, id);
+            }
+
+            if (cell !== null) {
+                break;
+            }
+        }
+        return cell;
     };
 }

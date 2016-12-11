@@ -25,7 +25,13 @@ function Encounter() {
     self.parent = ko.observable();
     self.children = ko.observableArray([]);
 
-    // Public Methods
+    /* Public Methods */
+
+    self.removeChild = function(childId) {
+        self.children(self.children().filter(function(id, idx, _) {
+            return id !== childId;
+        }));
+    };
 
     /**
      * Returns the list of encounter objects corresponding to the child ids.
@@ -34,52 +40,19 @@ function Encounter() {
         return self.children().map(function(id, idx, _) {
             return PersistenceService.findFirstBy(Encounter, 'encounterId', id);
         });
-
     };
 
-    self.toggleIsOpen = function() {
-        self.isOpen(!self.isOpen());
+    self.getParent = function() {
+        return PersistenceService.findFirstBy(Encounter, 'encounterId', self.parent());
     };
 
-    self.arrowIconClass = ko.pureComputed(function() {
-        return self.isOpen() ? 'fa fa-caret-down' : 'fa fa-caret-right';
-    });
-
-    /**
-     * If the current encounter contains a parent, then check if it's parent
-     * knows. If the parent isn't aware that it has a child, it could get really
-     * awkward at dinner-time.
-     */
-    self.alertParentOfNewChild = function() {
-        if (!self.parent()) { return; }
-        var parent = PersistenceService.findFirstBy(Encounter, 'encounterId', self.parent());
-        if (parent.children().indexOf(self.encounterId()) === -1) {
-            parent.children.push(self.encounterId());
-            parent.save();
-        }
-    };
-
-    /**
-     * If the node has a parent, remove itself from it's parent's custody.
-     */
-    self.alertParentOfLostChild = function() {
-        if (!self.parent()) { return; }
-        var parent = PersistenceService.findFirstBy(Encounter, 'encounterId', self.parent());
-        if (parent.children().indexOf(self.encounterId()) > -1) {
-            parent.children.remove(self.encounterId());
-            parent.save();
-        }
-    };
+    /* View Model Methods */
 
     self.save = function() {
         self.ps.save();
     };
 
     self.delete = function() {
-        self.alertParentOfLostChild();
-        self.getChildren().forEach(function(child, idx, _) {
-            child.delete();
-        });
         self.ps.delete();
     };
 
