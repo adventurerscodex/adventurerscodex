@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="h3">
+    <div class="h2">
       <span data-bind="text: name"></span>&nbsp;
       <small data-bind="text: encounterLocation"></small>
       <div class="pull-right">
@@ -20,6 +20,7 @@
         templateUrl: 'templates/dm/encounter_sections',
         data: $parent[section.property]()
       }"></div>
+      <hr data-bind="visible: $parent[section.property]().visible" />
     <!-- /ko -->
     <!-- /ko -->
   </div>

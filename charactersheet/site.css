@@ -441,6 +441,17 @@ ul.footer-icons li {
   padding-top:175px;
 }
 
+.preview-modal-overflow-sm {
+  max-height: 225px;
+  overflow-y: auto;
+}
+
+.embedded-image {
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 225px;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
@@ -544,4 +555,16 @@ ul.ui-autocomplete .ui-state-active {
   background-image: url('/images/spell_icons/transmutation.svg');
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/*
+ * Encounter Section Icon CSS
+ */
+
+.encounter-section-img {
+  height: 35px;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-right: 10px;
+  float: left;
 }
