@@ -1,22 +1,23 @@
 'use strict';
 
 /**
- * encounter-list component
+ * nested-list component
  *
- * This component uses the provided list of encounters and displays them.
- * Then handles when a given encounter has been selected.
+ * This component uses the provided list of cells and displays them.
+ * Then handles when a given cell has been selected, added, or removed.
  *
- * @param encounters {Array Encounter} A list of possible encounters.
- * @param selectedEncounter {Encounter} The observable used to store.
- * @param levels {Int} The maximum level of nested encounters to display.
+ * @param cells {Array Encounter} A list of cells. Nested cells are children
+ * of the top level cells.
+ * @param selectedCell {Encounter} The observable used to store the selected cell.
+ * @param levels {Int} The maximum level of nested cells to display.
  * the currently selected encounter. Default is 5.
  *
  * Events:
  * @param onadd {Function} A callback that takes 1 parameter. This callback is
- * invoked when a new encounter has been added. The parameter is the parent
- * of the new encounter if it exists.
+ * invoked when a new cell has been added. The parameter is the parent
+ * of the new cell if it exists.
  * @param ondelete {Function} A callback function that takes 1 parameter. The only
- * parameter is the encounter object that is to be removed.
+ * parameter is the cell object that is to be removed.
  *
  * Note: This binding recursively uses itself to render it's children.
  */
