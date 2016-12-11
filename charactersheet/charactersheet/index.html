@@ -19,7 +19,8 @@
   <link href="https://fonts.googleapis.com/css?family=IM+Fell+English+SC" rel="stylesheet">
 
 </head>
-<body  data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
+<body data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
+<div id="content">
 <nav class="navbar navbar-default navbar-static-top">
 <div class="container-fluid">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
@@ -47,7 +48,7 @@
 </div>
 </nav>
 <!-- ko if: ready -->
-<div id='content' class='container-fluid'>
+<div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
   <div id="characters" class="container-fluid characters-module-style">
     <div class="row">
@@ -125,6 +126,18 @@
       <!-- /ko -->
 	</div>
 </div>
+<!-- /ko -->
+<!-- ko ifnot: ready -->
+<div id="wizard" class="container-fluid main"
+  data-bind="with: wizardViewModel">
+  <div data-bind="template: {
+    name: 'wizard.tmpl',
+    templateUrl: 'templates/common',
+    data: $data }"></div>
+</div>
+<!-- /ko -->
+</div>
+
 <!-- Footer -->
 <div class="container-fluid footer">
   <div class="col-lg-10 col-lg-offset-1">
@@ -146,7 +159,7 @@
       </li>
     </ul>
     <center>
-      <p class="text-muted">&copy; Adventurer's Codex. All rights reserved. &#32;&#32;&#124;&#32;
+      <p class="text-muted">&copy; 2016 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
         <a href="//adventurerscodex.com/contact.html">Contact Us</a>
       </p>
       <p class="text-muted">
@@ -159,18 +172,6 @@
     </center>
   </div>
 </div>
-<!-- /ko -->
-
-
-<!-- ko ifnot: ready -->
-<div id="wizard" class="container-fluid"
-  data-bind="with: wizardViewModel">
-  <div data-bind="template: {
-    name: 'wizard.tmpl',
-    templateUrl: 'templates/common',
-    data: $data }"></div>
-</div>
-<!-- /ko -->
 
 <!-- Switch Characters Modal -->
 <div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
