@@ -1,3 +1,76 @@
+version 1.2.0 (12/14/2016)
+
+####Player Tools####
+
+Autocomplete:
+
+  * Armor
+  * Weapons
+  * Magic Items
+  * Race (Names only)
+  * Class (Names only)
+  * Alignment
+
+Preivew Cards:
+
+  * Spells
+  * Magic Items
+  * Inventory
+  * Armor
+  * Weapons
+
+Auto Calculation:
+
+  * Weapon Range
+  * Total weight for gold
+  * Total spells
+
+Notes module:
+
+  * Add multiple notes nesting
+  * Add markdown support
+
+Spells module:
+
+  * Add spell status
+  * Cantrip removes prepared checkbox
+
+Status line:
+
+  * Add total weight
+
+UI:
+
+  * Death saves redesign
+  * Image URL redesign
+  * New short and long rest icons
+  * Add short and long rest icons to tracking table
+  * Add badges for magic weapons and armor
+
+General:
+
+  * Spell slots status bar sized dynamically by max uses
+
+####DM Tools####
+
+  * Add new campaigns for DMs
+  * Add Campaign image
+  * Overview tab
+    * Setting
+    * Days since campaign started
+    * Notes
+  * Encounters tab
+    * Add remove encounters (Nested up to 5 levels)
+      Encounter types:
+        * Add types to tailor encounter
+        * Environment
+        * Points of interest
+        * NPC
+        * Read aloud text (Boxed text)
+        * Monsters
+        * Treasure
+  * Export campaign
+
 version 1.1.1 (10/04/2016)
 * fixes issue with Proficiency Calculations not updating or providing invalid modifiers. 
 
