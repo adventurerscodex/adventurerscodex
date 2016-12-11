@@ -17,7 +17,7 @@ function NotesSection() {
     self.name = ko.observable('Notes');
 
     self.notes = ko.observable('');
-    self.visible = ko.observable(false);
+    self.visible = ko.observable(true);
 
     self.save = function() {
         self.ps.save();
