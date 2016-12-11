@@ -484,6 +484,11 @@ ul.footer-icons li {
   overflow-y: auto;
 }
 
+.encounter-detail-place-holder {
+  height: 400px;
+  padding-top:175px;
+}
+
 .preview-modal-overflow-sm {
   max-height: 225px;
   overflow-y: auto;

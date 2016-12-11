@@ -42,11 +42,11 @@ describe('Profile Model', function() {
                 var profile = new Profile();
 
                 //Empty
-                profile.characterSummary().should.equal('A unique character, handcrafted from the finest bits the internet can provide.');
+                profile.summary().should.equal('A unique character, handcrafted from the finest bits the internet can provide.');
 
                 //Full
                 profile.importValues(ProfileFixture);
-                profile.characterSummary().should.equal('A level 2 Dragonborn Wizard by Joe Blow');
+                profile.summary().should.equal('A level 2 Dragonborn Wizard by Joe Blow');
             });
         });
 
