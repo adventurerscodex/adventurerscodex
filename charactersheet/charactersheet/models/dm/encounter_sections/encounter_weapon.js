@@ -14,5 +14,13 @@ function EncounterWeapon() {
         return self.weaponName();
     });
 
+    self.propertyLabel = ko.pureComputed(function() {
+        return self.weaponDmg() ? self.weaponDmg() : '';
+    });
+
+    self.descriptionLabel = ko.pureComputed(function() {
+        return self.weaponDescription() ? self.weaponDescription() : '';
+    });
+
     return self;
 }

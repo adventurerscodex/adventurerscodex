@@ -14,5 +14,13 @@ function EncounterCoins() {
         return 'Coins';
     });
 
+    self.propertyLabel = ko.pureComputed(function() {
+        return '';
+    });
+
+    self.descriptionLabel = ko.pureComputed(function() {
+        return self.worthInGold() ? self.worthInGold() + '(gp)' : '';
+    });
+
     return self;
 }

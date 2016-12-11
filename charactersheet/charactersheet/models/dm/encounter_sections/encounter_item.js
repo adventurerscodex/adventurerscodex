@@ -14,5 +14,13 @@ function EncounterItem() {
         return self.itemName();
     });
 
+    self.propertyLabel = ko.pureComputed(function() {
+        return '';
+    });
+
+    self.descriptionLabel = ko.pureComputed(function() {
+        return self.shortDescription();
+    });
+
     return self;
 }

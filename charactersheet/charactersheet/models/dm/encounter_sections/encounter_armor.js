@@ -14,5 +14,13 @@ function EncounterArmor() {
         return self.armorName();
     });
 
+    self.propertyLabel = ko.pureComputed(function() {
+        return self.armorClass() ? self.acLabel() : '';
+    });
+
+    self.descriptionLabel = ko.pureComputed(function() {
+        return self.armorDescription();
+    });
+
     return self;
 }

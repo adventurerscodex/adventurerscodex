@@ -32,6 +32,7 @@ function TreasureSectionViewModel(parentEncounter) {
     self.itemShow = ko.observable(false);
     self.magicItemShow = ko.observable(false);
     self.weaponShow = ko.observable(false);
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.sorts = {
         'nameLabel asc': { field: 'nameLabel', direction: 'asc' },
@@ -132,6 +133,7 @@ function TreasureSectionViewModel(parentEncounter) {
         self.treasure.push(treasure);
         self.blankTreasure(null);
         self.clearTreasureTemplates();
+        self.itemType('');
     };
 
     self.setTreasure = function() {
@@ -171,14 +173,56 @@ function TreasureSectionViewModel(parentEncounter) {
     };
 
     self.editTreasure = function(treasure) {
+        self.selectPreviewTab();
         self.selecteditem(treasure);
     };
+
+    /* Auto-complete logic */
+
+    self.treasurePrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys;
+        if (self.itemType() == 'armor') {
+            keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
+        } else if (self.itemType() == 'item') {
+            keys = DataRepository.items ? Object.keys(DataRepository.items) : [];
+        } else if (self.itemType() == 'magicItem') {
+            keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
+        } else if (self.itemType() == 'weapon') {
+            keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
+        }
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    self.populateTreasure = function(label, value) {
+        var treasure;
+        if (self.itemType() == 'armor') {
+            treasure = DataRepository.armors[label];
+        } else if (self.itemType() == 'item') {
+            treasure = DataRepository.items[label];
+        } else if (self.itemType() == 'magicItem') {
+            treasure = DataRepository.magicItems[label];
+        } else if (self.itemType() == 'weapon') {
+            treasure = DataRepository.weapons[label];
+        }
+
+        self.blankTreasure().importValues(treasure);
+        self.shouldShowDisclaimer(true);
+    };
+
+    /* Modal Methods */
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
     };
 
-    /* Modal Methods */
+    self.addModalFinishedClosing = function() {
+        self.blankTreasure(null);
+        self.shouldShowDisclaimer(false);
+    };
 
     self.modalFinishedOpening = function() {
 

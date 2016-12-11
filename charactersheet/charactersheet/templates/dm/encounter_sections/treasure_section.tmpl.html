@@ -9,6 +9,12 @@
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
+      <th class="col-md-3">
+        Property
+      </th>
+      <th class="col-md-5">
+        Description
+      </th>
       <th class="col-md-1">
         <a data-toggle="modal"
            data-target="#addTreasure" href="#">
@@ -21,6 +27,10 @@
   <!-- ko foreach: filteredAndSortedTreasure -->
     <tr class="clickable">
       <td data-bind="text: nameLabel, click: $parent.editTreasure"
+          href="#"></td>
+      <td data-bind="text: propertyLabel, click: $parent.editTreasure"
+          href="#"></td>
+      <td data-bind="text: descriptionLabel, click: $parent.editTreasure"
           href="#"></td>
       <td>
         <a data-bind="click: $parent.removeTreasure" href="#">
@@ -46,7 +56,10 @@
 <div class="modal fade"
      id="addTreasure"
      tabindex="-1"
-     role="dialog">
+     role="dialog"
+     data-bind="modal: {
+      onclose: addModalFinishedClosing
+    }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -65,31 +78,34 @@
           <div class="form-group">
             <div class="col-sm-12">
               <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default"
+                <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'armor'}">
+                  <img class="action-bar-icon" src="/images/misc_icons/breastplate.svg"></img>
                   <input type="radio" class="hide-block"
                     data-bind="checked: itemType, click: setTreasure"
                     name="armor" value="armor"/>Armor
                 </label>
-                <label class="btn btn-default"
+                <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'coins'}">
+                 <img class="action-bar-icon" src="/images/misc_icons/coins.svg"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="coins" value="coins"/>Coins
                 </label>
-                <label class="btn btn-default"
+                <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'item'}">
+                  <img class="action-bar-icon" src="/images/misc_icons/drink-me.svg"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="item" value="item"/>Item
                 </label>
-                <label class="btn btn-default"
+                <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'magicItem'}">
-                  <prof-marker params="itemType: 'half'"></prof-marker>
+                  <img class="action-bar-icon" src="/images/misc_icons/fairy-wand.svg"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                        name="magicItem" value="magicItem"/>Magic Item
                 </label>
-                <label class="btn btn-default"
+                <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'weapon'}">
-                  <prof-marker params="itemType: 'proficient'"></prof-marker>
+                  <img class="action-bar-icon" src="/images/misc_icons/broadsword.svg"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                         name="weapon" value="weapon"/>Weapon
                 </label>
@@ -124,6 +140,14 @@
                     class="btn btn-primary"
                     data-bind='click: addTreasure'
                     data-dismiss="modal">Add</button>
+            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+              <sm><i>This data is distributed under the
+                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                  target='_blank'>
+                  OGL</a><br/>
+                  Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
+                </i><sm>
+            </p>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -241,7 +265,8 @@
              class="form-control"
              id="armorName"
              placeholder="Chain Mail"
-             data-bind='textInput: blankTreasure().armorName'>
+             data-bind='textInput: blankTreasure().armorName,
+              autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
     </div>
   </div>
   <div class="form-group">
@@ -388,7 +413,8 @@
          class="form-control"
          id="itemName"
          placeholder="Rations"
-         data-bind='textInput: blankTreasure().itemName'>
+         data-bind='textInput: blankTreasure().itemName,
+            autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
      </div>
    </div>
    <div class="form-group">
@@ -462,7 +488,7 @@
                id="magicItemName"
                placeholder="Dagger of Venom"
                data-bind='textInput: blankTreasure().magicItemName,
-               autocomplete: { source: magicItemsPrePopFilter'>
+                  autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
     <div class="form-group">
@@ -572,7 +598,8 @@
                class="form-control"
                id="weaponName"
                placeholder="Short Sword"
-               data-bind='textInput: blankTreasure().weaponName'>
+               data-bind='textInput: blankTreasure().weaponName,
+                 autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
     <div class="form-group">
@@ -738,7 +765,27 @@
 </script>
 
 <script type="text/html" id="coinsPreviewTemplate">
-
+  <div class="h3">
+    <span>Coins</span>&nbsp;
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-sm-6 col-xs-12"><b>Platinum:</b>&nbsp;<span data-bind="text: platinum"></span></div>
+    <div class="col-sm-6 col-xs-12"><b>Gold:</b>&nbsp;<span data-bind="text: gold"></span></div>
+    <div class="col-sm-6 col-xs-12"><b>Electrum:</b>&nbsp;<span data-bind="text: electrum"></span></div>
+    <div class="col-sm-6 col-xs-12"><b>Silver:</b>&nbsp;<span data-bind="text: silver"></span></div>
+    <div class="col-sm-6 col-xs-12"><b>Copper:</b>&nbsp;<span data-bind="text: copper"></span></div>
+  </div>
+  <hr />
+  <h4>Description</h4>
+  <div class="row row-padded">
+    <div class="col-sm-12 col-xs-12">
+      Total worth in Gold: <span data-bind="text: worthInGold"></span>
+    </div>
+    <div class="col-sm-12 col-xs-12">
+      Total Weight: <span data-bind="text: totalWeightLabel"></span>
+    </div>
+  </div>
 </script>
 
 <script type="text/html" id="itemPreviewTemplate">
@@ -762,11 +809,52 @@
 </script>
 
 <script type="text/html" id="magicItemPreviewTemplate">
-
+    <div class="h3">
+      <span data-bind="text: magicItemNameLabel"></span>&nbsp;
+      <small data-bind="text: magicItemRarity"></small>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: magicItemType"></span></div>
+      <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: magicItemWeightLabel"></span></div>
+      <div class="col-sm-4 col-xs-12"><b>Max Charges:</b>&nbsp;<span data-bind="text: magicItemMaxCharges"></span></div>
+    </div>
+    <hr />
+    <h4>Description</h4>
+    <div class="row row-padded">
+      <div class="col-xs-12 col-padded">
+        <div data-bind="html: magicItemDescriptionHTML"
+             class="preview-modal-overflow">
+        </div>
+      </div>
+    </div>
 </script>
 
 <script type="text/html" id="weaponPreviewTemplate">
-
+    <div class="h3">
+      <span data-bind="text: weaponName"></span>
+      <small data-bind="text: magicalModifierLabel"></small>
+    </div>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: weaponDmg"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: weaponRangeLabel"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: weaponType"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: weaponWeightLabel"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: weaponDamageType"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Proficiency:</b>&nbsp;<span data-bind="text: weaponProficiency"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Handedness:</b>&nbsp;<span data-bind="text: weaponHandedness"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Property:</b>&nbsp;<span data-bind="text: weaponProperty"></span></div>
+    </div>
+    <hr />
+    <h4>Description</h4>
+    <div class="row row-padded">
+      <div class="col-xs-12 col-padded">
+        <div data-bind="html: weaponDescriptionHTML"
+             class="preview-modal-overflow">
+        </div>
+      </div>
+    </div>
 </script>
 
 <!-- Edit Templates -->
@@ -868,7 +956,53 @@
 </script>
 
 <script type="text/html" id="coinsEditTemplate">
-
+  <div class="row row-padded">
+    <div class="col-sm-12 row-padded">
+      <div class="input-group ">
+        <span class="input-group-addon no-top-bottom-padding">
+          <img src="/images/pp-coin.svg" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+        </span>
+        <input type="number" class="form-control" min="1"
+          data-bind='value: platinum'/>
+      </div>
+    </div>
+    <div class="col-sm-12 row-padded">
+      <div class="input-group ">
+        <span class="input-group-addon no-top-bottom-padding">
+          <img src="/images/gp-coin.svg" width="30px" title="Gold Coins" alt="Gold Coins"/>
+        </span>
+        <input type="number" class="form-control" min="1"
+          data-bind='value: gold'/>
+      </div>
+    </div>
+    <div class="col-sm-12 row-padded">
+      <div class="input-group ">
+        <span class="input-group-addon no-top-bottom-padding">
+          <img src="/images/ep-coin.svg" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+        </span>
+        <input type="number" class="form-control" min="1"
+          data-bind='value: electrum'>
+      </div>
+    </div>
+    <div class="col-sm-12 row-padded">
+      <div class="input-group ">
+        <span class="input-group-addon no-top-bottom-padding">
+          <img src="/images/sp-coin.svg" width="30px" title="Silver Coins" alt="Silver Coins"/>
+        </span>
+        <input type="number" class="form-control" min="1"
+          data-bind='value: silver'>
+      </div>
+    </div>
+    <div class="col-sm-12 row-padded">
+      <div class="input-group">
+        <span class="input-group-addon no-top-bottom-padding">
+          <img src="/images/cp-coin.svg" width="30px" title="Copper Coins" alt="Copper Coins"/>
+        </span>
+        <input type="number" class="form-control" min="1"
+          data-bind='value: copper'>
+      </div>
+    </div>
+  </div>
 </script>
 
 <script type="text/html" id="itemEditTemplate">
@@ -945,9 +1079,260 @@
 </script>
 
 <script type="text/html" id="magicItemEditTemplate">
-
+    <div class="form-group">
+      <label for="magicItemName"
+             class="col-sm-2 control-label">Item</label>
+      <div class="col-sm-10">
+        <input type="text"
+               class="form-control"
+               id="magicItemName"
+               placeholder="Dagger of Venom"
+               data-bind='textInput: magicItemName'>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="magicItemType"
+             class="col-sm-2 control-label">Type</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: magicItemTypeOptions,
+                           value: magicItemType,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="magicItemType"
+             class="col-sm-2 control-label">Rarity</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: magicItemRarityOptions,
+                           value: magicItemRarity,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="magicItemMaxCharges"
+             class="col-sm-2 control-label">Max Charges</label>
+        <div class="col-sm-10">
+          <input type="number"
+                 class="form-control"
+                 id="magicItemMaxCharges"
+                 placeholder="1"
+                 min="0"
+                 max="100"
+                 data-bind='textInput: magicItemMaxCharges'>
+        </div>
+    </div>
+    <div data-bind="visible: magicItemMaxCharges() != 0">
+      <div class="form-group">
+        <label for="magicItemCharges"
+               class="col-sm-2 control-label">Charges</label>
+          <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   id="magicItemCharges"
+                   placeholder="1"
+                   min="0"
+                   max="100"
+                   data-bind='textInput: magicItemCharges'>
+          </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="magicItemWeight"
+             class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-10">
+          <input type="number"
+                 class="form-control"
+                 id="magicItemWeight"
+                 placeholder="1"
+                 min="0"
+                 max="1000"
+                 data-bind='textInput: magicItemWeight'>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="magicItemRequiresAttunement"
+             class="col-sm-2 control-label">Requires Attunement</label>
+        <div class="col-sm-10">
+          <input type="checkbox"
+                 class="form-control"
+                 id="magicItemRequiresAttunement"
+                 data-bind='checked: magicItemRequiresAttunement'>
+        </div>
+    </div>
+    <div data-bind="visible: magicItemRequiresAttunement() == true">
+      <div class="form-group">
+        <label for="magicItemAttuned"
+               class="col-sm-2 control-label">Attuned</label>
+          <div class="col-sm-10">
+            <input type="checkbox"
+                   class="form-control"
+                   id="magicItemAttuned"
+                   data-bind='checked: magicItemAttuned'>
+          </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="magicItemDescription"
+             class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+          <textarea type="password"
+                    class="form-control"
+                    id="magicItemDescription"
+                    rows="4"
+                    placeholder="Awesome stuff goes here"
+                    data-bind='textInput: magicItemDescription'>
+          </textarea>
+        </div>
+    </div>
 </script>
 
 <script type="text/html" id="weaponEditTemplate">
+    <div class="form-group">
+      <label for="weaponName"
+             class="col-sm-2 control-label">Name</label>
+      <div class="col-sm-10">
+        <input type="text"
+               class="form-control"
+               id="weaponName"
+               placeholder="Short Sword"
+               data-bind='textInput: weaponName'>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponDmg"
+             class="col-sm-2 control-label">Damage</label>
+        <div class="col-sm-10">
+          <input type="text"
+                 class="form-control"
+                 id="weaponDmg"
+                 placeholder="1D4"
+                 data-bind='textInput: weaponDmg'>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponHit"
+             class="col-sm-2 control-label">Magical Modifier</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control"
+               id="weaponHit"
+               placeholder="Place hit bonus here"
+               data-bind='textInput: weaponHit'>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponType"
+             class="col-sm-2 control-label">Type</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: weaponTypeOptions,
+                           value: weaponType,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponHandedness"
+             class="col-sm-2 control-label">Handedness</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: weaponHandednessOptions,
+                           value: weaponHandedness,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponProficiency"
+             class="col-sm-2 control-label">Proficiency</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: weaponProficiencyOptions,
+                           value: weaponProficiency,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponPrice"
+             class="col-sm-2 control-label">Price</label>
+      <div class="col-sm-10">
+        <div class="input-group">
+          <input type="number" min="0" class="form-control input-select2-addon"
+               id="weaponPrice"
+               placeholder="5"
+               data-bind='textInput: weaponPrice'>
+           <span class="input-group-addon">
+            <select class="form-control"
+                    data-bind="options: $parent.currencyDenominationList,
+                               value: weaponCurrencyDenomination,
+                               select2: {theme: 'classic'}"></select>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponWeight"
+             class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-10">
+          <input type="number" min="0" class="form-control"
+                 id="weaponWeight"
+                 placeholder="6"
+                 data-bind='textInput: weaponWeight'>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponRange"
+             class="col-sm-2 control-label">Range</label>
+        <div class="col-sm-10">
+          <input type="text"
+                 class="form-control"
+                 id="weaponRange"
+                 placeholder="25/100"
+                 data-bind='textInput: weaponRange'>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="weaponDamageType"
+             class="col-sm-2 control-label">Damage Type</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: weaponDamageTypeOptions,
+                           value: weaponDamageType,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+        </div>
+      <div class="form-group">
+      <label for="weaponProperty"
+             class="col-sm-2 control-label">Property</label>
+        <div class="col-sm-10">
+        <select class="form-control"
+                data-bind="options: weaponPropertyOptions,
+                           value: weaponProperty,
+                           select2: {theme: 'classic'}"></select>
+        </div>
+    </div>
 
+    <div class="form-group">
+      <label for="weaponQuantity"
+             class="col-sm-2 control-label">Quantity</label>
+        <div class="col-sm-10">
+          <input type="number" min="0" class="form-control"
+                 id="weaponQuantity"
+                 placeholder="1"
+                 data-bind='textInput: weaponQuantity'>
+        </div>
+    </div>
+
+    <div class="form-group">
+      <label for="weaponDescription"
+             class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+          <textarea type="password"
+                    class="form-control"
+                    id="weaponDescription"
+                    rows="4"
+                    placeholder="A sword...that is short..."
+                    data-bind='textInput: weaponDescription'>
+          </textarea>
+        </div>
+    </div>
 </script>

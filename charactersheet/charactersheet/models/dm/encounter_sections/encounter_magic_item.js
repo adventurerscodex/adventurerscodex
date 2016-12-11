@@ -14,5 +14,13 @@ function EncounterMagicItem() {
         return self.magicItemName();
     });
 
+    self.propertyLabel = ko.pureComputed(function() {
+        return self.magicItemType() ? self.magicItemType() : '';
+    });
+
+    self.descriptionLabel = ko.pureComputed(function() {
+        return self.shortDescription();
+    });
+
     return self;
 }
