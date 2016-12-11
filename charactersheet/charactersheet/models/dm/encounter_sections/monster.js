@@ -59,11 +59,6 @@ function Monster() {
         return foundScore;
     };
 
-    self.getValue = function(name) {
-        var score = self.findAbilityScoreByName(name);
-        return score.value();
-    }
-
     self.clear = function() {
         var values = new Monster().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
