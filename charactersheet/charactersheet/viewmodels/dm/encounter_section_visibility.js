@@ -5,6 +5,7 @@ function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
 
     self.name = ko.observable('');
     self.visible = ko.observable(false);
+    self.tagline = ko.observable();
     self.encounterId = parentEncounter.encounterId;
     self.sectionModel = sectionModel;
 
@@ -19,6 +20,7 @@ function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
         }
         self.visible(section.visible());
         self.name(section.name());
+        self.tagline(section.tagline());
     };
 
     self.unload = function() {};

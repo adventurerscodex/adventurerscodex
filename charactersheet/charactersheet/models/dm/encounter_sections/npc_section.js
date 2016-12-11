@@ -9,7 +9,8 @@ function NPCSection() {
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
-    self.name = ko.observable('NPC');
+    self.name = ko.observable('Non-Player Characters');
+    self.tagline = ko.observable('Keep track of all of the interesting characters in your world.');
     self.visible = ko.observable(false);
 
     //Public Methods

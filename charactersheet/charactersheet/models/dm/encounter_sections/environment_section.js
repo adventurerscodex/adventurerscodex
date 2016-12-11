@@ -11,6 +11,7 @@ function EnvironmentSection() {
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
     self.name = ko.observable('Environment');
+    self.tagline = ko.observable('Where is this encounter, and what\'s it like there?');
     self.visible = ko.observable(false);
 
     self.save = function() {

@@ -11,6 +11,7 @@ function PlayerTextSection() {
     self.encounterId = ko.observable();
     self.name = ko.observable('Read-Aloud Text');
     self.visible = ko.observable(false);
+    self.tagline = ko.observable('For all the things you need to say to players: wall carvings, secret messages, or worldly descriptions.');
 
     //Public Methods
 

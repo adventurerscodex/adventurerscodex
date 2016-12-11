@@ -20,6 +20,7 @@ function NotesSectionViewModel(parentEncounter) {
      * REQUIRED: The display name of the encounter section.
      */
     self.name = 'Notes';
+    self.tagline = ko.observable();
 
     //Public Methods
 
@@ -46,6 +47,7 @@ function NotesSectionViewModel(parentEncounter) {
         }
         self.notes(notesSection.notes());
         self.visible(notesSection.visible());
+        self.tagline(notesSection.tagline());
     };
 
     self.unload = function() {
