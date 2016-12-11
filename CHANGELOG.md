@@ -11,7 +11,7 @@ Autocomplete:
   * Class (Names only)
   * Alignment
 
-Preivew Cards:
+Preview Cards:
 
   * Spells
   * Magic Items
