@@ -40,11 +40,30 @@ function Monster() {
         return self.description() ? self.description() : '';
     });
 
-    self.showComma = ko.pureComputed(function() {
-        return self.type() && self.alignment();
+    self.nameLabel = ko.pureComputed(function() {
+        var label = self.size() ? self.size() : '';
+        label += self.type() ? ' ' + self.type() : '';
+        label += (self.size() && self.alignment()) || (self.type() && self.alignment()) ? ', ' : '';
+        label += self.alignment() ? self.alignment() : '';
+        return label;
     });
 
     //Public Methods
+    self.findAbilityScoreByName = function(name) {
+        var foundScore;
+        self.abilityScores().forEach(function(score, idx, _) {
+            if (score.name() == name) {
+                foundScore = score;
+            }
+        });
+        return foundScore;
+    };
+
+    self.getValue = function(name) {
+        var score = self.findAbilityScoreByName(name);
+        return score.value();
+    }
+
     self.clear = function() {
         var values = new Monster().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);

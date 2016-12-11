@@ -148,12 +148,12 @@ function MonsterSectionViewModel(parentEncounter) {
 
     self.toggleModal = function() {
         var abilityScores = [
-            { name: 'Strength', encounterId: null, characterId: null, value: null},
-            { name: 'Dexterity', encounterId: null, characterId: null, value: null},
-            { name: 'Constitution', encounterId: null, characterId: null, value: null},
-            { name: 'Intelligence', encounterId: null, characterId: null, value: null},
-            { name: 'Wisdom', encounterId: null, characterId: null, value: null},
-            { name: 'Charisma', encounterId: null, characterId: null, value: null}
+            { name: 'Strength', encounterId: null, characterId: null, value: 0},
+            { name: 'Dexterity', encounterId: null, characterId: null, value: 0},
+            { name: 'Constitution', encounterId: null, characterId: null, value: 0},
+            { name: 'Intelligence', encounterId: null, characterId: null, value: 0},
+            { name: 'Wisdom', encounterId: null, characterId: null, value: 0},
+            { name: 'Charisma', encounterId: null, characterId: null, value: 0}
         ];
         self.blankMonster().abilityScores(
             abilityScores.map(function(e, i, _) {
@@ -166,6 +166,14 @@ function MonsterSectionViewModel(parentEncounter) {
         self.openModal(!self.openModal());
     };
 
+    self.renderAbilityScoresInAddModal = function() {
+        if (self.blankMonster().abilityScores()[0].name()) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
@@ -173,7 +181,7 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.modalFinishedClosing = function() {
-
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {

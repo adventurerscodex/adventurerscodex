@@ -170,32 +170,34 @@
               </tr>
             </thead>
             <tbody>
+              <!-- ko if: renderAbilityScoresInAddModal() -->
               <tr>
                 <td class="text-center">
                   <input type="number" class="form-control"
-                    data-bind='value: blankMonster().abilityScores()[0].value'>
+                    data-bind="value: blankMonster().findAbilityScoreByName('Strength').value">
                 </td>
                 <td class="text-center">
                   <input type="number" class="form-control"
-                    data-bind='value: blankMonster().abilityScores()[1].value'>
+                    data-bind="value: blankMonster().findAbilityScoreByName('Dexterity').value">
                 </td>
                 <td class="text-center">
                   <input type="number" class="form-control"
-                    data-bind='value: blankMonster().abilityScores()[2].value'>
+                    data-bind="value: blankMonster().findAbilityScoreByName('Constitution').value">
                 </td>
                 <td class="text-center">
                   <input type="number" class="form-control"
-                    data-bind='value: blankMonster().abilityScores()[3].value'>
+                    data-bind="value: blankMonster().findAbilityScoreByName('Intelligence').value">
                 </td>
                 <td class="text-center">
                   <input type="number" class="form-control"
-                    data-bind='value: blankMonster().abilityScores()[4].value'>
+                    data-bind="value: blankMonster().findAbilityScoreByName('Wisdom').value">
                 </td>
                 <td class="text-center">
                   <input type="number" class="form-control"
-                    data-bind='value: blankMonster().abilityScores()[5].value'>
+                    data-bind="value: blankMonster().findAbilityScoreByName('Charisma').value">
                 </td>
               </tr>
+              <!-- /ko -->
             </tbody>
           </table>
           <hr/>
@@ -349,9 +351,7 @@
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;
-              <small data-bind="text: type"></small>
-              <small data-bind="if: showComma">,</small>
-              <small data-bind="text: alignment"></small>
+              <small data-bind="text: nameLabel"></small>
             </div>
             <div class="row">
               <div class="col-sm-6 col-xs-12"><b>Armor Class:</b>&nbsp;<span data-bind="text: armorClass"></span></div>
@@ -385,39 +385,39 @@
                   <tbody>
                     <tr>
                       <td class="text-center">
-                        <span data-bind='text: abilityScores()[0].value'></span>
+                        <span data-bind="text: findAbilityScoreByName('Strength').value"></span>
                         <sup>
-                          <span class="badge" data-bind="text: abilityScores()[0].modifierLabel"></span>
+                          <span class="badge" data-bind="text: findAbilityScoreByName('Strength').modifierLabel"></span>
                         </sup>
                       </td>
                       <td class="text-center">
-                        <span data-bind='text: abilityScores()[1].value'></span>
+                        <span data-bind="text: findAbilityScoreByName('Dexterity').value"></span>
                         <sup>
-                          <span class="badge" data-bind="text: abilityScores()[1].modifierLabel"></span>
+                          <span class="badge" data-bind="text: findAbilityScoreByName('Dexterity').modifierLabel"></span>
                         </sup>
                       </td>
                       <td class="text-center">
-                        <span data-bind='text: abilityScores()[2].value'></span>
+                        <span data-bind="text: findAbilityScoreByName('Constitution').value"></span>
                         <sup>
-                          <span class="badge" data-bind="text: abilityScores()[2].modifierLabel"></span>
+                          <span class="badge" data-bind="text: findAbilityScoreByName('Constitution').modifierLabel"></span>
                         </sup>
                       </td>
                       <td class="text-center">
-                        <span data-bind='text: abilityScores()[3].value'></span>
+                        <span data-bind="text: findAbilityScoreByName('Intelligence').value"></span>
                         <sup>
-                          <span class="badge" data-bind="text: abilityScores()[3].modifierLabel"></span>
+                          <span class="badge" data-bind="text: findAbilityScoreByName('Intelligence').modifierLabel"></span>
                         </sup>
                       </td>
                       <td class="text-center">
-                        <span data-bind='text: abilityScores()[4].value'></span>
+                        <span data-bind="text: findAbilityScoreByName('Wisdom').value"></span>
                         <sup>
-                          <span class="badge" data-bind="text: abilityScores()[4].modifierLabel"></span>
+                          <span class="badge" data-bind="text: findAbilityScoreByName('Wisdom').modifierLabel"></span>
                         </sup>
                       </td>
                       <td class="text-center">
-                        <span data-bind='text: abilityScores()[5].value'></span>
+                        <span data-bind="text: findAbilityScoreByName('Charisma').value"></span>
                         <sup>
-                          <span class="badge" data-bind="text: abilityScores()[5].modifierLabel"></span>
+                          <span class="badge" data-bind="text: findAbilityScoreByName('Charisma').modifierLabel"></span>
                         </sup>
                       </td>
                     </tr>
@@ -527,27 +527,27 @@
                   <tr>
                     <td class="text-center">
                       <input type="number" class="form-control"
-                        data-bind='value: abilityScores()[0].value'>
+                        data-bind="value: findAbilityScoreByName('Strength').value">
                     </td>
                     <td class="text-center">
                       <input type="number" class="form-control"
-                        data-bind='value: abilityScores()[1].value'>
+                        data-bind="value: findAbilityScoreByName('Dexterity').value">
                     </td>
                     <td class="text-center">
                       <input type="number" class="form-control"
-                        data-bind='value: abilityScores()[2].value'>
+                        data-bind="value: findAbilityScoreByName('Constitution').value">
                     </td>
                     <td class="text-center">
                       <input type="number" class="form-control"
-                        data-bind='value: abilityScores()[3].value'>
+                        data-bind="value: findAbilityScoreByName('Intelligence').value">
                     </td>
                     <td class="text-center">
                       <input type="number" class="form-control"
-                        data-bind='value: abilityScores()[4].value'>
+                        data-bind="value: findAbilityScoreByName('Wisdom').value">
                     </td>
                     <td class="text-center">
                       <input type="number" class="form-control"
-                        data-bind='value: abilityScores()[5].value'>
+                        data-bind="value: findAbilityScoreByName('Charisma').value">
                     </td>
                   </tr>
                 </tbody>
