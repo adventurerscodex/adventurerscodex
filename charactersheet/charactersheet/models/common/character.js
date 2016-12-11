@@ -50,11 +50,9 @@ function Character() {
      * @returns summary {string} describes the character.
      */
     self.playerSummary = ko.pureComputed(function() {
-        var summ = '';
-        try {
-            summ = Profile.findBy(self.key())[0].characterSummary();
-        } catch(err) { /*Ignore*/ }
-        return summ;
+        var model = self.playerType().key == 'character' ? Profile : Campaign;
+        var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
+        return data ? data.summary() : '';
     });
 
     /**
@@ -63,11 +61,9 @@ function Character() {
      * @returns summary {string} an author for the character.
      */
     self.playerAuthor = ko.pureComputed(function() {
-        var summ = '';
-        try {
-            summ = Profile.findBy(self.key())[0].playerName();
-        } catch(err) { /*Ignore*/ }
-        return summ;
+        var model = self.playerType().key == 'character' ? Profile : Campaign;
+        var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
+        return data ? data.playerName() : '';
     });
 
     /**
@@ -76,11 +72,10 @@ function Character() {
      * @returns summary {string} a title for the character.
      */
     self.playerTitle = ko.pureComputed(function() {
-        var summ = '';
-        try {
-            summ = Profile.findBy(self.key())[0].characterName();
-        } catch(err) { /*Ignore*/ }
-        return summ;
+        var model = self.playerType().key == 'character' ? Profile : Campaign;
+        var property = self.playerType().key == 'character' ? 'characterName' : 'name';
+        var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
+        return data ? data[property](): '';
     });
 
     self.saveToFile = function() {

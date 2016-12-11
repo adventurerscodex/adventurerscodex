@@ -23,7 +23,7 @@ function Profile() {
 
     //Public Methods
 
-    self.characterSummary = ko.pureComputed(function() {
+    self.summary = ko.pureComputed(function() {
         var desc = ((self.race() && self.race() !== '') &&
                         (self.typeClass() && self.typeClass() !== '') &&
                         (self.level() && self.level() !== '')) ?
