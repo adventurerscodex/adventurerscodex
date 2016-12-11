@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="h3">
+    <img class="encounter-section-img" src="/images/encounters/night-sky.svg">
+    Environment<br />
+    <small>Where is this encounter, and what's it like there?</small>
+  </div>
+  <!-- Begin Tabs -->
+  <ul class="nav nav-tabs tabs">
+    <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+      <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
+          <b>Preview</b>
+      </a>
+    </li>
+    <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+      <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
+          <b>Edit</b>
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" data-bind="css: previewTabStatus" class="tab-pane">
+      <div class="row row-padded">
+        <div data-bind="col-xs-12">
+          <div class="row">
+            <div class="col-xs-12"><b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span></div>
+          </div>
+          <div class="row row-padded">
+            <div class="col-xs-12"><b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span></div>
+          </div>
+          <hr data-bind="visible: shouldShowDividingMarker"/>
+          <div>
+            <!-- ko if: imageUrl -->
+            <img data-bind="attr: { src: imageUrl, width: imageWidth }, css: imageClass"
+              class="img-responsive img-rounded">
+            <!-- /ko -->
+            <span data-bind="markdownPreview: description"
+               class="preview-modal-overflow-sm">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End Preview Tab -->
+    <div role="tabpanel" data-bind="css: editTabStatus" class="tab-pane">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 col-padded control-label">Image Link</label>
+          <div class="col-sm-10 col-padded">
+            <input type="text"
+                   class="form-control"
+                   data-bind="value: imageUrl">
+          </div>
+          <label class="col-sm-2 col-padded control-label">Weather</label>
+          <div class="col-sm-10 col-padded">
+            <input type="text"
+                   class="form-control"
+                   data-bind="value: weather">
+          </div>
+          <label class="col-sm-2 col-padded control-label">Terrain</label>
+          <div class="col-sm-10 col-padded">
+            <input type="text"
+                   class="form-control"
+                   data-bind="value: terrain">
+          </div>
+          <label class="col-sm-2 col-padded control-label">Description</label>
+            <div class="col-sm-10 col-padded">
+              <textarea type="text"
+                     class="form-control" rows="4"
+                     data-bind="value: description, markdownEditor: true"></textarea>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

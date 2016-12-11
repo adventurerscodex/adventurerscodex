@@ -13,6 +13,7 @@ function EncounterViewModel() {
     /* Encounter Sections */
 
     self.sections = [
+        { property: 'environmentSectionViewModel', vm: EnvironmentSectionViewModel, model: EnvironmentSection },
         { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
         { property: 'npcSectionViewModel', vm: NPCSectionViewModel, model: NPCSection },
         { property: 'playerTextSectionViewModel', vm: PlayerTextSectionViewModel, model: PlayerTextSection },
