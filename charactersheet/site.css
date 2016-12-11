@@ -1,6 +1,14 @@
+html, body {height: 100%;}
+
 #content {
   max-width: 1800px;
   font-family: "Lato", sans-serif;
+  min-height: 100%;
+}
+
+.main {
+  padding-bottom:150px;
+  overflow:auto;
 }
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
@@ -17,6 +25,10 @@ small {
 }
 
 .footer {
+  position: relative;
+  height: 150px;
+	clear:both;
+  margin-top:-150px;
   padding-top:30px;
   background-color: #ecf0f1;
   padding-bottom: 20px;
