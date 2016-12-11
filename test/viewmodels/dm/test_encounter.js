@@ -4,18 +4,18 @@ describe('Encounter View Model', function() {
 
     describe('Load', function() {
         it('should load the encounters list', function() {
-            var data = [new Encounter()];
+            var data = [new EncounterCellViewModel(new Encounter())];
 
             var vm = new EncounterViewModel();
-            var spy1 = simple.mock(vm, '_getTopLevelEncounters').returnWith(data);
-            var spy2 = simple.mock(vm.selectedEncounter, 'subscribe').callFn(function() {});
+            var spy1 = simple.mock(vm, '_getEncounterCells').returnWith(data);
+            var spy2 = simple.mock(vm.selectedCell, 'subscribe').callFn(function() {});
 
             spy1.called.should.equal(false);
             spy2.called.should.equal(false);
             vm.load();
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
-            vm.selectedEncounter().encounterId().should.equal(data[0].encounterId());
+            vm.selectedCell().encounterId().should.equal(data[0].encounterId());
         });
     });
 
@@ -23,43 +23,40 @@ describe('Encounter View Model', function() {
         it('should take the value from the modal and add relevant data,'
             +' then save and reload the enocunters', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            var data = [new Encounter()];
+            var data = [new EncounterCellViewModel(new Encounter())];
 
             var vm = new EncounterViewModel();
             vm.encounterDetailViewModel(new EncounterDetailViewModel(new Encounter(), []));
-            simple.mock(vm, 'modalEncounter').returnWith(data[0]);
-            var spy1 = simple.mock(vm, '_getTopLevelEncounters').returnWith(data);
+            simple.mock(vm, 'modalEncounter').returnWith(new Encounter());
+            var spy1 = simple.mock(vm, '_findCell').returnWith(data[0]);
             var spy3 = simple.mock(vm.encounterDetailViewModel(), 'save').callFn(function() {});
 
             spy1.called.should.equal(false);
             vm.addEncounter();
             spy1.called.should.equal(true);
-            vm.selectedEncounter().encounterId().should.equal(data[0].encounterId());
+            vm.selectedCell().encounterId().should.equal(data[0].encounterId());
             spy3.called.should.equal(true);
         });
 
-        it('should take the value from the modal and add relevant data,'
-            +' then save and reload the enocunters. This one has a parent', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            var data = [new Encounter()];
-            data[0].parent(uuid.v4());
-
-            var vm = new EncounterViewModel();
-            vm.encounterDetailViewModel(new EncounterDetailViewModel(new Encounter(), []));
-            simple.mock(vm, 'modalEncounter').returnWith(data[0]);
-            var spy1 = simple.mock(vm, '_getTopLevelEncounters').returnWith(data);
-            var parentSpy = simple.mock(data[0], 'alertParentOfNewChild').callFn(function() {});
-            var spy2 = simple.mock(vm.selectedEncounter, 'subscribe').callFn(function() {});
-            var spy3 = simple.mock(vm.encounterDetailViewModel(), 'save').callFn(function() {});
-
-            spy1.called.should.equal(false);
-            parentSpy.called.should.equal(false);
-            vm.addEncounter();
-            spy1.called.should.equal(true);
-            parentSpy.called.should.equal(true);
-            vm.selectedEncounter().encounterId().should.equal(data[0].encounterId());
-            spy3.called.should.equal(true);
-        });
+//         it('should take the value from the modal and add relevant data,'
+//             +' then save and reload the enocunters. This one has a parent', function() {
+//             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+//             var data = [new Encounter()];
+//             data[0].parent(uuid.v4());
+//
+//             var vm = new EncounterViewModel();
+//             vm.encounterDetailViewModel(new EncounterDetailViewModel(new Encounter(), []));
+//             simple.mock(vm, 'modalEncounter').returnWith(data[0]);
+//             var spy1 = simple.mock(vm, '_findCell').returnWith(new EncounterCellViewModel(data[0]));
+//             var spy2 = simple.mock(vm.selectedCell, 'subscribe').callFn(function() {});
+//             var spy3 = simple.mock(vm.encounterDetailViewModel(), 'save').callFn(function() {});
+//
+//             spy1.called.should.equal(false);
+//             vm.addEncounter();
+//             spy1.called.should.equal(true);
+//             vm.selectedCell().encounterId().should.equal(data[0].encounterId());
+//             spy3.called.should.equal(true);
+//         });
     });
 
     describe('openAddModal', function() {
@@ -141,25 +138,6 @@ describe('Encounter View Model', function() {
             unloadSpy.called.should.equal(false);
             vm._deinitializeDetailViewModel();
             unloadSpy.called.should.equal(true);
-        });
-    });
-
-    describe('_getTopLevelEncounters', function() {
-        it('should fetch the top level encounters (encounters with a null parent', function() {
-            var enc1 = new Encounter();
-            enc1.parent(uuid.v4());
-            var enc2 = new Encounter();
-            enc2.parent(null);
-            var data = [enc1, enc2];
-
-            var vm = new EncounterViewModel();
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            var spy = simple.mock(PersistenceService, 'findBy').returnWith(data);
-
-            spy.called.should.equal(false);
-            var result = vm._getTopLevelEncounters();
-            spy.called.should.equal(true);
-            result[0].encounterId().should.equal(data[1].encounterId())
         });
     });
 });
