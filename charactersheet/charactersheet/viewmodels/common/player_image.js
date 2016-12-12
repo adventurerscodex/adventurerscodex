@@ -23,7 +23,7 @@ function PlayerImageViewModel() {
         if (image && image.imageUrl()) {
             self.imageUrl(image.imageUrl());
         } else {
-            var image = new ImageModel();
+            image = new ImageModel();
             image.characterId(key);
             image.save();
         }
@@ -32,7 +32,7 @@ function PlayerImageViewModel() {
         if (info) {
             self.email(info.email());
         } else {
-            var info = new PlayerInfo();
+            info = new PlayerInfo();
             info.characterId(key);
             info.save();
         }
@@ -41,7 +41,7 @@ function PlayerImageViewModel() {
         if (playerImageSource) {
             self.imageSource(playerImageSource.imageSource());
         } else {
-            var playerImageSource = new PlayerImage();
+            playerImageSource = new PlayerImage();
             playerImageSource.characterId(key);
             playerImageSource.save();
         }
@@ -132,5 +132,5 @@ function PlayerImageViewModel() {
         if (info) {
             return info.gravatarUrl();
         }
-    }
+    };
 }

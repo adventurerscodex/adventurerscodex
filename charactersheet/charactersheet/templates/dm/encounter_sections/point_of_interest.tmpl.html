@@ -1,0 +1,190 @@
+<div class="h3">
+  <img class="encounter-section-img" src="/images/encounters/rune-stone.svg">
+  Points of Interest<br />
+  <small data-bind="text: tagline"></small>
+</div>
+<table class="table table-responsive table-ac-bordered table-hover">
+  <thead>
+    <tr>
+      <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
+        Name
+        <span data-bind="css: sortArrow('name')"></span>
+      </th>
+      <th data-bind="click: function(){sortBy('description');}" class="col-md-8">
+        Description
+        <span data-bind="css: sortArrow('description')"></span>
+      </th>
+      <th class="col-md-1">
+        <a data-toggle="modal"
+           data-target="#addPointOfInterest" href="#">
+          <i class="fa fa-plus fa-color"></i>
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <!-- ko foreach: filteredAndSortedPointsOfInterest -->
+    <tr class="clickable">
+      <td data-bind="text: name, click: $parent.editPointOfInterest"
+          href="#"
+          data-toggle="modal"
+          data-target="#viewPointOfInterest"></td>
+      <td data-bind="text: description, click: $parent.editPointOfInterest"
+          href="#"
+          data-toggle="modal"
+          data-target="#viewPointOfInterest"></td>
+      <td>
+        <a data-bind="click: $parent.removePointOfInterest" href="#">
+          <i class="fa fa-trash-o fa-color-hover">
+          </i>
+        </a>
+      </td>
+    </tr>
+    <!-- /ko -->
+    <!-- ko if: filteredAndSortedPointsOfInterest().length == 0 -->
+    <tr class="clickable">
+      <td data-toggle="modal" data-target="#addPointOfInterest" href="#"
+        colspan="7" class="text-center">
+        <i class="fa fa-plus fa-color"></i>
+        Add a new Point of Interest
+      </td>
+    </tr>
+    <!-- /ko -->
+  </tbody>
+</table>
+
+<!-- Add Modal -->
+<div class="modal fade"
+     id="addPointOfInterest"
+     tabindex="-1"
+     role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"
+            id="addWeaponLabel">Add a new Point of Interest</h4>
+    </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text"
+                     class="form-control"
+                     placeholder="A Statue of a King"
+                     data-bind="textInput: blankPointOfInterest().name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea type="text"
+                       class="form-control" rows="4"
+                       placeholder="It rises up from it's stone pillar..."
+                       data-bind='value: blankPointOfInterest().description'></textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind='click: addPointOfInterest'
+                    data-dismiss="modal">Add</button>
+          </div>
+        </form>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+     id="viewWeapon"
+     tabindex="-1"
+     role="dialog"
+     data-bind="modal: {
+      open: selecteditem,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit a Point of Interest</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Begin Tabs -->
+        <ul class="nav nav-tabs tabs">
+          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
+                <b>Preview</b>
+            </a>
+          </li>
+          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
+                <b>Edit</b>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-bind="with: selecteditem">
+          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
+            <div class="h3">
+              <span data-bind="text: name"></span>&nbsp;
+            </div>
+            <hr />
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: description"
+                     class="preview-modal-overflow">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal">Done</button>
+            </div>
+          </div> <!-- End Preview Tab -->
+          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="pointOfInterestName"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         data-bind="textInput: name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="pointInterestDescription"
+                       class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea type="text" rows="6"
+                           class="form-control"
+                           data-bind='value: description, markdownEditor: true'></textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->

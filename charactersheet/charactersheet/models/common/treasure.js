@@ -33,10 +33,10 @@ function Treasure() {
         weight += self.platinum() ? parseInt(self.platinum()) : 0;
         weight += self.gold() ? parseInt(self.gold()) : 0;
         weight += self.electrum() ? parseInt(self.electrum()) : 0;
-        weight += self.silver() ? parseInt(self.silver()) : 0;;
+        weight += self.silver() ? parseInt(self.silver()) : 0;
         weight += self.copper() ? parseInt(self.copper()) : 0;
 
-        weight = Math.floor(weight / 50)
+        weight = Math.floor(weight / 50);
 
         return weight;
     });
@@ -63,6 +63,10 @@ function Treasure() {
 
     self.save = function() {
         self.ps.save();
+    };
+
+    self.delete = function() {
+        self.ps.delete();
     };
 }
 

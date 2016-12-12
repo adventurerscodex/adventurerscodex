@@ -55,10 +55,6 @@ small {
     padding-right: 5px;
 }
 
-.well-no-padding {
-  margin-bottom:0px;
-}
-
 .well-top-shadow {
   box-shadow: 0px 2px 2px -2px #888888 inset;
 }
@@ -70,6 +66,10 @@ small {
 
 .table-ac-bordered tr {
   border-bottom: thin solid #ecf0f1;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0px;
 }
 
 .beta {
@@ -484,6 +484,31 @@ ul.footer-icons li {
   overflow-y: auto;
 }
 
+.encounter-detail-place-holder {
+  height: 400px;
+  padding-top:175px;
+}
+
+.preview-modal-overflow-sm {
+  max-height: 225px;
+  overflow-y: auto;
+}
+
+.embedded-image {
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 225px;
+}
+
+.btn-group-padding {
+  padding: 10px 0px;
+}
+
+.no-top-or-bottom-margin {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
@@ -657,4 +682,16 @@ ul.ui-autocomplete .ui-state-active {
   background-image: url('/images/magic_items_icons/wondrous.svg');
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/*
+ * Encounter Section Icon CSS
+ */
+
+.encounter-section-img {
+  height: 35px;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-right: 10px;
+  float: left;
 }

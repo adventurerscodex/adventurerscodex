@@ -179,10 +179,20 @@ function WizardViewModel() {
             abData.characterId = character.key();
             abilityScores.importValues(abData);
             abilityScores.save();
-        } else if (playerType == 'dm') {
+        } else if (playerType.key == 'dm') {
             // Campaign
 
-            //TODO
+            var campaign = new Campaign();
+            var campaignStep = self.allSteps().filter(function(step, idx, _) {
+                return step.IDENTIFIER === 'WizardCampaignStep';
+            });
+
+            data = campaignStep[0].results();
+            campaign.characterId = character.key();
+            campaign.playerName(data.playerName);
+            campaign.name(data.campaignName);
+            campaign.createdDate(new Date());
+            campaign.save();
         }
         //TODO: Save the results of all child steps.
     };

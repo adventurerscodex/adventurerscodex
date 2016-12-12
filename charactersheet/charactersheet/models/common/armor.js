@@ -65,7 +65,7 @@ function Armor() {
     });
 
     self.armorWeightLabel = ko.pureComputed(function() {
-        return self.armorWeight() + ' lbs.'
+        return self.armorWeight() + ' lbs.';
     });
 
     self.clear = function() {

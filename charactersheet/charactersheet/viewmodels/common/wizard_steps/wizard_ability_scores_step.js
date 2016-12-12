@@ -18,12 +18,12 @@ function WizardAbilityScoresStepViewModel() {
 
     // View Properties
 
-    self.str = ko.observable().extend({ required: "&#9679; Required" });
-    self.dex = ko.observable().extend({ required: "&#9679; Required" });
-    self.con = ko.observable().extend({ required: "&#9679; Required" });
-    self.int = ko.observable().extend({ required: "&#9679; Required" });
-    self.wis = ko.observable().extend({ required: "&#9679; Required" });
-    self.cha = ko.observable().extend({ required: "&#9679; Required" });
+    self.str = ko.observable().extend({ required: '&#9679; Required' });
+    self.dex = ko.observable().extend({ required: '&#9679; Required' });
+    self.con = ko.observable().extend({ required: '&#9679; Required' });
+    self.int = ko.observable().extend({ required: '&#9679; Required' });
+    self.wis = ko.observable().extend({ required: '&#9679; Required' });
+    self.cha = ko.observable().extend({ required: '&#9679; Required' });
 
     // Wizard Step Methods
 

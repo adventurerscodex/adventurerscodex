@@ -120,6 +120,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    encounters: {
+        changed: new signals.Signal()
+    },
+
     playerImage: {
         changed: new signals.Signal()
     },

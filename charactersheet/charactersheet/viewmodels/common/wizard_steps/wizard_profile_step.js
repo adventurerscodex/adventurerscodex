@@ -18,9 +18,8 @@ function WizardProfileStepViewModel() {
 
     // View Properties
 
-    self.characterName = ko.observable().extend({ required: "&#9679; Required" });
-    self.playerName = ko.observable().extend({ required: "&#9679; Required" });
-    self.background = ko.observable();
+    self.characterName = ko.observable().extend({ required: '&#9679; Required' });
+    self.playerName = ko.observable().extend({ required: '&#9679; Required' });
     self.race = ko.observable();
     self.typeClass = ko.observable();
     self.alignment = ko.observable();
@@ -38,11 +37,11 @@ function WizardProfileStepViewModel() {
     //Prepopulate methods
     self.setRace = function(label, value) {
         self.race(value);
-    }
+    };
 
     self.setClass = function(label, value) {
         self.typeClass(value);
-    }
+    };
 
     self.setAlignment = function(label, value) {
         self.alignment(value);
