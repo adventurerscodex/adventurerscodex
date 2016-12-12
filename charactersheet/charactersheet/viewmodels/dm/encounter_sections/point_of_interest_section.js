@@ -3,7 +3,7 @@
 function PointOfInterestSectionViewModel(parentEncounter) {
     var self = this;
 
-    self.template = 'point_of_interest.tmpl'
+    self.template = 'point_of_interest.tmpl';
     self.encounterId = parentEncounter.encounterId;
     self.characterId = ko.observable();
 

@@ -3,7 +3,7 @@
 function PlayerTextSectionViewModel(parentEncounter) {
     var self = this;
 
-    self.template = 'player_text_section.tmpl'
+    self.template = 'player_text_section.tmpl';
     self.encounterId = parentEncounter.encounterId;
     self.characterId = ko.observable();
 
@@ -109,7 +109,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     self.addPlayerText = function() {
-        var playerText = self.blankPlayerText();
+        var playerText = self.blankPlayerText();
         playerText.characterId(CharacterManager.activeCharacter().key());
         playerText.encounterId(self.encounterId());
         playerText.save();

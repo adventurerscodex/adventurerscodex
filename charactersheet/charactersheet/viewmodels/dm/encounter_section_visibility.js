@@ -12,7 +12,7 @@ function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
 
     self.load = function() {
         var key = self.encounterId();
-        var section = PersistenceService.findFirstBy(self.sectionModel, 'encounterId', key);;
+        var section = PersistenceService.findFirstBy(self.sectionModel, 'encounterId', key);
         if (!section) {
             section = new self.sectionModel();
             section.encounterId(self.encounterId());
@@ -25,7 +25,7 @@ function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
 
     self.save = function() {
         var key = self.encounterId();
-        var section = PersistenceService.findFirstBy(self.sectionModel, 'encounterId', key);;
+        var section = PersistenceService.findFirstBy(self.sectionModel, 'encounterId', key);
         if (!section) {
             section = new self.sectionModel();
             section.encounterId(self.encounterId());
@@ -34,4 +34,4 @@ function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
         section.visible(self.visible());
         section.save();
     };
-};
+}

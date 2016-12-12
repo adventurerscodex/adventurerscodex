@@ -187,7 +187,7 @@ function WizardViewModel() {
                 return step.IDENTIFIER === 'WizardCampaignStep';
             });
 
-            var data = campaignStep[0].results();
+            data = campaignStep[0].results();
             campaign.characterId = character.key();
             campaign.playerName(data.playerName);
             campaign.name(data.campaignName);

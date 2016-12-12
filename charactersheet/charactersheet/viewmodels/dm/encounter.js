@@ -16,6 +16,7 @@ function EncounterViewModel() {
         { property: 'environmentSectionViewModel', vm: EnvironmentSectionViewModel, model: EnvironmentSection },
         { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
         { property: 'npcSectionViewModel', vm: NPCSectionViewModel, model: NPCSection },
+        { property: 'monsterSectionViewModel', vm: MonsterSectionViewModel, model: MonsterSection },
         { property: 'playerTextSectionViewModel', vm: PlayerTextSectionViewModel, model: PlayerTextSection },
         { property: 'treasureSectionViewModel', vm: TreasureSectionViewModel, model: TreasureSection },
         { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
@@ -81,7 +82,7 @@ function EncounterViewModel() {
 
     self.modalFinishedClosing = function() {
         self.modalEncounter(null);
-        self._deinitializeVisibilityViewModel()
+        self._deinitializeVisibilityViewModel();
     };
 
     /* Manage Encounter Methods */

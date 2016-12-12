@@ -9,7 +9,10 @@ module.exports = function(grunt) {
 		target: [
     		'charactersheet/charactersheet/*/*.js',
     		'test/*/*.js',
-    		'charactersheet/charactersheet/*.js']
+    		'charactersheet/charactersheet/*.js',
+        'charactersheet/charactersheet/*/*/*.js',
+        'charactersheet/charactersheet/*/*/*/*.js',
+        'charactersheet/charactersheet/*/*/*/*/*.js']
 	},
     karma: {
         test: {

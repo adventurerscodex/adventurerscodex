@@ -33,7 +33,7 @@ function EnvironmentSection() {
     };
 
     self.exportValues = function() {
-      var mapping = ko.mapping.autoignore(self, self.mapping);
-      return ko.mapping.toJS(self, mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 }

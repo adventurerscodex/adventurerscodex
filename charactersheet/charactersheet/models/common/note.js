@@ -49,6 +49,6 @@ function Note() {
 
     self._getFirstWords = function(myString, nWords) {
         var words = myString.split(/\s+/);
-        return words.slice(0, words.length - 2).join(" ");
+        return words.slice(0, words.length - 2).join(' ');
     };
-};
+}

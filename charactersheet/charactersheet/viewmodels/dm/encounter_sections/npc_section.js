@@ -3,7 +3,7 @@
 function NPCSectionViewModel(parentEncounter) {
     var self = this;
 
-    self.template = 'npc_section.tmpl'
+    self.template = 'npc_section.tmpl';
     self.encounterId = parentEncounter.encounterId;
     self.characterId = ko.observable();
 

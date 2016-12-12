@@ -4,21 +4,11 @@ function NotesSectionViewModel(parentEncounter) {
     var self = this;
 
     self.notes = ko.observable('');
-
-    /**
-     * REQUIRED: Whether or not the given encounter section should be displayed.
-     */
     self.visible = ko.observable(false);
 
-    /**
-     * REQUIRED: The template name relative to the encounter_sections.
-     */
     self.template = 'notes_section.tmpl';
     self.encounterId = parentEncounter.encounterId;
 
-    /**
-     * REQUIRED: The display name of the encounter section.
-     */
     self.name = 'Notes';
 
     //Public Methods
@@ -73,7 +63,7 @@ function NotesSectionViewModel(parentEncounter) {
     self.delete = function() {
         var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
         notes.delete();
-    }
+    };
 
     /* Private Methods */
 
