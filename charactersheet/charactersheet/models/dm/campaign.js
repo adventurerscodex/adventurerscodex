@@ -45,7 +45,6 @@ function Campaign() {
         if (self.name() && self.playerName()) {
             return self.name() + ': A story by ' + self.playerName();
         }
-        return 'A long long time ago...'
+        return 'A long long time ago...';
     };
 }
-

@@ -74,7 +74,7 @@ function CampaignOverviewViewModel() {
         var dateCreated = self.createdDate().format('longDate');
         var msg = 'Created on: ' + dateCreated + '.';
         if (since > 0) {
-            msg += ' This adventure has been in progress for ' + since + ' days.'
+            msg += ' This adventure has been in progress for ' + since + ' days.';
         }
         return msg;
     });

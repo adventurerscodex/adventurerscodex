@@ -22,7 +22,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self.init = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-   };
+    };
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
@@ -69,7 +69,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         if (environment) {
             environment.delete();
         }
-    }
+    };
 
     /* UI Methods */
 
