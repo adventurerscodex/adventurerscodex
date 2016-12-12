@@ -40,9 +40,7 @@ function ProfileViewModel() {
     };
 
     self.init = function() {
-        Notifications.global.save.add(function() {
-            self.dataHasChanged();
-        });
+        Notifications.global.save.add(self.dataHasChanged);
     };
 
     self.load = function() {
@@ -79,6 +77,7 @@ function ProfileViewModel() {
 
     self.unload = function() {
         Notifications.stats.changed.remove(self.dataHasChanged);
+        Notifications.global.save.remove(self.dataHasChanged);
     };
 
     self.dataHasChanged = function() {
