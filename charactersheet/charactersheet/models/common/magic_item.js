@@ -9,7 +9,7 @@ function MagicItem() {
     self.mapping = {
         include: ['characterId', 'magicItemName', 'magicItemType', 'magicItemRarity',
             'magicItemRequiresAttunement', 'magicItemAttuned', 'magicItemMaxCharges',
-            'magicItemWeight', 'magicItemDescription']
+            'magicItemCharges', 'magicItemWeight', 'magicItemDescription']
     };
 
     self.characterId = ko.observable(null);

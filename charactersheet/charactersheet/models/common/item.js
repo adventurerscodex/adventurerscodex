@@ -17,9 +17,6 @@ function Item() {
 
     self.characterId = ko.observable(null);
     self.itemName = ko.observable('');
-    self.itemType = ko.observable('');
-    self.itemIsEquippable = ko.observable(false);
-    self.itemBodyLocation = ko.observable('');
     self.itemDesc = ko.observable('');
     self.itemQty = ko.observable(1);
     self.itemWeight = ko.observable(0);

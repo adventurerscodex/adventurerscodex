@@ -112,7 +112,7 @@
               </div>
             </div>
          </div>
-
+         <!-- ko if: blankTreasure() -->
          <!--ko if: armorShow()-->
           <div data-bind="template: { name: 'armorTemplate' }"></div>
          <!--/ko-->
@@ -132,7 +132,7 @@
          <!--ko if: weaponShow()-->
           <div data-bind="template: { name: 'weaponTemplate' }"></div>
          <!--/ko-->
-
+         <!--/ko-->
           </div><!-- Modal Body -->
 
           <div class="modal-footer">
