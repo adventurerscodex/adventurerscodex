@@ -504,6 +504,11 @@ ul.footer-icons li {
   padding: 10px 0px;
 }
 
+.no-top-or-bottom-margin {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start

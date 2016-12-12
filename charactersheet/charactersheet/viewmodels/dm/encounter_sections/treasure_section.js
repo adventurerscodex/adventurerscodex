@@ -9,6 +9,7 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.visible = ko.observable();
     self.name = ko.observable();
+    self.tagline = ko.observable();
 
     self.treasure = ko.observableArray();
 
@@ -66,6 +67,7 @@ function TreasureSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 
     self.unload = function() {

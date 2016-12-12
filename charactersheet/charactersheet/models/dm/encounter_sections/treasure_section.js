@@ -11,6 +11,7 @@ function TreasureSection() {
     self.encounterId = ko.observable();
     self.name = ko.observable('Treasure');
     self.visible = ko.observable(false);
+    self.tagline = ko.observable("Add loot to the treasure horde.");
 
     //Public Methods
 
