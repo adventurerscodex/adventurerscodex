@@ -341,149 +341,115 @@ var jebeddo_data = {
   "Item": [
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "itemName": "Piccolo",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
-      "itemDesc": "Small flute",
-      "itemQty": "1",
-      "itemWeight": "",
-      "itemCost": ""
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "itemName": "Bongo",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
-      "itemDesc": "Percussion instrument",
-      "itemQty": "1",
-      "itemWeight": "",
-      "itemCost": 0
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Bedrolls",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Costumes",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Waterskins",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Food ration",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "15",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Mess Kit",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "1",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Rope ",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "130 feet",
       "itemQty": "",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Torches",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "10",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Disguise Kit",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "1",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Backpacks",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Wine",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Fine elven wine",
       "itemQty": "",
       "itemWeight": "",
-      "itemCost": "20"
+      "itemCost": "20",
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Arrows",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "21",
       "itemWeight": 0,
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Potions of no pain",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Kit + 2 vials\nBowl, rocks, water vial",
       "itemQty": "3",
       "itemWeight": 0,
-      "itemCost": "2"
+      "itemCost": "2",
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Darts",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "30",
       "itemWeight": 0,
@@ -493,9 +459,6 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Poison Vials",
-      "itemType": "",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Small",
       "itemQty": "2",
       "itemWeight": 0,
@@ -505,9 +468,6 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Pink Powder",
-      "itemType": "",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Got his from the orcs. Small pouch.",
       "itemQty": 1,
       "itemWeight": 0,
@@ -517,9 +477,6 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Pigs Blood",
-      "itemType": "",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": 1,
       "itemWeight": 0,

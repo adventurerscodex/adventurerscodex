@@ -64,6 +64,10 @@ function Treasure() {
     self.save = function() {
         self.ps.save();
     };
+
+    self.delete = function() {
+        self.ps.delete();
+    };
 }
 
 Treasure.findBy = function(characterId) {

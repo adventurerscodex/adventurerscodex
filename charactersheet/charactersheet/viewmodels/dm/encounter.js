@@ -17,6 +17,7 @@ function EncounterViewModel() {
         { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
         { property: 'npcSectionViewModel', vm: NPCSectionViewModel, model: NPCSection },
         { property: 'playerTextSectionViewModel', vm: PlayerTextSectionViewModel, model: PlayerTextSection },
+        { property: 'treasureSectionViewModel', vm: TreasureSectionViewModel, model: TreasureSection },
         { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
     ];
 

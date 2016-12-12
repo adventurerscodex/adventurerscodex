@@ -11,16 +11,12 @@ function Item() {
 
     self.ps = PersistenceService.register(Item, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'totalWeight', 'delete', 'mapping'],
-        include: ['characterId']
+        include: ['characterId', 'itemName', 'itemDesc', 'itemQty', 'itemWeight',
+        'itemCost', 'itemCurrencyDenomination']
     };
 
     self.characterId = ko.observable(null);
     self.itemName = ko.observable('');
-    self.itemType = ko.observable('');
-    self.itemIsEquippable = ko.observable(false);
-    self.itemBodyLocation = ko.observable('');
     self.itemDesc = ko.observable('');
     self.itemQty = ko.observable(1);
     self.itemWeight = ko.observable(0);
@@ -54,15 +50,18 @@ function Item() {
 
     self.clear = function() {
         var values = new Item().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
