@@ -48,11 +48,11 @@ ko.bindingHandlers.markdownEditor = {
  */
 ko.bindingHandlers.markdownPreview = {
     init: function(element, valueAccessor, allBindings) {
-        var value = ko.unwrap(valueAccessor());
+        var value = ko.unwrap(valueAccessor()) || '';
         $(element).html(marked(value));
     },
     update: function(element, valueAccessor, allBindings) {
-        var value = ko.unwrap(valueAccessor());
+        var value = ko.unwrap(valueAccessor()) || '';
         $(element).html(marked(value));
     }
 };
