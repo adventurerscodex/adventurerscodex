@@ -1,30 +1,31 @@
 'use strict';
 
 /**
- * encounter-list component
+ * nested-list component
  *
- * This component uses the provided list of encounters and displays them.
- * Then handles when a given encounter has been selected.
+ * This component uses the provided list of cells and displays them.
+ * Then handles when a given cell has been selected, added, or removed.
  *
- * @param encounters {Array Encounter} A list of possible encounters.
- * @param selectedEncounter {Encounter} The observable used to store.
- * @param levels {Int} The maximum level of nested encounters to display.
+ * @param cells {Array Encounter} A list of cells. Nested cells are children
+ * of the top level cells.
+ * @param selectedCell {Encounter} The observable used to store the selected cell.
+ * @param levels {Int} The maximum level of nested cells to display.
  * the currently selected encounter. Default is 5.
  *
  * Events:
  * @param onadd {Function} A callback that takes 1 parameter. This callback is
- * invoked when a new encounter has been added. The parameter is the parent
- * of the new encounter if it exists.
+ * invoked when a new cell has been added. The parameter is the parent
+ * of the new cell if it exists.
  * @param ondelete {Function} A callback function that takes 1 parameter. The only
- * parameter is the encounter object that is to be removed.
+ * parameter is the cell object that is to be removed.
  *
  * Note: This binding recursively uses itself to render it's children.
  */
-function EncounterListComponentViewModel(params) {
+function NestedListComponentViewModel(params) {
     var self = this;
 
-    self.encounters = params.encounters || ko.observableArray();
-    self.selectedEncounter = params.selectedEncounter || ko.observable();
+    self.cells = params.cells || ko.observableArray();
+    self.selectedCell = params.selectedCell || ko.observable();
     self.ondelete = params.ondelete;
     self.onadd = params.onadd;
 
@@ -34,51 +35,53 @@ function EncounterListComponentViewModel(params) {
         self.levels = 4;
     }
 
-    self.selectEncounter = function(encounter) {
-        self.selectedEncounter(encounter);
+    self.selectCell = function(cell) {
+        self.selectedCell(cell);
     };
 
     /**
      * Fires the `ondelete` callback to the responder.
      */
-    self.deleteEncounter = function(encounter) {
+    self.deleteCell = function(cell) {
         if (self.ondelete) {
-            self.ondelete(encounter);
+            self.ondelete(cell);
         }
     };
 
     /**
      * Fires the `onadd` callback to the responder.
      */
-    self.addEncounter = function(parent) {
+    self.addCell = function(parent) {
         if (self.onadd) {
             self.onadd(parent);
         }
     };
 
+    /* UI Methods */
+
     /**
      * Returns the correct active css for a given encounter.
      */
-    self.isActiveCSS = function(encounter) {
-        var selected = self.selectedEncounter();
+    self.isActiveCSS = function(cell) {
+        var selected = self.selectedCell();
         if (selected) {
-            return encounter.encounterId() === selected.encounterId() ? 'active' : '';
+            return cell.encounterId() === selected.encounterId() ? 'active' : '';
         }
     };
 
-    self.isSelected = function(encounter) {
-        if (!self.selectedEncounter()) { return false; }
-        return self.selectedEncounter().encounterId() === encounter.encounterId() ? true : false;
+    self.isSelected = function(cell) {
+        if (!self.selectedCell()) { return false; }
+        return self.selectedCell().id() === cell.id() ? true : false;
     };
 }
 
-ko.components.register('encounter-list', {
-    viewModel: EncounterListComponentViewModel,
+ko.components.register('nested-list', {
+    viewModel: NestedListComponentViewModel,
     template: '\
-        <div data-bind="foreach: encounters" class="list-group no-bottom-margin">\
+        <div data-bind="foreach: cells" class="list-group no-bottom-margin">\
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
-                    click: $parent.selectEncounter">\
+                    click: $parent.selectCell">\
                 <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
                 <i data-bind="css: arrowIconClass, click: toggleIsOpen" aria-hidden="true"></i>&nbsp; \
                 <!-- /ko -->\
@@ -87,21 +90,21 @@ ko.components.register('encounter-list', {
                 <span class="pull-right"> \
                     <!-- ko if: $parent.levels > 0 -->\
                     <span class="glyphicon glyphicon-plus" \
-                        data-bind="click: $parent.addEncounter"></span>&nbsp;&nbsp; \
+                        data-bind="click: $parent.addCell"></span>&nbsp;&nbsp; \
                     <!-- /ko -->\
                     <span class="glyphicon glyphicon-trash" \
-                        data-bind="click: $parent.deleteEncounter"></span>\
+                        data-bind="click: $parent.deleteCell"></span>\
                 </span> \
                 <!-- /ko -->\
             </a>\
             <div class="row" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
                     <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
-                    <encounter-list params="encounters: getChildren(), \
+                    <nested-list params="cells: children, \
                         levels: $parent.levels - 1, \
-                        selectedEncounter: $parent.selectedEncounter, \
+                        selectedCell: $parent.selectedCell, \
                         onadd: $parent.onadd, \
-                        ondelete: $parent.ondelete"></encounter-list>\
+                        ondelete: $parent.ondelete"></nested-list>\
                     <!-- /ko -->\
                 </div>\
             </div>\

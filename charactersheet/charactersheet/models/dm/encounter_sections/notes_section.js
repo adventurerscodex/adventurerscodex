@@ -18,7 +18,7 @@ function NotesSection() {
     self.tagline = ko.observable('Was there something particularly interesting about this place?');
 
     self.notes = ko.observable('');
-    self.visible = ko.observable(false);
+    self.visible = ko.observable(true);
 
     self.save = function() {
         self.ps.save();
