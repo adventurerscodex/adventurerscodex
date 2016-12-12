@@ -9,6 +9,7 @@ function PointOfInterestSectionViewModel(parentEncounter) {
 
     self.visible = ko.observable();
     self.name = ko.observable();
+    self.tagline = ko.observable();
 
     self.pointsOfInterest = ko.observableArray();
 
@@ -50,6 +51,7 @@ function PointOfInterestSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 
     self.unload = function() {

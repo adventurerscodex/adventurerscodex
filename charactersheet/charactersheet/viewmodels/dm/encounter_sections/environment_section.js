@@ -7,6 +7,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self.encounterId = parentEncounter.encounterId;
 
     self.name = ko.observable();
+    self.tagline = ko.observable();
     self.visible = ko.observable(false);
 
     self.imageUrl = ko.observable();
@@ -30,6 +31,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         if (environmentSection) {
             self.name(environmentSection.name());
             self.visible(environmentSection.visible());
+            self.tagline(environmentSection.tagline());
         }
 
         var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());

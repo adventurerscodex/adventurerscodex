@@ -75,16 +75,22 @@
           </div>
           <!-- Encounter Section Show/Hide -->
           <!-- ko foreach: { data: visibilityVMs } -->
-          <div class="row row-padded">
-            <label for="encounter.locale" class="col-sm-3 control-label"
+          <div class="row text-left">
+            <div class="col-sm-8 col-sm-offset-1 h5"
               data-bind="text: name">
-            </label>
-            <div class="col-sm-8">
+            </div>
+            <div class="col-sm-3">
               <input type="checkbox" class="form-control" id=""
                      data-bind="checked: visible" />
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-1">
+              <i class="text-muted" data-bind="text: tagline"></i>
+            </div>
+          </div>
           <!-- /ko -->
+          <div class="spacer"></div>
           <div class="modal-footer">
             <div class="form-group">
               <div class="col-xs-offset-7 col-xs-5">

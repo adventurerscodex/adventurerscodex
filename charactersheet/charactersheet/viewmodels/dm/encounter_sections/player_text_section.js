@@ -9,6 +9,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self.visible = ko.observable();
     self.name = ko.observable();
+    self.tagline = ko.observable();
 
     self.playerTexts = ko.observableArray();
 
@@ -50,6 +51,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 
     self.unload = function() {

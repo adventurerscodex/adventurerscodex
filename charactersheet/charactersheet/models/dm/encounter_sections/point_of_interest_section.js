@@ -11,6 +11,7 @@ function PointOfInterestSection() {
     self.encounterId = ko.observable();
     self.name = ko.observable('Points of Interest');
     self.visible = ko.observable(false);
+    self.tagline = ko.observable("Keep track of all of the interesting locations and objects in the world.");
 
     //Public Methods
 

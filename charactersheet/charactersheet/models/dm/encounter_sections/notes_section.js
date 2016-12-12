@@ -15,6 +15,7 @@ function NotesSection() {
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
     self.name = ko.observable('Notes');
+    self.tagline = ko.observable('Was there something particularly interesting about this place?');
 
     self.notes = ko.observable('');
     self.visible = ko.observable(false);
