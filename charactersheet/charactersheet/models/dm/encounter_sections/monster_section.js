@@ -11,7 +11,7 @@ function MonsterSection() {
     self.encounterId = ko.observable();
     self.name = ko.observable('Monster');
     self.visible = ko.observable(false);
-    self.tagline = ko.observable("What kind of baddies will your encounters have?");
+    self.tagline = ko.observable('What kind of baddies will your encounters have?');
 
     //Public Methods
 

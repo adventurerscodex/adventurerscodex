@@ -26,19 +26,21 @@ function DeathSave() {
     };
 
     self.deathSaveSuccessIcon = ko.pureComputed(function() {
+        var css;
         if (self.deathSaveSuccess() === true) {
-            var css = 'ds-success-full';
+            css = 'ds-success-full';
         } else if (self.deathSaveSuccess() === false){
-            var css = 'ds-success-empty';
+            css = 'ds-success-empty';
         }
         return css;
     });
 
     self.deathSaveFailureIcon = ko.pureComputed(function() {
+        var css;
         if (self.deathSaveFailure() === true) {
-            var css = 'ds-failure-full';
+            css = 'ds-failure-full';
         } else if (self.deathSaveFailure() === false){
-            var css = 'ds-failure-empty';
+            css = 'ds-failure-empty';
         }
         return css;
     });

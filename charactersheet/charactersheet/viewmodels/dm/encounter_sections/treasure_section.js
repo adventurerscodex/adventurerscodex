@@ -3,7 +3,7 @@
 function TreasureSectionViewModel(parentEncounter) {
     var self = this;
 
-    self.template = 'treasure_section.tmpl'
+    self.template = 'treasure_section.tmpl';
     self.encounterId = parentEncounter.encounterId;
     self.characterId = ko.observable();
 
@@ -17,7 +17,7 @@ function TreasureSectionViewModel(parentEncounter) {
      * A list of types to accept/load into the treasure.
      */
     self.treasureTypes = [
-      EncounterItem, EncounterWeapon, EncounterMagicItem, EncounterArmor, EncounterCoins
+        EncounterItem, EncounterWeapon, EncounterMagicItem, EncounterArmor, EncounterCoins
     ];
 
     self.blankTreasure = ko.observable(null);
@@ -37,7 +37,7 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.sorts = {
         'nameLabel asc': { field: 'nameLabel', direction: 'asc' },
-        'nameLabel desc': { field: 'nameLabel', direction: 'desc' },
+        'nameLabel desc': { field: 'nameLabel', direction: 'desc' }
     };
 
     self.filter = ko.observable('');

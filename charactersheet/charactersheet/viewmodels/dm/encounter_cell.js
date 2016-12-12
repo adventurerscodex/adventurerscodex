@@ -20,7 +20,7 @@ function EncounterCellViewModel(encounter) {
 
     self.children = ko.pureComputed(function() {
         return self._children().map(function(child, idx, _) {
-            return new EncounterCellViewModel(child)
+            return new EncounterCellViewModel(child);
         });
     });
 
@@ -61,4 +61,4 @@ function EncounterCellViewModel(encounter) {
             child.delete();
         });
     };
-};
+}

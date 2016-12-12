@@ -59,7 +59,7 @@ function EncounterViewModel() {
         var cell = self.selectedCell();
         if (!cell) { return null; }
 
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId())
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId());
         self.encounterDetailViewModel(new EncounterDetailViewModel(encounter, self.sections));
         self._initializeDetailViewModel();
     };
@@ -112,7 +112,7 @@ function EncounterViewModel() {
         }
 
         // Select the new encounter.
-        var cellToSelect = self._findCell(self.encounterCells(), 'encounterId', encounter.encounterId())
+        var cellToSelect = self._findCell(self.encounterCells(), 'encounterId', encounter.encounterId());
         if (cellToSelect) {
             self.selectedCell(cellToSelect);
             self.encounterDetailViewModel().save();
@@ -125,7 +125,7 @@ function EncounterViewModel() {
      * take care of removing the element from the UI.
      */
     self.deleteEncounter = function(cell) {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId())
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId());
 
         var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
         if (parentCell) {
@@ -162,7 +162,7 @@ function EncounterViewModel() {
 
     self._deinitializeVisibilityViewModel = function() {
         self.visibilityViewModels().forEach(function(vm, idx, _) {
-           vm.unload();
+            vm.unload();
         });
         self.visibilityViewModels([]);
     };

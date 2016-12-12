@@ -41,5 +41,5 @@ function TreasureViewModel() {
     self._dataHasChanged = function() {
         self.treasure().save();
         Notifications.treasure.changed.dispatch();
-    }
+    };
 }

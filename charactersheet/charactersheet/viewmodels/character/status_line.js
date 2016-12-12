@@ -34,7 +34,7 @@ function StatusLineViewModel() {
         if (!profile || statuses.length == 0) { return ''; }
 
         return profile.characterName() + ' is ' + statuses.map(function(e, i, _) {
-            return '<span class="text-' + e.type() + '">' + e.name() + '</span>'
+            return '<span class="text-' + e.type() + '">' + e.name() + '</span>';
         }).join('&nbsp;,') + '.';
     };
 }

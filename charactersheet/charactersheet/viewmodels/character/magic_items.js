@@ -62,7 +62,7 @@ function MagicItemsViewModel() {
     self.determineMagicItemIcon = ko.computed(function() {
         if (self.selecteditem() && self.selecteditem().magicItemType()) {
             var magicItemType = self.selecteditem().magicItemType();
-            var cssClassName = magicItemType.split(" ")[0].toLowerCase() + "-magic-item-card";
+            var cssClassName = magicItemType.split(' ')[0].toLowerCase() + '-magic-item-card';
             self.magicItemIconCSS(cssClassName);
         }
     });

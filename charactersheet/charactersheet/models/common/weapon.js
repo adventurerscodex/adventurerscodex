@@ -48,7 +48,7 @@ function Weapon() {
 
     self.totalWeight = ko.computed(function() {
         var qty = parseInt(self.weaponQuantity()) || 1;
-        var perWeight = parseInt(self.weaponWeight()) || 0
+        var perWeight = parseInt(self.weaponWeight()) || 0;
 
         return qty * perWeight;
     });
