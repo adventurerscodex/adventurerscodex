@@ -266,7 +266,7 @@
              class="form-control"
              id="armorName"
              placeholder="Chain Mail"
-             data-bind='textInput: blankTreasure().armorName,
+             data-bind='textInput: blankTreasure().armorName, hasFocus: armorFirstElementFocus,
               autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
     </div>
   </div>
@@ -363,7 +363,7 @@
           <img src="/images/pp-coin.svg" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
-          data-bind='value: blankTreasure().platinum'/>
+          data-bind='value: blankTreasure().platinum, hasFocus: coinsFirstElementFocus'/>
       </div>
     </div>
     <div class="col-sm-12 row-padded">
@@ -414,7 +414,7 @@
          class="form-control"
          id="itemName"
          placeholder="Rations"
-         data-bind='textInput: blankTreasure().itemName,
+         data-bind='textInput: blankTreasure().itemName, hasFocus: itemFirstElementFocus,
             autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
      </div>
    </div>
@@ -488,7 +488,7 @@
                class="form-control"
                id="magicItemName"
                placeholder="Dagger of Venom"
-               data-bind='textInput: blankTreasure().magicItemName,
+               data-bind='textInput: blankTreasure().magicItemName, hasFocus: magicItemFirstElementFocus,
                   autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
@@ -599,7 +599,7 @@
                class="form-control"
                id="weaponName"
                placeholder="Short Sword"
-               data-bind='textInput: blankTreasure().weaponName,
+               data-bind='textInput: blankTreasure().weaponName, hasFocus: weaponFirstElementFocus,
                  autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
@@ -868,7 +868,7 @@
                class="form-control"
                id="armorName"
                placeholder="Chain Mail"
-               data-bind='textInput: armorName'>
+               data-bind='textInput: armorName, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -964,7 +964,7 @@
           <img src="/images/pp-coin.svg" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
-          data-bind='value: platinum'/>
+          data-bind='value: platinum, hasFocus: $parent.editFirstModalElementHasFocus'/>
       </div>
     </div>
     <div class="col-sm-12 row-padded">
@@ -1016,7 +1016,7 @@
                class="form-control"
                id="itemName"
                placeholder="Rations"
-               data-bind='textInput: itemName'>
+               data-bind='textInput: itemName, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -1088,7 +1088,7 @@
                class="form-control"
                id="magicItemName"
                placeholder="Dagger of Venom"
-               data-bind='textInput: magicItemName'>
+               data-bind='textInput: magicItemName, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -1198,7 +1198,7 @@
                class="form-control"
                id="weaponName"
                placeholder="Short Sword"
-               data-bind='textInput: weaponName'>
+               data-bind='textInput: weaponName, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
