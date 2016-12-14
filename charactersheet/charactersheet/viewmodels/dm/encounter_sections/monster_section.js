@@ -183,6 +183,7 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.modalFinishedClosing = function() {
+        self.openModal(false);
         self.selectPreviewTab();
     };
 
