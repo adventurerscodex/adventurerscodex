@@ -141,7 +141,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     self.modalFinishedClosing = function() {
-
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {

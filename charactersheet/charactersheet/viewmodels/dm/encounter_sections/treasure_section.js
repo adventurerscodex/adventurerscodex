@@ -243,7 +243,7 @@ function TreasureSectionViewModel(parentEncounter) {
     };
 
     self.modalFinishedClosing = function() {
-
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {

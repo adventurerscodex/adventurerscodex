@@ -15,7 +15,7 @@ function EncounterItem() {
     });
 
     self.propertyLabel = ko.pureComputed(function() {
-        return '';
+        return 'N/A';
     });
 
     self.descriptionLabel = ko.pureComputed(function() {
