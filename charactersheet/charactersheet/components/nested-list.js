@@ -92,7 +92,7 @@ ko.components.register('nested-list', {
                     <span class="glyphicon glyphicon-plus" \
                         data-bind="click: $parent.addCell"></span>&nbsp;&nbsp; \
                     <!-- /ko -->\
-                    <span class="glyphicon glyphicon-trash" \
+                    <span class="glyphicon glyphicon-trash hover" \
                         data-bind="click: $parent.deleteCell"></span>\
                 </span> \
                 <!-- /ko -->\

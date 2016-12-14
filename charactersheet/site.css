@@ -344,6 +344,10 @@ textarea.dark-area {
   color:#e74c3c;
 }
 
+.glyphicon-trash:hover {
+  color:#e74c3c;
+}
+
 .feature-row span {
   line-height: 3em;
 }
