@@ -1,6 +1,14 @@
+html, body {height: 100%;}
+
 #content {
   max-width: 1800px;
   font-family: "Lato", sans-serif;
+  min-height: 100%;
+}
+
+.main {
+  padding-bottom:150px;
+  overflow:auto;
 }
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
@@ -17,6 +25,10 @@ small {
 }
 
 .footer {
+  position: relative;
+  height: 150px;
+	clear:both;
+  margin-top:-150px;
   padding-top:30px;
   background-color: #ecf0f1;
   padding-bottom: 20px;
@@ -43,10 +55,6 @@ small {
     padding-right: 5px;
 }
 
-.well-no-padding {
-  margin-bottom:0px;
-}
-
 .well-top-shadow {
   box-shadow: 0px 2px 2px -2px #888888 inset;
 }
@@ -58,6 +66,10 @@ small {
 
 .table-ac-bordered tr {
   border-bottom: thin solid #ecf0f1;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0px;
 }
 
 .beta {
@@ -185,6 +197,42 @@ div.hr {
   padding: 0 0 0 0px;
 }
 
+.ds-failure-full {
+  cursor:pointer;
+  background: url('/images/harry-potter-skull.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-failure-empty {
+  cursor:pointer;
+  background: url('/images/harry-potter-skull-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-success-full {
+  cursor:pointer;
+  background: url('/images/hospital-cross.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-success-empty {
+  cursor:pointer;
+  background: url('/images/hospital-cross-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
 .circular-profile {
 	width: 80px;
 	height: 80px;
@@ -206,12 +254,33 @@ div.hr {
   border:none;
 }
 
+.dashed-border {
+  border-style: dashed;
+  border-color: lightgray;
+}
+
 .underline {
   text-decoration: underline;
 }
 
 .tab-icon {
   width: 35px;
+}
+
+.tab-subtext {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.tab-subtext:hover {
+  color: #2c3e50;
+}
+.tab-subtext:focus {
+  color: #2c3e50;
+}
+
+.action-bar-icon {
+  width: 2em;
 }
 
 textarea.dark-area {
@@ -272,6 +341,10 @@ textarea.dark-area {
 }
 
 .fa-color-hover:hover {
+  color:#e74c3c;
+}
+
+.glyphicon-trash-hover:hover {
   color:#e74c3c;
 }
 
@@ -343,7 +416,9 @@ textarea.dark-area {
 }
 
 .player-image-style {
-  margin-top:7px;
+  margin-top:4px;
+  margin-left: 6px;
+  margin-right: 6px;
 }
 
 .spell-slots-level {
@@ -408,6 +483,36 @@ ul.footer-icons li {
   font-size: 1.5em;
 }
 
+.preview-modal-overflow {
+  height: 225px;
+  overflow-y: auto;
+}
+
+.encounter-detail-place-holder {
+  height: 400px;
+  padding-top:175px;
+}
+
+.preview-modal-overflow-sm {
+  max-height: 225px;
+  overflow-y: auto;
+}
+
+.embedded-image {
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 225px;
+}
+
+.btn-group-padding {
+  padding: 10px 0px;
+}
+
+.no-top-or-bottom-margin {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
@@ -426,27 +531,171 @@ body {
 
 
 .ui-autocomplete {
-    z-index: 1051;
+  z-index: 1051;
 }
 
 ul.ui-autocomplete {
-    margin: 0;
-    padding-left: 0;
-    border-color: #aaa;
-    border-radius: 0px 0px 4px 4px;
-    box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+  margin: 0;
+  padding-left: 0;
+  border-color: #aaa;
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
 }
 
 ul.ui-autocomplete li {
-    list-style: none;
-    display: list-item;
-    background-image: none;
-    min-height: 1em;
-    font-size: 15px;
+  list-style: none;
+  display: list-item;
+  background-image: none;
+  min-height: 1em;
+  font-size: 15px;
 }
 
 
 ul.ui-autocomplete .ui-state-active {
-    background: #2c3e50;
-    color: #fff;
+  background: #2c3e50;
+  color: #fff;
+}
+
+/*
+ * Data validation CSS
+ */
+
+.errormessagetext {
+  color: #ca2f2b;
+  font-weight: 600;
+  vertical-align: -webkit-baseline-middle;
+}
+
+/*
+ * Spell School Icon CSS
+ */
+
+.abjuration {
+  background-image: url('/images/spell_icons/abjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.conjuration {
+  background-image: url('/images/spell_icons/conjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.divination {
+  background-image: url('/images/spell_icons/divination.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.enchantment {
+  background-image: url('/images/spell_icons/enchantment.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.evocation {
+  background-image: url('/images/spell_icons/evocation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.illusion {
+  background-image: url('/images/spell_icons/illusion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.necromancy {
+  background-image: url('/images/spell_icons/necromancy.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.transmutation {
+  background-image: url('/images/spell_icons/transmutation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*
+ * Magic Items Icon CSS
+ */
+
+.armor-magic-item-card {
+  background-image: url('/images/magic_items_icons/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.potion-magic-item-card {
+  background-image: url('/images/magic_items_icons/potion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ring-magic-item-card {
+  background-image: url('/images/magic_items_icons/ring.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rod-magic-item-card {
+  background-image: url('/images/magic_items_icons/rod.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.scroll-magic-item-card {
+  background-image: url('/images/magic_items_icons/scroll.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.staff-magic-item-card {
+  background-image: url('/images/magic_items_icons/staff.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.sword-magic-item-card {
+  background-image: url('/images/magic_items_icons/sword.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.armor-wand-item-card {
+  background-image: url('/images/magic_items_icons/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wand-magic-item-card {
+  background-image: url('/images/magic_items_icons/wand.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.weapon-magic-item-card {
+  background-image: url('/images/magic_items_icons/weapon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wondrous-magic-item-card {
+  background-image: url('/images/magic_items_icons/wondrous.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*
+ * Encounter Section Icon CSS
+ */
+
+.encounter-section-img {
+  height: 35px;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-right: 10px;
+  float: left;
 }

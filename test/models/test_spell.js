@@ -62,6 +62,33 @@ describe('Spell Model', function() {
         });
     });
 
+    describe('Spell Name Label', function() {
+        it('should return the correct label', function() {
+            var ritual = new Spell();
+            ritual.spellName('Identify');
+            ritual.isRitual(true);
+            ritual.spellNameLabel().should.equal('Identify (Ritual)');
+
+            var spell = new Spell();
+            spell.spellName('Magic Missile');
+            spell.isRitual(false);
+            spell.spellNameLabel().should.equal('Magic Missile');
+        });
+    });
+
+    describe('Spell Description Label', function() {
+        it('should return the correct label', function() {
+            var spell = new Spell();
+            spell.spellDescription('This thing is cool.\n');
+            spell.spellDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var spell2 = new Spell();
+            spell2.spellDescription('');
+            spell2.spellDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
+        });
+    });
+
     describe('Spell Damage Label', function() {
         it('should return the correct label', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
@@ -79,6 +106,18 @@ describe('Spell Model', function() {
 
             ft.spellType('Support');
             ft.spellDamageLabel().should.equal('1D4');
+        });
+    });
+
+    describe('Spell Level Label', function() {
+        it('should return the correct label', function() {
+            var cantrip = new Spell();
+            cantrip.spellLevel(0);
+            cantrip.spellLevelLabel().should.equal('Cantrip');
+
+            var spell = new Spell();
+            spell.spellLevel(1);
+            spell.spellLevelLabel().should.equal(1);
         });
     });
 

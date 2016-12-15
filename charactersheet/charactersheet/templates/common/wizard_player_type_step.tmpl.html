@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="container">
+      <div class="center-block">
+        <!-- Begin About Section -->
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-11 col-xs-12">
+            <div class="h1">Welcome to Adventurers Codex!<br />
+              <small>Experience the next step in tabletop RPGs</small>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-offset-1 col-sm-7 col-xs-12">
+            <div class="h3">First thing's first</div>
+            <p>
+              Before we can go any further, what kind of player are you? Once we know,
+              we can start the process of making your character or campaign.
+            </p><br />
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2">
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                    data-bind="css: { active: playerType() == 'characterPlayerType'}">
+                    <input type="radio" class="hide-block"
+                    name="setPlayerTypePlayer" value="characterPlayerType" data-bind="checked: playerType"/>
+                    I'm a Player
+                  </label>
+                  <label class="btn btn-default"
+                    data-bind="css: { active: playerType() == 'dmPlayerType'}">
+                    <input type="radio" class="hide-block"
+                      name="setPlayerTypeDM" value="dmPlayerType" data-bind="checked: playerType"/>
+                    I'm a DM
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 hidden-xs">
+            <img src="/images/logo-all-icons.png" width="100%">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

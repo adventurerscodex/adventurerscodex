@@ -91,7 +91,15 @@ var Notifications = {
         toggle: new signals.Signal()
     },
 
+    status: {
+        changed: new signals.Signal()
+    },
+
     abilityScores: {
+        changed: new signals.Signal()
+    },
+
+    armor: {
         changed: new signals.Signal()
     },
 
@@ -102,6 +110,18 @@ var Notifications = {
     characters: {
         changed: new signals.Signal(),
         allRemoved: new signals.Signal()
+    },
+
+    item: {
+        changed: new signals.Signal()
+    },
+
+    magicItem: {
+        changed: new signals.Signal()
+    },
+
+    encounters: {
+        changed: new signals.Signal()
     },
 
     playerImage: {
@@ -129,6 +149,14 @@ var Notifications = {
     },
 
     spellStats: {
+        changed: new signals.Signal()
+    },
+
+    weapon: {
+        changed: new signals.Signal()
+    },
+
+    treasure: {
         changed: new signals.Signal()
     },
 

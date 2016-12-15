@@ -96,5 +96,46 @@ describe('Magic Items View Model', function(){
             magicItems.magicItems().length.should.equal(2);
             magicItems.totalMagicItemWeight().should.equal('10 (lbs)');
         });
+
+        it('should return 0 for weight if the weight is empty.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var items = [new MagicItem(), new MagicItem()].map(function(e, i, _) {
+                e.magicItemWeight('');
+                return e;
+            });
+
+            magicItems = new MagicItemsViewModel();
+            magicItems.magicItems(items);
+            magicItems.magicItems().length.should.equal(2);
+            magicItems.totalMagicItemWeight().should.equal('0 (lbs)');
+        });
     });
+
+    describe('Select Preview Tab', function() {
+        it('should switch to preview tab status', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.selectPreviewTab();
+            magicItems.previewTabStatus().should.equal('active');
+            magicItems.editTabStatus().should.equal('');
+        });
+    });
+
+    describe('Select Edit Tab', function() {
+        it('should switch to edit tab status', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.selectEditTab();
+            magicItems.editTabStatus().should.equal('active');
+            magicItems.previewTabStatus().should.equal('');
+        });
+    });
+
+    describe('Modal Finished Closing', function() {
+        it('should switch default state to preview', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.selectEditTab();
+            magicItems.modalFinishedClosing();
+            magicItems.previewTabStatus().should.equal('active');
+        });
+    });
+
 });

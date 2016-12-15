@@ -8,23 +8,26 @@
  * This binding also has an optional field for a callback
  * once the animation has completed.
  *
- * Note: The callback is called when the modal is both opened and closed.
  *
  * Usage:
- * <div data-bind="modal: { open: myObservable, callback: myFunction }"></div>
+ * <div data-bind="modal: { open: myObservable, onopen: myFunction,
+ *      onclose: myOtherFunction }"></div>
  */
 ko.bindingHandlers.modal = {
     init: function(element, valueAccessor, allBindingsAccessor) {
         var value = valueAccessor();
         var openOrClosed = ko.utils.unwrapObservable(value.open);
-        var callback = ko.utils.unwrapObservable(value.callback);
+        var onopen = ko.utils.unwrapObservable(value.onopen);
+        var onclose = ko.utils.unwrapObservable(value.onclose);
 
         ko.bindingHandlers.modal.toggle(openOrClosed, element);
 
-        if (callback) {
-            // Register callbacks.
-            $(element).on('hidden.bs.modal', callback);
-            $(element).on('shown.bs.modal', callback);
+        if (onopen) {
+            $(element).on('shown.bs.modal', onopen);
+        }
+
+        if (onclose) {
+            $(element).on('hidden.bs.modal', onclose);
         }
     },
 

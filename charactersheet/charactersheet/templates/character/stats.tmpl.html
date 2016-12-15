@@ -1,0 +1,136 @@
+<div class="panel panel-default bio">
+  <div class="panel-body">
+    <div class="row row-padded">
+    </div>
+	<!--Health items -->
+    <div class="row row-padded">
+      <div class="col-md-12 col-padded stats-health-border">
+        <div class="progress clickable" data-bind="with: health"
+          data-toggle="modal" data-target="#viewHealth">
+          <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
+            data-bind="style: { width: regularProgressWidth }, css: progressType,
+              text: progressLabel">
+            <span class="sr-only"></span>
+          </div>
+          <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar" aria-valuemin="0"
+            data-bind="style: { width: tempProgressWidth }" aria-describedby="hitpointsCounter">
+            <span class="sr-only"></span>
+          </div>
+          <div class="progress-text col-xs-3 col-xs-offset-5"
+            id="hitpointsCounter" data-bind="text: hitpointsText">
+          </div>
+        </div>
+        <table class="table table-responsive table-ac-bordered table-hover">
+          <thead data-toggle="modal" data-target="#viewHealth" class="clickable">
+            <tr>
+              <th class="col-md-2"></th>
+              <th class="text-center col-md-2">Max</th>
+              <th class="text-center col-md-5">Damage</th>
+              <th class="text-center col-md-3">Reset</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-content-vertical clickable"
+                data-toggle="modal" data-target="#viewHealth">
+                <b>Hit Points:</b>
+              </td>
+              <td class="col-content-vertical text-center clickable"
+               data-toggle="modal" data-target="#viewHealth">
+                  <span data-bind="text: health().maxHitpoints"></span>
+              </td>
+              <td>
+                <plus-minus params="value: health().damage,
+                  max: health().totalHitpoints">
+                  </plus-minus>
+              </td>
+              <td class="text-center col-content-vertical">
+                <a data-bind="click: resetDamage" href="#">
+                  <i class="fa fa-refresh fa-color"> </i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="input-group">
+          <span class="input-group-addon">Hit Dice:</span>
+          <div class="form-control hit-dice-list">
+            <!-- ko foreach: hitDiceList -->
+            <span data-bind="attr: { id: $index, name: $index },
+              css: hitDiceIcon, click: toggleHitDice"></span>
+            <!-- /ko -->
+            <!-- ko if: hitDiceList().length == 0 -->
+            <span class="hit-dice-list-empty-fill">&nbsp;</span>
+            <!-- /ko -->
+          </div>
+        </div>
+        <br />
+        <div class="input-group">
+          <span class="input-group-addon">Death Save Successes</span>
+           <div class="form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
+            <span data-bind="attr: { id: $index, name: $index }, click: deathSaveSuccessHandler,
+                  css: deathSaveSuccessIcon"></span>
+          </div>
+
+          <span class="input-group-addon">Death Save Failures</span>
+          <div class="form-control hit-dice-list"
+               data-bind="foreach: deathSaveFailureList">
+            <span data-bind="attr: { id: $index, name: $index }, click: deathSaveFailureHandler,
+                  css: deathSaveFailureIcon"></span>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End Panel-->
+<!--HP Modal-->
+	<div class="modal fade" id="viewHealth" tabindex="-1" role="dialog" aria-labelledby="viewHealthLabel"
+  data-bind="modal: {onopen: modalFinishedAnimating}">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+            aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+					<h4 class="modal-title" id="healthLabel"> Edit your Hit Points.
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Max HP</label>
+						<div class="col-sm-10">
+              <input type="number" class="form-control"
+                data-bind='textInput: health().maxHitpoints, hasFocus: modifierHasFocus' min="0">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="bonus" class="col-sm-2 control-label">Damage</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" min="0" data-bind='textInput: health().damage'>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="name" class="col-sm-2 control-label">Temporary HP</label>
+						<div class="col-sm-10">
+              <input type="number" class="form-control"
+                data-bind='textInput: health().tempHitpoints' min="0">
+						</div>
+					</div>
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Hit Dice Type</label>
+            <div class="col-sm-10">
+              <select class="form-control" data-bind="options: hitDiceType().hitDiceOptions,
+                         value: hitDiceType().hitDiceType,
+                         select2: {theme: 'classic'}"></select>
+            </div>
+          </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+					</div>
+				</form>
+			</div><!-- Modal Body -->
+		</div><!-- Modal Content -->
+	</div><!-- Modal Dialog -->
+</div><!-- Modal Fade -->

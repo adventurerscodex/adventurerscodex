@@ -143,5 +143,32 @@ describe('Equipment View Model', function(){
                 eq.sortArrow('itemWeight').should.equal('fa fa-arrow-down fa-color');
             });
         });
+
+        describe('Select Preview Tab', function() {
+            it('should switch to preview tab status', function() {
+                var items = new ItemsViewModel();
+                items.selectPreviewTab();
+                items.previewTabStatus().should.equal('active');
+                items.editTabStatus().should.equal('');
+            });
+        });
+
+        describe('Select Edit Tab', function() {
+            it('should switch to edit tab status', function() {
+                var items = new ItemsViewModel();
+                items.selectEditTab();
+                items.editTabStatus().should.equal('active');
+                items.previewTabStatus().should.equal('');
+            });
+        });
+
+        describe('Modal Finished Closing', function() {
+            it('should switch default state to preview', function() {
+                var items = new ItemsViewModel();
+                items.selectEditTab();
+                items.modalFinishedClosing();
+                items.previewTabStatus().should.equal('active');
+            });
+        });
     });
 });

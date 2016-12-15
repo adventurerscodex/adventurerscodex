@@ -1,0 +1,21 @@
+<ul class="nav nav-tabs tabs">
+  <li role="presentation" data-bind="click: activateOverviewTab, css: overviewTabStatus">
+    <a href="#campaign-header" aria-controls="overview-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/bookmarklet.svg"></img></br>
+      <span class="text-center"><small>Overview</small></span>
+    </a>
+  </li>
+  <li role="presentation" data-bind="click: activateEncounterTab, css: encounterTabStatus">
+    <a href="#encounter-header" aria-controls="encounter-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/treasure-map.svg"></img></br>
+      <span class="text-center"><small>Encounters</small></span>
+    </a>
+  </li>
+</ul>
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="with: campaignTabViewModel, css: overviewTabStatus">
+  <div id="dm.tab.overview" data-bind="template: { name: 'overview.tmpl', templateUrl: 'templates/dm', data: campaignOverviewViewModel }"></div>
+</div>
+<div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="with: encounterTabViewModel, css: encounterTabStatus">
+  <div id="dm.tab.encounters" data-bind="template: { name: 'encounter.tmpl', templateUrl: 'templates/dm', data: encounterViewModel }"></div>
+</div>

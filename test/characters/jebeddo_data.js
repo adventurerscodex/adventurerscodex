@@ -31,7 +31,6 @@ var jebeddo_data = {
       "background": "",
       "playerName": "Bhuvan",
       "race": "Half-Elf",
-      "religion": "",
       "alignment": "Chaotic Neutral",
       "diety": "Leira, Goddess of illusion",
       "typeClass": "Bard",
@@ -256,8 +255,7 @@ var jebeddo_data = {
       "gold": "388",
       "electrum": 0,
       "silver": "267",
-      "copper": "583",
-      "misc": "Carved stone pendant on a string. \nShard of obsidian + always feels warm\nCrumpled map, old socks,\n\nDiary with runes \nDiary with runes at another well - 100% Identical\n\nPurple handkerchief which turns to a hat\n\n Signet ring (small for orcs)\nWhetstone\nPigs blood\nFlask of lamp oil\n\nSmall vial of light blue liquid x2 -  Poison\nSmall packet with pink powder \n\nCut sword  with hilt  and white smoke in the \n\n"
+      "copper": "583"
     }
   ],
   "FeatsProf": [
@@ -307,7 +305,11 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "spellcastingAbility": "CHA",
       "spellSaveDc": "14",
-      "spellAttackBonus": "7"
+      "spellAttackBonus": "7",
+      "spellsKnown": "6",
+      "spellsCantripsKnown": "8",
+      "spellsInvocationsKnown": "9",
+      "spellsMaxPrepared": "5"
     }
   ],
   "Slot": [
@@ -339,149 +341,115 @@ var jebeddo_data = {
   "Item": [
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "itemName": "Piccolo",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
-      "itemDesc": "Small flute",
-      "itemQty": "1",
-      "itemWeight": "",
-      "itemCost": ""
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "itemName": "Bongo",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
-      "itemDesc": "Percussion instrument",
-      "itemQty": "1",
-      "itemWeight": "",
-      "itemCost": 0
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Bedrolls",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Costumes",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Waterskins",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Food ration",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "15",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Mess Kit",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "1",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Rope ",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "130 feet",
       "itemQty": "",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Torches",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "10",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Disguise Kit",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "1",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Backpacks",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "2",
       "itemWeight": "",
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Wine",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Fine elven wine",
       "itemQty": "",
       "itemWeight": "",
-      "itemCost": "20"
+      "itemCost": "20",
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Arrows",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "21",
       "itemWeight": 0,
-      "itemCost": 0
+      "itemCost": 0,
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Potions of no pain",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Kit + 2 vials\nBowl, rocks, water vial",
       "itemQty": "3",
       "itemWeight": 0,
-      "itemCost": "2"
+      "itemCost": "2",
+      "itemCurrencyDenomination": "PP"
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Darts",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": "30",
       "itemWeight": 0,
@@ -491,9 +459,6 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Poison Vials",
-      "itemType": "",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Small",
       "itemQty": "2",
       "itemWeight": 0,
@@ -503,9 +468,6 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Pink Powder",
-      "itemType": "",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "Got his from the orcs. Small pouch.",
       "itemQty": 1,
       "itemWeight": 0,
@@ -515,9 +477,6 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "itemName": "Pigs Blood",
-      "itemType": "",
-      "itemIsEquippable": false,
-      "itemBodyLocation": "",
       "itemDesc": "",
       "itemQty": 1,
       "itemWeight": 0,
@@ -547,6 +506,7 @@ var jebeddo_data = {
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "spellName": "Charm  Person",
+      "spellPrepared": false,
       "spellType": "Attack Roll",
       "spellDmg": "",
       "spellDmgType": "",
@@ -580,10 +540,10 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Medium",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Range",
-      "weaponDescription": ""
+      "weaponDescription": "",
+      "weaponQuantity": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
@@ -597,10 +557,10 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Small",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
-      "weaponDescription": ""
+      "weaponDescription": "",
+      "weaponQuantity": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
@@ -610,13 +570,14 @@ var jebeddo_data = {
       "weaponHandedness": "One-Handed",
       "weaponProficiency": "Simple",
       "weaponPrice": "",
+      "weaponCurrencyDenomination": "PP",
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Small",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
-      "weaponDescription": ""
+      "weaponDescription": "",
+      "weaponQuantity": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
@@ -630,7 +591,6 @@ var jebeddo_data = {
       "weaponHit": "0",
       "weaponWeight": "",
       "weaponRange": "",
-      "weaponSize": "Small",
       "weaponDamageType": "Piercing",
       "weaponProperty": "Light",
       "weaponDescription": "",
@@ -648,7 +608,6 @@ var jebeddo_data = {
       "weaponHit": "1",
       "weaponWeight": "",
       "weaponRange": "Radiant Damage",
-      "weaponSize": "Small",
       "weaponDamageType": "Slashing",
       "weaponProperty": "Light",
       "weaponDescription": "",
@@ -660,14 +619,13 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "armorName": "Studded Leather Armor",
       "armorType": "Light",
-      "armorProficiency": true,
       "armorPrice": "",
+      "armorMagicalModifier": "",
       "armorCurrencyDenomination": "PP",
       "armorWeight": "",
       "armorClass": "12",
-      "armorDescription": "12",
-      "armorDexBonus": "3",
-      "armorCheckPenalty": ""
+      "armorStealth": "",
+      "armorDescription": "12"
     }
   ],
   "DeathSave": [
@@ -778,5 +736,5 @@ var jebeddo_data = {
       "color": "progress-bar-indigo"
     }
   ],
-  "__version__":"1.1.0"
+  "__version__":"1.2.0"
 };

@@ -8,7 +8,7 @@ Welcome to Adventurer&rsquo;s&nbsp;Codex</h1>
 [![Coverage Status](https://coveralls.io/repos/github/adventurerscodex/adventurerscodex/badge.svg?branch=develop)](https://coveralls.io/github/adventurerscodex/adventurerscodex?branch=develop)
 [![Gitter](https://img.shields.io/gitter/room/nwjs/nw.js.svg)](https://gitter.im/Sonictherocketman/adventurerscodex)
 
-A tool to help D&D 5e players keep their ducks in a row.
+Experience the next step in tabletop RPGs
 
 
 What is it?
@@ -55,8 +55,9 @@ Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventure
 How can I contribute?
 =====================
 
-You should check out our `CONTRIBUTING.md`! We'd love the help!
+You should check out our [Contributing][contributing] wiki! We'd love the help!
 
 [blog]: https://adventurerscodex.com/blog.html
 [ac]: https://adventurerscodex.com
-[gs]: https://github.com/adventurerscodex/adventurerscodex/blob/develop/docs/getting_started.md#getting-started
+[gs]: https://github.com/adventurerscodex/adventurerscodex/wiki/Getting-Started
+[contributing]: https://github.com/adventurerscodex/adventurerscodex/wiki/Contributing

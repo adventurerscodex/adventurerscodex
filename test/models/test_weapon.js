@@ -186,4 +186,86 @@ describe('Weapon Model', function() {
             totalBonus.should.equal('+ 0');
         });
     });
+
+    describe('Magical Modifier Label', function() {
+        it('should create a badge for positive modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponHit(2);
+
+            var totalBonus = weap.magicalModifierLabel();
+            totalBonus.should.equal('+ 2');
+        });
+        it('should create a badge for negative modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponHit(-2);
+
+            var totalBonus = weap.magicalModifierLabel();
+            totalBonus.should.equal('- 2');
+        });
+        it('should create a badge for no modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponHit();
+
+            var totalBonus = weap.magicalModifierLabel();
+            totalBonus.should.equal('');
+        });
+    });
+
+    describe('Apply Magical Modifier Label', function() {
+        it('should return true if there is a magicalModifierLabel', function() {
+            var weap = new Weapon();
+            weap.weaponHit(2);
+
+            weap.applyMagicalModifierLabel().should.equal(true);
+        });
+        it('should return false if there is on magicalModifierLabel', function() {
+            var weap = new Weapon();
+            weap.weaponHit(0);
+
+            weap.applyMagicalModifierLabel().should.equal(false);
+        });
+    });
+
+    describe('Weapon Description Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponDescription('This thing is cool.\n');
+            weapon.weaponDescriptionHTML().should.equal('This thing is cool.<br />');
+
+            var weapon2 = new Weapon();
+            weapon2.weaponDescription('');
+            weapon2.weaponDescriptionHTML().should.equal(
+                '<div class="h3"><small>Add a description via the edit tab.</small></div>');
+        });
+    });
+
+    describe('Weapon Weight Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight(10);
+            weapon.weaponWeightLabel().should.equal('10 lbs.');
+        });
+    });
+
+    describe('Weapon Range Label', function() {
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponType('Ranged');
+            weapon.weaponRange('20/60');
+            weapon.weaponRangeLabel().should.equal('20/60 ft.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponType('Melee');
+            weapon.weaponProperty('');
+            weapon.weaponRangeLabel().should.equal('5 ft.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponType('Melee');
+            weapon.weaponProperty('Thrown and Reach');
+            weapon.weaponRangeLabel().should.equal('10 ft.');
+        });
+    });
+
 });

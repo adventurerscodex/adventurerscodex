@@ -1,10 +1,10 @@
 {
-  "name": "Chractersheet",
-  "description": "A tool to help D&D 5e players keep their ducks in a row.",
-  "version": "1.0.2",
+  "name": "AdventurersCodex",
+  "description": "Experience the next step in tabletop RPGs",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/charactersheet/charactersheet"
+    "url": "https://github.com/adventurerscodex/adventurerscodex"
   },
   "devDependencies": {
     "bower": "^1.5.2",

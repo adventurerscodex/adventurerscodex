@@ -45,10 +45,11 @@ describe('Character Model', function() {
         it('should fetch the details for a given player. said summary should be identical to the profile summary.', function() {
             var mockProfile = new Profile();
             mockProfile.importValues(ProfileFixture);
-            simple.mock(Profile, 'findBy').returnWith([mockProfile]);
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(mockProfile);
 
             var cha = new Character();
-            cha.playerSummary().should.equal(mockProfile.characterSummary());
+            cha.playerType(PlayerTypes.characterPlayerType);
+            cha.playerSummary().should.equal(mockProfile.summary());
         });
     });
 
@@ -56,9 +57,10 @@ describe('Character Model', function() {
         it('should fetch the details for a given player. said author should be identical to the profile author.', function() {
             var mockProfile = new Profile();
             mockProfile.importValues(ProfileFixture);
-            simple.mock(Profile, 'findBy').returnWith([mockProfile]);
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(mockProfile);
 
             var cha = new Character();
+            cha.playerType(PlayerTypes.characterPlayerType);
             cha.playerAuthor().should.equal(mockProfile.playerName());
         });
     });
@@ -67,9 +69,10 @@ describe('Character Model', function() {
         it('should fetch the details for a given player. said title should be identical to the profile title.', function() {
             var mockProfile = new Profile();
             mockProfile.importValues(ProfileFixture);
-            simple.mock(Profile, 'findBy').returnWith([mockProfile]);
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(mockProfile);
 
             var cha = new Character();
+            cha.playerType(PlayerTypes.characterPlayerType);
             cha.playerTitle().should.equal(mockProfile.characterName());
         });
     });

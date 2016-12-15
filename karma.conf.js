@@ -9,7 +9,6 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bower_components/jquery/dist/jquery.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/bootstrap/dist/js/bootstrap.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/knockout/dist/knockout.js', watched: false},
-			{pattern: 'charactersheet/bower_components/file-saver.js/FileSaver.js', watched: false},
 			{pattern: 'charactersheet/bower_components/should/should.js', watched: false},
 			{pattern: 'charactersheet/bower_components/uri.js/src/URI.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/node-uuid/uuid.js', watched: false},
@@ -21,10 +20,12 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bin/koExternalTemplateEngine_all.min.js', watched: false},
 			{pattern: 'charactersheet/bin/markdown.min.js', watched: false},
 			{pattern: 'charactersheet/bin/knockout.mapping.js', watched: false},
+			{pattern: 'charactersheet/bin/knockout-mapping-autoignore.js', watched: false},
 			//Stuff to test.
+			'charactersheet/charactersheet/**/*root.js',
 			'charactersheet/charactersheet/**/*.js',
-            'test/**/*.js',
-            'test/*.js'
+      'test/**/*.js',
+      'test/*.js'
         ],
         browsers: ['PhantomJS'],
         reporters: ['progress', 'coverage'],
