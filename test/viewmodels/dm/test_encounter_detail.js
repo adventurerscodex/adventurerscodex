@@ -55,9 +55,14 @@ describe('EncounterDetailViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new EncounterDetailViewModel(new Encounter(), []);
             var saveSpy = simple.mock(vm, 'save').callFn(function() {});
+            var visibilityVMsSpy = simple.mock(vm, 'visibilityVMs').callFn(function(){return [];});
+            var _deinitializeVisibilityVMsSpy = simple.mock(vm, '_deinitializeVisibilityVMs').callFn(function(){});
+            simple.mock(Notifications.encounters.changed, 'dispatch').callFn(function(){});
             vm.modalFinishedClosing();
             vm.openModal().should.equal(false);
             saveSpy.called.should.equal(true);
+            visibilityVMsSpy.called.should.equal(true);
+            _deinitializeVisibilityVMsSpy.called.should.equal(true);
         });
     });
 

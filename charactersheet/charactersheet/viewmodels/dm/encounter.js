@@ -32,7 +32,7 @@ function EncounterViewModel() {
 
         self.encounterCells(self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
-        Notifications.encounters.changed.add(self.encounterCells.valueHasMutated);
+        Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
     self.unload = function() {
@@ -42,6 +42,8 @@ function EncounterViewModel() {
         self.encounterCells().forEach(function(cell, idx, _) {
             cell.save();
         });
+
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     /* UI Methods */
@@ -143,7 +145,6 @@ function EncounterViewModel() {
             self.encounterCells.remove(cell);
         }
 
-
         self.encounterDetailViewModel().delete();
         self.encounterDetailViewModel(null);
         self.selectedCell(self.encounterCells()[0]);
@@ -201,5 +202,11 @@ function EncounterViewModel() {
             }
         }
         return cell;
+    };
+
+    self._dataHasChanged = function() {
+        self.encounterCells().forEach(function(cell, idx, _) {
+            cell.reloadData();
+        });
     };
 }

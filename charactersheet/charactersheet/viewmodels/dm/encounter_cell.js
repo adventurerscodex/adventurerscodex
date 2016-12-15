@@ -61,4 +61,15 @@ function EncounterCellViewModel(encounter) {
             child.delete();
         });
     };
+
+    /* Data Refresh Methods */
+
+    self.reloadData = function() {
+        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        self.name(encounter.name());
+        self.encounterLocation(encounter.encounterLocation());
+        self.children().forEach(function(child, idx, _) {
+            child.reloadData();
+        });
+    };
 }
