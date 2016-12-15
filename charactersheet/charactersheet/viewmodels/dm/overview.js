@@ -13,7 +13,6 @@ function CampaignOverviewViewModel() {
     /* Public Methods */
 
     self.init = function() {
-        Notifications.global.save.add(self.save);
     };
 
     self.load = function() {
@@ -26,6 +25,9 @@ function CampaignOverviewViewModel() {
             self.setting(overview.setting());
             self.createdDate(new Date(overview.createdDate()));
         }
+
+        // Subscriptions
+        Notifications.global.save.add(self.save);
     };
 
     self.unload = function() {
@@ -41,6 +43,8 @@ function CampaignOverviewViewModel() {
         overview.setting(self.setting());
         overview.name(self.name());
         overview.save();
+
+        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
