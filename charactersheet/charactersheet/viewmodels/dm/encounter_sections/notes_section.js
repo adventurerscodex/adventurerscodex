@@ -71,7 +71,9 @@ function NotesSectionViewModel(parentEncounter) {
 
     self._dataHasChanged = function() {
         var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
-        self.notes(notesSection.notes());
-        self.visible(notesSection.visible());
+        if (notesSection) {
+            self.notes(notesSection.notes());
+            self.visible(notesSection.visible());
+        }
     };
 }
