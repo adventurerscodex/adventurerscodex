@@ -16,6 +16,8 @@ function NPCSectionViewModel(parentEncounter) {
     self.blankNPC = ko.observable(new NPC());
     self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.firstElementInModalHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
 
@@ -137,11 +139,11 @@ function NPCSectionViewModel(parentEncounter) {
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
-
+        self.firstElementInModalHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
-
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {
@@ -152,6 +154,7 @@ function NPCSectionViewModel(parentEncounter) {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* Private Methods */

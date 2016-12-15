@@ -16,6 +16,8 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     self.blankPointOfInterest = ko.observable(new PointOfInterest());
     self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.firstElementInModalHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
 
@@ -135,11 +137,11 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
-
+        self.firstElementInModalHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
-
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {
@@ -150,6 +152,7 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* Private Methods */

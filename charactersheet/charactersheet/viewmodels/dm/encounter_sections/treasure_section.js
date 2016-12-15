@@ -24,15 +24,22 @@ function TreasureSectionViewModel(parentEncounter) {
     self.selecteditem = ko.observable();
     self.itemType = ko.observable(null);
     self.openModal = ko.observable(false);
+    self.firstElementInModalHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.armorShow = ko.observable(false);
+    self.armorFirstElementFocus = ko.observable(false);
     self.coinsShow = ko.observable(false);
+    self.coinsFirstElementFocus = ko.observable(false);
     self.itemShow = ko.observable(false);
+    self.itemFirstElementFocus = ko.observable(false);
     self.magicItemShow = ko.observable(false);
+    self.magicItemFirstElementFocus = ko.observable(false);
     self.weaponShow = ko.observable(false);
+    self.weaponFirstElementFocus = ko.observable(false);
     self.shouldShowDisclaimer = ko.observable(false);
 
     self.sorts = {
@@ -146,18 +153,23 @@ function TreasureSectionViewModel(parentEncounter) {
         if (self.itemType() == 'armor') {
             self.blankTreasure(new EncounterArmor());
             self.armorShow(true);
+            self.armorFirstElementFocus(true);
         } else if (self.itemType() == 'coins') {
             self.blankTreasure(new EncounterCoins());
             self.coinsShow(true);
+            self.coinsFirstElementFocus(true);
         } else if (self.itemType() == 'item') {
             self.blankTreasure(new EncounterItem());
             self.itemShow(true);
+            self.itemFirstElementFocus(true);
         } else if (self.itemType() == 'magicItem') {
             self.blankTreasure(new EncounterMagicItem());
             self.magicItemShow(true);
+            self.magicItemFirstElementFocus(true);
         } else if (self.itemType() == 'weapon') {
             self.blankTreasure(new EncounterWeapon());
             self.weaponShow(true);
+            self.weaponFirstElementFocus(true);
         }
     };
 
@@ -231,7 +243,7 @@ function TreasureSectionViewModel(parentEncounter) {
     };
 
     self.modalFinishedClosing = function() {
-
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {
@@ -242,6 +254,7 @@ function TreasureSectionViewModel(parentEncounter) {
     self.selectEditTab = function() {
         self.editTabStatus('active');
         self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
     };
 
     /* Private Methods */

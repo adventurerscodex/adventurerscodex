@@ -80,7 +80,7 @@
 <div class="modal fade"
      id="addMonster"
      tabindex="-1"
-     role="dialog" data-bind="modal: { open: openModal,
+     role="dialog" data-bind="modal: { open: openModal, onopen: modalFinishedOpening,
        onclose: modalFinishedClosing}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -102,7 +102,8 @@
               <input type="text"
                      class="form-control"
                      placeholder="Ancient Black Dragon"
-                     data-bind="textInput: blankMonster().name">
+                     data-bind="textInput: blankMonster().name,
+                        hasFocus: firstElementInModalHasFocus">
             </div>
           </div>
           <div class="form-group">
@@ -456,7 +457,7 @@
                   <input type="text"
                          class="form-control"
                          placeholder="Ancient Black Dragon"
-                         data-bind="textInput: name">
+                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
               </div>
               <div class="form-group">

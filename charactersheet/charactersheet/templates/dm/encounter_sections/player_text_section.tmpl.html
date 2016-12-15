@@ -64,7 +64,9 @@
 <div class="modal fade"
      id="addPlayerText"
      tabindex="-1"
-     role="dialog">
+     role="dialog" data-bind="modal: {
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -85,7 +87,8 @@
               <input type="text"
                      class="form-control"
                      placeholder="A kingly statue"
-                     data-bind="textInput: blankPlayerText().name">
+                     data-bind="textInput: blankPlayerText().name,
+                        hasFocus: firstElementInModalHasFocus">
             </div>
             <label class="col-sm-2 col-padded control-label">Description</label>
               <div class="col-sm-10 col-padded">
@@ -170,7 +173,7 @@
                 <div class="col-sm-10 col-padded">
                   <input type="text"
                          class="form-control"
-                         data-bind="textInput: name">
+                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
                 <label for="playerTextDescription"
                        class="col-sm-2 col-padded control-label">Description</label>
