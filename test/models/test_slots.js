@@ -21,8 +21,8 @@ describe('Slot Model', function() {
             s.maxSpellSlots().should.equal(4);
             s.usedSpellSlots().should.equal(1);
             s.clear();
-            s.level().should.equal(0);
-            s.maxSpellSlots().should.equal(0);
+            s.level().should.equal(1);
+            s.maxSpellSlots().should.equal(1);
             s.usedSpellSlots().should.equal(0);
         });
     });

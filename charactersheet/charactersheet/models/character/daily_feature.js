@@ -4,10 +4,8 @@ function DailyFeature() {
     var self = this;
     self.ps = PersistenceService.register(DailyFeature, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save', 'delete',
-         'featureColors', 'currentFeaturesAvailable', 'progressLabel',
-         'dailyFeaturesProgressWidth', 'mapping', 'resetsOnImgSource',
-         'needsResetsOnImg']
+        include: ['characterId', 'featureName', 'featureMaxUses', 'featureUsed',
+            'featureResetsOn', 'featureDescription', 'color']
     };
 
     self.featureColors = Fixtures.general.colorList;
@@ -48,15 +46,18 @@ function DailyFeature() {
 
     self.clear = function() {
         var values = new DailyFeature().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
