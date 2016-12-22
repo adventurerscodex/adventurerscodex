@@ -189,5 +189,17 @@ var Notifications = {
          * Dispatched when the Wizard has completed making a character.
          */
         completed: new signals.Signal()
+    },
+
+    /*****************************
+     ***** Messaging Events ******
+     *****************************/
+
+    ircConnection: {
+        connectionOpened: new signals.Signal(),
+        connectionClosed: new signals.Signal(),
+
+        messageReceived: new signals.Signal(),
+        errorReceived: new signals.Signal()
     }
 };
