@@ -42,7 +42,7 @@ function Monster() {
 
     self.nameLabel = ko.pureComputed(function() {
         var label = self.size() ? self.size() : '';
-        label += self.type() ? ' ' + self.type() : '';
+        label += self.type() ? (self.size() ? ' ' : '') + self.type() : '';
         label += (self.size() && self.alignment()) || (self.type() && self.alignment()) ? ', ' : '';
         label += self.alignment() ? self.alignment() : '';
         return label;
