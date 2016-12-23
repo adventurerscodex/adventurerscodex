@@ -5,14 +5,14 @@
  * custom configurations.
  */
 var defaultConfig = {
-    url: 'https://jabber.postel.org/http-bind/',
+    url: '/http-bind/',
 
     connection: {
         /* A list of all valid options are located here:
          * http://strophe.im/strophejs/doc/1.2.10/files/strophe-js.html#Strophe.Connection.connect
          */
-        jid: 'sonictest1',
-        pass: 'test1',
+        jid: 'test',
+        pass: 'test',
 
         // Specify a custom callback here.
         callback: null
