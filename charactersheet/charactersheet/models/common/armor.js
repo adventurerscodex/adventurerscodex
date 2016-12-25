@@ -58,7 +58,7 @@ function Armor() {
             if (self.acLabel()){
                 return self.magicalModifierLabel() + ', ' + self.acLabel();
             } else {
-                return self.magicalModifierLabel() + self.acLabel();
+                return self.magicalModifierLabel();
             }
         } else {
             return self.acLabel();

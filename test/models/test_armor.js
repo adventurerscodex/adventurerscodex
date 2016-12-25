@@ -127,5 +127,12 @@ describe('Armor Model', function() {
 
             armor.armorSummaryLabel().should.equal('AC 14');
         });
+        it('should return a summary label', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(1);
+            armor.armorClass('');
+
+            armor.armorSummaryLabel().should.equal('+ 1');
+        });
     });
 });
