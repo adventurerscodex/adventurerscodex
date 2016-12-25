@@ -25,7 +25,6 @@ function Armor() {
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
 
     self.acLabel = ko.pureComputed(function() {
-        // AC needs a value that is not whitespace self.armorClass().indexOf(' ') == -1 &&
         if (self.armorClass().trim()){
             return 'AC ' + self.armorClass();
         }
