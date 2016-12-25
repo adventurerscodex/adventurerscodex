@@ -60,12 +60,20 @@ function DMRootViewModel() {
         return self._tabIsVisible('encounter');
     });
 
+    self.dmscreenTabStatus = ko.pureComputed(function() {
+        return self._tabIsVisible('dmscreen');
+    });
+
     self.activateOverviewTab = function() {
         self.activeTab('overview');
     };
 
     self.activateEncounterTab = function() {
         self.activeTab('encounter');
+    };
+
+    self.activateDmScreenTab = function() {
+        self.activeTab('dmscreen');
     };
 
 
