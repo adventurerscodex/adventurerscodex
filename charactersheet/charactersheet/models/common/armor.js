@@ -26,7 +26,7 @@ function Armor() {
 
     self.acLabel = ko.pureComputed(function() {
         if (self.armorClass().replace(/^\s+|\s+$/g, '')) {
-            return 'AC ' + self.armorClass();
+            return 'AC ' + self.armorClass().replace(/^\s+|\s+$/g, '');
         }
         else {
             return '';
