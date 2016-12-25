@@ -109,21 +109,21 @@ describe('Armor Model', function() {
         it('should return a summary label', function() {
             var armor = new Armor();
             armor.armorMagicalModifier(2);
-            armor.armorClass(14);
+            armor.armorClass('14');
 
             armor.armorSummaryLabel().should.equal('+ 2, AC 14');
         });
         it('should return a summary label', function() {
             var armor = new Armor();
             armor.armorMagicalModifier(-2);
-            armor.armorClass(14);
+            armor.armorClass('14');
 
             armor.armorSummaryLabel().should.equal('- 2, AC 14');
         });
         it('should return a summary label', function() {
             var armor = new Armor();
             armor.armorMagicalModifier(0);
-            armor.armorClass(14);
+            armor.armorClass('14');
 
             armor.armorSummaryLabel().should.equal('AC 14');
         });
