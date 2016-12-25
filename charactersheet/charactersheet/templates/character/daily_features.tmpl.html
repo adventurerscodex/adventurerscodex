@@ -14,7 +14,7 @@
 					<th class="col-sm-1" data-bind="click: function(){sortBy('featureMaxUses');}">Max
             <i data-bind="css: sortArrow('featureMaxUses')"></i>
           </th> <!-- Max -->
-					<th class="col-sm-1" data-bind="click: function(){sortBy('featureResetsOn');}">Resets on
+					<th class="col-sm-1 hidden-sm" data-bind="click: function(){sortBy('featureResetsOn');}">Resets on
             <i data-bind="css: sortArrow('featureResetsOn')"></i>
           </th> <!-- Max -->
 					<th class="col-sm-3 text-center">Used</th> <!-- Up/down -->
@@ -44,7 +44,7 @@
           data-target="#viewDailyFeature">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
-					<td class="col-content-vertical col-sm-1" data-bind="click: $parent.editDailyFeature"
+					<td class="col-content-vertical col-sm-1 hidden-sm" data-bind="click: $parent.editDailyFeature"
           href="#"
           class="col-sm-3 feature-row"
           data-toggle="modal"
