@@ -4,14 +4,9 @@ function Spell() {
     var self = this;
     self.ps = PersistenceService.register(Spell, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
-            'spellSaveAttrOptions', 'spellSchoolOptions',
-            'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel',
-            'spellLevelLabel'],
-        include: ['spellDmgType', 'spellMaterialComponents', 'isRitual',
-            'characterId', 'spellPrepared']
+        include: ['characterId', 'spellName', 'spellPrepared', 'spellType', 'spellSaveAttr',
+            'spellDmg', 'spellDmgType', 'spellSchool', 'spellLevel', 'spellDescription', 'spellCastingTime',
+            'spellRange', 'spellComponents', 'spellDuration', 'spellPrepared', 'spellMaterialComponents', 'isRitual']
     };
 
     self.characterId = ko.observable(null);
@@ -81,15 +76,18 @@ function Spell() {
 
     self.clear = function() {
         var values = new Spell().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {

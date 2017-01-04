@@ -2,8 +2,7 @@ function HitDiceType() {
     var self = this;
     self.ps = PersistenceService.register(HitDiceType, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-                'mapping', 'hitDiceOptions']
+        include: ['characterId', 'hitDiceType']
     };
 
     self.characterId = ko.observable(null);
@@ -12,15 +11,18 @@ function HitDiceType() {
 
     self.clear = function() {
         var values = new HitDiceType().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {

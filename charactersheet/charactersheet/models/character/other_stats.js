@@ -3,9 +3,9 @@
 function OtherStats() {
     var self = this;
     self.ps = PersistenceService.register(OtherStats, self);
-    self.mapping = { ignore: ['ps', 'mapping', 'importValues', 'exportValues',
-        'clear', 'save', 'passiveWisdom', 'updateValues', 'passiveWisdomTooltip',
-        'msg', '_passiveWisdomDummy', '_proficiencyLabelDummy', 'proficiencyLabel']
+    self.mapping = {
+        include: ['characterId', 'ac', 'initiative', 'speed',
+        'inspiration', 'proficiency']
     };
 
     self.characterId = ko.observable(null);
@@ -57,15 +57,18 @@ function OtherStats() {
 
     self.clear = function() {
         var values = new OtherStats().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {

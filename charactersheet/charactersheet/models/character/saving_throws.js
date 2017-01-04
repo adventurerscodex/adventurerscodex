@@ -3,6 +3,9 @@
 function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
+    self.mapping = {
+        include: ['characterId', 'name', 'modifier', 'proficiency']
+    };
 
     self.characterId = ko.observable(null);
     self.name = ko.observable('');
@@ -78,31 +81,25 @@ function SavingThrows() {
         self.ps.delete();
     };
 
-    self.clear = function() {
-        self.name('');
-        self.modifier(null);
-        self.proficiency(false);
-    };
-
     self.updateValues = function() {
         self.modifier.notifySubscribers();
         self.proficiency.notifySubscribers();
     };
 
+    self.clear = function() {
+        var values = new SavingThrows().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
+    };
+
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.name(values.name);
-        self.modifier(values.modifier);
-        self.proficiency(values.proficiency);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            name: self.name(),
-            modifier: self.modifier(),
-            proficiency: self.proficiency()
-        };
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 }
 
