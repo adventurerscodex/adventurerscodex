@@ -239,9 +239,19 @@ var Fixtures = {
     weapon: {
         weaponDamageTypeOptions: [
             '',
+            'Acid',
             'Bludgeoning',
+            'Cold',
+            'Fire',
+            'Force',
+            'Lightning',
+            'Necrotic',
             'Piercing',
-            'Slashing'
+            'Poison',
+            'Psychic',
+            'Radiant',
+            'Slashing',
+            'Thunder'
         ],
         weaponHandednessOptions: [
             'One or Two Handed',
