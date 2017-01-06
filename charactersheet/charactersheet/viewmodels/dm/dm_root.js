@@ -87,6 +87,7 @@ function DMRootViewModel() {
 
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
+        HotkeysService.registerHotkey('3', self.activateDmScreenTab);
     };
 
     /**
