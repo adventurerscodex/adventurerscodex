@@ -5,14 +5,14 @@
  * custom configurations.
  */
 var defaultConfig = {
-    url: '/http-bind/',
+    url: 'http://chat.adventurerscodex.com:5280/http-bind/',
 
     connection: {
         /* A list of all valid options are located here:
          * http://strophe.im/strophejs/doc/1.2.10/files/strophe-js.html#Strophe.Connection.connect
          */
-        jid: 'test',
-        pass: 'test',
+        jid: '',
+        pass: '',
 
         // Specify a custom callback here.
         callback: null
@@ -85,8 +85,17 @@ var XMPPService = {
                 throw error;
             }
         }
-        if (XMPPService._shouldLog() && "console" in window) {
-            console.log("Connection attempted. Response status: " + status);
+        if (status === Strophe.Status.CONNECTED) {
+            if (XMPPService._shouldLog() && 'console' in window) {
+                console.log('Connected.');
+            }
+            Notifications.xmpp.connected.dispatch();
+        } else if (status === Strophe.Status.DISCONNECTED) {
+            if (XMPPService._shouldLog() && 'console' in window) {
+                console.log('Disconnected.');
+            }
+            Notifications.xmpp.disconnected.dispatch();
         }
+
     }
 };
