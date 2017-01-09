@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-console:0*/
 
 /**
  * The default configuration object. Use this as a template for creating
@@ -78,7 +79,7 @@ var XMPPService = {
     _connectionHandler: function(status, error) {
         if (error) {
             if (XMPPService._shouldLog()) {
-                if ("console" in window) {
+                if ('console' in window) {
                     console.log(error);
                 }
             } else if (XMPPService._shouldThrow()) {
