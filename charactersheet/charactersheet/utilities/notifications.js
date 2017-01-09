@@ -165,5 +165,14 @@ var Notifications = {
          * Dispatched when the Wizard has completed making a character.
          */
         completed: new signals.Signal()
+    },
+
+    /**
+     * Messaging Notifications
+     */
+
+    xmpp: {
+        connected: new signals.Signal(),
+        disconnected: new signals.Signal()
     }
 };
