@@ -14,7 +14,7 @@ function MonsterAbilityScore() {
     self.value = ko.observable();
 
     self.modifier = ko.pureComputed(function() {
-        if (isNumeric(self.value())) {
+        if (self.isNumeric(self.value())) {
             return Math.floor((self.value() - 10) / 2);
         } else {
             return null;
@@ -54,7 +54,7 @@ function MonsterAbilityScore() {
         self.ps.delete();
     };
 
-    var isNumeric = function(n) {
+    self.isNumeric = function(n) {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
 }
