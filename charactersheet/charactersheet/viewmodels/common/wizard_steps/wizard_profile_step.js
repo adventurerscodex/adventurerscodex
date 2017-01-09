@@ -34,6 +34,7 @@ function WizardProfileStepViewModel() {
     self.raceOptions = Fixtures.profile.raceOptions;
     self.classOptions = Fixtures.profile.classOptions;
     self.alignmentOptions = Fixtures.profile.alignmentOptions;
+    self.backgroundOptions = Fixtures.profile.backgroundOptions;
 
     //Prepopulate methods
     self.setRace = function(label, value) {
@@ -46,6 +47,10 @@ function WizardProfileStepViewModel() {
 
     self.setAlignment = function(label, value) {
         self.alignment(value);
+    };
+
+    self.setBackground = function(label, value) {
+        self.background(value);
     };
 
     // Wizard Step Methods
