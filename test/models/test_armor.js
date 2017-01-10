@@ -42,18 +42,6 @@ describe('Armor Model', function() {
             armor.armorClass('15');
             armor.acLabel().should.equal('AC 15');
         });
-
-        it('should return AC Label with whitespace stripped', function() {
-            var armor = new Armor();
-            armor.armorClass('15 ');
-            armor.acLabel().should.equal('AC 15');
-        });
-
-        it('should return empty if only whitespace for AC', function() {
-            var armor = new Armor();
-            armor.armorClass(' ');
-            armor.acLabel().should.equal('');
-        });
     });
 
     describe('Armor Description Label', function() {

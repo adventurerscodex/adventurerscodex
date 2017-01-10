@@ -25,8 +25,8 @@ function Armor() {
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
 
     self.acLabel = ko.pureComputed(function() {
-        if (self.armorClass().replace(/^\s+|\s+$/g, '')) {
-            return 'AC ' + self.armorClass().replace(/^\s+|\s+$/g, '');
+        if (self.armorClass()) {
+            return 'AC ' + self.armorClass();
         }
         else {
             return '';
