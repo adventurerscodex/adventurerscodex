@@ -25,7 +25,12 @@ function Armor() {
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
 
     self.acLabel = ko.pureComputed(function() {
-        return 'AC ' + self.armorClass();
+        if (self.armorClass()) {
+            return 'AC ' + self.armorClass();
+        }
+        else {
+            return '';
+        }
     });
 
     self.armorDescriptionHTML = ko.pureComputed(function() {
@@ -50,7 +55,11 @@ function Armor() {
 
     self.armorSummaryLabel = ko.pureComputed(function() {
         if (self.armorMagicalModifier() != 0){
-            return self.magicalModifierLabel() + ', ' + self.acLabel();
+            if (self.acLabel()){
+                return self.magicalModifierLabel() + ', ' + self.acLabel();
+            } else {
+                return self.magicalModifierLabel();
+            }
         } else {
             return self.acLabel();
         }
