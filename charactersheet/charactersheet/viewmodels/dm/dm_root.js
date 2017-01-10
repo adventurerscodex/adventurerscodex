@@ -60,12 +60,20 @@ function DMRootViewModel() {
         return self._tabIsVisible('encounter');
     });
 
+    self.dmscreenTabStatus = ko.pureComputed(function() {
+        return self._tabIsVisible('dmscreen');
+    });
+
     self.activateOverviewTab = function() {
         self.activeTab('overview');
     };
 
     self.activateEncounterTab = function() {
         self.activeTab('encounter');
+    };
+
+    self.activateDmScreenTab = function() {
+        self.activeTab('dmscreen');
     };
 
 
@@ -79,6 +87,7 @@ function DMRootViewModel() {
 
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
+        HotkeysService.registerHotkey('3', self.activateDmScreenTab);
     };
 
     /**
