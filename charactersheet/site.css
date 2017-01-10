@@ -352,6 +352,11 @@ textarea.dark-area {
   line-height: 3em;
 }
 
+.table-data-overflow {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
 .color-picker-item {
   margin:10px;
   padding-right:0px;
