@@ -2,6 +2,9 @@
 
 function PlayerText() {
     var self = this;
+    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    self.LONG_DESCRIPTION_MAX_LENGTH = 200;
+
     self.ps = PersistenceService.register(PlayerText, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'name', 'description']
@@ -41,21 +44,10 @@ function PlayerText() {
     // UI Methods
 
     self.longDescription = ko.pureComputed(function() {
-        if (!self.description()) { return ''; }
-        return Utility.markdown.asPlaintext(self._formatStringToLength(self.description(), 200));
+        return Utility.stringUtil.truncateStringAtLength(self.description(), self.LONG_DESCRIPTION_MAX_LENGTH);
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        if (!self.description()) { return ''; }
-        return Utility.markdown.asPlaintext(self._formatStringToLength(self.description(), 100));
+        return Utility.stringUtil.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
-
-    // Private Methods
-
-    self._formatStringToLength = function(string, length) {
-        if (string.length > length) {
-            return string.substr(0, length).trim() + '...';
-        }
-        return string;
-    };
 }

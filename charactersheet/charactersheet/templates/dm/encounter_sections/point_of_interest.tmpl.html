@@ -29,7 +29,13 @@
           href="#"
           data-toggle="modal"
           data-target="#viewPointOfInterest"></td>
-      <td data-bind="text: description, click: $parent.editPointOfInterest"
+      <td data-bind="html: shortDescription, click: $parent.editPointOfInterest"
+          class="col-xs-12 hidden-md hidden-lg"
+          href="#"
+          data-toggle="modal"
+          data-target="#viewPointOfInterest"></td>
+      <td data-bind="html: longDescription, click: $parent.editPointOfInterest"
+          class="col-md-12 hidden-sm hidden-xs"
           href="#"
           data-toggle="modal"
           data-target="#viewPointOfInterest"></td>

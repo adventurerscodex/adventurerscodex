@@ -2,6 +2,9 @@
 
 function NPC() {
     var self = this;
+    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    self.LONG_DESCRIPTION_MAX_LENGTH = 200;
+
     self.ps = PersistenceService.register(NPC, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'name', 'race', 'description']
@@ -42,10 +45,10 @@ function NPC() {
     // UI Methods
 
     self.longDescription = ko.pureComputed(function() {
-        return Utility.markdown.asPlaintext(self.description()).substr(0, 200).trim() + '...';
+        return Utility.stringUtil.truncateStringAtLength(self.description(), self.LONG_DESCRIPTION_MAX_LENGTH);
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        return Utility.markdown.asPlaintext(self.description()).substr(0, 100).trim() + '...';
+        return Utility.stringUtil.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }

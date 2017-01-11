@@ -43,9 +43,7 @@ function MagicItem() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        if (self.magicItemDescription()) {
-            return self.magicItemDescription().substring(0, self.DESCRIPTION_MAX_LENGTH) + '...';
-        }
+        return Utility.stringUtil.truncateStringAtLength(self.magicItemDescription(), self.DESCRIPTION_MAX_LENGTH);
     });
 
     self.magicItemNameLabel = ko.pureComputed(function() {
