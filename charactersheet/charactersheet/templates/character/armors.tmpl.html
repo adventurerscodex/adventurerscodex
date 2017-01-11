@@ -11,7 +11,7 @@
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
-          <th class="hidden-xs">
+          <th>
             Armor Class
           </th>
           <th>
@@ -35,8 +35,7 @@
               data-bind="text: armorType, click: $parent.editArmor"
               href="#"
               data-target="#viewArmor"></td>
-          <td class="hidden-xs"
-              data-bind="text: armorClass, click: $parent.editArmor"
+          <td data-bind="text: armorClass, click: $parent.editArmor"
               href="#"
               data-target="#viewArmor"></td>
           <td>
