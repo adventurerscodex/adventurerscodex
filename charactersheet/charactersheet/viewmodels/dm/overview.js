@@ -7,7 +7,6 @@ function CampaignOverviewViewModel() {
     self.createdDate = ko.observable();
     self.notes = ko.observable();
     self.setting = ko.observable();
-    self.createdDate = ko.observable();
     self.name = ko.observable();
 
     /* Public Methods */
