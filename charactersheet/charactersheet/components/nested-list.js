@@ -92,7 +92,7 @@ ko.components.register('nested-list', {
                     <span class="fa fa-plus fa-lg" \
                         data-bind="click: $parent.addCell"></span>&nbsp;&nbsp; \
                     <!-- /ko -->\
-                    <span class="fa fa-trash-o fa-color-hover fa-lg" \
+                    <span class="fa fa-trash-o fa-color-white-hover fa-lg" \
                         data-bind="click: $parent.deleteCell"></span>\
                 </span> \
                 <!-- /ko -->\

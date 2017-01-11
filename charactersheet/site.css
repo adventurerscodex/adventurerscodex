@@ -344,9 +344,17 @@ textarea.dark-area {
   color:#e74c3c;
 }
 
-.glyphicon-trash-hover:hover {
+.fa-color-white-hover {
+  color:#ffffff;
+}
+
+.fa-color-white-hover:hover {
   color:#e74c3c;
 }
+
+/*.glyphicon-trash-hover:hover {
+  color:#e74c3c;
+}*/
 
 .feature-row span {
   line-height: 3em;
