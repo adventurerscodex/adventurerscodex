@@ -15,9 +15,6 @@ function OtherStats() {
     self.inspiration = ko.observable(0);
     self.proficiency = ko.observable(0);
 
-    var msg = 'Calculated Value:  10 + your perception bonus';
-    self.passiveWisdomTooltip = ko.observable(msg);
-
   /**
    * Calculates passive wisdom based on the formula:
    * 10 + Perception Skill Bonus.
