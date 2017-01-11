@@ -65,6 +65,13 @@ function Skill() {
         return bonus;
     });
 
+    self.passiveBonus = ko.pureComputed(function() {
+        self._dummy();
+        var bonus = 10 + self.bonus();
+
+        return bonus;
+    });
+
     self.bonusLabel = ko.pureComputed(function() {
         self._dummy();
         var str = '+ 0';

@@ -80,6 +80,30 @@ describe('Skill Model', function() {
             s.proficiencyScore().should.equal(4);
         });
     });
+
+    describe('Passive Bonus', function() {
+        it('should yield the passive score', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
+
+            var s = new Skill();
+            s.name('Arcana');
+            s.modifier(4);
+            s.abilityScore('Wis');
+            s.proficiency('proficient');
+
+            s.passiveBonus().should.equal(16);
+
+            s = new Skill();
+            s.name('Arcana');
+            s.modifier(4);
+            s.abilityScore('Wis');
+
+            s.passiveBonus().should.equal(14);
+        });
+    });
+
     describe('Clear', function() {
         it('should clear all values', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
