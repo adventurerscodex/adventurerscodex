@@ -31,7 +31,7 @@ function Item() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        return Utility.stringUtil.truncateStringAtLength(self.itemDesc(), self.DESCRIPTION_MAX_LENGTH);
+        return Utility.string.truncateStringAtLength(self.itemDesc(), self.DESCRIPTION_MAX_LENGTH);
     });
 
     self.itemDescriptionHTML = ko.pureComputed(function() {

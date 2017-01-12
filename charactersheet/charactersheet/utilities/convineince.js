@@ -10,7 +10,7 @@
 
 var Utility = {
     markdown: {},
-    stringUtil: {}
+    string: {}
 };
 
 
@@ -36,11 +36,11 @@ Utility.markdown.asPlaintext = function(markdown) {
  * @return plain text string that may or may not be truncated
  */
 
-Utility.stringUtil.truncateStringAtLength = function(value, truncateAt) {
+Utility.string.truncateStringAtLength = function(value, truncateAt) {
     var string = Utility.markdown.asPlaintext(value);
     if (string.length >= truncateAt) {
         return string.substring(0, truncateAt) + '...';
     } else {
         return string;
     }
-}
+};

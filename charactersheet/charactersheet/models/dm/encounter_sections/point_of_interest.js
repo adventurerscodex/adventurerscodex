@@ -44,10 +44,10 @@ function PointOfInterest() {
     // UI Methods
 
     self.longDescription = ko.pureComputed(function() {
-        return Utility.stringUtil.truncateStringAtLength(self.description(), self.LONG_DESCRIPTION_MAX_LENGTH);
+        return Utility.string.truncateStringAtLength(self.description(), self.LONG_DESCRIPTION_MAX_LENGTH);
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        return Utility.stringUtil.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+        return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }

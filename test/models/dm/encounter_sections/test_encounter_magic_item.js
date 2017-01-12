@@ -36,9 +36,10 @@ describe('EncounterMagicItem', function(){
         it('should return a description if it exists', function() {
             var encounterMagicItem = new EncounterMagicItem();
             encounterMagicItem.magicItemDescription('Blah');
+            simple.mock(Utility.markdown, 'asPlaintext').returnWith('Blah');
 
             var label = encounterMagicItem.descriptionLabel();
-            label.should.equal('Blah...');
+            label.should.equal('Blah');
         });
     });
 });

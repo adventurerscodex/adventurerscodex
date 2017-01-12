@@ -13,7 +13,7 @@ describe('NPC', function(){
             simple.mock(Utility.markdown, 'asPlaintext').returnWith('blah');
 
             var description = npc.shortDescription();
-            description.should.equal('blah...');
+            description.should.equal('blah');
         });
     });
 
@@ -24,7 +24,7 @@ describe('NPC', function(){
             simple.mock(Utility.markdown, 'asPlaintext').returnWith('blah');
 
             var description = npc.longDescription();
-            description.should.equal('blah...');
+            description.should.equal('blah');
         });
     });
 
