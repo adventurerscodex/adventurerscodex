@@ -6,21 +6,6 @@ describe('PlayerText', function(){
         simple.restore();
     });
 
-    describe('_formatStringToLength ', function() {
-        it('should return a truncated string', function() {
-            var playerText = new PlayerText();
-
-            var string = playerText._formatStringToLength('blah', 2);
-            string.should.equal('bl...');
-        });
-        it('should return the string', function() {
-            var playerText = new PlayerText();
-
-            var string = playerText._formatStringToLength('blah', 5);
-            string.should.equal('blah');
-        });
-    });
-
     describe('shortDescription', function() {
         it('should return short description', function() {
             var playerText = new PlayerText();
@@ -32,6 +17,7 @@ describe('PlayerText', function(){
         });
         it('should return nothing', function() {
             var playerText = new PlayerText();
+            simple.mock(Utility.markdown, 'asPlaintext').returnWith('');
 
             var description = playerText.shortDescription();
             description.should.equal('');
@@ -49,6 +35,7 @@ describe('PlayerText', function(){
         });
         it('should return nothing', function() {
             var playerText = new PlayerText();
+            simple.mock(Utility.markdown, 'asPlaintext').returnWith('');
 
             var description = playerText.longDescription();
             description.should.equal('');
