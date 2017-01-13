@@ -136,7 +136,7 @@ var MessagingService = {
             'type': 'set',
             'from': connection.jid,
             'to':  '', //TODO Add server JID
-            'id': connection.getUniqueId(),
+            'id': connection.getUniqueId()
         }).c('pubsub', {
             xmlns: MessagingService.configuration.namespaces.pubsub
         }).c('publish', {
@@ -156,7 +156,7 @@ var MessagingService = {
         if (!MessagingService.notifications[identifier]) {
             MessagingService.notifications[identifier] = new signals.Signal();
         }
-        MessagingService.notifications[identifier].add(callback)
+        MessagingService.notifications[identifier].add(callback);
     },
 
     unsubscribe: function(identifier, handlerToken) {
@@ -222,7 +222,7 @@ var MessagingService = {
         if (!xjson.length > 0) { return true; }
 
         var data = JSON.parse(Strophe.getText(xjson[0]));
-        var identifier = xjson[0].attributes.getNamedItem('identifier').value
+        var identifier = xjson[0].attributes.getNamedItem('identifier').value;
 
         // Dispatch the parsed data in a notification.
         if (MessagingService.notifications[identifier]) {
