@@ -34,10 +34,13 @@ function StatusLineViewModel() {
         if (!profile || statuses.length == 0) { return ''; }
 
         return profile.characterName() + ' is ' + statuses.map(function(e, i, _) {
+            var status = '<span class="text-' + e.type() + '">' + e.name() + '</span>'
             if (statuses.length > 1 && i == statuses.length - 1) {
-                return 'and <span class="text-' + e.type() + '">' + e.name() + '</span>';
+                return 'and ' + status;
+            } else if (statuses.length > 1) {
+                return status + ',&nbsp;';
             } else {
-                return '<span class="text-' + e.type() + '">' + e.name() + '</span>,&nbsp;';
+                return status;
             }
         }).join('') + '.';
     };
