@@ -12,8 +12,8 @@ var defaultConfig = {
         /* A list of all valid options are located here:
          * http://strophe.im/strophejs/doc/1.2.10/files/strophe-js.html#Strophe.Connection.connect
          */
-        jid: '',
-        pass: '',
+        jid: 'tester@adventurerscodex.com',
+        pass: 'etheekne',
 
         // Specify a custom callback here.
         callback: null
