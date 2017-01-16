@@ -18,7 +18,7 @@ describe('Skill Model', function() {
             s.abilityScore('Wis');
             s.proficiency('proficient');
 
-            s.bonusLabel().should.equal('+ 6 <i><small>(Wis)</small></i>');
+            s.bonusLabel().should.equal('+ 6');
 
             s = new Skill(parent);
             s.name('Arcana');
@@ -26,33 +26,30 @@ describe('Skill Model', function() {
             s.abilityScore('Wis');
             s.proficiency('proficient');
 
-            s.bonusLabel().should.equal('- 2 <i><small>(Wis)</small></i>');
-
-            s = new Skill(parent);
-            s.name('Arcana');
-            s.modifier(2);
-            s.abilityScore('Wis');
-            s.proficiency('not');
-
-            s.bonusLabel().should.equal('+ 2 <i><small>(Wis)</small></i>');
-
-            s = new Skill(parent);
-            s.name('Arcana');
-            s.modifier(2);
-            s.abilityScore('Wis');
-            s.proficiency('half');
-
-            s.bonusLabel().should.equal('+ 3 <i><small>(Wis)</small></i>');
-
-            s = new Skill(parent);
-            s.name('Arcana');
-            s.modifier(2);
-            s.abilityScore('Wis');
-            s.proficiency('expertise');
-
-            s.bonusLabel().should.equal('+ 6 <i><small>(Wis)</small></i>');
+            s.bonusLabel().should.equal('- 2');
         });
     });
+
+    describe('Name Label', function() {
+        it('should yield the correct name label.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
+
+            var s = new Skill();
+            s.name('Arcana');
+            s.abilityScore('Wis');
+
+            s.nameLabel().should.equal('Arcana <i><small class="skills-ability-type">(Wis)</small></i>');
+
+            s = new Skill(parent);
+            s.name('Stealth');
+            s.abilityScore('Dex');
+
+            s.nameLabel().should.equal('Stealth <i><small class="skills-ability-type">(Dex)</small></i>');
+        });
+    });
+
     describe('Proficiency Label', function() {
         it('should yield the proficiency value (or none).', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);

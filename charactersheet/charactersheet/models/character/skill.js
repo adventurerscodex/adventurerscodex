@@ -87,7 +87,7 @@ function Skill() {
         self._dummy();
         var str = self.name();
 
-        str += ' <i><small style="color: #b4bcc2;">(' + self.abilityScore() + ')</small></i>';
+        str += ' <i><small class="skills-ability-type">(' + self.abilityScore() + ')</small></i>';
 
         return str;
     });
