@@ -80,8 +80,15 @@ function Skill() {
             Math.abs(self.bonus());
         }
 
-        str += ' <i><small>('
-                + self.abilityScore() + ')</small></i>';
+        return str;
+    });
+
+    self.nameLabel = ko.pureComputed(function(){
+        self._dummy();
+        var str = self.name();
+
+        str += ' <i><small style="color: #b4bcc2;">(' + self.abilityScore() + ')</small></i>';
+
         return str;
     });
 
