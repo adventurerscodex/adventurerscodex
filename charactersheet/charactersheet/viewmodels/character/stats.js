@@ -13,18 +13,6 @@ function StatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
-
-    //popover text
-    var initiativePopoverText = 'Initiative is the same as your dexterity bonus';
-    self.initiativePopover = ko.observable(initiativePopoverText);
-
-    var passiveWisdomPopoverText = 'Calculated Value:  10 + your perception bonus';
-    self.passiveWisdomPopover = ko.observable(passiveWisdomPopoverText);
-
-    var proficiencyPopoverText = 'Proficiency is determined by your character level';
-    self.proficiencyPopover = ko.observable(proficiencyPopoverText);
-
-
     self.init = function() {
         Notifications.global.save.add(function() {
             self.health().save();
