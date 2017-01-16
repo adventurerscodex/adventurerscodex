@@ -7,14 +7,14 @@
             <span class="glyphicon glyphicon-ok"></span>
             <span data-bind="css: sortArrow('proficiency')"></span>
           </th>
+          <th>
+          </th>
           <th data-bind="click: function(){sortBy('name');}">
             Skill
             <span data-bind="css: sortArrow('name')"></span>
           </th>
           <th>
             Passive
-          </th>
-          <th>
           </th>
         </tr>
       </thead>
@@ -23,9 +23,9 @@
           <td>
             <prof-marker params="proficiency: proficiency"></prof-marker>
           </td>
+          <td data-bind="html: bonusLabel"></td>
           <td data-bind="html: nameLabel"></td>
           <td data-bind="text: passiveBonus"></td>
-          <td data-bind="html: bonusLabel"></td>
         </tr>
       </tbody>
     </table>
