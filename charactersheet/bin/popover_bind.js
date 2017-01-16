@@ -1,4 +1,7 @@
 /**
+ * Obtained this binding from:
+ * http://stackoverflow.com/questions/14822018/knockout-twitter-bootstrap-popover-binding
+ *
  * This binding adds support for the boostrap popover functionality. This binding
  * supports popover options and by default the placement is on the top. There are
  * two parts to fully implement a popover:
