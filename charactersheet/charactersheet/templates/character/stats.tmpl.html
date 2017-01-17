@@ -1,7 +1,5 @@
 <div class="panel panel-default bio">
   <div class="panel-body">
-    <div class="row row-padded">
-    </div>
 	<!--Health items -->
     <div class="row row-padded">
       <div class="col-md-12 col-padded stats-health-border">
@@ -65,20 +63,26 @@
           </div>
         </div>
         <br />
-        <div class="input-group">
-          <span class="input-group-addon">Death Save Successes</span>
-           <div class="form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
-            <span data-bind="attr: { id: $index, name: $index }, click: deathSaveSuccessHandler,
-                  css: deathSaveSuccessIcon"></span>
+        <div class="row row-padded">
+          <div class="col-md-6 col-sm-12 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon">Death Save Successes</span>
+              <div class="form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
+                <span data-bind="attr: { id: $index, name: $index }, click: deathSaveSuccessHandler,
+                      css: deathSaveSuccessIcon"></span>
+              </div>
+            </div>
           </div>
-
-          <span class="input-group-addon">Death Save Failures</span>
-          <div class="form-control hit-dice-list"
-               data-bind="foreach: deathSaveFailureList">
-            <span data-bind="attr: { id: $index, name: $index }, click: deathSaveFailureHandler,
-                  css: deathSaveFailureIcon"></span>
-
+          <div class="col-md-6 col-sm-12 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon">Death Save Failures</span>
+              <div class="form-control hit-dice-list" data-bind="foreach: deathSaveFailureList">
+                <span data-bind="attr: { id: $index, name: $index }, click: deathSaveFailureHandler,
+                    css: deathSaveFailureIcon"></span>
+              </div>
+            </div>
           </div>
+        </div>
         </div>
       </div>
     </div>

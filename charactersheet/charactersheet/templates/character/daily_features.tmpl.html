@@ -8,18 +8,18 @@
 		<table id='dailyFeaturesTable' class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr>
-					<th class="col-sm-2" data-bind="click: function(){sortBy('featureName');}">Name
+					<th class="col-sm-4 col-xs-2" data-bind="click: function(){sortBy('featureName');}">Name
             <i data-bind="css: sortArrow('featureName')"></i>
           </th>
-					<th class="col-sm-1" data-bind="click: function(){sortBy('featureMaxUses');}">Max
+					<th class="col-sm-1 hidden-xs" data-bind="click: function(){sortBy('featureMaxUses');}">Max
             <i data-bind="css: sortArrow('featureMaxUses')"></i>
           </th> <!-- Max -->
-					<th class="col-sm-1" data-bind="click: function(){sortBy('featureResetsOn');}">Resets on
+					<th class="col-sm-2 hidden-sm hidden-xs" data-bind="click: function(){sortBy('featureResetsOn');}">Resets on
             <i data-bind="css: sortArrow('featureResetsOn')"></i>
           </th> <!-- Max -->
-					<th class="col-sm-3 text-center">Used</th> <!-- Up/down -->
-					<th class="col-sm-1">Reset</th>
-					<th class="col-sm-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
+					<th class="col-sm-3 col-xs-8 text-center">Used</th> <!-- Up/down -->
+					<th class="col-xs-1">Reset</th>
+					<th class="col-xs-1"> <a data-toggle="modal" data-target="#addDailyFeatures" href="#"> <i class="fa fa-plus fa-color"></i> </a> </th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,41 +27,40 @@
 				<tr class="clickable">
 					<td data-bind="click: $parent.editDailyFeature"
 					href="#"
-					class="col-sm-3 feature-row"
+					class="col-sm-4 col-xs-3 feature-row table-data-overflow"
           data-toggle="modal"
           data-target="#viewDailyFeature">
             <span data-bind="css: color" class="form-control pull-left color-picker-item"></span>
-  					<span
-  					href="#"
-            data-toggle="modal"
-            data-target="#viewDailyFeature" data-bind="text: featureName">
+  					<span href="#" data-bind="text: featureName" class="hidden-xs">
 					  </span>
 					</td>
-					<td class="col-content-vertical col-sm-1" data-bind="click: $parent.editDailyFeature"
+
+					<td class="col-content-vertical col-sm-1 feature-row hidden-xs text-center" data-bind="click: $parent.editDailyFeature"
           href="#"
-          class="col-sm-3 feature-row"
           data-toggle="modal"
           data-target="#viewDailyFeature">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
-					<td class="col-content-vertical col-sm-1" data-bind="click: $parent.editDailyFeature"
+
+					<td class="col-content-vertical col-sm-2 hidden-sm hidden-xs feature-row" data-bind="click: $parent.editDailyFeature"
           href="#"
-          class="col-sm-3 feature-row"
           data-toggle="modal"
           data-target="#viewDailyFeature">
           	<!-- ko if: needsResetsOnImg -->
 						<img class="action-bar-icon" data-bind="attr: { 'src': resetsOnImgSource }"></img>
 						<!-- /ko -->
 					</td>
-					<td class="col-sm-3">
+
+					<td class="col-sm-3 col-xs-7">
             <plus-minus params="value: featureUsed, max: featureMaxUses"></plus-minus>
 					</td>
 
-					<td class="col-content-vertical col-sm-1"> <!--Refresh -->
+					<td class="col-content-vertical col-xs-1 text-center"> <!--Refresh -->
 						<a data-bind="click: $parent.refreshDailyFeature" href="#">
 							<i class="fa fa-refresh fa-color"> </i>
 						</a>
-					<td class="col-sm-1 col-content-vertical"> <!--Remove -->
+          </td>
+					<td class="col-xs-1 col-content-vertical"> <!--Remove -->
 						<a data-bind="click: $parent.removeDailyFeature" href="#">
 							<i class="fa fa-trash-o fa-color-hover"> </i>
 						</a>
