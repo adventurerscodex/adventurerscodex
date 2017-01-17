@@ -37,8 +37,10 @@ function StatusLineViewModel() {
             var status = '<span class="text-' + e.type() + '">' + e.name() + '</span>';
             if (statuses.length > 1 && i == statuses.length - 1) {
                 return 'and ' + status;
-            } else if (statuses.length > 1) {
+            } else if (statuses.length > 2) {
                 return status + ',&nbsp;';
+            } else if (statuses.length > 1) {
+                return status + '&nbsp;';
             } else {
                 return status;
             }
