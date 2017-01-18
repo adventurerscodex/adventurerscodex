@@ -61,6 +61,9 @@ var Settings = {
         }, {
             key: 'magicItems',
             url: 'https://adventurerscodex.com/data/SRD/magic_items.json'
+        }, {
+            key: 'monsters',
+            url: 'https://adventurerscodex.com/data/SRD/monsters.json'
         }
     ]
 };

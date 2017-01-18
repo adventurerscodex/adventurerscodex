@@ -52,7 +52,7 @@ function Monster() {
     self.findAbilityScoreByName = function(name) {
         var foundScore;
         self.abilityScores().forEach(function(score, idx, _) {
-            if (score.name() == name) {
+            if (score.name().toLowerCase() == name.toLowerCase()) {
                 foundScore = score;
             }
         });
