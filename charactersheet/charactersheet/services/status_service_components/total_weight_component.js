@@ -25,7 +25,7 @@ function TotalWeightStatusServiceComponent() {
      */
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var scores = AbilityScores.findBy(key)[0];
+        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
         if (!scores || !scores.str()) {
             self._removeStatus();
         } else {

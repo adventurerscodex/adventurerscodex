@@ -66,7 +66,7 @@ function Weapon() {
     self.strAbilityScoreModifier = function() {
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Str');
         } catch(err) { /*Ignore*/ }
         if (score === null){
@@ -80,7 +80,7 @@ function Weapon() {
     self.dexAbilityScoreModifier = function() {
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
         if (score === null){

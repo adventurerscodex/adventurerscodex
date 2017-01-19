@@ -28,7 +28,7 @@ function SavingThrows() {
         var score = null;
         try {
             var key = CharacterManager.activeCharacter().key();
-            score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
+            score = PersistenceService.findBy(AbilityScores, 'characterId', key)[0].modifierFor(self._abilityScore());
         } catch(err) { /*Ignore*/ }
         if (score === null){
             return null;

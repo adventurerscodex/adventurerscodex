@@ -42,7 +42,7 @@ function AbilityScoresViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        var scores = AbilityScores.findBy(key);
+        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
         if (scores.length > 0) {
             self.abilityScores(scores[0]);
         } else {

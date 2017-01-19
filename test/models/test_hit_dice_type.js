@@ -60,21 +60,4 @@ describe('Hit Dice Type Model', function() {
             deleted.should.equal(true);
         });
     });
-
-    describe('Find All', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new HitDiceType(), new HitDiceType()]);
-            var r = HitDiceType.findAllBy(key);
-            r.length.should.equal(0);
-
-
-            simple.mock(PersistenceService, 'findAll').returnWith([new HitDiceType(), new HitDiceType()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            }));
-            r = HitDiceType.findAllBy(key);
-            r.length.should.equal(2);
-        });
-    });
 });

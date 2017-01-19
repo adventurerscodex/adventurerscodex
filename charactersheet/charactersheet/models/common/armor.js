@@ -109,7 +109,7 @@ function Armor() {
         self._dummy();
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
 

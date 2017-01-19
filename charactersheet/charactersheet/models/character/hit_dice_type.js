@@ -33,9 +33,3 @@ function HitDiceType() {
         self.ps.delete();
     };
 }
-
-HitDiceType.findAllBy = function(characterId) {
-    return PersistenceService.findAll(HitDiceType).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
