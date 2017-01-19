@@ -33,9 +33,3 @@ function FeaturesTraits() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
-FeaturesTraits.findBy = function(characterId) {
-    return PersistenceService.findAll(FeaturesTraits).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

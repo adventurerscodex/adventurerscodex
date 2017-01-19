@@ -10,7 +10,7 @@ describe('Skill Model', function() {
         it('should yield the modifier value (signed).', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
+            simple.mock(PersistenceService, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
 
             var s = new Skill();
             s.name('Arcana');
@@ -56,7 +56,7 @@ describe('Skill Model', function() {
     describe('Proficiency Label', function() {
         it('should yield the proficiency value (or none).', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
+            simple.mock(PersistenceService, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
 
             var s = new Skill(parent);
             s.name('Arcana');

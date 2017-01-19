@@ -56,12 +56,6 @@ function Slot() {
     };
 }
 
-Slot.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Slot).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
 Slot.REST_TYPE = {
     SHORT_REST: 'short',
     LONG_REST: 'long'

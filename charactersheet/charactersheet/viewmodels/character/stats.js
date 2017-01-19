@@ -35,7 +35,7 @@ function StatsViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        var health = Health.findBy(key);
+        var health = PersistenceService.findBy(Health, 'characterId', key);
         if (health.length > 0) {
             self.health(health[0]);
         } else {
@@ -43,7 +43,7 @@ function StatsViewModel() {
         }
         self.health().characterId(key);
 
-        var otherStats = OtherStats.findBy(key);
+        var otherStats = PersistenceService.findBy(OtherStats, 'characterId', key);
         if (otherStats.length > 0) {
             self.otherStats(otherStats[0]);
         } else {
@@ -51,7 +51,7 @@ function StatsViewModel() {
         }
         self.otherStats().characterId(key);
 
-        var hitDiceList = HitDice.findAllBy(key);
+        var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
         if (hitDiceList.length > 0) {
             self.hitDiceList(hitDiceList);
         }
@@ -70,7 +70,7 @@ function StatsViewModel() {
         }
         self.hitDiceType().characterId(key);
 
-        var deathSaveList = DeathSave.findAllBy(key);
+        var deathSaveList = PersistenceService.findBy(DeathSave, 'characterId', key);
         self.deathSaveSuccessList([]);
         self.deathSaveFailureList([]);
         if (deathSaveList.length > 0) {
@@ -87,7 +87,7 @@ function StatsViewModel() {
             }
         }
 
-        var profile = Profile.findBy(key)[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
         if (profile) {
             self.level(profile.level());
             self.experience(profile.exp());
@@ -149,7 +149,8 @@ function StatsViewModel() {
     };
 
     self.calculateHitDice = function() {
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
 
         var difference = parseInt(profile.level()) - self.hitDiceList().length;
         var pushOrPop = difference > 0 ? 'push' : 'pop';
@@ -187,7 +188,8 @@ function StatsViewModel() {
      * This will be used primarily for long rest resets.
      */
     self.resetHitDice = function(){
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
         var level = profile.level();
         var restoredHitDice = Math.floor(level / 2);
 
@@ -230,7 +232,8 @@ function StatsViewModel() {
         Notifications.stats.changed.dispatch();
 
         //Save level and exp in profile model
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
         profile.level(self.level());
         profile.exp(self.experience());
         profile.save();

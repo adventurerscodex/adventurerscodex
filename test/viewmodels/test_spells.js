@@ -20,7 +20,7 @@ describe('SpellsViewModel', function(){
                 };
             };
 
-            Spell.findAllBy = function(key) { return [new Spell(), new Spell()]; };
+            PersistenceService.findBy = function(key) { return [new Spell(), new Spell()]; };
             var spellsVM = new SpellbookViewModel();
             spellsVM.spellbook().length.should.equal(0);
             spellsVM.load();
@@ -45,7 +45,7 @@ describe('SpellsViewModel', function(){
                 e.save = function() { saved[i] = true; };
                 return e;
             });
-            Spell.findAllBy = function(key) { return spells; };
+            PersistenceService.findBy = function(key) { return spells; };
 
             saved.forEach(function(e, i, _) {
                 e.should.equal(false);

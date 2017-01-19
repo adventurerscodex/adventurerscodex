@@ -1,18 +1,20 @@
 'use strict';
-
+/*eslint no-console:0 */
 var CharacterManager = {
     __activeCharacter__: null
 };
 
 CharacterManager.changeCharacter = function(characterId) {
-    var newChar = Character.findBy(characterId);
+    var newChar = PersistenceService.findBy(Character, 'key', characterId);
     try {
         Notifications.characterManager.changing.dispatch(
             CharacterManager.activeCharacter(), newChar[0]);
         CharacterManager.__activeCharacter__ = newChar[0];
         Notifications.characterManager.changed.dispatch(
             CharacterManager.activeCharacter());
-    } catch(err) { /*Ignore*/ }
+    } catch(err) { 
+        console.log(err); 
+    }
 };
 
 CharacterManager.activeCharacter = function() {
@@ -27,7 +29,7 @@ CharacterManager.activeCharacter = function() {
 
 CharacterManager.defaultCharacter = function() {
     try {
-        return Character.findAll().filter(function(e, i, _) {
+        return PersistenceService.findAll(Character).filter(function(e, i, _) {
             return e.isDefault();
         })[0];
     } catch(err) {

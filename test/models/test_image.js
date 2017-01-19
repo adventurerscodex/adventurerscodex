@@ -46,19 +46,4 @@ describe('Image Model', function() {
             });
         });
     });
-    describe('Find By', function() {
-        it('Should return a list of image models matching the given id.', function() {
-            //Empty
-            simple.mock(PersistenceService, 'findBy').returnWith([new ImageModel()]);
-            ImageModel.findBy('someid').length.should.equal(0);
-
-            //Filled
-            simple.mock(PersistenceService, 'findAll').returnWith([new ImageModel(), new ImageModel()].map(function(e, i, _) {
-                e.characterId('');
-                return e;
-            }));
-            ImageModel.findBy('someid').length.should.equal(0);
-
-        });
-    });
 });

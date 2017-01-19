@@ -61,21 +61,4 @@ describe('Death Save Model', function() {
             deleted.should.equal(true);
         });
     });
-
-    describe('Find All', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new DeathSave(), new DeathSave()]);
-            var r = DeathSave.findAllBy(key);
-            r.length.should.equal(0);
-
-
-            simple.mock(PersistenceService, 'findAll').returnWith([new DeathSave(), new DeathSave()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            }));
-            r = DeathSave.findAllBy(key);
-            r.length.should.equal(2);
-        });
-    });
 });

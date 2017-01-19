@@ -153,9 +153,3 @@ function Armor() {
         return totalBonus;
     });
 }
-
-Armor.findAllBy =function(characterId) {
-    return PersistenceService.findAll(Armor).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

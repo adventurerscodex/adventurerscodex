@@ -90,16 +90,6 @@ function Character() {
     };
 }
 
-Character.findAll = function() {
-    return PersistenceService.findAll(Character);
-};
-
-Character.findBy = function(characterId) {
-    return Character.findAll().filter(function(e, i, _) {
-        if (e.key() === characterId) return e;
-    });
-};
-
 Character.exportCharacter = function(characterId) {
     var data = {};
     PersistenceService.listAll().forEach(function(e1, i1, _1) {

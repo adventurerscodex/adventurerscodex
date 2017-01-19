@@ -32,9 +32,3 @@ function FeatsProf() {
         self.ps.save();
     };
 }
-
-FeatsProf.findBy = function(characterId) {
-    return PersistenceService.findAll(FeatsProf).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

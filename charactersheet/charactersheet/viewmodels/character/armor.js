@@ -36,7 +36,7 @@ function ArmorViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        self.armors(Armor.findAllBy(key));
+        self.armors(PersistenceService.findBy(Armor, 'characterId', key));
 
         //Subscriptions
         Notifications.abilityScores.changed.add(self.valueHasChanged);

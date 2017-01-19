@@ -165,7 +165,7 @@ describe('Stats View Model', function() {
                 var hitDice3 = new HitDice();
                 hitDice3.hitDiceUsed(true);
 
-                simple.mock(Profile, 'findBy').returnWith(
+                simple.mock(PersistenceService, 'findBy').returnWith(
                     [{'level': function() { return 2; } }] );
 
                 stats.hitDiceList([hitDice1, hitDice2, hitDice3]);

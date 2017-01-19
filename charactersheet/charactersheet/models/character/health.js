@@ -104,9 +104,3 @@ function Health() {
         self.ps.save();
     };
 }
-
-Health.findBy = function(characterId) {
-    return PersistenceService.findAll(Health).filter(function(e,i,_) {
-        return e.characterId() === characterId;
-    });
-};

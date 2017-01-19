@@ -1,5 +1,10 @@
 'use strict';
 
+DailyFeature.REST_VALUES = {
+    SHORT_REST: 'short',
+    LONG_REST: 'long'
+};
+
 function DailyFeature() {
     var self = this;
     self.ps = PersistenceService.register(DailyFeature, self);
@@ -68,14 +73,3 @@ function DailyFeature() {
         self.ps.delete();
     };
 }
-
-DailyFeature.findAllBy = function(characterId) {
-    return PersistenceService.findAll(DailyFeature).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
-DailyFeature.REST_VALUES = {
-    SHORT_REST: 'short',
-    LONG_REST: 'long'
-};

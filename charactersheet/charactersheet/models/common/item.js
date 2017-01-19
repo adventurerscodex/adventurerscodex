@@ -70,9 +70,3 @@ function Item() {
         self.ps.delete();
     };
 }
-
-Item.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Item).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

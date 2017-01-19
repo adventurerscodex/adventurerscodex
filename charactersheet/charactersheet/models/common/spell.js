@@ -9,6 +9,7 @@ function Spell() {
             'spellRange', 'spellComponents', 'spellDuration', 'spellPrepared', 'spellMaterialComponents', 'isRitual']
     };
 
+    self._dummy = ko.observable(null);
     self.characterId = ko.observable(null);
     self.spellName = ko.observable('');
     self.spellPrepared = ko.observable(false);
@@ -33,22 +34,27 @@ function Spell() {
     self.spellComponentsOptions = ko.observableArray(Fixtures.spell.spellComponentsOptions);
     self.spellRangeOptions = ko.observableArray(Fixtures.spell.spellRangeOptions);
 
+    self.updateValues = function() {
+        self._dummy.notifySubscribers();
+    };
+    
     self.spellNameLabel = ko.pureComputed(function() {
-        if(self.isRitual() === true){
-            return (self.spellName() + ' (Ritual)' );
+        if (self.isRitual() === true) {
+            return (self.spellName() + ' (Ritual)');
         } else {
             return self.spellName();
         }
     });
 
     self.spellDamageLabel = ko.pureComputed(function() {
-        var charKey = CharacterManager.activeCharacter().key();
-
-        if( self.spellType() === 'Attack Roll' ){
-            var spellBonus = SpellStats.findBy(charKey)[0] ? SpellStats.findBy(charKey)[0].spellAttackBonus() : 0;
+        self._dummy();
+        var key = CharacterManager.activeCharacter().key();
+        var spellStats = PersistenceService.findBy(SpellStats, 'characterId', key)[0];
+        if (self.spellType() === 'Attack Roll') {
+            var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;
             return (self.spellDmg() + ' [Spell Bonus: +' + spellBonus + ']');
         }
-        else{
+        else {
             return self.spellDmg();
         }
     });
@@ -67,7 +73,7 @@ function Spell() {
     });
 
     self.spellDescriptionHTML = ko.pureComputed(function() {
-        if (self.spellDescription()){
+        if (self.spellDescription()) {
             return self.spellDescription().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
@@ -98,9 +104,3 @@ function Spell() {
         self.ps.delete();
     };
 }
-
-Spell.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Spell).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

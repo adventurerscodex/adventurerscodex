@@ -56,26 +56,4 @@ describe('Features and Traits Model', function() {
             ft.background().should.equal(e.background);
         });
     });
-
-    describe('Find All', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            var _findAll = PersistenceService.findAll;
-
-            PersistenceService.findAll = function(_) { return [new FeaturesTraits(), new FeaturesTraits()]; };
-            var r = FeaturesTraits.findBy(key);
-            r.length.should.equal(0);
-
-
-            var results = [new FeaturesTraits(), new FeaturesTraits()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            });
-            PersistenceService.findAll = function(_) { return results; };
-            r = FeaturesTraits.findBy(key);
-            r.length.should.equal(2);
-
-            PersistenceService.findAll = _findAll;
-        });
-    });
 });

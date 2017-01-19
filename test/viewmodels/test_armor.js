@@ -82,7 +82,7 @@ describe('ArmorViewModel', function(){
 
     describe('Load', function() {
         it('should load values from db', function() {
-            simple.mock(Armor, 'findAllBy').returnWith([new Armor(), new Armor()]);
+            simple.mock(PersistenceService, 'findBy').returnWith([new Armor(), new Armor()]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var armors = new ArmorViewModel();

@@ -55,20 +55,6 @@ describe('Weapon Model', function() {
             });
         });
     });
-    describe('Find By', function() {
-        it('Should return a list of image models matching the given id.', function() {
-            //Empty
-            simple.mock(PersistenceService, 'findBy').returnWith([new Weapon()]);
-            Weapon.findAllBy('someid').length.should.equal(0);
-
-            //Filled
-            simple.mock(PersistenceService, 'findAll').returnWith([new Weapon(), new Weapon()].map(function(e, i, _) {
-                e.characterId('someid');
-                return e;
-            }));
-            Weapon.findAllBy('someid').length.should.equal(2);
-        });
-    });
 
     describe('Update Values', function() {
         it('should call notify subscriber a value has changed', function() {
@@ -83,7 +69,7 @@ describe('Weapon Model', function() {
         it('should get proficiency score from other stats', function() {
             var weap = new Weapon();
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(4)}]);
+            simple.mock(PersistenceService, 'findBy').returnWith([{ proficiencyLabel: ko.observable(4)}]);
 
             var profBonus = weap.proficiencyScore();
             profBonus.should.equal(4);

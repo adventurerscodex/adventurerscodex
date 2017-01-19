@@ -13,7 +13,8 @@ function FeaturesTraitsViewModel() {
     };
 
     self.load = function() {
-        var ft = FeaturesTraits.findBy(CharacterManager.activeCharacter().key());
+        var ft = PersistenceService.findBy(FeaturesTraits, 'characterId',
+            CharacterManager.activeCharacter().key());
         if (ft.length > 0) {
             self.featTraits(ft[0]);
         } else {

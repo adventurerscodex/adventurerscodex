@@ -25,7 +25,7 @@ function Skill() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
         try{
-            profBonus = OtherStats.findBy(
+            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
                 CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /* Ignore */}
         profBonus = parseInt(profBonus);
@@ -102,20 +102,3 @@ function Skill() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
-Skill.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Skill).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
-/**
- * Given a character id and a case insensitive skill name,
- * return the relevant Skill(s).
- */
-Skill.findAllByKeyAndName = function(characterId, skillName) {
-    return PersistenceService.findAll(Skill).filter(function(e, i, _) {
-        return (e.characterId() === characterId
-            && e.name().toLowerCase() == skillName.toLowerCase());
-    });
-};

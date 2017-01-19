@@ -92,7 +92,7 @@ describe('Spell Model', function() {
     describe('Spell Damage Label', function() {
         it('should return the correct label', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(SpellStats, 'findBy').callFn(function(characterId) {
+            simple.mock(PersistenceService, 'findBy').callFn(function(characterId) {
                 var spellStat = new SpellStats();
                 spellStat.characterId(characterId);
                 simple.mock(spellStat, 'spellAttackBonus').returnWith(3);
@@ -118,23 +118,6 @@ describe('Spell Model', function() {
             var spell = new Spell();
             spell.spellLevel(1);
             spell.spellLevelLabel().should.equal(1);
-        });
-    });
-
-    describe('Find All', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new Spell(), new Spell()]);
-            var r = Spell.findAllBy(key);
-            r.length.should.equal(0);
-
-
-            simple.mock(PersistenceService, 'findAll').returnWith([new Spell(), new Spell()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            }));
-            r = Spell.findAllBy(key);
-            r.length.should.equal(2);
         });
     });
 });

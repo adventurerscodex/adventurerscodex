@@ -20,7 +20,7 @@ function CharactersViewModel() {
     };
 
     self.load = function() {
-        self.characters(Character.findAll());
+        self.characters(PersistenceService.findAll(Character));
         var defaultKey = '';
         try {
             defaultKey = self.characters().filter(function(e, i, _) {

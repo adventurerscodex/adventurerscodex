@@ -115,7 +115,7 @@ function WizardViewModel() {
     self.terminate = function() {
         // Newest character will be at the back.
         //Notifications.wizard.completed.dispatch();
-        var character = Character.findAll().reverse()[0];
+        var character = PersistenceService.findAll(Character).reverse()[0];
         if (character) {
             CharacterManager.changeCharacter(character.key());
         }

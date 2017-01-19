@@ -69,9 +69,3 @@ function Treasure() {
         self.ps.delete();
     };
 }
-
-Treasure.findBy = function(characterId) {
-    return PersistenceService.findAll(Treasure).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

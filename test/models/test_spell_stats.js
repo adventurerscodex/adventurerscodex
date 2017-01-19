@@ -44,21 +44,4 @@ describe('SpellStats Model', function() {
             saved.should.equal(true);
         });
     });
-
-    describe('Find By', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new SpellStats()]);
-            var r = SpellStats.findBy(key);
-            r.length.should.equal(0);
-
-
-            simple.mock(PersistenceService, 'findAll').returnWith([new SpellStats()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            }));
-            r = SpellStats.findBy(key);
-            r.length.should.equal(1);
-        });
-    });
 });

@@ -44,7 +44,8 @@ function ProfileViewModel() {
     };
 
     self.load = function() {
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
         if (profile) {
             self.level(profile.level());
             self.playerName(profile.playerName());
@@ -81,7 +82,8 @@ function ProfileViewModel() {
     };
 
     self.dataHasChanged = function() {
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
         profile.level(self.level());
         profile.playerName(self.playerName());
         profile.characterName(self.characterName());

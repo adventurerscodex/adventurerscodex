@@ -77,7 +77,7 @@ function MagicItemsViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        self.magicItems(MagicItem.findAllBy(key));
+        self.magicItems(PersistenceService.findBy(MagicItem, 'characterId', key));
     };
 
     self.unload = function() {

@@ -42,9 +42,3 @@ function HitDice() {
         return css;
     });
 }
-
-HitDice.findAllBy = function(characterId) {
-    return PersistenceService.findAll(HitDice).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
