@@ -29,9 +29,10 @@ describe('EncounterItem', function(){
         it('should return a description if it exists', function() {
             var encounterItem = new EncounterItem();
             encounterItem.itemDesc('Blah');
+            simple.mock(Utility.markdown, 'asPlaintext').returnWith('Blah');
 
             var label = encounterItem.descriptionLabel();
-            label.should.equal('Blah...');
+            label.should.equal('Blah');
         });
     });
 });

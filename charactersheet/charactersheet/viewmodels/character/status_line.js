@@ -34,7 +34,16 @@ function StatusLineViewModel() {
         if (!profile || statuses.length == 0) { return ''; }
 
         return profile.characterName() + ' is ' + statuses.map(function(e, i, _) {
-            return '<span class="text-' + e.type() + '">' + e.name() + '</span>';
-        }).join('&nbsp;,') + '.';
+            var status = '<span class="text-' + e.type() + '">' + e.name() + '</span>';
+            if (statuses.length > 1 && i == statuses.length - 1) {
+                return 'and ' + status;
+            } else if (statuses.length > 2) {
+                return status + ',&nbsp;';
+            } else if (statuses.length > 1) {
+                return status + '&nbsp;';
+            } else {
+                return status;
+            }
+        }).join('') + '.';
     };
 }

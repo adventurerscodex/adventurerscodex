@@ -2,58 +2,60 @@
   <div class="panel-body">
     <div class="row" data-bind="click: openModal, with: abilityScores"
          title="Click to edit Ability Scores.">
-      <table class="table table-responsive table-hover table-no-margin">
-        <thead>
-          <tr class="clickable">
-            <th width="16%" class="text-center">Strength</th>
-            <th width="16%" class="text-center">Dexterity</th>
-            <th width="16%" class="text-center">Constitution</th>
-            <th width="16%" class="text-center">Intelligence</th>
-            <th width="16%" class="text-center">Wisdom</th>
-            <th width="16%" class="text-center">Charisma</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="clickable">
-            <td class="text-center">
-              <span data-bind='text: str'></span>
-              <sup>
-                <span class="badge" data-bind="text: strModifier"></span>
-              </sup>
-            </td>
-            <td class="text-center">
-              <span data-bind='text: dex'></span>
-              <sup>
-                <span class="badge" data-bind="text: dexModifier"></span>
-              </sup>
-            </td>
-            <td class="text-center">
-              <span data-bind='text: con'></span>
-              <sup>
-                <span class="badge" data-bind="text: conModifier"></span>
-              </sup>
-            </td>
-            <td class="text-center">
-              <span data-bind='text: int'></span>
-              <sup>
-                <span class="badge" data-bind="text: intModifier"></span>
-              </sup>
-            </td>
-            <td class="text-center">
-              <span data-bind='text: wis'></span>
-              <sup>
-                <span class="badge" data-bind="text: wisModifier"></span>
-              </sup>
-            </td>
-            <td class="text-center">
-              <span data-bind='text: cha'></span>
-              <sup>
-                <span class="badge" data-bind="text: chaModifier"></span>
-              </sup>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-hover table-no-margin">
+          <thead>
+            <tr class="clickable">
+              <th width="16%" class="text-center">Strength</th>
+              <th width="16%" class="text-center">Dexterity</th>
+              <th width="16%" class="text-center">Constitution</th>
+              <th width="16%" class="text-center">Intelligence</th>
+              <th width="16%" class="text-center">Wisdom</th>
+              <th width="16%" class="text-center">Charisma</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="clickable">
+              <td class="text-center">
+                <span data-bind='text: str'></span>
+                <sup>
+                  <span class="badge" data-bind="text: strModifier"></span>
+                </sup>
+              </td>
+              <td class="text-center">
+                <span data-bind='text: dex'></span>
+                <sup>
+                  <span class="badge" data-bind="text: dexModifier"></span>
+                </sup>
+              </td>
+              <td class="text-center">
+                <span data-bind='text: con'></span>
+                <sup>
+                  <span class="badge" data-bind="text: conModifier"></span>
+                </sup>
+              </td>
+              <td class="text-center">
+                <span data-bind='text: int'></span>
+                <sup>
+                  <span class="badge" data-bind="text: intModifier"></span>
+                </sup>
+              </td>
+              <td class="text-center">
+                <span data-bind='text: wis'></span>
+                <sup>
+                  <span class="badge" data-bind="text: wisModifier"></span>
+                </sup>
+              </td>
+              <td class="text-center">
+                <span data-bind='text: cha'></span>
+                <sup>
+                  <span class="badge" data-bind="text: chaModifier"></span>
+                </sup>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
