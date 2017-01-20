@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /**
  * A convenience class for constructing multi-property queries for
@@ -19,4 +19,4 @@ PersistenceServicePredicate.keyValuePredicate = function(key, value) {
     predicate.key = key;
     predicate.value = value;
     return predicate;
-}
+};
