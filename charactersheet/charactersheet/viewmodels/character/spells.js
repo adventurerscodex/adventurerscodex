@@ -46,15 +46,13 @@ function SpellbookViewModel() {
         return self.spellbook() ? self.spellbook().length : 0;
     });
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.spellbook().forEach(function(e, i, _) {
                 e.save();
             });
         });
-    };
-
-    self.load = function() {
+                
         var key = CharacterManager.activeCharacter().key();
         self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
         Notifications.spellStats.changed.add(self.valueHasChanged);

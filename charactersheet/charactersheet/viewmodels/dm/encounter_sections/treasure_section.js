@@ -51,13 +51,10 @@ function TreasureSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['nameLabel asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
-
-    self.load = function() {
+        
         var key = CharacterManager.activeCharacter().key();
         var treasure = [];
         self.treasureTypes.forEach(function(type, idx, _){

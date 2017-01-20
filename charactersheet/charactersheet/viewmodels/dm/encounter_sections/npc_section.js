@@ -34,13 +34,10 @@ function NPCSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['name asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
-
-    self.load = function() {
+        
         var key = CharacterManager.activeCharacter().key();
         var npc = PersistenceService.findBy(NPC, 'encounterId', self.encounterId());
         if (npc) {

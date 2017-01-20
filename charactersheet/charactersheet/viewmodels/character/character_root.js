@@ -133,11 +133,9 @@ function CharacterRootViewModel() {
     //Public Methods
 
     /**
-     * Call Init on each sub-module.
+     * Call Init on services
      */
     self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-
         self.statusLineService.init();
 
         //Subscriptions

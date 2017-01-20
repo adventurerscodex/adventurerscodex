@@ -5,11 +5,10 @@ function FeaturesTraitsViewModel() {
 
     self.featTraits = ko.observable(new FeaturesTraits());
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.featTraits().save();
         });
-
     };
 
     self.load = function() {

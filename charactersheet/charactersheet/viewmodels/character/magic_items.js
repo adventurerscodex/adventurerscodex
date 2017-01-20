@@ -67,15 +67,13 @@ function MagicItemsViewModel() {
         }
     });
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.magicItems().forEach(function(e, i, _) {
                 e.save();
             });
         });
-    };
-
-    self.load = function() {
+                
         var key = CharacterManager.activeCharacter().key();
         self.magicItems(PersistenceService.findBy(MagicItem, 'characterId', key));
     };

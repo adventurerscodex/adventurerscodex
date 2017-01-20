@@ -13,7 +13,10 @@ function StatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
-    self.init = function() {
+    var msg = 'Dexterity Bonus';
+    self.initiativeTooltip = ko.observable(msg);
+
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.health().save();
             self.otherStats().save();
@@ -28,9 +31,7 @@ function StatsViewModel() {
                 e.save();
             });
         });
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var health = PersistenceService.findBy(Health, 'characterId', key);
         if (health.length > 0) {

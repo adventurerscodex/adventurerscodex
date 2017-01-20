@@ -13,21 +13,15 @@ function NotesSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     //Public Methods
-
-    /**
-     * Call Init on each sub-module.
-     */
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.save();
-        });
-        Notifications.encounters.changed.add(self._dataHasChanged);
-    };
-
     /**
      * Signal all modules to load their data.
      */
     self.load = function() {
+        Notifications.global.save.add(function() {
+            self.save();
+        });
+        Notifications.encounters.changed.add(self._dataHasChanged);
+
         var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
         if (!notesSection) {
             notesSection = new NotesSection();

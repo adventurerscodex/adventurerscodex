@@ -31,13 +31,7 @@ function EncounterDetailViewModel(encounter, allSections) {
     self.nameHasFocus = ko.observable(false);
 
     /* Public Methods */
-
-    self.init = function() {
-    };
-
     self.load = function() {
-        self._initializeSectionVMs();
-        ViewModelUtilities.initSubViewModels(self);
         ViewModelUtilities.loadSubViewModels(self);
     };
 
@@ -117,7 +111,6 @@ function EncounterDetailViewModel(encounter, allSections) {
         var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
         self.visibilityVMs(self.sections.map(function(section, idx, _) {
             var visibilityViewModel = new EncounterSectionVisibilityViewModel(encounter, section.model);
-            visibilityViewModel.init();
             visibilityViewModel.load();
             return visibilityViewModel;
         }));

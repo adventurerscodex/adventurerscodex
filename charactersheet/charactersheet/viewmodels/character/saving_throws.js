@@ -35,7 +35,7 @@ function SavingThrowsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.init = function() {
+    self.load = function() {
         Notifications.abilityScores.changed.add(function() {
             $.each(self.savingThrows(), function(_, e) {
                 e.updateValues();
@@ -51,9 +51,7 @@ function SavingThrowsViewModel() {
                 e.save();
             });
         });
-    };
 
-    self.load = function() {
         var st = PersistenceService.findBy(SavingThrows, 'characterId',
             CharacterManager.activeCharacter().key());
         if (st.length === 0) {

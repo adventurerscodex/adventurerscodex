@@ -5,7 +5,7 @@ function FeatsProfViewModel() {
 
     self.featsProf = ko.observable(new FeatsProf());
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.featsProf().save();
         });

@@ -10,10 +10,6 @@ function CampaignOverviewViewModel() {
     self.name = ko.observable();
 
     /* Public Methods */
-
-    self.init = function() {
-    };
-
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);

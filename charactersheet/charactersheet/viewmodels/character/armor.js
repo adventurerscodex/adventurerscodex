@@ -23,7 +23,7 @@ function ArmorViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['armorName asc']);
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.armors().forEach(function(e, i, _) {
                 e.save();
@@ -32,9 +32,7 @@ function ArmorViewModel() {
         self.armors.subscribe(function() {
             Notifications.armor.changed.dispatch();
         });
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         self.armors(PersistenceService.findBy(Armor, 'characterId', key));
 

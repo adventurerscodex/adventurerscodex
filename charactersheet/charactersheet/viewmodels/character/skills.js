@@ -47,15 +47,13 @@ function SkillsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.skills().forEach(function(e, i, _) {
                 e.save();
             });
         });
-    };
 
-    self.load = function() {
         var skills = PersistenceService.findBy(Skill, 'characterId',
             CharacterManager.activeCharacter().key());
 

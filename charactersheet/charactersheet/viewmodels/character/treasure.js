@@ -5,15 +5,14 @@ function TreasureViewModel() {
 
     self.treasure = ko.observable(new Treasure());
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(function() {
             self.treasure().save();
         });
-    };
 
-    self.load = function() {
         var t = PersistenceService.findBy(Treasure, 'characterId',
             CharacterManager.activeCharacter().key());
+
         if (t.length > 0) {
             self.treasure(t[0]);
         } else {
