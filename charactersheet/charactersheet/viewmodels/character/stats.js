@@ -13,9 +13,6 @@ function StatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
-    var msg = 'Dexterity Bonus';
-    self.initiativeTooltip = ko.observable(msg);
-
     self.init = function() {
         Notifications.global.save.add(function() {
             self.health().save();
