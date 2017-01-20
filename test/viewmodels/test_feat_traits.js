@@ -6,13 +6,6 @@ describe('FeaturesTraitsViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var featsVM = new FeaturesTraitsViewModel();
-            featsVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var feat = new FeaturesTraits();

@@ -6,14 +6,6 @@ describe('NotesSectionViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init view model', function() {
-            var vm = new NotesSectionViewModel(new Encounter(), new NotesSection());
-
-            vm.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load notes model', function() {
             var notes = new NotesSection();

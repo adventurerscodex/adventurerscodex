@@ -1,13 +1,6 @@
 'use strict';
 
 describe('Feats Prof View Model', function() {
-    describe('Init', function() {
-        it('should init the module.', function() {
-            var featsProfVM = new FeatsProfViewModel();
-            featsProfVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load the data from the FeatsProf db.', function() {
             var c = CharacterManager.activeCharacter;

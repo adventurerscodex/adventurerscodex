@@ -6,17 +6,6 @@ describe('SkillsTabViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init the sub view models', function() {
-            var vm = new SkillsTabViewModel();
-            var notifySpy = simple.mock(ViewModelUtilities, 'initSubViewModels');
-
-            vm.init();
-
-            notifySpy.called.should.equal(true);
-        });
-    });
-
     describe('Load', function() {
         it('should load the sub view models', function() {
             var vm = new SkillsTabViewModel();

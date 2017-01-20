@@ -132,13 +132,6 @@ describe('ArmorViewModel', function(){
         });
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var armorsVM = new ArmorViewModel();
-            armorsVM.init();
-        });
-    });
-
     describe('Total Item Weight', function() {
         it('should return a string with the total weight of all items.', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);

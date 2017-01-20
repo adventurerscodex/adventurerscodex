@@ -32,6 +32,7 @@ function EncounterDetailViewModel(encounter, allSections) {
 
     /* Public Methods */
     self.load = function() {
+        self._initializeSectionVMs();
         ViewModelUtilities.loadSubViewModels(self);
     };
 

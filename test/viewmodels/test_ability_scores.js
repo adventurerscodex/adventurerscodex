@@ -6,13 +6,6 @@ describe('AbilityScoresViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var asVM = new AbilityScoresViewModel();
-            asVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var scores = new AbilityScores();

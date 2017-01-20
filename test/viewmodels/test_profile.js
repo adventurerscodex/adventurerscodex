@@ -16,13 +16,6 @@ describe('Profile View Model', function() {
         });
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var pVM = new ProfileViewModel();
-            pVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var p = new Profile();
