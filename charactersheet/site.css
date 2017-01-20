@@ -708,3 +708,11 @@ ul.ui-autocomplete .ui-state-active {
   margin-right: 10px;
   float: left;
 }
+
+/*
+ * Skills view table ability score color
+ */
+
+.skills-ability-type {
+  color: #b4bcc2;
+}

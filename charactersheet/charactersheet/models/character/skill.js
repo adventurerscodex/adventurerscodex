@@ -65,6 +65,13 @@ function Skill() {
         return bonus;
     });
 
+    self.passiveBonus = ko.pureComputed(function() {
+        self._dummy();
+        var bonus = 10 + self.bonus();
+
+        return bonus;
+    });
+
     self.bonusLabel = ko.pureComputed(function() {
         self._dummy();
         var str = '+ 0';
@@ -73,8 +80,15 @@ function Skill() {
             Math.abs(self.bonus());
         }
 
-        str += ' <i><small>('
-                + self.abilityScore() + ')</small></i>';
+        return str;
+    });
+
+    self.nameLabel = ko.pureComputed(function(){
+        self._dummy();
+        var str = self.name();
+
+        str += ' <i><small class="skills-ability-type">(' + self.abilityScore() + ')</small></i>';
+
         return str;
     });
 
