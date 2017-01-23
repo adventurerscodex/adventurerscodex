@@ -43,7 +43,11 @@ function Item() {
     });
 
     self.itemWeightLabel = ko.pureComputed(function() {
-        return self.itemWeight() + ' lbs.';
+        return self.itemWeight() ? self.itemWeight() + ' lbs.' : '';
+    });
+
+    self.costLabel = ko.pureComputed(function() {
+        return self.itemCost() ? self.itemCost() + ' ' + self.itemCurrencyDenomination() : '';
     });
 
     self.clear = function() {

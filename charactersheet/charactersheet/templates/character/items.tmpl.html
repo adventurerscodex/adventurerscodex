@@ -12,6 +12,9 @@
           <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
+          <th data-bind="click: function(){sortBy('itemCost');}" class="hidden-xs">
+            Cost
+            <span data-bind="css: sortArrow('itemCost')"></span></th>
           <th class="hidden-sm hidden-xs">
             Description</th>
           <th>
@@ -29,8 +32,10 @@
                   href="#"></td>
           <td data-bind="text: itemQty, click: $parent.editItemButton"
                   href="#"></td>
-          <td data-bind="text: itemWeight, click: $parent.editItemButton"
+          <td data-bind="text: itemWeightLabel, click: $parent.editItemButton"
                   href="#"></td>
+          <td class="hidden-xs" data-bind="text: costLabel,
+                  click: $parent.editItemButton" href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: shortDescription,
             click: $parent.editItemButton" href="#"></td>
           <td>
@@ -220,8 +225,9 @@
             </div>
             <hr />
             <div class="row">
-              <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Cost:</b>&nbsp;<span data-bind="text: costLabel"></span></div>
             </div>
             <hr />
             <h4>Description</h4>
