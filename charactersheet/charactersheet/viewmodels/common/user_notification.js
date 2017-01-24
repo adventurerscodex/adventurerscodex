@@ -7,8 +7,6 @@
 function UserNotificationViewModel() {
     var self = this;
 
-    self.notifications = ko.observableArray([]);
-
     self.init = function() {
         Notifications.userNotification.infoNotification.add(self.addInfoNotification);
         Notifications.userNotification.successNotification.add(self.addSuccessNotification);
@@ -16,34 +14,41 @@ function UserNotificationViewModel() {
         Notifications.userNotification.dangerNotification.add(self.addDangerNotification);
     };
 
-    self.load = function() {};
+    self.load = function() {
+        toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': true,
+            'progressBar': true,
+            'positionClass': 'toast-top-right',
+            'preventDuplicates': true,
+            'onclick': null,
+            'showDuration': '300',
+            'hideDuration': '1000',
+            'timeOut': '10000',
+            'extendedTimeOut': '10000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut'
+        };
+    };
 
     self.unload = function() {};
 
-    self.visibleNotifications = ko.pureComputed(function() {
-        return self.notifications().reverse().filter(function(e, i, _) {
-            return e.visible();
-        })[0];
-    });
-
-    self.addInfoNotification = function(message) {
-        self.notifications.push(
-            UserNotification.notificationWithTypeAndMessage('info', message));
+    self.addInfoNotification = function(message, title) {
+        toastr.info(message, title);
     };
 
-    self.addSuccessNotification = function(message) {
-        self.notifications.push(
-            UserNotification.notificationWithTypeAndMessage('success', message));
+    self.addSuccessNotification = function(message, title) {
+        toastr.success(message, title);
     };
 
-    self.addWarningNotification = function(message) {
-        self.notifications.push(
-            UserNotification.notificationWithTypeAndMessage('warning', message));
+    self.addWarningNotification = function(message, title) {
+        toastr.warning(message, title);
     };
 
-    self.addDangerNotification = function(message) {
-        self.notifications.push(
-            UserNotification.notificationWithTypeAndMessage('danger', message));
+    self.addDangerNotification = function(message, title) {
+        toastr.error(message, title);
     };
-
 }
