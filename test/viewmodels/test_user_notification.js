@@ -6,37 +6,40 @@ describe('UserNotificationViewModel', function(){
         simple.restore();
     });
     describe('Add Info Notification', function() {
-        it('should add an info notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
+            var toastrSpy = simple.mock(toastr, 'info');
+
             userNotificationViewModel.addInfoNotification('testing', 'title');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('info');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 
     describe('Add Success Notification', function() {
-        it('should add an success notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
+            var toastrSpy = simple.mock(toastr, 'success');
+
             userNotificationViewModel.addSuccessNotification('testing', 'title');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('success');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 
     describe('Add Warning Notification', function() {
-        it('should add an warning notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
+            var toastrSpy = simple.mock(toastr, 'warning');
+
             userNotificationViewModel.addWarningNotification('testing', 'title');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('warning');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 
     describe('Add Danger Notification', function() {
-        it('should add an danger notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
             var toastrSpy = simple.mock(toastr, 'error');
 
