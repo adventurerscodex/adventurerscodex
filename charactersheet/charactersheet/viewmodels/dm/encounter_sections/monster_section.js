@@ -20,6 +20,7 @@ function MonsterSectionViewModel(parentEncounter) {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -178,9 +179,30 @@ function MonsterSectionViewModel(parentEncounter) {
         }
     };
 
+    self.monstersPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.monsters ? Object.keys(DataRepository.monsters) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    self.populateMonster = function(label, value) {
+        var monster = DataRepository.monsters[label];
+
+        self.blankMonster().importValues(monster);
+        self.blankMonster().abilityScores().forEach(function(score, idx, _) {
+            score.name(monster.abilityScores[idx].name);
+            score.value(monster.abilityScores[idx].value);
+        });
+        self.shouldShowDisclaimer(true);
+    };
+
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
+        self.shouldShowDisclaimer(false);
         self.firstElementInModalHasFocus(true);
     };
 

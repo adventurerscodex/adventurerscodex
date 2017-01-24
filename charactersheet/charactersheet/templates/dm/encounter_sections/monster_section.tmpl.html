@@ -103,7 +103,8 @@
                      class="form-control"
                      placeholder="Ancient Black Dragon"
                      data-bind="textInput: blankMonster().name,
-                        hasFocus: firstElementInModalHasFocus">
+                        hasFocus: firstElementInModalHasFocus,
+                        autocomplete: { source: monstersPrePopFilter, onselect: populateMonster }">
             </div>
           </div>
           <div class="form-group">
@@ -279,7 +280,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label">Challenge</label>
               <div class="col-sm-10">
-                <input type="number"
+                <input type="text"
                        class="form-control"
                        placeholder="22"
                        data-bind='value: blankMonster().challenge'>
@@ -304,10 +305,21 @@
               </div>
           </div>
           <div class="modal-footer">
+            <button type="button" 
+                    class="btn btn-default"
+                    data-dismiss="modal">Cancel</button>
             <button type="button"
                     class="btn btn-primary"
                     data-bind='click: addMonster'
                     data-dismiss="modal">Add</button>
+              <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+                <sm><i>This data is distributed under the
+                  <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                    target='_blank'>
+                    OGL</a><br/>
+                    Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                  </i><sm>
+              </p>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -631,7 +643,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">Challenge</label>
                   <div class="col-sm-10">
-                    <input type="number"
+                    <input type="text"
                            class="form-control"
                            placeholder="14"
                            data-bind='value: challenge'>

@@ -64,7 +64,7 @@ describe('Monster', function(){
             monsterScore.name('Dexterity');
             monster.abilityScores([monsterScore]);
 
-            var foundScore = monster.findAbilityScoreByName('Dexterity');
+            var foundScore = monster.findAbilityScoreByName('dexterity');
             foundScore.name().should.equal('Dexterity');
         });
         it('should return nothing', function() {
