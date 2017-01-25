@@ -78,6 +78,22 @@ function Skill() {
         return str;
     });
 
+    self.nameLabel = ko.pureComputed(function(){
+        self._dummy();
+        var str = self.name();
+
+        str += ' <i><small class="skills-ability-type">(' + self.abilityScore() + ')</small></i>';
+
+        return str;
+    });
+
+    self.passiveBonus = ko.pureComputed(function() {
+        self._dummy();
+        var bonus = 10 + self.bonus();
+
+        return bonus;
+    });
+
     self.save = function() {
         self.ps.save();
     };

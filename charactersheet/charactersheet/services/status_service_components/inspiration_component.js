@@ -38,9 +38,9 @@ function InspirationStatusServiceComponent() {
     self._updateStatus = function() {
         var key = CharacterManager.activeCharacter().key();
 
-        var status = PersistenceService.findByListOfPredicates(Status,
-            [PersistenceServicePredicate.keyValuePredicate('characterId', key),
-            PersistenceServicePredicate.keyValuePredicate('identifier', self.statusIdentifier)])[0];
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
             status.characterId(key);
@@ -56,9 +56,9 @@ function InspirationStatusServiceComponent() {
 
     self._removeStatus = function() {
         var key = CharacterManager.activeCharacter().key();
-        var status = PersistenceService.findByListOfPredicates(Status,
-            [PersistenceServicePredicate.keyValuePredicate('characterId', key),
-            PersistenceServicePredicate.keyValuePredicate('identifier', self.statusIdentifier)])[0];
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

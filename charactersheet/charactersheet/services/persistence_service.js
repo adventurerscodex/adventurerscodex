@@ -149,16 +149,16 @@ PersistenceService.findBy = function(model, property, value) {
  * Usage
  * -----
  * ```javascript
- *         var status = PersistenceService.findByListOfPredicates(Status,
- *          [PersistenceServicePredicate.keyValuePredicate('characterId', key),
-            PersistenceServicePredicate.keyValuePredicate('identifier', self.statusIdentifier)]);
+ *         var status = PersistenceService.findByPredicates(Status,
+ *          [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)]);
  * ```
  */
-PersistenceService.findByListOfPredicates = function(model, properties) {
+PersistenceService.findByPredicates = function(model, predicates) {
     return PersistenceService._findFiltered(model, function(element, idx) {
         // Ensure that every comparison returns true.
-        return properties.every(function(property, idx, _) {
-            return element[property.key] === property.value;
+        return predicates.every(function(predicate, idx, _) {
+            return predicate.matches(element);
         });
     });
 };
