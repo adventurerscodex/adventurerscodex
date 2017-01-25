@@ -8,20 +8,21 @@ function UserNotificationViewModel() {
     var self = this;
 
     self.init = function() {
+    };
+
+    self.load = function() {
         Notifications.userNotification.infoNotification.add(self.addInfoNotification);
         Notifications.userNotification.successNotification.add(self.addSuccessNotification);
         Notifications.userNotification.warningNotification.add(self.addWarningNotification);
         Notifications.userNotification.dangerNotification.add(self.addDangerNotification);
-    };
-
-    self.load = function() {
+                
         toastr.options = {
             'closeButton': true,
             'debug': false,
             'newestOnTop': true,
             'progressBar': true,
             'positionClass': 'toast-top-right',
-            'preventDuplicates': true,
+            'preventDuplicates': false,
             'onclick': null,
             'showDuration': '300',
             'hideDuration': '1000',
@@ -36,6 +37,12 @@ function UserNotificationViewModel() {
 
     self.unload = function() {};
 
+    /**
+     * Dispatches notification to toastr.
+     * 
+     * @param message  body of notification
+     * @param title  title of notification, can be blank.
+     */
     self.addInfoNotification = function(message, title) {
         toastr.info(message, title);
     };
