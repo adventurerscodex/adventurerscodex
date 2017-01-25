@@ -136,6 +136,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    proficiency: {
+        changed: new signals.Signal()
+    },
+
     settings: {
         changed: new signals.Signal()
     },

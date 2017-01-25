@@ -136,9 +136,13 @@
     </div>
     <div class="col-md-8 col-sm-7 col-padded">
       <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates/character', data: featsProfViewModel }">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div id="proficiencies" data-bind="template: { name: 'proficiencies.tmpl', templateUrl: 'templates/character', data: proficienciesViewModel }">
+      </div>
     </div>
   </div>
-</div>
 </div>
 <!-- End Skills Tab -->
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">

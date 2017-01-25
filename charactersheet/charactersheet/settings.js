@@ -64,6 +64,9 @@ var Settings = {
         }, {
             key: 'monsters',
             url: 'https://adventurerscodex.com/data/SRD/monsters.json'
+        }, {
+            key: 'proficiencies',
+            url: 'https://adventurerscodex.com/data/SRD/proficiencies.json'
         }
     ]
 };
