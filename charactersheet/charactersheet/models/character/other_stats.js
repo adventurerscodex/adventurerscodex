@@ -15,25 +15,6 @@ function OtherStats() {
     self.inspiration = ko.observable(0);
     self.proficiency = ko.observable(0);
 
-  /**
-   * Calculates passive wisdom based on the formula:
-   * 10 + Perception Skill Bonus.
-   */
-    self.passiveWisdom = ko.pureComputed(function() {
-        self._passiveWisdomDummy();
-        var key = CharacterManager.activeCharacter().key();
-        var perceptionBonus;
-        PersistenceService.findBy(Skill, 'characterId', key).forEach(function(skill, idx, _){
-            if (skill.name().toLowerCase() === 'perception'.toLowerCase()) {
-                perceptionBonus = skill.bonus();
-            }
-        });
-        
-        return 10 + perceptionBonus;
-    });
-
-    self._passiveWisdomDummy = ko.observable(null);
-
     /**
     * Calculates user's proficiency based on this formula:
     * ceil(level / 4) + 1
@@ -53,7 +34,6 @@ function OtherStats() {
      * Reevaluate all computed variables.
      */
     self.updateValues = function() {
-        self._passiveWisdomDummy.valueHasMutated();
         self._proficiencyLabelDummy.valueHasMutated();
     };
 
