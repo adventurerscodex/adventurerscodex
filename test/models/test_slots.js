@@ -22,7 +22,7 @@ describe('Slot Model', function() {
             s.usedSpellSlots().should.equal(1);
             s.clear();
             s.level().should.equal(1);
-            s.maxSpellSlots().should.equal(1);
+            Should.not.exist(s.maxSpellSlots());
             s.usedSpellSlots().should.equal(0);
         });
     });
