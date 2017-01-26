@@ -6,10 +6,11 @@ function ActionsToolbarViewModel() {
     self.wellOpen = ko.observable(false);
 
     self.load = function() {
-        Notifications.actionsToolbar.toggle.add(self.toggleWellOpen);        
+        Notifications.actionsToolbar.toggle.add(self.toggleWellOpen);
     };
 
     self.unload = function() {
+        Notifications.actionsToolbar.toggle.remove(self.toggleWellOpen);        
     };
 
     /* Button Handlers */

@@ -9,16 +9,19 @@ function UserNotificationViewModel() {
 
     self.notifications = ko.observableArray([]);
 
-    self.init = function() {
+    self.load = function() {
         Notifications.userNotification.infoNotification.add(self.addInfoNotification);
         Notifications.userNotification.successNotification.add(self.addSuccessNotification);
         Notifications.userNotification.warningNotification.add(self.addWarningNotification);
         Notifications.userNotification.dangerNotification.add(self.addDangerNotification);
     };
 
-    self.load = function() {};
-
-    self.unload = function() {};
+    self.unload = function() {
+        Notifications.userNotification.infoNotification.remove(self.addInfoNotification);
+        Notifications.userNotification.successNotification.remove(self.addSuccessNotification);
+        Notifications.userNotification.warningNotification.remove(self.addWarningNotification);
+        Notifications.userNotification.dangerNotification.remove(self.addDangerNotification);        
+    };
 
     self.visibleNotifications = ko.pureComputed(function() {
         return self.notifications().reverse().filter(function(e, i, _) {

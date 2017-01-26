@@ -44,6 +44,10 @@ function NotesSectionViewModel(parentEncounter) {
         notes.visible(self.visible());
 
         notes.save();
+        Notifications.global.save.remove(function() {
+            self.save();
+        });
+        Notifications.encounters.changed.remove(self._dataHasChanged);        
     };
 
     self.save = function() {

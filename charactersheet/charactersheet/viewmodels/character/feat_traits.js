@@ -24,5 +24,8 @@ function FeaturesTraitsViewModel() {
 
     self.unload = function() {
         self.featTraits().save();
+        Notifications.global.save.remove(function() {
+            self.featTraits().save();
+        });        
     };
 }

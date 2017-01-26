@@ -45,6 +45,11 @@ function ArmorViewModel() {
             e.save();
         });
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(function() {
+            self.armors().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     self.totalWeight = ko.pureComputed(function() {

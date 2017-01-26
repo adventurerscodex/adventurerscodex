@@ -69,6 +69,21 @@ function SavingThrowsViewModel() {
         $.each(self.savingThrows(), function(_, e) {
             e.save();
         });
+        Notifications.abilityScores.changed.remove(function() {
+            $.each(self.savingThrows(), function(_, e) {
+                e.updateValues();
+            });
+        });
+        Notifications.stats.changed.remove(function() {
+            $.each(self.savingThrows(), function(_, e) {
+                e.updateValues();
+            });
+        });
+        Notifications.global.save.remove(function() {
+            self.savingThrows().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     /* UI Methods */

@@ -131,6 +131,20 @@ function StatsViewModel() {
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.skills.changed.remove(self.calculatePassiveWisdom);
         Notifications.events.longRest.remove(self.resetOnLongRest);
+        Notifications.global.save.remove(function() {
+            self.health().save();
+            self.otherStats().save();
+            self.hitDiceList().forEach(function(e, i, _) {
+                e.save();
+            });
+            self.hitDiceType().save();
+            self.deathSaveSuccessList().forEach(function(e, i, _) {
+                e.save();
+            });
+            self.deathSaveFailureList().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
         self.dataHasChanged();
     };
 

@@ -30,6 +30,9 @@ function TreasureViewModel() {
 
     self.unload = function() {
         self.treasure().save();
+        Notifications.global.save.remove(function() {
+            self.treasure().save();
+        });        
     };
 
     self.clear = function() {

@@ -54,6 +54,11 @@ function ItemsViewModel() {
         $.each(self.items(), function(_, e) {
             e.save();
         });
+        Notifications.global.save.remove(function() {
+            self.items().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     // Modal methods

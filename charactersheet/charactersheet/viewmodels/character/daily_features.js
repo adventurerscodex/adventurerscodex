@@ -44,6 +44,11 @@ function DailyFeatureViewModel() {
         self.dailyFeatures().forEach(function(e, i, _) {
             e.save();
         });
+        Notifications.global.save.remove(function() {
+            self.dailyFeatures().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
         Notifications.events.longRest.remove(self.resetShortRestFeatures);
         Notifications.events.shortRest.remove(self.resetShortRestFeatures);
     };

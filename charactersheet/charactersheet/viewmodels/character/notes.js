@@ -21,6 +21,7 @@ function NotesViewModel() {
 
     self.unload = function() {
         self.save();
+        Notifications.global.save.remove(self.save);        
     };
 
     self.save = function() {

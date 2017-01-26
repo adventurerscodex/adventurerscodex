@@ -41,6 +41,12 @@ function SpellSlotsViewModel() {
             e.save();
         });
         Notifications.events.longRest.remove(self.resetOnLongRest);
+        Notifications.events.shortRest.remove(self.resetShortRest);
+        Notifications.global.save.remove(function() {
+            self.slots().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     /* UI Methods */

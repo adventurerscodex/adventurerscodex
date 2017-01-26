@@ -24,5 +24,8 @@ function FeatsProfViewModel() {
 
     self.unload = function() {
         self.featsProf().save();
+        Notifications.global.save.remove(function() {
+            self.featsProf().save();
+        });        
     };
 }

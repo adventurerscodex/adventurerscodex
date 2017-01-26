@@ -25,6 +25,9 @@ function SpellStatsViewModel() {
 
     self.unload = function() {
         self.spellStats().save();
+        Notifications.global.save.remove(function() {
+            self.spellStats().save();
+        });        
     };
 
     self.clear = function() {

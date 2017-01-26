@@ -22,6 +22,9 @@ function AppearanceViewModel() {
 
     self.unload = function() {
         self.appearance().save();
+        Notifications.global.save.remove(function() {
+            self.appearance().save();
+        });        
     };
 
     self.clear = function() {

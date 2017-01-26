@@ -58,6 +58,10 @@ function AbilityScoresViewModel() {
 
     self.unload = function() {
         self.abilityScores().save();
+
+        Notifications.global.save.remove(function() {
+            self.abilityScores().save();
+        });
     };
 
     self.dataHasChanged = function() {

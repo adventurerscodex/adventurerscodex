@@ -82,6 +82,11 @@ function MagicItemsViewModel() {
         $.each(self.magicItems(), function(_, e) {
             e.save();
         });
+        Notifications.global.save.remove(function() {
+            self.magicItems().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     self.populateMagicItems = function(label, value) {

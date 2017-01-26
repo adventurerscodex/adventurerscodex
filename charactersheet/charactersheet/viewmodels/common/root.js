@@ -37,7 +37,6 @@ function AdventurersCodexViewModel() {
      * Call Init on each sub-module.
      */
     self.init = function() {
-        self.userNotificationViewModel.init();
         self.charactersViewModel.init();
         self.wizardViewModel.init();
 

@@ -83,6 +83,11 @@ function SkillsViewModel() {
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
         Notifications.stats.changed.remove(self.dataHasChanged);
         Notifications.profile.changed.remove(self.dataHasChanged);
+        Notifications.global.save.remove(function() {
+            self.skills().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     /* UI Methods */

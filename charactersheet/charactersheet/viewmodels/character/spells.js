@@ -63,6 +63,11 @@ function SpellbookViewModel() {
             e.save();
         });
         Notifications.spellStats.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(function() {
+            self.spellbook().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     self.populateSpell = function(label, value) {

@@ -5,14 +5,12 @@ function StatusLineViewModel() {
 
     self.statusLine = ko.observable('');
 
-    self.init = function() {
+    self.load = function() {
         Notifications.status.changed.add(self.dataHasChanged);
     };
 
-    self.load = function() {
-    };
-
     self.unload = function() {
+        Notifications.status.changed.remove(self.dataHasChanged);        
         self.clear();
     };
 

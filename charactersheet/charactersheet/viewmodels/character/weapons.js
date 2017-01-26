@@ -55,6 +55,11 @@ function WeaponsViewModel() {
         self.weapons([]);
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
         Notifications.stats.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(function() {
+            self.weapons().forEach(function(e, i, _) {
+                e.save();
+            });
+        });        
     };
 
     self.totalWeight = ko.pureComputed(function() {

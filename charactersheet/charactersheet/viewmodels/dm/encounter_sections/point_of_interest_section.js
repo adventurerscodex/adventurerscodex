@@ -54,7 +54,8 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
