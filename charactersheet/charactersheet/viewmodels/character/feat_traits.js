@@ -9,9 +9,7 @@ function FeaturesTraitsViewModel() {
         Notifications.global.save.add(function() {
             self.featTraits().save();
         });
-    };
-
-    self.load = function() {
+        
         var ft = PersistenceService.findBy(FeaturesTraits, 'characterId',
             CharacterManager.activeCharacter().key());
         if (ft.length > 0) {

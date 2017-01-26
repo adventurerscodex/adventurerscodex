@@ -9,9 +9,6 @@ function FeatsProfViewModel() {
         Notifications.global.save.add(function() {
             self.featsProf().save();
         });
-    };
-
-    self.load = function() {
         var fp = PersistenceService.findBy(FeatsProf, 'characterId',
             CharacterManager.activeCharacter().key());
         if (fp.length > 0) {

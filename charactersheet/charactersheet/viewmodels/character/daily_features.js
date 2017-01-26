@@ -24,9 +24,6 @@ function DailyFeatureViewModel() {
                 e.save();
             });
         });
-    };
-
-    self.load = function() {
         var dailyFeatures = PersistenceService.findBy(DailyFeature, 'characterId',
             CharacterManager.activeCharacter().key());
         if (dailyFeatures.length > 0) {
