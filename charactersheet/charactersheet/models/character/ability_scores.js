@@ -86,9 +86,3 @@ function AbilityScores() {
         self.ps.save();
     };
 }
-
-AbilityScores.findBy = function(characterId) {
-    return PersistenceService.findAll(AbilityScores).filter(function(e, i, _){
-        return e.characterId() === characterId;
-    });
-};

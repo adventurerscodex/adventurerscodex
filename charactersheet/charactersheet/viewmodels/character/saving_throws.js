@@ -54,7 +54,8 @@ function SavingThrowsViewModel() {
     };
 
     self.load = function() {
-        var st = SavingThrows.findAllBy(CharacterManager.activeCharacter().key());
+        var st = PersistenceService.findBy(SavingThrows, 'characterId',
+            CharacterManager.activeCharacter().key());
         if (st.length === 0) {
             self.savingThrows(self._defaultSavingThrows());
         }

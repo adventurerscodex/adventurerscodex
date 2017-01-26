@@ -27,7 +27,8 @@ function DailyFeatureViewModel() {
     };
 
     self.load = function() {
-        var dailyFeatures = DailyFeature.findAllBy(CharacterManager.activeCharacter().key());
+        var dailyFeatures = PersistenceService.findBy(DailyFeature, 'characterId',
+            CharacterManager.activeCharacter().key());
         if (dailyFeatures.length > 0) {
             self.dailyFeatures(dailyFeatures);
         } else {

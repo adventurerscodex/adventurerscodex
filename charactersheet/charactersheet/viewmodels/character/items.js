@@ -50,7 +50,7 @@ function ItemsViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        self.items(Item.findAllBy(key));
+        self.items(PersistenceService.findBy(Item, 'characterId', key));
     };
 
     self.unload = function() {

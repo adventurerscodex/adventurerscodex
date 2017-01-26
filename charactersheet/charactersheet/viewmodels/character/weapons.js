@@ -43,7 +43,7 @@ function WeaponsViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        self.weapons(Weapon.findAllBy(key));
+        self.weapons(PersistenceService.findBy(Weapon, 'characterId', key));
 
         Notifications.abilityScores.changed.add(self.valueHasChanged);
         Notifications.stats.changed.add(self.valueHasChanged);

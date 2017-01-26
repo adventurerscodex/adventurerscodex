@@ -175,7 +175,7 @@ describe('Wizard ViewModel', function(){
             var changeStub = simple.mock(CharacterManager, 'changeCharacter').callFn(function(){});
             var stubChar = new Character();
             stubChar.key('1234');
-            simple.mock(Character, 'findAll').returnWith([stubChar]);
+            simple.mock(PersistenceService, 'findAll').returnWith([stubChar]);
 
             var wizard = new WizardViewModel();
             changeStub.called.should.equal(false);
@@ -185,7 +185,7 @@ describe('Wizard ViewModel', function(){
         it('should not change the active character.', function() {
             // Test no chars.
             var changeStub = simple.mock(CharacterManager, 'changeCharacter');
-            simple.mock(Character, 'findAll').returnWith([]);
+            simple.mock(PersistenceService, 'findAll').returnWith([]);
             changeStub.called.should.equal(false);
 
             var wizard = new WizardViewModel();

@@ -56,7 +56,8 @@ function SkillsViewModel() {
     };
 
     self.load = function() {
-        var skills = Skill.findAllBy(CharacterManager.activeCharacter().key());
+        var skills = PersistenceService.findBy(Skill, 'characterId',
+            CharacterManager.activeCharacter().key());
 
         if (skills.length === 0) {
             self.skills(self._defaultSkills());

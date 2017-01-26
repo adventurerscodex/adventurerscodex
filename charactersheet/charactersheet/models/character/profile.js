@@ -54,9 +54,3 @@ function Profile() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
-Profile.findBy = function(characterId) {
-    return PersistenceService.findAll(Profile).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

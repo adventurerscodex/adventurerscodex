@@ -13,7 +13,7 @@ function AppearanceViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        var appear = CharacterAppearance.findBy(key);
+        var appear = PersistenceService.findBy(CharacterAppearance, 'characterId', key);
         if (appear.length > 0) {
             self.appearance(appear[0]);
         } else {

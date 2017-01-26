@@ -12,7 +12,8 @@ function TreasureViewModel() {
     };
 
     self.load = function() {
-        var t = Treasure.findBy(CharacterManager.activeCharacter().key());
+        var t = PersistenceService.findBy(Treasure, 'characterId',
+            CharacterManager.activeCharacter().key());
         if (t.length > 0) {
             self.treasure(t[0]);
         } else {

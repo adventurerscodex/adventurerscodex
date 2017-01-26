@@ -31,42 +31,43 @@ function StatsViewModel() {
     };
 
     self.load = function() {
-        var health = Health.findBy(CharacterManager.activeCharacter().key());
+        var key = CharacterManager.activeCharacter().key();
+        var health = PersistenceService.findBy(Health, 'characterId', key);
         if (health.length > 0) {
             self.health(health[0]);
         } else {
             self.health(new Health());
         }
-        self.health().characterId(CharacterManager.activeCharacter().key());
+        self.health().characterId(key);
 
-        var otherStats = OtherStats.findBy(CharacterManager.activeCharacter().key());
+        var otherStats = PersistenceService.findBy(OtherStats, 'characterId', key);
         if (otherStats.length > 0) {
             self.otherStats(otherStats[0]);
         } else {
             self.otherStats(new OtherStats());
         }
-        self.otherStats().characterId(CharacterManager.activeCharacter().key());
+        self.otherStats().characterId(key);
 
-        var hitDiceList = HitDice.findAllBy(CharacterManager.activeCharacter().key());
+        var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
         if (hitDiceList.length > 0) {
             self.hitDiceList(hitDiceList);
         }
         self.hitDiceList().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key());
+            e.characterId(key);
         });
 
         self.calculateHitDice();
 
-        var hitDiceType = HitDiceType.findAllBy(CharacterManager.activeCharacter().key());
+        var hitDiceType = PersistenceService.findBy(HitDiceType, 'characterId', key);
         if(hitDiceType.length > 0){
             self.hitDiceType(hitDiceType[0]);
         }
         else {
             self.hitDiceType(new HitDiceType());
         }
-        self.hitDiceType().characterId(CharacterManager.activeCharacter().key());
+        self.hitDiceType().characterId(key);
 
-        var deathSaveList = DeathSave.findAllBy(CharacterManager.activeCharacter().key());
+        var deathSaveList = PersistenceService.findBy(DeathSave, 'characterId', key);
         self.deathSaveSuccessList([]);
         self.deathSaveFailureList([]);
         if (deathSaveList.length > 0) {
@@ -83,17 +84,17 @@ function StatsViewModel() {
             }
         }
 
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
         if (profile) {
             self.level(profile.level());
             self.experience(profile.exp());
         }
 
         self.deathSaveSuccessList().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key());
+            e.characterId(key);
         });
         self.deathSaveFailureList().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key());
+            e.characterId(key);
         });
 
         //Subscriptions
@@ -145,7 +146,8 @@ function StatsViewModel() {
     };
 
     self.calculateHitDice = function() {
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
 
         var difference = parseInt(profile.level()) - self.hitDiceList().length;
         var pushOrPop = difference > 0 ? 'push' : 'pop';
@@ -183,7 +185,8 @@ function StatsViewModel() {
      * This will be used primarily for long rest resets.
      */
     self.resetHitDice = function(){
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
         var level = profile.level();
         var restoredHitDice = Math.floor(level / 2);
 
@@ -226,7 +229,8 @@ function StatsViewModel() {
         Notifications.stats.changed.dispatch();
 
         //Save level and exp in profile model
-        var profile = Profile.findBy(CharacterManager.activeCharacter().key())[0];
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
         profile.level(self.level());
         profile.exp(self.experience());
         profile.save();

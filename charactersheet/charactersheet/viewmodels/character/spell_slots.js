@@ -27,7 +27,8 @@ function SpellSlotsViewModel() {
     };
 
     self.load = function() {
-        var slots = Slot.findAllBy(CharacterManager.activeCharacter().key());
+        var slots = PersistenceService.findBy(Slot, 'characterId',
+            CharacterManager.activeCharacter().key());
         self.slots(slots);
 
         self.blankSlot().level(self.slots().length + 1);

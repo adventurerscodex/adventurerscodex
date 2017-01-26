@@ -22,10 +22,14 @@ function InspirationStatusServiceComponent() {
         var key = CharacterManager.activeCharacter().key();
         var stats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
 
-        if (!parseInt(stats.inspiration())) {
-            self._removeStatus();
-        } else {
-            self._updateStatus();
+        if (!stats) { return; }
+        
+        if (stats) {
+            if (!parseInt(stats.inspiration())) {
+                self._removeStatus();
+            } else {
+                self._updateStatus();
+            }
         }
     };
 
@@ -34,7 +38,9 @@ function InspirationStatusServiceComponent() {
     self._updateStatus = function() {
         var key = CharacterManager.activeCharacter().key();
 
-        var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
             status.characterId(key);
@@ -50,7 +56,9 @@ function InspirationStatusServiceComponent() {
 
     self._removeStatus = function() {
         var key = CharacterManager.activeCharacter().key();
-        var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

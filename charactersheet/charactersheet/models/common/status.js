@@ -51,15 +51,3 @@ function Status() {
         self.ps.delete();
     };
 }
-
-Status.findBy = function(characterId) {
-    return PersistenceService.findAll(Status).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
-Status.findByKeyAndIdentifier = function(characterId, identifier) {
-    return PersistenceService.findAll(Status).filter(function(e, i, _) {
-        return e.characterId() === characterId && e.identifier() === identifier;
-    });
-};

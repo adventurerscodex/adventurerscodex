@@ -131,6 +131,39 @@ PersistenceService.findBy = function(model, property, value) {
 };
 
 /**
+ * Given a model class, return all of the stored instances that match a given
+ * array of filter criteria.
+ *
+ * Parameters
+ * ----------
+ *
+ * model: The prototype for the type of model that is being searched for.
+ * properties: A static array of properties that the data object will be 
+ * compared against.
+ *
+ * Returns
+ * -------
+ *
+ * A list of objects of the desired type, which match the list of criteria.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ *         var status = PersistenceService.findByPredicates(Status,
+ *          [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)]);
+ * ```
+ */
+PersistenceService.findByPredicates = function(model, predicates) {
+    return PersistenceService._findFiltered(model, function(element, idx) {
+        // Ensure that every comparison returns true.
+        return predicates.every(function(predicate, idx, _) {
+            return predicate.matches(element);
+        });
+    });
+};
+
+/**
  * Given a model class, return the first instance of the stored mapped models that
  * match a given filter criteria.
  *

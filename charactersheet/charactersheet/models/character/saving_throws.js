@@ -18,7 +18,7 @@ function SavingThrows() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
         try {
-            profBonus = OtherStats.findBy(
+            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
                 CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /*Ignore*/ }
         return profBonus;
@@ -28,7 +28,7 @@ function SavingThrows() {
         var score = null;
         try {
             var key = CharacterManager.activeCharacter().key();
-            score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
+            score = PersistenceService.findBy(AbilityScores, 'characterId', key)[0].modifierFor(self._abilityScore());
         } catch(err) { /*Ignore*/ }
         if (score === null){
             return null;
@@ -102,9 +102,3 @@ function SavingThrows() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
-SavingThrows.findAllBy = function(characterId) {
-    return PersistenceService.findAll(SavingThrows).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

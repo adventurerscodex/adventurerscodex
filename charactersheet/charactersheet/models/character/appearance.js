@@ -37,11 +37,3 @@ function CharacterAppearance() {
         self.ps.save();
     };
 }
-
-//CRUD
-
-CharacterAppearance.findBy = function(characterId) {
-    return PersistenceService.findAll(CharacterAppearance).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

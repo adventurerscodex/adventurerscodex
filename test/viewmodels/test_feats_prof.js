@@ -20,7 +20,7 @@ describe('Feats Prof View Model', function() {
             var fp = new FeatsProf();
             fp.feats('hi');
             fp.characterId('1234');
-            FeatsProf.findBy = function(key) { return [ fp, new FeatsProf()]; };
+            PersistenceService.findBy = function(key) { return [ fp, new FeatsProf()]; };
             var featsProfVM = new FeatsProfViewModel();
             featsProfVM.featsProf().feats().should.equal('');
             featsProfVM.load();
@@ -44,8 +44,8 @@ describe('Feats Prof View Model', function() {
             fp.feats('hi');
             fp.characterId('1234');
             var saved = [false, false];
-            var _find = FeatsProf.findBy;
-            FeatsProf.findBy = function(key) {
+            var _find = PersistenceService.findBy;
+            PersistenceService.findBy = function(key) {
                 return [fp, new FeatsProf()].map(function(e, i, _) {
                     e.save = function() { saved[i] = true; };
                     return e;
@@ -66,7 +66,7 @@ describe('Feats Prof View Model', function() {
 
             //Other test
             saved = [false, false];
-            FeatsProf.findBy = function(key) {
+            PersistenceService.findBy = function(key) {
                 return [];
             };
             featsProfVM = new FeatsProfViewModel();
@@ -80,7 +80,7 @@ describe('Feats Prof View Model', function() {
 
 
 
-            FeatsProf.findBy = _find;
+            PersistenceService.findBy = _find;
             CharacterManager.activeCharacter = c;
         });
     });

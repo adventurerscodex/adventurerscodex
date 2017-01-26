@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Equipment View Model', function(){
+describe('InventoryViewModel', function(){
     //Clean up after each test.
     afterEach(function() {
         simple.restore();
@@ -8,8 +8,8 @@ describe('Equipment View Model', function(){
 
     describe('Instance Methods', function() {
         describe('Load', function() {
-            it('should load items to the equipment', function() {
-                simple.mock(Item, 'findAllBy').returnWith([new Item(), new Item()]);
+            it('should load items to the inventory', function() {
+                simple.mock(PersistenceService, 'findBy').returnWith([new Item(), new Item()]);
                 simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var p = new ItemsViewModel();

@@ -22,8 +22,14 @@ function OtherStats() {
     self.passiveWisdom = ko.pureComputed(function() {
         self._passiveWisdomDummy();
         var key = CharacterManager.activeCharacter().key();
-        var perceptionSkill = Skill.findAllByKeyAndName(key, 'perception');
-        return 10 + perceptionSkill[0].bonus();
+        var perceptionBonus;
+        PersistenceService.findBy(Skill, 'characterId', key).forEach(function(skill, idx, _){
+            if (skill.name().toLowerCase() === 'perception'.toLowerCase()) {
+                perceptionBonus = skill.bonus();
+            }
+        });
+        
+        return 10 + perceptionBonus;
     });
 
     self._passiveWisdomDummy = ko.observable(null);
@@ -35,7 +41,7 @@ function OtherStats() {
     self.proficiencyLabel = ko.pureComputed(function() {
         self._proficiencyLabelDummy();
         var key = CharacterManager.activeCharacter().key();
-        var level = Profile.findBy(key)[0].level();
+        var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
         level = level ? parseInt(level) : 0;
         var proficiency = parseInt(self.proficiency()) ? parseInt(self.proficiency()) : 0;
         return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
@@ -72,9 +78,3 @@ function OtherStats() {
         self.ps.save();
     };
 }
-
-OtherStats.findBy = function(characterId) {
-    return PersistenceService.findAll(OtherStats).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

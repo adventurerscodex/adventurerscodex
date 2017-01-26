@@ -92,7 +92,7 @@ function CharacterRootViewModel() {
         var key = CharacterManager.activeCharacter().key();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
-                summary = Profile.findBy(key)[0].characterSummary();
+                summary = PersistenceService.findBy(Profile, 'characterId', key)[0].characterSummary();
             } catch(err) { /*Ignore*/ }
         }
         return summary;
@@ -104,7 +104,7 @@ function CharacterRootViewModel() {
         var key = CharacterManager.activeCharacter().key();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
-                name = Profile.findBy(key)[0].characterName();
+                name = PersistenceService.findBy(Profile, 'characterId', key)[0].characterName();
             } catch(err) { /*Ignore*/ }
         }
         return name;
@@ -116,7 +116,7 @@ function CharacterRootViewModel() {
         var key = CharacterManager.activeCharacter().key();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
-                name = Profile.findBy(key)[0].playerName();
+                name = PersistenceService.findBy(Profile, 'characterId', key)[0].playerName();
             } catch(err) { /*Ignore*/ }
         }
         return name;

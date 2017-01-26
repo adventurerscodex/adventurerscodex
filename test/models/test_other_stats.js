@@ -10,13 +10,10 @@ describe('Other Stats Model', function() {
         describe('Passive Wisdom', function() {
             it('should return the passive wisdom bonus.', function() {
                 //Mocks
-                simple.mock(Skill, 'findAllByKeyAndName').callFn(function(characterId, skillName) {
-                    var skill = new Skill();
-                    skill.characterId(characterId);
-                    skill.name(skillName);
-                    simple.mock(skill, 'bonus').returnWith(1);
-                    return [skill];
-                });
+                var skill = new Skill();
+                skill.name('perception');
+                skill.modifier(1);
+                simple.mock(PersistenceService, 'findBy').returnWith([skill]);
                 simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 //Test
@@ -80,23 +77,6 @@ describe('Other Stats Model', function() {
                 os.save();
                 saved.should.equal(true);
             });
-        });
-    });
-
-    describe('FindBy', function() {
-        it('should find the other stats module from the db.', function() {
-            var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new OtherStats()]);
-            var r = OtherStats.findBy(key);
-            r.length.should.equal(0);
-
-            simple.mock(PersistenceService, 'findAll').returnWith([new OtherStats()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            }));
-            r = OtherStats.findBy(key);
-            r.length.should.equal(1);
-
         });
     });
 });

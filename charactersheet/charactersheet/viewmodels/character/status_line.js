@@ -24,8 +24,8 @@ function StatusLineViewModel() {
 
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var statuses = Status.findBy(key);
-        var profile = Profile.findBy(key)[0];
+        var statuses = PersistenceService.findBy(Status, 'characterId', key);
+        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
 
         self.statusLine(self.getStatusLine(profile, statuses));
     };

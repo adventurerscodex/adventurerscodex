@@ -69,9 +69,3 @@ function DeathSave() {
         self.ps.delete();
     };
 }
-
-DeathSave.findAllBy = function(characterId) {
-    return PersistenceService.findAll(DeathSave).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

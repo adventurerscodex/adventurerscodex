@@ -56,13 +56,15 @@ function SpellbookViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        self.spellbook(Spell.findAllBy(key));
+        self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
+        Notifications.spellStats.changed.add(self.valueHasChanged);
     };
 
     self.unload = function() {
         $.each(self.spellbook(), function(_, e) {
             e.save();
         });
+        Notifications.spellStats.changed.remove(self.valueHasChanged);
     };
 
     self.populateSpell = function(label, value) {
@@ -163,5 +165,11 @@ function SpellbookViewModel() {
 
     self.clear = function() {
         self.spellbook([]);
+    };
+
+    self.valueHasChanged = function() {
+        self.spellbook().forEach(function(e, i, _) {
+            e.updateValues();
+        });
     };
 }

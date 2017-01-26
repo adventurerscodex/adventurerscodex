@@ -15,13 +15,14 @@ function SpellStatsViewModel() {
 
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
-        var stats = SpellStats.findBy(key);
+        var stats = PersistenceService.findBy(SpellStats, 'characterId', key);
         if (stats.length > 0) {
             self.spellStats(stats[0]);
         } else {
             self.spellStats(new SpellStats());
         }
         self.spellStats().characterId(key);
+        self.spellStats().spellAttackBonus.subscribe(self.dataHasChanged);
     };
 
     self.unload = function() {
@@ -47,5 +48,10 @@ function SpellStatsViewModel() {
     self.modalFinishedAnimating = function() {
         self.firstModalElementHasFocus(true);
         self.firstModalElementHasFocus.valueHasMutated();
+    };
+
+    self.dataHasChanged = function() {
+        self.spellStats().save();
+        Notifications.spellStats.changed.dispatch();
     };
 }

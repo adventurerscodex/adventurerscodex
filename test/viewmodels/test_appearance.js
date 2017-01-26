@@ -11,7 +11,7 @@ describe('Appearance', function() {
             var app = new CharacterAppearance();
             app.height('6ft');
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(CharacterAppearance, 'findBy').returnWith([app]);
+            simple.mock(PersistenceService, 'findBy').returnWith([app]);
             var a = new AppearanceViewModel();
 
             app.height('6ft');
@@ -22,7 +22,7 @@ describe('Appearance', function() {
 
         it('should not load values from database', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(CharacterAppearance, 'findBy').returnWith([]);
+            simple.mock(PersistenceService, 'findBy').returnWith([]);
             var a = new AppearanceViewModel();
 
             a.load();

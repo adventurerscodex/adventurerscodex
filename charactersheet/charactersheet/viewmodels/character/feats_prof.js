@@ -12,7 +12,8 @@ function FeatsProfViewModel() {
     };
 
     self.load = function() {
-        var fp = FeatsProf.findBy(CharacterManager.activeCharacter().key());
+        var fp = PersistenceService.findBy(FeatsProf, 'characterId',
+            CharacterManager.activeCharacter().key());
         if (fp.length > 0) {
             self.featsProf(fp[0]);
         } else {

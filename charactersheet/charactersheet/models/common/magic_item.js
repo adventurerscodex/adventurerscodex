@@ -82,9 +82,3 @@ function MagicItem() {
         self.ps.delete();
     };
 }
-
-MagicItem.findAllBy =function(characterId) {
-    return PersistenceService.findAll(MagicItem).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

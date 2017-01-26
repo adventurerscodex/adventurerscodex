@@ -25,7 +25,7 @@ function Skill() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
         try{
-            profBonus = OtherStats.findBy(
+            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
                 CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /* Ignore */}
         profBonus = parseInt(profBonus);
@@ -46,7 +46,7 @@ function Skill() {
         self._dummy();
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
         } catch(err) { /*Ignore*/ }
 
@@ -65,13 +65,6 @@ function Skill() {
         return bonus;
     });
 
-    self.passiveBonus = ko.pureComputed(function() {
-        self._dummy();
-        var bonus = 10 + self.bonus();
-
-        return bonus;
-    });
-
     self.bonusLabel = ko.pureComputed(function() {
         self._dummy();
         var str = '+ 0';
@@ -80,6 +73,8 @@ function Skill() {
             Math.abs(self.bonus());
         }
 
+        str += ' <i><small>('
+                + self.abilityScore() + ')</small></i>';
         return str;
     });
 
@@ -90,6 +85,13 @@ function Skill() {
         str += ' <i><small class="skills-ability-type">(' + self.abilityScore() + ')</small></i>';
 
         return str;
+    });
+
+    self.passiveBonus = ko.pureComputed(function() {
+        self._dummy();
+        var bonus = 10 + self.bonus();
+
+        return bonus;
     });
 
     self.save = function() {
@@ -116,20 +118,3 @@ function Skill() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
-Skill.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Skill).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
-/**
- * Given a character id and a case insensitive skill name,
- * return the relevant Skill(s).
- */
-Skill.findAllByKeyAndName = function(characterId, skillName) {
-    return PersistenceService.findAll(Skill).filter(function(e, i, _) {
-        return (e.characterId() === characterId
-            && e.name().toLowerCase() == skillName.toLowerCase());
-    });
-};

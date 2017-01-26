@@ -57,7 +57,7 @@ function Weapon() {
         var key = CharacterManager.activeCharacter().key();
         var profBonus = 0;
         try{
-            profBonus = OtherStats.findBy(
+            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
                 CharacterManager.activeCharacter().key())[0].proficiencyLabel();
         } catch(err) { /*Ignore*/ }
         return parseInt(profBonus);
@@ -66,7 +66,7 @@ function Weapon() {
     self.strAbilityScoreModifier = function() {
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Str');
         } catch(err) { /*Ignore*/ }
         if (score === null){
@@ -80,7 +80,7 @@ function Weapon() {
     self.dexAbilityScoreModifier = function() {
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
         if (score === null){
@@ -222,9 +222,3 @@ function Weapon() {
         self.ps.delete();
     };
 }
-
-Weapon.findAllBy =function(characterId) {
-    return PersistenceService.findAll(Weapon).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
