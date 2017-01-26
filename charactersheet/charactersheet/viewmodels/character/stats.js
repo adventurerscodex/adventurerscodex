@@ -108,7 +108,6 @@ function StatsViewModel() {
 
         Notifications.profile.changed.add(self.calculateProficiencyLabel);
         Notifications.profile.changed.add(self.calculateHitDice);
-        Notifications.skills.changed.add(self.calculatePassiveWisdom);
         Notifications.events.longRest.add(self.resetOnLongRest);
     };
 
@@ -128,7 +127,6 @@ function StatsViewModel() {
 
         Notifications.profile.changed.remove(self.calculateProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
-        Notifications.skills.changed.remove(self.calculatePassiveWisdom);
         Notifications.events.longRest.remove(self.resetOnLongRest);
         self.dataHasChanged();
     };
@@ -198,13 +196,6 @@ function StatsViewModel() {
                 }
             }
         });
-    };
-
-  /**
-   * Tells the other stats model to recalculate it's passive wisdom value.
-   */
-    self.calculatePassiveWisdom = function() {
-        self.otherStats().updateValues();
     };
 
     /**
