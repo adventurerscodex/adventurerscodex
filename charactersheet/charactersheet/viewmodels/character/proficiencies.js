@@ -21,23 +21,19 @@ function ProficienciesViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
 
-    self.init = function() {
-
-    };
-
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.proficiencies().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
 
         var key = CharacterManager.activeCharacter().key();
         self.proficiencies(PersistenceService.findBy(Proficiency, 'characterId', key));
     };
 
     self.unload = function() {
-        $.each(self.proficiencies(), function(_, e) {
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.proficiencies().forEach(function(e, i, _) {
             e.save();
         });
     };
