@@ -7,7 +7,7 @@ var init = function(viewModel) {
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
     // Set global URI settings.
-    URI.fragmentPrefix = "";
+    URI.fragmentPrefix = '';
 
     // Import static data
     Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {

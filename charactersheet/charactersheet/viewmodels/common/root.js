@@ -20,7 +20,7 @@ function AdventurersCodexViewModel() {
     self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
-    self.loginViewModel = new LoginViewModel()
+    self.loginViewModel = new LoginViewModel();
 
     //UI Methods
 

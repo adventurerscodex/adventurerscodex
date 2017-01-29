@@ -21,7 +21,7 @@ var SharedServiceManager = function(sharedServiceType, configuration) {
             SharedServiceManager._sharedService = new self._sharedServiceType(config);
         }
         return SharedServiceManager._sharedService;
-    },
+    };
 
     /**
      * Clear out the current instance of the sharedService. This will cause a
@@ -29,5 +29,5 @@ var SharedServiceManager = function(sharedServiceType, configuration) {
      */
     self.resetSharedService = function() {
         SharedServiceManager._sharedService = null;
-    }
+    };
 };

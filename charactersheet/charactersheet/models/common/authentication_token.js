@@ -57,7 +57,7 @@ function AuthenticationToken() {
         if (fragments['scope']) {
             self.scopes(fragments['scope'].split(' '));
         }
-    }
+    };
 
     // CRUD Methods
 
