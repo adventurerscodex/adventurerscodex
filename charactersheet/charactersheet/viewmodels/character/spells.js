@@ -46,6 +46,12 @@ function SpellbookViewModel() {
         return self.spellbook() ? self.spellbook().length : 0;
     });
 
+    self.spellPreparedVisible = function(spell) {
+        return spell.spellLevel() != 0 && !spell.spellAlwaysPrepared();
+    };
+
+    self.alwaysPreparedPopoverText = Fixtures.popoverText.alwaysPrepared;
+
     self.init = function() {
         Notifications.global.save.add(function() {
             self.spellbook().forEach(function(e, i, _) {

@@ -181,4 +181,34 @@ describe('SpellsViewModel', function(){
             book.sortArrow('spellLevel').should.equal('fa fa-arrow-down fa-color');
         });
     });
+
+    describe('Spell Prepared Visible', function() {
+        it('should return false if always prepared', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellAlwaysPrepared(true);
+            book.spellbook([spell]);
+            book.spellPreparedVisible(spell).should.equal(false);
+        });
+        it('should return false if level 0', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellLevel(0);
+            book.spellbook([spell]);
+            book.spellPreparedVisible(spell).should.equal(false);
+        });
+        it('should return true if not level 0 and not always prepared', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            book.spellbook([spell]);
+            book.spellPreparedVisible(spell).should.equal(true);
+        });
+    });
+
 });

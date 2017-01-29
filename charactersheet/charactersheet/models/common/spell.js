@@ -6,13 +6,15 @@ function Spell() {
     self.mapping = {
         include: ['characterId', 'spellName', 'spellPrepared', 'spellType', 'spellSaveAttr',
             'spellDmg', 'spellDmgType', 'spellSchool', 'spellLevel', 'spellDescription', 'spellCastingTime',
-            'spellRange', 'spellComponents', 'spellDuration', 'spellPrepared', 'spellMaterialComponents', 'isRitual']
+            'spellRange', 'spellComponents', 'spellDuration', 'spellPrepared',
+            'spellAlwaysPrepared', 'spellMaterialComponents', 'isRitual']
     };
 
     self._dummy = ko.observable(null);
     self.characterId = ko.observable(null);
     self.spellName = ko.observable('');
     self.spellPrepared = ko.observable(false);
+    self.spellAlwaysPrepared = ko.observable(false);
     self.spellType = ko.observable('');
     self.spellSaveAttr = ko.observable('');
     self.spellDmg = ko.observable('');
@@ -37,7 +39,7 @@ function Spell() {
     self.updateValues = function() {
         self._dummy.notifySubscribers();
     };
-    
+
     self.spellNameLabel = ko.pureComputed(function() {
         if (self.isRitual() === true) {
             return (self.spellName() + ' (Ritual)');
