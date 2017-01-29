@@ -30,9 +30,7 @@ function SpellSlotsViewModel() {
         var slots = PersistenceService.findBy(Slot, 'characterId',
             CharacterManager.activeCharacter().key());
         self.slots(slots);
-
         self.blankSlot().level(self.slots().length + 1);
-        self.blankSlot().maxSpellSlots(1);
 
         //Notifications
         Notifications.events.longRest.add(self.resetOnLongRest);
@@ -135,12 +133,12 @@ function SpellSlotsViewModel() {
 
         self.blankSlot(new Slot());
         self.blankSlot().level(self.slots().length + 1);
-        self.blankSlot().maxSpellSlots(1);
     };
 
     self.removeSlot = function(slot) {
         self.slots.remove(slot);
         slot.delete();
+        self.blankSlot().level(self.slots().length + 1);
     };
 
     self.resetSlots = function() {
@@ -151,14 +149,14 @@ function SpellSlotsViewModel() {
 
     self.increaseUsage = function(spellSlots) {
         var used = spellSlots.usedSpellSlots();
-        if(used !== parseInt(spellSlots.maxSpellSlots())){
+        if (used !== parseInt(spellSlots.maxSpellSlots())) {
             spellSlots.usedSpellSlots(used + 1);
         }
     };
 
     self.decreaseUsage = function(spellSlots) {
         var used = spellSlots.usedSpellSlots();
-        if(used !== 0){
+        if (used !== 0) {
             spellSlots.usedSpellSlots(used - 1);
         }
     };

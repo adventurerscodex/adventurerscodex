@@ -11,7 +11,7 @@ function Slot() {
 
     self.characterId = ko.observable(null);
     self.level = ko.observable(1);
-    self.maxSpellSlots = ko.observable(1);
+    self.maxSpellSlots = ko.observable();
     self.usedSpellSlots = ko.observable(0);
     self.resetsOn = ko.observable();
 

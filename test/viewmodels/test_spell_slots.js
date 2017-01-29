@@ -81,6 +81,11 @@ describe('Spell Slots View Model', function() {
             p.addSlot();
             p.addSlot();
             p.addSlot();
+
+            p.slots().forEach(function(slot, idx, _) {
+                slot.maxSpellSlots(1);
+            });
+
             p.currentSlotWidth(1,1).should.equal('25%');
 
             CharacterManager.activeCharacter = c;
