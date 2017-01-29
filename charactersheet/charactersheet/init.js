@@ -6,6 +6,9 @@ var init = function(viewModel) {
     // Always ignore values in this list when mapping.
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
+    // Set global URI settings.
+    URI.fragmentPrefix = "";
+
     // Import static data
     Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
         $.getJSON(location.url, function(data) {
@@ -21,7 +24,10 @@ var init = function(viewModel) {
         new TotalWeightStatusServiceComponent(),
         new InspirationStatusServiceComponent()
     ];
-    StatusService.sharedService(); // Prime the service.
+
+    // Prime the services.
+    StatusService.sharedService();
+    AuthenticationServiceManager.sharedService();
 
     // Initialize the View Model
     viewModel.init();

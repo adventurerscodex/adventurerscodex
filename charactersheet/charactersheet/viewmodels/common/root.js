@@ -20,6 +20,7 @@ function AdventurersCodexViewModel() {
     self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
+    self.loginViewModel = new LoginViewModel()
 
     //UI Methods
 
@@ -37,6 +38,8 @@ function AdventurersCodexViewModel() {
      * Call Init on each sub-module.
      */
     self.init = function() {
+        AuthenticationServiceManager.sharedService().init();
+
         self.charactersViewModel.init();
         self.wizardViewModel.init();
 
@@ -123,7 +126,7 @@ function AdventurersCodexViewModel() {
             return  character.key();
         });
         PersistenceService.listAll().forEach(function(table, idx, _) {
-            if (!window[table] || table === 'Character') { return; }
+            if (!window[table] || table === 'Character' || table === 'AuthenticationToken') { return; }
             PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
                 var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
                 var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;
