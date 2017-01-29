@@ -7,21 +7,6 @@ describe('Other Stats Model', function() {
     });
 
     describe('Instance Methods', function() {
-        describe('Passive Wisdom', function() {
-            it('should return the passive wisdom bonus.', function() {
-                //Mocks
-                var skill = new Skill();
-                skill.name('perception');
-                skill.modifier(1);
-                simple.mock(PersistenceService, 'findBy').returnWith([skill]);
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
-                //Test
-                var os = new OtherStats();
-                os.passiveWisdom().should.equal(11);
-            });
-        });
-
         describe('Clear', function() {
             it('should clear all the values in stats', function() {
                 var os = new OtherStats();
