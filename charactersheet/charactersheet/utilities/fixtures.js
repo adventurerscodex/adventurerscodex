@@ -302,5 +302,12 @@ var Fixtures = {
               'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
         races : ['Dwarf', 'Elf', 'Halfling', 'Human', 'Dragonborn', 'Gnome',
               'Half-Elf', 'Half-Orc', 'Tiefling']
+    },
+
+    popoverText: {
+        alwaysPrepared : 'Examples of always prepared spells: <br />' +
+            '<ul><li>Paladin Oath Spells</li>' +
+            '<li>Cleric Domain Spells</li>' +
+            '<li>Wizard Signature Spells</li></ul>'
     }
 };

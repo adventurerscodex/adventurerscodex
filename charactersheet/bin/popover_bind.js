@@ -32,6 +32,7 @@ ko.bindingHandlers.popover = {
         });
     },
     options: {
-        placement: "top"
+        placement: "top",
+        html: true
     }
 };
