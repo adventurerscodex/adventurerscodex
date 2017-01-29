@@ -10,11 +10,6 @@ function StatsTabViewModel() {
     self.abilityScoresViewModel = ko.observable(new AbilityScoresViewModel());
     self.savingThrowsViewModel  = ko.observable(new SavingThrowsViewModel());
 
-
-    self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-    };
-
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
     };

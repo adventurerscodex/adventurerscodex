@@ -8,10 +8,6 @@ function NotesTabViewModel() {
 
     self.notesViewModel = ko.observable(new NotesViewModel());
 
-    self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-    };
-
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
     };

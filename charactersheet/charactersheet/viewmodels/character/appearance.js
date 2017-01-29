@@ -5,13 +5,9 @@ function AppearanceViewModel() {
 
     self.appearance = ko.observable(new CharacterAppearance());
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.appearance().save();
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
+                
         var key = CharacterManager.activeCharacter().key();
         var appear = PersistenceService.findBy(CharacterAppearance, 'characterId', key);
         if (appear.length > 0) {
@@ -23,6 +19,11 @@ function AppearanceViewModel() {
     };
 
     self.unload = function() {
+        self.appearance().save();
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
         self.appearance().save();
     };
 

@@ -32,13 +32,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['description asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
-
-    self.load = function() {
+        
         var key = CharacterManager.activeCharacter().key();
         var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
         if (playerTexts) {
@@ -57,7 +54,8 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {

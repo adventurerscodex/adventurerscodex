@@ -7,13 +7,9 @@ function SpellStatsViewModel() {
     self.modalStatus = ko.observable(false);
     self.firstModalElementHasFocus = ko.observable(false);
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.spellStats().save();
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
+                
         var key = CharacterManager.activeCharacter().key();
         var stats = PersistenceService.findBy(SpellStats, 'characterId', key);
         if (stats.length > 0) {
@@ -26,6 +22,11 @@ function SpellStatsViewModel() {
     };
 
     self.unload = function() {
+        self.save();
+        Notifications.global.save.remove(self.save);     
+    };
+
+    self.save = function() {
         self.spellStats().save();
     };
 

@@ -83,8 +83,6 @@ function DMRootViewModel() {
      * Call Init on each sub-module.
      */
     self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);

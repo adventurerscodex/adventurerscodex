@@ -23,18 +23,12 @@ function ArmorViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['armorName asc']);
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.armors().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+    self.load = function() {
+        Notifications.global.save.add(self.save);
         self.armors.subscribe(function() {
             Notifications.armor.changed.dispatch();
         });
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         self.armors(PersistenceService.findBy(Armor, 'characterId', key));
 
@@ -43,10 +37,15 @@ function ArmorViewModel() {
     };
 
     self.unload = function() {
-        $.each(self.armors(), function(_, e) {
+        self.save();
+        Notifications.abilityScores.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.armors().forEach(function(e, i, _) {
             e.save();
         });
-        Notifications.abilityScores.changed.remove(self.valueHasChanged);
     };
 
     self.totalWeight = ko.pureComputed(function() {

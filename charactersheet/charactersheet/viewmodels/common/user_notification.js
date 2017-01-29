@@ -7,9 +7,6 @@
 function UserNotificationViewModel() {
     var self = this;
 
-    self.init = function() {
-    };
-
     self.load = function() {
         Notifications.userNotification.infoNotification.add(self.addInfoNotification);
         Notifications.userNotification.successNotification.add(self.addSuccessNotification);
@@ -35,7 +32,13 @@ function UserNotificationViewModel() {
         };
     };
 
-    self.unload = function() {};
+    self.unload = function() {
+        Notifications.userNotification.infoNotification.remove(self.addInfoNotification);
+        Notifications.userNotification.successNotification.remove(self.addSuccessNotification);
+        Notifications.userNotification.warningNotification.remove(self.addWarningNotification);
+        Notifications.userNotification.dangerNotification.remove(self.addDangerNotification);        
+    };
+
 
     /**
      * Dispatches notification to toastr.

@@ -22,7 +22,7 @@ function CharacterRootViewModel() {
     self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
-    self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
+    self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();
@@ -133,11 +133,9 @@ function CharacterRootViewModel() {
     //Public Methods
 
     /**
-     * Call Init on each sub-module.
+     * Call Init on services
      */
     self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-
         self.statusLineService.init();
 
         //Subscriptions

@@ -33,15 +33,9 @@ function WeaponsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['weaponName asc']);
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.weapons().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
+
         var key = CharacterManager.activeCharacter().key();
         self.weapons(PersistenceService.findBy(Weapon, 'characterId', key));
 
@@ -57,7 +51,14 @@ function WeaponsViewModel() {
         self.weapons([]);
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
         Notifications.stats.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(self.save);      
     };
+
+    self.save = function() {
+        self.weapons().forEach(function(e, i, _) {
+            e.save();
+        });
+    };    
 
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;

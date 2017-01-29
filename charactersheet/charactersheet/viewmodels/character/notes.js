@@ -6,11 +6,9 @@ function NotesViewModel() {
     self.notes = ko.observableArray();
     self.selectedNote = ko.observable();
 
-    self.init = function() {
-        Notifications.global.save.add(self.save);
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
+        
         var key = CharacterManager.activeCharacter().key();
         var notes = PersistenceService.findBy(Note, 'characterId', key);
         if (notes.length > 0) {
@@ -23,6 +21,7 @@ function NotesViewModel() {
 
     self.unload = function() {
         self.save();
+        Notifications.global.save.remove(self.save);        
     };
 
     self.save = function() {

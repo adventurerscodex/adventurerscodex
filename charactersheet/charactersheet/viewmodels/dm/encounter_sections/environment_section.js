@@ -20,12 +20,10 @@ function EnvironmentSectionViewModel(parentEncounter) {
 
     //Public Methods
 
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
-
-    self.load = function() {
+        
         var key = CharacterManager.activeCharacter().key();
         var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
         if (environmentSection) {
@@ -49,6 +47,8 @@ function EnvironmentSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);        
     };
 
     self.save = function() {

@@ -47,15 +47,9 @@ function SkillsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.skills().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
+
         var skills = PersistenceService.findBy(Skill, 'characterId',
             CharacterManager.activeCharacter().key());
 
@@ -85,6 +79,13 @@ function SkillsViewModel() {
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
         Notifications.stats.changed.remove(self.dataHasChanged);
         Notifications.profile.changed.remove(self.dataHasChanged);
+        Notifications.global.save.remove(self.save);      
+    };
+
+    self.save = function() {
+        self.skills().forEach(function(e, i, _) {
+            e.save();
+        });
     };
 
     /* UI Methods */

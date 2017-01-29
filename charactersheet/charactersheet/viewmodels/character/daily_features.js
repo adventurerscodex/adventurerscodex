@@ -18,15 +18,8 @@ function DailyFeatureViewModel() {
     self.sort = ko.observable(self.sorts['featureName asc']);
     self.filter = ko.observable('');
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.dailyFeatures().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
         var dailyFeatures = PersistenceService.findBy(DailyFeature, 'characterId',
             CharacterManager.activeCharacter().key());
         if (dailyFeatures.length > 0) {
@@ -44,9 +37,16 @@ function DailyFeatureViewModel() {
         self.dailyFeatures().forEach(function(e, i, _) {
             e.save();
         });
+        Notifications.global.save.remove(self.save);
         Notifications.events.longRest.remove(self.resetShortRestFeatures);
         Notifications.events.shortRest.remove(self.resetShortRestFeatures);
     };
+
+    self.save = function() {
+        self.dailyFeatures().forEach(function(e, i, _) {
+            e.save();
+        });
+    };    
 
     /* UI Methods */
 

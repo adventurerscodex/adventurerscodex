@@ -13,24 +13,12 @@ function StatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.health().save();
-            self.otherStats().save();
-            self.hitDiceList().forEach(function(e, i, _) {
-                e.save();
-            });
-            self.hitDiceType().save();
-            self.deathSaveSuccessList().forEach(function(e, i, _) {
-                e.save();
-            });
-            self.deathSaveFailureList().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
+    var msg = 'Dexterity Bonus';
+    self.initiativeTooltip = ko.observable(msg);
 
     self.load = function() {
+        Notifications.global.save.add(self.save);
+
         var key = CharacterManager.activeCharacter().key();
         var health = PersistenceService.findBy(Health, 'characterId', key);
         if (health.length > 0) {
@@ -128,7 +116,23 @@ function StatsViewModel() {
         Notifications.profile.changed.remove(self.calculateProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.events.longRest.remove(self.resetOnLongRest);
+        Notifications.global.save.remove(self.save);     
         self.dataHasChanged();
+    };
+
+    self.save = function() {
+        self.health().save();
+        self.otherStats().save();
+        self.hitDiceList().forEach(function(e, i, _) {
+            e.save();
+        });
+        self.hitDiceType().save();
+        self.deathSaveSuccessList().forEach(function(e, i, _) {
+            e.save();
+        });
+        self.deathSaveFailureList().forEach(function(e, i, _) {
+            e.save();
+        });
     };
 
     self.clear = function() {

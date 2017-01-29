@@ -10,10 +10,6 @@ function ProfileTabViewModel() {
     self.appearanceViewModel     = ko.observable(new AppearanceViewModel());
     self.featuresTraitsViewModel = ko.observable(new FeaturesTraitsViewModel());
 
-    self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-    };
-
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
     };

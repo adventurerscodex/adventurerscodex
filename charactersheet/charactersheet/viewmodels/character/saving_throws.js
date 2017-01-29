@@ -35,25 +35,11 @@ function SavingThrowsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.init = function() {
-        Notifications.abilityScores.changed.add(function() {
-            $.each(self.savingThrows(), function(_, e) {
-                e.updateValues();
-            });
-        });
-        Notifications.stats.changed.add(function() {
-            $.each(self.savingThrows(), function(_, e) {
-                e.updateValues();
-            });
-        });
-        Notifications.global.save.add(function() {
-            self.savingThrows().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
+        Notifications.abilityScores.changed.add(self.updateValues);
+        Notifications.stats.changed.add(self.updateValues);
+        Notifications.global.save.add(self.save);
+
         var st = PersistenceService.findBy(SavingThrows, 'characterId',
             CharacterManager.activeCharacter().key());
         if (st.length === 0) {
@@ -68,8 +54,21 @@ function SavingThrowsViewModel() {
     };
 
     self.unload = function() {
-        $.each(self.savingThrows(), function(_, e) {
+        self.save();
+        Notifications.abilityScores.changed.remove(self.updateValues);
+        Notifications.stats.changed.remove(self.updateValues);
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.savingThrows().forEach(function(e, i, _) {
             e.save();
+        });
+    };   
+
+    self.updateValues = function() {
+        $.each(self.savingThrows(), function(_, e) {
+            e.updateValues();
         });
     };
 

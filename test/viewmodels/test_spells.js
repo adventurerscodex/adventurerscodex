@@ -4,13 +4,6 @@ describe('SpellsViewModel', function(){
     PersistenceService._save = function(){};
     PersistenceService._delete = function(){};
 
-    describe('Init', function() {
-        it('should init the module.', function() {
-            var spellsVM = new SpellbookViewModel();
-            spellsVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load the data from the spells db.', function() {
             var c = CharacterManager.activeCharacter;

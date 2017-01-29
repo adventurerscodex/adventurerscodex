@@ -10,10 +10,6 @@ function SkillsTabViewModel() {
     self.skillsViewModel       = ko.observable(new SkillsViewModel());
     self.dailyFeatureViewModel = ko.observable(new DailyFeatureViewModel());
 
-    self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-    };
-
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
     };

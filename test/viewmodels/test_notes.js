@@ -6,13 +6,6 @@ describe('NotesViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var notesVM = new NotesViewModel();
-            notesVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var note = new Note();

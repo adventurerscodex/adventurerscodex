@@ -39,13 +39,10 @@ function MonsterSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['name asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var monster = PersistenceService.findBy(Monster, 'encounterId', self.encounterId());
         if (monster) {
@@ -66,7 +63,8 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
