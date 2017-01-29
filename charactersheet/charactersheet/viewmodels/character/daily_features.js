@@ -19,11 +19,7 @@ function DailyFeatureViewModel() {
     self.filter = ko.observable('');
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.dailyFeatures().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
         var dailyFeatures = PersistenceService.findBy(DailyFeature, 'characterId',
             CharacterManager.activeCharacter().key());
         if (dailyFeatures.length > 0) {
@@ -41,14 +37,16 @@ function DailyFeatureViewModel() {
         self.dailyFeatures().forEach(function(e, i, _) {
             e.save();
         });
-        Notifications.global.save.remove(function() {
-            self.dailyFeatures().forEach(function(e, i, _) {
-                e.save();
-            });
-        });        
+        Notifications.global.save.remove(self.save);
         Notifications.events.longRest.remove(self.resetShortRestFeatures);
         Notifications.events.shortRest.remove(self.resetShortRestFeatures);
     };
+
+    self.save = function() {
+        self.dailyFeatures().forEach(function(e, i, _) {
+            e.save();
+        });
+    };    
 
     /* UI Methods */
 

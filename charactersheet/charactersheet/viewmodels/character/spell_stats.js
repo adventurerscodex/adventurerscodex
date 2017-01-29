@@ -8,9 +8,7 @@ function SpellStatsViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.spellStats().save();
-        });
+        Notifications.global.save.add(self.save);
                 
         var key = CharacterManager.activeCharacter().key();
         var stats = PersistenceService.findBy(SpellStats, 'characterId', key);
@@ -24,10 +22,12 @@ function SpellStatsViewModel() {
     };
 
     self.unload = function() {
+        self.save();
+        Notifications.global.save.remove(self.save);     
+    };
+
+    self.save = function() {
         self.spellStats().save();
-        Notifications.global.save.remove(function() {
-            self.spellStats().save();
-        });        
     };
 
     self.clear = function() {

@@ -68,26 +68,22 @@ function MagicItemsViewModel() {
     });
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.magicItems().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
                 
         var key = CharacterManager.activeCharacter().key();
         self.magicItems(PersistenceService.findBy(MagicItem, 'characterId', key));
     };
 
     self.unload = function() {
-        $.each(self.magicItems(), function(_, e) {
+        self.save();
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.magicItems().forEach(function(e, i, _) {
             e.save();
         });
-        Notifications.global.save.remove(function() {
-            self.magicItems().forEach(function(e, i, _) {
-                e.save();
-            });
-        });        
-    };
+    };    
 
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];

@@ -24,11 +24,7 @@ function ArmorViewModel() {
     self.sort = ko.observable(self.sorts['armorName asc']);
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.armors().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
         self.armors.subscribe(function() {
             Notifications.armor.changed.dispatch();
         });
@@ -41,15 +37,15 @@ function ArmorViewModel() {
     };
 
     self.unload = function() {
-        $.each(self.armors(), function(_, e) {
+        self.save();
+        Notifications.abilityScores.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.armors().forEach(function(e, i, _) {
             e.save();
         });
-        Notifications.abilityScores.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(function() {
-            self.armors().forEach(function(e, i, _) {
-                e.save();
-            });
-        });        
     };
 
     self.totalWeight = ko.pureComputed(function() {

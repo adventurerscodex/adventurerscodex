@@ -40,26 +40,22 @@ function ItemsViewModel() {
 
     //Responders
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.items().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
 
         var key = CharacterManager.activeCharacter().key();
         self.items(PersistenceService.findBy(Item, 'characterId', key));
     };
 
     self.unload = function() {
-        $.each(self.items(), function(_, e) {
+        self.save();
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.items().forEach(function(e, i, _) {
             e.save();
         });
-        Notifications.global.save.remove(function() {
-            self.items().forEach(function(e, i, _) {
-                e.save();
-            });
-        });        
-    };
+    };    
 
     // Modal methods
     self.modalFinishedOpening = function() {

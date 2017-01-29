@@ -17,9 +17,7 @@ function NotesSectionViewModel(parentEncounter) {
      * Signal all modules to load their data.
      */
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.save();
-        });
+        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
         var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
@@ -44,9 +42,7 @@ function NotesSectionViewModel(parentEncounter) {
         notes.visible(self.visible());
 
         notes.save();
-        Notifications.global.save.remove(function() {
-            self.save();
-        });
+        Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);        
     };
 

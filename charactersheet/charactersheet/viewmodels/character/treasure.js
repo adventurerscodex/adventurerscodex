@@ -6,9 +6,7 @@ function TreasureViewModel() {
     self.treasure = ko.observable(new Treasure());
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.treasure().save();
-        });
+        Notifications.global.save.add(self.save);
 
         var t = PersistenceService.findBy(Treasure, 'characterId',
             CharacterManager.activeCharacter().key());
@@ -30,10 +28,12 @@ function TreasureViewModel() {
 
     self.unload = function() {
         self.treasure().save();
-        Notifications.global.save.remove(function() {
-            self.treasure().save();
-        });        
+        Notifications.global.save.remove(self.save);   
     };
+
+    self.save = function() {
+        self.treasure().save();
+    };    
 
     self.clear = function() {
         self.treasure().clear();

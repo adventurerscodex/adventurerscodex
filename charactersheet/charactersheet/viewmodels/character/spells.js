@@ -47,11 +47,7 @@ function SpellbookViewModel() {
     });
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.spellbook().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
                 
         var key = CharacterManager.activeCharacter().key();
         self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
@@ -63,11 +59,13 @@ function SpellbookViewModel() {
             e.save();
         });
         Notifications.spellStats.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(function() {
-            self.spellbook().forEach(function(e, i, _) {
-                e.save();
-            });
-        });        
+        Notifications.global.save.remove(self.save);    
+    };
+
+    self.save = function() {
+        self.spellbook().forEach(function(e, i, _) {
+            e.save();
+        });
     };
 
     self.populateSpell = function(label, value) {

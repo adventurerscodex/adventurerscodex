@@ -35,9 +35,7 @@ function AbilityScoresViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.abilityScores().save();
-        });
+        Notifications.global.save.add(self.save);
         var key = CharacterManager.activeCharacter().key();
         var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
         if (scores.length > 0) {
@@ -57,11 +55,12 @@ function AbilityScoresViewModel() {
     };
 
     self.unload = function() {
-        self.abilityScores().save();
+        self.save();
+        Notifications.global.save.remove(self.save);
+    };
 
-        Notifications.global.save.remove(function() {
-            self.abilityScores().save();
-        });
+    self.save = function() {
+        self.abilityScores().save();
     };
 
     self.dataHasChanged = function() {

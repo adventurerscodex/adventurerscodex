@@ -6,9 +6,7 @@ function FeaturesTraitsViewModel() {
     self.featTraits = ko.observable(new FeaturesTraits());
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.featTraits().save();
-        });
+        Notifications.global.save.add(self.save);
         
         var ft = PersistenceService.findBy(FeaturesTraits, 'characterId',
             CharacterManager.activeCharacter().key());
@@ -22,8 +20,10 @@ function FeaturesTraitsViewModel() {
 
     self.unload = function() {
         self.featTraits().save();
-        Notifications.global.save.remove(function() {
-            self.featTraits().save();
-        });        
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.featTraits().save();
     };
 }

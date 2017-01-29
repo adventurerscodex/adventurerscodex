@@ -6,9 +6,7 @@ function FeatsProfViewModel() {
     self.featsProf = ko.observable(new FeatsProf());
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.featsProf().save();
-        });
+        Notifications.global.save.add(self.save);
         var fp = PersistenceService.findBy(FeatsProf, 'characterId',
             CharacterManager.activeCharacter().key());
         if (fp.length > 0) {
@@ -21,8 +19,10 @@ function FeatsProfViewModel() {
 
     self.unload = function() {
         self.featsProf().save();
-        Notifications.global.save.remove(function() {
-            self.featsProf().save();
-        });        
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.featsProf().save();
     };
 }

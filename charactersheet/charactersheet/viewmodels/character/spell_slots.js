@@ -19,11 +19,7 @@ function SpellSlotsViewModel() {
     self.filter = ko.observable('');
 
     self.load = function() {
-        Notifications.global.save.add(function() {
-            self.slots().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
+        Notifications.global.save.add(self.save);
         var slots = PersistenceService.findBy(Slot, 'characterId',
             CharacterManager.activeCharacter().key());
         self.slots(slots);
@@ -42,11 +38,13 @@ function SpellSlotsViewModel() {
         });
         Notifications.events.longRest.remove(self.resetOnLongRest);
         Notifications.events.shortRest.remove(self.resetShortRest);
-        Notifications.global.save.remove(function() {
-            self.slots().forEach(function(e, i, _) {
-                e.save();
-            });
-        });        
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.slots().forEach(function(e, i, _) {
+            e.save();
+        });
     };
 
     /* UI Methods */
