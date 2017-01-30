@@ -25,42 +25,47 @@
       <!-- ko foreach: filteredAndSortedSlots -->
         <tr class="row clickable">
           <td class="col-sm-1 col-content-vertical" data-bind="click: $parent.editSlot"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewSlot">
+              href="#"
+              data-toggle="modal"
+              data-target="#viewSlot">
             <span data-bind="css: color" class="form-control color-picker-item" >
             </span>
           </td>
           <td class="col-sm-1 col-content-vertical"
-          data-bind="click: $parent.editSlot, text: level"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewSlot"></td>
+              data-bind="click: $parent.editSlot, text: level"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewSlot">
+          </td>
           <td class="col-sm-1 col-content-vertical"
-            data-bind="click: $parent.editSlot, text: maxSpellSlots"
-            href="#"
-            data-toggle="modal"
-            data-target="#viewSlot"></td>
-          <td class="col-content-vertical col-sm-1 hidden-sm hidden-xs" data-bind="click: $parent.editSlot"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewSlot">
+              data-bind="click: $parent.editSlot, text: maxSpellSlots"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewSlot">
+          </td>
+          <td class="col-content-vertical col-sm-1 hidden-sm hidden-xs"
+              data-bind="click: $parent.editSlot"
+              href="#"
+              data-toggle="modal"
+              data-target="#viewSlot">
             <!-- ko if: $parent.needsResetsOnImg($data) -->
-            <img class="action-bar-icon" data-bind="attr: { 'src': $parent.resetsOnImgSource($data) }"></img>
+            <img class="action-bar-icon" data-bind="attr: { 'src': $parent.resetsOnImgSource($data) }">
+            </img>
             <!-- /ko -->
           </td>
           <td class="col-sm-4">
             <plus-minus params="value: usedSpellSlots,
-              max: maxSpellSlots"></plus-minus>
+              max: maxSpellSlots">
+            </plus-minus>
           </td>
           <td class="col-content-vertical col-xs-1 text-center"> <!--Refresh -->
             <a data-bind="click: $parent.resetSlots" href="#">
-              <i class="fa fa-refresh fa-color"> </i>
+              <i class="fa fa-refresh fa-color"></i>
             </a>
           </td>
           <td class="col-content-vertical">
             <a data-bind="click: $parent.removeSlot" href="#">
-              <i class="fa fa-trash-o fa-color-hover"> </i>
+              <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
           </td>
         </tr>
@@ -76,8 +81,8 @@
       <!-- /ko -->
       </tbody>
     </table>
-  </div>
-</div>
+  </div> <!-- end panel-body -->
+</div> <!-- end panel -->
 
 <!-- Add Modal -->
 <div class="modal fade" id="addSpellSlot" tabindex="-1" role="dialog"
@@ -86,8 +91,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span> </button>
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <h4 class="modal-title" id="addSkillLabel">
           Add a spell slot.
         </h4>
@@ -97,15 +106,23 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control" id="level" min="1" max="9"
-                data-bind='textInput: blankSlot().level'>
+              <input type="number"
+                     class="form-control"
+                     id="level"
+                     min="1"
+                     max="9"
+                     data-bind='textInput: blankSlot().level'>
             </div>
           </div>
           <div class="form-group">
             <label for="bonus" class="col-sm-2 control-label">Max</label>
             <div class="col-sm-10">
-              <input type="number" class="form-control" id="max" min="1" max="4"
-                data-bind='textInput: blankSlot().maxSpellSlots, hasFocus: modifierHasFocus'>
+              <input type="number"
+                     class="form-control"
+                     id="max"
+                     min="1"
+                     max="4"
+                     data-bind='textInput: blankSlot().maxSpellSlots, hasFocus: modifierHasFocus'>
             </div>
           </div>
           <div class="form-group">
@@ -113,96 +130,123 @@
             <div class="col-sm-10">
               <div class="btn-group btn-group-justified" role="group">
                 <label class="btn btn-default"
-                 data-bind="css: { active: blankSlot().resetsOn() == 'short'}">
-                   <input type="radio" class="hide-block"
-                   name="blankresetsOnShort" value="short"
-                   data-bind="checked: blankSlot().resetsOn"/>
+                       data-bind="css: { active: blankSlot().resetsOn() == 'short'}">
+                   <input type="radio"
+                          class="hide-block"
+                          name="blankresetsOnShort" value="short"
+                          data-bind="checked: blankSlot().resetsOn"/>
                     <img class="action-bar-icon" src="/images/meditation.svg"></img>
                     &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
                 <label class="btn btn-default"
                  data-bind="css: { active: blankSlot().resetsOn() != 'short'}">
-                   <input type="radio" class="hide-block"
-                   name="blankresetsOnLong" value="long"
-                   data-bind="checked: blankSlot().resetsOn"/>
+                   <input type="radio"
+                          class="hide-block"
+                          name="blankresetsOnLong"
+                          value="long"
+                          data-bind="checked: blankSlot().resetsOn"/>
                    <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
                     &nbsp;&nbsp;&nbsp;Long Rest
                 </label>
               </div>
             </div>
-          </div>
+          </div> <!-- end form-group -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> <button type="button" class="btn btn-primary" data-bind='click: addSlot' data-dismiss="modal">Add</button>
+            <button type="button"
+                    class="btn btn-default"
+                    data-dismiss="modal">Cancel
+            </button>
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind='click: addSlot'
+                    data-dismiss="modal">Add
+            </button>
           </div>
         </form>
-      </div>
-
-<!-- Modal Body -->
-    </div>
-<!-- Modal Content -->
-  </div>
-<!-- Modal Dialog -->
-</div>
-<!-- Modal Fade -->
+      </div> <!-- end modal-body -->
+    </div> <!-- end modal content -->
+  </div> <!-- end modal dialog -->
+</div> <!-- end modal -->
 <!-- ViewEdit Modal -->
-  <div class="modal fade" id="viewSlot" tabindex="-1" role="dialog"
-    aria-labelledby="viewSlotLabel" data-bind="modal: {
-       onopen: editModalOpen}, with: selecteditem">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-          <h4 class="modal-title" id="addSlotLabel"> Edit your Spell Slot.
-          </h4>
-        </div>
-        <div class="modal-body">
-          <form class="form-horizontal">
-            <div class="form-group">
-              <label for="name" class="col-sm-2 control-label">Level</label>
-              <div class="col-sm-10">
-                <input type="number" class="form-control" id="name" min="1" max="9"
-                  data-bind="value: level">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="bonus" class="col-sm-2 control-label">Max</label>
-              <div class="col-sm-10">
-                <input type="number" class="form-control" id="bonus" min="1" max="4"
-                  data-bind="value: maxSpellSlots, hasFocus: $parent.editHasFocus">
-              </div>
-            </div>
-           <div class="form-group">
-           <label class="col-sm-2 control-label">Resets on...</label>
-             <div class="col-sm-10">
-               <div class="btn-group btn-group-justified" role="group">
-                 <label class="btn btn-default"
-                 data-bind="css: { active: resetsOn() == 'short'}">
-                   <input type="radio" class="hide-block"
-                   name="resetsOnShort" value="short" data-bind="checked: resetsOn"/>
-                   <img class="action-bar-icon" src="/images/meditation.svg"></img>
-                   &nbsp;&nbsp;&nbsp;Short Rest
-                 </label>
-                 <label class="btn btn-default"
-                 data-bind="css: { active: resetsOn() != 'short'}">
-                    <input type="radio" class="hide-block"
-                    name="resetsOnLong" value="long" data-bind="checked: resetsOn"/>
-                    <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
-                    &nbsp;&nbsp;&nbsp;Long Rest
-                 </label>
-               </div>
-             </div>
-           </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
-          </div>
-        </form>
+<div class="modal fade"
+     id="viewSlot"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="viewSlotLabel"
+     data-bind="modal: {
+     onopen: editModalOpen}, with: selecteditem">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="addSlotLabel"> Edit your Spell Slot.
+        </h4>
       </div>
-
-<!-- Modal Body -->
-    </div>
-<!-- Modal Content -->
-  </div>
-<!-- Modal Dialog -->
-</div>
-<!-- End with statement -->
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Level</label>
+            <div class="col-sm-10">
+              <input type="number"
+                     class="form-control"
+                     id="name"
+                     min="1"
+                     max="9"
+                     data-bind="value: level">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="bonus" class="col-sm-2 control-label">Max</label>
+            <div class="col-sm-10">
+              <input type="number"
+                     class="form-control"
+                     id="bonus"
+                     min="1"
+                     max="4"
+                     data-bind="value: maxSpellSlots, hasFocus: $parent.editHasFocus">
+            </div>
+          </div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label">Resets on...</label>
+            <div class="col-sm-10">
+              <div class="btn-group btn-group-justified" role="group">
+                <label class="btn btn-default"
+                       data-bind="css: { active: resetsOn() == 'short'}">
+                  <input type="radio"
+                         class="hide-block"
+                         name="resetsOnShort"
+                         value="short"
+                         data-bind="checked: resetsOn"/>
+                  <img class="action-bar-icon"
+                       src="/images/meditation.svg"></img>
+                       &nbsp;&nbsp;&nbsp;Short Rest
+                </label>
+                <label class="btn btn-default"
+                       data-bind="css: { active: resetsOn() != 'short'}">
+                <input type="radio"
+                       class="hide-block"
+                       name="resetsOnLong"
+                       value="long"
+                       data-bind="checked: resetsOn"/>
+                <img class="action-bar-icon"
+                     src="/images/camping-tent.svg"></img>
+                     &nbsp;&nbsp;&nbsp;Long Rest
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal">Done</button>
+        </div>
+        </form>
+    </div> <!-- end modal body -->
+    </div> <!-- end modal content -->
+  </div> <!-- end modal dialog -->
+</div> <!-- end with statement -->
