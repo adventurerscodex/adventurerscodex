@@ -331,25 +331,29 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": "1",
       "maxSpellSlots": "4",
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": 2,
       "maxSpellSlots": "3",
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": 3,
       "maxSpellSlots": "3",
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": 4,
       "maxSpellSlots": 1,
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     }
   ],
   "Item": [
