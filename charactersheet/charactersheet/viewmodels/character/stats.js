@@ -17,6 +17,7 @@ function StatsViewModel() {
 
     var msg = 'Dexterity Bonus';
     self.initiativeTooltip = ko.observable(msg);
+    self.proficiencyPopover = ko.observable();
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -96,7 +97,7 @@ function StatsViewModel() {
         self.level.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
 
-        Notifications.profile.changed.add(self.calculateProficiencyLabel);
+        Notifications.profile.changed.add(self.calculatedProficiencyLabel);
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
     };
@@ -115,7 +116,7 @@ function StatsViewModel() {
         });
         self.hitDiceType().save();
 
-        Notifications.profile.changed.remove(self.calculateProficiencyLabel);
+        Notifications.profile.changed.remove(self.calculatedProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.events.longRest.remove(self.resetOnLongRest);
         Notifications.global.save.remove(self.save);     
@@ -213,8 +214,21 @@ function StatsViewModel() {
     /**
     * Tells otherStats to run proficiencyLabel method
     */
-    self.calculateProficiencyLabel = function() {
-        self.otherStats().updateValues();
+    self.calculatedProficiencyLabel = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
+        level = level ? parseInt(level) : 0;
+        var proficiency = parseInt(self.otherStats().proficiency()) ? parseInt(self.otherStats().proficiency()) : 0;
+        self.updatePopoverMessage(level, proficiency);
+
+        return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
+    };
+
+    self.updatePopoverMessage = function(level, proficiency) {
+        var levelBonus = (Math.ceil(level / 4) + 1);
+        self.proficiencyPopover("<span style='white-space:nowrap;'><strong>Proficiency</strong> ="
+            + "(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong><span></br>Proficiency = "
+            + levelBonus + " + " + proficiency);
     };
 
     // Modal methods
