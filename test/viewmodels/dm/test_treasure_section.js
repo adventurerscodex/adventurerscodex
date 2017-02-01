@@ -7,18 +7,32 @@ describe('TreasureSectionViewModel', function(){
     });
 
     describe('Load', function() {
-        it('should load model and section', function() {
+        it('should not load model and section', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
+            simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
             
             vm.load();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
         });
+        it('should load model and section', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var vm = new TreasureSectionViewModel(new Encounter());
+            var spy1 = simple.mock(Notifications.global.save, 'add');
+            var spy2 = simple.mock(Notifications.encounters.changed, 'add');
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
+            simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
+            
+            vm.load();
+
+            spy1.called.should.equal(true);
+            spy2.called.should.equal(true);
+        });        
     });  
 
     describe('Unload', function() {
@@ -114,7 +128,13 @@ describe('TreasureSectionViewModel', function(){
 
             vm.weaponShow().should.equal(true);
             vm.weaponFirstElementFocus().should.equal(true);
-        });                                
+        }); 
+        it('should allocate the correct model', function() {
+            var vm = new TreasureSectionViewModel(new Encounter());
+            vm.itemType('');
+            
+            vm.setTreasure();
+        });                                         
     });    
 
     /* UI Methods */
@@ -190,9 +210,18 @@ describe('TreasureSectionViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
+            simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
             
             vm._dataHasChanged();
         });
+        it('should load new data', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var vm = new TreasureSectionViewModel(new Encounter());
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
+            simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
+            
+            vm._dataHasChanged();
+        });        
     });     
 
     describe('Toggle modal', function() {

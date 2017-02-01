@@ -12,13 +12,33 @@ describe('EnvironmentSectionViewModel', function(){
             var vm = new EnvironmentSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
+            simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, property, value) {
+                if (model.name === 'EnvironmentSection') {
+                    return new EnvironmentSection();
+                } else if (model.name === 'Environment') {
+                    var environment = new Environment();
+                    environment.imageUrl('link');
+                    return environment;
+                }
+            });
             
             vm.load();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
         });
+        it('should load model and section', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var vm = new EnvironmentSectionViewModel(new Encounter());
+            var spy1 = simple.mock(Notifications.global.save, 'add');
+            var spy2 = simple.mock(Notifications.encounters.changed, 'add');
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
+            
+            vm.load();
+
+            spy1.called.should.equal(true);
+            spy2.called.should.equal(true);
+        });        
     });  
 
     describe('Unload', function() {
@@ -201,5 +221,20 @@ describe('EnvironmentSectionViewModel', function(){
             
             vm._dataHasChanged();
         });
+        it('should load new data', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var vm = new EnvironmentSectionViewModel(new Encounter());
+            simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, property, value) {
+                if (model.name === 'EnvironmentSection') {
+                    return new EnvironmentSection();
+                } else if (model.name === 'Environment') {
+                    var environment = new Environment();
+                    environment.imageUrl('link');
+                    return environment;
+                }
+            });
+            
+            vm._dataHasChanged();
+        });        
     });                                   
 });

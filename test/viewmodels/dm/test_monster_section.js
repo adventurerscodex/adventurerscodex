@@ -7,18 +7,38 @@ describe('MonsterSectionViewModel', function(){
     });
 
     describe('Load', function() {
-        it('should load model and section', function() {
+        it('should not load model and section', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
+            simple.mock(PersistenceService, 'findBy').returnWith(null);
             
             vm.load();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
         });
+        it('should load model and section', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var vm = new MonsterSectionViewModel(new Encounter());
+            var spy1 = simple.mock(Notifications.global.save, 'add');
+            var spy2 = simple.mock(Notifications.encounters.changed, 'add');
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
+            simple.mock(PersistenceService, 'findBy').callFn(function(model, property, value) {
+                if (model.name === 'Monster') {
+                    return [new Monster()];
+                } else if (model.name === 'MonsterAbilityScore') {
+                    return [new MonsterAbilityScore()];
+                }
+            });
+            
+            vm.load();
+
+            spy1.called.should.equal(true);
+            spy2.called.should.equal(true);
+        });        
     });  
 
     describe('Unload', function() {
@@ -39,6 +59,7 @@ describe('MonsterSectionViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
+            vm.addMonster();
             
             vm.save();
         });
@@ -53,9 +74,11 @@ describe('MonsterSectionViewModel', function(){
 
     describe('Delete', function() {
         it('should delete model', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
-            
+            vm.addMonster();
+
             vm.delete();
         });
         it('should do nothing since it can\'t find the model', function() {
@@ -149,9 +172,18 @@ describe('MonsterSectionViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
+            simple.mock(PersistenceService, 'findBy').returnWith(null);
             
             vm._dataHasChanged();
         });
+        it('should load new data', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var vm = new MonsterSectionViewModel(new Encounter());
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
+            simple.mock(PersistenceService, 'findBy').returnWith([new Monster()]);
+            
+            vm._dataHasChanged();
+        });        
     });     
 
     describe('Toggle modal', function() {
