@@ -59,12 +59,12 @@ describe('Magic Items View Model', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var magicItems = new MagicItemsViewModel();
-            magicItems.magicItems().length.should.equal(0);
-            magicItems.addItem();
-            magicItems.magicItems().length.should.equal(1);
-            var magicItem = magicItems.magicItems.pop();
+
+            var magicItem = new MagicItem();
+            magicItem.magicItemName('Wand');
             magicItems.editItem(magicItem);
-            magicItems.selecteditem().should.equal(magicItem);
+            magicItems.currentEditItem().magicItemName().should.equal(magicItem.magicItemName());
+            magicItems.modalOpen().should.equal(true);
         });
     });
 

@@ -26,26 +26,20 @@
 			<!-- ko foreach: filteredAndSortedDailyFeatures -->
 				<tr class="clickable">
 					<td data-bind="click: $parent.editDailyFeature"
-					href="#"
-					class="col-sm-4 col-xs-3 feature-row table-data-overflow"
-          data-toggle="modal"
-          data-target="#viewDailyFeature">
+					href="#" class="col-sm-4 col-xs-3 feature-row table-data-overflow"
+          data-toggle="modal">
             <span data-bind="css: color" class="form-control pull-left color-picker-item"></span>
   					<span href="#" data-bind="text: featureName" class="hidden-xs">
 					  </span>
 					</td>
 
-					<td class="col-content-vertical col-sm-1 feature-row hidden-xs text-center" data-bind="click: $parent.editDailyFeature"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewDailyFeature">
+					<td class="col-content-vertical col-sm-1 feature-row hidden-xs text-center"
+            data-bind="click: $parent.editDailyFeature" href="#"  data-toggle="modal">
 						<span data-bind="text: featureMaxUses" ></span>
 					</td>
 
-					<td class="col-content-vertical col-sm-2 hidden-sm hidden-xs feature-row" data-bind="click: $parent.editDailyFeature"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewDailyFeature">
+					<td class="col-content-vertical col-sm-2 hidden-sm hidden-xs feature-row"
+            data-bind="click: $parent.editDailyFeature" href="#" data-toggle="modal">
           	<!-- ko if: needsResetsOnImg -->
 						<img class="action-bar-icon" data-bind="attr: { 'src': resetsOnImgSource }"></img>
 						<!-- /ko -->
@@ -154,7 +148,7 @@
 <!-- ViewEdit Modal -->
 	<div class="modal fade" id="viewDailyFeature" tabindex="-1" role="dialog"
 		aria-labelledby="viewDailyFeatureLabel" data-bind="modal: {
-			 onopen: editModalOpen}, with: selecteditem">
+		open: modalOpen, onopen: editModalOpen, onclose: modalFinishedClosing}, with: editItem">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">

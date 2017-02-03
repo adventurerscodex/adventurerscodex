@@ -33,16 +33,11 @@ function Weapon() {
     self.weaponDescription = ko.observable('');
     self.weaponQuantity = ko.observable(1);
 
-    self.weaponProficiencyOptions = ko.observableArray(
-        Fixtures.weapon.weaponProficiencyOptions);
-    self.weaponHandednessOptions = ko.observableArray(
-        Fixtures.weapon.weaponHandednessOptions);
-    self.weaponTypeOptions = ko.observableArray(
-        Fixtures.weapon.weaponTypeOptions);
-    self.weaponPropertyOptions = ko.observableArray(
-        Fixtures.weapon.weaponPropertyOptions);
-    self.weaponDamageTypeOptions = ko.observableArray(
-        Fixtures.weapon.weaponDamageTypeOptions);
+    self.weaponProficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
+    self.weaponHandednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
+    self.weaponTypeOptions = ko.observableArray(Fixtures.weapon.weaponTypeOptions);
+    self.weaponPropertyOptions = ko.observableArray(Fixtures.weapon.weaponPropertyOptions);
+    self.weaponDamageTypeOptions = ko.observableArray(Fixtures.weapon.weaponDamageTypeOptions);
 
     self.updateValues = function() {
         self._dummy.notifySubscribers();
@@ -167,9 +162,6 @@ function Weapon() {
                 }
             }
             return weaponRange + ' ft.';
-
-        } else {
-            throw 'Weapon type not range or melee.';
         }
     });
 

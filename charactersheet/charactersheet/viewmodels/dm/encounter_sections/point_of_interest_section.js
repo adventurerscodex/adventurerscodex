@@ -12,10 +12,10 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     self.pointsOfInterest = ko.observableArray();
-
     self.blankPointOfInterest = ko.observable(new PointOfInterest());
-    self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();    
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -125,7 +125,10 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     };
 
     self.editPointOfInterest = function(poi) {
-        self.selecteditem(poi);
+        self.editItemIndex = poi.__id;
+        self.currentEditItem(new PointOfInterest());
+        self.currentEditItem().importValues(poi.exportValues());
+        self.openModal(true);        
     };
 
     self.toggleModal = function() {
@@ -140,6 +143,17 @@ function PointOfInterestSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+        
+        if (self.openModal()) {
+            self.pointsOfInterest().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        self.openModal(false);        
     };
 
     self.selectPreviewTab = function() {

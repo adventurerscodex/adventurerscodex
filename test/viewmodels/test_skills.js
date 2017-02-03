@@ -44,21 +44,15 @@ describe('Skill Tree', function() {
 
     describe('Edit skill', function() {
         it('should put a skill from the list of skills into the selected slot', function() {
-            var c = CharacterManager.activeCharacter;
-            CharacterManager.activeCharacter = function() {
-                return {
-                    key: function() { return '1234'; }
-                };
-            };
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var p = new SkillsViewModel();
-            p.addSkill();
-            Should.not.exist(p.selecteditem());
-            p.skills().length.should.equal(1);
-            p.editSkill(p.skills()[0]);
-            p.selecteditem().should.equal(p.skills.pop());
 
-            CharacterManager.activeCharacter = c;
+            var skill = new Skill();
+            skill.name('Tree climbing');
+            p.editSkill(skill);
+            p.currentEditItem().name().should.equal(skill.name());
+            p.modalOpen().should.equal(true);
         });
     });
 

@@ -20,10 +20,11 @@ function SpellbookViewModel() {
         'spellRange desc': { field: 'spellRange', direction: 'desc'}
     };
 
-    self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();    
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -55,9 +56,7 @@ function SpellbookViewModel() {
     };
 
     self.unload = function() {
-        $.each(self.spellbook(), function(_, e) {
-            e.save();
-        });
+        self.save();
         Notifications.spellStats.changed.remove(self.valueHasChanged);
         Notifications.global.save.remove(self.save);
     };
@@ -87,14 +86,21 @@ function SpellbookViewModel() {
         self.editTabStatus('');
         self.firstModalElementHasFocus(false);
         self.spellSchoolIconCSS('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
+        if (self.modalOpen()) {
+            self.spellbook().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+        self.save();
+        
+        self.modalOpen(false);
     };
 
     self.selectPreviewTab = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
-
     };
 
     self.selectEditTab = function() {
@@ -104,8 +110,8 @@ function SpellbookViewModel() {
     };
 
     self.determineSpellSchoolIcon = ko.computed(function() {
-        if (self.selecteditem() && self.selecteditem().spellSchool()) {
-            var spellSchool = self.selecteditem().spellSchool();
+        if (self.currentEditItem() && self.currentEditItem().spellSchool()) {
+            var spellSchool = self.currentEditItem().spellSchool();
             self.spellSchoolIconCSS(spellSchool.toLowerCase());
         }
     });
@@ -197,7 +203,10 @@ function SpellbookViewModel() {
     };
 
     self.editSpell = function(spell) {
-        self.selecteditem(spell);
+        self.editItemIndex = spell.__id;
+        self.currentEditItem(new Spell());
+        self.currentEditItem().importValues(spell.exportValues());
+        self.modalOpen(true);        
     };
 
     self.clear = function() {

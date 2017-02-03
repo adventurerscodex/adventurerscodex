@@ -12,10 +12,11 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     self.playerTexts = ko.observableArray();
-
     self.blankPlayerText = ko.observable(new PlayerText());
     self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();      
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -125,7 +126,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     self.editPlayerText = function(playerText) {
-        self.selecteditem(playerText);
+        self.editItemIndex = playerText.__id;
+        self.currentEditItem(new PlayerText());
+        self.currentEditItem().importValues(playerText.exportValues());
+        self.openModal(true);            
     };
 
     self.toggleModal = function() {
@@ -140,6 +144,17 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+
+        if (self.openModal()) {
+            self.playerTexts().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        self.openModal(false);         
     };
 
     self.selectPreviewTab = function() {

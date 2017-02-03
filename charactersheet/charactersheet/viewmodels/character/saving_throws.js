@@ -3,6 +3,12 @@
 function SavingThrowsViewModel() {
     var self = this;
 
+    self.blankSavingThrow = ko.observable(new SavingThrows());
+    self.savingThrows = ko.observableArray([]);
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();    
+    
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
@@ -11,6 +17,9 @@ function SavingThrowsViewModel() {
         'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
         'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
     };
+
+    self.filter = ko.observable('');
+    self.sort = ko.observable(self.sorts['name asc']);
 
     self._defaultSavingThrows = function() {
         var savingThrows = [
@@ -28,12 +37,6 @@ function SavingThrowsViewModel() {
             return savingThrow;
         });
     };
-
-    self.selecteditem = ko.observable();
-    self.blankSavingThrow = ko.observable(new SavingThrows());
-    self.savingThrows = ko.observableArray([]);
-    self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['name asc']);
 
     self.load = function() {
         Notifications.abilityScores.changed.add(self.updateValues);
@@ -104,6 +107,19 @@ function SavingThrowsViewModel() {
         self.modifierHasFocus(true);
     };
 
+    self.modalFinishedClosing = function() {
+        if (self.modalOpen()) {
+            self.savingThrows().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        self.modalOpen(false);
+    };    
+
     //Manipulating savingThrows
     self.addsavingThrow = function() {
         self.blankSavingThrow().save();
@@ -117,7 +133,10 @@ function SavingThrowsViewModel() {
     };
 
     self.editSavingThrow = function(savingThrow) {
-        self.selecteditem(savingThrow);
+        self.editItemIndex = savingThrow.__id;
+        self.currentEditItem(new SavingThrows());
+        self.currentEditItem().importValues(savingThrow.exportValues());
+        self.modalOpen(true);  
     };
 
     self.clear = function() {

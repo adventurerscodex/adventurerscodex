@@ -35,11 +35,9 @@
       <!-- ko foreach: filteredAndSortedMagicItems -->
         <tr class="clickable">
           <td data-bind="text: magicItemName, click: $parent.editItem"
-            href="#"
-            data-target="#viewMagicItem"></td>
+            href="#"></td>
           <td data-bind="text: chargesDisplay, click: $parent.editItem"
-            href="#"
-            data-target="#viewMagicItem"></td>
+            href="#"></td>
           <td data-bind="visible: $parent.noneAttuned() === false">
             <div data-bind="visible: magicItemRequiresAttunement() == true">
               <input data-bind="checked: magicItemAttuned"
@@ -49,12 +47,10 @@
             </div>
           </td>
           <td data-bind="text: magicItemWeightLabel, click: $parent.editItem"
-              href="#"
-              data-target="#viewMagicItem">
+              href="#">
           </td>
           <td data-bind="text: shortDescription, click: $parent.editItem"
-            href="#" class="hidden-sm hidden-xs"
-            data-target="#viewMagicItem">
+            href="#" class="hidden-sm hidden-xs">
          </td>
           <td>
             <a data-bind="click: $parent.removeItem" href="#">

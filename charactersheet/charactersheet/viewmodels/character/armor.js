@@ -3,15 +3,17 @@
 function ArmorViewModel() {
     var self = this;
 
-    self.selecteditem = ko.observable();
     self.blankArmor = ko.observable(new Armor());
     self.armors = ko.observableArray([]);
-    self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
         'armorName asc': { field: 'armorName', direction: 'asc'},
@@ -51,8 +53,8 @@ function ArmorViewModel() {
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
         if(self.armors().length > 0) {
-            $.each(self.armors(), function(_, e) {
-                weight += e.armorWeight() ? parseInt(e.armorWeight()) : 0;
+            self.armors().forEach(function(armor, idx, _) {
+                weight += armor.armorWeight() ? parseInt(armor.armorWeight()) : 0;
             });
         }
         return weight + ' (lbs)';
@@ -84,13 +86,16 @@ function ArmorViewModel() {
     self.modalFinishedClosing = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
+        if (self.modalOpen()) {
+            self.armors().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
 
-        // Just in case data was changed.
-        self.armors().forEach(function(e, i, _) {
-            e.save();
-        });
+        self.save();
+        self.modalOpen(false);
         Notifications.armor.changed.dispatch();
     };
 
@@ -144,7 +149,10 @@ function ArmorViewModel() {
     };
 
     self.editArmor = function(armor) {
-        self.selecteditem(armor);
+        self.editItemIndex = armor.__id;
+        self.currentEditItem(new Armor());
+        self.currentEditItem().importValues(armor.exportValues());
+        self.modalOpen(true);        
     };
 
     self.clear = function() {

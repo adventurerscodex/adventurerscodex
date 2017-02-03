@@ -19,12 +19,12 @@ describe('WeaponsViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var weapons = new WeaponsViewModel();
-            weapons.weapons().length.should.equal(0);
-            weapons.addWeapon();
-            weapons.weapons().length.should.equal(1);
-            var weapon = weapons.weapons.pop();
+
+            var weapon = new Weapon();
+            weapon.weaponName('Sword');
             weapons.editWeapon(weapon);
-            weapons.selecteditem().should.equal(weapon);
+            weapons.currentEditItem().weaponName().should.equal(weapon.weaponName());
+            weapons.modalOpen().should.equal(true);
         });
     });
 

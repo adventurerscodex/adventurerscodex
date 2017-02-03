@@ -12,10 +12,10 @@ function NPCSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     self.npcs = ko.observableArray();
-
     self.blankNPC = ko.observable(new NPC());
-    self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();       
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -127,7 +127,10 @@ function NPCSectionViewModel(parentEncounter) {
     };
 
     self.editNPC = function(npc) {
-        self.selecteditem(npc);
+        self.editItemIndex = npc.__id;
+        self.currentEditItem(new NPC());
+        self.currentEditItem().importValues(npc.exportValues());
+        self.openModal(true);            
     };
 
     self.toggleModal = function() {
@@ -142,6 +145,17 @@ function NPCSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+
+        if (self.openModal()) {
+            self.npcs().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        self.openModal(false);           
     };
 
     self.selectPreviewTab = function() {

@@ -6,32 +6,19 @@ describe('SpellsViewModel', function(){
 
     describe('Load', function() {
         it('should load the data from the spells db.', function() {
-            var c = CharacterManager.activeCharacter;
-            CharacterManager.activeCharacter = function() {
-                return {
-                    key: function() { return '1234'; }
-                };
-            };
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             PersistenceService.findBy = function(key) { return [new Spell(), new Spell()]; };
             var spellsVM = new SpellbookViewModel();
             spellsVM.spellbook().length.should.equal(0);
             spellsVM.load();
             spellsVM.spellbook().length.should.equal(2);
-
-            CharacterManager.activeCharacter = c;
         });
     });
 
     describe('Unload', function() {
         it('should unload the data to the spells db.', function() {
-            //Shims
-            var c = CharacterManager.activeCharacter;
-            CharacterManager.activeCharacter = function() {
-                return {
-                    key: function() { return '1234'; }
-                };
-            };
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var saved = [false, false];
             var spells = [new Spell(), new Spell()].map(function(e, i, _) {
@@ -54,59 +41,38 @@ describe('SpellsViewModel', function(){
             saved.forEach(function(e, i, _) {
                 e.should.equal(true);
             });
-
-            CharacterManager.activeCharacter = c;
         });
     });
 
     describe('Add Spell', function() {
         it('should add a new spell to the SpellbookViewModel', function() {
-            var c = CharacterManager.activeCharacter;
-            CharacterManager.activeCharacter = function() {
-                return {
-                    key: function() { return '1234'; }
-                };
-            };
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var book = new SpellbookViewModel();
             book.clear();
             book.spellbook().length.should.equal(0);
             book.addSpell();
             book.spellbook().length.should.equal(1);
-
-            CharacterManager.activeCharacter = c;
         });
     });
 
     describe('Edit Spell', function() {
         it('should select a spell for editing.', function() {
-            var c = CharacterManager.activeCharacter;
-            CharacterManager.activeCharacter = function() {
-                return {
-                    key: function() { return '1234'; }
-                };
-            };
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var book = new SpellbookViewModel();
-            book.spellbook().length.should.equal(0);
-            book.addSpell();
-            book.spellbook().length.should.equal(1);
-            var spell = book.spellbook.pop();
-            book.editSpell(spell);
-            book.selecteditem().should.equal(spell);
 
-            CharacterManager.activeCharacter = c;
+            var spell = new Spell();
+            spell.spellName('Magic missle');
+            book.editSpell(spell);
+            book.currentEditItem().spellName().should.equal(spell.spellName());
+            book.modalOpen().should.equal(true);
         });
     });
 
     describe('Remove Item', function() {
         it('should remove a item from the SpellbookViewModel', function() {
-            var c = CharacterManager.activeCharacter;
-            CharacterManager.activeCharacter = function() {
-                return {
-                    key: function() { return '1234'; }
-                };
-            };
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var book = new SpellbookViewModel();
             book.clear();
@@ -115,8 +81,6 @@ describe('SpellsViewModel', function(){
             book.spellbook().length.should.equal(1);
             book.removeSpell(book.spellbook().pop());
             book.spellbook().length.should.equal(0);
-
-            CharacterManager.activeCharacter = c;
         });
     });
 

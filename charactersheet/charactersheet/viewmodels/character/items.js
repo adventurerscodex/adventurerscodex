@@ -79,9 +79,7 @@ function ItemsViewModel() {
             });
         }
 
-        // Just in case data was changed.
         self.save();
-        
         self.modalOpen(false);
         Notifications.item.changed.dispatch();
     };
@@ -140,10 +138,6 @@ function ItemsViewModel() {
         item.importValues(self.blankItem().exportValues());
         self.addItem(item);
         self.blankItem().clear();
-    };
-
-    self.editItemButton = function(item) {
-        self.editItem(item);
     };
 
     self.populateItem = function(label, value) {

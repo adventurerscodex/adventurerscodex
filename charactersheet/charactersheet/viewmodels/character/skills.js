@@ -41,8 +41,11 @@ function SkillsViewModel() {
         });
     };
 
-    self.selecteditem = ko.observable();
+    
     self.blankSkill = ko.observable(new Skill(self));
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();    
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
@@ -72,9 +75,7 @@ function SkillsViewModel() {
     };
 
     self.unload = function() {
-        self.skills().forEach(function(e, i, _) {
-            e.save();
-        });
+        self.save();
         self.skills([]);
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
         Notifications.stats.changed.remove(self.dataHasChanged);
@@ -120,6 +121,20 @@ function SkillsViewModel() {
         self.modifierHasFocus(true);
     };
 
+    self.modalFinishedClosing = function() {
+        if (self.modalOpen()) {
+            self.skills().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        
+        self.modalOpen(false);
+    };    
+
     //Manipulating skills
 
     self.addSkill = function() {
@@ -137,7 +152,10 @@ function SkillsViewModel() {
     };
 
     self.editSkill = function(skill) {
-        self.selecteditem(skill);
+        self.editItemIndex = skill.__id;
+        self.currentEditItem(new Skill());
+        self.currentEditItem().importValues(skill.exportValues());
+        self.modalOpen(true);
     };
 
     self.clear = function() {

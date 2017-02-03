@@ -21,9 +21,10 @@ function TreasureSectionViewModel(parentEncounter) {
     ];
 
     self.blankTreasure = ko.observable(null);
-    self.selecteditem = ko.observable();
     self.itemType = ko.observable(null);
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();  
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -186,7 +187,21 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
-        self.selecteditem(treasure);
+        self.editItemIndex = treasure.__id;        
+        if (treasure.treasureType() == 'armor') {
+            self.currentEditItem(new EncounterArmor());
+        } else if (treasure.treasureType() == 'item') {
+            self.currentEditItem(new EncounterItem());
+        } else if (treasure.treasureType() == 'magicItem') {
+            self.currentEditItem(new EncounterMagicItem());
+        } else if (treasure.treasureType() == 'weapon') {
+            self.currentEditItem(new EncounterWeapon());
+        } else if (treasure.treasureType() == 'coins') {
+            self.currentEditItem(new EncounterCoins());
+        }
+        
+        self.currentEditItem().importValues(treasure.exportValues());
+        self.openModal(true);              
     };
 
     /* Auto-complete logic */
@@ -242,6 +257,17 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+
+        if (self.openModal()) {
+            self.treasure().forEach(function(item, idx, _) {
+                if (item.treasureType() === self.currentEditItem().treasureType() && item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        self.openModal(false);          
     };
 
     self.selectPreviewTab = function() {

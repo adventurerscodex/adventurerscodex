@@ -153,7 +153,7 @@ function StatsViewModel() {
         self.editItem(new Health());
         self.editItem().importValues(self.health().exportValues());
         self.modalOpen(true);
-    }
+    };
 
     self.calculateHitDice = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',

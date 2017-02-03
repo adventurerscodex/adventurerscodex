@@ -28,16 +28,16 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedEquipment -->
         <tr class="clickable">
-          <td data-bind="text: itemName, click: $parent.editItemButton"
+          <td data-bind="text: itemName, click: $parent.editItem"
                   href="#"></td>
-          <td data-bind="text: itemQty, click: $parent.editItemButton"
+          <td data-bind="text: itemQty, click: $parent.editItem"
                   href="#"></td>
-          <td data-bind="text: itemWeightLabel, click: $parent.editItemButton"
+          <td data-bind="text: itemWeightLabel, click: $parent.editItem"
                   href="#"></td>
           <td class="hidden-xs" data-bind="text: costLabel,
-                  click: $parent.editItemButton" href="#"></td>
+                  click: $parent.editItem" href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: shortDescription,
-            click: $parent.editItemButton" href="#"></td>
+            click: $parent.editItem" href="#"></td>
           <td>
             <a data-bind='click: $parent.removeItemButton' href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>

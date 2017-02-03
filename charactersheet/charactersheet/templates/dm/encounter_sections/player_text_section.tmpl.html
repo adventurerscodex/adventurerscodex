@@ -27,19 +27,13 @@
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editPlayerText"
           class="col-xs-12 col-sm-4 col-md-3"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewPlayerText"></td>
+          href="#" data-toggle="modal"></td>
       <td data-bind="html: shortDescription, click: $parent.editPlayerText"
           class="col-xs-12 hidden-md hidden-lg"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewPlayerText"></td>
+          href="#" data-toggle="modal"></td>
       <td data-bind="html: longDescription, click: $parent.editPlayerText"
           class="col-md-12 hidden-sm hidden-xs"
-          href="#"
-          data-toggle="modal"
-          data-target="#viewPlayerText"></td>
+          href="#" data-toggle="modal"></td>
       <td>
         <a data-bind="click: $parent.removePlayerText" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -116,7 +110,7 @@
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
-      open: selecteditem,
+      open: openModal,
       onopen: modalFinishedOpening,
       onclose: modalFinishedClosing
     }">
@@ -145,7 +139,7 @@
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: selecteditem">
+        <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="row">
               <div class="col-xs-12">

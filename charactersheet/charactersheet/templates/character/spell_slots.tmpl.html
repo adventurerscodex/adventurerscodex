@@ -25,29 +25,21 @@
       <!-- ko foreach: filteredAndSortedSlots -->
         <tr class="row clickable">
           <td class="col-sm-1 col-xs-1 col-content-vertical" data-bind="click: $parent.editSlot"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewSlot">
+              href="#">
             <span data-bind="css: color" class="form-control color-picker-item" >
             </span>
           </td>
           <td class="col-sm-2 col-xs-2 col-content-vertical"
               data-bind="click: $parent.editSlot, text: level"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewSlot">
+              href="#">
           </td>
           <td class="col-sm-2 hidden-xs col-content-vertical"
               data-bind="click: $parent.editSlot, text: maxSpellSlots"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewSlot">
+              href="#">
           </td>
           <td class="col-content-vertical col-md-2 hidden-sm hidden-xs"
               data-bind="click: $parent.editSlot"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewSlot">
+              href="#">
             <!-- ko if: $parent.needsResetsOnImg($data) -->
             <img class="action-bar-icon" data-bind="attr: { 'src': $parent.resetsOnImgSource($data) }">
             </img>
@@ -173,8 +165,8 @@
      tabindex="-1"
      role="dialog"
      aria-labelledby="viewSlotLabel"
-     data-bind="modal: {
-     onopen: editModalOpen}, with: selecteditem">
+     data-bind="modal: { open: openModal, onopen: editModalOpen,
+       onclose: modalFinishedClosing}, with: currentEditItem">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

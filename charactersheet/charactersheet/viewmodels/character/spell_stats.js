@@ -5,6 +5,7 @@ function SpellStatsViewModel() {
 
     self.spellStats = ko.observable(new SpellStats());
     self.modalStatus = ko.observable(false);
+    self.editItem = ko.observable();
     self.firstModalElementHasFocus = ko.observable(false);
 
     self.load = function() {
@@ -35,21 +36,29 @@ function SpellStatsViewModel() {
     };
 
     self.setSpellCastingAbility = function(label, value) {
-        self.spellStats().spellcastingAbility(label);
+        self.editItem().spellcastingAbility(label);
     };
 
     // Modal Methods
 
-    self.openModal = function() {
+    self.editSpellStats = function() {
         self.modalStatus(true);
-         // Alert the modal even if the value didn't technically change.
-        self.modalStatus.valueHasMutated();
+        self.editItem(new SpellStats());
+        self.editItem().importValues(self.spellStats().exportValues());
     };
 
     self.modalFinishedAnimating = function() {
         self.firstModalElementHasFocus(true);
         self.firstModalElementHasFocus.valueHasMutated();
     };
+
+    self.modalFinishedClosing = function() {    
+        if (self.modalStatus()) {
+            self.spellStats().importValues(self.editItem().exportValues());
+        }
+        self.modalStatus(false);
+        self.save();
+    };    
 
     self.dataHasChanged = function() {
         self.spellStats().save();

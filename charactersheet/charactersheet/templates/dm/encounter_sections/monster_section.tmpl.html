@@ -38,24 +38,19 @@
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editMonster"
           href="#"
-          data-toggle="modal"
-          data-target="#viewMonster"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: armorClass, click: $parent.editMonster"
           href="#"
-          data-toggle="modal"
-          data-target="#viewMonster"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: hitPoints, click: $parent.editMonster"
           href="#"
-          data-toggle="modal"
-          data-target="#viewMonster"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: speed, click: $parent.editMonster"
           href="#"
-          data-toggle="modal"
-          data-target="#viewMonster"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: experience, click: $parent.editMonster"
           href="#"
-          data-toggle="modal"
-          data-target="#viewMonster"></td>
+          data-toggle="modal"></td>
       <td>
         <a data-bind="click: $parent.removeMonster" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -328,12 +323,13 @@
 </div> <!-- Modal Fade -->
 
 <!-- ViewEdit Modal -->
+<!-- ko if: openEditModal -->
 <div class="modal fade"
      id="viewWeapon"
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
-      open: selecteditem,
+      open: openEditModal,
       onopen: modalFinishedOpening,
       onclose: modalFinishedClosing
     }">
@@ -362,7 +358,7 @@
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: selecteditem">
+        <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;
@@ -679,3 +675,4 @@
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
+<!-- /ko -->

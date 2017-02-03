@@ -47,34 +47,28 @@
       <!-- ko foreach: filteredAndSortedWeapons -->
         <tr class="clickable">
           <td data-bind="click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon">
+              href="#">
               <span data-bind="text: weaponName">
               </span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td data-bind="text: weaponDmg, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponDamageType, click: $parent.editWeapon"
-              href="#" data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponRangeLabel, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponProperty, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponQuantity, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td>
             <a data-bind="click: $parent.removeWeapon" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -308,7 +302,7 @@
          role="dialog"
          aria-labelledby="viewWeaponLabel"
          data-bind="modal: {
-           open: selecteditem,
+           open: modalOpen,
            onopen: modalFinishedOpening,
            onclose: modalFinishedClosing
         }">
@@ -337,7 +331,7 @@
                 </a>
               </li>
             </ul>
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="weaponsModalPreview">
                 <div class="h3">
                   <span data-bind="text: weaponName"></span>
