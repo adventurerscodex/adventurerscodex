@@ -1,0 +1,116 @@
+'use strict';
+
+function ProficienciesViewModel() {
+    var self = this;
+
+    self.sorts = {
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'type asc': { field: 'type', direction: 'asc'},
+        'type desc': { field: 'type', direction: 'desc'}
+    };
+
+    self.proficiencies = ko.observableArray([]);
+    self.blankProficiency = ko.observable(new Proficiency());
+    self.selecteditem = ko.observable();
+    self.sort = ko.observable(self.sorts['name asc']);
+    self.filter = ko.observable('');
+    self.shouldShowDisclaimer = ko.observable(false);
+    self.previewTabStatus = ko.observable('active');
+    self.editTabStatus = ko.observable('');
+    self.firstModalElementHasFocus = ko.observable(false);
+    self.editFirstModalElementHasFocus = ko.observable(false);
+
+    self.load = function() {
+        Notifications.global.save.add(self.save);
+
+        var key = CharacterManager.activeCharacter().key();
+        self.proficiencies(PersistenceService.findBy(Proficiency, 'characterId', key));
+    };
+
+    self.unload = function() {
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.proficiencies().forEach(function(e, i, _) {
+            e.save();
+        });
+    };
+
+    // Pre-pop methods
+    self.proficienciesPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.proficiencies ? Object.keys(DataRepository.proficiencies) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    self.populateProficiency = function(label, value) {
+        var proficiency = DataRepository.proficiencies[label];
+
+        self.blankProficiency().importValues(proficiency);
+        self.shouldShowDisclaimer(true);
+    };
+
+    // Modal methods
+    self.modalFinishedOpening = function() {
+        self.shouldShowDisclaimer(false);
+        self.firstModalElementHasFocus(true);
+    };
+
+    self.modalFinishedClosing = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+        self.previewTabStatus.valueHasMutated();
+        self.editTabStatus.valueHasMutated();
+    };
+
+    self.selectPreviewTab = function() {
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
+
+    self.selectEditTab = function() {
+        self.editTabStatus('active');
+        self.previewTabStatus('');
+        self.editFirstModalElementHasFocus(true);
+    };
+
+    self.filteredAndSortedProficiencies = ko.computed(function() {
+        return SortService.sortAndFilter(self.proficiencies(), self.sort(), null);
+    });
+
+    self.sortArrow = function(columnName) {
+        return SortService.sortArrow(columnName, self.sort());
+    };
+
+    self.sortBy = function(columnName) {
+        self.sort(SortService.sortForName(self.sort(),
+            columnName, self.sorts));
+    };
+
+    self.addProficiency = function() {
+        var proficiency = self.blankProficiency();
+        proficiency.characterId(CharacterManager.activeCharacter().key());
+        proficiency.save();
+        self.proficiencies.push(proficiency);
+        self.blankProficiency(new Proficiency());
+    };
+
+    self.clear = function() {
+        self.proficiencies([]);
+    };
+
+    self.removeProficiency = function(proficiency) {
+        self.proficiencies.remove(proficiency);
+        proficiency.delete();
+        Notifications.proficiency.changed.dispatch();
+    };
+
+    self.editProficiency = function(proficiency) {
+        self.selecteditem(proficiency);
+    };
+}

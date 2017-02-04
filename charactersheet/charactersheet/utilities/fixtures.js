@@ -180,6 +180,14 @@ var Fixtures = {
         spellcastingAbilityOptions: [
             'INT', 'WIS', 'CHA']
     },
+    proficiency: {
+        proficiencyTypes: [
+            'Armor',
+            'Languages',
+            'Tools',
+            'Weapon'
+        ]
+    },
     profile: {
         alignmentOptions: [
             'Lawful good',
