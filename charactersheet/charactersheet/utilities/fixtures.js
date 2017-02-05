@@ -305,9 +305,9 @@ var Fixtures = {
     },
 
     popoverText: {
-        alwaysPrepared : 'Examples of always prepared spells: <br />' +
-            '<ul><li>Paladin Oath Spells</li>' +
-            '<li>Cleric Domain Spells</li>' +
-            '<li>Wizard Signature Spells</li></ul>'
+        alwaysPrepared : 'Examples: <br />' +
+            '<ul><li>Oath Spells</li>' +
+            '<li>Domain Spells</li>' +
+            '<li>Signature Spells</li></ul>'
     }
 };
