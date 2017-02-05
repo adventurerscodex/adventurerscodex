@@ -158,6 +158,10 @@ function SpellSlotsViewModel() {
         self.blankSlot().level(self.slots().length + 1);
     };
 
+    self.resetSlot = function(slot) {
+        slot.usedSpellSlots(0);
+    };
+
     self.resetSlots = function() {
         self.slots().forEach(function(slot, i, _) {
             slot.usedSpellSlots(0);
