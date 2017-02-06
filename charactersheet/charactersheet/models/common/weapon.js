@@ -185,6 +185,18 @@ function Weapon() {
         }
     });
 
+    self.toHitModifierLabel = ko.pureComputed(function() {
+        self._dummy();
+
+        var toHitModifier = self.weaponToHitModifier();
+        if (toHitModifier) {
+            return toHitModifier >= 0 ? ('+ ' + toHitModifier) : '- ' +
+            Math.abs(toHitModifier);
+        } else {
+            return 0;
+        }
+    });
+
     self.applyMagicalModifierLabel = ko.pureComputed(function() {
         if (self.magicalModifierLabel() !== '' ){
             return true;

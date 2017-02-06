@@ -198,6 +198,30 @@ describe('Weapon Model', function() {
         });
     });
 
+    describe('To Hit Modifier Label', function() {
+        it('should create a badge for positive modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier(2);
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal('+ 2');
+        });
+        it('should create a badge for negative modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier(-2);
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal('- 2');
+        });
+        it('should create a badge for no modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier();
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal(0);
+        });
+    });
+
     describe('Apply Magical Modifier Label', function() {
         it('should return true if there is a magicalModifierLabel', function() {
             var weap = new Weapon();
