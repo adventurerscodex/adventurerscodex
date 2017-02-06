@@ -10,8 +10,8 @@ function Weapon() {
     self.mapping = {
         include: ['weaponHit', 'characterId', 'weaponName', 'weaponType', 'weaponDmg',
         'weaponHandedness', 'weaponProficiency', 'weaponPrice', 'weaponCurrencyDenomination',
-        'weaponWeight', 'weaponRange', 'weaponDamageType', 'weaponProperty',
-        'weaponDescription', 'weaponQuantity']
+        'weaponToHitModifier', 'weaponWeight', 'weaponRange', 'weaponDamageType',
+        'weaponProperty', 'weaponDescription', 'weaponQuantity']
     };
 
     self._dummy = ko.observable(null);
