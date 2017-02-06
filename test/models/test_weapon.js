@@ -141,11 +141,12 @@ describe('Weapon Model', function() {
         it('should sum up all hit related bonuses', function() {
             var weap = new Weapon();
             weap.weaponHit(1);
+            weap.weaponToHitModifier(1);
             simple.mock(weap, 'abilityScoreBonus').returnWith(1);
             simple.mock(weap, 'proficiencyScore').returnWith(1);
 
             var totalBonus = weap.totalBonus();
-            totalBonus.should.equal(3);
+            totalBonus.should.equal(4);
         });
     });
 
