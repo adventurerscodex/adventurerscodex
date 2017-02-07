@@ -46,10 +46,6 @@ function SpellbookViewModel() {
         return self.spellbook() ? self.spellbook().length : 0;
     });
 
-    self.spellPreparedVisible = function(spell) {
-        return spell.spellLevel() != 0 && !spell.spellAlwaysPrepared();
-    };
-
     self.alwaysPreparedPopoverText = Fixtures.popoverText.alwaysPrepared;
 
     self.load = function() {
@@ -117,6 +113,35 @@ function SpellbookViewModel() {
     });
 
     /* UI Methods */
+
+    /**
+     * Returns the correct html for spell prepared based on cantrip or always
+     * prepared value.
+     */
+    self.preparedCheckboxHTML = function(spell) {
+        if(parseInt(spell.spellLevel()) === 0){
+            return '';
+        } else if(spell.spellAlwaysPrepared()){
+            return '<input type="checkbox" disabled checked>';
+        } else {
+            return '<input data-bind="checked: spellPrepared" ' +
+                   'type="checkbox" href="#"></input>';
+        }
+    };
+
+    /**
+     * Returns true if the spell prepared row should be visible in the add modal
+     */
+    self.preparedRowVisibleAdd = function() {
+        return parseInt(self.blankSpell().spellLevel()) !== 0;
+    };
+
+    /**
+     * Returns true if the spell prepared row should be visible in the edit modal
+     */
+    self.preparedRowVisibleEdit = function(spell) {
+        return parseInt(spell.spellLevel()) !== 0;
+    };
 
     /**
      * Filters and sorts the spells for presentation in a table.

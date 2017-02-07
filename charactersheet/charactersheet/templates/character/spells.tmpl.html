@@ -42,14 +42,7 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedSpells -->
         <tr class="clickable">
-          <!-- ko if: $parent.spellPreparedVisible($data) -->
-          <td><input data-bind="checked: spellPrepared"
-                     type="checkbox"
-                     href="#"></input></td>
-          <!-- /ko -->
-          <!-- ko ifnot: $parent.spellPreparedVisible($data) -->
-          <td><input type="checkbox" disabled checked></td>
-          <!-- /ko -->
+          <td data-bind="html: $parent.preparedCheckboxHTML($data)"></td>
           <td data-bind="text: spellNameLabel, click: $parent.editSpell"
                href="#"></td>
           <td data-bind="text: spellLevelLabel, click: $parent.editSpell"
@@ -124,6 +117,7 @@
                           hasFocus: firstModalElementHasFocus">
                 </div>
               </div>
+              <!-- ko if: preparedRowVisibleAdd() -->
               <div class="form-group">
                 <label for="spellPrepared"
                        class="col-sm-2 control-label">Prepared</label>
@@ -158,6 +152,7 @@
                            data-bind='checked: blankSpell().isRitual'>
                   </div>
               </div>
+              <!-- /ko -->
               <div class="form-group">
                 <label for="spellLevel"
                        class="col-sm-2 control-label">Level</label>
@@ -376,6 +371,7 @@
                              hasFocus: $parent.editFirstModalElementHasFocus">
                     </div>
                   </div>
+                  <!-- ko if: $parent.preparedRowVisibleEdit($data) -->
                   <div class="form-group">
                     <label for="spellPrepared"
                            class="col-sm-2 control-label">Prepared</label>
@@ -405,6 +401,7 @@
                                data-bind='checked: isRitual'>
                       </div>
                   </div>
+                  <!-- /ko -->
                   <div class="form-group">
                     <label for="spellLevel"
                            class="col-sm-2 control-label">Level</label>
