@@ -118,6 +118,22 @@ describe('Spell Slots View Model', function() {
         });
     });
 
+    describe('Reset Slot', function() {
+        it('should reset slot count to 0.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var p = new SpellSlotsViewModel();
+            p.blankSlot().maxSpellSlots(3);
+            p.addSlot();
+            p.blankSlot().maxSpellSlots(3);
+            p.addSlot();
+            p.slots()[0].usedSpellSlots(1);
+            p.slots()[1].usedSpellSlots(1);
+            p.resetSlot(p.slots()[0]);
+            p.slots()[0].usedSpellSlots().should.equal(0);
+            p.slots()[1].usedSpellSlots().should.equal(1);
+        });
+    });
+
     describe('Clear', function() {
         it('should clear all the values in spell slots.', function() {
             var p = new SpellSlotsViewModel();

@@ -9,7 +9,9 @@ function SpellSlotsViewModel() {
         'maxSpellSlots asc': { field: 'maxSpellSlots', direction: 'asc', numeric: true},
         'maxSpellSlots desc': { field: 'maxSpellSlots', direction: 'desc', numeric: true},
         'usedSpellSlots asc': { field: 'usedSpellSlots', direction: 'asc', numeric: true},
-        'usedSpellSlots desc': { field: 'usedSpellSlots', direction: 'desc', numeric: true}
+        'usedSpellSlots desc': { field: 'usedSpellSlots', direction: 'desc', numeric: true},
+        'resetsOn asc': { field: 'resetsOn', direction: 'asc'},
+        'resetsOn desc': { field: 'resetsOn', direction: 'desc'}
     };
 
     self.slots = ko.observableArray([]);
@@ -46,6 +48,20 @@ function SpellSlotsViewModel() {
     };
 
     /* UI Methods */
+
+    self.needsResetsOnImg = function(slot){
+        return slot.resetsOn() != '';
+    };
+
+    self.resetsOnImgSource = function(slot){
+        if(slot.resetsOn() === 'long') {
+            return '/images/camping-tent-blue.svg';
+        } else if (slot.resetsOn() === 'short') {
+            return '/images/meditation-blue.svg';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
+    };
 
     /**
      * Filters and sorts the slots for presentation in a table.
@@ -140,6 +156,10 @@ function SpellSlotsViewModel() {
         self.slots.remove(slot);
         slot.delete();
         self.blankSlot().level(self.slots().length + 1);
+    };
+
+    self.resetSlot = function(slot) {
+        slot.usedSpellSlots(0);
     };
 
     self.resetSlots = function() {
