@@ -46,8 +46,6 @@ function SpellbookViewModel() {
         return self.spellbook() ? self.spellbook().length : 0;
     });
 
-    self.alwaysPreparedPopoverText = Fixtures.popoverText.alwaysPrepared;
-
     self.load = function() {
         Notifications.global.save.add(self.save);
 
@@ -128,6 +126,13 @@ function SpellbookViewModel() {
                    'type="checkbox" href="#"></input>';
         }
     };
+
+    /**
+     * Popover for prepared spells
+     */
+    self.alwaysPreparedPopoverText = function() {
+        return 'Always prepared spells will not count against total prepared spells.';
+    }
 
     /**
      * Returns true if the spell prepared row should be visible in the add modal
