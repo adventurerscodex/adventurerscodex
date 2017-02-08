@@ -8,30 +8,30 @@
     <table id='spellSlotsTable' class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr class="row">
-          <th class="col-sm-1">Slot</th>
-          <th class="col-sm-2 hidden-xs" data-bind="click: function(){sortBy('level');}">Level
+          <th class="col-sm-1 col-xs-1">Slot</th>
+          <th class="col-sm-2 col-xs-2" data-bind="click: function(){sortBy('level');}">Level
             <i data-bind="css: sortArrow('level')"></i></th>
           <th class="col-sm-2 hidden-xs" data-bind="click: function(){sortBy('maxSpellSlots');}">Max
             <i data-bind="css: sortArrow('maxSpellSlots')"></i></th>
-          <th class="col-sm-2 hidden-sm hidden-xs" data-bind="click: function(){sortBy('resetsOn');}">Resets on
+          <th class="col-md-2 hidden-sm hidden-xs" data-bind="click: function(){sortBy('resetsOn');}">Resets on
             <i data-bind="css: sortArrow('resetsOn')"></i></th>
-          <th class="col-sm-3 text-center" data-bind="click: function(){sortBy('usedSpellSlots');}">Used
+          <th class="col-md-3 col-sm-4 col-xs-8 text-center" data-bind="click: function(){sortBy('usedSpellSlots');}">Used
             <i data-bind="css: sortArrow('usedSpellSlots')"></i></th>
-          <th class="col-xs-1">Reset</th>
-          <th class="col-sm-1"> <a data-toggle="modal" data-target="#addSpellSlot" href="#"><i class="fa fa-plus fa-color"></i></a></th>
+          <th class="col-md-1 hidden-sm hidden-xs">Reset</th>
+          <th class="col-xs-1"> <a data-toggle="modal" data-target="#addSpellSlot" href="#"><i class="fa fa-plus fa-color"></i></a></th>
         </tr>
       </thead>
       <tbody>
       <!-- ko foreach: filteredAndSortedSlots -->
         <tr class="row clickable">
-          <td class="col-sm-1 col-content-vertical" data-bind="click: $parent.editSlot"
+          <td class="col-sm-1 col-xs-1 col-content-vertical" data-bind="click: $parent.editSlot"
               href="#"
               data-toggle="modal"
               data-target="#viewSlot">
             <span data-bind="css: color" class="form-control color-picker-item" >
             </span>
           </td>
-          <td class="col-sm-2 hidden-xs col-content-vertical"
+          <td class="col-sm-2 col-xs-2 col-content-vertical"
               data-bind="click: $parent.editSlot, text: level"
               href="#"
               data-toggle="modal"
@@ -43,7 +43,7 @@
               data-toggle="modal"
               data-target="#viewSlot">
           </td>
-          <td class="col-content-vertical col-sm-2 hidden-sm hidden-xs"
+          <td class="col-content-vertical col-md-2 hidden-sm hidden-xs"
               data-bind="click: $parent.editSlot"
               href="#"
               data-toggle="modal"
@@ -53,17 +53,17 @@
             </img>
             <!-- /ko -->
           </td>
-          <td class="col-sm-3">
+          <td class="col-md-3 col-sm-4 col-xs-8">
             <plus-minus params="value: usedSpellSlots,
               max: maxSpellSlots">
             </plus-minus>
           </td>
-          <td class="col-content-vertical col-xs-1 text-center"> <!--Refresh -->
+          <td class="col-content-vertical col-md-1 hidden-sm hidden-xs text-center"> <!--Refresh -->
             <a data-bind="click: $parent.resetSlot" href="#">
               <i class="fa fa-refresh fa-color"></i>
             </a>
           </td>
-          <td class="col-content-vertical">
+          <td class="col-content-vertical col-xs-1">
             <a data-bind="click: $parent.removeSlot" href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
