@@ -132,7 +132,7 @@ function SpellbookViewModel() {
      */
     self.alwaysPreparedPopoverText = function() {
         return 'Always prepared spells will not count against total prepared spells.';
-    }
+    };
 
     /**
      * Returns true if the spell prepared row should be visible in the add modal
