@@ -48,7 +48,7 @@ function SpellbookViewModel() {
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-                
+
         var key = CharacterManager.activeCharacter().key();
         self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
         Notifications.spellStats.changed.add(self.valueHasChanged);
@@ -59,7 +59,7 @@ function SpellbookViewModel() {
             e.save();
         });
         Notifications.spellStats.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);    
+        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
@@ -111,6 +111,42 @@ function SpellbookViewModel() {
     });
 
     /* UI Methods */
+
+    /**
+     * Returns the correct html for spell prepared based on cantrip or always
+     * prepared value.
+     */
+    self.preparedCheckboxHTML = function(spell) {
+        if(parseInt(spell.spellLevel()) === 0){
+            return '';
+        } else if(spell.spellAlwaysPrepared()){
+            return '<input type="checkbox" disabled checked>';
+        } else {
+            return '<input data-bind="checked: spellPrepared" ' +
+                   'type="checkbox" href="#"></input>';
+        }
+    };
+
+    /**
+     * Popover for prepared spells
+     */
+    self.alwaysPreparedPopoverText = function() {
+        return 'Always prepared spells will not count against total prepared spells.';
+    };
+
+    /**
+     * Returns true if the spell prepared row should be visible in the add modal
+     */
+    self.preparedRowVisibleAdd = function() {
+        return parseInt(self.blankSpell().spellLevel()) !== 0;
+    };
+
+    /**
+     * Returns true if the spell prepared row should be visible in the edit modal
+     */
+    self.preparedRowVisibleEdit = function(spell) {
+        return parseInt(spell.spellLevel()) !== 0;
+    };
 
     /**
      * Filters and sorts the spells for presentation in a table.

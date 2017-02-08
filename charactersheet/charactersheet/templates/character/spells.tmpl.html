@@ -42,14 +42,7 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedSpells -->
         <tr class="clickable">
-          <!-- ko if: spellLevel() != 0 -->
-          <td><input data-bind="checked: spellPrepared"
-                     type="checkbox"
-                     href="#"></input></td>
-          <!-- /ko -->
-          <!-- ko if: spellLevel() == 0 -->
-          <td></td>
-          <!-- /ko -->
+          <td data-bind="html: $parent.preparedCheckboxHTML($data)"></td>
           <td data-bind="text: spellNameLabel, click: $parent.editSpell"
                href="#"></td>
           <td data-bind="text: spellLevelLabel, click: $parent.editSpell"
@@ -124,24 +117,42 @@
                           hasFocus: firstModalElementHasFocus">
                 </div>
               </div>
+              <!-- ko if: preparedRowVisibleAdd() -->
               <div class="form-group">
                 <label for="spellPrepared"
                        class="col-sm-2 control-label">Prepared</label>
-                  <div class="col-sm-4">
+                  <div class="col-sm-1">
                     <input type="checkbox"
                            class="form-control"
                            id="spellPrepared"
-                           data-bind='checked: blankSpell().spellPrepared'>
+                           data-bind='checked: blankSpell().spellPrepared,
+                                      disable: blankSpell().spellAlwaysPrepared'>
                   </div>
+
+                <label class="col-sm-4 control-label">
+                  <span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
+                      data-bind="popover: { content: alwaysPreparedPopoverText }"></span>
+                       Always Prepared
+                </label>
+
+                <div class="col-sm-1">
+                  <input type="checkbox"
+                         class="form-control"
+                         id="spellAlwaysPrepared"
+                         data-bind='checked: blankSpell().spellAlwaysPrepared,
+                                    disable: blankSpell().spellPrepared'>
+
+                </div>
                 <label for="spellIsRitual"
                        class="col-sm-2 control-label">Ritual</label>
-                  <div class="col-sm-4">
+                  <div class="col-sm-1">
                     <input type="checkbox"
                            class="form-control"
                            id="spellIsRitual"
                            data-bind='checked: blankSpell().isRitual'>
                   </div>
               </div>
+              <!-- /ko -->
               <div class="form-group">
                 <label for="spellLevel"
                        class="col-sm-2 control-label">Level</label>
@@ -360,24 +371,37 @@
                              hasFocus: $parent.editFirstModalElementHasFocus">
                     </div>
                   </div>
+                  <!-- ko if: $parent.preparedRowVisibleEdit($data) -->
                   <div class="form-group">
                     <label for="spellPrepared"
                            class="col-sm-2 control-label">Prepared</label>
-                      <div class="col-sm-4">
+                      <div class="col-sm-1">
                         <input type="checkbox"
                                class="form-control"
                                id="spellPrepared"
-                               data-bind='checked: spellPrepared'>
+                               data-bind='checked: spellPrepared,
+                                          disable: spellAlwaysPrepared'>
+                      </div>
+                    <label class="col-sm-4 control-label">
+                    <span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
+                      data-bind="popover: { content: $parent.alwaysPreparedPopoverText }"></span>&nbsp;Always Prepared</label>
+                      <div class="col-sm-1">
+                        <input type="checkbox"
+                               class="form-control"
+                               id="spellAlwaysPrepared"
+                               data-bind='checked: spellAlwaysPrepared,
+                                          disable: spellPrepared'>
                       </div>
                     <label for="spellIsRitual"
                            class="col-sm-2 control-label">Ritual</label>
-                      <div class="col-sm-4">
+                      <div class="col-sm-1">
                         <input type="checkbox"
                                class="form-control"
                                id="spellIsRitual"
                                data-bind='checked: isRitual'>
                       </div>
                   </div>
+                  <!-- /ko -->
                   <div class="form-group">
                     <label for="spellLevel"
                            class="col-sm-2 control-label">Level</label>

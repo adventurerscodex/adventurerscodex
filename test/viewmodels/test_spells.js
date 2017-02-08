@@ -174,4 +174,75 @@ describe('SpellsViewModel', function(){
             book.sortArrow('spellLevel').should.equal('fa fa-arrow-down fa-color');
         });
     });
+
+    describe('Prepared Row Visible Add Modal', function() {
+        it('should return true if the prepared row checkboxes should be visible', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.preparedRowVisibleAdd().should.equal(true);
+        });
+        it('should return true if the prepared row checkboxes should be visible', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(0);
+            book.preparedRowVisibleAdd().should.equal(false);
+        });
+    });
+
+    describe('Prepared Row Visible Edit Modal', function() {
+        it('should return true if the prepared row checkboxes should be visible', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellLevel(1);
+            book.spellbook([spell]);
+            book.preparedRowVisibleEdit(spell).should.equal(true);
+        });
+        it('should return true if the prepared row checkboxes should be visible', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellLevel(0);
+            book.spellbook([spell]);
+            book.preparedRowVisibleEdit(spell).should.equal(false);
+        });
+    });
+
+    describe('Prepared checkbox html', function() {
+        it('should return the correct hmtl for prepared checkbox', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellAlwaysPrepared(true);
+            book.spellbook([spell]);
+            book.preparedCheckboxHTML(spell).should.equal('<input type="checkbox" disabled checked>');
+        });
+        it('should return the correct hmtl for prepared checkbox', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellLevel(0);
+            book.spellbook([spell]);
+            book.preparedCheckboxHTML(spell).should.equal('');
+        });
+        it('should return the correct hmtl for prepared checkbox', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+
+            var expected = '<input data-bind="checked: spellPrepared" ' +
+                           'type="checkbox" href="#"></input>';
+
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            book.spellbook([spell]);
+            book.preparedCheckboxHTML(spell).should.equal(expected);
+        });
+    });
+
 });
