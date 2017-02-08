@@ -141,11 +141,12 @@ describe('Weapon Model', function() {
         it('should sum up all hit related bonuses', function() {
             var weap = new Weapon();
             weap.weaponHit(1);
+            weap.weaponToHitModifier(1);
             simple.mock(weap, 'abilityScoreBonus').returnWith(1);
             simple.mock(weap, 'proficiencyScore').returnWith(1);
 
             var totalBonus = weap.totalBonus();
-            totalBonus.should.equal(3);
+            totalBonus.should.equal(4);
         });
     });
 
@@ -194,6 +195,30 @@ describe('Weapon Model', function() {
 
             var totalBonus = weap.magicalModifierLabel();
             totalBonus.should.equal('');
+        });
+    });
+
+    describe('To Hit Modifier Label', function() {
+        it('should create a badge for positive modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier(2);
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal('+ 2');
+        });
+        it('should create a badge for negative modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier(-2);
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal('- 2');
+        });
+        it('should create a badge for no modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier();
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal(0);
         });
     });
 

@@ -10,8 +10,8 @@ function Weapon() {
     self.mapping = {
         include: ['weaponHit', 'characterId', 'weaponName', 'weaponType', 'weaponDmg',
         'weaponHandedness', 'weaponProficiency', 'weaponPrice', 'weaponCurrencyDenomination',
-        'weaponWeight', 'weaponRange', 'weaponDamageType', 'weaponProperty',
-        'weaponDescription', 'weaponQuantity']
+        'weaponToHitModifier', 'weaponWeight', 'weaponRange', 'weaponDamageType',
+        'weaponProperty', 'weaponDescription', 'weaponQuantity']
     };
 
     self._dummy = ko.observable(null);
@@ -23,7 +23,9 @@ function Weapon() {
     self.weaponProficiency = ko.observable('');
     self.weaponPrice = ko.observable(0);
     self.weaponCurrencyDenomination = ko.observable('');
+    // weaponHit is misnamed, should be magical modifier
     self.weaponHit = ko.observable(0);
+    self.weaponToHitModifier = ko.observable(0);
     self.weaponWeight = ko.observable(1);
     self.weaponRange = ko.observable('');
     self.weaponDamageType = ko.observable('');
@@ -116,7 +118,9 @@ function Weapon() {
         var bonus = 0;
         var abilityScoreBonus = self.abilityScoreBonus();
         var proficiencyBonus = self.proficiencyScore();
+        // This is magical modifier
         var weaponHit = parseInt(self.weaponHit());
+        var toHitModifer = parseInt(self.weaponToHitModifier());
 
         if(abilityScoreBonus){
             bonus += abilityScoreBonus;
@@ -127,7 +131,9 @@ function Weapon() {
         if(weaponHit){
             bonus += weaponHit;
         }
-
+        if(toHitModifer){
+            bonus += toHitModifer;
+        }
         return bonus;
     });
 
@@ -176,6 +182,18 @@ function Weapon() {
             Math.abs(magicalModifier);
         } else {
             return '';
+        }
+    });
+
+    self.toHitModifierLabel = ko.pureComputed(function() {
+        self._dummy();
+
+        var toHitModifier = self.weaponToHitModifier();
+        if (toHitModifier) {
+            return toHitModifier >= 0 ? ('+ ' + toHitModifier) : '- ' +
+            Math.abs(toHitModifier);
+        } else {
+            return 0;
         }
     });
 
