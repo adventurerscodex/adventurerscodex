@@ -1,7 +1,7 @@
 <div class="panel panel-default bio">
   <div class="panel-body">
     <div class="h3">
-      Proficiencies & Languages
+      Proficiencies &amp; Languages
     </div>
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
@@ -26,13 +26,9 @@
       <!-- ko foreach: filteredAndSortedProficiencies -->
         <tr class="clickable">
           <td data-bind="text: name, click: $parent.editProficiency"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewProficiency"></td>
+              href="#"></td>
           <td data-bind="text: type, click: $parent.editProficiency"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewProficiency"></td>
+              href="#"></td>
           <td>
             <a data-bind="click: $parent.removeProficiency" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -132,11 +128,11 @@
 
 <!-- ViewEdit Modal -->
 <div class="modal fade"
-     id="viewWeapon"
+     id="viewProficiency"
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
-      open: selecteditem,
+      open: modalOpen,
       onopen: modalFinishedOpening,
       onclose: modalFinishedClosing
     }">
@@ -165,7 +161,7 @@
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: selecteditem">
+        <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;

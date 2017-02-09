@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-body" data-bind="click: openModal, with: spellStats">
+  <div class="panel-body" data-bind="click: editSpellStats, with: spellStats">
     <div class="table-responsive">
       <table class="table table-ac-bordered table-hover">
         <thead>
@@ -47,8 +47,9 @@
 <div class="modal fade" tabindex="-1" role="dialog"
    data-bind="modal: {
       open: modalStatus,
-      onopen: modalFinishedAnimating
-    }, with: spellStats">
+      onopen: modalFinishedAnimating,
+      onclose: modalFinishedClosing
+    }, with: editItem">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">

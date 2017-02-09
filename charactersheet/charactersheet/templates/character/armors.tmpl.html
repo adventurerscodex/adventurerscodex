@@ -208,7 +208,7 @@
          role="dialog"
          aria-labelledby="viewArmorLabel"
          data-bind="modal: {
-           open: selecteditem,
+           open: modalOpen,
            onopen: modalFinishedOpening,
            onclose: modalFinishedClosing
         }">
@@ -239,7 +239,7 @@
               </li>
             </ul>
 
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="armorModalPreview">
                 <div class="h3">
                   <span data-bind="text: armorName"></span>&nbsp;

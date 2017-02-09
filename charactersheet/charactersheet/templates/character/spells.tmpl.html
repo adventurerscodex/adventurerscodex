@@ -302,7 +302,7 @@
          tabindex="-1"
          role="dialog"
          data-bind="modal: {
-          open: selecteditem,
+          open: modalOpen,
           onopen: modalFinishedOpening,
           onclose: modalFinishedClosing
         }"
@@ -332,7 +332,7 @@
                 </a>
               </li>
             </ul>
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
                 <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
                 <div class="h3">

@@ -199,10 +199,8 @@ describe('PointOfInterestSectionViewModel', function(){
 
             var vm = new PointOfInterestSectionViewModel(new Encounter());
             vm.addPointOfInterest();
-            Should.not.exist(vm.selecteditem());
             vm.pointsOfInterest().length.should.equal(1);
             vm.editPointOfInterest (vm.pointsOfInterest()[0]);
-            vm.selecteditem().should.equal(vm.pointsOfInterest.pop());
         });
     });                                            
 });

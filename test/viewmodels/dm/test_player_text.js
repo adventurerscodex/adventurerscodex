@@ -199,10 +199,8 @@ describe('PlayerTextSectionViewModel', function(){
 
             var vm = new PlayerTextSectionViewModel(new Encounter());
             vm.addPlayerText();
-            Should.not.exist(vm.selecteditem());
             vm.playerTexts().length.should.equal(1);
             vm.editPlayerText(vm.playerTexts()[0]);
-            vm.selecteditem().should.equal(vm.playerTexts.pop());
         });
     });                                            
 });

@@ -14,7 +14,9 @@ function ItemsViewModel() {
 
     self.items = ko.observableArray([]);
     self.blankItem = ko.observable(new Item());
-    self.selecteditem = ko.observable();
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
     self.sort = ko.observable(self.sorts['itemName asc']);
     self.filter = ko.observable('');
@@ -55,7 +57,7 @@ function ItemsViewModel() {
         self.items().forEach(function(e, i, _) {
             e.save();
         });
-    };    
+    };
 
     // Modal methods
     self.modalFinishedOpening = function() {
@@ -69,10 +71,12 @@ function ItemsViewModel() {
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
 
-        // Just in case data was changed.
-        self.items().forEach(function(e, i, _) {
-            e.save();
-        });
+        if (self.modalOpen()) {
+            Utility.array.updateElement(self.items(), self.currentEditItem(), self.editItemIndex);
+        }
+
+        self.save();
+        self.modalOpen(false);
         Notifications.item.changed.dispatch();
     };
 
@@ -121,10 +125,6 @@ function ItemsViewModel() {
     };
 
     //Manipulating items
-    self.removeItemModalButton = function() {
-        self.removeItem(self.selecteditem());
-    };
-
     self.removeItemButton = function(item) {
         self.removeItem(item);
     };
@@ -134,10 +134,6 @@ function ItemsViewModel() {
         item.importValues(self.blankItem().exportValues());
         self.addItem(item);
         self.blankItem().clear();
-    };
-
-    self.editItemButton = function(item) {
-        self.editItem(item);
     };
 
     self.populateItem = function(label, value) {
@@ -173,6 +169,9 @@ function ItemsViewModel() {
     };
 
     self.editItem = function(item) {
-        self.selecteditem(item);
+        self.editItemIndex = item.__id;
+        self.currentEditItem(new Item());
+        self.currentEditItem().importValues(item.exportValues());
+        self.modalOpen(true);
     };
 }

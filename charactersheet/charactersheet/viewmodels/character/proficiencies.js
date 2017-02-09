@@ -12,7 +12,9 @@ function ProficienciesViewModel() {
 
     self.proficiencies = ko.observableArray([]);
     self.blankProficiency = ko.observable(new Proficiency());
-    self.selecteditem = ko.observable();
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable(new Proficiency());
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
     self.shouldShowDisclaimer = ko.observable(false);
@@ -64,8 +66,16 @@ function ProficienciesViewModel() {
     self.modalFinishedClosing = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
+
+        if (self.modalOpen()) {
+            Utility.array.updateElement(self.proficiencies(), self.currentEditItem(), self.editItemIndex);
+        }
+
+        // Just in case data was changed.
+        self.save();
+
+        self.modalOpen(false);
+        Notifications.proficiency.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -111,6 +121,9 @@ function ProficienciesViewModel() {
     };
 
     self.editProficiency = function(proficiency) {
-        self.selecteditem(proficiency);
+        self.editItemIndex = proficiency.__id;
+        self.currentEditItem(new Proficiency());
+        self.currentEditItem().importValues(proficiency.exportValues());
+        self.modalOpen(true);
     };
 }

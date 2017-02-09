@@ -36,10 +36,8 @@ describe('ProficienciesViewModel', function() {
 
             var proficienciesViewModel = new ProficienciesViewModel();
             proficienciesViewModel.addProficiency();
-            Should.not.exist(proficienciesViewModel.selecteditem());
             proficienciesViewModel.proficiencies().length.should.equal(1);
             proficienciesViewModel.editProficiency(proficienciesViewModel.proficiencies()[0]);
-            proficienciesViewModel.selecteditem().should.equal(proficienciesViewModel.proficiencies.pop());
         });
     });
 

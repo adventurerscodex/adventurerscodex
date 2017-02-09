@@ -10,6 +10,8 @@ function StatsViewModel() {
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
+    self.editItem = ko.observable();
+    self.modalOpen = ko.observable(false);    
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
@@ -147,6 +149,12 @@ function StatsViewModel() {
         self.hitDiceList([]);
     };
 
+    self.editHealth = function() {
+        self.editItem(new Health());
+        self.editItem().importValues(self.health().exportValues());
+        self.modalOpen(true);
+    };
+
     self.calculateHitDice = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
             CharacterManager.activeCharacter().key())[0];
@@ -186,15 +194,15 @@ function StatsViewModel() {
      *
      * This will be used primarily for long rest resets.
      */
-    self.resetHitDice = function(){
+    self.resetHitDice = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
             CharacterManager.activeCharacter().key())[0];
         var level = profile.level();
         var restoredHitDice = Math.floor(level / 2);
 
         ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
-            if (hitDice.hitDiceUsed() === true){
-                if (restoredHitDice !== 0){
+            if (hitDice.hitDiceUsed() === true) {
+                if (restoredHitDice !== 0) {
                     hitDice.hitDiceUsed(false);
                     restoredHitDice -= 1;
                 }
@@ -214,6 +222,14 @@ function StatsViewModel() {
 
     self.modalFinishedAnimating = function() {
         self.modifierHasFocus(true);
+    };
+
+    self.modalFinishedClosing = function() {    
+        if (self.modalOpen()) {
+            self.health().importValues(self.editItem().exportValues());
+        }
+        self.modalOpen(false);
+        self.health().save();
     };
 
     /* Utility Methods */

@@ -23,12 +23,12 @@ describe('ArmorViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var armors = new ArmorViewModel();
-            armors.armors().length.should.equal(0);
-            armors.addArmor();
-            armors.armors().length.should.equal(1);
-            var armor = armors.armors.pop();
+
+            var armor = new Armor();
+            armor.armorName('Shield');
             armors.editArmor(armor);
-            armors.selecteditem().should.equal(armor);
+            armors.currentEditItem().armorName().should.equal(armor.armorName());
+            armors.modalOpen().should.equal(true);
         });
     });
 

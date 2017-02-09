@@ -35,9 +35,10 @@
   <div class="modal fade" tabindex="-1" role="dialog"
        aria-labelledby="viewSkillLabel"
        data-bind="modal: {
-          open: selecteditem,
-          onopen: modalFinishedAnimating
-        }, with: selecteditem">
+          open: modalOpen,
+          onopen: modalFinishedAnimating,
+          onclose: modalFinishedClosing
+        }, with: currentEditItem">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">

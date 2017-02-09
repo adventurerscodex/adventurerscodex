@@ -244,14 +244,11 @@ describe('MonsterSectionViewModel', function(){
 
     describe('Edit monster', function() {
         it('should put a monster from the list of monsters into the selected slot', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var vm = new MonsterSectionViewModel(new Encounter());
             vm.addMonster();
-            Should.not.exist(vm.selecteditem());
             vm.monsters().length.should.equal(1);
             vm.editMonster(vm.monsters()[0]);
-            vm.selecteditem().should.equal(vm.monsters.pop());
         });
     });                                            
 });

@@ -10,7 +10,8 @@
 
 var Utility = {
     markdown: {},
-    string: {}
+    string: {},
+    array: {}
 };
 
 
@@ -29,10 +30,10 @@ Utility.markdown.asPlaintext = function(markdown) {
 /**
  * Decides wether the input string should be truncated and have ellipses
  * added to it.
- * 
- * @param value string to be modified
- * @param truncateAt is the length at which string will be truncated
- * 
+ *
+ * @param value: string to be modified
+ * @param truncateAt: is the length at which string will be truncated
+ *
  * @return plain text string that may or may not be truncated
  */
 
@@ -43,4 +44,21 @@ Utility.string.truncateStringAtLength = function(value, truncateAt) {
     } else {
         return string;
     }
+};
+
+/**
+ * Updates a single element in an observable array.
+ *
+ * @param array: observable array that contains the item to be updated.
+ * @param updatedElement: updated version of the original array element
+ * @param elementId: PersistenceService ID of the element that has been updated
+ *
+ * @return void
+ */
+Utility.array.updateElement = function(array, updatedElement, elementId) {
+    array.forEach(function(element, idx, _) {
+        if (element.__id === elementId) {
+            element.importValues(updatedElement.exportValues());
+        }
+    });
 };

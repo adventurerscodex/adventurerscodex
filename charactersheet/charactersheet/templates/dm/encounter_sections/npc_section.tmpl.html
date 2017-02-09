@@ -31,20 +31,16 @@
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editNPC"
           href="#"
-          data-toggle="modal"
-          data-target="#viewNPC"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: race, click: $parent.editNPC"
           href="#"
-          data-toggle="modal"
-          data-target="#viewNPC"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: shortDescription, click: $parent.editNPC"
           href="#" class="hidden-md hidden-lg"
-          data-toggle="modal"
-          data-target="#viewNPC"></td>
+          data-toggle="modal"></td>
       <td data-bind="text: longDescription, click: $parent.editNPC"
           href="#" class="hidden-sm hidden-xs"
-          data-toggle="modal"
-          data-target="#viewNPC"></td>
+          data-toggle="modal"></td>
       <td>
         <a data-bind="click: $parent.removeNPC" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -131,7 +127,7 @@
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
-      open: selecteditem,
+      open: openModal,
       onopen: modalFinishedOpening,
       onclose: modalFinishedClosing
     }">
@@ -160,7 +156,7 @@
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: selecteditem">
+        <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;
