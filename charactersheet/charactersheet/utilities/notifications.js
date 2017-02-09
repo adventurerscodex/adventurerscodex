@@ -112,6 +112,10 @@ var Notifications = {
         allRemoved: new signals.Signal()
     },
 
+    feat: {
+        changed: new signals.Signal()
+    },
+
     item: {
         changed: new signals.Signal()
     },
