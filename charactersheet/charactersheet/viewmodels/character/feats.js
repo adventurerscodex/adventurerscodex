@@ -3,6 +3,8 @@
 function FeatsViewModel() {
     var self = this;
 
+    self.DESCRIPTION_MAX_LENGTH = 45;
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
@@ -121,7 +123,6 @@ function FeatsViewModel() {
                 Tracked, 'trackedId', feat.trackedId());
             tracked.delete();
         }
-
         self.feats.remove(feat);
         feat.delete();
         Notifications.feat.changed.dispatch();
@@ -129,5 +130,9 @@ function FeatsViewModel() {
 
     self.editFeat = function(feat) {
         self.selecteditem(feat);
+    };
+
+    self.shortDescription = function(feat) {
+        return Utility.string.truncateStringAtLength(feat.description(), self.DESCRIPTION_MAX_LENGTH);
     };
 }
