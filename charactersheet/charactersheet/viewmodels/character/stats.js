@@ -15,8 +15,7 @@ function StatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
 
-    var msg = 'Dexterity Bonus';
-    self.initiativeTooltip = ko.observable(msg);
+    self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
 
     self.load = function() {
@@ -100,6 +99,7 @@ function StatsViewModel() {
         Notifications.profile.changed.add(self.calculatedProficiencyLabel);
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
+        Notifications.abilityScores.changed.add(self.calculateInitiativeLabel);
     };
 
     self.unload = function() {
@@ -119,7 +119,8 @@ function StatsViewModel() {
         Notifications.profile.changed.remove(self.calculatedProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.events.longRest.remove(self.resetOnLongRest);
-        Notifications.global.save.remove(self.save);     
+        Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
+        Notifications.global.save.remove(self.save);
         self.dataHasChanged();
     };
 
@@ -219,16 +220,32 @@ function StatsViewModel() {
         var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
         level = level ? parseInt(level) : 0;
         var proficiency = parseInt(self.otherStats().proficiency()) ? parseInt(self.otherStats().proficiency()) : 0;
-        self.updatePopoverMessage(level, proficiency);
+        self.updateProficiencyPopoverMessage(level, proficiency);
 
         return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
     };
 
-    self.updatePopoverMessage = function(level, proficiency) {
+    self.updateProficiencyPopoverMessage = function(level, proficiency) {
         var levelBonus = (Math.ceil(level / 4) + 1);
-        self.proficiencyPopover("<span style='white-space:nowrap;'><strong>Proficiency</strong> ="
-            + "(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong><span></br>Proficiency = "
+        self.proficiencyPopover("<span style='white-space:nowrap;'><strong>Proficiency</strong> = "
+            + "(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = "
             + levelBonus + " + " + proficiency);
+    };
+
+    self.calculateInitiativeLabel = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
+        var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
+        var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
+        self.updateInitiativePopoverMessage(abilityScores.dexModifier(), initiativeModifier);
+
+        return dexterityModifier + initiativeModifier;
+    };
+
+    self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
+        self.initiativePopover("<span style='white-space:nowrap;'><strong>Initiative</strong> = " +
+        "Modifier + Dexterity Modifier</span></br>"
+            + "Initiative = " + initiativeModifier + " " + dexterityModifier);
     };
 
     // Modal methods

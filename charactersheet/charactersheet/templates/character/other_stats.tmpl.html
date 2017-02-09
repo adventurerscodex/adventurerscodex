@@ -10,8 +10,7 @@
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">
         Proficiency Bonus&nbsp;
-         <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }">
-     </span>        
+         <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
       </span>
        <span class="input-group-addon" id="basic-addon3" data-bind="text: calculatedProficiencyLabel()"></span>
        <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().proficiency'>
@@ -21,8 +20,10 @@
  <div class="row">
    <div class="col-md-6 col-padded">
      <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2" >Initiative&nbsp;
+       <span class="input-group-addon" id="basic-addon2">Initiative&nbsp;
+          <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
        </span>
+       <span class="input-group-addon" id="basic-addon3" data-bind="text: calculateInitiativeLabel()"></span>
        <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().initiative'>
      </div>
    </div>
@@ -56,5 +57,5 @@
        <span class="input-group-addon" id="basic-addon2">Inspiration</span>
        <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().inspiration' min="0">
      </div>
-   </div>   
+   </div>
  </div>

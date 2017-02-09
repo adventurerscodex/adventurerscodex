@@ -18,10 +18,10 @@ var getStrModifier = function(modifier){
         return '';
     }
     modifier = getModifier(modifier);
-    if (modifier >= 0){
+    if (modifier >= 0) {
         modifier = '+ ' + modifier;
     }
-    else{
+    else {
         modifier = '- ' + Math.abs(modifier);
     }
     return modifier;
