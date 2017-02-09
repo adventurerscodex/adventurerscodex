@@ -20,7 +20,7 @@ function MagicItemsViewModel() {
     self.magicItems = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();    
+    self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -71,7 +71,7 @@ function MagicItemsViewModel() {
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-                
+
         var key = CharacterManager.activeCharacter().key();
         self.magicItems(PersistenceService.findBy(MagicItem, 'characterId', key));
     };
@@ -85,7 +85,7 @@ function MagicItemsViewModel() {
         self.magicItems().forEach(function(e, i, _) {
             e.save();
         });
-    };    
+    };
 
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];
@@ -107,16 +107,12 @@ function MagicItemsViewModel() {
         self.editTabStatus.valueHasMutated();
 
         if (self.modalOpen()) {
-            self.magicItems().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.magicItems(), self.currentEditItem(), self.editItemIndex);
         }
-        
+
         // Just in case data was changed.
         self.save();
-                
+
         self.modalOpen(false);
         Notifications.magicItem.changed.dispatch();
     };
@@ -180,7 +176,7 @@ function MagicItemsViewModel() {
         self.editItemIndex = item.__id;
         self.currentEditItem(new MagicItem());
         self.currentEditItem().importValues(item.exportValues());
-        self.modalOpen(true);        
+        self.modalOpen(true);
     };
 
     self.clear = function() {

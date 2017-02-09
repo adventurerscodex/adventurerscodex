@@ -15,7 +15,7 @@ function DailyFeatureViewModel() {
     self.dailyFeatures = ko.observableArray([]);
     self.blankDailyFeature = ko.observable(new DailyFeature());
     self.editItem = ko.observable();
-    self.modalOpen = ko.observable(false);    
+    self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.sort = ko.observable(self.sorts['featureName asc']);
     self.filter = ko.observable('');
@@ -46,7 +46,7 @@ function DailyFeatureViewModel() {
         self.dailyFeatures().forEach(function(e, i, _) {
             e.save();
         });
-    };    
+    };
 
     /* UI Methods */
 
@@ -110,17 +110,13 @@ function DailyFeatureViewModel() {
         self.modifierHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {    
+    self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
-            self.dailyFeatures().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.editItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.dailyFeatures(), self.editItem(), self.editItemIndex);
         }
         self.save();
         self.modalOpen(false);
-    };    
+    };
 
     self.editModalOpen = function() {
         self.editHasFocus(true);
@@ -130,7 +126,7 @@ function DailyFeatureViewModel() {
         self.editItemIndex = dailyFeature.__id;
         self.editItem(new DailyFeature());
         self.editItem().importValues(dailyFeature.exportValues());
-        self.modalOpen(true);        
+        self.modalOpen(true);
     };
 
     self.addDailyFeature = function() {

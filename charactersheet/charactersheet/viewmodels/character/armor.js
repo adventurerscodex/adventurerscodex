@@ -87,11 +87,7 @@ function ArmorViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
         if (self.modalOpen()) {
-            self.armors().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.armors(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
@@ -152,7 +148,7 @@ function ArmorViewModel() {
         self.editItemIndex = armor.__id;
         self.currentEditItem(new Armor());
         self.currentEditItem().importValues(armor.exportValues());
-        self.modalOpen(true);        
+        self.modalOpen(true);
     };
 
     self.clear = function() {

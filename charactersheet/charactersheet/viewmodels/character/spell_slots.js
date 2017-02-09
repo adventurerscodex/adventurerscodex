@@ -19,7 +19,7 @@ function SpellSlotsViewModel() {
     self.openModal = ko.observable(false);
     self.editHasFocus = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();      
+    self.currentEditItem = ko.observable();
     self.modifierHasFocus = ko.observable(false);
     self.sort = ko.observable(self.sorts['level asc']);
     self.filter = ko.observable('');
@@ -117,20 +117,16 @@ function SpellSlotsViewModel() {
 
     self.editModalOpen = function() {
         self.editHasFocus(true);
-    };    
+    };
 
     self.modalFinishedClosing = function() {
         if (self.openModal()) {
-            self.slots().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.slots(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
-        self.openModal(false);        
-    };    
+        self.openModal(false);
+    };
 
     //Manipulating spell slots
 
@@ -154,7 +150,7 @@ function SpellSlotsViewModel() {
         self.editItemIndex = slot.__id;
         self.currentEditItem(new Slot());
         self.currentEditItem().importValues(slot.exportValues());
-        self.openModal(true);           
+        self.openModal(true);
     };
 
     self.addSlot = function() {

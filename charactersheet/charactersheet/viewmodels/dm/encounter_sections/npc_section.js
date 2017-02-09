@@ -15,7 +15,7 @@ function NPCSectionViewModel(parentEncounter) {
     self.blankNPC = ko.observable(new NPC());
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();       
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -37,7 +37,7 @@ function NPCSectionViewModel(parentEncounter) {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-        
+
         var key = CharacterManager.activeCharacter().key();
         var npc = PersistenceService.findBy(NPC, 'encounterId', self.encounterId());
         if (npc) {
@@ -130,7 +130,7 @@ function NPCSectionViewModel(parentEncounter) {
         self.editItemIndex = npc.__id;
         self.currentEditItem(new NPC());
         self.currentEditItem().importValues(npc.exportValues());
-        self.openModal(true);            
+        self.openModal(true);
     };
 
     self.toggleModal = function() {
@@ -147,15 +147,11 @@ function NPCSectionViewModel(parentEncounter) {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            self.npcs().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.npcs(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
-        self.openModal(false);           
+        self.openModal(false);
     };
 
     self.selectPreviewTab = function() {

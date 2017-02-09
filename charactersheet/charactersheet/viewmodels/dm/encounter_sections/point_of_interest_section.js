@@ -15,7 +15,7 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     self.blankPointOfInterest = ko.observable(new PointOfInterest());
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();    
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -35,7 +35,7 @@ function PointOfInterestSectionViewModel(parentEncounter) {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-        
+
         var key = CharacterManager.activeCharacter().key();
         var poi = PersistenceService.findBy(PointOfInterest, 'encounterId', self.encounterId());
         if (poi) {
@@ -128,7 +128,7 @@ function PointOfInterestSectionViewModel(parentEncounter) {
         self.editItemIndex = poi.__id;
         self.currentEditItem(new PointOfInterest());
         self.currentEditItem().importValues(poi.exportValues());
-        self.openModal(true);        
+        self.openModal(true);
     };
 
     self.toggleModal = function() {
@@ -143,17 +143,13 @@ function PointOfInterestSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
-        
+
         if (self.openModal()) {
-            self.pointsOfInterest().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.pointsOfInterest(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
-        self.openModal(false);        
+        self.openModal(false);
     };
 
     self.selectPreviewTab = function() {

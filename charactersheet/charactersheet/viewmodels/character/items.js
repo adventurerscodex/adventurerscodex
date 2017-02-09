@@ -57,7 +57,7 @@ function ItemsViewModel() {
         self.items().forEach(function(e, i, _) {
             e.save();
         });
-    };    
+    };
 
     // Modal methods
     self.modalFinishedOpening = function() {
@@ -72,11 +72,7 @@ function ItemsViewModel() {
         self.editTabStatus.valueHasMutated();
 
         if (self.modalOpen()) {
-            self.items().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.items(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();

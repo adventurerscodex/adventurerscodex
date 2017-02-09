@@ -24,7 +24,7 @@ function TreasureSectionViewModel(parentEncounter) {
     self.itemType = ko.observable(null);
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();  
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -55,7 +55,7 @@ function TreasureSectionViewModel(parentEncounter) {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-        
+
         var key = CharacterManager.activeCharacter().key();
         var treasure = [];
         self.treasureTypes.forEach(function(type, idx, _){
@@ -187,7 +187,7 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
-        self.editItemIndex = treasure.__id;        
+        self.editItemIndex = treasure.__id;
         if (treasure.treasureType() == 'armor') {
             self.currentEditItem(new EncounterArmor());
         } else if (treasure.treasureType() == 'item') {
@@ -199,9 +199,9 @@ function TreasureSectionViewModel(parentEncounter) {
         } else if (treasure.treasureType() == 'coins') {
             self.currentEditItem(new EncounterCoins());
         }
-        
+
         self.currentEditItem().importValues(treasure.exportValues());
-        self.openModal(true);              
+        self.openModal(true);
     };
 
     /* Auto-complete logic */
@@ -267,7 +267,7 @@ function TreasureSectionViewModel(parentEncounter) {
         }
 
         self.save();
-        self.openModal(false);          
+        self.openModal(false);
     };
 
     self.selectPreviewTab = function() {

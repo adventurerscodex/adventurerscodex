@@ -7,8 +7,8 @@ function SavingThrowsViewModel() {
     self.savingThrows = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();    
-    
+    self.currentEditItem = ko.observable();
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
@@ -67,7 +67,7 @@ function SavingThrowsViewModel() {
         self.savingThrows().forEach(function(e, i, _) {
             e.save();
         });
-    };   
+    };
 
     self.updateValues = function() {
         $.each(self.savingThrows(), function(_, e) {
@@ -109,16 +109,12 @@ function SavingThrowsViewModel() {
 
     self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
-            self.savingThrows().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.savingThrows(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
         self.modalOpen(false);
-    };    
+    };
 
     //Manipulating savingThrows
     self.addsavingThrow = function() {
@@ -136,7 +132,7 @@ function SavingThrowsViewModel() {
         self.editItemIndex = savingThrow.__id;
         self.currentEditItem(new SavingThrows());
         self.currentEditItem().importValues(savingThrow.exportValues());
-        self.modalOpen(true);  
+        self.modalOpen(true);
     };
 
     self.clear = function() {

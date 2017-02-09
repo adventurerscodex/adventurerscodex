@@ -8,7 +8,7 @@ function WeaponsViewModel() {
     self.weapons = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable(new Weapon());    
+    self.currentEditItem = ko.observable(new Weapon());
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -52,14 +52,14 @@ function WeaponsViewModel() {
         self.weapons([]);
         Notifications.abilityScores.changed.remove(self.valueHasChanged);
         Notifications.stats.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);      
+        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
         self.weapons().forEach(function(e, i, _) {
             e.save();
         });
-    };    
+    };
 
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
@@ -113,16 +113,12 @@ function WeaponsViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
         if (self.modalOpen()) {
-            self.weapons().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.weapons(), self.currentEditItem(), self.editItemIndex);
         }
 
         // Just in case data was changed.
         self.save();
-        
+
         self.modalOpen(false);
         Notifications.weapon.changed.dispatch();
     };

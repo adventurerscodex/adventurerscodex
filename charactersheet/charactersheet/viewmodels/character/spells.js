@@ -24,7 +24,7 @@ function SpellbookViewModel() {
     self.spellbook = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();    
+    self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -87,14 +87,10 @@ function SpellbookViewModel() {
         self.firstModalElementHasFocus(false);
         self.spellSchoolIconCSS('');
         if (self.modalOpen()) {
-            self.spellbook().forEach(function(item, idx, _) {
-                if (item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
-                }
-            });
+            Utility.array.updateElement(self.spellbook(), self.currentEditItem(), self.editItemIndex);
         }
         self.save();
-        
+
         self.modalOpen(false);
     };
 
@@ -206,7 +202,7 @@ function SpellbookViewModel() {
         self.editItemIndex = spell.__id;
         self.currentEditItem(new Spell());
         self.currentEditItem().importValues(spell.exportValues());
-        self.modalOpen(true);        
+        self.modalOpen(true);
     };
 
     self.clear = function() {
