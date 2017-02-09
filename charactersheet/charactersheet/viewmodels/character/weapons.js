@@ -3,7 +3,6 @@
 function WeaponsViewModel() {
     var self = this;
 
-    self.selecteditem = ko.observable();
     self.blankWeapon = ko.observable(new Weapon());
     self.weapons = ko.observableArray([]);
     self.modalOpen = ko.observable(false);

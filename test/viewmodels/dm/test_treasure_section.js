@@ -8,7 +8,6 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Load', function() {
         it('should not load model and section', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
@@ -21,7 +20,6 @@ describe('TreasureSectionViewModel', function(){
             spy2.called.should.equal(true);
         });
         it('should load model and section', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
@@ -50,7 +48,6 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Save', function() {
         it('should save model', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
             vm.blankTreasure(new EncounterArmor());
@@ -58,7 +55,6 @@ describe('TreasureSectionViewModel', function(){
             vm.save();
         });
         it('should create and save a new model', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
             
@@ -70,7 +66,6 @@ describe('TreasureSectionViewModel', function(){
         it('should delete model', function() {
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             vm.blankTreasure(new EncounterArmor());
             vm.addTreasure();
             vm.delete();
@@ -207,7 +202,6 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Data has changed', function() {
         it('should load new data', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
             simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
@@ -215,7 +209,6 @@ describe('TreasureSectionViewModel', function(){
             vm._dataHasChanged();
         });
         it('should load new data', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
             simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
@@ -226,7 +219,6 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Toggle modal', function() {
         it('should toggle modal and add AS to Treasure', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
             
@@ -251,7 +243,6 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Add Treasure', function() {
         it('should add new Treasure to array', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             vm.blankTreasure(new EncounterArmor());
 
@@ -263,7 +254,6 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Remove Treasure', function() {
         it('should remove Treasure from array', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new TreasureSectionViewModel(new Encounter());
             vm.blankTreasure(new EncounterArmor());
             vm.addTreasure();
@@ -277,15 +267,13 @@ describe('TreasureSectionViewModel', function(){
 
     describe('Edit Treasure', function() {
         it('should put a Treasure from the list of treasure into the selected slot', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var vm = new TreasureSectionViewModel(new Encounter());
             vm.blankTreasure(new EncounterArmor());
+            vm.itemType('armor');
             vm.addTreasure();
-            Should.not.exist(vm.selecteditem());
             vm.treasure().length.should.equal(1);
             vm.editTreasure(vm.treasure()[0]);
-            vm.selecteditem().should.equal(vm.treasure.pop());
         });
     });                                            
 });

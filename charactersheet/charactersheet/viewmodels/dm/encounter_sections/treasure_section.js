@@ -198,6 +198,8 @@ function TreasureSectionViewModel(parentEncounter) {
             self.currentEditItem(new EncounterWeapon());
         } else if (treasure.treasureType() == 'coins') {
             self.currentEditItem(new EncounterCoins());
+        } else {
+            throw Error('Invalid Treasure type identifier ' + treasure.treasureType());
         }
 
         self.currentEditItem().importValues(treasure.exportValues());

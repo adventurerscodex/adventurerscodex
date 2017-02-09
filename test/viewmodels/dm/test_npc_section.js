@@ -199,10 +199,8 @@ describe('NPCSectionViewModel', function(){
 
             var vm = new NPCSectionViewModel(new Encounter());
             vm.addNPC();
-            Should.not.exist(vm.selecteditem());
             vm.npcs().length.should.equal(1);
             vm.editNPC(vm.npcs()[0]);
-            vm.selecteditem().should.equal(vm.npcs.pop());
         });
     });                                            
 });

@@ -13,7 +13,6 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self.playerTexts = ko.observableArray();
     self.blankPlayerText = ko.observable(new PlayerText());
-    self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
