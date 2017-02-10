@@ -25,15 +25,10 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedFeats -->
         <tr class="clickable">
-          <td data-bind="text: name, click: $parent.editFeat"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewFeat"></td>
+          <td data-bind="text: name, click: $parent.editFeat" href="#"></td>
           <td data-bind="text: $parent.shortDescription($data), click: $parent.editFeat"
-              href="#"
-              data-toggle="modal"
-              data-target="#viewFeat"></td>
-          <td>
+              href="#"></td>
+          <td class="col-content-vertical">
             <a data-bind="click: $parent.removeFeat" href="#">
               <i class="fa fa-trash-o fa-color-hover">
               </i>
@@ -44,7 +39,7 @@
         <!-- ko if: filteredAndSortedFeats().length == 0 -->
         <tr class="clickable">
           <td data-toggle="modal" data-target="#addFeat" href="#"
-            colspan="7" class="text-center">
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new Feat
           </td>
@@ -99,6 +94,49 @@
                 </textarea>
               </div>
           </div>
+          <div class="form-group">
+            <label for="featDescription" class="col-sm-2 control-label">Tracked?</label>
+              <div class="col-sm-10">
+                <input type="checkbox"
+                         class="form-control"
+                         id="tracked"
+                         data-bind='checked: blankFeat().isTracked'>
+              </div>
+          </div>
+          <div data-bind="visible: blankFeat().isTracked">
+            <div class="form-group">
+              <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
+              </div>
+              <label for="bonus" class="col-sm-2 control-label">Max</label>
+              <div class="col-sm-9">
+                <input type="number" class="form-control" id="max" min="1"
+                      data-bind='textInput: blankTracked().maxUses'>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:50px">
+              </div>
+              <label class="col-sm-2 control-label">Resets on...</label>
+              <div class="col-sm-9">
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                        data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
+                    <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
+                            data-bind="checked: blankTracked().resetsOn"/>
+                      <img class="action-bar-icon" src="/images/meditation.svg"></img>
+                      &nbsp;&nbsp;&nbsp;Short Rest
+                  </label>
+                  <label class="btn btn-default"
+                  data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
+                    <input type="radio" class="hide-block" name="blankresetsOnLong"
+                            value="long" data-bind="checked: blankTracked().resetsOn"/>
+                    <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+                      &nbsp;&nbsp;&nbsp;Long Rest
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="modal-footer">
             <button type="button"
                     class="btn btn-primary"
@@ -125,7 +163,7 @@
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
-      open: selecteditem,
+      open: modalOpen,
       onopen: modalFinishedOpening,
       onclose: modalFinishedClosing
     }">
@@ -154,11 +192,28 @@
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: selecteditem">
+        <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>
             </div>
+            <!-- ko if: $parent.currentEditItem().isTracked -->
+            <div class="row" >
+              <div class="col-sm-6 col-xs-12">
+                <b>Max Uses:</b>&nbsp;
+                <span data-bind="text: $parent.currentEditTracked().maxUses"></span>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <b>Resets on:</b>&nbsp;
+                <span data-bind="visible: $parent.currentEditTracked().resetsOn() === 'short'">
+                  Short Rest
+                </span>
+                <span data-bind="visible: $parent.currentEditTracked().resetsOn() === 'long'">
+                  Long Rest
+                </span>
+              </div>
+            </div>
+            <!-- /ko -->
             <hr />
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
@@ -193,6 +248,47 @@
                            class="form-control"
                            data-bind='value: description, markdownEditor: true'></textarea>
                   </div>
+              </div>
+              <div class="form-group">
+                <label for="featDescription" class="col-sm-2 control-label">Tracked?</label>
+                  <div class="col-sm-10">
+                    <input type="checkbox" class="form-control" id="tracked"
+                            data-bind='checked: isTracked'>
+                  </div>
+              </div>
+              <div data-bind="visible: isTracked">
+                <div class="form-group">
+                  <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
+                  </div>
+                  <label for="bonus" class="col-sm-2 control-label">Max</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" id="max" min="1"
+                          data-bind='textInput: $parent.currentEditTracked().maxUses'>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:50px">
+                  </div>
+                  <label class="col-sm-2 control-label">Resets on...</label>
+                  <div class="col-sm-9">
+                    <div class="btn-group btn-group-justified" role="group">
+                      <label class="btn btn-default"
+                            data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
+                        <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
+                                data-bind="checked: $parent.currentEditTracked().resetsOn"/>
+                          <img class="action-bar-icon" src="/images/meditation.svg"></img>
+                          &nbsp;&nbsp;&nbsp;Short Rest
+                      </label>
+                      <label class="btn btn-default"
+                      data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
+                        <input type="radio" class="hide-block" name="blankresetsOnLong"
+                                value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
+                        <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+                          &nbsp;&nbsp;&nbsp;Long Rest
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button"

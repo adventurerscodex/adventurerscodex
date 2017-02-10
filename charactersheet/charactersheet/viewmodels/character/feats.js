@@ -15,7 +15,10 @@ function FeatsViewModel() {
     self.feats = ko.observableArray([]);
     self.blankFeat = ko.observable(new Feat());
     self.blankTracked = ko.observable(new Tracked());
-    self.selecteditem = ko.observable();
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable(new Feat());
+    self.currentEditTracked = ko.observable(new Tracked());
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
     self.shouldShowDisclaimer = ko.observable(false);
@@ -67,8 +70,20 @@ function FeatsViewModel() {
     self.modalFinishedClosing = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
+
+        if (self.modalOpen()) {
+            Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
+            if (self.currentEditItem().isTracked()) {
+                var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
+                tracked.importValues(self.currentEditTracked().exportValues());
+                tracked.save();
+            }
+        }
+
+        self.save();
+
+        self.modalOpen(false);
+        Notifications.feat.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -105,7 +120,7 @@ function FeatsViewModel() {
             tracked.trackedId(feat.trackedId());
             tracked.maxUses(self.blankTracked().maxUses());
             tracked.resetsOn(self.blankTracked().resetsOn());
-            tracked.save()
+            tracked.save();
         }
         feat.save();
         self.feats.push(feat);
@@ -129,7 +144,11 @@ function FeatsViewModel() {
     };
 
     self.editFeat = function(feat) {
-        self.selecteditem(feat);
+        self.editItemIndex = feat.__id;
+        self.currentEditItem(new Feat());
+        self.currentEditItem().importValues(feat.exportValues());
+        self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feat.trackedId()));
+        self.modalOpen(true);
     };
 
     self.shortDescription = function(feat) {

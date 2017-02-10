@@ -12,7 +12,7 @@ function Tracked() {
     self.trackedId = ko.observable(null);
     self.maxUses = ko.observable(0);
     self.used = ko.observable(0);
-    self.resetsOn = ko.observable('');
+    self.resetsOn = ko.observable('long');
 
     self.save = function() {
         self.ps.save();
