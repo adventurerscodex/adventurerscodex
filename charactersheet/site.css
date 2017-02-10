@@ -522,12 +522,15 @@ ul.footer-icons li {
   margin-bottom: 0px;
 }
 
+.content-left {
+  text-align: left !important;
+}
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
  */
 body {
-  padding-right: 0px !important
+  padding-right: 0px !important;
 }
 
 .modal-open {

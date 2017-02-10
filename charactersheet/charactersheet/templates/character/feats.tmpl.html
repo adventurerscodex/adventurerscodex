@@ -95,8 +95,10 @@
               </div>
           </div>
           <div class="form-group">
-            <label for="featDescription" class="col-sm-2 control-label">Tracked?</label>
-              <div class="col-sm-10">
+            <label for="featDescription" class="col-sm-3 control-label content-left">
+              <span class="fa fa-info-circle" style="cursor:pointer;"
+                      data-bind="popover: { content: trackedPopoverText }"></span>&nbsp;Tracked?</label>
+              <div class="col-sm-7">
                 <input type="checkbox"
                          class="form-control"
                          id="tracked"

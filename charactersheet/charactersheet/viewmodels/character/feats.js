@@ -154,4 +154,8 @@ function FeatsViewModel() {
     self.shortDescription = function(feat) {
         return Utility.string.truncateStringAtLength(feat.description(), self.DESCRIPTION_MAX_LENGTH);
     };
+
+    self.trackedPopoverText = function() {
+        return 'Tracked Feats are listed in Feature Tracker.';
+    };
 }
