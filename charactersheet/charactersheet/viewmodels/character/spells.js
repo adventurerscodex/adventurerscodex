@@ -36,11 +36,14 @@ function SpellbookViewModel() {
     self.sort = ko.observable(self.sorts['spellName asc']);
 
     self.numberOfPrepared = ko.computed(function(){
-        var prepared = ko.utils.arrayFilter(self.spellbook(), function(spell) {
-            return spell.spellPrepared() === true;
+        var prepared = 0;
+        self.spellbook().forEach(function(spell) {
+            if (spell.spellPrepared() === true) {
+                prepared++;
+            }
         });
 
-        return prepared.length;
+        return prepared;
     });
 
     self.numberOfSpells = ko.computed(function() {
@@ -113,21 +116,6 @@ function SpellbookViewModel() {
     });
 
     /* UI Methods */
-
-    /**
-     * Returns the correct html for spell prepared based on cantrip or always
-     * prepared value.
-     */
-    self.preparedCheckboxHTML = function(spell) {
-        if(parseInt(spell.spellLevel()) === 0){
-            return '';
-        } else if(spell.spellAlwaysPrepared()){
-            return '<input type="checkbox" disabled checked>';
-        } else {
-            return '<input data-bind="checked: spellPrepared" ' +
-                   'type="checkbox" href="#"></input>';
-        }
-    };
 
     /**
      * Popover for prepared spells

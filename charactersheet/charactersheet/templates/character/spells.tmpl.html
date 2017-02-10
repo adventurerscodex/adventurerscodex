@@ -42,7 +42,12 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedSpells -->
         <tr class="clickable">
-          <td data-bind="html: $parent.preparedCheckboxHTML($data)"></td>
+          <td>
+            <!-- ko if: spellLevel() != 0 -->
+              <input data-bind="checked: spellPrepared || spellAlwaysPrepared,
+                disable: spellAlwaysPrepared" type="checkbox" href="#"></input>
+            <!-- /ko -->
+          </td>
           <td data-bind="text: spellNameLabel, click: $parent.editSpell"
                href="#"></td>
           <td data-bind="text: spellLevelLabel, click: $parent.editSpell"
