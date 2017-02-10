@@ -215,7 +215,7 @@ function StatsViewModel() {
     /**
     * Tells otherStats to run proficiencyLabel method
     */
-    self.calculatedProficiencyLabel = function() {
+    self.calculatedProficiencyLabel = ko.pureComputed(function() {
         var key = CharacterManager.activeCharacter().key();
         var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
         level = level ? parseInt(level) : 0;
@@ -223,7 +223,7 @@ function StatsViewModel() {
         self.updateProficiencyPopoverMessage(level, proficiency);
 
         return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
-    };
+    });
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
         var levelBonus = (Math.ceil(level / 4) + 1);
@@ -232,7 +232,7 @@ function StatsViewModel() {
             + levelBonus + " + " + proficiency);
     };
 
-    self.calculateInitiativeLabel = function() {
+    self.calculateInitiativeLabel = ko.pureComputed(function() {
         var key = CharacterManager.activeCharacter().key();
         var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
         var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
@@ -240,7 +240,7 @@ function StatsViewModel() {
         self.updateInitiativePopoverMessage(abilityScores.dexModifier(), initiativeModifier);
 
         return dexterityModifier + initiativeModifier;
-    };
+    });
 
     self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
         self.initiativePopover("<span style='white-space:nowrap;'><strong>Initiative</strong> = " +

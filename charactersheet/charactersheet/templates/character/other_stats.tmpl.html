@@ -12,7 +12,7 @@
         Proficiency Bonus&nbsp;
          <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
       </span>
-       <span class="input-group-addon" id="basic-addon3" data-bind="text: calculatedProficiencyLabel()"></span>
+       <span class="input-group-addon" id="basic-addon3" data-bind="text: calculatedProficiencyLabel"></span>
        <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().proficiency'>
      </div>
    </div>
@@ -23,7 +23,7 @@
        <span class="input-group-addon" id="basic-addon2">Initiative&nbsp;
           <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
        </span>
-       <span class="input-group-addon" id="basic-addon3" data-bind="text: calculateInitiativeLabel()"></span>
+       <span class="input-group-addon" id="basic-addon3" data-bind="text: calculateInitiativeLabel"></span>
        <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().initiative'>
      </div>
    </div>
