@@ -14,6 +14,8 @@ function StatsViewModel() {
     self.modalOpen = ko.observable(false);    
     self.level = ko.observable('');
     self.experience = ko.observable('');
+    self._dummy = ko.observable();
+    self._otherStatsDummy = ko.observable();
 
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
@@ -92,14 +94,15 @@ function StatsViewModel() {
         self.health().damage.subscribe(self.dataHasChanged);
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().inspiration.subscribe(self.dataHasChanged);
+        self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
         self.otherStats().ac.subscribe(self.dataHasChanged);
         self.level.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
 
-        Notifications.profile.changed.add(self.calculatedProficiencyLabel);
+        Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
-        Notifications.abilityScores.changed.add(self.calculateInitiativeLabel);
+        Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
     };
 
     self.unload = function() {
@@ -216,6 +219,7 @@ function StatsViewModel() {
     * Tells otherStats to run proficiencyLabel method
     */
     self.calculatedProficiencyLabel = ko.pureComputed(function() {
+        self._dummy();
         var key = CharacterManager.activeCharacter().key();
         var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
         level = level ? parseInt(level) : 0;
@@ -233,6 +237,7 @@ function StatsViewModel() {
     };
 
     self.calculateInitiativeLabel = ko.pureComputed(function() {
+        self._otherStatsDummy();
         var key = CharacterManager.activeCharacter().key();
         var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
         var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
