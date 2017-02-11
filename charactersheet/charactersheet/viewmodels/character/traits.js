@@ -169,6 +169,6 @@ function TraitsViewModel() {
     };
 
     self.trackedPopoverText = function() {
-        return 'Tracked Traits are listed in Traiture Tracker.';
+        return 'Tracked Traits are listed in the Tracker.';
     };
 }
