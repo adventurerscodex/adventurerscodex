@@ -11,7 +11,7 @@ function StatsViewModel() {
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
     self.editItem = ko.observable();
-    self.modalOpen = ko.observable(false);    
+    self.modalOpen = ko.observable(false);
     self.level = ko.observable('');
     self.experience = ko.observable('');
     self._dummy = ko.observable();
@@ -231,9 +231,9 @@ function StatsViewModel() {
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
         var levelBonus = (Math.ceil(level / 4) + 1);
-        self.proficiencyPopover("<span style='white-space:nowrap;'><strong>Proficiency</strong> = "
-            + "(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = "
-            + levelBonus + " + " + proficiency);
+        self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
+            + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = '
+            + levelBonus + ' + ' + proficiency);
     };
 
     self.calculateInitiativeLabel = ko.pureComputed(function() {
@@ -248,9 +248,9 @@ function StatsViewModel() {
     });
 
     self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
-        self.initiativePopover("<span style='white-space:nowrap;'><strong>Initiative</strong> = " +
-        "Modifier + Dexterity Modifier</span></br>"
-            + "Initiative = " + initiativeModifier + " " + dexterityModifier);
+        self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
+        'Modifier + Dexterity Modifier</span></br>'
+            + 'Initiative = ' + initiativeModifier + ' ' + dexterityModifier);
     };
 
     // Modal methods
@@ -260,7 +260,7 @@ function StatsViewModel() {
         self.modifierHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {    
+    self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
             self.health().importValues(self.editItem().exportValues());
         }
