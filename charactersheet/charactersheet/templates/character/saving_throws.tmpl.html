@@ -7,10 +7,11 @@
             <span class="glyphicon glyphicon-ok"></span>
             <span data-bind="css: sortArrow('proficiency')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('name');}" colspan="2">
+          <th data-bind="click: function(){sortBy('name');}">
             Saving Throw
             <span data-bind="css: sortArrow('name')"></span>
           </th>
+          <th></th> <!-- Modifier column -->
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSavingThrows'>

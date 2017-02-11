@@ -11,12 +11,14 @@ function StatsViewModel() {
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
     self.editItem = ko.observable();
-    self.modalOpen = ko.observable(false);    
+    self.modalOpen = ko.observable(false);
     self.level = ko.observable('');
     self.experience = ko.observable('');
+    self._dummy = ko.observable();
+    self._otherStatsDummy = ko.observable();
 
-    var msg = 'Dexterity Bonus';
-    self.initiativeTooltip = ko.observable(msg);
+    self.initiativePopover = ko.observable();
+    self.proficiencyPopover = ko.observable();
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -92,13 +94,15 @@ function StatsViewModel() {
         self.health().damage.subscribe(self.dataHasChanged);
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().inspiration.subscribe(self.dataHasChanged);
+        self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
         self.otherStats().ac.subscribe(self.dataHasChanged);
         self.level.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
 
-        Notifications.profile.changed.add(self.calculateProficiencyLabel);
+        Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
+        Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
     };
 
     self.unload = function() {
@@ -115,10 +119,11 @@ function StatsViewModel() {
         });
         self.hitDiceType().save();
 
-        Notifications.profile.changed.remove(self.calculateProficiencyLabel);
+        Notifications.profile.changed.remove(self.calculatedProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.events.longRest.remove(self.resetOnLongRest);
-        Notifications.global.save.remove(self.save);     
+        Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
+        Notifications.global.save.remove(self.save);
         self.dataHasChanged();
     };
 
@@ -213,8 +218,39 @@ function StatsViewModel() {
     /**
     * Tells otherStats to run proficiencyLabel method
     */
-    self.calculateProficiencyLabel = function() {
-        self.otherStats().updateValues();
+    self.calculatedProficiencyLabel = ko.pureComputed(function() {
+        self._dummy();
+        var key = CharacterManager.activeCharacter().key();
+        var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
+        level = level ? parseInt(level) : 0;
+        var proficiency = parseInt(self.otherStats().proficiency()) ? parseInt(self.otherStats().proficiency()) : 0;
+        self.updateProficiencyPopoverMessage(level, proficiency);
+
+        return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
+    });
+
+    self.updateProficiencyPopoverMessage = function(level, proficiency) {
+        var levelBonus = (Math.ceil(level / 4) + 1);
+        self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
+            + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = '
+            + levelBonus + ' + 1 + ' + proficiency);
+    };
+
+    self.calculateInitiativeLabel = ko.pureComputed(function() {
+        self._otherStatsDummy();
+        var key = CharacterManager.activeCharacter().key();
+        var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
+        var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
+        var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
+        self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
+
+        return dexterityModifier + initiativeModifier;
+    });
+
+    self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
+        self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
+        'Dexterity Modifier + Modifier</span></br>'
+            + 'Initiative = ' + dexterityModifier + ' + ' +  initiativeModifier );
     };
 
     // Modal methods
@@ -224,7 +260,7 @@ function StatsViewModel() {
         self.modifierHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {    
+    self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
             self.health().importValues(self.editItem().exportValues());
         }
