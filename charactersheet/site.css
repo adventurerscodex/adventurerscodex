@@ -537,6 +537,10 @@ body {
   overflow-y: auto;
 }
 
+.popover {
+  max-width: 100%;
+}
+
 /*
  * Modal Fix End
  */

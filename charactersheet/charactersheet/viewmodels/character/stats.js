@@ -233,7 +233,7 @@ function StatsViewModel() {
         var levelBonus = (Math.ceil(level / 4) + 1);
         self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
             + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = '
-            + levelBonus + ' + ' + proficiency);
+            + levelBonus + ' + 1 + ' + proficiency);
     };
 
     self.calculateInitiativeLabel = ko.pureComputed(function() {
@@ -242,15 +242,15 @@ function StatsViewModel() {
         var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
         var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
         var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
-        self.updateInitiativePopoverMessage(abilityScores.dexModifier(), initiativeModifier);
+        self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
 
         return dexterityModifier + initiativeModifier;
     });
 
     self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
         self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
-        'Modifier + Dexterity Modifier</span></br>'
-            + 'Initiative = ' + initiativeModifier + ' ' + dexterityModifier);
+        'Dexterity Modifier + Modifier</span></br>'
+            + 'Initiative = ' + dexterityModifier + ' + ' +  initiativeModifier );
     };
 
     // Modal methods
