@@ -116,6 +116,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    feature: {
+        changed: new signals.Signal()
+    },
+
     item: {
         changed: new signals.Signal()
     },
