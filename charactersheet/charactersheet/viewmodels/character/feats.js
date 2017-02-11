@@ -72,16 +72,23 @@ function FeatsViewModel() {
         self.editTabStatus('');
 
         if (self.modalOpen()) {
-            Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
             if (self.currentEditItem().isTracked()) {
-                var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                tracked.importValues(self.currentEditTracked().exportValues());
-                tracked.save();
+                if (self.currentEditItem().trackedId()) {
+                    var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
+                    tracked.importValues(self.currentEditTracked().exportValues());
+                    tracked.save();
+                } else {
+                    self.currentEditItem().trackedId(uuid.v4());
+                    self.addTracked(self.currentEditItem().trackedId(),
+                        self.currentEditItem().characterId(), self.currentEditTracked());
+                }
             }
+            Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
-
+        self.currentEditItem(new Feat());
+        self.currentEditTracked(new Tracked());
         self.modalOpen(false);
         Notifications.feat.changed.dispatch();
     };
@@ -115,17 +122,21 @@ function FeatsViewModel() {
         feat.characterId(CharacterManager.activeCharacter().key());
         if (feat.isTracked()) {
             feat.trackedId(uuid.v4());
-            var tracked = new Tracked();
-            tracked.characterId(feat.characterId());
-            tracked.trackedId(feat.trackedId());
-            tracked.maxUses(self.blankTracked().maxUses());
-            tracked.resetsOn(self.blankTracked().resetsOn());
-            tracked.save();
+            self.addTracked(feat.trackedId(), feat.characterId(), self.blankTracked());
         }
         feat.save();
         self.feats.push(feat);
         self.blankFeat(new Feat());
         self.blankTracked(new Tracked());
+    };
+
+    self.addTracked = function(uuid, characterId, tracked) {
+        var newTracked = new Tracked();
+        newTracked.characterId(characterId);
+        newTracked.trackedId(uuid);
+        newTracked.maxUses(tracked.maxUses());
+        newTracked.resetsOn(tracked.resetsOn());
+        newTracked.save();
     };
 
     self.clear = function() {
@@ -147,7 +158,9 @@ function FeatsViewModel() {
         self.editItemIndex = feat.__id;
         self.currentEditItem(new Feat());
         self.currentEditItem().importValues(feat.exportValues());
-        self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feat.trackedId()));
+        if (feat.isTracked()) {
+            self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feat.trackedId()));
+        }
         self.modalOpen(true);
     };
 

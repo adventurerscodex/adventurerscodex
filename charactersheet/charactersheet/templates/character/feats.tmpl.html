@@ -199,7 +199,7 @@
             <div class="h3">
               <span data-bind="text: name"></span>
             </div>
-            <!-- ko if: $parent.currentEditItem().isTracked -->
+            <!-- ko if: isTracked -->
             <div class="row" >
               <div class="col-sm-6 col-xs-12">
                 <b>Max Uses:</b>&nbsp;
@@ -258,7 +258,7 @@
                             data-bind='checked: isTracked'>
                   </div>
               </div>
-              <div data-bind="visible: isTracked">
+              <!-- ko if: isTracked -->
                 <div class="form-group">
                   <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
                   </div>
@@ -291,7 +291,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+                <!-- /ko -->
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-primary"
