@@ -74,7 +74,7 @@ describe('ProficienciesViewModel', function() {
             proficienciesViewModel.shouldShowDisclaimer().should.equal(false);
             proficienciesViewModel.firstModalElementHasFocus().should.equal(true);
         });
-    });    
+    });
 
     describe('modalFinishedClosing', function() {
         it('perform actions after a modal has closed', function() {
@@ -98,7 +98,7 @@ describe('ProficienciesViewModel', function() {
             proficienciesViewModel.previewTabStatus().should.equal('active');
             proficienciesViewModel.editTabStatus().should.equal('');
         });
-    });       
+    });
 
     describe('selectEditTab', function() {
         it('perform actions after the preview tab has been selected', function() {
@@ -111,7 +111,7 @@ describe('ProficienciesViewModel', function() {
             proficienciesViewModel.editTabStatus().should.equal('active');
             proficienciesViewModel.editFirstModalElementHasFocus().should.equal(true);
         });
-    });             
+    });
 
     describe('Sort By', function() {
         it('should sort the list of proficiencies by given criteria', function() {
