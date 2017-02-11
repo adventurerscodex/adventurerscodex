@@ -1,9 +1,0 @@
-// Place your settings in this file to overwrite default and user settings.
-{
-    "editor.wrappingColumn": 200,
-    "editor.rulers": [
-        80
-    ],
-    "editor.renderWhitespace": "boundary",
-    "editor.trimAutoWhitespace": true
-}
