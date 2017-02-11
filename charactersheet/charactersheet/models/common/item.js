@@ -43,7 +43,7 @@ function Item() {
     });
 
     self.itemWeightLabel = ko.pureComputed(function() {
-        return self.itemWeight() ? self.itemWeight() + ' lbs.' : '';
+        return self.itemWeight() >= 0 ? self.itemWeight() + ' lbs.' : '';
     });
 
     self.costLabel = ko.pureComputed(function() {

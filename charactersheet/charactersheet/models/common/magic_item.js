@@ -55,7 +55,7 @@ function MagicItem() {
     });
 
     self.magicItemWeightLabel = ko.pureComputed(function() {
-        return self.magicItemWeight() ? self.magicItemWeight() + ' lbs.' : '';
+        return self.magicItemWeight() >= 0 ? self.magicItemWeight() + ' lbs.' : '';
     });
 
     self.clear = function() {

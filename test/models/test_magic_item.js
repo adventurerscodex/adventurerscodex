@@ -107,6 +107,11 @@ describe('Magic Item Model', function() {
             magicItem.magicItemWeight(10);
             magicItem.magicItemWeightLabel().should.equal('10 lbs.');
         });
+        it('should return the correct label', function() {
+            var magicItem = new MagicItem();
+            magicItem.magicItemWeight(0);
+            magicItem.magicItemWeightLabel().should.equal('0 lbs.');
+        });
     });
 
     describe('Magic Item Description Label', function() {
