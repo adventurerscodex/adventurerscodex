@@ -160,6 +160,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    trait: {
+        changed: new signals.Signal()
+    },
+
     weapon: {
         changed: new signals.Signal()
     },

@@ -71,6 +71,10 @@ var Settings = {
         {
             key: 'feats',
             url: 'https://adventurerscodex.com/data/SRD/feats.json'
+        },
+        {
+            key: 'traits',
+            url: 'https://adventurerscodex.com/data/SRD/traits.json'
         }
     ]
 };
