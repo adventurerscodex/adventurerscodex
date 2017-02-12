@@ -49,7 +49,7 @@ function FeaturesViewModel() {
     // Pre-pop methods
     self.featuresPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
-        var keys = DataRepository.features ? Object.keys(DataRepository.features) : [];
+        var keys = DataRepository.features ? DataRepository.featuresDisplayNames : [];
         var results = keys.filter(function(name, idx, _) {
             return name.toLowerCase().indexOf(term) > -1;
         });
@@ -57,10 +57,11 @@ function FeaturesViewModel() {
     };
 
     self.populateFeature = function(label, value) {
-        var feature = DataRepository.features[label];
-
-        self.blankFeature().importValues(feature);
-        self.shouldShowDisclaimer(true);
+        var feature = DataRepository.filterBy('features', 'displayName', label)[0];
+        if (feature) {
+            self.blankFeature().importValues(feature);
+            self.shouldShowDisclaimer(true);
+        }
     };
 
     // Modal methods

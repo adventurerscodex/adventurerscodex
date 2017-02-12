@@ -10,6 +10,11 @@ var init = function(viewModel) {
     Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
         $.getJSON(location.url, function(data) {
             DataRepository[location.key] = data;
+            if (location.key === 'features') {
+                DataRepository[location.key + 'DisplayNames'] = data.map(function(item, idx, _){
+                    return item.displayName;
+                });
+            }
         });
     });
 
