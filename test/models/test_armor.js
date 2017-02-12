@@ -42,7 +42,7 @@ describe('Armor Model', function() {
         it('should return the correct label', function() {
             var armor = new Armor();
             armor.armorWeight('');
-            armor.armorWeightLabel().should.equal('');
+            armor.armorWeightLabel().should.equal('0 lbs.');
         });
     });
 

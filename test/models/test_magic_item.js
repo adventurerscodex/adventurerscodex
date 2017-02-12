@@ -115,7 +115,7 @@ describe('Magic Item Model', function() {
         it('should return the correct label', function() {
             var magicItem = new MagicItem();
             magicItem.magicItemWeight('');
-            magicItem.magicItemWeightLabel().should.equal('');
+            magicItem.magicItemWeightLabel().should.equal('0 lbs.');
         });
     });
 

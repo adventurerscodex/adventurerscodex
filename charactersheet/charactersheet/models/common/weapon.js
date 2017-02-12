@@ -206,7 +206,7 @@ function Weapon() {
     });
 
     self.weaponWeightLabel = ko.pureComputed(function() {
-        return self.weaponWeight() !== '' && self.weaponWeight() >= 0 ? self.weaponWeight() + ' lbs.' : '';
+        return self.weaponWeight() !== '' && self.weaponWeight() >= 0 ? self.weaponWeight() + ' lbs.' : '0 lbs.';
     });
 
     self.clear = function() {

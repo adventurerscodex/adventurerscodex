@@ -264,7 +264,7 @@ describe('Weapon Model', function() {
         it('should return the correct label', function() {
             var weapon = new Weapon();
             weapon.weaponWeight('');
-            weapon.weaponWeightLabel().should.equal('');
+            weapon.weaponWeightLabel().should.equal('0 lbs.');
         });
     });
 
