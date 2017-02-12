@@ -5,11 +5,14 @@ function Feature() {
 
     self.ps = PersistenceService.register(Feature, self);
     self.mapping = {
-        include: ['characterId', 'name', 'description', 'trackedId', 'isTracked']
+        include: ['characterId', 'name', 'description', 'trackedId', 'isTracked',
+                  'level', 'characterClass']
     };
 
     self.characterId = ko.observable(null);
     self.name = ko.observable('');
+    self.level = ko.observable('');
+    self.characterClass = ko.observable('');
     self.description = ko.observable('');
     self.trackedId = ko.observable(null);
     self.isTracked = ko.observable(false);

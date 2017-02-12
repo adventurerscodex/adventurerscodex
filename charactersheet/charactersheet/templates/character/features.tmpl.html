@@ -10,6 +10,10 @@
             Name
             <span data-bind="css: sortArrow('name')"></span>
           </th>
+          <th data-bind="click: function(){sortBy('characterClass');}" class="col-md-3">
+            Class
+            <span data-bind="css: sortArrow('characterClass')"></span>
+          </th>
           <th data-bind="click: function(){sortBy('description');}" class="col-md-3">
             Description
             <span data-bind="css: sortArrow('description')"></span>
@@ -26,6 +30,7 @@
       <!-- ko foreach: filteredAndSortedFeatures -->
         <tr class="clickable">
           <td data-bind="text: name, click: $parent.editFeature" href="#"></td>
+          <td data-bind="text: characterClass, click: $parent.editFeature" href="#"></td>
           <td data-bind="text: $parent.shortDescription($data), click: $parent.editFeature"
               href="#"></td>
           <td class="col-content-vertical">
@@ -35,8 +40,8 @@
             </a>
           </td>
         </tr>
-        <!-- /ko -->
-        <!-- ko if: filteredAndSortedFeatures().length == 0 -->
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedFeatures().length == 0 -->
         <tr class="clickable">
           <td data-toggle="modal" data-target="#addFeature" href="#"
             colspan="12" class="text-center">
@@ -44,7 +49,7 @@
             Add a new Feature
           </td>
         </tr>
-        <!-- /ko -->
+      <!-- /ko -->
       </tbody>
     </table>
   </div>
@@ -76,10 +81,34 @@
                 <input type="text"
                         class="form-control"
                         id="featureName"
-                        placeholder="Trance"
+                        placeholder="Rage"
                         data-bind='textInput: blankFeature().name,
                         autocomplete: { source: featuresPrePopFilter,
                         onselect: populateFeature }, hasFocus: firstModalElementHasFocus'>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="class" class="col-sm-2 control-label">Class</label>
+              <div class="col-sm-10">
+                <input type="text"
+                        class="form-control"
+                        id="class"
+                        placeholder="Barbarian"
+                        data-bind='textInput: blankFeature().characterClass,
+                        autocomplete: { source: featuresPrePopFilter,
+                        onselect: populateFeature }'>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="level" class="col-sm-2 control-label">Level</label>
+              <div class="col-sm-10">
+                <input type="number"
+                        class="form-control"
+                        id="class"
+                        placeholder="1"
+                        data-bind='textInput: blankFeature().level,
+                        autocomplete: { source: featuresPrePopFilter,
+                        onselect: populateFeature }'>
               </div>
           </div>
           <div class="form-group">
@@ -89,7 +118,7 @@
                           class="form-control"
                           id="featureDescription"
                           rows="4"
-                          placeholder="Elves don't need to sleep..."
+                          placeholder="While you are not wearing any armor, your Armor Class..."
                           data-bind='textInput: blankFeature().description'>
                 </textarea>
               </div>
@@ -238,8 +267,28 @@
                   <input type="text"
                         class="form-control"
                         id="featureName"
-                        placeholder="Trance"
+                        placeholder="Rage"
                         data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="class" class="col-sm-2 control-label">Class</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                        class="form-control"
+                        id="class"
+                        placeholder="Barbarian"
+                        data-bind='textInput: characterClass'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="level" class="col-sm-2 control-label">Level</label>
+                <div class="col-sm-10">
+                  <input type="number"
+                        class="form-control"
+                        id="class"
+                        placeholder="1"
+                        data-bind='textInput: level'>
                 </div>
               </div>
               <div class="form-group">
@@ -248,7 +297,7 @@
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
                            class="form-control"
-                           placeholder="Elves don't need to sleep..."
+                           placeholder="While you are not wearing any armor, your Armor Class..."
                            data-bind='value: description, markdownEditor: true'></textarea>
                   </div>
               </div>

@@ -8,6 +8,8 @@ function FeaturesViewModel() {
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
+        'characterClass asc': { field: 'characterClass', direction: 'asc'},
+        'characterClass desc': { field: 'characterClass', direction: 'desc'},
         'description asc': { field: 'description', direction: 'asc'},
         'description desc': { field: 'description', direction: 'desc'}
     };
