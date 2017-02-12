@@ -4,35 +4,45 @@ function DailyFeatureViewModel() {
     var self = this;
 
     self.sorts = {
-        'featureName asc': { field: 'featureName', direction: 'asc'},
-        'featureName desc': { field: 'featureName', direction: 'desc'},
-        'featureMaxUses asc': { field: 'featureMaxUses', direction: 'asc', numeric: true},
-        'featureMaxUses desc': { field: 'featureMaxUses', direction: 'desc', numeric: true},
-        'featureResetsOn asc': { field: 'featureResetsOn', direction: 'asc'},
-        'featureResetsOn desc': { field: 'featureResetsOn', direction: 'desc'}
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'}
     };
 
     self.dailyFeatures = ko.observableArray([]);
-    self.blankDailyFeature = ko.observable(new DailyFeature());
     self.editItem = ko.observable();
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
-    self.sort = ko.observable(self.sorts['featureName asc']);
+    self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
+    // List of all models that can be tracked
+    self.trackedTypes = [ Feat, Trait ];
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-        var dailyFeatures = PersistenceService.findBy(DailyFeature, 'characterId',
-            CharacterManager.activeCharacter().key());
-        if (dailyFeatures.length > 0) {
-            self.dailyFeatures(dailyFeatures);
-        } else {
-            self.dailyFeatures([]);
-        }
+        self.loadTrackedItems();
 
         //Notifications
         Notifications.events.shortRest.add(self.resetShortRestFeatures);
         Notifications.events.longRest.add(self.resetLongRestFeatures);
+        Notifications.feat.changed.add(self.loadTrackedItems);
+        Notifications.trait.changed.add(self.loadTrackedItems);
+    };
+
+    self.loadTrackedItems = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var dailyFeatures = [];
+        // Fetch all items that can be tracked
+        self.trackedTypes.forEach(function(type, idx, _){
+            var result = PersistenceService.findBy(type, 'characterId', key);
+            dailyFeatures = dailyFeatures.concat(result);
+        });
+        var tracked = dailyFeatures.filter(function(e, i, _) {
+            if (e.isTracked()) {
+                e.tracked(PersistenceService.findFirstBy(Tracked, 'trackedId', e.trackedId()));
+            }
+            return e.isTracked();
+        });
+        self.dailyFeatures(tracked);
     };
 
     self.unload = function() {
@@ -40,15 +50,21 @@ function DailyFeatureViewModel() {
         Notifications.global.save.remove(self.save);
         Notifications.events.longRest.remove(self.resetShortRestFeatures);
         Notifications.events.shortRest.remove(self.resetShortRestFeatures);
+        Notifications.feat.changed.remove(self.loadTrackedItems);
+        Notifications.trait.changed.remove(self.loadTrackedItems);
     };
 
     self.save = function() {
-        self.dailyFeatures().forEach(function(e, i, _) {
-            e.save();
+        self.dailyFeatures().forEach(function(item, idx, _){
+            item.tracked().save();
         });
     };
 
     /* UI Methods */
+
+    self.dailyFeaturesProgressWidth = function(max, used) {
+        return (parseInt(max) - parseInt(used)) / parseInt(max);
+    };
 
     /**
      * Filters and sorts the daily features for presentation in a table.
@@ -68,8 +84,7 @@ function DailyFeatureViewModel() {
      * Given a column name, determine the current sort type & order.
      */
     self.sortBy = function(columnName) {
-        self.sort(SortService.sortForName(self.sort(),
-            columnName, self.sorts));
+        self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
     //Manipulating daily features
@@ -78,9 +93,9 @@ function DailyFeatureViewModel() {
      * Resets all short-rest features.
      */
     self.resetShortRestFeatures = function() {
-        ko.utils.arrayForEach(self.dailyFeatures(), function(feature) {
-            if (feature.featureResetsOn() === DailyFeature.REST_VALUES.SHORT_REST) {
-                feature.featureUsed(0);
+        ko.utils.arrayForEach(self.dailyFeatures(), function(item) {
+            if (item.tracked().resetsOn() === Fixtures.resting.shortRestEnum) {
+                item.tracked().used(0);
             }
         });
     };
@@ -89,10 +104,10 @@ function DailyFeatureViewModel() {
      * Resets all long-rest features.
      */
     self.resetLongRestFeatures = function() {
-        ko.utils.arrayForEach(self.dailyFeatures(), function(feature) {
-            if (feature.featureResetsOn() === DailyFeature.REST_VALUES.LONG_REST ||
-                feature.featureResetsOn() === DailyFeature.REST_VALUES.SHORT_REST) {
-                feature.featureUsed(0);
+        ko.utils.arrayForEach(self.dailyFeatures(), function(item) {
+            if (item.tracked().resetsOn() === Fixtures.resting.shortRestEnum ||
+                item.tracked().resetsOn() === Fixtures.resting.longRestEnum) {
+                item.tracked().used(0);
             }
         });
     };
@@ -112,9 +127,16 @@ function DailyFeatureViewModel() {
 
     self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
-            Utility.array.updateElement(self.dailyFeatures(), self.editItem(), self.editItemIndex);
+            var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId',
+                self.editItem().trackedId());
+            tracked.importValues(self.editItem().exportValues());
+            tracked.save();
+            self.dailyFeatures().forEach(function(item, idx, _) {
+                if (item.trackedId() === tracked.trackedId()) {
+                    item.tracked().importValues(tracked.exportValues());
+                }
+            });
         }
-        self.save();
         self.modalOpen(false);
     };
 
@@ -122,31 +144,14 @@ function DailyFeatureViewModel() {
         self.editHasFocus(true);
     };
 
-    self.editDailyFeature = function(dailyFeature) {
-        self.editItemIndex = dailyFeature.__id;
-        self.editItem(new DailyFeature());
-        self.editItem().importValues(dailyFeature.exportValues());
+    self.editDailyFeature = function(item) {
+        self.editItem(new Tracked());
+        self.editItem().importValues(item.tracked().exportValues());
         self.modalOpen(true);
     };
 
-    self.addDailyFeature = function() {
-        var dailyFeature = self.blankDailyFeature();
-        dailyFeature.characterId(CharacterManager.activeCharacter().key());
-        dailyFeature.color(Fixtures.general.colorList[self.dailyFeatures().length
-          % Fixtures.general.colorList.length]);
-        dailyFeature.save();
-        self.dailyFeatures.push(dailyFeature);
-
-        self.blankDailyFeature(new DailyFeature());
-    };
-
-    self.removeDailyFeature = function(dailyFeature) {
-        self.dailyFeatures.remove(dailyFeature);
-        dailyFeature.delete();
-    };
-
-    self.refreshDailyFeature = function(dailyFeature) {
-        dailyFeature.featureUsed(0);
+    self.refreshDailyFeature = function(item) {
+        item.tracked().used(0);
     };
 
     self.clear = function() {

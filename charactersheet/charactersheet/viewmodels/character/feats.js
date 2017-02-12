@@ -136,6 +136,10 @@ function FeatsViewModel() {
         newTracked.trackedId(uuid);
         newTracked.maxUses(tracked.maxUses());
         newTracked.resetsOn(tracked.resetsOn());
+        newTracked.type(Feat);
+        var trackedList = PersistenceService.findBy(Tracked, 'characterId', characterId);
+        newTracked.color(Fixtures.general.colorList[trackedList.length
+          % Fixtures.general.colorList.length]);
         newTracked.save();
     };
 

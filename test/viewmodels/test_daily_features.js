@@ -121,7 +121,6 @@ describe('Daily Features View Model', function() {
     describe('Clear', function() {
         it('should clear all the values in spell dailyFeatures.', function() {
             var p = new DailyFeatureViewModel();
-            var df = new DailyFeature();
             var dailyFeatures = [df];
             p.dailyFeatures(dailyFeatures);
             p.dailyFeatures().should.equal(dailyFeatures);

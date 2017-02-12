@@ -302,9 +302,10 @@ var Fixtures = {
         shortRestMessage : 'Your relevant Spell Slots, Tracked Features, ' +
               'Feats, and Traits have been restored.',
         longRestMessage : 'Your Hit Dice, Spell Slots, Hit Points, ' +
-              'Tracked Features, Feats, and Traits have been restored.'
+              'Tracked Features, Feats, and Traits have been restored.',
+        shortRestEnum : 'short',
+        longRestEnum : 'long'
     },
-
     wizardProfile: {
         classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
               'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
