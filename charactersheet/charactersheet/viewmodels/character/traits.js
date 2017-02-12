@@ -8,6 +8,8 @@ function TraitsViewModel() {
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
+        'race asc': { field: 'race', direction: 'asc'},
+        'race desc': { field: 'race', direction: 'desc'},
         'description asc': { field: 'description', direction: 'asc'},
         'description desc': { field: 'description', direction: 'desc'}
     };
