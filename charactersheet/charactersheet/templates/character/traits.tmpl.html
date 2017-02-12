@@ -82,7 +82,7 @@
                         class="form-control"
                         id="traitName"
                         placeholder="Trance"
-                        data-bind='textInput: blankTrait().name,
+                        data-bind='textInput: blankTrait().name, hasFocus: firstModalElementHasFocus,
                         autocomplete: { source: traitsPrePopFilter,
                         onselect: populateTrait }'>
               </div>
@@ -267,7 +267,7 @@
                          class="form-control"
                          id="race"
                          placeholder="Trance"
-                         data-bind='textInput: race, hasFocus: $parent.editFirstModalElementHasFocus'>
+                         data-bind='textInput: race'>
                 </div>
               </div>
               <div class="form-group">
