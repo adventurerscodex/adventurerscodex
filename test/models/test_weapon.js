@@ -256,6 +256,16 @@ describe('Weapon Model', function() {
             weapon.weaponWeight(10);
             weapon.weaponWeightLabel().should.equal('10 lbs.');
         });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight(0);
+            weapon.weaponWeightLabel().should.equal('0 lbs.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight('');
+            weapon.weaponWeightLabel().should.equal('');
+        });
     });
 
     describe('Weapon Range Label', function() {

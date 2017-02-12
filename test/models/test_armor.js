@@ -34,6 +34,16 @@ describe('Armor Model', function() {
             armor.armorWeight(10);
             armor.armorWeightLabel().should.equal('10 lbs.');
         });
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorWeight(0);
+            armor.armorWeightLabel().should.equal('0 lbs.');
+        });
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorWeight('');
+            armor.armorWeightLabel().should.equal('');
+        });
     });
 
     describe('Armor AC Label', function() {

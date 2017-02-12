@@ -61,6 +61,11 @@ describe('Item Model', function() {
             item.itemWeight(0);
             item.itemWeightLabel().should.equal('0 lbs.');
         });
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemWeight('');
+            item.itemWeightLabel().should.equal('');
+        });
     });
 
     describe('Item Description Label', function() {
