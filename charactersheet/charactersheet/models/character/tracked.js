@@ -14,7 +14,7 @@ function Tracked() {
     self.maxUses = ko.observable(0);
     self.used = ko.observable(0);
     self.resetsOn = ko.observable('long');
-    self.color = ko.observable('progress-bar-blue');
+    self.color = ko.observable('');
     self.type = ko.observable(null);
 
     self.save = function() {
