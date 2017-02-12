@@ -47,7 +47,7 @@ function MagicItem() {
     });
 
     self.magicItemNameLabel = ko.pureComputed(function() {
-        if(self.magicItemAttuned() === true){
+        if (self.magicItemAttuned() === true) {
             return (self.magicItemName() + ' (Attuned)' );
         } else {
             return self.magicItemName();
@@ -55,7 +55,7 @@ function MagicItem() {
     });
 
     self.magicItemWeightLabel = ko.pureComputed(function() {
-        return self.magicItemWeight() ? self.magicItemWeight() + ' lbs.' : '';
+        return self.magicItemWeight() !== '' && self.magicItemWeight() >= 0 ? self.magicItemWeight() + ' lbs.' : '0 lbs.';
     });
 
     self.clear = function() {

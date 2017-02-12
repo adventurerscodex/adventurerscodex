@@ -56,6 +56,16 @@ describe('Item Model', function() {
             item.itemWeight(10);
             item.itemWeightLabel().should.equal('10 lbs.');
         });
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemWeight(0);
+            item.itemWeightLabel().should.equal('0 lbs.');
+        });
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemWeight('');
+            item.itemWeightLabel().should.equal('0 lbs.');
+        });
     });
 
     describe('Item Description Label', function() {
