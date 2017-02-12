@@ -130,28 +130,30 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4 col-sm-12 col-padded">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-padded">
       <div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates/character', data: skillsViewModel }">
       </div>
     </div>
-    <div class="col-md-4 col-sm-12 col-padded">
-      <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates/character', data: featsProfViewModel }">
+    <div class="col-lg-8 col-md-7 col-sm-6 col-padded">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 col-padded">
+          <div data-bind="template: { name: 'features.tmpl', templateUrl: 'templates/character', data: featuresViewModel }">
+          </div>
+        </div>
+        <div class="col-lg-6 col-xs-12 col-padded">
+          <div data-bind="template: { name: 'feats.tmpl', templateUrl: 'templates/character', data: featsViewModel }">
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-md-4 col-sm-12 col-padded">
-      <div data-bind="template: { name: 'feats.tmpl', templateUrl: 'templates/character', data: featsViewModel }">
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-12 col-padded">
-      <div data-bind="template: { name: 'traits.tmpl', templateUrl: 'templates/character', data: traitsViewModel }">
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-12 col-padded">
-      <div data-bind="template: { name: 'features.tmpl', templateUrl: 'templates/character', data: featuresViewModel }">
-      </div>
-    </div>
-    <div class="col-md-4 col-sm-12 col-padded">
-      <div id="proficiencies" data-bind="template: { name: 'proficiencies.tmpl', templateUrl: 'templates/character', data: proficienciesViewModel }">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 col-padded">
+          <div data-bind="template: { name: 'traits.tmpl', templateUrl: 'templates/character', data: traitsViewModel }">
+          </div>
+        </div>
+        <div class="col-lg-6 col-xs-12 col-padded">
+          <div data-bind="template: { name: 'proficiencies.tmpl', templateUrl: 'templates/character', data: proficienciesViewModel }">
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -6,7 +6,6 @@
 function SkillsTabViewModel() {
     var self = this;
 
-    self.featsProfViewModel    = ko.observable(new FeatsProfViewModel());
     self.skillsViewModel       = ko.observable(new SkillsViewModel());
     self.trackerViewModel = ko.observable(new TrackerViewModel());
     self.proficienciesViewModel = ko.observable(new ProficienciesViewModel());

@@ -82,6 +82,9 @@ function FeatsViewModel() {
                     self.addTracked(self.currentEditItem().trackedId(),
                         self.currentEditItem().characterId(), self.currentEditTracked());
                 }
+            } else if (self.currentEditItem().trackedId()) {
+                var trackedToDelete = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
+                tracked.delete();
             }
             Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
         }

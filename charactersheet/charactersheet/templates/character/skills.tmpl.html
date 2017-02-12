@@ -3,17 +3,19 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('proficiency');}">
+          <th data-bind="click: function(){sortBy('proficiency');}"
+            class="col-md-2 col-sm-2">
             <span class="glyphicon glyphicon-ok"></span>
             <span data-bind="css: sortArrow('proficiency')"></span>
           </th>
-          <th>
+          <th class="col-md-3 col-sm-3">
           </th>
-          <th data-bind="click: function(){sortBy('name');}">
+          <th data-bind="click: function(){sortBy('name');}"
+            class="col-md-5">
             Skill
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th>
+          <th class="col-md-2">
             Passive
           </th>
         </tr>

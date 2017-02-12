@@ -15,7 +15,7 @@ function TrackerViewModel() {
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
     // List of all models that can be tracked
-    self.trackedTypes = [ Feat, Trait ];
+    self.trackedTypes = [ Feat, Trait, Feature ];
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -26,6 +26,7 @@ function TrackerViewModel() {
         Notifications.events.longRest.add(self.resetLongRestFeatures);
         Notifications.feat.changed.add(self.loadTrackedItems);
         Notifications.trait.changed.add(self.loadTrackedItems);
+        Notifications.feature.changed.add(self.loadTrackedItems);
     };
 
     self.loadTrackedItems = function() {
@@ -52,6 +53,7 @@ function TrackerViewModel() {
         Notifications.events.shortRest.remove(self.resetShortRestFeatures);
         Notifications.feat.changed.remove(self.loadTrackedItems);
         Notifications.trait.changed.remove(self.loadTrackedItems);
+        Notifications.feature.changed.remove(self.loadTrackedItems);
     };
 
     self.save = function() {
