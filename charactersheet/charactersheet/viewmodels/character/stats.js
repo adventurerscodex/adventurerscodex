@@ -5,6 +5,7 @@ function StatsViewModel() {
 
     self.health = ko.observable(new Health());
     self.otherStats = ko.observable(new OtherStats());
+    self.armorClass = ko.observable();
     self.blankHitDice = ko.observable(new HitDice());
     self.hitDiceList = ko.observableArray([]);
     self.hitDiceType = ko.observable(new HitDiceType());
@@ -19,6 +20,7 @@ function StatsViewModel() {
 
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
+    self.armorClassPopover = ko.observable();
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -95,13 +97,14 @@ function StatsViewModel() {
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().inspiration.subscribe(self.dataHasChanged);
         self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
-        self.otherStats().ac.subscribe(self.dataHasChanged);
+        self.otherStats().armorClassModifier.subscribe(self.dataHasChanged);
         self.level.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
 
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.profile.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
+        Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
     };
 
@@ -122,6 +125,7 @@ function StatsViewModel() {
         Notifications.profile.changed.remove(self.calculatedProficiencyLabel);
         Notifications.profile.changed.remove(self.calculateHitDice);
         Notifications.events.longRest.remove(self.resetOnLongRest);
+        Notifications.armorClass.changed.remove(self.updateArmorClass);
         Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
         Notifications.global.save.remove(self.save);
         self.dataHasChanged();
@@ -228,8 +232,8 @@ function StatsViewModel() {
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
         self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
-            + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = '
-            + level + ' + 1 + ' + proficiency);
+            + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />Proficiency = '
+            + levelBonus + ' + 1 + ' + proficiency);
     };
 
     // Calculate initiative label and popover
@@ -246,8 +250,29 @@ function StatsViewModel() {
 
     self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
         self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
-        'Dexterity Modifier + Modifier</span></br>'
+        'Dexterity Modifier + Modifier</span><br />'
             + 'Initiative = ' + dexterityModifier + ' + ' +  initiativeModifier );
+    };
+
+    self.updateArmorClassPopoverMessage = function(dexterityModifier, initiativeModifier) {
+        var acService = ArmorClassService.sharedService();
+        var baseAC = acService.baseArmorClass(),
+            dexMod = acService.dexBonus(),
+            magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
+            shield = acService.hasShield() ? 2 : 0;
+
+        var otherStats = PersistenceService.findFirstBy(OtherStats);
+        var modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;
+
+        self.armorClassPopover('<span><strong>Armor Class</strong> = ' +
+        'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />' +
+        '<strong>Armor Class</strong> = ' + baseAC + ' + ' + dexMod + ' + ' +  magicModifiers +
+        ' + ' + shield + ' + ' + modifier);
+    };
+
+    self.updateArmorClass = function() {
+        self.updateArmorClassPopoverMessage();
+        self.armorClass(ArmorClassService.sharedService().armorClass());
     };
 
     // Modal methods

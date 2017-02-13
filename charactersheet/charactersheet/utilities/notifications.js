@@ -103,6 +103,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    armorClass: {
+        changed: new signals.Signal()
+    },
+
     campaign: {
         changed: new signals.Signal()
     },

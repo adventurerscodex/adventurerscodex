@@ -4,12 +4,12 @@ function OtherStats() {
     var self = this;
     self.ps = PersistenceService.register(OtherStats, self);
     self.mapping = {
-        include: ['characterId', 'ac', 'initiative', 'speed',
+        include: ['characterId', 'armorClassModifier', 'initiative', 'speed',
         'inspiration', 'proficiency']
     };
 
     self.characterId = ko.observable(null);
-    self.ac = ko.observable(10);
+    self.armorClassModifier = ko.observable(0);
     self.initiative = ko.observable(0);
     self.speed = ko.observable(0);
     self.inspiration = ko.observable(0);

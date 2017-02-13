@@ -6,7 +6,7 @@ function Armor() {
     self.mapping = {
         include: ['characterId', 'armorName', 'armorType',
                   'armorPrice', 'armorMagicalModifier', 'armorCurrencyDenomination',
-                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription']
+                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription', 'armorEquipped']
     };
 
     self._dummy = ko.observable(null);
@@ -20,6 +20,7 @@ function Armor() {
     self.armorClass = ko.observable('');
     self.armorStealth = ko.observable('');
     self.armorDescription = ko.observable('');
+    self.armorEquipped = ko.observable('');
 
     self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
@@ -54,7 +55,7 @@ function Armor() {
     });
 
     self.armorSummaryLabel = ko.pureComputed(function() {
-        if (self.armorMagicalModifier() != 0){
+        if (self.armorMagicalModifier() != 0) {
             if (self.acLabel()){
                 return self.magicalModifierLabel() + ', ' + self.acLabel();
             } else {
@@ -66,7 +67,7 @@ function Armor() {
     });
 
     self.applyMagicalModifierLabel = ko.pureComputed(function() {
-        if (self.magicalModifierLabel() !== '' ){
+        if (self.magicalModifierLabel() !== '' ) {
             return true;
         } else {
             return false;

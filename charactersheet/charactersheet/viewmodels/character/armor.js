@@ -50,6 +50,10 @@ function ArmorViewModel() {
         });
     };
 
+    self.armorEquippedLabel = function(armor) {
+        return armor.armorEquipped() ? 'fa fa-check' : '';
+    };
+
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
         if(self.armors().length > 0) {
@@ -59,6 +63,25 @@ function ArmorViewModel() {
         }
         return weight + ' (lbs)';
     });
+
+    self.equipArmorHandler = function() {
+        var item = self.currentEditItem();
+        if (item.armorEquipped()) {
+            if (item.armorType() === 'Shield') {
+                ko.utils.arrayForEach(self.armors(), function(item2) {
+                    if (self.editItemIndex != item2.__id && item2.armorType() == 'Shield') {
+                        item2.armorEquipped('');
+                    }
+                });
+            } else {
+                ko.utils.arrayForEach(self.armors(), function(item2) {
+                    if (self.editItemIndex != item2.__id && item2.armorType() != 'Shield') {
+                        item2.armorEquipped('');
+                    }
+                });
+            }
+        }
+    };
 
     /* Modal Methods */
 
@@ -89,6 +112,8 @@ function ArmorViewModel() {
         if (self.modalOpen()) {
             Utility.array.updateElement(self.armors(), self.currentEditItem(), self.editItemIndex);
         }
+
+        self.equipArmorHandler();
 
         self.save();
         self.modalOpen(false);
