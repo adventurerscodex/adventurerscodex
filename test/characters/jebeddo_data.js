@@ -218,7 +218,7 @@ var jebeddo_data = {
   "OtherStats": [
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "ac": "15",
+      "armorClassModifier": "15",
       "initiative": "3",
       "speed": "30",
       "inspiration": "1",
@@ -643,7 +643,8 @@ var jebeddo_data = {
       "armorWeight": "",
       "armorClass": "12",
       "armorStealth": "",
-      "armorDescription": "12"
+      "armorDescription": "12",
+      "armorEquipped": ""
     }
   ],
   "DeathSave": [
