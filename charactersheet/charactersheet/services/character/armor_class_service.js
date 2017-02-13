@@ -141,14 +141,14 @@ function _ArmorClassService(configuration) {
     };
 
     self.armorClassModifier = function() {
-        var key = CharacterManager.activeCharacter().key()
+        var key = CharacterManager.activeCharacter().key();
         var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
 
         return otherStats.armorClassModifier() ? parseInt(otherStats.armorClassModifier()) : 0;
     };
 
     self.hasArmor = function() {
-       var characterId = CharacterManager.activeCharacter().key();
+        var characterId = CharacterManager.activeCharacter().key();
         var predicates = [
             new KeyValuePredicate('characterId', characterId),
             new KeyValuePredicate('armorEquipped', 'equipped'),
@@ -159,7 +159,7 @@ function _ArmorClassService(configuration) {
     };
 
     self.hasShield = function() {
-       var characterId = CharacterManager.activeCharacter().key();
+        var characterId = CharacterManager.activeCharacter().key();
         var predicates = [
             new KeyValuePredicate('characterId', characterId),
             new KeyValuePredicate('armorEquipped', 'equipped'),
