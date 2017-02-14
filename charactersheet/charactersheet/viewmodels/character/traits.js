@@ -87,6 +87,7 @@ function TraitsViewModel() {
             } else if (self.currentEditItem().trackedId()) {
                 var trackedToDelete = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
                 trackedToDelete.delete();
+                self.currentEditItem().trackedId(null);
             }
             Utility.array.updateElement(self.traits(), self.currentEditItem(), self.editItemIndex);
         }
