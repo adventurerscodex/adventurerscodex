@@ -2,7 +2,7 @@
 	<div class='panel-body'>
     <div class="progress" data-bind="{ foreach: trackables, visible: trackables().length > 0 }">
       <div class="progress-bar" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().maxUses(), tracked().used()) * $parent.maxFeatureWidth() + '%' }, css: tracked().color()">
+        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().maxUses(), tracked().used()) * $parent.maxTrackerWidth() + '%' }, css: tracked().color()">
         <span class="sr-only"></span>
       </div>
     </div>

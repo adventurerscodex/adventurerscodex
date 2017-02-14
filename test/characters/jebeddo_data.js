@@ -268,14 +268,6 @@ var jebeddo_data = {
       "copper": "583"
     }
   ],
-  "FeatsProf": [
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "feats": "1. Bardic Inspiration - Radius 60 ft, 1d8 inspiration die (have to use it in 10 minutes), Uses - Charisma Mod (3)\n                                 \n2. Jack of All Trades\n\n3. Song of Rest - 1d6 hit points gained during short rest\n\n4. Cutting Words-\nWhen a creature that you can see within 60 feet o f you makes an attack roll, an ability check, or a damage roll, you can use your reaction to expend one of your uses of Bardic Inspiration, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll.\n\n5. Font of Inspiration -\nBeginning when you reach 5th level, you regain all of your expended uses o f Bardic Inspiration when you finish a short or long rest.",
-      "proficiencies": "Dexterity\nCharisma\nAthletics\nIntimidation\nInvestigation\nInsight\nPerception\nPersuasion \nSleight of Hand\nStealth\nDouble Proficiency\n\nAthletics\nPerception",
-      "specialAbilities": ""
-    }
-  ],
   "SavingThrows": [
       {
         "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
@@ -740,26 +732,6 @@ var jebeddo_data = {
       "magicItemCharges": "2",
       "magicItemWeight": 0,
       "magicItemDescription": "Find a secret door within 30 ft of you, the wand points to it by pulsing\nGain 1d3 charges in the morning."
-    }
-  ],
-  "DailyFeature": [
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "featureName": "Song of Rest",
-      "featureMaxUses": "1",
-      "featureUsed": 0,
-      "featureResetsOn": "",
-      "featureDescription": "Extra 1d6 hit points gained when using a hit die.",
-      "color": "progress-bar-red"
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "featureName": "Bardic Inspiration/Cutting Words",
-      "featureMaxUses": "3",
-      "featureUsed": 0,
-      "featureResetsOn": "short",
-      "featureDescription": "d8",
-      "color": "progress-bar-indigo"
     }
   ],
   "__version__":"1.2.0"

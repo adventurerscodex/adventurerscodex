@@ -91,9 +91,6 @@ function TrackerViewModel() {
 
     //Manipulating tracked elements
 
-    /**
-     * Resets all short-rest features.
-     */
     self.resetShortRestFeatures = function() {
         ko.utils.arrayForEach(self.trackables(), function(item) {
             if (item.tracked().resetsOn() === Fixtures.resting.shortRestEnum) {
@@ -102,19 +99,13 @@ function TrackerViewModel() {
         });
     };
 
-    /**
-     * Resets all long-rest features.
-     */
     self.resetLongRestFeatures = function() {
         ko.utils.arrayForEach(self.trackables(), function(item) {
-            if (item.tracked().resetsOn() === Fixtures.resting.shortRestEnum ||
-                item.tracked().resetsOn() === Fixtures.resting.longRestEnum) {
-                item.tracked().used(0);
-            }
+            item.tracked().used(0);
         });
     };
 
-    self.maxFeatureWidth = function() {
+    self.maxTrackerWidth = function() {
         return 100 / self.trackables().length;
     };
 
