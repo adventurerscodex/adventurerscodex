@@ -204,11 +204,35 @@ describe('Tracker View Model', function() {
     });
 
     describe('modalFinishedClosing', function() {
-        it('set values after modal finishes animating', function() {
+        it('close the modal', function() {
             var trackerViewModel = new TrackerViewModel();
-            trackerViewModel.modifierHasFocus().should.equal(false);
-            trackerViewModel.modalFinishedAnimating();
-            trackerViewModel.modifierHasFocus().should.equal(true);
+            trackerViewModel.modalOpen().should.equal(false);
+            trackerViewModel.modalFinishedClosing();
+            trackerViewModel.modalOpen().should.equal(false);
+        });
+        it('save the tracked item', function() {
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Tracked());
+            var trackerViewModel = new TrackerViewModel();
+            trackerViewModel.modalOpen(true);
+            trackerViewModel.editItem(new Tracked);
+            trackerViewModel.modalOpen().should.equal(true);
+            trackerViewModel.modalFinishedClosing();
+            trackerViewModel.modalOpen().should.equal(false);
+        });
+        it('save tracked item and update element in array', function() {
+            var tracked = new Tracked();
+            tracked.trackedId('123');
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(tracked);
+            var trackerViewModel = new TrackerViewModel();
+            trackerViewModel.modalOpen(true);
+            trackerViewModel.editItem(new Tracked);
+            var feat = new Feat();
+            feat.tracked(new Tracked());
+            feat.tracked().trackedId('123');
+            trackerViewModel.trackables([feat]);
+            trackerViewModel.modalOpen().should.equal(true);
+            trackerViewModel.modalFinishedClosing();
+            trackerViewModel.modalOpen().should.equal(false);
         });
     });
 
