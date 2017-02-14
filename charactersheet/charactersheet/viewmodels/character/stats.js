@@ -219,7 +219,7 @@ function StatsViewModel() {
     self.calculatedProficiencyLabel = ko.pureComputed(function() {
         self._dummy();
         var proficiencyService = ProficiencyService.sharedService();
-        var level = proficiencyService.levelBonus();
+        var level = proficiencyService.proficiencyBonusByLevel();
         var proficiency = proficiencyService.proficiencyModifier();
         self.updateProficiencyPopoverMessage(level, proficiency);
 

@@ -61,7 +61,7 @@ describe('Proficiency Service', function() {
             simple.mock(PersistenceService, 'findFirstBy').returnWith(profile);
 
             var proficiencyService = ProficiencyService.sharedService();
-            var level = proficiencyService.levelBonus();
+            var level = proficiencyService.proficiencyBonusByLevel();
             level.should.equal(1);
         });
         it('should fail at parsing level and return 0', function() {
@@ -70,14 +70,14 @@ describe('Proficiency Service', function() {
             simple.mock(PersistenceService, 'findFirstBy').returnWith(profile);
 
             var proficiencyService = ProficiencyService.sharedService();
-            var level = proficiencyService.levelBonus();
+            var level = proficiencyService.proficiencyBonusByLevel();
             level.should.equal(0);
         });
         it('should not receive a valid profile and return 0', function() {
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
 
             var proficiencyService = ProficiencyService.sharedService();
-            var level = proficiencyService.levelBonus();
+            var level = proficiencyService.proficiencyBonusByLevel();
             level.should.equal(0);
         });
     });

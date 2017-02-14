@@ -19,13 +19,13 @@ function _ProficiencyService(configuration) {
     };
 
     self.dataHasChanged = function() {
-        // Starts at one because of the static one in the calculation
-        var proficiency = 1;
+        var proficiency = 0;
         var proficiencyModifier = self.proficiencyModifier();
-        var levelBonus = self.levelBonus();
+        var proficiencyBonusByLevel = self.proficiencyBonusByLevel();
 
         proficiency += proficiencyModifier;
-        proficiency += levelBonus;
+        proficiency += proficiencyBonusByLevel;
+        proficiency += 1;
 
         // Set the value and let everyone know.
         self.proficiency(proficiency);
@@ -43,7 +43,7 @@ function _ProficiencyService(configuration) {
         return proficiencyModifier;
     };
 
-    self.levelBonus = function() {
+    self.proficiencyBonusByLevel = function() {
         var level = 0;
         var profile = PersistenceService.findFirstBy(Profile, 'characterId', self.characterId());
         if (profile) {
