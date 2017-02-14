@@ -51,13 +51,7 @@ function Weapon() {
     });
 
     self.proficiencyScore = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var profBonus = 0;
-        try{
-            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
-                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
-        } catch(err) { /*Ignore*/ }
-        return parseInt(profBonus);
+        return ProficiencyService.sharedService().proficiency();
     };
 
     self.strAbilityScoreModifier = function() {

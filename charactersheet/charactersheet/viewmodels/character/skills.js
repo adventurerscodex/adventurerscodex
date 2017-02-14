@@ -127,6 +127,9 @@ function SkillsViewModel() {
         }
 
         self.save();
+        self.skills().forEach(function(skill, idx, _) {
+            skill.updateValues();
+        });
 
         self.modalOpen(false);
     };

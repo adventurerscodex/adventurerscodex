@@ -148,6 +148,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    proficiencyBonus: {
+        changed: new signals.Signal()
+    },
+
     settings: {
         changed: new signals.Signal()
     },

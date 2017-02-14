@@ -215,27 +215,24 @@ function StatsViewModel() {
         });
     };
 
-    /**
-    * Tells otherStats to run proficiencyLabel method
-    */
+    // Calculate proficiency label and popover
     self.calculatedProficiencyLabel = ko.pureComputed(function() {
         self._dummy();
-        var key = CharacterManager.activeCharacter().key();
-        var level = PersistenceService.findBy(Profile, 'characterId', key)[0].level();
-        level = level ? parseInt(level) : 0;
-        var proficiency = parseInt(self.otherStats().proficiency()) ? parseInt(self.otherStats().proficiency()) : 0;
+        var proficiencyService = ProficiencyService.sharedService();
+        var level = proficiencyService.levelBonus();
+        var proficiency = proficiencyService.proficiencyModifier();
         self.updateProficiencyPopoverMessage(level, proficiency);
 
-        return level ? Math.ceil(level / 4) + 1 + proficiency : proficiency;
+        return ProficiencyService.sharedService().proficiency();
     });
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
-        var levelBonus = (Math.ceil(level / 4) + 1);
         self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
             + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span></br>Proficiency = '
-            + levelBonus + ' + 1 + ' + proficiency);
+            + level + ' + 1 + ' + proficiency);
     };
 
+    // Calculate initiative label and popover
     self.calculateInitiativeLabel = ko.pureComputed(function() {
         self._otherStatsDummy();
         var key = CharacterManager.activeCharacter().key();

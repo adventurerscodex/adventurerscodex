@@ -68,8 +68,7 @@ describe('Weapon Model', function() {
     describe('Proficiency Score', function() {
         it('should get proficiency score from other stats', function() {
             var weap = new Weapon();
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(PersistenceService, 'findBy').returnWith([{ proficiencyLabel: ko.observable(4)}]);
+            simple.mock(ProficiencyService.sharedService(), 'proficiency').returnWith(4);
 
             var profBonus = weap.proficiencyScore();
             profBonus.should.equal(4);

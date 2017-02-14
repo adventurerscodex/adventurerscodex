@@ -15,13 +15,7 @@ function SavingThrows() {
     //UI Methods
 
     self.proficiencyScore = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var profBonus = 0;
-        try {
-            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
-                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
-        } catch(err) { /*Ignore*/ }
-        return profBonus;
+        return ProficiencyService.sharedService().proficiency();
     };
 
     self.abilityScoreModifier = function() {

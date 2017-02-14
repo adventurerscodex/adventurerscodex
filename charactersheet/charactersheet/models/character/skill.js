@@ -23,12 +23,7 @@ function Skill() {
     self.proficiencyScore = function() {
         self._dummy();
         var key = CharacterManager.activeCharacter().key();
-        var profBonus = 0;
-        try{
-            profBonus = PersistenceService.findBy(OtherStats, 'characterId',
-                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
-        } catch(err) { /* Ignore */}
-        profBonus = parseInt(profBonus);
+        var profBonus = ProficiencyService.sharedService().proficiency();
 
         if (self.proficiency() === 'half') {
             return Math.floor(profBonus / 2);
@@ -58,7 +53,7 @@ function Skill() {
         var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
         if (self.proficiency()) {
             bonus += self.proficiencyScore() + self.abilityScoreModifier();
-        } else if (self.abilityScoreModifier()){
+        } else if (self.abilityScoreModifier()) {
             bonus += self.abilityScoreModifier();
         }
 
