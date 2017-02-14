@@ -9,7 +9,7 @@
 		<table id='trackablesTable' class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr>
-					<th class="col-sm-4 col-xs-2" data-bind="click: function(){sortBy('name');}">Name
+					<th class="col-sm-4 col-xs-3" data-bind="click: function(){sortBy('name');}">Name
             <i data-bind="css: sortArrow('name')"></i>
           </th>
 					<th class="col-sm-1 hidden-xs">Max
@@ -24,10 +24,10 @@
 			<!-- ko foreach: filteredAndSortedTrackables -->
 				<tr class="clickable">
 					<td data-bind="click: $parent.editTracked"
-					href="#" class="col-sm-4 col-xs-2 feature-row table-data-overflow"
+					href="#" class="col-sm-4 col-xs-3 feature-row table-data-overflow"
           data-toggle="modal">
             <span data-bind="css: tracked().color()" class="form-control pull-left color-picker-item"></span>
-  					<span href="#" data-bind="text: name" class="hidden-xs">
+  					<span href="#" data-bind="text: name" style="overflow-x: hidden">
 					  </span>
 					</td>
 
