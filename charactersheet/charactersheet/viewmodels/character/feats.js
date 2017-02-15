@@ -82,6 +82,10 @@ function FeatsViewModel() {
                     self.addTracked(self.currentEditItem().trackedId(),
                         self.currentEditItem().characterId(), self.currentEditTracked());
                 }
+            } else if (self.currentEditItem().trackedId()) {
+                var trackedToDelete = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
+                trackedToDelete.delete();
+                self.currentEditItem().trackedId(null);
             }
             Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
         }
@@ -136,6 +140,10 @@ function FeatsViewModel() {
         newTracked.trackedId(uuid);
         newTracked.maxUses(tracked.maxUses());
         newTracked.resetsOn(tracked.resetsOn());
+        newTracked.type(Feat);
+        var trackedList = PersistenceService.findBy(Tracked, 'characterId', characterId);
+        newTracked.color(Fixtures.general.colorList[trackedList.length
+          % Fixtures.general.colorList.length]);
         newTracked.save();
     };
 

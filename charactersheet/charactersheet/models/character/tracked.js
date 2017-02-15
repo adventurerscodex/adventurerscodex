@@ -5,7 +5,8 @@ function Tracked() {
 
     self.ps = PersistenceService.register(Tracked, self);
     self.mapping = {
-        include: ['characterId', 'trackedId', 'maxUses', 'used', 'resetsOn']
+        include: ['characterId', 'trackedId', 'maxUses', 'used', 'resetsOn',
+            'color', 'type']
     };
 
     self.characterId = ko.observable(null);
@@ -13,6 +14,8 @@ function Tracked() {
     self.maxUses = ko.observable(0);
     self.used = ko.observable(0);
     self.resetsOn = ko.observable('long');
+    self.color = ko.observable('');
+    self.type = ko.observable(null);
 
     self.save = function() {
         self.ps.save();

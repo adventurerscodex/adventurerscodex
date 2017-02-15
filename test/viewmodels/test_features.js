@@ -88,6 +88,7 @@ describe('FeaturesViewModel', function() {
 
     describe('modalFinishedClosing', function() {
         it('perform actions after a modal has closed', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
             var featuresViewModel = new FeaturesViewModel();
 
             featuresViewModel.previewTabStatus('');
@@ -96,26 +97,41 @@ describe('FeaturesViewModel', function() {
             featuresViewModel.previewTabStatus().should.equal('active');
             featuresViewModel.editTabStatus().should.equal('');
         });
-        it('saves edited item', function() {
+        it('saves edited item and creates a new tracked item', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
             var featuresViewModel = new FeaturesViewModel();
 
             featuresViewModel.previewTabStatus('');
             featuresViewModel.editTabStatus('active');
             featuresViewModel.modalOpen(true);
-            featuresViewModel.modalFinishedClosing();
-            featuresViewModel.previewTabStatus().should.equal('active');
-            featuresViewModel.editTabStatus().should.equal('');
-        });
-        it('saves edited item and tracked item', function() {
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Feature());
-            var featuresViewModel = new FeaturesViewModel();
-
-            featuresViewModel.previewTabStatus('');
-            featuresViewModel.editTabStatus('active');
-            featuresViewModel.modalOpen(true);
-            featuresViewModel.currentEditItem(new Feature());
             featuresViewModel.currentEditItem().isTracked(true);
-            featuresViewModel.currentEditTracked(new Tracked());
+            featuresViewModel.modalFinishedClosing();
+            featuresViewModel.previewTabStatus().should.equal('active');
+            featuresViewModel.editTabStatus().should.equal('');
+        });
+        it('saves edited item and updates the tracked item', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Tracked());
+            var featuresViewModel = new FeaturesViewModel();
+
+            featuresViewModel.previewTabStatus('');
+            featuresViewModel.editTabStatus('active');
+            featuresViewModel.modalOpen(true);
+            featuresViewModel.currentEditItem().isTracked(true);
+            featuresViewModel.currentEditItem().trackedId('123');
+            featuresViewModel.modalFinishedClosing();
+            featuresViewModel.previewTabStatus().should.equal('active');
+            featuresViewModel.editTabStatus().should.equal('');
+        });
+        it('saves edited item and deletes the tracked item', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Tracked());
+            var featuresViewModel = new FeaturesViewModel();
+
+            featuresViewModel.previewTabStatus('');
+            featuresViewModel.editTabStatus('active');
+            featuresViewModel.modalOpen(true);
+            featuresViewModel.currentEditItem().trackedId('123');
             featuresViewModel.modalFinishedClosing();
             featuresViewModel.previewTabStatus().should.equal('active');
             featuresViewModel.editTabStatus().should.equal('');
@@ -206,6 +222,14 @@ describe('FeaturesViewModel', function() {
 
             var description = featuresViewModel.shortDescription(feature);
             description.should.equal('blah');
+        });
+    });
+
+    describe('trackedPopoverText', function() {
+        it('should return a static string', function() {
+            var featuresViewModel = new FeaturesViewModel();
+            var description = featuresViewModel.trackedPopoverText();
+            description.should.equal('Tracked Features are listed in the Tracker.');
         });
     });
 });

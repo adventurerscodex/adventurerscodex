@@ -14,7 +14,7 @@ describe('MonsterSectionViewModel', function(){
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
             simple.mock(PersistenceService, 'findBy').returnWith(null);
-            
+
             vm.load();
 
             spy1.called.should.equal(true);
@@ -33,20 +33,20 @@ describe('MonsterSectionViewModel', function(){
                     return [new MonsterAbilityScore()];
                 }
             });
-            
+
             vm.load();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
-        });        
-    });  
+        });
+    });
 
     describe('Unload', function() {
         it('should unsubscribe from notifications', function() {
             var vm = new MonsterSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'remove');
             var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-            
+
             vm.unload();
 
             spy1.called.should.equal(true);
@@ -60,17 +60,17 @@ describe('MonsterSectionViewModel', function(){
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
             vm.addMonster();
-            
+
             vm.save();
         });
         it('should create and save a new model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.save();
-        });        
-    });    
+        });
+    });
 
     describe('Delete', function() {
         it('should delete model', function() {
@@ -84,10 +84,10 @@ describe('MonsterSectionViewModel', function(){
         it('should do nothing since it can\'t find the model', function() {
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.delete();
-        });        
-    });    
+        });
+    });
 
     /* UI Methods */
 
@@ -117,7 +117,7 @@ describe('MonsterSectionViewModel', function(){
             vm.sortArrow('name').should.equal('fa fa-arrow-up fa-color');
             vm.sortArrow('speed').should.equal('');
         });
-    });       
+    });
 
     describe('modalFinishedOpening', function() {
         it('perform actions after a modal has opened', function() {
@@ -129,7 +129,7 @@ describe('MonsterSectionViewModel', function(){
             vm.shouldShowDisclaimer().should.equal(false);
             vm.firstElementInModalHasFocus().should.equal(true);
         });
-    });    
+    });
 
     describe('modalFinishedClosing', function() {
         it('perform actions after a modal has closed', function() {
@@ -153,7 +153,7 @@ describe('MonsterSectionViewModel', function(){
             vm.previewTabStatus().should.equal('active');
             vm.editTabStatus().should.equal('');
         });
-    });       
+    });
 
     describe('selectEditTab', function() {
         it('perform actions after the preview tab has been selected', function() {
@@ -165,7 +165,7 @@ describe('MonsterSectionViewModel', function(){
             vm.previewTabStatus().should.equal('');
             vm.editTabStatus().should.equal('active');
         });
-    });   
+    });
 
     describe('Data has changed', function() {
         it('should load new data', function() {
@@ -173,7 +173,7 @@ describe('MonsterSectionViewModel', function(){
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
             simple.mock(PersistenceService, 'findBy').returnWith(null);
-            
+
             vm._dataHasChanged();
         });
         it('should load new data', function() {
@@ -181,22 +181,22 @@ describe('MonsterSectionViewModel', function(){
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
             simple.mock(PersistenceService, 'findBy').returnWith([new Monster()]);
-            
+
             vm._dataHasChanged();
-        });        
-    });     
+        });
+    });
 
     describe('Toggle modal', function() {
         it('should toggle modal and add AS to monster', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.openModal().should.equal(false);
             vm.toggleModal();
             vm.openModal().should.equal(true);
         });
-    });    
+    });
 
     describe('renderAbilityScoresInAddModal', function() {
         it('should show AS', function() {
@@ -208,11 +208,11 @@ describe('MonsterSectionViewModel', function(){
         });
         it('should not show AS', function() {
             var vm = new MonsterSectionViewModel(new Encounter());
-            
+
             var showAS = vm.renderAbilityScoresInAddModal();
             showAS.should.equal(false);
-        });        
-    });      
+        });
+    });
 
     /* CRUD */
 
@@ -227,7 +227,7 @@ describe('MonsterSectionViewModel', function(){
             vm.monsters().length.should.equal(1);
             Should.not.exist(vm.blankMonster().name());
         });
-    });   
+    });
 
     describe('Remove monster', function() {
         it('should remove monster from array', function() {
@@ -240,7 +240,7 @@ describe('MonsterSectionViewModel', function(){
 
             vm.monsters().length.should.equal(0);
         });
-    });  
+    });
 
     describe('Edit monster', function() {
         it('should put a monster from the list of monsters into the selected slot', function() {
@@ -250,5 +250,5 @@ describe('MonsterSectionViewModel', function(){
             vm.monsters().length.should.equal(1);
             vm.editMonster(vm.monsters()[0]);
         });
-    });                                            
+    });
 });

@@ -88,6 +88,7 @@ describe('FeatsViewModel', function() {
 
     describe('modalFinishedClosing', function() {
         it('perform actions after a modal has closed', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
             var featsViewModel = new FeatsViewModel();
 
             featsViewModel.previewTabStatus('');
@@ -96,26 +97,41 @@ describe('FeatsViewModel', function() {
             featsViewModel.previewTabStatus().should.equal('active');
             featsViewModel.editTabStatus().should.equal('');
         });
-        it('saves edited item', function() {
+        it('saves edited item and creates a new tracked item', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
             var featsViewModel = new FeatsViewModel();
 
             featsViewModel.previewTabStatus('');
             featsViewModel.editTabStatus('active');
             featsViewModel.modalOpen(true);
-            featsViewModel.modalFinishedClosing();
-            featsViewModel.previewTabStatus().should.equal('active');
-            featsViewModel.editTabStatus().should.equal('');
-        });
-        it('saves edited item and tracked item', function() {
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Feat());
-            var featsViewModel = new FeatsViewModel();
-
-            featsViewModel.previewTabStatus('');
-            featsViewModel.editTabStatus('active');
-            featsViewModel.modalOpen(true);
-            featsViewModel.currentEditItem(new Feat());
             featsViewModel.currentEditItem().isTracked(true);
-            featsViewModel.currentEditTracked(new Tracked());
+            featsViewModel.modalFinishedClosing();
+            featsViewModel.previewTabStatus().should.equal('active');
+            featsViewModel.editTabStatus().should.equal('');
+        });
+        it('saves edited item and updates the tracked item', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Tracked());
+            var featsViewModel = new FeatsViewModel();
+
+            featsViewModel.previewTabStatus('');
+            featsViewModel.editTabStatus('active');
+            featsViewModel.modalOpen(true);
+            featsViewModel.currentEditItem().isTracked(true);
+            featsViewModel.currentEditItem().trackedId('123');
+            featsViewModel.modalFinishedClosing();
+            featsViewModel.previewTabStatus().should.equal('active');
+            featsViewModel.editTabStatus().should.equal('');
+        });
+        it('saves edited item and deletes the tracked item', function() {
+            simple.mock(Notifications.trait.changed, 'dispatch').callFn(function(){});
+            simple.mock(PersistenceService, 'findFirstBy').returnWith(new Tracked());
+            var featsViewModel = new FeatsViewModel();
+
+            featsViewModel.previewTabStatus('');
+            featsViewModel.editTabStatus('active');
+            featsViewModel.modalOpen(true);
+            featsViewModel.currentEditItem().trackedId('123');
             featsViewModel.modalFinishedClosing();
             featsViewModel.previewTabStatus().should.equal('active');
             featsViewModel.editTabStatus().should.equal('');
@@ -206,6 +222,14 @@ describe('FeatsViewModel', function() {
 
             var description = featsViewModel.shortDescription(feat);
             description.should.equal('blah');
+        });
+    });
+
+    describe('trackedPopoverText', function() {
+        it('should return a static string', function() {
+            var featsViewModel = new FeatsViewModel();
+            var description = featsViewModel.trackedPopoverText();
+            description.should.equal('Tracked Feats are listed in Feature Tracker.');
         });
     });
 });
