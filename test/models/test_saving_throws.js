@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Saving Throws Model', function() {
     //Clean up after each test.
     afterEach(function() {
@@ -6,22 +8,24 @@ describe('Saving Throws Model', function() {
 
     describe('Bonus Label', function() {
         it('should yield the modifier value (signed).', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(PersistenceService, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2)}]);
+            simple.mock(ProficiencyService.sharedService(), 'proficiency').returnWith(2);
+            var scores = new AbilityScores();
+            scores.wis(2);
+            scores.int(2);
+            simple.mock(PersistenceService, 'findBy').returnWith([scores]);
 
             var s = new SavingThrows();
             s.name('Wisdom');
             s.modifier(4);
             s.proficiency(true);
-
-            s.modifierLabel().should.equal('+ 6');
+            s.modifierLabel().should.equal('+ 2');
 
             s = new SavingThrows();
-            s.name('Arcana');
+            s.name('Intelligence');
             s.modifier(-4);
             s.proficiency(true);
 
-            s.modifierLabel().should.equal('- 2');
+            s.modifierLabel().should.equal('- 6');
         });
     });
 
@@ -35,8 +39,6 @@ describe('Saving Throws Model', function() {
 
     describe('Proficiency Label', function() {
         it('should yield the proficiency value (or none).', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new SavingThrows();
             s.name('Wisdom');
             s.modifier(4);
@@ -54,8 +56,6 @@ describe('Saving Throws Model', function() {
     });
     describe('Clear', function() {
         it('should clear all values', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new SavingThrows(parent);
             s.name('Wisdom');
             s.modifier(4);
@@ -73,8 +73,6 @@ describe('Saving Throws Model', function() {
 
     describe('Export', function() {
         it('should yield an object with all the info supplied.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new SavingThrows();
             s.name('Wisdom');
             s.modifier(4);
@@ -92,8 +90,6 @@ describe('Saving Throws Model', function() {
 
     describe('Import', function() {
         it('should import an object with all the info supplied.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new SavingThrows();
             var e = { name: 'Wisdom', modifier: 3, proficiency: true };
             s.importValues(e);
