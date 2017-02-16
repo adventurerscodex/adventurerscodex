@@ -10,6 +10,7 @@ var Migrations = {
         // v1.2
         migration_120_1_weapons,
         // v1.3
-        migration_130_1_armors
+        migration_130_1_armors,
+        migration_130_2_feats_features_proficiencies_daily_features
     ]
 };
