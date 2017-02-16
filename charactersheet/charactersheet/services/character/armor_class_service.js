@@ -113,7 +113,7 @@ function _ArmorClassService(configuration) {
     self.getEquippedShieldBonus = function() {
         if (self.hasShield()) {
             var armorClass = self._getEquippedShields()[0].armorClass();
-            return parseInt(armorClass) ? parseInt(armorClass) : 0
+            return parseInt(armorClass) ? parseInt(armorClass) : 0;
         }
         return 0;
     };

@@ -171,6 +171,7 @@ describe('ArmorViewModel', function(){
     describe('Modal Finished Closing', function() {
         it('should switch default state to preview', function() {
             var armorsVM = new ArmorViewModel();
+            armorsVM.currentEditItem(new Armor());
             armorsVM.selectEditTab();
             armorsVM.modalFinishedClosing();
             armorsVM.previewTabStatus().should.equal('active');
