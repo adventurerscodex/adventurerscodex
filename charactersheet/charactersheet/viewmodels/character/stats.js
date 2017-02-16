@@ -259,7 +259,7 @@ function StatsViewModel() {
         var baseAC = acService.baseArmorClass(),
             dexMod = acService.dexBonus(),
             magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
-            shield = acService.hasShield() ? 2 : 0;
+            shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
 
         var otherStats = PersistenceService.findFirstBy(OtherStats);
         var modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;

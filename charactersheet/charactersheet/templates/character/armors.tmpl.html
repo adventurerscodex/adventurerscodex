@@ -29,23 +29,19 @@
       <!-- ko foreach: filteredAndSortedArmors -->
         <tr class="clickable">
           <td data-bind="click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor">
+              href="#">
             <span data-bind="css: $parent.armorEquippedLabel($data)"></span>
           </td>
           <td data-bind="click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor">
+              href="#">
               <span data-bind="text: armorName"></span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: armorType, click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor"></td>
+              href="#"></td>
           <td data-bind="text: armorClass, click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor"></td>
+              href="#"></td>
           <td>
             <a data-bind="click: $parent.removeArmor" href="#">
               <i class="fa fa-trash-o fa-color-hover">
