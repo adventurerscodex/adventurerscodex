@@ -8,7 +8,7 @@ var migration_130_1_armors = {
     version: '1.3.0',
     migration: function() {
         var armors = PersistenceService.findAllObjs('Armor');
-        armors.forEach(function(armor, idx, _) {
+        armors.forEach(function(element, idx, _) {
             var id = armors[idx].id;
             var armor = armors[idx].data;
 

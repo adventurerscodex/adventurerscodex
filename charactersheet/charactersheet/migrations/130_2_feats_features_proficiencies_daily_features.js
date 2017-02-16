@@ -11,10 +11,10 @@ var migration_130_2_feats_features_proficiencies_daily_features = {
         var dailyFeatures = PersistenceService.findAllObjs('DailyFeature');
 
         featsProfs.forEach(function(element, idx, _) {
-            var characterId = element.characterId();
-            var proficiency = element.proficiencies();
-            var feats = element.feats();
-            var features = element.specialAbilities();
+            var characterId = element.data.characterId;
+            var proficiency = element.data.proficiencies;
+            var feats = element.data.feats;
+            var features = element.data.specialAbilities;
 
             if (proficiency) {
                 var newProficiency = new Proficiency();
@@ -45,25 +45,25 @@ var migration_130_2_feats_features_proficiencies_daily_features = {
         });
 
         dailyFeatures.forEach(function(element, idx, _) {
-            var characterId = element.characterId();
+            var characterId = element.data.characterId;
             var trackedList = PersistenceService.findBy(Tracked, 'characterId', characterId);
 
             var feature = new Feature();
-            feature.name(element.featureName());
+            feature.name(element.data.featureName);
             feature.characterId(characterId);
-            feature.description(element.description());
+            feature.description(element.data.featureDescription);
             feature.isTracked(true);
             feature.trackedId(uuid.v4());
 
             var tracked = new Tracked();
-            tracked.maxUses(element.featureMaxUses());
-            tracked.used(element.featureUsed());
+            tracked.maxUses(element.data.featureMaxUses);
+            tracked.used(element.data.featureUsed);
             tracked.trackedId(feature.trackedId());
             tracked.characterId(characterId);
-            tracked.resetsOn(element.featureResetsOn());
+            tracked.resetsOn(element.data.featureResetsOn);
             tracked.type(Feature);
             tracked.color(Fixtures.general.colorList[trackedList.length
-                % Fixtures.general.colorList.length])
+                % Fixtures.general.colorList.length]);
 
             feature.save();
             tracked.save();
