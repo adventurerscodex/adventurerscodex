@@ -93,7 +93,7 @@ function _ArmorClassService(configuration) {
         } catch(err) { /*Ignore*/ }
 
         var armor = self._getEquippedArmors()[0];
-        if (armor.armorEquipped() === 'equipped') {
+        if (armor && armor.armorEquipped() === 'equipped') {
             if (armor.armorType() === 'Medium') {
                 score += rawDexBonus >= 2 ? 2 : rawDexBonus;
             } else {

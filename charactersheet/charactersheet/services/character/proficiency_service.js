@@ -2,7 +2,6 @@
 
 var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
 
-
 function _ProficiencyService(configuration) {
     var self = this;
 

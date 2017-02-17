@@ -233,7 +233,7 @@ function StatsViewModel() {
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
         self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
             + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />Proficiency = '
-            + levelBonus + ' + 1 + ' + proficiency);
+            + level + ' + 1 + ' + proficiency);
     };
 
     // Calculate initiative label and popover
