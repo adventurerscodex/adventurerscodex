@@ -179,10 +179,6 @@ describe('TraitsViewModel', function() {
             traitsViewModel.sort().should.equal(traitsViewModel.sorts['name desc']);
             traitsViewModel.sortBy('name');
             traitsViewModel.sort().should.equal(traitsViewModel.sorts['name asc']);
-            traitsViewModel.sortBy('description');
-            traitsViewModel.sort().should.equal(traitsViewModel.sorts['description asc']);
-            traitsViewModel.sortBy('description');
-            traitsViewModel.sort().should.equal(traitsViewModel.sorts['description desc']);
         });
     });
 
@@ -219,18 +215,6 @@ describe('TraitsViewModel', function() {
             traitsViewModel.addTrait();
             traitsViewModel.traits().length.should.equal(1);
             traitsViewModel.save();
-        });
-    });
-
-    describe('shortDescription', function() {
-        it('should return short description', function() {
-            var traitsViewModel = new TraitsViewModel();
-            var trait = new Trait();
-            trait.description('blah');
-            simple.mock(Utility.markdown, 'asPlaintext').returnWith('blah');
-
-            var description = traitsViewModel.shortDescription(trait);
-            description.should.equal('blah');
         });
     });
 

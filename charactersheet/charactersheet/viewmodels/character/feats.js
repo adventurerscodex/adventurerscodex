@@ -7,9 +7,7 @@ function FeatsViewModel() {
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
-        'name desc': { field: 'name', direction: 'desc'},
-        'description asc': { field: 'description', direction: 'asc'},
-        'description desc': { field: 'description', direction: 'desc'}
+        'name desc': { field: 'name', direction: 'desc'}
     };
 
     self.feats = ko.observableArray([]);
@@ -170,10 +168,6 @@ function FeatsViewModel() {
             self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feat.trackedId()));
         }
         self.modalOpen(true);
-    };
-
-    self.shortDescription = function(feat) {
-        return Utility.string.truncateStringAtLength(feat.description(), self.DESCRIPTION_MAX_LENGTH);
     };
 
     self.trackedPopoverText = function() {

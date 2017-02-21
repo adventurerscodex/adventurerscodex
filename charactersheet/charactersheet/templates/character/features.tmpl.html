@@ -6,17 +6,13 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
+          <th data-bind="click: function(){sortBy('name');}" class="col-md-7">
             Name
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('characterClass');}" class="col-md-3">
+          <th data-bind="click: function(){sortBy('characterClass');}" class="col-md-4">
             Class
             <span data-bind="css: sortArrow('characterClass')"></span>
-          </th>
-          <th data-bind="click: function(){sortBy('description');}" class="col-md-3">
-            Description
-            <span data-bind="css: sortArrow('description')"></span>
           </th>
           <th class="col-md-1">
             <a data-toggle="modal"
@@ -31,8 +27,6 @@
         <tr class="clickable">
           <td data-bind="text: name, click: $parent.editFeature" href="#"></td>
           <td data-bind="text: characterClass, click: $parent.editFeature" href="#"></td>
-          <td data-bind="text: $parent.shortDescription($data), click: $parent.editFeature"
-              href="#"></td>
           <td class="col-content-vertical">
             <a data-bind="click: $parent.removeFeature" href="#">
               <i class="fa fa-trash-o fa-color-hover">

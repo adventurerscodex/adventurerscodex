@@ -9,9 +9,7 @@ function FeaturesViewModel() {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
         'characterClass asc': { field: 'characterClass', direction: 'asc'},
-        'characterClass desc': { field: 'characterClass', direction: 'desc'},
-        'description asc': { field: 'description', direction: 'asc'},
-        'description desc': { field: 'description', direction: 'desc'}
+        'characterClass desc': { field: 'characterClass', direction: 'desc'}
     };
 
     self.features = ko.observableArray([]);
@@ -173,10 +171,6 @@ function FeaturesViewModel() {
             self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feature.trackedId()));
         }
         self.modalOpen(true);
-    };
-
-    self.shortDescription = function(feature) {
-        return Utility.string.truncateStringAtLength(feature.description(), self.DESCRIPTION_MAX_LENGTH);
     };
 
     self.trackedPopoverText = function() {
