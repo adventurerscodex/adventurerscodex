@@ -9,9 +9,7 @@ function TraitsViewModel() {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
         'race asc': { field: 'race', direction: 'asc'},
-        'race desc': { field: 'race', direction: 'desc'},
-        'description asc': { field: 'description', direction: 'asc'},
-        'description desc': { field: 'description', direction: 'desc'}
+        'race desc': { field: 'race', direction: 'desc'}
     };
 
     self.traits = ko.observableArray([]);
@@ -172,10 +170,6 @@ function TraitsViewModel() {
             self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', trait.trackedId()));
         }
         self.modalOpen(true);
-    };
-
-    self.shortDescription = function(trait) {
-        return Utility.string.truncateStringAtLength(trait.description(), self.DESCRIPTION_MAX_LENGTH);
     };
 
     self.trackedPopoverText = function() {

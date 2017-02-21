@@ -24,29 +24,29 @@
 			<!-- ko foreach: filteredAndSortedTrackables -->
 				<tr class="clickable">
 					<td data-bind="click: $parent.editTracked"
-					href="#" class="col-sm-4 col-xs-3 feature-row table-data-overflow"
+					href="#" class="feature-row table-data-overflow"
           data-toggle="modal">
             <span data-bind="css: tracked().color()" class="form-control pull-left color-picker-item"></span>
   					<span href="#" data-bind="text: name" style="overflow-x: hidden">
 					  </span>
 					</td>
 
-					<td class="col-content-vertical col-sm-1 feature-row hidden-xs"
+					<td class="col-content-vertical feature-row hidden-xs"
             data-bind="click: $parent.editTracked" href="#"  data-toggle="modal">
 						<span data-bind="text: tracked().maxUses()" ></span>
 					</td>
 
-					<td class="col-content-vertical col-sm-2 hidden-sm hidden-xs feature-row"
+					<td class="col-content-vertical hidden-sm hidden-xs feature-row"
             data-bind="click: $parent.editTracked" href="#" data-toggle="modal">
             <img class="action-bar-icon" src="/images/meditation-blue.svg" data-bind="visible: tracked().resetsOn() === 'short'"></img>
             <img class="action-bar-icon" src="/images/camping-tent-blue.svg" data-bind="visible: tracked().resetsOn() === 'long'"></img>
 					</td>
 
-					<td class="col-sm-4 col-xs-8">
+					<td>
             <plus-minus params="value: tracked().used, max: tracked().maxUses"></plus-minus>
 					</td>
 
-					<td class="col-content-vertical col-xs-1"> <!--Refresh -->
+					<td class="col-content-vertical"> <!--Refresh -->
 						<a data-bind="click: $parent.refreshTracked" href="#">
 							<i class="fa fa-refresh fa-color"> </i>
 						</a>

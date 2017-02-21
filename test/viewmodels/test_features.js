@@ -170,10 +170,6 @@ describe('FeaturesViewModel', function() {
             featuresViewModel.sort().should.equal(featuresViewModel.sorts['name desc']);
             featuresViewModel.sortBy('name');
             featuresViewModel.sort().should.equal(featuresViewModel.sorts['name asc']);
-            featuresViewModel.sortBy('description');
-            featuresViewModel.sort().should.equal(featuresViewModel.sorts['description asc']);
-            featuresViewModel.sortBy('description');
-            featuresViewModel.sort().should.equal(featuresViewModel.sorts['description desc']);
         });
     });
 
@@ -210,18 +206,6 @@ describe('FeaturesViewModel', function() {
             featuresViewModel.addFeature();
             featuresViewModel.features().length.should.equal(1);
             featuresViewModel.save();
-        });
-    });
-
-    describe('shortDescription', function() {
-        it('should return short description', function() {
-            var featuresViewModel = new FeaturesViewModel();
-            var feature = new Feature();
-            feature.description('blah');
-            simple.mock(Utility.markdown, 'asPlaintext').returnWith('blah');
-
-            var description = featuresViewModel.shortDescription(feature);
-            description.should.equal('blah');
         });
     });
 
