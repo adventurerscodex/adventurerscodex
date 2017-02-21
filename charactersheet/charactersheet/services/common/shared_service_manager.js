@@ -30,4 +30,4 @@ function SharedServiceManager(sharedServiceType, configuration) {
     self.resetSharedService = function() {
         self._sharedService = null;
     };
-};
+}
