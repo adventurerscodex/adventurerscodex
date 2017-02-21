@@ -16,7 +16,7 @@ var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationServi
 function _AuthenticationService(config) {
     var self = this;
 
-    self.validationUrl = '/api/o/validate/?access_token={access_token}'
+    self.validationUrl = '/api/o/validate/?access_token={access_token}';
 
     /**
      * A configuration object that can be used to set options at initialization-time.
