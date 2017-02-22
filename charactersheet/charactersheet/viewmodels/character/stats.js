@@ -261,8 +261,12 @@ function StatsViewModel() {
             magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
             shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
 
-        var otherStats = PersistenceService.findFirstBy(OtherStats);
-        var modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;
+        var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId',
+            CharacterManager.activeCharacter().key());
+        var modifier = 0;
+        if (otherStats) {
+            modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;
+        }
 
         self.armorClassPopover('<span><strong>Armor Class</strong> = ' +
         'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />' +
