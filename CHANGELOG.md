@@ -1,3 +1,23 @@
+version 1.3.0 (2/21/2017)
+
+####Player Tools####
+
+* New tables and modals for Features, Feats, Traits, Proficiencies, and Languages
+* New handling of tracked items
+* Improved messaging library, toastr
+* Add inspired to status line
+* Add popovers for auto-calculations
+* Add passive scores to skills table
+* Add always prepared to spells modal
+* Add to hit modifier adjustment
+* Add short and long rest icons to spell slots module
+
+####DM Tools####
+
+* Add magic damage types to options list for weapons
+* Pre-population for monsters
+* Add DM Screen
+
 version 1.2.0 (12/14/2016)
 
 ####Player Tools####
