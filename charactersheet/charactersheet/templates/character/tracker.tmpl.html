@@ -27,8 +27,8 @@
 					href="#" class="feature-row table-data-overflow"
           data-toggle="modal">
             <span data-bind="css: tracked().color()" class="form-control pull-left color-picker-item"></span>
-  					<span href="#" data-bind="text: name" style="overflow-x: hidden">
-					  </span>
+  					<span href="#" data-bind="html: $parent.shortName(name)" class="hidden-lg hidden-md"></span>
+						<span href="#" data-bind="text: name" class="hidden-sm hidden-xs"></span>
 					</td>
 
 					<td class="col-content-vertical feature-row hidden-xs"

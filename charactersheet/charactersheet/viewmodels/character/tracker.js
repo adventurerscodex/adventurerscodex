@@ -68,6 +68,10 @@ function TrackerViewModel() {
         return (parseInt(max) - parseInt(used)) / parseInt(max);
     };
 
+    self.shortName = function(string) {
+        return Utility.string.truncateStringAtLength(string(), 15);
+    };
+
     /**
      * Filters and sorts the trackables for presentation in a table.
      */

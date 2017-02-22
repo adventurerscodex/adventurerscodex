@@ -43,17 +43,17 @@ function SavingThrowsViewModel() {
         Notifications.stats.changed.add(self.updateValues);
         Notifications.global.save.add(self.save);
 
-        var st = PersistenceService.findBy(SavingThrows, 'characterId',
+        var savingThrows = PersistenceService.findBy(SavingThrows, 'characterId',
             CharacterManager.activeCharacter().key());
-        if (st.length === 0) {
+        if (savingThrows.length > 0) {
+            self.savingThrows(savingThrows);
+        } else {
             self.savingThrows(self._defaultSavingThrows());
+            self.savingThrows().forEach(function(e, i, _) {
+                e.characterId(CharacterManager.activeCharacter().key());
+            });
+            self.save();
         }
-        else {
-            self.savingThrows(st);
-        }
-        self.savingThrows().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key());
-        });
     };
 
     self.unload = function() {

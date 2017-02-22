@@ -109,8 +109,13 @@ function _ArmorClassService(configuration) {
     self.armorClassModifier = function() {
         var key = CharacterManager.activeCharacter().key();
         var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
+        var armorClassModifier = 0;
 
-        return otherStats.armorClassModifier() ? parseInt(otherStats.armorClassModifier()) : 0;
+        if (otherStats) {
+            armorClassModifier = otherStats.armorClassModifier() ? parseInt(otherStats.armorClassModifier()) : 0;
+        }
+
+        return armorClassModifier;
     };
 
     self.getEquippedShieldBonus = function() {
