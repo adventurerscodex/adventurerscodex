@@ -11,6 +11,7 @@ describe('130 Features, Feats, and Traits Migration', function() {
                     return dailyFeaturesFixture;
                 }
             });
+            var deleteObjs = simple.mock(PersistenceService, '_delete').callFn(function() {});
             var saveObj = simple.mock(PersistenceService, 'register').callFn(function(model, inst) {
                 return new function() {
                     this.save = function() {
@@ -39,6 +40,7 @@ describe('130 Features, Feats, and Traits Migration', function() {
 
             migration_130_2_feats_features_proficiencies_daily_features.migration();
             saveObj.callCount.should.equal(5);
+            deleteObjs.callCount.should.equal(2);
             findAll.callCount.should.equal(2);
         });
     });
