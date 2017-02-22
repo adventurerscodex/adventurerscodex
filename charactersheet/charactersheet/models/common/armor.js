@@ -6,7 +6,7 @@ function Armor() {
     self.mapping = {
         include: ['characterId', 'armorName', 'armorType',
                   'armorPrice', 'armorMagicalModifier', 'armorCurrencyDenomination',
-                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription']
+                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription', 'armorEquipped']
     };
 
     self._dummy = ko.observable(null);
@@ -20,12 +20,18 @@ function Armor() {
     self.armorClass = ko.observable('');
     self.armorStealth = ko.observable('');
     self.armorDescription = ko.observable('');
+    self.armorEquipped = ko.observable('');
 
     self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
 
     self.acLabel = ko.pureComputed(function() {
-        return 'AC ' + self.armorClass();
+        if (self.armorClass()) {
+            return 'AC ' + self.armorClass();
+        }
+        else {
+            return '';
+        }
     });
 
     self.armorDescriptionHTML = ko.pureComputed(function() {
@@ -49,15 +55,19 @@ function Armor() {
     });
 
     self.armorSummaryLabel = ko.pureComputed(function() {
-        if (self.armorMagicalModifier() != 0){
-            return self.magicalModifierLabel() + ', ' + self.acLabel();
+        if (self.armorMagicalModifier() != 0) {
+            if (self.acLabel()){
+                return self.magicalModifierLabel() + ', ' + self.acLabel();
+            } else {
+                return self.magicalModifierLabel();
+            }
         } else {
             return self.acLabel();
         }
     });
 
     self.applyMagicalModifierLabel = ko.pureComputed(function() {
-        if (self.magicalModifierLabel() !== '' ){
+        if (self.magicalModifierLabel() !== '' ) {
             return true;
         } else {
             return false;
@@ -65,7 +75,7 @@ function Armor() {
     });
 
     self.armorWeightLabel = ko.pureComputed(function() {
-        return self.armorWeight() + ' lbs.';
+        return self.armorWeight() !== '' && self.armorWeight() >= 0 ? self.armorWeight() + ' lbs.' : '0 lbs.';
     });
 
     self.clear = function() {
@@ -100,7 +110,7 @@ function Armor() {
         self._dummy();
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
 
@@ -144,9 +154,3 @@ function Armor() {
         return totalBonus;
     });
 }
-
-Armor.findAllBy =function(characterId) {
-    return PersistenceService.findAll(Armor).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

@@ -10,17 +10,14 @@ describe('EncounterDetailViewModel', function(){
         it('should load encounter\'s data', function() {
             var vm = new EncounterDetailViewModel(new Encounter(), []);
             var setupSpy = simple.mock(vm, '_initializeSectionVMs').callFn(function() {});
-            var initSpy = simple.mock(ViewModelUtilities, 'initSubViewModels').callFn(function() {});
             var loadSpy = simple.mock(ViewModelUtilities, 'loadSubViewModels').callFn(function() {});
 
             setupSpy.called.should.equal(false);
-            initSpy.called.should.equal(false);
             loadSpy.called.should.equal(false);
 
             vm.load();
 
             setupSpy.called.should.equal(true);
-            initSpy.called.should.equal(true);
             loadSpy.called.should.equal(true);
         });
     });

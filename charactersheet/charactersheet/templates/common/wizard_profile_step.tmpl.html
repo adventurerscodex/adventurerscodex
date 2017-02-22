@@ -106,7 +106,9 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Background</span>
               <input type="text" class="form-control" aria-describedby="basic-addon2"
-                data-bind='textInput: background'>
+                     data-bind='textInput: background,
+                                autocomplete: { source: backgroundOptions,
+                                onselect: setBackground }'>
             </div>
           </div>
         </div>

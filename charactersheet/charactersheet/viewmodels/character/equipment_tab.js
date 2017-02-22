@@ -9,10 +9,6 @@ function EquipmentTabViewModel() {
     self.weaponsViewModel = ko.observable(new WeaponsViewModel());
     self.armorViewModel = ko.observable(new ArmorViewModel());
 
-    self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-    };
-
     self.load = function() {
         ViewModelUtilities.loadSubViewModels(self);
     };

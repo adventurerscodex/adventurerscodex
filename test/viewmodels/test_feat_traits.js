@@ -6,17 +6,10 @@ describe('FeaturesTraitsViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var featsVM = new FeaturesTraitsViewModel();
-            featsVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var feat = new FeaturesTraits();
-            simple.mock(FeaturesTraits, 'findBy').returnWith([feat]);
+            simple.mock(PersistenceService, 'findBy').returnWith([feat]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var featsVM = new FeaturesTraitsViewModel();
@@ -28,7 +21,7 @@ describe('FeaturesTraitsViewModel', function(){
 
         it('should not load values from database.', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(FeaturesTraits, 'findBy').returnWith([]);
+            simple.mock(PersistenceService, 'findBy').returnWith([]);
             var featsVM = new FeaturesTraitsViewModel();
 
             featsVM.load();

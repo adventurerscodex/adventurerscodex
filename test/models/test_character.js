@@ -77,17 +77,6 @@ describe('Character Model', function() {
         });
     });
 
-    describe('Find By', function() {
-        it('should fetch a given character by id.', function() {
-            var mockCha = new Character();
-            mockCha.importValues(CharacterFixture);
-            simple.mock(Character, 'findAll').returnWith([mockCha]);
-
-            var cha = Character.findBy(mockCha.key())[0];
-            cha.key().should.equal(mockCha.key());
-        });
-    });
-
     describe('Export Character', function() {
         it('should return a json document containing the details of a character.', function() {
             var keys = Object.keys(jebeddo_data);

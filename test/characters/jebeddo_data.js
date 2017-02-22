@@ -47,122 +47,132 @@ var jebeddo_data = {
     }
   ],
   "Skill": [
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Acrobatics",
-      "abilityScore": "Dex",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Animal Handling",
-      "abilityScore": "Wis",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Arcana",
-      "abilityScore": "Int",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Athletics",
-      "abilityScore": "Str",
-      "modifier": "3",
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Deception",
-      "abilityScore": "Cha",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "History",
-      "abilityScore": "Int",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Insight",
-      "abilityScore": "Wis",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Intimidation",
-      "abilityScore": "Cha",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Investigation",
-      "abilityScore": "Int",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Medicine",
-      "abilityScore": "Wis",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Nature",
-      "abilityScore": "Int",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Perception",
-      "abilityScore": "Wis",
-      "modifier": "3",
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Performance",
-      "abilityScore": "Cha",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Persuasion",
-      "abilityScore": "Cha",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Religion",
-      "abilityScore": "Int",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Sleight of Hand",
-      "abilityScore": "Dex",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Stealth",
-      "abilityScore": "Dex",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Survival",
-      "abilityScore": "Wis",
-      "modifier": null
-    }
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Acrobatics",
+        "modifier": null,
+        "abilityScore": "Dex",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Animal Handling",
+        "modifier": null,
+        "abilityScore": "Wis",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Arcana",
+        "modifier": null,
+        "abilityScore": "Int",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Athletics",
+        "modifier": null,
+        "abilityScore": "Str",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Deception",
+        "modifier": null,
+        "abilityScore": "Cha",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "History",
+        "modifier": null,
+        "abilityScore": "Int",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Insight",
+        "modifier": null,
+        "abilityScore": "Wis",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Intimidation",
+        "modifier": null,
+        "abilityScore": "Cha",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Investigation",
+        "modifier": null,
+        "abilityScore": "Int",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Medicine",
+        "modifier": null,
+        "abilityScore": "Wis",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Nature",
+        "modifier": null,
+        "abilityScore": "Int",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Perception",
+        "modifier": null,
+        "abilityScore": "Wis",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Performance",
+        "modifier": null,
+        "abilityScore": "Cha",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Persuasion",
+        "modifier": null,
+        "abilityScore": "Cha",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Religion",
+        "modifier": null,
+        "abilityScore": "Int",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Sleight of Hand",
+        "modifier": null,
+        "abilityScore": "Dex",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Stealth",
+        "modifier": null,
+        "abilityScore": "Dex",
+        "proficiency": ""
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Survival",
+        "modifier": null,
+        "abilityScore": "Wis",
+        "proficiency": ""
+      }
   ],
   "HitDice": [
     {
@@ -208,7 +218,7 @@ var jebeddo_data = {
   "OtherStats": [
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "ac": "15",
+      "armorClassModifier": "15",
       "initiative": "3",
       "speed": "30",
       "inspiration": "1",
@@ -258,47 +268,43 @@ var jebeddo_data = {
       "copper": "583"
     }
   ],
-  "FeatsProf": [
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "feats": "1. Bardic Inspiration - Radius 60 ft, 1d8 inspiration die (have to use it in 10 minutes), Uses - Charisma Mod (3)\n                                 \n2. Jack of All Trades\n\n3. Song of Rest - 1d6 hit points gained during short rest\n\n4. Cutting Words-\nWhen a creature that you can see within 60 feet o f you makes an attack roll, an ability check, or a damage roll, you can use your reaction to expend one of your uses of Bardic Inspiration, rolling a Bardic Inspiration die and subtracting the number rolled from the creature's roll.\n\n5. Font of Inspiration -\nBeginning when you reach 5th level, you regain all of your expended uses o f Bardic Inspiration when you finish a short or long rest.",
-      "proficiencies": "Dexterity\nCharisma\nAthletics\nIntimidation\nInvestigation\nInsight\nPerception\nPersuasion \nSleight of Hand\nStealth\nDouble Proficiency\n\nAthletics\nPerception",
-      "specialAbilities": ""
-    }
-  ],
   "SavingThrows": [
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Charisma",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Constitution",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Dexterity",
-      "modifier": null,
-      "proficiency": true
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Intelligence",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Strength",
-      "modifier": null
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "name": "Wisdom",
-      "modifier": null
-    }
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Charisma",
+        "modifier": null,
+        "proficiency": false
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Constitution",
+        "modifier": null,
+        "proficiency": false
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Dexterity",
+        "modifier": null,
+        "proficiency": false
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Intelligence",
+        "modifier": null,
+        "proficiency": false
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Strength",
+        "modifier": null,
+        "proficiency": false
+      },
+      {
+        "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
+        "name": "Wisdom",
+        "modifier": null,
+        "proficiency": false
+      }
   ],
   "SpellStats": [
     {
@@ -317,25 +323,29 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": "1",
       "maxSpellSlots": "4",
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": 2,
       "maxSpellSlots": "3",
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": 3,
       "maxSpellSlots": "3",
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     },
     {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "level": 4,
       "maxSpellSlots": 1,
-      "usedSpellSlots": 0
+      "usedSpellSlots": 0,
+      "resetsOn": ""
     }
   ],
   "Item": [
@@ -489,6 +499,7 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "spellName": "Blade Ward",
       "spellPrepared": false,
+      "spellAlwaysPrepared": false,
       "spellType": "Automatic",
       "spellSaveAttr": "Str",
       "spellDmg": "Cantrip",
@@ -507,7 +518,9 @@ var jebeddo_data = {
       "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
       "spellName": "Charm  Person",
       "spellPrepared": false,
+      "spellAlwaysPrepared": false,
       "spellType": "Attack Roll",
+      "spellSaveAttr": "Str",
       "spellDmg": "",
       "spellDmgType": "",
       "spellSchool": "Enchantment",
@@ -538,6 +551,7 @@ var jebeddo_data = {
       "weaponPrice": "",
       "weaponCurrencyDenomination": "PP",
       "weaponHit": "0",
+      "weaponToHitModifier": "0",
       "weaponWeight": "",
       "weaponRange": "",
       "weaponDamageType": "Piercing",
@@ -555,6 +569,7 @@ var jebeddo_data = {
       "weaponPrice": "",
       "weaponCurrencyDenomination": "PP",
       "weaponHit": "0",
+      "weaponToHitModifier": "0",
       "weaponWeight": "",
       "weaponRange": "",
       "weaponDamageType": "Piercing",
@@ -572,6 +587,7 @@ var jebeddo_data = {
       "weaponPrice": "",
       "weaponCurrencyDenomination": "PP",
       "weaponHit": "0",
+      "weaponToHitModifier": "0",
       "weaponWeight": "",
       "weaponRange": "",
       "weaponDamageType": "Piercing",
@@ -589,6 +605,7 @@ var jebeddo_data = {
       "weaponPrice": "",
       "weaponCurrencyDenomination": "PP",
       "weaponHit": "0",
+      "weaponToHitModifier": "0",
       "weaponWeight": "",
       "weaponRange": "",
       "weaponDamageType": "Piercing",
@@ -606,6 +623,7 @@ var jebeddo_data = {
       "weaponPrice": "",
       "weaponCurrencyDenomination": "PP",
       "weaponHit": "1",
+      "weaponToHitModifier": "0",
       "weaponWeight": "",
       "weaponRange": "Radiant Damage",
       "weaponDamageType": "Slashing",
@@ -625,7 +643,8 @@ var jebeddo_data = {
       "armorWeight": "",
       "armorClass": "12",
       "armorStealth": "",
-      "armorDescription": "12"
+      "armorDescription": "12",
+      "armorEquipped": ""
     }
   ],
   "DeathSave": [
@@ -716,25 +735,5 @@ var jebeddo_data = {
       "magicItemDescription": "Find a secret door within 30 ft of you, the wand points to it by pulsing\nGain 1d3 charges in the morning."
     }
   ],
-  "DailyFeature": [
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "featureName": "Song of Rest",
-      "featureMaxUses": "1",
-      "featureUsed": 0,
-      "featureResetsOn": "",
-      "featureDescription": "Extra 1d6 hit points gained when using a hit die.",
-      "color": "progress-bar-red"
-    },
-    {
-      "characterId": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",
-      "featureName": "Bardic Inspiration/Cutting Words",
-      "featureMaxUses": "3",
-      "featureUsed": 0,
-      "featureResetsOn": "short",
-      "featureDescription": "d8",
-      "color": "progress-bar-indigo"
-    }
-  ],
-  "__version__":"1.2.0"
+  "__version__":"1.3.0"
 };

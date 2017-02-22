@@ -4,8 +4,8 @@ function CharacterAppearance() {
     var self = this;
     self.ps = PersistenceService.register(CharacterAppearance, self);
     self.mapping = {
-        ignore: ['ps', 'mapping', 'importValues', 'exportValues', 'clear',
-            'save']
+        include: ['characterId', 'height', 'weight', 'hairColor', 'eyeColor',
+            'skinColor']
     };
 
     self.characterId = ko.observable(null);
@@ -19,27 +19,21 @@ function CharacterAppearance() {
 
     self.clear = function() {
         var values = new CharacterAppearance().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
         self.ps.save();
     };
 }
-
-//CRUD
-
-CharacterAppearance.findBy = function(characterId) {
-    return PersistenceService.findAll(CharacterAppearance).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-

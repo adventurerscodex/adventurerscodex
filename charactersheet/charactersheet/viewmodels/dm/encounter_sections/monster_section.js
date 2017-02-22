@@ -12,14 +12,16 @@ function MonsterSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     self.monsters = ko.observableArray();
-
     self.blankMonster = ko.observable(new Monster());
-    self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.openEditModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();   
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.shouldShowDisclaimer = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -38,13 +40,10 @@ function MonsterSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['name asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var monster = PersistenceService.findBy(Monster, 'encounterId', self.encounterId());
         if (monster) {
@@ -65,7 +64,8 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -147,7 +147,16 @@ function MonsterSectionViewModel(parentEncounter) {
     };
 
     self.editMonster = function(monster) {
-        self.selecteditem(monster);
+        self.editItemIndex = monster.__id;
+        self.currentEditItem(new Monster());
+        self.currentEditItem().importValues(monster.exportValues());
+        self.currentEditItem().abilityScores(monster.abilityScores().map(function(e, i, _) {
+            var abilityScore = new MonsterAbilityScore();
+            abilityScore.importValues(e);
+            return abilityScore;
+        })
+        );
+        self.openEditModal(true);             
     };
 
     self.toggleModal = function() {
@@ -178,15 +187,53 @@ function MonsterSectionViewModel(parentEncounter) {
         }
     };
 
+    self.monstersPrePopFilter = function(request, response) {
+        var term = request.term.toLowerCase();
+        var keys = DataRepository.monsters ? Object.keys(DataRepository.monsters) : [];
+        var results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    self.populateMonster = function(label, value) {
+        var monster = DataRepository.monsters[label];
+
+        self.blankMonster().importValues(monster);
+        self.blankMonster().abilityScores().forEach(function(score, idx, _) {
+            score.name(monster.abilityScores[idx].name);
+            score.value(monster.abilityScores[idx].value);
+        });
+        self.shouldShowDisclaimer(true);
+    };
+
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
+        self.shouldShowDisclaimer(false);
         self.firstElementInModalHasFocus(true);
     };
 
     self.modalFinishedClosing = function() {
         self.openModal(false);
         self.selectPreviewTab();
+
+        if (self.openEditModal()) {
+            self.monsters().forEach(function(item, idx, _) {
+                if (item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                    item.abilityScores(self.currentEditItem().abilityScores().map(function(e, i, _) {
+                        var abilityScore = new MonsterAbilityScore();
+                        abilityScore.importValues(e);
+                        return abilityScore;
+                    })
+                    );                    
+                }
+            });
+        }
+
+        self.save();
+        self.openEditModal(false);          
     };
 
     self.selectPreviewTab = function() {

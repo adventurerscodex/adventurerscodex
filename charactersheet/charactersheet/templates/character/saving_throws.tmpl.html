@@ -7,26 +7,21 @@
             <span class="glyphicon glyphicon-ok"></span>
             <span data-bind="css: sortArrow('proficiency')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('name');}" colspan="2">
+          <th data-bind="click: function(){sortBy('name');}">
             Saving Throw
             <span data-bind="css: sortArrow('name')"></span>
           </th>
+          <th></th> <!-- Modifier column -->
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSavingThrows'>
         <tr class="clickable">
           <td data-bind="click: $parent.editSavingThrow"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSavingThrow"> <span data-bind="css: proficiencyLabel"></span></td>
+               href="#"> <span data-bind="css: proficiencyLabel"></span></td>
           <td data-bind="text: name, click: $parent.editSavingThrow"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSavingThrow"></td>
+               href="#"></td>
           <td data-bind="text: modifierLabel, click: $parent.editSavingThrow"
-               href="#"
-               data-toggle="modal"
-               data-target="#viewSavingThrow"></td>
+               href="#"></td>
         </tr>
       </tbody>
     </table>
@@ -97,7 +92,8 @@
     <!-- ViewEdit Modal -->
     <div class="modal fade" id="viewSavingThrow" tabindex="-1" role="dialog"
          aria-labelledby="viewSavingThrowLabel" data-bind="modal: {
-            onopen: modalFinishedAnimating}, with: selecteditem">
+            open: modalOpen, onopen: modalFinishedAnimating,
+            onclose: modalFinishedClosing}, with: currentEditItem">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">

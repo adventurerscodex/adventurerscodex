@@ -4,19 +4,17 @@ function Spell() {
     var self = this;
     self.ps = PersistenceService.register(Spell, self);
     self.mapping = {
-        ignore: ['clear', 'ps', 'importValues', 'exportValues', 'save',
-            'spellDamageLabel', 'delete', 'mapping', 'spellTypeOptions',
-            'spellSaveAttrOptions', 'spellSchoolOptions',
-            'spellCastingTimeOptions', 'spellDurationOptions',
-            'spellComponentsOptions', 'spellRangeOptions', 'spellNameLabel',
-            'spellLevelLabel'],
-        include: ['spellDmgType', 'spellMaterialComponents', 'isRitual',
-            'characterId', 'spellPrepared']
+        include: ['characterId', 'spellName', 'spellPrepared', 'spellType', 'spellSaveAttr',
+            'spellDmg', 'spellDmgType', 'spellSchool', 'spellLevel', 'spellDescription', 'spellCastingTime',
+            'spellRange', 'spellComponents', 'spellDuration', 'spellPrepared',
+            'spellAlwaysPrepared', 'spellMaterialComponents', 'isRitual']
     };
 
+    self._dummy = ko.observable(null);
     self.characterId = ko.observable(null);
     self.spellName = ko.observable('');
     self.spellPrepared = ko.observable(false);
+    self.spellAlwaysPrepared = ko.observable(false);
     self.spellType = ko.observable('');
     self.spellSaveAttr = ko.observable('');
     self.spellDmg = ko.observable('');
@@ -38,22 +36,27 @@ function Spell() {
     self.spellComponentsOptions = ko.observableArray(Fixtures.spell.spellComponentsOptions);
     self.spellRangeOptions = ko.observableArray(Fixtures.spell.spellRangeOptions);
 
+    self.updateValues = function() {
+        self._dummy.notifySubscribers();
+    };
+
     self.spellNameLabel = ko.pureComputed(function() {
-        if(self.isRitual() === true){
-            return (self.spellName() + ' (Ritual)' );
+        if (self.isRitual() === true) {
+            return (self.spellName() + ' (Ritual)');
         } else {
             return self.spellName();
         }
     });
 
     self.spellDamageLabel = ko.pureComputed(function() {
-        var charKey = CharacterManager.activeCharacter().key();
-
-        if( self.spellType() === 'Attack Roll' ){
-            var spellBonus = SpellStats.findBy(charKey)[0] ? SpellStats.findBy(charKey)[0].spellAttackBonus() : 0;
+        self._dummy();
+        var key = CharacterManager.activeCharacter().key();
+        var spellStats = PersistenceService.findBy(SpellStats, 'characterId', key)[0];
+        if (self.spellType() === 'Attack Roll') {
+            var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;
             return (self.spellDmg() + ' [Spell Bonus: +' + spellBonus + ']');
         }
-        else{
+        else {
             return self.spellDmg();
         }
     });
@@ -72,7 +75,7 @@ function Spell() {
     });
 
     self.spellDescriptionHTML = ko.pureComputed(function() {
-        if (self.spellDescription()){
+        if (self.spellDescription()) {
             return self.spellDescription().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
@@ -81,15 +84,18 @@ function Spell() {
 
     self.clear = function() {
         var values = new Spell().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        ko.mapping.fromJS(values, self.mapping, self);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return ko.mapping.toJS(self, self.mapping);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
@@ -100,9 +106,3 @@ function Spell() {
         self.ps.delete();
     };
 }
-
-Spell.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Spell).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

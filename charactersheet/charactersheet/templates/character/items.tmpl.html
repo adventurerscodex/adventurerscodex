@@ -12,6 +12,9 @@
           <th data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
+          <th data-bind="click: function(){sortBy('itemCost');}" class="hidden-xs">
+            Cost
+            <span data-bind="css: sortArrow('itemCost')"></span></th>
           <th class="hidden-sm hidden-xs">
             Description</th>
           <th>
@@ -25,14 +28,16 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedEquipment -->
         <tr class="clickable">
-          <td data-bind="text: itemName, click: $parent.editItemButton"
+          <td data-bind="text: itemName, click: $parent.editItem"
                   href="#"></td>
-          <td data-bind="text: itemQty, click: $parent.editItemButton"
+          <td data-bind="text: itemQty, click: $parent.editItem"
                   href="#"></td>
-          <td data-bind="text: itemWeight, click: $parent.editItemButton"
+          <td data-bind="text: itemWeightLabel, click: $parent.editItem"
                   href="#"></td>
+          <td class="hidden-xs" data-bind="text: costLabel,
+                  click: $parent.editItem" href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: shortDescription,
-            click: $parent.editItemButton" href="#"></td>
+            click: $parent.editItem" href="#"></td>
           <td>
             <a data-bind='click: $parent.removeItemButton' href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
@@ -180,7 +185,7 @@
 <!-- ViewEdit Modal -->
 <div class="modal fade"
      data-bind="modal: {
-       open: selecteditem,
+       open: modalOpen,
        onopen: modalFinishedOpening,
        onclose: modalFinishedClosing
       }"
@@ -213,15 +218,16 @@
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: selecteditem">
+        <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="itemsModalPreview">
             <div class="h3">
               <span data-bind="text: itemName"></span>&nbsp;
             </div>
             <hr />
             <div class="row">
-              <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel"></span></div>
-              <div class="col-sm-6 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Cost:</b>&nbsp;<span data-bind="text: costLabel"></span></div>
             </div>
             <hr />
             <h4>Description</h4>

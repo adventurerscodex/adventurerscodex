@@ -103,6 +103,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    armorClass: {
+        changed: new signals.Signal()
+    },
+
     campaign: {
         changed: new signals.Signal()
     },
@@ -110,6 +114,14 @@ var Notifications = {
     characters: {
         changed: new signals.Signal(),
         allRemoved: new signals.Signal()
+    },
+
+    feat: {
+        changed: new signals.Signal()
+    },
+
+    feature: {
+        changed: new signals.Signal()
     },
 
     item: {
@@ -136,6 +148,14 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    proficiency: {
+        changed: new signals.Signal()
+    },
+
+    proficiencyBonus: {
+        changed: new signals.Signal()
+    },
+
     settings: {
         changed: new signals.Signal()
     },
@@ -149,6 +169,10 @@ var Notifications = {
     },
 
     spellStats: {
+        changed: new signals.Signal()
+    },
+
+    trait: {
         changed: new signals.Signal()
     },
 

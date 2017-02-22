@@ -3,6 +3,12 @@
 function SavingThrowsViewModel() {
     var self = this;
 
+    self.blankSavingThrow = ko.observable(new SavingThrows());
+    self.savingThrows = ko.observableArray([]);
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
@@ -11,6 +17,9 @@ function SavingThrowsViewModel() {
         'proficiency asc': { field: 'proficiency', direction: 'asc', booleanType: true},
         'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
     };
+
+    self.filter = ko.observable('');
+    self.sort = ko.observable(self.sorts['name asc']);
 
     self._defaultSavingThrows = function() {
         var savingThrows = [
@@ -29,46 +38,40 @@ function SavingThrowsViewModel() {
         });
     };
 
-    self.selecteditem = ko.observable();
-    self.blankSavingThrow = ko.observable(new SavingThrows());
-    self.savingThrows = ko.observableArray([]);
-    self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['name asc']);
-
-    self.init = function() {
-        Notifications.abilityScores.changed.add(function() {
-            $.each(self.savingThrows(), function(_, e) {
-                e.updateValues();
-            });
-        });
-        Notifications.stats.changed.add(function() {
-            $.each(self.savingThrows(), function(_, e) {
-                e.updateValues();
-            });
-        });
-        Notifications.global.save.add(function() {
-            self.savingThrows().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
-        var st = SavingThrows.findAllBy(CharacterManager.activeCharacter().key());
-        if (st.length === 0) {
+        Notifications.abilityScores.changed.add(self.updateValues);
+        Notifications.stats.changed.add(self.updateValues);
+        Notifications.global.save.add(self.save);
+
+        var savingThrows = PersistenceService.findBy(SavingThrows, 'characterId',
+            CharacterManager.activeCharacter().key());
+        if (savingThrows.length > 0) {
+            self.savingThrows(savingThrows);
+        } else {
             self.savingThrows(self._defaultSavingThrows());
+            self.savingThrows().forEach(function(e, i, _) {
+                e.characterId(CharacterManager.activeCharacter().key());
+            });
+            self.save();
         }
-        else {
-            self.savingThrows(st);
-        }
-        self.savingThrows().forEach(function(e, i, _) {
-            e.characterId(CharacterManager.activeCharacter().key());
-        });
     };
 
     self.unload = function() {
-        $.each(self.savingThrows(), function(_, e) {
+        self.save();
+        Notifications.abilityScores.changed.remove(self.updateValues);
+        Notifications.stats.changed.remove(self.updateValues);
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.savingThrows().forEach(function(e, i, _) {
             e.save();
+        });
+    };
+
+    self.updateValues = function() {
+        $.each(self.savingThrows(), function(_, e) {
+            e.updateValues();
         });
     };
 
@@ -104,6 +107,15 @@ function SavingThrowsViewModel() {
         self.modifierHasFocus(true);
     };
 
+    self.modalFinishedClosing = function() {
+        if (self.modalOpen()) {
+            Utility.array.updateElement(self.savingThrows(), self.currentEditItem(), self.editItemIndex);
+        }
+
+        self.save();
+        self.modalOpen(false);
+    };
+
     //Manipulating savingThrows
     self.addsavingThrow = function() {
         self.blankSavingThrow().save();
@@ -117,7 +129,10 @@ function SavingThrowsViewModel() {
     };
 
     self.editSavingThrow = function(savingThrow) {
-        self.selecteditem(savingThrow);
+        self.editItemIndex = savingThrow.__id;
+        self.currentEditItem(new SavingThrows());
+        self.currentEditItem().importValues(savingThrow.exportValues());
+        self.modalOpen(true);
     };
 
     self.clear = function() {

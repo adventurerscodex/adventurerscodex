@@ -12,10 +12,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     self.playerTexts = ko.observableArray();
-
     self.blankPlayerText = ko.observable(new PlayerText());
-    self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -32,13 +32,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['description asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
         if (playerTexts) {
@@ -57,7 +54,8 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -127,7 +125,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     self.editPlayerText = function(playerText) {
-        self.selecteditem(playerText);
+        self.editItemIndex = playerText.__id;
+        self.currentEditItem(new PlayerText());
+        self.currentEditItem().importValues(playerText.exportValues());
+        self.openModal(true);
     };
 
     self.toggleModal = function() {
@@ -142,6 +143,13 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+
+        if (self.openModal()) {
+            Utility.array.updateElement(self.playerTexts(), self.currentEditItem(), self.editItemIndex);
+        }
+
+        self.save();
+        self.openModal(false);
     };
 
     self.selectPreviewTab = function() {

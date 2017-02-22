@@ -37,7 +37,6 @@ function AdventurersCodexViewModel() {
      * Call Init on each sub-module.
      */
     self.init = function() {
-        self.userNotificationViewModel.init();
         self.charactersViewModel.init();
         self.wizardViewModel.init();
 
@@ -46,7 +45,7 @@ function AdventurersCodexViewModel() {
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
-        var character = Character.findAll()[0];
+        var character = PersistenceService.findAll(Character)[0];
         if (character) {
             //Switching characters will fire the load notification.
             CharacterManager.changeCharacter(character.key());
@@ -112,7 +111,7 @@ function AdventurersCodexViewModel() {
     };
 
     self._hasAtLeastOneCharacter = function() {
-        return Character.findAll().length > 0;
+        return PersistenceService.findAll(Character).length > 0;
     };
 
     /**

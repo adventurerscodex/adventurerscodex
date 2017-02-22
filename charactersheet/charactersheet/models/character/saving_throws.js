@@ -3,6 +3,9 @@
 function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
+    self.mapping = {
+        include: ['characterId', 'name', 'modifier', 'proficiency']
+    };
 
     self.characterId = ko.observable(null);
     self.name = ko.observable('');
@@ -12,20 +15,14 @@ function SavingThrows() {
     //UI Methods
 
     self.proficiencyScore = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var profBonus = 0;
-        try {
-            profBonus = OtherStats.findBy(
-                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
-        } catch(err) { /*Ignore*/ }
-        return profBonus;
+        return ProficiencyService.sharedService().proficiency();
     };
 
     self.abilityScoreModifier = function() {
         var score = null;
         try {
             var key = CharacterManager.activeCharacter().key();
-            score = AbilityScores.findBy(key)[0].modifierFor(self._abilityScore());
+            score = PersistenceService.findBy(AbilityScores, 'characterId', key)[0].modifierFor(self._abilityScore());
         } catch(err) { /*Ignore*/ }
         if (score === null){
             return null;
@@ -78,36 +75,24 @@ function SavingThrows() {
         self.ps.delete();
     };
 
-    self.clear = function() {
-        self.name('');
-        self.modifier(null);
-        self.proficiency(false);
-    };
-
     self.updateValues = function() {
         self.modifier.notifySubscribers();
         self.proficiency.notifySubscribers();
     };
 
+    self.clear = function() {
+        var values = new SavingThrows().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
+    };
+
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.name(values.name);
-        self.modifier(values.modifier);
-        self.proficiency(values.proficiency);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            name: self.name(),
-            modifier: self.modifier(),
-            proficiency: self.proficiency()
-        };
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 }
-
-SavingThrows.findAllBy = function(characterId) {
-    return PersistenceService.findAll(SavingThrows).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

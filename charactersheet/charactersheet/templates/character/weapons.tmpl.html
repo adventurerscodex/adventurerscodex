@@ -47,34 +47,28 @@
       <!-- ko foreach: filteredAndSortedWeapons -->
         <tr class="clickable">
           <td data-bind="click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon">
+              href="#">
               <span data-bind="text: weaponName">
               </span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td data-bind="text: weaponDmg, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponDamageType, click: $parent.editWeapon"
-              href="#" data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponRangeLabel, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs hidden-md"
               data-bind="text: weaponProperty, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponQuantity, click: $parent.editWeapon"
-              href="#"
-              data-target="#viewWeapon"></td>
+              href="#"></td>
           <td>
             <a data-bind="click: $parent.removeWeapon" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -150,8 +144,18 @@
                 <div class="col-sm-10">
                   <input type="number" class="form-control"
                          id="weaponHit"
-                         placeholder="Place hit bonus here"
+                         placeholder="Place magical modifier here"
                          data-bind='textInput: blankWeapon().weaponHit'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="weaponToHitModifier"
+                       class="col-sm-2 control-label">To Hit Modifier</label>
+                <div class="col-sm-10">
+                  <input type="number" class="form-control"
+                         id="weaponToHitModifier"
+                         placeholder="Adjust to hit modifier here"
+                         data-bind='textInput: blankWeapon().weaponToHitModifier'>
                 </div>
               </div>
               <div class="form-group">
@@ -298,7 +302,7 @@
          role="dialog"
          aria-labelledby="viewWeaponLabel"
          data-bind="modal: {
-           open: selecteditem,
+           open: modalOpen,
            onopen: modalFinishedOpening,
            onclose: modalFinishedClosing
         }">
@@ -327,7 +331,7 @@
                 </a>
               </li>
             </ul>
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="weaponsModalPreview">
                 <div class="h3">
                   <span data-bind="text: weaponName"></span>
@@ -336,6 +340,7 @@
                 <hr />
                 <div class="row">
                   <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: weaponDmg"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>To Hit Modifier:</b>&nbsp;<span data-bind="text: toHitModifierLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: weaponRangeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: weaponType"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: weaponWeightLabel"></span></div>
@@ -390,8 +395,18 @@
                     <div class="col-sm-10">
                       <input type="number" class="form-control"
                              id="weaponHit"
-                             placeholder="Place hit bonus here"
+                             placeholder="Place magical modifier here"
                              data-bind='textInput: weaponHit'>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="weaponToHitModifier"
+                           class="col-sm-2 control-label">To Hit Modifier</label>
+                    <div class="col-sm-10">
+                      <input type="number" class="form-control"
+                             id="weaponToHitModifier"
+                             placeholder="Adjust to hit modifier here"
+                             data-bind='textInput: weaponToHitModifier'>
                     </div>
                   </div>
                   <div class="form-group">

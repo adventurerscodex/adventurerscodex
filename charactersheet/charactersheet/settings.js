@@ -7,7 +7,7 @@ var Settings = {
      * Application's version number.
      * Used to determine which migration scripts to run.
      */
-    version: '1.2.0',
+    version: '1.3.0',
     /**
      * A series of values to always ignore when mapping KO Objects.
      */
@@ -61,6 +61,21 @@ var Settings = {
         }, {
             key: 'magicItems',
             url: 'https://adventurerscodex.com/data/SRD/magic_items.json'
+        }, {
+            key: 'monsters',
+            url: 'https://adventurerscodex.com/data/SRD/monsters.json'
+        }, {
+            key: 'proficiencies',
+            url: 'https://adventurerscodex.com/data/SRD/proficiencies.json'
+        }, {
+            key: 'feats',
+            url: 'https://adventurerscodex.com/data/SRD/feats.json'
+        }, {
+            key: 'features',
+            url: 'https://adventurerscodex.com/data/SRD/features.json'
+        }, {
+            key: 'traits',
+            url: 'https://adventurerscodex.com/data/SRD/traits.json'
         }
     ]
 };

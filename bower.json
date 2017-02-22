@@ -36,7 +36,8 @@
     "blueimp-md5": "~2.1.0",
     "font-awesome": "~4.6.1",
     "jquery-ui": "^1.12.0",
-    "jquery.textarea-markdown-editor": "^0.9.1"
+    "jquery.textarea-markdown-editor": "^0.9.1",
+    "toastr": "2.1.3"
   },
   "resolutions": {
     "webcomponentsjs": "~0.5.4"

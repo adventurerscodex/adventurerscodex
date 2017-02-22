@@ -38,9 +38,3 @@ function PlayerInfo() {
         };
     };
 }
-
-PlayerInfo.findBy = function(characterId) {
-    return PersistenceService.findAll(PlayerInfo).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

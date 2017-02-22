@@ -75,8 +75,7 @@
         Ability Scores, Savings Throw, and Other Stats<br />
         <small>Click on your Ability Scores to add or edit them. Savings
           Throw modifiers automatically include your Ability Score modifier
-          and Proficiency Bonus. Your Passive Wisdom is also calculated
-           automatically based on your Wisdom.
+          and Proficiency Bonus.
         </small>
       </div>
     </div>
@@ -88,11 +87,11 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4 col-padded">
+    <div class="col-md-4 col-sm-6 col-padded">
       <div id="saving_throws" data-bind="template: { name: 'saving_throws.tmpl', templateUrl: 'templates/character', data: savingThrowsViewModel }">
       </div>
     </div>
-    <div class="col-sm-8 col-padded">
+    <div class="col-md-8 col-sm-6 col-padded">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
@@ -117,7 +116,7 @@
         Tracked Features, Feats, and Traits<br />
         <small>Configure to reset on a short or long rest.</small>
       </div>
-      <div id="daily_features" data-bind="template: { name: 'daily_features.tmpl', templateUrl: 'templates/character', data: dailyFeatureViewModel }">
+      <div id="tracker" data-bind="template: { name: 'tracker.tmpl', templateUrl: 'templates/character', data: trackerViewModel }">
       </div>
     </div>
   </div>
@@ -131,15 +130,27 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4 col-padded">
+    <div class="col-lg-4 col-md-5 col-sm-6 col-padded">
       <div id="skills" data-bind="template: { name: 'skills.tmpl', templateUrl: 'templates/character', data: skillsViewModel }">
       </div>
     </div>
-    <div class="col-sm-8 col-padded">
-      <div data-bind="template: { name: 'feats_prof.tmpl', templateUrl: 'templates/character', data: featsProfViewModel }">
+    <div class="col-lg-8 col-md-7 col-sm-6 col-padded">
+      <div class="row">
+        <div class="col-lg-6 col-xs-12 col-padded">
+          <div data-bind="template: { name: 'features.tmpl', templateUrl: 'templates/character', data: featuresViewModel }">
+          </div>
+        </div>
+        <div class="col-lg-6 col-xs-12 col-padded">
+          <div data-bind="template: { name: 'feats.tmpl', templateUrl: 'templates/character', data: featsViewModel }">
+          </div>
+          <div data-bind="template: { name: 'traits.tmpl', templateUrl: 'templates/character', data: traitsViewModel }">
+          </div>
+          <div data-bind="template: { name: 'proficiencies.tmpl', templateUrl: 'templates/character', data: proficienciesViewModel }">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 </div>
 <!-- End Skills Tab -->
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
@@ -191,8 +202,9 @@
       <div class="h3">
         Weapons<br />
         <small>A weapon's To Hit bonus is automatically calculated based on
-           your Strength, Dexterity and your weapon's magical modifier
-           and property.</small>
+           your Strength or Dexterity, proficiency bonus, magical modifier,
+           and property. Use the To Hit Modifier to adjust for features, feats,
+           or special cases.</small>
       </div>
       <div id="weapons" data-bind="template: { name: 'weapons.tmpl', templateUrl: 'templates/character', data: weaponsViewModel }">
       </div>
@@ -202,8 +214,9 @@
     <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
       <div class="h3">
         Armor<br />
-        <small>Your Armor doesn't automatically influence your
-        Armor Class...yet.</small>
+        <small>Armor Class calculations are based on your equipped Armor, Shield, Magical Modifiers, and Dexterity.
+               Be sure to Don your armor and/or shield so your AC will be calculated.
+        </small>
       </div>
       <div id="armors" data-bind="template: { name: 'armors.tmpl', templateUrl: 'templates/character', data: armorViewModel }">
       </div>

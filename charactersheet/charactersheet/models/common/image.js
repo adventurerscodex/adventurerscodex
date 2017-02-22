@@ -38,9 +38,3 @@ function ImageModel() {
         }
     });
 }
-
-ImageModel.findBy = function(characterId) {
-    return PersistenceService.findAll(ImageModel).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

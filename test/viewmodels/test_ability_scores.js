@@ -6,17 +6,10 @@ describe('AbilityScoresViewModel', function(){
         simple.restore();
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var asVM = new AbilityScoresViewModel();
-            asVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var scores = new AbilityScores();
-            simple.mock(AbilityScores, 'findBy').returnWith([scores]);
+            simple.mock(PersistenceService, 'findBy').returnWith([scores]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             scores.con(5);
 
@@ -27,7 +20,7 @@ describe('AbilityScoresViewModel', function(){
 
         it('should not load values from database.', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(AbilityScores, 'findBy').returnWith([]);
+            simple.mock(PersistenceService, 'findBy').returnWith([]);
             var asVM = new AbilityScoresViewModel();
 
             asVM.load();

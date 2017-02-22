@@ -18,10 +18,10 @@ var getStrModifier = function(modifier){
         return '';
     }
     modifier = getModifier(modifier);
-    if (modifier >= 0){
+    if (modifier >= 0) {
         modifier = '+ ' + modifier;
     }
-    else{
+    else {
         modifier = '- ' + Math.abs(modifier);
     }
     return modifier;
@@ -32,17 +32,13 @@ function AbilityScoresViewModel() {
 
     self.abilityScores = ko.observable(new AbilityScores());
     self.modalStatus = ko.observable(false);
+    self.editItem = ko.observable();
     self.firstModalElementHasFocus = ko.observable(false);
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.abilityScores().save();
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
         var key = CharacterManager.activeCharacter().key();
-        var scores = AbilityScores.findBy(key);
+        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
         if (scores.length > 0) {
             self.abilityScores(scores[0]);
         } else {
@@ -60,6 +56,11 @@ function AbilityScoresViewModel() {
     };
 
     self.unload = function() {
+        self.save();
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
         self.abilityScores().save();
     };
 
@@ -71,6 +72,9 @@ function AbilityScoresViewModel() {
     // Modal Methods
 
     self.openModal = function() {
+        self.editItem(new AbilityScores());
+        self.editItem().importValues(self.abilityScores().exportValues());        
+
         self.modalStatus(true);
          // Alert the modal even if the value didn't technically change.
         self.modalStatus.valueHasMutated();
@@ -80,4 +84,12 @@ function AbilityScoresViewModel() {
         self.firstModalElementHasFocus(true);
         self.firstModalElementHasFocus.valueHasMutated();
     };
+
+    self.modalFinishedClosing = function() {    
+        if (self.modalStatus()) {
+            self.abilityScores().importValues(self.editItem().exportValues());
+        }
+        self.modalStatus(false);
+        self.abilityScores().save();
+    };    
 }

@@ -117,13 +117,10 @@ describe('Encounter View Model', function() {
             var vm = new EncounterViewModel();
             vm.encounterDetailViewModel(new EncounterDetailViewModel(new Encounter()));
 
-            var initSpy = simple.mock(vm.encounterDetailViewModel(), 'init').callFn(function() {});
             var loadSpy = simple.mock(vm.encounterDetailViewModel(), 'load').callFn(function() {});
 
-            initSpy.called.should.equal(false);
             loadSpy.called.should.equal(false);
             vm._initializeDetailViewModel();
-            initSpy.called.should.equal(true);
             loadSpy.called.should.equal(true);
         });
     });

@@ -23,10 +23,6 @@ function EncounterViewModel() {
     ];
 
     /* Public Methods */
-
-    self.init = function() {
-    };
-
     self.load = function() {
         self.selectedCell.subscribe(self.setEncounterDetailViewModel);
 
@@ -155,7 +151,6 @@ function EncounterViewModel() {
     self._initializeVisibilityViewModel = function() {
         self.visibilityViewModels(self.sections.map(function(section, idx, _) {
             var visibilityViewModel = new EncounterSectionVisibilityViewModel(self.modalEncounter(), section.model);
-            visibilityViewModel.init();
             visibilityViewModel.load();
             return visibilityViewModel;
         }));
@@ -169,7 +164,6 @@ function EncounterViewModel() {
     };
 
     self._initializeDetailViewModel = function() {
-        self.encounterDetailViewModel().init();
         self.encounterDetailViewModel().load();
     };
 

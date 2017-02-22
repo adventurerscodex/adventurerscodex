@@ -25,7 +25,7 @@ function TotalWeightStatusServiceComponent() {
      */
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var scores = AbilityScores.findBy(key)[0];
+        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key)[0];
         if (!scores || !scores.str()) {
             self._removeStatus();
         } else {
@@ -56,7 +56,7 @@ function TotalWeightStatusServiceComponent() {
 
     self._updateStatus = function() {
         var key = CharacterManager.activeCharacter().key();
-        var scores = AbilityScores.findBy(key)[0];
+        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key)[0];
 
         var weight = 0;
 
@@ -66,7 +66,9 @@ function TotalWeightStatusServiceComponent() {
         weight += self._getWeightFor(MagicItem, 'magicItemWeight');
         weight += self._getWeightFor(Treasure, 'totalWeight');
 
-        var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
             status.characterId(key);
@@ -82,7 +84,9 @@ function TotalWeightStatusServiceComponent() {
 
     self._removeStatus = function() {
         var key = CharacterManager.activeCharacter().key();
-        var status = Status.findByKeyAndIdentifier(key, self.statusIdentifier)[0];
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();

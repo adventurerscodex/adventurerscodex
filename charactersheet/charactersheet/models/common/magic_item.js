@@ -43,13 +43,11 @@ function MagicItem() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        if (self.magicItemDescription()) {
-            return self.magicItemDescription().substring(0, self.DESCRIPTION_MAX_LENGTH) + '...';
-        }
+        return Utility.string.truncateStringAtLength(self.magicItemDescription(), self.DESCRIPTION_MAX_LENGTH);
     });
 
     self.magicItemNameLabel = ko.pureComputed(function() {
-        if(self.magicItemAttuned() === true){
+        if (self.magicItemAttuned() === true) {
             return (self.magicItemName() + ' (Attuned)' );
         } else {
             return self.magicItemName();
@@ -57,7 +55,7 @@ function MagicItem() {
     });
 
     self.magicItemWeightLabel = ko.pureComputed(function() {
-        return self.magicItemWeight() + ' lbs.';
+        return self.magicItemWeight() !== '' && self.magicItemWeight() >= 0 ? self.magicItemWeight() + ' lbs.' : '0 lbs.';
     });
 
     self.clear = function() {
@@ -84,9 +82,3 @@ function MagicItem() {
         self.ps.delete();
     };
 }
-
-MagicItem.findAllBy =function(characterId) {
-    return PersistenceService.findAll(MagicItem).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

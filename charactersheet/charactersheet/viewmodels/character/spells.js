@@ -20,10 +20,11 @@ function SpellbookViewModel() {
         'spellRange desc': { field: 'spellRange', direction: 'desc'}
     };
 
-    self.selecteditem = ko.observable();
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -35,32 +36,36 @@ function SpellbookViewModel() {
     self.sort = ko.observable(self.sorts['spellName asc']);
 
     self.numberOfPrepared = ko.computed(function(){
-        var prepared = ko.utils.arrayFilter(self.spellbook(), function(spell) {
-            return spell.spellPrepared() === true;
+        var prepared = 0;
+        self.spellbook().forEach(function(spell) {
+            if (spell.spellPrepared() === true) {
+                prepared++;
+            }
         });
 
-        return prepared.length;
+        return prepared;
     });
 
     self.numberOfSpells = ko.computed(function() {
         return self.spellbook() ? self.spellbook().length : 0;
     });
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.spellbook().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
+        Notifications.global.save.add(self.save);
+
         var key = CharacterManager.activeCharacter().key();
-        self.spellbook(Spell.findAllBy(key));
+        self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
+        Notifications.spellStats.changed.add(self.valueHasChanged);
     };
 
     self.unload = function() {
-        $.each(self.spellbook(), function(_, e) {
+        self.save();
+        Notifications.spellStats.changed.remove(self.valueHasChanged);
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.spellbook().forEach(function(e, i, _) {
             e.save();
         });
     };
@@ -84,14 +89,17 @@ function SpellbookViewModel() {
         self.editTabStatus('');
         self.firstModalElementHasFocus(false);
         self.spellSchoolIconCSS('');
-        self.previewTabStatus.valueHasMutated();
-        self.editTabStatus.valueHasMutated();
+        if (self.modalOpen()) {
+            Utility.array.updateElement(self.spellbook(), self.currentEditItem(), self.editItemIndex);
+        }
+        self.save();
+
+        self.modalOpen(false);
     };
 
     self.selectPreviewTab = function() {
         self.previewTabStatus('active');
         self.editTabStatus('');
-
     };
 
     self.selectEditTab = function() {
@@ -101,13 +109,34 @@ function SpellbookViewModel() {
     };
 
     self.determineSpellSchoolIcon = ko.computed(function() {
-        if (self.selecteditem() && self.selecteditem().spellSchool()) {
-            var spellSchool = self.selecteditem().spellSchool();
+        if (self.currentEditItem() && self.currentEditItem().spellSchool()) {
+            var spellSchool = self.currentEditItem().spellSchool();
             self.spellSchoolIconCSS(spellSchool.toLowerCase());
         }
     });
 
     /* UI Methods */
+
+    /**
+     * Popover for prepared spells
+     */
+    self.alwaysPreparedPopoverText = function() {
+        return 'Always prepared spells will not count against total prepared spells.';
+    };
+
+    /**
+     * Returns true if the spell prepared row should be visible in the add modal
+     */
+    self.preparedRowVisibleAdd = function() {
+        return parseInt(self.blankSpell().spellLevel()) !== 0;
+    };
+
+    /**
+     * Returns true if the spell prepared row should be visible in the edit modal
+     */
+    self.preparedRowVisibleEdit = function(spell) {
+        return parseInt(spell.spellLevel()) !== 0;
+    };
 
     /**
      * Filters and sorts the spells for presentation in a table.
@@ -158,10 +187,19 @@ function SpellbookViewModel() {
     };
 
     self.editSpell = function(spell) {
-        self.selecteditem(spell);
+        self.editItemIndex = spell.__id;
+        self.currentEditItem(new Spell());
+        self.currentEditItem().importValues(spell.exportValues());
+        self.modalOpen(true);
     };
 
     self.clear = function() {
         self.spellbook([]);
+    };
+
+    self.valueHasChanged = function() {
+        self.spellbook().forEach(function(e, i, _) {
+            e.updateValues();
+        });
     };
 }

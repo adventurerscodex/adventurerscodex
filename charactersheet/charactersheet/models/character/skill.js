@@ -3,6 +3,9 @@
 function Skill() {
     var self = this;
     self.ps = PersistenceService.register(Skill, self);
+    self.mapping = {
+        include: ['characterId', 'name', 'modifier', 'abilityScore', 'proficiency']
+    };
 
     self._dummy = ko.observable(null);
     self.characterId = ko.observable(null);
@@ -20,12 +23,7 @@ function Skill() {
     self.proficiencyScore = function() {
         self._dummy();
         var key = CharacterManager.activeCharacter().key();
-        var profBonus = 0;
-        try{
-            profBonus = OtherStats.findBy(
-                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
-        } catch(err) { /* Ignore */}
-        profBonus = parseInt(profBonus);
+        var profBonus = ProficiencyService.sharedService().proficiency();
 
         if (self.proficiency() === 'half') {
             return Math.floor(profBonus / 2);
@@ -43,7 +41,7 @@ function Skill() {
         self._dummy();
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
         } catch(err) { /*Ignore*/ }
 
@@ -55,7 +53,7 @@ function Skill() {
         var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
         if (self.proficiency()) {
             bonus += self.proficiencyScore() + self.abilityScoreModifier();
-        } else if (self.abilityScoreModifier()){
+        } else if (self.abilityScoreModifier()) {
             bonus += self.abilityScoreModifier();
         }
 
@@ -75,6 +73,22 @@ function Skill() {
         return str;
     });
 
+    self.nameLabel = ko.pureComputed(function(){
+        self._dummy();
+        var str = self.name();
+
+        str += ' <i><small class="skills-ability-type">(' + self.abilityScore() + ')</small></i>';
+
+        return str;
+    });
+
+    self.passiveBonus = ko.pureComputed(function() {
+        self._dummy();
+        var bonus = 10 + self.bonus();
+
+        return bonus;
+    });
+
     self.save = function() {
         self.ps.save();
     };
@@ -84,44 +98,18 @@ function Skill() {
     };
 
     self.clear = function() {
-        self.name('');
-        self.abilityScore('');
-        self.modifier(null);
-        self.proficiency('');
+        var values = new Skill().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.name(values.name);
-        self.abilityScore(values.abilityScore);
-        self.modifier(values.modifier);
-        self.proficiency(values.proficiency);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            name: self.name(),
-            abilityScore: self.abilityScore(),
-            modifier: self.modifier(),
-            proficiency: self.proficiency()
-        };
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 }
-
-Skill.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Skill).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
-
-/**
- * Given a character id and a case insensitive skill name,
- * return the relevant Skill(s).
- */
-Skill.findAllByKeyAndName = function(characterId, skillName) {
-    return PersistenceService.findAll(Skill).filter(function(e, i, _) {
-        return (e.characterId() === characterId
-            && e.name().toLowerCase() == skillName.toLowerCase());
-    });
-};

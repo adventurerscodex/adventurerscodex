@@ -12,10 +12,10 @@ function NPCSectionViewModel(parentEncounter) {
     self.tagline = ko.observable();
 
     self.npcs = ko.observableArray();
-
     self.blankNPC = ko.observable(new NPC());
-    self.selecteditem = ko.observable();
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -34,13 +34,10 @@ function NPCSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['name asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var npc = PersistenceService.findBy(NPC, 'encounterId', self.encounterId());
         if (npc) {
@@ -59,7 +56,8 @@ function NPCSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -129,7 +127,10 @@ function NPCSectionViewModel(parentEncounter) {
     };
 
     self.editNPC = function(npc) {
-        self.selecteditem(npc);
+        self.editItemIndex = npc.__id;
+        self.currentEditItem(new NPC());
+        self.currentEditItem().importValues(npc.exportValues());
+        self.openModal(true);
     };
 
     self.toggleModal = function() {
@@ -144,6 +145,13 @@ function NPCSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+
+        if (self.openModal()) {
+            Utility.array.updateElement(self.npcs(), self.currentEditItem(), self.editItemIndex);
+        }
+
+        self.save();
+        self.openModal(false);
     };
 
     self.selectPreviewTab = function() {

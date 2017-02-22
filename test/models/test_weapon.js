@@ -55,20 +55,6 @@ describe('Weapon Model', function() {
             });
         });
     });
-    describe('Find By', function() {
-        it('Should return a list of image models matching the given id.', function() {
-            //Empty
-            simple.mock(PersistenceService, 'findBy').returnWith([new Weapon()]);
-            Weapon.findAllBy('someid').length.should.equal(0);
-
-            //Filled
-            simple.mock(PersistenceService, 'findAll').returnWith([new Weapon(), new Weapon()].map(function(e, i, _) {
-                e.characterId('someid');
-                return e;
-            }));
-            Weapon.findAllBy('someid').length.should.equal(2);
-        });
-    });
 
     describe('Update Values', function() {
         it('should call notify subscriber a value has changed', function() {
@@ -82,8 +68,7 @@ describe('Weapon Model', function() {
     describe('Proficiency Score', function() {
         it('should get proficiency score from other stats', function() {
             var weap = new Weapon();
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(4)}]);
+            simple.mock(ProficiencyService.sharedService(), 'proficiency').returnWith(4);
 
             var profBonus = weap.proficiencyScore();
             profBonus.should.equal(4);
@@ -155,11 +140,12 @@ describe('Weapon Model', function() {
         it('should sum up all hit related bonuses', function() {
             var weap = new Weapon();
             weap.weaponHit(1);
+            weap.weaponToHitModifier(1);
             simple.mock(weap, 'abilityScoreBonus').returnWith(1);
             simple.mock(weap, 'proficiencyScore').returnWith(1);
 
             var totalBonus = weap.totalBonus();
-            totalBonus.should.equal(3);
+            totalBonus.should.equal(4);
         });
     });
 
@@ -211,6 +197,30 @@ describe('Weapon Model', function() {
         });
     });
 
+    describe('To Hit Modifier Label', function() {
+        it('should create a badge for positive modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier(2);
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal('+ 2');
+        });
+        it('should create a badge for negative modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier(-2);
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal('- 2');
+        });
+        it('should create a badge for no modifier bonus', function() {
+            var weap = new Weapon();
+            weap.weaponToHitModifier();
+
+            var totalBonus = weap.toHitModifierLabel();
+            totalBonus.should.equal(0);
+        });
+    });
+
     describe('Apply Magical Modifier Label', function() {
         it('should return true if there is a magicalModifierLabel', function() {
             var weap = new Weapon();
@@ -244,6 +254,16 @@ describe('Weapon Model', function() {
             var weapon = new Weapon();
             weapon.weaponWeight(10);
             weapon.weaponWeightLabel().should.equal('10 lbs.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight(0);
+            weapon.weaponWeightLabel().should.equal('0 lbs.');
+        });
+        it('should return the correct label', function() {
+            var weapon = new Weapon();
+            weapon.weaponWeight('');
+            weapon.weaponWeightLabel().should.equal('0 lbs.');
         });
     });
 

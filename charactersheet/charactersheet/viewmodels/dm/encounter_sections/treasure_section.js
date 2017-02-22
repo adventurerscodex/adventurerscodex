@@ -21,9 +21,10 @@ function TreasureSectionViewModel(parentEncounter) {
     ];
 
     self.blankTreasure = ko.observable(null);
-    self.selecteditem = ko.observable();
     self.itemType = ko.observable(null);
     self.openModal = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -51,13 +52,10 @@ function TreasureSectionViewModel(parentEncounter) {
     self.sort = ko.observable(self.sorts['nameLabel asc']);
 
     /* Public Methods */
-
-    self.init = function() {
+    self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-    };
 
-    self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var treasure = [];
         self.treasureTypes.forEach(function(type, idx, _){
@@ -78,7 +76,8 @@ function TreasureSectionViewModel(parentEncounter) {
     };
 
     self.unload = function() {
-
+        Notifications.global.save.remove(self.save);
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -188,7 +187,23 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
-        self.selecteditem(treasure);
+        self.editItemIndex = treasure.__id;
+        if (treasure.treasureType() == 'armor') {
+            self.currentEditItem(new EncounterArmor());
+        } else if (treasure.treasureType() == 'item') {
+            self.currentEditItem(new EncounterItem());
+        } else if (treasure.treasureType() == 'magicItem') {
+            self.currentEditItem(new EncounterMagicItem());
+        } else if (treasure.treasureType() == 'weapon') {
+            self.currentEditItem(new EncounterWeapon());
+        } else if (treasure.treasureType() == 'coins') {
+            self.currentEditItem(new EncounterCoins());
+        } else {
+            throw Error('Invalid Treasure type identifier ' + treasure.treasureType());
+        }
+
+        self.currentEditItem().importValues(treasure.exportValues());
+        self.openModal(true);
     };
 
     /* Auto-complete logic */
@@ -244,6 +259,17 @@ function TreasureSectionViewModel(parentEncounter) {
 
     self.modalFinishedClosing = function() {
         self.selectPreviewTab();
+
+        if (self.openModal()) {
+            self.treasure().forEach(function(item, idx, _) {
+                if (item.treasureType() === self.currentEditItem().treasureType() && item.__id === self.editItemIndex) {
+                    item.importValues(self.currentEditItem().exportValues());
+                }
+            });
+        }
+
+        self.save();
+        self.openModal(false);
     };
 
     self.selectPreviewTab = function() {

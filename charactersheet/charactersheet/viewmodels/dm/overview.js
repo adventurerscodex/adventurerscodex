@@ -7,14 +7,9 @@ function CampaignOverviewViewModel() {
     self.createdDate = ko.observable();
     self.notes = ko.observable();
     self.setting = ko.observable();
-    self.createdDate = ko.observable();
     self.name = ko.observable();
 
     /* Public Methods */
-
-    self.init = function() {
-    };
-
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);

@@ -11,6 +11,12 @@
       <span class="text-center"><small>Encounters</small></span>
     </a>
   </li>
+  <li role="presentation" data-bind="click: activateDmScreenTab, css: dmscreenTabStatus">
+    <a href="#dmscreen-header" aria-controls="dmscreen-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/gift-of-knowledge.svg"></img></br>
+      <span class="text-center"><small>Screen</small></span>
+    </a>
+  </li>
 </ul>
 <div class="tab-content">
 <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="with: campaignTabViewModel, css: overviewTabStatus">
@@ -18,4 +24,8 @@
 </div>
 <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="with: encounterTabViewModel, css: encounterTabStatus">
   <div id="dm.tab.encounters" data-bind="template: { name: 'encounter.tmpl', templateUrl: 'templates/dm', data: encounterViewModel }"></div>
+</div>
+<div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
+  <div id="dm.tab.dmscreen" data-bind="template: { name: 'dmscreen.tmpl', templateUrl: 'templates/dm' }"></div>
+</div>
 </div>

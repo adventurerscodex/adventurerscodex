@@ -31,9 +31,7 @@ function Item() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
-        if (self.itemDesc()) {
-            return self.itemDesc().substring(0, self.DESCRIPTION_MAX_LENGTH) + '...';
-        }
+        return Utility.string.truncateStringAtLength(self.itemDesc(), self.DESCRIPTION_MAX_LENGTH);
     });
 
     self.itemDescriptionHTML = ko.pureComputed(function() {
@@ -45,7 +43,11 @@ function Item() {
     });
 
     self.itemWeightLabel = ko.pureComputed(function() {
-        return self.itemWeight() + ' lbs.';
+        return self.itemWeight() !== '' && self.itemWeight() >= 0 ? self.itemWeight() + ' lbs.' : '0 lbs.';
+    });
+
+    self.costLabel = ko.pureComputed(function() {
+        return self.itemCost() ? self.itemCost() + ' ' + self.itemCurrencyDenomination() : '';
     });
 
     self.clear = function() {
@@ -72,9 +74,3 @@ function Item() {
         self.ps.delete();
     };
 }
-
-Item.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Item).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

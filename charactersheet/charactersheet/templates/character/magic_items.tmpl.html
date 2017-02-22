@@ -35,11 +35,9 @@
       <!-- ko foreach: filteredAndSortedMagicItems -->
         <tr class="clickable">
           <td data-bind="text: magicItemName, click: $parent.editItem"
-            href="#"
-            data-target="#viewMagicItem"></td>
+            href="#"></td>
           <td data-bind="text: chargesDisplay, click: $parent.editItem"
-            href="#"
-            data-target="#viewMagicItem"></td>
+            href="#"></td>
           <td data-bind="visible: $parent.noneAttuned() === false">
             <div data-bind="visible: magicItemRequiresAttunement() == true">
               <input data-bind="checked: magicItemAttuned"
@@ -48,13 +46,11 @@
               </input>
             </div>
           </td>
-          <td data-bind="text: magicItemWeight, click: $parent.editItem"
-              href="#"
-              data-target="#viewMagicItem">
+          <td data-bind="text: magicItemWeightLabel, click: $parent.editItem"
+              href="#">
           </td>
           <td data-bind="text: shortDescription, click: $parent.editItem"
-            href="#" class="hidden-sm hidden-xs"
-            data-target="#viewMagicItem">
+            href="#" class="hidden-sm hidden-xs">
          </td>
           <td>
             <a data-bind="click: $parent.removeItem" href="#">
@@ -240,7 +236,7 @@
          role="dialog"
          aria-labelledby="viewMagicItemLabel"
          data-bind="modal: {
-           open: selecteditem,
+           open: modalOpen,
            onopen: modalFinishedOpening,
            onclose: modalFinishedClosing
         }">
@@ -269,7 +265,7 @@
                 </a>
               </li>
             </ul>
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="magicItemsModalPreview">
               <div id="magicItemIcon" data-bind="css: $parent.magicItemIconCSS">
                 <div class="h3">

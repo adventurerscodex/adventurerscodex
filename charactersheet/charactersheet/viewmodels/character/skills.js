@@ -41,22 +41,20 @@ function SkillsViewModel() {
         });
     };
 
-    self.selecteditem = ko.observable();
+
     self.blankSkill = ko.observable(new Skill(self));
+    self.modalOpen = ko.observable(false);
+    self.editItemIndex = null;
+    self.currentEditItem = ko.observable();
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.init = function() {
-        Notifications.global.save.add(function() {
-            self.skills().forEach(function(e, i, _) {
-                e.save();
-            });
-        });
-    };
-
     self.load = function() {
-        var skills = Skill.findAllBy(CharacterManager.activeCharacter().key());
+        Notifications.global.save.add(self.save);
+
+        var skills = PersistenceService.findBy(Skill, 'characterId',
+            CharacterManager.activeCharacter().key());
 
         if (skills.length === 0) {
             self.skills(self._defaultSkills());
@@ -77,13 +75,18 @@ function SkillsViewModel() {
     };
 
     self.unload = function() {
-        self.skills().forEach(function(e, i, _) {
-            e.save();
-        });
+        self.save();
         self.skills([]);
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
         Notifications.stats.changed.remove(self.dataHasChanged);
         Notifications.profile.changed.remove(self.dataHasChanged);
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.skills().forEach(function(e, i, _) {
+            e.save();
+        });
     };
 
     /* UI Methods */
@@ -118,6 +121,19 @@ function SkillsViewModel() {
         self.modifierHasFocus(true);
     };
 
+    self.modalFinishedClosing = function() {
+        if (self.modalOpen()) {
+            Utility.array.updateElement(self.skills(), self.currentEditItem(), self.editItemIndex);
+        }
+
+        self.save();
+        self.skills().forEach(function(skill, idx, _) {
+            skill.updateValues();
+        });
+
+        self.modalOpen(false);
+    };
+
     //Manipulating skills
 
     self.addSkill = function() {
@@ -135,7 +151,10 @@ function SkillsViewModel() {
     };
 
     self.editSkill = function(skill) {
-        self.selecteditem(skill);
+        self.editItemIndex = skill.__id;
+        self.currentEditItem(new Skill());
+        self.currentEditItem().importValues(skill.exportValues());
+        self.modalOpen(true);
     };
 
     self.clear = function() {

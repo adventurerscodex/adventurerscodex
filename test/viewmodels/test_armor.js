@@ -23,12 +23,12 @@ describe('ArmorViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var armors = new ArmorViewModel();
-            armors.armors().length.should.equal(0);
-            armors.addArmor();
-            armors.armors().length.should.equal(1);
-            var armor = armors.armors.pop();
+
+            var armor = new Armor();
+            armor.armorName('Shield');
             armors.editArmor(armor);
-            armors.selecteditem().should.equal(armor);
+            armors.currentEditItem().armorName().should.equal(armor.armorName());
+            armors.modalOpen().should.equal(true);
         });
     });
 
@@ -82,7 +82,7 @@ describe('ArmorViewModel', function(){
 
     describe('Load', function() {
         it('should load values from db', function() {
-            simple.mock(Armor, 'findAllBy').returnWith([new Armor(), new Armor()]);
+            simple.mock(PersistenceService, 'findBy').returnWith([new Armor(), new Armor()]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var armors = new ArmorViewModel();
@@ -132,10 +132,25 @@ describe('ArmorViewModel', function(){
         });
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
+    describe('Equip Armor Handler', function() {
+        it('should ensure no more than 1 armor and/or shield is equipped.', function() {
+            var armor1 = new Armor();
+            armor1.armorType('light');
+            armor1.armorEquipped('equipped');
+            armor1.__id = 0;
+
+            var armor2 = new Armor();
+            armor2.armorType('light');
+            armor2.armorEquipped('equipped');
+            armor2.__id = 1;
+
             var armorsVM = new ArmorViewModel();
-            armorsVM.init();
+            armorsVM.armors([armor1]);
+            armorsVM.addArmor(armor2);
+
+            armorsVM.armors()[0].armorEquipped().should.equal('');
+            armorsVM.armors()[1].armorEquipped().should.equal('equipped');
+
         });
     });
 
@@ -178,6 +193,7 @@ describe('ArmorViewModel', function(){
     describe('Modal Finished Closing', function() {
         it('should switch default state to preview', function() {
             var armorsVM = new ArmorViewModel();
+            armorsVM.currentEditItem(new Armor());
             armorsVM.selectEditTab();
             armorsVM.modalFinishedClosing();
             armorsVM.previewTabStatus().should.equal('active');

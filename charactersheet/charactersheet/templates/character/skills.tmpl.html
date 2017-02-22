@@ -3,15 +3,20 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('proficiency');}">
+          <th data-bind="click: function(){sortBy('proficiency');}"
+            class="col-md-2 col-sm-2">
             <span class="glyphicon glyphicon-ok"></span>
             <span data-bind="css: sortArrow('proficiency')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('name');}">
+          <th class="col-md-3 col-sm-3">
+          </th>
+          <th data-bind="click: function(){sortBy('name');}"
+            class="col-md-5">
             Skill
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th>
+          <th class="col-md-2">
+            Passive
           </th>
         </tr>
       </thead>
@@ -20,8 +25,9 @@
           <td>
             <prof-marker params="proficiency: proficiency"></prof-marker>
           </td>
-          <td data-bind="text: name"></td>
           <td data-bind="html: bonusLabel"></td>
+          <td data-bind="html: nameLabel"></td>
+          <td data-bind="text: passiveBonus"></td>
         </tr>
       </tbody>
     </table>
@@ -31,9 +37,10 @@
   <div class="modal fade" tabindex="-1" role="dialog"
        aria-labelledby="viewSkillLabel"
        data-bind="modal: {
-          open: selecteditem,
-          onopen: modalFinishedAnimating
-        }, with: selecteditem">
+          open: modalOpen,
+          onopen: modalFinishedAnimating,
+          onclose: modalFinishedClosing
+        }, with: currentEditItem">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">

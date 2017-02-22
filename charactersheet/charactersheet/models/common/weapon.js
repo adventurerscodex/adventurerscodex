@@ -10,8 +10,8 @@ function Weapon() {
     self.mapping = {
         include: ['weaponHit', 'characterId', 'weaponName', 'weaponType', 'weaponDmg',
         'weaponHandedness', 'weaponProficiency', 'weaponPrice', 'weaponCurrencyDenomination',
-        'weaponWeight', 'weaponRange', 'weaponDamageType', 'weaponProperty',
-        'weaponDescription', 'weaponQuantity']
+        'weaponToHitModifier', 'weaponWeight', 'weaponRange', 'weaponDamageType',
+        'weaponProperty', 'weaponDescription', 'weaponQuantity']
     };
 
     self._dummy = ko.observable(null);
@@ -23,7 +23,9 @@ function Weapon() {
     self.weaponProficiency = ko.observable('');
     self.weaponPrice = ko.observable(0);
     self.weaponCurrencyDenomination = ko.observable('');
+    // weaponHit is misnamed, should be magical modifier
     self.weaponHit = ko.observable(0);
+    self.weaponToHitModifier = ko.observable(0);
     self.weaponWeight = ko.observable(1);
     self.weaponRange = ko.observable('');
     self.weaponDamageType = ko.observable('');
@@ -31,16 +33,11 @@ function Weapon() {
     self.weaponDescription = ko.observable('');
     self.weaponQuantity = ko.observable(1);
 
-    self.weaponProficiencyOptions = ko.observableArray(
-        Fixtures.weapon.weaponProficiencyOptions);
-    self.weaponHandednessOptions = ko.observableArray(
-        Fixtures.weapon.weaponHandednessOptions);
-    self.weaponTypeOptions = ko.observableArray(
-        Fixtures.weapon.weaponTypeOptions);
-    self.weaponPropertyOptions = ko.observableArray(
-        Fixtures.weapon.weaponPropertyOptions);
-    self.weaponDamageTypeOptions = ko.observableArray(
-        Fixtures.weapon.weaponDamageTypeOptions);
+    self.weaponProficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
+    self.weaponHandednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
+    self.weaponTypeOptions = ko.observableArray(Fixtures.weapon.weaponTypeOptions);
+    self.weaponPropertyOptions = ko.observableArray(Fixtures.weapon.weaponPropertyOptions);
+    self.weaponDamageTypeOptions = ko.observableArray(Fixtures.weapon.weaponDamageTypeOptions);
 
     self.updateValues = function() {
         self._dummy.notifySubscribers();
@@ -54,19 +51,13 @@ function Weapon() {
     });
 
     self.proficiencyScore = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var profBonus = 0;
-        try{
-            profBonus = OtherStats.findBy(
-                CharacterManager.activeCharacter().key())[0].proficiencyLabel();
-        } catch(err) { /*Ignore*/ }
-        return parseInt(profBonus);
+        return ProficiencyService.sharedService().proficiency();
     };
 
     self.strAbilityScoreModifier = function() {
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Str');
         } catch(err) { /*Ignore*/ }
         if (score === null){
@@ -80,7 +71,7 @@ function Weapon() {
     self.dexAbilityScoreModifier = function() {
         var score = null;
         try {
-            score = AbilityScores.findBy(
+            score = PersistenceService.findBy(AbilityScores, 'characterId',
                 CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
         if (score === null){
@@ -116,7 +107,9 @@ function Weapon() {
         var bonus = 0;
         var abilityScoreBonus = self.abilityScoreBonus();
         var proficiencyBonus = self.proficiencyScore();
+        // This is magical modifier
         var weaponHit = parseInt(self.weaponHit());
+        var toHitModifer = parseInt(self.weaponToHitModifier());
 
         if(abilityScoreBonus){
             bonus += abilityScoreBonus;
@@ -127,7 +120,9 @@ function Weapon() {
         if(weaponHit){
             bonus += weaponHit;
         }
-
+        if(toHitModifer){
+            bonus += toHitModifer;
+        }
         return bonus;
     });
 
@@ -161,9 +156,6 @@ function Weapon() {
                 }
             }
             return weaponRange + ' ft.';
-
-        } else {
-            throw 'Weapon type not range or melee.';
         }
     });
 
@@ -176,6 +168,18 @@ function Weapon() {
             Math.abs(magicalModifier);
         } else {
             return '';
+        }
+    });
+
+    self.toHitModifierLabel = ko.pureComputed(function() {
+        self._dummy();
+
+        var toHitModifier = self.weaponToHitModifier();
+        if (toHitModifier) {
+            return toHitModifier >= 0 ? ('+ ' + toHitModifier) : '- ' +
+            Math.abs(toHitModifier);
+        } else {
+            return 0;
         }
     });
 
@@ -196,7 +200,7 @@ function Weapon() {
     });
 
     self.weaponWeightLabel = ko.pureComputed(function() {
-        return self.weaponWeight() + ' lbs.';
+        return self.weaponWeight() !== '' && self.weaponWeight() >= 0 ? self.weaponWeight() + ' lbs.' : '0 lbs.';
     });
 
     self.clear = function() {
@@ -222,9 +226,3 @@ function Weapon() {
         self.ps.delete();
     };
 }
-
-Weapon.findAllBy =function(characterId) {
-    return PersistenceService.findAll(Weapon).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};

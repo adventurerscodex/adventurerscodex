@@ -12,7 +12,7 @@ function PlayerImage() {
     self.imageSource = ko.observable();
 
     self.clear = function() {
-        var values = new AbilityScores().exportValues();
+        var values = new PlayerImage().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };

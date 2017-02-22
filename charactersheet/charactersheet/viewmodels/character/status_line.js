@@ -5,14 +5,12 @@ function StatusLineViewModel() {
 
     self.statusLine = ko.observable('');
 
-    self.init = function() {
+    self.load = function() {
         Notifications.status.changed.add(self.dataHasChanged);
     };
 
-    self.load = function() {
-    };
-
     self.unload = function() {
+        Notifications.status.changed.remove(self.dataHasChanged);        
         self.clear();
     };
 
@@ -24,8 +22,8 @@ function StatusLineViewModel() {
 
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var statuses = Status.findBy(key);
-        var profile = Profile.findBy(key)[0];
+        var statuses = PersistenceService.findBy(Status, 'characterId', key);
+        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
 
         self.statusLine(self.getStatusLine(profile, statuses));
     };
@@ -34,7 +32,16 @@ function StatusLineViewModel() {
         if (!profile || statuses.length == 0) { return ''; }
 
         return profile.characterName() + ' is ' + statuses.map(function(e, i, _) {
-            return '<span class="text-' + e.type() + '">' + e.name() + '</span>';
-        }).join('&nbsp;,') + '.';
+            var status = '<span class="text-' + e.type() + '">' + e.name() + '</span>';
+            if (statuses.length > 1 && i == statuses.length - 1) {
+                return 'and ' + status;
+            } else if (statuses.length > 2) {
+                return status + ',&nbsp;';
+            } else if (statuses.length > 1) {
+                return status + '&nbsp;';
+            } else {
+                return status;
+            }
+        }).join('') + '.';
     };
 }

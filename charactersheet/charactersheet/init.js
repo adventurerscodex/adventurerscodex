@@ -9,7 +9,12 @@ var init = function(viewModel) {
     // Import static data
     Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
         $.getJSON(location.url, function(data) {
-            DataRepository[location.key] = data;
+            DataRepository[location.key] = data.values;
+            if (location.key === 'features') {
+                DataRepository[location.key + 'DisplayNames'] = data.values.map(function(item, idx, _){
+                    return item.displayName;
+                });
+            }
         });
     });
 
@@ -18,7 +23,8 @@ var init = function(viewModel) {
 
     // Set default status service components.
     StatusService.configuration.components = [
-        new TotalWeightStatusServiceComponent()
+        new TotalWeightStatusServiceComponent(),
+        new InspirationStatusServiceComponent()
     ];
     StatusService.sharedService(); // Prime the service.
 

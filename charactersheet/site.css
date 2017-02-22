@@ -133,9 +133,6 @@ div.progress-text {
 .progress-bar-purple {
   background-color: purple !important;
 }
-.progress-bar-purple {
-  background-color: purple !important;
-}
 .progress-bar-teal {
   background-color: #01DFD7 !important;
 }
@@ -344,12 +341,21 @@ textarea.dark-area {
   color:#e74c3c;
 }
 
-.glyphicon-trash-hover:hover {
+.fa-color-white-hover {
+  color:#ffffff;
+}
+
+.fa-color-white-hover:hover {
   color:#e74c3c;
 }
 
 .feature-row span {
   line-height: 3em;
+}
+
+.table-data-overflow {
+  white-space: nowrap;
+  overflow-x: hidden;
 }
 
 .color-picker-item {
@@ -513,16 +519,23 @@ ul.footer-icons li {
   margin-bottom: 0px;
 }
 
+.content-left {
+  text-align: left !important;
+}
 /*
  * The following CSS is to fix the modal on tablets.
  * Modal Fix Start
  */
 body {
-  padding-right: 0px !important
+  padding-right: 0px !important;
 }
 
 .modal-open {
   overflow-y: auto;
+}
+
+.popover {
+  max-width: 100%;
 }
 
 /*
@@ -698,4 +711,12 @@ ul.ui-autocomplete .ui-state-active {
   margin-left: 5px;
   margin-right: 10px;
   float: left;
+}
+
+/*
+ * Skills view table ability score color
+ */
+
+.skills-ability-type {
+  color: #b4bcc2;
 }

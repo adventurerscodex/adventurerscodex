@@ -42,7 +42,7 @@ function Monster() {
 
     self.nameLabel = ko.pureComputed(function() {
         var label = self.size() ? self.size() : '';
-        label += self.type() ? ' ' + self.type() : '';
+        label += self.type() ? (self.size() ? ' ' : '') + self.type() : '';
         label += (self.size() && self.alignment()) || (self.type() && self.alignment()) ? ', ' : '';
         label += self.alignment() ? self.alignment() : '';
         return label;
@@ -52,7 +52,7 @@ function Monster() {
     self.findAbilityScoreByName = function(name) {
         var foundScore;
         self.abilityScores().forEach(function(score, idx, _) {
-            if (score.name() == name) {
+            if (score.name().toLowerCase() == name.toLowerCase()) {
                 foundScore = score;
             }
         });

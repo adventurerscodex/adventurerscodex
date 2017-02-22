@@ -8,9 +8,7 @@ describe('Skill Model', function() {
 
     describe('Bonus Label', function() {
         it('should yield the modifier value (signed).', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
+            simple.mock(ProficiencyService.sharedService(), 'proficiency').returnWith(2);
 
             var s = new Skill();
             s.name('Arcana');
@@ -55,8 +53,7 @@ describe('Skill Model', function() {
     });
     describe('Proficiency Label', function() {
         it('should yield the proficiency value (or none).', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(OtherStats, 'findBy').returnWith([{ proficiencyLabel: ko.observable(2) }]);
+            simple.mock(ProficiencyService.sharedService(), 'proficiency').returnWith(2);
 
             var s = new Skill(parent);
             s.name('Arcana');
@@ -82,8 +79,6 @@ describe('Skill Model', function() {
     });
     describe('Clear', function() {
         it('should clear all values', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new Skill(parent);
             s.name('Arcana');
             s.modifier(4);
@@ -101,8 +96,6 @@ describe('Skill Model', function() {
 
     describe('Export', function() {
         it('should yield an object with all the info supplied.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new Skill(parent);
             s.name('Arcana');
             s.modifier(4);
@@ -120,8 +113,6 @@ describe('Skill Model', function() {
 
     describe('Import', function() {
         it('should import an object with all the info supplied.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
             var s = new Skill(parent);
             var e = { name: 'Arcana', modifier: 3, proficiency: true , proficiencyType: 'expertise'};
             s.importValues(e);

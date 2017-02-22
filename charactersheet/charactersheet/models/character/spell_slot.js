@@ -3,14 +3,17 @@
 function Slot() {
     var self = this;
     self.ps = PersistenceService.register(Slot, self);
+    self.mapping = {
+        include: ['characterId', 'level', 'maxSpellSlots', 'usedSpellSlots', 'resetsOn']
+    };
 
     self.slotColors = Fixtures.general.colorList;
 
     self.characterId = ko.observable(null);
     self.level = ko.observable(1);
-    self.maxSpellSlots = ko.observable(1);
+    self.maxSpellSlots = ko.observable();
     self.usedSpellSlots = ko.observable(0);
-    self.resetsOn = ko.observable();
+    self.resetsOn = ko.observable('long');
 
     self.color = ko.pureComputed(function() {
         return self.slotColors[self.level()-1];
@@ -29,27 +32,19 @@ function Slot() {
     });
 
     self.clear = function() {
-        self.level(0);
-        self.maxSpellSlots(0);
-        self.usedSpellSlots(0);
+        var values = new Slot().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.level(values.level);
-        self.maxSpellSlots(values.maxSpellSlots);
-        self.usedSpellSlots(values.usedSpellSlots);
-        self.resetsOn(values.resetsOn);
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
     };
 
     self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            level: self.level(),
-            maxSpellSlots: self.maxSpellSlots(),
-            usedSpellSlots: self.usedSpellSlots(),
-            resetsOn: self.resetsOn()
-        };
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
     };
 
     self.save = function() {
@@ -60,12 +55,6 @@ function Slot() {
         self.ps.delete();
     };
 }
-
-Slot.findAllBy = function(characterId) {
-    return PersistenceService.findAll(Slot).filter(function(e, i, _) {
-        return e.characterId() === characterId;
-    });
-};
 
 Slot.REST_TYPE = {
     SHORT_REST: 'short',

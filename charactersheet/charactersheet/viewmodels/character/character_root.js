@@ -22,10 +22,12 @@ function CharacterRootViewModel() {
     self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
-    self.playerImageViewModel    = ko.observable(new PlayerImageViewModel());
+    self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();
+    self.proficiencyService = ProficiencyService.sharedService();
+    self.armorClassService = ArmorClassService.sharedService();
 
     //Tooltips
     self.profileTooltip = ko.observable('Profile');
@@ -92,7 +94,7 @@ function CharacterRootViewModel() {
         var key = CharacterManager.activeCharacter().key();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
-                summary = Profile.findBy(key)[0].characterSummary();
+                summary = PersistenceService.findBy(Profile, 'characterId', key)[0].characterSummary();
             } catch(err) { /*Ignore*/ }
         }
         return summary;
@@ -104,7 +106,7 @@ function CharacterRootViewModel() {
         var key = CharacterManager.activeCharacter().key();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
-                name = Profile.findBy(key)[0].characterName();
+                name = PersistenceService.findBy(Profile, 'characterId', key)[0].characterName();
             } catch(err) { /*Ignore*/ }
         }
         return name;
@@ -116,7 +118,7 @@ function CharacterRootViewModel() {
         var key = CharacterManager.activeCharacter().key();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
-                name = Profile.findBy(key)[0].playerName();
+                name = PersistenceService.findBy(Profile, 'characterId', key)[0].playerName();
             } catch(err) { /*Ignore*/ }
         }
         return name;
@@ -133,12 +135,12 @@ function CharacterRootViewModel() {
     //Public Methods
 
     /**
-     * Call Init on each sub-module.
+     * Call Init on services
      */
     self.init = function() {
-        ViewModelUtilities.initSubViewModels(self);
-
         self.statusLineService.init();
+        self.proficiencyService.init();
+        self.armorClassService.init();
 
         //Subscriptions
         Notifications.profile.changed.add(function() {

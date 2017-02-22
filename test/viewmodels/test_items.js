@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Equipment View Model', function(){
+describe('InventoryViewModel', function(){
     //Clean up after each test.
     afterEach(function() {
         simple.restore();
@@ -8,8 +8,8 @@ describe('Equipment View Model', function(){
 
     describe('Instance Methods', function() {
         describe('Load', function() {
-            it('should load items to the equipment', function() {
-                simple.mock(Item, 'findAllBy').returnWith([new Item(), new Item()]);
+            it('should load items to the inventory', function() {
+                simple.mock(PersistenceService, 'findBy').returnWith([new Item(), new Item()]);
                 simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var p = new ItemsViewModel();
@@ -73,13 +73,13 @@ describe('Equipment View Model', function(){
             it('should select a item for editing.', function() {
                 simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
-                var eq = new ItemsViewModel();
-                eq.items().length.should.equal(0);
-                eq.addItemButton();
-                eq.items().length.should.equal(1);
-                var item = eq.items.pop();
-                eq.editItem(item);
-                eq.selecteditem().should.equal(item);
+                var itemsVm = new ItemsViewModel();
+
+                var item = new Item();
+                item.itemName('Potion');
+                itemsVm.editItem(item);
+                itemsVm.currentEditItem().itemName().should.equal(item.itemName());
+                itemsVm.modalOpen().should.equal(true);
             });
         });
 

@@ -50,28 +50,21 @@ describe('Item Model', function() {
         });
     });
 
-    describe('Find All', function() {
-        it('should find all of the values in the db.', function() {
-            var key = '1234';
-            simple.mock(PersistenceService, 'findAll').returnWith([new Item(), new Item()]);
-            var r = Item.findAllBy(key);
-            r.length.should.equal(0);
-
-
-            simple.mock(PersistenceService, 'findAll').returnWith([new Item(), new Item()].map(function(e, i, _) {
-                e.characterId(key);
-                return e;
-            }));
-            r = Item.findAllBy(key);
-            r.length.should.equal(2);
-        });
-    });
-
     describe('Item Weight Label', function() {
         it('should return the correct label', function() {
             var item = new Item();
             item.itemWeight(10);
             item.itemWeightLabel().should.equal('10 lbs.');
+        });
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemWeight(0);
+            item.itemWeightLabel().should.equal('0 lbs.');
+        });
+        it('should return the correct label', function() {
+            var item = new Item();
+            item.itemWeight('');
+            item.itemWeightLabel().should.equal('0 lbs.');
         });
     });
 

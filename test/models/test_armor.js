@@ -34,6 +34,16 @@ describe('Armor Model', function() {
             armor.armorWeight(10);
             armor.armorWeightLabel().should.equal('10 lbs.');
         });
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorWeight(0);
+            armor.armorWeightLabel().should.equal('0 lbs.');
+        });
+        it('should return the correct label', function() {
+            var armor = new Armor();
+            armor.armorWeight('');
+            armor.armorWeightLabel().should.equal('0 lbs.');
+        });
     });
 
     describe('Armor AC Label', function() {
@@ -97,23 +107,30 @@ describe('Armor Model', function() {
         it('should return a summary label', function() {
             var armor = new Armor();
             armor.armorMagicalModifier(2);
-            armor.armorClass(14);
+            armor.armorClass('14');
 
             armor.armorSummaryLabel().should.equal('+ 2, AC 14');
         });
         it('should return a summary label', function() {
             var armor = new Armor();
             armor.armorMagicalModifier(-2);
-            armor.armorClass(14);
+            armor.armorClass('14');
 
             armor.armorSummaryLabel().should.equal('- 2, AC 14');
         });
         it('should return a summary label', function() {
             var armor = new Armor();
             armor.armorMagicalModifier(0);
-            armor.armorClass(14);
+            armor.armorClass('14');
 
             armor.armorSummaryLabel().should.equal('AC 14');
+        });
+        it('should return a summary label', function() {
+            var armor = new Armor();
+            armor.armorMagicalModifier(1);
+            armor.armorClass('');
+
+            armor.armorSummaryLabel().should.equal('+ 1');
         });
     });
 });

@@ -9,8 +9,6 @@ function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
     self.encounterId = parentEncounter.encounterId;
     self.sectionModel = sectionModel;
 
-    self.init = function() {};
-
     self.load = function() {
         var key = self.encounterId();
         var section = PersistenceService.findFirstBy(self.sectionModel, 'encounterId', key);

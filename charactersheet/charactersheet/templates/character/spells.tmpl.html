@@ -3,7 +3,7 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th class="hidden-xs" data-bind="click: function(){sortBy('spellPrepared');}">
+          <th data-bind="click: function(){sortBy('spellPrepared');}">
             <span class="glyphicon glyphicon-check"></span>
             <span data-bind="css: sortArrow('spellPrepared')"></span>
           </th>
@@ -19,7 +19,7 @@
             Type
             <span data-bind="css: sortArrow('spellType')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellDmg');}">
+          <th class="hidden-xs" data-bind="click: function(){sortBy('spellDmg');}">
             Damage
             <span data-bind="css: sortArrow('spellDmg')"></span>
           </th>
@@ -27,7 +27,7 @@
             Casting Time
             <span data-bind="css: sortArrow('spellCastingTime')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellRange');}">
+          <th class="hidden-xs" data-bind="click: function(){sortBy('spellRange');}">
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
@@ -42,25 +42,23 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedSpells -->
         <tr class="clickable">
-          <!-- ko if: spellLevel() != 0 -->
-          <td><input data-bind="checked: spellPrepared"
-                     type="checkbox"
-                     href="#"></input></td>
-          <!-- /ko -->
-          <!-- ko if: spellLevel() == 0 -->
-          <td></td>
-          <!-- /ko -->
+          <td>
+            <!-- ko if: spellLevel() != 0 -->
+              <input data-bind="checked: spellPrepared || spellAlwaysPrepared,
+                disable: spellAlwaysPrepared" type="checkbox" href="#"></input>
+            <!-- /ko -->
+          </td>
           <td data-bind="text: spellNameLabel, click: $parent.editSpell"
                href="#"></td>
           <td data-bind="text: spellLevelLabel, click: $parent.editSpell"
                href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
                href="#"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: spellDamageLabel, click: $parent.editSpell"
+          <td class="hidden-xs" data-bind="text: spellDamageLabel, click: $parent.editSpell"
                href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellCastingTime, click: $parent.editSpell"
                href="#"></td>
-          <td data-bind="text: spellRange, click: $parent.editSpell"
+          <td class="hidden-xs" data-bind="text: spellRange, click: $parent.editSpell"
                href="#"></td>
           <td>
             <a data-bind="click: $parent.removeSpell" href="#">
@@ -124,24 +122,42 @@
                           hasFocus: firstModalElementHasFocus">
                 </div>
               </div>
+              <!-- ko if: preparedRowVisibleAdd() -->
               <div class="form-group">
                 <label for="spellPrepared"
                        class="col-sm-2 control-label">Prepared</label>
-                  <div class="col-sm-4">
+                  <div class="col-sm-1">
                     <input type="checkbox"
                            class="form-control"
                            id="spellPrepared"
-                           data-bind='checked: blankSpell().spellPrepared'>
+                           data-bind='checked: blankSpell().spellPrepared,
+                                      disable: blankSpell().spellAlwaysPrepared'>
                   </div>
+
+                <label class="col-sm-4 control-label">
+                  <span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
+                      data-bind="popover: { content: alwaysPreparedPopoverText }"></span>
+                       Always Prepared
+                </label>
+
+                <div class="col-sm-1">
+                  <input type="checkbox"
+                         class="form-control"
+                         id="spellAlwaysPrepared"
+                         data-bind='checked: blankSpell().spellAlwaysPrepared,
+                                    disable: blankSpell().spellPrepared'>
+
+                </div>
                 <label for="spellIsRitual"
                        class="col-sm-2 control-label">Ritual</label>
-                  <div class="col-sm-4">
+                  <div class="col-sm-1">
                     <input type="checkbox"
                            class="form-control"
                            id="spellIsRitual"
                            data-bind='checked: blankSpell().isRitual'>
                   </div>
               </div>
+              <!-- /ko -->
               <div class="form-group">
                 <label for="spellLevel"
                        class="col-sm-2 control-label">Level</label>
@@ -291,7 +307,7 @@
          tabindex="-1"
          role="dialog"
          data-bind="modal: {
-          open: selecteditem,
+          open: modalOpen,
           onopen: modalFinishedOpening,
           onclose: modalFinishedClosing
         }"
@@ -321,7 +337,7 @@
                 </a>
               </li>
             </ul>
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
                 <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
                 <div class="h3">
@@ -360,24 +376,37 @@
                              hasFocus: $parent.editFirstModalElementHasFocus">
                     </div>
                   </div>
+                  <!-- ko if: $parent.preparedRowVisibleEdit($data) -->
                   <div class="form-group">
                     <label for="spellPrepared"
                            class="col-sm-2 control-label">Prepared</label>
-                      <div class="col-sm-4">
+                      <div class="col-sm-1">
                         <input type="checkbox"
                                class="form-control"
                                id="spellPrepared"
-                               data-bind='checked: spellPrepared'>
+                               data-bind='checked: spellPrepared,
+                                          disable: spellAlwaysPrepared'>
+                      </div>
+                    <label class="col-sm-4 control-label">
+                    <span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
+                      data-bind="popover: { content: $parent.alwaysPreparedPopoverText }"></span>&nbsp;Always Prepared</label>
+                      <div class="col-sm-1">
+                        <input type="checkbox"
+                               class="form-control"
+                               id="spellAlwaysPrepared"
+                               data-bind='checked: spellAlwaysPrepared,
+                                          disable: spellPrepared'>
                       </div>
                     <label for="spellIsRitual"
                            class="col-sm-2 control-label">Ritual</label>
-                      <div class="col-sm-4">
+                      <div class="col-sm-1">
                         <input type="checkbox"
                                class="form-control"
                                id="spellIsRitual"
                                data-bind='checked: isRitual'>
                       </div>
                   </div>
+                  <!-- /ko -->
                   <div class="form-group">
                     <label for="spellLevel"
                            class="col-sm-2 control-label">Level</label>
@@ -385,7 +414,7 @@
                         <input type="number"
                                class="form-control"
                                id="spellLevel"
-                               min="1"
+                               min="0"
                                max="9"
                                placeholder="1"
                                data-bind="value: spellLevel">

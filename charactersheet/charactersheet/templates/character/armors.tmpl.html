@@ -3,6 +3,9 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
+          <th data-bind="click: function(){sortBy('armorEquipped');}">
+            <span data-bind="css: sortArrow('armorEquipped')"></span>
+          </th>
           <th data-bind="click: function(){sortBy('armorName');}">
             Armor
             <span data-bind="css: sortArrow('armorName')"></span>
@@ -11,7 +14,7 @@
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
-          <th class="hidden-sm hidden-xs">
+          <th>
             Armor Class
           </th>
           <th>
@@ -26,19 +29,19 @@
       <!-- ko foreach: filteredAndSortedArmors -->
         <tr class="clickable">
           <td data-bind="click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor">
+              href="#">
+            <span data-bind="css: $parent.armorEquippedLabel($data)"></span>
+          </td>
+          <td data-bind="click: $parent.editArmor"
+              href="#">
               <span data-bind="text: armorName"></span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: armorType, click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor"></td>
-          <td class="hidden-sm hidden-xs"
-              data-bind="text: armorClass, click: $parent.editArmor"
-              href="#"
-              data-target="#viewArmor"></td>
+              href="#"></td>
+          <td data-bind="text: armorClass, click: $parent.editArmor"
+              href="#"></td>
           <td>
             <a data-bind="click: $parent.removeArmor" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -103,7 +106,7 @@
                   <select class="form-control"
                           data-bind="options: blankArmor().armorTypeOptions,
                                      value: blankArmor().armorType,
-                                     select2: {theme: 'classic'}"></select>
+                                     select2: { theme: 'classic'}"></select>
                   </div>
               </div>
               <div class="form-group">
@@ -138,7 +141,7 @@
                 <label for="armorWeight"
                        class="col-sm-2 control-label">Weight</label>
                   <div class="col-sm-10">
-                    <input type="text"
+                    <input type="number"
                            class="form-control"
                            id="armorWeight"
                            placeholder="6"
@@ -165,6 +168,25 @@
                                      value: blankArmor().armorStealth,
                                      select2: {theme: 'classic'}"></select>
                   </div>
+              </div>
+              <div class="form-group">
+              <label class="col-sm-2 control-label">Equipped</label>
+                <div class="col-sm-10">
+                  <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                  data-bind="css: { active: blankArmor().armorEquipped() == ''}">
+                    <input type="radio" class="hide-block"
+                    name="notEquipped" value="" data-bind="checked: blankArmor().armorEquipped"/>
+                    Doff
+                  </label>
+                  <label class="btn btn-default"
+                  data-bind="css: { active: blankArmor().armorEquipped() == 'equipped'}">
+                    <input type="radio" class="hide-block"
+                    name="equipped" value="equipped" data-bind="checked: blankArmor().armorEquipped"/>
+                    Don
+                    </label>
+                  </div>
+                </div>
               </div>
               <div class="form-group">
                 <label for="armorDescription"
@@ -209,7 +231,7 @@
          role="dialog"
          aria-labelledby="viewArmorLabel"
          data-bind="modal: {
-           open: selecteditem,
+           open: modalOpen,
            onopen: modalFinishedOpening,
            onclose: modalFinishedClosing
         }">
@@ -240,7 +262,7 @@
               </li>
             </ul>
 
-            <div class="tab-content" data-bind="with: selecteditem">
+            <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="armorModalPreview">
                 <div class="h3">
                   <span data-bind="text: armorName"></span>&nbsp;
@@ -326,7 +348,7 @@
                     <label for="armorWeight"
                            class="col-sm-2 control-label">Weight</label>
                       <div class="col-sm-10">
-                        <input type="text"
+                        <input type="number"
                                class="form-control"
                                id="armorWeight"
                                placeholder="6"
@@ -353,6 +375,26 @@
                                          value: armorStealth,
                                          select2: {theme: 'classic'}"></select>
                       </div>
+                  </div>
+                  <div class="form-group">
+                  <label
+                         class="col-sm-2 control-label">Equipped</label>
+                    <div class="col-sm-10">
+                      <div class="btn-group btn-group-justified" role="group">
+                      <label class="btn btn-default"
+                      data-bind="css: { active: armorEquipped() == ''}">
+                        <input type="radio" class="hide-block"
+                        name="notEquipped" value="" data-bind="checked: armorEquipped"/>
+                        Doff
+                      </label>
+                      <label class="btn btn-default"
+                      data-bind="css: { active: armorEquipped() == 'equipped'}">
+                        <input type="radio" class="hide-block"
+                        name="equipped" value="equipped" data-bind="checked: armorEquipped"/>
+                        Don
+                        </label>
+                      </div>
+                    </div>
                   </div>
                   <div class="form-group">
                     <label for="armorDescription"

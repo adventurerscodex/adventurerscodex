@@ -6,58 +6,46 @@ describe('UserNotificationViewModel', function(){
         simple.restore();
     });
     describe('Add Info Notification', function() {
-        it('should add an info notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
-            userNotificationViewModel.notifications().length.should.equal(0);
-            userNotificationViewModel.addInfoNotification('testing');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('info');
+            var toastrSpy = simple.mock(toastr, 'info');
+
+            userNotificationViewModel.addInfoNotification('testing', 'title');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 
     describe('Add Success Notification', function() {
-        it('should add an success notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
-            userNotificationViewModel.notifications().length.should.equal(0);
-            userNotificationViewModel.addSuccessNotification('testing');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('success');
+            var toastrSpy = simple.mock(toastr, 'success');
+
+            userNotificationViewModel.addSuccessNotification('testing', 'title');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 
     describe('Add Warning Notification', function() {
-        it('should add an warning notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
-            userNotificationViewModel.notifications().length.should.equal(0);
-            userNotificationViewModel.addWarningNotification('testing');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('warning');
+            var toastrSpy = simple.mock(toastr, 'warning');
+
+            userNotificationViewModel.addWarningNotification('testing', 'title');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 
     describe('Add Danger Notification', function() {
-        it('should add an danger notification to the list of notifications', function() {
+        it('should dispatch an info notification to toastr', function() {
             var userNotificationViewModel = new UserNotificationViewModel();
-            userNotificationViewModel.notifications().length.should.equal(0);
-            userNotificationViewModel.addDangerNotification('testing');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.notifications()[0].message().should.equal('testing');
-            userNotificationViewModel.notifications()[0].type().should.equal('danger');
-        });
-    });
+            var toastrSpy = simple.mock(toastr, 'error');
 
-    describe('Visible Notifications', function() {
-        it('should only display notifications which have not been marked as read.', function() {
-            var userNotificationViewModel = new UserNotificationViewModel();
-            userNotificationViewModel.notifications().length.should.equal(0);
-            userNotificationViewModel.addDangerNotification('testing');
-            userNotificationViewModel.notifications().length.should.equal(1);
-            userNotificationViewModel.visibleNotifications().should.not.be.empty();
-            userNotificationViewModel.notifications()[0].toggleVisible();
-            Should.not.exist(userNotificationViewModel.visibleNotifications());
+            userNotificationViewModel.addDangerNotification('testing', 'title');
+
+            toastrSpy.called.should.equal(true);
         });
     });
 });

@@ -1,43 +1,45 @@
 <div class="panel panel-default">
-  <div class="panel-body" data-bind="click: openModal, with: spellStats">
-    <table class="table table-responsive table-ac-bordered table-hover">
-      <thead>
-        <tr>
-          <th class="text-center">
-            Spell Attack Bonus
-          </th>
-          <th class="text-center">
-            Spell Save DC
-          </th>
-          <th class="text-center">
-            Spell Casting Ability
-          </th>
-          <th class="text-center">
-            Spells Known
-          </th>
-          <th class="text-center">
-            Cantrips Known
-          </th>
-          <th class="text-center">
-            Max Prepared
-          </th>
-          <th class="text-center">
-            Invocations Known
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="clickable">
-          <td data-bind="text: spellAttackBonus" class="text-center"></td>
-          <td data-bind="text: spellSaveDc" class="text-center"></td>
-          <td data-bind="text: spellcastingAbility" class="text-center"></td>
-          <td data-bind="text: spellsKnown" class="text-center"></td>
-          <td data-bind="text: spellsCantripsKnown" class="text-center"></td>
-          <td data-bind="text: spellsMaxPrepared" class="text-center"></td>
-          <td data-bind="text: spellsInvocationsKnown" class="text-center"></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="panel-body" data-bind="click: editSpellStats, with: spellStats">
+    <div class="table-responsive">
+      <table class="table table-ac-bordered table-hover">
+        <thead>
+          <tr>
+            <th class="text-center">
+              Spell Attack Bonus
+            </th>
+            <th class="text-center">
+              Spell Save DC
+            </th>
+            <th class="text-center">
+              Spell Casting Ability
+            </th>
+            <th class="text-center">
+              Spells Known
+            </th>
+            <th class="text-center">
+              Cantrips Known
+            </th>
+            <th class="text-center">
+              Max Prepared
+            </th>
+            <th class="text-center">
+              Invocations Known
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="clickable">
+            <td data-bind="text: spellAttackBonus" class="text-center"></td>
+            <td data-bind="text: spellSaveDc" class="text-center"></td>
+            <td data-bind="text: spellcastingAbility" class="text-center"></td>
+            <td data-bind="text: spellsKnown" class="text-center"></td>
+            <td data-bind="text: spellsCantripsKnown" class="text-center"></td>
+            <td data-bind="text: spellsMaxPrepared" class="text-center"></td>
+            <td data-bind="text: spellsInvocationsKnown" class="text-center"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -45,8 +47,9 @@
 <div class="modal fade" tabindex="-1" role="dialog"
    data-bind="modal: {
       open: modalStatus,
-      onopen: modalFinishedAnimating
-    }, with: spellStats">
+      onopen: modalFinishedAnimating,
+      onclose: modalFinishedClosing
+    }, with: editItem">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">

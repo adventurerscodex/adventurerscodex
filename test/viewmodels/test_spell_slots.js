@@ -81,6 +81,11 @@ describe('Spell Slots View Model', function() {
             p.addSlot();
             p.addSlot();
             p.addSlot();
+
+            p.slots().forEach(function(slot, idx, _) {
+                slot.maxSpellSlots(1);
+            });
+
             p.currentSlotWidth(1,1).should.equal('25%');
 
             CharacterManager.activeCharacter = c;
@@ -110,6 +115,22 @@ describe('Spell Slots View Model', function() {
             p.slots()[1].usedSpellSlots().should.equal(0);
 
             CharacterManager.activeCharacter = c;
+        });
+    });
+
+    describe('Reset Slot', function() {
+        it('should reset slot count to 0.', function() {
+            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
+            var p = new SpellSlotsViewModel();
+            p.blankSlot().maxSpellSlots(3);
+            p.addSlot();
+            p.blankSlot().maxSpellSlots(3);
+            p.addSlot();
+            p.slots()[0].usedSpellSlots(1);
+            p.slots()[1].usedSpellSlots(1);
+            p.resetSlot(p.slots()[0]);
+            p.slots()[0].usedSpellSlots().should.equal(0);
+            p.slots()[1].usedSpellSlots().should.equal(1);
         });
     });
 

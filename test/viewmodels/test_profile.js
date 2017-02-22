@@ -16,17 +16,10 @@ describe('Profile View Model', function() {
         });
     });
 
-    describe('Init', function() {
-        it('should init the module', function() {
-            var pVM = new ProfileViewModel();
-            pVM.init();
-        });
-    });
-
     describe('Load', function() {
         it('should load values from db', function() {
             var p = new Profile();
-            simple.mock(Profile, 'findBy').returnWith([p]);
+            simple.mock(PersistenceService, 'findBy').returnWith([p]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
             var pVM = new ProfileViewModel();
@@ -42,7 +35,7 @@ describe('Profile View Model', function() {
             var pVM = new ProfileViewModel();
             var notifySpy2 = simple.mock(Notifications.profile.changed, 'dispatch');
             var p = new Profile();
-            simple.mock(Profile, 'findBy').returnWith([p]);
+            simple.mock(PersistenceService, 'findBy').returnWith([p]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             
             pVM.dataHasChanged();

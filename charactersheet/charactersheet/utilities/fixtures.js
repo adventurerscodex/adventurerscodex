@@ -26,7 +26,7 @@ var Fixtures = {
     },
     armor : {
         armorTypeOptions : [
-            'Light', 'Medium', 'Heavy', 'Shields'],
+            'Light', 'Medium', 'Heavy', 'Shield'],
         armorStealthOptions : [
             'Advantage', 'Normal', 'Disadvantage']
     },
@@ -180,6 +180,14 @@ var Fixtures = {
         spellcastingAbilityOptions: [
             'INT', 'WIS', 'CHA']
     },
+    proficiency: {
+        proficiencyTypes: [
+            'Armor',
+            'Languages',
+            'Tools',
+            'Weapon'
+        ]
+    },
     profile: {
         alignmentOptions: [
             'Lawful good',
@@ -239,9 +247,19 @@ var Fixtures = {
     weapon: {
         weaponDamageTypeOptions: [
             '',
+            'Acid',
             'Bludgeoning',
+            'Cold',
+            'Fire',
+            'Force',
+            'Lightning',
+            'Necrotic',
             'Piercing',
-            'Slashing'
+            'Poison',
+            'Psychic',
+            'Radiant',
+            'Slashing',
+            'Thunder'
         ],
         weaponHandednessOptions: [
             'One or Two Handed',
@@ -281,12 +299,13 @@ var Fixtures = {
         ]
     },
     resting : {
-        shortRestMessage : 'Your relevant spell slots and tracked features, ' +
-              ' feats, traits and have been restored.',
-        longRestMessage : 'Your hit dice, spell slots, hit points, ' +
-              'and tracked features, feats, and traits have been restored.'
+        shortRestMessage : 'Your relevant Spell Slots, Tracked Features, ' +
+              'Feats, and Traits have been restored.',
+        longRestMessage : 'Your Hit Dice, Spell Slots, Hit Points, ' +
+              'Tracked Features, Feats, and Traits have been restored.',
+        shortRestEnum : 'short',
+        longRestEnum : 'long'
     },
-
     wizardProfile: {
         classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
               'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],

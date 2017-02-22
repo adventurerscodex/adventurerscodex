@@ -14,6 +14,7 @@
   <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 	<link href="/bower_components/knockout-file-bindings/knockout-file-bindings.css" rel="stylesheet">
   <link href="/bower_components/select2/select2.css" rel="stylesheet">
+  <link href="/bower_components/toastr/toastr.css" rel="stylesheet">
   <link href="/bin/select2-bootstrap-flatly.css" rel="stylesheet">
 	<link href="/site.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=IM+Fell+English+SC" rel="stylesheet">
@@ -52,7 +53,7 @@
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
   <div id="characters" class="container-fluid characters-module-style">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-12">
         <div class="row">
           <!-- ko with: childRootViewModel -->
           <div class="col-padded col-xs-2" data-bind="template: {
@@ -93,7 +94,7 @@
             <div class="row">
               <div class="col-md-12">
                 <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#newModal" href="#">New</a></i>
+                  data-target="#newModal" href="#">New/Import</a></i>
                 &nbsp;
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#charactersModal" href="#">Characters and Games</a></i>
@@ -119,12 +120,6 @@
             <!-- /ko -->
           </div>
         </div>
-      </div>
-      <div class="col-sm-4" data-bind="template: {
-        name: 'user_notifications.tmpl',
-        templateUrl: 'templates/common',
-        data: userNotificationViewModel
-      }">
       </div>
       </div>
     </div>
@@ -155,23 +150,33 @@
   <div class="col-lg-10 col-lg-offset-1">
     <ul class="footer-icons" style="padding:0px;">
       <li>
-        <a href="//twitter.com/adventurercodex">
+				<a href="//facebook.com/adventurerscodex" target="_blank">
+					<i class="fa fa-facebook social-media" aria-hidden="true"></i>
+				</a>
+			</li>
+			<li>
+        <a href="//twitter.com/adventurercodex" target="_blank">
           <i class="fa fa-twitter social-media" aria-hidden="true"></i>
         </a>
       </li>
+			<li>
+				<a href="//plus.google.com/105624626079092258118" target="_blank">
+					<i class="fa fa-google-plus social-media" aria-hidden="true"></i>
+				</a>
+			</li>
       <li>
-        <a href="//github.com/adventurerscodex">
+        <a href="//github.com/adventurerscodex" target="_blank">
           <i class="fa fa-github social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="/feed.xml">
+        <a href="//adventurerscodex.com/feed.xml" target="_blank">
           <i class="fa fa-rss social-media" aria-hidden="true"></i>
         </a>
       </li>
     </ul>
     <center>
-      <p class="text-muted">&copy; 2016 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
+      <p class="text-muted">&copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
         <a href="//adventurerscodex.com/contact.html">Contact Us</a>
       </p>
       <p class="text-muted">
@@ -256,6 +261,7 @@
 <script src="/bower_components/knockout-file-bindings/knockout-file-bindings.js" type="text/javascript"></script>
 <script src="/bower_components/blueimp-md5/js/md5.min.js" type="text/javascript"></script>
 <script src="/bower_components/select2/select2.min.js"></script>
+<script src="/bower_components/toastr/toastr.min.js"></script>
 <script src="/bower_components/jquery.textarea-markdown-editor/dist/marked.min.js"></script>
 <script src="/bower_components/jquery.textarea-markdown-editor/dist/jquery.textarea-markdown-editor.js"></script>
 <!-- Bindings -->
@@ -265,6 +271,7 @@
 <script src="/bin/koExternalTemplateEngine_all.min.js" type="text/javascript"></script>
 <script src="/bin/knockout.mapping.js" type="text/javascript"></script>
 <script src="/bin/tooltip_bind.js" type="text/javascript"></script>
+<script src="/bin/popover_bind.js" type="text/javascript"></script>
 <script src="/bin/select2.js" type="text/javascript"></script>
 <script src="/bin/knockout-jquery-autocomplete.js" type="text/javascript"></script>
 <script src="/bin/knockout-binding-contenteditable.js" type="text/javascript"></script>
@@ -280,15 +287,17 @@
 <script src="viewmodels/character/appearance.js" type="text/javascript"></script>
 <script src="viewmodels/character/armor.js" type="text/javascript"></script>
 <script src="viewmodels/character/character_root.js" type="text/javascript"></script>
-<script src="viewmodels/character/daily_features.js" type="text/javascript"></script>
+<script src="viewmodels/character/tracker.js" type="text/javascript"></script>
 <script src="viewmodels/character/equipment_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/feat_traits.js" type="text/javascript"></script>
-<script src="viewmodels/character/feats_prof.js" type="text/javascript"></script>
+<script src="viewmodels/character/feats.js" type="text/javascript"></script>
+<script src="viewmodels/character/features.js" type="text/javascript"></script>
 <script src="viewmodels/character/inventory_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/items.js" type="text/javascript"></script>
 <script src="viewmodels/character/magic_items.js" type="text/javascript"></script>
 <script src="viewmodels/character/notes_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/notes.js" type="text/javascript"></script>
+<script src="viewmodels/character/proficiencies.js" type="text/javascript"></script>
 <script src="viewmodels/character/profile_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/profile.js" type="text/javascript"></script>
 <script src="viewmodels/character/saving_throws.js" type="text/javascript"></script>
@@ -301,6 +310,7 @@
 <script src="viewmodels/character/status_line.js" type="text/javascript"></script>
 <script src="viewmodels/character/stats_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/stats.js" type="text/javascript"></script>
+<script src="viewmodels/character/traits.js" type="text/javascript"></script>
 <script src="viewmodels/character/treasure.js" type="text/javascript"></script>
 <script src="viewmodels/character/weapons.js" type="text/javascript"></script>
 <script src="viewmodels/common/characters.js" type="text/javascript"></script>
@@ -331,19 +341,21 @@
 <!-- Models -->
 <script src="models/character/ability_scores.js" type="text/javascript"></script>
 <script src="models/character/appearance.js" type="text/javascript"></script>
-<script src="models/character/daily_feature.js" type="text/javascript"></script>
 <script src="models/character/death_save.js" type="text/javascript"></script>
+<script src="models/character/feat.js" type="text/javascript"></script>
+<script src="models/character/feature.js" type="text/javascript"></script>
 <script src="models/character/feat_traits.js" type="text/javascript"></script>
-<script src="models/character/feats_prof.js" type="text/javascript"></script>
 <script src="models/character/health.js" type="text/javascript"></script>
 <script src="models/character/hit_dice_type.js" type="text/javascript"></script>
 <script src="models/character/hit_dice.js" type="text/javascript"></script>
 <script src="models/character/other_stats.js" type="text/javascript"></script>
+<script src="models/character/proficiency.js" type="text/javascript"></script>
 <script src="models/character/profile.js" type="text/javascript"></script>
 <script src="models/character/saving_throws.js" type="text/javascript"></script>
 <script src="models/character/skill.js" type="text/javascript"></script>
 <script src="models/character/spell_slot.js" type="text/javascript"></script>
 <script src="models/character/spell_stats.js" type="text/javascript"></script>
+<script src="models/character/tracked.js" type="text/javascript"></script>
 <script src="models/common/armor.js" type="text/javascript"></script>
 <script src="models/common/character.js" type="text/javascript"></script>
 <script src="models/common/image.js" type="text/javascript"></script>
@@ -355,8 +367,8 @@
 <script src="models/common/player_types.js" type="text/javascript"></script>
 <script src="models/common/spell.js" type="text/javascript"></script>
 <script src="models/common/status.js" type="text/javascript"></script>
+<script src="models/character/trait.js" type="text/javascript"></script>
 <script src="models/common/treasure.js" type="text/javascript"></script>
-<script src="models/common/user_notification.js" type="text/javascript"></script>
 <script src="models/common/weapon.js" type="text/javascript"></script>
 <script src="models/dm/campaign.js" type="text/javascript"></script>
 <script src="models/dm/encounter.js" type="text/javascript"></script>
@@ -383,12 +395,20 @@
 <script src="migrations/110_2_spells.js" type="text/javascript"></script>
 <script src="migrations/110_3_stats.js" type="text/javascript"></script>
 <script src="migrations/120_1_weapons.js" type="text/javascript"></script>
+<script src="migrations/130_1_armor.js" type="text/javascript"></script>
+<script src="migrations/130_2_feats_features_proficiencies_daily_features.js" type="text/javascript"></script>
 <!-- Services -->
+<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
+<script src="services/character/armor_class_service.js" type="text/javascript"></script>
 <script src="services/hotkeys_service.js" type="text/javascript"></script>
 <script src="services/persistence_service.js" type="text/javascript"></script>
+<script src="services/persistence_service_components/persistence_service_predicates.js" type="text/javascript"></script>
 <script src="services/sort_service.js" type="text/javascript"></script>
 <script src="services/status_service.js" type="text/javascript"></script>
+<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
+<script src="services/character/proficiency_service.js" type="text/javascript"></script>
 <script src="services/status_service_components/total_weight_component.js" type="text/javascript"></script>
+<script src="services/status_service_components/inspiration_component.js" type="text/javascript"></script>
 <!-- Utilities -->
 <script src="utilities/character_manager.js" type="text/javascript"></script>
 <script src="utilities/notifications.js" type="text/javascript"></script>
@@ -396,7 +416,7 @@
 <script src="utilities/migrations.js" type="text/javascript"></script>
 <script src="utilities/data_repository.js" type="text/javascript"></script>
 <script src="utilities/view_model_utilities.js" type="text/javascript"></script>
-<script src="utilities/convineince.js" type="text/javascript"></script>
+<script src="utilities/convenience.js" type="text/javascript"></script>
 <!-- Components -->
 <script src="components/plus-minus.js" type="text/javascript"></script>
 <script src="components/proficiency-marker.js" type="text/javascript"></script>
