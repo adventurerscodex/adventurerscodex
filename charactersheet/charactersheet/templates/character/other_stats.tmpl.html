@@ -2,8 +2,11 @@
  <div class="row">
    <div class="col-md-6 col-padded">
      <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">AC</span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().ac' min="10">
+       <span class="input-group-addon" id="basic-addon2">AC&nbsp;
+          <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: armorClassPopover }"></span>
+       </span>
+       <span class="input-group-addon" id="basic-addon3" data-bind="text: armorClass"></span>
+       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind='textInput: otherStats().armorClassModifier'>
      </div>
    </div>
    <div class="col-md-6 col-padded">

@@ -50,6 +50,10 @@ function ArmorViewModel() {
         });
     };
 
+    self.armorEquippedLabel = function(armor) {
+        return armor.armorEquipped() ? 'fa fa-check' : '';
+    };
+
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
         if(self.armors().length > 0) {
@@ -59,6 +63,24 @@ function ArmorViewModel() {
         }
         return weight + ' (lbs)';
     });
+
+    self.equipArmorHandler = function(selectedItem, index) {
+        if (selectedItem.armorEquipped()) {
+            if (selectedItem.armorType() === 'Shield') {
+                ko.utils.arrayForEach(self.armors(), function(item2) {
+                    if (index != item2.__id && item2.armorType() == 'Shield') {
+                        item2.armorEquipped('');
+                    }
+                });
+            } else {
+                ko.utils.arrayForEach(self.armors(), function(item2) {
+                    if (index != item2.__id && item2.armorType() != 'Shield') {
+                        item2.armorEquipped('');
+                    }
+                });
+            }
+        }
+    };
 
     /* Modal Methods */
 
@@ -89,6 +111,8 @@ function ArmorViewModel() {
         if (self.modalOpen()) {
             Utility.array.updateElement(self.armors(), self.currentEditItem(), self.editItemIndex);
         }
+
+        self.equipArmorHandler(self.currentEditItem(), self.editItemIndex);
 
         self.save();
         self.modalOpen(false);
@@ -135,6 +159,9 @@ function ArmorViewModel() {
         var armor = self.blankArmor();
         armor.characterId(CharacterManager.activeCharacter().key());
         armor.save();
+
+        self.equipArmorHandler(armor, armor.__id);
+
         self.armors.push(armor);
         self.blankArmor(new Armor());
     };

@@ -26,7 +26,7 @@ var Fixtures = {
     },
     armor : {
         armorTypeOptions : [
-            'Light', 'Medium', 'Heavy', 'Shields'],
+            'Light', 'Medium', 'Heavy', 'Shield'],
         armorStealthOptions : [
             'Advantage', 'Normal', 'Disadvantage']
     },
