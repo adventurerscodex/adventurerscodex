@@ -42,6 +42,7 @@ var migration_130_2_feats_features_proficiencies_daily_features = {
 
                 newFeature.save();
             }
+            PersistenceService._delete('FeatsProf', element.__id);
         });
 
         dailyFeatures.forEach(function(element, idx, _) {
@@ -67,6 +68,8 @@ var migration_130_2_feats_features_proficiencies_daily_features = {
 
             feature.save();
             tracked.save();
+
+            PersistenceService._delete('DailyFeature', element.__id);
         });
     }
 };
