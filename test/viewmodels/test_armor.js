@@ -132,30 +132,27 @@ describe('ArmorViewModel', function(){
         });
     });
 
-/*    describe('Equip Armor Handler', function() {
+    describe('Equip Armor Handler', function() {
         it('should ensure no more than 1 armor and/or shield is equipped.', function() {
             var armor1 = new Armor();
             armor1.armorType('light');
             armor1.armorEquipped('equipped');
-            armor1.__id = 'wtf';
+            armor1.__id = 0;
 
             var armor2 = new Armor();
             armor2.armorType('light');
             armor2.armorEquipped('equipped');
-            armor2.__id = 'fml';
+            armor2.__id = 1;
 
             var armorsVM = new ArmorViewModel();
             armorsVM.armors([armor1]);
-            armorsVM.currentEditItem(armor2);
-            armorsVM.editItemIndex = armor2.__id;
             armorsVM.addArmor(armor2);
 
-            armorsVM.equipArmorHandler();
             armorsVM.armors()[0].armorEquipped().should.equal('');
             armorsVM.armors()[1].armorEquipped().should.equal('equipped');
 
         });
-    });*/
+    });
 
     describe('Total Item Weight', function() {
         it('should return a string with the total weight of all items.', function() {

@@ -6,42 +6,23 @@ describe('Armor Class Service', function() {
         simple.restore();
     });
 
-/*    describe('Init', function() {
+    describe('Init', function() {
         it('should subscribe to relevant viewmodels and calculate first Armor Class', function() {
             var spy1 = simple.mock(Notifications.armor.changed, 'add');
             var spy2 = simple.mock(Notifications.abilityScores.changed, 'add');
             var spy3 = simple.mock(Notifications.stats.changed, 'add');
-            simple.mock(PersistenceService, 'findByPredicates').callFn(function(model, property, value) {
-                if (model.name === 'Armor') {
-                    var armor = new Armor();
-                    armor.armorType('Light');
-                    armor.armorClass(12);
-                    armor.magicalModifier(1);
-                    return [armor];
-                }
-            });
-            simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, property, value) {
-                if (model.name === 'AbilityScores') {
-                    var abilityScore = new AbilityScores();
-                    abilityScore.dex(18);
-                    abilityScore.modifierFor('Dex').should.equal(4);
-                    return abilityScore;
-                } else if (model.name === 'OtherStats') {
-                    var otherStats = new OtherStats();
-                    otherStats.armorClassModifier(2);
-                    return otherStats;
-                }
-            });
 
             var armorClassService = ArmorClassService.sharedService();
+            var spy4 = simple.mock(armorClassService, 'dataHasChanged').callFn(function() {});
+
             armorClassService.init();
-            var armorClass = armorClassService.armorClass();
-            armorClass.should.equal(19);
+
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
             spy3.called.should.equal(true);
+            spy4.called.should.equal(true);
         });
-    });*/
+    });
 
     describe('Data Has Changed', function() {
         it('should calculate Armor Class', function() {

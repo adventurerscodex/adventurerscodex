@@ -64,18 +64,17 @@ function ArmorViewModel() {
         return weight + ' (lbs)';
     });
 
-    self.equipArmorHandler = function() {
-        var item = self.currentEditItem();
-        if (item.armorEquipped()) {
-            if (item.armorType() === 'Shield') {
+    self.equipArmorHandler = function(selectedItem, index) {
+        if (selectedItem.armorEquipped()) {
+            if (selectedItem.armorType() === 'Shield') {
                 ko.utils.arrayForEach(self.armors(), function(item2) {
-                    if (self.editItemIndex != item2.__id && item2.armorType() == 'Shield') {
+                    if (index != item2.__id && item2.armorType() == 'Shield') {
                         item2.armorEquipped('');
                     }
                 });
             } else {
                 ko.utils.arrayForEach(self.armors(), function(item2) {
-                    if (self.editItemIndex != item2.__id && item2.armorType() != 'Shield') {
+                    if (index != item2.__id && item2.armorType() != 'Shield') {
                         item2.armorEquipped('');
                     }
                 });
@@ -113,7 +112,7 @@ function ArmorViewModel() {
             Utility.array.updateElement(self.armors(), self.currentEditItem(), self.editItemIndex);
         }
 
-        self.equipArmorHandler();
+        self.equipArmorHandler(self.currentEditItem(), self.editItemIndex);
 
         self.save();
         self.modalOpen(false);
@@ -160,6 +159,9 @@ function ArmorViewModel() {
         var armor = self.blankArmor();
         armor.characterId(CharacterManager.activeCharacter().key());
         armor.save();
+
+        self.equipArmorHandler(armor, armor.__id);
+
         self.armors.push(armor);
         self.blankArmor(new Armor());
     };
