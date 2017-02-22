@@ -292,3 +292,29 @@ var weaponDataFixture = [
         }
     }
 ];
+
+var featureFeatsTraitsFixture = [
+    {
+        id: 0,
+        data: {
+            characterId: '12345678',
+            proficiencies:  'TEST PROFICIENCIES',
+            feats: 'TEST FEAT',
+            specialAbilities: 'TEST SPECIAL ABILITY'
+        }
+    }
+];
+
+var dailyFeaturesFixture = [
+    {
+        id: 0,
+        data: {
+            featureDescription: 'TEST DESC',
+            featureMaxUses: 2,
+            featureUsed: 1,
+            featureResetsOn: 'long rest',
+            featureName: 'test name',
+            characterId: '1234567890'
+        }
+    }
+];
