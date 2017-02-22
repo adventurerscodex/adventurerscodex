@@ -735,5 +735,5 @@ var jebeddo_data = {
       "magicItemDescription": "Find a secret door within 30 ft of you, the wand points to it by pulsing\nGain 1d3 charges in the morning."
     }
   ],
-  "__version__":"1.2.0"
+  "__version__":"1.3.0"
 };
