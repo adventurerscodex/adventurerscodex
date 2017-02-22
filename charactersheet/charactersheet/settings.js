@@ -67,16 +67,13 @@ var Settings = {
         }, {
             key: 'proficiencies',
             url: 'https://adventurerscodex.com/data/SRD/proficiencies.json'
-        },
-        {
+        }, {
             key: 'feats',
             url: 'https://adventurerscodex.com/data/SRD/feats.json'
-        },
-        {
+        }, {
             key: 'features',
             url: 'https://adventurerscodex.com/data/SRD/features.json'
-        },
-        {
+        }, {
             key: 'traits',
             url: 'https://adventurerscodex.com/data/SRD/traits.json'
         }
