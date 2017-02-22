@@ -32,10 +32,10 @@ describe('130 Features, Feats, and Traits Migration', function() {
                         } else if (model.name == 'Tracked') {
                             inst.maxUses().should.equal(dailyFeaturesFixture[0].data.featureMaxUses);
                         } else {
-                            throw "UNHANDLED CASE";
+                            throw 'UNHANDLED CASE';
                         }
                     };
-                }
+                };
             });
 
             migration_130_2_feats_features_proficiencies_daily_features.migration();
