@@ -70,7 +70,7 @@ function SavingThrowsViewModel() {
     };
 
     self.updateValues = function() {
-        $.each(self.savingThrows(), function(_, e) {
+        self.savingThrows().forEach(function(e, i, _) {
             e.updateValues();
         });
     };

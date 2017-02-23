@@ -49,7 +49,7 @@ function CharactersViewModel() {
     };
 
     self.unload = function() {
-        $.each(self.characters(), function(_, e) {
+        self.characters().forEach(function(e, i, _) {
             e.save();
         });
     };
