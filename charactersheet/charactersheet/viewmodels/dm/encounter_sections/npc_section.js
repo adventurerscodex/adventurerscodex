@@ -33,6 +33,9 @@ function NPCSectionViewModel(parentEncounter) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
+    //Static Data
+    self.raceOptions = Fixtures.profile.raceOptions;
+
     /* Public Methods */
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -163,6 +166,15 @@ function NPCSectionViewModel(parentEncounter) {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    //Prepopulate methods
+    self.populateRace = function(label, value) {
+        self.blankNPC().race(value);
+    };
+
+    self.populateRaceEdit = function(label, value) {
+        self.currentEditItem().race(value);
     };
 
     /* Private Methods */
