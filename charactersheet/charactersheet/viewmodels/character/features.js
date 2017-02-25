@@ -27,6 +27,9 @@ function FeaturesViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
 
+    //Static Data
+    self.classOptions = Fixtures.profile.classOptions;
+
     self.load = function() {
         Notifications.global.save.add(self.save);
 
@@ -60,6 +63,14 @@ function FeaturesViewModel() {
             self.blankFeature().importValues(feature);
             self.shouldShowDisclaimer(true);
         }
+    };
+
+    self.populateClass = function(label, value) {
+        self.blankFeature().characterClass(value);
+    };
+
+    self.populateClassEdit = function(label, value) {
+        self.currentEditItem().characterClass(value);
     };
 
     // Modal methods
