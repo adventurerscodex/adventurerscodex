@@ -5,3 +5,4 @@
 * [nuubduud](https://github.com/nuubduud)
 * [bmolparia](https://github.com/bmolparia)
 * [valterlima](https://github.com/valterlima)
+* [nhutto](https://github.com/nhutto)
