@@ -30,13 +30,19 @@ var defaultConfig = {
  * A single, shared connection to the XMPP server is shared across
  * the application instance, and can be accessed via `sharedConnection`.
  */
-var XMPPService = {
+var XMPPService = new SharedServiceManager(_XMPPService, defaultConfig);
+
+
+function _XMPPService(config) {
+    var self = this;
 
     /**
      * Custom configurations for a connection should be provided before
      * the connection is established.
      */
-    configuration: defaultConfig,
+    self.configuration = config;
+
+    self.connection = null;
 
     /**
      * A lazily instantiated connection to the XMPP backend server.
@@ -48,55 +54,49 @@ var XMPPService = {
      * If a connection fails, the fallback action is determined by the
      * configuration settings for the service.
      */
-    sharedConnection: function() {
-        if (!XMPPService._sharedConnection) {
-            var connection = new Strophe.Connection(XMPPService.configuration.url);
+    self.init = function() {
+        var connection = new Strophe.Connection(self.configuration.url);
 
-            var callback = XMPPService.configuration.connection.callback || XMPPService._connectionHandler;
-            connection.connect(
-                XMPPService.configuration.connection.jid,
-                XMPPService.configuration.connection.pass,
-                callback
-            );
+        var callback = self.configuration.connection.callback || self._connectionHandler;
+        connection.connect(
+            self.configuration.connection.jid,
+            self.configuration.connection.pass,
+            callback
+        );
 
-            XMPPService._sharedConnection = connection;
-        }
-        return XMPPService._sharedConnection;
+        self.connection = connection;
     },
 
     /* Private Methods */
 
-    _sharedConnection: null,
+    self._shouldLog = function() {
+        return self.configuration.fallbackAction == 'log';
+    };
 
-    _shouldLog: function() {
-        return XMPPService.configuration.fallbackAction == 'log';
-    },
+    self._shouldThrow = function() {
+        return self.configuration.fallbackAction == 'throw';
+    };
 
-    _shouldThrow: function() {
-        return XMPPService.configuration.fallbackAction == 'throw';
-    },
-
-    _connectionHandler: function(status, error) {
+    self._connectionHandler = function(status, error) {
         if (error) {
-            if (XMPPService._shouldLog()) {
+            if (self._shouldLog()) {
                 if ('console' in window) {
                     console.log(error);
                 }
-            } else if (XMPPService._shouldThrow()) {
+            } else if (self._shouldThrow()) {
                 throw error;
             }
         }
         if (status === Strophe.Status.CONNECTED) {
-            if (XMPPService._shouldLog() && 'console' in window) {
+            if (self._shouldLog() && 'console' in window) {
                 console.log('Connected.');
             }
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
-            if (XMPPService._shouldLog() && 'console' in window) {
+            if (self._shouldLog() && 'console' in window) {
                 console.log('Disconnected.');
             }
             Notifications.xmpp.disconnected.dispatch();
         }
-
-    }
+    };
 };
