@@ -88,7 +88,9 @@
                         class="form-control"
                         id="class"
                         placeholder="Barbarian"
-                        data-bind='textInput: blankFeature().characterClass'>
+                        data-bind='textInput: blankFeature().characterClass,
+                                   autocomplete: { source: classOptions,
+                                   onselect: populateClass }'>
               </div>
           </div>
           <div class="form-group">
@@ -276,7 +278,9 @@
                         class="form-control"
                         id="class"
                         placeholder="Barbarian"
-                        data-bind='textInput: characterClass'>
+                        data-bind='textInput: characterClass,
+                                   autocomplete: { source: $parent.classOptions,
+                                   onselect: $parent.populateClassEdit }'>
                 </div>
               </div>
               <div class="form-group">
