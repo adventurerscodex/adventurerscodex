@@ -17,6 +17,12 @@
       <span class="text-center"><small>Screen</small></span>
     </a>
   </li>
+  <li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus">
+    <a href="#party-header" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/backup.svg"></img></br>
+      <span class="text-center"><small>Party</small></span>
+    </a>
+  </li>
 </ul>
 <div class="tab-content">
 <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="with: campaignTabViewModel, css: overviewTabStatus">
@@ -27,5 +33,8 @@
 </div>
 <div role="tabpanel" class="tab-pane" id="dmscreen-tab" data-bind="css: dmscreenTabStatus">
   <div id="dm.tab.dmscreen" data-bind="template: { name: 'dmscreen.tmpl', templateUrl: 'templates/dm' }"></div>
+</div>
+<div role="tabpanel" class="tab-pane" id="party-tab" data-bind="css: partyTabStatus">
+  <div id="dm.tab.party" data-bind="template: { name: 'party.tmpl', templateUrl: 'templates/dm', data: partyTabViewModel }"></div>
 </div>
 </div>
