@@ -198,5 +198,16 @@ var Notifications = {
     xmpp: {
         connected: new signals.Signal(),
         disconnected: new signals.Signal()
+    },
+
+    messaging: {
+        all: {
+            lastPublished: new signals.Signal(),
+            newlyPublished: new signals.Signal(),
+            itemDeleted: new signals.Signal()
+        },
+        nodes: {
+            // All node signals are added dynamically.
+        }
     }
 };

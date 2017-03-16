@@ -5,7 +5,7 @@
  * The default configuration object. Use this as a template for creating
  * custom configurations.
  */
-var defaultConfig = {
+var XMPPServiceDefaultConfig = {
     url: 'http://chat.adventurerscodex.com:5280/http-bind/',
 
     connection: {
@@ -30,7 +30,7 @@ var defaultConfig = {
  * A single, shared connection to the XMPP server is shared across
  * the application instance, and can be accessed via `sharedConnection`.
  */
-var XMPPService = new SharedServiceManager(_XMPPService, defaultConfig);
+var XMPPService = new SharedServiceManager(_XMPPService, XMPPServiceDefaultConfig);
 
 
 function _XMPPService(config) {
@@ -55,6 +55,21 @@ function _XMPPService(config) {
      * configuration settings for the service.
      */
     self.init = function() {
+        // Namespace config
+        Strophe.addNamespace('HTML', 'http://jabber.org/protocol/xhtml-im');
+        Strophe.addNamespace('BODY', 'http://www.w3.org/1999/xhtml');
+
+        Strophe.addNamespace('JSON', 'urn:xmpp:json:0');
+        Strophe.addNamespace('ACTIVE', 'http://jabber.org/protocol/chatstates');
+
+        Strophe.addNamespace('PUBSUB', 'http://jabber.org/protocol/pubsub');
+        Strophe.addNamespace('PUBSUB_EVENT', Strophe.NS.PUBSUB + '#event');
+        Strophe.addNamespace('PUBSUB_OWNER', Strophe.NS.PUBSUB + '#owner');
+        Strophe.addNamespace('PUBSUB_NODE_CONFIG', Strophe.NS.PUBSUB + '#node_config');
+        Strophe.addNamespace('ATOM', 'http://www.w3.org/2005/Atom');
+        Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
+        Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
+
         var connection = new Strophe.Connection(self.configuration.url);
 
         var callback = self.configuration.connection.callback || self._connectionHandler;
@@ -65,6 +80,7 @@ function _XMPPService(config) {
         );
 
         self.connection = connection;
+        //self.connection.send($pres());
     },
 
     /* Private Methods */
@@ -87,10 +103,13 @@ function _XMPPService(config) {
                 throw error;
             }
         }
-        if (status === Strophe.Status.CONNECTED) {
+        if (status === Strophe.Status.CONNECTED || status === Strophe.Status.ATTACHED) {
             if (self._shouldLog() && 'console' in window) {
                 console.log('Connected.');
             }
+
+            self.configutation.
+
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
             if (self._shouldLog() && 'console' in window) {
@@ -99,4 +118,6 @@ function _XMPPService(config) {
             Notifications.xmpp.disconnected.dispatch();
         }
     };
+
+    // TODO: Add PEP Handlers
 };
