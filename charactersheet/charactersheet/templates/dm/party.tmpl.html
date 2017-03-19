@@ -1,7 +1,7 @@
 <!-- ko with: partyViewModel -->
 <div class="row">
   <!-- ko foreach: players -->
-  <div class="col-sm-6">
+  <div class="col-sm-4">
     <div class="panel panel-default">
       <div class="panel-body">
         <!-- Player Info -->
@@ -25,10 +25,17 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <div class="">
+              <span data-bind="html: statusLine"></span>
+            </div>
+          </div>
+        </div>
         <!-- Health, Spells, and Features  -->
         <div class="row">
           <div class="col-xs-12">
-            Hitpoints
+            Hit Points
             <div class="progress thin">
               <div class="progress-bar progress-bar-success" role="progressbar"
                 aria-valuenow="60" aria-valuemin="0"
@@ -50,7 +57,7 @@
         </div>
         <div class="row">
           <div class="col-xs-12">
-            Features
+            Features, Feats, and Traits
             <div class="progress thin">
               <div class="progress-bar progress-bar-warning" role="progressbar"
                 aria-valuenow="60" aria-valuemin="0"
@@ -61,20 +68,51 @@
         </div>
         <!-- Stats -->
         <div class="row">
-          <div class="col-xs-12 col-md-6">
-            <ul class="list-group">
-              <li class="list-group-item">
-                Armor Class:
-                <span data-bind="text: armorClass"></span>
-              </li>
-              <li class="list-group-item">
-                Hit Dice:
-                <span data-bind="text: hitDice"></span>
-              </li>
-            </ul>
+          <div class="col-xs-12 text-right">
+            <a class="text-right" style="cursor:pointer;"
+              data-bind="click: function() { moreInfoOpen(!moreInfoOpen())}">More
+              <span class="fa fa-caret-down"></span>
+            </div>
+          </a>
+        </div>
+        <div data-bind="well: { open: moreInfoOpen }">
+          <div class="row">
+            <div class="col-xs-12 col-emd-6 col-padded">
+              <ul class="list-group" style="margin-bottom:0;">
+                <li class="list-group-item">
+                  Armor Class
+                  <span class="pull-right" data-bind="text: armorClass"></span>
+                </li>
+                <li class="list-group-item">
+                  Hit Dice Remaining
+                  <span class="pull-right" data-bind="text: hitDice"></span>
+                </li>
+                <li class="list-group-item">
+                  Spell Save DC
+                  <span class="pull-right" data-bind="text: spellSaveDC"></span>
+                </li>
+                <li class="list-group-item">
+                  Experience
+                  <span class="pull-right" data-bind="text: experience"></span>
+                </li>
+                <li class="list-group-item">
+                  Passive Wisdom
+                  <span class="pull-right" data-bind="text: passiveWisdom"></span>
+                </li>
+                <li class="list-group-item">
+                  Passive Intelligence
+                  <span class="pull-right" data-bind="text: passiveIntelligence"></span>
+                </li>
+                <li class="list-group-item">
+                  Gold
+                  <span class="pull-right" data-bind="text: gold"></span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+<!--
       <div class="panel-footer text-right">
         <button class="btn btn-sm btn-primary" data-toggle="collapse"
           data-target="#actionsCollapse" aria-expanded="false"
@@ -83,6 +121,7 @@
             <i data-bind="" class="fa fa-caret-down" aria-hidden="true"></i>
         </button>
       </div>
+ -->
     </div>
   </div>
   <!-- /ko -->
