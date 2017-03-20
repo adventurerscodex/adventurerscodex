@@ -15,6 +15,7 @@ function DMRootViewModel() {
     self.campaignTabViewModel = ko.observable(new CampaignTabViewModel());
     self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
     self.partyTabViewModel = ko.observable(new PartyTabViewModel());
+    self.chatTabViewModel = ko.observable(new ChatTabViewModel());
         // TODO: Add
 
     //Tooltips
@@ -64,6 +65,9 @@ function DMRootViewModel() {
     self.dmscreenTabStatus = ko.pureComputed(function() {
         return self._tabIsVisible('dmscreen');
     });
+    self.chatTabStatus = ko.pureComputed(function() {
+        return self._tabIsVisible('chat');
+    });
 
     self.partyTabStatus = ko.pureComputed(function() {
         return self._tabIsVisible('party');
@@ -85,6 +89,9 @@ function DMRootViewModel() {
         self.activeTab('party');
     };
 
+    self.activateChatTab = function() {
+        self.activeTab('chat');
+    };
 
     //Public Methods
 
@@ -96,6 +103,7 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activatePartyTab);
+        HotkeysService.registerHotkey('5', self.activateChatTab);
     };
 
     /**

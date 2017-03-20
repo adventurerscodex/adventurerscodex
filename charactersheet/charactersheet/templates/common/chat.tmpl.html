@@ -1,0 +1,138 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="h2">
+      <span data-bind="text: name"></span>&nbsp;
+      <div class="pull-right">
+        <button class="btn btn-sm btn-default" data-bind="click: toggleModal">
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+		<div class="form-horizontal">
+			<form data-bind="submit: sendMessage">
+			  <div class="container-fluid">
+				  <ul class="list-group chat-style"
+				    data-bind="foreach: log, bottomsUp: {trim: 1000}">
+					  <li class="list-group-item">
+              <div class="row">
+                <div class="col-xs-1 hidden-xs" style="width:32px; padding-top:10px; margin-right:5px;">
+                  <!-- ko if: fromImage -->
+                  <img data-bind="attr: { src: fromImage }"
+                    class="img-circle chat-profile-image" width="25px"/>
+                  <!-- /ko -->
+                </div>
+                <div class="col-sm-11">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <small class="text-muted" data-bind="html: from"></small>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <span data-bind="html: message"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+					  </li>
+				  </ul>
+			  </div>
+			  <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group">
+              <input type='text' class="form-control" id="text"
+                data-bind="textInput: message" autocomplete="off">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default">Send</button>
+              </span>
+          </div>
+  			</div>
+			</div>
+		</div>
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<!--
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: openModal,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"> <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          Edit this Encounter's Details
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="form-group">
+            <div class="row row-padded">
+              <label for="encounter.name" class="col-sm-3 control-label">
+                Encounter Name
+              </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id=""
+                       data-bind="value: name,
+                        hasFocus: nameHasFocus" />
+              </div>
+            </div>
+            <div class="row row-padded">
+              <label for="encounter.location" class="col-sm-3 control-label">
+                Location
+              </label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                       data-bind="value: encounterLocation" />
+              </div>
+            </div>
+          </div>
+          <hr />
+          <div class="h4">
+            Which sections would you like to include?<br />
+            <small>You can always change these later</small>
+          </div>
+          <!~~ Encounter Section Show/Hide ~~>
+          <!~~ ko foreach: { data: visibilityVMs } ~~>
+          <hr class="no-top-or-bottom-margin">
+          <div class="row text-left">
+            <div class="col-sm-8 col-sm-offset-1 h5"
+              data-bind="text: name">
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" class="form-control" id=""
+                     data-bind="checked: visible" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-1">
+              <i class="text-muted" data-bind="text: tagline"></i>
+            </div>
+          </div>
+          <!~~ /ko ~~>
+          <div class="spacer"></div>
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-xs-offset-7 col-xs-5">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+ -->
