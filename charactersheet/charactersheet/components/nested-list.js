@@ -65,7 +65,7 @@ function NestedListComponentViewModel(params) {
     self.isActiveCSS = function(cell) {
         var selected = self.selectedCell();
         if (selected) {
-            return cell.encounterId() === selected.encounterId() ? 'active' : '';
+            return cell.id() === selected.id() ? 'active' : '';
         }
     };
 
@@ -82,32 +82,33 @@ ko.components.register('nested-list', {
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectCell">\
-                <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
+                <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
                 <i data-bind="css: arrowIconClass, click: toggleIsOpen" aria-hidden="true"></i>&nbsp; \
                 <!-- /ko -->\
-                <span data-bind="text: name"></span>\
-                <!-- ko if: $parent.isSelected($data) -->\
+                <span data-bind="html: name"></span>&nbsp;&nbsp;\
+                <span class="badge" style="float:none;">10</span>\
                 <span class="pull-right"> \
-                    <!-- ko if: $parent.levels > 0 -->\
+                    <!-- ko if: $parent.isSelected($data) -->\
+                    <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
                     <span class="fa fa-plus fa-lg" \
                         data-bind="click: $parent.addCell"></span>&nbsp;&nbsp; \
                     <!-- /ko -->\
                     <span class="fa fa-trash-o fa-color-white-hover fa-lg" \
                         data-bind="click: $parent.deleteCell"></span>\
-                </span> \
                 <!-- /ko -->\
+                </span> \
             </a>\
+            <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
             <div class="row" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
-                    <!-- ko if: $parent.levels > 0  && children().length > 0 -->\
                     <nested-list params="cells: children, \
                         levels: $parent.levels - 1, \
                         selectedCell: $parent.selectedCell, \
                         onadd: $parent.onadd, \
                         ondelete: $parent.ondelete"></nested-list>\
-                    <!-- /ko -->\
                 </div>\
             </div>\
+            <!-- /ko -->\
         </div>\
     '
 });
