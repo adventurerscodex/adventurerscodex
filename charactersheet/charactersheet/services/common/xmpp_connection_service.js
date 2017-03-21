@@ -120,4 +120,4 @@ function _XMPPService(config) {
     };
 
     // TODO: Add PEP Handlers
-};
+}
