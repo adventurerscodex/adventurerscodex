@@ -86,7 +86,9 @@ ko.components.register('nested-list', {
                 <i data-bind="css: arrowIconClass, click: toggleIsOpen" aria-hidden="true"></i>&nbsp; \
                 <!-- /ko -->\
                 <span data-bind="html: name"></span>&nbsp;&nbsp;\
-                <span class="badge" style="float:none;">10</span>\
+                <!-- ko if: $data.badge -->\
+                <span class="badge" style="float:none;" data-bind="text: badge"></span>\
+                <!-- /ko -->\
                 <span class="pull-right"> \
                     <!-- ko if: $parent.isSelected($data) -->\
                     <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
