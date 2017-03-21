@@ -6,7 +6,12 @@ function ChatCellViewModel(chat) {
     self.id = chat.chatId;
     self.characterId = chat.characterId;
     self.chatId = chat.chatId;
-    self.name = chat.name;
+    self._name = chat.name;
+    self.badge = ko.observable();
+
+    self.name = ko.pureComputed(function() {
+        return self._name();
+    });
 
     /* View Model Methods */
 
