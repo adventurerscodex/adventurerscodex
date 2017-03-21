@@ -12,8 +12,8 @@ var XMPPServiceDefaultConfig = {
         /* A list of all valid options are located here:
          * http://strophe.im/strophejs/doc/1.2.10/files/strophe-js.html#Strophe.Connection.connect
          */
-        jid: 'tester@adventurerscodex.com',
-        pass: 'etheekne',
+        jid: null,
+        pass: null,
 
         // Specify a custom callback here.
         callback: null
@@ -80,7 +80,6 @@ function _XMPPService(config) {
         );
 
         self.connection = connection;
-        //self.connection.send($pres());
     },
 
     /* Private Methods */
@@ -107,8 +106,6 @@ function _XMPPService(config) {
             if (self._shouldLog() && 'console' in window) {
                 console.log('Connected.');
             }
-
-            self.configutation.
 
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
