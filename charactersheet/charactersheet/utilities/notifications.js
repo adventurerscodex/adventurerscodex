@@ -35,6 +35,10 @@ var Notifications = {
         unload: new signals.Signal()
     },
 
+    authentication: {
+        loggedIn: new signals.Signal()
+    },
+
     userNotification: {
         /**
          * Notifies the user of changes.

@@ -14,6 +14,11 @@ var Settings = {
     mappingAlwaysIgnore: ['__id'],
 
     /**
+     * The App's Client ID for the API.
+     */
+    CLIENT_ID: '5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD',
+
+    /**
      * A config object for dropbox integration.
      */
     dropboxConfigOptions: {
