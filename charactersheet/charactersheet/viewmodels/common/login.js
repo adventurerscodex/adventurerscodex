@@ -4,9 +4,11 @@ function LoginViewModel() {
     var self = this;
 
     self._loginLink = '/api/o/authorize?client_id={client_id}&response_type=token';
-    self._logoutLink = '/api/accounts/logout/';
+    self._logoutLink = '/api/o/revoke_token/';
 
     self._dummy = ko.observable();
+
+    self.loggedIn = ko.observable(false);
 
     self.load = function() {
         Notifications.authentication.loggedIn.add(self.dataHasChanged);
@@ -27,7 +29,7 @@ function LoginViewModel() {
     self.loginLink = ko.pureComputed(function() {
         self._dummy();
         if (self._loginStatus()) {
-            return self._logoutLink;
+            return '/';
         } else {
             return self._loginLink.replace('{client_id}', Settings.CLIENT_ID);
         }
@@ -39,6 +41,10 @@ function LoginViewModel() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         if (token) {
             token.delete();
+            $.post(self._logoutLink, {
+                token: token.accessToken,
+                client_id: Settings.CLIENT_ID
+            });
         }
         return true; // Navigate to the link.
     };
@@ -51,6 +57,7 @@ function LoginViewModel() {
 
     self._loginStatus = function() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        return token && token.isValid();
+        self.loggedIn(token && token.isValid());
+        return self.loggedIn();
     };
 }
