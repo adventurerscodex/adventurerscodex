@@ -8,10 +8,9 @@ function LoginViewModel() {
 
     self._dummy = ko.observable();
 
-    self.loggedIn = ko.observable(false);
-
     self.load = function() {
         Notifications.authentication.loggedIn.add(self.dataHasChanged);
+        UserServiceManager.sharedService().init();
         AuthenticationServiceManager.sharedService().init();
     };
 
@@ -21,18 +20,21 @@ function LoginViewModel() {
 
     /* UI Methods */
 
-    self.loginStatusLabel = ko.pureComputed(function() {
-        self._dummy();
-        return self._loginStatus() ? 'Logout' : 'Login';
-    });
-
     self.loginLink = ko.pureComputed(function() {
         self._dummy();
-        if (self._loginStatus()) {
-            return '/';
-        } else {
-            return self._loginLink.replace('{client_id}', Settings.CLIENT_ID);
-        }
+        return self._loginLink.replace('{client_id}', Settings.CLIENT_ID);
+    });
+
+    self.loggedIn = ko.pureComputed(function() {
+        self._dummy();
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        return token && token.isValid();
+    });
+
+    self.username = ko.pureComputed(function() {
+        self._dummy();
+        var user = UserServiceManager.sharedService().user();
+        return user ? user.username : null;
     });
 
     /* Public Methods */
@@ -51,13 +53,5 @@ function LoginViewModel() {
 
     self.dataHasChanged = function() {
         self._dummy.valueHasMutated();
-    };
-
-    /* Private Methods */
-
-    self._loginStatus = function() {
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-        self.loggedIn(token && token.isValid());
-        return self.loggedIn();
     };
 }

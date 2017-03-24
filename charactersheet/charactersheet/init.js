@@ -34,6 +34,7 @@ var init = function(viewModel) {
     // Prime the services.
     StatusService.sharedService();
     AuthenticationServiceManager.sharedService();
+    UserServiceManager.sharedService();
 
     // Initialize the View Model
     viewModel.init();

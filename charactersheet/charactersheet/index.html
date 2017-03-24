@@ -50,9 +50,31 @@
       </ul>
       <!-- ko with: loginViewModel -->
       <ul class="nav navbar-nav navbar-right">
+        <!-- ko ifnot: loggedIn -->
         <li class="secondary-nav">
-          <a data-bind="text: loginStatusLabel, attr: { href: loginLink }, click: logoutLinkWasClicked"></a>
+          <a data-bind="attr: { href: loginLink }">
+            Login
+          </a>
         </li>
+        <!-- /ko -->
+        <!-- ko if: loggedIn -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            role="button" aria-haspopup="true" aria-expanded="false">
+              <span data-bind="text: username"></span>
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/accounts/profile/">Account</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="secondary-nav">
+              <a href="/" data-bind="click: logoutLinkWasClicked">
+                <span>Logout</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- /ko -->
       </ul>
       <!-- /ko -->
     </div>
@@ -429,15 +451,17 @@
 <script src="services/character/proficiency_service.js" type="text/javascript"></script>
 <script src="services/character/status_service_components/inspiration_component.js" type="text/javascript"></script>
 <script src="services/character/status_service_components/healthiness_component.js" type="text/javascript"></script>
+<script src="services/character/status_service_components/total_weight_component.js" type="text/javascript"></script>
 <script src="services/common/xmpp_connection_service.js" type="text/javascript"></script>
 <script src="services/common/hotkeys_service.js" type="text/javascript"></script>
 <script src="services/common/persistence_service.js" type="text/javascript"></script>
 <script src="services/common/persistence_service_components/persistence_service_predicates.js" type="text/javascript"></script>
 <script src="services/common/sort_service.js" type="text/javascript"></script>
 <script src="services/common/status_service.js" type="text/javascript"></script>
-<script src="services/character/status_service_components/total_weight_component.js" type="text/javascript"></script>
-<script src="services/common/authentication_service.js" type="text/javascript"></script>
 <script src="services/common/shared_service_manager.js" type="text/javascript"></script>
+<script src="services/common/account/authentication_service.js" type="text/javascript"></script>
+<script src="services/common/account/user_service.js" type="text/javascript"></script>
+<script src="services/common/account/xmpp_connection_service.js" type="text/javascript"></script>
 <!-- Utilities -->
 <script src="utilities/character_manager.js" type="text/javascript"></script>
 <script src="utilities/notifications.js" type="text/javascript"></script>

@@ -34,19 +34,20 @@ function _AuthenticationService(config) {
     // Private Methods
 
     self._handleValidationResponse = function(data, status) {
-        if (status !== 'success' || data.code !== 0) {
-            return;
-        }
-
-        var fragments = (new URI()).fragment(true);
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        if (!token) {
-            token = new AuthenticationToken();
+        if (status !== 'success' || data.code !== 0) {
+            if (token) {
+                token.delete();
+            }
+        } else {
+            var fragments = (new URI()).fragment(true);
+            if (!token) {
+                token = new AuthenticationToken();
+            }
+
+            token.map(fragments);
+            token.save();
         }
-
-        token.map(fragments);
-        token.save();
-
         Notifications.authentication.loggedIn.dispatch();
     };
 }
