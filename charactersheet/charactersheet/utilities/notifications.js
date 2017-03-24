@@ -39,6 +39,10 @@ var Notifications = {
         loggedIn: new signals.Signal()
     },
 
+    user: {
+        exists: new signals.Signal()
+    },
+
     userNotification: {
         /**
          * Notifies the user of changes.

@@ -9,12 +9,6 @@ var XMPPServiceDefaultConfig = {
     url: 'http://chat.adventurerscodex.com:5280/http-bind/',
 
     connection: {
-        /* A list of all valid options are located here:
-         * http://strophe.im/strophejs/doc/1.2.10/files/strophe-js.html#Strophe.Connection.connect
-         */
-        jid: null,
-        pass: null,
-
         // Specify a custom callback here.
         callback: null
     },
@@ -70,17 +64,8 @@ function _XMPPService(config) {
         Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
         Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
 
-        var connection = new Strophe.Connection(self.configuration.url);
-
-        var callback = self.configuration.connection.callback || self._connectionHandler;
-        connection.connect(
-            self.configuration.connection.jid,
-            self.configuration.connection.pass,
-            callback
-        );
-
-        self.connection = connection;
-    },
+        Notifications.user.exists.add(self._handleLogin);
+    };
 
     /* Private Methods */
 
@@ -90,6 +75,18 @@ function _XMPPService(config) {
 
     self._shouldThrow = function() {
         return self.configuration.fallbackAction == 'throw';
+    };
+
+    self._handleLogin = function() {
+        var user = UserServiceManager.sharedService().user();
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+
+        var connection = new Strophe.Connection(self.configuration.url);
+
+        var callback = self.configuration.connection.callback || self._connectionHandler;
+        connection.connect(user.jid, token.accessToken, callback);
+
+        self.connection = connection;
     };
 
     self._connectionHandler = function(status, error) {

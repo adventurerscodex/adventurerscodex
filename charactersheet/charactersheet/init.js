@@ -32,6 +32,7 @@ var init = function(viewModel) {
     ];
 
     // Prime the services.
+    XMPPService.sharedService();
     StatusService.sharedService();
     AuthenticationServiceManager.sharedService();
     UserServiceManager.sharedService();

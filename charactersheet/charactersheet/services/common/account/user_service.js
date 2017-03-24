@@ -46,6 +46,7 @@ function _UserService(config) {
         var user = data.results[0];
         if (user) {
             self.user(user);
+            Notifications.user.exists.dispatch();
         }
     };
 }

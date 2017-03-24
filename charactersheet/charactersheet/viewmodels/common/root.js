@@ -41,6 +41,8 @@ function AdventurersCodexViewModel() {
         self.charactersViewModel.init();
         self.wizardViewModel.init();
 
+        XMPPService.sharedService().init();
+
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
