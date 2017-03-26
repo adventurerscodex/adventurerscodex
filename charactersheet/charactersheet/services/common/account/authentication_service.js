@@ -27,7 +27,17 @@ function _AuthenticationService(config) {
     self.init = function() {
         // Make sure the token we have is valid.
         var fragments = (new URI()).fragment(true);
-        var url = self.validationUrl.replace('{access_token}', fragments['access_token']);
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        var url = null;
+
+        if (fragments['access_token']) {
+            url = self.validationUrl.replace('{access_token}', fragments['access_token']);
+        } else if (token && token.isValid()) {
+            url = self.validationUrl.replace('{access_token}', token.accessToken());
+        } else {
+            return;
+        }
+
         $.getJSON(url, self._handleValidationResponse);
     };
 
