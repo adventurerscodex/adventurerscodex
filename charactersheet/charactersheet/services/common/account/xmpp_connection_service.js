@@ -84,7 +84,7 @@ function _XMPPService(config) {
         var connection = new Strophe.Connection(self.configuration.url);
 
         var callback = self.configuration.connection.callback || self._connectionHandler;
-        connection.connect(user.jid, token.accessToken, callback);
+        connection.connect(user.xmpp.jid, token.accessToken(), callback);
 
         self.connection = connection;
     };
@@ -111,7 +111,6 @@ function _XMPPService(config) {
             }
             Notifications.xmpp.disconnected.dispatch();
         }
+        // Add more logging...
     };
-
-    // TODO: Add PEP Handlers
 }
