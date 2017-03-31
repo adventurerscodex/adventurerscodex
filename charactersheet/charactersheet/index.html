@@ -133,6 +133,11 @@
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#charactersModal" href="#">Characters and Games</a></i>
                 &nbsp;
+                <!-- ko if: partyManagerViewModel.loggedIn -->
+                <i class="small underline"><a class="" data-toggle="modal"
+                  data-target="#partyModal" href="#">Create/Join/Edit Party</a></i>
+                &nbsp;
+                <!-- /ko -->
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#exportModal"
                   data-bind="click: charactersViewModel.selectCharacter"
@@ -260,6 +265,15 @@
   </div>
 </div>
 
+<!-- Party Manager Modal -->
+<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
+  aria-labelledby="partyModalLabel"
+  data-bind="template: {
+      name: 'party_manager.tmpl',
+      templateUrl: 'templates/common',
+      data: partyManagerViewModel }">
+</div>
+
 <!-- New Modal -->
 <div class="modal fade" id="newModal" tabindex="-1" role="dialog"
   aria-labelledby="newLabel">
@@ -360,6 +374,7 @@
 <script src="viewmodels/character/weapons.js" type="text/javascript"></script>
 <script src="viewmodels/common/login.js" type="text/javascript"></script>
 <script src="viewmodels/common/characters.js" type="text/javascript"></script>
+<script src="viewmodels/common/party_manager.js" type="text/javascript"></script>
 <script src="viewmodels/common/player_image.js" type="text/javascript"></script>
 <script src="viewmodels/common/root.js" type="text/javascript"></script>
 <script src="viewmodels/common/user_notification.js" type="text/javascript"></script>
@@ -409,6 +424,7 @@
 <script src="models/common/item.js" type="text/javascript"></script>
 <script src="models/common/magic_item.js" type="text/javascript"></script>
 <script src="models/common/note.js" type="text/javascript"></script>
+<script src="models/common/party.js" type="text/javascript"></script>
 <script src="models/common/player_info.js" type="text/javascript"></script>
 <script src="models/common/player_image.js" type="text/javascript"></script>
 <script src="models/common/player_types.js" type="text/javascript"></script>
@@ -462,6 +478,7 @@
 <script src="services/common/shared_service_manager.js" type="text/javascript"></script>
 <script src="services/common/account/authentication_service.js" type="text/javascript"></script>
 <script src="services/common/account/user_service.js" type="text/javascript"></script>
+<script src="services/common/account/messaging/node_service.js" type="text/javascript"></script>
 <script src="services/common/account/xmpp_connection_service.js" type="text/javascript"></script>
 <!-- Utilities -->
 <script src="utilities/character_manager.js" type="text/javascript"></script>

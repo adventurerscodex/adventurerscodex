@@ -205,6 +205,10 @@ var Notifications = {
 
     xmpp: {
         connected: new signals.Signal(),
-        disconnected: new signals.Signal()
+        disconnected: new signals.Signal(),
+
+        routes: {
+            chat: new signals.Signal(),
+        }
     }
 };

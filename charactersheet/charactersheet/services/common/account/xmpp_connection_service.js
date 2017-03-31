@@ -13,6 +13,13 @@ var XMPPServiceDefaultConfig = {
         callback: null
     },
 
+    credentialsHelper: function() {
+        return {
+            jid: UserServiceManager.sharedService().user(),
+            password: PersistenceService.findAll(AuthenticationToken)[0]
+        }
+    },
+
     //Options: throw, log, none
     fallbackAction: 'log'
 };
@@ -56,14 +63,16 @@ function _XMPPService(config) {
         Strophe.addNamespace('JSON', 'urn:xmpp:json:0');
         Strophe.addNamespace('ACTIVE', 'http://jabber.org/protocol/chatstates');
 
-        Strophe.addNamespace('PUBSUB', 'http://jabber.org/protocol/pubsub');
-        Strophe.addNamespace('PUBSUB_EVENT', Strophe.NS.PUBSUB + '#event');
-        Strophe.addNamespace('PUBSUB_OWNER', Strophe.NS.PUBSUB + '#owner');
-        Strophe.addNamespace('PUBSUB_NODE_CONFIG', Strophe.NS.PUBSUB + '#node_config');
         Strophe.addNamespace('ATOM', 'http://www.w3.org/2005/Atom');
         Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
         Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
 
+        // Set up the connection.
+        var connection = new Strophe.Connection(self.configuration.url);
+        var callback = self.configuration.connection.callback || self._connectionHandler;
+        self.connection = connection;
+
+        // Finish setup after user has been confirmed.
         Notifications.user.exists.add(self._handleLogin);
     };
 
@@ -78,15 +87,9 @@ function _XMPPService(config) {
     };
 
     self._handleLogin = function() {
-        var user = UserServiceManager.sharedService().user();
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-
-        var connection = new Strophe.Connection(self.configuration.url);
-
+        var credentials = self.configuration.credentialsHelper();
         var callback = self.configuration.connection.callback || self._connectionHandler;
-        connection.connect(user.xmpp.jid, token.accessToken(), callback);
-
-        self.connection = connection;
+        self.connection.connect(credentials.jid, credentials.password, callback);
     };
 
     self._connectionHandler = function(status, error) {
@@ -103,6 +106,10 @@ function _XMPPService(config) {
             if (self._shouldLog() && 'console' in window) {
                 console.log('Connected.');
             }
+
+            // Send initial presence.
+            // https://xmpp.org/rfcs/rfc3921.html#presence
+            self.connection.send($pres().tree());
 
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {

@@ -21,6 +21,7 @@ function AdventurersCodexViewModel() {
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
     self.loginViewModel = new LoginViewModel();
+    self.partyManagerViewModel = new PartyManagerViewModel();
 
     //UI Methods
 
@@ -42,6 +43,7 @@ function AdventurersCodexViewModel() {
         self.wizardViewModel.init();
 
         XMPPService.sharedService().init();
+        NodeServiceManager.sharedService().init();
 
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
@@ -67,6 +69,7 @@ function AdventurersCodexViewModel() {
             self.childRootViewModel().load();
             self.userNotificationViewModel.load();
             self.charactersViewModel.load();
+            self.partyManagerViewModel.load();
             self.ready(true);
         } else {
             self.wizardViewModel.load();
@@ -81,6 +84,7 @@ function AdventurersCodexViewModel() {
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.wizardViewModel.unload();
+            self.partyManagerViewModel.unload();
         }
 
         self._purgeStrayDBEntries();
@@ -128,7 +132,7 @@ function AdventurersCodexViewModel() {
             return  character.key();
         });
         PersistenceService.listAll().forEach(function(table, idx, _) {
-            if (!window[table] || table === 'Character' || table === 'AuthenticationToken') { return; }
+            if (!window[table] || table === 'Character' || table === 'AuthenticationToken' || table === 'Party') { return; }
             PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
                 var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
                 var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;

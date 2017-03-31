@@ -56,6 +56,7 @@ function _AuthenticationService(config) {
             }
 
             token.map(fragments);
+            token.startTime((new Date()).getTime());
             token.save();
         }
         Notifications.authentication.loggedIn.dispatch();

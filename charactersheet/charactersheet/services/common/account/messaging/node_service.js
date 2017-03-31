@@ -3,9 +3,9 @@
 /**
 # Publish Subscribe Node Service
 
-*The node service is a global service, contained inside `NodeServiceManager` that
+The node service is a global service, contained inside `NodeServiceManager` that
 acts as a pubsub node configuration service and an event router for messages
-pushed to the client while connected to the server.*
+pushed to the client while connected to the server.
 
 The Node service performs a few different responsibilities and each is given its
 own section.
@@ -124,6 +124,11 @@ function _NodeService(config) {
     self.config = config;
 
     self.init = function() {
+        // Subscribe to all push events.
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
+
+        // Finish setup after login is complete.
         Notifications.xmpp.connected.add(self._handleConnect);
     };
 
@@ -140,7 +145,12 @@ function _NodeService(config) {
         var fragments = (new URI()).fragment(true);
         var nodeJID = fragments['node_jid'];
 
-        var subscriptions = $(response).find('subscriptions').children();
+        if (!nodeJID) {
+            // There's no node given. Don't try to connect.
+            return;
+        }
+
+        var subscriptions = $(response).find('subscriptions').children().toArray();
         var subscriptionAlreadyExists = subscriptions.some(function(subscription, idx, _) {
             return (
                 $(subscription).attr('node') === nodeJID &&
@@ -157,32 +167,41 @@ function _NodeService(config) {
 
     self._handleSubscriptionSuccess = function(subscription) {
         // TODO
+        console.log(subscription);
     };
 
     self._handleSubscriptionError = function(error) {
         // TODO
+        console.log(error);
     };
 
     self._handleEvent = function(event) {
-        var items = $(event).find('items').children();
+        var items = $(event).find('items').children().toArray();
         items.forEach(function(item, idx, _) {
             var json = $(item).find('json');
-            var route = json.attr('route').toLowerCase();
+            var route = json.attr('route');
+            if (!route) {
+                return;
+            }
+
+            route = route.toLowerCase();
             var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
 
             if (route && dispatchRouteExists) {
                 var content = self._getMessageContent(json);
+                console.log('NEW CONTENT', content);
                 Notifications.xmpp.routes[route].dispatch(content);
             }
         });
+        return true;
     };
 
     self._getMessageContent = function(node) {
         var isCompressed = node.attr('compressed').toLowerCase();
 
         var contents = null;
-        if (isCompressed) {
-            var compression = node..attr('compression').toLowerCase();
+        if (isCompressed == 'true') {
+            var compression = node.attr('compression').toLowerCase();
             contents = self._decompressContents(node.text(), compression);
         } else {
             contents = node.text();
@@ -193,4 +212,13 @@ function _NodeService(config) {
     self._decompressContents = function(data, compression) {
         self.config.compression[compression].decompress(data);
     };
+}
+
+
+function LOG1(a) {
+    console.log(a);
+}
+
+function LOG2(a) {
+    console.log(a);
 }

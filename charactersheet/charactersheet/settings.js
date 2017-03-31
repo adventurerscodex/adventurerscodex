@@ -19,6 +19,11 @@ var Settings = {
     CLIENT_ID: '5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD',
 
     /**
+     * The URL of the host application.
+     */
+    HOST_URL: 'https://app.adventurerscodex.com/charactersheet/',
+
+    /**
      * A config object for dropbox integration.
      */
     dropboxConfigOptions: {

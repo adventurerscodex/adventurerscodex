@@ -4,7 +4,7 @@ function AuthenticationToken() {
     var self = this;
     self.ps = PersistenceService.register(AuthenticationToken, self);
     self.mapping = {
-        include: [ 'accessToken', 'expiresIn', 'tokenType', 'scopes', '_startTime' ]
+        include: [ 'accessToken', 'expiresIn', 'tokenType', 'scopes', 'startTime' ]
     };
 
     /**
@@ -19,7 +19,7 @@ function AuthenticationToken() {
     self.tokenType = ko.observable();
     self.scopes = ko.observable();
 
-    self._startTime = ko.observable((new Date()).getTime());
+    self.startTime = ko.observable((new Date()).getTime());
 
     /**
      * A method that determines how long until the stored token is invalid.
@@ -27,7 +27,7 @@ function AuthenticationToken() {
      */
     self.timeTillExpires = function() {
         var expiresIn = self.expiresIn();
-        var startTime = self._startTime();
+        var startTime = self.startTime();
         if (!startTime || !expiresIn) { return 0; }
 
         var currentTime = (new Date()).getTime();
