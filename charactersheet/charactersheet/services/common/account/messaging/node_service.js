@@ -154,7 +154,7 @@ function _NodeService(config) {
     self.create = function(node, callback) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.pubsub.createNode(node, self.getDefaultNodeOptions(), function(a) {
-            Notifications.xmpp.pubsub.created.dispatch();
+            Notifications.xmpp.pubsub.created.dispatch(node);
             callback(a);
         });
     };
@@ -163,7 +163,7 @@ function _NodeService(config) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.pubsub.subscribe(node, self.getDefaultNodeOptions(),
             self._handleEvent, function(s) {
-                Notifications.xmpp.pubsub.subscribed.dispatch();
+                Notifications.xmpp.pubsub.subscribed.dispatch(node);
                 onsuccess(s);
             }, onerror, null);
     };
@@ -172,7 +172,7 @@ function _NodeService(config) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.pubsub.unsubscribe(node, xmpp.connection.jid, null,
             function(s) {
-                Notifications.xmpp.pubsub.unsubscribed.dispatch();
+                Notifications.xmpp.pubsub.unsubscribed.dispatch(node);
                 onsuccess(s);
             }, onerror);
     };
