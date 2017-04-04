@@ -7,7 +7,7 @@
  * @field weight  percentage that determines how valuable the given value is
  *
  * Sample object:
- * StatusWeightPair(89, 30)
+ * StatusWeightPair(0.89, 0.30)
  */
 function StatusWeightPair(value, weight) {
     var self = this;

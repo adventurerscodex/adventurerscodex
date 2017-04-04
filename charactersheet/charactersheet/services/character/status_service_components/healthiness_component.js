@@ -1,7 +1,8 @@
 'use strict';
 
 /**
- * A Status Service Component that calculates the player's overall healthiness. Hit Dice will have a weight of 30% and Health will have a weight 70%.
+ * A Status Service Component that calculates the player's overall healthiness.
+ * Hit Dice will have a weight of 30% and Hit Points will have a weight 70%.
  */
 
 function HealthinessStatusServiceComponent() {
@@ -17,8 +18,8 @@ function HealthinessStatusServiceComponent() {
     };
 
     /**
-     * This method generates and persists a status that reflects
-     * the character's encumbrance.
+     * This method determines wether to update or remove the Healthiness status
+     * component from the player's status line.
      */
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
@@ -32,36 +33,6 @@ function HealthinessStatusServiceComponent() {
         } else {
             self._removeStatus();
         }
-    };
-
-    /**
-     * Returns a decimal that represents the total health a player has.
-     *
-     * @param health  active character's Health model
-     * @return StatusWeightPair
-     */
-    self.prepareHealthValueWeightPairs = function(health) {
-        var value = health.hitpoints() / health.totalHitpoints();
-
-        return new StatusWeightPair(value, self.HEALTH_WEIGHT);
-    };
-
-    /**
-     * Returns a decimal that represents the total amount of un-used hit dice a player has.
-     *
-     * @param hitDiceList  active character's list of HitDice models
-     * @return StatusWeightPair
-     */
-    self.prepareHitDiceValueWeightPairs = function(hitDiceList) {
-        var avaialableHitDice = 0;
-        hitDiceList.forEach(function(hitDice, i, _) {
-            if (!hitDice.hitDiceUsed()) {
-                avaialableHitDice++;
-            }
-        });
-        var value = avaialableHitDice / hitDiceList.length;
-
-        return new StatusWeightPair(value, self.HIT_DICE_WEIGHT);
     };
 
     /* Private Methods */
@@ -108,5 +79,35 @@ function HealthinessStatusServiceComponent() {
             status.delete();
             Notifications.status.changed.dispatch();
         }
+    };
+
+    /**
+     * Returns a decimal that represents the total Hit Points a player has.
+     *
+     * @param health  active character's Health model
+     * @return StatusWeightPair
+     */
+    self.prepareHealthValueWeightPairs = function(health) {
+        var value = health.hitpoints() / health.totalHitpoints();
+
+        return new StatusWeightPair(value, self.HEALTH_WEIGHT);
+    };
+
+    /**
+     * Returns a decimal that represents the total amount of un-used Hit Dice a player has.
+     *
+     * @param hitDiceList  active character's list of HitDice models
+     * @return StatusWeightPair
+     */
+    self.prepareHitDiceValueWeightPairs = function(hitDiceList) {
+        var avaialableHitDice = 0;
+        hitDiceList.forEach(function(hitDice, i, _) {
+            if (!hitDice.hitDiceUsed()) {
+                avaialableHitDice++;
+            }
+        });
+        var value = avaialableHitDice / hitDiceList.length;
+
+        return new StatusWeightPair(value, self.HIT_DICE_WEIGHT);
     };
 }
