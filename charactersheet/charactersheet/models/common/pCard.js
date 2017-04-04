@@ -89,58 +89,7 @@ An entry for a weapon.
 
 `value` should contain the weapon's data as a JSON object.
 
-__totalHitPoints__
-
-__damage__
-
-__hitDice__
-
-Contains type, and used status.
-
-__spellSlot__
-
-__skill__
-
-__abilityScore__
-
-__feature__
-
-__trait__
-
-__feat__
-
-__proficiency__
-
-__armorClass__
-
-
-### DM Specific Fields
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// TODO: Add the rest of the player and the DM fields.
 */
 
 
