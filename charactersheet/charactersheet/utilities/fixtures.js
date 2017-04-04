@@ -314,71 +314,71 @@ var Fixtures = {
     },
     statusPhraseWordMap: {
         health: [{
-            "value": 1.0,
-            "status": "healthy",
-            "color": "success"
+            'value': 1.0,
+            'status': 'healthy',
+            'color': 'success'
         },{
-            "value": 0.85,
-            "status": "mostly healthy",
-            "color": "success"
+            'value': 0.85,
+            'status': 'mostly healthy',
+            'color': 'success'
         },{
-            "value": 0.60,
-            "status": "injured",
-            "color": "warning"
+            'value': 0.60,
+            'status': 'injured',
+            'color': 'warning'
         },{
-            "value": 0.30,
-            "status": "gravely injured",
-            "color": "warning"
+            'value': 0.30,
+            'status': 'gravely injured',
+            'color': 'warning'
         },{
-            "value": 0.15,
-            "status": "critically injured",
-            "color": "warning"
+            'value': 0.15,
+            'status': 'critically injured',
+            'color': 'warning'
         },{
-            "value": 0.05,
-            "status": "about to die",
-            "color": "danger"
+            'value': 0.05,
+            'status': 'about to die',
+            'color': 'danger'
         },{
-            "value": 0.0,
-            "status": "unconcious",
-            "color": "danger"
+            'value': 0.0,
+            'status': 'unconcious',
+            'color': 'danger'
         }],
         magic: [{
-            "value": 1.0,
-            "status": "magically prepared",
-            "color": "success"
+            'value': 1.0,
+            'status': 'magically prepared',
+            'color': 'success'
         },{
-            "value": 0.50,
-            "status": "magically strained",
-            "color": "warning"
+            'value': 0.50,
+            'status': 'magically strained',
+            'color': 'warning'
         },{
-            "value": 0.10,
-            "status": "magically exhausted",
-            "color": "warning"
+            'value': 0.10,
+            'status': 'magically exhausted',
+            'color': 'warning'
         },{
-            "value": 0.0,
-            "status": "magically depleted",
-            "color": "danger"
+            'value': 0.0,
+            'status': 'magically depleted',
+            'color': 'danger'
         }],
         features: [{
-            "value": 1.0,
-            "status": "bursting with abilities",
-            "color": "success"
+            'value': 1.0,
+            'status': 'bursting with abilities',
+            'color': 'success'
         },{
-            "value": 0.75,
-            "status": "good on abilities",
-            "color": "warning"
+            'value': 0.75,
+            'status': 'good on abilities',
+            'color': 'warning'
         },{
-            "value": 0.50,
-            "status": "low on abilities",
-            "color": "warning"
+            'value': 0.50,
+            'status': 'low on abilities',
+            'color': 'warning'
         },{
-            "value": 0.25,
-            "status": "about to run out of abilities",
-            "color": "warning"
+            'value': 0.25,
+            'status': 'about to run out of abilities',
+            'color': 'warning'
         },{
-            "value": 0.0,
-            "status": "out of abilities",
-            "color": "danger"
+            'value': 0.0,
+            'status': 'out of abilities',
+            'color': 'danger'
         }]
     }
 };
