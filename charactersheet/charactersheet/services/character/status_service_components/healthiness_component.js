@@ -35,22 +35,6 @@ function HealthinessStatusServiceComponent() {
     };
 
     /**
-     * Processes array of StatusWeightPairs and return their calculated sums.
-     *
-     * @param valueWeightPairs  Contains a list of StatusWeightPair objects
-     * @return totalStatusWeight  Decimal representation of StatusWeightPair list
-     */
-    self.processStatusWeights = function(valueWeightPairs) {
-        var totalStatusWeight = 0;
-
-        valueWeightPairs.forEach(function(pair, i, _) {
-            totalStatusWeight += pair.value * pair.weight;
-        });
-
-        return totalStatusWeight;
-    };
-
-    /**
      * Returns a decimal that represents the total health a player has.
      *
      * @param health  active character's Health model
@@ -105,10 +89,11 @@ function HealthinessStatusServiceComponent() {
             valueWeightPairs.push(self.prepareHitDiceValueWeightPairs(hitDiceList));
         }
 
-        var weightedTotal = self.processStatusWeights(valueWeightPairs);
+        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
+        var phrase = StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), weightedTotal);
 
-        status.name((weightedTotal));
-        status.type('info');
+        status.name(phrase.status);
+        status.type(phrase.color);
 
         status.save();
         Notifications.status.changed.dispatch();
