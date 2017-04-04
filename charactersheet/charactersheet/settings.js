@@ -24,6 +24,11 @@ var Settings = {
     HOST_URL: 'https://app.adventurerscodex.com/charactersheet/',
 
     /**
+     * The HOST URL of the pubsub services.
+     */
+    PUBSUB_HOST_JID: 'pubub.adventurerscodex.com',
+
+    /**
      * A config object for dropbox integration.
      */
     dropboxConfigOptions: {

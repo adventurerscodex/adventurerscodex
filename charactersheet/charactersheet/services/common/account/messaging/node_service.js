@@ -102,6 +102,9 @@ var NodeServiceConfiguration = {
                 return LZString.decompressFromUTF16(data);
             }
         }
+    },
+    defaultNodeOptions: {
+
     }
 };
 
@@ -132,12 +135,55 @@ function _NodeService(config) {
         Notifications.xmpp.connected.add(self._handleConnect);
     };
 
-    // Private Methods
+    /**
+     * Returns a unique id for a new node.
+     */
+    self.getUniqueNodeId = function() {
+        return uuid.v4();
+    };
+
+    /**
+     * Returns the default node configuration as specified by the initial config.
+     */
+    self.getDefaultNodeOptions = function() {
+        return self.config.defaultNodeOptions;
+    };
+
+    /* PubSub Methods */
+
+    self.create = function(node, callback) {
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.pubsub.createNode(node, self.getDefaultNodeOptions(), function(a) {
+            Notifications.xmpp.pubsub.created.dispatch();
+            callback(a);
+        });
+    };
+
+    self.subscribe = function(node, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.pubsub.subscribe(node, self.getDefaultNodeOptions(),
+            self._handleEvent, function(s) {
+                Notifications.xmpp.pubsub.subscribed.dispatch();
+                onsuccess(s);
+            }, onerror, null);
+    };
+
+    self.unsubscribe = function(node, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.pubsub.unsubscribe(node, xmpp.connection.jid, null,
+            function(s) {
+                Notifications.xmpp.pubsub.unsubscribed.dispatch();
+                onsuccess(s);
+            }, onerror);
+    };
+
+    /* Private Methods */
 
     self._handleConnect = function() {
         // Fetch all outstanding subscriptions.
         // https://xmpp.org/extensions/xep-0060.html#entity-subscriptions
         var xmpp = XMPPService.sharedService();
+        xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
         xmpp.connection.pubsub.getSubscriptions(self._handleSubscriptions, 3000);
     };
 
@@ -212,13 +258,4 @@ function _NodeService(config) {
     self._decompressContents = function(data, compression) {
         self.config.compression[compression].decompress(data);
     };
-}
-
-
-function LOG1(a) {
-    console.log(a);
-}
-
-function LOG2(a) {
-    console.log(a);
 }

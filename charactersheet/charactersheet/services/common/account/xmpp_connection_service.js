@@ -14,8 +14,10 @@ var XMPPServiceDefaultConfig = {
     },
 
     credentialsHelper: function() {
+        var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
+        var resource = CharacterManager.activeCharacter().key();
         return {
-            jid: UserServiceManager.sharedService().user(),
+            jid: bareJID + '/' + resource,
             password: PersistenceService.findAll(AuthenticationToken)[0]
         }
     },

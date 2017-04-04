@@ -209,6 +209,12 @@ var Notifications = {
 
         routes: {
             chat: new signals.Signal(),
+        },
+
+        pubsub: {
+            created: new signals.Signal(),
+            subscribed: new signals.Signal(),
+            unsubscribed: new signals.Signal(),
         }
     }
 };

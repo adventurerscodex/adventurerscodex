@@ -6,11 +6,11 @@ function Party() {
     self.ps = PersistenceService.register(Party, self);
 
     self.mapping = {
-        include: ['partyId', 'name', 'dateCreated']
+        include: ['partyId', 'characterId', 'dateCreated']
     };
 
     self.partyId = ko.observable(null);
-    self.name = ko.observable(null);
+    self.characterId = ko.observable(null);
     self.dateCreated = ko.observable((new Date()).getTime());
 
     self.clear = function() {

@@ -65,9 +65,9 @@
                 <div class="list-group" data-bind="foreach: parties">
                   <button type="button" class="list-group-item col-xs-12 text-left"
                     data-bind="click: $parent.joinPartyWasClickedWithParty">
-                      <span data-bind="text: name"></span><br/>
+                      <span data-bind="text: partyId"></span><br/>
                       <small class="text-muted">Created:
-                        <span data-bind="text: dateCreated"></span>
+                        <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
                       </small>
                     </button>
                 </div>
@@ -102,15 +102,6 @@
         <!-- /ko -->
         <!-- ko if: inAParty -->
         <div class="form-group">
-          <div class="row row-padded">
-            <label for="roomName"
-                   class="col-sm-3 control-label">Name</label>
-            <div class="col-sm-8">
-              <input type="text" disabled
-                     class="form-control"
-                     data-bind="value: roomName">
-            </div>
-          </div>
           <div class="row row-padded">
             <label for="roomName"
                    class="col-sm-3 control-label">Party Link</label>
