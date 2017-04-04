@@ -31,13 +31,6 @@ var init = function(viewModel) {
         new HealthinessStatusServiceComponent()
     ];
 
-    XMPPServiceDefaultConfig.credentialsHelper = function() {
-        return {
-            jid: 'sonicrocketman@adventurerscodex.com/76db1247-b021-4f3f-bac1-560cfd4ce42f',
-            password: 'bs152115'
-        }
-    };
-
     // Prime the services.
     XMPPService.sharedService();
     StatusService.sharedService();
