@@ -19,7 +19,7 @@ var XMPPServiceDefaultConfig = {
         return {
             jid: bareJID + '/' + resource,
             password: PersistenceService.findAll(AuthenticationToken)[0]
-        }
+        };
     },
 
     //Options: throw, log, none

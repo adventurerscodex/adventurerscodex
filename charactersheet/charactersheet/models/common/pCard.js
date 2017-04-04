@@ -116,7 +116,7 @@ function pCard() {
         var attrs = [];
         for (var i=0; i<self.entries.length; i++) {
             if (self.entries[i].name === name) {
-                attrs.push(self.entries[i].value)
+                attrs.push(self.entries[i].value);
             } else if (self.entries[i].id && self.entries[i].id === name) {
                 return self.entries[i].value;
             }
@@ -132,7 +132,7 @@ function pCard() {
         var attrs = [];
         for (var i=0; i<self.entries.length; i++) {
             if (self.entries[i].name === name) {
-                attrs.push(self.entries[i].attr)
+                attrs.push(self.entries[i].attr);
             } else if (self.entries[i].id && self.entries[i].id === name) {
                 return self.entries[i].attr;
             }
@@ -183,11 +183,11 @@ function pCard() {
     self.toJSON = function() {
         return JSON.stringify(self.entries);
     };
-};
+}
 
 
 pCard.fromJSON = function(json) {
     var card = new pCard();
     card.entries = JSON.parse(json);
-    return card
+    return card;
 };

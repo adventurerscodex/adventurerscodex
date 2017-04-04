@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-console:0*/
 
 /**
 # Publish Subscribe Node Service

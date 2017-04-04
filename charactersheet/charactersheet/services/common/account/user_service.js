@@ -27,7 +27,7 @@ function _UserService(config) {
 
     self.init = function() {
         Notifications.authentication.loggedIn.add(self.getAccount);
-    }
+    };
 
     self.getAccount = function() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];

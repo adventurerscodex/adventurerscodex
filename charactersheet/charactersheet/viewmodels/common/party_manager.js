@@ -1,4 +1,5 @@
 'use strict';
+/*eslint no-console:0*/
 
 function PartyManagerViewModel() {
     var self = this;
@@ -133,7 +134,7 @@ function PartyManagerViewModel() {
     };
 
     self.dataHasChanged = function() {
-        var token = PersistenceService.findAll(AuthenticationToken)[0]
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
         self.loggedIn(token && token.isValid());
     };
 
