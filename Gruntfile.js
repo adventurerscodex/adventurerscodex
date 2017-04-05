@@ -86,10 +86,10 @@ module.exports = function(grunt) {
         watch: {
             scripts: {
                 files: [
-                    'charactersheet/charactersheet/**/*.js',
-                    'charactersheet/charactersheet/*.js'
+                    'charactersheet/charactersheet/**/*',
+                    'charactersheet/charactersheet/*'
                 ],
-                tasks: ['copy', 'uglify'],
+                tasks: ['build'],
                 options: {
                     spawn: false,
                     interrupt: true
