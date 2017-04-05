@@ -28,7 +28,6 @@ module.exports = function(grunt) {
         },
         uglify: {
             options: {
-                compress: true,
                 sourceMap: true,
             },
             deploy: {
@@ -55,6 +54,19 @@ module.exports = function(grunt) {
                     ],
                 }
             }
+        },
+        watch: {
+            scripts: {
+                files: [
+                    'charactersheet/charactersheet/**/*.js',
+                    'charactersheet/charactersheet/*.js'
+                ],
+                tasks: ['uglify'],
+                options: {
+                    spawn: false,
+                    interrupt: true
+                },
+            },
         }
     });
 
@@ -62,4 +74,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-karma-coveralls');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 };
