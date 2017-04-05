@@ -24,3 +24,4 @@ ko.mapping.autoignore = function(obj, config) {
     }));
     return config;
 };
+

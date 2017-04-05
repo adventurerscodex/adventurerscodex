@@ -44,6 +44,7 @@
     "webcomponentsjs": "~0.5.4"
   },
   "devDependencies": {
-    "simple-mock": "~0.6.0"
+    "simple-mock": "~0.6.0",
+    "bower-knockout-mapping": "^2.6.0"
   }
 }

@@ -31,3 +31,11 @@ var init = function(viewModel) {
     // Initialize the View Model
     viewModel.init();
 };
+
+$(function(){
+    window.viewModel = new AdventurersCodexViewModel();
+    init(window.viewModel);
+    ko.applyBindings(window.viewModel, $('#html')[0]);
+    //Setup automatic saving.
+    window.onbeforeunload = viewModel.unload;
+});
