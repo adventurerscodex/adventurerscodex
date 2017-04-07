@@ -27,7 +27,16 @@ var CharacterCardFields = [
         name: 'imageUrl',
         refreshOn: Notifications.profile.changed,
         valueAccessor: function() {
-            return '';
+            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CharacterManager.activeCharacter().key());
+            if (image.imageSource() === 'link') {
+                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
+                return imageModel ? imageModel.imageUrl() : '';
+            } else if (image.imageSource() === 'email') {
+                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
+                return info ? info.gravararUrl() : '';
+            } else {
+                return null;
+            }
         }
     }
 ];
