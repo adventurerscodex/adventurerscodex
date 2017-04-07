@@ -104,6 +104,7 @@ function _pCardPublishingService(configuration) {
 
     self._updateCurrentNode = function(node) {
         self.currentPartyNode = node;
+        self.dataHasChanged();
     };
 
     self._removeCurrentNode = function(node) {
