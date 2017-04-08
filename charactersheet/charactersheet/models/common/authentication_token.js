@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * Persisted Model for an OAuth Token.
+ * For more information regarding OAuth tokens see:
+ * https://django-oauth-toolkit.readthedocs.io/en/latest/rest-framework/getting_started.html#step-4-get-your-token-and-use-your-api
+ */
 function AuthenticationToken() {
     var self = this;
     self.ps = PersistenceService.register(AuthenticationToken, self);
@@ -48,7 +53,7 @@ function AuthenticationToken() {
     /**
      * Map the given fragment object's properties onto a self.
      */
-    self.map = function(fragments) {
+    self.mapTokenKeys = function(fragments) {
         self.accessToken(fragments['access_token']);
         if (fragments['expires_in']) {
             self.expiresIn(parseInt(fragments['expires_in']));

@@ -55,7 +55,7 @@ function _AuthenticationService(config) {
                 token = new AuthenticationToken();
             }
 
-            token.map(fragments);
+            token.mapTokenKeys(fragments);
             token.startTime((new Date()).getTime());
             token.save();
         }

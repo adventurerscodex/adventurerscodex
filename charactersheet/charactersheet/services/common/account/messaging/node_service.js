@@ -236,7 +236,6 @@ function _NodeService(config) {
 
             if (route && dispatchRouteExists) {
                 var content = self._getMessageContent(json);
-                console.log('NEW CONTENT', content);
                 Notifications.xmpp.routes[route].dispatch(content);
             }
         });

@@ -126,7 +126,7 @@ function pCard() {
 
     /**
      * Returns the attributes of any fields that have the given name.
-     * If name is a entry ID then return just the 1 entry's attributes.
+     * If name is a entry ID then return just a list containing the 1 entry.
      */
     self.getAttributes = function(name) {
         var attrs = [];
@@ -134,7 +134,7 @@ function pCard() {
             if (self.entries[i].name === name) {
                 attrs.push(self.entries[i].attr);
             } else if (self.entries[i].id && self.entries[i].id === name) {
-                return self.entries[i].attr;
+                return [self.entries[i].attr];
             }
         }
         return attrs;
