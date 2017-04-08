@@ -94,6 +94,9 @@ function StatsViewModel() {
         //Subscriptions
         self.health().maxHitpoints.subscribe(self.dataHasChanged);
         self.health().damage.subscribe(self.dataHasChanged);
+        self.hitDiceList().forEach(function(hitDice, i, _) {
+            hitDice.hitDiceUsed.subscribe(self.dataHasChanged);
+        });
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().inspiration.subscribe(self.dataHasChanged);
         self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);

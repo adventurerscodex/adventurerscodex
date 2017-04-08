@@ -24,7 +24,8 @@ var init = function(viewModel) {
     // Set default status service components.
     StatusService.configuration.components = [
         new TotalWeightStatusServiceComponent(),
-        new InspirationStatusServiceComponent()
+        new InspirationStatusServiceComponent(),
+        new HealthinessStatusServiceComponent()
     ];
     StatusService.sharedService(); // Prime the service.
 
