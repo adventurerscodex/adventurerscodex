@@ -26,7 +26,8 @@ var init = function(viewModel) {
         new TotalWeightStatusServiceComponent(),
         new InspirationStatusServiceComponent(),
         new HealthinessStatusServiceComponent(),
-        new TrackedStatusServiceComponent()
+        new TrackedStatusServiceComponent(),
+        new MagicalStatusServiceComponent()
     ];
     StatusService.sharedService(); // Prime the service.
 

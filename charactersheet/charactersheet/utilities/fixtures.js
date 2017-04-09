@@ -347,11 +347,11 @@ var Fixtures = {
             'status': 'magically prepared',
             'color': 'success'
         },{
-            'value': 0.50,
+            'value': 0.60,
             'status': 'magically strained',
             'color': 'warning'
         },{
-            'value': 0.10,
+            'value': 0.25,
             'status': 'magically exhausted',
             'color': 'warning'
         },{
