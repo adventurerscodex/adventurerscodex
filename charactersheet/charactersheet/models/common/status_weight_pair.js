@@ -46,8 +46,8 @@ StatusWeightPair.determinePhraseAndColor = function(statusType, totalStatusWeigh
         phraseMap = Fixtures.statusPhraseWordMap.health;
     } else if (statusType === getMagicTypeEnum()) {
         phraseMap = Fixtures.statusPhraseWordMap.magic;
-    } else if (statusType === getFeatureTypeEnum()) {
-        phraseMap = Fixtures.statusPhraseWordMap.features;
+    } else if (statusType === getTrackedTypeEnum()) {
+        phraseMap = Fixtures.statusPhraseWordMap.tracked;
     }
 
     for (var i =0; i < phraseMap.length; i++) {
@@ -70,6 +70,6 @@ function getHealthTypeEnum() {
 function getMagicTypeEnum() {
     return 'magic';
 }
-function getFeatureTypeEnum() {
-    return 'feature';
+function getTrackedTypeEnum() {
+    return 'tracked';
 }

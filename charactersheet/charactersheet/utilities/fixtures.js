@@ -359,14 +359,14 @@ var Fixtures = {
             'status': 'magically depleted',
             'color': 'danger'
         }],
-        features: [{
+        tracked: [{
             'value': 1.0,
             'status': 'bursting with abilities',
             'color': 'success'
         },{
             'value': 0.75,
             'status': 'good on abilities',
-            'color': 'warning'
+            'color': 'success'
         },{
             'value': 0.50,
             'status': 'low on abilities',
