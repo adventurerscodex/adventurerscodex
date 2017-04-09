@@ -57,7 +57,9 @@ function TrackedStatusServiceComponent() {
         // Each tracked ability is weighted equally.
         var featureWeight = 1 / trackedAbilities.length;
         trackedAbilities.forEach(function(trackedAbility, i, _) {
-            var trackedValue = (trackedAbility.maxUses() - trackedAbility.used()) / trackedAbility.maxUses();
+            var maxUses = trackedAbility.maxUses() ? trackedAbility.maxUses() : 0;
+            var used = trackedAbility.used() ? trackedAbility.used() : 0;
+            var trackedValue = maxUses ? (maxUses - used) / maxUses : 0;
             valueWeightPairs.push(new StatusWeightPair(trackedValue, featureWeight));
         });
 
