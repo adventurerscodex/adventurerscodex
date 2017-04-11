@@ -184,6 +184,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    tracked: {
+        changed: new signals.Signal()
+    },
+
     weapon: {
         changed: new signals.Signal()
     },

@@ -21,6 +21,11 @@ function TrackerViewModel() {
         Notifications.global.save.add(self.save);
         self.loadTrackedItems();
 
+        self.trackables().forEach(function(tracked, idx, _) {
+            tracked.tracked().maxUses.subscribe(self.dataHasChanged);
+            tracked.tracked().used.subscribe(self.dataHasChanged);
+        });
+
         //Notifications
         Notifications.events.shortRest.add(self.resetShortRestFeatures);
         Notifications.events.longRest.add(self.resetLongRestFeatures);
@@ -133,8 +138,14 @@ function TrackerViewModel() {
                     item.tracked().importValues(tracked.exportValues());
                 }
             });
+            Notifications.tracked.changed.dispatch();
         }
         self.modalOpen(false);
+    };
+
+    self.dataHasChanged = function() {
+        self.save();
+        Notifications.tracked.changed.dispatch();
     };
 
     self.editModalOpen = function() {
