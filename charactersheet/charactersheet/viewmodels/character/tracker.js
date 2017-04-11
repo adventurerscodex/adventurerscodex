@@ -49,6 +49,10 @@ function TrackerViewModel() {
             return e.isTracked();
         });
         self.trackables(tracked);
+        self.trackables().forEach(function(tracked, idx, _) {
+            tracked.tracked().maxUses.subscribe(self.dataHasChanged);
+            tracked.tracked().used.subscribe(self.dataHasChanged);
+        });
     };
 
     self.unload = function() {
@@ -138,8 +142,8 @@ function TrackerViewModel() {
                     item.tracked().importValues(tracked.exportValues());
                 }
             });
-            Notifications.tracked.changed.dispatch();
         }
+        self.dataHasChanged();
         self.modalOpen(false);
     };
 

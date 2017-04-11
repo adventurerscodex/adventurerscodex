@@ -130,6 +130,7 @@ function SpellSlotsViewModel() {
         }
 
         self.save();
+        self.dataHasChanged();
         self.openModal(false);
     };
 
@@ -156,6 +157,11 @@ function SpellSlotsViewModel() {
         self.currentEditItem(new Slot());
         self.currentEditItem().importValues(slot.exportValues());
         self.openModal(true);
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
+        self.dataHasChanged();
     };
 
     self.addSlot = function() {
@@ -166,12 +172,22 @@ function SpellSlotsViewModel() {
 
         self.blankSlot(new Slot());
         self.blankSlot().level(self.slots().length + 1);
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
+        self.dataHasChanged();
     };
 
     self.removeSlot = function(slot) {
         self.slots.remove(slot);
         slot.delete();
         self.blankSlot().level(self.slots().length + 1);
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
+        self.dataHasChanged();
     };
 
     self.resetSlot = function(slot) {

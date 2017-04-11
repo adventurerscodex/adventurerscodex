@@ -2,7 +2,8 @@
 
 /**
  * A Status Service Component that calculates the player's Magical potential.
- * Each spell slot is weighed differentlu
+ * Each spell slot is weighed differently. Currently, the formula is linear.
+ * `Y=1.5x + 1` where x is the spell slot level.
  */
 
 function MagicalStatusServiceComponent() {
@@ -16,7 +17,7 @@ function MagicalStatusServiceComponent() {
     };
 
     /**
-     * This method determines wether to update or remove the Feature status
+     * This method determines wether to update or remove the Magical status
      * component from the player's status line.
      */
     self.dataHasChanged = function() {
@@ -71,6 +72,9 @@ function MagicalStatusServiceComponent() {
         }
     };
 
+    /**
+     * Creates the valueWeightPair array in preperation of further processing.
+     */
     self.prepareValueWeightPairs = function(spellSlots) {
         var valueWeightPairs = [];
 
