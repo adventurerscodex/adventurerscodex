@@ -349,7 +349,7 @@ Extend connection object to have plugin name 'pubsub'.
 
         var iq = $iq({from:this.jid, to:this.service, type:'set', id:iqid})
           .c('pubsub', { xmlns:Strophe.NS.PUBSUB })
-          .c('subscribe', {'node':node, 'jid':jid});
+          .c('subscribe', { 'node':node, 'jid':jid });
         if(options) {
             iq.up().c('options').form(Strophe.NS.PUBSUB_SUBSCRIBE_OPTIONS, options);
         }

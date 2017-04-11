@@ -35,6 +35,14 @@ var Notifications = {
         unload: new signals.Signal()
     },
 
+    authentication: {
+        loggedIn: new signals.Signal()
+    },
+
+    user: {
+        exists: new signals.Signal()
+    },
+
     userNotification: {
         /**
          * Notifies the user of changes.
@@ -205,6 +213,17 @@ var Notifications = {
 
     xmpp: {
         connected: new signals.Signal(),
-        disconnected: new signals.Signal()
+        disconnected: new signals.Signal(),
+
+        routes: {
+            chat: new signals.Signal(),
+            pcard: new signals.Signal()
+        },
+
+        pubsub: {
+            created: new signals.Signal(),
+            subscribed: new signals.Signal(),
+            unsubscribed: new signals.Signal()
+        }
     }
 };
