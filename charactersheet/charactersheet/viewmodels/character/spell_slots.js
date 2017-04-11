@@ -207,5 +207,5 @@ function SpellSlotsViewModel() {
     self.dataHasChanged = function() {
         self.save();
         Notifications.spellSlots.changed.dispatch();
-    }
+    };
 }
