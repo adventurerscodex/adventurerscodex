@@ -28,6 +28,7 @@ function CharacterRootViewModel() {
     self.statusLineService = StatusService.sharedService();
     self.proficiencyService = ProficiencyService.sharedService();
     self.armorClassService = ArmorClassService.sharedService();
+    self.characterCardPublishingService = CharacterCardPublishingService.sharedService();
 
     //Tooltips
     self.profileTooltip = ko.observable('Profile');
@@ -141,6 +142,7 @@ function CharacterRootViewModel() {
         self.statusLineService.init();
         self.proficiencyService.init();
         self.armorClassService.init();
+        self.characterCardPublishingService.init();
 
         //Subscriptions
         Notifications.profile.changed.add(function() {

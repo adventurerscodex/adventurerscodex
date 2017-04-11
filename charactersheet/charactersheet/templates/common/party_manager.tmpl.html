@@ -1,0 +1,139 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content container-fluid">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title" id="importModalLabel">
+        Create or Join a Party
+      </h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-horizontal" data-bind="">
+        <!-- ko ifnot: inAParty -->
+        <div class="form-group">
+          <div class="container-fluid">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="h4">
+                  Which would you like to do?
+                </div>
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                  data-bind="css: { active: createOrJoin() == 'create'}">
+                    <input type="radio" class="hide-block"
+                    name="createParty" value="create" data-bind="checked: createOrJoin"/>
+                    Create a Party
+                  </label>
+                  <label class="btn btn-default"
+                  data-bind="css: { active: createOrJoin() == 'join'}">
+                    <input type="radio" class="hide-block"
+                    name="joinParty" value="join" data-bind="checked: createOrJoin"/>
+                    Join a Previous Party
+                  </label>
+                  <label class="btn btn-default"
+                  data-bind="css: { active: createOrJoin() == 'add'}">
+                    <input type="radio" class="hide-block"
+                    name="joinParty" value="add" data-bind="checked: createOrJoin"/>
+                    Add a New Party
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="text-center container-fluid">
+              <!-- ko if: createOrJoin() === 'create' -->
+              <p class="text-left col-padded">
+                This will create a new party for you and your friends. Joining a
+                party means that you will be able to interact with others in your
+                party and that your DM will be able to see your character's stats.
+              </p>
+              <button data-bind="click: createPartyWasClicked" class="btn btn-primary">
+                Create a new Party</button>
+              <!-- /ko -->
+              <!-- ko if: createOrJoin() === 'join' -->
+                <!-- ko if: parties().length === 0  -->
+                <p class="text-left">
+                  It looks like you don't have any parties saved. Create one from
+                  scratch or join an existing one to save it.
+                </p>
+                <!-- /ko -->
+                <!-- ko if: parties().length > 0  -->
+                <p class="text-left">
+                  Click or tap a party to join it.
+                </p>
+                <div class="list-group" data-bind="foreach: parties">
+                  <button type="button" class="list-group-item col-xs-12 text-left"
+                    data-bind="click: $parent.joinPartyWasClickedWithParty">
+                      <span data-bind="text: partyId"></span><br/>
+                      <small class="text-muted">Created:
+                        <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
+                      </small>
+                    </button>
+                </div>
+                <!-- /ko -->
+              <!-- /ko -->
+              <!-- ko if: createOrJoin() === 'add' -->
+              <p class="text-left">
+                If one of your friends has already made a party, you can join it by
+                using the party link or by entering the party ID here.
+              </p>
+              <div class="row">
+                <label for="roomName"
+                       class="col-sm-3 control-label">Party ID</label>
+                <div class="col-sm-8">
+                  <input type="text"
+                         class="form-control"
+                         data-bind="value: roomId">
+                </div>
+              </div><br />
+              <div class="row">
+                <div class="col-sm-12 col-padded">
+                  <button data-bind="click: joinPartyWasClicked" class="btn btn-primary">
+                    <span class="hidden-xs">Add and join a new party</span>
+                    <span class="visible-xs">Add and Join</span>
+                  </button>
+                </div>
+              </div>
+              <!-- /ko -->
+            </div>
+          </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: inAParty -->
+        <div class="form-group">
+          <div class="row row-padded">
+            <label for="roomName"
+                   class="col-sm-3 control-label">Party Link</label>
+            <div class="col-sm-8">
+              <input type="text" disabled
+                     class="form-control"
+                     data-bind="value: roomLink">
+            </div>
+          </div>
+          <div class="row row-padded">
+            <label for="roomName"
+                   class="col-sm-3 control-label">Party ID</label>
+            <div class="col-sm-8">
+              <input type="text" disabled
+                     class="form-control"
+                     data-bind="value: roomId">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-padded text-center">
+              <button class="btn btn-danger" data-bind="click: leavePartyWasClicked">Leave</button>
+            </div>
+          </div>
+        </div>
+        <!-- /ko -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary pull-right"
+        data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">Done</span>
+      </button>
+    </div>
+  </div>
+</div>

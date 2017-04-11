@@ -15,6 +15,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bower_components/toastr/toastr.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/js-signals/dist/signals.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/simple-mock/index.js', watched: false},
+			{pattern: 'charactersheet/bower_components/lz-string/libs/lz-string.min.js', watched: false},
 			{pattern: 'charactersheet/bower_components/blueimp-md5/js/md5.min.js', watched: false},
 			{pattern: 'charactersheet/bin/socket.io-1.2.0.js', watched: false},
 			{pattern: 'charactersheet/bin/knockout-file-bind.js', watched: false},
@@ -24,6 +25,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bin/knockout-mapping-autoignore.js', watched: false},
 			//Stuff to test.
 			'charactersheet/charactersheet/**/*root.js',
+			'charactersheet/charactersheet/**/notifications.js',
 			'charactersheet/charactersheet/**/*manager.js',
 			'charactersheet/charactersheet/**/*.js',
       		'test/**/*.js',

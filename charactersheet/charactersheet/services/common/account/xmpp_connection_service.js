@@ -9,14 +9,17 @@ var XMPPServiceDefaultConfig = {
     url: 'http://chat.adventurerscodex.com:5280/http-bind/',
 
     connection: {
-        /* A list of all valid options are located here:
-         * http://strophe.im/strophejs/doc/1.2.10/files/strophe-js.html#Strophe.Connection.connect
-         */
-        jid: null,
-        pass: null,
-
         // Specify a custom callback here.
         callback: null
+    },
+
+    credentialsHelper: function() {
+        var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
+        var resource = CharacterManager.activeCharacter().key();
+        return {
+            jid: bareJID + '/' + resource,
+            password: PersistenceService.findAll(AuthenticationToken)[0]
+        };
     },
 
     //Options: throw, log, none
@@ -62,25 +65,18 @@ function _XMPPService(config) {
         Strophe.addNamespace('JSON', 'urn:xmpp:json:0');
         Strophe.addNamespace('ACTIVE', 'http://jabber.org/protocol/chatstates');
 
-        Strophe.addNamespace('PUBSUB', 'http://jabber.org/protocol/pubsub');
-        Strophe.addNamespace('PUBSUB_EVENT', Strophe.NS.PUBSUB + '#event');
-        Strophe.addNamespace('PUBSUB_OWNER', Strophe.NS.PUBSUB + '#owner');
-        Strophe.addNamespace('PUBSUB_NODE_CONFIG', Strophe.NS.PUBSUB + '#node_config');
         Strophe.addNamespace('ATOM', 'http://www.w3.org/2005/Atom');
         Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
         Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
 
+        // Set up the connection.
         var connection = new Strophe.Connection(self.configuration.url);
-
         var callback = self.configuration.connection.callback || self._connectionHandler;
-        connection.connect(
-            self.configuration.connection.jid,
-            self.configuration.connection.pass,
-            callback
-        );
-
         self.connection = connection;
-    },
+
+        // Finish setup after user has been confirmed.
+        Notifications.user.exists.add(self._handleLogin);
+    };
 
     /* Private Methods */
 
@@ -90,6 +86,12 @@ function _XMPPService(config) {
 
     self._shouldThrow = function() {
         return self.configuration.fallbackAction == 'throw';
+    };
+
+    self._handleLogin = function() {
+        var credentials = self.configuration.credentialsHelper();
+        var callback = self.configuration.connection.callback || self._connectionHandler;
+        self.connection.connect(credentials.jid, credentials.password, callback);
     };
 
     self._connectionHandler = function(status, error) {
@@ -107,6 +109,10 @@ function _XMPPService(config) {
                 console.log('Connected.');
             }
 
+            // Send initial presence.
+            // https://xmpp.org/rfcs/rfc3921.html#presence
+            self.connection.send($pres().tree());
+
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
             if (self._shouldLog() && 'console' in window) {
@@ -114,7 +120,6 @@ function _XMPPService(config) {
             }
             Notifications.xmpp.disconnected.dispatch();
         }
+        // Add more logging...
     };
-
-    // TODO: Add PEP Handlers
 }
