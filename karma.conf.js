@@ -25,7 +25,7 @@ module.exports = function(config) {
 			{pattern: 'charactersheet/bin/knockout-mapping-autoignore.js', watched: false},
 			//Stuff to test.
 			'charactersheet/charactersheet/**/*root.js',
-			'charactersheet/charactersheet/**/Notifications.js',
+			'charactersheet/charactersheet/**/notifications.js',
 			'charactersheet/charactersheet/**/*manager.js',
 			'charactersheet/charactersheet/**/*.js',
       		'test/**/*.js',
