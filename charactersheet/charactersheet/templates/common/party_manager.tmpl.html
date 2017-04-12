@@ -106,9 +106,12 @@
             <label for="roomName"
                    class="col-sm-3 control-label">Party Link</label>
             <div class="col-sm-8">
-              <input type="text" disabled
+              <input type="text" disabled id="roomLink"
                      class="form-control"
                      data-bind="value: roomLink">
+              <button class="btn" data-clipboard-target="#roomLink">
+                <img src="assets/clippy.svg" alt="Copy to clipboard">
+              </button>
             </div>
           </div>
           <div class="row row-padded">
