@@ -138,9 +138,13 @@ function _NodeService(config) {
 
     /**
      * Returns a unique id for a new node.
+     * Uses nouns and adjectives array from the `DataRepository`.
      */
     self.getUniqueNodeId = function() {
-        return uuid.v4();
+        var adjective = DataRepository["adjectives"][Math.floor(Math.random() * DataRepository["adjectives"].length)];
+        var noun = DataRepository["nouns"][Math.floor(Math.random() * DataRepository["nouns"].length)];
+        var code = uuid.v4().substr(0,4);
+        return adjective + "-" + noun + "-" + code;
     };
 
     /**
