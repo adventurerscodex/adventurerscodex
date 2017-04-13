@@ -24,7 +24,13 @@ var init = function(viewModel) {
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
 
+    // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
+
+    clipboard.on('success', function(e) {
+        Notifications.userNotification.infoNotification.dispatch('Room link copied to clipboard.', '');
+        e.clearSelection();
+    });
 
     // Set default status service components.
     StatusService.configuration.components = [
