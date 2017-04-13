@@ -141,10 +141,10 @@ function _NodeService(config) {
      * Uses nouns and adjectives array from the `DataRepository`.
      */
     self.getUniqueNodeId = function() {
-        var adjective = DataRepository["adjectives"][Math.floor(Math.random() * DataRepository["adjectives"].length)];
-        var noun = DataRepository["nouns"][Math.floor(Math.random() * DataRepository["nouns"].length)];
+        var adjective = DataRepository['adjectives'][Math.floor(Math.random() * DataRepository['adjectives'].length)];
+        var noun = DataRepository['nouns'][Math.floor(Math.random() * DataRepository['nouns'].length)];
         var code = uuid.v4().substr(0,4);
-        return adjective + "-" + noun + "-" + code;
+        return adjective + '-' + noun + '-' + code;
     };
 
     /**
