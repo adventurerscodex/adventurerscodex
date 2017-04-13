@@ -24,6 +24,8 @@ var init = function(viewModel) {
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
 
+    var clipboard = new Clipboard('.btn');
+
     // Set default status service components.
     StatusService.configuration.components = [
         new TotalWeightStatusServiceComponent(),
