@@ -136,9 +136,25 @@ function PartyManagerViewModel() {
     self.dataHasChanged = function() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         self.loggedIn(token && token.isValid());
+
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.pubsub.getSubscriptions(self._subscribeToExistingParty, 3000);
     };
 
     /* Private Methods */
+
+    self._subscribeToExistingParty = function(response) {
+        var subscriptions = $(response).find('subscriptions').children().toArray();
+        subscriptions.forEach(function(subscriptionNode, idx, _) {
+            if ($(subscriptionNode).attr('subscription') === 'subscribed') {
+                self.roomId($(subscriptionNode).attr('node'));
+                self.inAParty(true);
+                Notifications.userNotification.successNotification.dispatch(
+                    'You have re-joined ' + self.roomId()
+                );
+            }
+        });
+    };
 
     self._getParties = function() {
         var key = CharacterManager.activeCharacter().key();
@@ -153,7 +169,7 @@ function PartyManagerViewModel() {
         self.parties(self._getParties());
 
         Notifications.userNotification.successNotification.dispatch(
-            'You have successfully joined a party.'
+            'You have successfully joined ' + self.roomId()
         );
     };
 

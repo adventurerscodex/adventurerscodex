@@ -188,7 +188,7 @@ function _NodeService(config) {
         // Fetch all outstanding subscriptions.
         // https://xmpp.org/extensions/xep-0060.html#entity-subscriptions
         var xmpp = XMPPService.sharedService();
-        xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
+        // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
         xmpp.connection.pubsub.getSubscriptions(self._handleSubscriptions, 3000);
     };
 
