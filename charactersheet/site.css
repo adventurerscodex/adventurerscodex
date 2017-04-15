@@ -43,6 +43,10 @@ small {
   height:34px;
 }
 
+.progress.thin {
+  height:6px;
+}
+
 .row-padded {
   padding-top: 5px;
   padding-bottom: 5px;
