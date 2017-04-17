@@ -99,7 +99,7 @@ function PartyViewModel() {
             passiveWisdom: 15,
             gold: '~345 GP',
             moreInfoOpen: ko.observable(false)
-        },
+        }
 
     ];
 
