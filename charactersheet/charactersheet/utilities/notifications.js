@@ -176,6 +176,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    spellSlots: {
+        changed: new signals.Signal()
+    },
+
     spellStats: {
         changed: new signals.Signal()
     },
