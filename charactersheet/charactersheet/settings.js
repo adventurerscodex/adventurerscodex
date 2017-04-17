@@ -91,6 +91,12 @@ var Settings = {
         }, {
             key: 'traits',
             url: 'https://adventurerscodex.com/data/SRD/traits.json'
+        }, {
+            key: 'nouns',
+            url: 'https://adventurerscodex.com/data/misc/fantasy_nouns.json'
+        }, {
+            key: 'adjectives',
+            url: 'https://adventurerscodex.com/data/misc/fantasy_adjectives.json'
         }
     ]
 };

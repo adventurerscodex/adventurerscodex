@@ -11,9 +11,9 @@ var PlayerTypes = {
     },
     dmPlayerType: {
         key: 'dm',
-        visibleTabs: ['encounter', 'overview', 'dmscreen'],
+        visibleTabs: ['encounter', 'overview', 'dmscreen', 'party'],
         tabViewModels: [],
         rootViewModel: DMRootViewModel,
-        defaultTab: 'overview'
+        defaultTab: 'party'
     }
 };
