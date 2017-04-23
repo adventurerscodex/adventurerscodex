@@ -68,6 +68,7 @@ function TrackedStatusServiceComponent() {
 
         status.name(phrase.status);
         status.type(phrase.color);
+        status.value(weightedTotal);
 
         status.save();
         Notifications.status.changed.dispatch();

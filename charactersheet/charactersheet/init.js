@@ -33,6 +33,12 @@ var init = function(viewModel) {
 
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
+XMPPServiceDefaultConfig.credentialsHelper = function() {
+     return {
+         jid: 'sonicrocketman@adventurerscodex.com/76db1247-b021-4f3f-bac1-560cfd4ce42f',
+         password: 'bs152115'
+     };
+ };
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');

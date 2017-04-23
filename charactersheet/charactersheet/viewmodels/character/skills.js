@@ -179,5 +179,6 @@ function SkillsViewModel() {
         self.skills().forEach(function(e, i, _) {
             e.updateValues();
         });
+        Notifications.skills.changed.dispatch();
     };
 }
