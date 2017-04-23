@@ -55,15 +55,97 @@ This entry contains the profile image for a given character or campaign.
 
 `value` should contain a public URL to the player's chosen image.
 
+__race__
+
+This entry contains the players character's race.
+
+`value` should contain the players character's race.
+
+__class__
+
+This entry contains the players character's class.
+
+`value` should contain the players character's class.
+
+__armorClass__
+
+This entry contains the players character's armor class.
+
+`value` should contain the players character's armor class.
+
+__gold__
+
+This entry contains the players character's estimated gold value.
+
+`value` should contain the players character's gold.
+
+__maxHitPoints__
+
+This entry contains the players character's maximum hit points.
+
+`value` should contain the players character's hit points.
+
+__damage__
+
+This entry contains the players character's damage.
+
+`value` should contain the players character's damage.
+
+__tempHitPoints__
+
+This entry contains the players character's temporary hit points.
+
+`value` should contain the players character's temporary hit points.
+
+__hitDiceType__
+
+This entry contains the players character's hit dice type.
+
+`value` should contain the players character's hit dice type.
+
+__hitDice__
+
+This entry contains the players character's available hit dice.
+
+`value` should contain the players character's available hit dice over their total hit dice.
+
+__passivePerception__
+
+This entry contains the players character's passive perception, which is fetched from their perception skill.
+
+`value` should contain the players character's passive perception.
+
+__passiveIntelligence__
+
+This entry contains the players character's passive intelligence, which is fetched from their ability scores. 10 + intelligence modifier.
+
+`value` should contain the players character's passive intelligence.
+
+__spellSaveDC__
+
+This entry contains the players character's spell save DC.
+
+`value` should contain the players character's spell save DC.
+
+__healthinessStatus__
+
+This entry contains the players character's healthiness status model.
+
+`value` should contain the players character's deserialized healthiness status model.
+
+__magicStatus__
+
+This entry contains the players character's magic status model.
+
+`value` should contain the players character's deserialized magic status model.
+
+__trackedStatus__
+
+This entry contains the players character's tracked status model.
+
+`value` should contain the players character's deserialized tracked status model.
 
 ### Character Specific Fields
-
-__statusDescription__
-
-A status description is a human readable sentence that described the character's
-current state of being.
-
-`value` should be the sentence describing the character.
 
 __weapon__
 

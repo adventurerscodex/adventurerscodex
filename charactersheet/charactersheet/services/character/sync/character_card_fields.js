@@ -50,7 +50,7 @@ var CharacterCardFields = [
         refreshOn: Notifications.profile.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
-            return profile ? profile.class() : '';
+            return profile ? profile.typeClass() : '';
         }
     }, {
         name: 'level',
@@ -105,7 +105,7 @@ var CharacterCardFields = [
         name: 'hitDice',
         refreshOn: Notifications.stats.changed,
         valueAccessor: function() {
-            var hitDice = PersistenceService.findFirstBy(HitDice, 'characterId', CharacterManager.activeCharacter().key());
+            var hitDice = PersistenceService.findBy(HitDice, 'characterId', CharacterManager.activeCharacter().key());
             var totalHitDice = 0;
             hitDice.forEach(function(die, idx, _) {
                 if (!die.hitDiceUsed()) {
@@ -119,20 +119,20 @@ var CharacterCardFields = [
         refreshOn: Notifications.skills.changed,
         valueAccessor: function() {
             var predicates = [
-                new KeyValuePredicate('characterId', characterId),
+                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
                 new KeyValuePredicate('name', 'Perception')
             ];
-        var skill = PersistenceService.findByPredicates(Skill, predicates)[0];
+            var skill = PersistenceService.findByPredicates(Skill, predicates)[0];
 
-        return skill ? skill.passiveBonus() : 0;
+            return skill ? skill.passiveBonus() : 0;
         }
     }, {
         name: 'passiveIntelligence',
         refreshOn: Notifications.abilityScores.changed,
         valueAccessor: function() {
-        var abilityScores = PersistenceService.findFirstBy(AbilityScores, predicates);
+            var abilityScores = PersistenceService.findFirstBy(AbilityScores, CharacterManager.activeCharacter().key());
 
-        return abilityScores ? 10 + abilityScores.intModifier() : 0;
+            return abilityScores ? 10 + abilityScores.intModifier() : 0;
         }
     }, {
         name: 'spellSaveDC',
@@ -141,5 +141,38 @@ var CharacterCardFields = [
             var spellStats = PersistenceService.findFirstBy(SpellStats, 'characterId', CharacterManager.activeCharacter().key());
             return spellStats ? spellStats.spellSaveDc() : 0;
         }
-    },
+    }, {
+        name: 'healthinessStatus',
+        refreshOn: Notifications.status.changed,
+        valueAccessor: function() {
+            var predicates = [
+                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('identifier', 'Status.Healthiness')
+            ];
+            var healthinessStatus = PersistenceService.findByPredicates(Status, predicates)[0]
+            return healthinessStatus ? healthinessStatus.exportValues() : null;
+        }
+    }, {
+        name: 'magicStatus',
+        refreshOn: Notifications.status.changed,
+        valueAccessor: function() {
+            var predicates = [
+                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('identifier', 'Status.Magical')
+            ];
+            var magicStatus = PersistenceService.findByPredicates(Status, predicates)[0]
+            return magicStatus ? magicStatus.exportValues() : null;
+        }
+    }, {
+        name: 'trackedStatus',
+        refreshOn: Notifications.status.changed,
+        valueAccessor: function() {
+            var predicates = [
+                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('identifier', 'Status.Tracked')
+            ];
+            var trackedStatus = PersistenceService.findByPredicates(Status, predicates)[0];
+            return trackedStatus ? trackedStatus.exportValues() : null;
+        }
+    }
 ];

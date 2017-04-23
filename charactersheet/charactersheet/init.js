@@ -39,6 +39,12 @@ XMPPServiceDefaultConfig.credentialsHelper = function() {
          password: 'bs152115'
      };
  };
+//  XMPPServiceDefaultConfig.credentialsHelper = function() {
+//      return {
+//          jid: 'tester@adventurerscodex.com/1234',
+//          password: 'etheekne'
+//      };
+//  };
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
