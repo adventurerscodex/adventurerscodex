@@ -144,9 +144,7 @@ function PartyManagerViewModel() {
     /* Private Methods */
 
     self._subscribeToExistingParty = function(response) {
-        var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
-        var resource = CharacterManager.activeCharacter().key();
-        var fullJid = bareJID + '/' + resource;
+        var fullJid = XMPPService.sharedService().connection.jid;
         var subscriptions = $(response).find('subscriptions').children().toArray();
         subscriptions.forEach(function(subscriptionNode, idx, _) {
             if ($(subscriptionNode).attr('subscription') === 'subscribed' &&
