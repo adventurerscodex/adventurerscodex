@@ -10,6 +10,13 @@ var CharacterCardFields = [
             return profile ? profile.playerName() : '';
         }
     }, {
+        name: 'playerSummary',
+        refreshOn: Notifications.profile.changed,
+        valueAccessor: function() {
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            return profile ? profile.summary() : '';
+        }
+    }, {
         name: 'playerType',
         refreshOn: Notifications.characters.changed,
         valueAccessor: function() {
@@ -46,7 +53,7 @@ var CharacterCardFields = [
             return profile ? profile.race() : '';
         }
     }, {
-        name: 'class',
+        name: 'playerClass',
         refreshOn: Notifications.profile.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
@@ -149,7 +156,7 @@ var CharacterCardFields = [
                 new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
                 new KeyValuePredicate('identifier', 'Status.Healthiness')
             ];
-            var healthinessStatus = PersistenceService.findByPredicates(Status, predicates)[0]
+            var healthinessStatus = PersistenceService.findByPredicates(Status, predicates)[0];
             return healthinessStatus ? healthinessStatus.exportValues() : null;
         }
     }, {
@@ -160,7 +167,7 @@ var CharacterCardFields = [
                 new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
                 new KeyValuePredicate('identifier', 'Status.Magical')
             ];
-            var magicStatus = PersistenceService.findByPredicates(Status, predicates)[0]
+            var magicStatus = PersistenceService.findByPredicates(Status, predicates)[0];
             return magicStatus ? magicStatus.exportValues() : null;
         }
     }, {

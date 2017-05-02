@@ -18,8 +18,3 @@ function PartyViewModel() {
         self.players().push(new PlayerCard(pCard));
     };
 }
-
-function PlayerCard(pCard) {
-
-
-}

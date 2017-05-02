@@ -1,0 +1,129 @@
+'use strict;'
+/**
+ * Fields from a pCard will be extracted to create the UI representation of a player.
+ * @param pCard  contains all the fields that make up a player
+ */
+function PlayerCard(pCard) {
+
+    var self = this;
+    /* Fields that will be used by the UI.
+       Add more fields to the array as needed. */
+    var playerCardFields = [
+        {'key': 'playerName', 'converter': null},
+        {'playerType': null},
+        {'playerSummary': null},
+        {'name': null},
+        {'imageUrl': null},
+        {'race': null},
+        {'playerClass': null},
+        {'level': null},
+        {'armorClass': null},
+        {'gold': null},
+        {'maxHitPoints': null},
+        {'damage': null},
+        {'tempHitPoints': null},
+        {'hitDiceType': null},
+        {'hitDice': null},
+        {'passivePerception': null},
+        {'passiveIntelligence': null},
+        {'spellSaveDC': null},
+        {'healthinessStatus': function(value) { return self._importStatus(value); }},
+        {'magicStatus': function(value) { return self._importStatus(value); }},
+        {'trackedStatus': function(value) { return self._importStatus(value); }}
+    ];
+
+    /* Player Card Fields */
+
+    // Profile
+    self.playerName = ko.observable('');
+    self.playerType = ko.observable('');
+	self.name = ko.observable('');
+	self.imageUrl = ko.observable('');
+	self.race = ko.observable('');
+	self.playerClass = ko.observable('');
+	self.gold = ko.observable('');
+
+    // Health
+	self.maxHitPoints = ko.observable(0);
+	self.damage = ko.observable(0);
+	self.tempHitPoints = ko.observable(0);
+	self.hitDiceType = ko.observable('');
+	self.hitDice = ko.observable('');
+
+    // Stats
+	self.passivePerception = ko.observable(0);
+	self.passiveIntelligence = ko.observable(0);
+	self.spellSaveDC = ko.observable(0);
+    self.level = ko.observable(0);
+	self.armorClass = ko.observable(0);
+
+    // Status
+	self.healthinessStatus = ko.observable();
+	self.magicStatus = ko.observable();
+	self.trackedStatus = ko.observable();
+
+    // Health Progress Bar Methods
+    self.totalHitpoints = ko.pureComputed(function() {
+        return parseInt(self.maxHitPoints()) + parseInt(self.tempHitPoints());
+    });
+
+    self.tempHitpointsRemaining = ko.pureComputed(function() {
+        return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
+    });
+
+    self.regularHitpointsRemaining = ko.pureComputed(function() {
+        if (self.tempHitpointsRemaining() > 0) {
+            return parseInt(self.maxHitpoints());
+        }
+        return (parseInt(self.maxHitpoints()) - ((self.damage() ? parseInt(self.damage()) : 0) - parseInt(self.tempHitpoints())));
+    });
+
+    self.regularProgressWidth = ko.pureComputed(function() {
+        return (parseInt(self.regularHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
+    });
+
+    self.tempProgressWidth = ko.pureComputed(function() {
+        if (self.tempHitpointsRemaining() < 0) {
+            return '0%';
+        }
+        return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
+    });
+
+        self.isDangerous = ko.pureComputed(function() {
+        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD ? true : false;
+    });
+
+    self.isWarning = ko.pureComputed(function() {
+        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD ? true : false;
+    });
+
+    self.progressType = ko.pureComputed(function() {
+        var type = 'progress-bar-success';
+        if (self.isWarning()) { type = 'progress-bar-warning'; }
+        if (self.isDangerous()) { type = 'progress-bar-danger'; }
+        return type;
+    });
+
+    // Magic Progress Bar
+    self.magicProgressWidth = ko.pureComputed(function() {
+        return (parseInt(self.magicStatus().value()) * 100) + '%';
+    });
+
+    // Tracked Ability Progress Bar
+    self.trackedProgressWidth = ko.pureComputed(function() {
+        return (parseInt(self.trackedStatus().value()) * 100) + '%';
+    });
+
+    self._importStatus = function(values) {
+        var status = new Status();
+        return status.importValues(values);
+    };
+
+    self.setPlayerCardFields = function() {
+        if (pCard) {
+            playerCardFields.forEach(function(field, idx, _) {
+                self[field] = pCard.get(field);
+            });
+        }
+    };
+}
