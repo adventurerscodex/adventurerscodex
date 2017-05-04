@@ -7,29 +7,31 @@ function PlayerCard(pCard) {
 
     var self = this;
     /* Fields that will be used by the UI.
-       Add more fields to the array as needed. */
+       Add more fields to the array as needed.
+       _Note_: The 'key' has to have the same name as the model attribute. */
     var playerCardFields = [
-        {'key': 'playerName', 'converter': null},
-        {'playerType': null},
-        {'playerSummary': null},
-        {'name': null},
-        {'imageUrl': null},
-        {'race': null},
-        {'playerClass': null},
-        {'level': null},
-        {'armorClass': null},
-        {'gold': null},
-        {'maxHitPoints': null},
-        {'damage': null},
-        {'tempHitPoints': null},
-        {'hitDiceType': null},
-        {'hitDice': null},
-        {'passivePerception': null},
-        {'passiveIntelligence': null},
-        {'spellSaveDC': null},
-        {'healthinessStatus': function(value) { return self._importStatus(value); }},
-        {'magicStatus': function(value) { return self._importStatus(value); }},
-        {'trackedStatus': function(value) { return self._importStatus(value); }}
+        {'key':'playerName', 'converter': null},
+        {'key':'playerType', 'converter': null},
+        {'key':'playerSummary', 'converter': null},
+        {'key':'name', 'converter': null},
+        {'key':'imageUrl', 'converter': null},
+        {'key':'race', 'converter': null},
+        {'key':'playerClass', 'converter': null},
+        {'key':'level', 'converter': null},
+        {'key':'experience', 'converter': null},
+        {'key':'armorClass', 'converter': null},
+        {'key':'gold', 'converter': null},
+        {'key':'maxHitPoints', 'converter': null},
+        {'key':'damage', 'converter': null},
+        {'key':'tempHitPoints', 'converter': null},
+        {'key':'hitDiceType', 'converter': null},
+        {'key':'hitDice', 'converter': null},
+        {'key':'passivePerception', 'converter': null},
+        {'key':'passiveIntelligence', 'converter': null},
+        {'key':'spellSaveDC', 'converter': null},
+        {'key':'healthinessStatus', 'converter': function(value) { return self._importStatus(value); }},
+        {'key':'magicStatus', 'converter':  function(value) { return self._importStatus(value); }},
+        {'key':'trackedStatus', 'converter':  function(value) { return self._importStatus(value); }}
     ];
 
     /* Player Card Fields */
@@ -37,7 +39,8 @@ function PlayerCard(pCard) {
     // Profile
     self.playerName = ko.observable('');
     self.playerType = ko.observable('');
-	self.name = ko.observable('');
+	self.playerSummary = ko.observable('');
+    self.name = ko.observable('');
 	self.imageUrl = ko.observable('');
 	self.race = ko.observable('');
 	self.playerClass = ko.observable('');
@@ -55,12 +58,15 @@ function PlayerCard(pCard) {
 	self.passiveIntelligence = ko.observable(0);
 	self.spellSaveDC = ko.observable(0);
     self.level = ko.observable(0);
+    self.experience = ko.observable('');
 	self.armorClass = ko.observable(0);
 
     // Status
 	self.healthinessStatus = ko.observable();
 	self.magicStatus = ko.observable();
 	self.trackedStatus = ko.observable();
+
+    self.moreInfoOpen = ko.observable(false);
 
     // Health Progress Bar Methods
     self.totalHitpoints = ko.pureComputed(function() {
@@ -119,10 +125,18 @@ function PlayerCard(pCard) {
         return status.importValues(values);
     };
 
+    self.toggleMoreInfo = function() {
+        self.moreInfoOpen(!self.toggleMoreInfo());
+    };
+
     self.setPlayerCardFields = function() {
         if (pCard) {
             playerCardFields.forEach(function(field, idx, _) {
-                self[field] = pCard.get(field);
+                if (field.converter == null) {
+                    self[field.key] = pCard.get(field.key);
+                } else {
+                    self[field.key] = field.converter(pCard.get(field.key));
+                }
             });
         }
     };

@@ -7,10 +7,10 @@
         <!-- Player Info -->
         <div class="row">
           <div class="col-xs-12">
-           <!-- ko if: image -->
+           <!-- ko if: imageUrl -->
            <img class="img-circle center-block"
              data-bind="attr: {
-               src: image,
+               src: imageUrl,
                height: 80,
                width: 80,
              }">
@@ -20,15 +20,8 @@
         <div class="row">
           <div class="col-xs-12 text-center">
             <div class="h4">
-              <span data-bind="text: name"></span><br />
-              <small data-bind="text: summary"></small>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <div class="">
-              <span data-bind="html: statusLine"></span>
+              <span data-bind="text: playerName"></span><br />
+              <small data-bind="text: playerSummary"></small>
             </div>
           </div>
         </div>
@@ -73,7 +66,7 @@
         <div class="row">
           <div class="col-xs-12 text-right">
             <a class="text-right" style="cursor:pointer;"
-              data-bind="click: function() { moreInfoOpen(!moreInfoOpen())}">More
+              data-bind="click: toggledMoreInfo">More
               <span class="fa fa-caret-down"></span>
             </div>
           </a>
@@ -84,30 +77,37 @@
               <ul class="list-group" style="margin-bottom:0;">
                 <li class="list-group-item">
                   Armor Class
+                  <img class="tab-icon" src="/images/party_icons/ac-shield.svg"></img>
                   <span class="pull-right" data-bind="text: armorClass"></span>
                 </li>
                 <li class="list-group-item">
                   Hit Dice Remaining
+                  <img class="tab-icon" src="/images/party_icons/hit-dice.svg"></img>
                   <span class="pull-right" data-bind="text: hitDice"></span>
                 </li>
                 <li class="list-group-item">
                   Spell Save DC
+                  <img class="tab-icon" src="/images/party_icons/spell-save.svg"></img>
                   <span class="pull-right" data-bind="text: spellSaveDC"></span>
                 </li>
                 <li class="list-group-item">
                   Experience
+                  <img class="tab-icon" src="/images/party_icons/experience.svg"></img>
                   <span class="pull-right" data-bind="text: experience"></span>
                 </li>
                 <li class="list-group-item">
-                  Passive Wisdom
-                  <span class="pull-right" data-bind="text: passiveWisdom"></span>
+                  Passive Perception
+                  <img class="tab-icon" src="/images/party_icons/passive-perception.svg"></img>
+                  <span class="pull-right" data-bind="text: passivePerception"></span>
                 </li>
                 <li class="list-group-item">
                   Passive Intelligence
+                  <img class="tab-icon" src="/images/party_icons/passive-intelligence.svg"></img>
                   <span class="pull-right" data-bind="text: passiveIntelligence"></span>
                 </li>
                 <li class="list-group-item">
                   Gold
+                  <img class="tab-icon" src="/images/party_icons/gold.svg"></img>
                   <span class="pull-right" data-bind="text: gold"></span>
                 </li>
               </ul>

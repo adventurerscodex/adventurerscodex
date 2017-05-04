@@ -67,6 +67,13 @@ var CharacterCardFields = [
             return profile ? profile.level() : '';
         }
     }, {
+        name: 'experience',
+        refreshOn: Notifications.profile.changed,
+        valueAccessor: function() {
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            return profile ? profile.exp() : '';
+        }
+    }, {
         name: 'armorClass',
         refreshOn: Notifications.armorClass.changed,
         valueAccessor: function() {
