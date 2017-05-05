@@ -99,7 +99,7 @@ function _pCardPublishingService(configuration) {
     /* Event Handlers */
 
     self._handleResponse = function(response) {
-
+        console.log(response);
     };
 
     self._updateCurrentNode = function(node) {

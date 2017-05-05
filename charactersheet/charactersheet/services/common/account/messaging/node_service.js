@@ -249,7 +249,7 @@ function _NodeService(config) {
     };
 
     self._decompressContents = function(data, compression) {
-        self.config.compression[compression].decompress(data);
+        return self.config.compression[compression].decompress(data);
     };
 
     self._subscribeToExistingParty = function(response) {

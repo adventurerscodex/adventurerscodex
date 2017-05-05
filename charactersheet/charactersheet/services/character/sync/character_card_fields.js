@@ -35,6 +35,7 @@ var CharacterCardFields = [
         refreshOn: Notifications.profile.changed,
         valueAccessor: function() {
             var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CharacterManager.activeCharacter().key());
+            if (!image) { return; }
             if (image.imageSource() === 'link') {
                 var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
                 return imageModel ? imageModel.imageUrl() : '';
@@ -85,41 +86,42 @@ var CharacterCardFields = [
         refreshOn: Notifications.treasure.changed,
         valueAccessor: function() {
             var treasure = PersistenceService.findFirstBy(Treasure, 'characterId', CharacterManager.activeCharacter().key());
-            return treasure.worthInGold();
+            return treasure ? treasure.worthInGold() : 0;
         }
     }, {
         name: 'maxHitPoints',
         refreshOn: Notifications.stats.changed,
         valueAccessor: function() {
             var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
-            return health.maxHitpoints();
+            return health ? health.maxHitpoints() : 0;
         }
     }, {
         name: 'damage',
         refreshOn: Notifications.stats.changed,
         valueAccessor: function() {
             var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
-            return health.damage();
+            return health ? health.damage() : 0;
         }
     }, {
         name: 'tempHitPoints',
         refreshOn: Notifications.stats.changed,
         valueAccessor: function() {
             var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
-            return health.tempHitpoints();
+            return health ? health.tempHitpoints() : 0;
         }
     }, {
         name: 'hitDiceType',
         refreshOn: Notifications.stats.changed,
         valueAccessor: function() {
             var hitDiceType = PersistenceService.findFirstBy(HitDiceType, 'characterId', CharacterManager.activeCharacter().key());
-            return hitDiceType.hitDiceType();
+            return hitDiceType ? hitDiceType.hitDiceType() : '';
         }
     }, {
         name: 'hitDice',
         refreshOn: Notifications.stats.changed,
         valueAccessor: function() {
             var hitDice = PersistenceService.findBy(HitDice, 'characterId', CharacterManager.activeCharacter().key());
+            if (!hitDice) { return; }
             var totalHitDice = 0;
             hitDice.forEach(function(die, idx, _) {
                 if (!die.hitDiceUsed()) {

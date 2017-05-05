@@ -197,7 +197,7 @@ function pCard() {
     self.get = function(name) {
         var attrs = [];
         for (var i=0; i<self.entries.length; i++) {
-            if (self.entries[i].name === name) {
+            if (self.entries[i].name === name && self.entries[i].value) {
                 attrs.push(self.entries[i].value);
             } else if (self.entries[i].id && self.entries[i].id === name) {
                 return self.entries[i].value;
@@ -273,3 +273,9 @@ pCard.fromJSON = function(json) {
     card.entries = JSON.parse(json);
     return card;
 };
+
+pCard.fromEntries = function(entries) {
+    var card = new pCard();
+    card.entries = entries;
+    return card;
+}

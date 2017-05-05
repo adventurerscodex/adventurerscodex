@@ -6,6 +6,9 @@
 function PlayerCard(pCard) {
 
     var self = this;
+
+    self.DANGER_THRESHOLD = 0.30;
+    self.WARNING_THRESHOLD = 0.50;
     /* Fields that will be used by the UI.
        Add more fields to the array as needed.
        _Note_: The 'key' has to have the same name as the model attribute. */
@@ -74,14 +77,14 @@ function PlayerCard(pCard) {
     });
 
     self.tempHitpointsRemaining = ko.pureComputed(function() {
-        return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
+        return (parseInt(self.tempHitPoints()) - parseInt(self.damage()));
     });
 
     self.regularHitpointsRemaining = ko.pureComputed(function() {
         if (self.tempHitpointsRemaining() > 0) {
-            return parseInt(self.maxHitpoints());
+            return parseInt(self.maxHitPoints());
         }
-        return (parseInt(self.maxHitpoints()) - ((self.damage() ? parseInt(self.damage()) : 0) - parseInt(self.tempHitpoints())));
+        return (parseInt(self.maxHitPoints()) - ((self.damage() ? parseInt(self.damage()) : 0) - parseInt(self.tempHitPoints())));
     });
 
     self.regularProgressWidth = ko.pureComputed(function() {
@@ -95,12 +98,12 @@ function PlayerCard(pCard) {
         return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
     });
 
-        self.isDangerous = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD ? true : false;
+    self.isDangerous = ko.pureComputed(function() {
+        return parseInt(self.maxHitPoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD ? true : false;
     });
 
     self.isWarning = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD ? true : false;
+        return parseInt(self.maxHitPoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD ? true : false;
     });
 
     self.progressType = ko.pureComputed(function() {
@@ -112,12 +115,12 @@ function PlayerCard(pCard) {
 
     // Magic Progress Bar
     self.magicProgressWidth = ko.pureComputed(function() {
-        return (parseInt(self.magicStatus().value()) * 100) + '%';
+        return self.magicStatus() ? (parseInt(self.magicStatus().value()) * 100) + '%' : '0%';
     });
 
     // Tracked Ability Progress Bar
     self.trackedProgressWidth = ko.pureComputed(function() {
-        return (parseInt(self.trackedStatus().value()) * 100) + '%';
+        return self.trackedStatus() ? (parseInt(self.trackedStatus().value()) * 100) + '%' : '0%';
     });
 
     self._importStatus = function(values) {
@@ -126,18 +129,18 @@ function PlayerCard(pCard) {
     };
 
     self.toggleMoreInfo = function() {
-        self.moreInfoOpen(!self.toggleMoreInfo());
+        self.moreInfoOpen(!self.moreInfoOpen());
     };
 
-    self.setPlayerCardFields = function() {
-        if (pCard) {
-            playerCardFields.forEach(function(field, idx, _) {
-                if (field.converter == null) {
-                    self[field.key] = pCard.get(field.key);
-                } else {
-                    self[field.key] = field.converter(pCard.get(field.key));
-                }
-            });
-        }
-    };
+    if (pCard) {
+        playerCardFields.forEach(function(field, idx, _) {
+            var pCardField = pCard.get(field.key);
+            if (pCardField.length < 1) { return; }
+            if (field.converter == null) {
+                self[field.key](pCardField[0]);
+            } else {
+                self[field.key](field.converter(pCardField[0]));
+            }
+        });
+    }
 }

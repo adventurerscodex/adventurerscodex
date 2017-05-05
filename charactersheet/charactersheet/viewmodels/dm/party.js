@@ -14,7 +14,7 @@ function PartyViewModel() {
 
     };
 
-    self.handlePCard = function(pCard) {
-        self.players().push(new PlayerCard(pCard));
+    self.handlePCard = function(inputPCard) {
+        self.players.push(new PlayerCard(pCard.fromEntries(inputPCard)));
     };
 }
