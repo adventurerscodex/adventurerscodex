@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-xs-12 text-center">
             <div class="h4">
-              <span data-bind="text: playerName"></span><br />
+              <span data-bind="text: characterName"></span><br />
               <small data-bind="text: playerSummary"></small>
             </div>
           </div>
@@ -47,7 +47,7 @@
             Spell Slots
             <div class="progress thin">
               <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0"
-                aria-valuemax="100" data-bind="style: { width: magicProgressWidth }">
+                aria-valuemax="100" data-bind="style: { width: magicProgressWidth }, css: magicStatus().type()">
               </div>
             </div>
           </div>
@@ -57,7 +57,7 @@
             Features, Feats, and Traits
             <div class="progress thin">
               <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuemin="0"
-                aria-valuemax="100" data-bind="style: { width: trackedProgressWidth }">
+                aria-valuemax="100" data-bind="style: { width: trackedProgressWidth }, css: trackedStatus().type()">
               </div>
             </div>
           </div>
@@ -70,42 +70,36 @@
             </div>
           </a>
         </div>
-        <div data-bind="well: { open: moreInfoOpen }">
+        <br />
+        <div data-bind="well: { open: moreInfoOpen }" class="collapse">
           <div class="row">
-            <div class="col-xs-12 col-emd-6 col-padded">
+            <div class="col-xs-12 col-padded">
               <ul class="list-group" style="margin-bottom:0;">
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/ac-shield.svg"></img>&nbsp;
                   Armor Class
                   <span class="pull-right" data-bind="text: armorClass"></span>
                 </li>
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/hit-dice.svg"></img>&nbsp;
                   Hit Dice
-                  <span class="pull-right" data-bind="text: hitDice"></span>
+                  <span class="pull-right" data-bind="text: hitDiceDisplay"></span>
                 </li>
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/spell-save.svg"></img>&nbsp;
                   Spell Save DC
                   <span class="pull-right" data-bind="text: spellSaveDC"></span>
                 </li>
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/experience.svg"></img>&nbsp;
                   Experience
                   <span class="pull-right" data-bind="text: experience"></span>
                 </li>
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/passive-perception.svg"></img>&nbsp;
                   Passive Perception
                   <span class="pull-right" data-bind="text: passivePerception"></span>
                 </li>
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/passive-intelligence.svg"></img>&nbsp;
                   Passive Intelligence
                   <span class="pull-right" data-bind="text: passiveIntelligence"></span>
                 </li>
                 <li class="list-group-item">
-                  <img class="party-icon" src="/images/party_icons/gold.svg"></img>&nbsp;
                   Gold
                   <span class="pull-right" data-bind="text: gold"></span>
                 </li>

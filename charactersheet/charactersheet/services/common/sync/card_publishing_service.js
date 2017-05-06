@@ -52,7 +52,8 @@ function _pCardPublishingService(configuration) {
         var compressed = self.configuration.enableCompression;
         var attrs = {
             id: xmpp.connection.getUniqueId(),
-            route: 'pcard'
+            route: 'pcard',
+            publisher: xmpp.connection.jid
         };
         var content = '';
 

@@ -3,11 +3,11 @@
 
 var CharacterCardFields = [
     {
-        name: 'playerName',
+        name: 'characterName',
         refreshOn: Notifications.profile.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
-            return profile ? profile.playerName() : '';
+            return profile ? profile.characterName() : '';
         }
     }, {
         name: 'playerSummary',
@@ -147,8 +147,9 @@ var CharacterCardFields = [
         refreshOn: Notifications.abilityScores.changed,
         valueAccessor: function() {
             var abilityScores = PersistenceService.findFirstBy(AbilityScores, CharacterManager.activeCharacter().key());
-
-            return abilityScores ? 10 + abilityScores.intModifier() : 0;
+            var modifier = abilityScores.modifierFor('int');
+            modifier = modifier ? modifier : 0;
+            return abilityScores ? 10 + modifier : 0;
         }
     }, {
         name: 'spellSaveDC',

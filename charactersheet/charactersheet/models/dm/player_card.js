@@ -13,7 +13,7 @@ function PlayerCard(pCard) {
        Add more fields to the array as needed.
        _Note_: The 'key' has to have the same name as the model attribute. */
     var playerCardFields = [
-        {'key':'playerName', 'converter': null},
+        {'key':'characterName', 'converter': null},
         {'key':'playerType', 'converter': null},
         {'key':'playerSummary', 'converter': null},
         {'key':'name', 'converter': null},
@@ -40,7 +40,7 @@ function PlayerCard(pCard) {
     /* Player Card Fields */
 
     // Profile
-    self.playerName = ko.observable('');
+    self.characterName = ko.observable('');
     self.playerType = ko.observable('');
 	self.playerSummary = ko.observable('');
     self.name = ko.observable('');
@@ -70,6 +70,13 @@ function PlayerCard(pCard) {
 	self.trackedStatus = ko.observable();
 
     self.moreInfoOpen = ko.observable(false);
+
+    self.hitDiceDisplay = ko.pureComputed(function() {
+        var hitDiceString = self.hitDice() ? self.hitDice() : '';
+        var hitDiceTypeString = self.hitDiceType() ? '(' + self.hitDiceType() + ')' : '';
+
+        return hitDiceString + ' ' + hitDiceTypeString;
+    });
 
     // Health Progress Bar Methods
     self.totalHitpoints = ko.pureComputed(function() {
@@ -115,17 +122,18 @@ function PlayerCard(pCard) {
 
     // Magic Progress Bar
     self.magicProgressWidth = ko.pureComputed(function() {
-        return self.magicStatus() ? (parseInt(self.magicStatus().value()) * 100) + '%' : '0%';
+        return self.magicStatus() ? (parseFloat(self.magicStatus().value()) * 100) + '%' : '0%';
     });
 
     // Tracked Ability Progress Bar
     self.trackedProgressWidth = ko.pureComputed(function() {
-        return self.trackedStatus() ? (parseInt(self.trackedStatus().value()) * 100) + '%' : '0%';
+        return self.trackedStatus() ? (parseFloat(self.trackedStatus().value()) * 100) + '%' : '0%';
     });
 
     self._importStatus = function(values) {
         var status = new Status();
-        return status.importValues(values);
+        status.importValues(values);
+        return status;
     };
 
     self.toggleMoreInfo = function() {

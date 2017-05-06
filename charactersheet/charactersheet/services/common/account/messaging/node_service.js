@@ -182,6 +182,23 @@ function _NodeService(config) {
             }, onerror);
     };
 
+    /**
+     *
+     */
+    self.deleteItem = function(node, itemId, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        var iq = $iq({
+            from: xmpp.connection.jid,
+            to: Settings.PUBSUB_HOST_JID,
+            type:'set',
+            id: xmpp.connection.getUniqueId()
+        }).c('pubsub', {xmlns: Strophe.NS.PUBSUB})
+        .c('retract', {node: node})
+        .c('item', {id: itemId});
+
+        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror, 3000);
+    };
+
     /* Private Methods */
 
     self._handleConnect = function() {
