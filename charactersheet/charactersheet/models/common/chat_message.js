@@ -6,16 +6,17 @@ function ChatMessage() {
 
     self.ps = PersistenceService.register(ChatMessage, self);
     self.mapping = {
-        include: ['characterId', 'to', 'from', 'fromImage', 'id', 'message', 'dateSent']
+        include: ['characterId', 'chatId', 'to', 'from', 'id', 'message', 'dateSent', 'read']
     };
 
     self.characterId = ko.observable();
+    self.chatId = ko.observable();
     self.to = ko.observable();
     self.from = ko.observable();
-    self.fromImage = ko.observable();
     self.id = ko.observable();
     self.message = ko.observable();
     self.dateSent = ko.observable();
+    self.read = ko.observable(false);
 
     self.clear = function() {
         var values = new Item().exportValues();
@@ -39,5 +40,17 @@ function ChatMessage() {
 
     self.delete = function() {
         self.ps.delete();
+    };
+
+    /* XMPP Methods */
+
+    self.tree = function() {
+        var message = $msg({
+            to: self.to(),
+            from: self.from(),
+            id: self.id(),
+            type: 'chat'
+        }).c('body').t(self.message());
+        return message.tree();
     };
 }
