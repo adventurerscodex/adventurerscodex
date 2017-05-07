@@ -8,6 +8,7 @@ function ChatCellViewModel(chat) {
     self.chatId = chat.chatId;
     self._name = chat.name;
     self.badge = ko.observable();
+    self.isGroupChat = chat.isGroupChat;
 
     self.name = ko.pureComputed(function() {
         return self._name();

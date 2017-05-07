@@ -105,7 +105,7 @@ var NodeServiceConfiguration = {
         }
     },
     defaultNodeOptions: {
-
+        'pubsub#publish_model': 'subscribers'
     }
 };
 

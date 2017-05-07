@@ -33,6 +33,15 @@
       <p class="lead text-muted heading" data-bind="html: addNewItemText"></p>
     </div>
     <!-- /ko -->
+    <!-- ko if: modalViewModel -->
+    <!-- ko with: modalViewModel -->
+    <div data-bind="template: {
+      name: templateName,
+      templateUrl: templateUrl,
+      data: $data
+    }"></div>
+    <!-- /ko -->
+    <!-- /ko -->
   </div>
 </div>
 <!-- /ko -->
