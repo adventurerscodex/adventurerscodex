@@ -70,9 +70,14 @@ function _pCardPublishingService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            xmpp.connection.pubsub.publish(self.currentPartyNode, [
-                { attrs: null, data: cardTree}
-            ], self._handleResponse);
+            xmpp.connection.pubsub.items(self.currentPartyNode,
+            function(response) {
+                self._clearOldPCards(response, function() {
+                    xmpp.connection.pubsub.publish(self.currentPartyNode, [
+                            { attrs: null, data: cardTree}
+                        ], self._handleResponse);
+                })
+            }, null, 3000);
         }
     };
 
@@ -95,6 +100,21 @@ function _pCardPublishingService(configuration) {
         });
 
         return card;
+    };
+    /**
+     *
+     * @param response  a list of items published to the node
+     */
+    self._clearOldPCards = function(response, callback) {
+        var node = NodeServiceManager.sharedService();
+        var xmpp = XMPPService.sharedService();
+        var items = $(response).find('items').children().toArray();
+        items.forEach(function(item, idx, _) {
+            if ($(item).children().attr('publisher') === xmpp.connection.jid) {
+                node.deleteItem(self.currentPartyNode, $(item).attr('id'), null, null);
+            }
+        });
+        callback();
     };
 
     /* Event Handlers */
