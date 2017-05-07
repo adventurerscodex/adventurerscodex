@@ -22,6 +22,7 @@ function MasterDetailViewModel() {
     self.listCSS = ko.observable({ 'col-xs-12 col-sm-4': true });
     self.detailViewModelCSS = ko.observable({ 'col-xs-12 col-sm-8': true });
     self.addNewItemText = ko.observable('Nothing here.');
+    self.modalIsOpen = ko.observable(false);
 
     /**
      *
@@ -147,6 +148,7 @@ function MasterDetailViewModel() {
             var modalViewModel = self.getModalViewModel();
             self.modalViewModel(modalViewModel);
             self._initializeModalViewModel();
+            self.modalIsOpen(true);
         } else {
             self.addItem();
         }
@@ -156,6 +158,7 @@ function MasterDetailViewModel() {
         if (self.shouldDisplayModelOnNewItem) {
             self.openModalWithParent(parent);
             self._initializeModalViewModel();
+            self.modalIsOpen(true);
         } else {
             self.addItemWithParent(null, parent)
         }
@@ -177,9 +180,8 @@ function MasterDetailViewModel() {
 
     /* Private Methods */
 
-    self._addItem = function() {
-        var item = self.modalItem();
-        self.addItem(item);
+    self._modalDoneButtonWasClicked = function() {
+        self.addItem();
     };
 
     self._deleteItem = function(item) {

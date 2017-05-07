@@ -6,12 +6,14 @@ function ChatRoom() {
 
     self.ps = PersistenceService.register(ChatRoom, self);
     self.mapping = {
-        include: ['characterId', 'chatId', 'dateCreated']
+        include: ['characterId', 'chatId', 'dateCreated', 'name', 'isGroupChat']
     };
 
     self.characterId = ko.observable();
     self.chatId = ko.observable();
     self.dateCreated = ko.observable();
+    self.name = ko.observable();
+    self.isGroupChat = ko.observable(false);
 
     self.clear = function() {
         var values = new Item().exportValues();
@@ -36,4 +38,34 @@ function ChatRoom() {
     self.delete = function() {
         self.ps.delete();
     };
+
+    self.purge = function() {
+        self.getAllMessages().forEach(function(msg, idx, _) {
+            msg.delete();
+        });
+    };
+
+    self.jid = ko.pureComputed(function() {
+        if (self.isGroupChat()) {
+            return self.chatId();
+        }
+
+        return '{}@conference.adventurerscodex.com'.replace('{}', self.chatId());
+    });
+
+    /* Convenience Methods */
+
+    self.getUnreadMessages = function() {
+        return PersistenceService.findByPredicates(ChatMessage, [
+            new KeyValuePredicate('chatId', self.chatId()),
+            new KeyValuePredicate('read', false),
+        ]);
+    };
+
+    self.getAllMessages = function() {
+        return PersistenceService.findByPredicates(ChatMessage, [
+            new KeyValuePredicate('chatId', self.chatId()),
+        ]);
+    };
+
 }

@@ -12,9 +12,9 @@ var Utility = {
     markdown: {},
     string: {},
     array: {},
-    oauth: {}
+    oauth: {},
+    jid: {}
 };
-
 
 /* Markdown */
 
@@ -91,4 +91,14 @@ Utility.oauth.getJSON = function(url, onsuccess, onerror) {
         error: onerror,
         beforeSend: Utility.oauth.setXHRBearerHeader
     });
+};
+
+
+/* JID Methods */
+
+/**
+ * Remove characters from string that are not usable in an JID username.
+ */
+Utility.jid.sanitize = function(text) {
+    return (text || '').replace(/[@"&'\/:<> ]/gm, '_');
 };

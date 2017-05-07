@@ -29,6 +29,11 @@ var Settings = {
     PUBSUB_HOST_JID: 'pubsub.adventurerscodex.com',
 
     /**
+     * The MUC Service URL.
+     */
+    MUC_SERVICE: 'conference.adventurerscodex.com',
+
+    /**
      * A config object for dropbox integration.
      */
     dropboxConfigOptions: {

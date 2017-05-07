@@ -28,3 +28,19 @@ function NotPredicate(predicate) {
         return !predicate.matches(element);
     };
 }
+
+
+/**
+ * Given a list of child predicates return a match if any of the children match.
+ */
+function OrPredicate(predicates) {
+    var self = this;
+
+    self.predicates = predicates;
+
+    self.matches = function(element) {
+        return predicates.some(function(predicate, idx, _) {
+            return predicate.matches(element);
+        });
+    };
+}
