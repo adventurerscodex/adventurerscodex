@@ -28,7 +28,7 @@ var init = function(viewModel) {
     var clipboard = new Clipboard('.btn');
 
     clipboard.on('success', function(e) {
-        Notifications.userNotification.infoNotification.dispatch('Room link copied to clipboard.', '');
+        Notifications.userNotification.infoNotification.dispatch('Text copied to clipboard.', '');
         e.clearSelection();
     });
 
