@@ -13,7 +13,6 @@ function PartyManagerViewModel() {
     self.roomId = ko.observable();
 
     self.load = function() {
-        Notifications.authentication.loggedIn.add(self.dataHasChanged);
         Notifications.xmpp.connected.add(self.dataHasChanged);
         self.parties(self._getParties());
     };
