@@ -8,11 +8,6 @@ function ChatViewModel() {
     self.title = 'Chats';
     self.shouldDisplayModelOnNewItem = true;
 
-    self._handlerTokens = [];
-
-    self._connectionIsSetup = false;
-    self._xmppIsConnected = ko.observable(false);
-
     /* View Model Methods */
 
     self.didLoad = function() {
@@ -146,14 +141,19 @@ function ChatViewModel() {
      * active, else badge the icon or create the room if needed and alert
      * the user.
      */
-    self._deliverMessageToRoom = function(room, msg) {
+    self._deliverMessageToRoom = function(room, msg, delay) {
         var roomIsSelected = self._isSelectedRoom(room);
         if (roomIsSelected) {
             // The room for this chat is the active room.
             self._childViewModelShouldUpdate();
-        } else {
+        } else if (!delay) {
             // The room is in the background. Badge the icon.
             self.updateBadge(room);
+        }
+
+        var chatTabIsForground = false;
+        if (!chatTabIsForground && !delay) {
+            Notifications.userNotification.infoNotification.dispatch(msg.message(), msg.from());
         }
     };
 
