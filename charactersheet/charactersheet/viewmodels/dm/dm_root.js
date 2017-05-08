@@ -16,7 +16,7 @@ function DMRootViewModel() {
     self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
     self.partyTabViewModel = ko.observable(new PartyTabViewModel());
     self.chatTabViewModel = ko.observable(new ChatTabViewModel());
-        // TODO: Add
+    // TODO: Add
 
     //Tooltips
     // TODO: Add

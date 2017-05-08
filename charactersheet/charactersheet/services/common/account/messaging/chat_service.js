@@ -91,8 +91,6 @@ function _ChatService(config) {
 
             var delay = $(msg).find('delay').length > 0;
 
-            console.log(msg);
-
             Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
@@ -110,7 +108,9 @@ function _ChatService(config) {
             var chatMessage = self._parseMessage(msg, room);
             chatMessage.save();
 
-            Notifications.chat.message.dispatch(room, chatMessage);
+            var delay = $(msg).find('delay').length > 0;
+
+            Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
         }

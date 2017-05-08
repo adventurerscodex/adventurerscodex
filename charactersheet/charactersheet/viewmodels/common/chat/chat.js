@@ -151,7 +151,7 @@ function ChatViewModel() {
             self.updateBadge(room);
         }
 
-        var chatTabIsForground = false;
+        var chatTabIsForground = viewModel.childRootViewModel().activeTab() == 'chat';
         if (!chatTabIsForground && !delay) {
             Notifications.userNotification.infoNotification.dispatch(msg.message(), msg.from());
         }
