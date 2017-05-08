@@ -23,6 +23,11 @@ function _ChatService(config) {
 
     self.configuration = config;
 
+    self._handlerTokens = [];
+
+    self._connectionIsSetup = false;
+    self._xmppIsConnected = ko.observable(false);
+
     self.init = function() {
         Notifications.xmpp.connected.add(self._setupConnection);
         Notifications.xmpp.disconnected.add(self._teardownConnection);
@@ -84,7 +89,11 @@ function _ChatService(config) {
             var chatMessage = self._parseMessage(msg, room);
             chatMessage.save();
 
-            Notifications.chat.message.dispatch(room, chatMessage);
+            var delay = $(msg).find('delay').length > 0;
+
+            console.log(msg);
+
+            Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
         }
