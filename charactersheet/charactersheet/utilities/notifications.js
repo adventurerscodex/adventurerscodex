@@ -124,6 +124,13 @@ var Notifications = {
         allRemoved: new signals.Signal()
     },
 
+    chat: {
+        message: new signals.Signal(),
+        iq: new signals.Signal(),
+        presence: new signals.Signal(),
+        room: new signals.Signal()
+    },
+
     feat: {
         changed: new signals.Signal()
     },
