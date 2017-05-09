@@ -132,16 +132,20 @@ function PlayerCard(pCard) {
         return self.trackedStatus() ? (parseFloat(self.trackedStatus().value()) * 100) + '%' : '0%';
     });
 
+    // Converts exported Status data into a Status object.
     self._importStatus = function(values) {
         var status = new Status();
         status.importValues(values);
         return status;
     };
 
+    // Toggles the 'More' well.
     self.toggleMoreInfo = function() {
         self.moreInfoOpen(!self.moreInfoOpen());
     };
 
+    // Using the passed in pCard and the playerCardFields array, this method will convert
+    // a pCard into a PlayerCard.
     self.map = function(pCard) {
         if (pCard) {
             playerCardFields.forEach(function(field, idx, _) {

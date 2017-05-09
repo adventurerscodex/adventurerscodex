@@ -183,7 +183,10 @@ function _NodeService(config) {
     };
 
     /**
+     * Deletes an item from a node with matching criteria.
      *
+     * @param node  id of node where items are published
+     * @param itemId  id of item to look for in the given node
      */
     self.deleteItem = function(node, itemId, onsuccess, onerror) {
         var xmpp = XMPPService.sharedService();

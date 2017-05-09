@@ -70,6 +70,7 @@ function _pCardPublishingService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
+            // Delete previous pCards, if they exist.
             xmpp.connection.pubsub.items(self.currentPartyNode,
             function(response) {
                 self._clearOldPCards(response, function() {
@@ -102,8 +103,10 @@ function _pCardPublishingService(configuration) {
         return card;
     };
     /**
+     * Deletes existing pCards.
      *
      * @param response  a list of items published to the node
+     * @param callback  called upon successful deletion of existing pCards
      */
     self._clearOldPCards = function(response, callback) {
         var node = NodeServiceManager.sharedService();

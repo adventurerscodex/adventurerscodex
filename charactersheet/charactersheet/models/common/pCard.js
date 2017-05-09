@@ -30,11 +30,11 @@ contain as their attributes and values.*
 
 ### Global Fields
 
-__playerName__
+__playerJid__
 
-The player's chosen name. This is not the character/campaign's name.
+The player's XMPP JID.
 
-`value` should contain the value of the name.
+`value` should contain the value of the JID.
 
 __playerType__
 
@@ -42,7 +42,7 @@ This explains the type of player the card represents.
 
 `value` should contain `dm` or `character`.
 
-__name__
+__characterName__
 
 This entry contains the name of the player's character or campaign. Often times
 this will be the display name of the player in UI.
@@ -61,11 +61,23 @@ This entry contains the players character's race.
 
 `value` should contain the players character's race.
 
-__class__
+__playerClass__
 
 This entry contains the players character's class.
 
 `value` should contain the players character's class.
+
+__level__
+
+This entry contains the players character's level.
+
+`value` should contain the players character's level.
+
+__experience__
+
+This entry contains the players character's experience.
+
+`value` should contain the players character's experience.
 
 __armorClass__
 
@@ -106,6 +118,8 @@ This entry contains the players character's hit dice type.
 __hitDice__
 
 This entry contains the players character's available hit dice.
+The format for this information is:
+    `<unused_hit_dice>/<total_hit_dice>`
 
 `value` should contain the players character's available hit dice over their total hit dice.
 
@@ -193,10 +207,12 @@ function pCard() {
     /**
      * Returns the values of any fields that have the given name.
      * If name is a entry ID then return just the 1 entry's value.
+     * If try to `get` an attribute that has a null/undefined value,
+     * an empty array will be returned.
      */
     self.get = function(name) {
         var attrs = [];
-        for (var i=0; i<self.entries.length; i++) {
+        for (var i = 0; i < self.entries.length; i++) {
             if (self.entries[i].name === name && self.entries[i].value) {
                 attrs.push(self.entries[i].value);
             } else if (self.entries[i].id && self.entries[i].id === name) {
@@ -274,6 +290,11 @@ pCard.fromJSON = function(json) {
     return card;
 };
 
+/**
+ * Sets an array of objects to the entries field in a pCard.
+ *
+ * @param entries  array of JS objects
+ */
 pCard.fromEntries = function(entries) {
     var card = new pCard();
     card.entries = entries;
