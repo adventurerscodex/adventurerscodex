@@ -23,6 +23,9 @@ function _ChatService(config) {
 
     self.configuration = config;
 
+    // A global roster of the currently connected rooms.
+    self.rooms = {};
+
     self._handlerTokens = [];
 
     self._connectionIsSetup = false;
@@ -65,6 +68,7 @@ function _ChatService(config) {
     self.leave = function(jid, nick, callback) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.muc.leave(jid, nick, callback, null);
+        delete self.rooms[jid];
     };
 
     // Room Management
@@ -126,6 +130,10 @@ function _ChatService(config) {
         //TODO Send IQ or Presence Message Notification.
         console.log(msg);
     };
+
+    self._handleNewRosterMessage = function(occupant, room) {
+        self.rooms[room.name] = room;
+    }
 
     // Connection Handlers
 
@@ -220,7 +228,8 @@ function _ChatService(config) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.muc.join(
             jid, nick, self._handleNewGroupMessage,
-            self._handleNewPresenceOrIqMessage, console.log,
+            self._handleNewPresenceOrIqMessage,
+            self._handleNewRosterMessage,
             null, null, null
         );
         xmpp.connection.flush();
