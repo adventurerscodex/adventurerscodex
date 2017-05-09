@@ -79,7 +79,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><a href="/accounts/profile/">Account</a></li>
             <li role="separator" class="divider"></li>
             <li class="secondary-nav">
-              <a href="/" data-bind="click: logoutLinkWasClicked">
+              <a data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }">
                 <span>Logout</span>
               </a>
             </li>

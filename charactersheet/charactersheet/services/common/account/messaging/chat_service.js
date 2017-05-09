@@ -35,6 +35,8 @@ function _ChatService(config) {
         Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
 
         self._setupConnection();
+
+        // TODO Set up initial whole party chat.
     };
 
     self.deinit = function() {
