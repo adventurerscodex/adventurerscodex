@@ -69,15 +69,17 @@ function ChatDetailViewModel(chatCell, parent) {
     });
 
     self.toggleModal = function() {
-        self.openModal(!self.openModal());
+        self.parent.modalIsOpen(!self.parent.modalIsOpen());
 
         // Modal will open.
-        if (self.openModal()) {
+        if (self.parent.modalIsOpen()) {
         }
     };
 
     self.sendMessage = function() {
         var message = self._buildMessage();
+
+        if (!message) { return; }
         self._sendMessage(message, function() {
             self.log.push(message);
         }, function() {
@@ -116,6 +118,10 @@ function ChatDetailViewModel(chatCell, parent) {
     };
 
     self._buildMessage = function() {
+        if (self.message().trim().length === 0) {
+            return null;
+        }
+
         var xmpp = XMPPService.sharedService();
         var key = CharacterManager.activeCharacter().key();
 

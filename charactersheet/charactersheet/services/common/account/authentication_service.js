@@ -16,7 +16,7 @@ var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationServi
 function _AuthenticationService(config) {
     var self = this;
 
-    self.validationUrl = '/api/o/validate/?access_token={access_token}';
+    self.validationUrl = '/api/o/validate/';
 
     /**
      * A configuration object that can be used to set options at initialization-time.
@@ -28,17 +28,18 @@ function _AuthenticationService(config) {
         // Make sure the token we have is valid.
         var fragments = (new URI()).fragment(true);
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        var url = null;
 
+        var accessToken = null;
         if (fragments['access_token']) {
-            url = self.validationUrl.replace('{access_token}', fragments['access_token']);
+            accessToken = fragments['access_token'];
         } else if (token && token.isValid()) {
-            url = self.validationUrl.replace('{access_token}', token.accessToken());
+            accessToken = token.accessToken();
         } else {
             return;
         }
 
-        $.getJSON(url, self._handleValidationResponse);
+        Utility.oauth.getJSON(self.validationUrl, self._handleValidationResponse,
+            self._handleValidationResponse, accessToken);
     };
 
     // Private Methods
@@ -58,7 +59,10 @@ function _AuthenticationService(config) {
             token.mapTokenKeys(fragments);
             token.startTime((new Date()).getTime());
             token.save();
+
+            if (token.isValid()) {
+                Notifications.authentication.loggedIn.dispatch();
+            }
         }
-        Notifications.authentication.loggedIn.dispatch();
     };
 }
