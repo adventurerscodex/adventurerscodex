@@ -8,6 +8,8 @@ function DMRootViewModel() {
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
+    self.isConnectedAndInAParty = ko.observable(false);
+    self.currentPartyNode = ko.observable(null);
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
     //Player Child View Models
@@ -66,11 +68,17 @@ function DMRootViewModel() {
         return self._tabIsVisible('dmscreen');
     });
     self.chatTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisible('chat');
+        if (self.isConnectedAndInAParty()) {
+            return self._tabIsVisible('chat');
+        }
+        return 'hidden';
     });
 
     self.partyTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisible('party');
+        if (self.isConnectedAndInAParty()) {
+            return self._tabIsVisible('party');
+        }
+        return 'hidden';
     });
 
     self.activateOverviewTab = function() {
@@ -113,11 +121,17 @@ function DMRootViewModel() {
         self.activeTab(self.playerType().defaultTab);
 
         ViewModelUtilities.loadSubViewModels(self);
+
+        Notifications.xmpp.pubsub.subscribed.add(self._updateCurrentNode);
+        Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
         ViewModelUtilities.unloadSubViewModels(self);
         HotkeysService.flushHotkeys();
+
+        Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
+        Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
     };
 
     //Private Methods
@@ -128,5 +142,20 @@ function DMRootViewModel() {
         } else {
             return 'hidden';
         }
+    };
+
+    self._updatePartyStatus = function() {
+        var xmpp = XMPPService.sharedService();
+        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode())
+    };
+
+    self._updateCurrentNode = function(node) {
+        self.currentPartyNode(node);
+        self._updatePartyStatus();
+    };
+
+    self._removeCurrentNode = function(node) {
+        self.currentPartyNode(null);
+        self._updatePartyStatus();
     };
 }
