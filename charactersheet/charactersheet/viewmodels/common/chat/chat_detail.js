@@ -33,8 +33,7 @@ function ChatDetailViewModel(chatCell, parent) {
         Notifications.xmpp.disconnected.remove(self._updateStatus);
     };
 
-    self.save = function() {
-    };
+    self.save = function() {};
 
     self.delete = function() {
         var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
