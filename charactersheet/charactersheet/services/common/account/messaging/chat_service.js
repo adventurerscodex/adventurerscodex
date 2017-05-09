@@ -34,12 +34,10 @@ function _ChatService(config) {
     self.currentPartyNode = null;
 
     self.init = function() {
-        Notifications.xmpp.connected.add(self._setupConnection);
-        Notifications.xmpp.disconnected.add(self._teardownConnection);
-        Notifications.xmpp.pubsub.subscribed.add(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
-
         self._setupConnection();
+
+        Notifications.xmpp.pubsub.subscribed.add(self._setupRooms);
+        Notifications.xmpp.pubsub.unsubscribed.add(self._teardownRooms);
 
         // TODO Set up initial whole party chat.
     };
@@ -47,10 +45,8 @@ function _ChatService(config) {
     self.deinit = function() {
         self._teardownConnection();
 
-        Notifications.xmpp.connected.remove(self._setupConnection);
-        Notifications.xmpp.disconnected.remove(self._teardownConnection);
-        Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
+        Notifications.xmpp.pubsub.subscribed.remove(self._setupRooms);
+        Notifications.xmpp.pubsub.unsubscribed.remove(self._teardownRooms);
     };
 
     self.send = function(room, message, onsuccess, onerror) {
@@ -140,23 +136,6 @@ function _ChatService(config) {
     self._setupConnection = function() {
         var xmpp = XMPPService.sharedService();
 
-        // MUC Notifications are subscribed to when joining/creating rooms.
-        // Rejoin all previous chats.
-        if (xmpp.connection.connected) {
-            var key = CharacterManager.activeCharacter().key();
-            var rooms = PersistenceService.findBy(ChatRoom, 'characterId', key);
-            rooms.forEach(function(room, idx, _) {
-                if (room.isGroupChat()) {
-                    self._joinRoom(room.chatId(), 'test');
-                }
-            });
-        }
-
-        if (self._connectionIsSetup) {
-            // Don't resubscribe if you don't need to.
-            return;
-        }
-
         // One To One Notifications
         var token1 = xmpp.connection.addHandler(
             self._handleNewOneToOneMessage,
@@ -172,7 +151,6 @@ function _ChatService(config) {
 
         self._handlerTokens.push(token1);
         self._handlerTokens.push(token2);
-        self._connectionIsSetup = true;
     };
 
     self._teardownConnection = function() {
@@ -180,15 +158,35 @@ function _ChatService(config) {
         self._handlerTokens.forEach(function(token, idx, _) {
             xmpp.connection.deleteHandler(token);
         });
-        self._connectionIsSetup = false;
     };
 
-    self._updateCurrentNode = function(node) {
+    self._setupRooms = function(node) {
+        if (self._roomsAreSetup) { return; }
+
+        var xmpp = XMPPService.sharedService();
+
+        // MUC Notifications are subscribed to when joining/creating rooms.
+        // Rejoin all previous chats.
+        if (xmpp.connection.connected) {
+            var key = CharacterManager.activeCharacter().key();
+            var rooms = PersistenceService.findBy(ChatRoom, 'characterId', key);
+            rooms.forEach(function(room, idx, _) {
+                if (room.isGroupChat()) {
+                    self._joinRoom(room.chatId(), 'test');
+                }
+            });
+        }
+
+        // Update the current party node.
         self.currentPartyNode = node;
+        self._roomsAreSetup = true;
     };
 
-    self._removeCurrentNode = function(node) {
+    self._teardownRooms = function() {
+        // Update the current party node.
         self.currentPartyNode = null;
+
+        self._roomsAreSetup = false;
     };
 
     // Room Management
