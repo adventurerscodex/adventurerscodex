@@ -4,7 +4,8 @@ function LoginViewModel() {
     var self = this;
 
     self._loginLink = '/api/o/authorize?client_id={client_id}&response_type=token';
-    self._logoutLink = '/api/o/revoke_token/';
+    self._logoutLink = '/accounts/logout/?next=/charactersheet/';
+    self._revokeToken = '/api/o/revoke_token/'
 
     self._dummy = ko.observable();
 
@@ -43,7 +44,7 @@ function LoginViewModel() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         if (token) {
             token.delete();
-            $.post(self._logoutLink, {
+            $.post(self._revokeToken, {
                 token: token.accessToken,
                 client_id: Settings.CLIENT_ID
             });

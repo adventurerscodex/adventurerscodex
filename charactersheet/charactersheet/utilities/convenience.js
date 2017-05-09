@@ -70,26 +70,33 @@ Utility.array.updateElement = function(array, updatedElement, elementId) {
  * Using the first Access Token in the local data store, set the
  * headers for an OAuth request.
  */
-Utility.oauth.setXHRBearerHeader = function(xhr) {
+Utility.oauth.setXHRBearerHeader = function(xhr, accessToken) {
     var key = CharacterManager.activeCharacter().key();
-    var token = PersistenceService.findAll(AuthenticationToken)[0];
-    if (!token) {
+    if (!accessToken) {
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        accessToken = token.accessToken();
+    }
+
+    if (!accessToken) {
         throw Error('No token available for OAuth Requests.');
     }
-    xhr.setRequestHeader('Authorization', 'Bearer ' + token.accessToken());
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 };
 
 /**
  * Mimics $.getJSON, but includes OAuth Headers.
+ * Leave accessToken argument blank to use the stored token value.
  */
-Utility.oauth.getJSON = function(url, onsuccess, onerror) {
+Utility.oauth.getJSON = function(url, onsuccess, onerror, accessToken) {
     $.ajax({
         url: url,
         type: 'GET',
         dataType: 'json',
         success: onsuccess,
         error: onerror,
-        beforeSend: Utility.oauth.setXHRBearerHeader
+        beforeSend: function(xhr) {
+            Utility.oauth.setXHRBearerHeader(xhr, accessToken);
+        }
     });
 };
 
