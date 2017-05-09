@@ -28,6 +28,8 @@ function _ChatService(config) {
     self._connectionIsSetup = false;
     self._xmppIsConnected = ko.observable(false);
 
+    self.currentPartyNode = null;
+
     self.init = function() {
         Notifications.xmpp.connected.add(self._setupConnection);
         Notifications.xmpp.disconnected.add(self._teardownConnection);
