@@ -45,6 +45,12 @@ var init = function(viewModel) {
          password: 'etheekne'
      };
  };
+// XMPPServiceDefaultConfig.credentialsHelper = function() {
+//      return {
+//          jid: 'tanyxp@adventurerscodex.com/1234',
+//          password: 'test'
+//      };
+//  };
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');

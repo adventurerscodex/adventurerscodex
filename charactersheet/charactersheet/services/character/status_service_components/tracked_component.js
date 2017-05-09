@@ -72,6 +72,7 @@ function TrackedStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
+        Notifications.status.tracked.changed.dispatch();
     };
 
     self._removeStatus = function() {
@@ -82,6 +83,7 @@ function TrackedStatusServiceComponent() {
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();
+            Notifications.status.tracked.changed.dispatch();
         }
     };
 }

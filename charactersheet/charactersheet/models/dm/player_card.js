@@ -13,6 +13,7 @@ function PlayerCard(pCard) {
        Add more fields to the array as needed.
        _Note_: The 'key' has to have the same name as the model attribute. */
     var playerCardFields = [
+        {'key':'publisherJid', 'converter': null},
         {'key':'characterName', 'converter': null},
         {'key':'playerType', 'converter': null},
         {'key':'playerSummary', 'converter': null},
@@ -40,6 +41,7 @@ function PlayerCard(pCard) {
     /* Player Card Fields */
 
     // Profile
+    self.publisherJid = ko.observable('');
     self.characterName = ko.observable('');
     self.playerType = ko.observable('');
 	self.playerSummary = ko.observable('');
@@ -105,15 +107,15 @@ function PlayerCard(pCard) {
         return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
     });
 
-    self.isDangerous = ko.pureComputed(function() {
+    self.isDangerous = ko.computed(function() {
         return parseInt(self.maxHitPoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD ? true : false;
     });
 
-    self.isWarning = ko.pureComputed(function() {
+    self.isWarning = ko.computed(function() {
         return parseInt(self.maxHitPoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD ? true : false;
     });
 
-    self.progressType = ko.pureComputed(function() {
+    self.progressType = ko.computed(function() {
         var type = 'progress-bar-success';
         if (self.isWarning()) { type = 'progress-bar-warning'; }
         if (self.isDangerous()) { type = 'progress-bar-danger'; }
@@ -140,15 +142,20 @@ function PlayerCard(pCard) {
         self.moreInfoOpen(!self.moreInfoOpen());
     };
 
-    if (pCard) {
-        playerCardFields.forEach(function(field, idx, _) {
-            var pCardField = pCard.get(field.key);
-            if (pCardField.length < 1) { return; }
-            if (field.converter == null) {
-                self[field.key](pCardField[0]);
-            } else {
-                self[field.key](field.converter(pCardField[0]));
-            }
-        });
-    }
+    self.map = function(pCard) {
+        if (pCard) {
+            playerCardFields.forEach(function(field, idx, _) {
+                var pCardField = pCard.get(field.key);
+                if (pCardField.length < 1) { return; }
+                if (field.converter == null) {
+                    self[field.key](pCardField[0]);
+                } else {
+                    self[field.key](field.converter(pCardField[0]));
+                }
+            });
+        }
+    };
+
+    self.map(pCard);
+
 }

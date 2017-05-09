@@ -13,7 +13,8 @@ function HealthinessStatusServiceComponent() {
     self.HIT_DICE_WEIGHT = 0.30;
 
     self.init = function() {
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.health.changed.add(self.dataHasChanged);
+        Notifications.hitDice.changed.add(self.dataHasChanged);
         self.dataHasChanged();
     };
 
@@ -69,6 +70,7 @@ function HealthinessStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
+        Notifications.status.healthiness.changed.dispatch();
     };
 
     self._removeStatus = function() {
@@ -79,6 +81,7 @@ function HealthinessStatusServiceComponent() {
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();
+            Notifications.status.healthiness.changed.dispatch();
         }
     };
 

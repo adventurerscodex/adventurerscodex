@@ -11,14 +11,14 @@ var CharacterCardFields = [
         }
     }, {
         name: 'characterName',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.profile.characterName.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
             return profile ? profile.characterName() : '';
         }
     }, {
         name: 'playerSummary',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.profile.characterName.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
             return profile ? profile.summary() : '';
@@ -32,7 +32,7 @@ var CharacterCardFields = [
         }
     }, {
         name: 'imageUrl',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.playerImage.changed,
         valueAccessor: function() {
             var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CharacterManager.activeCharacter().key());
             if (!image) { return; }
@@ -48,28 +48,28 @@ var CharacterCardFields = [
         }
     }, {
         name: 'race',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.profile.race.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
             return profile ? profile.race() : '';
         }
     }, {
         name: 'playerClass',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.profile.playerClass.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
             return profile ? profile.typeClass() : '';
         }
     }, {
         name: 'level',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.profile.level.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
             return profile ? profile.level() : '';
         }
     }, {
         name: 'experience',
-        refreshOn: Notifications.profile.changed,
+        refreshOn: Notifications.profile.experience.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
             return profile ? profile.exp() : '';
@@ -90,35 +90,35 @@ var CharacterCardFields = [
         }
     }, {
         name: 'maxHitPoints',
-        refreshOn: Notifications.stats.changed,
+        refreshOn: Notifications.health.maxHitPoints.changed,
         valueAccessor: function() {
             var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
             return health ? health.maxHitpoints() : 0;
         }
     }, {
         name: 'damage',
-        refreshOn: Notifications.stats.changed,
+        refreshOn: Notifications.health.damage.changed,
         valueAccessor: function() {
             var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
             return health ? health.damage() : 0;
         }
     }, {
         name: 'tempHitPoints',
-        refreshOn: Notifications.stats.changed,
+        refreshOn: Notifications.health.tempHitPoints.changed,
         valueAccessor: function() {
             var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
             return health ? health.tempHitpoints() : 0;
         }
     }, {
         name: 'hitDiceType',
-        refreshOn: Notifications.stats.changed,
+        refreshOn: Notifications.hitDiceType.changed,
         valueAccessor: function() {
             var hitDiceType = PersistenceService.findFirstBy(HitDiceType, 'characterId', CharacterManager.activeCharacter().key());
             return hitDiceType ? hitDiceType.hitDiceType() : '';
         }
     }, {
         name: 'hitDice',
-        refreshOn: Notifications.stats.changed,
+        refreshOn: Notifications.hitDice.changed,
         valueAccessor: function() {
             var hitDice = PersistenceService.findBy(HitDice, 'characterId', CharacterManager.activeCharacter().key());
             if (!hitDice) { return; }
@@ -160,7 +160,7 @@ var CharacterCardFields = [
         }
     }, {
         name: 'healthinessStatus',
-        refreshOn: Notifications.status.changed,
+        refreshOn: Notifications.status.healthiness.changed,
         valueAccessor: function() {
             var predicates = [
                 new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
@@ -171,7 +171,7 @@ var CharacterCardFields = [
         }
     }, {
         name: 'magicStatus',
-        refreshOn: Notifications.status.changed,
+        refreshOn: Notifications.status.magic.changed,
         valueAccessor: function() {
             var predicates = [
                 new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
@@ -182,7 +182,7 @@ var CharacterCardFields = [
         }
     }, {
         name: 'trackedStatus',
-        refreshOn: Notifications.status.changed,
+        refreshOn: Notifications.status.tracked.changed,
         valueAccessor: function() {
             var predicates = [
                 new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),

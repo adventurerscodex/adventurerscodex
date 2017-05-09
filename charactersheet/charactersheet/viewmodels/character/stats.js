@@ -92,20 +92,22 @@ function StatsViewModel() {
         });
 
         //Subscriptions
-        self.health().maxHitpoints.subscribe(self.dataHasChanged);
-        self.health().damage.subscribe(self.dataHasChanged);
+        self.health().maxHitpoints.subscribe(self.maxHpDataHasChanged);
+        self.health().damage.subscribe(self.damageDataHasChanged);
+        self.health().tempHitpoints.subscribe(self.tempHpDataHasChanged);
         self.hitDiceList().forEach(function(hitDice, i, _) {
-            hitDice.hitDiceUsed.subscribe(self.dataHasChanged);
+            hitDice.hitDiceUsed.subscribe(self.hitDiceDataHasChanged);
         });
+        self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
         self.otherStats().proficiency.subscribe(self.dataHasChanged);
         self.otherStats().inspiration.subscribe(self.dataHasChanged);
         self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
-        self.otherStats().armorClassModifier.subscribe(self.dataHasChanged);
-        self.level.subscribe(self.dataHasChanged);
-        self.experience.subscribe(self.dataHasChanged);
+        self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
+        self.level.subscribe(self.levelDataHasChanged);
+        self.experience.subscribe(self.experienceDataHasChanged);
 
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
-        Notifications.profile.changed.add(self.calculateHitDice);
+        Notifications.profile.level.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
@@ -295,21 +297,67 @@ function StatsViewModel() {
         }
         self.modalOpen(false);
         self.health().save();
+        Notifications.health.changed.dispatch();
     };
 
     /* Utility Methods */
 
     self.dataHasChanged = function() {
-        self.otherStats().save();
-        self.health().save();
-        Notifications.stats.changed.dispatch();
+    };
 
-        //Save level and exp in profile model
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
+    self.healthDataHasChange = function() {
+        self.health().save();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.armorClassModifierDataHasChanged = function() {
+        self.otherStats().save();
+        Notifications.stats.armorClassModifier.changed.dispatch();
+    };
+
+    self.levelDataHasChanged = function() {
+        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key());
         profile.level(self.level());
+        profile.save();
+        Notifications.profile.level.changed.dispatch();
+    };
+
+    self.experienceDataHasChanged = function() {
+        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key());
         profile.exp(self.experience());
         profile.save();
-        Notifications.profile.changed.dispatch();
+        Notifications.profile.experience.changed.dispatch();
+    };
+
+    self.maxHpDataHasChanged = function() {
+        self.health().save();
+        Notifications.health.maxHitPoints.changed.dispatch();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.damageDataHasChanged = function() {
+        self.health().save();
+        Notifications.health.damage.changed.dispatch();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.tempHpDataHasChanged = function() {
+        self.health().save();
+        Notifications.health.tempHitPoints.changed.dispatch();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.hitDiceDataHasChanged = function() {
+        self.hitDiceList().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.hitDice.changed.dispatch();
+    };
+
+    self.hitDiceTypeDataHasChanged = function() {
+        self.hitDiceType().save();
+        Notifications.hitDiceType.changed.dispatch();
     };
 }

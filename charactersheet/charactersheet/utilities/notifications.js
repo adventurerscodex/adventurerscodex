@@ -99,10 +99,6 @@ var Notifications = {
         toggle: new signals.Signal()
     },
 
-    status: {
-        changed: new signals.Signal()
-    },
-
     abilityScores: {
         changed: new signals.Signal()
     },
@@ -139,6 +135,27 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    health: {
+        changed: new signals.Signal(),
+        maxHitPoints: {
+            changed: new signals.Signal()
+        },
+        tempHitPoints: {
+            changed: new signals.Signal()
+        },
+        damage: {
+            changed: new signals.Signal()
+        }
+    },
+
+    hitDice: {
+        changed: new signals.Signal(),
+    },
+
+    hitDiceType: {
+        changed: new signals.Signal(),
+    },
+
     item: {
         changed: new signals.Signal()
     },
@@ -160,7 +177,28 @@ var Notifications = {
     },
 
     profile: {
-        changed: new signals.Signal()
+        changed: new signals.Signal(),
+        level: {
+            changed: new signals.Signal()
+        },
+        experience: {
+            changed: new signals.Signal()
+        },
+        characterName: {
+            changed: new signals.Signal()
+        },
+        playerSummary: {
+            changed: new signals.Signal()
+        },
+        playerType: {
+            changed: new signals.Signal()
+        },
+        race: {
+            changed: new signals.Signal()
+        },
+        playerClass: {
+            changed: new signals.Signal()
+        }
     },
 
     proficiency: {
@@ -175,10 +213,6 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
-    stats: {
-        changed: new signals.Signal()
-    },
-
     skills: {
         changed: new signals.Signal()
     },
@@ -189,6 +223,26 @@ var Notifications = {
 
     spellStats: {
         changed: new signals.Signal()
+    },
+
+    stats: {
+        changed: new signals.Signal(),
+        armorClassModifier: {
+            changed: new signals.Signal()
+        }
+    },
+
+    status: {
+        changed: new signals.Signal(),
+        healthiness: {
+            changed: new signals.Signal()
+        },
+        magic: {
+            changed: new signals.Signal()
+        },
+        tracked: {
+            changed: new signals.Signal()
+        }
     },
 
     trait: {

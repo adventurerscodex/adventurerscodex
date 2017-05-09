@@ -60,6 +60,7 @@ function MagicalStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
+        Notifications.status.magic.changed.dispatch();
     };
 
     self._removeStatus = function() {
@@ -70,6 +71,7 @@ function MagicalStatusServiceComponent() {
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();
+            Notifications.status.magic.changed.dispatch();
         }
     };
 
