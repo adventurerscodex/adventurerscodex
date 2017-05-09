@@ -99,7 +99,7 @@ function StatsViewModel() {
             hitDice.hitDiceUsed.subscribe(self.hitDiceDataHasChanged);
         });
         self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
-        self.otherStats().proficiency.subscribe(self.dataHasChanged);
+        self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
         self.otherStats().inspiration.subscribe(self.dataHasChanged);
         self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
         self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
@@ -359,5 +359,10 @@ function StatsViewModel() {
     self.hitDiceTypeDataHasChanged = function() {
         self.hitDiceType().save();
         Notifications.hitDiceType.changed.dispatch();
+    };
+
+    self.proficiencyHasChanged = function() {
+        self.otherStats().save();
+        Notifications.otherStats.proficiency.changed.dispatch();
     };
 }

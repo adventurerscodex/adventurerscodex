@@ -168,6 +168,13 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    otherStats: {
+        changed: new signals.Signal(),
+        proficiency: {
+            changed: new signals.Signal()
+        }
+    },
+
     playerImage: {
         changed: new signals.Signal()
     },

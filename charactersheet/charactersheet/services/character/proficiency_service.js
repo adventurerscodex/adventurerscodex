@@ -9,8 +9,7 @@ function _ProficiencyService(configuration) {
     self.characterId = ko.observable();
 
     self.init = function() {
-        Notifications.profile.changed.add(self.dataHasChanged);
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
 
         // Kick it off the first time.
         self.characterId(CharacterManager.activeCharacter().key());
