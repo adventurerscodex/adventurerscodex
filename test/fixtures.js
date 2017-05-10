@@ -160,8 +160,7 @@ var CharacterFixture = {
             'inventory',
             'notes',
             'settings',
-            'party'
-        ],
+            'party'],
         'defaultTab': 'stats'
     }
 };
@@ -181,8 +180,7 @@ var DMCharacterFixture = {
             'inventory',
             'notes',
             'settings',
-            'party'
-        ],
+            'party'],
         'defaultTab': 'campaign'
     }
 };

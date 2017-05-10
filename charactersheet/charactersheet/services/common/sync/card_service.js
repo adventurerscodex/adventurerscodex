@@ -78,8 +78,8 @@ function _pCardService(configuration) {
                 self._clearOldPCards(response, function() {
                     xmpp.connection.pubsub.publish(self.currentPartyNode, [
                             { attrs: null, data: cardTree}
-                        ], self._handleResponse);
-                })
+                    ], self._handleResponse);
+                });
             }, null, 3000);
         }
     };
@@ -125,7 +125,6 @@ function _pCardService(configuration) {
     /* Event Handlers */
 
     self._handleResponse = function(response) {
-        console.log(response);
     };
 
     self._updateCurrentNode = function(node) {

@@ -8,8 +8,7 @@ describe('Proficiency Service', function() {
 
     describe('Init', function() {
         it('should subscribe to relevant viewmodels and calculate first proficiency', function() {
-            var spy1 = simple.mock(Notifications.profile.changed, 'add');
-            var spy2 = simple.mock(Notifications.stats.changed, 'add');
+            var spy1 = simple.mock(Notifications.otherStats.proficiency.changed, 'add');
             simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, property, value) {
                 if (model.name === 'OtherStats') {
                     var otherStats = new OtherStats();
@@ -27,7 +26,6 @@ describe('Proficiency Service', function() {
             var proficiency = proficiencyService.proficiency();
             proficiency.should.equal(3);
             spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
         });
     });
 

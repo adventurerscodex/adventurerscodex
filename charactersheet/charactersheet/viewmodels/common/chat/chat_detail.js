@@ -47,15 +47,15 @@ function ChatDetailViewModel(chatCell, parent) {
         var key = CharacterManager.activeCharacter().key();
         var log = PersistenceService.findByPredicates(ChatMessage, [
             new OrPredicate([
-                new KeyValuePredicate('chatId', self.id()),
-            ]),
+                new KeyValuePredicate('chatId', self.id())
+            ])
         ]);
 
         self.log(log);
     };
 
     self.updateBadge = function() {
-        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0]
+        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
         self.parent.updateBadge(room);
     };
 
@@ -72,6 +72,7 @@ function ChatDetailViewModel(chatCell, parent) {
 
         // Modal will open.
         if (self.parent.modalIsOpen()) {
+            //todo
         }
     };
 
@@ -83,7 +84,7 @@ function ChatDetailViewModel(chatCell, parent) {
             self.log.push(message);
         }, function() {
             message.failed(true);
-            self.log.push(message)
+            self.log.push(message);
         });
 
         if (!self.isGroupChat()) {
@@ -157,5 +158,5 @@ function ChatDetailViewModel(chatCell, parent) {
         } else {
             self._xmppIsConnected(false);
         }
-    }
+    };
 }

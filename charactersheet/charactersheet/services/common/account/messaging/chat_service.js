@@ -129,7 +129,7 @@ function _ChatService(config) {
 
     self._handleNewRosterMessage = function(occupant, room) {
         self.rooms[room.name] = room;
-    }
+    };
 
     // Connection Handlers
 

@@ -186,5 +186,5 @@ function SkillsViewModel() {
 
     self.perceptionHasChanged = function() {
         Notifications.skills.perception.changed.dispatch();
-    }
+    };
 }

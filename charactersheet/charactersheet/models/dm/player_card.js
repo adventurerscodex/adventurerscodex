@@ -1,4 +1,4 @@
-'use strict;'
+'use strict';
 /**
  * Fields from a pCard will be extracted to create the UI representation of a player.
  * @param pCard  contains all the fields that make up a player
@@ -44,32 +44,32 @@ function PlayerCard(pCard) {
     self.publisherJid = ko.observable('');
     self.characterName = ko.observable('');
     self.playerType = ko.observable('');
-	self.playerSummary = ko.observable('');
+    self.playerSummary = ko.observable('');
     self.name = ko.observable('');
-	self.imageUrl = ko.observable('');
-	self.race = ko.observable('');
-	self.playerClass = ko.observable('');
-	self.gold = ko.observable('');
+    self.imageUrl = ko.observable('');
+    self.race = ko.observable('');
+    self.playerClass = ko.observable('');
+    self.gold = ko.observable('');
 
     // Health
-	self.maxHitPoints = ko.observable(0);
-	self.damage = ko.observable(0);
-	self.tempHitPoints = ko.observable(0);
-	self.hitDiceType = ko.observable('');
-	self.hitDice = ko.observable('');
+    self.maxHitPoints = ko.observable(0);
+    self.damage = ko.observable(0);
+    self.tempHitPoints = ko.observable(0);
+    self.hitDiceType = ko.observable('');
+    self.hitDice = ko.observable('');
 
     // Stats
-	self.passivePerception = ko.observable(0);
-	self.passiveIntelligence = ko.observable(0);
-	self.spellSaveDC = ko.observable(0);
+    self.passivePerception = ko.observable(0);
+    self.passiveIntelligence = ko.observable(0);
+    self.spellSaveDC = ko.observable(0);
     self.level = ko.observable(0);
     self.experience = ko.observable('');
-	self.armorClass = ko.observable(0);
+    self.armorClass = ko.observable(0);
 
     // Status
-	self.healthinessStatus = ko.observable();
-	self.magicStatus = ko.observable();
-	self.trackedStatus = ko.observable();
+    self.healthinessStatus = ko.observable();
+    self.magicStatus = ko.observable();
+    self.trackedStatus = ko.observable();
 
     self.moreInfoOpen = ko.observable(false);
 

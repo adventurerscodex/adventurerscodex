@@ -102,10 +102,10 @@ var Notifications = {
     abilityScores: {
         changed: new signals.Signal(),
         intelligence: {
-            changed: new signals.Signal(),
+            changed: new signals.Signal()
         },
         dexterity: {
-            changed: new signals.Signal(),
+            changed: new signals.Signal()
         }
     },
 
@@ -155,11 +155,11 @@ var Notifications = {
     },
 
     hitDice: {
-        changed: new signals.Signal(),
+        changed: new signals.Signal()
     },
 
     hitDiceType: {
-        changed: new signals.Signal(),
+        changed: new signals.Signal()
     },
 
     item: {

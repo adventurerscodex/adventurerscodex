@@ -299,4 +299,4 @@ pCard.fromEntries = function(entries) {
     var card = new pCard();
     card.entries = entries;
     return card;
-}
+};
