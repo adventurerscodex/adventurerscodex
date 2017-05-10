@@ -30,15 +30,12 @@ FOR DMS
 
 Manage your campaign by keeping track of enemies, and friendly NPCs, as well as any notes, maps, custom items, and whatever else you've created!
 
-**Coming soon...**
-
 
 FOR ENTIRE PARTIES
 ------------------
 
-Take advantage of innovative features like group chat, advanced time-tracking, terrain visualizations, custom item sets, and a combat management tool!
+Take advantage of innovative features like group chat, party dashboard, and a combat management tool!
 
-**Coming soon...**
 
 Getting Started
 ===============
