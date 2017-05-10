@@ -33,7 +33,7 @@ var CharacterCardFields = [
                 return imageModel ? imageModel.imageUrl() : '';
             } else if (image.imageSource() === 'email') {
                 var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
-                return info ? info.gravararUrl() : '';
+                return info ? info.gravatarUrl() : '';
             } else {
                 return null;
             }

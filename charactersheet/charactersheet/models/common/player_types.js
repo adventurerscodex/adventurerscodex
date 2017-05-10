@@ -5,7 +5,7 @@ var PlayerTypes = {
         key: 'character',
         visibleTabs: [
             'profile', 'stats', 'skills', 'spells', 'equipment',
-            'inventory', 'notes', 'settings', 'party'],
+            'inventory', 'notes', 'settings', 'party', 'chat'],
         rootViewModel: CharacterRootViewModel,
         defaultTab: 'stats'
     },
