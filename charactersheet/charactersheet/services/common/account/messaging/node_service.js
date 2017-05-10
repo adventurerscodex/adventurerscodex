@@ -182,6 +182,26 @@ function _NodeService(config) {
             }, onerror);
     };
 
+    /**
+     * Deletes an item from a node with matching criteria.
+     *
+     * @param node  id of node where items are published
+     * @param itemId  id of item to look for in the given node
+     */
+    self.deleteItem = function(node, itemId, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        var iq = $iq({
+            from: xmpp.connection.jid,
+            to: Settings.PUBSUB_HOST_JID,
+            type:'set',
+            id: xmpp.connection.getUniqueId()
+        }).c('pubsub', {xmlns: Strophe.NS.PUBSUB})
+        .c('retract', {node: node})
+        .c('item', {id: itemId});
+
+        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror, 3000);
+    };
+
     /* Private Methods */
 
     self._handleConnect = function() {
@@ -249,7 +269,7 @@ function _NodeService(config) {
     };
 
     self._decompressContents = function(data, compression) {
-        self.config.compression[compression].decompress(data);
+        return self.config.compression[compression].decompress(data);
     };
 
     self._subscribeToExistingParty = function(response) {

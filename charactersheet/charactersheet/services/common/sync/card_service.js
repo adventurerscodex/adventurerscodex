@@ -20,20 +20,22 @@ var DMCardPublishingServiceConfiguration = {
 };
 
 
-var CharacterCardPublishingService = new SharedServiceManager(_pCardPublishingService, CharacterCardPublishingServiceConfiguration);
-var DMCardPublishingService = new SharedServiceManager(_pCardPublishingService, DMCardPublishingServiceConfiguration);
+var CharacterCardPublishingService = new SharedServiceManager(_pCardService, CharacterCardPublishingServiceConfiguration);
+var DMCardPublishingService = new SharedServiceManager(_pCardService, DMCardPublishingServiceConfiguration);
 
 /**
  * A service responsible for publishing the current pCard.
  */
-function _pCardPublishingService(configuration) {
+function _pCardService(configuration) {
     var self = this;
 
     self.configuration = configuration;
     self.currentPartyNode = null;
+    self.pCards = {};
 
     self.init = function() {
         var key = CharacterManager.activeCharacter().key();
+        Notifications.xmpp.routes.pcard.add(self.handlePCard);
         var player = PersistenceService.findFirstBy(Character, 'key', key);
         if (player.playerType().key === PlayerTypes.characterPlayerType.key) {
             self._setupNotifications();
@@ -52,7 +54,8 @@ function _pCardPublishingService(configuration) {
         var compressed = self.configuration.enableCompression;
         var attrs = {
             id: xmpp.connection.getUniqueId(),
-            route: 'pcard'
+            route: 'pcard',
+            publisher: xmpp.connection.jid
         };
         var content = '';
 
@@ -69,9 +72,15 @@ function _pCardPublishingService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            xmpp.connection.pubsub.publish(self.currentPartyNode, [
-                { attrs: null, data: cardTree}
-            ], self._handleResponse);
+            // Delete previous pCards, if they exist.
+            xmpp.connection.pubsub.items(self.currentPartyNode,
+            function(response) {
+                self._clearOldPCards(response, function() {
+                    xmpp.connection.pubsub.publish(self.currentPartyNode, [
+                            { attrs: null, data: cardTree}
+                    ], self._handleResponse);
+                });
+            }, null, 3000);
         }
     };
 
@@ -95,11 +104,27 @@ function _pCardPublishingService(configuration) {
 
         return card;
     };
+    /**
+     * Deletes existing pCards.
+     *
+     * @param response  a list of items published to the node
+     * @param callback  called upon successful deletion of existing pCards
+     */
+    self._clearOldPCards = function(response, callback) {
+        var node = NodeServiceManager.sharedService();
+        var xmpp = XMPPService.sharedService();
+        var items = $(response).find('items').children().toArray();
+        items.forEach(function(item, idx, _) {
+            if ($(item).children().attr('publisher') === xmpp.connection.jid) {
+                node.deleteItem(self.currentPartyNode, $(item).attr('id'), null, null);
+            }
+        });
+        callback();
+    };
 
     /* Event Handlers */
 
     self._handleResponse = function(response) {
-
     };
 
     self._updateCurrentNode = function(node) {
@@ -109,5 +134,11 @@ function _pCardPublishingService(configuration) {
 
     self._removeCurrentNode = function(node) {
         self.currentPartyNode = null;
+    };
+
+    self.handlePCard = function(inputPCard) {
+        var newPCard = pCard.fromEntries(inputPCard);
+
+        self.pCards[newPCard.get('publisherJid')] = newPCard;
     };
 }

@@ -1,5 +1,5 @@
 'use strict';
-
+/*eslint no-console:0*/
 function ChatViewModel() {
     var self = new MasterDetailViewModel();
 

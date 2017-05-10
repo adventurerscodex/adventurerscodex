@@ -5,7 +5,7 @@ function LoginViewModel() {
 
     self._loginLink = '/api/o/authorize?client_id={client_id}&response_type=token';
     self._logoutLink = '/accounts/logout/?next=/charactersheet/';
-    self._revokeToken = '/api/o/revoke_token/'
+    self._revokeToken = '/api/o/revoke_token/';
 
     self._dummy = ko.observable();
 

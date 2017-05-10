@@ -225,7 +225,7 @@ function CharacterRootViewModel() {
 
     self._updatePartyStatus = function() {
         var xmpp = XMPPService.sharedService();
-        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode())
+        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
     };
 
     self._updateCurrentNode = function(node) {

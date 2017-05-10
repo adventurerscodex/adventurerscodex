@@ -95,6 +95,7 @@ describe('Character Model', function() {
             var list_expected = JSON.stringify(jebeddo_data).split(',');
 
             list_data.forEach(function(item, idx, _) {
+                console.log(list_expected[idx], item);
                 item.should.equal(list_expected[idx]);
             });
         });

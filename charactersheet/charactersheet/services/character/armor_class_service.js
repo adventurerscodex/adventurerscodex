@@ -9,8 +9,8 @@ function _ArmorClassService(configuration) {
 
     self.init = function() {
         Notifications.armor.changed.add(self.dataHasChanged);
-        Notifications.abilityScores.changed.add(self.dataHasChanged);
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.abilityScores.dexterity.changed.add(self.dataHasChanged);
+        Notifications.stats.armorClassModifier.changed.add(self.dataHasChanged);
 
         // Kick it off the first time.
         self.dataHasChanged();
