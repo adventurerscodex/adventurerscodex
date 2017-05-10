@@ -28,6 +28,13 @@ function Status() {
      */
     self.name = ko.observable();
 
+    /**
+     * A value associated with the status itself.
+     *
+     * Example: Integer value of gold, raw healthiness score, etc.
+     */
+    self.value = ko.observable(0);
+
     //Public Methods
 
     self.clear = function() {

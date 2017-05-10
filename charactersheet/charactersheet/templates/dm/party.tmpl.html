@@ -7,10 +7,10 @@
         <!-- Player Info -->
         <div class="row">
           <div class="col-xs-12">
-           <!-- ko if: image -->
+           <!-- ko if: imageUrl -->
            <img class="img-circle center-block"
              data-bind="attr: {
-               src: image,
+               src: imageUrl,
                height: 80,
                width: 80,
              }">
@@ -20,15 +20,8 @@
         <div class="row">
           <div class="col-xs-12 text-center">
             <div class="h4">
-              <span data-bind="text: name"></span><br />
-              <small data-bind="text: summary"></small>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-xs-12 text-center">
-            <div class="">
-              <span data-bind="html: statusLine"></span>
+              <span data-bind="text: characterName"></span><br />
+              <small data-bind="text: playerSummary"></small>
             </div>
           </div>
         </div>
@@ -37,9 +30,14 @@
           <div class="col-xs-12">
             Hit Points
             <div class="progress thin">
-              <div class="progress-bar progress-bar-success" role="progressbar"
-                aria-valuenow="60" aria-valuemin="0"
-                aria-valuemax="100" style="width: 60%;">
+              <div class="progress thin">
+                <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
+                  data-bind="style: { width: regularProgressWidth }, css: progressType">
+                  <span class="sr-only"></span>
+                </div>
+                <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar"
+                  aria-valuemin="0" data-bind="style: { width: tempProgressWidth }">
+                </div>
               </div>
             </div>
           </div>
@@ -48,9 +46,8 @@
           <div class="col-xs-12">
             Spell Slots
             <div class="progress thin">
-              <div class="progress-bar progress-bar-info" role="progressbar"
-                aria-valuenow="60" aria-valuemin="0"
-                aria-valuemax="100" style="width: 80%;">
+              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0"
+                aria-valuemax="100" data-bind="style: { width: magicProgressWidth }">
               </div>
             </div>
           </div>
@@ -59,33 +56,32 @@
           <div class="col-xs-12">
             Features, Feats, and Traits
             <div class="progress thin">
-              <div class="progress-bar progress-bar-warning" role="progressbar"
-                aria-valuenow="60" aria-valuemin="0"
-                aria-valuemax="100" style="width: 20%;">
+              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuemin="0"
+                aria-valuemax="100" data-bind="style: { width: trackedProgressWidth }">
               </div>
             </div>
           </div>
         </div>
-        <!-- Stats -->
         <div class="row">
           <div class="col-xs-12 text-right">
             <a class="text-right" style="cursor:pointer;"
-              data-bind="click: function() { moreInfoOpen(!moreInfoOpen())}">More
+              data-bind="click: toggleMoreInfo">More
               <span class="fa fa-caret-down"></span>
             </div>
           </a>
         </div>
-        <div data-bind="well: { open: moreInfoOpen }">
+        <br />
+        <div data-bind="well: { open: moreInfoOpen }" class="collapse">
           <div class="row">
-            <div class="col-xs-12 col-emd-6 col-padded">
+            <div class="col-xs-12 col-padded">
               <ul class="list-group" style="margin-bottom:0;">
                 <li class="list-group-item">
                   Armor Class
                   <span class="pull-right" data-bind="text: armorClass"></span>
                 </li>
                 <li class="list-group-item">
-                  Hit Dice Remaining
-                  <span class="pull-right" data-bind="text: hitDice"></span>
+                  Hit Dice
+                  <span class="pull-right" data-bind="text: hitDiceDisplay"></span>
                 </li>
                 <li class="list-group-item">
                   Spell Save DC
@@ -96,8 +92,8 @@
                   <span class="pull-right" data-bind="text: experience"></span>
                 </li>
                 <li class="list-group-item">
-                  Passive Wisdom
-                  <span class="pull-right" data-bind="text: passiveWisdom"></span>
+                  Passive Perception
+                  <span class="pull-right" data-bind="text: passivePerception"></span>
                 </li>
                 <li class="list-group-item">
                   Passive Intelligence

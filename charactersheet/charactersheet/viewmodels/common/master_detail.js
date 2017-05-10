@@ -160,7 +160,7 @@ function MasterDetailViewModel() {
             self._initializeModalViewModel();
             self.modalIsOpen(true);
         } else {
-            self.addItemWithParent(null, parent)
+            self.addItemWithParent(null, parent);
         }
     };
 

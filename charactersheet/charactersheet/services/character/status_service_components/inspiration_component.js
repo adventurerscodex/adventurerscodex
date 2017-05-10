@@ -23,7 +23,7 @@ function InspirationStatusServiceComponent() {
         var stats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
 
         if (!stats) { return; }
-        
+
         if (stats) {
             if (!parseInt(stats.inspiration())) {
                 self._removeStatus();
@@ -49,6 +49,7 @@ function InspirationStatusServiceComponent() {
 
         status.name('inspired');
         status.type('info');
+        status.value(1);
 
         status.save();
         Notifications.status.changed.dispatch();

@@ -18,8 +18,7 @@ var jebeddo_data = {
           "inventory",
           "notes",
           "settings",
-          "party"
-        ],
+          "party"],
         "defaultTab": "stats"
       }
     }
