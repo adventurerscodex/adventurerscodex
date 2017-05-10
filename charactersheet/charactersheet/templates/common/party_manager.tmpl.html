@@ -106,18 +106,32 @@
             <label for="roomName"
                    class="col-sm-3 control-label">Party Link</label>
             <div class="col-sm-8">
-              <input type="text" disabled
-                     class="form-control"
-                     data-bind="value: roomLink">
+              <div class="input-group">
+                <input type="text" readonly id="roomLink"
+                      class="form-control"
+                      data-bind="value: roomLink">
+                <span class="input-group-btn">
+                  <button class="btn" data-clipboard-target="#roomLink">
+                    <i class="fa fa-clipboard" aria-hidden="true" title="Copy to clipboard"></i>
+                  </button>
+                </span>
+              </div>
             </div>
           </div>
           <div class="row row-padded">
             <label for="roomName"
                    class="col-sm-3 control-label">Party ID</label>
             <div class="col-sm-8">
-              <input type="text" disabled
-                     class="form-control"
-                     data-bind="value: roomId">
+              <div class="input-group">
+                <input type="text" readonly id="nodeId"
+                      class="form-control"
+                      data-bind="value: roomId">
+                <span class="input-group-btn">
+                  <button class="btn" data-clipboard-target="#nodeId">
+                    <i class="fa fa-clipboard" aria-hidden="true" title="Copy to clipboard"></i>
+                  </button>
+                </span>
+              </div>
             </div>
           </div>
           <div class="row">

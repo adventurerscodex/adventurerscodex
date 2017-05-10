@@ -30,10 +30,7 @@ function _UserService(config) {
     };
 
     self.getAccount = function() {
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-        if (token) {
-            $.getJSON(self.url, self._handleResponse);
-        }
+        Utility.oauth.getJSON(self.url, self._handleResponse);
     };
 
     // Private Methods

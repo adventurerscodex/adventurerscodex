@@ -26,7 +26,7 @@ var Settings = {
     /**
      * The HOST URL of the pubsub services.
      */
-    PUBSUB_HOST_JID: 'pubub.adventurerscodex.com',
+    PUBSUB_HOST_JID: 'pubsub.adventurerscodex.com',
 
     /**
      * A config object for dropbox integration.
