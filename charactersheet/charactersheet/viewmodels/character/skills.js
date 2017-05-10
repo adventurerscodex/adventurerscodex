@@ -41,7 +41,6 @@ function SkillsViewModel() {
         });
     };
 
-
     self.blankSkill = ko.observable(new Skill(self));
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
@@ -67,10 +66,13 @@ function SkillsViewModel() {
 
         //Subscriptions
         Notifications.abilityScores.changed.add(self.dataHasChanged);
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
         Notifications.profile.changed.add(self.dataHasChanged);
         self.skills().forEach(function(e, i, _) {
             self.addNotifiers(e);
+            if (e.name() === 'Perception'){
+                e.bonus.subscribe(self.perceptionHasChanged);
+            }
         });
     };
 
@@ -78,7 +80,7 @@ function SkillsViewModel() {
         self.save();
         self.skills([]);
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
-        Notifications.stats.changed.remove(self.dataHasChanged);
+        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
         Notifications.profile.changed.remove(self.dataHasChanged);
         Notifications.global.save.remove(self.save);
     };
@@ -181,4 +183,8 @@ function SkillsViewModel() {
         });
         Notifications.skills.changed.dispatch();
     };
+
+    self.perceptionHasChanged = function() {
+        Notifications.skills.perception.changed.dispatch();
+    }
 }

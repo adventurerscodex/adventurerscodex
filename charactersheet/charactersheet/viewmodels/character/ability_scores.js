@@ -48,9 +48,9 @@ function AbilityScoresViewModel() {
 
         //Subscriptions
         self.abilityScores().str.subscribe(self.dataHasChanged);
-        self.abilityScores().dex.subscribe(self.dataHasChanged);
+        self.abilityScores().dex.subscribe(self.dexterityHasChanged);
         self.abilityScores().con.subscribe(self.dataHasChanged);
-        self.abilityScores().int.subscribe(self.dataHasChanged);
+        self.abilityScores().int.subscribe(self.intelligenceHasChanged);
         self.abilityScores().wis.subscribe(self.dataHasChanged);
         self.abilityScores().cha.subscribe(self.dataHasChanged);
     };
@@ -69,11 +69,23 @@ function AbilityScoresViewModel() {
         Notifications.abilityScores.changed.dispatch();
     };
 
+    self.intelligenceHasChanged = function() {
+        self.abilityScores().save();
+        Notifications.abilityScores.intelligence.changed.dispatch();
+        Notifications.abilityScores.changed.dispatch();
+    };
+
+    self.dexterityHasChanged = function() {
+        self.abilityScores().save();
+        Notifications.abilityScores.dexterity.changed.dispatch();
+        Notifications.abilityScores.changed.dispatch();
+    };
+
     // Modal Methods
 
     self.openModal = function() {
         self.editItem(new AbilityScores());
-        self.editItem().importValues(self.abilityScores().exportValues());        
+        self.editItem().importValues(self.abilityScores().exportValues());
 
         self.modalStatus(true);
          // Alert the modal even if the value didn't technically change.
@@ -85,11 +97,11 @@ function AbilityScoresViewModel() {
         self.firstModalElementHasFocus.valueHasMutated();
     };
 
-    self.modalFinishedClosing = function() {    
+    self.modalFinishedClosing = function() {
         if (self.modalStatus()) {
             self.abilityScores().importValues(self.editItem().exportValues());
         }
         self.modalStatus(false);
         self.abilityScores().save();
-    };    
+    };
 }

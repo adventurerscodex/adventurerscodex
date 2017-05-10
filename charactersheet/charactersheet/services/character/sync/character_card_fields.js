@@ -132,7 +132,7 @@ var CharacterCardFields = [
         }
     }, {
         name: 'passivePerception',
-        refreshOn: Notifications.skills.changed,
+        refreshOn: Notifications.skills.perception.changed,
         valueAccessor: function() {
             var predicates = [
                 new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
@@ -144,7 +144,7 @@ var CharacterCardFields = [
         }
     }, {
         name: 'passiveIntelligence',
-        refreshOn: Notifications.abilityScores.changed,
+        refreshOn: Notifications.abilityScores.intelligence.changed,
         valueAccessor: function() {
             var abilityScores = PersistenceService.findFirstBy(AbilityScores, CharacterManager.activeCharacter().key());
             var modifier = abilityScores.modifierFor('int');

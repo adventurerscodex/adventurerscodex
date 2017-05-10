@@ -100,7 +100,13 @@ var Notifications = {
     },
 
     abilityScores: {
-        changed: new signals.Signal()
+        changed: new signals.Signal(),
+        intelligence: {
+            changed: new signals.Signal(),
+        },
+        dexterity: {
+            changed: new signals.Signal(),
+        }
     },
 
     armor: {
@@ -221,7 +227,10 @@ var Notifications = {
     },
 
     skills: {
-        changed: new signals.Signal()
+        changed: new signals.Signal(),
+        perception: {
+            changed: new signals.Signal()
+        }
     },
 
     spellSlots: {
