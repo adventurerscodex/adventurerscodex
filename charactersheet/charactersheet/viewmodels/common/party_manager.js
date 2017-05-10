@@ -142,21 +142,6 @@ function PartyManagerViewModel() {
 
     /* Private Methods */
 
-    self._subscribeToExistingParty = function(response) {
-        var fullJid = XMPPService.sharedService().connection.jid;
-        var subscriptions = $(response).find('subscriptions').children().toArray();
-        subscriptions.forEach(function(subscriptionNode, idx, _) {
-            if ($(subscriptionNode).attr('subscription') === 'subscribed' &&
-            $(subscriptionNode).attr('jid') === fullJid) {
-                self.roomId($(subscriptionNode).attr('node'));
-                self.inAParty(true);
-                Notifications.userNotification.successNotification.dispatch(
-                    'You have re-joined ' + self.roomId()
-                );
-            }
-        });
-    };
-
     self._getParties = function() {
         var key = CharacterManager.activeCharacter().key();
         return PersistenceService.findBy(Party, 'characterId', key);

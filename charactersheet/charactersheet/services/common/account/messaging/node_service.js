@@ -197,22 +197,11 @@ function _NodeService(config) {
         var nodeJID = fragments['node_jid'];
 
         if (!nodeJID) {
-            // There's no node given. Don't try to connect.
+            // There's no node given. See if we're already in a party
+            self._subscribeToExistingParty(response);
             return;
-        }
-
-        var subscriptions = $(response).find('subscriptions').children().toArray();
-        var subscriptionAlreadyExists = subscriptions.some(function(subscription, idx, _) {
-            return (
-                $(subscription).attr('node') === nodeJID &&
-                $(subscription).attr('subscription') === 'subscribed'
-            );
-        });
-
-        if (!subscriptionAlreadyExists) {
-            var xmpp = XMPPService.sharedService();
-            xmpp.connection.pubsub.subscribe(nodeJID, {}, self._handleEvent,
-                self._handleSubscriptionSuccess, self._handleSubscriptionError);
+        } else {
+            self._subscribeToGivenNode(response, nodeJID);
         }
     };
 
@@ -261,5 +250,33 @@ function _NodeService(config) {
 
     self._decompressContents = function(data, compression) {
         self.config.compression[compression].decompress(data);
+    };
+
+    self._subscribeToExistingParty = function(response) {
+        var fullJid = XMPPService.sharedService().connection.jid;
+        var subscriptions = $(response).find('subscriptions').children().toArray();
+        subscriptions.forEach(function(subscriptionNode, idx, _) {
+            if ($(subscriptionNode).attr('subscription') === 'subscribed' &&
+            $(subscriptionNode).attr('jid') === fullJid) {
+                Notifications.xmpp.pubsub.subscribed.dispatch(fullJid);
+                Notifications.userNotification.successNotification.dispatch(
+                    'You have re-joined ' + self.roomId()
+                );
+            }
+        });
+    };
+
+    self._subscribeToGivenNode = function(response, nodeJID) {
+        var subscriptions = $(response).find('subscriptions').children().toArray();
+        var subscriptionAlreadyExists = subscriptions.some(function(subscription, idx, _) {
+            return (
+                $(subscription).attr('node') === nodeJID &&
+                $(subscription).attr('subscription') === 'subscribed'
+            );
+        });
+
+        if (!subscriptionAlreadyExists) {
+            self.subscribe(nodeJID, self._handleSubscriptionSuccess, self._handleSubscriptionError);
+        }
     };
 }
