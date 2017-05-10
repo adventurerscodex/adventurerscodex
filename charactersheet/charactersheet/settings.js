@@ -63,34 +63,34 @@ var Settings = {
     srdDataRepositoryLocations: [
         {
             key: 'items',
-            url: 'https://adventurerscodex.com/data/SRD/items.json'
+            url: 'https://adventurerscodex.com/data/SRD/items.min.json'
         }, {
             key: 'spells',
-            url: 'https://adventurerscodex.com/data/SRD/spells.json'
+            url: 'https://adventurerscodex.com/data/SRD/spells.min.json'
         }, {
             key: 'armors',
-            url: 'https://adventurerscodex.com/data/SRD/armor.json'
+            url: 'https://adventurerscodex.com/data/SRD/armor.min.json'
         }, {
             key: 'weapons',
-            url: 'https://adventurerscodex.com/data/SRD/weapons.json'
+            url: 'https://adventurerscodex.com/data/SRD/weapons.min.json'
         }, {
             key: 'magicItems',
-            url: 'https://adventurerscodex.com/data/SRD/magic_items.json'
+            url: 'https://adventurerscodex.com/data/SRD/magic_items.min.json'
         }, {
             key: 'monsters',
-            url: 'https://adventurerscodex.com/data/SRD/monsters.json'
+            url: 'https://adventurerscodex.com/data/SRD/monsters.min.json'
         }, {
             key: 'proficiencies',
-            url: 'https://adventurerscodex.com/data/SRD/proficiencies.json'
+            url: 'https://adventurerscodex.com/data/SRD/proficiencies.min.json'
         }, {
             key: 'feats',
-            url: 'https://adventurerscodex.com/data/SRD/feats.json'
+            url: 'https://adventurerscodex.com/data/SRD/feats.min.json'
         }, {
             key: 'features',
-            url: 'https://adventurerscodex.com/data/SRD/features.json'
+            url: 'https://adventurerscodex.com/data/SRD/features.min.json'
         }, {
             key: 'traits',
-            url: 'https://adventurerscodex.com/data/SRD/traits.json'
+            url: 'https://adventurerscodex.com/data/SRD/traits.min.json'
         }, {
             key: 'nouns',
             url: 'https://adventurerscodex.com/data/misc/fantasy_nouns.json'
