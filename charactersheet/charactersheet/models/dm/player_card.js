@@ -15,6 +15,7 @@ function PlayerCard(pCard) {
     var playerCardFields = [
         {'key':'publisherJid', 'converter': null},
         {'key':'characterName', 'converter': null},
+        {'key':'playerName', 'converter': null},
         {'key':'playerType', 'converter': null},
         {'key':'playerSummary', 'converter': null},
         {'key':'name', 'converter': null},
@@ -43,6 +44,7 @@ function PlayerCard(pCard) {
     // Profile
     self.publisherJid = ko.observable('');
     self.characterName = ko.observable('');
+    self.playerName = ko.observable('');
     self.playerType = ko.observable('');
     self.playerSummary = ko.observable('');
     self.name = ko.observable('');
