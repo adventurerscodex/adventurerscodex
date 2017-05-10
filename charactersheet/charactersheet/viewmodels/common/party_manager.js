@@ -89,12 +89,20 @@ function PartyManagerViewModel() {
     /**
      * Join an existing node and fire a notification to let the user know
      * they've successfully joined the party.
+     * If successful, the party will be saved for easy access later.
      * If any errors occur, also fire off a notification to let the user know.
      */
     self.joinParty = function(node) {
         var nodeManager = NodeServiceManager.sharedService();
-        nodeManager.subscribe(node,
-            self._handleSuccessfulSubscription,
+        nodeManager.subscribe(node, function(success) {
+                var party = new Party();
+                party.importValues({
+                    partyId: node,
+                    characterId: CharacterManager.activeCharacter().key()
+                });
+                party.save();
+                self._handleSuccessfulSubscription(success);
+            },
             self._handleFailedSubscription
         );
     };

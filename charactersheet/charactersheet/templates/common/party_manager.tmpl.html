@@ -63,13 +63,19 @@
                   Click or tap a party to join it.
                 </p>
                 <div class="list-group" data-bind="foreach: parties">
-                  <button type="button" class="list-group-item col-xs-12 text-left"
-                    data-bind="click: $parent.joinPartyWasClickedWithParty">
-                      <span data-bind="text: partyId"></span><br/>
-                      <small class="text-muted">Created:
-                        <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
-                      </small>
+                  <div class="btn-group" role="group">
+                    <button type="button" class="list-group-item col-xs-10 text-left"
+                      data-bind="click: $parent.joinPartyWasClickedWithParty">
+                        <span data-bind="text: partyId"></span><br/>
+                        <small class="text-muted">Created:
+                          <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
+                        </small>
                     </button>
+                    <button type="button" class="text-center col-xs-2"
+                      data-bind="click: $parent.deletePartyWasClicked">
+                      &times;
+                    </button>
+                  </div>
                 </div>
                 <!-- /ko -->
               <!-- /ko -->
