@@ -41,16 +41,17 @@ var CharacterCardFields = [
         name: 'imageUrl',
         refreshOn: Notifications.playerImage.changed,
         valueAccessor: function() {
+            var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
             var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CharacterManager.activeCharacter().key());
-            if (!image) { return; }
+            if (!image) { return defaultImage; }
             if (image.imageSource() === 'link') {
                 var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
-                return imageModel ? imageModel.imageUrl() : '';
+                return imageModel ? imageModel.imageUrl() : defaultImage;
             } else if (image.imageSource() === 'email') {
                 var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
-                return info ? info.gravatarUrl() : '';
+                return info ? info.gravatarUrl() : defaultImage;
             } else {
-                return null;
+                return defaultImage;
             }
         }
     }, {
