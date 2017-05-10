@@ -200,6 +200,9 @@ var Notifications = {
         characterName: {
             changed: new signals.Signal()
         },
+        playerName: {
+            changed: new signals.Signal()
+        },
         playerSummary: {
             changed: new signals.Signal()
         },

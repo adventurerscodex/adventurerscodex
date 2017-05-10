@@ -76,6 +76,7 @@ function ProfileViewModel() {
         self.race.subscribe(self.dataHasChanged);
         self.typeClass.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
+        self.playerName.subscribe(self.playerNameHasChanged);
 
         Notifications.stats.changed.add(self.dataHasChanged);
     };
@@ -98,6 +99,11 @@ function ProfileViewModel() {
     self.typeClassDataHasChanged = function() {
         self.saveProfile();
         Notifications.profile.typeClass.changed.dispatch();
+    };
+
+    self.playerNameHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.playerName.changed.dispatch();
     };
 
     self.experienceDataHasChanged = function() {
