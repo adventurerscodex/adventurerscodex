@@ -71,7 +71,6 @@ Utility.array.updateElement = function(array, updatedElement, elementId) {
  * headers for an OAuth request.
  */
 Utility.oauth.setXHRBearerHeader = function(xhr, accessToken) {
-    var key = CharacterManager.activeCharacter().key();
     if (!accessToken) {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         accessToken = token.accessToken();
