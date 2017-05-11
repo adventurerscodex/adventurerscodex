@@ -155,9 +155,7 @@ function _ChatService(config) {
     self._handlePresence = function(response) {
         /*eslint no-console:0*/
         try {
-            // TODO: Dispatch presence based on value.
-            console.log(response);
-
+            var xmpp = XMPPService.sharedService();
             var isParticipant = $(response).find('item[role="participant"]').length > 0;
             var isModerator = $(response).find('item[role="moderator"]').length > 0;
             var isNone = $(response).find('item[role="none"]').length > 0;
@@ -172,9 +170,25 @@ function _ChatService(config) {
             if (hasError) {
                 Notifications.party.joined.dispatch(from, false);
             } else if (joinedRoom) {
-                Notifications.party.joined.dispatch(from, true);
+                var nick = Strophe.getResourceFromJid($(response).attr('from'));
+                var myNick = Strophe.getNodeFromJid(xmpp.connection.jid);
+                if (nick == myNick) {
+                    // We've joined.
+                    Notifications.party.joined.dispatch(from, true);
+                } else {
+                    // Someone else has joined.
+                    Notifications.chat.member.joined.dispatch(from, nick);
+                }
             } else if (leftRoom) {
-                Notifications.party.left.dispatch(from, true);
+                var nick = Strophe.getResourceFromJid($(response).attr('from'));
+                var myNick = Strophe.getNodeFromJid(xmpp.connection.jid);
+                if (nick == myNick) {
+                    // We've left.
+                    Notifications.party.left.dispatch(from, true);
+                } else {
+                    // Someone else has left.
+                    Notifications.chat.member.left.dispatch(from, nick);
+                }
             }
         } catch(err) {
             console.log(err);
