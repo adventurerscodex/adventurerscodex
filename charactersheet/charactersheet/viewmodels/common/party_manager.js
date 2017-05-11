@@ -43,7 +43,7 @@ function PartyManagerViewModel() {
     };
 
     self.joinPartyWasClickedWithParty = function(party) {
-        self.joinParty(party.partyId());
+        self.joinExistingParty(party.partyId());
     };
 
     self.leavePartyWasClicked = function() {
@@ -107,6 +107,11 @@ function PartyManagerViewModel() {
         );
     };
 
+    self.joinExistingParty = function(node) {
+        var nodeManager = NodeServiceManager.sharedService();
+        nodeManager.subscribe(node, self._handleSuccessfulSubscription, self._handleFailedSubscription);
+    };
+
     /**
      * Unsubscrive to an existing node subscription and fire a notification to
      * let the user know they've successfully left the party.
@@ -130,11 +135,8 @@ function PartyManagerViewModel() {
     /**
      * Deletes a given party from the user's previously joined parties list.
      */
-    self.deleteParty = function(node) {
-        var party = PersistenceService.findFirstBy(Party, 'partyId', node);
-        if (party) {
-            party.delete();
-        }
+    self.deleteParty = function(party) {
+        party.delete();
 
         // Reload parties.
         self.parties(self._getParties());
