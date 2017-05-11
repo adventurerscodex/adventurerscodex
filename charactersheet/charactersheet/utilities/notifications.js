@@ -130,7 +130,11 @@ var Notifications = {
         message: new signals.Signal(),
         iq: new signals.Signal(),
         presence: new signals.Signal(),
-        room: new signals.Signal()
+        room: new signals.Signal(),
+        member: {
+            joined: new signals.Signal(),
+            left: new signals.Signal()
+        }
     },
 
     feat: {

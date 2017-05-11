@@ -19,6 +19,8 @@ function ChatViewModel() {
         // Message Notifications
         Notifications.chat.message.add(self._deliverMessageToRoom);
         Notifications.chat.room.add(self._updateChatRooms);
+        Notifications.chat.member.joined.add(self._userHasJoined);
+        Notifications.chat.member.left.add(self._userHasLeft);
         Notifications.party.joined.add(self._updateChatRooms);
         Notifications.party.left.add(self._updateChatRooms);
     };
@@ -34,6 +36,8 @@ function ChatViewModel() {
         // Message Notifications
         Notifications.chat.message.remove(self._deliverMessageToRoom);
         Notifications.chat.room.remove(self._updateChatRooms);
+        Notifications.chat.member.joined.remove(self._userHasJoined);
+        Notifications.chat.member.left.remove(self._userHasLeft);
         Notifications.party.left.remove(self._updateChatRooms);
         Notifications.party.joined.remove(self._updateChatRooms);
     };
@@ -176,6 +180,14 @@ function ChatViewModel() {
         // Update the UI.
         self.chats(self._getChats());
         self.cells(self._getChatCells());
+    };
+
+    self._userHasJoined = function(jid, nick) {
+        Notifications.userNotification.infoNotification.dispatch(nick+' has joined '+jid);
+    };
+
+    self._userHasLeft = function(jid, nick) {
+        Notifications.userNotification.infoNotification.dispatch(nick+' has left '+jid);
     };
 
     return self;

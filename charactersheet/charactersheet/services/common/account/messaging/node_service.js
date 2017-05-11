@@ -131,7 +131,7 @@ function _NodeService(config) {
         // Subscribe to all push events.
         var xmpp = XMPPService.sharedService();
         xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
-        xmpp.connection.addHandler(function(a) {console.log(a); return true;})
+        xmpp.connection.addHandler(function(a) {console.log('RAW REQ: ', a); return true;})
         xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         // Finish setup after login is complete.
@@ -214,21 +214,21 @@ function _NodeService(config) {
         // https://xmpp.org/extensions/xep-0060.html#entity-subscriptions
         var xmpp = XMPPService.sharedService();
         // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
-        xmpp.connection.pubsub.getSubscriptions(self._handleSubscriptions, 3000);
+        //xmpp.connection.pubsub.getSubscriptions(self._handleSubscriptions, 3000);
     };
 
-    self._handleSubscriptions = function(response) {
-        var fragments = (new URI()).fragment(true);
-        var nodeJID = fragments['node_jid'];
-
-        if (!nodeJID) {
-            // There's no node given. See if we're already in a party
-            self._subscribeToExistingParty(response);
-            return;
-        } else {
-            self._subscribeToGivenNode(response, nodeJID);
-        }
-    };
+//     self._handleSubscriptions = function(response) {
+//         var fragments = (new URI()).fragment(true);
+//         var nodeJID = fragments['node_jid'];
+//
+//         if (!nodeJID) {
+//             // There's no node given. See if we're already in a party
+//             self._subscribeToExistingParty(response);
+//             return;
+//         } else {
+//             self._subscribeToGivenNode(response, nodeJID);
+//         }
+//     };
 
     self._handleSubscriptionSuccess = function(subscription) {
         // TODO
@@ -260,23 +260,46 @@ function _NodeService(config) {
     };
 
     self._handlePresenceRequest = function(presenceRequest) {
-        var xmpp = XMPPService.sharedService();
-        var presence = $pres({
-            to: $(presenceRequest).attr('from'),
-            type: 'subscribed'
-        });
-        xmpp.connection.send(presence.tree());
+        /**eslint no-console:0 */
+        try {
+            var xmpp = XMPPService.sharedService();
+            var from = $(presenceRequest).attr('from');
+
+            // Don't subscribe to self.
+            if (from == Strophe.getBareJidFromJid(xmpp.connection.jid)) {
+                return true;
+            }
+
+            var presence = $pres({
+                to: $(presenceRequest).attr('from'),
+                type: 'subscribed'
+            });
+            xmpp.connection.send(presence.tree());
+            console.log('Subscribed to ', $(presenceRequest).attr('from'))
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
     };
 
     self._handlePresence = function(receivedPresence) {
-        if ($(receivedPresence).attr('type').length > 0) { return; }
-        var xmpp = XMPPService.sharedService();
-        var presence = $pres({
-            to: $(receivedPresence).attr('from'),
-            from: xmpp.connection.jid,
-            type: 'subscribe'
-        });
-        xmpp.connection.send(presence.tree());
+        /**eslint no-console:0 */
+        try {
+            var xItem = $(receivedPresence).find('x item')[0];
+            if (!xItem) {
+                return true;
+            }
+            var xmpp = XMPPService.sharedService();
+            var presence = $pres({
+                to: $(xItem).attr('jid'),
+                from: xmpp.connection.jid,
+                type: 'subscribe'
+            });
+            xmpp.connection.send(presence.tree());
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
     };
 
     self._getMessageContent = function(node) {
