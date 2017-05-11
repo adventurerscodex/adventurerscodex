@@ -289,12 +289,19 @@ function _NodeService(config) {
             if (!xItem) {
                 return true;
             }
+            var jid = $(xItem).attr('jid');
+            if (!jid) {
+                return true;
+            }
+
+            // Send the presence subscription request.
             var xmpp = XMPPService.sharedService();
             var presence = $pres({
-                to: $(xItem).attr('jid'),
+                to: jid,
                 from: xmpp.connection.jid,
                 type: 'subscribe'
             });
+            console.log('Asking to subscribe to ', $(receivedPresence).attr('from'))
             xmpp.connection.send(presence.tree());
         } catch(err) {
             console.log(err);
