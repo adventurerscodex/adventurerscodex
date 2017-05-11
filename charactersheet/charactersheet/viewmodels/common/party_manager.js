@@ -51,11 +51,11 @@ function PartyManagerViewModel() {
     };
 
     self.joinPartyWasClicked = function() {
-        self.joinParty(self.roomJid());
+        self.joinParty(self.roomId());
     };
 
     self.joinPartyWasClickedWithParty = function(party) {
-        self.joinParty(party.chatId());
+        self.joinParty(Strophe.getNodeFromJid(party.chatId()));
     };
 
     self.leavePartyWasClicked = function() {
@@ -150,7 +150,6 @@ function PartyManagerViewModel() {
             Notifications.userNotification.warningNotification.dispatch(
                 'An error has occurred while attempting to join the party'
             );
-            console.log(error);
         }
     };
 
