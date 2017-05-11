@@ -132,6 +132,8 @@ function _NodeService(config) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
         xmpp.connection.addHandler(function(a) {console.log(a); return true;})
+        xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
+        xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         // Finish setup after login is complete.
         Notifications.xmpp.connected.add(self._handleConnect);
     };
@@ -191,6 +193,20 @@ function _NodeService(config) {
         xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror, 3000);
     };
 
+    self.publishItem = function(item, attrs, route, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        var iq = $iq({
+            from: xmpp.connection.jid,
+            type: 'set',
+            id: xmpp.connection.getUniqueId()
+        }).c('pubsub', {
+            xmlns: Strophe.NS.PUBSUB
+        }).c('publish', {
+            node: Strophe.NS.JSON + '#' + route
+        }).c('item').c('json', attrs, item);
+        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
+    };
+
     /* Private Methods */
 
     self._handleConnect = function() {
@@ -228,20 +244,39 @@ function _NodeService(config) {
         var items = $(event).find('items').children().toArray();
         items.forEach(function(item, idx, _) {
             var json = $(item).find('json');
-            var route = json.attr('route');
-            if (!route) {
-                return;
-            }
+            var route = $(item).attr('node')[0];
+            if (!route) { return; }
 
-            route = route.toLowerCase();
+            route = route.split('#')[1];
+            if (!route) { return; }
+
             var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
-
             if (route && dispatchRouteExists) {
                 var content = self._getMessageContent(json);
                 Notifications.xmpp.routes[route].dispatch(content);
             }
         });
         return true;
+    };
+
+    self._handlePresenceRequest = function(presenceRequest) {
+        var xmpp = XMPPService.sharedService();
+        var presence = $pres({
+            to: $(presenceRequest).attr('from'),
+            type: 'subscribed'
+        });
+        xmpp.connection.send(presence.tree());
+    };
+
+    self._handlePresence = function(receivedPresence) {
+        if ($(receivedPresence).attr('type').length > 0) { return; }
+        var xmpp = XMPPService.sharedService();
+        var presence = $pres({
+            to: $(receivedPresence).attr('from'),
+            from: xmpp.connection.jid,
+            type: 'subscribe'
+        });
+        xmpp.connection.send(presence.tree());
     };
 
     self._getMessageContent = function(node) {

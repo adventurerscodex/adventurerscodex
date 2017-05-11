@@ -87,10 +87,9 @@ function PartyManagerViewModel() {
      * Join an existing node or create a new node.
      */
     self.joinParty = function(node) {
-        var chatManager = ChatServiceManager.sharedService();
         var xmpp = XMPPService.sharedService();
-        chatManager.join(node+'@'+Settings.MUC_SERVICE,
-            Strophe.getNodeFromJid(xmpp.connection.jid), true);
+        var chatManager = ChatServiceManager.sharedService();
+        chatManager.join(node + '@' + Settings.MUC_SERVICE, Strophe.getNodeFromJid(xmpp.connection.jid));
     };
 
     self.joinExistingParty = function(node) {
@@ -102,9 +101,9 @@ function PartyManagerViewModel() {
      * Unsubscrive to an existing node subscription.
      */
     self.leaveParty = function(node, notify) {
-        var chatManager = ChatServiceManager.sharedService();
         var xmpp = XMPPService.sharedService();
-        chatManager.leave(node, Strophe.getNodeFromJid(xmpp.connection.jid));
+        var chatManager = ChatServiceManager.sharedService();
+        chatManager.leave(node + '@' + Settings.MUC_SERVICE, Strophe.getNodeFromJid(xmpp.connection.jid), self._handleUnsubscription);
     };
 
     /**

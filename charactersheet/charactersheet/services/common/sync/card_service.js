@@ -49,12 +49,12 @@ function _pCardService(configuration) {
 
     self.publishCard = function(card) {
         var xmpp = XMPPService.sharedService();
+        var nodeService = NodeServiceManager.sharedService();
 
         // Serialize the card to XML.
         var compressed = self.configuration.enableCompression;
         var attrs = {
             id: xmpp.connection.getUniqueId(),
-            route: 'pcard',
             publisher: xmpp.connection.jid
         };
         var content = '';
@@ -72,15 +72,7 @@ function _pCardService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            // Delete previous pCards, if they exist.
-            xmpp.connection.pubsub.items(self.currentPartyNode,
-            function(response) {
-                self._clearOldPCards(response, function() {
-                    xmpp.connection.pubsub.publish(self.currentPartyNode, [
-                            { attrs: null, data: cardTree}
-                    ], self._handleResponse);
-                });
-            }, null, 3000);
+            nodeService.publishItem(content, attrs, 'pcard', null, null);
         }
     };
 
@@ -103,23 +95,6 @@ function _pCardService(configuration) {
         });
 
         return card;
-    };
-    /**
-     * Deletes existing pCards.
-     *
-     * @param response  a list of items published to the node
-     * @param callback  called upon successful deletion of existing pCards
-     */
-    self._clearOldPCards = function(response, callback) {
-        var node = NodeServiceManager.sharedService();
-        var xmpp = XMPPService.sharedService();
-        var items = $(response).find('items').children().toArray();
-        items.forEach(function(item, idx, _) {
-            if ($(item).children().attr('publisher') === xmpp.connection.jid) {
-                node.deleteItem(self.currentPartyNode, $(item).attr('id'), null, null);
-            }
-        });
-        callback();
     };
 
     /* Event Handlers */
