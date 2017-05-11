@@ -131,20 +131,9 @@ function _NodeService(config) {
         // Subscribe to all push events.
         var xmpp = XMPPService.sharedService();
         xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
-
+        xmpp.connection.addHandler(function(a) {console.log(a); return true;})
         // Finish setup after login is complete.
         Notifications.xmpp.connected.add(self._handleConnect);
-    };
-
-    /**
-     * Returns a unique id for a new node.
-     * Uses nouns and adjectives array from the `DataRepository`.
-     */
-    self.getUniqueNodeId = function() {
-        var adjective = DataRepository['adjectives'][Math.floor(Math.random() * DataRepository['adjectives'].length)];
-        var noun = DataRepository['nouns'][Math.floor(Math.random() * DataRepository['nouns'].length)];
-        var code = uuid.v4().substr(0,4);
-        return adjective + '-' + noun + '-' + code;
     };
 
     /**

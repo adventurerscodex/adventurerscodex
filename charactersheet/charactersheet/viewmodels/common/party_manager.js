@@ -15,6 +15,9 @@ function PartyManagerViewModel() {
     self.load = function() {
         Notifications.xmpp.connected.add(self.dataHasChanged);
         self.parties(self._getParties());
+
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.addHandler(self._handlePresence, null, 'presence');
     };
 
     self.unload = function() {
@@ -43,7 +46,7 @@ function PartyManagerViewModel() {
     };
 
     self.joinPartyWasClickedWithParty = function(party) {
-        self.joinExistingParty(party.partyId());
+        self.joinParty(party.chatId());
     };
 
     self.leavePartyWasClicked = function() {
@@ -67,23 +70,21 @@ function PartyManagerViewModel() {
      * If any errors occur in this process an alert is fired to the user.
      */
     self.createParty = function() {
-        var nodeManager = NodeServiceManager.sharedService();
-        var node = nodeManager.getUniqueNodeId();
-        nodeManager.create(node, function() {
-            // Save the party now that it's officially created.
-            var party = new Party();
-            party.importValues({
-                partyId: node,
-                characterId: CharacterManager.activeCharacter().key()
-            });
-            party.save();
+        var chatManager = ChatServiceManager.sharedService();
+        var node = chatManager.getUniqueNodeId();
 
-           // Once a node has been created, subscribe to it.
-            nodeManager.subscribe(node,
-                self._handleSuccessfulSubscription,
-                self._handleFailedSubscription
-            );
+        var party = new ChatRoom();
+        party.importValues({
+            chatId: node,
+            dateCreated: (new Date()).getTime(),
+            name: 'Party Chat',
+            isGroupChat: true,
+            isParty: true,
+            characterId: CharacterManager.activeCharacter().key()
         });
+        party.save();
+
+        self.joinParty(node);
     };
 
     /**
@@ -93,18 +94,8 @@ function PartyManagerViewModel() {
      * If any errors occur, also fire off a notification to let the user know.
      */
     self.joinParty = function(node) {
-        var nodeManager = NodeServiceManager.sharedService();
-        nodeManager.subscribe(node, function(success) {
-                var party = new Party();
-                party.importValues({
-                    partyId: node,
-                    characterId: CharacterManager.activeCharacter().key()
-                });
-                party.save();
-                self._handleSuccessfulSubscription(success);
-            },
-            self._handleFailedSubscription
-        );
+        var chatManager = ChatServiceManager.sharedService();
+        chatManager.join(node+'@'+Settings.MUC_SERVICE, 'test');
     };
 
     self.joinExistingParty = function(node) {
@@ -118,18 +109,8 @@ function PartyManagerViewModel() {
      * If any errors occur, also fire off a notification to let the user know.
      */
     self.leaveParty = function(node, notify) {
-        var nodeManager = NodeServiceManager.sharedService();
-        if (notify) {
-            nodeManager.unsubscribe(node,
-                self._handleSuccessfulUnsubscription,
-                self._handleFailedUnsubscription
-            );
-        } else {
-            nodeManager.unsubscribe(node,
-                self._handleSuccessfulUnsubscription,
-                self._doNothing
-            );
-        }
+        var chatManager = ChatServiceManager.sharedService();
+        chatManager.leave(node+'@'+Settings.MUC_SERVICE, 'test', self._handleUnsubscription);
     };
 
     /**
@@ -154,16 +135,43 @@ function PartyManagerViewModel() {
 
     self._getParties = function() {
         var key = CharacterManager.activeCharacter().key();
-        return PersistenceService.findBy(Party, 'characterId', key);
+        return PersistenceService.findByPredicates(ChatRoom, [
+            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('isParty', true)
+        ]);
+    };
+
+    /**
+     * Dispatch all presence messages based on what they are.
+     */
+    self._handlePresence = function(response) {
+        // TODO: Dispatch presence based on value.
+        console.log(response);
+
+        var isParticipant = $(response).find('item[role="participant"]').length > 0;
+        var isModerator = $(response).find('item[role="moderator"]').length > 0;
+        var isNone = $(response).find('item[role="none"]').length > 0;
+
+        if (isParticipant || isModerator) {
+            self._handleSuccessfulSubscription(response);
+        } else if (isNone) {
+            self._handleSuccessfulUnsubscription(response);
+        }
+
+        return true;
     };
 
     self._handleSuccessfulSubscription = function(success) {
-        self.roomId($(success).find('subscription').attr('node'));
+        // Ignore if we're already in a party.
+        if (self.inAParty()) { return; }
+
+        self.roomId(Strophe.getNodeFromJid($(success).attr('from')));
         self.inAParty(true);
 
         // Reload parties.
         self.parties(self._getParties());
 
+        Notifications.party.joined.dispatch(self.roomId());
         Notifications.userNotification.successNotification.dispatch(
             'You have successfully joined ' + self.roomId()
         );
@@ -176,21 +184,19 @@ function PartyManagerViewModel() {
         console.log(error);
     };
 
-    self._handleSuccessfulUnsubscription = function(success) {
+    self._handleSuccessfulUnsubscription = function(response) {
         self.roomId(null);
         self.inAParty(false);
 
+        Notifications.party.left.dispatch();
         Notifications.userNotification.successNotification.dispatch(
             'You have successfully left your party.'
         );
     };
 
-    self._handleFailedUnsubscription = function(error) {
+    self._handleFailedUnSubscription = function(response) {
         Notifications.userNotification.warningNotification.dispatch(
             'An error has occurred while attempting to leave the party'
         );
-        console.log(error);
     };
-
-    self._doNothing = function() {};
 }

@@ -6,7 +6,7 @@ function ChatRoom() {
 
     self.ps = PersistenceService.register(ChatRoom, self);
     self.mapping = {
-        include: ['characterId', 'chatId', 'dateCreated', 'name', 'isGroupChat']
+        include: ['characterId', 'chatId', 'dateCreated', 'name', 'isGroupChat', 'isParty']
     };
 
     self.characterId = ko.observable();
@@ -14,6 +14,7 @@ function ChatRoom() {
     self.dateCreated = ko.observable();
     self.name = ko.observable();
     self.isGroupChat = ko.observable(false);
+    self.isParty = ko.observable(false);
 
     self.clear = function() {
         var values = new Item().exportValues();

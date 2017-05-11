@@ -25,7 +25,7 @@ function CharacterRootViewModel() {
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
     self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
-    self.chatTabViewModel = ko.observable(new ChatTabViewModel());
+    self.chatTabViewModel          = ko.observable(new ChatTabViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();
@@ -192,8 +192,8 @@ function CharacterRootViewModel() {
 
         ViewModelUtilities.loadSubViewModels(self);
 
-        Notifications.xmpp.pubsub.subscribed.add(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
+        Notifications.party.joined.add(self._updateCurrentNode);
+        Notifications.party.left.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
@@ -201,8 +201,8 @@ function CharacterRootViewModel() {
 
         HotkeysService.flushHotkeys();
 
-        Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
+        Notifications.party.joined.remove(self._updateCurrentNode);
+        Notifications.party.joined.remove(self._removeCurrentNode);
     };
 
     //Private Methods
