@@ -5,13 +5,17 @@ function ChatCellViewModel(chat) {
 
     self.id = chat.chatId;
     self.characterId = chat.characterId;
-    self.chatId = chat.chatId;
     self._name = chat.name;
     self.badge = ko.observable();
     self.isGroupChat = chat.isGroupChat;
+    self.isParty = chat.isParty;
 
     self.name = ko.pureComputed(function() {
-        return self._name();
+        return self._name() + (self.isParty() ? 'party chat' : '');
+    });
+
+    self.shouldShowDelete = ko.pureComputed(function() {
+        return !self.isParty();
     });
 
     /* View Model Methods */

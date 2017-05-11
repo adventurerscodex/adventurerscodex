@@ -11,9 +11,7 @@ function ChatViewModel() {
     /* View Model Methods */
 
     self.didLoad = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
-        self.chats(chats);
+        self.chats(self._getChats());
 
         self.cells(self._getChatCells());
         self.selectedCell(self.cells()[0]);
@@ -21,6 +19,8 @@ function ChatViewModel() {
         // Message Notifications
         Notifications.chat.message.add(self._deliverMessageToRoom);
         Notifications.chat.room.add(self._updateChatRooms);
+        Notifications.party.joined.add(self._updateChatRooms);
+        Notifications.party.left.add(self._updateChatRooms);
     };
 
     self.didUnload = function() {
@@ -34,6 +34,8 @@ function ChatViewModel() {
         // Message Notifications
         Notifications.chat.message.remove(self._deliverMessageToRoom);
         Notifications.chat.room.remove(self._updateChatRooms);
+        Notifications.party.left.remove(self._updateChatRooms);
+        Notifications.party.joined.remove(self._updateChatRooms);
     };
 
     /* List Management Methods */
@@ -49,11 +51,10 @@ function ChatViewModel() {
         var invitees = self.modalViewModel().partyMembersToAdd();
 
         var chatService = ChatServiceManager.sharedService();
-        var room = chatService.createRoomAndInvite(name, invitees);
-        var key = CharacterManager.activeCharacter().key();
+        var jid = name+'@'+Settings.MUC_SERVICE;
+        var room = chatService.createRoomAndInvite(jid, invitees);
 
-        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
-        self.chats(chats);
+        self.chats(self._getChats());
         self.cells(self._getChatCells());
 
         var cellToSelect = self.cells().filter(function(cell, idx, _) {
@@ -71,9 +72,7 @@ function ChatViewModel() {
         var chatService = ChatServiceManager.sharedService();
         chatService.leave(cell.id(), 'test', console.log);
 
-        var key = CharacterManager.activeCharacter().key();
-        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
-        self.chats(chats);
+        self.chats(self._getChats());
         self.cells(self._getChatCells());
         self.selectedCell(self.cells()[0]);
     };
@@ -106,7 +105,7 @@ function ChatViewModel() {
      */
     self.updateBadge = function(room) {
         var cellToBadge = self.cells().filter(function(cell, idx, _) {
-            return cell.chatId() === room.chatId();
+            return cell.id() === room.chatId();
         })[0];
         if (cellToBadge) {
             cellToBadge.badge(room.getUnreadMessages().length);
@@ -121,12 +120,28 @@ function ChatViewModel() {
         });
     };
 
+    self._getChats = function() {
+        var chatService = ChatServiceManager.sharedService();
+        var currentPartyNode = chatService.currentPartyNode;
+        var chats = PersistenceService.findByPredicates(ChatRoom, [
+            new OrPredicate([
+                // Get the party chat.
+                new KeyValuePredicate('chatId', currentPartyNode),
+                // Get all related chats.
+                new KeyValuePredicate('partyId', currentPartyNode)
+            ])
+        ]);
+        return chats.sort(function(a,b) {
+            return a.isParty() > b.isParty()
+        });
+    };
+
     /**
      * Return if the current active room is the same as the provided.
      */
     self._isSelectedRoom = function(room) {
         if (!room || !self.selectedCell()) { return false; }
-        return self.selectedCell().chatId() === room.chatId();
+        return self.selectedCell().id() === room.chatId();
     };
 
     /**
@@ -159,7 +174,7 @@ function ChatViewModel() {
 
     self._updateChatRooms = function(room) {
         // Update the UI.
-        self.chats.push(room);
+        self.chats(self._getChats());
         self.cells(self._getChatCells());
     };
 

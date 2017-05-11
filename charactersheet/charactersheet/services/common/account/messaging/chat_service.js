@@ -36,20 +36,18 @@ function _ChatService(config) {
     self.init = function() {
         self._setupConnection();
 
-        Notifications.xmpp.pubsub.subscribed.add(self._setupRooms);
-        Notifications.xmpp.pubsub.unsubscribed.add(self._teardownRooms);
-
-        // TODO Set up initial whole party chat.
+        Notifications.party.joined.add(self._setupRooms);
+        Notifications.party.left.add(self._teardownRooms);
     };
 
     self.deinit = function() {
         self._teardownConnection();
 
-        Notifications.xmpp.pubsub.subscribed.remove(self._setupRooms);
-        Notifications.xmpp.pubsub.unsubscribed.remove(self._teardownRooms);
+        Notifications.party.joined.remove(self._setupRooms);
+        Notifications.party.left.remove(self._teardownRooms);
     };
 
-    self.send = function(room, message, onsuccess, onerror) {
+    self.send = function(room, message) {
         var xmpp = XMPPService.sharedService();
         if (room.isGroupChat()) {
             var id = xmpp.connection.getUniqueId();
@@ -61,15 +59,23 @@ function _ChatService(config) {
         xmpp.connection.flush();
     };
 
-    self.join = function(jid, nick) {
+    self.join = function(jid, nick, isParty) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.muc.join(
             jid, nick, self._handleNewGroupMessage,
-            self._handleNewPresenceOrIqMessage,
-            self._handleNewRosterMessage,
+            null, self._handleNewRosterMessage,
             null, null, null
         );
         xmpp.connection.flush();
+
+        if (isParty) {
+            var party = self._getOrCreateParty(jid);
+            self.currentPartyNode = jid;
+            return party;
+        } else {
+            var room = self._getOrCreateRoom(jid, true);
+            return room;
+        }
     };
 
     self.leave = function(jid, nick, callback) {
@@ -91,11 +97,11 @@ function _ChatService(config) {
         return adjective + '-' + noun + '-' + code;
     };
 
-    self.createRoomAndInvite = function(name, invitees) {
-        var jid = self._jidFromName(name);
-        var room = self._getRoomOrCreate(jid, true);
+    self.createRoomAndInvite = function(jid, invitees) {
+        var xmpp = XMPPService.sharedService();
+        var room = self._getOrCreateRoom(jid, true);
 
-        self.join(jid, 'test');
+        self.join(room.chatId(), Strophe.getNodeFromJid(xmpp.connection.jid));
         self._inviteAll(jid, invitees);
 
         return room;
@@ -111,7 +117,7 @@ function _ChatService(config) {
             // Messages in Group Chats are ID'd by the group JID.
             var from = Strophe.getBareJidFromJid($(msg).attr('from'));
 
-            var room = self._getRoomOrCreate(from, true);
+            var room = self._getOrCreateRoom(from, true);
             var chatMessage = self._parseMessage(msg, room);
             chatMessage.save();
 
@@ -130,7 +136,7 @@ function _ChatService(config) {
             // Messages in 1-to-1 Chats are ID'd by the from JID.
             var from = $(msg).attr('from');
 
-            var room = self._getRoomOrCreate(from, false);
+            var room = self._getRoomOrCreate(Strophe.getNodeFromJid(from), false);
             var chatMessage = self._parseMessage(msg, room);
             chatMessage.save();
 
@@ -143,10 +149,43 @@ function _ChatService(config) {
         return true;
     };
 
-    self._handleNewPresenceOrIqMessage = function(msg) {
+    /**
+     * Dispatch all presence messages based on what they are.
+     */
+    self._handlePresence = function(response) {
         /*eslint no-console:0*/
-        //TODO Send IQ or Presence Message Notification.
-        console.log(msg);
+        try {
+            // TODO: Dispatch presence based on value.
+            console.log(response);
+
+            var isParticipant = $(response).find('item[role="participant"]').length > 0;
+            var isModerator = $(response).find('item[role="moderator"]').length > 0;
+            var isNone = $(response).find('item[role="none"]').length > 0;
+            var from = Strophe.getBareJidFromJid($(response).attr('from'));
+
+            // Handle Joining and leaving a room.
+            var isCurrentParty = (from === self.currentPartyNode);
+            var joinedRoom = (isCurrentParty && (isParticipant || isModerator));
+            var leftRoom = (isNone && isCurrentParty);
+            if (joinedRoom) {
+                Notifications.party.joined.dispatch(from, true);
+            } else if (leftRoom) {
+                Notifications.party.left.dispatch(from, true);
+            }
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
+    };
+
+    self._handleIQ = function(response) {
+        /*eslint no-console:0*/
+        try {
+            console.log(response);
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
     };
 
     self._handleNewRosterMessage = function(occupant, room) {
@@ -164,15 +203,22 @@ function _ChatService(config) {
             null, null,  'chat', null, null,
             {ignoreNamespaceFragment: true}
         );
-        // Presence and IQ messages
+        // Presence
         var token2 = xmpp.connection.addHandler(
-            self._handleNewPresenceOrIqMessage,
-            null, null,  null, null, null,
+            self._handlePresence,
+            null, 'presence', null, null, null,
+            {ignoreNamespaceFragment: true}
+        );
+
+        var token3 = xmpp.connection.addHandler(
+            self._handleIQ,
+            null, 'iq', null, null, null,
             {ignoreNamespaceFragment: true}
         );
 
         self._handlerTokens.push(token1);
         self._handlerTokens.push(token2);
+        self._handlerTokens.push(token3);
     };
 
     self._teardownConnection = function() {
@@ -189,15 +235,15 @@ function _ChatService(config) {
 
         // MUC Notifications are subscribed to when joining/creating rooms.
         // Rejoin all previous chats.
-        if (xmpp.connection.connected) {
-            var key = CharacterManager.activeCharacter().key();
-            var rooms = PersistenceService.findBy(ChatRoom, 'characterId', key);
-            rooms.forEach(function(room, idx, _) {
-                if (room.isGroupChat()) {
-                    self.join(room.chatId(), 'test');
-                }
-            });
-        }
+//         if (xmpp.connection.connected) {
+//             var key = CharacterManager.activeCharacter().key();
+//             var rooms = PersistenceService.findBy(ChatRoom, 'characterId', key);
+//             rooms.forEach(function(room, idx, _) {
+//                 if (room.isGroupChat()) {
+//                     self.join(room.chatId(), 'test');
+//                 }
+//             });
+//         }
 
         // Update the current party node.
         self.currentPartyNode = node;
@@ -207,39 +253,70 @@ function _ChatService(config) {
     self._teardownRooms = function() {
         // Update the current party node.
         self.currentPartyNode = null;
-
         self._roomsAreSetup = false;
     };
+
+    // Party Management
+
+    self._getOrCreateParty = function(jid) {
+        var key = CharacterManager.activeCharacter().key();
+        var party = PersistenceService.findByPredicates(ChatRoom, [
+            new KeyValuePredicate('isParty', true),
+            new KeyValuePredicate('chatId', jid)
+        ])[0];
+
+        // Create the room if it doesn't exist...
+        if (!party) {
+            party = new ChatRoom();
+            party.importValues({
+                chatId: jid,
+                dateCreated: (new Date()).getTime(),
+                name: jid, // DEBUG
+                isGroupChat: true,
+                isParty: true,
+                partyId: null,
+                characterId: CharacterManager.activeCharacter().key()
+            });
+            party.save();
+        }
+
+        return party;
+    };
+
 
     // Room Management
 
     /**
      * Fetch room with ID or create one if not existant.
+     * Refuses to create rooms if there's no current party.
      */
-    self._getRoomOrCreate = function(roomId, isGroupChat) {
+    self._getOrCreateRoom = function(jid, isGroupChat) {
+        if (!self.currentPartyNode) { return; }
         var key = CharacterManager.activeCharacter().key();
-        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
-        var chat = chats.filter(function(chats, idx, _) {
-            return chats.chatId() === roomId;
-        })[0];
+        var room = PersistenceService.findByPredicates(ChatRoom, [
+            // Has the current jid.
+            new KeyValuePredicate('chatId', jid),
+            new OrPredicate([
+                // Either is a party or belongs to the party.
+                new KeyValuePredicate('partyId', self.currentPartyNode),
+                new KeyValuePredicate('isParty', true),
+            ])
+        ])[0];
 
-        // Found it, just exit.
-        if (chat) {
-            return chat;
+        // Create the room if it doesn't exist...
+        if (!room) {
+            room = new ChatRoom();
+            room.importValues({
+                chatId: jid,
+                dateCreated: (new Date()).getTime(),
+                name: jid, // DEBUG
+                isGroupChat: isGroupChat,
+                isParty: false,
+                partyId: self.currentPartyNode,
+                characterId: CharacterManager.activeCharacter().key()
+            });
+            room.save();
         }
-
-        // Create the room since it doesn't exist...
-        var room = new ChatRoom();
-        room.importValues({
-            characterId: CharacterManager.activeCharacter().key(),
-            chatId: roomId,
-            name: roomId,
-            isGroupChat: isGroupChat,
-            dateCreated: (new Date()).getTime()
-        });
-        room.save();
-
-        Notifications.chat.room.dispatch(room);
 
         return room;
     };
