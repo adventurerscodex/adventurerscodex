@@ -724,3 +724,11 @@ ul.ui-autocomplete .ui-state-active {
 .skills-ability-type {
   color: #b4bcc2;
 }
+
+/*
+ * Resize logo on the navbar
+ */
+img.resize_logo_nav {
+  width:36px;
+  height:auto;
+}
