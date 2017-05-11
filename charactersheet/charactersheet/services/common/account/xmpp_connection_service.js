@@ -47,6 +47,10 @@ function _XMPPService(config) {
 
     self.connection = null;
 
+    self._isShuttingDown = false;
+    self._connectionRetries = 0;
+    self.MAX_RETRIES = 3;
+
     /**
      * A lazily instantiated connection to the XMPP backend server.
      * The first attempt to fetch this connection will instantiate
@@ -78,6 +82,11 @@ function _XMPPService(config) {
         Notifications.user.exists.add(self._handleLogin);
     };
 
+    self.deinit = function() {
+        self._isShuttingDown = true;
+        self.connection.disconnect();
+    };
+
     /* Private Methods */
 
     self._shouldLog = function() {
@@ -107,6 +116,7 @@ function _XMPPService(config) {
         }
         if (status === Strophe.Status.CONNECTED || status === Strophe.Status.ATTACHED) {
             if (self._shouldLog() && 'console' in window) {
+                self._connectionRetries = 0;
                 console.log('Connected.');
             }
 
@@ -117,10 +127,22 @@ function _XMPPService(config) {
 
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
+            // Typical disconnect workflow.
             if (self._shouldLog() && 'console' in window) {
                 console.log('Disconnected.');
             }
             Notifications.xmpp.disconnected.dispatch();
+
+            // Attempt reconnect, unless the app is shutting down.
+            if (!self._isShuttingDown) {
+                if (self._connectionRetries >= self.MAX_RETRIES) {
+                    console.log('No attempt to reconnect: max connection retries reached.')
+                } else {
+                    console.log('Reconnecting...');
+                    self._connectionRetries += 1
+                    self._handleLogin();
+                }
+            }
         }
         // Add more logging...
     };
