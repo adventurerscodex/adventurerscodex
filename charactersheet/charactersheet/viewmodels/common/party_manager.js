@@ -89,7 +89,8 @@ function PartyManagerViewModel() {
     self.joinParty = function(node) {
         var xmpp = XMPPService.sharedService();
         var chatManager = ChatServiceManager.sharedService();
-        chatManager.join(node + '@' + Settings.MUC_SERVICE, Strophe.getNodeFromJid(xmpp.connection.jid));
+        chatManager.join(node+'@'+Settings.MUC_SERVICE,
+            Strophe.getNodeFromJid(xmpp.connection.jid), true);
     };
 
     self.joinExistingParty = function(node) {
@@ -103,7 +104,7 @@ function PartyManagerViewModel() {
     self.leaveParty = function(node, notify) {
         var xmpp = XMPPService.sharedService();
         var chatManager = ChatServiceManager.sharedService();
-        chatManager.leave(node + '@' + Settings.MUC_SERVICE, Strophe.getNodeFromJid(xmpp.connection.jid), self._handleUnsubscription);
+        chatManager.leave(node, Strophe.getNodeFromJid(xmpp.connection.jid));
     };
 
     /**

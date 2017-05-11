@@ -192,6 +192,24 @@ function _ChatService(config) {
         return true;
     };
 
+    self._handleInviteMessages = function(response) {
+        /*eslint no-console:0*/
+        try {
+            var invite = $(response).find('invite')[0];
+            if (!invite || !self.currentPartyNode) { return; }
+
+            // Join room if user is in party.
+            var xmpp = XMPPService.sharedService();
+            var roomJid = $(reponse).attr('from');
+            var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
+            self.join(roomJid, nick, false);
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
+
+    };
+
     self._handleNewRosterMessage = function(occupant, room) {
         self.rooms[room.name] = room;
     };
@@ -220,9 +238,16 @@ function _ChatService(config) {
             {ignoreNamespaceFragment: true}
         );
 
+        var token4 = xmpp.connection.addHandler(
+            self._handleInviteMessages, null, 'message',
+            null, null, null,
+            {ignoreNamespaceFragment: true}
+        );
+
         self._handlerTokens.push(token1);
         self._handlerTokens.push(token2);
         self._handlerTokens.push(token3);
+        self._handlerTokens.push(token4);
     };
 
     self._teardownConnection = function() {
