@@ -39,12 +39,12 @@ var init = function(viewModel) {
 //          password: 'bs152115'
 //      };
 //  };
- XMPPServiceDefaultConfig.credentialsHelper = function() {
-     return {
-         jid: 'tester@adventurerscodex.com/1234',
-         password: 'etheekne'
-     };
- };
+//  XMPPServiceDefaultConfig.credentialsHelper = function() {
+//      return {
+//          jid: 'tester@adventurerscodex.com/1234',
+//          password: 'etheekne'
+//      };
+//  };
     // XMPPServiceDefaultConfig.credentialsHelper = function() {
     //     return {
     //         jid: 'tanyxp@adventurerscodex.com/1234',

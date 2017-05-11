@@ -3,7 +3,7 @@
 function ChatDetailViewModel(chatCell, parent) {
     var self = this;
 
-    self.id = chatCell.chatId;
+    self.id = chatCell.id;
     self.name = chatCell.name;
     self.isGroupChat = chatCell.isGroupChat;
     self.parent = parent;

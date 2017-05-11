@@ -73,6 +73,10 @@ function NestedListComponentViewModel(params) {
         if (!self.selectedCell()) { return false; }
         return self.selectedCell().id() === cell.id() ? true : false;
     };
+
+    self.shouldShowDelete = function(cell) {
+        return cell.shouldShowDelete ? cell.shouldShowDelete() : false;
+    };
 }
 
 ko.components.register('nested-list', {
@@ -95,8 +99,10 @@ ko.components.register('nested-list', {
                     <span class="fa fa-plus fa-lg" \
                         data-bind="click: $parent.addCell"></span>&nbsp;&nbsp; \
                     <!-- /ko -->\
+                    <!-- ko if: $parent.shouldShowDelete($data) -->\
                     <span class="fa fa-trash-o fa-color-white-hover fa-lg" \
                         data-bind="click: $parent.deleteCell"></span>\
+                    <!-- /ko -->\
                 <!-- /ko -->\
                 </span> \
             </a>\

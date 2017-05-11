@@ -10,21 +10,30 @@ function PartyManagerViewModel() {
 
     self.createOrJoin = ko.observable('create');
 
+    /**
+     * The node id of the current party. This should always be a node, not a jid.
+     */
     self.roomId = ko.observable();
+
+    self.roomJid = function() {
+        return self.roomId()+'@'+Settings.MUC_SERVICE
+    };
 
     self.load = function() {
         Notifications.xmpp.connected.add(self.dataHasChanged);
         self.parties(self._getParties());
 
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.addHandler(self._handlePresence, null, 'presence');
+        Notifications.party.joined.add(self._handleSubscription);
+        Notifications.party.left.add(self._handleUnsubscription);
     };
 
     self.unload = function() {
-        Notifications.authentication.loggedIn.remove(self.dataHasChanged);
+        Notifications.xmpp.connected.remove(self.dataHasChanged);
+        Notifications.party.joined.remove(self._handleSubscription);
+        Notifications.party.left.remove(self._handleUnsubscription);
 
         if (self.roomId()) {
-            self.leaveParty(self.roomId(), false);
+            self.leaveParty(self.roomJid(), false);
         }
     };
 
@@ -42,7 +51,7 @@ function PartyManagerViewModel() {
     };
 
     self.joinPartyWasClicked = function() {
-        self.joinParty(self.roomId());
+        self.joinParty(self.roomJid());
     };
 
     self.joinPartyWasClickedWithParty = function(party) {
@@ -50,7 +59,7 @@ function PartyManagerViewModel() {
     };
 
     self.leavePartyWasClicked = function() {
-        self.leaveParty(self.roomId(), true);
+        self.leaveParty(self.roomJid(), true);
     };
 
     self.deletePartyWasClicked = function(party) {
@@ -67,35 +76,21 @@ function PartyManagerViewModel() {
     /**
      * Create a new party node with a random id, and once that's
      * complete subscribe to that node.
-     * If any errors occur in this process an alert is fired to the user.
      */
     self.createParty = function() {
         var chatManager = ChatServiceManager.sharedService();
         var node = chatManager.getUniqueNodeId();
-
-        var party = new ChatRoom();
-        party.importValues({
-            chatId: node,
-            dateCreated: (new Date()).getTime(),
-            name: 'Party Chat',
-            isGroupChat: true,
-            isParty: true,
-            characterId: CharacterManager.activeCharacter().key()
-        });
-        party.save();
-
         self.joinParty(node);
     };
 
     /**
-     * Join an existing node and fire a notification to let the user know
-     * they've successfully joined the party.
-     * If successful, the party will be saved for easy access later.
-     * If any errors occur, also fire off a notification to let the user know.
+     * Join an existing node or create a new node.
      */
     self.joinParty = function(node) {
         var chatManager = ChatServiceManager.sharedService();
-        chatManager.join(node+'@'+Settings.MUC_SERVICE, 'test');
+        var xmpp = XMPPService.sharedService();
+        chatManager.join(node+'@'+Settings.MUC_SERVICE,
+            Strophe.getNodeFromJid(xmpp.connection.jid), true);
     };
 
     self.joinExistingParty = function(node) {
@@ -104,13 +99,12 @@ function PartyManagerViewModel() {
     };
 
     /**
-     * Unsubscrive to an existing node subscription and fire a notification to
-     * let the user know they've successfully left the party.
-     * If any errors occur, also fire off a notification to let the user know.
+     * Unsubscrive to an existing node subscription.
      */
     self.leaveParty = function(node, notify) {
         var chatManager = ChatServiceManager.sharedService();
-        chatManager.leave(node+'@'+Settings.MUC_SERVICE, 'test', self._handleUnsubscription);
+        var xmpp = XMPPService.sharedService();
+        chatManager.leave(node, Strophe.getNodeFromJid(xmpp.connection.jid));
     };
 
     /**
@@ -126,9 +120,6 @@ function PartyManagerViewModel() {
     self.dataHasChanged = function() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         self.loggedIn(token && token.isValid());
-
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.getSubscriptions(self._subscribeToExistingParty, 3000);
     };
 
     /* Private Methods */
@@ -141,62 +132,42 @@ function PartyManagerViewModel() {
         ]);
     };
 
-    /**
-     * Dispatch all presence messages based on what they are.
-     */
-    self._handlePresence = function(response) {
-        // TODO: Dispatch presence based on value.
-        console.log(response);
+    self._handleSubscription = function(node, success) {
+        if (success) {
+            // Ignore if we're already in a party.
+            if (self.inAParty()) { return; }
 
-        var isParticipant = $(response).find('item[role="participant"]').length > 0;
-        var isModerator = $(response).find('item[role="moderator"]').length > 0;
-        var isNone = $(response).find('item[role="none"]').length > 0;
+            self.roomId(Strophe.getNodeFromJid(node));
+            self.inAParty(true);
 
-        if (isParticipant || isModerator) {
-            self._handleSuccessfulSubscription(response);
-        } else if (isNone) {
-            self._handleSuccessfulUnsubscription(response);
+            // Reload parties.
+            self.parties(self._getParties());
+
+            Notifications.userNotification.successNotification.dispatch(
+                'You have successfully joined ' + self.roomId()
+            );
+        } else {
+            Notifications.userNotification.warningNotification.dispatch(
+                'An error has occurred while attempting to join the party'
+            );
+            console.log(error);
         }
-
-        return true;
     };
 
-    self._handleSuccessfulSubscription = function(success) {
-        // Ignore if we're already in a party.
-        if (self.inAParty()) { return; }
+    self._handleUnsubscription = function(node, success) {
+        if (success) {
+            self.roomId(null);
+            self.inAParty(false);
 
-        self.roomId(Strophe.getNodeFromJid($(success).attr('from')));
-        self.inAParty(true);
-
-        // Reload parties.
-        self.parties(self._getParties());
-
-        Notifications.party.joined.dispatch(self.roomId());
-        Notifications.userNotification.successNotification.dispatch(
-            'You have successfully joined ' + self.roomId()
-        );
-    };
-
-    self._handleFailedSubscription = function(error) {
-        Notifications.userNotification.warningNotification.dispatch(
-            'An error has occurred while attempting to join the party'
-        );
-        console.log(error);
-    };
-
-    self._handleSuccessfulUnsubscription = function(response) {
-        self.roomId(null);
-        self.inAParty(false);
-
-        Notifications.party.left.dispatch();
-        Notifications.userNotification.successNotification.dispatch(
-            'You have successfully left your party.'
-        );
-    };
-
-    self._handleFailedUnSubscription = function(response) {
-        Notifications.userNotification.warningNotification.dispatch(
-            'An error has occurred while attempting to leave the party'
-        );
+            Notifications.userNotification.successNotification.dispatch(
+                'You have successfully left your party.'
+            );
+        } else {
+            self._handleFailedUnSubscription = function(node) {
+                Notifications.userNotification.warningNotification.dispatch(
+                    'An error has occurred while attempting to leave the party'
+                );
+            }
+        }
     };
 }

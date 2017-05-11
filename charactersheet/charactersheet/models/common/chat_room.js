@@ -6,7 +6,7 @@ function ChatRoom() {
 
     self.ps = PersistenceService.register(ChatRoom, self);
     self.mapping = {
-        include: ['characterId', 'chatId', 'dateCreated', 'name', 'isGroupChat', 'isParty']
+        include: ['characterId', 'chatId', 'dateCreated', 'name', 'isGroupChat', 'isParty', 'partyId']
     };
 
     self.characterId = ko.observable();
@@ -15,9 +15,10 @@ function ChatRoom() {
     self.name = ko.observable();
     self.isGroupChat = ko.observable(false);
     self.isParty = ko.observable(false);
+    self.partyId = ko.observable();
 
     self.clear = function() {
-        var values = new Item().exportValues();
+        var values = new ChatRoom().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };
@@ -45,14 +46,6 @@ function ChatRoom() {
             msg.delete();
         });
     };
-
-    self.jid = ko.pureComputed(function() {
-        if (self.isGroupChat()) {
-            return self.chatId();
-        }
-
-        return '{}@conference.adventurerscodex.com'.replace('{}', self.chatId());
-    });
 
     /* Convenience Methods */
 
