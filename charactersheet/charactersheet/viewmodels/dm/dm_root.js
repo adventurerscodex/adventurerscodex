@@ -126,8 +126,8 @@ function DMRootViewModel() {
 
         ViewModelUtilities.loadSubViewModels(self);
 
-        Notifications.xmpp.pubsub.subscribed.add(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
+        Notifications.party.joined.add(self._updateCurrentNode);
+        Notifications.party.left.add(self._removeCurrentNode);
     };
 
     self.unload = function() {

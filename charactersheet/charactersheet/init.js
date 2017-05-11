@@ -25,8 +25,8 @@ var init = function(viewModel) {
     //DEBUG
     XMPPServiceDefaultConfig.credentialsHelper = function() {
         return {
-            jid: 'tester2@adventurerscodex.com/4949e074-242b-4ea5-9c60-84326b8d4a7f',
-            password: 'etheekne'
+            jid: 'tester3@adventurerscodex.com/4949e074-242b-4ea5-9c60-84326b8d4a7f',
+            password: 'test1234'
         };
     };
 

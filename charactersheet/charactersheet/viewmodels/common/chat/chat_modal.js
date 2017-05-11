@@ -33,7 +33,7 @@ function ChatModalViewModel(parent) {
             image: 'http://www.gravatar.com/avatar/11b074a636e00292c98e3e60f7e16595?size=280'
         }, {
             name: 'Tim',
-            jid: 'tim@text.com',
+            jid: 'tanyxp@adventurerscodex.com/1234',
             image: 'https://avatars3.githubusercontent.com/u/7286387?v=3&s=460'
         }];
     };

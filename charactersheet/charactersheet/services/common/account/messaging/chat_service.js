@@ -61,6 +61,17 @@ function _ChatService(config) {
         xmpp.connection.flush();
     };
 
+    self.join = function(jid, nick) {
+        var xmpp = XMPPService.sharedService();
+        xmpp.connection.muc.join(
+            jid, nick, self._handleNewGroupMessage,
+            self._handleNewPresenceOrIqMessage,
+            self._handleNewRosterMessage,
+            null, null, null
+        );
+        xmpp.connection.flush();
+    };
+
     self.leave = function(jid, nick, callback) {
         var xmpp = XMPPService.sharedService();
         xmpp.connection.muc.leave(jid, nick, callback, null);
@@ -69,11 +80,22 @@ function _ChatService(config) {
 
     // Room Management
 
+    /**
+     * Returns a unique id for a new node.
+     * Uses nouns and adjectives array from the `DataRepository`.
+     */
+    self.getUniqueNodeId = function() {
+        var adjective = DataRepository['adjectives'][Math.floor(Math.random() * DataRepository['adjectives'].length)];
+        var noun = DataRepository['nouns'][Math.floor(Math.random() * DataRepository['nouns'].length)];
+        var code = uuid.v4().substr(0,4);
+        return adjective + '-' + noun + '-' + code;
+    };
+
     self.createRoomAndInvite = function(name, invitees) {
         var jid = self._jidFromName(name);
         var room = self._getRoomOrCreate(jid, true);
 
-        self._joinRoom(jid, 'test');
+        self.join(jid, 'test');
         self._inviteAll(jid, invitees);
 
         return room;
@@ -172,7 +194,7 @@ function _ChatService(config) {
             var rooms = PersistenceService.findBy(ChatRoom, 'characterId', key);
             rooms.forEach(function(room, idx, _) {
                 if (room.isGroupChat()) {
-                    self._joinRoom(room.chatId(), 'test');
+                    self.join(room.chatId(), 'test');
                 }
             });
         }
@@ -220,17 +242,6 @@ function _ChatService(config) {
         Notifications.chat.room.dispatch(room);
 
         return room;
-    };
-
-    self._joinRoom = function(jid, nick) {
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.muc.join(
-            jid, nick, self._handleNewGroupMessage,
-            self._handleNewPresenceOrIqMessage,
-            self._handleNewRosterMessage,
-            null, null, null
-        );
-        xmpp.connection.flush();
     };
 
     self._inviteAll = function(jid, invitees) {

@@ -181,6 +181,11 @@ var Notifications = {
         }
     },
 
+    party: {
+        joined: new signals.Signal(),
+        left: new signals.Signal(),
+    },
+
     playerImage: {
         changed: new signals.Signal()
     },
