@@ -196,7 +196,7 @@ function _NodeService(config) {
     self.publishItem = function(item, attrs, route, onsuccess, onerror) {
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
-            from: xmpp.connection.jid,
+            from: Strophe.getBareJidFromJid(xmpp.connection.jid),
             type: 'set',
             id: xmpp.connection.getUniqueId()
         }).c('pubsub', {
@@ -241,10 +241,11 @@ function _NodeService(config) {
     };
 
     self._handleEvent = function(event) {
+        try {
         var items = $(event).find('items').children().toArray();
         items.forEach(function(item, idx, _) {
             var json = $(item).find('json');
-            var route = $(item).attr('node')[0];
+            var route = $(json).attr('node');
             if (!route) { return; }
 
             route = route.split('#')[1];
@@ -257,6 +258,10 @@ function _NodeService(config) {
             }
         });
         return true;
+        } catch(e) {
+            console.log(e);
+            return true;
+        }
     };
 
     self._handlePresenceRequest = function(presenceRequest) {

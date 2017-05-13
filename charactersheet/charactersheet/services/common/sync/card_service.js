@@ -55,7 +55,8 @@ function _pCardService(configuration) {
         var compressed = self.configuration.enableCompression;
         var attrs = {
             id: xmpp.connection.getUniqueId(),
-            publisher: xmpp.connection.jid
+            publisher: xmpp.connection.jid,
+            node: Strophe.NS.JSON + '#' + 'pcard'
         };
         var content = '';
 
@@ -72,14 +73,14 @@ function _pCardService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            nodeService.publishItem(content, attrs, 'pcard', null, null);
+            nodeService.publishItem(content, attrs, 'pcard', console.log, console.log);
         }
     };
 
     /* Private Methods */
 
     self._setupNotifications = function() {
-        Notifications.xmpp.pubsub.subscribed.add(self._updateCurrentNode);
+        Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
 
         self.configuration.fields.forEach(function(field, idx, _) {
@@ -102,9 +103,11 @@ function _pCardService(configuration) {
     self._handleResponse = function(response) {
     };
 
-    self._updateCurrentNode = function(node) {
-        self.currentPartyNode = node;
-        self.dataHasChanged();
+    self._updateCurrentNode = function(roomName, success) {
+        if (success) {
+            self.currentPartyNode = roomName;
+            self.dataHasChanged();
+        }
     };
 
     self._removeCurrentNode = function(node) {
