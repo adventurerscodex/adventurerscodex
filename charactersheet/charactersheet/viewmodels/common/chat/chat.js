@@ -161,6 +161,7 @@ function ChatViewModel() {
      * the user.
      */
     self._deliverMessageToRoom = function(room, msg, delay) {
+        self._updateChatRooms();
         var roomIsSelected = self._isSelectedRoom(room);
         if (roomIsSelected) {
             // The room for this chat is the active room.
@@ -176,7 +177,7 @@ function ChatViewModel() {
         }
     };
 
-    self._updateChatRooms = function(room) {
+    self._updateChatRooms = function() {
         // Update the UI.
         self.chats(self._getChats());
         self.cells(self._getChatCells());

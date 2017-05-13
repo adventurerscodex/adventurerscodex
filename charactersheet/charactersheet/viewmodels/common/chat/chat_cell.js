@@ -11,7 +11,7 @@ function ChatCellViewModel(chat) {
     self.isParty = chat.isParty;
 
     self.name = ko.pureComputed(function() {
-        return self.isParty() ? 'party chat' : self.id();
+        return self.isParty() ? 'My Party' : self.id();
     });
 
     self.shouldShowDelete = ko.pureComputed(function() {
