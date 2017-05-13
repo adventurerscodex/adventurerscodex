@@ -131,7 +131,6 @@ function _NodeService(config) {
         // Subscribe to all push events.
         var xmpp = XMPPService.sharedService();
         xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
-        xmpp.connection.addHandler(function(a) {console.log('RAW REQ: ', a); return true;})
         xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         // Finish setup after login is complete.
