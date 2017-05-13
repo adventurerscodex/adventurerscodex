@@ -271,7 +271,7 @@ function _NodeService(config) {
             }
 
             var presence = $pres({
-                to: $(presenceRequest).attr('from'),
+                to: Strophe.getBareJidFromJid($(presenceRequest).attr('from')),
                 type: 'subscribed'
             });
             xmpp.connection.send(presence.tree());
@@ -297,11 +297,10 @@ function _NodeService(config) {
             // Send the presence subscription request.
             var xmpp = XMPPService.sharedService();
             var presence = $pres({
-                to: jid,
+                to: Strophe.getBareJidFromJid(jid),
                 from: xmpp.connection.jid,
                 type: 'subscribe'
             });
-            console.log('Asking to subscribe to ', $(receivedPresence).attr('from'))
             xmpp.connection.send(presence.tree());
         } catch(err) {
             console.log(err);
