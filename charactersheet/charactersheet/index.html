@@ -98,7 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 </nav>
-<!-- ko if: ready -->
+<!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
   <div id="characters" class="container-fluid characters-module-style">
@@ -189,7 +189,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</div>
 </div>
 <!-- /ko -->
-<!-- ko ifnot: ready -->
+
+<!-- ko if: shouldShowWizard -->
 <div id="wizard" class="container-fluid main"
   data-bind="with: wizardViewModel">
   <div data-bind="template: {
@@ -198,7 +199,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     data: $data }"></div>
 </div>
 <!-- /ko -->
+
+<!-- ko if: shouldShowPicker -->
+<div id="picker" class="container-fluid main"
+  data-bind="with: charactersViewModel">
+  <div data-bind="template: {
+    name: 'character_picker.tmpl',
+    templateUrl: 'templates/common',
+    data: $data }"></div>
 </div>
+<!-- /ko -->
+
+</div>
+
 
 <!-- Footer -->
 <div class="container-fluid footer">

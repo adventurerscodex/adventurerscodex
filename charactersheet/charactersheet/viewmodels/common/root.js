@@ -1,6 +1,25 @@
 'use strict';
 
 /**
+ * All of the possible states that the app globally can render.
+ */
+var APP_STATE = {
+    /**
+     * A character/dm has been chosen to load and the normal workflow is available.
+     */
+    CHOSEN: 'app',
+    /**
+     * No character/dm was chosen, or none exists and the wizard should be shown.
+     */
+    WIZARD: 'wizard',
+    /**
+     * No character/dm has been chosen and the app should present the user
+     * with the available options
+     */
+    SELECT: 'select'
+};
+
+/**
  * The Root View Model for the application. All other view models are children of this view model.
  * This view model contains the global import/export functionality for player data as well as the
  * UI helpers for page layout and design.
@@ -12,7 +31,7 @@ function AdventurersCodexViewModel() {
      * Once the app is ready to be displayed and all data has been loaded,
      * and the init process has finished.
       */
-    self.ready = ko.observable(false);
+    self.state = ko.observable(APP_STATE.SELECT);
     self._dummy = ko.observable();
 
     // View Models
@@ -27,11 +46,24 @@ function AdventurersCodexViewModel() {
 
     self.showWizard = function() {
         //Unload the prior character.
+        self.state(APP_STATE.WIZARD);
         if (CharacterManager.activeCharacter()) {
             self.unload();
         }
-        self.ready(false);
+        self.load();
     };
+
+    self.shouldShowApp = ko.pureComputed(function() {
+        return  self.state() == APP_STATE.CHOSEN;
+    });
+
+    self.shouldShowWizard = ko.pureComputed(function() {
+        return  self.state() == APP_STATE.WIZARD;
+    });
+
+    self.shouldShowPicker = ko.pureComputed(function() {
+        return  self.state() == APP_STATE.SELECT;
+    });
 
     //Public Methods
 
@@ -51,14 +83,14 @@ function AdventurersCodexViewModel() {
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
-        var character = PersistenceService.findAll(Character)[0];
-        if (character) {
-            //Switching characters will fire the load notification.
-            CharacterManager.changeCharacter(character.key());
+        var characters = PersistenceService.findAll(Character);
+        if (characters) {
+            self.state(APP_STATE.SELECT);
         } else {
             //If no current character exists, fire the load process anyway.
-            self.load();
+            self.state(APP_STATE.WIZARD);
         }
+        self.load();
     };
 
     /**
@@ -66,14 +98,16 @@ function AdventurersCodexViewModel() {
      */
     self.load = function() {
         self.loginViewModel.load();
-        if (CharacterManager.activeCharacter()) {
+        if (self.state() == APP_STATE.CHOSEN) {
             self.childRootViewModel().load();
             self.userNotificationViewModel.load();
             self.charactersViewModel.load();
             self.partyManagerViewModel.load();
-            self.ready(true);
-        } else {
+            self.state(APP_STATE.CHOSEN);
+        } else if (self.state() == APP_STATE.WIZARD) {
             self.wizardViewModel.load();
+        } else {
+            self.charactersViewModel.load();
         }
         self._dummy.valueHasMutated();
     };
@@ -106,13 +140,14 @@ function AdventurersCodexViewModel() {
 
     self._handleChangingCharacter = function() {
         //Don't save an empty character.
-        if (CharacterManager.activeCharacter() && self.ready()) {
+        if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
     };
 
     self._handleChangedCharacter = function() {
         self._setNewCharacter(CharacterManager.activeCharacter());
+        self.state(APP_STATE.CHOSEN);
         try {
             self.load();
         } catch(err) {

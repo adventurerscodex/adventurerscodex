@@ -77,7 +77,7 @@ Utility.oauth.setXHRBearerHeader = function(xhr, accessToken) {
     }
 
     if (!accessToken) {
-        throw Error('No token available for OAuth Requests.');
+        return;
     }
     xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
 };
