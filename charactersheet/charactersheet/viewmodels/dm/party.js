@@ -9,10 +9,12 @@ function PartyViewModel() {
 
     self.load = function() {
         Notifications.xmpp.routes.pcard.add(self.handlePCard);
+        Notifications.chat.member.left.add(self.removePlayer);
     };
 
     self.unload = function() {
         Notifications.xmpp.routes.pcard.remove(self.handlePCard);
+        Notifications.chat.member.left.remove(self.removePlayer);
     };
 
     self.handlePCard = function(inputPCard) {
@@ -34,5 +36,12 @@ function PartyViewModel() {
         }
 
         Notifications.party.players.changed.dispatch(self.players());
+    };
+
+    self.removePlayer = function(room, nick, jid) {
+        var remainingPlayers = self.players().filter(function(player) {
+            return player.publisherJid() !== jid;
+        });
+        self.players(remainingPlayers);
     };
 }

@@ -23,33 +23,33 @@ var init = function(viewModel) {
 
 
     //DEBUG
-//     XMPPServiceDefaultConfig.credentialsHelper = function() {
-//         return {
-//             jid: 'tester5@adventurerscodex.com/4949e074-242b-4ea5-9c60-84326b8d4a7f',
-//             password: 'test'
-//         };
-//     };
+    // XMPPServiceDefaultConfig.credentialsHelper = function() {
+    //     return {
+    //         jid: 'tester5@adventurerscodex.com/4949e074-242b-4ea5-9c60-84326b8d4a7f',
+    //         password: 'test'
+    //     };
+    // };
 
-//     // Run migration
-//     PersistenceService.migrate(Migrations.scripts, Settings.version);
-// XMPPServiceDefaultConfig.credentialsHelper = function() {
-//      return {
-//          jid: 'sonicrocketman@adventurerscodex.com/76db1247-b021-4f3f-bac1-560cfd4ce42f',
-//          password: 'bs152115'
-//      };
-//  };
+    // Run migration
+    PersistenceService.migrate(Migrations.scripts, Settings.version);
+XMPPServiceDefaultConfig.credentialsHelper = function() {
+     return {
+         jid: 'sonicrocketman@adventurerscodex.com/76db1247-b021-4f3f-bac1-560cfd4ce42f',
+         password: 'bs152115'
+     };
+ };
 //  XMPPServiceDefaultConfig.credentialsHelper = function() {
 //      return {
 //          jid: 'tester@adventurerscodex.com/1234',
 //          password: 'etheekne'
 //      };
 //  };
-    XMPPServiceDefaultConfig.credentialsHelper = function() {
-        return {
-            jid: 'tanyxp@adventurerscodex.com/1234',
-            password: 'test'
-        };
-    };
+    // XMPPServiceDefaultConfig.credentialsHelper = function() {
+    //     return {
+    //         jid: 'tanyxp@adventurerscodex.com/1234',
+    //         password: 'test'
+    //     };
+    // };
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
