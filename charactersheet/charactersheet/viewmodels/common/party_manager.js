@@ -25,6 +25,8 @@ function PartyManagerViewModel() {
 
         Notifications.party.joined.add(self._handleSubscription);
         Notifications.party.left.add(self._handleUnsubscription);
+
+        self.dataHasChanged();
     };
 
     self.unload = function() {
