@@ -31,12 +31,6 @@
                     name="joinParty" value="join" data-bind="checked: createOrJoin"/>
                     Join a Previous Party
                   </label>
-                  <label class="btn btn-default"
-                  data-bind="css: { active: createOrJoin() == 'add'}">
-                    <input type="radio" class="hide-block"
-                    name="joinParty" value="add" data-bind="checked: createOrJoin"/>
-                    Add a New Party
-                  </label>
                 </div>
               </div>
             </div>
@@ -62,7 +56,7 @@
                 <p class="text-left">
                   Click or tap a party to join it.
                 </p>
-                <div class="list-group" data-bind="foreach: parties">
+                <div class="list-group" data-bind="foreach: parties" style="max-height: 250px; overflow-y:scroll;">
                     <button type="button" class="list-group-item text-left col-xs-12"
                       data-bind="click: $parent.joinPartyWasClickedWithParty">
                       <div class="col-xs-11">
@@ -78,30 +72,27 @@
                       </div>
                     </button>
                 </div>
-                <!-- /ko -->
-              <!-- /ko -->
-              <!-- ko if: createOrJoin() === 'add' -->
               <p class="text-left">
                 If one of your friends has already made a party, you can join it by
-                using the party link or by entering the party ID here.
+                using the party link or by entering the Party ID here.
               </p>
               <div class="row">
                 <label for="roomName"
-                       class="col-sm-3 control-label">Party ID</label>
-                <div class="col-sm-8">
+                       class="col-sm-2 control-label">Party ID</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
                   <input type="text"
                          class="form-control"
                          data-bind="value: roomId">
-                </div>
-              </div><br />
-              <div class="row">
-                <div class="col-sm-12 col-padded">
-                  <button data-bind="click: joinPartyWasClicked" class="btn btn-primary">
-                    <span class="hidden-xs">Add and join a new party</span>
-                    <span class="visible-xs">Add and Join</span>
-                  </button>
+                    <span class="input-group-btn">
+                      <button data-bind="click: joinPartyWasClicked" class="btn btn-primary">
+                        <span>Add and join</span>
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
+                <!-- /ko -->
               <!-- /ko -->
             </div>
           </div>
