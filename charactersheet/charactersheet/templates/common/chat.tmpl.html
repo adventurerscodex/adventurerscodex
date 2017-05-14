@@ -17,6 +17,7 @@
 				    data-bind="foreach: log, bottomsUp: true">
 					  <li class="list-group-item">
               <div class="row">
+                <!-- ko ifnot: isSystemMessage -->
                 <div class="col-xs-1 hidden-xs" style="width:32px; padding-top:10px; margin-right:5px;">
                 </div>
                 <div class="col-sm-11">
@@ -31,6 +32,14 @@
                     </div>
                   </div>
                 </div>
+                <!-- /ko -->
+                <!-- ko if: isSystemMessage -->
+                <div class="row">
+                  <div class="col-sm-11 col-sm-offset-1">
+                    <small class="text-muted" data-bind="text: message"></small>
+                  </div>
+                </div>
+                <!-- /ko -->
               </div>
 					  </li>
 				  </ul>

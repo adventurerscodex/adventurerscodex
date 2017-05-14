@@ -408,37 +408,3 @@ function _ChatService(config) {
         );
     };
 }
-
-
-function MOCK_TEST_INVITE() {
-    var xmpp = XMPPService.sharedService();
-    var msg = $msg({
-        from: 'fdfgood@conference.adventurerscodex.com',
-        to: 'tester3@adventurerscodex.com',
-        type: 'normal'
-    }).c('archived', {
-        xmlns: 'urn:xmpp:mam:tmp',
-        by: 'adventurerscodex.com',
-        id: 'asdfghjkl'
-    }).up().c('stanza-id', {
-        xmlns: 'urn:xmpp:mam:sid:0',
-        by: 'adventurerscodex.com',
-        id: 'asdfghjkl'
-    }).up().c('x', {
-        xmlns: Strophe.NS.MUC_USER
-    }).c('invite', {
-        from: "sonicrocketman@adventurerscodex.com/Sonic's Retina Macbook Pro",
-    }).c('reason', {}).t(
-        'Please join me in this chat.'
-    ).up().up().up().c('x', {
-        xmlns: "jabber:x:conference",
-        jid: "fdfgood@conference.adventurerscodex.com"
-    }).t(
-        'Please join me in this chat.'
-    ).up().c('body').t(
-        "sonicrocketman@adventurerscodex.com/Sonic's Retina Macbook Pro invites you to the room fdfgood@conference.adventurerscodex.com (Please join me in this chat.) "
-    );
-
-    var chatService = ChatServiceManager.sharedService();
-    chatService._handleInviteMessages(msg.tree());
-}

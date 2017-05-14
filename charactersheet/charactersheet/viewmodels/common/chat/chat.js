@@ -184,11 +184,31 @@ function ChatViewModel() {
     };
 
     self._userHasJoined = function(jid, nick) {
-        Notifications.userNotification.infoNotification.dispatch(nick+' has joined '+jid);
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
+        var chat = new ChatMessage();
+        chat.importValues({
+            characterId: CharacterManager.activeCharacter().key(),
+            chatId: room.chatId(),
+            isSystemMessage: true,
+            message: nick + ' has entered the room.',
+            dateSent: (new Date()).getTime()
+        });
+        chat.save();
+        self._deliverMessageToRoom(chat, room, false)
     };
 
     self._userHasLeft = function(jid, nick) {
-        Notifications.userNotification.infoNotification.dispatch(nick+' has left '+jid);
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
+        var chat = new ChatMessage();
+        chat.importValues({
+            characterId: CharacterManager.activeCharacter().key(),
+            chatId: room.chatId(),
+            isSystemMessage: true,
+            message: nick + ' has left the room.',
+            dateSent: (new Date()).getTime()
+        });
+        chat.save();
+        self._deliverMessageToRoom(chat, room, false)
     };
 
     return self;

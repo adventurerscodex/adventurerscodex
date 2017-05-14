@@ -6,7 +6,7 @@ function ChatMessage() {
 
     self.ps = PersistenceService.register(ChatMessage, self);
     self.mapping = {
-        include: ['characterId', 'chatId', 'to', 'from', 'id', 'message', 'dateSent', 'read']
+        include: ['characterId', 'chatId', 'to', 'from', 'id', 'message', 'dateSent', 'read', 'isSystemMessage']
     };
 
     self.characterId = ko.observable();
@@ -17,6 +17,7 @@ function ChatMessage() {
     self.message = ko.observable();
     self.dateSent = ko.observable();
     self.read = ko.observable(false);
+    self.isSystemMessage = ko.observable(false);
 
     self.clear = function() {
         var values = new Item().exportValues();
