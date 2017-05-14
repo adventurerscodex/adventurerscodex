@@ -160,6 +160,7 @@ function _ChatService(config) {
             var isModerator = $(response).find('item[role="moderator"]').length > 0;
             var isNone = $(response).find('item[role="none"]').length > 0;
             var from = Strophe.getBareJidFromJid($(response).attr('from'));
+            var jid = $(response).find('item').attr('jid');
 
             // Handle Joining and leaving a room.
             var isCurrentParty = (from === self.currentPartyNode);
@@ -187,7 +188,7 @@ function _ChatService(config) {
                     Notifications.party.left.dispatch(from, true);
                 } else {
                     // Someone else has left.
-                    Notifications.chat.member.left.dispatch(from, nick);
+                    Notifications.chat.member.left.dispatch(from, nick, jid);
                 }
             }
         } catch(err) {

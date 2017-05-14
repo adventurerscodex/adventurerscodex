@@ -197,8 +197,8 @@ function ChatViewModel() {
         self._deliverMessageToRoom(chat, room, false)
     };
 
-    self._userHasLeft = function(jid, nick) {
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
+    self._userHasLeft = function(roomId, nick, jid) {
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', roomId);
         var chat = new ChatMessage();
         chat.importValues({
             characterId: CharacterManager.activeCharacter().key(),

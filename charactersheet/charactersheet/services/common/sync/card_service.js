@@ -36,6 +36,7 @@ function _pCardService(configuration) {
     self.init = function() {
         var key = CharacterManager.activeCharacter().key();
         Notifications.xmpp.routes.pcard.add(self.handlePCard);
+        Notifications.chat.member.left.add(self.removePlayer);
         var player = PersistenceService.findFirstBy(Character, 'key', key);
         if (player.playerType().key === PlayerTypes.characterPlayerType.key) {
             self._setupNotifications();
@@ -118,5 +119,12 @@ function _pCardService(configuration) {
         var newPCard = pCard.fromEntries(inputPCard);
 
         self.pCards[newPCard.get('publisherJid')] = newPCard;
+    };
+
+    self.removePlayer = function(room, nick, jid) {
+        var doesUserExist = self.pCards[jid];
+        if (doesUserExist) {
+            delete self.pCards[jid];
+        }
     };
 }
