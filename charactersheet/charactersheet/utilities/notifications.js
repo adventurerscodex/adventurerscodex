@@ -188,6 +188,9 @@ var Notifications = {
     party: {
         joined: new signals.Signal(),
         left: new signals.Signal(),
+        players: {
+            changed: new signals.Signal()
+        }
     },
 
     playerImage: {

@@ -196,10 +196,14 @@ function StatsViewModel() {
     self.resetOnLongRest = function() {
         self.resetHitDice();
         self.health().damage(0);
+        self.health().save();
+        self.damageDataHasChanged();
     };
 
     self.resetDamage = function() {
         self.health().damage(0);
+        self.health().save();
+        self.damageDataHasChanged();
     };
 
     /**
@@ -222,6 +226,10 @@ function StatsViewModel() {
                 }
             }
         });
+        self.hitDiceList().forEach(function(e, i, _) {
+            e.save();
+        });
+        self.hitDiceDataHasChanged();
     };
 
     // Calculate proficiency label and popover
