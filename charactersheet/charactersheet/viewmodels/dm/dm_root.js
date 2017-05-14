@@ -18,6 +18,7 @@ function DMRootViewModel() {
     self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
     self.partyTabViewModel = ko.observable(new PartyTabViewModel());
     self.chatTabViewModel = ko.observable(new ChatTabViewModel());
+    self.partyStatusLineViewModel = ko.observable(new PartyStatusLineViewModel());
     // TODO: Add
 
     self.dmCardService = DMCardPublishingService.sharedService();

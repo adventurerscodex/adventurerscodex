@@ -66,6 +66,7 @@ function _XMPPService(config) {
         Strophe.addNamespace('HTML', 'http://jabber.org/protocol/xhtml-im');
         Strophe.addNamespace('BODY', 'http://www.w3.org/1999/xhtml');
 
+        Strophe.addNamespace('PUBSUB', 'http://jabber.org/protocol/pubsub');
         Strophe.addNamespace('JSON', 'urn:xmpp:json:0');
         Strophe.addNamespace('ACTIVE', 'http://jabber.org/protocol/chatstates');
 

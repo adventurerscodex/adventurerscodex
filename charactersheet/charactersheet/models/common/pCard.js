@@ -213,7 +213,7 @@ function pCard() {
     self.get = function(name) {
         var attrs = [];
         for (var i = 0; i < self.entries.length; i++) {
-            if (self.entries[i].name === name && self.entries[i].value) {
+            if (self.entries[i].name === name && self.entries[i].value != null && self.entries[i].value != undefined) {
                 attrs.push(self.entries[i].value);
             } else if (self.entries[i].id && self.entries[i].id === name) {
                 return self.entries[i].value;
