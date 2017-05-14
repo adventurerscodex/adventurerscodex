@@ -73,6 +73,7 @@ function AdventurersCodexViewModel() {
     self.init = function() {
         self.charactersViewModel.init();
         self.wizardViewModel.init();
+        self.loginViewModel.load();
 
         XMPPService.sharedService().init();
         NodeServiceManager.sharedService().init();
@@ -97,7 +98,6 @@ function AdventurersCodexViewModel() {
      * Signal all modules to load their data.
      */
     self.load = function() {
-        self.loginViewModel.load();
         if (self.state() == APP_STATE.CHOSEN) {
             self.childRootViewModel().load();
             self.userNotificationViewModel.load();

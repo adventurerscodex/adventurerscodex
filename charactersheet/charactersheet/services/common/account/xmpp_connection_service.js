@@ -140,7 +140,7 @@ function _XMPPService(config) {
                     console.log('No attempt to reconnect: max connection retries reached.')
                 } else {
                     console.log('Reconnecting...');
-                    self._connectionRetries += 1
+                    self._connectionRetries += 1;
                     self._handleLogin();
                 }
             }
