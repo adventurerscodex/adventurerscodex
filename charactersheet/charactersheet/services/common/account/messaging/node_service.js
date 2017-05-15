@@ -195,6 +195,8 @@ function _NodeService(config) {
 
     self.publishItem = function(item, attrs, route, onsuccess, onerror) {
         var xmpp = XMPPService.sharedService();
+        // Refuse to publish if the connection is not established.
+        if (!xmpp.connection.connected) { return; }
         var iq = $iq({
             from: Strophe.getBareJidFromJid(xmpp.connection.jid),
             type: 'set',
@@ -210,8 +212,6 @@ function _NodeService(config) {
     /* Private Methods */
 
     self._handleConnect = function() {
-        // Fetch all outstanding subscriptions.
-        // https://xmpp.org/extensions/xep-0060.html#entity-subscriptions
         var xmpp = XMPPService.sharedService();
         // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
     };

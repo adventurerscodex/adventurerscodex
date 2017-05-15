@@ -22,14 +22,6 @@ var init = function(viewModel) {
     });
 
 
-    //DEBUG
-    // XMPPServiceDefaultConfig.credentialsHelper = function() {
-    //     return {
-    //         jid: 'tester5@adventurerscodex.com/4949e074-242b-4ea5-9c60-84326b8d4a7f',
-    //         password: 'test'
-    //     };
-    // };
-
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
 // XMPPServiceDefaultConfig.credentialsHelper = function() {

@@ -30,12 +30,19 @@ function _ChatService(config) {
 
     self._connectionIsSetup = false;
     self._xmppIsConnected = ko.observable(false);
+    self._toJoinParty = null;
 
     self.currentPartyNode = null;
 
     self.init = function() {
+        var fragments = new URI().fragment(true);
+        self._toJoinParty = fragments['party_node'];
+
         self._setupConnection();
 
+        XMPPService.sharedService().connection.addHandler(function(a) { console.log(a); return true;});
+        Notifications.xmpp.connected.add(self._handleConnect);
+        Notifications.characterManager.changing.add(self._leaveAll);
         Notifications.party.joined.add(self._setupRooms);
         Notifications.party.left.add(self._teardownRooms);
     };
@@ -231,6 +238,17 @@ function _ChatService(config) {
 
     // Connection Handlers
 
+    self._handleConnect = function() {
+        if (!self._toJoinParty) { return; }
+        var xmpp = XMPPService.sharedService();
+        var jid = self._toJoinParty+'@'+Settings.MUC_SERVICE;
+        var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
+
+        var party = self._getOrCreateParty(jid);
+
+        self.join(jid, nick, true);
+    };
+
     self._setupConnection = function() {
         var xmpp = XMPPService.sharedService();
 
@@ -377,6 +395,15 @@ function _ChatService(config) {
         rooms.forEach(function(room, idx, _) {
             self.join(room.chatId(), nick);
         });
+    };
+
+    self._leaveAll = function() {
+        var xmpp = XMPPService.sharedService();
+        var rooms = Object.keys(self.rooms);
+        rooms.forEach(function(room, idx, _) {
+            self.leave(room, Strophe.getNodeFromJid(xmpp.connection.jid));
+        });
+        self.rooms = {};
     };
 
     // Utility Methods
