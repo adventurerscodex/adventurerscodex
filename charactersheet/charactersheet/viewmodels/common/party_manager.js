@@ -33,17 +33,13 @@ function PartyManagerViewModel() {
         Notifications.xmpp.connected.remove(self.dataHasChanged);
         Notifications.party.joined.remove(self._handleSubscription);
         Notifications.party.left.remove(self._handleUnsubscription);
-
-        if (self.roomId()) {
-            self.leaveParty(self.roomJid(), false);
-        }
     };
 
     /* UI Methods */
 
     self.roomLink = ko.pureComputed(function() {
         if (self.roomId()) {
-            return encodeURI(Settings.HOST_URL + '?node_jid=' + self.roomId());
+            return encodeURI(Settings.HOST_URL + '?party_node=' + self.roomId());
         }
         return '';
     });
