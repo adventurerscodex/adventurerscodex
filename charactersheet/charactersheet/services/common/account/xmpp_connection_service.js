@@ -15,7 +15,7 @@ var XMPPServiceDefaultConfig = {
 
     credentialsHelper: function() {
         var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
-        var resource = CharacterManager.activeCharacter().key();
+        var resource = 'Adventurers Codex (Web)';
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         return {
             jid: bareJID + '/' + resource,
@@ -80,9 +80,7 @@ function _XMPPService(config) {
         var callback = self.configuration.connection.callback || self._connectionHandler;
         self.connection = connection;
 
-        // Finish setup after user has been confirmed and they've chosen a character.
-        Notifications.characterManager.changed.add(self._handleCharacterSwitched, null, 10000);
-        Notifications.characterManager.changing.add(self._handleCharacterSwitching, null, 10000);
+        Notifications.characterManager.changed.addOnce(self._handleConnect);
     };
 
     self.deinit = function() {
@@ -100,7 +98,7 @@ function _XMPPService(config) {
         return self.configuration.fallbackAction == 'throw';
     };
 
-    self._handleCharacterSwitched = function() {
+    self._handleConnect = function() {
         // Don't connect to XMPP without a logged in user.
         var user = UserServiceManager.sharedService().user();
         if (!user) { return; }
@@ -110,11 +108,6 @@ function _XMPPService(config) {
         var callback = self.configuration.connection.callback || self._connectionHandler;
         self.connection.connect(credentials.jid, credentials.password, callback);
         self.connection.flush();
-    };
-
-    self._handleCharacterSwitching = function() {
-        self._isShuttingDown = true;
-        self.connection.disconnect();
     };
 
     self._connectionHandler = function(status, error) {
