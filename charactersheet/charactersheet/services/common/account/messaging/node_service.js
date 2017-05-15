@@ -133,6 +133,7 @@ function _NodeService(config) {
         xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
         xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
+        xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
         // Finish setup after login is complete.
         Notifications.xmpp.connected.add(self._handleConnect);
     };
@@ -212,19 +213,7 @@ function _NodeService(config) {
 
     self._handleConnect = function() {
         var xmpp = XMPPService.sharedService();
-    };
-
-    self._handleSubscriptions = function(response) {
-        var fragments = (new URI()).fragment(true);
-        var nodeJID = fragments['party_node'];
-
-        if (!nodeJID) {
-            // There's no node given. See if we're already in a party
-            self._subscribeToExistingParty(response);
-            return;
-        } else {
-            self._subscribeToGivenNode(response, nodeJID);
-        }
+        // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
     };
 
     self._handleSubscriptionSuccess = function(subscription) {
@@ -310,6 +299,33 @@ function _NodeService(config) {
         return true;
     };
 
+    self._handleSuccessfulPresenceSubscription = function(response) {
+        try {
+            var xmpp = XMPPService.sharedService();
+            var from = $(response).attr('from');
+
+            var iq = $iq({
+                from: xmpp.connection.jid,
+                to: from,
+                id: xmpp.connection.getUniqueId(),
+                type: 'set'
+            }).c('pubsub', {
+                xmlns: Strophe.NS.PUBSUB
+            }).c('subscribe', {
+                node: Strophe.NS.JSON + '#' + 'pcard',
+                jid: Strophe.getBareJidFromJid(xmpp.connection.jid)
+            });
+            xmpp.connection.sendIQ(iq.tree(), self._getCards, console.log);
+        } catch(e) {
+            console.log(e);
+        }
+        return true;
+    };
+
+    self._getCards = function(response) {
+        console.log(response);
+    };
+
     self._getMessageContent = function(node) {
         var isCompressed = node.attr('compressed').toLowerCase();
 
@@ -325,20 +341,6 @@ function _NodeService(config) {
 
     self._decompressContents = function(data, compression) {
         return self.config.compression[compression].decompress(data);
-    };
-
-    self._subscribeToExistingParty = function(response) {
-        var fullJid = XMPPService.sharedService().connection.jid;
-        var subscriptions = $(response).find('subscriptions').children().toArray();
-        subscriptions.forEach(function(subscriptionNode, idx, _) {
-            if ($(subscriptionNode).attr('subscription') === 'subscribed' &&
-            $(subscriptionNode).attr('jid') === fullJid) {
-                Notifications.xmpp.pubsub.subscribed.dispatch(fullJid);
-                Notifications.userNotification.successNotification.dispatch(
-                    'You have re-joined ' + self.roomId()
-                );
-            }
-        });
     };
 
     self._subscribeToGivenNode = function(response, nodeJID) {
