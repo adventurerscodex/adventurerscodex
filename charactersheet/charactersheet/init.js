@@ -32,21 +32,27 @@ var init = function(viewModel) {
 
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
-XMPPServiceDefaultConfig.credentialsHelper = function() {
-     return {
-         jid: 'sonicrocketman@adventurerscodex.com/76db1247-b021-4f3f-bac1-560cfd4ce42f',
-         password: 'bs152115'
-     };
- };
-//  XMPPServiceDefaultConfig.credentialsHelper = function() {
+// XMPPServiceDefaultConfig.credentialsHelper = function() {
 //      return {
-//          jid: 'tester@adventurerscodex.com/1234',
-//          password: 'etheekne'
+//          jid: 'sonicrocketman@adventurerscodex.com/76db1247-b021-4f3f-bac1-560cfd4ce42f',
+//          password: 'bs152115'
 //      };
 //  };
+ XMPPServiceDefaultConfig.credentialsHelper = function() {
+     return {
+         jid: 'tester9@adventurerscodex.com/1234',
+         password: 'test'
+     };
+ };
     // XMPPServiceDefaultConfig.credentialsHelper = function() {
     //     return {
-    //         jid: 'tanyxp@adventurerscodex.com/1234',
+    //         jid: 'tanyxp3@adventurerscodex.com/1234',
+    //         password: 'test'
+    //     };
+    // };
+    //     XMPPServiceDefaultConfig.credentialsHelper = function() {
+    //     return {
+    //         jid: 'tanyxp2@adventurerscodex.com/1234',
     //         password: 'test'
     //     };
     // };
