@@ -36,6 +36,7 @@ function _ChatService(config) {
     self.init = function() {
         self._setupConnection();
 
+        Notifications.xmpp.connected.add(self._handleConnect);
         Notifications.party.joined.add(self._setupRooms);
         Notifications.party.left.add(self._teardownRooms);
     };
@@ -230,6 +231,18 @@ function _ChatService(config) {
     };
 
     // Connection Handlers
+
+    self._handleConnect = function() {
+        var fragments = (new URI()).fragment(true);
+        var partyNode = fragments['party_node'];
+
+        if (!partyNode) { return; }
+        var xmpp = XMPPService.sharedService();
+        var jid = partyNode+'@'+Settings.MUC_SERVICE;
+        var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
+
+        self.join(jid, nick, true);
+    };
 
     self._setupConnection = function() {
         var xmpp = XMPPService.sharedService();

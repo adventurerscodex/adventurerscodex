@@ -194,6 +194,8 @@ function _NodeService(config) {
 
     self.publishItem = function(item, attrs, route, onsuccess, onerror) {
         var xmpp = XMPPService.sharedService();
+        // Refuse to publish if the connection is not established.
+        if (!xmpp.connection.connected) { return; }
         var iq = $iq({
             from: Strophe.getBareJidFromJid(xmpp.connection.jid),
             type: 'set',
@@ -209,25 +211,21 @@ function _NodeService(config) {
     /* Private Methods */
 
     self._handleConnect = function() {
-        // Fetch all outstanding subscriptions.
-        // https://xmpp.org/extensions/xep-0060.html#entity-subscriptions
         var xmpp = XMPPService.sharedService();
-        // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
-        //xmpp.connection.pubsub.getSubscriptions(self._handleSubscriptions, 3000);
     };
 
-//     self._handleSubscriptions = function(response) {
-//         var fragments = (new URI()).fragment(true);
-//         var nodeJID = fragments['node_jid'];
-//
-//         if (!nodeJID) {
-//             // There's no node given. See if we're already in a party
-//             self._subscribeToExistingParty(response);
-//             return;
-//         } else {
-//             self._subscribeToGivenNode(response, nodeJID);
-//         }
-//     };
+    self._handleSubscriptions = function(response) {
+        var fragments = (new URI()).fragment(true);
+        var nodeJID = fragments['party_node'];
+
+        if (!nodeJID) {
+            // There's no node given. See if we're already in a party
+            self._subscribeToExistingParty(response);
+            return;
+        } else {
+            self._subscribeToGivenNode(response, nodeJID);
+        }
+    };
 
     self._handleSubscriptionSuccess = function(subscription) {
         // TODO
