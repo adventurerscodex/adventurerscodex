@@ -33,6 +33,7 @@ function PartyManagerViewModel() {
         Notifications.xmpp.connected.remove(self.dataHasChanged);
         Notifications.party.joined.remove(self._handleSubscription);
         Notifications.party.left.remove(self._handleUnsubscription);
+        Notifications.characterManager.changing.add(self._leaveOnSwitch);
     };
 
     /* UI Methods */
@@ -128,6 +129,12 @@ function PartyManagerViewModel() {
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isParty', true)
         ]);
+    };
+
+    self._leaveOnSwitch = function() {
+        if (self.inAParty()) {
+            self._handleUnsubscription('', true);
+        }
     };
 
     self._handleSubscription = function(node, success) {
