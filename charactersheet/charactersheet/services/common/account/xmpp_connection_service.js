@@ -142,7 +142,7 @@ function _XMPPService(config) {
             // Attempt reconnect, unless the app is shutting down.
             if (!self._isShuttingDown) {
                 if (self._connectionRetries >= self.MAX_RETRIES) {
-                    console.log('No attempt to reconnect: max connection retries reached.')
+                    console.log('No attempt to reconnect: max connection retries reached.');
                 } else {
                     console.log('Reconnecting...');
                     self._connectionRetries += 1;

@@ -134,6 +134,7 @@ function _NodeService(config) {
         xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
+        Notifications.chat.member.left.add(self.unsubscribe);
         // Finish setup after login is complete.
         Notifications.xmpp.connected.add(self._handleConnect);
     };
@@ -164,33 +165,21 @@ function _NodeService(config) {
             }, onerror, null);
     };
 
-    self.unsubscribe = function(node, onsuccess, onerror) {
+    self.unsubscribe = function(room, nick, jid) {
         var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.unsubscribe(node, xmpp.connection.jid, null,
-            function(s) {
-                Notifications.xmpp.pubsub.unsubscribed.dispatch(node);
-                onsuccess(s);
-            }, onerror);
-    };
 
-    /**
-     * Deletes an item from a node with matching criteria.
-     *
-     * @param node  id of node where items are published
-     * @param itemId  id of item to look for in the given node
-     */
-    self.deleteItem = function(node, itemId, onsuccess, onerror) {
-        var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,
-            to: Settings.PUBSUB_HOST_JID,
-            type:'set',
-            id: xmpp.connection.getUniqueId()
-        }).c('pubsub', {xmlns: Strophe.NS.PUBSUB})
-        .c('retract', {node: node})
-        .c('item', {id: itemId});
-
-        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror, 3000);
+            to: jid,
+            id: xmpp.connection.getUniqueId(),
+            type: 'set'
+        }).c('pubsub', {
+            xmlns: Strophe.NS.PUBSUB
+        }).c('unsubscribe', {
+            node: Strophe.NS.JSON + '#' + 'pcard',
+            jid: Strophe.getBareJidFromJid(xmpp.connection.jid)
+        });
+        xmpp.connection.sendIQ(iq.tree(), self._getCards, console.log);
     };
 
     self.publishItem = function(item, attrs, route, onsuccess, onerror) {
@@ -228,26 +217,25 @@ function _NodeService(config) {
 
     self._handleEvent = function(event) {
         try {
-        var items = $(event).find('items').children().toArray();
-        items.forEach(function(item, idx, _) {
-            var json = $(item).find('json');
-            var route = $(json).attr('node');
-            if (!route) { return; }
+            var items = $(event).find('items').children().toArray();
+            items.forEach(function(item, idx, _) {
+                var json = $(item).find('json');
+                var route = $(json).attr('node');
+                if (!route) { return; }
 
-            route = route.split('#')[1];
-            if (!route) { return; }
+                route = route.split('#')[1];
+                if (!route) { return; }
 
-            var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
-            if (route && dispatchRouteExists) {
-                var content = self._getMessageContent(json);
-                Notifications.xmpp.routes[route].dispatch(content);
-            }
-        });
-        return true;
+                var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
+                if (route && dispatchRouteExists) {
+                    var content = self._getMessageContent(json);
+                    Notifications.xmpp.routes[route].dispatch(content);
+                }
+            });
         } catch(e) {
             console.log(e);
-            return true;
         }
+        return true;
     };
 
     self._handlePresenceRequest = function(presenceRequest) {
@@ -266,7 +254,7 @@ function _NodeService(config) {
                 type: 'subscribed'
             });
             xmpp.connection.send(presence.tree());
-            console.log('Subscribed to ', $(presenceRequest).attr('from'))
+            console.log('Subscribed to ', $(presenceRequest).attr('from'));
         } catch(err) {
             console.log(err);
         }
@@ -323,7 +311,24 @@ function _NodeService(config) {
     };
 
     self._getCards = function(response) {
-        console.log(response);
+        var chat = ChatServiceManager.sharedService();
+        var xmpp = XMPPService.sharedService();
+        var partyId = chat.currentPartyNode;
+        var roster = Object.keys(chat.rooms[partyId].roster);
+        if (roster.length < 1) { return; }
+        roster.forEach(function(member, idx, _) {
+            var iq = $iq({
+                from: xmpp.connection.jid,
+                to: member + '@adventurerscodex.com',
+                id: xmpp.connection.getUniqueId(),
+                type: 'get'
+            }).c('pubsub', {
+                xmlns: Strophe.NS.PUBSUB
+            }).c('items', {
+                node: Strophe.NS.JSON + '#pcard'
+            });
+            xmpp.connection.sendIQ(iq.tree(), self._handleEvent, console.log);
+        });
     };
 
     self._getMessageContent = function(node) {

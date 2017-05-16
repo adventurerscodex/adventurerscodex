@@ -168,6 +168,8 @@ function _ChatService(config) {
             var isNone = $(response).find('item[role="none"]').length > 0;
             var from = Strophe.getBareJidFromJid($(response).attr('from'));
             var jid = $(response).find('item').attr('jid');
+            var nick = Strophe.getResourceFromJid($(response).attr('from'));
+            var myNick = Strophe.getNodeFromJid(xmpp.connection.jid);
 
             // Handle Joining and leaving a room.
             var isCurrentParty = (from === self.currentPartyNode);
@@ -178,8 +180,6 @@ function _ChatService(config) {
             if (hasError) {
                 Notifications.party.joined.dispatch(from, false);
             } else if (joinedRoom) {
-                var nick = Strophe.getResourceFromJid($(response).attr('from'));
-                var myNick = Strophe.getNodeFromJid(xmpp.connection.jid);
                 if (nick == myNick) {
                     // We've joined.
                     Notifications.party.joined.dispatch(from, true);
@@ -188,8 +188,6 @@ function _ChatService(config) {
                     Notifications.chat.member.joined.dispatch(from, nick);
                 }
             } else if (leftRoom) {
-                var nick = Strophe.getResourceFromJid($(response).attr('from'));
-                var myNick = Strophe.getNodeFromJid(xmpp.connection.jid);
                 if (nick == myNick) {
                     // We've left.
                     Notifications.party.left.dispatch(from, true);
@@ -352,7 +350,7 @@ function _ChatService(config) {
             new OrPredicate([
                 // Either is a party or belongs to the party.
                 new KeyValuePredicate('partyId', self.currentPartyNode),
-                new KeyValuePredicate('isParty', true),
+                new KeyValuePredicate('isParty', true)
             ])
         ])[0];
 
@@ -389,7 +387,7 @@ function _ChatService(config) {
         var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
         var rooms = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('partyId', node),
-            new KeyValuePredicate('isGroupChat', true),
+            new KeyValuePredicate('isGroupChat', true)
         ]);
 
         rooms.forEach(function(room, idx, _) {

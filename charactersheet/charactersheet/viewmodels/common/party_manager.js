@@ -16,7 +16,7 @@ function PartyManagerViewModel() {
     self.roomId = ko.observable();
 
     self.roomJid = function() {
-        return self.roomId()+'@'+Settings.MUC_SERVICE
+        return self.roomId() + '@' + Settings.MUC_SERVICE;
     };
 
     self.load = function() {
@@ -171,7 +171,7 @@ function PartyManagerViewModel() {
                 Notifications.userNotification.warningNotification.dispatch(
                     'An error has occurred while attempting to leave the party'
                 );
-            }
+            };
         }
     };
 }

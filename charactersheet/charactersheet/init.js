@@ -32,7 +32,7 @@ var init = function(viewModel) {
 //  };
  XMPPServiceDefaultConfig.credentialsHelper = function() {
      return {
-         jid: 'tester9@adventurerscodex.com/1234',
+         jid: 'tester6@adventurerscodex.com/1234',
          password: 'test'
      };
  };

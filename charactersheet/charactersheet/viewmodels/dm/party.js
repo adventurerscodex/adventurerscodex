@@ -5,7 +5,6 @@ function PartyViewModel() {
     var self = this;
 
     self.players = ko.observableArray();
-    self.partyStatus = ko.observable();
 
     self.load = function() {
         Notifications.xmpp.routes.pcard.add(self.handlePCard);
@@ -43,5 +42,6 @@ function PartyViewModel() {
             return player.publisherJid() !== jid;
         });
         self.players(remainingPlayers);
+        Notifications.party.players.changed.dispatch(self.players());
     };
 }

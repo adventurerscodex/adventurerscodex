@@ -63,7 +63,7 @@ function CharactersViewModel() {
 
         // Do switch
         if (character.key() !== activeCharacterKey) {
-           CharacterManager.changeCharacter(character.key());
+            CharacterManager.changeCharacter(character.key());
         }
     };
 
