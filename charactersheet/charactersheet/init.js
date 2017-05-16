@@ -21,7 +21,6 @@ var init = function(viewModel) {
         });
     });
 
-
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
 

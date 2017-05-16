@@ -136,7 +136,7 @@ function ChatViewModel() {
             ])
         ]);
         return chats.sort(function(a,b) {
-            return a.isParty() > b.isParty()
+            return a.isParty() > b.isParty();
         });
     };
 
@@ -194,7 +194,7 @@ function ChatViewModel() {
             dateSent: (new Date()).getTime()
         });
         chat.save();
-        self._deliverMessageToRoom(chat, room, false)
+        self._deliverMessageToRoom(chat, room, false);
     };
 
     self._userHasLeft = function(roomId, nick, jid) {
@@ -208,7 +208,7 @@ function ChatViewModel() {
             dateSent: (new Date()).getTime()
         });
         chat.save();
-        self._deliverMessageToRoom(chat, room, false)
+        self._deliverMessageToRoom(chat, room, false);
     };
 
     return self;

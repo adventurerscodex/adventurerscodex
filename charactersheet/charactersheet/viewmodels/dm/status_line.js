@@ -25,7 +25,7 @@ function PartyStatusLineViewModel() {
     };
 
     self.getStatusLine = function(players) {
-        if (players.length < 1) { return; }
+        if (players.length < 1) { return ''; }
         var totalHealthiness = 0;
         var totalMagic = 0;
         var totalTrackedAbilities = 0;
