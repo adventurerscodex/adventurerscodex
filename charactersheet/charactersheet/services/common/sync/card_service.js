@@ -116,6 +116,8 @@ function _pCardService(configuration) {
     };
 
     self.handlePCard = function(inputPCard) {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode == null) { return; }
         var newPCard = pCard.fromEntries(inputPCard);
 
         self.pCards[newPCard.get('publisherJid')] = newPCard;

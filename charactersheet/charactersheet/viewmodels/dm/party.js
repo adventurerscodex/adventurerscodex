@@ -17,6 +17,8 @@ function PartyViewModel() {
     };
 
     self.handlePCard = function(inputPCard) {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode == null) { return; }
         var publisherJid;
         var isNewPlayer = true;
         inputPCard.forEach(function(field, idx, _) {
