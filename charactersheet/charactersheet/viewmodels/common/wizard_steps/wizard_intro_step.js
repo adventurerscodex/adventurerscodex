@@ -44,7 +44,7 @@ function WizardIntroStepViewModel() {
         //Make sure only one dropbox button is created
         var dropboxContainer = document.getElementById('dropbox-container');
         if(dropboxContainer.childNodes.length < 1){
-            var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
+            var button = Dropbox.createChooseButton(Settings.dropboxPickerConfigOptions);
             dropboxContainer.appendChild(button);
         }
     };
