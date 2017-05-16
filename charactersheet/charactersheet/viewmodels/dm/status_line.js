@@ -25,7 +25,8 @@ function PartyStatusLineViewModel() {
     };
 
     self.getStatusLine = function(players) {
-        if (players.length < 1) { return ''; }
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode == null || players.length < 1) { return ''; }
         var totalHealthiness = 0;
         var totalMagic = 0;
         var totalTrackedAbilities = 0;

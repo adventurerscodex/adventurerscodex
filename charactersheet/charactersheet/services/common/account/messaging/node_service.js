@@ -135,8 +135,8 @@ function _NodeService(config) {
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
         Notifications.chat.member.left.add(self.unsubscribe);
-        // Finish setup after login is complete.
-        Notifications.xmpp.connected.add(self._handleConnect);
+        Notifications.chat.member.joined.add(self._getCards);
+        Notifications.party.joined.add(self._getCards);
     };
 
     /**
@@ -146,31 +146,12 @@ function _NodeService(config) {
         return self.config.defaultNodeOptions;
     };
 
-    /* PubSub Methods */
-
-    self.create = function(node, callback) {
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.createNode(node, self.getDefaultNodeOptions(), function(a) {
-            Notifications.xmpp.pubsub.created.dispatch(node);
-            callback(a);
-        });
-    };
-
-    self.subscribe = function(node, onsuccess, onerror) {
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.subscribe(node, self.getDefaultNodeOptions(),
-            self._handleEvent, function(s) {
-                Notifications.xmpp.pubsub.subscribed.dispatch(node);
-                onsuccess(s);
-            }, onerror, null);
-    };
-
     self.unsubscribe = function(room, nick, jid) {
         var xmpp = XMPPService.sharedService();
 
         var iq = $iq({
-            from: xmpp.connection.jid,
-            to: jid,
+            from: Strophe.getBareJidFromJid(xmpp.connection.jid),
+            to: Strophe.getBareJidFromJid(jid),
             id: xmpp.connection.getUniqueId(),
             type: 'set'
         }).c('pubsub', {
@@ -199,21 +180,6 @@ function _NodeService(config) {
     };
 
     /* Private Methods */
-
-    self._handleConnect = function() {
-        var xmpp = XMPPService.sharedService();
-        // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
-    };
-
-    self._handleSubscriptionSuccess = function(subscription) {
-        // TODO
-        console.log(subscription);
-    };
-
-    self._handleSubscriptionError = function(error) {
-        // TODO
-        console.log(error);
-    };
 
     self._handleEvent = function(event) {
         try {
@@ -346,19 +312,5 @@ function _NodeService(config) {
 
     self._decompressContents = function(data, compression) {
         return self.config.compression[compression].decompress(data);
-    };
-
-    self._subscribeToGivenNode = function(response, nodeJID) {
-        var subscriptions = $(response).find('subscriptions').children().toArray();
-        var subscriptionAlreadyExists = subscriptions.some(function(subscription, idx, _) {
-            return (
-                $(subscription).attr('node') === nodeJID &&
-                $(subscription).attr('subscription') === 'subscribed'
-            );
-        });
-
-        if (!subscriptionAlreadyExists) {
-            self.subscribe(nodeJID, self._handleSubscriptionSuccess, self._handleSubscriptionError);
-        }
     };
 }
