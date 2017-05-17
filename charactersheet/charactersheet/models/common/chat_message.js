@@ -20,7 +20,7 @@ function ChatMessage() {
     self.isSystemMessage = ko.observable(false);
 
     self.clear = function() {
-        var values = new Item().exportValues();
+        var values = new ChatMessage().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };
