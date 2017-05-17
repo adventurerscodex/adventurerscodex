@@ -10,7 +10,7 @@ var CharacterCardFields = [
             return xmpp.connection.jid;
         }
     }, {
-        name: 'characterName',
+        name: 'name',
         refreshOn: Notifications.profile.characterName.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());

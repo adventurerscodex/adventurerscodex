@@ -42,7 +42,7 @@ This explains the type of player the card represents.
 
 `value` should contain `dm` or `character`.
 
-__characterName__
+__name__
 
 This entry contains the name of the player's character or campaign. Often times
 this will be the display name of the player in UI.

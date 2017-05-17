@@ -23,6 +23,7 @@ function ChatViewModel() {
         Notifications.chat.member.left.add(self._userHasLeft);
         Notifications.party.joined.add(self._updateChatRooms);
         Notifications.party.left.add(self._updateChatRooms);
+        Notifications.party.players.changed.add(self._updateChatRooms);
     };
 
     self.didUnload = function() {
@@ -40,6 +41,7 @@ function ChatViewModel() {
         Notifications.chat.member.left.remove(self._userHasLeft);
         Notifications.party.left.remove(self._updateChatRooms);
         Notifications.party.joined.remove(self._updateChatRooms);
+        Notifications.party.players.changed.remove(self._updateChatRooms);
     };
 
     /* List Management Methods */
@@ -120,7 +122,9 @@ function ChatViewModel() {
 
     self._getChatCells = function() {
         return self.chats().map(function(chat, idx, _) {
-            return new ChatCellViewModel(chat);
+            var cell = new ChatCellViewModel(chat);
+            cell.reload();
+            return cell;
         });
     };
 
@@ -210,6 +214,33 @@ function ChatViewModel() {
         chat.save();
         self._deliverMessageToRoom(chat, room, false);
     };
+
+    // Chat Member Methods
+
+//     self._getRoomMembers = function(jid) {
+//         var character = CharacterManager.activeCharacter();
+//         var chatService = ChatServiceManager.sharedService();
+//
+//         // Get the current card service.
+//         var cardService = null;
+//         if (character.playerType().key == 'character') {
+//             cardService = CharacterCardPublishingService.sharedService();
+//         } else {
+//             cardService = DMCardPublishingService.sharedService();
+//         }
+//
+//         var room = chatService.rooms[jid];
+//         if (!room) {
+//             return;
+//         }
+//
+//         var cardsToInclude = Object.keys(room.roster).map(function(occupant, idx, _) {
+//             var jid = room.roster[occupant].jid;
+//             return cardService.pCards[jid];
+//         }).filter(function(card, idx, _) { return card; });
+//
+//         return cardsToInclude;
+//     };
 
     return self;
 }

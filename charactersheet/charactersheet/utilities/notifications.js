@@ -188,6 +188,10 @@ var Notifications = {
     party: {
         joined: new signals.Signal(),
         left: new signals.Signal(),
+        /**
+         * A new player update is available.
+         * NOTE: The first parameter is the list of pCards.
+         */
         players: {
             changed: new signals.Signal()
         }

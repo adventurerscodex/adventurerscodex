@@ -131,6 +131,8 @@ function _pCardService(configuration) {
         if (pCardInParty) {
             self.pCards[newPCard.get('publisherJid')] = newPCard;
         }
+
+        self._dispatchPlayerChangedNotification();
     };
 
     self.removePlayer = function(room, nick, jid) {
@@ -138,9 +140,20 @@ function _pCardService(configuration) {
         if (doesUserExist) {
             delete self.pCards[jid];
         }
+
+        self._dispatchPlayerChangedNotification();
     };
 
     self.clearPCards = function() {
         self.pCards = {};
     }
+
+    /* Private Methods */
+
+    self._dispatchPlayerChangedNotification = function() {
+        var players = Object.keys(self.pCards).map(function(jid, idx, _) {
+            return self.pCards[jid];
+        });
+        Notifications.party.players.changed.dispatch(players);
+    };
 }

@@ -54,6 +54,8 @@ function _ChatService(config) {
         Notifications.party.left.remove(self._teardownRooms);
     };
 
+    /* Public Methods */
+
     self.send = function(room, message) {
         var xmpp = XMPPService.sharedService();
         if (room.isGroupChat()) {
@@ -112,6 +114,15 @@ function _ChatService(config) {
         self._inviteAll(jid, invitees);
 
         return room;
+    };
+
+    self.getOccupantsInRoom = function(jid) {
+        var room = self.rooms[jid] || {};
+        var roster = room.roster || {};
+
+        return Object.keys(roster).map(function(occupant, idx, _) {
+            return room.roster[occupant].jid;
+        });
     };
 
     /* Private Methods */
