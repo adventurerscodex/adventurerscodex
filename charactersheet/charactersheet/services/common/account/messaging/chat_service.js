@@ -175,7 +175,7 @@ function _ChatService(config) {
             var isCurrentParty = (from === self.currentPartyNode);
             var joinedRoom = (isCurrentParty && (isParticipant || isModerator));
             var leftRoom = (isNone && isCurrentParty);
-            var hasError =  $(response).find('error').length > 0;
+            var hasError = $(response).find('error').length > 0;
 
             if (hasError) {
                 Notifications.party.joined.dispatch(from, false);
