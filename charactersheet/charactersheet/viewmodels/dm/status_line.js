@@ -20,7 +20,10 @@ function PartyStatusLineViewModel() {
 
     // Private Methods
 
-    self.dataHasChanged = function(players) {
+    self.dataHasChanged = function(pCards) {
+        var players = pCards.map(function(inputPCard, idx, _) {
+            return new PlayerCard(inputPCard);
+        });
         self.statusLine(self.getStatusLine(players));
     };
 

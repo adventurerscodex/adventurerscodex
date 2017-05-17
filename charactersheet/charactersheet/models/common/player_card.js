@@ -14,7 +14,7 @@ function PlayerCard(pCard) {
        _Note_: The 'key' has to have the same name as the model attribute. */
     var playerCardFields = [
         {'key':'publisherJid', 'converter': null},
-        {'key':'characterName', 'converter': null},
+        {'key':'name', 'converter': null},
         {'key':'playerName', 'converter': null},
         {'key':'playerType', 'converter': null},
         {'key':'playerSummary', 'converter': null},

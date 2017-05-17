@@ -47,8 +47,6 @@ function PartyViewModel() {
         if (isNewPlayer) {
             self.players.push(new PlayerCard(pCard.fromEntries(inputPCard)));
         }
-
-        Notifications.party.players.changed.dispatch(self.players());
     };
 
     self.removePlayer = function(room, nick, jid) {
@@ -56,7 +54,6 @@ function PartyViewModel() {
             return player.publisherJid() !== jid;
         });
         self.players(remainingPlayers);
-        Notifications.party.players.changed.dispatch(self.players());
     };
 
     self.clearPCards = function() {
