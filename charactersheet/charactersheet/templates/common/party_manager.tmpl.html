@@ -5,7 +5,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h4 class="modal-title" id="importModalLabel">
-        Create or Join a Party
+        Manage Party
       </h4>
     </div>
     <div class="modal-body">
@@ -29,7 +29,7 @@
                   data-bind="css: { active: createOrJoin() == 'join'}">
                     <input type="radio" class="hide-block"
                     name="joinParty" value="join" data-bind="checked: createOrJoin"/>
-                    Join a Previous Party
+                    Join a Party
                   </label>
                 </div>
               </div>
@@ -43,7 +43,7 @@
                 party and that your DM will be able to see your character's stats.
               </p>
               <button data-bind="click: createPartyWasClicked" class="btn btn-primary">
-                Create a new Party</button>
+                Create</button>
               <!-- /ko -->
               <!-- ko if: createOrJoin() === 'join' -->
                 <!-- ko if: parties().length === 0  -->
@@ -72,6 +72,7 @@
                       </div>
                     </button>
                 </div>
+                <!-- /ko -->
               <p class="text-left">
                 If one of your friends has already made a party, you can join it by
                 using the party link or by entering the Party ID here.
@@ -92,7 +93,6 @@
                   </div>
                 </div>
               </div>
-                <!-- /ko -->
               <!-- /ko -->
             </div>
           </div>
