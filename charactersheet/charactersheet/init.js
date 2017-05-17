@@ -30,18 +30,18 @@ var init = function(viewModel) {
 //          password: 'bs152115'
 //      };
 //  };
- XMPPServiceDefaultConfig.credentialsHelper = function() {
-     return {
-         jid: 'tany@adventurerscodex.com/1234',
-         password: 'test'
-     };
- };
-    // XMPPServiceDefaultConfig.credentialsHelper = function() {
-    //     return {
-    //         jid: 'tanyxp3@adventurerscodex.com/1234',
-    //         password: 'test'
-    //     };
-    // };
+//  XMPPServiceDefaultConfig.credentialsHelper = function() {
+//      return {
+//          jid: 'tany@adventurerscodex.com/1234',
+//          password: 'test'
+//      };
+//  };
+    XMPPServiceDefaultConfig.credentialsHelper = function() {
+        return {
+            jid: 'blah3@adventurerscodex.com',
+            password: 'test'
+        };
+    };
     //     XMPPServiceDefaultConfig.credentialsHelper = function() {
     //     return {
     //         jid: 'tanyxp2@adventurerscodex.com/1234',

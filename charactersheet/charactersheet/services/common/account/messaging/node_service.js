@@ -134,7 +134,6 @@ function _NodeService(config) {
         xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
-        Notifications.chat.member.left.add(self.unsubscribe);
         Notifications.chat.member.joined.add(self._getCards);
         Notifications.party.joined.add(self._getCards);
     };
@@ -144,23 +143,6 @@ function _NodeService(config) {
      */
     self.getDefaultNodeOptions = function() {
         return self.config.defaultNodeOptions;
-    };
-
-    self.unsubscribe = function(room, nick, jid) {
-        var xmpp = XMPPService.sharedService();
-
-        var iq = $iq({
-            from: Strophe.getBareJidFromJid(xmpp.connection.jid),
-            to: Strophe.getBareJidFromJid(jid),
-            id: xmpp.connection.getUniqueId(),
-            type: 'set'
-        }).c('pubsub', {
-            xmlns: Strophe.NS.PUBSUB
-        }).c('unsubscribe', {
-            node: Strophe.NS.JSON + '#' + 'pcard',
-            jid: Strophe.getBareJidFromJid(xmpp.connection.jid)
-        });
-        xmpp.connection.sendIQ(iq.tree(), self._getCards, console.log);
     };
 
     self.publishItem = function(item, attrs, route, onsuccess, onerror) {
@@ -280,6 +262,7 @@ function _NodeService(config) {
         var chat = ChatServiceManager.sharedService();
         var xmpp = XMPPService.sharedService();
         var partyId = chat.currentPartyNode;
+        if (partyId == null || !chat.rooms[partyId]) { return; }
         var roster = Object.keys(chat.rooms[partyId].roster);
         if (roster.length < 1) { return; }
         roster.forEach(function(member, idx, _) {

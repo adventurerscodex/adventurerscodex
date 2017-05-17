@@ -37,6 +37,7 @@ function _pCardService(configuration) {
         var key = CharacterManager.activeCharacter().key();
         Notifications.xmpp.routes.pcard.add(self.handlePCard);
         Notifications.chat.member.left.add(self.removePlayer);
+        Notifications.party.left.add(self.clearPCards);
         var player = PersistenceService.findFirstBy(Character, 'key', key);
         if (player.playerType().key === PlayerTypes.characterPlayerType.key) {
             self._setupNotifications();
@@ -82,7 +83,6 @@ function _pCardService(configuration) {
 
     self._setupNotifications = function() {
         Notifications.party.joined.add(self._updateCurrentNode);
-        Notifications.xmpp.pubsub.unsubscribed.add(self._removeCurrentNode);
 
         self.configuration.fields.forEach(function(field, idx, _) {
             field.refreshOn.add(self.dataHasChanged);
@@ -111,16 +111,26 @@ function _pCardService(configuration) {
         }
     };
 
-    self._removeCurrentNode = function(node) {
-        self.currentPartyNode = null;
-    };
-
     self.handlePCard = function(inputPCard) {
         var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode == null) { return; }
+        if (chat.currentPartyNode == null) {
+            return;
+        }
+        var pCardInParty = false;
         var newPCard = pCard.fromEntries(inputPCard);
+        var publisherJid = newPCard.get('publisherJid')[0].split('@')[0];
+        var players = Object.keys(chat.rooms[chat.currentPartyNode].roster);
+        if (players.length > 0) {
+            players.forEach(function(player, idx, _) {
+                if (player === publisherJid) {
+                    pCardInParty = true;
+                }
+            });
+        }
 
-        self.pCards[newPCard.get('publisherJid')] = newPCard;
+        if (pCardInParty) {
+            self.pCards[newPCard.get('publisherJid')] = newPCard;
+        }
     };
 
     self.removePlayer = function(room, nick, jid) {
@@ -129,4 +139,8 @@ function _pCardService(configuration) {
             delete self.pCards[jid];
         }
     };
+
+    self.clearPCards = function() {
+        self.pCards = {};
+    }
 }
