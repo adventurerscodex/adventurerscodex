@@ -19,22 +19,22 @@ function ChatModalViewModel(parent) {
     };
 
     self.getAllPartyMembers = function() {
-        return [{
-            name: 'Jim',
-            jid: 'jim@text.com',
-            image: 'https://s-media-cache-ak0.pinimg.com/564x/67/88/bb/6788bbf5cf1cbf91cebc337dc0ec50fb.jpg'
-        }, {
-            name: 'Bob',
-            jid: 'bob@text.com',
-            image: 'https://s-media-cache-ak0.pinimg.com/564x/67/88/bb/6788bbf5cf1cbf91cebc337dc0ec50fb.jpg'
-        }, {
-            name: 'Joe',
-            jid: 'sonicrocketman@adventurerscodex.com',
-            image: 'http://www.gravatar.com/avatar/11b074a636e00292c98e3e60f7e16595?size=280'
-        }, {
-            name: 'Tim',
-            jid: 'tanyxp@adventurerscodex.com/1234',
-            image: 'https://avatars3.githubusercontent.com/u/7286387?v=3&s=460'
-        }];
+        var character = CharacterManager.activeCharacter();
+        var chatService = ChatServiceManager.sharedService();
+
+        // Get the current card service.
+        var cardService = null;
+        if (character.playerType().key == 'character') {
+            cardService = CharacterCardPublishingService.sharedService();
+        } else {
+            cardService = DMCardPublishingService.sharedService();
+        }
+
+        return cardService.getPCardsExceptMine().map(function(card, idx, _) {
+            return {
+                name: card.get('name')[0],
+                image: card.get('imageUrl')[0]
+            };
+        });
     };
 }

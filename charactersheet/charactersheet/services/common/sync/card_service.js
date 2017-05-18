@@ -79,6 +79,15 @@ function _pCardService(configuration) {
         }
     };
 
+    self.getPCardsExceptMine = function() {
+        return Object.keys(self.pCards).filter(function(jid, idx, _) {
+            var xmpp = XMPPService.sharedService();
+            return jid !== xmpp.connection.jid;
+        }).map(function(jid, idx, _) {
+            return self.pCards[jid];
+        });
+    };
+
     /* Private Methods */
 
     self._setupNotifications = function() {

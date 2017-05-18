@@ -62,4 +62,24 @@ function ChatRoom() {
         ]);
     };
 
+    self.getRoomMembers = function() {
+        var jid = self.chatId();
+        var character = CharacterManager.activeCharacter();
+        var chatService = ChatServiceManager.sharedService();
+        var occupants = chatService.getOccupantsInRoom(jid);
+
+        // Get the current card service.
+        var cardService = null;
+        if (character.playerType().key == 'character') {
+            cardService = CharacterCardPublishingService.sharedService();
+        } else {
+            cardService = DMCardPublishingService.sharedService();
+        }
+
+        var occupantCardsOrNames = occupants.map(function(occupant, idx, _) {
+            return cardService.pCards[occupant] ? cardService.pCards[occupant] : occupant;
+        });
+
+        return occupantCardsOrNames;
+    };
 }
