@@ -4,8 +4,9 @@ function ChatDetailViewModel(chatCell, parent) {
     var self = this;
 
     self.id = chatCell.id;
-    self.name = chatCell.name;
+    self.members = chatCell.members;
     self.isGroupChat = chatCell.isGroupChat;
+    self._getRoomMembers = chatCell._getRoomMembers;
     self.parent = parent;
 
     self.templateUrl = 'templates/common';
@@ -60,6 +61,14 @@ function ChatDetailViewModel(chatCell, parent) {
     };
 
     /* UI Methods */
+
+
+    self.name = ko.pureComputed(function() {
+        return self.members().map(function(member, idx, _) {
+            return self._getMemberTemplate(member);
+        }).join('');
+
+    });
 
     self.messageFieldShouldHaveFocus = ko.observable(true);
 
@@ -159,4 +168,25 @@ function ChatDetailViewModel(chatCell, parent) {
             self._xmppIsConnected(false);
         }
     };
+
+    self._getMemberTemplate = function(card) {
+        if (typeof card == 'string') {
+            return card;
+        } else {
+            return ChatDetailViewModelMemberTemplate.replace(
+                '{card.image}', card.get('imageUrl')[0]
+            ).replace(
+                '{card.name}', card.get('name')[0]
+            );
+        }
+    };
 }
+
+
+var ChatDetailViewModelMemberTemplate = '\
+    <div class="col-md-2 col-xs-3 text-center col-padded">\
+        <img src="{card.image}" width="60" height="60" \
+            class="img img-circle img-padded" /><br />\
+        <small class="text-muted">{card.name}</small>\
+    </div>\
+'

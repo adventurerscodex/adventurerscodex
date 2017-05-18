@@ -8,14 +8,11 @@ function ChatCellViewModel(chat) {
     self._name = chat.name;
     self.badge = ko.observable();
     self.isGroupChat = chat.isGroupChat;
+    self._getRoomMembers = chat.getRoomMembers;
     self.isParty = chat.isParty;
     self.members = ko.observableArray([]);
 
     self.name = ko.pureComputed(function() {
-//         if (self.isParty()) {
-//             return 'My Party';
-//         }
-
         return self.members().map(function(member, idx, _) {
             return self._getMemberTemplate(member);
         }).join('');
@@ -37,36 +34,17 @@ function ChatCellViewModel(chat) {
     /* Template Rendering Methods */
 
     self._getMemberTemplate = function(card) {
-        return card;
-        return ChatCellViewModelMemberTemplate.replace(
-            '{card.imageUrl}', card.get('imageUrl')[0]
-        );
-    };
-
-    self._getRoomMembers = function() {
-        var jid = self.id();
-        var character = CharacterManager.activeCharacter();
-        var chatService = ChatServiceManager.sharedService();
-        var occupants = chatService.getOccupantsInRoom(jid);
-
-        // Get the current card service.
-        var cardService = null;
-        if (character.playerType().key == 'character') {
-            cardService = CharacterCardPublishingService.sharedService();
+        if (typeof card == 'string') {
+            return card;
         } else {
-            cardService = DMCardPublishingService.sharedService();
+            return ChatCellViewModelMemberTemplate.replace(
+                '{card.imageUrl}', card.get('imageUrl')[0]
+            );
         }
-
-        var occupantCardsOrNames = occupants.map(function(occupant, idx, _) {
-            return cardService.pCards[occupant] ? cardService.pCards[occupant] : occupant;
-        });
-
-        return occupantCardsOrNames;
     };
-
 }
 
 
 var ChatCellViewModelMemberTemplate = '\
-    <img src="{card.imageUrl}" width="80px" height="80px" class="img img-circle" />\
+    <img src="{card.imageUrl}" width="40px" height="40px" class="img img-circle" />&nbsp;\
 '

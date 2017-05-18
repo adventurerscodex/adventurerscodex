@@ -242,7 +242,13 @@ function _ChatService(config) {
     };
 
     self._handleNewRosterMessage = function(occupant, room) {
-        self.rooms[room.name] = room;
+        try {
+            self.rooms[room.name] = room;
+            Notifications.chat.member.joined.dispatch(room.name, room.nick);
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
     };
 
     // Connection Handlers
