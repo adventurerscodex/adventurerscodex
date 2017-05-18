@@ -33,7 +33,8 @@ function ChatModalViewModel(parent) {
         return cardService.getPCardsExceptMine().map(function(card, idx, _) {
             return {
                 name: card.get('name')[0],
-                image: card.get('imageUrl')[0]
+                image: card.get('imageUrl')[0],
+                jid: card.get('publisherJid')[0]
             };
         });
     };
