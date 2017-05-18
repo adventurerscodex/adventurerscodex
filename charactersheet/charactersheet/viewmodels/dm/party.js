@@ -44,7 +44,11 @@ function PartyViewModel() {
                 isNewPlayer = false;
             }
         });
-        if (isNewPlayer) {
+
+        var xmpp = XMPPService.sharedService();
+        var isMe = publisherJid == xmpp.connection.jid;
+
+        if (isNewPlayer && !isMe) {
             self.players.push(new PlayerCard(pCard.fromEntries(inputPCard)));
         }
     };
