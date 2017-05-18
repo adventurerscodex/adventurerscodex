@@ -19,6 +19,14 @@ function ChatMessage() {
     self.read = ko.observable(false);
     self.isSystemMessage = ko.observable(false);
 
+    self.image = ko.pureComputed(function() {
+        var card = self.getCard();
+        if (!card) {
+            return '';
+        };
+        return card.get('imageUrl');
+    });
+
     self.clear = function() {
         var values = new ChatMessage().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
@@ -42,6 +50,25 @@ function ChatMessage() {
     self.delete = function() {
         self.ps.delete();
     };
+
+    /* Card Methods */
+
+    self.getCard = function() {
+        var character = CharacterManager.activeCharacter();
+        var chatService = ChatServiceManager.sharedService();
+        var jid = chatService.rooms[self.chatId()].roster[self.from()].jid;
+
+        // Get the current card service.
+        var cardService = null;
+        if (character.playerType().key == 'character') {
+            cardService = CharacterCardPublishingService.sharedService();
+        } else {
+            cardService = DMCardPublishingService.sharedService();
+        }
+
+        return cardService.pCards[jid] ? cardService.pCards[jid]: null;
+    };
+
 
     /* XMPP Methods */
 
