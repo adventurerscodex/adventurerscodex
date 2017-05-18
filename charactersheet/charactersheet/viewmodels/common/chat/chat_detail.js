@@ -70,6 +70,11 @@ function ChatDetailViewModel(chatCell, parent) {
 
     });
 
+    self.fromLabel = function(msg) {
+        var card = msg.getCard();
+        return card.get('name') + ' (' + msg.from() + ')';
+    };
+
     self.messageFieldShouldHaveFocus = ko.observable(true);
 
     self.sendButtonShouldBeDisabled = ko.pureComputed(function() {

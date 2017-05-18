@@ -21,11 +21,12 @@
               <div class="row">
                 <!-- ko ifnot: isSystemMessage -->
                 <div class="col-xs-1 hidden-xs" style="width:32px; padding-top:10px; margin-right:5px;">
+                  <img class="img img-circle" width="30px" height="30px" data-bind="attr: { src: image }" />
                 </div>
                 <div class="col-sm-11">
                   <div class="row">
                     <div class="col-sm-12">
-                      <small class="text-muted" data-bind="html: from"></small>
+                      <small class="text-muted" data-bind="html: $parent.fromLabel($data)"></small>
                     </div>
                   </div>
                   <div class="row">
@@ -37,8 +38,8 @@
                 <!-- /ko -->
                 <!-- ko if: isSystemMessage -->
                 <div class="row">
-                  <div class="col-sm-11 col-sm-offset-1">
-                    <small class="text-muted" data-bind="text: message"></small>
+                  <div class="col-sm-12 text-center">
+                    <i><small class="text-muted" data-bind="text: message"></small></i>
                   </div>
                 </div>
                 <!-- /ko -->
