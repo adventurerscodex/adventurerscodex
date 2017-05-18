@@ -18,7 +18,6 @@ function PlayerCard(pCard) {
         {'key':'playerName', 'converter': null},
         {'key':'playerType', 'converter': null},
         {'key':'playerSummary', 'converter': null},
-        {'key':'name', 'converter': null},
         {'key':'imageUrl', 'converter': null},
         {'key':'race', 'converter': null},
         {'key':'playerClass', 'converter': null},
@@ -43,7 +42,6 @@ function PlayerCard(pCard) {
 
     // Profile
     self.publisherJid = ko.observable('');
-    self.characterName = ko.observable('');
     self.playerName = ko.observable('');
     self.playerType = ko.observable('');
     self.playerSummary = ko.observable('');
@@ -163,5 +161,4 @@ function PlayerCard(pCard) {
     };
 
     self.map(pCard);
-
 }

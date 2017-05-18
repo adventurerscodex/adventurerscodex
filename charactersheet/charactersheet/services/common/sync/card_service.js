@@ -107,9 +107,6 @@ function _pCardService(configuration) {
 
     /* Event Handlers */
 
-    self._handleResponse = function(response) {
-    };
-
     self._updateCurrentNode = function(roomName, success) {
         if (success) {
             self.currentPartyNode = roomName;

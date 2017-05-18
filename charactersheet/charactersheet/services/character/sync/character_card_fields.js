@@ -21,7 +21,7 @@ var CharacterCardFields = [
         refreshOn: Notifications.profile.playerName.changed,
         valueAccessor: function() {
             var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
-            return profile ? profile.characterName() : '';
+            return profile ? profile.playerName() : '';
         }
     }, {
         name: 'playerSummary',

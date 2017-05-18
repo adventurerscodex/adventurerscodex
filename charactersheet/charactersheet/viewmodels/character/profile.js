@@ -72,13 +72,18 @@ function ProfileViewModel() {
         self.experience.subscribe(self.dataHasChanged);
 
         self.level.subscribe(self.levelDataHasChanged);
-        self.characterName.subscribe(self.dataHasChanged);
-        self.race.subscribe(self.dataHasChanged);
-        self.typeClass.subscribe(self.dataHasChanged);
-        self.experience.subscribe(self.dataHasChanged);
+        self.characterName.subscribe(self.characterNameDataHasChanged);
+        self.race.subscribe(self.raceDataHasChanged);
+        self.typeClass.subscribe(self.typeClassDataHasChanged);
+        self.experience.subscribe(self.experienceDataHasChanged);
         self.playerName.subscribe(self.playerNameHasChanged);
 
         Notifications.stats.changed.add(self.dataHasChanged);
+    };
+
+    self.unload = function() {
+        Notifications.stats.changed.remove(self.dataHasChanged);
+        Notifications.global.save.remove(self.dataHasChanged);
     };
 
     self.levelDataHasChanged = function() {
@@ -109,11 +114,6 @@ function ProfileViewModel() {
     self.experienceDataHasChanged = function() {
         self.saveProfile();
         Notifications.profile.experience.changed.dispatch();
-    };
-
-    self.unload = function() {
-        Notifications.stats.changed.remove(self.dataHasChanged);
-        Notifications.global.save.remove(self.dataHasChanged);
     };
 
     self.dataHasChanged = function() {
