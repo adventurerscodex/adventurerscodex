@@ -16,7 +16,7 @@ var DMCardPublishingServiceConfiguration = {
         name: 'lz-string',
         method: LZString.compressToUTF16
     },
-    fields: []
+    fields: DMCardFields
 };
 
 
@@ -34,14 +34,11 @@ function _pCardService(configuration) {
     self.pCards = {};
 
     self.init = function() {
-        var key = CharacterManager.activeCharacter().key();
         Notifications.xmpp.routes.pcard.add(self.handlePCard);
         Notifications.chat.member.left.add(self.removePlayer);
         Notifications.party.left.add(self.clearPCards);
-        var player = PersistenceService.findFirstBy(Character, 'key', key);
-        if (player.playerType().key === PlayerTypes.characterPlayerType.key) {
-            self._setupNotifications();
-        }
+
+        self._setupNotifications();
     };
 
     self.dataHasChanged = function() {

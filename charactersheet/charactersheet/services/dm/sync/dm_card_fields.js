@@ -11,17 +11,17 @@ var DMCardFields = [
         }
     }, {
         name: 'name',
-        refreshOn: Notifications.campaign.campaignName.changed,
+        refreshOn: Notifications.campaign.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Campaign, 'characterId', CharacterManager.activeCharacter().key());
-            return profile ? profile.characterName() : '';
+            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', CharacterManager.activeCharacter().key());
+            return campaign ? campaign.name() : '';
         }
     }, {
         name: 'playerName',
-        refreshOn: Notifications.campaign.playerName.changed,
+        refreshOn: Notifications.campaign.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Campaign, 'characterId', CharacterManager.activeCharacter().key());
-            return campaign ? campaign.name() : '';
+            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', CharacterManager.activeCharacter().key());
+            return campaign ? campaign.playerName() : '';
         }
     }, {
         name: 'playerType',
