@@ -72,6 +72,9 @@ function ChatDetailViewModel(chatCell, parent) {
 
     self.fromLabel = function(msg) {
         var card = msg.getCard();
+        if (!card) {
+            return msg.from();
+        }
         return card.get('name') + ' (' + msg.from() + ')';
     };
 
