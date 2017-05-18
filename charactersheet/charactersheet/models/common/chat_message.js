@@ -54,6 +54,9 @@ function ChatMessage() {
     /* Card Methods */
 
     self.getCard = function() {
+        if (self.isSystemMessage()) {
+            return null;
+        }
         var character = CharacterManager.activeCharacter();
         var chatService = ChatServiceManager.sharedService();
         var jid = chatService.rooms[self.chatId()].roster[self.from()].jid;

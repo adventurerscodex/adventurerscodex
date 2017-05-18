@@ -439,15 +439,4 @@ function _ChatService(config) {
         });
         return chat;
     };
-
-    self._jidFromName = function(name) {
-        name = Utility.jid.sanitize(name);
-        return '{name}.{party}@{muc}'.replace(
-            '{name}', name
-        ).replace(
-            '{party}', self.currentPartyNode
-        ).replace(
-            '{muc}', Settings.MUC_SERVICE
-        );
-    };
 }

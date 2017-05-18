@@ -140,7 +140,10 @@ function ChatViewModel() {
             ])
         ]);
         return chats.sort(function(a,b) {
-            return a.isParty() > b.isParty();
+            var aVal = a.isParty() ? 1 : -1;
+            var bVal = b.isParty() ? 1 : -1;
+
+            return bVal - aVal;
         });
     };
 
@@ -214,33 +217,6 @@ function ChatViewModel() {
         chat.save();
         self._deliverMessageToRoom(chat, room, false);
     };
-
-    // Chat Member Methods
-
-//     self._getRoomMembers = function(jid) {
-//         var character = CharacterManager.activeCharacter();
-//         var chatService = ChatServiceManager.sharedService();
-//
-//         // Get the current card service.
-//         var cardService = null;
-//         if (character.playerType().key == 'character') {
-//             cardService = CharacterCardPublishingService.sharedService();
-//         } else {
-//             cardService = DMCardPublishingService.sharedService();
-//         }
-//
-//         var room = chatService.rooms[jid];
-//         if (!room) {
-//             return;
-//         }
-//
-//         var cardsToInclude = Object.keys(room.roster).map(function(occupant, idx, _) {
-//             var jid = room.roster[occupant].jid;
-//             return cardService.pCards[jid];
-//         }).filter(function(card, idx, _) { return card; });
-//
-//         return cardsToInclude;
-//     };
 
     return self;
 }
