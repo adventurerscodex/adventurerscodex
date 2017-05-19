@@ -182,6 +182,9 @@ var Notifications = {
         changed: new signals.Signal(),
         proficiency: {
             changed: new signals.Signal()
+        },
+        inspiration: {
+            changed: new signals.Signal()
         }
     },
 

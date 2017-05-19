@@ -100,7 +100,7 @@ function StatsViewModel() {
         });
         self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
         self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
-        self.otherStats().inspiration.subscribe(self.dataHasChanged);
+        self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
         self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
         self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
         self.level.subscribe(self.levelDataHasChanged);
@@ -133,7 +133,6 @@ function StatsViewModel() {
         Notifications.armorClass.changed.remove(self.updateArmorClass);
         Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
         Notifications.global.save.remove(self.save);
-        self.dataHasChanged();
     };
 
     self.save = function() {
@@ -310,7 +309,9 @@ function StatsViewModel() {
 
     /* Utility Methods */
 
-    self.dataHasChanged = function() {
+    self.inspirationHasChanged = function() {
+        self.otherStats().save();
+        Notifications.otherStats.inspiration.changed.dispatch();
     };
 
     self.healthDataHasChange = function() {

@@ -10,7 +10,7 @@ function InspirationStatusServiceComponent() {
     self.statusIdentifier = 'Status.Inspired';
 
     self.init = function() {
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.otherStats.inspiration.changed.add(self.dataHasChanged);
         self.dataHasChanged();  //Calculate the first one.
     };
 

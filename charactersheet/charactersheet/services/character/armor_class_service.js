@@ -96,8 +96,9 @@ function _ArmorClassService(configuration) {
         if (armor && armor.armorEquipped() === 'equipped') {
             if (armor.armorType() === 'Medium') {
                 score += rawDexBonus >= 2 ? 2 : rawDexBonus;
-            } else if (armor.armorType() === 'Heavy'){ /*Score remains 0*/ }
-            else {
+            } else if (armor.armorType() === 'Heavy'){
+                /*Score remains 0*/
+            } else {
                 score += rawDexBonus;
             }
         } else {

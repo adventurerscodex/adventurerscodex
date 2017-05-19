@@ -77,12 +77,9 @@ function ProfileViewModel() {
         self.typeClass.subscribe(self.typeClassDataHasChanged);
         self.experience.subscribe(self.experienceDataHasChanged);
         self.playerName.subscribe(self.playerNameHasChanged);
-
-        Notifications.stats.changed.add(self.dataHasChanged);
     };
 
     self.unload = function() {
-        Notifications.stats.changed.remove(self.dataHasChanged);
         Notifications.global.save.remove(self.dataHasChanged);
     };
 

@@ -10,6 +10,7 @@ function _ProficiencyService(configuration) {
 
     self.init = function() {
         Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
+        Notifications.profile.level.changed.add(self.dataHasChanged);
 
         // Kick it off the first time.
         self.characterId(CharacterManager.activeCharacter().key());

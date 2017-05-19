@@ -106,6 +106,12 @@ function CharacterRootViewModel() {
     self.activateChatTab = function() {
         self.activeTab('chat');
     };
+    self.activateChatTabFromHotkey = function() {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode != null) {
+            self.activeTab('chat');
+        }
+    };
 
 
     self.toggleWell = function() {
@@ -181,7 +187,8 @@ function CharacterRootViewModel() {
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
-        HotkeysService.registerHotkey('8', self.toggleWell);
+        HotkeysService.registerHotkey('8', self.activateChatTabFromHotkey);
+        HotkeysService.registerHotkey('9', self.toggleWell);
     };
 
     /**

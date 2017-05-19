@@ -104,6 +104,20 @@ function DMRootViewModel() {
         self.activeTab('chat');
     };
 
+    self.activatePartyTabFromHotkey = function() {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode != null) {
+            self.activeTab('party');
+        }
+    };
+
+    self.activateChatTabFromHotkey = function() {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode != null) {
+            self.activeTab('chat');
+        }
+    };
+
     //Public Methods
 
     /**
@@ -113,8 +127,8 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
-        HotkeysService.registerHotkey('4', self.activatePartyTab);
-        HotkeysService.registerHotkey('5', self.activateChatTab);
+        HotkeysService.registerHotkey('4', self.activatePartyTabFromHotkey);
+        HotkeysService.registerHotkey('5', self.activateChatTabFromHotkey);
 
         self.dmCardService.init();
     };
