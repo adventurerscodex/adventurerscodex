@@ -27,11 +27,6 @@ function ChatDetailViewModel(chatCell, parent) {
 
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
-
-        // DEBUG
-        self.log(
-            PersistenceService.findAll(ChatMessage)
-        );
     };
 
     self.unload = function() {
