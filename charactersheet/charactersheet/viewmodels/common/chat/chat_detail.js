@@ -27,6 +27,11 @@ function ChatDetailViewModel(chatCell, parent) {
 
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
+
+        // DEBUG
+        self.log(
+            PersistenceService.findAll(ChatMessage)
+        );
     };
 
     self.unload = function() {
@@ -115,6 +120,22 @@ function ChatDetailViewModel(chatCell, parent) {
         self.message('');
 
         return false;
+    };
+
+    self.saveToNotes = function(message) {
+        var note = PersistenceService.findFirstBy(Note, 'isSavedChatNotes', true);
+        if (!note) {
+            var key = CharacterManager.activeCharacter().key();
+            note = new Note();
+            note.characterId(key);
+            note.text('# Saved from Chat');
+            note.isSavedChatNotes(true);
+        }
+        note.text(note.text() + '\n\n' + message.toText());
+        note.save();
+
+        Notifications.notes.changed.dispatch();
+        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
 
     /* Private Methods */

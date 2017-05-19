@@ -174,6 +174,10 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    notes: {
+        changed: new signals.Signal()
+    },
+
     encounters: {
         changed: new signals.Signal()
     },

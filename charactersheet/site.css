@@ -350,6 +350,10 @@ textarea.dark-area {
   color:#e74c3c;
 }
 
+.fa-color-hover-success:hover {
+  color:#128770;
+}
+
 .fa-color-white-hover {
   color:#ffffff;
 }
