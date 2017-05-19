@@ -23,7 +23,7 @@ function ChatMessage() {
         var card = self.getCard();
         if (!card) {
             return '';
-        };
+        }
         return card.get('imageUrl');
     });
 

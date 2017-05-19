@@ -47,6 +47,7 @@ function _pCardService(configuration) {
     };
 
     self.publishCard = function(card) {
+        /*eslint no-console:0*/
         var xmpp = XMPPService.sharedService();
         var nodeService = NodeServiceManager.sharedService();
 
@@ -149,7 +150,7 @@ function _pCardService(configuration) {
 
     self.clearPCards = function() {
         self.pCards = {};
-    }
+    };
 
     /* Private Methods */
 

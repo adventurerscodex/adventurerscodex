@@ -62,5 +62,5 @@ function PartyViewModel() {
 
     self.clearPCards = function() {
         self.players([]);
-    }
+    };
 }

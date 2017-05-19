@@ -197,4 +197,4 @@ var ChatDetailViewModelMemberTemplate = '\
             class="img img-circle img-padded" /><br />\
         <small class="text-muted">{card.name}</small>\
     </div>\
-'
+';

@@ -47,4 +47,4 @@ function ChatCellViewModel(chat) {
 
 var ChatCellViewModelMemberTemplate = '\
     <img src="{card.imageUrl}" width="40px" height="40px" class="img img-circle" />&nbsp;\
-'
+';
