@@ -77,6 +77,13 @@ function ChatMessage() {
         return cardService.pCards[jid] ? cardService.pCards[jid]: null;
     };
 
+    /* String Methods */
+
+    self.toText = function() {
+        return '{text}'.replace(
+            '{text}', self.message()
+        );
+    };
 
     /* XMPP Methods */
 

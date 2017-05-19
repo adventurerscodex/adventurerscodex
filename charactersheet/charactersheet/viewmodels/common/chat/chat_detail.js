@@ -84,6 +84,11 @@ function ChatDetailViewModel(chatCell, parent) {
         return !self._xmppIsConnected();
     });
 
+    self.shouldShowSaveToChatButton = ko.pureComputed(function() {
+        var key = CharacterManager.activeCharacter().playerType().key;
+        return key == PlayerTypes.characterPlayerType.key;
+    });
+
     self.toggleModal = function() {
         self.parent.modalIsOpen(!self.parent.modalIsOpen());
 
@@ -115,6 +120,22 @@ function ChatDetailViewModel(chatCell, parent) {
         self.message('');
 
         return false;
+    };
+
+    self.saveToNotes = function(message) {
+        var note = PersistenceService.findFirstBy(Note, 'isSavedChatNotes', true);
+        if (!note) {
+            var key = CharacterManager.activeCharacter().key();
+            note = new Note();
+            note.characterId(key);
+            note.text('# Saved from Chat');
+            note.isSavedChatNotes(true);
+        }
+        note.text(note.text() + '\n\n' + message.toText());
+        note.save();
+
+        Notifications.notes.changed.dispatch();
+        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
 
     /* Private Methods */
