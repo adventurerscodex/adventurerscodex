@@ -67,7 +67,6 @@ function CharacterRootViewModel() {
         return self._tabIsVisible('notes');
     });
     self.chatTabStatus = ko.pureComputed(function() {
-        return 'active';
         if (self.isConnectedAndInAParty()) {
             return self._tabIsVisible('chat');
         }

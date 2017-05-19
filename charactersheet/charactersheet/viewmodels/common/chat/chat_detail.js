@@ -89,6 +89,11 @@ function ChatDetailViewModel(chatCell, parent) {
         return !self._xmppIsConnected();
     });
 
+    self.shouldShowSaveToChatButton = ko.pureComputed(function() {
+        var key = CharacterManager.activeCharacter().playerType().key;
+        return key == PlayerTypes.characterPlayerType.key;
+    });
+
     self.toggleModal = function() {
         self.parent.modalIsOpen(!self.parent.modalIsOpen());
 

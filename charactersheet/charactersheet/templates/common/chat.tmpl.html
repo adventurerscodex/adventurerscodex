@@ -30,6 +30,7 @@
                     </div>
                   </div>
                   <div class="row">
+                    <!-- ko if: $parent.shouldShowSaveToChatButton -->
                     <div class="col-xs-11">
                       <span data-bind="html: message"></span>
                     </div>
@@ -38,6 +39,12 @@
                         <i class="fa fa-save fa-color-hover-success clickable" data-bind="click: $parent.saveToNotes"></i>
                       </div>
                     </div>
+                    <!-- /ko -->
+                    <!-- ko ifnot: $parent.shouldShowSaveToChatButton -->
+                    <div class="col-xs-12">
+                      <span data-bind="html: message"></span>
+                    </div>
+                    <!-- /ko -->
                   </div>
                 </div>
                 <!-- /ko -->
