@@ -23,6 +23,11 @@ function PartyManagerViewModel() {
         Notifications.xmpp.connected.add(self.dataHasChanged);
         self.parties(self._getParties());
 
+        if (self.parties().length > 0) {
+            // Show party tab first.
+            self.createOrJoin('join');
+        }
+
         Notifications.party.joined.add(self._handleSubscription);
         Notifications.party.left.add(self._handleUnsubscription);
 
