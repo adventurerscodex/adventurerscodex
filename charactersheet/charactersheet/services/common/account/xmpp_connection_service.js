@@ -149,7 +149,20 @@ function _XMPPService(config) {
                     self._handleLogin();
                 }
             }
+        } else if (status === Strophe.Status.CONNECTING) {
+            if (self._shouldLog() && 'console' in window) {
+                console.log('Connecting.');
+            }
+        } else if (status === Strophe.Status.AUTHFAIL) {
+            if (self._shouldLog() && 'console' in window) {
+                console.log('Authentication failure.');
+            }
+        } else {
+            if (self._shouldLog() && 'console' in window) {
+                console.log('Strophe.Status: ', status);
+            }
         }
+
         // Add more logging...
     };
 }
