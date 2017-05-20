@@ -98,7 +98,7 @@ function Character() {
         //Notify all apps to save their data.
         Notifications.global.save.dispatch();
         //Write the file.
-        var string = JSON.stringify(Character.exportCharacter(self.key()),
+        var string = encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())),
             null, 2); //Pretty print
         var filename = self.playerTitle();
         var blob = new Blob([string], {type: 'application/json'});
