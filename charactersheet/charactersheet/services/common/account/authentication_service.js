@@ -58,8 +58,8 @@ function _AuthenticationService(config) {
     };
 
     self._handleValidationResponse = function(data, status) {
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
         if (status !== 'success' || data.code !== 0) {
-            var token = PersistenceService.findAll(AuthenticationToken)[0];
             if (self._tokenOrigin == self.TOKEN_ORIGINS.FRAGMENT) {
                 // Retry with local token.
                 self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL;
@@ -76,7 +76,6 @@ function _AuthenticationService(config) {
         }
 
         if (self._tokenOrigin == self.TOKEN_ORIGINS.FRAGMENT) {
-            var token = PersistenceService.findAll(AuthenticationToken)[0];
             if (!token) {
                 token = new AuthenticationToken();
             }
@@ -85,7 +84,7 @@ function _AuthenticationService(config) {
             token.startTime((new Date()).getTime());
             token.save();
             Notifications.authentication.loggedIn.dispatch();
-        } else if (self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL) {
+        } else if (self._tokenOrigin == self.TOKEN_ORIGINS.LOCAL) {
             Notifications.authentication.loggedIn.dispatch();
         } else {
             return;

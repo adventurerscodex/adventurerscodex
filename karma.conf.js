@@ -28,6 +28,8 @@ module.exports = function(config) {
 			'charactersheet/charactersheet/**/notifications.js',
 			'charactersheet/charactersheet/**/*manager.js',
 			'charactersheet/charactersheet/**/*.js',
+			'charactersheet/charactersheet/**/**/*.js',
+			'charactersheet/charactersheet/**/**/**/*.js',
       		'test/**/*.js',
       		'test/*.js'
         ],

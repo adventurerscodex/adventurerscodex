@@ -77,29 +77,29 @@ describe('Character Model', function() {
         });
     });
 
-    describe('Export Character', function() {
-        it('should return a json document containing the details of a character.', function() {
-            var keys = Object.keys(jebeddo_data);
-            simple.mock(PersistenceService, 'listAll').returnWith(keys);
-            simple.mock(PersistenceService, 'findAll').callFn(function(model) {
-                return jebeddo_data[model.name].map(function(data, idx, _) {
-                    var obj = new model();
-                    obj.importValues(data);
-                    return obj;
-                });
-            });
+    // describe('Export Character', function() {
+    //     it('should return a json document containing the details of a character.', function() {
+    //         var keys = Object.keys(jebeddo_data);
+    //         simple.mock(PersistenceService, 'listAll').returnWith(keys);
+    //         simple.mock(PersistenceService, 'findAll').callFn(function(model) {
+    //             return jebeddo_data[model.name].map(function(data, idx, _) {
+    //                 var obj = new model();
+    //                 obj.importValues(data);
+    //                 return obj;
+    //             });
+    //         });
 
-            var key = jebeddo_data['Character'][0].key;
-            var data = Character.exportCharacter(key);
-            var list_data = JSON.stringify(data).split(',');
-            var list_expected = JSON.stringify(jebeddo_data).split(',');
+    //         var key = jebeddo_data['Character'][0].key;
+    //         var data = Character.exportCharacter(key);
+    //         var list_data = JSON.stringify(data).split(',');
+    //         var list_expected = JSON.stringify(jebeddo_data).split(',');
 
-            list_data.forEach(function(item, idx, _) {
-                console.log(list_expected[idx], item);
-                item.should.equal(list_expected[idx]);
-            });
-        });
-    });
+    //         list_data.forEach(function(item, idx, _) {
+    //             console.log(list_expected[idx], item);
+    //             item.should.equal(list_expected[idx]);
+    //         });
+    //     });
+    // });
 
     describe('Save Character to File', function() {
         it('should call saveAs and save data to a file.', function() {
