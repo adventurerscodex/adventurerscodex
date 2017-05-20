@@ -130,9 +130,6 @@ function WizardViewModel() {
         self.nextStep(null);
         self._isComplete(false);
         self._currentStepReadySubscription = null;
-
-        self.getNextStep();
-        self.goForward();
     };
 
     /**

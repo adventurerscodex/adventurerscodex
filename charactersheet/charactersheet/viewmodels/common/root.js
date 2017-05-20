@@ -114,14 +114,17 @@ function AdventurersCodexViewModel() {
 
     self.unload = function() {
         self.loginViewModel.unload();
-        if (CharacterManager.activeCharacter()) {
+        if (self.state() == APP_STATE.CHOSEN) {
             self.childRootViewModel().unload();
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.wizardViewModel.unload();
             self.partyManagerViewModel.unload();
+        } else if (self.state() == APP_STATE.WIZARD) {
+            self.wizardViewModel.unload();
+        } else {
+            self.charactersViewModel.unload();
         }
-
         self._purgeStrayDBEntries();
     };
 
