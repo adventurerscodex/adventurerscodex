@@ -188,7 +188,6 @@ function CharacterRootViewModel() {
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
         HotkeysService.registerHotkey('8', self.activateChatTabFromHotkey);
-        HotkeysService.registerHotkey('9', self.toggleWell);
     };
 
     /**

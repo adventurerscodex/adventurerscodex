@@ -23,7 +23,12 @@ var init = function(viewModel) {
 
     // Run migration
     PersistenceService.migrate(Migrations.scripts, Settings.version);
-
+XMPPServiceDefaultConfig.credentialsHelper = function() {
+     return {
+         jid: 'pika@adventurerscodex.com',
+         password: 'test'
+     };
+  };
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
 

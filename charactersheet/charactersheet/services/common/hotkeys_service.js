@@ -7,8 +7,9 @@
 var HotkeysService = {
     hotkeyHandler : function(data, event) {
         var keypressIsInBody = event.target.tagName.toLowerCase() !== 'input' &&
-            event.target.tagName.toLowerCase() !== 'textarea';
-        if(keypressIsInBody){
+            event.target.tagName.toLowerCase() !== 'textarea' &&
+            event.target.id !== 'characterName' && event.target.id !== 'dmName';
+        if (keypressIsInBody) {
             var metaKey = HotkeysService._determineMetakey(event);
 
             var alphaNumericKey = String.fromCharCode(event.which);

@@ -37,33 +37,43 @@ function PartyStatusLineViewModel() {
         var magicModified = false;
         var trackedAbilitiesModified = false;
         var statuses = [];
+        var numberOfHealthinessStatuses = 0;
+        var numberOfMagicStatuses = 0;
+        var numberOfTrackedStatuses = 0;
 
         players.forEach(function(player, idx, _) {
-            if (player.healthinessStatus()) {
-                totalHealthiness += player.healthinessStatus().value();
-                healthinessModified = true;
-            }
-            if (player.magicStatus()) {
-                totalMagic += player.magicStatus().value();
-                magicModified = true;
-            }
-            if (player.trackedStatus()) {
-                totalTrackedAbilities += player.trackedStatus().value();
-                trackedAbilitiesModified = true;
+            if (player.playerType() === PlayerTypes.characterPlayerType.key) {
+                if (player.healthinessStatus()) {
+                    totalHealthiness += player.healthinessStatus().value();
+                    healthinessModified = true;
+                    numberOfHealthinessStatuses++;
+                }
+                if (player.magicStatus()) {
+                    totalMagic += player.magicStatus().value();
+                    magicModified = true;
+                    numberOfMagicStatuses++;
+                }
+                if (player.trackedStatus()) {
+                    totalTrackedAbilities += player.trackedStatus().value();
+                    trackedAbilitiesModified = true;
+                    numberOfTrackedStatuses++;
+                }
             }
         });
 
         if (healthinessModified) {
-            statuses.push(StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), totalHealthiness / players.length));
+            statuses.push(StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), totalHealthiness / numberOfHealthinessStatuses));
         }
 
         if (magicModified) {
-            statuses.push(StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), totalMagic / players.length));
+            statuses.push(StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), totalMagic / numberOfMagicStatuses));
         }
 
         if (trackedAbilitiesModified) {
-            statuses.push(StatusWeightPair.determinePhraseAndColor(getTrackedTypeEnum(), totalTrackedAbilities / players.length));
+            statuses.push(StatusWeightPair.determinePhraseAndColor(getTrackedTypeEnum(), totalTrackedAbilities / numberOfTrackedStatuses));
         }
+
+        if (statuses.length < 1) { return ''; }
 
         return 'Your party is ' + statuses.map(function(e, i, _) {
             var status = '<span class="text-' + e.color + '">' + e.status + '</span>';
