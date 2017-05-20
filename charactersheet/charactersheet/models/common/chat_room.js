@@ -52,7 +52,8 @@ function ChatRoom() {
     self.getUnreadMessages = function() {
         return PersistenceService.findByPredicates(ChatMessage, [
             new KeyValuePredicate('chatId', self.chatId()),
-            new KeyValuePredicate('read', false)
+            new KeyValuePredicate('read', false),
+            new KeyValuePredicate('isSystemMessage', false)
         ]);
     };
 

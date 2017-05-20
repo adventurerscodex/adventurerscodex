@@ -11,19 +11,17 @@ function ChatViewModel() {
     /* View Model Methods */
 
     self.didLoad = function() {
-        self.chats(self._getChats());
-
-        self.cells(self._getChatCells());
+        self.reloadCells();
         self.selectedCell(self.cells()[0]);
 
         // Message Notifications
         Notifications.chat.message.add(self._deliverMessageToRoom);
-        Notifications.chat.room.add(self._updateChatRooms);
+        Notifications.chat.room.add(self.reloadCells);
         Notifications.chat.member.joined.add(self._userHasJoined);
         Notifications.chat.member.left.add(self._userHasLeft);
-        Notifications.party.joined.add(self._updateChatRooms);
-        Notifications.party.left.add(self._updateChatRooms);
-        Notifications.party.players.changed.add(self._updateChatRooms);
+        Notifications.party.joined.add(self._didJoinParty);
+        Notifications.party.left.add(self.reloadCells);
+        Notifications.party.players.changed.add(self.reloadCells);
     };
 
     self.didUnload = function() {
@@ -36,12 +34,12 @@ function ChatViewModel() {
 
         // Message Notifications
         Notifications.chat.message.remove(self._deliverMessageToRoom);
-        Notifications.chat.room.remove(self._updateChatRooms);
+        Notifications.chat.room.remove(self.reloadCells);
         Notifications.chat.member.joined.remove(self._userHasJoined);
         Notifications.chat.member.left.remove(self._userHasLeft);
-        Notifications.party.left.remove(self._updateChatRooms);
-        Notifications.party.joined.remove(self._updateChatRooms);
-        Notifications.party.players.changed.remove(self._updateChatRooms);
+        Notifications.party.joined.remove(self._didJoinParty);
+        Notifications.party.left.remove(self.reloadCells);
+        Notifications.party.players.changed.remove(self.reloadCells);
     };
 
     /* List Management Methods */
@@ -60,8 +58,7 @@ function ChatViewModel() {
         var jid = name+'@'+Settings.MUC_SERVICE;
         var room = chatService.createRoomAndInvite(jid, invitees);
 
-        self.chats(self._getChats());
-        self.cells(self._getChatCells());
+        self.reloadCells();
 
         var cellToSelect = self.cells().filter(function(cell, idx, _) {
             return cell.id() === room.chatId();
@@ -78,8 +75,7 @@ function ChatViewModel() {
         var chatService = ChatServiceManager.sharedService();
         chatService.leave(cell.id(), 'test', console.log);
 
-        self.chats(self._getChats());
-        self.cells(self._getChatCells());
+        self.reloadCells();
         self.selectedCell(self.cells()[0]);
     };
 
@@ -116,6 +112,27 @@ function ChatViewModel() {
         if (cellToBadge) {
             cellToBadge.badge(room.getUnreadMessages().length);
         }
+    };
+
+    // Cell Methods
+
+    /**
+     * Fetch all of the cells for the given character/campaign and
+     * convert them into cells.
+     */
+    self.reloadCells = function() {
+        self.chats(self._getChats());
+        self.cells(self._getChatCells());
+    };
+
+    /**
+     * Tell each of the existing cells to reload their data.
+     * This does NOT reload the list of cells from disk.
+     */
+    self.refreshCells = function() {
+        return self.cells().forEach(function(cell, idx, _) {
+            cell.reload();
+        });
     };
 
     /* Private Methods */
@@ -168,7 +185,7 @@ function ChatViewModel() {
      * the user.
      */
     self._deliverMessageToRoom = function(room, msg, delay) {
-        self._updateChatRooms();
+        self.reloadCells();
         var roomIsSelected = self._isSelectedRoom(room);
         if (roomIsSelected) {
             // The room for this chat is the active room.
@@ -182,12 +199,6 @@ function ChatViewModel() {
         if (!chatTabIsForground && !delay) {
             Notifications.userNotification.infoNotification.dispatch(msg.message(), msg.from());
         }
-    };
-
-    self._updateChatRooms = function() {
-        // Update the UI.
-        self.chats(self._getChats());
-        self.cells(self._getChatCells());
     };
 
     self._userHasJoined = function(jid, nick) {
@@ -216,6 +227,11 @@ function ChatViewModel() {
         });
         chat.save();
         self._deliverMessageToRoom(chat, room, false);
+    };
+
+    self._didJoinParty = function() {
+        self.reloadCells();
+        self.selectedCell(self.cells()[0]);
     };
 
     return self;
