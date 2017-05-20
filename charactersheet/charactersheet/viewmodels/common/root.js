@@ -85,7 +85,7 @@ function AdventurersCodexViewModel() {
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
         var characters = PersistenceService.findAll(Character);
-        if (characters) {
+        if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
         } else {
             //If no current character exists, fire the load process anyway.
