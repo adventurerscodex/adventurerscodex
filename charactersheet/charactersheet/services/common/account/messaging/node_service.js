@@ -238,7 +238,7 @@ function _NodeService(config) {
     self._handleSuccessfulPresenceSubscription = function(response) {
         try {
             var from = $(response).attr('from');
-            self._subscribeToNode(from, Strophe.NS.JSON + '#pcard', self._getCards, null);
+            self._subscribeToNode(Strophe.getBareJidFromJid(from), Strophe.NS.JSON + '#pcard', self._getCards, null);
         } catch(e) {
             console.log(e);
         }
@@ -292,7 +292,7 @@ function _NodeService(config) {
             xmlns: Strophe.NS.PUBSUB
         }).c('subscribe', {
             node: node,
-            jid: Strophe.getBareJidFromJid(toJid)
+            jid: Strophe.getBareJidFromJid(xmpp.connection.jid)
         });
         xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
     };
