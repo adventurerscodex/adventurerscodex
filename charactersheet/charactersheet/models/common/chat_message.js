@@ -80,7 +80,14 @@ function ChatMessage() {
     /* String Methods */
 
     self.toText = function() {
-        return '{text}'.replace(
+        var dateString = '';
+        if (self.dateSent()) {
+            dateString = (new Date(self.dateSent())).toDateString();
+        }
+
+        return '**{date}**\n\n{text}'.replace(
+            '{date}', dateString
+        ).replace(
             '{text}', self.message()
         );
     };
