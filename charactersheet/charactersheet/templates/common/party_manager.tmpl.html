@@ -5,7 +5,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
       <h4 class="modal-title" id="importModalLabel">
-        Create or Join a Party
+        Manage Party
       </h4>
     </div>
     <div class="modal-body">
@@ -29,13 +29,7 @@
                   data-bind="css: { active: createOrJoin() == 'join'}">
                     <input type="radio" class="hide-block"
                     name="joinParty" value="join" data-bind="checked: createOrJoin"/>
-                    Join a Previous Party
-                  </label>
-                  <label class="btn btn-default"
-                  data-bind="css: { active: createOrJoin() == 'add'}">
-                    <input type="radio" class="hide-block"
-                    name="joinParty" value="add" data-bind="checked: createOrJoin"/>
-                    Add a New Party
+                    Join a Party
                   </label>
                 </div>
               </div>
@@ -49,7 +43,7 @@
                 party and that your DM will be able to see your character's stats.
               </p>
               <button data-bind="click: createPartyWasClicked" class="btn btn-primary">
-                Create a new Party</button>
+                Create</button>
               <!-- /ko -->
               <!-- ko if: createOrJoin() === 'join' -->
                 <!-- ko if: parties().length === 0  -->
@@ -62,37 +56,41 @@
                 <p class="text-left">
                   Click or tap a party to join it.
                 </p>
-                <div class="list-group" data-bind="foreach: parties">
-                  <button type="button" class="list-group-item col-xs-12 text-left"
-                    data-bind="click: $parent.joinPartyWasClickedWithParty">
-                      <span data-bind="text: partyId"></span><br/>
-                      <small class="text-muted">Created:
-                        <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
-                      </small>
+                <div class="list-group" data-bind="foreach: parties" style="max-height: 250px; overflow-y:scroll;">
+                    <button type="button" class="list-group-item text-left col-xs-12"
+                      data-bind="click: $parent.joinPartyWasClickedWithParty">
+                      <div class="col-xs-11">
+                        <span data-bind="text: chatId"></span><br/>
+                        <small class="text-muted">Created:
+                          <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
+                        </small>
+                      </div>
+                      <div class="col-xs-1">
+                        <a data-bind="click: $parent.deletePartyWasClicked" href="#">
+                          <i class="fa fa-trash-o fa-color-hover"></i>
+                        </a>
+                      </div>
                     </button>
                 </div>
                 <!-- /ko -->
-              <!-- /ko -->
-              <!-- ko if: createOrJoin() === 'add' -->
               <p class="text-left">
                 If one of your friends has already made a party, you can join it by
-                using the party link or by entering the party ID here.
+                using the party link or by entering the Party ID here.
               </p>
               <div class="row">
                 <label for="roomName"
-                       class="col-sm-3 control-label">Party ID</label>
-                <div class="col-sm-8">
+                       class="col-sm-2 control-label">Party ID</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
                   <input type="text"
                          class="form-control"
                          data-bind="value: roomId">
-                </div>
-              </div><br />
-              <div class="row">
-                <div class="col-sm-12 col-padded">
-                  <button data-bind="click: joinPartyWasClicked" class="btn btn-primary">
-                    <span class="hidden-xs">Add and join a new party</span>
-                    <span class="visible-xs">Add and Join</span>
-                  </button>
+                    <span class="input-group-btn">
+                      <button data-bind="click: joinPartyWasClicked" class="btn btn-primary">
+                        <span>Add and join</span>
+                      </button>
+                    </span>
+                  </div>
                 </div>
               </div>
               <!-- /ko -->
@@ -102,6 +100,9 @@
         <!-- /ko -->
         <!-- ko if: inAParty -->
         <div class="form-group">
+          <p class="text-center">
+            Invite people to this party by giving them the link below...
+          </p>
           <div class="row row-padded">
             <label for="roomName"
                    class="col-sm-3 control-label">Party Link</label>
@@ -118,6 +119,9 @@
               </div>
             </div>
           </div>
+          <p class="text-center">
+            ... or give them this code which they can enter manually.
+          </p>
           <div class="row row-padded">
             <label for="roomName"
                    class="col-sm-3 control-label">Party ID</label>

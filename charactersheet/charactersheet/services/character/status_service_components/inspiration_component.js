@@ -10,7 +10,7 @@ function InspirationStatusServiceComponent() {
     self.statusIdentifier = 'Status.Inspired';
 
     self.init = function() {
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.otherStats.inspiration.changed.add(self.dataHasChanged);
         self.dataHasChanged();  //Calculate the first one.
     };
 
@@ -23,7 +23,7 @@ function InspirationStatusServiceComponent() {
         var stats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
 
         if (!stats) { return; }
-        
+
         if (stats) {
             if (!parseInt(stats.inspiration())) {
                 self._removeStatus();
@@ -49,6 +49,7 @@ function InspirationStatusServiceComponent() {
 
         status.name('inspired');
         status.type('info');
+        status.value(1);
 
         status.save();
         Notifications.status.changed.dispatch();

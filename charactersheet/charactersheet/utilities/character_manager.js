@@ -12,27 +12,15 @@ CharacterManager.changeCharacter = function(characterId) {
         CharacterManager.__activeCharacter__ = newChar[0];
         Notifications.characterManager.changed.dispatch(
             CharacterManager.activeCharacter());
-    } catch(err) { 
-        console.log(err); 
+    } catch(err) {
+        console.log(err);
     }
 };
 
 CharacterManager.activeCharacter = function() {
     if (CharacterManager.__activeCharacter__) {
         return CharacterManager.__activeCharacter__;
-    } else if (CharacterManager.defaultCharacter()) {
-        return CharacterManager.defaultCharacter();
     } else {
-        return null;
-    }
-};
-
-CharacterManager.defaultCharacter = function() {
-    try {
-        return PersistenceService.findAll(Character).filter(function(e, i, _) {
-            return e.isDefault();
-        })[0];
-    } catch(err) {
         return null;
     }
 };

@@ -1,0 +1,47 @@
+<!-- ko with: chatViewModel -->
+<div class="row">
+  <div data-bind="css: listCSS">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="panel-heading">
+          <div class="h4">
+            <span data-bind="html: title"></span>
+            <div class="pull-right">
+              <span class="fa fa-plus fa-lg" style="cursor:pointer;"
+                data-bind="click: addButtonWasClicked"></span>
+            </div>
+          </div>
+        </div>
+        <nested-list params="cells: cells, selectedCell: selectedCell, ondelete: deleteButtonWasClicked, onadd: addButtonWasClickedWithParent">
+        </nested-list>
+      </div>
+    </div>
+  </div>
+  <div data-bind="css: detailViewModelCSS">
+    <!-- ko if: detailViewModel -->
+    <!-- ko with: detailViewModel -->
+    <div data-bind="template: {
+      name: templateName,
+      templateUrl: templateUrl,
+      data: $data
+    }"></div>
+    <!-- /ko -->
+    <!-- /ko -->
+    <!-- ko ifnot: detailViewModel -->
+    <div class="detail-place-holder well text-center"
+      style="cursor:pointer;" data-bind="click: addButtonWasClicked">
+      <p class="lead text-muted heading" data-bind="html: addNewItemText"></p>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: modalViewModel -->
+    <!-- ko with: modalViewModel -->
+    <div data-bind="template: {
+      name: templateName,
+      templateUrl: templateUrl,
+      data: $data
+    }"></div>
+    <!-- /ko -->
+    <!-- /ko -->
+  </div>
+</div>
+<!-- /ko -->

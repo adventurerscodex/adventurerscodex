@@ -9,6 +9,8 @@ function CharacterRootViewModel() {
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
+    self.isConnectedAndInAParty = ko.observable(false);
+    self.currentPartyNode = ko.observable(null);
 
     //Player Child View Models
     self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
@@ -23,6 +25,7 @@ function CharacterRootViewModel() {
     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
 
     self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
+    self.chatTabViewModel          = ko.observable(new ChatTabViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();
@@ -38,6 +41,8 @@ function CharacterRootViewModel() {
     self.weaponsAndArmorTooltip = ko.observable('Weapons and Armor');
     self.backpackTooltip = ko.observable('Backpack');
     self.notesTooltip = ko.observable('Notes');
+    self.partyTooltip = ko.observable('Party');
+    self.chatTooltip = ko.observable('Chat');
 
     //Tab Properties
     self.profileTabStatus = ko.pureComputed(function() {
@@ -61,6 +66,18 @@ function CharacterRootViewModel() {
     self.notesTabStatus = ko.pureComputed(function() {
         return self._tabIsVisible('notes');
     });
+    self.chatTabStatus = ko.pureComputed(function() {
+        if (self.isConnectedAndInAParty()) {
+            return self._tabIsVisible('chat');
+        }
+        return 'hidden';
+    });
+    self.partyTabStatus = ko.pureComputed(function() {
+        if (self.isConnectedAndInAParty()) {
+            return self._tabIsVisible('party');
+        }
+        return 'hidden';
+    });
 
     self.activateProfileTab = function() {
         self.activeTab('profile');
@@ -83,6 +100,20 @@ function CharacterRootViewModel() {
     self.activateNotesTab = function() {
         self.activeTab('notes');
     };
+    self.activatePartyTab = function() {
+        self.activeTab('party');
+    };
+    self.activateChatTab = function() {
+        self.activeTab('chat');
+    };
+    self.activateChatTabFromHotkey = function() {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode != null) {
+            self.activeTab('chat');
+        }
+    };
+
+
     self.toggleWell = function() {
         Notifications.actionsToolbar.toggle.dispatch();
     };
@@ -156,7 +187,7 @@ function CharacterRootViewModel() {
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
-        HotkeysService.registerHotkey('8', self.toggleWell);
+        HotkeysService.registerHotkey('8', self.activateChatTabFromHotkey);
     };
 
     /**
@@ -166,11 +197,18 @@ function CharacterRootViewModel() {
         self.activeTab(self.playerType().defaultTab);
 
         ViewModelUtilities.loadSubViewModels(self);
+
+        Notifications.party.joined.add(self._updateCurrentNode);
+        Notifications.party.left.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
         ViewModelUtilities.unloadSubViewModels(self);
+
         HotkeysService.flushHotkeys();
+
+        Notifications.party.joined.remove(self._updateCurrentNode);
+        Notifications.party.joined.remove(self._removeCurrentNode);
     };
 
     //Private Methods
@@ -190,4 +228,20 @@ function CharacterRootViewModel() {
             return 'hidden';
         }
     };
+
+    self._updatePartyStatus = function() {
+        var xmpp = XMPPService.sharedService();
+        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
+    };
+
+    self._updateCurrentNode = function(node) {
+        self.currentPartyNode(node);
+        self._updatePartyStatus();
+    };
+
+    self._removeCurrentNode = function(node) {
+        self.currentPartyNode(null);
+        self._updatePartyStatus();
+    };
+
 }

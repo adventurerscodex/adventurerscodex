@@ -15,10 +15,11 @@ var XMPPServiceDefaultConfig = {
 
     credentialsHelper: function() {
         var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
-        var resource = CharacterManager.activeCharacter().key();
+        var resource = 'Adventurers Codex (Web)';
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
         return {
             jid: bareJID + '/' + resource,
-            password: PersistenceService.findAll(AuthenticationToken)[0]
+            password: token.accessToken()
         };
     },
 
@@ -47,6 +48,10 @@ function _XMPPService(config) {
 
     self.connection = null;
 
+    self._isShuttingDown = false;
+    self._connectionRetries = 0;
+    self.MAX_RETRIES = 3;
+
     /**
      * A lazily instantiated connection to the XMPP backend server.
      * The first attempt to fetch this connection will instantiate
@@ -62,6 +67,7 @@ function _XMPPService(config) {
         Strophe.addNamespace('HTML', 'http://jabber.org/protocol/xhtml-im');
         Strophe.addNamespace('BODY', 'http://www.w3.org/1999/xhtml');
 
+        Strophe.addNamespace('PUBSUB', 'http://jabber.org/protocol/pubsub');
         Strophe.addNamespace('JSON', 'urn:xmpp:json:0');
         Strophe.addNamespace('ACTIVE', 'http://jabber.org/protocol/chatstates');
 
@@ -74,8 +80,12 @@ function _XMPPService(config) {
         var callback = self.configuration.connection.callback || self._connectionHandler;
         self.connection = connection;
 
-        // Finish setup after user has been confirmed.
-        Notifications.user.exists.add(self._handleLogin);
+        Notifications.characterManager.changed.addOnce(self._handleConnect);
+    };
+
+    self.deinit = function() {
+        self._isShuttingDown = true;
+        self.connection.disconnect();
     };
 
     /* Private Methods */
@@ -88,10 +98,16 @@ function _XMPPService(config) {
         return self.configuration.fallbackAction == 'throw';
     };
 
-    self._handleLogin = function() {
+    self._handleConnect = function() {
+        // Don't connect to XMPP without a logged in user.
+        var user = UserServiceManager.sharedService().user();
+        if (!user) { return; }
+
+        self._isShuttingDown = false;
         var credentials = self.configuration.credentialsHelper();
         var callback = self.configuration.connection.callback || self._connectionHandler;
         self.connection.connect(credentials.jid, credentials.password, callback);
+        self.connection.flush();
     };
 
     self._connectionHandler = function(status, error) {
@@ -106,20 +122,47 @@ function _XMPPService(config) {
         }
         if (status === Strophe.Status.CONNECTED || status === Strophe.Status.ATTACHED) {
             if (self._shouldLog() && 'console' in window) {
+                self._connectionRetries = 0;
                 console.log('Connected.');
             }
 
             // Send initial presence.
             // https://xmpp.org/rfcs/rfc3921.html#presence
             self.connection.send($pres().tree());
+            self.connection.flush();
 
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
+            // Typical disconnect workflow.
             if (self._shouldLog() && 'console' in window) {
                 console.log('Disconnected.');
             }
             Notifications.xmpp.disconnected.dispatch();
+
+            // Attempt reconnect, unless the app is shutting down.
+            if (!self._isShuttingDown) {
+                if (self._connectionRetries >= self.MAX_RETRIES) {
+                    console.log('No attempt to reconnect: max connection retries reached.');
+                } else {
+                    console.log('Reconnecting...');
+                    self._connectionRetries += 1;
+                    self._handleLogin();
+                }
+            }
+        } else if (status === Strophe.Status.CONNECTING) {
+            if (self._shouldLog() && 'console' in window) {
+                console.log('Connecting.');
+            }
+        } else if (status === Strophe.Status.AUTHFAIL) {
+            if (self._shouldLog() && 'console' in window) {
+                console.log('Authentication failure.');
+            }
+        } else {
+            if (self._shouldLog() && 'console' in window) {
+                console.log('Strophe.Status: ', status);
+            }
         }
+
         // Add more logging...
     };
 }

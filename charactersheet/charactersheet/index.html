@@ -84,7 +84,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <li><a href="/accounts/profile/">Account</a></li>
             <li role="separator" class="divider"></li>
             <li class="secondary-nav">
-              <a href="/" data-bind="click: logoutLinkWasClicked">
+              <a data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }">
                 <span>Logout</span>
               </a>
             </li>
@@ -98,7 +98,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 </nav>
-<!-- ko if: ready -->
+<!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
   <div id="characters" class="container-fluid characters-module-style">
@@ -118,7 +118,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" data-bind="contenteditable: {
+                <div class="h3" id="characterName" data-bind="contenteditable: {
                   text: characterName,
                   placeholder: placeholderText
                 }"></div>
@@ -132,7 +132,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" data-bind="contenteditable: {
+                <div class="h3" id="dmName" data-bind="contenteditable: {
                   text: name,
                   placeholder: placeholderText
                 }"></div>
@@ -151,7 +151,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 &nbsp;
                 <!-- ko if: partyManagerViewModel.loggedIn -->
                 <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#partyModal" href="#">Create/Join/Edit Party</a></i>
+                  data-target="#partyModal" href="#">Manage Party</a></i>
                 &nbsp;
                 <!-- /ko -->
                 <i class="small underline"><a class="" data-toggle="modal"
@@ -168,6 +168,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   name: 'status_line.tmpl',
                   templateUrl: 'templates/character',
                   data: statusLineViewModel
+                 }"></div>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: playerType().key == 'dm' -->
+            <div class="row row-padded">
+              <div class="col-xs-12">
+                <div data-bind="template: {
+                  name: 'status_line.tmpl',
+                  templateUrl: 'templates/character',
+                  data: partyStatusLineViewModel
                  }"></div>
               </div>
             </div>
@@ -189,7 +200,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	</div>
 </div>
 <!-- /ko -->
-<!-- ko ifnot: ready -->
+
+<!-- ko if: shouldShowWizard -->
 <div id="wizard" class="container-fluid main"
   data-bind="with: wizardViewModel">
   <div data-bind="template: {
@@ -198,7 +210,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     data: $data }"></div>
 </div>
 <!-- /ko -->
+
+<!-- ko if: shouldShowPicker -->
+<div id="picker" class="container-fluid main"
+  data-bind="with: charactersViewModel">
+  <div data-bind="template: {
+    name: 'character_picker.tmpl',
+    templateUrl: 'templates/common',
+    data: $data }"></div>
 </div>
+<!-- /ko -->
+
+</div>
+
 
 <!-- Footer -->
 <div class="container-fluid footer">
@@ -271,6 +295,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="modal-body">
         <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+        <a href="https://dl.dropboxusercontent.com/s/deroi5nwm6u7gdf/advice.png" class="dropbox-saver"></a>
         <p>Note: Safari users will need to save the contents of the page.</p>
       <!-- Add export form. -->
       </div>
@@ -350,10 +375,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="/bin/knockout-jquery-autocomplete.js" type="text/javascript"></script>
 <script src="/bin/knockout-binding-contenteditable.js" type="text/javascript"></script>
 <script src="/bin/knockout-boostrap-collapse.js" type="text/javascript"></script>
+<script src="/bin/knockout-bottomsup.js" type="text/javascript"></script>
 <script src="/bin/knockout-bootstrap-modal.js" type="text/javascript"></script>
 <script src="/bin/knockout-mapping-autoignore.js" type="text/javascript"></script>
 <script src="/bin/knockout-markdown.js" type="text/javascript"></script>
-<script src="/bin/xmpp/pubsub.strophe.js" type="text/javascript"></script>
 <script src="/bin/xmpp/muc.strophe.js" type="text/javascript"></script>
 <!-- Extenders -->
 <script src="/bin/knockout-required-extender.js" type="text/javascript"></script>
@@ -392,6 +417,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="viewmodels/common/login.js" type="text/javascript"></script>
 <script src="viewmodels/common/characters.js" type="text/javascript"></script>
 <script src="viewmodels/common/party_manager.js" type="text/javascript"></script>
+<script src="viewmodels/common/master_detail.js" type="text/javascript"></script>
+<script src="viewmodels/common/characters.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_tab.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_cell.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_detail.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_modal.js" type="text/javascript"></script>
 <script src="viewmodels/common/player_image.js" type="text/javascript"></script>
 <script src="viewmodels/common/root.js" type="text/javascript"></script>
 <script src="viewmodels/common/user_notification.js" type="text/javascript"></script>
@@ -418,6 +450,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="viewmodels/dm/encounter_sections/treasure_section.js" type="text/javascript"></script>
 <script src="viewmodels/dm/party_tab.js" type="text/javascript"></script>
 <script src="viewmodels/dm/party.js" type="text/javascript"></script>
+<script src="viewmodels/dm/status_line.js" type="text/javascript"></script>
 <!-- Models -->
 <script src="models/character/ability_scores.js" type="text/javascript"></script>
 <script src="models/character/appearance.js" type="text/javascript"></script>
@@ -439,6 +472,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="models/character/trait.js" type="text/javascript"></script>
 <script src="models/common/armor.js" type="text/javascript"></script>
 <script src="models/common/authentication_token.js" type="text/javascript"></script>
+<script src="models/common/chat_message.js" type="text/javascript"></script>
+<script src="models/common/chat_room.js" type="text/javascript"></script>
 <script src="models/common/character.js" type="text/javascript"></script>
 <script src="models/common/image.js" type="text/javascript"></script>
 <script src="models/common/item.js" type="text/javascript"></script>
@@ -446,6 +481,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="models/common/note.js" type="text/javascript"></script>
 <script src="models/common/party.js" type="text/javascript"></script>
 <script src="models/common/pCard.js" type="text/javascript"></script>
+<script src="models/common/player_card.js" type="text/javascript"></script>
 <script src="models/common/player_info.js" type="text/javascript"></script>
 <script src="models/common/player_image.js" type="text/javascript"></script>
 <script src="models/common/player_types.js" type="text/javascript"></script>
@@ -490,6 +526,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="utilities/view_model_utilities.js" type="text/javascript"></script>
 <script src="utilities/convenience.js" type="text/javascript"></script>
 <!-- Services -->
+<script src="services/dm/sync/dm_card_fields.js" type="text/javascript"></script>
 <script src="services/common/shared_service_manager.js" type="text/javascript"></script>
 <script src="services/character/armor_class_service.js" type="text/javascript"></script>
 <script src="services/common/shared_service_manager.js" type="text/javascript"></script>
@@ -509,12 +546,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="services/common/account/authentication_service.js" type="text/javascript"></script>
 <script src="services/common/account/user_service.js" type="text/javascript"></script>
 <script src="services/common/account/messaging/node_service.js" type="text/javascript"></script>
+<script src="services/common/account/messaging/chat_service.js" type="text/javascript"></script>
 <script src="services/common/account/xmpp_connection_service.js" type="text/javascript"></script>
-<script src="services/common/sync/card_publishing_service.js" type="text/javascript"></script>
+<script src="services/common/sync/card_service.js" type="text/javascript"></script>
 <!-- Components -->
 <script src="components/plus-minus.js" type="text/javascript"></script>
 <script src="components/proficiency-marker.js" type="text/javascript"></script>
 <script src="components/markdown-edit-preview.js" type="text/javascript"></script>
+<script src="components/image-picker.js" type="text/javascript"></script>
 <script src="components/nested-list.js" type="text/javascript"></script>
 <!-- Settings -->
 <script src="settings.js" type="text/javascript"></script>

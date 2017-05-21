@@ -8,6 +8,8 @@ function DMRootViewModel() {
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
+    self.isConnectedAndInAParty = ko.observable(false);
+    self.currentPartyNode = ko.observable(null);
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
     //Player Child View Models
@@ -15,7 +17,11 @@ function DMRootViewModel() {
     self.campaignTabViewModel = ko.observable(new CampaignTabViewModel());
     self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
     self.partyTabViewModel = ko.observable(new PartyTabViewModel());
-        // TODO: Add
+    self.chatTabViewModel = ko.observable(new ChatTabViewModel());
+    self.partyStatusLineViewModel = ko.observable(new PartyStatusLineViewModel());
+    // TODO: Add
+
+    self.dmCardService = DMCardPublishingService.sharedService();
 
     //Tooltips
     // TODO: Add
@@ -64,9 +70,18 @@ function DMRootViewModel() {
     self.dmscreenTabStatus = ko.pureComputed(function() {
         return self._tabIsVisible('dmscreen');
     });
+    self.chatTabStatus = ko.pureComputed(function() {
+        if (self.isConnectedAndInAParty()) {
+            return self._tabIsVisible('chat');
+        }
+        return 'hidden';
+    });
 
     self.partyTabStatus = ko.pureComputed(function() {
-        return self._tabIsVisible('party');
+        if (self.isConnectedAndInAParty()) {
+            return self._tabIsVisible('party');
+        }
+        return 'hidden';
     });
 
     self.activateOverviewTab = function() {
@@ -85,6 +100,23 @@ function DMRootViewModel() {
         self.activeTab('party');
     };
 
+    self.activateChatTab = function() {
+        self.activeTab('chat');
+    };
+
+    self.activatePartyTabFromHotkey = function() {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode != null) {
+            self.activeTab('party');
+        }
+    };
+
+    self.activateChatTabFromHotkey = function() {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode != null) {
+            self.activeTab('chat');
+        }
+    };
 
     //Public Methods
 
@@ -95,7 +127,10 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
-        HotkeysService.registerHotkey('4', self.activatePartyTab);
+        HotkeysService.registerHotkey('4', self.activatePartyTabFromHotkey);
+        HotkeysService.registerHotkey('5', self.activateChatTabFromHotkey);
+
+        self.dmCardService.init();
     };
 
     /**
@@ -105,11 +140,17 @@ function DMRootViewModel() {
         self.activeTab(self.playerType().defaultTab);
 
         ViewModelUtilities.loadSubViewModels(self);
+
+        Notifications.party.joined.add(self._updateCurrentNode);
+        Notifications.party.left.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
         ViewModelUtilities.unloadSubViewModels(self);
         HotkeysService.flushHotkeys();
+
+        Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
+        Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
     };
 
     //Private Methods
@@ -120,5 +161,20 @@ function DMRootViewModel() {
         } else {
             return 'hidden';
         }
+    };
+
+    self._updatePartyStatus = function() {
+        var xmpp = XMPPService.sharedService();
+        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
+    };
+
+    self._updateCurrentNode = function(node) {
+        self.currentPartyNode(node);
+        self._updatePartyStatus();
+    };
+
+    self._removeCurrentNode = function(node) {
+        self.currentPartyNode(null);
+        self._updatePartyStatus();
     };
 }

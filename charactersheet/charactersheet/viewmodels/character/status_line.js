@@ -10,7 +10,7 @@ function StatusLineViewModel() {
     };
 
     self.unload = function() {
-        Notifications.status.changed.remove(self.dataHasChanged);        
+        Notifications.status.changed.remove(self.dataHasChanged);
         self.clear();
     };
 

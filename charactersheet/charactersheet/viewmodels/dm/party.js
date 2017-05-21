@@ -4,110 +4,63 @@
 function PartyViewModel() {
     var self = this;
 
-    self.players = [
-        {
-            image: 'http://www.gravatar.com/avatar/11b074a636e00292c98e3e60f7e16595?d=mm',
-            name: 'Brom Erriksson',
-            level: 2,
-            armorClass: 13,
-            playerName: 'Brian Schrader',
-            summary: 'A level 4 orc warrior by Brian Schrader',
-            hitpoints: 56,
-            damage: 32,
-            hitDice: '4/4 (D6)',
-            statusLine: 'Brom is <span class="text-info">inspired</span>'
-                + ', <span class="text-danger">encumbered</span>, and carrying.',
-            experience: 1234,
-            spellSaveDC: 12,
-            passiveIntelligence: 12,
-            passiveWisdom: 15,
-            gold: '~345 GP',
-            moreInfoOpen: ko.observable(false)
-        },
-        {
-            image: 'http://www.gravatar.com/avatar/5af11548d191b476eb4d73e9d540579a?d=mm',
-            name: 'Joe Thorinsn',
-            level: 4,
-            armorClass: 11,
-            playerName: 'Brian Schrader',
-            summary: 'A level 4 elf wizard by Brian Schrader',
-            hitpoints: 56,
-            damage: 32,
-            hitDice: '1/4 (D6)',
-            statusLine: 'Joe is <span class="text-info">inspired</span>'
-                + ', <span class="text-danger">encumbered</span>, and carrying nothing.',
-            experience: 1234,
-            spellSaveDC: 12,
-            passiveIntelligence: 12,
-            passiveWisdom: 15,
-            gold: '~345 GP',
-            moreInfoOpen: ko.observable(false)
-        },
-        {
-            image: 'https://avatars3.githubusercontent.com/u/7286387?v=3&s=460',
-            name: 'Ferage Thorinsn',
-            level: 4,
-            armorClass: 11,
-            playerName: 'Brian Schrader',
-            summary: 'A level 4 elf wizard by Brian Schrader',
-            hitpoints: 56,
-            damage: 32,
-            hitDice: '1/4 (D6)',
-            statusLine: 'Joe is <span class="text-info">inspired</span>'
-                + ', <span class="text-danger">encumbered</span>, and carrying nothing.',
-            experience: 1234,
-            spellSaveDC: 12,
-            passiveIntelligence: 12,
-            passiveWisdom: 15,
-            gold: '~345 GP',
-            moreInfoOpen: ko.observable(false)
-        },
-        {
-            image: 'http://www.gravatar.com/avatar/kk?d=mm',
-            name: 'Another guy',
-            level: 4,
-            armorClass: 11,
-            playerName: 'Brian Schrader',
-            summary: 'A level 4 elf wizard by Brian Schrader',
-            hitpoints: 56,
-            damage: 32,
-            hitDice: '1/4 (D6)',
-            statusLine: 'Joe is <span class="text-info">inspired</span>'
-                + ', <span class="text-danger">encumbered</span>, and carrying nothing.',
-            experience: 1234,
-            spellSaveDC: 12,
-            passiveIntelligence: 12,
-            passiveWisdom: 15,
-            gold: '~345 GP',
-            moreInfoOpen: ko.observable(false)
-        },
-        {
-            image: 'http://www.gravatar.com/avatar/5af1154kk8d191b476eb4d73e9d540579a?d=mm',
-            name: 'Billy Maize',
-            level: 4,
-            armorClass: 11,
-            playerName: 'Brian Schrader',
-            summary: 'A level 4 elf wizard by Brian Schrader',
-            hitpoints: 56,
-            damage: 32,
-            hitDice: '1/4 (D6)',
-            statusLine: 'Joe is <span class="text-info">inspired</span>'
-                + ', <span class="text-danger">encumbered</span>, and carrying nothing.',
-            experience: 1234,
-            spellSaveDC: 12,
-            passiveIntelligence: 12,
-            passiveWisdom: 15,
-            gold: '~345 GP',
-            moreInfoOpen: ko.observable(false)
-        }
-
-    ];
+    self.players = ko.observableArray();
 
     self.load = function() {
-
+        Notifications.xmpp.routes.pcard.add(self.handlePCard);
+        Notifications.chat.member.left.add(self.removePlayer);
+        Notifications.party.left.add(self.clearPCards);
     };
 
     self.unload = function() {
+        Notifications.xmpp.routes.pcard.remove(self.handlePCard);
+        Notifications.chat.member.left.remove(self.removePlayer);
+        Notifications.party.left.remove(self.clearPCards);
+    };
 
+    self.handlePCard = function(inputPCard) {
+        var chat = ChatServiceManager.sharedService();
+        if (chat.currentPartyNode == null) { return; }
+        var publisherJid;
+        var isNewPlayer = true;
+        inputPCard.forEach(function(field, idx, _) {
+            if (field.name === 'publisherJid') {
+                publisherJid = field.value;
+            }
+        });
+        var pCardInParty = false;
+        var players = Object.keys(chat.rooms[chat.currentPartyNode].roster);
+        if (players.length > 0) {
+            players.forEach(function(player, idx, _) {
+                if (player === publisherJid.split('@')[0]) {
+                    pCardInParty = true;
+                }
+            });
+        }
+        if (!pCardInParty) { return; }
+        self.players().forEach(function(player, idx, _) {
+            if (player.publisherJid() === publisherJid) {
+                player.map(pCard.fromEntries(inputPCard));
+                isNewPlayer = false;
+            }
+        });
+
+        var xmpp = XMPPService.sharedService();
+        var isMe = publisherJid == xmpp.connection.jid;
+
+        if (isNewPlayer && !isMe) {
+            self.players.push(new PlayerCard(pCard.fromEntries(inputPCard)));
+        }
+    };
+
+    self.removePlayer = function(room, nick, jid) {
+        var remainingPlayers = self.players().filter(function(player) {
+            return player.publisherJid() !== jid;
+        });
+        self.players(remainingPlayers);
+    };
+
+    self.clearPCards = function() {
+        self.players([]);
     };
 }

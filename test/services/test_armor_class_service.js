@@ -9,8 +9,8 @@ describe('Armor Class Service', function() {
     describe('Init', function() {
         it('should subscribe to relevant viewmodels and calculate first Armor Class', function() {
             var spy1 = simple.mock(Notifications.armor.changed, 'add');
-            var spy2 = simple.mock(Notifications.abilityScores.changed, 'add');
-            var spy3 = simple.mock(Notifications.stats.changed, 'add');
+            var spy2 = simple.mock(Notifications.abilityScores.dexterity.changed, 'add');
+            var spy3 = simple.mock(Notifications.stats.armorClassModifier.changed, 'add');
 
             var armorClassService = ArmorClassService.sharedService();
             var spy4 = simple.mock(armorClassService, 'dataHasChanged').callFn(function() {});

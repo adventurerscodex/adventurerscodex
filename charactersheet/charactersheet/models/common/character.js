@@ -78,11 +78,27 @@ function Character() {
         return data ? data[property](): '';
     });
 
+    self.playerImage = ko.pureComputed(function() {
+        var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
+        var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', self.key());
+        if (!image) { return defaultImage; }
+
+        if (image.imageSource() === 'link') {
+            var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', self.key());
+            return imageModel && imageModel.imageUrl() ? imageModel.imageUrl() : defaultImage;
+        } else if (image.imageSource() === 'email') {
+            var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', self.key());
+            return info && info.gravatarUrl() ? info.gravatarUrl() : defaultImage;
+        } else {
+            return defaultImage;
+        }
+    });
+
     self.saveToFile = function() {
         //Notify all apps to save their data.
         Notifications.global.save.dispatch();
         //Write the file.
-        var string = JSON.stringify(Character.exportCharacter(self.key()),
+        var string = encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())),
             null, 2); //Pretty print
         var filename = self.playerTitle();
         var blob = new Blob([string], {type: 'application/json'});

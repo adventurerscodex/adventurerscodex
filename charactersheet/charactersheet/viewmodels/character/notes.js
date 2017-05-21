@@ -7,8 +7,24 @@ function NotesViewModel() {
     self.selectedNote = ko.observable();
 
     self.load = function() {
+        self.reloadData();
+
         Notifications.global.save.add(self.save);
-        
+        Notifications.notes.changed.add(self.reloadData);
+    };
+
+    self.unload = function() {
+        self.save();
+        Notifications.global.save.remove(self.save);
+    };
+
+    self.save = function() {
+        self.notes().forEach(function(note, idx, _) {
+            note.save();
+        });
+    };
+
+    self.reloadData = function() {
         var key = CharacterManager.activeCharacter().key();
         var notes = PersistenceService.findBy(Note, 'characterId', key);
         if (notes.length > 0) {
@@ -17,17 +33,6 @@ function NotesViewModel() {
             self.addNote();
         }
         self.selectNote(self.notes()[0]);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.global.save.remove(self.save);        
-    };
-
-    self.save = function() {
-        self.notes().forEach(function(note, idx, _) {
-            note.save();
-        });
     };
 
     /* UI Methods */

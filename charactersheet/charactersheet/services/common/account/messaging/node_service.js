@@ -105,7 +105,7 @@ var NodeServiceConfiguration = {
         }
     },
     defaultNodeOptions: {
-
+        'pubsub#publish_model': 'subscribers'
     }
 };
 
@@ -131,20 +131,11 @@ function _NodeService(config) {
         // Subscribe to all push events.
         var xmpp = XMPPService.sharedService();
         xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
-
-        // Finish setup after login is complete.
-        Notifications.xmpp.connected.add(self._handleConnect);
-    };
-
-    /**
-     * Returns a unique id for a new node.
-     * Uses nouns and adjectives array from the `DataRepository`.
-     */
-    self.getUniqueNodeId = function() {
-        var adjective = DataRepository['adjectives'][Math.floor(Math.random() * DataRepository['adjectives'].length)];
-        var noun = DataRepository['nouns'][Math.floor(Math.random() * DataRepository['nouns'].length)];
-        var code = uuid.v4().substr(0,4);
-        return adjective + '-' + noun + '-' + code;
+        xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
+        xmpp.connection.addHandler(self._handlePresence, null, 'presence');
+        xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
+        Notifications.chat.member.joined.add(self._getCards);
+        Notifications.party.joined.add(self._getCards);
     };
 
     /**
@@ -154,96 +145,115 @@ function _NodeService(config) {
         return self.config.defaultNodeOptions;
     };
 
-    /* PubSub Methods */
-
-    self.create = function(node, callback) {
+    self.publishItem = function(item, attrs, route, onsuccess, onerror) {
         var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.createNode(node, self.getDefaultNodeOptions(), function(a) {
-            Notifications.xmpp.pubsub.created.dispatch(node);
-            callback(a);
-        });
-    };
-
-    self.subscribe = function(node, onsuccess, onerror) {
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.subscribe(node, self.getDefaultNodeOptions(),
-            self._handleEvent, function(s) {
-                Notifications.xmpp.pubsub.subscribed.dispatch(node);
-                onsuccess(s);
-            }, onerror, null);
-    };
-
-    self.unsubscribe = function(node, onsuccess, onerror) {
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.pubsub.unsubscribe(node, xmpp.connection.jid, null,
-            function(s) {
-                Notifications.xmpp.pubsub.unsubscribed.dispatch(node);
-                onsuccess(s);
-            }, onerror);
+        // Refuse to publish if the connection is not established.
+        if (!xmpp.connection.connected) { return; }
+        var iq = $iq({
+            from: Strophe.getBareJidFromJid(xmpp.connection.jid),
+            type: 'set',
+            id: xmpp.connection.getUniqueId()
+        }).c('pubsub', {
+            xmlns: Strophe.NS.PUBSUB
+        }).c('publish', {
+            node: Strophe.NS.JSON + '#' + route
+        }).c('item').c('json', attrs, item);
+        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
     };
 
     /* Private Methods */
 
-    self._handleConnect = function() {
-        // Fetch all outstanding subscriptions.
-        // https://xmpp.org/extensions/xep-0060.html#entity-subscriptions
-        var xmpp = XMPPService.sharedService();
-        // xmpp.connected.pubsub.connect(Settings.PUBSUB_HOST_JID);
-        xmpp.connection.pubsub.getSubscriptions(self._handleSubscriptions, 3000);
-    };
-
-    self._handleSubscriptions = function(response) {
-        var fragments = (new URI()).fragment(true);
-        var nodeJID = fragments['node_jid'];
-
-        if (!nodeJID) {
-            // There's no node given. Don't try to connect.
-            return;
-        }
-
-        var subscriptions = $(response).find('subscriptions').children().toArray();
-        var subscriptionAlreadyExists = subscriptions.some(function(subscription, idx, _) {
-            return (
-                $(subscription).attr('node') === nodeJID &&
-                $(subscription).attr('subscription') === 'subscribed'
-            );
-        });
-
-        if (!subscriptionAlreadyExists) {
-            var xmpp = XMPPService.sharedService();
-            xmpp.connection.pubsub.subscribe(nodeJID, {}, self._handleEvent,
-                self._handleSubscriptionSuccess, self._handleSubscriptionError);
-        }
-    };
-
-    self._handleSubscriptionSuccess = function(subscription) {
-        // TODO
-        console.log(subscription);
-    };
-
-    self._handleSubscriptionError = function(error) {
-        // TODO
-        console.log(error);
-    };
-
     self._handleEvent = function(event) {
-        var items = $(event).find('items').children().toArray();
-        items.forEach(function(item, idx, _) {
-            var json = $(item).find('json');
-            var route = json.attr('route');
-            if (!route) {
-                return;
-            }
+        try {
+            var items = $(event).find('items').children().toArray();
+            items.forEach(function(item, idx, _) {
+                var json = $(item).find('json');
+                var route = $(json).attr('node');
+                if (!route) { return; }
 
-            route = route.toLowerCase();
-            var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
+                route = route.split('#')[1];
+                if (!route) { return; }
 
-            if (route && dispatchRouteExists) {
-                var content = self._getMessageContent(json);
-                Notifications.xmpp.routes[route].dispatch(content);
-            }
-        });
+                var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
+                if (route && dispatchRouteExists) {
+                    var content = self._getMessageContent(json);
+                    Notifications.xmpp.routes[route].dispatch(content);
+                }
+            });
+        } catch(e) {
+            console.log(e);
+        }
         return true;
+    };
+
+    self._handlePresenceRequest = function(presenceRequest) {
+        /**eslint no-console:0 */
+        try {
+            var xmpp = XMPPService.sharedService();
+            var from = $(presenceRequest).attr('from');
+
+            // Don't subscribe to self.
+            if (from == Strophe.getBareJidFromJid(xmpp.connection.jid)) {
+                return true;
+            }
+
+            var presence = $pres({
+                to: Strophe.getBareJidFromJid($(presenceRequest).attr('from')),
+                type: 'subscribed'
+            });
+            xmpp.connection.send(presence.tree());
+            console.log('Subscribed to ', $(presenceRequest).attr('from'));
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
+    };
+
+    self._handlePresence = function(receivedPresence) {
+        /**eslint no-console:0 */
+        try {
+            var xItem = $(receivedPresence).find('x item')[0];
+            if (!xItem) {
+                return true;
+            }
+            var jid = $(xItem).attr('jid');
+            if (!jid) {
+                return true;
+            }
+
+            // Send the presence subscription request.
+            var xmpp = XMPPService.sharedService();
+            var presence = $pres({
+                to: Strophe.getBareJidFromJid(jid),
+                from: xmpp.connection.jid,
+                type: 'subscribe'
+            });
+            xmpp.connection.send(presence.tree());
+        } catch(err) {
+            console.log(err);
+        }
+        return true;
+    };
+
+    self._handleSuccessfulPresenceSubscription = function(response) {
+        try {
+            var from = $(response).attr('from');
+            self._subscribeToNode(Strophe.getBareJidFromJid(from), Strophe.NS.JSON + '#pcard', self._getCards, null);
+        } catch(e) {
+            console.log(e);
+        }
+        return true;
+    };
+
+    self._getCards = function(response) {
+        var chat = ChatServiceManager.sharedService();
+        var partyId = chat.currentPartyNode;
+        if (partyId == null || !chat.rooms[partyId]) { return; }
+        var roster = Object.keys(chat.rooms[partyId].roster);
+        if (roster.length < 1) { return; }
+        roster.forEach(function(member, idx, _) {
+            self._getItemsFromNode(member + '@adventurerscodex.com', 'pcard', self._handleEvent, null);
+        });
     };
 
     self._getMessageContent = function(node) {
@@ -260,6 +270,53 @@ function _NodeService(config) {
     };
 
     self._decompressContents = function(data, compression) {
-        self.config.compression[compression].decompress(data);
+        return self.config.compression[compression].decompress(data);
+    };
+
+    /**
+     * Constructs IQ stanza to subscribe to a node.
+     *
+     * @param toJid  full JID of the node to subscribe to (example@adventurerscodex.com)
+     * @param nodeRoute  route to subscribe to (Strophe.NS.JSON + '#pcard')
+     * @param onsuccess  method to be invoked once the request is handled successfully
+     * @param onerror  method to be invoked if the request returns an error
+     */
+    self._subscribeToNode = function(toJid, node, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        var iq = $iq({
+            from: xmpp.connection.jid,
+            to: toJid,
+            id: xmpp.connection.getUniqueId(),
+            type: 'set'
+        }).c('pubsub', {
+            xmlns: Strophe.NS.PUBSUB
+        }).c('subscribe', {
+            node: node,
+            jid: Strophe.getBareJidFromJid(xmpp.connection.jid)
+        });
+        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
+    };
+
+    /**
+     * Constructs IQ stanza to retrieve items from the given node route.
+     *
+     * @param toJid  full JID of the node to retrieve items for or someone's JID (example@adventurerscodex.com)
+     * @param nodeRoute  route to retrieve items from (pcard)
+     * @param onsuccess  method to be invoked once the request is handled successfully
+     * @param onerror  method to be invoked if the request returns an error
+     */
+    self._getItemsFromNode = function(toJid, nodeRoute, onsuccess, onerror) {
+        var xmpp = XMPPService.sharedService();
+        var iq = $iq({
+            from: xmpp.connection.jid,
+            to: toJid,
+            id: xmpp.connection.getUniqueId(),
+            type: 'get'
+        }).c('pubsub', {
+            xmlns: Strophe.NS.PUBSUB
+        }).c('items', {
+            node: Strophe.NS.JSON + '#' + nodeRoute
+        });
+        xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
     };
 }

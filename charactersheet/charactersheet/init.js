@@ -47,6 +47,7 @@ var init = function(viewModel) {
     AuthenticationServiceManager.sharedService();
     UserServiceManager.sharedService();
     NodeServiceManager.sharedService();
+    ChatServiceManager.sharedService();
 
     // Initialize the View Model
     viewModel.init();

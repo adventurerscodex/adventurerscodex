@@ -52,6 +52,11 @@ small {
   padding-bottom: 5px;
 }
 
+.img-padded {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 .no-top-bottom-padding {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -345,6 +350,10 @@ textarea.dark-area {
   color:#e74c3c;
 }
 
+.fa-color-hover-success:hover {
+  color:#128770;
+}
+
 .fa-color-white-hover {
   color:#ffffff;
 }
@@ -388,12 +397,17 @@ textarea.dark-area {
 
 .chat-style {
   overflow:auto;
-  height: 300px;
+  height: 500px;
 }
 
 .chat-profile-image {
   margin-top:-5px;
   margin-bottom:-5px;
+}
+
+.img-circle.active {
+  border-radius: 50%;
+  border: 5px solid #18bc9c;
 }
 
 .col-content-vertical {

@@ -55,7 +55,16 @@ function CharactersViewModel() {
     };
 
     self.changeCharacter = function(character) {
-        CharacterManager.changeCharacter(character.key());
+        // Don't switch to the same character.
+        var activeCharacterKey = null;
+        if (CharacterManager.activeCharacter()) {
+            activeCharacterKey = CharacterManager.activeCharacter().key();
+        }
+
+        // Do switch
+        if (character.key() !== activeCharacterKey) {
+            CharacterManager.changeCharacter(character.key());
+        }
     };
 
     self.selectCharacter = function(character) {

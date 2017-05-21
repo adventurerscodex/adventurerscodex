@@ -44,7 +44,7 @@ function WizardIntroStepViewModel() {
         //Make sure only one dropbox button is created
         var dropboxContainer = document.getElementById('dropbox-container');
         if(dropboxContainer.childNodes.length < 1){
-            var button = Dropbox.createChooseButton(Settings.dropboxConfigOptions);
+            var button = Dropbox.createChooseButton(Settings.dropboxPickerConfigOptions);
             dropboxContainer.appendChild(button);
         }
     };
@@ -58,8 +58,9 @@ function WizardIntroStepViewModel() {
         //character in the string before the actual json data
         if(!self.fromRemoteFile){
             var length = self.fileReader.result.indexOf(',') + 1;
-            var values = JSON.parse(atob(self.fileReader.result.substring(
-                length, self.fileReader.result.length)));
+            var values = JSON.parse(decodeURIComponent(atob(
+                self.fileReader.result.substring(
+                    length, self.fileReader.result.length))));
             var character = Character.importCharacter(values);
 
             self._setImportReady(character.key());
