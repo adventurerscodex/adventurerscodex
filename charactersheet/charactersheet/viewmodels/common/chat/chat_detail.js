@@ -27,11 +27,23 @@ function ChatDetailViewModel(chatCell, parent) {
 
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
+        Notifications.chat.room.add(self.reloadData);
+        Notifications.chat.member.joined.add(self.reloadData);
+        Notifications.chat.member.left.add(self.reloadData);
+        Notifications.party.joined.add(self.reloadData);
+        Notifications.party.left.add(self.reloadData);
+        Notifications.party.players.changed.add(self.reloadData);
     };
 
     self.unload = function() {
         Notifications.xmpp.connected.remove(self._updateStatus);
         Notifications.xmpp.disconnected.remove(self._updateStatus);
+        Notifications.chat.room.remove(self.reloadData);
+        Notifications.chat.member.joined.remove(self.reloadData);
+        Notifications.chat.member.left.remove(self.reloadData);
+        Notifications.party.left.remove(self.reloadData);
+        Notifications.party.joined.remove(self.reloadData);
+        Notifications.party.players.changed.remove(self.reloadData);
     };
 
     self.save = function() {};
@@ -45,6 +57,10 @@ function ChatDetailViewModel(chatCell, parent) {
     };
 
     self.reloadData = function() {
+        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
+        if (!chat) { return; }
+        self.members(chat.getRoomMembers());
+
         var key = CharacterManager.activeCharacter().key();
         var log = PersistenceService.findByPredicates(ChatMessage, [
             new OrPredicate([
@@ -200,7 +216,12 @@ function ChatDetailViewModel(chatCell, parent) {
 
     self._getMemberTemplate = function(card) {
         if (typeof card == 'string') {
-            return card;
+            var jid = card;
+            return ChatDetailViewModelMemberTemplate.replace(
+                '{card.image}', 'https://www.gravatar.com/avatar/null?d=mm'
+            ).replace(
+                '{card.name}', Strophe.getNodeFromJid(jid)
+            );
         } else {
             return ChatDetailViewModelMemberTemplate.replace(
                 '{card.image}', card.get('imageUrl')[0]

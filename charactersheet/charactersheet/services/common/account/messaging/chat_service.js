@@ -40,7 +40,6 @@ function _ChatService(config) {
 
         self._setupConnection();
 
-        XMPPService.sharedService().connection.addHandler(function(a) { console.log(a); return true;});
         Notifications.xmpp.connected.add(self._handleConnect);
         Notifications.characterManager.changing.add(self._leaveAll);
         Notifications.party.joined.add(self._setupRooms);
