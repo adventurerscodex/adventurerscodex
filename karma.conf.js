@@ -26,6 +26,7 @@ module.exports = function(config) {
 			//Stuff to test.
 			'charactersheet/charactersheet/**/*root.js',
 			'charactersheet/charactersheet/**/notifications.js',
+			'charactersheet/charactersheet/services/**/sync/dm_card_*.js',
 			'charactersheet/charactersheet/**/*manager.js',
 			'charactersheet/charactersheet/**/*.js',
 			'charactersheet/charactersheet/**/**/*.js',
