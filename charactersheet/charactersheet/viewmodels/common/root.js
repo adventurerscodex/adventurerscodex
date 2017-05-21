@@ -85,7 +85,7 @@ function AdventurersCodexViewModel() {
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
         var characters = PersistenceService.findAll(Character);
-        if (characters) {
+        if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
         } else {
             //If no current character exists, fire the load process anyway.
@@ -114,14 +114,17 @@ function AdventurersCodexViewModel() {
 
     self.unload = function() {
         self.loginViewModel.unload();
-        if (CharacterManager.activeCharacter()) {
+        if (self.state() == APP_STATE.CHOSEN) {
             self.childRootViewModel().unload();
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.wizardViewModel.unload();
             self.partyManagerViewModel.unload();
+        } else if (self.state() == APP_STATE.WIZARD) {
+            self.wizardViewModel.unload();
+        } else {
+            self.charactersViewModel.unload();
         }
-
         self._purgeStrayDBEntries();
     };
 
