@@ -53,6 +53,7 @@ function ChatViewModel() {
     self.addItem = function() {
         var name = uuid.v4().substring(0,6);
         var invitees = self.modalViewModel().partyMembersToAdd();
+        if (invitees.length === 0) { return; }
 
         var chatService = ChatServiceManager.sharedService();
         var jid = name+'@'+Settings.MUC_SERVICE;
