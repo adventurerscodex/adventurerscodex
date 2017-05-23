@@ -33,6 +33,7 @@ function AdventurersCodexViewModel() {
       */
     self.state = ko.observable(APP_STATE.SELECT);
     self._dummy = ko.observable();
+    self.partyManagerModalStatus = ko.observable(false);
 
     // View Models
     self.childRootViewModel = ko.observable();
@@ -126,6 +127,17 @@ function AdventurersCodexViewModel() {
             self.charactersViewModel.unload();
         }
         self._purgeStrayDBEntries();
+    };
+
+    self.togglePartyManagerModal = function() {
+        if (self.partyManagerViewModel.parties().length > 0) {
+            self.partyManagerViewModel.createOrJoin('join');
+        }
+        self.partyManagerModalStatus(!self.partyManagerModalStatus());
+    };
+
+    self.partyModalFinishedClosing = function() {
+        self.partyManagerModalStatus(false);
     };
 
     //Private Methods
