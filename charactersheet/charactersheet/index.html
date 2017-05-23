@@ -150,8 +150,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   data-target="#charactersModal" href="#">Characters and Games</a></i>
                 &nbsp;
                 <!-- ko if: partyManagerViewModel.loggedIn -->
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#partyModal" href="#">Manage Party</a></i>
+                <i class="small underline">
+                  <a class="" data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                </i>
                 &nbsp;
                 <!-- /ko -->
                 <i class="small underline"><a class="" data-toggle="modal"
@@ -310,9 +311,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
   aria-labelledby="partyModalLabel"
   data-bind="template: {
-      name: 'party_manager.tmpl',
-      templateUrl: 'templates/common',
-      data: partyManagerViewModel }">
+    name: 'party_manager.tmpl',
+    templateUrl: 'templates/common',
+    data: partyManagerViewModel },
+    modal: {
+    open: partyManagerModalStatus,
+    onclose: partyModalFinishedClosing
+    }">
 </div>
 
 <!-- New Modal -->
