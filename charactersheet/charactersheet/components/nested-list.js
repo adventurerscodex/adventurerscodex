@@ -95,7 +95,7 @@ ko.components.register('nested-list', {
                 <!-- /ko -->\
                 <span class="pull-right"> \
                     <!-- ko if: $parent.isSelected($data) -->\
-                    <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
+                    <!-- ko if: $data.children && $parent.levels > 0 -->\
                     <span class="fa fa-plus fa-lg" \
                         data-bind="click: $parent.addCell"></span>&nbsp;&nbsp; \
                     <!-- /ko -->\

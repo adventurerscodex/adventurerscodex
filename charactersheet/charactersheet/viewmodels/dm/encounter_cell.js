@@ -28,6 +28,10 @@ function EncounterCellViewModel(encounter) {
         self.isOpen(!self.isOpen());
     };
 
+    self.shouldShowDelete = ko.pureComputed(function() {
+        return true;
+    });
+
     /* Child Management Methods */
 
     self.addChild = function(child) {
