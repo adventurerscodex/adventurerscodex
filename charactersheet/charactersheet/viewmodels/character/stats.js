@@ -11,7 +11,8 @@ function StatsViewModel() {
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
-    self.editItem = ko.observable();
+    self.editHealthItem = ko.observable();
+    self.editHitDiceItem = ko.observable();
     self.modalOpen = ko.observable(false);
     self.level = ko.observable('');
     self.experience = ko.observable('');
@@ -163,8 +164,10 @@ function StatsViewModel() {
     };
 
     self.editHealth = function() {
-        self.editItem(new Health());
-        self.editItem().importValues(self.health().exportValues());
+        self.editHealthItem(new Health());
+        self.editHitDiceItem(new HitDiceType());
+        self.editHealthItem().importValues(self.health().exportValues());
+        self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
         self.modalOpen(true);
     };
 
@@ -300,11 +303,12 @@ function StatsViewModel() {
 
     self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
-            self.health().importValues(self.editItem().exportValues());
+            self.health().importValues(self.editHealthItem().exportValues());
+            self.hitDiceType().importValues(self.editHitDiceItem().exportValues());
         }
         self.modalOpen(false);
-        self.health().save();
-        Notifications.health.changed.dispatch();
+        self.hitDiceTypeDataHasChanged();
+        self.healthDataHasChange();
     };
 
     /* Utility Methods */

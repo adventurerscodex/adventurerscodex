@@ -10,7 +10,7 @@ function SpellStatsViewModel() {
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-                
+
         var key = CharacterManager.activeCharacter().key();
         var stats = PersistenceService.findBy(SpellStats, 'characterId', key);
         if (stats.length > 0) {
@@ -24,7 +24,7 @@ function SpellStatsViewModel() {
 
     self.unload = function() {
         self.save();
-        Notifications.global.save.remove(self.save);     
+        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
@@ -52,13 +52,13 @@ function SpellStatsViewModel() {
         self.firstModalElementHasFocus.valueHasMutated();
     };
 
-    self.modalFinishedClosing = function() {    
+    self.modalFinishedClosing = function() {
         if (self.modalStatus()) {
             self.spellStats().importValues(self.editItem().exportValues());
         }
+        self.dataHasChanged();
         self.modalStatus(false);
-        self.save();
-    };    
+    };
 
     self.dataHasChanged = function() {
         self.spellStats().save();

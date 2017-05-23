@@ -100,7 +100,7 @@ function ProfileViewModel() {
 
     self.typeClassDataHasChanged = function() {
         self.saveProfile();
-        Notifications.profile.typeClass.changed.dispatch();
+        Notifications.profile.playerClass.changed.dispatch();
     };
 
     self.playerNameHasChanged = function() {
