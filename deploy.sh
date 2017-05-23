@@ -4,9 +4,7 @@
 # author: Brian Schrader
 # since: 2015-12-23
 
-DOMAIN="app.adventurerscodex.com"
 ARCHIVE="project.tar.gz"
-
 
 set -e;
 
@@ -18,6 +16,7 @@ npm test;
 shopt -s extglob
 tar --remove-files -zcvf $ARCHIVE !(charactersheet);
 shopt -u extglob
+rm $ARCHIVE
 
 # Extract the project.
 mv ./charactersheet ./deploy
@@ -25,9 +24,6 @@ mv ./charactersheet ./deploy
 # Delete the temp files.
 cp -R ./deploy/* .;
 rm -rf deploy*
-
-# Make CNAME File
-echo "$DOMAIN" > CNAME
 
 # Remove Travis file to stop failing master builds.
 rm .travis.yml
