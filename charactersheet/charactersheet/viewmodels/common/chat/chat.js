@@ -227,7 +227,7 @@ function ChatViewModel() {
             dateSent: (new Date()).getTime()
         });
         chat.save();
-        self._deliverMessageToRoom(chat, room, false);
+        self._deliverMessageToRoom(room, chat, false);
     };
 
     self._didJoinParty = function() {
