@@ -122,18 +122,16 @@ function _pCardService(configuration) {
         }
         var pCardInParty = false;
         var newPCard = pCard.fromEntries(inputPCard);
-        var publisherJid = newPCard.get('publisherJid')[0].split('@')[0];
-        var players = Object.keys(chat.rooms[chat.currentPartyNode].roster);
-        if (players.length > 0) {
-            players.forEach(function(player, idx, _) {
-                if (player === publisherJid) {
-                    pCardInParty = true;
-                }
-            });
-        }
+        var publisherJid = newPCard.get('publisherJid')[0];
+        var players = chat.getOccupantsInRoom(chat.currentPartyNode);
+        players.forEach(function(player, idx, _) {
+            if (player === publisherJid) {
+                pCardInParty = true;
+            }
+        });
 
         if (pCardInParty) {
-            self.pCards[newPCard.get('publisherJid')] = newPCard;
+            self.pCards[publisherJid] = newPCard;
         }
 
         self._dispatchPlayerChangedNotification();

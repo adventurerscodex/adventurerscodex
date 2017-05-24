@@ -21,26 +21,20 @@ function PartyViewModel() {
     self.handlePCard = function(inputPCard) {
         var chat = ChatServiceManager.sharedService();
         if (chat.currentPartyNode == null) { return; }
-        var publisherJid;
         var isNewPlayer = true;
-        inputPCard.forEach(function(field, idx, _) {
-            if (field.name === 'publisherJid') {
-                publisherJid = field.value;
+        var newPCard = pCard.fromEntries(inputPCard);
+        var publisherJid = newPCard.get('publisherJid')[0];
+        var pCardInParty = false;
+        var players = chat.getOccupantsInRoom(chat.currentPartyNode);
+        players.forEach(function(player, idx, _) {
+            if (player === publisherJid) {
+                pCardInParty = true;
             }
         });
-        var pCardInParty = false;
-        var players = Object.keys(chat.rooms[chat.currentPartyNode].roster);
-        if (players.length > 0) {
-            players.forEach(function(player, idx, _) {
-                if (player === publisherJid.split('@')[0]) {
-                    pCardInParty = true;
-                }
-            });
-        }
         if (!pCardInParty) { return; }
         self.players().forEach(function(player, idx, _) {
             if (player.publisherJid() === publisherJid) {
-                player.map(pCard.fromEntries(inputPCard));
+                player.map();
                 isNewPlayer = false;
             }
         });
@@ -49,7 +43,7 @@ function PartyViewModel() {
         var isMe = publisherJid == xmpp.connection.jid;
 
         if (isNewPlayer && !isMe) {
-            self.players.push(new PlayerCard(pCard.fromEntries(inputPCard)));
+            self.players.push(new PlayerCard(newPCard));
         }
     };
 
