@@ -218,7 +218,7 @@ function StatsViewModel() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
             CharacterManager.activeCharacter().key())[0];
         var level = profile.level();
-        var restoredHitDice = Math.floor(level / 2);
+        var restoredHitDice = Math.floor(level / 2) < 1 ? 1 : Math.floor(level / 2);
 
         ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
             if (hitDice.hitDiceUsed() === true) {
