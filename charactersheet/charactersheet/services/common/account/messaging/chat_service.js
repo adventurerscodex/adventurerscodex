@@ -124,6 +124,13 @@ function _ChatService(config) {
         });
     };
 
+    self.isJidInParty = function(jid) {
+        var members = self.getOccupantsInRoom(self.currentPartyNode);
+        return members.some(function(member, idx, _) {
+            return member === jid;
+        });
+    };
+
     /* Private Methods */
 
     // Message Handlers

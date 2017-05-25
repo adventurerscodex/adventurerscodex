@@ -120,15 +120,9 @@ function _pCardService(configuration) {
         if (chat.currentPartyNode == null) {
             return;
         }
-        var pCardInParty = false;
         var newPCard = pCard.fromEntries(inputPCard);
         var publisherJid = newPCard.get('publisherJid')[0];
-        var players = chat.getOccupantsInRoom(chat.currentPartyNode);
-        players.forEach(function(player, idx, _) {
-            if (player === publisherJid) {
-                pCardInParty = true;
-            }
-        });
+        var pCardInParty = chat.isJidInParty(publisherJid);
 
         if (pCardInParty) {
             self.pCards[publisherJid] = newPCard;

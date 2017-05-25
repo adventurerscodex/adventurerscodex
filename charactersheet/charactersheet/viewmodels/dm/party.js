@@ -24,13 +24,7 @@ function PartyViewModel() {
         var isNewPlayer = true;
         var newPCard = pCard.fromEntries(inputPCard);
         var publisherJid = newPCard.get('publisherJid')[0];
-        var pCardInParty = false;
-        var players = chat.getOccupantsInRoom(chat.currentPartyNode);
-        players.forEach(function(player, idx, _) {
-            if (player === publisherJid) {
-                pCardInParty = true;
-            }
-        });
+        var pCardInParty = chat.isJidInParty(publisherJid);
         if (!pCardInParty) { return; }
         self.players().forEach(function(player, idx, _) {
             if (player.publisherJid() === publisherJid) {
