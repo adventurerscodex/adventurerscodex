@@ -239,7 +239,7 @@ function ChatViewModel() {
 
     self._isMe = function(nick) {
         var xmpp = XMPPService.sharedService();
-        return xmpp.connection.jid.split('@')[0] === nick;
+        return Strophe.getNodeFromJid(xmpp.connection.jid) === nick;
     };
 
     return self;
