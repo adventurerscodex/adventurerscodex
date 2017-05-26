@@ -104,7 +104,6 @@ function AdventurersCodexViewModel() {
             self.userNotificationViewModel.load();
             self.charactersViewModel.load();
             self.partyManagerViewModel.load();
-            self.state(APP_STATE.CHOSEN);
         } else if (self.state() == APP_STATE.WIZARD) {
             self.wizardViewModel.load();
         } else {
@@ -115,14 +114,12 @@ function AdventurersCodexViewModel() {
 
     self.unload = function() {
         self.loginViewModel.unload();
-        if (self.state() == APP_STATE.CHOSEN) {
+        if (self.state() != APP_STATE.SELECT) {
             self.childRootViewModel().unload();
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.wizardViewModel.unload();
             self.partyManagerViewModel.unload();
-        } else if (self.state() == APP_STATE.WIZARD) {
-            self.wizardViewModel.unload();
         } else {
             self.charactersViewModel.unload();
         }
