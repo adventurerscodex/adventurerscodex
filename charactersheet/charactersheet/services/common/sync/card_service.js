@@ -120,20 +120,12 @@ function _pCardService(configuration) {
         if (chat.currentPartyNode == null) {
             return;
         }
-        var pCardInParty = false;
         var newPCard = pCard.fromEntries(inputPCard);
-        var publisherJid = newPCard.get('publisherJid')[0].split('@')[0];
-        var players = Object.keys(chat.rooms[chat.currentPartyNode].roster);
-        if (players.length > 0) {
-            players.forEach(function(player, idx, _) {
-                if (player === publisherJid) {
-                    pCardInParty = true;
-                }
-            });
-        }
+        var publisherJid = newPCard.get('publisherJid')[0];
+        var pCardInParty = chat.isJidInParty(publisherJid);
 
         if (pCardInParty) {
-            self.pCards[newPCard.get('publisherJid')] = newPCard;
+            self.pCards[publisherJid] = newPCard;
         }
 
         self._dispatchPlayerChangedNotification();
