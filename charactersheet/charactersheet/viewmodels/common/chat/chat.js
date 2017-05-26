@@ -203,6 +203,7 @@ function ChatViewModel() {
     };
 
     self._userHasJoined = function(jid, nick) {
+        if (self._isMe(nick)) { return; }
         var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
         var chat = new ChatMessage();
         chat.importValues({
@@ -217,6 +218,7 @@ function ChatViewModel() {
     };
 
     self._userHasLeft = function(roomId, nick, jid) {
+        if (self._isMe(nick)) { return; }
         var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', roomId);
         var chat = new ChatMessage();
         chat.importValues({
@@ -233,6 +235,11 @@ function ChatViewModel() {
     self._didJoinParty = function() {
         self.reloadCells();
         self.selectedCell(self.cells()[0]);
+    };
+
+    self._isMe = function(nick) {
+        var xmpp = XMPPService.sharedService();
+        return Strophe.getNodeFromJid(xmpp.connection.jid) === nick;
     };
 
     return self;
