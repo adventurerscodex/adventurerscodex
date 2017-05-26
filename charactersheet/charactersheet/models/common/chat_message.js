@@ -59,11 +59,12 @@ function ChatMessage() {
         }
         var character = CharacterManager.activeCharacter();
         var chatService = ChatServiceManager.sharedService();
-        var occupant = chatService.rooms[self.chatId()].roster[self.from()];
+        var chatRoom = chatService.rooms[self.chatId()];
+        if (!chatRoom) { return null; }
+        var occupant = chatRoom.roster[self.from()];
         if (!occupant) {
             return null;
         }
-
 
         // Get the current card service.
         var jid = occupant.jid;
