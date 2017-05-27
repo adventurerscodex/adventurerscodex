@@ -18,7 +18,7 @@ function ChatRoom() {
     self.partyId = ko.observable();
 
     self.chatName = ko.pureComputed(function() {
-        return self.chatId().split('@')[0];
+        return Strophe.getNodeFromJid(self.chatId());
     });
 
     self.clear = function() {
