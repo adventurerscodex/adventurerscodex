@@ -396,7 +396,8 @@ textarea.dark-area {
 }
 
 .chat-style {
-  overflow:auto;
+  overflow-y:auto;
+  overflow-x: hidden;
   height: 500px;
 }
 
