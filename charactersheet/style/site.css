@@ -119,6 +119,10 @@ small {
 	width:22%;
 }
 
+.danger-text {
+  color: #e74c3c;
+}
+
 /**
  * Additional Progress Bar Colors
  */
@@ -396,7 +400,8 @@ textarea.dark-area {
 }
 
 .chat-style {
-  overflow:auto;
+  overflow-y:auto;
+  overflow-x: hidden;
   height: 500px;
 }
 
