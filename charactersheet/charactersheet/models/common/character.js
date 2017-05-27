@@ -15,6 +15,7 @@ function Character() {
     self.key = ko.observable(null);
     self.playerType = ko.observable(PlayerTypes.characterPlayerType);
     self.isDefault = ko.observable(false);
+    self.saveApi = '/api/storage/upload/';
 
     self.importValues = function(values) {
         self.key(values.key);
@@ -94,14 +95,24 @@ function Character() {
         }
     });
 
-    self.saveToFile = function() {
+    self.exportCharacter = function() {
         //Notify all apps to save their data.
         Notifications.global.save.dispatch();
-        //Write the file.
+        //Export the character to a string.
         var string = encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())));
+    };
+
+    self.saveToFile = function() {
         var filename = self.playerTitle();
-        var blob = new Blob([string], {type: 'application/json'});
+        var blob = new Blob([self.exportCharacter()], {type: 'application/json'});
         saveAs(blob, filename);
+    };
+
+    self.saveToDropbox = function() {
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        var url = Utility.oauth.postData(self.saveApi, self.exportCharacter(), function(url) {
+            Dropbox.save(url, self.playerTitle(), Settings.dropboxSaveOptions);
+        }, console.log, token);
     };
 }
 

@@ -99,6 +99,19 @@ Utility.oauth.getJSON = function(url, onsuccess, onerror, accessToken) {
     });
 };
 
+Utility.oauth.postData = function(url, data, onsuccess, onerror, accessToken) {
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        dataType: 'text',
+        success: onsuccess,
+        error: onerror,
+        beforeSend: function(xhr) {
+            Utility.oauth.setXHRBearerHeader(xhr, accessToken);
+        }
+    });
+};
 
 /* JID Methods */
 
