@@ -99,7 +99,7 @@ function Character() {
         //Notify all apps to save their data.
         Notifications.global.save.dispatch();
         //Export the character to a string.
-        var string = encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())));
+        return encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())));
     };
 
     self.saveToFile = function() {
@@ -110,9 +110,10 @@ function Character() {
 
     self.saveToDropbox = function() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        var url = Utility.oauth.postData(self.saveApi, self.exportCharacter(), function(url) {
-            Dropbox.save(url, self.playerTitle(), Settings.dropboxSaveOptions);
-        }, console.log, token);
+        var data = {data: self.exportCharacter()};
+        var url = Utility.oauth.postData(self.saveApi, data, function(url) {
+            Dropbox.save(JSON.parse(url).url, self.playerTitle() + '.json', Settings.dropboxSaveOptions);
+        }, null, token.accessToken());
     };
 }
 
