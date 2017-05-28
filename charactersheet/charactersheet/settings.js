@@ -58,11 +58,7 @@ var Settings = {
         extensions: ['.json']
     },
 
-    options: {
-        files: [
-
-        ],
-
+    dropboxSaveOptions: {
         // Success is called once all files have been successfully added to the user's
         // Dropbox, although they may not have synced to the user's devices yet.
         success: function () {
