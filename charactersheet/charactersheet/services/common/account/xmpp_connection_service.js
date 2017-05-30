@@ -6,7 +6,7 @@
  * custom configurations.
  */
 var XMPPServiceDefaultConfig = {
-    url: 'ws://chat.adventurerscodex.com:5280/websocket/',
+    url: 'wss://adventurerscodex.com:5280/websocket/',
 
     connection: {
         // Specify a custom callback here.

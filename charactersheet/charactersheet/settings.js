@@ -31,7 +31,7 @@ var Settings = {
     /**
      * The MUC Service URL.
      */
-    MUC_SERVICE: 'conference.adventurerscodex.com',
+    MUC_SERVICE: 'chat.adventurerscodex.com',
 
     /**
      * A config object for dropbox integration.
