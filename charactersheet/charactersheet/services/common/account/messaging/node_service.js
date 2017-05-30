@@ -202,7 +202,6 @@ function _NodeService(config) {
                 type: 'subscribed'
             });
             xmpp.connection.send(presence.tree());
-            console.log('Subscribed to ', $(presenceRequest).attr('from'));
         } catch(err) {
             console.log(err);
         }
