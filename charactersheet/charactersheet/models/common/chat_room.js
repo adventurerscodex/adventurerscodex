@@ -17,6 +17,10 @@ function ChatRoom() {
     self.isParty = ko.observable(false);
     self.partyId = ko.observable();
 
+    self.chatName = ko.pureComputed(function() {
+        return Strophe.getNodeFromJid(self.chatId());
+    });
+
     self.clear = function() {
         var values = new ChatRoom().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);

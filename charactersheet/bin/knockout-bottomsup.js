@@ -19,7 +19,8 @@
                     (allBindings.template && allBindings.template.foreach),
                 isAtBottom,
                 beforeChangeSubscription = observableArray.subscribe(function () {
-                    isAtBottom = element.scrollHeight - element.scrollTop <= element.clientHeight;
+                    // The "tolerance" of 2 pixels is due to https://github.com/One-com/knockout-bottomsup/issues/1
+                    isAtBottom = element.scrollHeight - element.scrollTop - 2 <= element.clientHeight;
                 }, this, 'beforeChange'),
                 afterChangeSubscription = observableArray.subscribe(function () {
                     if (isAtBottom) {

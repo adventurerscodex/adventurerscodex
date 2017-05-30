@@ -25,21 +25,23 @@
           <div class="h4">
             Invite your party members to the room
           </div>
+          <div class="text-danger text-center" data-bind="visible: isErrorMessageVisible">
+            A room with these members already exists.
+          </div>
           <div class="invite.members">
             <image-picker params="cells: partyMembers, selectedCells: partyMembersToAdd"></image-picker>
-          </div>
           <div class="spacer"></div>
+      </div>
+      <div class="modal-footer">
+        <div class="form-group">
+          <div class="col-xs-offset-7 col-xs-5">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind="click: $parent._modalDoneButtonWasClicked, disable: isSubmitButtonDisabled"
+                    data-dismiss="modal">Done</button>
           </div>
-          <div class="modal-footer">
-            <div class="form-group">
-              <div class="col-xs-offset-7 col-xs-5">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-bind="click: $parent.parent._modalDoneButtonWasClicked"
-                        data-dismiss="modal">Done</button>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
         </form>
       </div>
     </div>

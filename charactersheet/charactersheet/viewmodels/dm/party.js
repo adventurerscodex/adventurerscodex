@@ -28,7 +28,7 @@ function PartyViewModel() {
         if (!pCardInParty) { return; }
         self.players().forEach(function(player, idx, _) {
             if (player.publisherJid() === publisherJid) {
-                player.map();
+                player.map(newPCard);
                 isNewPlayer = false;
             }
         });

@@ -68,13 +68,12 @@ function WizardIntroStepViewModel() {
         else {
             self._setImportReady(self.character.key());
         }
-
     };
 
     WizardIntroStepViewModel.importRemoteFile = function(files) {
-        $.getJSON(files[0].link).done(function(data) {
+        $.get(files[0].link).done(function(data) {
             self.fromRemoteFile = true;
-            self.character = Character.importCharacter(data);
+            self.character = Character.importCharacter(JSON.parse(decodeURIComponent(data)));
         }).error(function(err) {
             //TODO: Alert user of error
         });
