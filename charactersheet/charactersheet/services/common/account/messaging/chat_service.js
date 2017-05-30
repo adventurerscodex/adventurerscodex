@@ -219,16 +219,6 @@ function _ChatService(config) {
         return true;
     };
 
-    self._handleIQ = function(response) {
-        /*eslint no-console:0*/
-        try {
-            console.log(response);
-        } catch(err) {
-            console.log(err);
-        }
-        return true;
-    };
-
     self._handleInviteMessages = function(response) {
         /*eslint no-console:0*/
         try {
@@ -287,12 +277,6 @@ function _ChatService(config) {
         );
 
         var token3 = xmpp.connection.addHandler(
-            self._handleIQ,
-            null, 'iq', null, null, null,
-            {ignoreNamespaceFragment: true}
-        );
-
-        var token4 = xmpp.connection.addHandler(
             self._handleInviteMessages, null, 'message',
             'normal', null, null,
             {ignoreNamespaceFragment: true}
@@ -301,7 +285,6 @@ function _ChatService(config) {
         self._handlerTokens.push(token1);
         self._handlerTokens.push(token2);
         self._handlerTokens.push(token3);
-        self._handlerTokens.push(token4);
     };
 
     self._teardownConnection = function() {
