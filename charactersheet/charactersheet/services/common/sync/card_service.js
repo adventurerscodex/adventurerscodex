@@ -73,7 +73,7 @@ function _pCardService(configuration) {
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            nodeService.publishItem(content, attrs, 'pcard', console.log, console.log);
+            nodeService.publishItem(content, attrs, 'pcard', null, null);
         }
     };
 
