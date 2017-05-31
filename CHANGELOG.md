@@ -1,3 +1,25 @@
+version 1.4.0 (5/30/2017)
+
+* Updates logo 
+* Adds prepopulation for NPC Races, Classs
+* Adds prepopulation for Features and Traits
+* Fixes a bug with gold weight calculations
+* Adds new Party Collaboration Tools
+ * Adds new Party Manager UI that allows users to create/manage their parties.
+ * Adds a new chat for all members of a party as well as optional private chats for member(s).
+  * Adds new "Save to Notes" feature for chat messages.
+ * Adds new Party Dashboard for the DM which allows them to see their party member's stats.
+ * Adds a new Party Status Line for DMs which allows them to gauge the overall status of their party.
+* Updates Gravatar to use HTTPS.
+* Fixes a few encoding errors with HTML entities in headers
+* Adds new Save to Dropbox functionality.
+* Updates Alert system to use a new, swanky looking system.
+* Fixes broken links
+* Adds new character switcher that is displayed on first load.
+* Adds new Account signin/creation links
+* Adds new Patreon Link
+* Updates contributer list.
+
 version 1.3.0 (2/21/2017)
 
 ####Player Tools####
