@@ -140,6 +140,9 @@ function _ChatService(config) {
         try {
             // Messages in Group Chats are ID'd by the group JID.
             var from = Strophe.getBareJidFromJid($(msg).attr('from'));
+            if (Strophe.getResourceFromJid(from) == null || Strophe.getResourceFromJid(from) === '') {
+                return true;
+            }
 
             var room = self._getOrCreateRoom(from, true);
             var chatMessage = self._parseMessage(msg, room);
