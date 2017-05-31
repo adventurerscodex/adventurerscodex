@@ -1,0 +1,123 @@
+<!-- ko with: partyViewModel -->
+<div class="row">
+  <!-- ko foreach: players -->
+  <div class="col-sm-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <!-- Player Info -->
+        <div class="row">
+          <div class="col-xs-12">
+           <img class="img-circle center-block"
+             data-bind="attr: {
+               src: imageUrl,
+               height: 80,
+               width: 80,
+             }">
+          </div>
+       </div>
+        <div class="row">
+          <div class="col-xs-12 text-center">
+            <div class="h4">
+              <span data-bind="text: name"></span><br />
+              <small data-bind="text: playerSummary"></small>
+            </div>
+          </div>
+        </div>
+        <!-- Health, Spells, and Features  -->
+        <div class="row">
+          <div class="col-xs-12">
+            Hit Points
+            <div class="progress thin">
+              <div class="progress thin">
+                <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
+                  data-bind="style: { width: regularProgressWidth }, css: progressType">
+                  <span class="sr-only"></span>
+                </div>
+                <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar"
+                  aria-valuemin="0" data-bind="style: { width: tempProgressWidth }">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            Spell Slots
+            <div class="progress thin">
+              <div class="progress-bar progress-bar-info" role="progressbar" aria-valuemin="0"
+                aria-valuemax="100" data-bind="style: { width: magicProgressWidth }">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            Features, Feats, and Traits
+            <div class="progress thin">
+              <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuemin="0"
+                aria-valuemax="100" data-bind="style: { width: trackedProgressWidth }">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 text-right">
+            <a class="text-right" style="cursor:pointer;"
+              data-bind="click: toggleMoreInfo">More
+              <span class="fa fa-caret-down"></span>
+            </div>
+          </a>
+        </div>
+        <br />
+        <div data-bind="well: { open: moreInfoOpen }" class="collapse">
+          <div class="row">
+            <div class="col-xs-12 col-padded">
+              <ul class="list-group" style="margin-bottom:0;">
+                <li class="list-group-item">
+                  Armor Class
+                  <span class="pull-right" data-bind="text: armorClass"></span>
+                </li>
+                <li class="list-group-item">
+                  Hit Dice
+                  <span class="pull-right" data-bind="text: hitDiceDisplay"></span>
+                </li>
+                <li class="list-group-item">
+                  Spell Save DC
+                  <span class="pull-right" data-bind="text: spellSaveDC"></span>
+                </li>
+                <li class="list-group-item">
+                  Experience
+                  <span class="pull-right" data-bind="text: experience"></span>
+                </li>
+                <li class="list-group-item">
+                  Passive Perception
+                  <span class="pull-right" data-bind="text: passivePerception"></span>
+                </li>
+                <li class="list-group-item">
+                  Passive Intelligence
+                  <span class="pull-right" data-bind="text: passiveIntelligence"></span>
+                </li>
+                <li class="list-group-item">
+                  Gold
+                  <span class="pull-right" data-bind="text: gold"></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+<!--
+      <div class="panel-footer text-right">
+        <button class="btn btn-sm btn-primary" data-toggle="collapse"
+          data-target="#actionsCollapse" aria-expanded="false"
+          aria-controls="actionsCollapse">
+            More
+            <i data-bind="" class="fa fa-caret-down" aria-hidden="true"></i>
+        </button>
+      </div>
+ -->
+    </div>
+  </div>
+  <!-- /ko -->
+</div>
+<!-- /ko -->

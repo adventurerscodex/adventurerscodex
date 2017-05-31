@@ -3,12 +3,12 @@
 function PlayerInfo() {
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);
-    
-    self.GRAVATAR_BASE_URL = 'http://www.gravatar.com/avatar/{}?d=mm';
-       
+
+    self.GRAVATAR_BASE_URL = 'https://www.gravatar.com/avatar/{}?d=mm';
+
     self.characterId = ko.observable(null);
     self.email = ko.observable('');
-    
+
     self.gravatarUrl = function() {
         try {
             var hash = md5(self.email().trim());
@@ -17,20 +17,20 @@ function PlayerInfo() {
             return '';
         }
     };
-    
+
     self.clear = function() {
         self.email('');
     };
-    
+
     self.save = function() {
         self.ps.save();
     };
-    
+
     self.importValues = function(values) {
         self.characterId(values.characterId);
         self.email(values.email);
     };
-    
+
     self.exportValues = function() {
         return {
             characterId: self.characterId(),

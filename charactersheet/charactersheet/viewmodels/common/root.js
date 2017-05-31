@@ -1,6 +1,25 @@
 'use strict';
 
 /**
+ * All of the possible states that the app globally can render.
+ */
+var APP_STATE = {
+    /**
+     * A character/dm has been chosen to load and the normal workflow is available.
+     */
+    CHOSEN: 'app',
+    /**
+     * No character/dm was chosen, or none exists and the wizard should be shown.
+     */
+    WIZARD: 'wizard',
+    /**
+     * No character/dm has been chosen and the app should present the user
+     * with the available options
+     */
+    SELECT: 'select'
+};
+
+/**
  * The Root View Model for the application. All other view models are children of this view model.
  * This view model contains the global import/export functionality for player data as well as the
  * UI helpers for page layout and design.
@@ -12,24 +31,40 @@ function AdventurersCodexViewModel() {
      * Once the app is ready to be displayed and all data has been loaded,
      * and the init process has finished.
       */
-    self.ready = ko.observable(false);
+    self.state = ko.observable(APP_STATE.SELECT);
     self._dummy = ko.observable();
+    self.partyManagerModalStatus = ko.observable(false);
 
     // View Models
     self.childRootViewModel = ko.observable();
     self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
+    self.loginViewModel = new LoginViewModel();
+    self.partyManagerViewModel = new PartyManagerViewModel();
 
     //UI Methods
 
     self.showWizard = function() {
         //Unload the prior character.
+        self.state(APP_STATE.WIZARD);
         if (CharacterManager.activeCharacter()) {
             self.unload();
         }
-        self.ready(false);
+        self.load();
     };
+
+    self.shouldShowApp = ko.pureComputed(function() {
+        return  self.state() == APP_STATE.CHOSEN;
+    });
+
+    self.shouldShowWizard = ko.pureComputed(function() {
+        return  self.state() == APP_STATE.WIZARD;
+    });
+
+    self.shouldShowPicker = ko.pureComputed(function() {
+        return  self.state() == APP_STATE.SELECT;
+    });
 
     //Public Methods
 
@@ -39,46 +74,67 @@ function AdventurersCodexViewModel() {
     self.init = function() {
         self.charactersViewModel.init();
         self.wizardViewModel.init();
+        self.loginViewModel.load();
+
+        XMPPService.sharedService().init();
+        NodeServiceManager.sharedService().init();
+        ChatServiceManager.sharedService().init();
 
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
-        var character = PersistenceService.findAll(Character)[0];
-        if (character) {
-            //Switching characters will fire the load notification.
-            CharacterManager.changeCharacter(character.key());
+        var characters = PersistenceService.findAll(Character);
+        if (characters.length > 0) {
+            self.state(APP_STATE.SELECT);
         } else {
             //If no current character exists, fire the load process anyway.
-            self.load();
+            self.state(APP_STATE.WIZARD);
         }
+        self.load();
     };
 
     /**
      * Signal all modules to load their data.
      */
     self.load = function() {
-        if (CharacterManager.activeCharacter()) {
+        if (self.state() == APP_STATE.CHOSEN) {
             self.childRootViewModel().load();
             self.userNotificationViewModel.load();
             self.charactersViewModel.load();
-            self.ready(true);
-        } else {
+            self.partyManagerViewModel.load();
+        } else if (self.state() == APP_STATE.WIZARD) {
             self.wizardViewModel.load();
+        } else {
+            self.charactersViewModel.load();
         }
         self._dummy.valueHasMutated();
     };
 
     self.unload = function() {
-        if (CharacterManager.activeCharacter()) {
+        self.loginViewModel.unload();
+        if (self.state() != APP_STATE.SELECT) {
             self.childRootViewModel().unload();
             self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.wizardViewModel.unload();
+            self.partyManagerViewModel.unload();
+        } else {
+            self.charactersViewModel.unload();
         }
-
         self._purgeStrayDBEntries();
+    };
+
+    self.togglePartyManagerModal = function() {
+        if (self.partyManagerViewModel.parties().length > 0) {
+            self.partyManagerViewModel.createOrJoin('join');
+        }
+        self.partyManagerModalStatus(!self.partyManagerModalStatus());
+    };
+
+    self.partyModalFinishedClosing = function() {
+        self.partyManagerModalStatus(false);
     };
 
     //Private Methods
@@ -96,13 +152,14 @@ function AdventurersCodexViewModel() {
 
     self._handleChangingCharacter = function() {
         //Don't save an empty character.
-        if (CharacterManager.activeCharacter() && self.ready()) {
+        if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
     };
 
     self._handleChangedCharacter = function() {
         self._setNewCharacter(CharacterManager.activeCharacter());
+        self.state(APP_STATE.CHOSEN);
         try {
             self.load();
         } catch(err) {
@@ -123,7 +180,7 @@ function AdventurersCodexViewModel() {
             return  character.key();
         });
         PersistenceService.listAll().forEach(function(table, idx, _) {
-            if (!window[table] || table === 'Character') { return; }
+            if (!window[table] || table === 'Character' || table === 'AuthenticationToken') { return; }
             PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
                 var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
                 var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;

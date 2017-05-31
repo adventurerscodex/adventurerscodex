@@ -1,0 +1,753 @@
+html, body {height: 100%;}
+
+#content {
+  max-width: 1800px;
+  font-family: "Lato", sans-serif;
+  min-height: 100%;
+}
+
+.main {
+  padding-bottom:150px;
+  overflow:auto;
+}
+
+h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
+  font-family: 'IM Fell English SC', serif;
+}
+
+small {
+  font-family: "Lato", sans-serif;
+}
+
+.brand-icon {
+  margin-top: -5px;
+  margin-right: 10px;
+}
+
+.footer {
+  position: relative;
+  height: 150px;
+	clear:both;
+  margin-top:-150px;
+  padding-top:30px;
+  background-color: #ecf0f1;
+  padding-bottom: 20px;
+}
+
+.close-check {
+  margin-left: -5px;
+  margin-right: -8px
+}
+
+.progress {
+  height:34px;
+}
+
+.progress.thin {
+  height:6px;
+}
+
+.row-padded {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.img-padded {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.no-top-bottom-padding {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.well-top-shadow {
+  box-shadow: 0px 2px 2px -2px #888888 inset;
+}
+
+.col-padded {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.table-ac-bordered tr {
+  border-bottom: thin solid #ecf0f1;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0px;
+}
+
+.beta {
+  color:orange;
+}
+
+.spacer {
+	width:10px;
+	height:10px;
+}
+
+.spacer-lg {
+  height:23px;
+  width:23px;
+}
+
+.inline-left {
+	float:left;
+	display:inline;
+	width: 49%;
+}
+
+.inline-right {
+	float:right;
+	display:inline;
+	width: 49%
+}
+
+.tri {
+	margin-left:2%;
+	margin-right:2%;
+	width:30%;
+}
+
+.quad {
+	margin-left:2%;
+	margin-right:2%;
+	width:22%;
+}
+
+/**
+ * Additional Progress Bar Colors
+ */
+div.progress-text {
+  line-height: 2.5em;
+  position: absolute;
+}
+
+.progress-bar-blue {
+  background-color: #337ab7 !important;
+}
+.progress-bar-orange {
+  background-color: #f0ad4e !important;
+}
+.progress-bar-red {
+  background-color: #d9534f !important;
+}
+.progress-bar-green {
+  background-color: #5cb85c !important;
+}
+.progress-bar-purple {
+  background-color: purple !important;
+}
+.progress-bar-teal {
+  background-color: #01DFD7 !important;
+}
+.progress-bar-yellow {
+  background-color: #D7DF01 !important;
+}
+.progress-bar-indigo {
+  background-color: #8000FF !important;
+}
+.progress-bar-brown {
+  background-color: #906713 !important;
+}
+.progress-bar-magenta {
+  background-color: #C82D78 !important;
+}
+.progress-bar-sky {
+  background-color: #71D4E8 !important;
+}
+.progress-bar-forest {
+  background-color: #2F972F !important;
+}
+
+
+/*******
+ * Experimental stuff
+ *******/
+
+.panel-heading {
+}
+.panel {
+  box-shadow: 2px 3px 0px 0px #ecf0f1;
+}
+
+div.hr {
+  height:80px;
+  background:url('/images/page-divider.png') no-repeat;
+
+}
+
+.tab-pane {
+  padding-top:10px;
+}
+
+.dice-full {
+  cursor:pointer;
+  background: url('/images/dice-twenty-faces-twenty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.dice-empty {
+  cursor:pointer;
+  background: url('/images/dice-twenty-faces-twenty-clear.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-failure-full {
+  cursor:pointer;
+  background: url('/images/harry-potter-skull.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-failure-empty {
+  cursor:pointer;
+  background: url('/images/harry-potter-skull-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-success-full {
+  cursor:pointer;
+  background: url('/images/hospital-cross.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.ds-success-empty {
+  cursor:pointer;
+  background: url('/images/hospital-cross-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.circular-profile {
+	width: 80px;
+	height: 80px;
+	border-radius: 40px;
+	-webkit-border-radius: 40px;
+	-moz-border-radius: 40px;
+	overflow:hidden;
+}
+
+.no-padding {
+  padding:0px;
+}
+
+.no-top-margin {
+  margin-top:0px;
+}
+
+.no-border {
+  border:none;
+}
+
+.dashed-border {
+  border-style: dashed;
+  border-color: lightgray;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.tab-icon {
+  width: 35px;
+}
+
+.tab-subtext {
+  text-align: center;
+  color: #2c3e50;
+}
+
+.text-lightgray {
+  color: #798d8f;
+}
+
+.tab-subtext:hover {
+  color: #2c3e50;
+}
+.tab-subtext:focus {
+  color: #2c3e50;
+}
+
+.action-bar-icon {
+  width: 2em;
+}
+
+textarea.dark-area {
+  background-color: #ecf0f1;
+}
+
+/**
+ * Alerts
+ */
+
+.alert {
+  min-height: 43px;
+  line-height: 16px;
+  margin-bottom:10px;
+}
+
+.alert-warning {
+  background-color: #fad79e;
+  color: #925d07;
+}
+
+.alert-danger {
+  background-color: #f7c1bb;
+  color: #9f1f14;
+}
+
+.alert-info {
+  background-color: #bedef4;
+  color: #1b6698;
+}
+
+.alert-success {
+  background-color: #d2f9f1;
+  color: #128770;
+}
+
+.coin-input {
+  padding-right: 10px;
+}
+.coin-input input {
+  min-width: 75px;
+}
+
+.alert .close {
+  top:-7px;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.fa-color {
+  color:#2c3e50;
+}
+
+.fa-color-hover {
+  color:#2c3e50;
+}
+
+.fa-color-hover:hover {
+  color:#e74c3c;
+}
+
+.fa-color-hover-success:hover {
+  color:#128770;
+}
+
+.fa-color-white-hover {
+  color:#ffffff;
+}
+
+.fa-color-white-hover:hover {
+  color:#e74c3c;
+}
+
+.feature-row span {
+  line-height: 3em;
+}
+
+.table-data-overflow {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.color-picker-item {
+  margin:10px;
+  padding-right:0px;
+  width:25px;
+  height:25px;
+  border-radius:40px;
+}
+
+.hit-dice-list {
+  height:100%;
+  padding:15px;
+  line-height:0.7em;
+}
+
+.hit-dice-list-empty-fill {
+  padding:15px;
+  line-height:1.5em;
+}
+
+.input-select2-addon {
+  height:100%;
+  padding:18px;
+}
+
+.chat-style {
+  overflow-y:auto;
+  overflow-x: hidden;
+  height: 500px;
+}
+
+.chat-profile-image {
+  margin-top:-5px;
+  margin-bottom:-5px;
+}
+
+.img-circle.active {
+  border-radius: 50%;
+  border: 5px solid #18bc9c;
+}
+
+.col-content-vertical {
+  vertical-align:middle !important;
+}
+
+.ac-plus-minus {
+  width: 100%;
+  text-align: center;
+}
+.ac-plus-minus div {
+  display:inline-block;
+  background-color:#DCE4EC;
+  float: none;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.used-slot-span {
+  padding:10px 12px;
+  font-size:15px;
+}
+
+.clickable {
+  cursor:pointer;
+}
+
+.hide-block {
+  display: none;
+}
+
+.player-image-style {
+  margin-top:4px;
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.spell-slots-level {
+  border:none;
+  background:none;
+}
+
+.user-notification-height {
+  max-height:100px;
+}
+
+.characters-module-style {
+  padding-top:10px;
+  padding-bottom:10px;
+}
+
+.characters-player-name {
+  margin-top:-20px;
+}
+
+.stats-health-border {
+  border-right:1px solid #ecf0f1;
+}
+
+.tabs .secondary-nav {
+	float:right;
+	margin-left:10px;
+	margin-right:10px;
+	line-height: 3.6em
+}
+
+table.table-no-margin {
+  margin-bottom: 0px;
+}
+
+table.table-no-margin tbody td {
+  padding-top:13px;
+}
+
+div.h3 small {
+  color: #6f7d88;
+}
+
+
+.ability-score-input {
+  width: 65px;
+}
+
+.modal-footer-ability-scores {
+  padding: 15px;
+  text-align: left;
+  border-top: 1px solid #e5e5e5;
+}
+
+ul.footer-icons li {
+  margin: 0px 10px;
+  display:inline;
+}
+
+.social-media {
+  color: #798d8f;
+  font-size: 1.5em;
+}
+
+.preview-modal-overflow {
+  height: 225px;
+  overflow-y: auto;
+}
+
+.encounter-detail-place-holder {
+  height: 400px;
+  padding-top:175px;
+}
+
+.preview-modal-overflow-sm {
+  max-height: 225px;
+  overflow-y: auto;
+}
+
+.embedded-image {
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 225px;
+}
+
+.btn-group-padding {
+  padding: 10px 0px;
+}
+
+.no-top-or-bottom-margin {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.content-left {
+  text-align: left !important;
+}
+/*
+ * The following CSS is to fix the modal on tablets.
+ * Modal Fix Start
+ */
+body {
+  padding-right: 0px !important;
+}
+
+.modal-open {
+  overflow-y: auto;
+}
+
+.popover {
+  max-width: 100%;
+}
+
+/*
+ * Modal Fix End
+ */
+
+
+.ui-autocomplete {
+  z-index: 1051;
+}
+
+ul.ui-autocomplete {
+  margin: 0;
+  padding-left: 0;
+  border-color: #aaa;
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+}
+
+ul.ui-autocomplete li {
+  list-style: none;
+  display: list-item;
+  background-image: none;
+  min-height: 1em;
+  font-size: 15px;
+}
+
+
+ul.ui-autocomplete .ui-state-active {
+  background: #2c3e50;
+  color: #fff;
+}
+
+/*
+ * Data validation CSS
+ */
+
+.errormessagetext {
+  color: #ca2f2b;
+  font-weight: 600;
+  vertical-align: -webkit-baseline-middle;
+}
+
+/*
+ * Spell School Icon CSS
+ */
+
+.abjuration {
+  background-image: url('/images/spell_icons/abjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.conjuration {
+  background-image: url('/images/spell_icons/conjuration.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.divination {
+  background-image: url('/images/spell_icons/divination.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.enchantment {
+  background-image: url('/images/spell_icons/enchantment.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.evocation {
+  background-image: url('/images/spell_icons/evocation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.illusion {
+  background-image: url('/images/spell_icons/illusion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.necromancy {
+  background-image: url('/images/spell_icons/necromancy.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.transmutation {
+  background-image: url('/images/spell_icons/transmutation.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*
+ * Magic Items Icon CSS
+ */
+
+.armor-magic-item-card {
+  background-image: url('/images/magic_items_icons/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.potion-magic-item-card {
+  background-image: url('/images/magic_items_icons/potion.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.ring-magic-item-card {
+  background-image: url('/images/magic_items_icons/ring.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rod-magic-item-card {
+  background-image: url('/images/magic_items_icons/rod.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.scroll-magic-item-card {
+  background-image: url('/images/magic_items_icons/scroll.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.staff-magic-item-card {
+  background-image: url('/images/magic_items_icons/staff.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.sword-magic-item-card {
+  background-image: url('/images/magic_items_icons/sword.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.armor-wand-item-card {
+  background-image: url('/images/magic_items_icons/armor.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wand-magic-item-card {
+  background-image: url('/images/magic_items_icons/wand.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.weapon-magic-item-card {
+  background-image: url('/images/magic_items_icons/weapon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wondrous-magic-item-card {
+  background-image: url('/images/magic_items_icons/wondrous.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/*
+ * Encounter Section Icon CSS
+ */
+
+.encounter-section-img {
+  height: 35px;
+  margin-top: 3px;
+  margin-left: 5px;
+  margin-right: 10px;
+  float: left;
+}
+
+/*
+ * Skills view table ability score color
+ */
+
+.skills-ability-type {
+  color: #b4bcc2;
+}
+
+/*
+ * Resize logo on the navbar
+ */
+img.resize_logo_nav {
+  width:36px;
+  height:auto;
+}

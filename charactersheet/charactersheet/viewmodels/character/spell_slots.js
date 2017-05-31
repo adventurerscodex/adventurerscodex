@@ -34,6 +34,11 @@ function SpellSlotsViewModel() {
         //Notifications
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.events.shortRest.add(self.resetShortRest);
+
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
     };
 
     self.unload = function() {
@@ -125,6 +130,7 @@ function SpellSlotsViewModel() {
         }
 
         self.save();
+        self.dataHasChanged();
         self.openModal(false);
     };
 
@@ -151,6 +157,11 @@ function SpellSlotsViewModel() {
         self.currentEditItem(new Slot());
         self.currentEditItem().importValues(slot.exportValues());
         self.openModal(true);
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
+        self.dataHasChanged();
     };
 
     self.addSlot = function() {
@@ -161,12 +172,22 @@ function SpellSlotsViewModel() {
 
         self.blankSlot(new Slot());
         self.blankSlot().level(self.slots().length + 1);
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
+        self.dataHasChanged();
     };
 
     self.removeSlot = function(slot) {
         self.slots.remove(slot);
         slot.delete();
         self.blankSlot().level(self.slots().length + 1);
+        self.slots().forEach(function(slot, idx, _) {
+            slot.maxSpellSlots.subscribe(self.dataHasChanged);
+            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+        });
+        self.dataHasChanged();
     };
 
     self.resetSlot = function(slot) {
@@ -179,21 +200,12 @@ function SpellSlotsViewModel() {
         });
     };
 
-    self.increaseUsage = function(spellSlots) {
-        var used = spellSlots.usedSpellSlots();
-        if (used !== parseInt(spellSlots.maxSpellSlots())) {
-            spellSlots.usedSpellSlots(used + 1);
-        }
-    };
-
-    self.decreaseUsage = function(spellSlots) {
-        var used = spellSlots.usedSpellSlots();
-        if (used !== 0) {
-            spellSlots.usedSpellSlots(used - 1);
-        }
-    };
-
     self.clear = function() {
         self.slots([]);
+    };
+
+    self.dataHasChanged = function() {
+        self.save();
+        Notifications.spellSlots.changed.dispatch();
     };
 }

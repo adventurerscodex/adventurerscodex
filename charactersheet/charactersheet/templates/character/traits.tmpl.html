@@ -1,13 +1,10 @@
 <div class="panel panel-default bio">
   <div class="panel-body">
-    <div class="h3">
-      Traits
-    </div>
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
           <th data-bind="click: function(){sortBy('name');}" class="col-md-7">
-            Name
+            Trait
             <span data-bind="css: sortArrow('name')"></span>
           </th>
           <th data-bind="click: function(){sortBy('race');}" class="col-md-4">
@@ -89,8 +86,8 @@
                         id="race"
                         placeholder="Elf"
                         data-bind='textInput: blankTrait().race,
-                        autocomplete: { source: traitsPrePopFilter,
-                        onselect: populateTrait }'>
+                        autocomplete: { source: raceOptions,
+                        onselect: populateRace }'>
               </div>
           </div>
           <div class="form-group">
@@ -261,7 +258,9 @@
                          class="form-control"
                          id="race"
                          placeholder="Trance"
-                         data-bind='textInput: race'>
+                         data-bind='textInput: race,
+                        autocomplete: { source: $parent.raceOptions,
+                        onselect: $parent.populateRaceEdit }'>
                 </div>
               </div>
               <div class="form-group">

@@ -9,8 +9,8 @@ function _ArmorClassService(configuration) {
 
     self.init = function() {
         Notifications.armor.changed.add(self.dataHasChanged);
-        Notifications.abilityScores.changed.add(self.dataHasChanged);
-        Notifications.stats.changed.add(self.dataHasChanged);
+        Notifications.abilityScores.dexterity.changed.add(self.dataHasChanged);
+        Notifications.stats.armorClassModifier.changed.add(self.dataHasChanged);
 
         // Kick it off the first time.
         self.dataHasChanged();
@@ -96,8 +96,9 @@ function _ArmorClassService(configuration) {
         if (armor && armor.armorEquipped() === 'equipped') {
             if (armor.armorType() === 'Medium') {
                 score += rawDexBonus >= 2 ? 2 : rawDexBonus;
-            } else if (armor.armorType() === 'Heavy'){ /*Score remains 0*/ }
-            else {
+            } else if (armor.armorType() === 'Heavy'){
+                /*Score remains 0*/
+            } else {
                 score += rawDexBonus;
             }
         } else {

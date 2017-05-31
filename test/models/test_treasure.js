@@ -71,6 +71,17 @@ describe('Treasure Model', function() {
             treasure.electrum(2);
             treasure.worthInGold().should.equal(16);
         });
+
+        var types = ['copper', 'silver', 'electrum', 'gold', 'electrum', 'platinum'];
+
+        types.forEach(function(type) {
+            it('correctly converts blank ' + type + ' to zero (0)', function() {
+                var treasure = new Treasure();
+                treasure[type]('');
+                treasure.worthInGold().should.equal(0);
+            });
+        });
+
     });
 
 });

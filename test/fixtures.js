@@ -54,7 +54,7 @@ var ImageFixture = {
 var PlayerInfoFixture = {
     email: 'brian@brianschrader.com',
     characterId: '12345',
-    gravatarUrl: 'http://www.gravatar.com/avatar/11b074a636e00292c98e3e60f7e16595?d=mm'
+    gravatarUrl: 'https://www.gravatar.com/avatar/11b074a636e00292c98e3e60f7e16595?d=mm'
 };
 
 var WeaponFixture = {
@@ -160,8 +160,7 @@ var CharacterFixture = {
             'inventory',
             'notes',
             'settings',
-            'party'
-        ],
+            'party'],
         'defaultTab': 'stats'
     }
 };
@@ -181,8 +180,7 @@ var DMCharacterFixture = {
             'inventory',
             'notes',
             'settings',
-            'party'
-        ],
+            'party'],
         'defaultTab': 'campaign'
     }
 };

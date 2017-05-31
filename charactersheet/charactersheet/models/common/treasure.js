@@ -16,11 +16,17 @@ function Treasure() {
     self.copper = ko.observable(0);
 
     self.worthInGold = ko.computed(function(){
-        var adjPlatinum = parseInt(self.platinum()) * 10;
-        var adjGold = parseInt(self.gold());
-        var adjElectrum = parseInt(self.electrum()) / 2;
-        var adjSilver = parseInt(self.silver()) / 10;
-        var adjCopper = parseInt(self.copper()) / 100;
+        var parsedPlatinum = parseInt(self.platinum()) || 0;
+        var parsedGold = parseInt(self.gold()) || 0;
+        var parsedElectrum = parseInt(self.electrum()) || 0;
+        var parsedSilver = parseInt(self.silver()) || 0;
+        var parsedCopper = parseInt(self.copper()) || 0;
+
+        var adjPlatinum = parsedPlatinum * 10;
+        var adjGold = parsedGold;
+        var adjElectrum = parsedElectrum / 2;
+        var adjSilver = parsedSilver / 10;
+        var adjCopper = parsedCopper / 100;
 
         var total = adjPlatinum + adjGold + adjElectrum + adjSilver + adjCopper;
 

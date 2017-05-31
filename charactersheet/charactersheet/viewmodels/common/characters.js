@@ -49,13 +49,22 @@ function CharactersViewModel() {
     };
 
     self.unload = function() {
-        $.each(self.characters(), function(_, e) {
+        self.characters().forEach(function(e, i, _) {
             e.save();
         });
     };
 
     self.changeCharacter = function(character) {
-        CharacterManager.changeCharacter(character.key());
+        // Don't switch to the same character.
+        var activeCharacterKey = null;
+        if (CharacterManager.activeCharacter()) {
+            activeCharacterKey = CharacterManager.activeCharacter().key();
+        }
+
+        // Do switch
+        if (character.key() !== activeCharacterKey) {
+            CharacterManager.changeCharacter(character.key());
+        }
     };
 
     self.selectCharacter = function(character) {

@@ -97,7 +97,9 @@
               <input type="text"
                      class="form-control"
                      placeholder="Human"
-                     data-bind="textInput: blankNPC().race">
+                     data-bind="textInput: blankNPC().race,
+                                autocomplete: { source: raceOptions,
+                                onselect: populateRace }">
             </div>
           </div>
           <div class="form-group">
@@ -193,7 +195,9 @@
                   <input type="text"
                          class="form-control"
                          placeholder="Human"
-                         data-bind="textInput: race">
+                         data-bind="textInput: race,
+                                    autocomplete: { source: $parent.raceOptions,
+                                    onselect: $parent.populateRaceEdit }">
                 </div>
               </div>
               <div class="form-group">

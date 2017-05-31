@@ -43,7 +43,7 @@ function ProfileViewModel() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
             CharacterManager.activeCharacter().key())[0];
         Notifications.global.save.add(self.dataHasChanged);
-        
+
         if (profile) {
             self.level(profile.level());
             self.playerName(profile.playerName());
@@ -71,30 +71,50 @@ function ProfileViewModel() {
         self.age.subscribe(self.dataHasChanged);
         self.experience.subscribe(self.dataHasChanged);
 
-        Notifications.stats.changed.add(self.dataHasChanged);
+        self.level.subscribe(self.levelDataHasChanged);
+        self.characterName.subscribe(self.characterNameDataHasChanged);
+        self.race.subscribe(self.raceDataHasChanged);
+        self.typeClass.subscribe(self.typeClassDataHasChanged);
+        self.experience.subscribe(self.experienceDataHasChanged);
+        self.playerName.subscribe(self.playerNameHasChanged);
     };
 
     self.unload = function() {
-        Notifications.stats.changed.remove(self.dataHasChanged);
         Notifications.global.save.remove(self.dataHasChanged);
     };
 
-    self.dataHasChanged = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
-        profile.level(self.level());
-        profile.playerName(self.playerName());
-        profile.characterName(self.characterName());
-        profile.background(self.background());
-        profile.race(self.race());
-        profile.alignment(self.alignment());
-        profile.diety(self.diety());
-        profile.typeClass(self.typeClass());
-        profile.gender(self.gender());
-        profile.age(self.age());
-        profile.exp(self.experience());
-        profile.save();
+    self.levelDataHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.level.changed.dispatch();
+    };
 
+    self.characterNameDataHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.characterName.changed.dispatch();
+    };
+
+    self.raceDataHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.race.changed.dispatch();
+    };
+
+    self.typeClassDataHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.playerClass.changed.dispatch();
+    };
+
+    self.playerNameHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.playerName.changed.dispatch();
+    };
+
+    self.experienceDataHasChanged = function() {
+        self.saveProfile();
+        Notifications.profile.experience.changed.dispatch();
+    };
+
+    self.dataHasChanged = function() {
+        self.saveProfile();
         Notifications.profile.changed.dispatch();
     };
 
@@ -112,5 +132,22 @@ function ProfileViewModel() {
         self.age('');
         self.level('');
         self.experience('');
+    };
+
+    self.saveProfile = function() {
+        var profile = PersistenceService.findBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key())[0];
+        profile.level(self.level());
+        profile.playerName(self.playerName());
+        profile.characterName(self.characterName());
+        profile.background(self.background());
+        profile.race(self.race());
+        profile.alignment(self.alignment());
+        profile.diety(self.diety());
+        profile.typeClass(self.typeClass());
+        profile.gender(self.gender());
+        profile.age(self.age());
+        profile.exp(self.experience());
+        profile.save();
     };
 }

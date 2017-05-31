@@ -15,6 +15,7 @@ function Character() {
     self.key = ko.observable(null);
     self.playerType = ko.observable(PlayerTypes.characterPlayerType);
     self.isDefault = ko.observable(false);
+    self.saveApi = '/api/storage/upload/';
 
     self.importValues = function(values) {
         self.key(values.key);
@@ -78,15 +79,41 @@ function Character() {
         return data ? data[property](): '';
     });
 
-    self.saveToFile = function() {
+    self.playerImage = ko.pureComputed(function() {
+        var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
+        var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', self.key());
+        if (!image) { return defaultImage; }
+
+        if (image.imageSource() === 'link') {
+            var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', self.key());
+            return imageModel && imageModel.imageUrl() ? imageModel.imageUrl() : defaultImage;
+        } else if (image.imageSource() === 'email') {
+            var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', self.key());
+            return info && info.gravatarUrl() ? info.gravatarUrl() : defaultImage;
+        } else {
+            return defaultImage;
+        }
+    });
+
+    self.exportCharacter = function() {
         //Notify all apps to save their data.
         Notifications.global.save.dispatch();
-        //Write the file.
-        var string = JSON.stringify(Character.exportCharacter(self.key()),
-            null, 2); //Pretty print
+        //Export the character to a string.
+        return encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())));
+    };
+
+    self.saveToFile = function() {
         var filename = self.playerTitle();
-        var blob = new Blob([string], {type: 'application/json'});
+        var blob = new Blob([self.exportCharacter()], {type: 'application/json'});
         saveAs(blob, filename);
+    };
+
+    self.saveToDropbox = function() {
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        var data = {data: self.exportCharacter()};
+        var url = Utility.oauth.postData(self.saveApi, data, function(url) {
+            Dropbox.save(JSON.parse(url).url, self.playerTitle() + '.json', Settings.dropboxSaveOptions);
+        }, null, token.accessToken());
     };
 }
 

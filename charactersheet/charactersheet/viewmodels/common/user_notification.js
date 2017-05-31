@@ -12,7 +12,7 @@ function UserNotificationViewModel() {
         Notifications.userNotification.successNotification.add(self.addSuccessNotification);
         Notifications.userNotification.warningNotification.add(self.addWarningNotification);
         Notifications.userNotification.dangerNotification.add(self.addDangerNotification);
-                
+
         toastr.options = {
             'closeButton': true,
             'debug': false,
@@ -36,13 +36,13 @@ function UserNotificationViewModel() {
         Notifications.userNotification.infoNotification.remove(self.addInfoNotification);
         Notifications.userNotification.successNotification.remove(self.addSuccessNotification);
         Notifications.userNotification.warningNotification.remove(self.addWarningNotification);
-        Notifications.userNotification.dangerNotification.remove(self.addDangerNotification);        
+        Notifications.userNotification.dangerNotification.remove(self.addDangerNotification);
     };
 
 
     /**
      * Dispatches notification to toastr.
-     * 
+     *
      * @param message  body of notification
      * @param title  title of notification, can be blank.
      */

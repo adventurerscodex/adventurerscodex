@@ -11,7 +11,8 @@ function StatsViewModel() {
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveFailureList = ko.observableArray([]);
-    self.editItem = ko.observable();
+    self.editHealthItem = ko.observable();
+    self.editHitDiceItem = ko.observable();
     self.modalOpen = ko.observable(false);
     self.level = ko.observable('');
     self.experience = ko.observable('');
@@ -92,17 +93,22 @@ function StatsViewModel() {
         });
 
         //Subscriptions
-        self.health().maxHitpoints.subscribe(self.dataHasChanged);
-        self.health().damage.subscribe(self.dataHasChanged);
-        self.otherStats().proficiency.subscribe(self.dataHasChanged);
-        self.otherStats().inspiration.subscribe(self.dataHasChanged);
+        self.health().maxHitpoints.subscribe(self.maxHpDataHasChanged);
+        self.health().damage.subscribe(self.damageDataHasChanged);
+        self.health().tempHitpoints.subscribe(self.tempHpDataHasChanged);
+        self.hitDiceList().forEach(function(hitDice, i, _) {
+            hitDice.hitDiceUsed.subscribe(self.hitDiceDataHasChanged);
+        });
+        self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
+        self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
+        self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
         self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
-        self.otherStats().armorClassModifier.subscribe(self.dataHasChanged);
-        self.level.subscribe(self.dataHasChanged);
-        self.experience.subscribe(self.dataHasChanged);
+        self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
+        self.level.subscribe(self.levelDataHasChanged);
+        self.experience.subscribe(self.experienceDataHasChanged);
 
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
-        Notifications.profile.changed.add(self.calculateHitDice);
+        Notifications.profile.level.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
@@ -128,7 +134,6 @@ function StatsViewModel() {
         Notifications.armorClass.changed.remove(self.updateArmorClass);
         Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
         Notifications.global.save.remove(self.save);
-        self.dataHasChanged();
     };
 
     self.save = function() {
@@ -159,8 +164,10 @@ function StatsViewModel() {
     };
 
     self.editHealth = function() {
-        self.editItem(new Health());
-        self.editItem().importValues(self.health().exportValues());
+        self.editHealthItem(new Health());
+        self.editHitDiceItem(new HitDiceType());
+        self.editHealthItem().importValues(self.health().exportValues());
+        self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
         self.modalOpen(true);
     };
 
@@ -191,10 +198,14 @@ function StatsViewModel() {
     self.resetOnLongRest = function() {
         self.resetHitDice();
         self.health().damage(0);
+        self.health().save();
+        self.damageDataHasChanged();
     };
 
     self.resetDamage = function() {
         self.health().damage(0);
+        self.health().save();
+        self.damageDataHasChanged();
     };
 
     /**
@@ -207,7 +218,7 @@ function StatsViewModel() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
             CharacterManager.activeCharacter().key())[0];
         var level = profile.level();
-        var restoredHitDice = Math.floor(level / 2);
+        var restoredHitDice = Math.floor(level / 2) < 1 ? 1 : Math.floor(level / 2);
 
         ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
             if (hitDice.hitDiceUsed() === true) {
@@ -217,6 +228,10 @@ function StatsViewModel() {
                 }
             }
         });
+        self.hitDiceList().forEach(function(e, i, _) {
+            e.save();
+        });
+        self.hitDiceDataHasChanged();
     };
 
     // Calculate proficiency label and popover
@@ -288,25 +303,79 @@ function StatsViewModel() {
 
     self.modalFinishedClosing = function() {
         if (self.modalOpen()) {
-            self.health().importValues(self.editItem().exportValues());
+            self.health().importValues(self.editHealthItem().exportValues());
+            self.hitDiceType().importValues(self.editHitDiceItem().exportValues());
         }
         self.modalOpen(false);
-        self.health().save();
+        self.hitDiceTypeDataHasChanged();
+        self.healthDataHasChange();
     };
 
     /* Utility Methods */
 
-    self.dataHasChanged = function() {
+    self.inspirationHasChanged = function() {
         self.otherStats().save();
-        self.health().save();
-        Notifications.stats.changed.dispatch();
+        Notifications.otherStats.inspiration.changed.dispatch();
+    };
 
-        //Save level and exp in profile model
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
+    self.healthDataHasChange = function() {
+        self.health().save();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.armorClassModifierDataHasChanged = function() {
+        self.otherStats().save();
+        Notifications.stats.armorClassModifier.changed.dispatch();
+    };
+
+    self.levelDataHasChanged = function() {
+        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key());
         profile.level(self.level());
+        profile.save();
+        Notifications.profile.level.changed.dispatch();
+    };
+
+    self.experienceDataHasChanged = function() {
+        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
+            CharacterManager.activeCharacter().key());
         profile.exp(self.experience());
         profile.save();
-        Notifications.profile.changed.dispatch();
+        Notifications.profile.experience.changed.dispatch();
+    };
+
+    self.maxHpDataHasChanged = function() {
+        self.health().save();
+        Notifications.health.maxHitPoints.changed.dispatch();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.damageDataHasChanged = function() {
+        self.health().save();
+        Notifications.health.damage.changed.dispatch();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.tempHpDataHasChanged = function() {
+        self.health().save();
+        Notifications.health.tempHitPoints.changed.dispatch();
+        Notifications.health.changed.dispatch();
+    };
+
+    self.hitDiceDataHasChanged = function() {
+        self.hitDiceList().forEach(function(e, i, _) {
+            e.save();
+        });
+        Notifications.hitDice.changed.dispatch();
+    };
+
+    self.hitDiceTypeDataHasChanged = function() {
+        self.hitDiceType().save();
+        Notifications.hitDiceType.changed.dispatch();
+    };
+
+    self.proficiencyHasChanged = function() {
+        self.otherStats().save();
+        Notifications.otherStats.proficiency.changed.dispatch();
     };
 }

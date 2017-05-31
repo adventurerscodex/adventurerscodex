@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html id='html'>
 <head>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-T24P7ZM');</script>
+  <!-- End Google Tag Manager -->
+
   <!-- ko with: childRootViewModel -->
 	<title data-bind='text: pageTitle'></title>
 	<!-- /ko -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<link rel="apple-touch-icon" href="/images/logo-full-icon.png">
-	<link rel="icon" type="image/png" href="/images/logo-full.png">
+	<link rel="apple-touch-icon" href="/images/logo-full-icon.jpg">
+	<link rel="icon" type="image/png" href="/images/logo-full-circle-icon-favicon.png">
   <link rel="stylesheet" href="/bower_components/jquery-ui/themes/smoothness/jquery-ui.css">
 	<link href="/bower_components/bootstrap-theme-bootswatch-flatly/css/bootstrap.css" rel="stylesheet">
   <link href="/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet">
@@ -16,11 +24,14 @@
   <link href="/bower_components/select2/select2.css" rel="stylesheet">
   <link href="/bower_components/toastr/toastr.css" rel="stylesheet">
   <link href="/bin/select2-bootstrap-flatly.css" rel="stylesheet">
-	<link href="/site.css" rel="stylesheet">
+	<link href="/style/site.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=IM+Fell+English+SC" rel="stylesheet">
-
 </head>
 <body data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T24P7ZM"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div id="content">
 <nav class="navbar navbar-default navbar-static-top">
 <div class="container-fluid">
@@ -32,23 +43,62 @@
         <span class="icon-bar"></span><span class="icon-bar"></span>
       </button>
       <a href='//adventurerscodex.com' class="navbar-brand">
-    	  <img src="/images/logo-full-circle-small.png"
-    	    class="pull-left img-rounded inline-block brand-icon"
-    	    alt="Adventurer's Codex"/>
+    	  <img src="/images/logo-full-circle-icon.png"
+    	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
+    	       alt="Adventurer's Codex"/>
         <span class="inline-block pull-right">Adventurer's Codex
       </a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="//adventurerscodex.com/blog">Blog</a></li>
-        <li><a href="//tinyletter.com/adventurerscodex">Newsletter</a></li>
+        <li><a href="//adventurerscodex.com/blog.html"
+               target="_blank">Blog</a></li>
+        <li><a href="//tinyletter.com/adventurerscodex"
+               target="_blank">Newsletter</a></li>
+        <li><a href="https://www.patreon.com/bePatron?u=5313385"
+               target="_blank">Become a Patron</a>
+        </li>
       </ul>
+      <!-- ko with: loginViewModel -->
+      <ul class="nav navbar-nav navbar-right">
+        <!-- ko ifnot: loggedIn -->
+        <li class="secondary-nav">
+          <a data-bind="attr: { href: loginLink }">
+            Login
+          </a>
+        </li>
+        <li class="secondary-nav">
+          <a data-bind="attr: { href: signupLink }">
+            Sign Up
+          </a>
+        </li>
+        <!-- /ko -->
+        <!-- ko if: loggedIn -->
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+            role="button" aria-haspopup="true" aria-expanded="false">
+              <span data-bind="text: username"></span>
+              <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="/accounts/profile/">Account</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="secondary-nav">
+              <a data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }">
+                <span>Logout</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- /ko -->
+      </ul>
+      <!-- /ko -->
     </div>
   <!--/.nav-collapse -->
   </div>
 </div>
 </nav>
-<!-- ko if: ready -->
+<!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
   <div id="characters" class="container-fluid characters-module-style">
@@ -68,7 +118,7 @@
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" data-bind="contenteditable: {
+                <div class="h3" id="characterName" data-bind="contenteditable: {
                   text: characterName,
                   placeholder: placeholderText
                 }"></div>
@@ -82,7 +132,7 @@
             <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" data-bind="contenteditable: {
+                <div class="h3" id="dmName" data-bind="contenteditable: {
                   text: name,
                   placeholder: placeholderText
                 }"></div>
@@ -99,6 +149,12 @@
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#charactersModal" href="#">Characters and Games</a></i>
                 &nbsp;
+                <!-- ko if: partyManagerViewModel.loggedIn -->
+                <i class="small underline">
+                  <a class="" data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                </i>
+                &nbsp;
+                <!-- /ko -->
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#exportModal"
                   data-bind="click: charactersViewModel.selectCharacter"
@@ -113,6 +169,17 @@
                   name: 'status_line.tmpl',
                   templateUrl: 'templates/character',
                   data: statusLineViewModel
+                 }"></div>
+              </div>
+            </div>
+            <!-- /ko -->
+            <!-- ko if: playerType().key == 'dm' -->
+            <div class="row row-padded">
+              <div class="col-xs-12">
+                <div data-bind="template: {
+                  name: 'status_line.tmpl',
+                  templateUrl: 'templates/character',
+                  data: partyStatusLineViewModel
                  }"></div>
               </div>
             </div>
@@ -134,7 +201,8 @@
 	</div>
 </div>
 <!-- /ko -->
-<!-- ko ifnot: ready -->
+
+<!-- ko if: shouldShowWizard -->
 <div id="wizard" class="container-fluid main"
   data-bind="with: wizardViewModel">
   <div data-bind="template: {
@@ -143,7 +211,19 @@
     data: $data }"></div>
 </div>
 <!-- /ko -->
+
+<!-- ko if: shouldShowPicker -->
+<div id="picker" class="container-fluid main"
+  data-bind="with: charactersViewModel">
+  <div data-bind="template: {
+    name: 'character_picker.tmpl',
+    templateUrl: 'templates/common',
+    data: $data }"></div>
 </div>
+<!-- /ko -->
+
+</div>
+
 
 <!-- Footer -->
 <div class="container-fluid footer">
@@ -157,6 +237,11 @@
 			<li>
         <a href="//twitter.com/adventurercodex" target="_blank">
           <i class="fa fa-twitter social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="//www.reddit.com/r/adventurerscodex/" target="_blank">
+          <i class="fa fa-reddit social-media" aria-hidden="true"></i>
         </a>
       </li>
 			<li>
@@ -215,10 +300,24 @@
       <!-- Add export form. -->
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export</button>
+        <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export to file</button>
+        <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Party Manager Modal -->
+<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
+  aria-labelledby="partyModalLabel"
+  data-bind="template: {
+    name: 'party_manager.tmpl',
+    templateUrl: 'templates/common',
+    data: partyManagerViewModel },
+    modal: {
+    open: partyManagerModalStatus,
+    onclose: partyModalFinishedClosing
+    }">
 </div>
 
 <!-- New Modal -->
@@ -251,6 +350,7 @@
 </div>
 
 <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="3j1z94debj5xcwn"></script>
+<script src="/bower_components/clipboard/dist/clipboard.min.js"></script>
 <script src="/bower_components/jquery/dist/jquery.min.js" type="text/javascript"></script>
 <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript"></script>
@@ -264,6 +364,10 @@
 <script src="/bower_components/toastr/toastr.min.js"></script>
 <script src="/bower_components/jquery.textarea-markdown-editor/dist/marked.min.js"></script>
 <script src="/bower_components/jquery.textarea-markdown-editor/dist/jquery.textarea-markdown-editor.js"></script>
+<script src="/bower_components/Strophe.js/strophe.min.js"></script>
+<script src="/bower_components/lz-string/libs/lz-string.min.js"></script>
+<script src="/bower_components/uri.js/src/URI.min.js"></script>
+<script src="/bower_components/uri.js/src/URI.fragmentQuery.js"></script>
 <!-- Bindings -->
 <script src="/bin/date-format.js"></script>
 <script src="/bin/markdown.min.js"></script>
@@ -276,9 +380,11 @@
 <script src="/bin/knockout-jquery-autocomplete.js" type="text/javascript"></script>
 <script src="/bin/knockout-binding-contenteditable.js" type="text/javascript"></script>
 <script src="/bin/knockout-boostrap-collapse.js" type="text/javascript"></script>
+<script src="/bin/knockout-bottomsup.js" type="text/javascript"></script>
 <script src="/bin/knockout-bootstrap-modal.js" type="text/javascript"></script>
 <script src="/bin/knockout-mapping-autoignore.js" type="text/javascript"></script>
 <script src="/bin/knockout-markdown.js" type="text/javascript"></script>
+<script src="/bin/xmpp/muc.strophe.js" type="text/javascript"></script>
 <!-- Extenders -->
 <script src="/bin/knockout-required-extender.js" type="text/javascript"></script>
 <!-- ViewModels -->
@@ -313,7 +419,16 @@
 <script src="viewmodels/character/traits.js" type="text/javascript"></script>
 <script src="viewmodels/character/treasure.js" type="text/javascript"></script>
 <script src="viewmodels/character/weapons.js" type="text/javascript"></script>
+<script src="viewmodels/common/login.js" type="text/javascript"></script>
 <script src="viewmodels/common/characters.js" type="text/javascript"></script>
+<script src="viewmodels/common/party_manager.js" type="text/javascript"></script>
+<script src="viewmodels/common/master_detail.js" type="text/javascript"></script>
+<script src="viewmodels/common/characters.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_tab.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_cell.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_detail.js" type="text/javascript"></script>
+<script src="viewmodels/common/chat/chat_modal.js" type="text/javascript"></script>
 <script src="viewmodels/common/player_image.js" type="text/javascript"></script>
 <script src="viewmodels/common/root.js" type="text/javascript"></script>
 <script src="viewmodels/common/user_notification.js" type="text/javascript"></script>
@@ -338,6 +453,9 @@
 <script src="viewmodels/dm/encounter_sections/point_of_interest_section.js" type="text/javascript"></script>
 <script src="viewmodels/dm/encounter_sections/player_text_section.js" type="text/javascript"></script>
 <script src="viewmodels/dm/encounter_sections/treasure_section.js" type="text/javascript"></script>
+<script src="viewmodels/dm/party_tab.js" type="text/javascript"></script>
+<script src="viewmodels/dm/party.js" type="text/javascript"></script>
+<script src="viewmodels/dm/status_line.js" type="text/javascript"></script>
 <!-- Models -->
 <script src="models/character/ability_scores.js" type="text/javascript"></script>
 <script src="models/character/appearance.js" type="text/javascript"></script>
@@ -356,18 +474,25 @@
 <script src="models/character/spell_slot.js" type="text/javascript"></script>
 <script src="models/character/spell_stats.js" type="text/javascript"></script>
 <script src="models/character/tracked.js" type="text/javascript"></script>
+<script src="models/character/trait.js" type="text/javascript"></script>
 <script src="models/common/armor.js" type="text/javascript"></script>
+<script src="models/common/authentication_token.js" type="text/javascript"></script>
+<script src="models/common/chat_message.js" type="text/javascript"></script>
+<script src="models/common/chat_room.js" type="text/javascript"></script>
 <script src="models/common/character.js" type="text/javascript"></script>
 <script src="models/common/image.js" type="text/javascript"></script>
 <script src="models/common/item.js" type="text/javascript"></script>
 <script src="models/common/magic_item.js" type="text/javascript"></script>
 <script src="models/common/note.js" type="text/javascript"></script>
+<script src="models/common/party.js" type="text/javascript"></script>
+<script src="models/common/pCard.js" type="text/javascript"></script>
+<script src="models/common/player_card.js" type="text/javascript"></script>
 <script src="models/common/player_info.js" type="text/javascript"></script>
 <script src="models/common/player_image.js" type="text/javascript"></script>
 <script src="models/common/player_types.js" type="text/javascript"></script>
 <script src="models/common/spell.js" type="text/javascript"></script>
 <script src="models/common/status.js" type="text/javascript"></script>
-<script src="models/character/trait.js" type="text/javascript"></script>
+<script src="models/common/status_weight_pair.js" type="text/javascript"></script>
 <script src="models/common/treasure.js" type="text/javascript"></script>
 <script src="models/common/weapon.js" type="text/javascript"></script>
 <script src="models/dm/campaign.js" type="text/javascript"></script>
@@ -397,18 +522,6 @@
 <script src="migrations/120_1_weapons.js" type="text/javascript"></script>
 <script src="migrations/130_1_armor.js" type="text/javascript"></script>
 <script src="migrations/130_2_feats_features_proficiencies_daily_features.js" type="text/javascript"></script>
-<!-- Services -->
-<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
-<script src="services/character/armor_class_service.js" type="text/javascript"></script>
-<script src="services/hotkeys_service.js" type="text/javascript"></script>
-<script src="services/persistence_service.js" type="text/javascript"></script>
-<script src="services/persistence_service_components/persistence_service_predicates.js" type="text/javascript"></script>
-<script src="services/sort_service.js" type="text/javascript"></script>
-<script src="services/status_service.js" type="text/javascript"></script>
-<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
-<script src="services/character/proficiency_service.js" type="text/javascript"></script>
-<script src="services/status_service_components/total_weight_component.js" type="text/javascript"></script>
-<script src="services/status_service_components/inspiration_component.js" type="text/javascript"></script>
 <!-- Utilities -->
 <script src="utilities/character_manager.js" type="text/javascript"></script>
 <script src="utilities/notifications.js" type="text/javascript"></script>
@@ -417,10 +530,35 @@
 <script src="utilities/data_repository.js" type="text/javascript"></script>
 <script src="utilities/view_model_utilities.js" type="text/javascript"></script>
 <script src="utilities/convenience.js" type="text/javascript"></script>
+<!-- Services -->
+<script src="services/dm/sync/dm_card_fields.js" type="text/javascript"></script>
+<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
+<script src="services/character/armor_class_service.js" type="text/javascript"></script>
+<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
+<script src="services/character/proficiency_service.js" type="text/javascript"></script>
+<script src="services/character/status_service_components/inspiration_component.js" type="text/javascript"></script>
+<script src="services/character/status_service_components/healthiness_component.js" type="text/javascript"></script>
+<script src="services/character/status_service_components/magical_component.js" type="text/javascript"></script>
+<script src="services/character/status_service_components/total_weight_component.js" type="text/javascript"></script>
+<script src="services/character/status_service_components/tracked_component.js" type="text/javascript"></script>
+<script src="services/character/sync/character_card_fields.js" type="text/javascript"></script>
+<script src="services/common/hotkeys_service.js" type="text/javascript"></script>
+<script src="services/common/persistence_service.js" type="text/javascript"></script>
+<script src="services/common/persistence_service_components/persistence_service_predicates.js" type="text/javascript"></script>
+<script src="services/common/sort_service.js" type="text/javascript"></script>
+<script src="services/common/status_service.js" type="text/javascript"></script>
+<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
+<script src="services/common/account/authentication_service.js" type="text/javascript"></script>
+<script src="services/common/account/user_service.js" type="text/javascript"></script>
+<script src="services/common/account/messaging/node_service.js" type="text/javascript"></script>
+<script src="services/common/account/messaging/chat_service.js" type="text/javascript"></script>
+<script src="services/common/account/xmpp_connection_service.js" type="text/javascript"></script>
+<script src="services/common/sync/card_service.js" type="text/javascript"></script>
 <!-- Components -->
 <script src="components/plus-minus.js" type="text/javascript"></script>
 <script src="components/proficiency-marker.js" type="text/javascript"></script>
 <script src="components/markdown-edit-preview.js" type="text/javascript"></script>
+<script src="components/image-picker.js" type="text/javascript"></script>
 <script src="components/nested-list.js" type="text/javascript"></script>
 <!-- Settings -->
 <script src="settings.js" type="text/javascript"></script>

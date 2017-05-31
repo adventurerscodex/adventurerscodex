@@ -35,6 +35,14 @@ var Notifications = {
         unload: new signals.Signal()
     },
 
+    authentication: {
+        loggedIn: new signals.Signal()
+    },
+
+    user: {
+        exists: new signals.Signal()
+    },
+
     userNotification: {
         /**
          * Notifies the user of changes.
@@ -91,12 +99,14 @@ var Notifications = {
         toggle: new signals.Signal()
     },
 
-    status: {
-        changed: new signals.Signal()
-    },
-
     abilityScores: {
-        changed: new signals.Signal()
+        changed: new signals.Signal(),
+        intelligence: {
+            changed: new signals.Signal()
+        },
+        dexterity: {
+            changed: new signals.Signal()
+        }
     },
 
     armor: {
@@ -116,11 +126,43 @@ var Notifications = {
         allRemoved: new signals.Signal()
     },
 
+    chat: {
+        message: new signals.Signal(),
+        iq: new signals.Signal(),
+        presence: new signals.Signal(),
+        room: new signals.Signal(),
+        member: {
+            joined: new signals.Signal(),
+            left: new signals.Signal()
+        }
+    },
+
     feat: {
         changed: new signals.Signal()
     },
 
     feature: {
+        changed: new signals.Signal()
+    },
+
+    health: {
+        changed: new signals.Signal(),
+        maxHitPoints: {
+            changed: new signals.Signal()
+        },
+        tempHitPoints: {
+            changed: new signals.Signal()
+        },
+        damage: {
+            changed: new signals.Signal()
+        }
+    },
+
+    hitDice: {
+        changed: new signals.Signal()
+    },
+
+    hitDiceType: {
         changed: new signals.Signal()
     },
 
@@ -132,8 +174,34 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    notes: {
+        changed: new signals.Signal()
+    },
+
     encounters: {
         changed: new signals.Signal()
+    },
+
+    otherStats: {
+        changed: new signals.Signal(),
+        proficiency: {
+            changed: new signals.Signal()
+        },
+        inspiration: {
+            changed: new signals.Signal()
+        }
+    },
+
+    party: {
+        joined: new signals.Signal(),
+        left: new signals.Signal(),
+        /**
+         * A new player update is available.
+         * NOTE: The first parameter is the list of pCards.
+         */
+        players: {
+            changed: new signals.Signal()
+        }
     },
 
     playerImage: {
@@ -145,7 +213,31 @@ var Notifications = {
     },
 
     profile: {
-        changed: new signals.Signal()
+        changed: new signals.Signal(),
+        level: {
+            changed: new signals.Signal()
+        },
+        experience: {
+            changed: new signals.Signal()
+        },
+        characterName: {
+            changed: new signals.Signal()
+        },
+        playerName: {
+            changed: new signals.Signal()
+        },
+        playerSummary: {
+            changed: new signals.Signal()
+        },
+        playerType: {
+            changed: new signals.Signal()
+        },
+        race: {
+            changed: new signals.Signal()
+        },
+        playerClass: {
+            changed: new signals.Signal()
+        }
     },
 
     proficiency: {
@@ -160,11 +252,14 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
-    stats: {
-        changed: new signals.Signal()
+    skills: {
+        changed: new signals.Signal(),
+        perception: {
+            changed: new signals.Signal()
+        }
     },
 
-    skills: {
+    spellSlots: {
         changed: new signals.Signal()
     },
 
@@ -172,7 +267,31 @@ var Notifications = {
         changed: new signals.Signal()
     },
 
+    stats: {
+        changed: new signals.Signal(),
+        armorClassModifier: {
+            changed: new signals.Signal()
+        }
+    },
+
+    status: {
+        changed: new signals.Signal(),
+        healthiness: {
+            changed: new signals.Signal()
+        },
+        magic: {
+            changed: new signals.Signal()
+        },
+        tracked: {
+            changed: new signals.Signal()
+        }
+    },
+
     trait: {
+        changed: new signals.Signal()
+    },
+
+    tracked: {
         changed: new signals.Signal()
     },
 
@@ -189,5 +308,25 @@ var Notifications = {
          * Dispatched when the Wizard has completed making a character.
          */
         completed: new signals.Signal()
+    },
+
+    /**
+     * Messaging Notifications
+     */
+
+    xmpp: {
+        connected: new signals.Signal(),
+        disconnected: new signals.Signal(),
+
+        routes: {
+            chat: new signals.Signal(),
+            pcard: new signals.Signal()
+        },
+
+        pubsub: {
+            created: new signals.Signal(),
+            subscribed: new signals.Signal(),
+            unsubscribed: new signals.Signal()
+        }
     }
 };

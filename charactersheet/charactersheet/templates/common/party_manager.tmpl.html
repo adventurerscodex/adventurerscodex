@@ -1,0 +1,157 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content container-fluid">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title" id="importModalLabel">
+        Manage Party
+      </h4>
+    </div>
+    <div class="modal-body">
+      <div class="form-horizontal" data-bind="">
+        <!-- ko ifnot: inAParty -->
+        <div class="form-group">
+          <div class="container-fluid">
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="h4">
+                  Which would you like to do?
+                </div>
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                  data-bind="css: { active: createOrJoin() == 'create'}">
+                    <input type="radio" class="hide-block"
+                    name="createParty" value="create" data-bind="checked: createOrJoin"/>
+                    Create a Party
+                  </label>
+                  <label class="btn btn-default"
+                  data-bind="css: { active: createOrJoin() == 'join'}">
+                    <input type="radio" class="hide-block"
+                    name="joinParty" value="join" data-bind="checked: createOrJoin"/>
+                    Join a Party
+                  </label>
+                </div>
+              </div>
+            </div>
+            <hr />
+            <div class="text-center container-fluid">
+              <!-- ko if: createOrJoin() === 'create' -->
+              <p class="text-left col-padded">
+                This will create a new party for you and your friends. Joining a
+                party means that you will be able to interact with others in your
+                party and that your DM will be able to see your character's stats.
+              </p>
+              <button data-bind="click: createPartyWasClicked" class="btn btn-primary">
+                Create</button>
+              <!-- /ko -->
+              <!-- ko if: createOrJoin() === 'join' -->
+                <!-- ko if: parties().length === 0  -->
+                <p class="text-left">
+                  It looks like you don't have any parties saved. Create one from
+                  scratch or join an existing one to save it.
+                </p>
+                <!-- /ko -->
+                <!-- ko if: parties().length > 0  -->
+                <p class="text-left">
+                  Click or tap a party to join it.
+                </p>
+                <div class="list-group" data-bind="foreach: parties" style="max-height: 250px; overflow-y:scroll;">
+                    <button type="button" class="list-group-item text-left col-xs-12"
+                      data-bind="click: $parent.joinPartyWasClickedWithParty">
+                      <div class="col-xs-11">
+                        <span data-bind="text: chatName"></span><br/>
+                        <small class="text-muted">Created:
+                          <span data-bind="text: $parent.dateCreatedLabel($data)"></span>
+                        </small>
+                      </div>
+                      <div class="col-xs-1">
+                        <a data-bind="click: $parent.deletePartyWasClicked" href="#">
+                          <i class="fa fa-trash-o fa-color-hover"></i>
+                        </a>
+                      </div>
+                    </button>
+                </div>
+                <!-- /ko -->
+              <p class="text-left">
+                If one of your friends has already made a party, you can join it by
+                using the party link or by entering the Party ID here.
+              </p>
+              <div class="row">
+                <label for="roomName"
+                       class="col-sm-2 control-label">Party ID</label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         data-bind="value: roomId">
+                    <span class="input-group-btn">
+                      <button data-bind="click: joinPartyWasClicked" class="btn btn-primary">
+                        <span>Add and join</span>
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <!-- /ko -->
+            </div>
+          </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: inAParty -->
+        <div class="form-group">
+          <p class="text-center">
+            Invite people to this party by giving them the link below...
+          </p>
+          <div class="row row-padded">
+            <label for="roomName"
+                   class="col-sm-3 control-label">Party Link</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input type="text" readonly id="roomLink"
+                      class="form-control"
+                      data-bind="value: roomLink">
+                <span class="input-group-btn">
+                  <button class="btn" data-clipboard-target="#roomLink">
+                    <i class="fa fa-clipboard" aria-hidden="true" title="Copy to clipboard"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <p class="text-center">
+            ... or give them this code which they can enter manually.
+          </p>
+          <div class="row row-padded">
+            <label for="roomName"
+                   class="col-sm-3 control-label">Party ID</label>
+            <div class="col-sm-8">
+              <div class="input-group">
+                <input type="text" readonly id="nodeId"
+                      class="form-control"
+                      data-bind="value: roomId">
+                <span class="input-group-btn">
+                  <button class="btn" data-clipboard-target="#nodeId">
+                    <i class="fa fa-clipboard" aria-hidden="true" title="Copy to clipboard"></i>
+                  </button>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-padded text-center">
+              <button class="btn btn-danger" data-bind="click: leavePartyWasClicked">Leave</button>
+            </div>
+          </div>
+        </div>
+        <!-- /ko -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary pull-right"
+        data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">Done</span>
+      </button>
+    </div>
+  </div>
+</div>

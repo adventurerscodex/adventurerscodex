@@ -27,6 +27,9 @@ function TraitsViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
 
+    //Static Data
+    self.raceOptions = Fixtures.profile.raceOptions;
+
     self.load = function() {
         Notifications.global.save.add(self.save);
 
@@ -52,6 +55,14 @@ function TraitsViewModel() {
             return name.toLowerCase().indexOf(term) > -1;
         });
         response(results);
+    };
+
+    self.populateRace = function(label, value) {
+        self.blankTrait().race(value);
+    };
+
+    self.populateRaceEdit = function(label, value) {
+        self.currentEditItem().race(value);
     };
 
     self.populateTrait = function(label, value) {

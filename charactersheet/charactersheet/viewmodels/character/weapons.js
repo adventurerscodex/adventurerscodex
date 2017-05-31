@@ -62,8 +62,8 @@ function WeaponsViewModel() {
 
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
-        if(self.weapons().length > 0){
-            $.each(self.weapons(), function(_, e) {
+        if (self.weapons().length > 0) {
+            self.weapons().forEach(function(e, i, _) {
                 weight += e.weaponWeight() ? parseInt(e.weaponWeight()) : 0;
             });
         }

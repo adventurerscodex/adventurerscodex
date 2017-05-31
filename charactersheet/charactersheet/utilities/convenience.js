@@ -11,9 +11,10 @@
 var Utility = {
     markdown: {},
     string: {},
-    array: {}
+    array: {},
+    oauth: {},
+    jid: {}
 };
-
 
 /* Markdown */
 
@@ -61,4 +62,62 @@ Utility.array.updateElement = function(array, updatedElement, elementId) {
             element.importValues(updatedElement.exportValues());
         }
     });
+};
+
+/* OAuth Request Shortcuts */
+
+/**
+ * Using the first Access Token in the local data store, set the
+ * headers for an OAuth request.
+ */
+Utility.oauth.setXHRBearerHeader = function(xhr, accessToken) {
+    if (!accessToken) {
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        accessToken = token.accessToken();
+    }
+
+    if (!accessToken) {
+        return;
+    }
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+};
+
+/**
+ * Mimics $.getJSON, but includes OAuth Headers.
+ * Leave accessToken argument blank to use the stored token value.
+ */
+Utility.oauth.getJSON = function(url, onsuccess, onerror, accessToken) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: onsuccess,
+        error: onerror,
+        beforeSend: function(xhr) {
+            Utility.oauth.setXHRBearerHeader(xhr, accessToken);
+        }
+    });
+};
+
+Utility.oauth.postData = function(url, data, onsuccess, onerror, accessToken) {
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: data,
+        dataType: 'text',
+        success: onsuccess,
+        error: onerror,
+        beforeSend: function(xhr) {
+            Utility.oauth.setXHRBearerHeader(xhr, accessToken);
+        }
+    });
+};
+
+/* JID Methods */
+
+/**
+ * Remove characters from string that are not usable in an JID username.
+ */
+Utility.jid.sanitize = function(text) {
+    return (text || '').replace(/[@"&'\/:<> ]/gm, '_');
 };
