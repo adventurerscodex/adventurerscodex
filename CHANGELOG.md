@@ -1,3 +1,9 @@
+version 1.4.1 (5/31/2017)
+
+* Fixes issue with some player images now displaying correctly.
+* Removes malfuctioning room URLs (for now).
+* Fixes favicon.
+
 version 1.4.0 (5/30/2017)
 
 * Updates logo 
