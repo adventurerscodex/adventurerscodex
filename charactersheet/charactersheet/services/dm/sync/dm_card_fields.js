@@ -39,7 +39,8 @@ var DMCardFields = [
             if (!image) { return defaultImage; }
             if (image.imageSource() === 'link') {
                 var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
-                return imageModel ? imageModel.imageUrl() : defaultImage;
+                if (imageModel) { return defaultImage; }
+                return imageModel.imageUrl() !== '' ? imageModel.imageUrl() : defaultImage;
             } else if (image.imageSource() === 'email') {
                 var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
                 return info ? info.gravatarUrl() : defaultImage;
