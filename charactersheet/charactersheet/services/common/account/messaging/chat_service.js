@@ -146,6 +146,10 @@ function _ChatService(config) {
 
             var room = self._getOrCreateRoom(from, true);
             var chatMessage = self._parseMessage(msg, room);
+            // Prevents blank toastr from popping up on prod 5/31/2017
+            if (chatMessage.from() == null && chatMessage.message() === '') {
+                return true;
+            }
             chatMessage.save();
 
             var delay = $(msg).find('delay').length > 0;
