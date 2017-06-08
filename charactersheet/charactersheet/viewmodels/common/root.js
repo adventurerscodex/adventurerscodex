@@ -99,9 +99,9 @@ function AdventurersCodexViewModel() {
      * Signal all modules to load their data.
      */
     self.load = function() {
+        self.userNotificationViewModel.load();
         if (self.state() == APP_STATE.CHOSEN) {
             self.childRootViewModel().load();
-            self.userNotificationViewModel.load();
             self.charactersViewModel.load();
             self.partyManagerViewModel.load();
         } else if (self.state() == APP_STATE.WIZARD) {
@@ -114,9 +114,9 @@ function AdventurersCodexViewModel() {
 
     self.unload = function() {
         self.loginViewModel.unload();
+        self.userNotificationViewModel.unload();
         if (self.state() != APP_STATE.SELECT) {
             self.childRootViewModel().unload();
-            self.userNotificationViewModel.unload();
             self.charactersViewModel.unload();
             self.wizardViewModel.unload();
             self.partyManagerViewModel.unload();
