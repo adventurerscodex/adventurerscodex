@@ -45,6 +45,8 @@ function UserNotificationViewModel() {
      *
      * @param message  body of notification
      * @param title  title of notification, can be blank.
+     * @param args  an optional args object to configure the Notifications
+     * @see toastr options.
      */
     self.addInfoNotification = function(message, title, args) {
         toastr.info(message, title, args);
