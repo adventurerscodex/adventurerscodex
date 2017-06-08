@@ -91,7 +91,7 @@ function _AuthenticationService(config) {
         }
 
         // Alert the user of the error.
-        var message = request.responseJSON.detail || "An error has occurred.";
+        var message = request.responseJSON.detail || 'An error has occurred.';
         Notifications.userNotification.warningNotification.dispatch(message, null, {
             timeOut: 0,
             extendedTimeOut: 0
