@@ -21,6 +21,7 @@ function PartyManagerViewModel() {
 
     self.load = function() {
         Notifications.xmpp.connected.add(self.dataHasChanged);
+        Notifications.xmpp.error.add(self._handleConnectionError);
         self.parties(self._getParties());
 
         Notifications.party.joined.add(self._handleSubscription);
@@ -31,6 +32,7 @@ function PartyManagerViewModel() {
 
     self.unload = function() {
         Notifications.xmpp.connected.remove(self.dataHasChanged);
+        Notifications.xmpp.error.remove(self._handleConnectionError);
         Notifications.party.joined.remove(self._handleSubscription);
         Notifications.party.left.remove(self._handleUnsubscription);
         Notifications.characterManager.changing.add(self._leaveOnSwitch);
@@ -167,11 +169,21 @@ function PartyManagerViewModel() {
                 'You have successfully left your party.'
             );
         } else {
-            self._handleFailedUnSubscription = function(node) {
-                Notifications.userNotification.warningNotification.dispatch(
-                    'An error has occurred while attempting to leave the party'
-                );
-            };
+            Notifications.userNotification.warningNotification.dispatch(
+                'An error has occurred while attempting to leave the party'
+            );
         }
+    };
+
+    self._handleConnectionError = function(code) {
+        self.loggedIn(false);
+        Notifications.userNotification.warningNotification.dispatch(
+            'You will not be able to access party features until this issue is resolved.',
+            'A connection error has occurred.',
+            {
+                timeOut: 0,
+                extendedTimeOut: 0,
+            }
+        );
     };
 }

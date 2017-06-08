@@ -46,19 +46,19 @@ function UserNotificationViewModel() {
      * @param message  body of notification
      * @param title  title of notification, can be blank.
      */
-    self.addInfoNotification = function(message, title) {
-        toastr.info(message, title);
+    self.addInfoNotification = function(message, title, args) {
+        toastr.info(message, title, args);
     };
 
-    self.addSuccessNotification = function(message, title) {
-        toastr.success(message, title);
+    self.addSuccessNotification = function(message, title, args) {
+        toastr.success(message, title, args);
     };
 
-    self.addWarningNotification = function(message, title) {
-        toastr.warning(message, title);
+    self.addWarningNotification = function(message, title, args) {
+        toastr.warning(message, title, args);
     };
 
-    self.addDangerNotification = function(message, title) {
-        toastr.error(message, title);
+    self.addDangerNotification = function(message, title, args) {
+        toastr.error(message, title, args);
     };
 }
