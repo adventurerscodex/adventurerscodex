@@ -182,7 +182,7 @@ function PartyManagerViewModel() {
             'A connection error has occurred.',
             {
                 timeOut: 0,
-                extendedTimeOut: 0,
+                extendedTimeOut: 0
             }
         );
     };
