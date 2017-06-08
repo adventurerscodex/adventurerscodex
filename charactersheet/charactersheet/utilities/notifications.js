@@ -315,8 +315,16 @@ var Notifications = {
      */
 
     xmpp: {
+        /**
+         * Dispatched when the XMPP connection is successfully established,
+         * the given user is authenticated, and the connection is now usable.
+         */
         connected: new signals.Signal(),
+        /**
+         * Dispatched when the XMPP connection has been successfully terminated.
+         */
         disconnected: new signals.Signal(),
+        error: new signals.Signal(),
 
         routes: {
             chat: new signals.Signal(),

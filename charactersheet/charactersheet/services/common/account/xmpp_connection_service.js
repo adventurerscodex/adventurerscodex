@@ -154,10 +154,12 @@ function _XMPPService(config) {
                 console.log('Connecting.');
             }
         } else if (status === Strophe.Status.AUTHFAIL) {
+            Notifications.xmpp.error.dispatch(status);
             if (self._shouldLog() && 'console' in window) {
                 console.log('Authentication failure.');
             }
         } else {
+            Notifications.xmpp.error.dispatch(status);
             if (self._shouldLog() && 'console' in window) {
                 console.log('Strophe.Status: ', status);
             }
