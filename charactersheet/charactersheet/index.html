@@ -118,7 +118,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" id="characterName" data-bind="contenteditable: {
+                <div class="h3" id="characterName" autocomplete="off" autocorrect="off"
+                  spellcheck="false" data-bind="contenteditable: {
                   text: characterName,
                   placeholder: placeholderText
                 }"></div>
@@ -132,7 +133,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" id="dmName" data-bind="contenteditable: {
+                <div class="h3" id="dmName" autocomplete="off" autocorrect="off"
+                  spellcheck="false" data-bind="contenteditable: {
                   text: name,
                   placeholder: placeholderText
                 }"></div>
