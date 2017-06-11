@@ -1,3 +1,12 @@
+version 1.4.2 (6/11/2017)
+* Changes where the navbar links take you
+* Fixes bug with private chats
+* Removes google analytics code
+* Fixes bug where chat history was not purged when you left a party
+* Fixes issue where the character/campaign name was autocorrected
+* Updates handling of error messages
+* Fixes issue with blank message in chat
+
 version 1.4.1 (5/31/2017)
 
 * Fixes issue with some player images now displaying correctly.
@@ -6,7 +15,7 @@ version 1.4.1 (5/31/2017)
 
 version 1.4.0 (5/30/2017)
 
-* Updates logo 
+* Updates logo
 * Adds prepopulation for NPC Races, Classs
 * Adds prepopulation for Features and Traits
 * Fixes a bug with gold weight calculations
@@ -120,7 +129,7 @@ General:
   * Export campaign
 
 version 1.1.1 (10/04/2016)
-* fixes issue with Proficiency Calculations not updating or providing invalid modifiers. 
+* fixes issue with Proficiency Calculations not updating or providing invalid modifiers.
 
 version 1.1.0 (10/02/2016)
 * Adds proficiency auto-calculation
@@ -214,7 +223,7 @@ version 0.0.6 (4/6/2016)
 * various bug fixes and improvements
 * fixes hit dice icon
 * fixes issue with sorting
-* fixes issue with saving armor and stats 
+* fixes issue with saving armor and stats
 * cleaner UI for cantrips
 * reset button for spell slots
 
