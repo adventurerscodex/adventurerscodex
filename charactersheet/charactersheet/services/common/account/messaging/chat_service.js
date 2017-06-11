@@ -227,7 +227,7 @@ function _ChatService(config) {
         /*eslint no-console:0*/
         try {
             var invite = $(response).find('invite')[0];
-            if (!invite || !self.currentPartyNode) { return; }
+            if (!invite || !self.currentPartyNode) { return true; }
 
             // Join room if user is in party.
             var xmpp = XMPPService.sharedService();
@@ -281,8 +281,8 @@ function _ChatService(config) {
         );
 
         var token3 = xmpp.connection.addHandler(
-            self._handleInviteMessages, null, 'message',
-            'normal', null, null,
+            self._handleInviteMessages,
+            null, 'message', null, null, null,
             {ignoreNamespaceFragment: true}
         );
 
