@@ -140,12 +140,13 @@ function _ChatService(config) {
         try {
             // Messages in Group Chats are ID'd by the group JID.
             var from = Strophe.getBareJidFromJid($(msg).attr('from'));
-            if (Strophe.getResourceFromJid(from) == null || Strophe.getResourceFromJid(from) === '') {
-                return true;
-            }
 
             var room = self._getOrCreateRoom(from, true);
             var chatMessage = self._parseMessage(msg, room);
+            // Prevents blank toastr from popping up on prod 5/31/2017
+            if (chatMessage.from() == null && chatMessage.message() === '') {
+                return true;
+            }
             chatMessage.save();
 
             var delay = $(msg).find('delay').length > 0;
@@ -226,7 +227,7 @@ function _ChatService(config) {
         /*eslint no-console:0*/
         try {
             var invite = $(response).find('invite')[0];
-            if (!invite || !self.currentPartyNode) { return; }
+            if (!invite || !self.currentPartyNode) { return true; }
 
             // Join room if user is in party.
             var xmpp = XMPPService.sharedService();
@@ -280,8 +281,8 @@ function _ChatService(config) {
         );
 
         var token3 = xmpp.connection.addHandler(
-            self._handleInviteMessages, null, 'message',
-            'normal', null, null,
+            self._handleInviteMessages,
+            null, 'message', null, null, null,
             {ignoreNamespaceFragment: true}
         );
 

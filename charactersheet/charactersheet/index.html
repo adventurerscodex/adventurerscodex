@@ -42,7 +42,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span><span class="icon-bar"></span>
       </button>
-      <a href='//adventurerscodex.com' class="navbar-brand">
+      <a href='//app.adventurerscodex.com' class="navbar-brand">
     	  <img src="/images/logo-full-circle-icon.png"
     	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
     	       alt="Adventurer's Codex"/>
@@ -51,7 +51,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="//adventurerscodex.com/blog.html"
+        <li><a href="//adventurerscodex.com"
                target="_blank">Blog</a></li>
         <li><a href="//tinyletter.com/adventurerscodex"
                target="_blank">Newsletter</a></li>
@@ -118,7 +118,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" id="characterName" data-bind="contenteditable: {
+                <div class="h3" id="characterName" autocomplete="off" autocorrect="off"
+                  spellcheck="false" data-bind="contenteditable: {
                   text: characterName,
                   placeholder: placeholderText
                 }"></div>
@@ -132,7 +133,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
             <div class="row">
               <div class="col-md-12">
-                <div class="h3" id="dmName" data-bind="contenteditable: {
+                <div class="h3" id="dmName" autocomplete="off" autocorrect="off"
+                  spellcheck="false" data-bind="contenteditable: {
                   text: name,
                   placeholder: placeholderText
                 }"></div>
@@ -575,15 +577,5 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     window.onbeforeunload = viewModel.unload;
 	});
 	</script>
-
-	<script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-79735521-1', 'auto');
-    ga('send', 'pageview');
-  </script>
 </body>
 </html>

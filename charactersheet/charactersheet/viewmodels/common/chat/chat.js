@@ -20,17 +20,12 @@ function ChatViewModel() {
         Notifications.chat.member.joined.add(self._userHasJoined);
         Notifications.chat.member.left.add(self._userHasLeft);
         Notifications.party.joined.add(self._didJoinParty);
-        Notifications.party.left.add(self.reloadCells);
+        Notifications.party.left.add(self._hasLeftParty);
         Notifications.party.players.changed.add(self.reloadCells);
     };
 
     self.didUnload = function() {
-        // Chat logs are saved server-side.
-        var key = CharacterManager.activeCharacter().key();
-        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
-        chats.forEach(function(chat, idx, _) {
-            chat.purge();
-        });
+        self._purgeChats();
 
         // Message Notifications
         Notifications.chat.message.remove(self._deliverMessageToRoom);
@@ -38,7 +33,7 @@ function ChatViewModel() {
         Notifications.chat.member.joined.remove(self._userHasJoined);
         Notifications.chat.member.left.remove(self._userHasLeft);
         Notifications.party.joined.remove(self._didJoinParty);
-        Notifications.party.left.remove(self.reloadCells);
+        Notifications.party.left.remove(self._hasLeftParty);
         Notifications.party.players.changed.remove(self.reloadCells);
     };
 
@@ -237,9 +232,24 @@ function ChatViewModel() {
         self.selectedCell(self.cells()[0]);
     };
 
+    self._hasLeftParty = function() {
+        self.reloadCells();
+        self._purgeChats();
+    };
+
+
     self._isMe = function(nick) {
         var xmpp = XMPPService.sharedService();
         return Strophe.getNodeFromJid(xmpp.connection.jid) === nick;
+    };
+
+    self._purgeChats = function() {
+        // Chat logs are saved server-side.
+        var key = CharacterManager.activeCharacter().key();
+        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
+        chats.forEach(function(chat, idx, _) {
+            chat.purge();
+        });
     };
 
     return self;
