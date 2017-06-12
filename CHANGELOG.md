@@ -1,3 +1,6 @@
+version 1.4.3 (6/11/2017)
+* Fixes bug with saving notes
+
 version 1.4.2 (6/11/2017)
 * Changes where the navbar links take you
 * Fixes bug with private chats
