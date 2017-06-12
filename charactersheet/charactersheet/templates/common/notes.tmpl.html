@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-xs-12 col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="h4">
+          All Notes
+          <div class="pull-right">
+              <span class="fa fa-plus" style="cursor:pointer;"
+                data-bind="click: addNote"></span>
+            </div>
+          </div>
+        </div>
+        <div class="list-group" data-bind="foreach: notes">
+          <a href="#" class="list-group-item"
+            data-bind="click: $parent.selectNote, css: $parent.isActiveCSS($data)">
+            <span data-bind="html: headline"></span>
+            <!-- ko if: $parent.isActiveCSS($data) == 'active' -->
+            <div class="pull-right">
+              <span class="fa fa-trash-o fa-color-white-hover fa-lg"
+                data-bind="click: $parent.deleteNote"></span>
+            </div>
+            <!-- /ko -->
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-9">
+      <!-- ko if: selectedNote -->
+      <div class="panel panel-default">
+        <div class="panel-body" data-bind="with: selectedNote">
+          <div class="row">
+            <div class="col-xs-12">
+              <markdown-edit-preview params="text: text, rows: 15, previewHeight: 200,
+                placeholder: 'Captain\'s Log...'"></markdown-edit-preview>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /ko -->
+    </div>
+  </div>
+</div>
