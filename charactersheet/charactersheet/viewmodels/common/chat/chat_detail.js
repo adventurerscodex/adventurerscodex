@@ -139,9 +139,12 @@ function ChatDetailViewModel(chatCell, parent) {
     };
 
     self.saveToNotes = function(message) {
-        var note = PersistenceService.findFirstBy(Note, 'isSavedChatNotes', true);
+        var key = CharacterManager.activeCharacter().key();
+        var note = PersistenceService.findByPredicates(Note, [
+            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('isSavedChatNotes', true)
+        ])[0];
         if (!note) {
-            var key = CharacterManager.activeCharacter().key();
             note = new Note();
             note.characterId(key);
             note.text('# Saved from Chat');
