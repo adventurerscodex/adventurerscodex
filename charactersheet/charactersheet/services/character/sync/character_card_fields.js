@@ -155,7 +155,7 @@ var CharacterCardFields = [
         name: 'passiveIntelligence',
         refreshOn: Notifications.abilityScores.intelligence.changed,
         valueAccessor: function() {
-            var abilityScores = PersistenceService.findFirstBy(AbilityScores, CharacterManager.activeCharacter().key());
+            var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', CharacterManager.activeCharacter().key());
             var modifier = abilityScores.modifierFor('int');
             modifier = modifier ? modifier : 0;
             return abilityScores ? 10 + modifier : 0;
