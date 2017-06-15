@@ -5,7 +5,6 @@ function CampaignOverviewViewModel() {
 
     self.playerName = ko.observable();
     self.createdDate = ko.observable();
-    self.notes = ko.observable();
     self.setting = ko.observable();
     self.name = ko.observable();
 
@@ -15,7 +14,6 @@ function CampaignOverviewViewModel() {
         var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         if (overview) {
             self.playerName(overview.playerName());
-            self.notes(overview.notes());
             self.name(overview.name());
             self.setting(overview.setting());
             self.createdDate(new Date(overview.createdDate()));
@@ -34,7 +32,6 @@ function CampaignOverviewViewModel() {
         }
         overview.playerName(self.playerName());
         overview.createdDate(self.createdDate());
-        overview.notes(self.notes());
         overview.setting(self.setting());
         overview.name(self.name());
         overview.save();
@@ -51,7 +48,6 @@ function CampaignOverviewViewModel() {
         }
         overview.playerName(self.playerName());
         overview.createdDate(self.createdDate());
-        overview.notes(self.notes());
         overview.setting(self.setting());
         overview.name(self.name());
         overview.save();
