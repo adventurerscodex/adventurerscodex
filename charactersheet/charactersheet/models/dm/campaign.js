@@ -25,9 +25,8 @@ function Campaign() {
     };
 
     self.clear = function() {
-        var values = new Encounter().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
+        var values = new Campaign().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
