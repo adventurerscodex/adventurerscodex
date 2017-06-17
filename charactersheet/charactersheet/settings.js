@@ -83,6 +83,19 @@ var Settings = {
     },
 
     /**
+     * Override for default linkify options.
+     * Documentation: http://soapbox.github.io/linkifyjs/docs/
+     * More options: http://soapbox.github.io/linkifyjs/docs/options.html
+     */
+    linkifyOptions : {
+        format: {
+            url: function (value) {
+            return value.length > 50 ? value.slice(0, 50) + '…' : value
+            }
+        }
+    },
+
+    /**
      * A set of Data Repository URLs and Keys. Each item in this list should
      * contain both a URL and a Key.
      *
