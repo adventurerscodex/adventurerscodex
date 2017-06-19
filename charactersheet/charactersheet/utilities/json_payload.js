@@ -26,7 +26,7 @@ __Example__
 */
 
 var JSONPayload = {
-    config: {
+    configuration: {
         compression: {
             'lz-string': {
                 compress: function(string) {
@@ -48,7 +48,7 @@ var JSONPayload = {
         var contents = null;
         if (isCompressed == 'true') {
             var compression = node.attr('compression').toLowerCase();
-            contents = JSONPayload.config.compression[compression].decompress(data);
+            contents = JSONPayload.configuration.compression[compression].decompress(node.text());
         } else {
             contents = node.text();
         }
@@ -62,8 +62,8 @@ var JSONPayload = {
     getElement: function(obj, attrs) {
         var contents = JSON.stringify(obj);
         if (attrs.compressed) {
-            contents = JSONPayload.configuration.compression[attrs.compression].method(contents);
+            contents = JSONPayload.configuration.compression[attrs.compression].compress(contents);
         }
-        return $build('json', attrs, contents);
+        return $build('json', attrs).t(contents);
     }
 };

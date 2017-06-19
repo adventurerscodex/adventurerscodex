@@ -62,7 +62,7 @@ function ChatDetailViewModel(chatCell, parent) {
         self.members(chat.getRoomMembers());
 
         var key = CharacterManager.activeCharacter().key();
-        var log = PersistenceService.findByPredicates(ChatMessage, [
+        var log = PersistenceService.findByPredicates(Message, [
             new OrPredicate([
                 new KeyValuePredicate('chatId', self.id())
             ])
@@ -161,7 +161,7 @@ function ChatDetailViewModel(chatCell, parent) {
 
     self._markAllAsRead = function() {
         var key = CharacterManager.activeCharacter().key();
-        var log = PersistenceService.findByPredicates(ChatMessage, [
+        var log = PersistenceService.findByPredicates(Message, [
             new OrPredicate([
                 new KeyValuePredicate('chatId', self.id())
             ]),
@@ -182,7 +182,7 @@ function ChatDetailViewModel(chatCell, parent) {
         var xmpp = XMPPService.sharedService();
         var key = CharacterManager.activeCharacter().key();
 
-        var message = new ChatMessage();
+        var message = new Message();
         message.importValues({
             from: xmpp.connection.jid,
             message: self.message(),

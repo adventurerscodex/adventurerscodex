@@ -192,15 +192,15 @@ function ChatViewModel() {
         }
 
         var chatTabIsForground = viewModel.childRootViewModel().activeTab() == 'chat';
-        if (!chatTabIsForground && !delay) {
-            Notifications.userNotification.infoNotification.dispatch(msg.message(), msg.from());
+        if (!chatTabIsForground && !delay && !msg.isSystemMessage()) {
+            Notifications.userNotification.infoNotification.dispatch(msg.html(), msg.from());
         }
     };
 
     self._userHasJoined = function(jid, nick) {
         if (self._isMe(nick)) { return; }
         var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
-        var chat = new ChatMessage();
+        var chat = new Message();
         chat.importValues({
             characterId: CharacterManager.activeCharacter().key(),
             chatId: room.chatId(),
@@ -215,7 +215,7 @@ function ChatViewModel() {
     self._userHasLeft = function(roomId, nick, jid) {
         if (self._isMe(nick)) { return; }
         var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', roomId);
-        var chat = new ChatMessage();
+        var chat = new Message();
         chat.importValues({
             characterId: CharacterManager.activeCharacter().key(),
             chatId: room.chatId(),

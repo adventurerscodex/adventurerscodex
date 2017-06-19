@@ -36,7 +36,7 @@ function _ChatService(config) {
 
     self.init = function() {
         var fragments = new URI().fragment(true);
-        self._toJoinParty = fragments['party_node'];
+//         self._toJoinParty = fragments['party_node'];
 
         self._setupConnection();
 
@@ -59,6 +59,7 @@ function _ChatService(config) {
         var xmpp = XMPPService.sharedService();
         if (room.isGroupChat()) {
             var id = xmpp.connection.getUniqueId();
+            // TODO: Refactor. This is just sending plaintext messages.
             xmpp.connection.muc.groupchat(message.to(), null, message.message(), id);
         } else {
             xmpp.connection.send(message.tree());
@@ -142,7 +143,7 @@ function _ChatService(config) {
             var from = Strophe.getBareJidFromJid($(msg).attr('from'));
 
             var room = self._getOrCreateRoom(from, true);
-            var chatMessage = self._parseMessage(msg, room);
+            var chatMessage = Message.fromTree(msg);
             // Prevents blank toastr from popping up on prod 5/31/2017
             if (chatMessage.from() == null && chatMessage.message() === '') {
                 return true;
@@ -150,7 +151,6 @@ function _ChatService(config) {
             chatMessage.save();
 
             var delay = $(msg).find('delay').length > 0;
-
             Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
@@ -165,11 +165,10 @@ function _ChatService(config) {
             var from = $(msg).attr('from');
 
             var room = self._getRoomOrCreate(Strophe.getNodeFromJid(from), false);
-            var chatMessage = self._parseMessage(msg, room);
+            var chatMessage = Message.fromTree(msg);
             chatMessage.save();
 
             var delay = $(msg).find('delay').length > 0;
-
             Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
@@ -184,37 +183,28 @@ function _ChatService(config) {
         /*eslint no-console:0*/
         try {
             var xmpp = XMPPService.sharedService();
-            var isParticipant = $(response).find('item[role="participant"]').length > 0;
-            var isModerator = $(response).find('item[role="moderator"]').length > 0;
-            var isNone = $(response).find('item[role="none"]').length > 0;
-            var from = Strophe.getBareJidFromJid($(response).attr('from'));
-            var jid = $(response).find('item').attr('jid');
-            var nick = Strophe.getResourceFromJid($(response).attr('from'));
             var myNick = Strophe.getNodeFromJid(xmpp.connection.jid);
+            var presence = Presence.fromTree(response);
+            presence.save();
 
             // Handle Joining and leaving a room.
-            var isCurrentParty = (from === self.currentPartyNode);
-            var joinedRoom = (isCurrentParty && (isParticipant || isModerator));
-            var leftRoom = (isNone && isCurrentParty);
-            var hasError = $(response).find('error').length > 0;
-
-            if (hasError) {
-                Notifications.party.joined.dispatch(from, false);
-            } else if (joinedRoom) {
-                if (nick == myNick) {
+            if (presence.hasError()) {
+                Notifications.party.joined.dispatch(presence.fromBare(), false);
+            } else if (presence.regardsJoiningRoom()) {
+                if (presence.fromNick() == myNick) {
                     // We've joined.
-                    Notifications.party.joined.dispatch(from, true);
+                    Notifications.party.joined.dispatch(presence.fromBare(), true);
                 } else {
                     // Someone else has joined.
-                    Notifications.chat.member.joined.dispatch(from, nick);
+                    Notifications.chat.member.joined.dispatch(presence.fromBare(), nick);
                 }
-            } else if (leftRoom) {
-                if (nick == myNick) {
+            } else if (presence.regardsLeavingRoom()) {
+                if (presence.fromNick() == myNick) {
                     // We've left.
-                    Notifications.party.left.dispatch(from, true);
+                    Notifications.party.left.dispatch(presence.fromBare(), true);
                 } else {
                     // Someone else has left.
-                    Notifications.chat.member.left.dispatch(from, nick, jid);
+                    Notifications.chat.member.left.dispatch(presence.fromBare(), nick, jid);
                 }
             }
         } catch(err) {
@@ -412,24 +402,5 @@ function _ChatService(config) {
             self.leave(room, Strophe.getNodeFromJid(xmpp.connection.jid));
         });
         self.rooms = {};
-    };
-
-    // Utility Methods
-
-    self._parseMessage = function(msg, room) {
-        var xmpp = XMPPService.sharedService();
-        var fullJid = $(msg).attr('from');
-        var username =  Strophe.getResourceFromJid(fullJid);
-        var chat = new ChatMessage();
-        chat.importValues({
-            characterId: CharacterManager.activeCharacter().key(),
-            to: $(msg).attr('to'),
-            from: username,
-            id: $(msg).attr('id'),
-            chatId: room.chatId(),
-            message: $(msg).find('html body').text(),
-            dateSent: (new Date()).getTime()
-        });
-        return chat;
     };
 }

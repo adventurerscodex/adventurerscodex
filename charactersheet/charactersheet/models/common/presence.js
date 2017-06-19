@@ -6,14 +6,12 @@ An object representation of an XMPP presence message.
 This class provides a number of different convenience methods for routing, and
 reasoning about presence messages.
 */
-function Presence(element) {
+function Presence() {
     var self = this;
     self.ps = PersistenceService.register(Presence, self);
     self.mapping = {
-        'include': ['element']
+        include: ['hasParticipantRole', 'hasModeratorRole', 'hasNoneRole', 'from', 'hasError']
     };
-
-    self.element = element;
 
     // Model Methods
 
@@ -41,25 +39,7 @@ function Presence(element) {
         self.ps.delete();
     };
 
-    // Role Methods
-
-    self.hasParticipantRole = function() {
-        return $(self.element).find('item[role="participant"]').length > 0;
-    };
-
-    self.hasModeratorRole = function() {
-        return $(self.element).find('item[role="moderator"]').length > 0;
-    };
-
-    self.hasNoneRole = function() {
-        return $(self.element).find('item[role="none"]').length > 0;
-    };
-
     // From Methods
-
-    self.from = function() {
-        return $(self.element).attr('from');
-    };
 
     self.fromNick = function() {
         return Strophe.getResourceFromJid(self.from());
@@ -69,17 +49,11 @@ function Presence(element) {
         return Strophe.getBareJidFromJid(self.from());
     };
 
-    // Error Methods
-
-    self.hasError = function() {
-        return $(self.element).find('error').length > 0;
-    };
-
     // Party/Room Methods
 
     self.regardsCurrentParty = function() {
         var chat = ChatServiceManager.sharedService();
-        return self.fromBare() === chat.currentPartyNode;
+        return self.fromBare() === Strophe.getBareJidFromJid(chat.currentPartyNode);
     };
 
     self.regardsJoiningRoom = function() {
@@ -92,3 +66,16 @@ function Presence(element) {
         return self.hasNoneRole() && self.regardsCurrentParty();
     };
 }
+
+
+Presence.fromTree = function(element) {
+    var presence = new Presence();
+    presence.importValues({
+        hasParticipantRole: $(element).find('item[role="participant"]').length > 0,
+        hasModeratorRole: $(element).find('item[role="moderator"]').length > 0,
+        hasNoneRole: $(element).find('item[role="none"]').length > 0,
+        from: $(element).attr('from'),
+        hasError: $(element).find('error').length > 0
+    });
+    return presence;
+};

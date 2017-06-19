@@ -34,7 +34,13 @@ function Message() {
          *
          * NOTE: These messages MUST not have any additional payload.
          */
-        HTML: 'chat',
+        CHAT: 'chat',
+
+        /**
+         *
+         *
+         */
+        SYSTEM: 'system',
         /**
          * Messages of type DATA are used to send some form of JSON payload
          * through the chat system to/from a given user.
@@ -45,7 +51,7 @@ function Message() {
          *
          * NOTE: It is recommended to include a plain-text message with these messages.
          */
-        IMAGE: 'data',
+        IMAGE: 'image',
     };
 
     // Generic Chat Message values
@@ -64,15 +70,18 @@ function Message() {
 
     /* Public Methods */
 
-    self.messageType = ko.pureComputed(function() {
-        if (self.item()) {
-            return self.MESSAGE_TYPES.DATA;
-        } else if (self.body() != null || self.html() != null) {
+    self.messageType = function() {
+        if (!self.item() && (self.html() || self.body())) {
             return self.MESSAGE_TYPES.CHAT;
-        } else {
-            throw Error('Undefined Message Type');
+        } else if (self.route() == self.MESSAGE_TYPES.IMAGE) {
+            return self.MESSAGE_TYPES.IMAGE;
         }
-    });
+        return self.MESSAGE_TYPES.SYSTEM;
+    };
+
+    self.isSystemMessage = function() {
+        return self.messageType() == self.MESSAGE_TYPES.SYSYTEM;
+    }
 
     /**
      * Returns the given route for data messages,
@@ -80,8 +89,8 @@ function Message() {
      * data message, the return value is null.
      */
     self.route = ko.pureComputed(function() {
-        if (self.messageType() == self.MESSAGE_TYPES.DATA) {
-            return self.items().xmlns.split('#')[1];
+        if (self.item()) {
+            return self.item().xmlns.split('#')[1];
         }
         return null;
     });

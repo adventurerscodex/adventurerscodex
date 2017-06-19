@@ -54,7 +54,7 @@ function ChatRoom() {
     /* Convenience Methods */
 
     self.getUnreadMessages = function() {
-        return PersistenceService.findByPredicates(ChatMessage, [
+        return PersistenceService.findByPredicates(Message, [
             new KeyValuePredicate('chatId', self.chatId()),
             new KeyValuePredicate('read', false),
             new KeyValuePredicate('isSystemMessage', false)
@@ -62,7 +62,7 @@ function ChatRoom() {
     };
 
     self.getAllMessages = function() {
-        return PersistenceService.findByPredicates(ChatMessage, [
+        return PersistenceService.findByPredicates(Message, [
             new KeyValuePredicate('chatId', self.chatId())
         ]);
     };

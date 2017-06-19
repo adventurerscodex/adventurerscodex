@@ -8,18 +8,28 @@ The node service is a global service, contained inside `NodeServiceManager` that
 acts as a pubsub node configuration service and an event router for messages
 pushed to the client while connected to the server.
 
-The Node service performs a few different responsibilities and each is given its
-own section.
-
 
 ## Node Configuration
 
 During application start-up the Node Service connects to the XMPP server and
 sets up any new nodes or subscriptions that are required.
 
-To do this, the Node Service looks at the `node_jid` fragment in the current URL
-and validates that it is already subscribed to the node, or in the event that it
-is not, it requests that it be added to the list of subscribers.
+
+## Routing
+
+The `route` attribute provides a way for the Services Layer to determine the
+intended recipient. Routes are determined by individual services and are used by
+the Node service to dispatch Notifications.
+
+Notifications take the form below:
+
+    Notifications.xmpp.routes.ROUTE_ID
+
+Routes are determined by the node namespace. For example:
+
+    <item xmlns="urn:xmpp:json:0#pcard" ...>
+
+Will route to the pcard listeners.
 
 
 ## Incoming Event Dispatch
@@ -35,7 +45,7 @@ the incoming pubsub element like so:
       <event xmlns='http://jabber.org/protocol/pubsub#event'>
         <items node='princely_musings'>
           <item id='ae890ac52d0df67ed7cfdf51b644e901'>
-            <json route="pcard" compressed="false">
+            <json compressed="false">
                 {
                     'playerNane': 'Bob Anderson',
                     'name': 'Arron Cubekiller',
@@ -49,63 +59,14 @@ the incoming pubsub element like so:
 
 Any element without a routing attribute is ignored.
 
-### PubSub Item Specification
-
-For an item to be dispatched automatically by the Node Service it must contain
-the following attributes.
-
-#### Route
-
-The `route` attribute provides a way for the Node Service to determine the
-intended recipient. Routes are determined by individual services and are used by
-the Node service to dispatch Notifications.
-
-__NOTE:__ The Node Service expects notifications to already exist at dispatch time and
-will not attempt to create them.
-
-Notifications take the form below:
-
-    Notifications.xmpp.routes.ROUTE_ID
-
-View Models and services can use this format to listen for events in routes that
-interest them. In all cases, the argument passed to the Notification signals is
-the received event XML node.
-
-
-#### Compressed
-
-This attribute tells the receiving Node Service that the contents are
-compressed and cannot be used in their current form.
-
-Values are `true` and `false`.
-
-__NOTE:__ If this attribute is present the item MUST also contain an attribute
-detailing the kind of compression used by including a `compression` attribute.
-
-__Example__
-
-    <json route="pcard" compressed="true" compression="gzip">
-        compressed json data
-    </json>
-
+For more information on the JSON element spec and payload, @see JSONPayload.
  */
 
 /**
  * The default configuration object for the Node service.
  */
 var NodeServiceConfiguration = {
-    compression: {
-        'lz-string': {
-            compress: function(string) {
-                return LZString.compressToUTF16(string);
-            },
-            decompress: function(data) {
-                return LZString.decompressFromUTF16(data);
-            }
-        }
-    },
     defaultNodeOptions: {
-        'pubsub#publish_model': 'subscribers'
     }
 };
 
@@ -157,7 +118,7 @@ function _NodeService(config) {
             xmlns: Strophe.NS.PUBSUB
         }).c('publish', {
             node: Strophe.NS.JSON + '#' + route
-        }).c('item').c('json', attrs, item);
+        }).c('item').cnode(JSONPayload.getElement(item, attrs).node);
         xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
     };
 
@@ -166,17 +127,16 @@ function _NodeService(config) {
     self._handleEvent = function(event) {
         try {
             var items = $(event).find('items').children().toArray();
+            var route = $(event).find('items').attr('node');
+            if (!route) { return; }
+            route = route.split('#')[1];
+            if (!route) { return; }
+
             items.forEach(function(item, idx, _) {
                 var json = $(item).find('json');
-                var route = $(json).attr('node');
-                if (!route) { return; }
-
-                route = route.split('#')[1];
-                if (!route) { return; }
-
                 var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
                 if (route && dispatchRouteExists) {
-                    var content = self._getMessageContent(json);
+                    var content = JSONPayload.getContents(json);
                     Notifications.xmpp.routes[route].dispatch(content);
                 }
             });
@@ -253,23 +213,6 @@ function _NodeService(config) {
         roster.forEach(function(member, idx, _) {
             self._getItemsFromNode(member + '@adventurerscodex.com', 'pcard', self._handleEvent, null);
         });
-    };
-
-    self._getMessageContent = function(node) {
-        var isCompressed = node.attr('compressed').toLowerCase();
-
-        var contents = null;
-        if (isCompressed == 'true') {
-            var compression = node.attr('compression').toLowerCase();
-            contents = self._decompressContents(node.text(), compression);
-        } else {
-            contents = node.text();
-        }
-        return JSON.parse(contents);
-    };
-
-    self._decompressContents = function(data, compression) {
-        return self.config.compression[compression].decompress(data);
     };
 
     /**
