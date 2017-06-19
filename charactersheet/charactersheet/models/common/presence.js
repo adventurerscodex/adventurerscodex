@@ -8,7 +8,38 @@ reasoning about presence messages.
 */
 function Presence(element) {
     var self = this;
+    self.ps = PersistenceService.register(Presence, self);
+    self.mapping = {
+        'include': ['element']
+    };
+
     self.element = element;
+
+    // Model Methods
+
+    self.clear = function() {
+        var values = new Message().exportValues();
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
+    };
+
+    self.importValues = function(values) {
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        ko.mapping.fromJS(values, mapping, self);
+    };
+
+    self.exportValues = function() {
+        var mapping = ko.mapping.autoignore(self, self.mapping);
+        return ko.mapping.toJS(self, mapping);
+    };
+
+    self.save = function() {
+        self.ps.save();
+    };
+
+    self.delete = function() {
+        self.ps.delete();
+    };
 
     // Role Methods
 
