@@ -35,9 +35,6 @@ function _ChatService(config) {
     self.currentPartyNode = null;
 
     self.init = function() {
-        var fragments = new URI().fragment(true);
-//         self._toJoinParty = fragments['party_node'];
-
         self._setupConnection();
 
         Notifications.xmpp.connected.add(self._handleConnect);
