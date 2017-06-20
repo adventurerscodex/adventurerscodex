@@ -9,7 +9,7 @@ function ChatDetailViewModel(chatCell, parent) {
     self._getRoomMembers = chatCell._getRoomMembers;
     self.parent = parent;
 
-    self.templateUrl = 'templates/common';
+    self.templateUrl = 'templates/common/chat';
     self.templateName = 'chat.tmpl';
 
     self.log = ko.observableArray();
@@ -61,14 +61,8 @@ function ChatDetailViewModel(chatCell, parent) {
         if (!chat) { return; }
         self.members(chat.getRoomMembers());
 
-        var key = CharacterManager.activeCharacter().key();
-        var log = PersistenceService.findByPredicates(Message, [
-            new OrPredicate([
-                new KeyValuePredicate('chatId', self.id())
-            ])
-        ]);
-
-        self.log(log);
+        var log = self._getRecentItems();
+        ko.utils.arrayPushAll(self.log, log);
     };
 
     self.updateBadge = function() {
@@ -85,14 +79,6 @@ function ChatDetailViewModel(chatCell, parent) {
         }).join('');
 
     });
-
-    self.fromLabel = function(msg) {
-        var card = msg.getCard();
-        if (!card) {
-            return msg.from();
-        }
-        return card.get('name') + ' (' + msg.from() + ')';
-    };
 
     self.messageFieldShouldHaveFocus = ko.observable(true);
 
@@ -182,13 +168,13 @@ function ChatDetailViewModel(chatCell, parent) {
         var xmpp = XMPPService.sharedService();
         var key = CharacterManager.activeCharacter().key();
 
+        // TODO FIX
         var message = new Message();
         message.importValues({
             from: xmpp.connection.jid,
             message: self.message(),
             to: self.id(),
             id: xmpp.connection.getUniqueId(),
-            chatId: self.id(),
             characterId: key
         });
 
@@ -199,6 +185,7 @@ function ChatDetailViewModel(chatCell, parent) {
         var xmpp = XMPPService.sharedService();
         if (self.isGroupChat()) {
             var id = xmpp.connection.getUniqueId();
+            // TODO: Refactor to be consistant with private chat.
             xmpp.connection.muc.groupchat(message.to(), null, message.message(), id);
         } else {
             xmpp.connection.send(message.tree());
@@ -232,6 +219,44 @@ function ChatDetailViewModel(chatCell, parent) {
                 '{card.name}', card.get('name')[0]
             );
         }
+    };
+
+    self._getLogItem = function(message) {
+        if (message.messageType() == CHAT_MESSAGE_TYPES.CHAT) {
+            return new ChatLogChatItem(message);
+        } else if (message.messageType() == CHAT_MESSAGE_TYPES.SYSTEM) {
+            return new ChatLogSystemItem(message);
+        } else {
+            throw Error('Undefined chat message type');
+        }
+    };
+
+    self._getLatestTimeStamp = function() {
+        var last = self.log().length - 1;
+        if (last < 1) {
+            return 0;
+        }
+        return self.log()[last].timestamp();
+    };
+
+    self._getRecentItems = function() {
+        var latestTime = self._getLatestTimeStamp();
+        var key = CharacterManager.activeCharacter().key();
+        var log = PersistenceService.findFiltered(Message, function(msg, _) {
+            return (
+                Strophe.getBareJidFromJid(msg.from) == self.id() &&
+                msg.dateReceived > latestTime
+            );
+        }).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
+            return (
+                Strophe.getBareJidFromJid(msg.from) == self.id() &&
+                msg.dateReceived > latestTime
+            )
+        })).map(function(msg, idx, _) {
+            return self._getLogItem(msg);
+        });
+
+        return log;
     };
 }
 

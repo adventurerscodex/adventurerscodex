@@ -55,15 +55,16 @@ function ChatRoom() {
 
     self.getUnreadMessages = function() {
         return PersistenceService.findByPredicates(Message, [
-            new KeyValuePredicate('chatId', self.chatId()),
-            new KeyValuePredicate('read', false),
-            new KeyValuePredicate('isSystemMessage', false)
+            new KeyValuePredicate('from', self.chatId()),
+            new KeyValuePredicate('read', false)
+            //TODO: Find new way to filter for system messages.
+            //new KeyValuePredicate('isSystemMessage', false)
         ]);
     };
 
     self.getAllMessages = function() {
         return PersistenceService.findByPredicates(Message, [
-            new KeyValuePredicate('chatId', self.chatId())
+            new KeyValuePredicate('from', self.chatId())
         ]);
     };
 

@@ -10,13 +10,15 @@ function Presence() {
     var self = this;
     self.ps = PersistenceService.register(Presence, self);
     self.mapping = {
-        include: ['hasParticipantRole', 'hasModeratorRole', 'hasNoneRole', 'from', 'hasError']
+        include: ['hasParticipantRole', 'hasModeratorRole', 'hasNoneRole', 'from', 'hasError', 'dateReceived']
     };
+
+    self.messageType = ko.observable(CHAT_MESSAGE_TYPES.SYSTEM);
 
     // Model Methods
 
     self.clear = function() {
-        var values = new Message().exportValues();
+        var values = new Presence().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };
@@ -75,7 +77,8 @@ Presence.fromTree = function(element) {
         hasModeratorRole: $(element).find('item[role="moderator"]').length > 0,
         hasNoneRole: $(element).find('item[role="none"]').length > 0,
         from: $(element).attr('from'),
-        hasError: $(element).find('error').length > 0
+        hasError: $(element).find('error').length > 0,
+        dateReceived: (new Date()).getTime()
     });
     return presence;
 };

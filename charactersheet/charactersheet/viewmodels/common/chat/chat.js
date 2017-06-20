@@ -192,7 +192,7 @@ function ChatViewModel() {
         }
 
         var chatTabIsForground = viewModel.childRootViewModel().activeTab() == 'chat';
-        if (!chatTabIsForground && !delay && !msg.isSystemMessage()) {
+        if (!chatTabIsForground && !delay) {
             Notifications.userNotification.infoNotification.dispatch(msg.html(), msg.from());
         }
     };
@@ -201,6 +201,7 @@ function ChatViewModel() {
         if (self._isMe(nick)) { return; }
         var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
         var chat = new Message();
+        // TODO FIX
         chat.importValues({
             characterId: CharacterManager.activeCharacter().key(),
             chatId: room.chatId(),
@@ -216,6 +217,7 @@ function ChatViewModel() {
         if (self._isMe(nick)) { return; }
         var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', roomId);
         var chat = new Message();
+        // TODO FIX
         chat.importValues({
             characterId: CharacterManager.activeCharacter().key(),
             chatId: room.chatId(),

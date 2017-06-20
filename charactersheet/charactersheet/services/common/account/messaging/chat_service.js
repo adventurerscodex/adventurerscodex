@@ -141,13 +141,15 @@ function _ChatService(config) {
         try {
             // Messages in Group Chats are ID'd by the group JID.
             var from = Strophe.getBareJidFromJid($(msg).attr('from'));
+            var isSubject = $(msg).find('subject').length > 0;
+
+            // We ignore subjects atm.
+            if (isSubject) {
+                return true;
+            }
 
             var room = self._getOrCreateRoom(from, true);
             var chatMessage = Message.fromTree(msg);
-            // Prevents blank toastr from popping up on prod 5/31/2017
-            if (chatMessage.from() == null && chatMessage.message() === '') {
-                return true;
-            }
             chatMessage.save();
 
             var delay = $(msg).find('delay').length > 0;
@@ -196,7 +198,7 @@ function _ChatService(config) {
                     Notifications.party.joined.dispatch(presence.fromBare(), true);
                 } else {
                     // Someone else has joined.
-                    Notifications.chat.member.joined.dispatch(presence.fromBare(), nick);
+                    Notifications.chat.member.joined.dispatch(presence.fromBare(), presence.fromNick());
                 }
             } else if (presence.regardsLeavingRoom()) {
                 if (presence.fromNick() == myNick) {
@@ -204,7 +206,7 @@ function _ChatService(config) {
                     Notifications.party.left.dispatch(presence.fromBare(), true);
                 } else {
                     // Someone else has left.
-                    Notifications.chat.member.left.dispatch(presence.fromBare(), nick, jid);
+                    Notifications.chat.member.left.dispatch(presence.fromBare(), presence.fromNick(), presence.fromNick());
                 }
             }
         } catch(err) {

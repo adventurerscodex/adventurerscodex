@@ -20,40 +20,6 @@ function Message() {
         include: ['characterId', 'to', 'from', 'type', 'id', 'body', 'html', 'item', 'dateReceived', 'read']
     };
 
-    /**
-     * Every message sent through the chat will have a type that tells
-     * the chat interface and the various chat subsystems how to render
-     * and route the given chat message.
-     */
-    self.MESSAGE_TYPES = {
-        /**
-         * Messages of type CHAT are usually plain-text messages sent to/from
-         * other members in the party.
-         * These messages are usually displayed along with the user's profile
-         * picture and their name in the relevant room.
-         *
-         * NOTE: These messages MUST not have any additional payload.
-         */
-        CHAT: 'chat',
-
-        /**
-         *
-         *
-         */
-        SYSTEM: 'system',
-        /**
-         * Messages of type DATA are used to send some form of JSON payload
-         * through the chat system to/from a given user.
-         *
-         * These data messages can optionally contain a plain-text message that
-         * the user should be shown in the chat to indicate that a data object
-         * has been received.
-         *
-         * NOTE: It is recommended to include a plain-text message with these messages.
-         */
-        IMAGE: 'image',
-    };
-
     // Generic Chat Message values
     self.characterId = ko.observable();
     self.type = ko.observable();
@@ -72,16 +38,16 @@ function Message() {
 
     self.messageType = function() {
         if (!self.item() && (self.html() || self.body())) {
-            return self.MESSAGE_TYPES.CHAT;
-        } else if (self.route() == self.MESSAGE_TYPES.IMAGE) {
-            return self.MESSAGE_TYPES.IMAGE;
+            return CHAT_MESSAGE_TYPES.CHAT;
+        } else if (self.route() == CHAT_MESSAGE_TYPES.IMAGE) {
+            return CHAT_MESSAGE_TYPES.IMAGE;
+        } else if (self.route() == CHAT_MESSAGE_TYPES.FORM) {
+            return CHAT_MESSAGE_TYPES.FORM;
         }
-        return self.MESSAGE_TYPES.SYSTEM;
-    };
 
-    self.isSystemMessage = function() {
-        return self.messageType() == self.MESSAGE_TYPES.SYSYTEM;
-    }
+        // Should never happen.
+        return null;
+    };
 
     /**
      * Returns the given route for data messages,
@@ -101,6 +67,10 @@ function Message() {
         } else {
             return Strophe.getNodeFromJid(self.from());
         }
+    });
+
+    self.fromBare = ko.pureComputed(function() {
+        return Strophe.getBareJidFromJid(self.from());
     });
 
     self.clear = function() {
@@ -154,7 +124,7 @@ function Message() {
             xmlns: Strophe.NS.HTML
         }, self.html());
 
-        if (self.messageType() == self.MESSAGE_TYPES.DATA) {
+        if (self.item()) {
             message.c('item', {
                 xmlns: item.xmlns
             }, JSONPayload.getElement(item.json, {

@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="container-fluid">
+      <div class="row" data-bind="html: name"></div>
+<!--
+      <div class="pull-right">
+        <button class="btn btn-sm btn-default" data-bind="click: toggleModal">
+          Edit
+        </button>
+      </div>
+ -->
+    </div>
+  </div>
+  <div class="panel-body">
+		<div class="form-horizontal">
+			<form data-bind="submit: sendMessage">
+			  <div class="container-fluid">
+				  <ul class="list-group chat-style"
+				    data-bind="foreach: log, bottomsUp: true">
+					  <li class="list-group-item">
+              <div class="row" data-bind="template: {
+                data: $data, name: templateName, templateUrl: templateUrl }"></div>
+					  </li>
+				  </ul>
+			  </div>
+			  <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group">
+              <input type="text" class="form-control" id="text"
+                data-bind="textInput: message, hasFocus: $parent.messageFieldShouldHaveFocus,
+                  disable: sendButtonShouldBeDisabled" autocomplete="off">
+              <span class="input-group-btn">
+                <button data-bind="disable: sendButtonShouldBeDisabled"
+                  type="submit" class="btn btn-default">Send</button>
+              </span>
+          </div>
+  			</div>
+			</div>
+		</div>
+  </div>
+</div>
