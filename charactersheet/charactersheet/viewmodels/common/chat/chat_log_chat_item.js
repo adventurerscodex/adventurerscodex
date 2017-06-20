@@ -17,6 +17,11 @@ function ChatLogChatItem(message) {
 
     // UI Methods
 
+    self.shouldShowSaveToChatButton = ko.pureComputed(function() {
+        var key = CharacterManager.activeCharacter().playerType().key;
+        return key == PlayerTypes.characterPlayerType.key;
+    });
+
     self.image = ko.pureComputed(function() {
         var card = self.getCard();
         if (!card) {
@@ -37,6 +42,24 @@ function ChatLogChatItem(message) {
         return self.message.html();
     });
 
+    self.saveToNotes = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var note = PersistenceService.findByPredicates(Note, [
+            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('isSavedChatNotes', true)
+        ])[0];
+        if (!note) {
+            note = new Note();
+            note.characterId(key);
+            note.text('# Saved from Chat');
+            note.isSavedChatNotes(true);
+        }
+        note.text(note.text() + '\n\n' + self.message.toText());
+        note.save();
+
+        Notifications.notes.changed.dispatch();
+        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
+    };
     /* Card Methods */
 
     self.getCard = function() {

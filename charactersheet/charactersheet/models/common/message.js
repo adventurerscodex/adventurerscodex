@@ -101,8 +101,8 @@ function Message() {
 
     self.toText = function() {
         var dateString = '';
-        if (self.dateSent()) {
-            dateString = (new Date(self.dateSent())).toDateString();
+        if (self.dateReceived()) {
+            dateString = (new Date(self.dateReceived())).toDateString();
         }
 
         return '**{date}**\n\n{text}'.replace(

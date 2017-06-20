@@ -8,17 +8,17 @@
     </div>
   </div>
   <div class="row">
-    <!-- ko if: $parent.shouldShowSaveToChatButton -->
+    <!-- ko if: shouldShowSaveToChatButton -->
     <div class="col-xs-11">
       <span data-bind="html: html"></span>
     </div>
     <div class="col-xs-1">
       <div class="input-group">
-        <i class="fa fa-save fa-color-hover-success clickable" data-bind="click: $parent.saveToNotes"></i>
+        <i class="fa fa-save fa-color-hover-success clickable" data-bind="click: saveToNotes"></i>
       </div>
     </div>
     <!-- /ko -->
-    <!-- ko ifnot: $parent.shouldShowSaveToChatButton -->
+    <!-- ko ifnot: shouldShowSaveToChatButton -->
     <div class="col-xs-12">
       <span data-bind="html: html"></span>
     </div>
