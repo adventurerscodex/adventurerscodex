@@ -57,8 +57,6 @@ function ChatRoom() {
         return PersistenceService.findByPredicates(Message, [
             new KeyValuePredicate('from', self.chatId()),
             new KeyValuePredicate('read', false)
-            //TODO: Find new way to filter for system messages.
-            //new KeyValuePredicate('isSystemMessage', false)
         ]);
     };
 
