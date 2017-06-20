@@ -23,7 +23,7 @@ function ChatLogSystemItem(message) {
         } else if (self.message.regardsLeavingRoom()) {
             return self.message.fromNick() + ' has left the room.';
         } else {
-            return 'something else has happened.'
+            return 'something else has happened.';
         }
     });
 }

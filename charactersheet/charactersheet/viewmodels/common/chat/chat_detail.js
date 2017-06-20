@@ -251,7 +251,7 @@ function ChatDetailViewModel(chatCell, parent) {
             return (
                 Strophe.getBareJidFromJid(msg.from) == self.id() &&
                 msg.dateReceived > latestTime
-            )
+            );
         })).map(function(msg, idx, _) {
             return self._getLogItem(msg);
         });
