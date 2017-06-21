@@ -12,6 +12,8 @@ function ChatCellViewModel(chat) {
     self.isParty = chat.isParty;
     self.members = ko.observableArray([]);
 
+    self.placeholder = 'https://www.gravatar.com/avatar/{}?d=mm';
+
     self.name = ko.pureComputed(function() {
         return self.members().map(function(member, idx, _) {
             return self._getMemberTemplate(member);
@@ -34,13 +36,10 @@ function ChatCellViewModel(chat) {
     /* Template Rendering Methods */
 
     self._getMemberTemplate = function(card) {
-        if (typeof card == 'string') {
-            return card;
-        } else {
-            return ChatCellViewModelMemberTemplate.replace(
-                '{card.imageUrl}', card.get('imageUrl')[0]
-            );
-        }
+        var url = (typeof card !== 'string') ? card.get('imageUrl')[0] : self.placeholder;
+        return ChatCellViewModelMemberTemplate.replace(
+            '{card.imageUrl}', url
+        );
     };
 }
 
