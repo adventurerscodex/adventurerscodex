@@ -122,15 +122,8 @@ function ChatDetailViewModel(chatCell, parent) {
     /* Private Methods */
 
     self._markAllAsRead = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var log = PersistenceService.findByPredicates(Message, [
-            new OrPredicate([
-                new KeyValuePredicate('chatId', self.id())
-            ]),
-            new KeyValuePredicate('read', false)
-        ]);
-
-        log.forEach(function(chat, idx, _) {
+        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
+        room.getUnreadMessages().forEach(function(chat, idx, _) {
             chat.read(true);
             chat.save();
         });
@@ -224,13 +217,15 @@ function ChatDetailViewModel(chatCell, parent) {
                 msg.dateReceived > latestTime &&
                 !msg.subject && !msg.invite
             );
-        }).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
+        }).concat(PersistenceService.findFiltered(Presence, function(pres, _) {
             return (
-                Strophe.getBareJidFromJid(msg.from) == self.id() &&
-                msg.dateReceived > latestTime
+                Strophe.getBareJidFromJid(pres.from) == self.id() &&
+                pres.dateReceived > latestTime
             );
         })).map(function(msg, idx, _) {
             return self._getLogItem(msg);
+        }).sort(function(a, b) {
+            return a.timestamp() - b.timestamp();
         });
 
         return log;
