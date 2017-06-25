@@ -17,8 +17,8 @@ function ChatViewModel() {
         // Message Notifications
         Notifications.chat.message.add(self._deliverMessageToRoom);
         Notifications.chat.room.add(self.reloadCells);
-        Notifications.chat.member.joined.add(self._userHasJoined);
-        Notifications.chat.member.left.add(self._userHasLeft);
+        Notifications.chat.member.joined.add(self._userHasJoinedOrLeft);
+        Notifications.chat.member.left.add(self._userHasJoinedOrLeft);
         Notifications.party.joined.add(self._didJoinParty);
         Notifications.party.left.add(self._hasLeftParty);
         Notifications.party.players.changed.add(self.reloadCells);
@@ -30,8 +30,8 @@ function ChatViewModel() {
         // Message Notifications
         Notifications.chat.message.remove(self._deliverMessageToRoom);
         Notifications.chat.room.remove(self.reloadCells);
-        Notifications.chat.member.joined.remove(self._userHasJoined);
-        Notifications.chat.member.left.remove(self._userHasLeft);
+        Notifications.chat.member.joined.remove(self._userHasJoinedOrLeft);
+        Notifications.chat.member.left.remove(self._userHasJoinedOrLeft);
         Notifications.party.joined.remove(self._didJoinParty);
         Notifications.party.left.remove(self._hasLeftParty);
         Notifications.party.players.changed.remove(self.reloadCells);
@@ -180,7 +180,7 @@ function ChatViewModel() {
      * active, else badge the icon or create the room if needed and alert
      * the user.
      */
-    self._deliverMessageToRoom = function(room, msg, delay) {
+    self._deliverMessageToRoom = function(room, msg, delay, hideTitle) {
         self.reloadCells();
         var roomIsSelected = self._isSelectedRoom(room);
         if (roomIsSelected) {
@@ -192,39 +192,20 @@ function ChatViewModel() {
         }
 
         var chatTabIsForground = viewModel.childRootViewModel().activeTab() == 'chat';
-        if (!chatTabIsForground && !delay) {
-            Notifications.userNotification.infoNotification.dispatch(msg.message(), msg.from());
+        if (!chatTabIsForground && !delay && msg.messageType() != CHAT_MESSAGE_TYPES.META) {
+            if (!hideTitle) {
+                Notifications.userNotification.infoNotification.dispatch(msg.html(), msg.fromUsername());
+            } else {
+                Notifications.userNotification.infoNotification.dispatch(msg.html());
+            }
+
         }
     };
 
-    self._userHasJoined = function(jid, nick) {
-        if (self._isMe(nick)) { return; }
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', jid);
-        var chat = new ChatMessage();
-        chat.importValues({
-            characterId: CharacterManager.activeCharacter().key(),
-            chatId: room.chatId(),
-            isSystemMessage: true,
-            message: nick + ' has entered the room.',
-            dateSent: (new Date()).getTime()
-        });
-        chat.save();
-        self._deliverMessageToRoom(room, chat, false);
-    };
-
-    self._userHasLeft = function(roomId, nick, jid) {
-        if (self._isMe(nick)) { return; }
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', roomId);
-        var chat = new ChatMessage();
-        chat.importValues({
-            characterId: CharacterManager.activeCharacter().key(),
-            chatId: room.chatId(),
-            isSystemMessage: true,
-            message: nick + ' has left the room.',
-            dateSent: (new Date()).getTime()
-        });
-        chat.save();
-        self._deliverMessageToRoom(room, chat, false);
+    self._userHasJoinedOrLeft = function(presence) {
+        if (self._isMe(presence.fromUsername())) { return; }
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', presence.fromBare());
+        self._deliverMessageToRoom(room, presence, false, true);
     };
 
     self._didJoinParty = function() {
@@ -236,7 +217,6 @@ function ChatViewModel() {
         self.reloadCells();
         self._purgeChats();
     };
-
 
     self._isMe = function(nick) {
         var xmpp = XMPPService.sharedService();

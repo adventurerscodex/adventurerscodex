@@ -2,20 +2,14 @@
 
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
-    compression: {
-        name: 'lz-string',
-        method: LZString.compressToUTF16
-    },
+    compression: 'lz-string',
     fields: CharacterCardFields
 };
 
 
 var DMCardPublishingServiceConfiguration = {
     enableCompression: true,
-    compression: {
-        name: 'lz-string',
-        method: LZString.compressToUTF16
-    },
+    compression: 'lz-string',
     fields: DMCardFields
 };
 
@@ -52,28 +46,15 @@ function _pCardService(configuration) {
         var nodeService = NodeServiceManager.sharedService();
 
         // Serialize the card to XML.
-        var compressed = self.configuration.enableCompression;
         var attrs = {
             id: xmpp.connection.getUniqueId(),
-            publisher: xmpp.connection.jid,
-            node: Strophe.NS.JSON + '#' + 'pcard'
+            compressed: self.configuration.enableCompression,
+            compression: self.configuration.enableCompression ? self.configuration.compression : null
         };
-        var content = '';
-
-        if (compressed) {
-            attrs.compressed = true;
-            attrs.compression = self.configuration.compression.name;
-            content = self.configuration.compression.method(card.toJSON());
-        } else {
-            attrs.compressed = false;
-            content = card.toJSON();
-        }
-
-        var cardTree = $build('json', attrs).t(content).tree();
 
         // Publish the card to the current node.
         if (self.currentPartyNode) {
-            nodeService.publishItem(content, attrs, 'pcard', null, null);
+            nodeService.publishItem(card.entries, attrs, 'pcard', null, null);
         }
     };
 

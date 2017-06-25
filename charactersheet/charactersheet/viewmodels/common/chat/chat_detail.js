@@ -9,7 +9,7 @@ function ChatDetailViewModel(chatCell, parent) {
     self._getRoomMembers = chatCell._getRoomMembers;
     self.parent = parent;
 
-    self.templateUrl = 'templates/common';
+    self.templateUrl = 'templates/common/chat';
     self.templateName = 'chat.tmpl';
 
     self.log = ko.observableArray();
@@ -61,14 +61,8 @@ function ChatDetailViewModel(chatCell, parent) {
         if (!chat) { return; }
         self.members(chat.getRoomMembers());
 
-        var key = CharacterManager.activeCharacter().key();
-        var log = PersistenceService.findByPredicates(ChatMessage, [
-            new OrPredicate([
-                new KeyValuePredicate('chatId', self.id())
-            ])
-        ]);
-
-        self.log(log);
+        var log = self._getRecentItems();
+        ko.utils.arrayPushAll(self.log, log);
     };
 
     self.updateBadge = function() {
@@ -86,23 +80,10 @@ function ChatDetailViewModel(chatCell, parent) {
 
     });
 
-    self.fromLabel = function(msg) {
-        var card = msg.getCard();
-        if (!card) {
-            return msg.from();
-        }
-        return card.get('name') + ' (' + msg.from() + ')';
-    };
-
     self.messageFieldShouldHaveFocus = ko.observable(true);
 
     self.sendButtonShouldBeDisabled = ko.pureComputed(function() {
         return !self._xmppIsConnected();
-    });
-
-    self.shouldShowSaveToChatButton = ko.pureComputed(function() {
-        var key = CharacterManager.activeCharacter().playerType().key;
-        return key == PlayerTypes.characterPlayerType.key;
     });
 
     self.toggleModal = function() {
@@ -138,37 +119,11 @@ function ChatDetailViewModel(chatCell, parent) {
         return false;
     };
 
-    self.saveToNotes = function(message) {
-        var key = CharacterManager.activeCharacter().key();
-        var note = PersistenceService.findByPredicates(Note, [
-            new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('isSavedChatNotes', true)
-        ])[0];
-        if (!note) {
-            note = new Note();
-            note.characterId(key);
-            note.text('# Saved from Chat');
-            note.isSavedChatNotes(true);
-        }
-        note.text(note.text() + '\n\n' + message.toText());
-        note.save();
-
-        Notifications.notes.changed.dispatch();
-        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
-    };
-
     /* Private Methods */
 
     self._markAllAsRead = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var log = PersistenceService.findByPredicates(ChatMessage, [
-            new OrPredicate([
-                new KeyValuePredicate('chatId', self.id())
-            ]),
-            new KeyValuePredicate('read', false)
-        ]);
-
-        log.forEach(function(chat, idx, _) {
+        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
+        room.getUnreadMessages().forEach(function(chat, idx, _) {
             chat.read(true);
             chat.save();
         });
@@ -182,13 +137,13 @@ function ChatDetailViewModel(chatCell, parent) {
         var xmpp = XMPPService.sharedService();
         var key = CharacterManager.activeCharacter().key();
 
-        var message = new ChatMessage();
+        // TODO FIX
+        var message = new Message();
         message.importValues({
             from: xmpp.connection.jid,
             message: self.message(),
             to: self.id(),
             id: xmpp.connection.getUniqueId(),
-            chatId: self.id(),
             characterId: key
         });
 
@@ -199,6 +154,7 @@ function ChatDetailViewModel(chatCell, parent) {
         var xmpp = XMPPService.sharedService();
         if (self.isGroupChat()) {
             var id = xmpp.connection.getUniqueId();
+            // TODO: Refactor to be consistant with private chat.
             xmpp.connection.muc.groupchat(message.to(), null, message.message(), id);
         } else {
             xmpp.connection.send(message.tree());
@@ -232,6 +188,47 @@ function ChatDetailViewModel(chatCell, parent) {
                 '{card.name}', card.get('name')[0]
             );
         }
+    };
+
+    self._getLogItem = function(message) {
+        if (message.messageType() == CHAT_MESSAGE_TYPES.CHAT) {
+            return new ChatLogChatItem(message);
+        } else if (message.messageType() == CHAT_MESSAGE_TYPES.SYSTEM) {
+            return new ChatLogSystemItem(message);
+        } else {
+            throw Error('Undefined chat message type');
+        }
+    };
+
+    self._getLatestTimeStamp = function() {
+        var last = self.log().length - 1;
+        if (last < 0) {
+            return 0;
+        }
+        return self.log()[last].timestamp();
+    };
+
+    self._getRecentItems = function() {
+        var latestTime = self._getLatestTimeStamp();
+        var key = CharacterManager.activeCharacter().key();
+        var log = PersistenceService.findFiltered(Message, function(msg, _) {
+            return (
+                Strophe.getBareJidFromJid(msg.from) == self.id() &&
+                msg.dateReceived > latestTime &&
+                !msg.subject && !msg.invite
+            );
+        }).concat(PersistenceService.findFiltered(Presence, function(pres, _) {
+            return (
+                Strophe.getBareJidFromJid(pres.from) == self.id() &&
+                pres.dateReceived > latestTime
+            );
+        })).map(function(msg, idx, _) {
+            return self._getLogItem(msg);
+        }).sort(function(a, b) {
+            return a.timestamp() - b.timestamp();
+        });
+
+        return log;
     };
 }
 
