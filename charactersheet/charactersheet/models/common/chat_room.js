@@ -63,7 +63,9 @@ function ChatRoom() {
     self.getAllMessages = function() {
         return PersistenceService.findByPredicates(Message, [
             new KeyValuePredicate('from', self.chatId())
-        ]);
+        ]).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
+            return Strophe.getBareJidFromJid(msg.from) == self.chatId();
+        }));
     };
 
     self.getRoomMembers = function() {

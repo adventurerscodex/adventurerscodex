@@ -129,6 +129,10 @@ function _ChatService(config) {
         });
     };
 
+    self.getAllRooms = function() {
+        return Object.keys(self.rooms);
+    };
+
     /* Private Methods */
 
     // Message Handlers
@@ -190,20 +194,20 @@ function _ChatService(config) {
             if (presence.hasError()) {
                 Notifications.party.joined.dispatch(presence.fromBare(), false);
             } else if (presence.regardsJoiningRoom()) {
-                if (presence.fromNick() == myNick) {
+                if (presence.fromUsername() == myNick) {
                     // We've joined.
                     Notifications.party.joined.dispatch(presence.fromBare(), true);
                 } else {
                     // Someone else has joined.
-                    Notifications.chat.member.joined.dispatch(presence.fromBare(), presence.fromNick());
+                    Notifications.chat.member.joined.dispatch(presence);
                 }
             } else if (presence.regardsLeavingRoom()) {
-                if (presence.fromNick() == myNick) {
+                if (presence.fromUsername() == myNick && presence.regardsLeavingParty()) {
                     // We've left.
                     Notifications.party.left.dispatch(presence.fromBare(), true);
                 } else {
                     // Someone else has left.
-                    Notifications.chat.member.left.dispatch(presence.fromBare(), presence.fromNick(), presence.fromNick());
+                    Notifications.chat.member.left.dispatch(presence);
                 }
             }
         } catch(err) {
@@ -233,7 +237,7 @@ function _ChatService(config) {
     self._handleNewRosterMessage = function(occupant, room) {
         try {
             self.rooms[room.name] = room;
-            Notifications.chat.member.joined.dispatch(room.name, room.nick);
+            Notifications.party.roster.changed.dispatch(room.name, room.nick);
         } catch(err) {
             console.log(err);
         }

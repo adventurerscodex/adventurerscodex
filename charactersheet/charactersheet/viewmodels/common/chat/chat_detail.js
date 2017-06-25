@@ -209,7 +209,7 @@ function ChatDetailViewModel(chatCell, parent) {
 
     self._getLatestTimeStamp = function() {
         var last = self.log().length - 1;
-        if (last < 1) {
+        if (last < 0) {
             return 0;
         }
         return self.log()[last].timestamp();
@@ -221,7 +221,8 @@ function ChatDetailViewModel(chatCell, parent) {
         var log = PersistenceService.findFiltered(Message, function(msg, _) {
             return (
                 Strophe.getBareJidFromJid(msg.from) == self.id() &&
-                msg.dateReceived > latestTime
+                msg.dateReceived > latestTime &&
+                !msg.subject && !msg.invite
             );
         }).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
             return (

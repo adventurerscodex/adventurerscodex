@@ -43,7 +43,7 @@ function Presence() {
 
     // From Methods
 
-    self.fromNick = function() {
+    self.fromUsername = function() {
         return Strophe.getResourceFromJid(self.from());
     };
 
@@ -58,15 +58,41 @@ function Presence() {
         return self.fromBare() === Strophe.getBareJidFromJid(chat.currentPartyNode);
     };
 
+    self.regardsActiveRoom = function() {
+        var chat = ChatServiceManager.sharedService();
+
+        // We've joined a room, but there are no active rooms set yet.
+        if (chat.getAllRooms().length == 0) {
+            return true;
+        }
+        return chat.getAllRooms().some(function(jid, idx, _) {
+            return self.fromBare() === Strophe.getBareJidFromJid(jid);
+        });
+    };
+
     self.regardsJoiningRoom = function() {
-        return self.regardsCurrentParty() && (
+        return self.regardsActiveRoom() && (
             self.hasParticipantRole() || self.hasModeratorRole()
         );
     };
 
     self.regardsLeavingRoom = function() {
+        return self.hasNoneRole();
+    };
+
+    self.regardsLeavingParty = function() {
         return self.hasNoneRole() && self.regardsCurrentParty();
     };
+
+    self.html = ko.pureComputed(function() {
+        if (self.regardsJoiningRoom()) {
+            return self.fromUsername() + ' has joined the room.';
+        } else if (self.regardsLeavingRoom()) {
+            return self.fromUsername() + ' has left the room.';
+        } else {
+            return 'something else has happened.';
+        }
+    });
 }
 
 

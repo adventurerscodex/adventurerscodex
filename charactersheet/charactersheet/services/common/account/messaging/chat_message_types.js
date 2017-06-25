@@ -7,6 +7,12 @@
  */
 var CHAT_MESSAGE_TYPES = {
     /**
+     * Messages of type META detail something about the chat room:
+     * Like a subject, or other room message.
+     */
+    META: 'meta',
+
+    /**
      * Messages of type CHAT are usually plain-text messages sent to/from
      * other members in the party.
      * These messages are usually displayed along with the user's profile
@@ -19,7 +25,10 @@ var CHAT_MESSAGE_TYPES = {
     /**
      * SYSTEM messages are any type of messages that do not conform to
      * another type. These can include malformed messages, as well as
-     * other valid XMPP message types (i.e. <subject> messages).
+     * other valid XMPP message types (i.e. <presence> messages).
+     *
+     * NOTE: These messages regard the connection as a whole,
+     * or other presence messages.
      */
     SYSTEM: 'system',
 

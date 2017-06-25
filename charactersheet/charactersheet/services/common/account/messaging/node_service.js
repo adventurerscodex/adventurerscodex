@@ -95,8 +95,7 @@ function _NodeService(config) {
         xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
         xmpp.connection.addHandler(self._handlePresence, null, 'presence');
         xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
-        Notifications.chat.member.joined.add(self._getCards);
-        Notifications.party.joined.add(self._getCards);
+        Notifications.party.roster.changed.add(self._getCards);
     };
 
     /**
@@ -204,7 +203,7 @@ function _NodeService(config) {
         return true;
     };
 
-    self._getCards = function(response) {
+    self._getCards = function() {
         var chat = ChatServiceManager.sharedService();
         var partyId = chat.currentPartyNode;
         if (partyId == null || !chat.rooms[partyId]) { return; }

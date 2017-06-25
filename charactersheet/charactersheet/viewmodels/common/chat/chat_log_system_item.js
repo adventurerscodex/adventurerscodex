@@ -18,12 +18,6 @@ function ChatLogSystemItem(message) {
     // UI Methods
 
     self.html = ko.pureComputed(function() {
-        if (self.message.regardsJoiningRoom()) {
-            return self.message.fromNick() + ' has joined the room.';
-        } else if (self.message.regardsLeavingRoom()) {
-            return self.message.fromNick() + ' has left the room.';
-        } else {
-            return 'something else has happened.';
-        }
+        return self.message.html();
     });
 }

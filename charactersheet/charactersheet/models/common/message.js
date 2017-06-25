@@ -17,7 +17,8 @@ function Message() {
 
     self.ps = PersistenceService.register(Message, self);
     self.mapping = {
-        include: ['characterId', 'to', 'from', 'type', 'id', 'body', 'html', 'item', 'dateReceived', 'read']
+        include: ['characterId', 'to', 'from', 'type', 'id', 'body', 'html',
+            'invite', 'item', 'subject', 'dateReceived', 'read']
     };
 
     // Generic Chat Message values
@@ -33,11 +34,16 @@ function Message() {
     self.item = ko.observable();
     self.html = ko.observable();
     self.body = ko.observable();
+    self.subject = ko.observable();
+    self.invite = ko.observable();
 
     /* Public Methods */
 
     self.messageType = function() {
-        if (!self.item() && (self.html() || self.body())) {
+        if (self.subject() || self.invite()) {
+            return CHAT_MESSAGE_TYPES.META;
+        }
+        else if (!self.item() && (self.html() || self.body())) {
             return CHAT_MESSAGE_TYPES.CHAT;
         } else if (self.route() == CHAT_MESSAGE_TYPES.IMAGE) {
             return CHAT_MESSAGE_TYPES.IMAGE;
@@ -155,6 +161,8 @@ Message.fromTree = function(msg) {
         type: $(msg).attr('type'),
         body: $(msg).find('body').text(),
         html: $(msg).find('html body').text(),
+        subject: $(msg).find('subject').text(),
+        invite: $(msg).find('invite').length > 0,
         item: item,
         dateReceived: (new Date()).getTime()
     });
