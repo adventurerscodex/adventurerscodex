@@ -21,6 +21,11 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
 
+    // Push to Player
+    self.selectedItemToPush = ko.observable();
+    self.pushModalViewModel = ko.observable();
+    self.openPushModal = ko.observable(false);
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
         'name desc': { field: 'name', direction: 'desc' },
@@ -133,6 +138,56 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+    };
+
+    /* Push to Player Methods */
+
+    self.pushModalToPlayerButtonWasPressed = function(item) {
+        self.selectedItemToPush(item);
+        self.pushModalViewModel(new PlayerTextSectionPushModalViewModel(self));
+        self.pushModalViewModel().load();
+        self.openPushModal(true);
+    };
+
+    self.pushModalFinishedClosing = function() {
+        self.pushModalViewModel().unload();
+        self.pushModalViewModel(null);
+        self.selectedItemToPush(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalDoneButtonWasClicked = function() {
+        var selected = self.pushModalViewModel().selectedPartyMembers();
+        var item = self.selectedItemToPush();
+
+        self.pushTextToPlayers(item, selected);
+    };
+
+    /**
+     * Given an item of text to push, send it as an HTML message
+     * to the given player/players.
+     */
+    self.pushTextToPlayers = function(item, players) {
+        var chat = ChatServiceManager.sharedService();
+        var currentParty = chat.currentPartyNode;
+        var xmpp = XMPPService.sharedService();
+
+        players.forEach(function(player, idx, _) {
+            var bare = Strophe.getBareJidFromJid(player.jid);
+            var nick = chat.getNickForBareJidInParty(bare);
+
+            var message = new Message();
+            message.importValues({
+                to: currentParty + '/' + nick,
+                type: 'chat',
+                from: xmpp.connection.jid,
+                id: xmpp.connection.getUniqueId(),
+                html: item.toHTML(),
+                body: ''
+            });
+
+            xmpp.connection.send(message.tree());
+        });
     };
 
     /* Modal Methods */

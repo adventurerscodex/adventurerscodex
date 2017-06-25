@@ -122,6 +122,15 @@ function _ChatService(config) {
         });
     };
 
+    self.getNickForBareJidInParty = function(jid) {
+        var party = self.rooms[self.currentPartyNode] || {};
+        var roster = party.roster || {};
+
+        return Object.keys(roster).filter(function(nick, idx, _) {
+            return Strophe.getBareJidFromJid(roster[nick].jid) === jid;
+        })[0]
+    };
+
     self.isJidInParty = function(jid) {
         var members = self.getOccupantsInRoom(self.currentPartyNode);
         return members.some(function(member, idx, _) {

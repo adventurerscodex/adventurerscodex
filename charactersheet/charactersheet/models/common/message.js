@@ -128,7 +128,7 @@ function Message() {
             type: 'chat'
         }).c('body').up().c('html', {
             xmlns: Strophe.NS.HTML
-        }, self.html());
+        }).c('body', {} , self.html());
 
         if (self.item()) {
             message.c('item', {

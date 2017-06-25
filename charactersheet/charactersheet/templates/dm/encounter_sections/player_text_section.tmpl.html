@@ -14,6 +14,7 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
+      <th></th>
       <th>
         <a data-toggle="modal"
            data-target="#addPlayerText" href="#">
@@ -34,6 +35,12 @@
       <td data-bind="html: longDescription, click: $parent.editPlayerText"
           class="col-md-12 hidden-sm hidden-xs"
           href="#" data-toggle="modal"></td>
+      <td>
+        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
+          <i class="fa fa-check fa-color-hover">
+          </i>
+        </a>
+      </td>
       <td>
         <a data-bind="click: $parent.removePlayerText" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -189,3 +196,50 @@
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
+
+<!-- Push Modal -->
+<!-- The parent is the detail vm and its parent is the master vm -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: openPushModal,
+      onclose: pushModalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          Create a new Chat Room
+        </h4>
+      </div>
+      <div class="modal-body" data-bind="with: pushModalViewModel">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="h4">
+            Send the message to which players?
+          </div>
+          <div class="invite.members">
+            <!-- ko if: partyMembers().length == 0 -->
+            <p>There are no players in your party right now.</p>
+            <!-- /ko -->
+            <image-picker params="cells: partyMembers, selectedCells: selectedPartyMembers"></image-picker>
+          <div class="spacer"></div>
+          <div class="modal-footer">
+            <div class="form-group">
+              <div class="col-xs-offset-7 col-xs-5">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-bind="click: $parent.pushModalDoneButtonWasClicked"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
