@@ -178,7 +178,9 @@ function PartyManagerViewModel() {
     self._handleConnectionError = function(code) {
         self.loggedIn(false);
         Notifications.userNotification.warningNotification.dispatch(
-            'You will not be able to access party features until this issue is resolved.',
+            'You will not be able to access party features until this issue is resolved. ' +
+            '<a href="https://adventurerscodex.com/faq.html#connection">Click here for ' +
+            'more info.</a>',
             'A connection error has occurred.',
             {
                 timeOut: 0,
