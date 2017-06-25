@@ -55,8 +55,8 @@ function ChatRoom() {
 
     self.getUnreadMessages = function() {
         return PersistenceService.findFiltered(Message, function(msg, _) {
-            return  Strophe.getBareJidFromJid(msg.from) == self.chatId() && !msg.read;
-        })
+            return Strophe.getBareJidFromJid(msg.from) == self.chatId() && !msg.read;
+        });
     };
 
     self.getAllMessages = function() {
