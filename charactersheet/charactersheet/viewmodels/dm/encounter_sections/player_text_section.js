@@ -26,6 +26,8 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.pushModalViewModel = ko.observable();
     self.openPushModal = ko.observable(false);
 
+    self._isConnectedToParty = ko.observable(false);
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
         'name desc': { field: 'name', direction: 'desc' },
@@ -40,6 +42,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
@@ -56,11 +59,14 @@ function PlayerTextSectionViewModel(parentEncounter) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+
+        self._connectionHasChanged();
     };
 
     self.unload = function() {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
+        Notifications.party.joined.remove(self._connectionHasChanged);
     };
 
     self.save = function() {
@@ -141,6 +147,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
     };
 
     /* Push to Player Methods */
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
 
     self.pushModalToPlayerButtonWasPressed = function(item) {
         self.selectedItemToPush(item);
@@ -235,5 +245,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }

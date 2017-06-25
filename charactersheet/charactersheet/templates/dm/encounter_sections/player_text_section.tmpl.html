@@ -36,10 +36,12 @@
           class="col-md-12 hidden-sm hidden-xs"
           href="#" data-toggle="modal"></td>
       <td>
+        <!-- ko if: $parent.shouldShowPushButton -->
         <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
-          <i class="fa fa-check fa-color-hover">
-          </i>
+          <i class="fa fa-paper-plane-o fa-color-hover">
+          </i>&nbsp;
         </a>
+        <!-- /ko -->
       </td>
       <td>
         <a data-bind="click: $parent.removePlayerText" href="#">

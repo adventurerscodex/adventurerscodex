@@ -33,7 +33,7 @@ var CHAT_MESSAGE_TYPES = {
     SYSTEM: 'system',
 
     /**
-     * Messages of type DATA are used to send some form of JSON payload
+     * Messages of type IMAGE are used to send some form of JSON payload
      * through the chat system to/from a given user.
      *
      * These data messages can optionally contain a plain-text message that

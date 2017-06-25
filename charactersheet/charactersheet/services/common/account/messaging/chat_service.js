@@ -128,7 +128,7 @@ function _ChatService(config) {
 
         return Object.keys(roster).filter(function(nick, idx, _) {
             return Strophe.getBareJidFromJid(roster[nick].jid) === jid;
-        })[0]
+        })[0];
     };
 
     self.isJidInParty = function(jid) {
