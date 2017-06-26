@@ -216,14 +216,11 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">
-          Create a new Chat Room
+          Send read aloud text to which players?
         </h4>
       </div>
       <div class="modal-body" data-bind="with: pushModalViewModel">
         <form class="form-horizontal" onsubmit="return false">
-          <div class="h4">
-            Send the message to which players?
-          </div>
           <div class="invite.members">
             <!-- ko if: partyMembers().length == 0 -->
             <p>There are no players in your party right now.</p>
@@ -235,8 +232,8 @@
               <div class="col-xs-offset-7 col-xs-5">
                 <button type="button"
                         class="btn btn-primary"
-                        data-bind="click: $parent.pushModalDoneButtonWasClicked"
-                        data-dismiss="modal">Done</button>
+                        data-bind="click: $parent.pushModalDoneButtonWasClicked, text: doneButtonLabel"
+                        data-dismiss="modal"></button>
               </div>
             </div>
           </div>

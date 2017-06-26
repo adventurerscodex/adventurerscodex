@@ -68,11 +68,7 @@ function Message() {
     });
 
     self.fromUsername = ko.pureComputed(function() {
-        if (self.type() == 'groupchat') {
-            return Strophe.getResourceFromJid(self.from());
-        } else {
-            return Strophe.getNodeFromJid(self.from());
-        }
+        return Strophe.getResourceFromJid(self.from());
     });
 
     self.fromBare = ko.pureComputed(function() {

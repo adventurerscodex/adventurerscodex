@@ -54,8 +54,8 @@ function PlayerText() {
     // Message Serialization Methods
 
     self.toHTML = function() {
-        return '<b>{name}</b><p>{description}</p>'.replace(
-            '{description}', self.description()
+        return '<h3>{name}</h3><p>{description}</p>'.replace(
+            '{description}', marked(self.description())
         ).replace(
             '{name}', self.name()
         );

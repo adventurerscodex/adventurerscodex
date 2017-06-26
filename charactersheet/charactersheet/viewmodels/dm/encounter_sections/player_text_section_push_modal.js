@@ -15,6 +15,14 @@ function PlayerTextSectionPushModalViewModel(parent) {
 
     };
 
+    self.doneButtonLabel = ko.pureComputed(function() {
+        if (self.selectedPartyMembers().length > 0) {
+            return 'Send';
+        } else {
+            return 'Cancel';
+        }
+    });
+
     self.getAllPartyMembers = function() {
         var character = CharacterManager.activeCharacter();
         var chatService = ChatServiceManager.sharedService();
