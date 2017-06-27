@@ -54,10 +54,12 @@ function PlayerText() {
     // Message Serialization Methods
 
     self.toHTML = function() {
+        var description = self.description() ? self.description() : '';
+        var name = self.name() ? self.name() : '';
         return '<h3>{name}</h3><p>{description}</p>'.replace(
-            '{description}', marked(self.description())
+            '{description}', marked(description)
         ).replace(
-            '{name}', self.name()
+            '{name}', name
         );
     };
 }
