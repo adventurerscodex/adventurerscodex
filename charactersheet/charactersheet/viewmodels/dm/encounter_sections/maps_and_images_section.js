@@ -1,9 +1,9 @@
 'use strict';
 
-function MapSectionViewModel(parentEncounter) {
+function MapsAndImagesSectionViewModel(parentEncounter) {
     var self = this;
 
-    self.template = 'map_section.tmpl';
+    self.template = 'maps_and_images_section.tmpl';
     self.encounterId = parentEncounter.encounterId;
     self.characterId = ko.observable();
 
@@ -11,8 +11,8 @@ function MapSectionViewModel(parentEncounter) {
     self.name = ko.observable();
     self.tagline = ko.observable();
 
-    self.maps = ko.observableArray();
-    self.blankMap = ko.observable(new Map());
+    self.mapsOrImages = ko.observableArray();
+    self.blankMapOrImage = ko.observable(new MapOrImage());
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
@@ -23,7 +23,9 @@ function MapSectionViewModel(parentEncounter) {
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
-        'name desc': { field: 'name', direction: 'desc' }
+        'name desc': { field: 'name', direction: 'desc' },
+        'description asc': { field: 'description', direction: 'asc' },
+        'description desc': { field: 'description', direction: 'desc' }
     };
 
     self.filter = ko.observable('');
@@ -35,14 +37,14 @@ function MapSectionViewModel(parentEncounter) {
         Notifications.encounters.changed.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
-        var map = PersistenceService.findBy(Map, 'encounterId', self.encounterId());
+        var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
         if (map) {
-            self.maps(map);
+            self.mapsOrImages(map);
         }
 
-        var section = PersistenceService.findFirstBy(MapSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
         if (!section) {
-            section = new MapSection();
+            section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());
             section.characterId(key);
         }
@@ -58,9 +60,9 @@ function MapSectionViewModel(parentEncounter) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(MapSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
         if (!section) {
-            section = new MapSection();
+            section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());
             section.characterId(key);
         }
@@ -69,18 +71,18 @@ function MapSectionViewModel(parentEncounter) {
         section.visible(self.visible());
         section.save();
 
-        self.maps().forEach(function(map, idx, _) {
+        self.mapsOrImages().forEach(function(map, idx, _) {
             map.save();
         });
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(MapSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
         if (section) {
             section.delete();
         }
 
-        self.maps().forEach(function(map, idx, _) {
+        self.mapsOrImages().forEach(function(map, idx, _) {
             map.delete();
         });
     };
@@ -90,8 +92,8 @@ function MapSectionViewModel(parentEncounter) {
     /**
      * Filters and sorts the weaponss for presentation in a table.
      */
-    self.filteredAndSortedMaps = ko.computed(function() {
-        return SortService.sortAndFilter(self.maps(), self.sort(), null);
+    self.filteredAndSortedMapsAndImages = ko.computed(function() {
+        return SortService.sortAndFilter(self.mapsOrImages(), self.sort(), null);
     });
 
     /**
@@ -108,24 +110,24 @@ function MapSectionViewModel(parentEncounter) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addMap = function() {
-        var map = self.blankMap();
-        map.characterId(CharacterManager.activeCharacter().key());
-        map.encounterId(self.encounterId());
-        map.save();
-        self.maps.push(map);
-        self.blankMap(new Map());
+    self.addMapOrImage = function() {
+        var mapOrImage = self.blankMapOrImage();
+        mapOrImage.characterId(CharacterManager.activeCharacter().key());
+        mapOrImage.encounterId(self.encounterId());
+        mapOrImage.save();
+        self.mapsOrImages.push(mapOrImage);
+        self.blankMapOrImage(new MapOrImage());
     };
 
-    self.removeMap = function(map) {
-        map.delete();
-        self.maps.remove(map);
+    self.removeMapOrImage = function(mapOrImage) {
+        mapOrImage.delete();
+        self.mapsOrImages.remove(mapOrImage);
     };
 
-    self.editMap = function(map) {
-        self.editItemIndex = map.__id;
-        self.currentEditItem(new Map());
-        self.currentEditItem().importValues(map.exportValues());
+    self.editMapOrImage = function(mapOrImage) {
+        self.editItemIndex = mapOrImage.__id;
+        self.currentEditItem(new MapOrImage());
+        self.currentEditItem().importValues(mapOrImage.exportValues());
         self.openModal(true);
     };
 
@@ -143,7 +145,7 @@ function MapSectionViewModel(parentEncounter) {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            Utility.array.updateElement(self.maps(), self.currentEditItem(), self.editItemIndex);
+            Utility.array.updateElement(self.mapsOrImages(), self.currentEditItem(), self.editItemIndex);
         }
 
         self.save();
@@ -165,14 +167,14 @@ function MapSectionViewModel(parentEncounter) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var map = PersistenceService.findBy(Map, 'encounterId', self.encounterId());
-        if (map) {
-            self.maps(map);
+        var mapOrImage = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
+        if (mapOrImage) {
+            self.mapsOrImages(mapOrImage);
         }
 
-        var section = PersistenceService.findFirstBy(MapSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
         if (!section) {
-            section = new MapSection();
+            section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());
             section.characterId(key);
         }

@@ -14,7 +14,7 @@ function EncounterViewModel() {
 
     self.sections = [
         { property: 'environmentSectionViewModel', vm: EnvironmentSectionViewModel, model: EnvironmentSection },
-        { property: 'mapSectionViewModel', vm: MapSectionViewModel, model: MapSection },
+        { property: 'mapsAndImagesSectionViewModel', vm: MapsAndImagesSectionViewModel, model: MapsAndImagesSection },
         { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
         { property: 'npcSectionViewModel', vm: NPCSectionViewModel, model: NPCSection },
         { property: 'monsterSectionViewModel', vm: MonsterSectionViewModel, model: MonsterSection },

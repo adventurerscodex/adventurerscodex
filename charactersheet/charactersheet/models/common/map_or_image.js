@@ -1,22 +1,25 @@
 'use strict';
 
-function MapSection() {
+function MapOrImage() {
     var self = this;
-    self.ps = PersistenceService.register(MapSection, self);
+
+    self.ps = PersistenceService.register(MapOrImage, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'visible', 'name']
+        include: ['characterId', 'encounterId', 'name', 'imageUrl', 'description']
     };
 
     self.characterId = ko.observable();
     self.encounterId = ko.observable();
-    self.name = ko.observable('Maps');
-    self.tagline = ko.observable('Keep track of all of the interesting places in your world.');
-    self.visible = ko.observable(false);
+    self.name = ko.observable();
+    self.description = ko.observable();
+    self.imageUrl = ko.observable();
 
-    //Public Methods
+    self.DESCRIPTION_MAX_LENGTH = 100;
+
+    // Public Methods
 
     self.clear = function() {
-        var values = new MapSection().exportValues();
+        var values = new Map().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };
@@ -30,6 +33,11 @@ function MapSection() {
         var mapping = ko.mapping.autoignore(self, self.mapping);
         return ko.mapping.toJS(self, mapping);
     };
+
+    self.shortDescription = ko.pureComputed(function() {
+        return Utility.string.truncateStringAtLength(self.description(), self.DESCRIPTION_MAX_LENGTH);
+    });
+
 
     self.save = function() {
         self.ps.save();
