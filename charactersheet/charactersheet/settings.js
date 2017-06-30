@@ -90,7 +90,7 @@ var Settings = {
     linkifyOptions : {
         format: {
             url: function (value) {
-            return value.length > 50 ? value.slice(0, 50) + '…' : value
+                return value.length > 50 ? value.slice(0, 50) + '…' : value;
             }
         }
     },
