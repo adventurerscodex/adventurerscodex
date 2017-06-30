@@ -39,7 +39,7 @@ function ChatLogChatItem(message) {
     });
 
     self.html = ko.pureComputed(function() {
-        return self.message.html();
+        return linkifyStr(self.message.html(), Settings.linkifyOptions);
     });
 
     self.saveToNotes = function() {
