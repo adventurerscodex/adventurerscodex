@@ -56,7 +56,7 @@ Utility.string.truncateStringAtLength = function(value, truncateAt) {
  */
 Utility.string.createDirectDropboxLink = function(link) {
     return link ? link.replace('www.dropbox.com', 'dl.dropboxusercontent.com') : '';
-}
+};
 
 /**
  * Updates a single element in an observable array.
