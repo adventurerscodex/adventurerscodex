@@ -23,7 +23,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-        
+
         var key = CharacterManager.activeCharacter().key();
         var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
         if (environmentSection) {
@@ -48,7 +48,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
 
     self.unload = function() {
         Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);        
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -109,6 +109,10 @@ function EnvironmentSectionViewModel(parentEncounter) {
             return 'embedded-image pull-right';
         }
         return 'embedded-image';
+    });
+
+    self.convertedImageLink = ko.pureComputed(function() {
+        return Utility.string.createDirectDropboxLink(self.imageUrl());
     });
 
     /* Private Methods */
