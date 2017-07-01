@@ -106,6 +106,9 @@ function StatsViewModel() {
         self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
         self.level.subscribe(self.levelDataHasChanged);
         self.experience.subscribe(self.experienceDataHasChanged);
+        self.deathSaveFailureList().forEach(function(save, idx, _) {
+            save.deathSaveFailure.subscribe(self._alertPlayerHasDied);
+        });
 
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.profile.level.changed.add(self.calculateHitDice);
@@ -377,5 +380,19 @@ function StatsViewModel() {
     self.proficiencyHasChanged = function() {
         self.otherStats().save();
         Notifications.otherStats.proficiency.changed.dispatch();
+    };
+
+    self._alertPlayerHasDied = function() {
+        var allFailed = self.deathSaveFailureList().every(function(save, idx, _) {
+            return save.deathSaveFailure();
+        });
+        if (allFailed) {
+            Notifications.userNotification.dangerNotification.dispatch(
+                'You have failed all 3 death saves.',
+                'You have died...', {
+                    timeOut: 0
+                });
+        }
+
     };
 }
