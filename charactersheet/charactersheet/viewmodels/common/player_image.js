@@ -98,7 +98,7 @@ function PlayerImageViewModel() {
 
     self.playerImageSrc = ko.pureComputed(function() {
         if (self.imageSource() == 'link') {
-            return self.imageUrl();
+            return Utility.string.createDirectDropboxLink(self.imageUrl());
         }
 
         var url = self._getEmailUrl();

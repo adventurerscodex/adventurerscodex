@@ -48,6 +48,17 @@ Utility.string.truncateStringAtLength = function(value, truncateAt) {
 };
 
 /**
+ * Converts a shareable dropbox link to a direct image link.
+ * `www.dropbox.com` will be converted to `dl.dropboxusercontent.com`
+ * @param link: link to be converted
+ *
+ * @return direct link to dropbox image
+ */
+Utility.string.createDirectDropboxLink = function(link) {
+    return link ? link.replace('www.dropbox.com', 'dl.dropboxusercontent.com') : '';
+};
+
+/**
  * Updates a single element in an observable array.
  *
  * @param array: observable array that contains the item to be updated.

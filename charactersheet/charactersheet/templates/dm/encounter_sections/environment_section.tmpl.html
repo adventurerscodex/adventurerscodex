@@ -30,7 +30,7 @@
           <hr data-bind="visible: shouldShowDividingMarker"/>
           <div>
             <!-- ko if: imageUrl -->
-            <img data-bind="attr: { src: imageUrl, width: imageWidth }, css: imageClass"
+            <img data-bind="attr: { src: convertedImageLink, width: imageWidth }, css: imageClass"
               class="img-responsive img-rounded">
             <!-- /ko -->
             <span data-bind="markdownPreview: description"
