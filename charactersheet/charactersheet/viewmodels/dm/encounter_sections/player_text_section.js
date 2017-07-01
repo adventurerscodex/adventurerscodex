@@ -197,8 +197,8 @@ function PlayerTextSectionViewModel(parentEncounter) {
             });
 
             message.item({
-                    xmlns: Strophe.NS.JSON + '#read-aloud',
-                    json: { html: item.toHTML() }
+                xmlns: Strophe.NS.JSON + '#read-aloud',
+                json: { html: item.toHTML() }
             });
 
             xmpp.connection.send(message.tree());
