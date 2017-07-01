@@ -7,14 +7,13 @@ function Campaign() {
     var self = this;
     self.ps = PersistenceService.register(Campaign, self);
     self.mapping = {
-        include: ['characterId', 'playerName', 'name', 'notes', 'createdDate', 'setting']
+        include: ['characterId', 'playerName', 'name', 'createdDate', 'setting']
     };
 
     self.characterId = ko.observable();
     self.playerName = ko.observable();
     self.setting = ko.observable();
     self.name = ko.observable();
-    self.notes = ko.observable('');
     self.createdDate = ko.observable();
 
     self.save = function() {
@@ -26,9 +25,8 @@ function Campaign() {
     };
 
     self.clear = function() {
-        var values = new Encounter().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
+        var values = new Campaign().exportValues();
+        ko.mapping.fromJS(values, self.mapping, self);
     };
 
     self.importValues = function(values) {
