@@ -388,8 +388,8 @@ function StatsViewModel() {
         });
         if (allFailed) {
             Notifications.userNotification.dangerNotification.dispatch(
-                'You have failed all 3 death saves.',
-                'You have died...', {
+                'Failing all 3 death saves will do that...',
+                'You have died.', {
                     timeOut: 0
                 });
         }
