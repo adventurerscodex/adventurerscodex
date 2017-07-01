@@ -1,3 +1,50 @@
+/*
+Responsive Styles
+*/
+.text-center-xs {
+    text-align: center;
+}
+.text-left-xs {
+    text-align: left;
+}
+.text-left-xs {
+    text-align: left;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .text-center-sm {
+        text-align: center;
+    }
+    .text-left-sm {
+        text-align: left;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .text-center-md {
+        text-align: center;
+    }
+    .text-left-md {
+        text-align: left;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .text-center-lg {
+        text-align: center;
+    }
+    .text-left-lg {
+        text-align: left;
+    }
+}
+
+
+/*
+General Styling
+*/
 html, body {height: 100%;}
 
 #content {
