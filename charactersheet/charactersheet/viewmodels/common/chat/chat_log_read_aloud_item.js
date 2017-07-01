@@ -3,19 +3,18 @@
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-function ChatLogChatItem(message) {
+function ChatLogReadAloudItem(message) {
     var self = this;
 
     self.message = message;
 
     // Chat Item Methods
     self.templateUrl = 'templates/common/chat';
-    self.templateName = 'chat_item.tmpl';
+    self.templateName = 'read_aloud_item.tmpl';
     self.timestamp = ko.pureComputed(function() {
         return self.message.dateReceived();
     });
-    self.listItemClass = ko.observable('');
-
+    self.listItemClass = ko.observable('info-chat-highlight');
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {
@@ -36,11 +35,11 @@ function ChatLogChatItem(message) {
         if (!card) {
             return self.message.fromUsername();
         }
-        return card.get('name') + ' (' + self.message.fromUsername() + ')';
+        return card.get('name') + ' (' + self.message.fromUsername() + ')<br />Private';
     });
 
     self.html = ko.pureComputed(function() {
-        return self.message.html();
+        return self.message.item().json.html;
     });
 
     self.saveToNotes = function() {
@@ -55,7 +54,7 @@ function ChatLogChatItem(message) {
             note.text('# Saved from Chat');
             note.isSavedChatNotes(true);
         }
-        note.text(note.text() + '\n\n' + self.message.toText());
+        note.text(note.text() + '\n\n' + self.html());
         note.save();
 
         Notifications.notes.changed.dispatch();

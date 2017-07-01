@@ -23,6 +23,21 @@ function PlayerTextSectionPushModalViewModel(parent) {
         }
     });
 
+    self.toggleAll = function() {
+        if (self.selectedPartyMembers().length > 0) {
+            self.selectedPartyMembers([]);
+        } else {
+            self.selectedPartyMembers(self.partyMembers());
+        }
+    };
+
+    self.selectAllButtonLabel = ko.pureComputed(function() {
+        if (self.selectedPartyMembers().length > 0) {
+            return 'Deselect All';
+        }
+        return 'Select All';
+    });
+
     self.getAllPartyMembers = function() {
         var character = CharacterManager.activeCharacter();
         var chatService = ChatServiceManager.sharedService();

@@ -195,6 +195,8 @@ function ChatDetailViewModel(chatCell, parent) {
             return new ChatLogChatItem(message);
         } else if (message.messageType() == CHAT_MESSAGE_TYPES.SYSTEM) {
             return new ChatLogSystemItem(message);
+        } else if (message.messageType() == CHAT_MESSAGE_TYPES.READ_ALOUD) {
+            return new ChatLogReadAloudItem(message);
         } else {
             throw Error('Undefined chat message type');
         }

@@ -14,6 +14,7 @@ function ChatLogSystemItem(message) {
     self.timestamp = ko.pureComputed(function() {
         return self.message.dateReceived();
     });
+    self.listItemClass = ko.observable('');
 
     // UI Methods
 

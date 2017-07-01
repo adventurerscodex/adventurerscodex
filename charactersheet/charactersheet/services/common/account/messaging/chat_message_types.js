@@ -33,6 +33,18 @@ var CHAT_MESSAGE_TYPES = {
     SYSTEM: 'system',
 
     /**
+     * Messages of type READ_ALOUD are used to send read aloud text
+     * through the chat system to/from a given user.
+     *
+     * These data messages can optionally contain a plain-text message that
+     * the user should be shown in the chat to indicate that a data object
+     * has been received.
+     *
+     * NOTE: It is recommended to include a plain-text message with these messages.
+     */
+    READ_ALOUD: 'read-aloud',
+
+    /**
      * Messages of type IMAGE are used to send some form of JSON payload
      * through the chat system to/from a given user.
      *

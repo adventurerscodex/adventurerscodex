@@ -14,7 +14,9 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <th></th>
+      <!-- ko if: shouldShowPushButton -->
+      <th>Send</th>
+      <!-- /ko -->
       <th>
         <a data-toggle="modal"
            data-target="#addPlayerText" href="#">
@@ -35,14 +37,14 @@
       <td data-bind="html: longDescription, click: $parent.editPlayerText"
           class="col-md-12 hidden-sm hidden-xs"
           href="#" data-toggle="modal"></td>
-      <td>
-        <!-- ko if: $parent.shouldShowPushButton -->
+      <!-- ko if: $parent.shouldShowPushButton -->
+      <td class="text-center">
         <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
           <i class="fa fa-paper-plane-o fa-color-hover">
-          </i>&nbsp;
-        </a>
-        <!-- /ko -->
+          </i>
+        </a>&nbsp;
       </td>
+      <!-- /ko -->
       <td>
         <a data-bind="click: $parent.removePlayerText" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -228,13 +230,16 @@
             <image-picker params="cells: partyMembers, selectedCells: selectedPartyMembers"></image-picker>
           <div class="spacer"></div>
           <div class="modal-footer">
-            <div class="form-group">
-              <div class="col-xs-offset-7 col-xs-5">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-bind="click: $parent.pushModalDoneButtonWasClicked, text: doneButtonLabel"
-                        data-dismiss="modal"></button>
-              </div>
+            <div class="col-xs-5">
+              <button type="button"
+                      class="btn btn-default pull-left"
+                      data-bind="click: toggleAll, text: selectAllButtonLabel"></button>
+            </div>
+            <div class="col-xs-offset-2 col-xs-5">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-bind="click: $parent.pushModalDoneButtonWasClicked, text: doneButtonLabel"
+                      data-dismiss="modal"></button>
             </div>
           </div>
         </form>

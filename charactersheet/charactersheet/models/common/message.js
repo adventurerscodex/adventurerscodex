@@ -45,6 +45,8 @@ function Message() {
         }
         else if (!self.item() && (self.html() || self.body())) {
             return CHAT_MESSAGE_TYPES.CHAT;
+        } else if (self.route() == CHAT_MESSAGE_TYPES.READ_ALOUD) {
+            return CHAT_MESSAGE_TYPES.READ_ALOUD;
         } else if (self.route() == CHAT_MESSAGE_TYPES.IMAGE) {
             return CHAT_MESSAGE_TYPES.IMAGE;
         } else if (self.route() == CHAT_MESSAGE_TYPES.FORM) {
@@ -54,6 +56,10 @@ function Message() {
         // Should never happen.
         return null;
     };
+
+    self.shortHtml = ko.pureComputed(function() {
+        return Utility.string.truncateStringAtLength(self.html(), 200);
+    });
 
     /**
      * Returns the given route for data messages,
@@ -84,6 +90,8 @@ function Message() {
     self.importValues = function(values) {
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
+        // Must manually override these imports.
+        self.item(values.item);
     };
 
     self.exportValues = function() {
@@ -124,15 +132,15 @@ function Message() {
             type: 'chat'
         }).c('body').up().c('html', {
             xmlns: Strophe.NS.HTML
-        }).c('body', {} , self.html());
+        }).c('body', {} , self.html()).up();
 
         if (self.item()) {
             message.c('item', {
-                xmlns: item.xmlns
-            }, JSONPayload.getElement(item.json, {
+                xmlns: self.item().xmlns
+            }).cnode(JSONPayload.getElement(self.item().json, {
                 compressed: true,
                 compression: 'lz-string'
-            }));
+            }).node);
         }
         return message.tree();
     };
@@ -144,7 +152,7 @@ Message.fromTree = function(msg) {
     if ($(msg).find('item').length > 0) {
         item = {
             xmlns: $(msg).find('item').attr('xmlns'),
-            json: JSONPayload($(msg).find('item json'))
+            json: JSONPayload.getContents($(msg).find('item json'))
         };
     }
 
@@ -159,8 +167,9 @@ Message.fromTree = function(msg) {
         html: $(msg).find('html body').text(),
         subject: $(msg).find('subject').text(),
         invite: $(msg).find('invite').length > 0,
-        item: item,
         dateReceived: (new Date()).getTime()
     });
+    chat.item(item);
+
     return chat;
 };
