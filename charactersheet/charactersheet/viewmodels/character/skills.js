@@ -41,7 +41,7 @@ function SkillsViewModel() {
         });
     };
 
-    self.blankSkill = ko.observable(new Skill(self));
+    self.blankSkill = ko.observable(new Skill());
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();

@@ -18,6 +18,7 @@
           <th class="col-md-2">
             Passive
           </th>
+          <th class="col-xs-1"> <a data-toggle="modal" data-target="#addSkill" href="#"><i class="fa fa-plus fa-color"></i></a></th>
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSkills'>
@@ -28,86 +29,208 @@
           <td data-bind="html: bonusLabel"></td>
           <td data-bind="html: nameLabel"></td>
           <td data-bind="text: passiveBonus"></td>
+          <td class="col-content-vertical col-xs-1">
+            <a data-bind="click: $parent.removeSkill" href="#">
+              <i class="fa fa-trash-o fa-color-hover"></i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
   </div> <!-- Panel Body -->
 </div> <!-- Panel -->
-    <!-- ViewEdit Modal -->
-  <div class="modal fade" tabindex="-1" role="dialog"
-       aria-labelledby="viewSkillLabel"
-       data-bind="modal: {
-          open: modalOpen,
-          onopen: modalFinishedAnimating,
-          onclose: modalFinishedClosing
-        }, with: currentEditItem">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="addSkillLabel"
-              data-bind="text: name"></h4>
-          </div>
-          <div class="modal-body">
-            <form class="form-horizontal" onsubmit="return false">
-              <div class="form-group">
-                <label for="modifier" class="col-sm-2 control-label">
-                  Modifier
-                </label>
-                  <div class="col-sm-10">
-                    <div class="input-group">
-                      <input type="number" class="form-control" id="modifier"
-                             data-bind="value: modifier,
-                              hasFocus: $parent.modifierHasFocus" />
-                      <span class="input-group-addon">Total:
-                        <span data-bind="text: bonus"></span>
-                      </span>
-                    </div>
-                  </div>
+
+<!-- ViewEdit Modal -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   aria-labelledby="viewSkillLabel"
+   data-bind="modal: {
+      open: modalOpen,
+      onopen: modalFinishedAnimating,
+      onclose: modalFinishedClosing
+    }, with: currentEditItem">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="addSkillLabel"
+          data-bind="text: name"></h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="form-group">
+            <label for="modifier" class="col-sm-2 control-label">
+              Modifier
+            </label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <input type="number" class="form-control" id="modifier"
+                         data-bind="value: modifier,
+                          hasFocus: $parent.modifierHasFocus" />
+                  <span class="input-group-addon">Total:
+                    <span data-bind="text: bonus"></span>
+                  </span>
+                </div>
               </div>
+          </div>
 
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Proficiency</label>
-                  <div class="col-sm-10">
-                    <div class="btn-group btn-group-justified" role="group">
-                      <label class="btn btn-default"
-                             data-bind="css: { active: proficiency() == 'not'}">
-                        <input type="radio" class="hide-block" data-bind="checked: proficiency"
-                               name="notProficient" value="not"/>None
-                      </label>
-                      <label class="btn btn-default"
-                             data-bind="css: { active: proficiency() == 'half'}">
-                        <prof-marker params="proficiency: 'half'"></prof-marker>
-                        <input type="radio" class="hide-block" data-bind="checked: proficiency"
-                             name="halfProficient" value="half"/>Half
-                      </label>
-                      <label class="btn btn-default"
-                             data-bind="css: { active: proficiency() == 'proficient'}">
-                        <prof-marker params="proficiency: 'proficient'"></prof-marker>
-                        <input type="radio" class="hide-block" data-bind="checked: proficiency"
-                              name="proficient" value="proficient"/>Proficient
-                      </label>
-                      <label class="btn btn-default"
-                             data-bind="css: { active: proficiency() == 'expertise'}">
-                        <prof-marker params="proficiency: 'expertise'"></prof-marker>
-                        <input type="radio" class="hide-block" data-bind="checked: proficiency"
-                               name="expertise" value="expertise"/>Expertise
-                      </label>
-                    </div>
-                  </div>
-               </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Proficiency</label>
+              <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                         data-bind="css: { active: proficiency() == 'not'}">
+                    <input type="radio" class="hide-block" data-bind="checked: proficiency"
+                           name="notProficient" value="not"/>None
+                  </label>
+                  <label class="btn btn-default"
+                         data-bind="css: { active: proficiency() == 'half'}">
+                    <prof-marker params="proficiency: 'half'"></prof-marker>
+                    <input type="radio" class="hide-block" data-bind="checked: proficiency"
+                         name="halfProficient" value="half"/>Half
+                  </label>
+                  <label class="btn btn-default"
+                         data-bind="css: { active: proficiency() == 'proficient'}">
+                    <prof-marker params="proficiency: 'proficient'"></prof-marker>
+                    <input type="radio" class="hide-block" data-bind="checked: proficiency"
+                          name="proficient" value="proficient"/>Proficient
+                  </label>
+                  <label class="btn btn-default"
+                         data-bind="css: { active: proficiency() == 'expertise'}">
+                    <prof-marker params="proficiency: 'expertise'"></prof-marker>
+                    <input type="radio" class="hide-block" data-bind="checked: proficiency"
+                           name="expertise" value="expertise"/>Expertise
+                  </label>
+                </div>
+              </div>
+           </div>
 
-              </div><!-- Modal Body -->
-              <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
-              </div> <!-- Modal Footer -->
-            </form>
-          </div> <!-- Modal Content -->
-        </div> <!-- Modal Dialog -->
-      </div> <!-- Modal Fade -->
-    </div> <!-- End with statement -->
+          </div><!-- Modal Body -->
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal">Done</button>
+          </div> <!-- Modal Footer -->
+        </form>
+      </div> <!-- Modal Content -->
+    </div> <!-- Modal Dialog -->
+  </div> <!-- Modal Fade -->
+</div> <!-- End with statement -->
+
+<!-- Add Modal -->
+<div class="modal fade" id="addSkill" tabindex="-1" role="dialog"
+  aria-labelledby="addSkillLabel" data-bind="">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="addSkillLabel">
+          Add a skill.
+        </h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+              <input type="text"
+                     class="form-control"
+                     id="name"
+                     data-bind='textInput: blankSkill().name'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Proficiency</label>
+              <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                         data-bind="css: { active: blankSkill().proficiency() == 'not'}">
+                    <input type="radio" class="hide-block" data-bind="checked: blankSkill().proficiency"
+                           name="notProficient" value="not"/>None
+                  </label>
+                  <label class="btn btn-default"
+                         data-bind="css: { active: blankSkill().proficiency() == 'half'}">
+                    <prof-marker params="proficiency: 'half'"></prof-marker>
+                    <input type="radio" class="hide-block" data-bind="checked: blankSkill().proficiency"
+                         name="halfProficient" value="half"/>Half
+                  </label>
+                  <label class="btn btn-default"
+                         data-bind="css: { active: blankSkill().proficiency() == 'proficient'}">
+                    <prof-marker params="proficiency: 'proficient'"></prof-marker>
+                    <input type="radio" class="hide-block" data-bind="checked: blankSkill().proficiency"
+                          name="proficient" value="proficient"/>Proficient
+                  </label>
+                  <label class="btn btn-default"
+                         data-bind="css: { active: blankSkill().proficiency() == 'expertise'}">
+                    <prof-marker params="proficiency: 'expertise'"></prof-marker>
+                    <input type="radio" class="hide-block" data-bind="checked: blankSkill().proficiency"
+                           name="expertise" value="expertise"/>Expertise
+                  </label>
+                </div>
+              </div>
+           </div>
+            <div class="form-group">
+              <label for="abscore"
+                   class="col-sm-2 control-label">Ability Score</label>
+
+              <div class="col-sm-10">
+                <div class="btn-group btn-group-justified" role="group">
+                <label class="btn btn-default"
+                data-bind="css: { active: blankSkill().abilityScore() == 'Str'}">
+                  <input type="radio" class="hide-block"
+                  name="abilityScore" value="Str" data-bind="checked: blankSkill().abilityScore"/>
+                  Str
+                </label>
+                <label class="btn btn-default "
+                data-bind="css: { active: blankSkill().abilityScore() == 'Dex'}">
+                  <input type="radio" class="hide-block"
+                  name="abilityScore" value="Dex" data-bind="checked: blankSkill().abilityScore"/>
+                  Dex
+                  </label>
+                <label class="btn btn-default "
+                data-bind="css: { active: blankSkill().abilityScore() == 'Con'}">
+                  <input type="radio" name="abilityScore" value="Con" class="hide-block"
+                  data-bind="checked: blankSkill().abilityScore"/>
+                  Con
+                  </label>
+                <label class="btn btn-default "
+                data-bind="css: { active: blankSkill().abilityScore() == 'Int'}">
+                  <input type="radio" class="hide-block"
+                  name="abilityScore" value="Int" data-bind="checked: blankSkill().abilityScore"/>
+                  Int
+                  </label>
+                <label class="btn btn-default "
+                data-bind="css: { active: blankSkill().abilityScore() == 'Wis'}">
+                  <input type="radio" class="hide-block"
+                  name="abilityScore" value="Wis" data-bind="checked: blankSkill().abilityScore"/>
+                  Wis
+                  </label>
+                <label class="btn btn-default "
+                data-bind="css: { active: blankSkill().abilityScore() == 'Cha'}">
+                  <input type="radio" class="hide-block"
+                  name="abilityScore" value="Cha" data-bind="checked: blankSkill().abilityScore"/>
+                  Cha
+                </label>
+              </div>
+              </div>
+            </div>
+          </div> <!-- end form-group -->
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind='click: addSkill'
+                    data-dismiss="modal">Add
+            </button>
+          </div>
+        </form>
+      </div> <!-- end modal-body -->
+    </div> <!-- end modal content -->
+  </div> <!-- end modal dialog -->
+</div> <!-- end modal -->
