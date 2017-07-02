@@ -44,9 +44,9 @@
 <div class="modal fade" tabindex="-1" role="dialog"
    aria-labelledby="viewSkillLabel"
    data-bind="modal: {
-      open: modalOpen,
-      onopen: modalFinishedAnimating,
-      onclose: modalFinishedClosing
+      open: editModalOpen,
+      onopen: editModalFinishedAnimating,
+      onclose: editModalFinishedClosing
     }, with: currentEditItem">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -68,7 +68,7 @@
                 <div class="input-group">
                   <input type="number" class="form-control" id="modifier"
                          data-bind="value: modifier,
-                          hasFocus: $parent.modifierHasFocus" />
+                          hasFocus: $parent.editModifierHasFocus" />
                   <span class="input-group-addon">Total:
                     <span data-bind="text: bonus"></span>
                   </span>
@@ -121,7 +121,11 @@
 
 <!-- Add Modal -->
 <div class="modal fade" id="addSkill" tabindex="-1" role="dialog"
-  aria-labelledby="addSkillLabel" data-bind="">
+  aria-labelledby="addSkillLabel" data-bind="modal: {
+      open: newModalOpen,
+      onopen: newModalFinishedAnimating,
+      onclose: newModalFinishedClosing
+    }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -143,7 +147,7 @@
               <input type="text"
                      class="form-control"
                      id="name"
-                     data-bind='textInput: blankSkill().name'>
+                     data-bind='textInput: blankSkill().name, hasFocus: newSkillFieldHasFocus'>
             </div>
           </div>
           <div class="form-group">
