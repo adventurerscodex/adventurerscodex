@@ -58,7 +58,7 @@ function Message() {
     };
 
     self.shortHtml = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.html(), 200);
+        return Utility.string.truncateStringAtLength(self.html(), 100);
     });
 
     /**

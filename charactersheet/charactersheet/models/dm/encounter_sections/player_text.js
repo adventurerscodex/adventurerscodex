@@ -56,7 +56,7 @@ function PlayerText() {
     self.toHTML = function() {
         var description = self.description() ? self.description() : '';
         var name = self.name() ? self.name() : '';
-        return '<h3>{name}</h3><p>{description}</p>'.replace(
+        return '<h3>{name}</h3>&nbsp;<p>{description}</p>'.replace(
             '{description}', marked(description)
         ).replace(
             '{name}', name
