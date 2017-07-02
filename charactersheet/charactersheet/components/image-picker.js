@@ -5,16 +5,22 @@
  *
  * @param cells {Array Objects} A list of cells.
  * @param selectedCells {Array Objects} The observable used to store the selected cells.
+ * @param multiselect {Bool} Defaults to True.
  */
 function ImagePickerComponentViewModel(params) {
     var self = this;
 
     self.cells = params.cells || ko.observableArray();
     self.selectedCells = params.selectedCells || ko.observableArray();
+    self.multiselect = params.multiselect == undefined ? true: params.multiselect;
 
     self.selectCell = function(cell) {
         if (self.selectedCells().indexOf(cell) == -1) {
-            self.selectedCells.push(cell);
+            if (self.multiselect) {
+                self.selectedCells.push(cell);
+            } else {
+                self.selectedCells([cell]);
+            }
         } else {
             self.selectedCells.remove(cell);
         }

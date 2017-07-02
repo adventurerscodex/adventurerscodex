@@ -1,6 +1,72 @@
 'use strict';
 
 var Fixtures = {
+    defaultProfilePictures: [
+        {
+            name: '',
+            image: '/images/sample-headshots/elf-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/elf-head-2.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/emo-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/sorceress-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/warrior-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/warlock-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/orc-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/druid-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/druid-head-2.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/dude-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/dwarf-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/knight-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/mechanic-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/merchant-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/ranger-head.png'
+        },
+        {
+            name: '',
+            image: '/images/sample-headshots/troll-head.png'
+        }
+    ],
     general : {
         currencyDenominationList : [
             'PP', 'GP', 'SP', 'EP', 'CP'],

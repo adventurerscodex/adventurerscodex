@@ -5,9 +5,12 @@ function PlayerImageViewModel() {
 
     self.openModal = ko.observable(false);
 
-    self.imageSource = ko.observable('link');
+    self.imageSource = ko.observable('picker');
     self.imageUrl = ko.observable('');
     self.email = ko.observable('');
+
+    self.defaultImages = ko.observableArray(Fixtures.defaultProfilePictures);
+    self.selectedDefaultImages = ko.observableArray();
     self.height = ko.observable(80);
     self.width = ko.observable(80);
 
@@ -20,7 +23,7 @@ function PlayerImageViewModel() {
     self.load = function() {
         var key = CharacterManager.activeCharacter().key();
         var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
-        if (image && image.imageUrl()) {
+        if (image) {
             self.imageUrl(image.imageUrl());
         } else {
             image = new ImageModel();
@@ -50,6 +53,7 @@ function PlayerImageViewModel() {
         self.email.subscribe(self.dataHasChanged);
         self.imageUrl.subscribe(self.dataHasChanged);
         self.imageSource.subscribe(self.dataHasChanged);
+        self.selectedDefaultImages.subscribe(self.updateImageUrl);
         Notifications.playerInfo.changed.add(self.dataHasChanged);
     };
 
@@ -63,11 +67,17 @@ function PlayerImageViewModel() {
         Notifications.playerImage.changed.dispatch();
     };
 
+    self.updateImageUrl = function() {
+        var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
+        self.imageUrl(url);
+    };
+
     //Public Methods
 
     self.clear = function() {
         self.imageUrl('');
         self.email('');
+        self.selectedDefaultImages([]);
     };
 
     self.save = function() {
@@ -85,7 +95,11 @@ function PlayerImageViewModel() {
 
         var playerImageSource = PersistenceService.findFirstBy(PlayerImage, 'characterId', key);
         if (playerImageSource) {
-            playerImageSource.imageSource(self.imageSource());
+            if (self.imageSource() == 'picker') {
+                playerImageSource.imageSource('link');
+            } else {
+                playerImageSource.imageSource(self.imageSource());
+            }
             playerImageSource.save();
         }
     };
@@ -99,6 +113,11 @@ function PlayerImageViewModel() {
     self.playerImageSrc = ko.pureComputed(function() {
         if (self.imageSource() == 'link') {
             return self.imageUrl();
+        }
+
+        if (self.imageSource() == 'picker') {
+            var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
+            return url;
         }
 
         var url = self._getEmailUrl();
