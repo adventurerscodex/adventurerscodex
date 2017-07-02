@@ -122,6 +122,15 @@ function _ChatService(config) {
         });
     };
 
+    self.getNickForBareJidInParty = function(jid) {
+        var party = self.rooms[self.currentPartyNode] || {};
+        var roster = party.roster || {};
+
+        return Object.keys(roster).filter(function(nick, idx, _) {
+            return Strophe.getBareJidFromJid(roster[nick].jid) === jid;
+        })[0];
+    };
+
     self.isJidInParty = function(jid) {
         var members = self.getOccupantsInRoom(self.currentPartyNode);
         return members.some(function(member, idx, _) {
@@ -163,16 +172,20 @@ function _ChatService(config) {
 
     self._handleNewOneToOneMessage = function(msg) {
         /*eslint no-console:0*/
+
+        // Note: 1-to-1 rooms are not enabled for now. They cause issues with
+        // the private messages from DMs to the party chat. They've worked before
+        // due to a bug in this method, but with it fixed the issue arose.
         try {
             // Messages in 1-to-1 Chats are ID'd by the from JID.
-            var from = $(msg).attr('from');
+//             var from = $(msg).attr('from');
 
-            var room = self._getRoomOrCreate(Strophe.getNodeFromJid(from), false);
-            var chatMessage = Message.fromTree(msg);
-            chatMessage.save();
-
-            var delay = $(msg).find('delay').length > 0;
-            Notifications.chat.message.dispatch(room, chatMessage, delay);
+//             var room = self._getOrCreateRoom(Strophe.getNodeFromJid(from), false);
+//             var chatMessage = Message.fromTree(msg);
+//             chatMessage.save();
+//
+//             var delay = $(msg).find('delay').length > 0;
+//             Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
         }

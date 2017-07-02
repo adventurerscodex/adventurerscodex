@@ -194,9 +194,9 @@ function ChatViewModel() {
         var chatTabIsForground = viewModel.childRootViewModel().activeTab() == 'chat';
         if (!chatTabIsForground && !delay && msg.messageType() != CHAT_MESSAGE_TYPES.META) {
             if (!hideTitle) {
-                Notifications.userNotification.infoNotification.dispatch(msg.html(), msg.fromUsername());
+                Notifications.userNotification.infoNotification.dispatch(msg.shortHtml(), msg.fromUsername());
             } else {
-                Notifications.userNotification.infoNotification.dispatch(msg.html());
+                Notifications.userNotification.infoNotification.dispatch(msg.shortHtml());
             }
 
         }

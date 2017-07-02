@@ -10,7 +10,7 @@
 			  <div class="container-fluid">
 				  <ul class="list-group chat-style"
 				    data-bind="foreach: log, bottomsUp: true">
-					  <li class="list-group-item">
+					  <li class="list-group-item" data-bind="css: listItemClass">
               <div class="row" data-bind="template: {
                 data: $data, name: templateName, templateUrl: templateUrl }"></div>
 					  </li>

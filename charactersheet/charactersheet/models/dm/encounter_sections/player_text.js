@@ -50,4 +50,16 @@ function PlayerText() {
     self.shortDescription = ko.pureComputed(function() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
+
+    // Message Serialization Methods
+
+    self.toHTML = function() {
+        var description = self.description() ? self.description() : '';
+        var name = self.name() ? self.name() : '';
+        return '<h3>{name}</h3>&nbsp;<p>{description}</p>'.replace(
+            '{description}', marked(description)
+        ).replace(
+            '{name}', name
+        );
+    };
 }

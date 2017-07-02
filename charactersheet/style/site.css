@@ -798,3 +798,9 @@ img.resize_logo_nav {
   width:36px;
   height:auto;
 }
+
+
+li.info-chat-highlight {
+  border-left: 2px solid #3498db;
+  padding-left: 1em;
+}

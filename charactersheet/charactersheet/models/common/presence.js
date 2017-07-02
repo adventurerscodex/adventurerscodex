@@ -93,6 +93,8 @@ function Presence() {
             return 'something else has happened.';
         }
     });
+
+    self.shortHtml = self.html;
 }
 
 

@@ -21,6 +21,13 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
 
+    // Push to Player
+    self.selectedItemToPush = ko.observable();
+    self.pushModalViewModel = ko.observable();
+    self.openPushModal = ko.observable(false);
+
+    self._isConnectedToParty = ko.observable(false);
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
         'name desc': { field: 'name', direction: 'desc' },
@@ -35,6 +42,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
@@ -51,11 +59,14 @@ function PlayerTextSectionViewModel(parentEncounter) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+
+        self._connectionHasChanged();
     };
 
     self.unload = function() {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
+        Notifications.party.joined.remove(self._connectionHasChanged);
     };
 
     self.save = function() {
@@ -135,6 +146,65 @@ function PlayerTextSectionViewModel(parentEncounter) {
         self.openModal(!self.openModal());
     };
 
+    /* Push to Player Methods */
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
+
+    self.pushModalToPlayerButtonWasPressed = function(item) {
+        self.selectedItemToPush(item);
+        self.pushModalViewModel(new PlayerTextSectionPushModalViewModel(self));
+        self.pushModalViewModel().load();
+        self.openPushModal(true);
+    };
+
+    self.pushModalFinishedClosing = function() {
+        self.pushModalViewModel().unload();
+        self.pushModalViewModel(null);
+        self.selectedItemToPush(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalDoneButtonWasClicked = function() {
+        var selected = self.pushModalViewModel().selectedPartyMembers();
+        var item = self.selectedItemToPush();
+
+        self.pushTextToPlayers(item, selected);
+    };
+
+    /**
+     * Given an item of text to push, send it as an HTML message
+     * to the given player/players.
+     */
+    self.pushTextToPlayers = function(item, players) {
+        var chat = ChatServiceManager.sharedService();
+        var currentParty = chat.currentPartyNode;
+        var xmpp = XMPPService.sharedService();
+
+        players.forEach(function(player, idx, _) {
+            var bare = Strophe.getBareJidFromJid(player.jid);
+            var nick = chat.getNickForBareJidInParty(bare);
+
+            var message = new Message();
+            message.importValues({
+                to: currentParty + '/' + nick,
+                type: 'chat',
+                from: xmpp.connection.jid,
+                id: xmpp.connection.getUniqueId(),
+                html: item.toHTML(),
+                body: ''
+            });
+
+            message.item({
+                xmlns: Strophe.NS.JSON + '#read-aloud',
+                json: { html: item.toHTML() }
+            });
+
+            xmpp.connection.send(message.tree());
+        });
+    };
+
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
@@ -180,5 +250,10 @@ function PlayerTextSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
