@@ -513,7 +513,7 @@ ul.footer-icons li {
 }
 
 .preview-modal-overflow {
-  height: 225px;
+  max-height: 225px;
   overflow-y: auto;
 }
 
