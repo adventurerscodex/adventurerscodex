@@ -115,12 +115,12 @@ function PlayerImageViewModel() {
             return self.imageUrl();
         }
 
+        var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
         if (self.imageSource() == 'picker') {
-            var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
             return url;
         }
 
-        var url = self._getEmailUrl();
+        url = self._getEmailUrl();
         if (self.imageSource() == 'email' && self.email()) {
             return url;
         }
