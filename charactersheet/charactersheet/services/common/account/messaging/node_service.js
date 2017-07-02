@@ -170,11 +170,7 @@ function _NodeService(config) {
     self._handlePresence = function(receivedPresence) {
         /**eslint no-console:0 */
         try {
-            var xItem = $(receivedPresence).find('x item')[0];
-            if (!xItem) {
-                return true;
-            }
-            var jid = $(xItem).attr('jid');
+            var jid = $(receivedPresence).find('x item').attr('jid');
             if (!jid) {
                 return true;
             }
