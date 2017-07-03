@@ -39,6 +39,7 @@
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="with: campaignTabViewModel, css: overviewTabStatus">
     <div id="dm.tab.overview" data-bind="template: { name: 'overview.tmpl', templateUrl: 'templates/dm', data: campaignOverviewViewModel }"></div>
+    <div id="dm.tab.maps" data-bind="template: { name: 'campaign_maps_and_images.tmpl', templateUrl: 'templates/dm', data: campaignMapsAndImagesViewModel }"></div>
   </div>
   <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="with: encounterTabViewModel, css: encounterTabStatus">
     <div id="dm.tab.encounters" data-bind="template: { name: 'encounter.tmpl', templateUrl: 'templates/dm', data: encounterViewModel }"></div>

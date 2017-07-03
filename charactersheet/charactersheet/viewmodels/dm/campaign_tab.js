@@ -4,6 +4,7 @@ function CampaignTabViewModel() {
     var self = this;
 
     self.campaignOverviewViewModel = ko.observable(new CampaignOverviewViewModel());
+    self.campaignMapsAndImagesViewModel = ko.observable(new CampaignMapsAndImagesViewModel());
 
     //Public Methods
     /**
