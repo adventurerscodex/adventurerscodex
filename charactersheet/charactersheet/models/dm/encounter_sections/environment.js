@@ -41,4 +41,23 @@ function Environment() {
     self.delete = function() {
         self.ps.delete();
     };
+
+    self.name = ko.pureComputed(function() {
+        return 'Weather: {weather}, Terrain: {terrain}'.replace(
+            '{weather}', self.weather()
+        ).replace(
+            '{terrain}', self.terrain()
+        );
+    });
+
+    self.toJSON = function() {
+        return {
+            name: self.name(),
+            image: self.imageUrl()
+        };
+    };
+
+    self.toHTML = function() {
+        return 'New environment';
+    };
 }
