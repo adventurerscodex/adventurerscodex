@@ -38,12 +38,21 @@ function MapOrImage() {
         return Utility.string.truncateStringAtLength(self.description(), self.DESCRIPTION_MAX_LENGTH);
     });
 
-
     self.save = function() {
         self.ps.save();
     };
 
     self.delete = function() {
         self.ps.delete();
+    };
+
+    /* Message Methods */
+
+    self.toJSON = function() {
+        return { image: self.imageUrl(), name: self.name() };
+    };
+
+    self.toHTML = function() {
+        return 'New image';
     };
 }
