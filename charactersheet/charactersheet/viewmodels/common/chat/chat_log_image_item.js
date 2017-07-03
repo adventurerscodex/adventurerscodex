@@ -62,7 +62,7 @@ function ChatLogImageItem(message) {
         note.save();
 
         Notifications.notes.changed.dispatch();
-        Notifications.userNotification.successNotification.dispatch('Saved to Album.');
+        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
 
     /* Card Methods */
