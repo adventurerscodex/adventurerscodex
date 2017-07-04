@@ -47,6 +47,12 @@
       <span class="text-center"><small>Chat</small></span>
     </a>
   </li>
+  <li role="presentation" data-bind="click: activateExhibitTab, css: exhibitTabStatus">
+    <a href="#exhibit-header" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/film-projector.svg"></img></br>
+      <span class="text-center"><small>Exhibit</small></span>
+    </a>
+  </li>
   <!-- Right tabs -->
   <li role="presentation" data-bind="with: actionsToolbarViewModel" class="secondary-nav">
     <button class="btn btn-sm btn-primary" data-toggle="collapse"
@@ -280,7 +286,7 @@
         Notes<br />
         <small>“Consult the Book of Armaments!” -King Arthur</small>
       </div>
-      <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates/character', data: notesViewModel }">
+      <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates/common', data: notesViewModel }">
       </div>
     </div>
   </div>
@@ -312,4 +318,9 @@
 <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
   <div id="player.tab.chat" data-bind="template: { name: 'master.tmpl', templateUrl: 'templates/common/master-detail', data: chatTabViewModel }"></div>
 </div>
+<!-- End Chat Tab -->
+<div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
+  <div id="player.tab.exhibit" data-bind="template: { name: 'exhibit.tmpl', templateUrl: 'templates/character', data: exhibitTabViewModel }"></div>
+</div>
+<!-- End Exhibit Tab -->
 </div>

@@ -86,7 +86,7 @@ function Character() {
 
         if (image.imageSource() === 'link') {
             var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', self.key());
-            return imageModel && imageModel.imageUrl() ? imageModel.imageUrl() : defaultImage;
+            return imageModel && imageModel.imageUrl() ? Utility.string.createDirectDropboxLink(imageModel.imageUrl()) : defaultImage;
         } else if (image.imageSource() === 'email') {
             var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', self.key());
             return info && info.gravatarUrl() ? info.gravatarUrl() : defaultImage;

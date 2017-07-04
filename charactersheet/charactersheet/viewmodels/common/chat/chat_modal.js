@@ -3,7 +3,7 @@
 function ChatModalViewModel(parent) {
     var self = this;
 
-    self.templateUrl = 'templates/common';
+    self.templateUrl = 'templates/common/chat';
     self.templateName = 'chat_modal.tmpl';
 
     self.parent = parent;

@@ -137,6 +137,11 @@ var Notifications = {
         }
     },
 
+    exhibit: {
+        changed: new signals.Signal(),
+        toggle: new signals.Signal()
+    },
+
     feat: {
         changed: new signals.Signal()
     },
@@ -195,6 +200,9 @@ var Notifications = {
     party: {
         joined: new signals.Signal(),
         left: new signals.Signal(),
+        roster: {
+            changed: new signals.Signal()
+        },
         /**
          * A new player update is available.
          * NOTE: The first parameter is the list of pCards.

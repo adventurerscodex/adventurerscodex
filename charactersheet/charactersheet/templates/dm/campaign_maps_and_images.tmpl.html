@@ -1,0 +1,282 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="h2">
+      Campaign Maps &amp; Images<br />
+      <small>A place for all of the great places and maps in your world.</small>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table table-responsive table-ac-bordered table-hover">
+          <thead>
+            <tr>
+              <th data-bind="click: function(){sortBy('name');}" class="col-md-4 col-sm-11">
+                Name
+                <span data-bind="css: sortArrow('name')"></span>
+              </th>
+              <th data-bind="click: function(){sortBy('description');}" class="col-md-7 hidden-xs hidden-sm">
+                Description
+                <span data-bind="css: sortArrow('description')"></span>
+              </th>
+              <!-- ko if: shouldShowPushButton -->
+              <th>Send</th>
+              <th>Exhibit</th>
+              <!-- /ko -->
+              <th class="col-md-1">
+                <a data-toggle="modal"
+                   data-target="#addCampaignMapOrImage" href="#">
+                  <i class="fa fa-plus fa-color"></i>
+                </a>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- ko foreach: filteredAndSortedMapsAndImages -->
+            <tr class="clickable">
+              <td data-bind="text: name, click: $parent.editMapOrImage"
+                  class="col-md-4 col-xs-12"
+                  href="#"
+                  data-toggle="modal"></td>
+              <td data-bind="html: shortDescription, click: $parent.editMapOrImage"
+                  class="col-md-7 hidden-sm hidden-xs"
+                  href="#" data-toggle="modal"></td>
+              <!-- ko if: $parent.shouldShowPushButton -->
+              <td class="text-center">
+                <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
+                  <i class="fa fa-paper-plane-o fa-color-hover">
+                  </i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a data-bind="click: $parent.toggleExhibit" href="#" title="Send Player's Exhibit">
+                  <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+                  </i>
+                </a>
+              </td>
+              <!-- /ko -->
+              <td>
+                <a data-bind="click: $parent.removeMapOrImage" href="#">
+                  <i class="fa fa-trash-o fa-color-hover">
+                  </i>
+                </a>
+              </td>
+            </tr>
+            <!-- /ko -->
+            <!-- ko if: filteredAndSortedMapsAndImages().length == 0 -->
+            <tr class="clickable">
+              <td data-toggle="modal" data-target="#addMapOrImage" href="#"
+                colspan="7" class="text-center">
+                <i class="fa fa-plus fa-color"></i>
+                Add a new Map or Image.
+              </td>
+            </tr>
+            <!-- /ko -->
+          </tbody>
+        </table>
+  </div>
+</div>
+
+        <!-- Add Modal -->
+        <div class="modal fade"
+             id="addMapOrImage"
+             tabindex="-1"
+             role="dialog" data-bind="modal: {
+              onopen: modalFinishedOpening, onclose: modalFinishedClosing}">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"
+                    id="addMapOrImageLabel">Add a new Map or Image.</h4>
+            </div>
+              <div class="modal-body">
+                <form class="form-horizontal" onsubmit="return false;">
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                      <input type="text"
+                             class="form-control"
+                             placeholder="A really cool place or image"
+                             data-bind="textInput: blankMapOrImage().name,
+                                hasFocus: firstElementInModalHasFocus">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label">Link</label>
+                    <div class="col-sm-10">
+                      <input type="text"
+                             class="form-control"
+                             placeholder=""
+                             data-bind="textInput: blankMapOrImage().imageUrl">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-2 col-padded control-label">Description</label>
+                      <div class="col-sm-10 col-padded">
+                        <textarea type="text"
+                               class="form-control" rows="4"
+                               data-bind='value: blankMapOrImage().description'></textarea>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-bind='click: addMapOrImage'
+                            data-dismiss="modal">Add</button>
+                  </div>
+                </form>
+              </div> <!-- Modal Body -->
+            </div> <!-- Modal Content -->
+          </div> <!-- Modal Dialog -->
+        </div> <!-- Modal Fade -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+     id="viewMapOrImage"
+     tabindex="-1"
+     role="dialog"
+     data-bind="modal: {
+      open: openModal,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit a Map or Image.</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Begin Tabs -->
+        <ul class="nav nav-tabs tabs">
+          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#" aria-controls="mapsAndImagesModalPreview" role="tab" data-toggle="tab">
+                <b>Preview</b>
+            </a>
+          </li>
+          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#" aria-controls="mapsAndImagesModalEdit" role="tab" data-toggle="tab">
+                <b>Edit</b>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-bind="with: currentEditItem">
+          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
+            <div class="h3">
+              <span data-bind="text: name"></span>
+            </div>
+            <hr />
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded text-center">
+                <img data-bind="attr: { src: imageUrl }" width="100%" />
+              </div>
+            </div>
+            <hr />
+            <div class="row">
+              <div class="col-xs-12">
+                <div data-bind="markdownPreview: description"
+                     class="preview-modal-overflow">
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Preview Tab -->
+          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="mapOrImageName"
+                       class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Link</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                         class="form-control"
+                         data-bind="textInput: imageUrl">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="mapOrImageDescription"
+                       class="col-sm-2 col-padded control-label">Description</label>
+                  <div class="col-sm-10 col-padded">
+                    <textarea type="text" rows="6"
+                           class="form-control"
+                           data-bind='value: description, markdownEditor: true'></textarea>
+                  </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal">Done</button>
+        </div>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<!-- Push Modal -->
+<!-- The parent is the detail vm and its parent is the master vm -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: openPushModal,
+      onclose: pushModalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          Send read aloud text to which players?
+        </h4>
+      </div>
+      <div class="modal-body" data-bind="with: pushModalViewModel">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="invite.members">
+            <!-- ko if: partyMembers().length == 0 -->
+            <p>There are no players in your party right now.</p>
+            <!-- /ko -->
+            <image-picker params="cells: partyMembers, selectedCells: selectedPartyMembers"></image-picker>
+          <div class="spacer"></div>
+          <div class="modal-footer">
+            <div class="col-xs-5">
+              <button type="button"
+                      class="btn btn-default pull-left"
+                      data-bind="click: toggleAll, text: selectAllButtonLabel"></button>
+            </div>
+            <div class="col-xs-offset-2 col-xs-5">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-bind="click: $parent.pushModalDoneButtonWasClicked, text: doneButtonLabel"
+                      data-dismiss="modal"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,11 @@
 <!-- ko with: partyViewModel -->
 <div class="row">
+  <!-- ko if: players().length == 0-->
+  <div class="detail-place-holder well text-center">
+    <p class="lead text-muted heading">There's no one here.</p>
+    <p class="text-muted">Once your players join the party, they'll show up here.</p>
+  </div>
+  <!-- /ko -->
   <!-- ko foreach: players -->
   <div class="col-sm-4">
     <div class="panel panel-default">

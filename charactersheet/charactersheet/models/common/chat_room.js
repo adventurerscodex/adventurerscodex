@@ -54,17 +54,17 @@ function ChatRoom() {
     /* Convenience Methods */
 
     self.getUnreadMessages = function() {
-        return PersistenceService.findByPredicates(ChatMessage, [
-            new KeyValuePredicate('chatId', self.chatId()),
-            new KeyValuePredicate('read', false),
-            new KeyValuePredicate('isSystemMessage', false)
-        ]);
+        return PersistenceService.findFiltered(Message, function(msg, _) {
+            return Strophe.getBareJidFromJid(msg.from) == self.chatId() && !msg.read;
+        });
     };
 
     self.getAllMessages = function() {
-        return PersistenceService.findByPredicates(ChatMessage, [
-            new KeyValuePredicate('chatId', self.chatId())
-        ]);
+        return PersistenceService.findFiltered(Message, function(msg, _) {
+            return  Strophe.getBareJidFromJid(msg.from) == self.chatId();
+        }).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
+            return Strophe.getBareJidFromJid(msg.from) == self.chatId();
+        }));
     };
 
     self.getRoomMembers = function() {

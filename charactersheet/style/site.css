@@ -1,3 +1,50 @@
+/*
+Responsive Styles
+*/
+.text-center-xs {
+    text-align: center;
+}
+.text-left-xs {
+    text-align: left;
+}
+.text-left-xs {
+    text-align: left;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .text-center-sm {
+        text-align: center;
+    }
+    .text-left-sm {
+        text-align: left;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .text-center-md {
+        text-align: center;
+    }
+    .text-left-md {
+        text-align: left;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .text-center-lg {
+        text-align: center;
+    }
+    .text-left-lg {
+        text-align: left;
+    }
+}
+
+
+/*
+General Styling
+*/
 html, body {height: 100%;}
 
 #content {
@@ -513,7 +560,7 @@ ul.footer-icons li {
 }
 
 .preview-modal-overflow {
-  height: 225px;
+  max-height: 225px;
   overflow-y: auto;
 }
 
@@ -750,4 +797,24 @@ ul.ui-autocomplete .ui-state-active {
 img.resize_logo_nav {
   width:36px;
   height:auto;
+}
+
+
+li.info-chat-highlight {
+  border-left: 2px solid #3498db;
+  padding-left: 1em;
+}
+
+.image-border-inspired {
+   -webkit-box-shadow: 0px 0px 20px 0px #3498db;
+   -moz-box-shadow: 0px 0px 20px 0px #3498db;
+   box-shadow: 0px 0px 20px 0px #3498db;
+}
+
+li.image-chat-highlight {
+  border-left: 2px solid #18bc9c;
+  padding-left: 1em;
+}
+.exhibitActiveIcon {
+  color: #0EADE1;
 }

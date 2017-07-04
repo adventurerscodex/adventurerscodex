@@ -5,7 +5,7 @@ function Environment() {
     self.ps = PersistenceService.register(Environment, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'imageUrl', 'weather',
-            'terrain', 'description']
+            'terrain', 'description', 'isExhibited']
     };
 
     self.characterId = ko.observable();
@@ -15,8 +15,13 @@ function Environment() {
     self.weather = ko.observable();
     self.terrain = ko.observable();
     self.description = ko.observable();
+    self.isExhibited = ko.observable(false);
 
     //Public Methods
+
+    self.toJSON = function() {
+        return { name: 'Environment', url: self.imageUrl() };
+    };
 
     self.clear = function() {
         var values = new Environment().exportValues();
@@ -40,5 +45,18 @@ function Environment() {
 
     self.delete = function() {
         self.ps.delete();
+    };
+
+    self.name = ko.pureComputed(function() {
+        return 'Weather: {weather}, Terrain: {terrain}'.replace(
+            '{weather}', self.weather() ? self.weather() : 'Unknown'
+        ).replace(
+            '{terrain}', self.terrain() ? self.terrain() : 'Unknown'
+
+        );
+    });
+
+    self.toHTML = function() {
+        return 'New environment';
     };
 }

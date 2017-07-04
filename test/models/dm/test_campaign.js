@@ -29,11 +29,11 @@ describe('Campaign', function(){
     describe('Clear', function() {
         it('should clear campaign', function() {
             var campaign = new Campaign();
-            campaign.notes('blah');
+            campaign.playerName('blah');
 
-            campaign.notes().should.equal('blah');
+            campaign.playerName().should.equal('blah');
             campaign.clear();
-            Should.not.exist(campaign.notes());
+            Should.not.exist(campaign.playerName());
         });
     });
 
@@ -41,20 +41,20 @@ describe('Campaign', function(){
         it('should import campaign', function() {
             var campaign = new Campaign();
 
-            campaign.notes().should.equal('');
-            campaign.importValues({"notes": 'blah'});
-            campaign.notes().should.equal('blah');
+            Should.not.exist(campaign.playerName());
+            campaign.importValues({"playerName": 'blah'});
+            campaign.playerName().should.equal('blah');
         });
     });
 
     describe('Export', function() {
         it('should export campaign', function() {
             var campaign = new Campaign();
-            campaign.notes('blah');
+            campaign.playerName('blah');
 
-            campaign.notes().should.equal('blah');
+            campaign.playerName().should.equal('blah');
             var exported = campaign.exportValues();
-            exported.notes.should.equal('blah');
+            exported.playerName.should.equal('blah');
         });
     });
 

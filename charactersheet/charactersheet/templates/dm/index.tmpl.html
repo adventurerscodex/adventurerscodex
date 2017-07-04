@@ -17,6 +17,12 @@
       <span class="text-center"><small>Screen</small></span>
     </a>
   </li>
+  <li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus">
+    <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img></br>
+      <span class="text-center"><small>Notes</small></span>
+    </a>
+  </li>
   <li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus">
     <a href="#party-header" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" src="/images/tab_icons/backup.svg"></img></br>
@@ -33,6 +39,7 @@
 <div class="tab-content">
   <div role="tabpanel" class="tab-pane" id="overview-tab" data-bind="with: campaignTabViewModel, css: overviewTabStatus">
     <div id="dm.tab.overview" data-bind="template: { name: 'overview.tmpl', templateUrl: 'templates/dm', data: campaignOverviewViewModel }"></div>
+    <div id="dm.tab.maps" data-bind="template: { name: 'campaign_maps_and_images.tmpl', templateUrl: 'templates/dm', data: campaignMapsAndImagesViewModel }"></div>
   </div>
   <div role="tabpanel" class="tab-pane" id="encounter-tab" data-bind="with: encounterTabViewModel, css: encounterTabStatus">
     <div id="dm.tab.encounters" data-bind="template: { name: 'encounter.tmpl', templateUrl: 'templates/dm', data: encounterViewModel }"></div>
@@ -46,4 +53,16 @@
   <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
     <div id="dm.tab.chat" data-bind="template: { name: 'master.tmpl', templateUrl: 'templates/common/master-detail', data: chatTabViewModel }"></div>
   </div>
+<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
+  <div class="row">
+    <div class="col-sm-12 col-padded">
+      <div class="h3">
+        Notes<br />
+        <small>“Armaments, chapter two, verses nine through twenty-one.” -Brother Maynard</small>
+      </div>
+      <div data-bind="template: { name: 'notes.tmpl', templateUrl: 'templates/common', data: notesViewModel }">
+      </div>
+    </div>
+  </div>
+</div>
 </div>

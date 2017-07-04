@@ -19,9 +19,10 @@ function DMRootViewModel() {
     self.partyTabViewModel = ko.observable(new PartyTabViewModel());
     self.chatTabViewModel = ko.observable(new ChatTabViewModel());
     self.partyStatusLineViewModel = ko.observable(new PartyStatusLineViewModel());
-    // TODO: Add
+    self.notesTabViewModel = ko.observable(new NotesTabViewModel());
 
     self.dmCardService = DMCardPublishingService.sharedService();
+    self.imageService = ImageServiceManager.sharedService();
 
     //Tooltips
     // TODO: Add
@@ -84,6 +85,10 @@ function DMRootViewModel() {
         return 'hidden';
     });
 
+    self.notesTabStatus = ko.pureComputed(function() {
+        return self._tabIsVisible('notes');
+    });
+
     self.activateOverviewTab = function() {
         self.activeTab('overview');
     };
@@ -102,6 +107,10 @@ function DMRootViewModel() {
 
     self.activateChatTab = function() {
         self.activeTab('chat');
+    };
+
+    self.activateNotesTab = function() {
+        self.activeTab('notes');
     };
 
     self.activatePartyTabFromHotkey = function() {
@@ -127,10 +136,12 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
-        HotkeysService.registerHotkey('4', self.activatePartyTabFromHotkey);
-        HotkeysService.registerHotkey('5', self.activateChatTabFromHotkey);
+        HotkeysService.registerHotkey('4', self.activateNotesTab);
+        HotkeysService.registerHotkey('5', self.activatePartyTabFromHotkey);
+        HotkeysService.registerHotkey('6', self.activateChatTabFromHotkey);
 
         self.dmCardService.init();
+        self.imageService.init();
     };
 
     /**
