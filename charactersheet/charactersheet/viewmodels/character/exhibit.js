@@ -14,8 +14,9 @@ function ExhibitViewModel() {
         Notifications.xmpp.routes.pcard.remove(self.exhibitGivenImage);
     };
 
-    self.exhibitGivenImage = function(pCard) {
-        if (pCard.get('exhibitImage')[0]) {
+    self.exhibitGivenImage = function(newPCard) {
+        var image = pCard.fromEntries(newPCard).get('exhibitImage')[0];
+        if (image) {
             self.name(image.name);
             self.url(Utility.string.createDirectDropboxLink(image.url));
         } else {
