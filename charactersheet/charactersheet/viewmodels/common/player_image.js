@@ -14,6 +14,8 @@ function PlayerImageViewModel() {
     self.height = ko.observable(80);
     self.width = ko.observable(80);
 
+    self.hasInspiredGlow = ko.observable(false);
+
     self.firstFieldHasFocus = ko.observable(false);
 
     self.init = function() {
@@ -49,17 +51,22 @@ function PlayerImageViewModel() {
             playerImageSource.save();
         }
 
+        // Prime the pump.
+        self.inspirationHasChanged();
+
         //Subscriptions
         self.email.subscribe(self.dataHasChanged);
         self.imageUrl.subscribe(self.dataHasChanged);
         self.imageSource.subscribe(self.dataHasChanged);
         self.selectedDefaultImages.subscribe(self.updateImageUrl);
         Notifications.playerInfo.changed.add(self.dataHasChanged);
+        Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
     };
 
     self.unload = function() {
         self.save();
         Notifications.playerInfo.changed.remove(self.dataHasChanged);
+        Notifications.otherStats.inspiration.changed.remove(self.inspirationHasChanged);
     };
 
     self.dataHasChanged = function() {
@@ -71,6 +78,16 @@ function PlayerImageViewModel() {
         var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
         self.imageUrl(url);
     };
+
+    self.inspirationHasChanged = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
+        self.hasInspiredGlow(otherStats && parseInt(otherStats.inspiration()));
+    };
+
+    self.inspiredGlowClass = ko.pureComputed(function() {
+        return self.hasInspiredGlow() ? 'image-border-inspired' : '';
+    });
 
     //Public Methods
 
@@ -105,7 +122,9 @@ function PlayerImageViewModel() {
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
-        return self.playerImageSrc().length ? 'no-border' : 'dashed-border';
+        var border = self.playerImageSrc().length ? 'no-border' : 'dashed-border';
+        var inspired = self.inspiredGlowClass();
+        return border + ' ' + inspired;
     });
 
     //Player Image Handlers
