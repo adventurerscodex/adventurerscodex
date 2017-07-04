@@ -54,6 +54,6 @@ function CampaignMapOrImage() {
     };
 
     self.toHTML = function() {
-        return 'New image';
+        return 'New image in chat';
     };
 }
