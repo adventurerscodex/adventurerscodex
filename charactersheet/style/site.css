@@ -804,3 +804,8 @@ li.info-chat-highlight {
   border-left: 2px solid #3498db;
   padding-left: 1em;
 }
+
+li.image-chat-highlight {
+  border-left: 2px solid #18bc9c;
+  padding-left: 1em;
+}

@@ -14,6 +14,9 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
+      <!-- ko if: shouldShowPushButton -->
+      <th>Send</th>
+      <!-- /ko -->
       <th class="col-md-1">
         <a data-toggle="modal"
            data-target="#addMapOrImage" href="#">
@@ -32,6 +35,14 @@
       <td data-bind="html: shortDescription, click: $parent.editMapOrImage"
           class="col-md-7 hidden-sm hidden-xs"
           href="#" data-toggle="modal"></td>
+      <!-- ko if: $parent.shouldShowPushButton -->
+      <td class="text-center">
+        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
+          <i class="fa fa-paper-plane-o fa-color-hover">
+          </i>
+        </a>
+      </td>
+      <!-- /ko -->
       <td>
         <a data-bind="click: $parent.removeMapOrImage" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -206,3 +217,50 @@
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
+
+<!-- Push Modal -->
+<!-- The parent is the detail vm and its parent is the master vm -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: openPushModal,
+      onclose: pushModalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">
+          Send read aloud text to which players?
+        </h4>
+      </div>
+      <div class="modal-body" data-bind="with: pushModalViewModel">
+        <form class="form-horizontal" onsubmit="return false">
+          <div class="invite.members">
+            <!-- ko if: partyMembers().length == 0 -->
+            <p>There are no players in your party right now.</p>
+            <!-- /ko -->
+            <image-picker params="cells: partyMembers, selectedCells: selectedPartyMembers"></image-picker>
+          <div class="spacer"></div>
+          <div class="modal-footer">
+            <div class="col-xs-5">
+              <button type="button"
+                      class="btn btn-default pull-left"
+                      data-bind="click: toggleAll, text: selectAllButtonLabel"></button>
+            </div>
+            <div class="col-xs-offset-2 col-xs-5">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-bind="click: $parent.pushModalDoneButtonWasClicked, text: doneButtonLabel"
+                      data-dismiss="modal"></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

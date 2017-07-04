@@ -1,6 +1,6 @@
 'use strict';
 
-function PlayerTextSectionPushModalViewModel(parent) {
+function PlayerPushModalViewModel(parent) {
     var self = this;
 
     self.parent = parent;

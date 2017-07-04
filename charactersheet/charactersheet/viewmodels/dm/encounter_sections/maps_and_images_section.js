@@ -31,10 +31,19 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
+    // Push to Player
+    self.selectedMapOrImageToPush = ko.observable();
+    self.pushModalViewModel = ko.observable();
+    self.openPushModal = ko.observable(false);
+
+    self._isConnectedToParty = ko.observable(false);
+
     /* Public Methods */
+
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
@@ -51,11 +60,14 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+
+        self._connectionHasChanged();
     };
 
     self.unload = function() {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
+        Notifications.party.joined.remove(self._connectionHasChanged);
     };
 
     self.save = function() {
@@ -163,6 +175,65 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         self.editFirstModalElementHasFocus(true);
     };
 
+    /* Push to Player Methods */
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
+
+    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
+        self.selectedMapOrImageToPush(mapOrImage);
+        self.pushModalViewModel(new PlayerPushModalViewModel(self));
+        self.pushModalViewModel().load();
+        self.openPushModal(true);
+    };
+
+    self.pushModalFinishedClosing = function() {
+        self.pushModalViewModel().unload();
+        self.pushModalViewModel(null);
+        self.selectedMapOrImageToPush(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalDoneButtonWasClicked = function() {
+        var selected = self.pushModalViewModel().selectedPartyMembers();
+        var mapOrImage = self.selectedMapOrImageToPush();
+
+        self.pushMapOrImageToPlayers(mapOrImage, selected);
+    };
+
+    /**
+     * Given an map or image to push, send it as an HTML message
+     * to the given player/players.
+     */
+    self.pushMapOrImageToPlayers = function(mapOrImage, players) {
+        var chat = ChatServiceManager.sharedService();
+        var currentParty = chat.currentPartyNode;
+        var xmpp = XMPPService.sharedService();
+
+        players.forEach(function(player, idx, _) {
+            var bare = Strophe.getBareJidFromJid(player.jid);
+            var nick = chat.getNickForBareJidInParty(bare);
+
+            var message = new Message();
+            message.importValues({
+                to: currentParty + '/' + nick,
+                type: 'chat',
+                from: xmpp.connection.jid,
+                id: xmpp.connection.getUniqueId(),
+                html: mapOrImage.toHTML(),
+                body: ''
+            });
+
+            message.item({
+                xmlns: Strophe.NS.JSON + '#image',
+                json: mapOrImage.toJSON()
+            });
+
+            xmpp.connection.send(message.tree());
+        });
+    };
+
     /* Private Methods */
 
     self._dataHasChanged = function() {
@@ -180,5 +251,10 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
