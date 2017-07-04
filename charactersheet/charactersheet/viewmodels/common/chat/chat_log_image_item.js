@@ -56,9 +56,11 @@ function ChatLogImageItem(message) {
 
     self.saveToNotes = function() {
         var key = CharacterManager.activeCharacter().key();
+        var date = (new Date()).toDateString();
+
         var note = new Note();
         note.characterId(key);
-        note.text(self.html() + '\n\n' + self.imageHtml());
+        note.text(self.html() + '\n\n' + date + '\n\n' + self.imageHtml());
         note.save();
 
         Notifications.notes.changed.dispatch();
