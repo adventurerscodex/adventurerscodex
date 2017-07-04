@@ -41,7 +41,7 @@ function ChatLogImageItem(message) {
     });
 
     self.messageImage = ko.pureComputed(function() {
-        return Utility.string.createDirectDropboxLink(self.message.item().json.image);
+        return Utility.string.createDirectDropboxLink(self.message.item().json.url);
     });
 
     self.html = ko.pureComputed(function() {
@@ -51,7 +51,7 @@ function ChatLogImageItem(message) {
     });
 
     self.imageHtml = function() {
-        return '<img src="{image}" width="100%" />'.replace('{image}', self.messageImage());
+        return '<img src="{url}" width="100%" />'.replace('{url}', self.messageImage());
     };
 
     self.saveToNotes = function() {

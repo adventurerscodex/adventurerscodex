@@ -5,7 +5,7 @@ function MapOrImage() {
 
     self.ps = PersistenceService.register(MapOrImage, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'name', 'imageUrl', 'description']
+        include: ['characterId', 'encounterId', 'name', 'imageUrl', 'description', 'isExhibited']
     };
 
     self.characterId = ko.observable();
@@ -13,10 +13,16 @@ function MapOrImage() {
     self.name = ko.observable();
     self.description = ko.observable();
     self.imageUrl = ko.observable();
+    self.isExhibited = ko.observable(false);
 
     self.DESCRIPTION_MAX_LENGTH = 100;
 
     // Public Methods
+
+    self.toJSON = function() {
+        var name = self.name() ? self.name() : 'Untitled';
+        return { name: name, url: self.imageUrl() };
+    };
 
     self.clear = function() {
         var values = new Map().exportValues();
@@ -47,10 +53,6 @@ function MapOrImage() {
     };
 
     /* Message Methods */
-
-    self.toJSON = function() {
-        return { image: self.imageUrl(), name: self.name() };
-    };
 
     self.toHTML = function() {
         return 'New image';

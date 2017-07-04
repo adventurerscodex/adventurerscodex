@@ -20,9 +20,9 @@ function DMRootViewModel() {
     self.chatTabViewModel = ko.observable(new ChatTabViewModel());
     self.partyStatusLineViewModel = ko.observable(new PartyStatusLineViewModel());
     self.notesTabViewModel = ko.observable(new NotesTabViewModel());
-    // TODO: Add
 
     self.dmCardService = DMCardPublishingService.sharedService();
+    self.imageService = ImageServiceManager.sharedService();
 
     //Tooltips
     // TODO: Add
@@ -141,6 +141,7 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('6', self.activateChatTabFromHotkey);
 
         self.dmCardService.init();
+        self.imageService.init();
     };
 
     /**

@@ -137,6 +137,11 @@ var Notifications = {
         }
     },
 
+    exhibit: {
+        changed: new signals.Signal(),
+        toggle: new signals.Signal()
+    },
+
     feat: {
         changed: new signals.Signal()
     },

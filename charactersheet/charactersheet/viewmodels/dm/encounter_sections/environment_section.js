@@ -14,6 +14,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self.weather = ko.observable();
     self.terrain = ko.observable();
     self.description = ko.observable('');
+    self.isExhibited = ko.observable(false);
 
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -27,10 +28,30 @@ function EnvironmentSectionViewModel(parentEncounter) {
 
     //Public Methods
 
+    self.toggleExhibit = function() {
+        var imageService = ImageServiceManager.sharedService();
+        if (self.isExhibited()) {
+            self.isExhibited(false);
+            self.save();
+            imageService.clearImage();
+        } else {
+            imageService.publishImage(self.toJSON());
+            imageService.clearExhibitFlag();
+            self.isExhibited(true);
+            self.save();
+            self._dataHasChanged();
+        }
+    };
+
+    self.toJSON = function() {
+        return { name: 'Environment', url: self.imageUrl() };
+    };
+
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
@@ -46,6 +67,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
             self.weather(environment.weather());
             self.terrain(environment.terrain());
             self.description(environment.description());
+            self.isExhibited(environment.isExhibited());
         }
 
         // If there's no data to show, then prefer the edit tab.
@@ -60,6 +82,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.exhibit.toggle.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -74,6 +97,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         environment.weather(self.weather());
         environment.terrain(self.terrain());
         environment.description(self.description());
+        environment.isExhibited(self.isExhibited());
         environment.save();
     };
 
@@ -199,6 +223,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
             self.weather(environment.weather());
             self.terrain(environment.terrain());
             self.description(environment.description());
+            self.isExhibited(environment.isExhibited());
         }
     };
 
