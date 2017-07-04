@@ -15,7 +15,9 @@
         <span data-bind="css: sortArrow('description')"></span>
       </th>
       <!-- ko if: shouldShowPushButton -->
-      <th>Send</th>
+      <th>
+        Send
+      </th>
       <th>
         Exhibit
       </th>
@@ -40,13 +42,13 @@
           href="#" data-toggle="modal"></td>
       <!-- ko if: $parent.shouldShowPushButton -->
       <td class="text-center">
-        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
+        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
           <i class="fa fa-paper-plane-o fa-color-hover">
           </i>
         </a>
       </td>
-      <td>
-        <a data-bind="click: $parent.exhibitMapOrImage" href="#">
+      <td class="text-center">
+        <a data-bind="click: $parent.exhibitMapOrImage" href="#" title="Send Player's Exhibit">
           <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
           </i>
         </a>

@@ -54,10 +54,6 @@ function MapOrImage() {
 
     /* Message Methods */
 
-    self.toJSON = function() {
-        return { image: self.imageUrl(), name: self.name() };
-    };
-
     self.toHTML = function() {
         return 'New image';
     };

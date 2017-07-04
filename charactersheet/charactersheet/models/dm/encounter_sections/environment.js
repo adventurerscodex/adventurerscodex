@@ -56,13 +56,6 @@ function Environment() {
         );
     });
 
-    self.toJSON = function() {
-        return {
-            name: self.name(),
-            image: self.imageUrl()
-        };
-    };
-
     self.toHTML = function() {
         return 'New environment';
     };

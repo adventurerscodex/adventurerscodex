@@ -22,24 +22,26 @@
       <div class="row row-padded">
         <div data-bind="col-xs-12">
           <div class="row">
-            <div class="col-xs-10"><b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span></div>
-            <div class="col-xs-1">
-              <!-- ko if: shouldShowPushButton -->
-              <a data-bind="click: pushModalToPlayerButtonWasPressed" href="#">
-                <i class="fa fa-paper-plane-o fa-color-hover">
-                </i>
-              </a>
-            </div>
-            <div class="col-xs-1">
-              <a data-bind="click: exhibitEnvironment">
-                <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
-                </i>
-              </a>
-            </div>
+            <div class="col-xs-8">
+              <b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span><br>
+              <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
+              </div>
+            <!-- ko if: shouldShowPushButton -->
+              <div class="col-xs-2 text-center">
+                <span style="font-weight: bold;">Send</span><br>
+                <a data-bind="click: pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
+                  <i class="fa fa-paper-plane-o fa-color-hover">
+                  </i>
+                </a>
+              </div>
+              <div class="col-xs-2 text-center">
+                <span style="font-weight: bold;">Exhibit</span><br>
+                <a data-bind="click: exhibitEnvironment" href="#" title="Send Player's Exhibit">
+                  <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+                  </i>
+                </a>
+              </div>
             <!-- /ko -->
-          </div>
-          <div class="row row-padded">
-            <div class="col-xs-12"><b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span></div>
           </div>
           <hr data-bind="visible: shouldShowDividingMarker"/>
           <div>
