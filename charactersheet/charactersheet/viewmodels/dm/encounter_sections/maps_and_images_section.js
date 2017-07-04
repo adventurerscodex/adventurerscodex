@@ -44,6 +44,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
@@ -68,6 +69,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.exhibit.toggle.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -143,7 +145,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         self.openModal(true);
     };
 
-    self.exhibitMapOrImage = function(image) {
+    self.toggleMapOrImageExhibit = function(image) {
         var imageService = ImageServiceManager.sharedService();
         if (image.isExhibited()) {
             image.isExhibited(false);

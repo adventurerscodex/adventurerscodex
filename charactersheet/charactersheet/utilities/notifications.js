@@ -139,7 +139,7 @@ var Notifications = {
 
     exhibit: {
         changed: new signals.Signal(),
-        display: new signals.Signal()
+        toggle: new signals.Signal()
     },
 
     feat: {

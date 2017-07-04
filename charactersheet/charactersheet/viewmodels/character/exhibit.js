@@ -7,15 +7,15 @@ function ExhibitViewModel() {
     self.url = ko.observable('');
 
     self.load = function() {
-        Notifications.exhibit.display.add(self.exhibitGivenImage);
+        Notifications.xmpp.routes.pcard.add(self.exhibitGivenImage);
     };
 
     self.unload = function() {
-        Notifications.exhibit.display.remove();
+        Notifications.xmpp.routes.pcard.remove(self.exhibitGivenImage);
     };
 
-    self.exhibitGivenImage = function(image) {
-        if (image) {
+    self.exhibitGivenImage = function(pCard) {
+        if (pCard.get('exhibitImage')[0]) {
             self.name(image.name);
             self.url(Utility.string.createDirectDropboxLink(image.url));
         } else {

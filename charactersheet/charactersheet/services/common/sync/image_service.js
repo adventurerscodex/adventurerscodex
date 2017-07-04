@@ -74,6 +74,6 @@ function _ImageService(config) {
             element.isExhibited(false);
             element.save();
         });
-        Notifications.encounters.changed.dispatch();
+        Notifications.exhibit.toggle.dispatch();
     };
 }

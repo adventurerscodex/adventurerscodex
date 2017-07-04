@@ -28,7 +28,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
 
     //Public Methods
 
-    self.exhibitEnvironment = function() {
+    self.toggleExhibit = function() {
         var imageService = ImageServiceManager.sharedService();
         if (self.isExhibited()) {
             self.isExhibited(false);
@@ -51,6 +51,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
@@ -81,6 +82,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.exhibit.toggle.remove(self._dataHasChanged);
     };
 
     self.save = function() {
