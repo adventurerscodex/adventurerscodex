@@ -16,6 +16,9 @@
       </th>
       <!-- ko if: shouldShowPushButton -->
       <th>Send</th>
+      <th>
+        Exhibit
+      </th>
       <!-- /ko -->
       <th class="col-md-1">
         <a data-toggle="modal"
@@ -39,6 +42,12 @@
       <td class="text-center">
         <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
           <i class="fa fa-paper-plane-o fa-color-hover">
+          </i>
+        </a>
+      </td>
+      <td>
+        <a data-bind="click: $parent.exhibitMapOrImage" href="#">
+          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
           </i>
         </a>
       </td>

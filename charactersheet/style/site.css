@@ -809,8 +809,12 @@ li.info-chat-highlight {
    -webkit-box-shadow: 0px 0px 10px 0px #3498db;
    -moz-box-shadow: 0px 0px 10px 0px #3498db;
    box-shadow: 0px 0px 10px 0px #3498db;
+}
 
 li.image-chat-highlight {
   border-left: 2px solid #18bc9c;
   padding-left: 1em;
+}
+.exhibitActiveIcon {
+  color: #0EADE1;
 }

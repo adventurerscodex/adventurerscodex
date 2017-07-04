@@ -5,7 +5,7 @@ function Environment() {
     self.ps = PersistenceService.register(Environment, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'imageUrl', 'weather',
-            'terrain', 'description']
+            'terrain', 'description', 'isExhibited']
     };
 
     self.characterId = ko.observable();
@@ -15,8 +15,13 @@ function Environment() {
     self.weather = ko.observable();
     self.terrain = ko.observable();
     self.description = ko.observable();
+    self.isExhibited = ko.observable(false);
 
     //Public Methods
+
+    self.toJSON = function() {
+        return { name: 'Environment', url: self.imageUrl() };
+    };
 
     self.clear = function() {
         var values = new Environment().exportValues();

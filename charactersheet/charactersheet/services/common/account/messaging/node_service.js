@@ -127,9 +127,9 @@ function _NodeService(config) {
         try {
             var items = $(event).find('items').children().toArray();
             var route = $(event).find('items').attr('node');
-            if (!route) { return; }
+            if (!route) { return true; }
             route = route.split('#')[1];
-            if (!route) { return; }
+            if (!route) { return true; }
 
             items.forEach(function(item, idx, _) {
                 var json = $(item).find('json');

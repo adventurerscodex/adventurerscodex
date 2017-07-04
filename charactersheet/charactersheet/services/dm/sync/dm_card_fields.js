@@ -48,5 +48,12 @@ var DMCardFields = [
                 return defaultImage;
             }
         }
+    }, {
+        name: 'exhibitImage',
+        refreshOn: Notifications.exhibit.changed,
+        valueAccessor: function() {
+            var exhibit = PersistenceService.findFirstBy(Exhibit, 'characterId', CharacterManager.activeCharacter().key());
+            return exhibit ? exhibit.toJSON() : null;
+        }
     }
 ];

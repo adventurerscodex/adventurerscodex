@@ -46,7 +46,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     	  <img src="/images/logo-full-circle-icon.png"
     	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
     	       alt="Adventurer's Codex"/>
-        <span class="inline-block pull-right">Adventurer's Codex
+        <span class="inline-block pull-right">Adventurer's Codex</span>
       </a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
@@ -132,7 +132,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- ko if: playerType().key == 'dm' -->
             <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-12 text-center-xs text-left-sm">
                 <div class="h3" id="dmName" autocomplete="off" autocorrect="off"
                   spellcheck="false" data-bind="contenteditable: {
                   text: name,
@@ -397,6 +397,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="viewmodels/character/appearance.js" type="text/javascript"></script>
 <script src="viewmodels/character/armor.js" type="text/javascript"></script>
 <script src="viewmodels/character/character_root.js" type="text/javascript"></script>
+<script src="viewmodels/character/exhibit.js" type="text/javascript"></script>
+<script src="viewmodels/character/exhibit_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/tracker.js" type="text/javascript"></script>
 <script src="viewmodels/character/equipment_tab.js" type="text/javascript"></script>
 <script src="viewmodels/character/feat_traits.js" type="text/javascript"></script>
@@ -509,6 +511,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="models/common/weapon.js" type="text/javascript"></script>
 <script src="models/dm/campaign.js" type="text/javascript"></script>
 <script src="models/dm/encounter.js" type="text/javascript"></script>
+<script src="models/dm/exhibit.js" type="text/javascript"></script>
 <script src="models/dm/encounter_sections/environment_section.js" type="text/javascript"></script>
 <script src="models/dm/encounter_sections/environment.js" type="text/javascript"></script>
 <script src="models/dm/encounter_sections/maps_and_images_section.js" type="text/javascript"></script>
@@ -549,7 +552,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="services/dm/sync/dm_card_fields.js" type="text/javascript"></script>
 <script src="services/common/shared_service_manager.js" type="text/javascript"></script>
 <script src="services/character/armor_class_service.js" type="text/javascript"></script>
-<script src="services/common/shared_service_manager.js" type="text/javascript"></script>
 <script src="services/character/proficiency_service.js" type="text/javascript"></script>
 <script src="services/character/status_service_components/inspiration_component.js" type="text/javascript"></script>
 <script src="services/character/status_service_components/healthiness_component.js" type="text/javascript"></script>
@@ -570,6 +572,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="services/common/account/messaging/chat_service.js" type="text/javascript"></script>
 <script src="services/common/account/xmpp_connection_service.js" type="text/javascript"></script>
 <script src="services/common/sync/card_service.js" type="text/javascript"></script>
+<script src="services/common/sync/image_service.js" type="text/javascript"></script>
 <!-- Components -->
 <script src="components/plus-minus.js" type="text/javascript"></script>
 <script src="components/proficiency-marker.js" type="text/javascript"></script>

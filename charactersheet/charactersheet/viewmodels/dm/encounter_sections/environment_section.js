@@ -14,6 +14,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self.weather = ko.observable();
     self.terrain = ko.observable();
     self.description = ko.observable('');
+    self.isExhibited = ko.observable(false);
 
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -26,6 +27,25 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self._isConnectedToParty = ko.observable(false);
 
     //Public Methods
+
+    self.exhibitEnvironment = function() {
+        var imageService = ImageServiceManager.sharedService();
+        if (self.isExhibited()) {
+            self.isExhibited(false);
+            self.save();
+            imageService.clearImage();
+        } else {
+            imageService.publishImage(self.toJSON());
+            imageService.clearExhibitFlag();
+            self.isExhibited(true);
+            self.save();
+            self._dataHasChanged();
+        }
+    };
+
+    self.toJSON = function() {
+        return { name: 'Environment', url: self.imageUrl() };
+    };
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -46,6 +66,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
             self.weather(environment.weather());
             self.terrain(environment.terrain());
             self.description(environment.description());
+            self.isExhibited(environment.isExhibited());
         }
 
         // If there's no data to show, then prefer the edit tab.
@@ -74,6 +95,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
         environment.weather(self.weather());
         environment.terrain(self.terrain());
         environment.description(self.description());
+        environment.isExhibited(self.isExhibited());
         environment.save();
     };
 
@@ -199,6 +221,7 @@ function EnvironmentSectionViewModel(parentEncounter) {
             self.weather(environment.weather());
             self.terrain(environment.terrain());
             self.description(environment.description());
+            self.isExhibited(environment.isExhibited());
         }
     };
 

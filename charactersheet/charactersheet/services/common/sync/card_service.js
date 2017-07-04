@@ -107,6 +107,11 @@ function _pCardService(configuration) {
 
         if (pCardInParty) {
             self.pCards[publisherJid] = newPCard;
+            if (newPCard.get('exhibitImage')[0]) {
+                Notifications.exhibit.display.dispatch(newPCard.get('exhibitImage')[0]);
+            } else {
+                Notifications.exhibit.display.dispatch(null);
+            }
         }
 
         self._dispatchPlayerChangedNotification();

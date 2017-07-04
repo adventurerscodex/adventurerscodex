@@ -143,6 +143,21 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         self.openModal(true);
     };
 
+    self.exhibitMapOrImage = function(image) {
+        var imageService = ImageServiceManager.sharedService();
+        if (image.isExhibited()) {
+            image.isExhibited(false);
+            image.save();
+            imageService.clearImage();
+        } else {
+            imageService.publishImage(image.toJSON());
+            imageService.clearExhibitFlag();
+            image.isExhibited(true);
+            image.save();
+            self._dataHasChanged();
+        }
+    };
+
     self.toggleModal = function() {
         self.openModal(!self.openModal());
     };
