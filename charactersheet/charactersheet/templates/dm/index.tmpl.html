@@ -17,6 +17,12 @@
       <span class="text-center"><small>Screen</small></span>
     </a>
   </li>
+  <li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus">
+    <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
+      <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img></br>
+      <span class="text-center"><small>Notes</small></span>
+    </a>
+  </li>
   <li role="presentation" data-bind="click: activatePartyTab, css: partyTabStatus">
     <a href="#party-header" aria-controls="party-tab" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" src="/images/tab_icons/backup.svg"></img></br>
@@ -27,12 +33,6 @@
     <a href="#chat-header" aria-controls="chat-tab" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" src="/images/tab_icons/conversation.svg"></img></br>
       <span class="text-center"><small>Chat</small></span>
-    </a>
-  </li>
-  <li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus">
-    <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img></br>
-      <span class="text-center"><small>Notes</small></span>
     </a>
   </li>
 </ul>
