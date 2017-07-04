@@ -44,9 +44,10 @@ function Environment() {
 
     self.name = ko.pureComputed(function() {
         return 'Weather: {weather}, Terrain: {terrain}'.replace(
-            '{weather}', self.weather()
+            '{weather}', self.weather() ? self.weather() : 'Unknown'
         ).replace(
-            '{terrain}', self.terrain()
+            '{terrain}', self.terrain() ? self.terrain() : 'Unknown'
+
         );
     });
 

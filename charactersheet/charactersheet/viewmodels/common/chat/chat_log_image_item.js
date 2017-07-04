@@ -41,7 +41,7 @@ function ChatLogImageItem(message) {
     });
 
     self.messageImage = ko.pureComputed(function() {
-        return self.message.item().json.image;
+        return Utility.string.createDirectDropboxLink(self.message.item().json.image);
     });
 
     self.html = ko.pureComputed(function() {
