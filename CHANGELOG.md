@@ -1,3 +1,19 @@
+version 1.5.0 (7/04/2017)
+* Adds new notifications for connection errors.
+* Adds link detection to chat messages.
+* Adds new section for DM Notes
+* Adds dropbox direct link detection for all link fields.
+* Adds new maps/images encounter section.
+* Adds new Push To Chat functionality to all Maps/Images and Enviroments.
+* Adds new section for campaign maps.
+* Fixes a bug where chat rooms might not be saved.
+* Adds new death saves failure notification.
+* Adds support for custom skills.
+* Adds new profile picture picker.
+* Adds new glow to player picture when inspired.
+* Fixes an issue with chat room case sensitivity.
+* Adds new exhibit funcitonality for maps, images, and environments.
+
 version 1.4.3 (6/11/2017)
 * Fixes bug with saving notes
 
