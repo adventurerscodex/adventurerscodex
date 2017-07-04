@@ -1,4 +1,0 @@
-language: node_js
-after_script: 
-  - npm run coveralls
-  - mr-doc -s charactersheet/charactersheet/ -o docs/ -n "CharacterSheet" -t "cayman"

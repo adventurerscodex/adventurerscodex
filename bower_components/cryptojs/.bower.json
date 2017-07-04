@@ -1,0 +1,13 @@
+{
+  "name": "cryptojs",
+  "homepage": "https://github.com/gwjjeff/cryptojs",
+  "_release": "c3c843c513",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "c3c843c5131e00607fd8cad1baf3761d0209663a"
+  },
+  "_source": "https://github.com/gwjjeff/cryptojs.git",
+  "_target": "*",
+  "_originalSource": "cryptojs"
+}

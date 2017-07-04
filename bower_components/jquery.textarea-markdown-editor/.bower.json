@@ -1,0 +1,37 @@
+{
+  "name": "jquery.textarea-markdown-editor",
+  "version": "0.9.1",
+  "homepage": "https://github.com/ttakuru88/jquery.textarea-markdown-editor",
+  "authors": [
+    "ttakuru88"
+  ],
+  "main": "dist/jquery.textarea-markdown-editor.js",
+  "keywords": [
+    "jquery",
+    "textarea",
+    "markdown"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.9.0"
+  },
+  "devDependencies": {
+    "marked": "~0.3.3"
+  },
+  "_release": "0.9.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.1",
+    "commit": "eacbd5eaabaf6afce40c5ff9adf984dd06ae183a"
+  },
+  "_source": "https://github.com/ttakuru88/jquery.textarea-markdown-editor.git",
+  "_target": "^0.9.1",
+  "_originalSource": "jquery.textarea-markdown-editor"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "knockout-file-bindings",
+  "version": "1.0.2",
+  "homepage": "https://github.com/adrotec/knockout-file-bindings",
+  "authors": [
+    "Muhammad Safraz <mr.safraz@gmail.com>"
+  ],
+  "description": "HTML5 File bindings for knockout js with drag and drop and custom input buttons",
+  "main": [
+    "knockout-file-bindings.js",
+    "knockout-file-bindings.css"
+  ],
+  "keywords": [
+    "knockoutjs",
+    "html5",
+    "file",
+    "upload"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {},
+  "_release": "1.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.2",
+    "commit": "3da3fc0393bb00ae8fc2482d0267ca0c6271e6fc"
+  },
+  "_source": "https://github.com/adrotec/knockout-file-bindings.git",
+  "_target": "~1.0.2",
+  "_originalSource": "knockout-file-bindings"
+}

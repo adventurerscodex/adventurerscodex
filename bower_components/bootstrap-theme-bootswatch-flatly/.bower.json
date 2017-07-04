@@ -1,0 +1,34 @@
+{
+  "name": "bootstrap-theme-bootswatch-flatly",
+  "version": "1.0.2",
+  "homepage": "https://github.com/tthew/bootstrap-theme-bootswatch-flatly",
+  "authors": [
+    "Matt Richards <matt@lucidmoon.co.uk>"
+  ],
+  "description": "Flatly theme for Bootstrap by Thomas Park bower component",
+  "keywords": [
+    "bootstrap",
+    "theme",
+    "flatly"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.2"
+  },
+  "_release": "1.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.2",
+    "commit": "43d11f348cbb2b0b4e29a16ac0e77b2c65cbad2f"
+  },
+  "_source": "https://github.com/tthew/bootstrap-theme-bootswatch-flatly.git",
+  "_target": "~1.0.2",
+  "_originalSource": "bootstrap-theme-bootswatch-flatly"
+}

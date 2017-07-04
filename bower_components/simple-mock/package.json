@@ -1,0 +1,35 @@
+{
+  "name": "simple-mock",
+  "version": "0.6.0",
+  "description": "Super simple stubs and spies with 1-step sandbox restore",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "npmrc": "printf \"_auth = $NPM_AUTH_TOKEN\nemail = $NPM_EMAIL\n\" > .npmrc",
+    "test": "npm run test-no-publish && if [ -n \"${TRAVIS_TAG}\" ]; then npm run npmrc && npm publish || 1; fi",
+    "test-no-publish": "standard && mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jupiter/simple-mock.git"
+  },
+  "keywords": [
+    "test",
+    "simplemock",
+    "simple",
+    "mock",
+    "stub",
+    "spy",
+    "fake"
+  ],
+  "author": "Pieter Raubenheimer",
+  "bugs": {
+    "url": "https://github.com/jupiter/simple-mock/issues"
+  },
+  "homepage": "https://github.com/jupiter/simple-mock",
+  "devDependencies": {
+    "mocha": "^2.2.5",
+    "standard": "^4.0.1"
+  },
+  "dependencies": {}
+}

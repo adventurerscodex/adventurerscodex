@@ -1,0 +1,32 @@
+{
+  "name": "node-uuid",
+  "version": "1.4.7",
+  "homepage": "https://github.com/broofa/node-uuid",
+  "authors": [
+    "Robert Kieffer <robert@broofa.com>"
+  ],
+  "description": "Rigorous implementation of RFC4122 (v1 and v4) UUIDs.",
+  "main": "uuid.js",
+  "keywords": [
+    "uuid",
+    "gid",
+    "rfc4122"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.4.7",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.4.7",
+    "commit": "d7fe1b07d688b0fff40e8493587b949478144228"
+  },
+  "_source": "https://github.com/broofa/node-uuid.git",
+  "_target": "~1.4.3",
+  "_originalSource": "node-uuid"
+}
