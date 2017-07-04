@@ -197,6 +197,8 @@ function ChatDetailViewModel(chatCell, parent) {
             return new ChatLogSystemItem(message);
         } else if (message.messageType() == CHAT_MESSAGE_TYPES.READ_ALOUD) {
             return new ChatLogReadAloudItem(message);
+        } else if (message.messageType() == CHAT_MESSAGE_TYPES.IMAGE) {
+            return new ChatLogImageItem(message);
         } else {
             throw Error('Undefined chat message type');
         }
