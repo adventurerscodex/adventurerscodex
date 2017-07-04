@@ -65,12 +65,17 @@ function _ImageService(config) {
             new KeyValuePredicate('isExhibited', true)
         ];
         var mapOrImages = PersistenceService.findByPredicates(MapOrImage, predicates);
+        var campaignMapOrImages = PersistenceService.findByPredicates(CampaignMapOrImage, predicates);
         var environment = PersistenceService.findByPredicates(Environment, predicates)[0];
         if (environment) {
             environment.isExhibited(false);
             environment.save();
         }
         mapOrImages.forEach(function(element, idx, _) {
+            element.isExhibited(false);
+            element.save();
+        });
+        campaignMapOrImages.forEach(function(element, idx, _) {
             element.isExhibited(false);
             element.save();
         });

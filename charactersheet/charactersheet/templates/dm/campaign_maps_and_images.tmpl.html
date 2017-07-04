@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-xs-12">
     <div class="h2">
-    <!--   <img class="encounter-section-img" src="/images/encounters/globe.svg"> -->
       Campaign Maps &amp; Images<br />
       <small>A place for all of the great places and maps in your world.</small>
     </div>
@@ -20,6 +19,7 @@
               </th>
               <!-- ko if: shouldShowPushButton -->
               <th>Send</th>
+              <th>Exhibit</th>
               <!-- /ko -->
               <th class="col-md-1">
                 <a data-toggle="modal"
@@ -41,8 +41,14 @@
                   href="#" data-toggle="modal"></td>
               <!-- ko if: $parent.shouldShowPushButton -->
               <td class="text-center">
-                <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
+                <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
                   <i class="fa fa-paper-plane-o fa-color-hover">
+                  </i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a data-bind="click: $parent.toggleExhibit" href="#" title="Send Player's Exhibit">
+                  <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
                   </i>
                 </a>
               </td>
@@ -68,7 +74,6 @@
         </table>
   </div>
 </div>
-
 
         <!-- Add Modal -->
         <div class="modal fade"

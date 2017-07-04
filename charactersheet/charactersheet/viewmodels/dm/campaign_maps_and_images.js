@@ -32,9 +32,25 @@ function CampaignMapsAndImagesViewModel() {
 
     /* Public Methods */
 
+    self.toggleExhibit = function(image) {
+        var imageService = ImageServiceManager.sharedService();
+        if (image.isExhibited()) {
+            image.isExhibited(false);
+            image.save();
+            imageService.clearImage();
+        } else {
+            imageService.publishImage(image.toJSON());
+            imageService.clearExhibitFlag();
+            image.isExhibited(true);
+            image.save();
+            self._dataHasChanged();
+        }
+    };
+
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var map = PersistenceService.findBy(CampaignMapOrImage, 'characterId', key);
@@ -48,6 +64,7 @@ function CampaignMapsAndImagesViewModel() {
     self.unload = function() {
         Notifications.global.save.remove(self.save);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.exhibit.toggle.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -201,5 +218,13 @@ function CampaignMapsAndImagesViewModel() {
     self._connectionHasChanged = function() {
         var chat = ChatServiceManager.sharedService();
         self._isConnectedToParty(chat.currentPartyNode != null);
+    };
+
+    self._dataHasChanged = function() {
+        var key = CharacterManager.activeCharacter().key();
+        var mapOrImage = PersistenceService.findBy(CampaignMapOrImage, 'characterId', key);
+        if (mapOrImage) {
+            self.mapsOrImages(mapOrImage);
+        }
     };
 }
