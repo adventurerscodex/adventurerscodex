@@ -19,6 +19,7 @@ function ExhibitViewModel() {
         if (image) {
             self.name(image.name);
             self.url(Utility.string.createDirectDropboxLink(image.url));
+            Notifications.userNotification.infoNotification.dispatch('New image on Exhibit', '');
         } else {
             self.name('');
             self.url('');
