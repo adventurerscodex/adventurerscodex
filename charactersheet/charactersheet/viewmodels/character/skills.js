@@ -41,8 +41,9 @@ function SkillsViewModel() {
         });
     };
 
-    self.blankSkill = ko.observable(new Skill(self));
-    self.modalOpen = ko.observable(false);
+    self.blankSkill = ko.observable(new Skill());
+    self.newModalOpen = ko.observable(false);
+    self.editModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.skills = ko.observableArray([]);
@@ -115,16 +116,16 @@ function SkillsViewModel() {
             columnName, self.sorts));
     };
 
-    // Modal Methods
+    // Edit Modal Methods
 
-    self.modifierHasFocus = ko.observable(false);
+    self.editModifierHasFocus = ko.observable(false);
 
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
+    self.editModalFinishedAnimating = function() {
+        self.editModifierHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
-        if (self.modalOpen()) {
+    self.editModalFinishedClosing = function() {
+        if (self.editModalOpen()) {
             Utility.array.updateElement(self.skills(), self.currentEditItem(), self.editItemIndex);
         }
 
@@ -133,7 +134,19 @@ function SkillsViewModel() {
             skill.updateValues();
         });
 
-        self.modalOpen(false);
+        self.editModalOpen(false);
+    };
+
+    // New Modal Methods
+
+    self.newSkillFieldHasFocus = ko.observable(false);
+
+    self.newModalFinishedAnimating = function() {
+        self.newSkillFieldHasFocus(true);
+    };
+
+    self.newModalFinishedClosing = function() {
+        self.newModalOpen(false);
     };
 
     //Manipulating skills
@@ -156,7 +169,7 @@ function SkillsViewModel() {
         self.editItemIndex = skill.__id;
         self.currentEditItem(new Skill());
         self.currentEditItem().importValues(skill.exportValues());
-        self.modalOpen(true);
+        self.editModalOpen(true);
     };
 
     self.clear = function() {

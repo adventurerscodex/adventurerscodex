@@ -13,7 +13,7 @@ function PartyManagerViewModel() {
     /**
      * The node id of the current party. This should always be a node, not a jid.
      */
-    self.roomId = ko.observable();
+    self.roomId = ko.observable('');
 
     self.roomJid = function() {
         return self.roomId() + '@' + Settings.MUC_SERVICE;
@@ -52,7 +52,9 @@ function PartyManagerViewModel() {
     };
 
     self.joinPartyWasClicked = function() {
-        self.joinParty(self.roomId());
+        if (self.roomId().length > 6) {
+            self.joinParty(self.roomId().toLowerCase());
+        }
     };
 
     self.joinPartyWasClickedWithParty = function(party) {

@@ -154,7 +154,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
     self.pushModalToPlayerButtonWasPressed = function(item) {
         self.selectedItemToPush(item);
-        self.pushModalViewModel(new PlayerTextSectionPushModalViewModel(self));
+        self.pushModalViewModel(new PlayerPushModalViewModel(self));
         self.pushModalViewModel().load();
         self.openPushModal(true);
     };

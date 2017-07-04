@@ -52,7 +52,7 @@ describe('Skill Tree', function() {
             skill.name('Tree climbing');
             p.editSkill(skill);
             p.currentEditItem().name().should.equal(skill.name());
-            p.modalOpen().should.equal(true);
+            p.editModalOpen().should.equal(true);
         });
     });
 

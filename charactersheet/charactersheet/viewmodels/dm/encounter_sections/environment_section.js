@@ -18,11 +18,19 @@ function EnvironmentSectionViewModel(parentEncounter) {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
 
+    // Push to Player
+
+    self.pushModalViewModel = ko.observable();
+    self.openPushModal = ko.observable(false);
+
+    self._isConnectedToParty = ko.observable(false);
+
     //Public Methods
 
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
@@ -44,11 +52,14 @@ function EnvironmentSectionViewModel(parentEncounter) {
         if (!self.imageUrl() && !self.weather() && !self.terrain() && !self.description()) {
             self.selectEditTab();
         }
+
+        self._connectionHasChanged();
     };
 
     self.unload = function() {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
+        Notifications.party.joined.remove(self._connectionHasChanged);
     };
 
     self.save = function() {
@@ -115,6 +126,63 @@ function EnvironmentSectionViewModel(parentEncounter) {
         return Utility.string.createDirectDropboxLink(self.imageUrl());
     });
 
+    /* Push to Player Methods */
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
+
+    self.pushModalToPlayerButtonWasPressed = function(environment) {
+        self.pushModalViewModel(new PlayerPushModalViewModel(self));
+        self.pushModalViewModel().load();
+        self.openPushModal(true);
+    };
+
+    self.pushModalFinishedClosing = function() {
+        self.pushModalViewModel().unload();
+        self.pushModalViewModel(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalDoneButtonWasClicked = function() {
+        var selected = self.pushModalViewModel().selectedPartyMembers();
+        var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());
+
+        self.pushEnvironmentToPlayers(environment, selected);
+    };
+
+    /**
+     * Send the current enviroment as an HTML message
+     * to the given player/players.
+     */
+    self.pushEnvironmentToPlayers = function(environment, players) {
+        var chat = ChatServiceManager.sharedService();
+        var currentParty = chat.currentPartyNode;
+        var xmpp = XMPPService.sharedService();
+
+        players.forEach(function(player, idx, _) {
+            var bare = Strophe.getBareJidFromJid(player.jid);
+            var nick = chat.getNickForBareJidInParty(bare);
+
+            var message = new Message();
+            message.importValues({
+                to: currentParty + '/' + nick,
+                type: 'chat',
+                from: xmpp.connection.jid,
+                id: xmpp.connection.getUniqueId(),
+                html: environment.toHTML(),
+                body: ''
+            });
+
+            message.item({
+                xmlns: Strophe.NS.JSON + '#image',
+                json: environment.toJSON()
+            });
+
+            xmpp.connection.send(message.tree());
+        });
+    };
+
     /* Private Methods */
 
     self._dataHasChanged = function() {
@@ -132,5 +200,10 @@ function EnvironmentSectionViewModel(parentEncounter) {
             self.terrain(environment.terrain());
             self.description(environment.description());
         }
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }

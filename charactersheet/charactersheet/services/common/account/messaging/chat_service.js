@@ -329,7 +329,8 @@ function _ChatService(config) {
         var key = CharacterManager.activeCharacter().key();
         var party = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('isParty', true),
-            new KeyValuePredicate('chatId', jid)
+            new KeyValuePredicate('chatId', jid),
+            new KeyValuePredicate('characterId', key)
         ])[0];
 
         // Create the room if it doesn't exist...
