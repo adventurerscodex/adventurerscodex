@@ -5,7 +5,7 @@ function CampaignMapOrImage() {
 
     self.ps = PersistenceService.register(CampaignMapOrImage, self);
     self.mapping = {
-        include: ['characterId', 'name', 'imageUrl', 'description']
+        include: ['characterId', 'name', 'imageUrl', 'description', 'isExhibited']
     };
 
     self.characterId = ko.observable();
@@ -13,6 +13,7 @@ function CampaignMapOrImage() {
     self.name = ko.observable();
     self.description = ko.observable();
     self.imageUrl = ko.observable();
+    self.isExhibited = ko.observable();
 
     self.DESCRIPTION_MAX_LENGTH = 100;
 
@@ -49,7 +50,7 @@ function CampaignMapOrImage() {
     /* Message Methods */
 
     self.toJSON = function() {
-        return { image: self.imageUrl(), name: self.name() };
+        return { url: self.imageUrl(), name: self.name() };
     };
 
     self.toHTML = function() {
