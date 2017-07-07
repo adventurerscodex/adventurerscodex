@@ -82,7 +82,7 @@ function NestedListComponentViewModel(params) {
 ko.components.register('nested-list', {
     viewModel: NestedListComponentViewModel,
     template: '\
-        <div data-bind="foreach: cells" class="list-group no-bottom-margin">\
+        <div data-bind="foreach: cells" class="list-group no-bottom-margin master-list">\
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectCell">\
