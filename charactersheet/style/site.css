@@ -818,3 +818,17 @@ li.image-chat-highlight {
 .exhibitActiveIcon {
   color: #0EADE1;
 }
+
+.tight-right {
+  padding-right:0px;
+}
+
+.tight-inner {
+  padding-left:0px;
+  padding-right: 0px;
+}
+
+.master-list .list-group-item {
+  border-radius: 0px;
+  border: none;
+}
