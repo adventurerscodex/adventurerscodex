@@ -300,10 +300,14 @@ var Fixtures = {
 
         raceOptions: [
             'Dwarf',
+            'Hill Dwarf',
+            'High Elf',
             'Elf',
+            'Lightfoot Halfling',
             'Halfling',
             'Human',
             'Dragonborn',
+            'Rock Gnome',
             'Gnome',
             'Half-Elf',
             'Half-Orc',
@@ -375,8 +379,21 @@ var Fixtures = {
     wizardProfile: {
         classes : ['Barbarian', 'Bard', 'Cleric', 'Druid', 'Fighter', 'Monk',
               'Paladin', 'Ranger', 'Rogue', 'Sorcerer', 'Warlock', 'Wizard'],
-        races : ['Dwarf', 'Elf', 'Halfling', 'Human', 'Dragonborn', 'Gnome',
-              'Half-Elf', 'Half-Orc', 'Tiefling']
+        races : [
+            'Dwarf',
+            'Hill Dwarf',
+            'High Elf',
+            'Elf',
+            'Lightfoot Halfling',
+            'Halfling',
+            'Human',
+            'Dragonborn',
+            'Rock Gnome',
+            'Gnome',
+            'Half-Elf',
+            'Half-Orc',
+            'Tiefling'
+        ]
     },
     statusPhraseWordMap: {
         health: [{
