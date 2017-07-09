@@ -107,7 +107,7 @@ ko.components.register('nested-list', {
                 </span> \
             </a>\
             <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
-            <div class="row" data-bind="well: { open: isOpen }">\
+            <div class="row collapse" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
                     <nested-list params="cells: children, \
                         levels: $parent.levels - 1, \

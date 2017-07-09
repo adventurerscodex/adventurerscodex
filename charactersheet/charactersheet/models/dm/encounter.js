@@ -8,7 +8,7 @@ function Encounter() {
     self.ps = PersistenceService.register(Encounter, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'name', 'encounterLocation', 'notes',
-            'parent', 'children']
+            'parent', 'children', 'isOpen']
     };
 
     // General Encounter Properties.
@@ -19,7 +19,7 @@ function Encounter() {
     self.notes = ko.observable();
 
     //Collapse Properties
-    self.isOpen = ko.observable(true);
+    self.isOpen = ko.observable(false);
 
     // Related Encounter IDs
     self.parent = ko.observable();
