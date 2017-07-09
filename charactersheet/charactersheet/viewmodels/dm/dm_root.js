@@ -162,6 +162,8 @@ function DMRootViewModel() {
 
         Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
         Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
+
+        self.dmCardService.deinit();
     };
 
     //Private Methods
