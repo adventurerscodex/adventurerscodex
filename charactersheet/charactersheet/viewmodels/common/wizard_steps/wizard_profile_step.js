@@ -53,6 +53,18 @@ function WizardProfileStepViewModel() {
         self.background(value);
     };
 
+    self.populateTraits = function() {
+        var traits = [];
+        var race = self.race();
+        Object.keys(DataRepository.traits).forEach(function(key) {
+            if (DataRepository.traits[key].race == race) {
+                traits.push(DataRepository.traits[key]);
+            }
+        });
+
+        return traits;
+    };
+
     // Wizard Step Methods
 
     /**
@@ -81,7 +93,8 @@ function WizardProfileStepViewModel() {
             gender: self.gender(),
             diety: self.diety(),
             level: self.level() || 1,
-            exp: self.exp()
+            exp: self.exp(),
+            traits: self.populateTraits()
         };
     });
 }
