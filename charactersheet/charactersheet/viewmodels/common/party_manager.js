@@ -122,7 +122,8 @@ function PartyManagerViewModel() {
 
     self.dataHasChanged = function() {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        self.loggedIn(token && token.isValid());
+        var xmpp = XMPPService.sharedService();
+        self.loggedIn(token && token.isValid() && xmpp.connection.authenticated);
     };
 
     /* Private Methods */

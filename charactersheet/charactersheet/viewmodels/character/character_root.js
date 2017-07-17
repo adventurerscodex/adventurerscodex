@@ -225,6 +225,8 @@ function CharacterRootViewModel() {
 
         Notifications.party.joined.remove(self._updateCurrentNode);
         Notifications.party.joined.remove(self._removeCurrentNode);
+
+        self.characterCardPublishingService.deinit();
     };
 
     //Private Methods
