@@ -26,15 +26,12 @@ describe('EncounterDetailViewModel', function(){
         it('should unload encounter\'s data', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new EncounterDetailViewModel(new Encounter(), []);
-            var saveSpy = simple.mock(vm, 'save').callFn(function() {});
             var unloadSpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels').callFn(function() {});
 
-            saveSpy.called.should.equal(false);
             unloadSpy.called.should.equal(false);
 
             vm.unload();
 
-            saveSpy.called.should.equal(true);
             unloadSpy.called.should.equal(true);
         });
     });
