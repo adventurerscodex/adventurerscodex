@@ -19,7 +19,7 @@ function MasterDetailViewModel() {
     self.supportsNestedCells = false;
 
     self.title = ko.observable('');
-    self.listCSS = ko.observable({ 'col-xs-12 col-sm-3': true });
+    self.listCSS = ko.observable({ 'col-xs-12 col-sm-3 tight-right': true });
     self.detailViewModelCSS = ko.observable({ 'col-xs-12 col-sm-9': true });
     self.addNewItemText = ko.observable('Nothing here.');
     self.modalIsOpen = ko.observable(false);
