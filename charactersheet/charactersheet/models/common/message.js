@@ -129,7 +129,7 @@ function Message() {
             to: self.to(),
             from: self.from(),
             id: self.id(),
-            type: self.type(),
+            type: self.type()
         }).c('body').up().c('html', {
             xmlns: Strophe.NS.HTML
         }).c('body', {} , self.html()).up();

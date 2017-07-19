@@ -179,7 +179,7 @@ function _XMPPService(config) {
      */
     self._attemptRetry = function(forceReconnect) {
         if (!forceReconnect && self.connection.connected) {
-            console.log('Already connected, retry not forced. Skipping...')
+            console.log('Already connected, retry not forced. Skipping...');
             return;
         }
 
