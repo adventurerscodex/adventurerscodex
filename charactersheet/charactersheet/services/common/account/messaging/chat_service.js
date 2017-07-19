@@ -29,7 +29,7 @@ function _ChatService(config) {
     self._handlerTokens = [];
 
     self._connectionIsSetup = false;
-    self._xmppIsConnected = ko.observable(false);
+    self._isListeningForXMPPEvents = false;
     self._toJoinParty = null;
 
     self.currentPartyNode = null;
@@ -38,6 +38,8 @@ function _ChatService(config) {
         self._setupConnection();
 
         Notifications.xmpp.connected.add(self._handleConnect);
+        Notifications.xmpp.connected.add(self._setupConnection);
+        Notifications.xmpp.disconnected.add(self._teardownConnection);
         Notifications.characterManager.changing.add(self._leaveAll);
         Notifications.party.joined.add(self._setupRooms);
         Notifications.party.left.add(self._teardownRooms);
@@ -46,6 +48,10 @@ function _ChatService(config) {
     self.deinit = function() {
         self._teardownConnection();
 
+        Notifications.xmpp.connected.remove(self._handleConnect);
+        Notifications.xmpp.connected.remove(self._setupConnection);
+        Notifications.xmpp.disconnected.remove(self._teardownConnection);
+        Notifications.characterManager.changing.remove(self._leaveAll);
         Notifications.party.joined.remove(self._setupRooms);
         Notifications.party.left.remove(self._teardownRooms);
     };
@@ -67,6 +73,8 @@ function _ChatService(config) {
 
     self.join = function(jid, nick, isParty) {
         var xmpp = XMPPService.sharedService();
+        // TODO: MUC Plugin has issues with connection interuptions....
+        // Need to investigate more
         xmpp.connection.muc.join(
             jid, nick, self._handleNewGroupMessage,
             null, self._handleNewRosterMessage,
@@ -271,6 +279,10 @@ function _ChatService(config) {
     };
 
     self._setupConnection = function() {
+        if (self._isListeningForXMPPEvents) {
+            return;
+        }
+
         var xmpp = XMPPService.sharedService();
 
         // One To One Notifications
@@ -295,6 +307,7 @@ function _ChatService(config) {
         self._handlerTokens.push(token1);
         self._handlerTokens.push(token2);
         self._handlerTokens.push(token3);
+        self._isListeningForXMPPEvents = true;
     };
 
     self._teardownConnection = function() {
@@ -302,6 +315,7 @@ function _ChatService(config) {
         self._handlerTokens.forEach(function(token, idx, _) {
             xmpp.connection.deleteHandler(token);
         });
+        self._isListeningForXMPPEvents = false;
     };
 
     self._setupRooms = function(node) {
