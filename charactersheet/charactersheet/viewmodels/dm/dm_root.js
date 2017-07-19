@@ -154,6 +154,7 @@ function DMRootViewModel() {
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
@@ -162,6 +163,7 @@ function DMRootViewModel() {
 
         Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
         Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.remove(self._removeCurrentNode);
 
         self.dmCardService.deinit();
     };
