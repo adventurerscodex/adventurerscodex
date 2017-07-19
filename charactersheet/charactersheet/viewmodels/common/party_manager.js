@@ -21,6 +21,7 @@ function PartyManagerViewModel() {
 
     self.load = function() {
         Notifications.xmpp.connected.add(self.dataHasChanged);
+        Notifications.xmpp.disconnected.add(self._handleDisconnection);
         Notifications.xmpp.error.add(self._handleConnectionError);
         self.parties(self._getParties());
 
@@ -32,6 +33,7 @@ function PartyManagerViewModel() {
 
     self.unload = function() {
         Notifications.xmpp.connected.remove(self.dataHasChanged);
+        Notifications.xmpp.disconnected.remove(self._handleDisconnection);
         Notifications.xmpp.error.remove(self._handleConnectionError);
         Notifications.party.joined.remove(self._handleSubscription);
         Notifications.party.left.remove(self._handleUnsubscription);
@@ -140,6 +142,22 @@ function PartyManagerViewModel() {
         if (self.inAParty()) {
             self._handleUnsubscription('', true);
         }
+    };
+
+    self._handleDisconnection = function() {
+        self.dataHasChanged();
+        self.loggedIn(false);
+        self.roomId(null);
+        self.inAParty(false);
+
+        Notifications.userNotification.warningNotification.dispatch(
+            'It looks like you\'ve been disconnected. Is your internet ok?',
+            '',
+            {
+                timeOut: 0,
+                extendedTimeOut: 0
+            }
+        );
     };
 
     self._handleSubscription = function(node, success) {
