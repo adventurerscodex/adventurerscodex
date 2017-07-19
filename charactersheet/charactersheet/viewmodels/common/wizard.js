@@ -161,6 +161,16 @@ function WizardViewModel() {
             profile.importValues(data);
             profile.save();
 
+            // Pre populate traits by race
+            var traits = data.traits;
+            traits.forEach(function (item, idx, _){
+                var trait = new Trait();
+                item.characterId = character.key();
+                trait.importValues(item);
+                trait.save();
+            });
+
+
             var playerInfo = new PlayerInfo();
             playerInfo.characterId(character.key());
             playerInfo.save();

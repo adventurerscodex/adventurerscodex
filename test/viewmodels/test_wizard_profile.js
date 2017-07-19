@@ -63,6 +63,25 @@ describe('Wizard Profile ViewModel', function(){
         });
     });
 
+    describe('Populate Traits from Race', function() {
+        var wizard = new WizardProfileStepViewModel();
+        wizard.setRace('label', 'Elf');
+
+        wizard.race().should.equal('Elf');
+
+        simple.mock(DataRepository, 'traits',
+            {'Age (Elf)': {
+                'description': 'You are old.',
+                'name': 'Age',
+                'race': 'Elf'
+            }
+        }
+        );
+        var traits = wizard.populateTraits();
+        traits.length.should.equal(1);
+        traits[0].name.should.equal('Age');
+    });
+
     describe('Ready', function() {
         it('should determine if step is ready', function() {
             var wizard = new WizardProfileStepViewModel();
