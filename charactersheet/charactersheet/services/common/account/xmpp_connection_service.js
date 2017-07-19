@@ -53,6 +53,10 @@ function _XMPPService(config) {
     self._connectionRetries = 0;
     self.MAX_RETRIES = 5;
     self.MIN_RETRY_INTERVAL = 1500;
+    self._pingHandle = null;
+
+    self.MAX_RETRIES = 3;
+    self.PING_INTERVAL = 5000000;
 
     /**
      * A lazily instantiated connection to the XMPP backend server.
@@ -145,6 +149,8 @@ function _XMPPService(config) {
             self.connection.send($pres().tree());
             self.connection.flush();
 
+            self._pingHandle = setInterval(self._ping, self.PING_INTERVAL);
+
             Notifications.xmpp.connected.dispatch();
         } else if (status === Strophe.Status.DISCONNECTED) {
             // Typical disconnect workflow.
@@ -154,6 +160,10 @@ function _XMPPService(config) {
 
             if (!self._isAttemptingRetry) {
                 Notifications.xmpp.disconnected.dispatch(true);
+            }
+
+            if (self._pingHandle) {
+                clearInterval(self._pingHandle);
             }
 
             // Attempt reconnect, unless the app is shutting down.
@@ -214,5 +224,9 @@ function _XMPPService(config) {
 
         var interval = self._connectionRetries * self.MIN_RETRY_INTERVAL;
         setTimeout(self._attemptRetry, interval);
+    };
+
+    self._ping = function() {
+        self.connection.send($pres().tree());
     };
 }
