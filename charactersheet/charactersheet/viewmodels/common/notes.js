@@ -54,6 +54,7 @@ function NotesViewModel() {
 
     self.selectNote = function(note) {
         self.selectedNote(note);
+        self.selectedNote().text.subscribe(self.selectedNote().save);
     };
 
     self.isActiveCSS = function(note) {

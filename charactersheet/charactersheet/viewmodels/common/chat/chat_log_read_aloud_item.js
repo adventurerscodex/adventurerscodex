@@ -60,6 +60,7 @@ function ChatLogReadAloudItem(message) {
         Notifications.notes.changed.dispatch();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
+
     /* Card Methods */
 
     self.getCard = function() {
