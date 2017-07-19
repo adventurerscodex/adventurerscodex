@@ -137,12 +137,12 @@ function ChatDetailViewModel(chatCell, parent) {
         var xmpp = XMPPService.sharedService();
         var key = CharacterManager.activeCharacter().key();
 
-        // TODO FIX
         var message = new Message();
         message.importValues({
             from: xmpp.connection.jid,
-            message: self.message(),
+            html: self.message(),
             to: self.id(),
+            type: 'groupchat',
             id: xmpp.connection.getUniqueId(),
             characterId: key
         });
@@ -152,14 +152,7 @@ function ChatDetailViewModel(chatCell, parent) {
 
     self._sendMessage = function(message, onsuccess, onerror) {
         var xmpp = XMPPService.sharedService();
-        if (self.isGroupChat()) {
-            var id = xmpp.connection.getUniqueId();
-            // TODO: Refactor to be consistant with private chat.
-            xmpp.connection.muc.groupchat(message.to(), null, message.message(), id);
-        } else {
-            xmpp.connection.send(message.tree());
-        }
-        // Actually send the messages.
+        xmpp.connection.send(message.tree());
         xmpp.connection.flush();
     };
 
