@@ -90,11 +90,12 @@ function _NodeService(config) {
     self._isListeningForXMPPEvents = false;
 
     self.init = function() {
-        Notifications.party.roster.changed.add(self._getCards);
-
-        // Re-add them upon reconnection.
-        Notifications.xmpp.connected.add(self._addXMPPHandlers);
         self._addXMPPHandlers();
+
+
+        Notifications.party.roster.changed.add(self._getCards);
+        Notifications.xmpp.initialized.add(self._addXMPPHandlers);
+        Notifications.xmpp.disconnected.add(self._handleXMPPDisconnect);
     };
 
     /**
@@ -130,9 +131,7 @@ function _NodeService(config) {
             xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
             xmpp.connection.addHandler(self._handlePresence, null, 'presence');
             xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
-
-            // DEBUG
-            XMPPService.sharedService().connection.addHandler(function(a) {console.log(a); return true;})        }
+        }
         self._isListeningForXMPPEvents = true;
     };
 

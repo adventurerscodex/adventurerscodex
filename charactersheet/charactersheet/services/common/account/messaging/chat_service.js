@@ -37,8 +37,8 @@ function _ChatService(config) {
     self.init = function() {
         self._setupConnection();
 
+        Notifications.xmpp.initialized.add(self._setupConnection);
         Notifications.xmpp.connected.add(self._handleConnect);
-        Notifications.xmpp.connected.add(self._setupConnection);
         Notifications.xmpp.disconnected.add(self._teardownConnection);
         Notifications.characterManager.changing.add(self._leaveAll);
         Notifications.party.joined.add(self._setupRooms);
@@ -48,8 +48,8 @@ function _ChatService(config) {
     self.deinit = function() {
         self._teardownConnection();
 
+        Notifications.xmpp.initialized.remove(self._setupConnection);
         Notifications.xmpp.connected.remove(self._handleConnect);
-        Notifications.xmpp.connected.remove(self._setupConnection);
         Notifications.xmpp.disconnected.remove(self._teardownConnection);
         Notifications.characterManager.changing.remove(self._leaveAll);
         Notifications.party.joined.remove(self._setupRooms);
@@ -57,19 +57,6 @@ function _ChatService(config) {
     };
 
     /* Public Methods */
-
-    self.send = function(room, message) {
-        var xmpp = XMPPService.sharedService();
-        if (room.isGroupChat()) {
-            var id = xmpp.connection.getUniqueId();
-            // TODO: Refactor. This is just sending plaintext messages.
-            xmpp.connection.muc.groupchat(message.to(), null, message.message(), id);
-        } else {
-            xmpp.connection.send(message.tree());
-        }
-        // Actually send the messages.
-        xmpp.connection.flush();
-    };
 
     self.join = function(jid, nick, isParty) {
         var xmpp = XMPPService.sharedService();

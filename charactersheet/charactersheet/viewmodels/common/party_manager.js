@@ -144,20 +144,22 @@ function PartyManagerViewModel() {
         }
     };
 
-    self._handleDisconnection = function() {
+    self._handleDisconnection = function(shouldNotify) {
         self.dataHasChanged();
         self.loggedIn(false);
         self.roomId(null);
         self.inAParty(false);
 
-        Notifications.userNotification.warningNotification.dispatch(
-            'It looks like you\'ve been disconnected. Is your internet ok?',
-            '',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        if (shouldNotify) {
+            Notifications.userNotification.warningNotification.dispatch(
+                'It looks like you\'ve been disconnected. Is your internet ok?',
+                '',
+                {
+                    timeOut: 0,
+                    extendedTimeOut: 0
+                }
+            );
+        }
     };
 
     self._handleSubscription = function(node, success) {

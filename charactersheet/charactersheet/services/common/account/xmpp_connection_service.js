@@ -76,10 +76,7 @@ function _XMPPService(config) {
         Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
         Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
 
-        // Set up the connection.
-        var connection = new Strophe.Connection(self.configuration.url);
-        var callback = self.configuration.connection.callback || self._connectionHandler;
-        self.connection = connection;
+        self._initializeConnection();
 
         Notifications.characterManager.changed.addOnce(self._handleConnect);
     };
@@ -90,6 +87,14 @@ function _XMPPService(config) {
     };
 
     /* Private Methods */
+
+    self._initializeConnection = function() {
+        var connection = new Strophe.Connection(self.configuration.url);
+        var callback = self.configuration.connection.callback || self._connectionHandler;
+        self.connection = connection;
+
+        Notifications.xmpp.initialized.dispatch();
+    };
 
     self._shouldLog = function() {
         return self.configuration.fallbackAction == 'log';
@@ -139,7 +144,7 @@ function _XMPPService(config) {
             if (self._shouldLog() && 'console' in window) {
                 console.log('Disconnected.');
             }
-            Notifications.xmpp.disconnected.dispatch();
+            Notifications.xmpp.disconnected.dispatch(true);
 
             // Attempt reconnect, unless the app is shutting down.
             if (!self._isShuttingDown) {
@@ -185,6 +190,10 @@ function _XMPPService(config) {
 
         console.log('Attempting to reconnect. Attempt {count}..'.replace('{count}', self._connectionRetries));
         self._connectionRetries += 1;
+
+        // Give the rest of the app the ability to unsubscribe before retrying.
+        Notifications.xmpp.disconnected.dispatch();
+        self._initializeConnection();
         self._handleConnect();
 
         var interval = self._connectionRetries * self.MIN_RETRY_INTERVAL;

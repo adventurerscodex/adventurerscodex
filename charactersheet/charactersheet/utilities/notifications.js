@@ -324,12 +324,18 @@ var Notifications = {
 
     xmpp: {
         /**
+         * Dispatched when a new connection object has been created, but before
+         * it is connected to the service.
+         */
+        initialized: new signals.Signal(),
+        /**
          * Dispatched when the XMPP connection is successfully established,
          * the given user is authenticated, and the connection is now usable.
          */
         connected: new signals.Signal(),
         /**
          * Dispatched when the XMPP connection has been successfully terminated.
+         * @param shouldNotify {bool} whether the event deserves to notify the user.
          */
         disconnected: new signals.Signal(),
         error: new signals.Signal(),
