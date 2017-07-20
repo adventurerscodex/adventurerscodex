@@ -819,16 +819,47 @@ li.image-chat-highlight {
   color: #0EADE1;
 }
 
+.master-list .list-group-item {
+  border-radius: 0px;
+  border: none;
+}
+
 .tight-right {
   padding-right:0px;
 }
 
+/**
+ * Tight panels remove the padding around themselves but add it back for inner
+ * table cells and some inner divs. Tables in tight panels stretch across the
+ * full inner width.
+ */
 .tight-inner {
   padding-left:0px;
   padding-right: 0px;
 }
 
-.master-list .list-group-item {
-  border-radius: 0px;
-  border: none;
+.tight-inner tr td:first-child {
+  padding-left:15px;
+}
+
+.tight-inner tr td:last-child {
+  padding-right:15px;
+}
+
+.tight-inner tr th:first-child {
+  padding-left:15px;
+}
+
+.tight-inner tr th:last-child {
+  padding-right:15px;
+}
+
+.tight-inner .progress {
+  margin-left:15px;
+  margin-right:15px;
+}
+
+.tight-inner .input-group {
+  margin-left:15px;
+  margin-right:15px;
 }
