@@ -53,6 +53,11 @@ function EnvironmentSectionViewModel(parentEncounter) {
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
+        self.imageUrl.subscribe(self.save);
+        self.weather.subscribe(self.save);
+        self.terrain.subscribe(self.save);
+        self.description.subscribe(self.save);
+
         var key = CharacterManager.activeCharacter().key();
         var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
         if (environmentSection) {

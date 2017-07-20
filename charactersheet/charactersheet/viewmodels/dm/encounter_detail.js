@@ -38,7 +38,6 @@ function EncounterDetailViewModel(encounter, allSections) {
     };
 
     self.unload = function() {
-        self.save();
         ViewModelUtilities.unloadSubViewModels(self);
     };
 
