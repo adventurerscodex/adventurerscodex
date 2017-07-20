@@ -832,3 +832,30 @@ li.image-chat-highlight {
   border-radius: 0px;
   border: none;
 }
+
+.connection-status {
+  position: relative;
+  width:15px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.connection-status .circle-indicator {
+  position: absolute;
+  width:15px;
+  height:15px;
+  margin-left: 30px;
+  margin-top: -18px;
+  z-index:1000;
+  border-radius:15px;
+
+  border: 2px solid white;
+}
+
+.circle-indicator.success {
+  background: #18bc9c;
+}
+
+.circle-indicator.failure {
+  background: #e74c3c;
+}

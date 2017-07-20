@@ -53,6 +53,7 @@ function PlayerImageViewModel() {
 
         // Prime the pump.
         self.inspirationHasChanged();
+        self._handleConnectionStatusChanged();
 
         //Subscriptions
         self.email.subscribe(self.dataHasChanged);
@@ -61,12 +62,16 @@ function PlayerImageViewModel() {
         self.selectedDefaultImages.subscribe(self.updateImageUrl);
         Notifications.playerInfo.changed.add(self.dataHasChanged);
         Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
+        Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
+        Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
     };
 
     self.unload = function() {
         self.save();
         Notifications.playerInfo.changed.remove(self.dataHasChanged);
         Notifications.otherStats.inspiration.changed.remove(self.inspirationHasChanged);
+        Notifications.xmpp.connected.remove(self._handleConnectionStatusChanged);
+        Notifications.xmpp.disconnected.remove(self._handleConnectionStatusChanged);
     };
 
     self.dataHasChanged = function() {
@@ -126,6 +131,22 @@ function PlayerImageViewModel() {
         var inspired = self.inspiredGlowClass();
         return border + ' ' + inspired;
     });
+
+    // Status Indicator Methods
+
+    self._isConnectedToXMPP = ko.observable();
+
+    self.statusIndicatorClass = ko.pureComputed(function() {
+        if (self._isConnectedToXMPP()) {
+            return 'success';
+        }
+        return 'failure';
+    });
+
+    self._handleConnectionStatusChanged = function() {
+        var xmpp = XMPPService.sharedService();
+        self._isConnectedToXMPP(xmpp.connection.connected);
+    };
 
     //Player Image Handlers
 
