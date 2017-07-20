@@ -413,6 +413,10 @@ textarea.dark-area {
   color:#e74c3c;
 }
 
+.fa-disabled {
+  color: lightgray;
+}
+
 .feature-row span {
   line-height: 3em;
 }

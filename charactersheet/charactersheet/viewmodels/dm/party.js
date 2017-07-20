@@ -1,22 +1,30 @@
 'use strict';
 
-
 function PartyViewModel() {
     var self = this;
 
     self.players = ko.observableArray();
+    self.isConnectedToParty = ko.observable(false);
 
     self.load = function() {
         Notifications.xmpp.routes.pcard.add(self.handlePCard);
         Notifications.chat.member.left.add(self.removePlayer);
         Notifications.party.left.add(self.clearPCards);
+        Notifications.party.joined.add(self.isConnectedToParty);
+        self.checkForParty();
     };
 
     self.unload = function() {
         Notifications.xmpp.routes.pcard.remove(self.handlePCard);
         Notifications.chat.member.left.remove(self.removePlayer);
         Notifications.party.left.remove(self.clearPCards);
+        Notifications.party.joined.remove(self.checkForParty);
     };
+
+    self.checkForParty = function() {
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
+    }
 
     self.handlePCard = function(inputPCard) {
         var chat = ChatServiceManager.sharedService();
@@ -50,5 +58,6 @@ function PartyViewModel() {
 
     self.clearPCards = function() {
         self.players([]);
+        self.checkForParty();
     };
 }
