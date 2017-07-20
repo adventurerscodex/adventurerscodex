@@ -171,6 +171,15 @@ function WizardViewModel() {
             });
 
 
+            // Pre populate items by backpack
+            var items = data.items;
+            items.forEach(function (element, idx, _){
+                var item = new Item();
+                element.characterId = character.key();
+                item.importValues(element);
+                item.save();
+            });
+
             var playerInfo = new PlayerInfo();
             playerInfo.characterId(character.key());
             playerInfo.save();

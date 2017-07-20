@@ -22,6 +22,7 @@ function WizardProfileStepViewModel() {
     self.playerName = ko.observable().extend({ required: '&#9679; Required' });
     self.race = ko.observable();
     self.background = ko.observable();
+    self.backpack = ko.observable();
     self.typeClass = ko.observable();
     self.alignment = ko.observable();
     self.age = ko.observable();
@@ -35,6 +36,7 @@ function WizardProfileStepViewModel() {
     self.classOptions = Fixtures.profile.classOptions;
     self.alignmentOptions = Fixtures.profile.alignmentOptions;
     self.backgroundOptions = Fixtures.profile.backgroundOptions;
+    self.backpackOptions = Fixtures.wizardProfile.backpackOptions;
 
     //Prepopulate methods
     self.setRace = function(label, value) {
@@ -53,6 +55,10 @@ function WizardProfileStepViewModel() {
         self.background(value);
     };
 
+    self.setBackpack = function(label, value) {
+        self.backpack(value);
+    };
+
     self.populateTraits = function() {
         var traits = [];
         var race = self.race();
@@ -63,6 +69,29 @@ function WizardProfileStepViewModel() {
         });
 
         return traits;
+    };
+
+    self.populateBackpackItems = function() {
+        var items = [];
+        var populatedItems = [];
+        var backpack = self.backpack();
+        Object.keys(DataRepository.backpacks).forEach(function(key) {
+            //Obtain items array for matching backpack
+            if (key == backpack) {
+                items = DataRepository.backpacks[key];
+            }
+        });
+
+        if (items) {
+            items.forEach(function(element, idx, _) {
+                var item = DataRepository.items[element.name];
+                //Add item quantity from backpacks object
+                item.itemQty = element.count;
+                populatedItems.push(item);
+            });
+        }
+
+        return populatedItems;
     };
 
     // Wizard Step Methods
@@ -94,7 +123,8 @@ function WizardProfileStepViewModel() {
             diety: self.diety(),
             level: self.level() || 1,
             exp: self.exp(),
-            traits: self.populateTraits()
+            traits: self.populateTraits(),
+            items: self.populateBackpackItems()
         };
     });
 }

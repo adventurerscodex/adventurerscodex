@@ -393,6 +393,16 @@ var Fixtures = {
             'Half-Elf',
             'Half-Orc',
             'Tiefling'
+        ],
+
+        backpackOptions : [
+            'Burglar\'s Pack',
+            'Diplomat\'s Pack',
+            'Dungeoneer\'s Pack',
+            'Entertainer\'s Pack',
+            'Explorer\'s Pack',
+            'Priest\'s Pack',
+            'Scholar\'s  Pack'
         ]
     },
     statusPhraseWordMap: {

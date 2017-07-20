@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="h3">Anything else?<br />
-          <small>You can always fill in this stuff later, but it's good to get it out of the way now.</small>
+          <small>Tell us more about yourself, and we will pre-populate what we can. Racial traits pre-populate now - more to come.</small>
         </div>
         <p></p>
         <!-- Race, Gender, Class, Alignment -->
@@ -109,6 +109,20 @@
                      data-bind='textInput: background,
                                 autocomplete: { source: backgroundOptions,
                                 onselect: setBackground }'>
+            </div>
+          </div>
+        </div>
+        <div class="h3">Adventuring Gear.<br />
+          <small>Select your backpack and all of your items will pre-populate in the inventory module.</small>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Backpack</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon2"
+                     data-bind='textInput: backpack,
+                                autocomplete: { source: backpackOptions,
+                                onselect: setBackpack }'>
             </div>
           </div>
         </div>
