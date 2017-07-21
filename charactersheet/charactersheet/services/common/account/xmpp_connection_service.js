@@ -56,7 +56,7 @@ function _XMPPService(config) {
     self._pingHandle = null;
 
     self.MAX_RETRIES = 3;
-    self.PING_INTERVAL = 4000000;
+    self.PING_INTERVAL = 240000;
 
     /**
      * A lazily instantiated connection to the XMPP backend server.
