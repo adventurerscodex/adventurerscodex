@@ -24,7 +24,7 @@ function PartyViewModel() {
     self.checkForParty = function() {
         var chat = ChatServiceManager.sharedService();
         self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
-    }
+    };
 
     self.handlePCard = function(inputPCard) {
         var chat = ChatServiceManager.sharedService();

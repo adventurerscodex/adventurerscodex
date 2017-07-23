@@ -42,7 +42,7 @@ function ChatViewModel() {
     self.checkForParty = function() {
         var chat = ChatServiceManager.sharedService();
         self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
-    }
+    };
 
     /* List Management Methods */
 

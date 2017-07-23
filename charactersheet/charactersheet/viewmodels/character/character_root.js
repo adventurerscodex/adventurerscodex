@@ -68,22 +68,13 @@ function CharacterRootViewModel() {
         return self._tabIsVisible('notes');
     });
     self.chatTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('chat');
-        }
-        return 'hidden';
+        return self._tabIsVisible('chat');
     });
     self.partyTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('party');
-        }
-        return 'hidden';
+        return self._tabIsVisible('party');
     });
     self.exhibitTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('exhibit');
-        }
-        return 'hidden';
+        return self._tabIsVisible('exhibit');
     });
 
     self.activateProfileTab = function() {
@@ -113,20 +104,8 @@ function CharacterRootViewModel() {
     self.activateChatTab = function() {
         self.activeTab('chat');
     };
-    self.activateChatTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('chat');
-        }
-    };
     self.activateExhibitTab = function() {
         self.activeTab('exhibit');
-    };
-    self.activateExhibitTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('exhibit');
-        }
     };
 
     self.toggleWell = function() {
@@ -202,8 +181,8 @@ function CharacterRootViewModel() {
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
-        HotkeysService.registerHotkey('8', self.activateChatTabFromHotkey);
-        HotkeysService.registerHotkey('9', self.activateExhibitTabFromHotkey);
+        HotkeysService.registerHotkey('8', self.activateChatTab);
+        HotkeysService.registerHotkey('9', self.activateExhibitTab);
     };
 
     /**

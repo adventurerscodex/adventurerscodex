@@ -44,6 +44,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
@@ -69,6 +70,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.party.left.remove(self._connectionHasChanged);
         Notifications.exhibit.toggle.remove(self._dataHasChanged);
     };
 

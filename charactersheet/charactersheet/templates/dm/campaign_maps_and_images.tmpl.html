@@ -51,18 +51,16 @@
                 </a>
               </td>
               <!-- /ko -->
-              <!-- ko if: !$parent.shouldShowPushButton() -->
+              <!-- ko ifnot: $parent.shouldShowPushButton -->
               <td class="text-center">
-                <a title="Join a Party to send image to Player's Chat">
-                  <i class="fa fa-paper-plane-o fa-disabled">
-                  </i>
-                </a>
+                <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
+                  data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+                </span>
               </td>
               <td class="text-center">
-                <a title="Join a Party send Player's Exhibit">
-                  <i class="fa fa-desktop fa-disabled">
-                  </i>
-                </a>
+                <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+                  data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+                </span>
               </td>
               <!-- /ko -->
               <td>

@@ -5,13 +5,24 @@ function ExhibitViewModel() {
 
     self.name = ko.observable('');
     self.url = ko.observable('');
+    self.isConnectedToParty = ko.observable(false);
 
     self.load = function() {
         Notifications.xmpp.routes.pcard.add(self.exhibitGivenImage);
+        Notifications.party.left.add(self.checkForParty);
+        Notifications.party.joined.add(self.checkForParty);
+        self.checkForParty();
     };
 
     self.unload = function() {
         Notifications.xmpp.routes.pcard.remove(self.exhibitGivenImage);
+        Notifications.party.left.remove(self.checkForParty);
+        Notifications.party.joined.remove(self.checkForParty);
+    };
+
+    self.checkForParty = function() {
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
     };
 
     self.exhibitGivenImage = function(newPCard) {

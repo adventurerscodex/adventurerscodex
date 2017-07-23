@@ -3,16 +3,27 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-12">
-                    <!-- ko if: name && url -->
-                        <h1 data-bind="html: name"></h1>
-                        <hr>
-                        <img data-bind="attr: { src: url }" width="100%" class="img-responsive img-rounded"/>
-                    <!-- /ko -->
-                    <!-- ko if: !name() && !url() -->
-                        <div class="detail-place-holder well text-center">
-                            <p class="lead text-muted heading">There's nothing being Exhibited.</p>
-                            <p class="text-muted">Wait for your DM to Exhibit an image.</p>
-                        </div>
+                    <!-- ko if: !isConnectedToParty() -->
+                    <div class="detail-place-holder well text-center">
+                        <p class="lead text-muted heading">You are not connected to a Party.</p>
+                        <p class="text-muted">
+                        Create or join a Party with friends to view your DM's Exhibit!<br/>
+                        Create a free account <a href="https://app.adventurerscodex.com/accounts/register/">here</a> or learn more about the Party <a href="https://adventurerscodex.com/collaboration.html#partyDashboard">here</a>.
+                        </p>
+                    </div>
+                    <!--/ko-->
+                    <!-- ko if: isConnectedToParty -->
+                        <!-- ko if: name && url -->
+                            <h1 data-bind="html: name"></h1>
+                            <hr>
+                            <img data-bind="attr: { src: url }" width="100%" class="img-responsive img-rounded"/>
+                        <!-- /ko -->
+                        <!-- ko if: !name() && !url() -->
+                            <div class="detail-place-holder well text-center">
+                                <p class="lead text-muted heading">There's nothing being Exhibited.</p>
+                                <p class="text-muted">Wait for your DM to Exhibit an image.</p>
+                            </div>
+                        <!-- /ko -->
                     <!-- /ko -->
                 </div>
             </div>
