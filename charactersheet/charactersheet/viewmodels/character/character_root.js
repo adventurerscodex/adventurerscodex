@@ -216,6 +216,7 @@ function CharacterRootViewModel() {
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
@@ -225,6 +226,7 @@ function CharacterRootViewModel() {
 
         Notifications.party.joined.remove(self._updateCurrentNode);
         Notifications.party.joined.remove(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.remove(self._removeCurrentNode);
 
         self.characterCardPublishingService.deinit();
     };
@@ -261,5 +263,4 @@ function CharacterRootViewModel() {
         self.currentPartyNode(null);
         self._updatePartyStatus();
     };
-
 }

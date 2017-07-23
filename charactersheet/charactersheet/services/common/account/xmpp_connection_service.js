@@ -6,7 +6,7 @@
  * custom configurations.
  */
 var XMPPServiceDefaultConfig = {
-    url: 'wss://adventurerscodex.com:5280/websocket/',
+    url: 'ws://localhost:5050/websocket/',
 
     connection: {
         // Specify a custom callback here.
@@ -49,8 +49,10 @@ function _XMPPService(config) {
     self.connection = null;
 
     self._isShuttingDown = false;
+    self._isAttemptingRetry = false;
     self._connectionRetries = 0;
-    self.MAX_RETRIES = 3;
+    self.MAX_RETRIES = 5;
+    self.MIN_RETRY_INTERVAL = 1500;
 
     /**
      * A lazily instantiated connection to the XMPP backend server.
@@ -75,10 +77,7 @@ function _XMPPService(config) {
         Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
         Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
 
-        // Set up the connection.
-        var connection = new Strophe.Connection(self.configuration.url);
-        var callback = self.configuration.connection.callback || self._connectionHandler;
-        self.connection = connection;
+        self._initializeConnection();
 
         Notifications.characterManager.changed.addOnce(self._handleConnect);
     };
@@ -89,6 +88,14 @@ function _XMPPService(config) {
     };
 
     /* Private Methods */
+
+    self._initializeConnection = function() {
+        var connection = new Strophe.Connection(self.configuration.url);
+        var callback = self.configuration.connection.callback || self._connectionHandler;
+        self.connection = connection;
+
+        Notifications.xmpp.initialized.dispatch();
+    };
 
     self._shouldLog = function() {
         return self.configuration.fallbackAction == 'log';
@@ -106,6 +113,7 @@ function _XMPPService(config) {
         self._isShuttingDown = false;
         var credentials = self.configuration.credentialsHelper();
         var callback = self.configuration.connection.callback || self._connectionHandler;
+
         self.connection.connect(credentials.jid, credentials.password, callback);
         self.connection.flush();
     };
@@ -121,10 +129,16 @@ function _XMPPService(config) {
             }
         }
         if (status === Strophe.Status.CONNECTED || status === Strophe.Status.ATTACHED) {
+            self._connectionRetries = 0;
             if (self._shouldLog() && 'console' in window) {
-                self._connectionRetries = 0;
                 console.log('Connected.');
             }
+
+            // We've successfully reconnected.
+            if (self._isAttemptingRetry) {
+                Notifications.xmpp.reconnected.dispatch();
+            }
+            self._isAttemptingRetry = false;
 
             // Send initial presence.
             // https://xmpp.org/rfcs/rfc3921.html#presence
@@ -137,17 +151,14 @@ function _XMPPService(config) {
             if (self._shouldLog() && 'console' in window) {
                 console.log('Disconnected.');
             }
-            Notifications.xmpp.disconnected.dispatch();
+
+            if (!self._isAttemptingRetry) {
+                Notifications.xmpp.disconnected.dispatch(true);
+            }
 
             // Attempt reconnect, unless the app is shutting down.
-            if (!self._isShuttingDown) {
-                if (self._connectionRetries >= self.MAX_RETRIES) {
-                    console.log('No attempt to reconnect: max connection retries reached.');
-                } else {
-                    console.log('Reconnecting...');
-                    self._connectionRetries += 1;
-                    self._handleLogin();
-                }
+            if (!self._isShuttingDown && !self._isAttemptingRetry) {
+                self._attemptRetry(true);
             }
         } else if (status === Strophe.Status.CONNECTING) {
             if (self._shouldLog() && 'console' in window) {
@@ -159,6 +170,11 @@ function _XMPPService(config) {
                 console.log('Authentication failure.');
             }
         } else {
+            // Ignore retry errors.
+            if (self._isAttemptingRetry) {
+                return;
+            }
+
             Notifications.xmpp.error.dispatch(status);
             if (self._shouldLog() && 'console' in window) {
                 console.log('Strophe.Status: ', status);
@@ -166,5 +182,37 @@ function _XMPPService(config) {
         }
 
         // Add more logging...
+    };
+
+    /**
+     * Using an internal refresh count, attempt to reestablish the connection
+     * if possible.
+     *
+     * This method uses a progressive back-off algorithm to try and
+     * re-establish connectivity. The first half of the requests are made
+     * frequently with later requests happening later and later.
+     */
+    self._attemptRetry = function(forceReconnect) {
+        if (!forceReconnect && self.connection.connected) {
+            console.log('Already connected, retry not forced. Skipping...');
+            return;
+        }
+
+        if (self._connectionRetries >= self.MAX_RETRIES) {
+            console.log('No attempt to reconnect: max connection retries reached.');
+            return;
+        }
+
+        console.log('Attempting to reconnect. Attempt {count}..'.replace('{count}', self._connectionRetries));
+        self._isAttemptingRetry = true;
+        self._connectionRetries += 1;
+
+        // Give the rest of the app the ability to unsubscribe before retrying.
+        Notifications.xmpp.disconnected.dispatch();
+        self._initializeConnection();
+        self._handleConnect();
+
+        var interval = self._connectionRetries * self.MIN_RETRY_INTERVAL;
+        setTimeout(self._attemptRetry, interval);
     };
 }
