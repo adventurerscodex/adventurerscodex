@@ -6,7 +6,7 @@
  * custom configurations.
  */
 var XMPPServiceDefaultConfig = {
-    url: 'wss://adventurerscodex.com:5280/websocket/',
+    url: 'ws://localhost:5050/websocket/',
 
     connection: {
         // Specify a custom callback here.
@@ -49,6 +49,7 @@ function _XMPPService(config) {
     self.connection = null;
 
     self._isShuttingDown = false;
+    self._isAttemptingRetry = false;
     self._connectionRetries = 0;
     self.MAX_RETRIES = 5;
     self.MIN_RETRY_INTERVAL = 1500;
@@ -133,6 +134,8 @@ function _XMPPService(config) {
                 console.log('Connected.');
             }
 
+            self._isAttemptingRetry = false;
+
             // Send initial presence.
             // https://xmpp.org/rfcs/rfc3921.html#presence
             self.connection.send($pres().tree());
@@ -144,10 +147,13 @@ function _XMPPService(config) {
             if (self._shouldLog() && 'console' in window) {
                 console.log('Disconnected.');
             }
-            Notifications.xmpp.disconnected.dispatch(true);
+
+            if (!self._isAttemptingRetry) {
+                Notifications.xmpp.disconnected.dispatch(true);
+            }
 
             // Attempt reconnect, unless the app is shutting down.
-            if (!self._isShuttingDown) {
+            if (!self._isShuttingDown && !self._isAttemptingRetry) {
                 self._attemptRetry(true);
             }
         } else if (status === Strophe.Status.CONNECTING) {
@@ -160,6 +166,11 @@ function _XMPPService(config) {
                 console.log('Authentication failure.');
             }
         } else {
+            // Ignore retry errors.
+            if (self._isAttemptingRetry) {
+                return;
+            }
+
             Notifications.xmpp.error.dispatch(status);
             if (self._shouldLog() && 'console' in window) {
                 console.log('Strophe.Status: ', status);
@@ -189,6 +200,7 @@ function _XMPPService(config) {
         }
 
         console.log('Attempting to reconnect. Attempt {count}..'.replace('{count}', self._connectionRetries));
+        self._isAttemptingRetry = true;
         self._connectionRetries += 1;
 
         // Give the rest of the app the ability to unsubscribe before retrying.
