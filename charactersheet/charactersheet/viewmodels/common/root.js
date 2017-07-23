@@ -79,6 +79,7 @@ function AdventurersCodexViewModel() {
         XMPPService.sharedService().init();
         NodeServiceManager.sharedService().init();
         ChatServiceManager.sharedService().init();
+        NotificationsServiceManager.sharedService().init();
 
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
