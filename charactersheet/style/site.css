@@ -859,3 +859,10 @@ li.image-chat-highlight {
 .circle-indicator.failure {
   background: #e74c3c;
 }
+
+div.toggle-arrow-container {
+  padding-left: 5px;
+  padding-right: 5px;
+  display: inline;
+  text-align: center;
+}
