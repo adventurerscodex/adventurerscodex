@@ -10,6 +10,7 @@ function DMRootViewModel() {
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
+    self.partyStatus = ko.observable('');
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
     //Player Child View Models
@@ -142,6 +143,7 @@ function DMRootViewModel() {
 
         self.dmCardService.init();
         self.imageService.init();
+        self._updatePartyStatus();
     };
 
     /**
@@ -181,6 +183,11 @@ function DMRootViewModel() {
     self._updatePartyStatus = function() {
         var xmpp = XMPPService.sharedService();
         self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
+        if (self.currentPartyNode()) {
+            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + self.currentPartyNode().split('@')[0] + '</span></i>.');
+        } else {
+            self.partyStatus('<i>You\'re not connected to a party.</i>');
+        }
     };
 
     self._updateCurrentNode = function(node) {
