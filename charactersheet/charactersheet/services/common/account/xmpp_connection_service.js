@@ -134,6 +134,10 @@ function _XMPPService(config) {
                 console.log('Connected.');
             }
 
+            // We've successfully reconnected.
+            if (self._isAttemptingRetry) {
+                Notifications.xmpp.reconnected.dispatch();
+            }
             self._isAttemptingRetry = false;
 
             // Send initial presence.

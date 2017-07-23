@@ -338,6 +338,7 @@ var Notifications = {
          * @param shouldNotify {bool} whether the event deserves to notify the user.
          */
         disconnected: new signals.Signal(),
+        reconnected: new signals.Signal(),
         error: new signals.Signal(),
 
         routes: {
