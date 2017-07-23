@@ -396,6 +396,7 @@ var Fixtures = {
         ],
 
         backpackOptions : [
+            '----',
             'Burglar\'s Pack',
             'Diplomat\'s Pack',
             'Dungeoneer\'s Pack',

@@ -113,16 +113,15 @@
           </div>
         </div>
         <div class="h3">Adventuring Gear.<br />
-          <small>Select your backpack and all of your items will pre-populate in the inventory module.</small>
+          <small>Select a starting backpack and we will add all the items to your inventory.</small>
         </div>
         <div class="row">
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Backpack</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
-                     data-bind='textInput: backpack,
-                                autocomplete: { source: backpackOptions,
-                                onselect: setBackpack }'>
+              <select  class="form-control"
+                       data-bind="options: backpackOptions,
+                                  value: backpack"></select>
             </div>
           </div>
         </div>
