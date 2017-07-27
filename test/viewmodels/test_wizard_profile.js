@@ -82,6 +82,21 @@ describe('Wizard Profile ViewModel', function(){
         traits[0].name.should.equal('Age');
     });
 
+    describe('Populate Backpack Items', function() {
+        var wizard = new WizardProfileStepViewModel();
+        wizard.setBackpack('label', 'Burglar\'s Pack');
+
+        wizard.backpack().should.equal('Burglar\'s Pack');
+
+        simple.mock(DataRepository, 'items', ItemsRepositoryFixture);
+        simple.mock(DataRepository, 'backpacks', BackpacksRepositoryFixture);
+
+        var items = wizard.populateBackpackItems();
+        items.length.should.equal(1);
+        items[0].itemName.should.equal('Backpack');
+        items[0].itemQty.should.equal(5);
+    });
+
     describe('Ready', function() {
         it('should determine if step is ready', function() {
             var wizard = new WizardProfileStepViewModel();
