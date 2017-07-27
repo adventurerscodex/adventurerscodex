@@ -47,13 +47,13 @@ function _NotificationsService(config) {
         self.notifications(data.results);
         self.notifications().forEach(function(status) {
             var options = {
-                    onCloseClick: function() {
-                        self.markAsRead(status);
-                    },
-                    onclick: function() {
-                        self.markAsRead(status);
-                    }
-                };
+                onCloseClick: function() {
+                    self.markAsRead(status);
+                },
+                onclick: function() {
+                    self.markAsRead(status);
+                }
+            };
             if (status.notification.requires_confirmation) {
                 options['timeOut'] = 0;
                 options['extendedTimeOut'] = 0;
