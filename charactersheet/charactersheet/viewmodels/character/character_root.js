@@ -11,6 +11,7 @@ function CharacterRootViewModel() {
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
+    self.partyStatus = ko.observable('');
 
     //Player Child View Models
     self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
@@ -189,6 +190,7 @@ function CharacterRootViewModel() {
         self.proficiencyService.init();
         self.armorClassService.init();
         self.characterCardPublishingService.init();
+        self._updatePartyStatus();
 
         //Subscriptions
         Notifications.profile.changed.add(function() {
@@ -252,6 +254,11 @@ function CharacterRootViewModel() {
     self._updatePartyStatus = function() {
         var xmpp = XMPPService.sharedService();
         self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
+        if (self.currentPartyNode()) {
+            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + self.currentPartyNode().split('@')[0] + '</span></i>.');
+        } else {
+            self.partyStatus('<i>You\'re not connected to a party.</i>');
+        }
     };
 
     self._updateCurrentNode = function(node) {
