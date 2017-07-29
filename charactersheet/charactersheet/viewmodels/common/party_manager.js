@@ -7,6 +7,7 @@ function PartyManagerViewModel() {
     self.loggedIn = ko.observable(false);
     self.inAParty = ko.observable(false);
     self.parties = ko.observableArray([]);
+    self.isConnectedToParty = ko.observable(false);
 
     self.createOrJoin = ko.observable('create');
 
@@ -39,6 +40,11 @@ function PartyManagerViewModel() {
     };
 
     /* UI Methods */
+
+    self.checkForParty = function() {
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
+    };
 
     self.roomLink = ko.pureComputed(function() {
         if (self.roomId()) {
