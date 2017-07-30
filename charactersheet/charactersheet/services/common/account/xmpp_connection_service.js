@@ -54,6 +54,7 @@ function _XMPPService(config) {
     self.MAX_RETRIES = 5;
     self.MIN_RETRY_INTERVAL = 1500;
     self._pingHandle = null;
+    self._conflicted = false;
 
     self.MAX_RETRIES = 3;
     self.PING_INTERVAL = 240000;
@@ -123,6 +124,9 @@ function _XMPPService(config) {
     };
 
     self._connectionHandler = function(status, error) {
+        if (self._conflicted) {
+            return;
+        }
         if (error) {
             if (self._shouldLog()) {
                 if ('console' in window) {
@@ -132,6 +136,17 @@ function _XMPPService(config) {
                 throw error;
             }
         }
+
+        // Save ourselves from infinite retry. Someone has tried to
+        // use the same account in 2 places.
+        if (error == 'conflict') {
+            self._conflicted = true;
+
+            Notifications.xmpp.conflict.dispatch();
+            Notifications.xmpp.disconnected.dispatch();
+            return;
+        }
+
         if (status === Strophe.Status.CONNECTED || status === Strophe.Status.ATTACHED) {
             self._connectionRetries = 0;
             if (self._shouldLog() && 'console' in window) {

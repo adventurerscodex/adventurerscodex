@@ -340,6 +340,7 @@ var Notifications = {
         disconnected: new signals.Signal(),
         reconnected: new signals.Signal(),
         error: new signals.Signal(),
+        conflict: new signals.Signal(),
 
         routes: {
             chat: new signals.Signal(),

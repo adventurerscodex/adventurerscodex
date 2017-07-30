@@ -24,6 +24,7 @@ function PartyManagerViewModel() {
         Notifications.xmpp.reconnected.add(self._handleReconnection);
         Notifications.xmpp.disconnected.add(self._handleDisconnection);
         Notifications.xmpp.error.add(self._handleConnectionError);
+        Notifications.xmpp.conflict.add(self._handleConflict);
         self.parties(self._getParties());
 
         Notifications.party.joined.add(self._handleSubscription);
@@ -37,6 +38,7 @@ function PartyManagerViewModel() {
         Notifications.xmpp.reconnected.remove(self._handleReconnection);
         Notifications.xmpp.disconnected.remove(self._handleDisconnection);
         Notifications.xmpp.error.remove(self._handleConnectionError);
+        Notifications.xmpp.conflict.remove(self._handleConflict);
         Notifications.party.joined.remove(self._handleSubscription);
         Notifications.party.left.remove(self._handleUnsubscription);
         Notifications.characterManager.changing.add(self._leaveOnSwitch);
@@ -218,6 +220,19 @@ function PartyManagerViewModel() {
         Notifications.userNotification.successNotification.dispatch(
             'You\'re back online.',
             'Connection reestablished',
+            {
+                timeOut: 0,
+                extendedTimeOut: 0
+            }
+        );
+    };
+
+    self._handleConflict = function() {
+        Notifications.userNotification.dangerNotification.dispatch(
+            'It looks like you\'re trying to use your account in two places at once.\n\
+            To use the party features you\'ll have to log out of the other session \
+            and refresh this page.',
+            'Conflict',
             {
                 timeOut: 0,
                 extendedTimeOut: 0
