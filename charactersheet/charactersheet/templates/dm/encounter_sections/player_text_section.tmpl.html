@@ -14,9 +14,7 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <!-- ko if: shouldShowPushButton -->
       <th>Send</th>
-      <!-- /ko -->
       <th>
         <a data-toggle="modal"
            data-target="#addPlayerText" href="#">
@@ -43,6 +41,13 @@
           <i class="fa fa-paper-plane-o fa-color-hover">
           </i>
         </a>
+      </td>
+      <!-- /ko -->
+      <!-- ko ifnot: $parent.shouldShowPushButton -->
+      <td class="text-center">
+        <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
+          data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+        </span>
       </td>
       <!-- /ko -->
       <td>

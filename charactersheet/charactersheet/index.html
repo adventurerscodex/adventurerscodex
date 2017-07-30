@@ -145,18 +145,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- /ko -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#newModal" href="#">New/Import</a></i>
-                &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#charactersModal" href="#">Characters and Games</a></i>
-                &nbsp;
-                <!-- ko if: partyManagerViewModel.loggedIn -->
-                <i class="small underline">
-                  <a class="" data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                <i class="small underline"><a data-toggle="modal"
+                  data-target="#newModal" href="#">New/Import</a>
                 </i>
                 &nbsp;
-                <!-- /ko -->
+                <i class="small underline"><a data-toggle="modal"
+                  data-target="#charactersModal" href="#">Characters and Games</a>
+                </i>
+                &nbsp;
+                <i class="small underline">
+                  <a data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                </i>
+                &nbsp;
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#exportModal"
                   data-bind="click: charactersViewModel.selectCharacter"

@@ -9,6 +9,16 @@
       </h4>
     </div>
     <div class="modal-body">
+      <!-- ko if: !loggedIn() -->
+        <div class="detail-place-holder well text-center">
+            <p class="lead text-muted heading">You are not connected to a Party.</p>
+            <p class="text-muted">
+            Create or join a Party with friends to unlock the Party Tools!<br/>
+            Create a free account <a href="https://app.adventurerscodex.com/accounts/register/">here</a> or learn more about Parties <a href="https://adventurerscodex.com/collaboration.html#party" target="_blank">here</a>.
+            </p>
+        </div>
+      <!--/ko-->
+      <!-- ko if: loggedIn -->
       <div class="form-horizontal" data-bind="">
         <!-- ko ifnot: inAParty -->
         <div class="form-group">
@@ -148,6 +158,7 @@
         </div>
         <!-- /ko -->
       </div>
+      <!-- /ko -->
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-primary pull-right"

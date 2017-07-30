@@ -73,17 +73,11 @@ function DMRootViewModel() {
         return self._tabIsVisible('dmscreen');
     });
     self.chatTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('chat');
-        }
-        return 'hidden';
+        return self._tabIsVisible('chat');
     });
 
     self.partyTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('party');
-        }
-        return 'hidden';
+        return self._tabIsVisible('party');
     });
 
     self.notesTabStatus = ko.pureComputed(function() {
@@ -114,20 +108,6 @@ function DMRootViewModel() {
         self.activeTab('notes');
     };
 
-    self.activatePartyTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('party');
-        }
-    };
-
-    self.activateChatTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('chat');
-        }
-    };
-
     //Public Methods
 
     /**
@@ -138,8 +118,8 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
-        HotkeysService.registerHotkey('5', self.activatePartyTabFromHotkey);
-        HotkeysService.registerHotkey('6', self.activateChatTabFromHotkey);
+        HotkeysService.registerHotkey('5', self.activatePartyTab);
+        HotkeysService.registerHotkey('6', self.activateChatTab);
 
         self.dmCardService.init();
         self.imageService.init();

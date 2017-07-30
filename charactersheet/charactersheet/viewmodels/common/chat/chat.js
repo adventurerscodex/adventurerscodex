@@ -4,6 +4,7 @@ function ChatViewModel() {
     var self = new MasterDetailViewModel();
 
     self.chats = ko.observableArray();
+    self.isConnectedToParty = ko.observable(false);
 
     self.title = 'Chats';
     self.shouldDisplayModelOnNewItem = true;
@@ -13,6 +14,7 @@ function ChatViewModel() {
     self.didLoad = function() {
         self.reloadCells();
         self.selectedCell(self.cells()[0]);
+        self.checkForParty();
 
         // Message Notifications
         Notifications.chat.message.add(self._deliverMessageToRoom);
@@ -35,6 +37,11 @@ function ChatViewModel() {
         Notifications.party.joined.remove(self._didJoinParty);
         Notifications.party.left.remove(self._hasLeftParty);
         Notifications.party.players.changed.remove(self.reloadCells);
+    };
+
+    self.checkForParty = function() {
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
     };
 
     /* List Management Methods */
@@ -211,11 +218,13 @@ function ChatViewModel() {
     self._didJoinParty = function() {
         self.reloadCells();
         self.selectedCell(self.cells()[0]);
+        self.checkForParty();
     };
 
     self._hasLeftParty = function() {
         self.reloadCells();
         self._purgeChats();
+        self.checkForParty();
     };
 
     self._isMe = function(nick) {
