@@ -9,7 +9,7 @@
       </h4>
     </div>
     <div class="modal-body">
-      <!-- ko if: !isConnectedToParty() -->
+      <!-- ko if: !loggedIn() -->
         <div class="detail-place-holder well text-center">
             <p class="lead text-muted heading">You are not connected to a Party.</p>
             <p class="text-muted">
@@ -18,7 +18,7 @@
             </p>
         </div>
       <!--/ko-->
-      <!-- ko if: isConnectedToParty -->
+      <!-- ko if: loggedIn -->
       <div class="form-horizontal" data-bind="">
         <!-- ko ifnot: inAParty -->
         <div class="form-group">
