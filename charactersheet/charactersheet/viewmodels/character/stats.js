@@ -115,6 +115,7 @@ function StatsViewModel() {
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
+        self.healthDataHasChange();
     };
 
     self.unload = function() {
