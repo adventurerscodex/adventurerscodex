@@ -124,6 +124,22 @@ Utility.oauth.postData = function(url, data, onsuccess, onerror, accessToken) {
     });
 };
 
+Utility.oauth.putData = function(url, data, onsuccess, onerror, accessToken) {
+    $.ajax({
+        url: url,
+        type: 'PUT',
+        data: data,
+        dataType: 'text',
+        success: onsuccess,
+        error: onerror,
+        beforeSend: function(xhr) {
+            Utility.oauth.setXHRBearerHeader(xhr, accessToken);
+        }
+    });
+};
+
+
+
 /* JID Methods */
 
 /**

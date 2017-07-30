@@ -8,9 +8,9 @@ function EncounterCellViewModel(encounter) {
     self.encounterId = encounter.encounterId;
     self.name = encounter.name;
     self.encounterLocation = encounter.encounterLocation;
+    self.isOpen = encounter.isOpen;
 
     self._children = ko.observableArray(encounter.getChildren());
-    self.isOpen = encounter.isOpen;
 
     /* UI Methods */
 
@@ -26,6 +26,7 @@ function EncounterCellViewModel(encounter) {
 
     self.toggleIsOpen = function() {
         self.isOpen(!self.isOpen());
+        self.save();
     };
 
     self.shouldShowDelete = ko.pureComputed(function() {
@@ -56,6 +57,8 @@ function EncounterCellViewModel(encounter) {
         var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
         encounter.name(self.name());
         encounter.encounterLocation(self.encounterLocation());
+        encounter.isOpen(self.isOpen());
+        encounter.save();
     };
 
     self.delete = function() {

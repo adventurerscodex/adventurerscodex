@@ -86,6 +86,26 @@ var MagicItemFixture = {
     magicItemDescription: 'Deadly dagger'
 };
 
+var ItemsRepositoryFixture = {
+    'Backpack': {
+        itemName: 'Backpack',
+        itemDesc: 'A backpack',
+        itemQty: 1,
+        itemWeight: 0,
+        itemCost: 0,
+        itemCurrencyDenomination: 'GP'
+    }
+};
+
+var BackpacksRepositoryFixture = {
+    'Burglar\'s Pack': [
+        {
+            name: 'Backpack',
+            count: 5
+        }
+    ]
+};
+
 var TreasureFixture = {
     characterId: '123',
     gold: 10

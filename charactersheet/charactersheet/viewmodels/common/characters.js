@@ -5,6 +5,8 @@ function CharactersViewModel() {
 
     self.totalLocalStorage = 5; //MB
 
+    self.isLoggedIn = ko.observable(false);
+
     self.selectedCharacter = ko.observable();
 
     self.characters = ko.observableArray([]);
@@ -17,6 +19,7 @@ function CharactersViewModel() {
         Notifications.profile.changed.add(function() {
             self.load();
         });
+        Notifications.user.exists.add(self._handleUserChanged);
     };
 
     self.load = function() {
@@ -45,7 +48,6 @@ function CharactersViewModel() {
                 e.save();
             });
         });
-
     };
 
     self.unload = function() {
@@ -104,4 +106,9 @@ function CharactersViewModel() {
         var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
         return (used / self.totalLocalStorage * 100).toFixed(2);
     });
+
+    self._handleUserChanged = function() {
+        var userExists = UserServiceManager.sharedService().user() != null;
+        self.isLoggedIn(userExists);
+    };
 }

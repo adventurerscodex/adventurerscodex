@@ -21,6 +21,8 @@ function PartyManagerViewModel() {
 
     self.load = function() {
         Notifications.xmpp.connected.add(self.dataHasChanged);
+        Notifications.xmpp.reconnected.add(self._handleReconnection);
+        Notifications.xmpp.disconnected.add(self._handleDisconnection);
         Notifications.xmpp.error.add(self._handleConnectionError);
         self.parties(self._getParties());
 
@@ -32,6 +34,8 @@ function PartyManagerViewModel() {
 
     self.unload = function() {
         Notifications.xmpp.connected.remove(self.dataHasChanged);
+        Notifications.xmpp.reconnected.remove(self._handleReconnection);
+        Notifications.xmpp.disconnected.remove(self._handleDisconnection);
         Notifications.xmpp.error.remove(self._handleConnectionError);
         Notifications.party.joined.remove(self._handleSubscription);
         Notifications.party.left.remove(self._handleUnsubscription);
@@ -142,6 +146,24 @@ function PartyManagerViewModel() {
         }
     };
 
+    self._handleDisconnection = function(shouldNotify) {
+        self.dataHasChanged();
+        self.loggedIn(false);
+        self.roomId(null);
+        self.inAParty(false);
+
+        if (shouldNotify) {
+            Notifications.userNotification.warningNotification.dispatch(
+                'It looks like you\'ve been disconnected. Is your internet ok?',
+                '',
+                {
+                    timeOut: 0,
+                    extendedTimeOut: 0
+                }
+            );
+        }
+    };
+
     self._handleSubscription = function(node, success) {
         if (success) {
             // Ignore if we're already in a party.
@@ -185,6 +207,17 @@ function PartyManagerViewModel() {
             '<a href="https://adventurerscodex.com/faq.html#connection">Click here for ' +
             'more info.</a>',
             'A connection error has occurred.',
+            {
+                timeOut: 0,
+                extendedTimeOut: 0
+            }
+        );
+    };
+
+    self._handleReconnection = function(code) {
+        Notifications.userNotification.successNotification.dispatch(
+            'You\'re back online.',
+            'Connection reestablished',
             {
                 timeOut: 0,
                 extendedTimeOut: 0

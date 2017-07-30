@@ -87,15 +87,15 @@ function _NodeService(config) {
      * Changes to this object after such time requires a rebuild of the service.
      */
     self.config = config;
+    self._isListeningForXMPPEvents = false;
 
     self.init = function() {
-        // Subscribe to all push events.
-        var xmpp = XMPPService.sharedService();
-        xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
-        xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
-        xmpp.connection.addHandler(self._handlePresence, null, 'presence');
-        xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
+        self._addXMPPHandlers();
+
+
         Notifications.party.roster.changed.add(self._getCards);
+        Notifications.xmpp.initialized.add(self._addXMPPHandlers);
+        Notifications.xmpp.disconnected.add(self._handleXMPPDisconnect);
     };
 
     /**
@@ -122,6 +122,22 @@ function _NodeService(config) {
     };
 
     /* Private Methods */
+
+    self._addXMPPHandlers = function() {
+        if (!self._isListeningForXMPPEvents) {
+            // Subscribe to all push events.
+            var xmpp = XMPPService.sharedService();
+            xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
+            xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
+            xmpp.connection.addHandler(self._handlePresence, null, 'presence');
+            xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
+        }
+        self._isListeningForXMPPEvents = true;
+    };
+
+    self._handleXMPPDisconnect = function() {
+        self._isListeningForXMPPEvents = false;
+    };
 
     self._handleEvent = function(event) {
         try {

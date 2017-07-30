@@ -139,6 +139,9 @@ var Settings = {
         }, {
             key: 'adjectives',
             url: 'https://adventurerscodex.com/data/misc/fantasy_adjectives.json'
+        }, {
+            key: 'backpacks',
+            url: 'https://adventurerscodex.com/data/SRD/backpacks.min.json'
         }
     ]
 };
