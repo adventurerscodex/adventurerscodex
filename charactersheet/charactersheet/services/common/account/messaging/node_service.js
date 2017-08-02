@@ -92,7 +92,6 @@ function _NodeService(config) {
     self.init = function() {
         self._addXMPPHandlers();
 
-
         Notifications.party.roster.changed.add(self._getCards);
         Notifications.xmpp.initialized.add(self._addXMPPHandlers);
         Notifications.xmpp.disconnected.add(self._handleXMPPDisconnect);
