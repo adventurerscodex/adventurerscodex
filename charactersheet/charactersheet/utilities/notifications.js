@@ -198,6 +198,10 @@ var Notifications = {
     },
 
     party: {
+        /**
+         * The first parameter is the node you have joined and the second parameter is a boolean
+         * that determines if you successfully connected to the party.
+         */
         joined: new signals.Signal(),
         left: new signals.Signal(),
         roster: {
