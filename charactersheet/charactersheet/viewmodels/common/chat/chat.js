@@ -149,9 +149,11 @@ function ChatViewModel() {
     };
 
     self._getChats = function() {
+        var key = CharacterManager.activeCharacter().key();
         var chatService = ChatServiceManager.sharedService();
         var currentPartyNode = chatService.currentPartyNode;
         var chats = PersistenceService.findByPredicates(ChatRoom, [
+            new KeyValuePredicate('characterId', key),
             new OrPredicate([
                 // Get the party chat.
                 new KeyValuePredicate('chatId', currentPartyNode),
