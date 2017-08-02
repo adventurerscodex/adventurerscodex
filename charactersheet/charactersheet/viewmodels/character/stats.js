@@ -109,6 +109,9 @@ function StatsViewModel() {
         self.deathSaveFailureList().forEach(function(save, idx, _) {
             save.deathSaveFailure.subscribe(self._alertPlayerHasDied);
         });
+        self.deathSaveSuccessList().forEach(function(save, idx, _) {
+            save.deathSaveSuccess.subscribe(self._alertPlayerIsStable);
+        });
 
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.profile.level.changed.add(self.calculateHitDice);
@@ -391,6 +394,20 @@ function StatsViewModel() {
             Notifications.userNotification.dangerNotification.dispatch(
                 'Failing all 3 death saves will do that...',
                 'You have died.', {
+                    timeOut: 0
+                });
+        }
+
+    };
+
+    self._alertPlayerIsStable = function() {
+        var allSaved = self.deathSaveSuccessList().every(function(save, idx, _) {
+            return save.deathSaveSuccess();
+        });
+        if (allSaved) {
+            Notifications.userNotification.successNotification.dispatch(
+                'You have been spared...for now.',
+                'You are now stable.', {
                     timeOut: 0
                 });
         }
