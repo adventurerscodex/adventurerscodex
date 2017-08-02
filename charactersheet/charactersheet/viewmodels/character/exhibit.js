@@ -28,21 +28,15 @@ function ExhibitViewModel() {
     self.exhibitGivenImage = function(pcards) {
         // Ignore non-DM cards and player is in a party
         if (!self.isConnectedToParty()) { return; }
-        var playerType;
-        var image;
-        var isDuplicateImage;
-        pcards.forEach(function(card, idx, _) {
-            playerType = card.get('playerType')[0];
-            if (PlayerTypes.dmPlayerType.key == playerType) {
-                image = card.get('exhibitImage')[0];
-                if (image) {
-                    isDuplicateImage = image.name == self.name() && image.url == self.url();
-                } else {
-                    self.name('');
-                    self.url('');
-                }
-            }
-        });
+        var dmCard = pcards.filter(function(card, idx, _) {
+            return PlayerTypes.dmPlayerType.key == card.get('playerType')[0];
+        })[0];
+
+        var image = dmCard.get('exhibitImage')[0];
+        var isDuplicateImage = true;
+        if (image) {
+            isDuplicateImage = image.name == self.name() && image.url == self.url();
+        }
 
         if (image && !isDuplicateImage) {
             self.name(image.name);
