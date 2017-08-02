@@ -123,7 +123,7 @@ function DMRootViewModel() {
 
         self.dmCardService.init();
         self.imageService.init();
-        self._updatePartyStatus();
+        self._updatePartyStatus(true);
     };
 
     /**
@@ -160,23 +160,24 @@ function DMRootViewModel() {
         }
     };
 
-    self._updatePartyStatus = function() {
-        var xmpp = XMPPService.sharedService();
-        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
-        if (self.currentPartyNode()) {
-            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + self.currentPartyNode().split('@')[0] + '</span></i>.');
+    self._updatePartyStatus = function(success) {
+        if (!success) { return; }
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedAndInAParty(chat.currentPartyNode);
+        if (chat.currentPartyNode) {
+            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
         } else {
             self.partyStatus('<i>You\'re not connected to a party.</i>');
         }
     };
 
-    self._updateCurrentNode = function(node) {
+    self._updateCurrentNode = function(node, success) {
         self.currentPartyNode(node);
-        self._updatePartyStatus();
+        self._updatePartyStatus(success);
     };
 
-    self._removeCurrentNode = function(node) {
+    self._removeCurrentNode = function(node, success) {
         self.currentPartyNode(null);
-        self._updatePartyStatus();
+        self._updatePartyStatus(success);
     };
 }

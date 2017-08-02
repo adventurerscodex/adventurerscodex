@@ -33,12 +33,11 @@ function ExhibitViewModel() {
         })[0];
 
         var image = dmCard.get('exhibitImage')[0];
-        var isDuplicateImage = true;
-        if (image) {
-            isDuplicateImage = image.name == self.name() && image.url == self.url();
-        }
 
-        if (image && !isDuplicateImage) {
+        if (image) {
+            if (image.name == self.name() && image.url == self.url()) {
+                return;
+            }
             self.name(image.name);
             self.url(Utility.string.createDirectDropboxLink(image.url));
             Notifications.userNotification.infoNotification.dispatch('New image on Exhibit', '');
