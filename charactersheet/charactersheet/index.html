@@ -145,18 +145,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- /ko -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#newModal" href="#">New/Import</a></i>
-                &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#charactersModal" href="#">Characters and Games</a></i>
-                &nbsp;
-                <!-- ko if: partyManagerViewModel.loggedIn -->
-                <i class="small underline">
-                  <a class="" data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                <i class="small underline"><a data-toggle="modal"
+                  data-target="#newModal" href="#">New/Import</a>
                 </i>
                 &nbsp;
-                <!-- /ko -->
+                <i class="small underline"><a data-toggle="modal"
+                  data-target="#charactersModal" href="#">Characters and Games</a>
+                </i>
+                &nbsp;
+                <i class="small underline">
+                  <a data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                </i>
+                &nbsp;
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#exportModal"
                   data-bind="click: charactersViewModel.selectCharacter"
@@ -186,6 +186,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               </div>
             </div>
             <!-- /ko -->
+            <div class="row">
+              <div class="col-xs-12">
+                <small data-bind="html: partyStatus"></small>
+              </div>
+            </div>
             <!-- /ko -->
           </div>
         </div>
@@ -288,9 +293,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
-  data-bind="with: charactersViewModel.selectedCharacter"
+  data-bind="with: charactersViewModel"
   aria-labelledby="exportModalLabel">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="document" data-bind="with: selectedCharacter">
     <div class="modal-content container-fluid">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -299,11 +304,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="modal-body">
         <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
         <p>Note: Safari users will need to save the contents of the page.</p>
+        <!-- ko ifnot: $parent.isLoggedIn -->
+        <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
+        <!-- /ko-->
       <!-- Add export form. -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export to file</button>
+        <!-- ko if: $parent.isLoggedIn -->
         <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
+        <!-- /ko-->
       </div>
     </div>
   </div>
@@ -572,6 +582,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="services/common/account/messaging/node_service.js" type="text/javascript"></script>
 <script src="services/common/account/messaging/chat_message_types.js" type="text/javascript"></script>
 <script src="services/common/account/messaging/chat_service.js" type="text/javascript"></script>
+<script src="services/common/account/notification_service.js" type="text/javascript"></script>
 <script src="services/common/account/xmpp_connection_service.js" type="text/javascript"></script>
 <script src="services/common/sync/card_service.js" type="text/javascript"></script>
 <script src="services/common/sync/image_service.js" type="text/javascript"></script>

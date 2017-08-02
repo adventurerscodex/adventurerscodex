@@ -35,6 +35,15 @@ function _pCardService(configuration) {
         self._setupNotifications();
     };
 
+    self.deinit = function() {
+        Notifications.xmpp.routes.pcard.remove(self.handlePCard);
+        Notifications.chat.member.left.remove(self.removePlayer);
+        Notifications.party.left.remove(self.clearPCards);
+
+        self._teardownNotifications();
+
+    };
+
     self.dataHasChanged = function() {
         var card = self._buildCard();
         self.publishCard(card);
@@ -74,6 +83,14 @@ function _pCardService(configuration) {
 
         self.configuration.fields.forEach(function(field, idx, _) {
             field.refreshOn.add(self.dataHasChanged);
+        });
+    };
+
+    self._teardownNotifications = function() {
+        Notifications.party.joined.remove(self._updateCurrentNode);
+
+        self.configuration.fields.forEach(function(field, idx, _) {
+            field.refreshOn.remove(self.dataHasChanged);
         });
     };
 

@@ -11,6 +11,7 @@ function CharacterRootViewModel() {
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
+    self.partyStatus = ko.observable('');
 
     //Player Child View Models
     self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
@@ -68,22 +69,13 @@ function CharacterRootViewModel() {
         return self._tabIsVisible('notes');
     });
     self.chatTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('chat');
-        }
-        return 'hidden';
+        return self._tabIsVisible('chat');
     });
     self.partyTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('party');
-        }
-        return 'hidden';
+        return self._tabIsVisible('party');
     });
     self.exhibitTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('exhibit');
-        }
-        return 'hidden';
+        return self._tabIsVisible('exhibit');
     });
 
     self.activateProfileTab = function() {
@@ -113,20 +105,8 @@ function CharacterRootViewModel() {
     self.activateChatTab = function() {
         self.activeTab('chat');
     };
-    self.activateChatTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('chat');
-        }
-    };
     self.activateExhibitTab = function() {
         self.activeTab('exhibit');
-    };
-    self.activateExhibitTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('exhibit');
-        }
     };
 
     self.toggleWell = function() {
@@ -189,6 +169,7 @@ function CharacterRootViewModel() {
         self.proficiencyService.init();
         self.armorClassService.init();
         self.characterCardPublishingService.init();
+        self._updatePartyStatus(true);
 
         //Subscriptions
         Notifications.profile.changed.add(function() {
@@ -202,8 +183,8 @@ function CharacterRootViewModel() {
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
         HotkeysService.registerHotkey('7', self.activateProfileTab);
-        HotkeysService.registerHotkey('8', self.activateChatTabFromHotkey);
-        HotkeysService.registerHotkey('9', self.activateExhibitTabFromHotkey);
+        HotkeysService.registerHotkey('8', self.activateChatTab);
+        HotkeysService.registerHotkey('9', self.activateExhibitTab);
     };
 
     /**
@@ -216,6 +197,7 @@ function CharacterRootViewModel() {
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
@@ -225,6 +207,9 @@ function CharacterRootViewModel() {
 
         Notifications.party.joined.remove(self._updateCurrentNode);
         Notifications.party.joined.remove(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.remove(self._removeCurrentNode);
+
+        self.characterCardPublishingService.deinit();
     };
 
     //Private Methods
@@ -245,19 +230,24 @@ function CharacterRootViewModel() {
         }
     };
 
-    self._updatePartyStatus = function() {
-        var xmpp = XMPPService.sharedService();
-        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
+    self._updatePartyStatus = function(success) {
+        if (!success) { return; }
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedAndInAParty(chat.currentPartyNode);
+        if (chat.currentPartyNode) {
+            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
+        } else {
+            self.partyStatus('<i>You\'re not connected to a party.</i>');
+        }
     };
 
-    self._updateCurrentNode = function(node) {
+    self._updateCurrentNode = function(node, success) {
         self.currentPartyNode(node);
-        self._updatePartyStatus();
+        self._updatePartyStatus(success);
     };
 
-    self._removeCurrentNode = function(node) {
+    self._removeCurrentNode = function(node, success) {
         self.currentPartyNode(null);
-        self._updatePartyStatus();
+        self._updatePartyStatus(success);
     };
-
 }

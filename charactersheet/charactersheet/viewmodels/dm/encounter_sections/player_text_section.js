@@ -43,6 +43,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
         var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
@@ -67,6 +68,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
         Notifications.global.save.remove(self.save);
         Notifications.encounters.changed.remove(self._dataHasChanged);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.party.left.remove(self._connectionHasChanged);
     };
 
     self.save = function() {

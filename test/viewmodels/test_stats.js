@@ -105,18 +105,6 @@ describe('Stats View Model', function() {
             });
         });
 
-        describe('Progress Label?', function() {
-            it('should give the progress bar label for the hp bar', function() {
-                var stats = new StatsViewModel();
-                stats.health().maxHitpoints(10);
-                stats.health().tempHitpoints(5);
-                stats.health().damage(13);
-                stats.health().progressLabel().should.equal('');
-                stats.health().damage(15);
-                stats.health().progressLabel().should.equal('K.O.');
-            });
-        });
-
         describe('Export', function() {
             it('should yield an object with all the info supplied.', function() {
                 var stats = new StatsViewModel();

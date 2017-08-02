@@ -161,6 +161,25 @@ function WizardViewModel() {
             profile.importValues(data);
             profile.save();
 
+            // Pre populate traits by race
+            var traits = data.traits;
+            traits.forEach(function (item, idx, _){
+                var trait = new Trait();
+                item.characterId = character.key();
+                trait.importValues(item);
+                trait.save();
+            });
+
+
+            // Pre populate items by backpack
+            var items = data.items;
+            items.forEach(function (element, idx, _){
+                var item = new Item();
+                element.characterId = character.key();
+                item.importValues(element);
+                item.save();
+            });
+
             var playerInfo = new PlayerInfo();
             playerInfo.characterId(character.key());
             playerInfo.save();

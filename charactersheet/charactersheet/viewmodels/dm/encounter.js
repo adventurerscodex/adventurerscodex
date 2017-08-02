@@ -105,6 +105,7 @@ function EncounterViewModel() {
         // Add the cell to the UI.
         if (encounter.parent()) {
             var parent = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
+            parent.isOpen(true);
             parent.addChild(encounter);
         } else {
             self.encounterCells.push(new EncounterCellViewModel(encounter));

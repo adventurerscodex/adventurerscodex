@@ -1,3 +1,25 @@
+version 1.5.1 (8/01/2017)
+* Adds subraces to races dropdown
+* Fixes issue with switching characters
+* Adds pre-population of traits based on selection of race in wizard
+* Fixes issue with ellipse pictures in the picker
+* Improves encounter switching speed
+* Fixes issue where notes do not save when switching notes
+* Adds new XMPP connection status indicator to player image
+* Dropbox export is no longer shown to non-logged in users
+* Adds status line for what party you're connected to
+* Adds new tight-inner panel class that saves some space with tables
+* Add populate backpacks
+* Increases encoutner collapse button hit-box size
+* Adds notifications service
+* Characters are no longer dead upon creation
+* Show party content offline
+* Adds 4 minute XMPP ping to keep connection alive
+* Remove ko from hp bar
+* Adds account conflict detection
+* Reduces notification spam
+* Add death save success toastr
+
 version 1.5.0 (7/04/2017)
 * Adds new notifications for connection errors.
 * Adds link detection to chat messages.

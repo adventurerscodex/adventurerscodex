@@ -198,6 +198,10 @@ var Notifications = {
     },
 
     party: {
+        /**
+         * The first parameter is the node you have joined and the second parameter is a boolean
+         * that determines if you successfully connected to the party.
+         */
         joined: new signals.Signal(),
         left: new signals.Signal(),
         roster: {
@@ -324,15 +328,23 @@ var Notifications = {
 
     xmpp: {
         /**
+         * Dispatched when a new connection object has been created, but before
+         * it is connected to the service.
+         */
+        initialized: new signals.Signal(),
+        /**
          * Dispatched when the XMPP connection is successfully established,
          * the given user is authenticated, and the connection is now usable.
          */
         connected: new signals.Signal(),
         /**
          * Dispatched when the XMPP connection has been successfully terminated.
+         * @param shouldNotify {bool} whether the event deserves to notify the user.
          */
         disconnected: new signals.Signal(),
+        reconnected: new signals.Signal(),
         error: new signals.Signal(),
+        conflict: new signals.Signal(),
 
         routes: {
             chat: new signals.Signal(),

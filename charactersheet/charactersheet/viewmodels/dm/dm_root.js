@@ -10,6 +10,7 @@ function DMRootViewModel() {
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
+    self.partyStatus = ko.observable('');
     self.TEMPLATE_FILE = 'dm/index.tmpl';
 
     //Player Child View Models
@@ -72,17 +73,11 @@ function DMRootViewModel() {
         return self._tabIsVisible('dmscreen');
     });
     self.chatTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('chat');
-        }
-        return 'hidden';
+        return self._tabIsVisible('chat');
     });
 
     self.partyTabStatus = ko.pureComputed(function() {
-        if (self.isConnectedAndInAParty()) {
-            return self._tabIsVisible('party');
-        }
-        return 'hidden';
+        return self._tabIsVisible('party');
     });
 
     self.notesTabStatus = ko.pureComputed(function() {
@@ -113,20 +108,6 @@ function DMRootViewModel() {
         self.activeTab('notes');
     };
 
-    self.activatePartyTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('party');
-        }
-    };
-
-    self.activateChatTabFromHotkey = function() {
-        var chat = ChatServiceManager.sharedService();
-        if (chat.currentPartyNode != null) {
-            self.activeTab('chat');
-        }
-    };
-
     //Public Methods
 
     /**
@@ -137,11 +118,12 @@ function DMRootViewModel() {
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
         HotkeysService.registerHotkey('4', self.activateNotesTab);
-        HotkeysService.registerHotkey('5', self.activatePartyTabFromHotkey);
-        HotkeysService.registerHotkey('6', self.activateChatTabFromHotkey);
+        HotkeysService.registerHotkey('5', self.activatePartyTab);
+        HotkeysService.registerHotkey('6', self.activateChatTab);
 
         self.dmCardService.init();
         self.imageService.init();
+        self._updatePartyStatus(true);
     };
 
     /**
@@ -154,6 +136,7 @@ function DMRootViewModel() {
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
@@ -162,6 +145,9 @@ function DMRootViewModel() {
 
         Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
         Notifications.xmpp.pubsub.unsubscribed.remove(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.remove(self._removeCurrentNode);
+
+        self.dmCardService.deinit();
     };
 
     //Private Methods
@@ -174,18 +160,24 @@ function DMRootViewModel() {
         }
     };
 
-    self._updatePartyStatus = function() {
-        var xmpp = XMPPService.sharedService();
-        self.isConnectedAndInAParty(xmpp.connection.connected && self.currentPartyNode());
+    self._updatePartyStatus = function(success) {
+        if (!success) { return; }
+        var chat = ChatServiceManager.sharedService();
+        self.isConnectedAndInAParty(chat.currentPartyNode);
+        if (chat.currentPartyNode) {
+            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
+        } else {
+            self.partyStatus('<i>You\'re not connected to a party.</i>');
+        }
     };
 
-    self._updateCurrentNode = function(node) {
+    self._updateCurrentNode = function(node, success) {
         self.currentPartyNode(node);
-        self._updatePartyStatus();
+        self._updatePartyStatus(success);
     };
 
-    self._removeCurrentNode = function(node) {
+    self._removeCurrentNode = function(node, success) {
         self.currentPartyNode(null);
-        self._updatePartyStatus();
+        self._updatePartyStatus(success);
     };
 }

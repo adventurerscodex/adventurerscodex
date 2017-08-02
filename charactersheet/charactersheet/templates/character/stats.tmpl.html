@@ -1,12 +1,11 @@
 <div class="panel panel-default bio">
-  <div class="panel-body">
+  <div class="panel-body tight-inner">
 	<!--Health items -->
     <div class="row row-padded">
-      <div class="col-md-12 col-padded stats-health-border">
+      <div class="col-md-12 col-padded">
         <div class="progress clickable" data-toggle="modal" data-bind="click: editHealth">
           <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
-            data-bind="style: { width: health().regularProgressWidth }, css: health().progressType,
-              text: health().progressLabel">
+            data-bind="style: { width: health().regularProgressWidth }, css: health().progressType">
             <span class="sr-only"></span>
           </div>
           <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar" aria-valuemin="0"

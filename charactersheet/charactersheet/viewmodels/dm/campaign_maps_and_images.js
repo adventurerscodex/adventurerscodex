@@ -50,6 +50,7 @@ function CampaignMapsAndImagesViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
         Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CharacterManager.activeCharacter().key();
@@ -64,6 +65,7 @@ function CampaignMapsAndImagesViewModel() {
     self.unload = function() {
         Notifications.global.save.remove(self.save);
         Notifications.party.joined.remove(self._connectionHasChanged);
+        Notifications.party.left.remove(self._connectionHasChanged);
         Notifications.exhibit.toggle.remove(self._dataHasChanged);
     };
 

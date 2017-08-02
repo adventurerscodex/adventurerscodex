@@ -82,12 +82,14 @@ function NestedListComponentViewModel(params) {
 ko.components.register('nested-list', {
     viewModel: NestedListComponentViewModel,
     template: '\
-        <div data-bind="foreach: cells" class="list-group no-bottom-margin">\
+        <div data-bind="foreach: cells" class="list-group no-bottom-margin master-list">\
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectCell">\
                 <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
-                <i data-bind="css: arrowIconClass, click: toggleIsOpen" aria-hidden="true"></i>&nbsp; \
+                <div class="toggle-arrow-container" data-bind="click: toggleIsOpen">\
+                    <i data-bind="css: arrowIconClass" aria-hidden="true"></i>&nbsp; \
+                </div>\
                 <!-- /ko -->\
                 <span data-bind="html: name"></span>&nbsp;&nbsp;\
                 <!-- ko if: $data.badge -->\
@@ -107,7 +109,7 @@ ko.components.register('nested-list', {
                 </span> \
             </a>\
             <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
-            <div class="row" data-bind="well: { open: isOpen }">\
+            <div class="row collapse" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
                     <nested-list params="cells: children, \
                         levels: $parent.levels - 1, \

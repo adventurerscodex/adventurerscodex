@@ -1,9 +1,9 @@
+<div class="h3">
+  <img class="encounter-section-img" src="/images/encounters/night-sky.svg">
+  Environment<br />
+  <small data-bind="text: tagline"></small>
+</div>
 <div class="container-fluid">
-  <div class="h3">
-    <img class="encounter-section-img" src="/images/encounters/night-sky.svg">
-    Environment<br />
-    <small data-bind="text: tagline"></small>
-  </div>
   <!-- Begin Tabs -->
   <ul class="nav nav-tabs tabs">
     <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
@@ -26,8 +26,8 @@
               <b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span><br>
               <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
               </div>
-            <!-- ko if: shouldShowPushButton -->
               <div class="col-xs-4 text-right">
+                <!-- ko if: shouldShowPushButton -->
                 <div class="text-center inline-block">
                   <span style="font-weight: bold;">Send</span><br>
                   <a data-bind="click: pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
@@ -42,8 +42,22 @@
                     </i>
                   </a>
                 </div>
+                <!-- /ko -->
+                <!-- ko ifnot: shouldShowPushButton -->
+                <div class="text-center inline-block">
+                  <span style="font-weight: bold;">Send</span><br>
+                    <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
+                      data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+                    </span>
+                </div>&nbsp;&nbsp;
+                <div class="text-center inline-block">
+                  <span style="font-weight: bold;">Exhibit</span><br>
+                  <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+                    data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+                  </span>
+                </div>
+                <!-- /ko -->
               </div>
-            <!-- /ko -->
           </div>
           <hr data-bind="visible: shouldShowDividingMarker"/>
           <div>

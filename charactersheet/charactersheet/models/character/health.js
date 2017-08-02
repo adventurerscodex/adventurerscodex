@@ -76,14 +76,6 @@ function Health() {
         return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
     }, self);
 
-
-    self.progressLabel = ko.pureComputed(function() {
-        if (self.isKnockedOut()) {
-            return 'K.O.';
-        }
-        return '';
-    }, self);
-
     self.clear = function() {
         var values = new Health().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
