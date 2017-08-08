@@ -35,6 +35,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
     self.selectedMapOrImageToPush = ko.observable();
     self.pushModalViewModel = ko.observable();
     self.openPushModal = ko.observable(false);
+    self.convertedDisplayUrl = ko.observable();
 
     self._isConnectedToParty = ko.observable(false);
 
@@ -144,6 +145,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
         self.editItemIndex = mapOrImage.__id;
         self.currentEditItem(new MapOrImage());
         self.currentEditItem().importValues(mapOrImage.exportValues());
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
         self.openModal(true);
     };
 
@@ -184,6 +186,7 @@ function MapsAndImagesSectionViewModel(parentEncounter) {
     };
 
     self.selectPreviewTab = function() {
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };

@@ -12,6 +12,7 @@ function CampaignMapsAndImagesViewModel() {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.convertedDisplayUrl = ko.observable();
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -121,6 +122,7 @@ function CampaignMapsAndImagesViewModel() {
         self.editItemIndex = mapOrImage.__id;
         self.currentEditItem(new MapOrImage());
         self.currentEditItem().importValues(mapOrImage.exportValues());
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
         self.openModal(true);
     };
 
@@ -146,6 +148,7 @@ function CampaignMapsAndImagesViewModel() {
     };
 
     self.selectPreviewTab = function() {
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
