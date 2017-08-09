@@ -217,6 +217,7 @@ function PartyManagerViewModel() {
     };
 
     self._handleReconnection = function(code) {
+        self.inAParty(true);
         Notifications.userNotification.successNotification.dispatch(
             'You\'re back online.',
             'Connection reestablished',
