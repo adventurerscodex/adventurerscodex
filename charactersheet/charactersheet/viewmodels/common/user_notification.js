@@ -19,7 +19,7 @@ function UserNotificationViewModel() {
             'newestOnTop': true,
             'progressBar': true,
             'positionClass': 'toast-top-right',
-            'preventDuplicates': false,
+            'preventDuplicates': true,
             'onclick': null,
             'showDuration': '300',
             'hideDuration': '1000',
