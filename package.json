@@ -27,14 +27,18 @@
     "mr-doc": "^3.2.1",
     "mr-doc-theme-cayman": "^1.4.1",
     "phantomjs-prebuilt": "^2.1.14",
-    "serve": "^1.4.0"
+    "serve": "^1.4.0",
+    "webpack": "^3.5.4",
+    "webpack-dev-server": "^2.7.1"
   },
   "scripts": {
     "postinstall": "bower install --force && cp -r charactersheet/bin/fonts charactersheet/bower_components/bootstrap-theme-bootswatch-flatly/fonts",
     "test": "grunt eslint && grunt karma:test",
     "coveralls": "grunt coveralls",
     "deploy": "bash deploy.sh",
-    "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\""
+    "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
+    "build": "webpack --config webpack.config.js -p", // the -p is for production, which uglifies the code
+    "start": "webpack-dev-server"
   },
   "dependencies": {
     "cryptojs": "^2.5.3",
