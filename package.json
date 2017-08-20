@@ -22,6 +22,7 @@
     "karma-coverage": "~0.5.0",
     "karma-mocha": "~0.2.0",
     "karma-phantomjs-launcher": "^1.0.2",
+    "knockout": "~3.3.0",
     "load-grunt-tasks": "^3.5.0",
     "mocha": "^2.3.3",
     "mr-doc": "^3.2.1",
@@ -37,7 +38,7 @@
     "coveralls": "grunt coveralls",
     "deploy": "bash deploy.sh",
     "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
-    "build": "webpack --config webpack.config.js", // the -p is for production, which uglifies the code
+    "build": "webpack --config webpack.config.js",
     "start": "webpack-dev-server"
   },
   "dependencies": {

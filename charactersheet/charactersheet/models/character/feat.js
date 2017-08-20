@@ -1,6 +1,6 @@
 'use strict';
 
-function Feat() {
+export function Feat() {
     var self = this;
 
     self.ps = PersistenceService.register(Feat, self);

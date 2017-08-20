@@ -1,6 +1,6 @@
 'use strict';
 
-function CharacterAppearance() {
+export function CharacterAppearance() {
     var self = this;
     self.ps = PersistenceService.register(CharacterAppearance, self);
     self.mapping = {

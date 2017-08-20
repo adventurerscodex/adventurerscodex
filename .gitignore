@@ -9,3 +9,5 @@ node_modules/
 .DS_Store
 .metadata/
 .vscode/
+dist/ac.bundle.js
+dist/vendor.bundle.js

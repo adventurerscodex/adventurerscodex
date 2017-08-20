@@ -1,6 +1,6 @@
 'use strict';
 
-function AbilityScores() {
+export function AbilityScores() {
     var self = this;
     self.ps = PersistenceService.register(AbilityScores, self);
     self.mapping = {
