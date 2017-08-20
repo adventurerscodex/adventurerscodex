@@ -37,7 +37,7 @@
     "coveralls": "grunt coveralls",
     "deploy": "bash deploy.sh",
     "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
-    "build": "webpack --config webpack.config.js -p", // the -p is for production, which uglifies the code
+    "build": "webpack --config webpack.config.js", // the -p is for production, which uglifies the code
     "start": "webpack-dev-server"
   },
   "dependencies": {

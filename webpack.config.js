@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = {
   context: path.resolve(__dirname, './charactersheet/charactersheet'),
   entry: {
-    ac: ['./init.js', './settings.js'],
+    ac: './app.js',
   },
   output: {
     path: path.resolve(__dirname, './dist'),
