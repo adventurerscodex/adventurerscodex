@@ -1,5 +1,12 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { AbilityScores, Armor } from 'charactersheet/models/character'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+
 function CampaignMapOrImage() {
     var self = this;
 

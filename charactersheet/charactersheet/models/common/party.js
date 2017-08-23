@@ -1,5 +1,9 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
 
 function Party() {
     var self = this;

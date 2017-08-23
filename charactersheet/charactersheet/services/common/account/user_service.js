@@ -3,7 +3,7 @@
 /**
  * A global service that fetches the user's account information.
  */
-var UserServiceManager = new SharedServiceManager(_UserService, null);
+export var UserServiceManager = new SharedServiceManager(_UserService, null);
 
 /**
  * An internal service implementation that holds onto data regarding the

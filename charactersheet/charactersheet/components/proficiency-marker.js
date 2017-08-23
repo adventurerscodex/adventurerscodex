@@ -1,5 +1,7 @@
 'use strict';
 
+import ko from 'knockout'
+
 /**
  * Proficiency Marker component
  *
@@ -11,7 +13,7 @@
  *
  * <prof-marker params="proficiencyType: 'normal'></prof-marker>"
  */
-function ProficiencyTypeComponentViewModel(params) {
+export function ProficiencyTypeComponentViewModel(params) {
     var self = this;
 
     self.proficiency = params.proficiency;

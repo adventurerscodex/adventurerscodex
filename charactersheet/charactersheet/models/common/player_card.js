@@ -1,4 +1,10 @@
 'use strict';
+
+import ko from 'knockout'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
+
 /**
  * Fields from a pCard will be extracted to create the UI representation of a player.
  * @param pCard  contains all the fields that make up a player

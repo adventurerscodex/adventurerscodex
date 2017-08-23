@@ -1,5 +1,13 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { ChatRoom } from 'charactersheet/models/character'
+import { Message } from 'charactersheet/models/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+
 
 function ChatRoom() {
     var self = this;

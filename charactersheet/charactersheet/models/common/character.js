@@ -1,5 +1,13 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { Profile, Campaign } from 'charactersheet/models/character'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+
+
 /**
  * Character Model
  * @author Brian Schrader

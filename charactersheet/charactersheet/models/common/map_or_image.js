@@ -1,5 +1,11 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { PersistenceService } from 'charactersheet/services/common'
+import { Utility } from 'charactersheet/utilites'
+
+
 function MapOrImage() {
     var self = this;
 
@@ -25,7 +31,7 @@ function MapOrImage() {
     };
 
     self.clear = function() {
-        var values = new Map().exportValues();
+        var values = new MapOrImage().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };

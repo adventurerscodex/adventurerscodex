@@ -4,7 +4,7 @@
  * Converts the values of skill proficiency from a boolean
  * to a set of enumerated strings based on their boolean value.
  */
-var migration_110_1_skills = {
+export var migration_110_1_skills = {
     name: 'Skills Proficiency Value Migration',
     version: '1.1.0',
     migration: function() {

@@ -1,5 +1,7 @@
 'use strict';
 
+import { LZString } from 'lz-string'
+
 /**
 ### JSON Item Specification
 
@@ -24,8 +26,7 @@ __Example__
         compressed json data
     </json>
 */
-
-var JSONPayload = {
+export var JSONPayload = {
     configuration: {
         compression: {
             'lz-string': {

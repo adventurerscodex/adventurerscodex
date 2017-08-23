@@ -1,6 +1,10 @@
 'use strict';
 
-var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { OtherStats, Profile } from 'charactersheet/models/character'
+import { PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+
+export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
 
 function _ProficiencyService(configuration) {
     var self = this;

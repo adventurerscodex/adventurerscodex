@@ -4,7 +4,7 @@
  * A global service that observes changes in account statuses
  * and holds onto the global account state per session.
  */
-function SharedServiceManager(sharedServiceType, configuration) {
+export function SharedServiceManager(sharedServiceType, configuration) {
     var self = this;
 
     self._sharedService = null;

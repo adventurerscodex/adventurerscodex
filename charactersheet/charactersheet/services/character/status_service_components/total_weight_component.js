@@ -1,10 +1,16 @@
 'use strict';
 
+import { AbilityScores } from 'charactersheet/models/character'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { Status, StatusWeightPair } from 'charactersheet/models/common'
+
+
 /**
  * A Status Service Component that tracks the total weight that a character
  * is carrying, and any modifiers that are applied due to this weight.
  */
-function TotalWeightStatusServiceComponent() {
+export function TotalWeightStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Encumbrance';

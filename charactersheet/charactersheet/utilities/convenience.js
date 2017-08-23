@@ -8,7 +8,7 @@
  * @author Nathaniel Arellano
  */
 
-var Utility = {
+export var Utility = {
     markdown: {},
     string: {},
     array: {},

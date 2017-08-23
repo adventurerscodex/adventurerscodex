@@ -1,5 +1,8 @@
 'use strict';
 
+import ko from 'knockout'
+//TODO Import
+
 function ArmorViewModel() {
     var self = this;
 
