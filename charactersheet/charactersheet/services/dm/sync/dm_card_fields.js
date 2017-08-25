@@ -1,5 +1,10 @@
 'use strict';
 
+import { Campaign, Exhibit } from 'charactersheet/models/dm'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPService } from 'charactersheet/services/common'
+import { PlayerImage, PlayerInfo, Status, StatusWeightPair } from 'charactersheet/models/common'
+
 
 var DMCardFields = [
     {

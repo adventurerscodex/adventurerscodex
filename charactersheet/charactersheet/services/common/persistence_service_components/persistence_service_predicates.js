@@ -7,7 +7,7 @@
  * @field key  name of property that will be compared
  * @field value  desired value to be compared against
  */
-function KeyValuePredicate(key, value) {
+export function KeyValuePredicate(key, value) {
     var self = this;
 
     self.key = key;
@@ -19,7 +19,7 @@ function KeyValuePredicate(key, value) {
 }
 
 
-function NotPredicate(predicate) {
+export function NotPredicate(predicate) {
     var self = this;
 
     self.predicate = predicate;
@@ -33,7 +33,7 @@ function NotPredicate(predicate) {
 /**
  * Given a list of child predicates return a match if all of the children match.
  */
-function AndPredicate(predicates) {
+export function AndPredicate(predicates) {
     var self = this;
 
     self.predicates = predicates;
@@ -49,7 +49,7 @@ function AndPredicate(predicates) {
 /**
  * Given a list of child predicates return a match if any of the children match.
  */
-function OrPredicate(predicates) {
+export function OrPredicate(predicates) {
     var self = this;
 
     self.predicates = predicates;

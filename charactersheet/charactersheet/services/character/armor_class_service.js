@@ -1,6 +1,13 @@
 'use strict';
 
-var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
+import { ko } from 'ko'
+
+import { AbilityScores, Armor, OtherStats } from 'charactersheet/models'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate, NotPredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+
+
+export var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
 
 function _ArmorClassService(configuration) {
     var self = this;

@@ -1,5 +1,10 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
+
 function MagicItem() {
     var self = this;
 
@@ -25,8 +30,8 @@ function MagicItem() {
     self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
     self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
-    self.chargesDisplay = ko.pureComputed(function(){
-        if(self.magicItemMaxCharges() == 0){
+    self.chargesDisplay = ko.pureComputed(function() {
+        if (self.magicItemMaxCharges() == 0) {
             return 'N/A';
         }
         else {

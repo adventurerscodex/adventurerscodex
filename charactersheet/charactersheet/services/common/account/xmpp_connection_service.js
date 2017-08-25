@@ -34,7 +34,7 @@ var XMPPServiceDefaultConfig = {
  * A single, shared connection to the XMPP server is shared across
  * the application instance, and can be accessed via `sharedConnection`.
  */
-var XMPPService = new SharedServiceManager(_XMPPService, XMPPServiceDefaultConfig);
+export var XMPPService = new SharedServiceManager(_XMPPService, XMPPServiceDefaultConfig);
 
 
 function _XMPPService(config) {

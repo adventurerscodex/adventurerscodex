@@ -1,12 +1,14 @@
 'use strict';
 
+import { signals } from 'signals'
+
 /**
  * A central repository of signals used in Adventurer's Codex
  * To be notified of changes to an outside module, subscribe to a
  * given notification.
  */
 
-var Notifications = {
+export var Notifications = {
 
     /*****************************
      ***** Application Events ****

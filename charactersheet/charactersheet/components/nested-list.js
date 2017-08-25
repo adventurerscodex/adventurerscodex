@@ -1,5 +1,7 @@
 'use strict';
 
+import ko from 'knockout'
+
 /**
  * nested-list component
  *
@@ -21,7 +23,7 @@
  *
  * Note: This binding recursively uses itself to render it's children.
  */
-function NestedListComponentViewModel(params) {
+export function NestedListComponentViewModel(params) {
     var self = this;
 
     self.cells = params.cells || ko.observableArray();

@@ -1,5 +1,7 @@
 'use strict';
 
+import ko from 'knockout'
+
 /**
  * plus-minus component
  * A useful 2 button component for incrementing/decrementing a value.
@@ -11,7 +13,7 @@
  *
  * Note: This template adapts the button size based on the device size.
  */
-function PlusMinusComponentViewModel(params) {
+export function PlusMinusComponentViewModel(params) {
     var self = this;
 
     self.value = params.value;

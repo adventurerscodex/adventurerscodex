@@ -1,6 +1,6 @@
 'use strict';
 
-var Fixtures = {
+export var Fixtures = {
     defaultProfilePictures: [
         {
             name: '',

@@ -4,7 +4,7 @@
  * input keys and registers new [hotkey, function] combinations.
 */
 
-var HotkeysService = {
+export var HotkeysService = {
     hotkeyHandler : function(data, event) {
         var keypressIsInBody = event.target.tagName.toLowerCase() !== 'input' &&
             event.target.tagName.toLowerCase() !== 'textarea' &&

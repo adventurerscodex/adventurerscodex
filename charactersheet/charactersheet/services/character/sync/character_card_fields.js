@@ -1,7 +1,12 @@
 'use strict';
 
+import { AbilityScores, Health, HitDice, HitDiceType, Profile, SpellStats, Treasure } from 'charactersheet/models/character'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPService } from 'charactersheet/services/common'
+import { PlayerImage, PlayerInfo, Status, StatusWeightPair } from 'charactersheet/models/common'
 
-var CharacterCardFields = [
+
+export var CharacterCardFields = [
     {
         name: 'publisherJid',
         refreshOn: Notifications.item.changed,

@@ -1,10 +1,16 @@
 'use strict';
 
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { OtherStats } from 'charactersheet/models/character'
+import { Status, StatusWeightPair } from 'charactersheet/models/common'
+
+
 /**
  * A Status Service Component that tracks the total weight that a character
  * is carrying, and any modifiers that are applied due to this weight.
  */
-function InspirationStatusServiceComponent() {
+export function InspirationStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Inspired';
