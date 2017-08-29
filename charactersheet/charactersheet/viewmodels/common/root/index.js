@@ -1,5 +1,13 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { NodeServiceManager, ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { Notifications } from 'charactersheet/utilities'
+import { NotificationsServiceManager, XMPPService } from 'charactersheet/services/common/account'
+import { PersistenceService } from 'charactersheet/services/common'
+
 /**
  * All of the possible states that the app globally can render.
  */
@@ -24,7 +32,7 @@ var APP_STATE = {
  * This view model contains the global import/export functionality for player data as well as the
  * UI helpers for page layout and design.
  */
-function AdventurersCodexViewModel() {
+export function AdventurersCodexViewModel() {
     var self = this;
 
     /**

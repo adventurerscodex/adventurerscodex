@@ -1,6 +1,15 @@
 'use strict';
 
-function ArmorViewModel() {
+import ko from 'knockout'
+
+import { Armor} from 'charactersheet/common/models'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function ArmorViewModel() {
     var self = this;
 
     self.blankArmor = ko.observable(new Armor());
@@ -188,3 +197,8 @@ function ArmorViewModel() {
         });
     };
 }
+
+ko.components.register('armor', {
+  viewModel: ArmorViewModel,
+  template: template
+})

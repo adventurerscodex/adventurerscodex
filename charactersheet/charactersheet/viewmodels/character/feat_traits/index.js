@@ -1,13 +1,22 @@
 'use strict';
 
-function FeaturesTraitsViewModel() {
+import ko from 'knockout'
+
+import { FeaturesTraits } from 'charactersheet/character/models'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function FeaturesTraitsViewModel() {
     var self = this;
 
     self.featTraits = ko.observable(new FeaturesTraits());
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-        
+
         var ft = PersistenceService.findBy(FeaturesTraits, 'characterId',
             CharacterManager.activeCharacter().key());
         if (ft.length > 0) {
@@ -27,3 +36,8 @@ function FeaturesTraitsViewModel() {
         self.featTraits().save();
     };
 }
+
+ko.components.register('feat-traits', {
+  viewModel: FeaturesTraitsViewModel,
+  template: template
+})

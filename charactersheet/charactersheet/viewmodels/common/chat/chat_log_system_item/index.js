@@ -1,9 +1,12 @@
 'use strict';
 
+import ko from 'knockout'
+
+import template from './index.html'
 /**
  * A View that handles displaying Messages of type SYSTEM.
  */
-function ChatLogSystemItem(message) {
+export function ChatLogSystemItem(message) {
     var self = this;
 
     self.message = message;
@@ -22,3 +25,8 @@ function ChatLogSystemItem(message) {
         return self.message.html();
     });
 }
+
+ko.components.register('chat-log-system-item', {
+  viewModel: ChatLogSystemItem,
+  template: template
+})

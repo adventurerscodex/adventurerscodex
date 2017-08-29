@@ -1,9 +1,18 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common/account/sync'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { XMPPService } from 'charactersheet/services/common/account'
+
+import template from './index.html'
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-function ChatLogChatItem(message) {
+export function ChatLogChatItem(message) {
     var self = this;
 
     self.message = message;
@@ -85,3 +94,8 @@ function ChatLogChatItem(message) {
         return cardService.pCards[jid] ? cardService.pCards[jid]: null;
     };
 }
+
+ko.components.register('chat-log-chat-item', {
+  viewModel: ChatLogChatItem,
+  template: template
+})

@@ -1,6 +1,16 @@
 'use strict';
 
-function MagicItemsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { MagicItem } from 'charactersheet/common/models'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SortService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function MagicItemsViewModel() {
     var self = this;
 
     self.sorts = {
@@ -183,3 +193,8 @@ function MagicItemsViewModel() {
         self.magicItems([]);
     };
 }
+
+ko.components.register('magic-items', {
+  viewModel: MagicItemsViewModel,
+  template: template
+})

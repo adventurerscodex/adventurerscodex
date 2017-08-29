@@ -1,9 +1,14 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { NotesViewModel } from 'charactersheet/viewmodels/common'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 /**
  * This view model contains the player's notes information.
  */
-function NotesTabViewModel() {
+export function NotesTabViewModel() {
     var self = this;
 
     self.notesViewModel = ko.observable(new NotesViewModel());

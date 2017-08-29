@@ -1,7 +1,14 @@
 'use strict';
 /*eslint no-console:0*/
 
-function PartyManagerViewModel() {
+import ko from 'knockout'
+
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function PartyManagerViewModel() {
     var self = this;
 
     self.loggedIn = ko.observable(false);
@@ -240,3 +247,8 @@ function PartyManagerViewModel() {
         );
     };
 }
+
+ko.components.register('party-manager', {
+  viewModel: PartyManagerViewModel,
+  template: template
+})
