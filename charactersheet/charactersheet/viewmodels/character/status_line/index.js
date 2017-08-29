@@ -1,6 +1,14 @@
 'use strict';
 
-function StatusLineViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function StatusLineViewModel() {
     var self = this;
 
     self.statusLine = ko.observable('');
@@ -45,3 +53,8 @@ function StatusLineViewModel() {
         }).join('') + '.';
     };
 }
+
+ko.components.register('status-line', {
+  viewModel: StatusLineViewModel,
+  template: template
+})

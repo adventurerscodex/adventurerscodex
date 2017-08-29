@@ -1,6 +1,15 @@
 'use strict';
 
-function TreasureViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { Treasure } from 'charactersheet/common/models'
+
+import template from './index.html'
+
+export function TreasureViewModel() {
     var self = this;
 
     self.treasure = ko.observable(new Treasure());
@@ -28,12 +37,12 @@ function TreasureViewModel() {
 
     self.unload = function() {
         self.treasure().save();
-        Notifications.global.save.remove(self.save);   
+        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
         self.treasure().save();
-    };    
+    };
 
     self.clear = function() {
         self.treasure().clear();
@@ -46,3 +55,8 @@ function TreasureViewModel() {
         Notifications.treasure.changed.dispatch();
     };
 }
+
+ko.components.register('treasure', {
+  viewModel: TreasureViewModel,
+  template: template
+})

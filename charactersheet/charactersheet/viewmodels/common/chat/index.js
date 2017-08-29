@@ -1,6 +1,17 @@
 'use strict';
 /*eslint no-console:0*/
-function ChatViewModel() {
+
+import ko from 'knockout'
+
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { XMPPService } from 'charactersheet/services/common/account'
+
+import template from './index.html'
+
+export function ChatViewModel() {
     var self = new MasterDetailViewModel();
 
     self.chats = ko.observableArray();
@@ -245,3 +256,8 @@ function ChatViewModel() {
 
     return self;
 }
+
+ko.components.register('chat-modal', {
+  viewModel: ChatViewModel,
+  template: template
+})

@@ -1,6 +1,16 @@
 'use strict';
 
-function SpellbookViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SortService } from 'charactersheet/services/common'
+import { Spell } from 'charactersheet/character/models'
+
+import template from './index.html'
+
+export function SpellbookViewModel() {
     var self = this;
 
     self.sorts = {
@@ -203,3 +213,8 @@ function SpellbookViewModel() {
         });
     };
 }
+
+ko.components.register('spells', {
+  viewModel: SpellbookViewModel,
+  template: template
+})

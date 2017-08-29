@@ -1,9 +1,16 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores'
+import { SavingThrowsViewModel } from 'charactersheet/viewmodels/character/savings_throws'
+import { StatsViewModel } from 'charactersheet/viewmodels/character/stats'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 /**
  * This view model contains the player's stats information.
  */
-function StatsTabViewModel() {
+export function StatsTabViewModel() {
     var self = this;
 
     self.statsViewModel         = ko.observable(new StatsViewModel());

@@ -1,9 +1,20 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common/account/sync'
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { XMPPService } from 'charactersheet/services/common/account'
+
+import template from './index.html'
+
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-function ChatLogReadAloudItem(message) {
+export function ChatLogReadAloudItem(message) {
     var self = this;
 
     self.message = message;
@@ -85,3 +96,8 @@ function ChatLogReadAloudItem(message) {
         return cardService.pCards[jid] ? cardService.pCards[jid]: null;
     };
 }
+
+ko.components.register('chat-log-read-aloud-item', {
+  viewModel: ChatLogReadAloudItem,
+  template: template
+})

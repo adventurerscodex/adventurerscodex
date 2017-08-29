@@ -1,6 +1,15 @@
 'use strict';
 
-function SpellStatsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SpellStats } from 'charactersheet/character/models'
+
+import template from './index.html'
+
+export function SpellStatsViewModel() {
     var self = this;
 
     self.spellStats = ko.observable(new SpellStats());
@@ -65,3 +74,8 @@ function SpellStatsViewModel() {
         Notifications.spellStats.changed.dispatch();
     };
 }
+
+ko.components.register('spell-stats', {
+  viewModel: SpellStatsViewModel,
+  template: template
+})

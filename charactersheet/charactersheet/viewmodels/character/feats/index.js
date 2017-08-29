@@ -1,6 +1,18 @@
 'use strict';
 
-function FeatsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { DataRepository } from 'charactersheet/utilities'
+import { Feat } from 'charactersheet/character/models'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SortService } from 'charactersheet/services/common'
+import { Tracked } from 'charactersheet/character/models'
+
+import template from './index.html'
+
+export function FeatsViewModel() {
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 45;
@@ -174,3 +186,8 @@ function FeatsViewModel() {
         return 'Tracked Feats are listed in Feature Tracker.';
     };
 }
+
+ko.components.register('feats', {
+  viewModel: FeatsViewModel,
+  template: template
+})

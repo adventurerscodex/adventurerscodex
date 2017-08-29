@@ -1,6 +1,18 @@
 'use strict';
 
-function StatsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Health } from 'charactersheet/character/models'
+import { HitDice } from 'charactersheet/character/models'
+import { HitDiceType } from 'charactersheet/character/models'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { OtherStats } from 'charactersheet/character/models'
+
+import template from './index.html'
+
+export function StatsViewModel() {
     var self = this;
 
     self.health = ko.observable(new Health());
@@ -414,3 +426,8 @@ function StatsViewModel() {
 
     };
 }
+
+ko.components.register('stats', {
+  viewModel: StatsViewModel,
+  template: template
+})

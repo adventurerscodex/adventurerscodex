@@ -1,6 +1,16 @@
 'use strict';
 
-function TrackerViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SortService } from 'charactersheet/services/common'
+import { Utility } from 'charactersheet/utilities'
+
+import template from './index.html'
+
+export function TrackerViewModel() {
     var self = this;
 
     self.sorts = {
@@ -171,3 +181,8 @@ function TrackerViewModel() {
         self.trackables([]);
     };
 }
+
+ko.components.register('tracker', {
+  viewModel: TrackerViewModel,
+  template: template
+})

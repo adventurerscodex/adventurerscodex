@@ -1,5 +1,14 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { AbilityScores } from 'charactersheet/character/models'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
 var isNumeric = function(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
@@ -27,7 +36,7 @@ var getStrModifier = function(modifier){
     return modifier;
 };
 
-function AbilityScoresViewModel() {
+export function AbilityScoresViewModel() {
     var self = this;
 
     self.abilityScores = ko.observable(new AbilityScores());
@@ -105,3 +114,8 @@ function AbilityScoresViewModel() {
         self.abilityScores().save();
     };
 }
+
+ko.components.register('ability-scores', {
+  viewModel: AbilityScoresViewModel,
+  template: template
+})

@@ -1,6 +1,16 @@
 'use strict';
 
-function ItemsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Items } from 'charactersheet/common/models'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SortService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function ItemsViewModel() {
     var self = this;
 
     self.sorts = {
@@ -175,3 +185,8 @@ function ItemsViewModel() {
         self.modalOpen(true);
     };
 }
+
+ko.components.register('items', {
+  viewModel: ItemsViewModel,
+  template: template
+})

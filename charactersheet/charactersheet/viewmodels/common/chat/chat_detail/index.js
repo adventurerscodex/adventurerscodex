@@ -1,6 +1,14 @@
 'use strict';
 
-function ChatDetailViewModel(chatCell, parent) {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Message } from 'charactersheet/models/common'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { XMPPService } from 'charactersheet/services/common/account'
+
+export function ChatDetailViewModel(chatCell, parent) {
     var self = this;
 
     self.id = chatCell.id;
@@ -237,3 +245,8 @@ var ChatDetailViewModelMemberTemplate = '\
         <small class="text-lightgray">{card.name}</small>\
     </div>\
 ';
+
+ko.components.register('chat-detail', {
+  viewModel: ChatCellViewModel,
+  template: ChatDetailViewModelMemberTemplate
+})
