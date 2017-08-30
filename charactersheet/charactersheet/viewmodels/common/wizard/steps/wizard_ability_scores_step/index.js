@@ -1,6 +1,10 @@
 'use strict';
 
-function WizardAbilityScoresStepViewModel() {
+import ko from 'knockout'
+
+import template from './index.html'
+
+export function WizardAbilityScoresStepViewModel() {
     var self = this;
 
     self.TEMPLATE_FILE = 'wizard_ability_scores_step.tmpl';
@@ -52,3 +56,8 @@ function WizardAbilityScoresStepViewModel() {
         };
     });
 }
+
+ko.components.register('wizard-ability-score-step', {
+    viewModel: WizardAbilityScoresStepViewModel,
+    template: template
+  })

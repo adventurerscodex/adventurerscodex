@@ -1,6 +1,10 @@
 'use strict';
 
-function WizardCampaignStepViewModel() {
+import ko from 'knockout'
+
+import template from './index.html'
+
+export function WizardCampaignStepViewModel() {
     var self = this;
 
     self.TEMPLATE_FILE = 'wizard_campaign_step.tmpl';
@@ -44,3 +48,8 @@ function WizardCampaignStepViewModel() {
         };
     });
 }
+
+ko.components.register('wizard-campaign-step', {
+    viewModel: WizardCampaignStepViewModel,
+    template: template
+  })

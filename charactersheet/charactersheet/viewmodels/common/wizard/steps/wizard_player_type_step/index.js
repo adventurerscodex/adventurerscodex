@@ -1,6 +1,10 @@
 'use strict';
 
-function WizardPlayerTypeStepViewModel() {
+import ko from 'knockout'
+
+import template from './index.html'
+
+export function WizardPlayerTypeStepViewModel() {
     var self = this;
 
     self.TEMPLATE_FILE = 'wizard_player_type_step.tmpl';
@@ -44,3 +48,8 @@ function WizardPlayerTypeStepViewModel() {
         };
     });
 }
+
+ko.components.register('wizard-player-type-step', {
+    viewModel: WizardPlayerTypeStepViewModel,
+    template: template
+  })

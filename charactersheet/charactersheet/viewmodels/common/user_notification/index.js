@@ -2,9 +2,9 @@
 
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Fixtures } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
+import { CharacterManager,
+    Notifications,
+    Fixtures } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 
 /**

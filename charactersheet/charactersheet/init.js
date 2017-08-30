@@ -8,7 +8,7 @@ import {
     ChatServiceManager,
     HealthinessStatusServiceComponent,
     InspirationStatusServiceComponent,
-    MagicalStatusServiceComponent
+    MagicalStatusServiceComponent,
     NodeServiceManager,
     NotificationsServiceManager,
     StatusService,

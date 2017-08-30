@@ -7,8 +7,6 @@ import { ChatServiceManager,
     CharacterCardPublishingService } from 'charactersheet/services/common'
 import { CharacterManager } from 'charactersheet/utilities'
 
-import template from './index.html'
-
 export function PlayerPushModalViewModel(parent) {
     var self = this;
 
@@ -70,6 +68,5 @@ export function PlayerPushModalViewModel(parent) {
 }
 
 ko.components.register('player-push-modal', {
-    viewModel: PlayerPushModalViewModel,
-    template: template
+    viewModel: PlayerPushModalViewModel
   })

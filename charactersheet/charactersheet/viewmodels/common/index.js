@@ -1,6 +1,6 @@
 import ko from 'knockout'
 
-import './character_picker'
+// import './character_picker' TODO: What to do with only tmpl files?
 import './characters'
 import './chat/chat_cell'
 import './chat/chat_detail'
@@ -17,9 +17,10 @@ import './notes_tab'
 import './notifications'
 import './party_manager'
 import './player_image'
-import './player_info'
+// import './player_info' TODO: What to do with only tmpl files?
 import './root'
 import './user_notification'
 import './wizard/steps'
+import './wizard'
 
 ko.applyBindings()

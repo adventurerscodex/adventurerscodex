@@ -1,6 +1,10 @@
 'use strict';
 
-function WizardIntroStepViewModel() {
+import ko from 'knockout'
+
+import template from './index.html'
+
+export function WizardIntroStepViewModel() {
     var self = this;
 
     self.TEMPLATE_FILE = 'wizard_intro_step.tmpl';
@@ -92,3 +96,8 @@ function WizardIntroStepViewModel() {
     };
 
 }
+
+ko.components.register('wizard-intro-step', {
+    viewModel: WizardIntroStepViewModel,
+    template: template
+  })

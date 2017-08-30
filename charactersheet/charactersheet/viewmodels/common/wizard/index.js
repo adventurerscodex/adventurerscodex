@@ -2,7 +2,15 @@
 
 import ko from 'knockout'
 
-import { Character } from 'charactersheet/models/common'
+import { CharacterManager } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { Character,
+    Profile,
+    Campaign,
+    AbilityScores,
+    PlayerInfo,
+    Item,
+    Trait } from 'charactersheet/models'
 
 import template from './index.html'
 
