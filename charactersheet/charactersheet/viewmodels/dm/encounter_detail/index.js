@@ -1,4 +1,13 @@
 'use strict';
+import ko from 'knockout'
+
+import { Encounter } from 'charactersheet/models/dm'
+import { EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
+import { ViewModelUtilities,
+    Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
 
 /**
  * A View Model for the detailed display of an encounter.
@@ -6,7 +15,7 @@
  * is given the encounter it will display. When the user selects another
  * encounter to focus on, the current encounter is cleaned up.
  */
-function EncounterDetailViewModel(encounter, allSections) {
+export function EncounterDetailViewModel(encounter, allSections) {
     var self = this;
 
     self.encounterId = encounter.encounterId;
@@ -121,3 +130,8 @@ function EncounterDetailViewModel(encounter, allSections) {
         self.visibilityVMs([]);
     };
 }
+
+ko.components.register('encounter-detail', {
+  viewModel: EncounterDetailViewModel,
+  template: template
+})

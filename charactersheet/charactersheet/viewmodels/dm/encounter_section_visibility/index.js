@@ -1,6 +1,12 @@
 'use strict';
+import ko from 'knockout'
 
-function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
+import { ViewModelUtilities,
+    Notifications,
+    CharacterManager } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function EncounterSectionVisibilityViewModel(parentEncounter, sectionModel) {
     var self = this;
 
     self.name = ko.observable('');

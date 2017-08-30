@@ -1,6 +1,12 @@
 'use strict';
 
-function NotesSectionViewModel(parentEncounter) {
+import ko from 'knockout'
+
+import { NotesSection } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function NotesSectionViewModel(parentEncounter) {
     var self = this;
 
     self.notes = ko.observable('');
@@ -43,7 +49,7 @@ function NotesSectionViewModel(parentEncounter) {
 
         notes.save();
         Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);        
+        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
@@ -71,3 +77,8 @@ function NotesSectionViewModel(parentEncounter) {
         }
     };
 }
+
+ko.components.register('notes-section', {
+  viewModel: NotesSectionViewModel,
+  template: template
+})

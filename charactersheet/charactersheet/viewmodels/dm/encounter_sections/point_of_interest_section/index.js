@@ -1,6 +1,13 @@
 'use strict';
 
-function PointOfInterestSectionViewModel(parentEncounter) {
+import ko from 'knockout'
+
+import { PointOfInterest,
+    PointOfInterestSection } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function PointOfInterestSectionViewModel(parentEncounter) {
     var self = this;
 
     self.template = 'point_of_interest.tmpl';
@@ -182,3 +189,8 @@ function PointOfInterestSectionViewModel(parentEncounter) {
         self.visible(section.visible());
     };
 }
+
+ko.components.register('point-of-interest-section', {
+  viewModel: PointOfInterestSectionViewModel,
+  template: template
+})

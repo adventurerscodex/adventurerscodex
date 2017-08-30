@@ -1,6 +1,14 @@
 'use strict';
+import ko from 'knockout'
 
-function CampaignMapsAndImagesViewModel() {
+import { CampaignMapOrImage,
+    Message,
+    PlayerPushModalViewModel,
+    MapOrImage } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function CampaignMapsAndImagesViewModel() {
     var self = this;
 
     self.mapsOrImages = ko.observableArray();
@@ -233,3 +241,8 @@ function CampaignMapsAndImagesViewModel() {
         }
     };
 }
+
+ko.components.register('campaign-maps-and-images', {
+  viewModel: CampaignMapsAndImagesViewModel,
+  template: template
+})

@@ -1,6 +1,12 @@
 'use strict';
+//TODO: do we need math or date?
+import ko from 'knockout'
 
-function CampaignOverviewViewModel() {
+import { Campaign } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function CampaignOverviewViewModel() {
     var self = this;
 
     self.playerName = ko.observable();
@@ -81,3 +87,8 @@ function CampaignOverviewViewModel() {
         return Math.round((now-day.getTime())/(1000*60*60*24));
     };
 }
+
+ko.components.register('overview', {
+  viewModel: CampaignOverviewViewModel,
+  template: template
+})

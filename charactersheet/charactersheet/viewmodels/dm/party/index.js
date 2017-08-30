@@ -1,6 +1,11 @@
 'use strict';
+import ko from 'knockout'
 
-function PartyViewModel() {
+import { PlayerCard } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function PartyViewModel() {
     var self = this;
 
     self.players = ko.observableArray();
@@ -61,3 +66,8 @@ function PartyViewModel() {
         self.checkForParty();
     };
 }
+
+ko.components.register('party', {
+  viewModel: PartyViewModel,
+  template: template
+})

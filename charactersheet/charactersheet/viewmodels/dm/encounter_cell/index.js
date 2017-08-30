@@ -1,6 +1,11 @@
 'use strict';
+import ko from 'knockout'
 
-function EncounterCellViewModel(encounter) {
+import { Encounter } from 'charactersheet/models/dm'
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
+export function EncounterCellViewModel(encounter) {
     var self = this;
 
     self.id = encounter.encounterId;
