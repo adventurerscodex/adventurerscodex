@@ -1,9 +1,15 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+import { WeaponsViewModel } from 'charactersheet/viewmodels/character/weapons'
+
 /**
  * This view model contains the player's equipment information.
  */
-function EquipmentTabViewModel() {
+export function EquipmentTabViewModel() {
     var self = this;
 
     self.weaponsViewModel = ko.observable(new WeaponsViewModel());
@@ -22,3 +28,7 @@ function EquipmentTabViewModel() {
     };
 }
 
+ko.components.register('equipment-tab', {
+  viewModel: EquipmentTabViewModel,
+  template: template
+})

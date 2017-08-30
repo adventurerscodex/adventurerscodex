@@ -1,6 +1,16 @@
 'use strict';
 
-function SavingThrowsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SavingThrows } from 'charactersheet/character/models'
+import { SortService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function SavingThrowsViewModel() {
     var self = this;
 
     self.blankSavingThrow = ko.observable(new SavingThrows());
@@ -139,3 +149,8 @@ function SavingThrowsViewModel() {
         self.savingThrows([]);
     };
 }
+
+ko.components.register('savings-throws', {
+  viewModel: SavingThrowsViewModel,
+  template: template
+})

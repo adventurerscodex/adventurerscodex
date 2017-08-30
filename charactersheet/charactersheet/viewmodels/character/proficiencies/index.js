@@ -1,6 +1,17 @@
 'use strict';
 
-function ProficienciesViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { DataRepository } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { Proficiency } from 'charactersheet/character/models'
+import { SortService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function ProficienciesViewModel() {
     var self = this;
 
     self.sorts = {
@@ -127,3 +138,8 @@ function ProficienciesViewModel() {
         self.modalOpen(true);
     };
 }
+
+ko.components.register('proficiencies', {
+  viewModel: ProficienciesViewModel,
+  template: template
+})

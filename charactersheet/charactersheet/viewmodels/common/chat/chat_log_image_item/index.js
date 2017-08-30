@@ -1,9 +1,17 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications, Utility } from 'charactersheet/utilities'
+import { XMPPService } from 'charactersheet/services/common/account'
+
+import template from './index.html'
+
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-function ChatLogImageItem(message) {
+export function ChatLogImageItem(message) {
     var self = this;
 
     self.message = message;
@@ -91,3 +99,8 @@ function ChatLogImageItem(message) {
         return cardService.pCards[jid] ? cardService.pCards[jid]: null;
     };
 }
+
+ko.components.register('chat-log-image-item', {
+  viewModel: ChatLogImageItem,
+  template: template
+})

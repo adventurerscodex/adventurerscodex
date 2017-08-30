@@ -1,6 +1,16 @@
 'use strict';
 
-function SpellSlotsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { Slot } from 'charactersheet/character/models'
+import { SortService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function SpellSlotsViewModel() {
     var self = this;
 
     self.sorts = {
@@ -209,3 +219,8 @@ function SpellSlotsViewModel() {
         Notifications.spellSlots.changed.dispatch();
     };
 }
+
+ko.components.register('spell-slots', {
+  viewModel: SpellSlotsViewModel,
+  template: template
+})

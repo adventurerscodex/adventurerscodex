@@ -1,6 +1,14 @@
 'use strict';
 
-function LoginViewModel() {
+import ko from 'knockout'
+
+import { AuthenticationServiceManager } from 'charactersheet/services/common/account'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { UserServiceManager } from 'charactersheet/services/common/account'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
+export function LoginViewModel() {
     var self = this;
 
     self._loginLink = '/api/o/authorize?client_id={client_id}&response_type=token';
@@ -57,3 +65,4 @@ function LoginViewModel() {
         self._dummy.valueHasMutated();
     };
 }
+

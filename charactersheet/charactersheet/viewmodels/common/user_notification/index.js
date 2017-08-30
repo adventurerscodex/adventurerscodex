@@ -1,10 +1,17 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
 /**
  * This view model is responsible for responding to and displaying
  * user related notifications.
  */
-function UserNotificationViewModel() {
+export function UserNotificationViewModel() {
     var self = this;
 
     self.load = function() {

@@ -1,9 +1,16 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance'
+import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/features'
+import { ProfileViewModel } from 'charactersheet/viewmodels/character/profile'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 /**
  * This view model contains the player's profile information.
  */
-function ProfileTabViewModel() {
+export function ProfileTabViewModel() {
     var self = this;
 
     self.profileViewModel        = ko.observable(new ProfileViewModel());

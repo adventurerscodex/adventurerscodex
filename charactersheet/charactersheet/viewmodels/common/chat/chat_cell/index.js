@@ -1,6 +1,8 @@
 'use strict';
 
-function ChatCellViewModel(chat) {
+import ko from 'knockout'
+
+export function ChatCellViewModel(chat) {
     var self = this;
 
     self.id = chat.chatId;
@@ -47,3 +49,8 @@ function ChatCellViewModel(chat) {
 var ChatCellViewModelMemberTemplate = '\
     <img src="{card.imageUrl}" width="40px" height="40px" class="img img-circle" />&nbsp;\
 ';
+
+ko.components.register('chat-cell', {
+  viewModel: ChatCellViewModel,
+  template: ChatCellViewModelMemberTemplate
+})

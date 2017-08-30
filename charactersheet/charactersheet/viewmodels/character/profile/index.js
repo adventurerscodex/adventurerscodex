@@ -1,6 +1,15 @@
 'use strict';
 
-function ProfileViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function ProfileViewModel() {
     var self = this;
 
     self.placeholderText = '<i>Character Name</i>';
@@ -151,3 +160,8 @@ function ProfileViewModel() {
         profile.save();
     };
 }
+
+ko.components.register('profile', {
+  viewModel: ProfileViewModel,
+  template: template
+})

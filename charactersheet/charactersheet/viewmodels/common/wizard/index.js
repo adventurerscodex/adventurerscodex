@@ -1,5 +1,11 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { Character } from 'charactersheet/models/common'
+
+import template from './index.html'
+
 /**
  * This view model contains the root implementation of the wizard.
  * Each individual view inside the wizard must conform to the following
@@ -17,7 +23,7 @@
  * To add steps: add an entry to the Fixtures.wizard.steps settings.
  *
  */
-function WizardViewModel() {
+export function WizardViewModel() {
     var self = this;
 
     self.previousSteps = ko.observableArray([]);
@@ -329,3 +335,8 @@ function NextStepDescriptor(viewModel, terminate) {
     this.viewModel = viewModel || null;
     this.terminate = terminate || false;
 }
+
+ko.components.register('wizard', {
+  viewModel: WizardViewModel,
+  template: template
+})

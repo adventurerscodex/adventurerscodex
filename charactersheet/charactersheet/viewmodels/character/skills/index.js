@@ -1,6 +1,16 @@
 'use strict';
 
-function SkillsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { Skill } from 'charactersheet/character/models'
+import { SortService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function SkillsViewModel() {
     var self = this;
 
     self.sorts = {
@@ -201,3 +211,8 @@ function SkillsViewModel() {
         Notifications.skills.perception.changed.dispatch();
     };
 }
+
+ko.components.register('skills', {
+  viewModel: SkillsViewModel,
+  template: template
+})
