@@ -1,6 +1,13 @@
 'use strict';
 
-function NotesViewModel() {
+import ko from 'knockout'
+
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function NotesViewModel() {
     var self = this;
 
     self.notes = ko.observableArray();
@@ -61,3 +68,8 @@ function NotesViewModel() {
         return self.selectedNote() === note ? 'active' : '';
     };
 }
+
+ko.components.register('notes', {
+  viewModel: NotesViewModel,
+  template: template
+})

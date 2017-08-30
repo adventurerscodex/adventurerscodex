@@ -14,8 +14,8 @@ var DMCardPublishingServiceConfiguration = {
 };
 
 
-var CharacterCardPublishingService = new SharedServiceManager(_pCardService, CharacterCardPublishingServiceConfiguration);
-var DMCardPublishingService = new SharedServiceManager(_pCardService, DMCardPublishingServiceConfiguration);
+export var CharacterCardPublishingService = new SharedServiceManager(_pCardService, CharacterCardPublishingServiceConfiguration);
+export var DMCardPublishingService = new SharedServiceManager(_pCardService, DMCardPublishingServiceConfiguration);
 
 /**
  * A service responsible for publishing the current pCard.

@@ -1,6 +1,13 @@
 'use strict';
 
-function ActionsToolbarViewModel() {
+import ko from 'knockout'
+
+import { Fixtures } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+
+import template from './index.html'
+
+export function ActionsToolbarViewModel() {
     var self = this;
 
     self.wellOpen = ko.observable(false);
@@ -10,7 +17,7 @@ function ActionsToolbarViewModel() {
     };
 
     self.unload = function() {
-        Notifications.actionsToolbar.toggle.remove(self.toggleWellOpen);        
+        Notifications.actionsToolbar.toggle.remove(self.toggleWellOpen);
     };
 
     /* Button Handlers */
@@ -33,3 +40,8 @@ function ActionsToolbarViewModel() {
         self.wellOpen(!self.wellOpen());
     };
 }
+
+ko.components.register('actions-toolbar', {
+  viewModel: ActionsToolbarViewModel,
+  template: template
+})

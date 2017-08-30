@@ -1,12 +1,18 @@
 'use strict';
 
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { Status, StatusWeightPair } from 'charactersheet/models/common'
+import { Tracked } from 'charactersheet/models/character'
+
+
 /**
  * A Status Service Component that calculates the player's tracked ability potential.
  * Each tracked ability is weighed equally, as there is no way to programmatically determine
  * a tracked abilities' value.
  */
 
-function TrackedStatusServiceComponent() {
+export function TrackedStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Tracked';

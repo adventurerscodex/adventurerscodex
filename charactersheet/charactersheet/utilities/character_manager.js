@@ -1,6 +1,6 @@
 'use strict';
 /*eslint no-console:0 */
-var CharacterManager = {
+export var CharacterManager = {
     __activeCharacter__: null
 };
 

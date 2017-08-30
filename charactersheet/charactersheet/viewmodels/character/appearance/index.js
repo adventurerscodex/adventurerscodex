@@ -1,13 +1,22 @@
 'use strict';
 
-function AppearanceViewModel() {
+import ko from 'knockout'
+
+import { CharacterAppearance } from 'charactersheet/character/models'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function AppearanceViewModel() {
     var self = this;
 
     self.appearance = ko.observable(new CharacterAppearance());
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-                
+
         var key = CharacterManager.activeCharacter().key();
         var appear = PersistenceService.findBy(CharacterAppearance, 'characterId', key);
         if (appear.length > 0) {
@@ -31,3 +40,8 @@ function AppearanceViewModel() {
         self.appearance().clear();
     };
 }
+
+ko.components.register('appearance', {
+  viewModel: AppearanceViewModel,
+  template: template
+})

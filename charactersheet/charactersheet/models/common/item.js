@@ -1,5 +1,11 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { PersistenceService } from 'charactersheet/services/common'
+import { Utility } from 'charactersheet/utilities'
+
+
 /**
  * Models an item in the user's backpack or something they
  * have equipped.

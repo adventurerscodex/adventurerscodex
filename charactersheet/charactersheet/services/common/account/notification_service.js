@@ -3,7 +3,7 @@
 /**
  * A global service that fetches the user's active notifications.
  */
-var NotificationsServiceManager = new SharedServiceManager(_NotificationsService, null);
+export var NotificationsServiceManager = new SharedServiceManager(_NotificationsService, null);
 
 /**
  * An internal service implementation that holds onto data regarding the

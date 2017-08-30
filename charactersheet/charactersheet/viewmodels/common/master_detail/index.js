@@ -1,12 +1,16 @@
 'use strict';
 
+import ko from 'knockout'
+
+import template from './index.html'
+
 /**
  *
  *
  *
  *
  */
-function MasterDetailViewModel() {
+export function MasterDetailViewModel() {
     var self = this;
 
     self._modalValue = ko.observable();
@@ -239,3 +243,8 @@ function MasterDetailViewModel() {
         }
     };
 }
+
+ko.components.register('master-detail', {
+  viewModel: MasterDetailViewModel,
+  template: template
+})

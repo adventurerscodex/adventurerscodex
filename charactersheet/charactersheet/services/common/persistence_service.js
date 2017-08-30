@@ -3,7 +3,7 @@
 
 //=========================== PersistenceService ==============================
 
-var PersistenceService = {
+export var PersistenceService = {
     customImport: true,
     logErrors: false,
     enableCompression: false,
@@ -138,7 +138,7 @@ PersistenceService.findBy = function(model, property, value) {
  * ----------
  *
  * model: The prototype for the type of model that is being searched for.
- * properties: A static array of properties that the data object will be 
+ * properties: A static array of properties that the data object will be
  * compared against.
  *
  * Returns

@@ -1,5 +1,10 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
+
 function ImageModel() {
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);

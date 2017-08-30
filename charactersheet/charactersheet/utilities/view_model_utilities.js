@@ -3,7 +3,7 @@
 /**
  * A set of general utilities that provide common functionality to view models.
  */
-var ViewModelUtilities = {
+export var ViewModelUtilities = {
 
     /**
      * Given an view model containing other view models,

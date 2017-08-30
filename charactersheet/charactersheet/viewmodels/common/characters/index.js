@@ -1,6 +1,14 @@
 'use strict';
 
-function CharactersViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function CharactersViewModel() {
     var self = this;
 
     self.totalLocalStorage = 5; //MB
@@ -112,3 +120,8 @@ function CharactersViewModel() {
         self.isLoggedIn(userExists);
     };
 }
+
+ko.components.register('characters', {
+  viewModel: CharactersViewModel,
+  template: template
+})

@@ -12,7 +12,7 @@ var ChatServiceConfiguration = {
 /**
  * The shared instance manager for the Chat Service.
  */
-var ChatServiceManager = new SharedServiceManager(_ChatService, ChatServiceConfiguration);
+export var ChatServiceManager = new SharedServiceManager(_ChatService, ChatServiceConfiguration);
 
 /**
  * An internal service implementation that holds onto data regarding the

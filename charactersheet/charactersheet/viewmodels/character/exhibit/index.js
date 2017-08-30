@@ -1,6 +1,15 @@
 'use strict';
 
-function ExhibitViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { ChatServiceManager } from 'charactersheet/services/common'
+import { Notifications } from 'charactersheet/utilities'
+import { PlayerTypes } from 'charactersheet/common/models'
+
+import template from './index.html'
+
+export function ExhibitViewModel() {
     var self = this;
 
     self.name = ko.observable('');
@@ -47,3 +56,8 @@ function ExhibitViewModel() {
         }
     };
 }
+
+ko.components.register('exhibit', {
+  viewModel: ExhibitViewModel,
+  template: template
+})

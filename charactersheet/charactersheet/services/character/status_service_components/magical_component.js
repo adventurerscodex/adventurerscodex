@@ -1,12 +1,18 @@
 'use strict';
 
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { Slot } from 'charactersheet/models/character'
+import { Status, StatusWeightPair } from 'charactersheet/models/common'
+
+
 /**
  * A Status Service Component that calculates the player's Magical potential.
  * Each spell slot is weighed differently. Currently, the formula is linear.
  * `Y=1.5x + 1` where x is the spell slot level.
  */
 
-function MagicalStatusServiceComponent() {
+export function MagicalStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Magical';

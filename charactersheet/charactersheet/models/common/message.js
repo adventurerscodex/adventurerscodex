@@ -1,5 +1,12 @@
 'use strict';
 
+import ko from 'knockout'
+import Strophe from 'strophe'
+
+import { CHAT_MESSAGE_TYPES, PersistenceService } from 'charactersheet/services/common'
+import { JSONPayload } from 'charactersheet/utilities'
+
+
 /**
 An object that represents any possible configuration of an XMPP Message element.
 This class also provides the functionality of a DB mapped model for convenience.

@@ -1,6 +1,6 @@
 'use strict';
 
-var DataRepository = {
+export var DataRepository = {
     /**
      * Convenience function to filter data repository by key
      *

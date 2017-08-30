@@ -1,9 +1,14 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { ExhibitViewModel } from 'charactersheet/viewmodels/exhibit'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 /**
  * This view model contains the player's Exhibit.
  */
-function ExhibitTabViewModel() {
+export function ExhibitTabViewModel() {
     var self = this;
 
     self.exhibitViewModel = ko.observable(new ExhibitViewModel());

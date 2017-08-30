@@ -1,6 +1,17 @@
 'use strict';
 
-function WeaponsViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager } from 'charactersheet/utilities'
+import { DataRepository } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SortService } from 'charactersheet/services/common'
+import { Weapon } from 'charactersheet/common/models'
+
+import template from './index.html'
+
+export function WeaponsViewModel() {
     var self = this;
 
     self.blankWeapon = ko.observable(new Weapon());
@@ -177,3 +188,8 @@ function WeaponsViewModel() {
         Notifications.weapon.changed.dispatch();
     };
 }
+
+ko.components.register('weapons', {
+  viewModel: WeaponsViewModel,
+  template: template
+})
