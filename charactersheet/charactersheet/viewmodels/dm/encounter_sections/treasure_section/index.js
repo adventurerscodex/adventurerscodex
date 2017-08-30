@@ -1,6 +1,18 @@
 'use strict';
 
-function TreasureSectionViewModel(parentEncounter) {
+import ko from 'knockout'
+
+import { TreasureSection,
+    EncounterArmor,
+    EncounterItem,
+    EncounterMagicItem,
+    EncounterWeapon,
+    EncounterCoins } from 'charactersheet/models'
+//todo import fixtures, datarepo
+
+import template from './index.html'
+
+export function TreasureSectionViewModel(parentEncounter) {
     var self = this;
 
     self.template = 'treasure_section.tmpl';
@@ -304,3 +316,8 @@ function TreasureSectionViewModel(parentEncounter) {
         self.visible(section.visible());
     };
 }
+
+ko.components.register('treasure-section', {
+  viewModel: TreasureSectionViewModel,
+  template: template
+})

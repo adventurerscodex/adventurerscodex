@@ -1,6 +1,10 @@
 'use strict';
+import ko from 'knockout'
 
-function EncounterTabViewModel() {
+import { EncounterViewModel } from 'charactersheet/viewmodels/dm'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
+export function EncounterTabViewModel() {
     var self = this;
 
     self.encounterViewModel = ko.observable(new EncounterViewModel());

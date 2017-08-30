@@ -1,6 +1,14 @@
 'use strict';
 
-function PlayerTextSectionViewModel(parentEncounter) {
+import ko from 'knockout'
+
+import { PlayerTextSection,
+    PlayerText,
+    Message } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function PlayerTextSectionViewModel(parentEncounter) {
     var self = this;
 
     self.template = 'player_text_section.tmpl';
@@ -246,7 +254,7 @@ function PlayerTextSectionViewModel(parentEncounter) {
 
         var section = PersistenceService.findFirstBy(PlayerTextSection, 'encounterId', self.encounterId());
         if (!section) {
-            section = new PointOfInterestSection();
+            section = new PlayerTextSection();
             section.encounterId(self.encounterId());
             section.characterId(key);
         }
@@ -259,3 +267,8 @@ function PlayerTextSectionViewModel(parentEncounter) {
         self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
+
+ko.components.register('player-text-section', {
+  viewModel: PlayerTextSectionViewModel,
+  template: template
+})

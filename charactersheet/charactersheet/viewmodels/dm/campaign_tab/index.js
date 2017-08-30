@@ -1,6 +1,11 @@
 'use strict';
+import ko from 'knockout'
 
-function CampaignTabViewModel() {
+import { CampaignOverviewViewModel,
+    CampaignMapsAndImagesViewModel } from 'charactersheet/viewmodels/dm'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
+export function CampaignTabViewModel() {
     var self = this;
 
     self.campaignOverviewViewModel = ko.observable(new CampaignOverviewViewModel());

@@ -1,6 +1,15 @@
 'use strict';
 
-function PlayerPushModalViewModel(parent) {
+import ko from 'knockout'
+
+import { ChatServiceManager,
+    DMCardPublishingService,
+    CharacterCardPublishingService } from 'charactersheet/services/common'
+import { CharacterManager } from 'charactersheet/utilities'
+
+import template from './index.html'
+
+export function PlayerPushModalViewModel(parent) {
     var self = this;
 
     self.parent = parent;
@@ -59,3 +68,8 @@ function PlayerPushModalViewModel(parent) {
         });
     };
 }
+
+ko.components.register('player-push-modal', {
+    viewModel: PlayerPushModalViewModel,
+    template: template
+  })

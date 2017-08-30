@@ -1,6 +1,13 @@
 'use strict';
 
-function NPCSectionViewModel(parentEncounter) {
+import ko from 'knockout'
+
+import { NPC,
+    NPCSection } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function NPCSectionViewModel(parentEncounter) {
     var self = this;
 
     self.template = 'npc_section.tmpl';
@@ -196,3 +203,8 @@ function NPCSectionViewModel(parentEncounter) {
         self.visible(section.visible());
     };
 }
+
+ko.components.register('npc-section', {
+  viewModel: NPCSectionViewModel,
+  template: template
+})

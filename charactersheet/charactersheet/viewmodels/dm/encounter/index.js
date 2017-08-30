@@ -1,6 +1,18 @@
 'use strict';
+import ko from 'knockout'
 
-function EncounterViewModel() {
+import { EncounterDetailViewModel,
+    EncounterCellViewModel,
+    EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
+import { ViewModelUtilities,
+    Notifications,
+    CharacterManager } from 'charactersheet/utilities'
+import { Encounter } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function EncounterViewModel() {
     var self = this;
 
     self.modalEncounter = ko.observable();
@@ -206,3 +218,8 @@ function EncounterViewModel() {
         });
     };
 }
+
+ko.components.register('encounter', {
+  viewModel: EncounterViewModel,
+  template: template
+})

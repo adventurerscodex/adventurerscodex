@@ -1,6 +1,18 @@
 'use strict';
+import ko from 'knockout'
+import Strophe from 'strophe'
 
-function EnvironmentSectionViewModel(parentEncounter) {
+import { Message, Environment, EnvironmentSection } from 'charactersheet/models'
+import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
+import { ImageServiceManager,
+    PersistenceService,
+    ChatServiceManager,
+    XMPPService } from 'charactersheet/services/common'
+import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
+
+import template from './index.html'
+
+export function EnvironmentSectionViewModel(parentEncounter) {
     var self = this;
 
     self.template = 'environment_section.tmpl';
@@ -239,3 +251,8 @@ function EnvironmentSectionViewModel(parentEncounter) {
         self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
+
+ko.components.register('environment-section', {
+  viewModel: EnvironmentSectionViewModel,
+  template: template
+})

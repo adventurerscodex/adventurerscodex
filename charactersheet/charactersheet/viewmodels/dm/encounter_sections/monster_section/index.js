@@ -1,6 +1,14 @@
 'use strict';
 
-function MonsterSectionViewModel(parentEncounter) {
+import ko from 'knockout'
+
+import { MonsterAbilityScore,
+    MonsterSection,
+    Monster } from 'charactersheet/models'
+
+import template from './index.html'
+
+export function MonsterSectionViewModel(parentEncounter) {
     var self = this;
 
     self.template = 'monster_section.tmpl';
@@ -16,7 +24,7 @@ function MonsterSectionViewModel(parentEncounter) {
     self.openModal = ko.observable(false);
     self.openEditModal = ko.observable(false);
     self.editItemIndex = null;
-    self.currentEditItem = ko.observable();   
+    self.currentEditItem = ko.observable();
     self.firstElementInModalHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -156,7 +164,7 @@ function MonsterSectionViewModel(parentEncounter) {
             return abilityScore;
         })
         );
-        self.openEditModal(true);             
+        self.openEditModal(true);
     };
 
     self.toggleModal = function() {
@@ -227,13 +235,13 @@ function MonsterSectionViewModel(parentEncounter) {
                         abilityScore.importValues(e);
                         return abilityScore;
                     })
-                    );                    
+                    );
                 }
             });
         }
 
         self.save();
-        self.openEditModal(false);          
+        self.openEditModal(false);
     };
 
     self.selectPreviewTab = function() {
@@ -266,3 +274,8 @@ function MonsterSectionViewModel(parentEncounter) {
         self.visible(section.visible());
     };
 }
+
+ko.components.register('monster-section', {
+  viewModel: MonsterSectionViewModel,
+  template: template
+})

@@ -1,6 +1,9 @@
 'use strict';
+import ko from 'knockout'
 
-function PartyStatusLineViewModel() {
+import { PlayerCard } from 'charactersheet/models'
+
+export function PartyStatusLineViewModel() {
     var self = this;
 
     self.statusLine = ko.observable('');
