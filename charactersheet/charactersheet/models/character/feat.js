@@ -1,5 +1,10 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { Feat } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
 export function Feat() {
     var self = this;
 

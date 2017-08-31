@@ -1,3 +1,10 @@
+'use strict';
+
+import ko from 'knockout'
+
+import { HitDiceType } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
 function HitDiceType() {
     var self = this;
     self.ps = PersistenceService.register(HitDiceType, self);

@@ -1,11 +1,16 @@
 'use strict';
 
-function Profile() {
+import ko from 'knockout'
+
+import { Profile } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Profile() {
     var self = this;
     self.ps = PersistenceService.register(Profile, self);
     self.mapping = {
-        include: ['characterId', 'characterName', 'background', 'playerName', 'race', 'alignment', 'diety', 'typeClass',
-            'gender', 'age', 'level', 'exp']
+        include: ['characterId', 'characterName', 'background', 'playerName',
+            'race', 'alignment', 'diety', 'typeClass', 'gender', 'age', 'level', 'exp']
     };
 
     self.characterId = ko.observable(null);

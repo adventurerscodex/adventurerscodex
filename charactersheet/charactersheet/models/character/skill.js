@@ -1,6 +1,11 @@
 'use strict';
 
-function Skill() {
+import ko from 'knockout'
+
+import { Skill } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Skill() {
     var self = this;
     self.ps = PersistenceService.register(Skill, self);
     self.mapping = {

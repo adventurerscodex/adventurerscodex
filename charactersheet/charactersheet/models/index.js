@@ -1,3 +1,5 @@
 import './character'
 import './common'
 import './dm'
+import './character'
+import './common'

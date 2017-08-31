@@ -2,11 +2,12 @@
 
 import ko from 'knockout'
 
+import { MapOrImage } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 import { Utility } from 'charactersheet/utilites'
 
 
-function MapOrImage() {
+export function MapOrImage() {
     var self = this;
 
     self.ps = PersistenceService.register(MapOrImage, self);

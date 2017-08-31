@@ -2,10 +2,13 @@
 
 import ko from 'knockout'
 
+import { MagicItem } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
+import { Fixtures,
+    Utility } from 'charactersheet/utilities'
 
 
-function MagicItem() {
+export function MagicItem() {
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 145;

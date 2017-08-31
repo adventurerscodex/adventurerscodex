@@ -3,6 +3,7 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
 
+import { Message } from 'charactersheet/models'
 import { CHAT_MESSAGE_TYPES, PersistenceService } from 'charactersheet/services/common'
 import { JSONPayload } from 'charactersheet/utilities'
 
@@ -19,7 +20,7 @@ on a series of rules.
 
 @see messageType for more information.
 */
-function Message() {
+export function Message() {
     var self = this;
 
     self.ps = PersistenceService.register(Message, self);

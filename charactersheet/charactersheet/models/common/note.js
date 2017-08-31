@@ -3,10 +3,11 @@
 import ko from 'knockout'
 import marked from 'marked'
 
+import { Note } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 
-function Note() {
+export function Note() {
     var self = this;
     self.ps = PersistenceService.register(Note, self);
     self.mapping = {

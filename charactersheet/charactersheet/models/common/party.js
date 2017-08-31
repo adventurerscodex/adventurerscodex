@@ -2,10 +2,11 @@
 
 import ko from 'knockout'
 
+import { Party } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 
-function Party() {
+export function Party() {
     var self = this;
     self.ps = PersistenceService.register(Party, self);
 
@@ -18,7 +19,7 @@ function Party() {
     self.dateCreated = ko.observable((new Date()).getTime());
 
     self.clear = function() {
-        var values = new PlayerImage().exportValues();
+        var values = new Party().exportValues();
         var mapping = ko.mapping.autoignore(self, self.mapping);
         ko.mapping.fromJS(values, mapping, self);
     };

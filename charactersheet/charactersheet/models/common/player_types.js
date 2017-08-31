@@ -1,6 +1,6 @@
 'use strict';
 
-var PlayerTypes = {
+export var PlayerTypes = {
     characterPlayerType: {
         key: 'character',
         visibleTabs: [

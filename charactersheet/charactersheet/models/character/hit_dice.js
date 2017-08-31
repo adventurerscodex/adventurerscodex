@@ -1,4 +1,11 @@
-function HitDice() {
+'use strict';
+
+import ko from 'knockout'
+
+import { HitDice } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function HitDice() {
     var self = this;
     self.ps = PersistenceService.register(HitDice, self);
 

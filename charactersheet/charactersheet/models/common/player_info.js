@@ -1,6 +1,11 @@
 'use strict';
 
-function PlayerInfo() {
+import ko from 'knockout'
+
+import { PlayerInfo } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function PlayerInfo() {
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);
 

@@ -1,6 +1,11 @@
 'use strict';
 
-function OtherStats() {
+import ko from 'knockout'
+
+import { OtherStats } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function OtherStats() {
     var self = this;
     self.ps = PersistenceService.register(OtherStats, self);
     self.mapping = {

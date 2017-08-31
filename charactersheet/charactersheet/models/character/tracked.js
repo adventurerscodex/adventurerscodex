@@ -1,6 +1,11 @@
 'use strict';
 
-function Tracked() {
+import ko from 'knockout'
+
+import { Tracked } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Tracked() {
     var self = this;
 
     self.ps = PersistenceService.register(Tracked, self);

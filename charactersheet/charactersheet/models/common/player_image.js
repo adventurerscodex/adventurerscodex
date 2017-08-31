@@ -1,6 +1,11 @@
 'use strict';
 
-function PlayerImage() {
+import ko from 'knockout'
+
+import { PlayerImage } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function PlayerImage() {
     var self = this;
     self.ps = PersistenceService.register(PlayerImage, self);
 

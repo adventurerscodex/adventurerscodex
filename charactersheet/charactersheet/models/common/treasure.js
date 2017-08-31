@@ -1,6 +1,11 @@
 'use strict';
 
-function Treasure() {
+import ko from 'knockout'
+
+import { Treasure } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Treasure() {
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
     self.mapping = {

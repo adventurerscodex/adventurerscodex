@@ -2,13 +2,16 @@
 
 import ko from 'knockout'
 
-import { AbilityScores, Armor } from 'charactersheet/models/character'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { AbilityScores,
+    Armor } from 'charactersheet/models'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
 import { Fixtures } from 'charactersheet/utilities'
-import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { KeyValuePredicate,
+    PersistenceService,
+    SharedServiceManager } from 'charactersheet/services/common'
 
-
-function Armor() {
+export function Armor() {
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {

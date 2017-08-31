@@ -1,6 +1,11 @@
 'use strict';
 
-function SpellStats() {
+import ko from 'knockout'
+
+import { SpellStats } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function SpellStats() {
     var self = this;
     self.ps = PersistenceService.register(SpellStats, self);
     self.mapping = {

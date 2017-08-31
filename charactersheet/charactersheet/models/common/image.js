@@ -2,10 +2,11 @@
 
 import ko from 'knockout'
 
+import { ImageModel } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 
-function ImageModel() {
+export function ImageModel() {
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);
 

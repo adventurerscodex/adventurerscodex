@@ -1,6 +1,14 @@
 'use strict';
 
-function Weapon() {
+import ko from 'knockout'
+
+import { Weapon,
+    AbilityScores } from 'charactersheet/models'
+import { PersistenceService,
+    SharedServiceManager } from 'charactersheet/services'
+import { Fixtures } from 'charactersheet/utilities'
+
+export function Weapon() {
     var self = this;
 
     self.FINESSE = 'finesse';

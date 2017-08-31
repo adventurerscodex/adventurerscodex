@@ -1,6 +1,12 @@
 'use strict';
 
-function SavingThrows() {
+import ko from 'knockout'
+
+import { SavingThrows,
+    AbilityScores } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
     self.mapping = {

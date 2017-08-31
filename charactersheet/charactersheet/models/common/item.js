@@ -2,6 +2,7 @@
 
 import ko from 'knockout'
 
+import { Item } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 import { Utility } from 'charactersheet/utilities'
 
@@ -10,7 +11,7 @@ import { Utility } from 'charactersheet/utilities'
  * Models an item in the user's backpack or something they
  * have equipped.
  */
-function Item() {
+export function Item() {
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 200;

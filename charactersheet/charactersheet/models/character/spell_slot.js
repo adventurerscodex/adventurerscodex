@@ -1,6 +1,11 @@
 'use strict';
 
-function Slot() {
+import ko from 'knockout'
+
+import { Slot } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Slot() {
     var self = this;
     self.ps = PersistenceService.register(Slot, self);
     self.mapping = {

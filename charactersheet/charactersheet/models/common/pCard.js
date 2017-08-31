@@ -202,7 +202,7 @@ An entry for a weapon.
  * cCards contain information about the player type and their details.
  * See the individual fields for more information.
  */
-function pCard() {
+export function pCard() {
     var self = this;
 
     self.entries = [];

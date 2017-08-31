@@ -1,11 +1,15 @@
 'use strict';
 
 import ko from 'knockout'
+import Dropbox from 'Dropbox'
 
-import { Profile, Campaign } from 'charactersheet/models/character'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Fixtures } from 'charactersheet/utilities'
-import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { Character,
+    PlayerImage,
+    ImageModel,
+    PlayerInfo } from 'charactersheet/models'
+import { Utility } from 'charactersheet/utilities'
+import { Settings } from 'charactersheet'
+import { PersistenceService } from 'charactersheet/services/common'
 
 
 /**
@@ -16,7 +20,7 @@ import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'cha
  * top of the relational model of data for Adventurer's Codex and also provides
  * a few convenience methods for fetching common data regarding a character.
  */
-function Character() {
+export function Character() {
     var self = this;
     self.ps = PersistenceService.register(Character, self);
 

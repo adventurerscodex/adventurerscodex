@@ -1,12 +1,19 @@
 'use strict';
 
+import ko from 'knockout'
+import Strophe from 'strophe'
+
+import { Presence } from 'charactersheet/models'
+import { PersistenceService,
+    SharedServiceManager } from 'charactersheet/services'
+
 /**
 An object representation of an XMPP presence message.
 
 This class provides a number of different convenience methods for routing, and
 reasoning about presence messages.
 */
-function Presence() {
+export function Presence() {
     var self = this;
     self.ps = PersistenceService.register(Presence, self);
     self.mapping = {

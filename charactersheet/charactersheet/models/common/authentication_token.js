@@ -1,11 +1,16 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { AuthenticationToken } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
 /**
  * Persisted Model for an OAuth Token.
  * For more information regarding OAuth tokens see:
  * https://django-oauth-toolkit.readthedocs.io/en/latest/rest-framework/getting_started.html#step-4-get-your-token-and-use-your-api
  */
-function AuthenticationToken() {
+export function AuthenticationToken() {
     var self = this;
     self.ps = PersistenceService.register(AuthenticationToken, self);
     self.mapping = {
@@ -67,7 +72,7 @@ function AuthenticationToken() {
     // CRUD Methods
 
     self.clear = function() {
-        var values = new Weapon().exportValues();
+        var values = new AuthenticationToken().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
     };
 

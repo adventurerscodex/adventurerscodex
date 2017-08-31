@@ -2,6 +2,8 @@
 
 import ko from 'knockout'
 
+import { PlayerCard,
+    Status } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 
@@ -9,7 +11,7 @@ import { PersistenceService } from 'charactersheet/services/common'
  * Fields from a pCard will be extracted to create the UI representation of a player.
  * @param pCard  contains all the fields that make up a player
  */
-function PlayerCard(pCard) {
+export function PlayerCard(pCard) {
 
     var self = this;
 

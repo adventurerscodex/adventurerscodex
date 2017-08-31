@@ -2,12 +2,10 @@
 
 import ko from 'knockout'
 
-import { AbilityScores, Armor } from 'charactersheet/models/character'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Fixtures } from 'charactersheet/utilities'
-import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { CampaignMapOrImage } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
 
-function CampaignMapOrImage() {
+export function CampaignMapOrImage() {
     var self = this;
 
     self.ps = PersistenceService.register(CampaignMapOrImage, self);

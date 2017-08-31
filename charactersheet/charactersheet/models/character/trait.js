@@ -1,6 +1,11 @@
 'use strict';
 
-function Trait() {
+import ko from 'knockout'
+
+import { Trait } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Trait() {
     var self = this;
 
     self.ps = PersistenceService.register(Trait, self);

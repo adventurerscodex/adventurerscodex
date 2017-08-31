@@ -1,6 +1,11 @@
 'use strict';
 
-function Health() {
+import ko from 'knockout'
+
+import { Health } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Health() {
     var self = this;
     self.ps = PersistenceService.register(Health, self);
     self.mapping = {

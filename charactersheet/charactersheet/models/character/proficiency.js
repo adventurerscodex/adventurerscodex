@@ -1,6 +1,11 @@
 'use strict';
 
-function Proficiency() {
+import ko from 'knockout'
+
+import { Proficiency } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services/common'
+
+export function Proficiency() {
     var self = this;
 
     self.ps = PersistenceService.register(Proficiency, self);
