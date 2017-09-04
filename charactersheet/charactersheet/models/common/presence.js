@@ -3,7 +3,6 @@
 import ko from 'knockout'
 import Strophe from 'Strophe'
 
-import { Presence } from 'charactersheet/models'
 import { PersistenceService,
     SharedServiceManager } from 'charactersheet/services'
 

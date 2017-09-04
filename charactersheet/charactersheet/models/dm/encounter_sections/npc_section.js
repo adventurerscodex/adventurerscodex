@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { NPCSection } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function NPCSection() {

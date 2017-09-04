@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { PlayerCard,
-    Status } from 'charactersheet/models'
+import { Status } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 

@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { CampaignMapOrImage } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 export function CampaignMapOrImage() {

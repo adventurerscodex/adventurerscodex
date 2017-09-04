@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { HitDiceType } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 function HitDiceType() {

@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { NotesSection } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function NotesSection() {

@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { AbilityScores,
-    Armor } from 'charactersheet/models'
+import { AbilityScores } from 'charactersheet/models'
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
 import { Fixtures } from 'charactersheet/utilities'

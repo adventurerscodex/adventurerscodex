@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { Campaign } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 /**

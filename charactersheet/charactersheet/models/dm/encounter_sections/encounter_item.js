@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { Item,
-    EncounterItem } from 'charactersheet/models'
+import { Item } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function EncounterItem() {

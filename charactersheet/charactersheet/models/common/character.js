@@ -3,8 +3,7 @@
 import ko from 'knockout'
 import Dropbox from 'Dropbox'
 
-import { Character,
-    PlayerImage,
+import { PlayerImage,
     ImageModel,
     PlayerInfo } from 'charactersheet/models'
 import { Utility } from 'charactersheet/utilities'

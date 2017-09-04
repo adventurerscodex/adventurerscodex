@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { Weapon,
-    AbilityScores } from 'charactersheet/models'
+import { Weapon } from 'charactersheet/models'
 import { PersistenceService,
     SharedServiceManager } from 'charactersheet/services'
 import { Fixtures } from 'charactersheet/utilities'

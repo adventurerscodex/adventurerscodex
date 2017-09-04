@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { NPC } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 import { Utility } from 'charactersheet/utilities'
 
