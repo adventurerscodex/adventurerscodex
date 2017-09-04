@@ -58,5 +58,10 @@ module.exports = {
       exclude: /node_modules/,
       }
     ],
+  },
+  externals: {
+    jquery: 'jQuery',
+    dropbox: 'dropbox',
+    marked: 'marked',
   }
 }

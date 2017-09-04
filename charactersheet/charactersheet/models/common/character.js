@@ -1,7 +1,7 @@
 'use strict';
 
 import ko from 'knockout'
-import Dropbox from 'Dropbox'
+import Dropbox from 'dropbox'
 
 import { PlayerImage,
     ImageModel,
