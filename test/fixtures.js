@@ -1,4 +1,6 @@
-var AppearanceFixture = {
+import ko from 'knockout'
+
+export const AppearanceFixture = {
     'height':'5\'1"',
     'weight':'123',
     'hairColor':'Brown',
@@ -6,7 +8,7 @@ var AppearanceFixture = {
     'skinColor':'Red'
 };
 
-var AbilitiesFixture = {
+export const AbilitiesFixture = {
     'str': 12,
     'dex': 13,
     'con': 14,
@@ -15,29 +17,29 @@ var AbilitiesFixture = {
     'cha': 18
 };
 
-var FeatsProfFixture = {
+export const FeatsProfFixture = {
     'feats': 'tough',
     'proficiencies': 'simple weapons',
     'specialAbilities': 'darkvision'
 };
 
-var SpellStatsFixture = {
+export const SpellStatsFixture = {
     'spellcastingAbility':'INT',
     'spellSaveDc':3,
     'spellAttackBonus':4,
 };
 
-var ArmorFixture = {
+export const ArmorFixture = {
     armorName: 'shield of stuff'
 };
 
-var CampaignFixture = {
+export const CampaignFixture = {
     campaignName: 'Hoard of the Dragon Queen',
     dmName: 'Brian Schrader',
     campaignSummary: 'Hoard of the Dragon Queen by Brian Schrader'
 };
 
-var PlayerSummaryFixture = {
+export const PlayerSummaryFixture = {
     id: '123456',
     playerName:'testing',
     characterName:'yes man',
@@ -45,19 +47,19 @@ var PlayerSummaryFixture = {
     profileImage: null
 };
 
-var ImageFixture = {
+export const ImageFixture = {
     dataUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABLMAAANeCAYAA',
     imageUrl: '123',
     characterId: '12345'
 };
 
-var PlayerInfoFixture = {
+export const PlayerInfoFixture = {
     email: 'brian@brianschrader.com',
     characterId: '12345',
     gravatarUrl: 'https://www.gravatar.com/avatar/11b074a636e00292c98e3e60f7e16595?d=mm'
 };
 
-var WeaponFixture = {
+export const WeaponFixture = {
     characterId: '123',
     weaponName: 'sword of swording',
     weaponType: 'sword',
@@ -74,7 +76,7 @@ var WeaponFixture = {
     weaponDescription: ''
 };
 
-var MagicItemFixture = {
+export const MagicItemFixture = {
     magicItemName: 'Dagger of venom',
     magicItemType: 'Wondrous Item',
     magicItemRarity: 'Very Rare',
@@ -86,7 +88,7 @@ var MagicItemFixture = {
     magicItemDescription: 'Deadly dagger'
 };
 
-var ItemsRepositoryFixture = {
+export const ItemsRepositoryFixture = {
     'Backpack': {
         itemName: 'Backpack',
         itemDesc: 'A backpack',
@@ -97,7 +99,7 @@ var ItemsRepositoryFixture = {
     }
 };
 
-var BackpacksRepositoryFixture = {
+export const BackpacksRepositoryFixture = {
     'Burglar\'s Pack': [
         {
             name: 'Backpack',
@@ -106,12 +108,12 @@ var BackpacksRepositoryFixture = {
     ]
 };
 
-var TreasureFixture = {
+export const TreasureFixture = {
     characterId: '123',
     gold: 10
-}
+};
 
-var ProfileFixture = {
+export const ProfileFixture = {
     characterId: '1234',
     playerName: 'Joe Blow',
     characterName: 'Chrisopolis Jed',
@@ -121,12 +123,12 @@ var ProfileFixture = {
     typeClass: 'Wizard',
 };
 
-var NPCFixture = {
+export const NPCFixture = {
     characterId: '1234',
     npcId: '1234222',
 };
 
-var MessageFixture = {
+export const MessageFixture = {
     'to': 'hi',
     toId: 'hah',
     from: 'dodo',
@@ -134,7 +136,7 @@ var MessageFixture = {
     text: 'test message'
 };
 
-var SortServiceFixture = {
+export const SortServiceFixture = {
     data: [
         {
             name: ko.observable('Abe'),
@@ -163,9 +165,9 @@ var SortServiceFixture = {
         },
     ]
 
-}
+};
 
-var CharacterFixture = {
+export const CharacterFixture = {
     'key': '18c286fa-3ce6-49e9-99cc-4710118915ff',
     'isDefault': true,
     'isActive': true,
@@ -185,7 +187,7 @@ var CharacterFixture = {
     }
 };
 
-var DMCharacterFixture = {
+export const DMCharacterFixture = {
     'key': '18c286fa-3ce6-49e9-99cc-4710118915ff',
     'isDefault': true,
     'isActive': true,
@@ -205,14 +207,14 @@ var DMCharacterFixture = {
     }
 };
 
-var HealthFixture = {
+export const HealthFixture = {
   'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
   'maxHitpoints': '9',
   'tempHitpoints': 0,
   'damage': '1',
 };
 
-OtherStatsFixture = {
+var OtherStatsFixture = {
   'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
   'ac': '13',
   'initiative': 0,
@@ -221,12 +223,12 @@ OtherStatsFixture = {
   'proficiency': '2'
 };
 
-var MockLocalStorage = {
+export const MockLocalStorage = {
     __master__: "[\"Character\",\"Profile\",\"PlayerInfo\",\"Skill\",\"Item\",\"CharacterAppearance\",\"FeaturesTraits\",\"Health\",\"OtherStats\",\"DeathSave\",\"HitDiceType\",\"AbilityScores\",\"SavingThrows\",\"SpellStats\",\"FeatsProf\",\"Treasure\",\"Note\",\"HitDice\",\"Spell\",\"Armor\",\"Slot\",\"Weapon\",\"DailyFeature\",\"ImageModel\"]",
     Skill: "{\"18\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Acrobatics\",\"abilityScore\":\"Dex\",\"modifier\":null},\"19\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Animal Handling\",\"abilityScore\":\"Wis\",\"modifier\":null},\"20\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Arcana\",\"abilityScore\":\"Int\",\"modifier\":null},\"21\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Athletics\",\"abilityScore\":\"Str\",\"modifier\":null},\"22\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Deception\",\"abilityScore\":\"Cha\",\"modifier\":null},\"23\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"History\",\"abilityScore\":\"Int\",\"modifier\":null},\"24\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Insight\",\"abilityScore\":\"Wis\",\"modifier\":null},\"25\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Intimidation\",\"abilityScore\":\"Cha\",\"modifier\":null},\"26\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Investigation\",\"abilityScore\":\"Int\",\"modifier\":null},\"27\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Medicine\",\"abilityScore\":\"Wis\",\"modifier\":null},\"28\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Nature\",\"abilityScore\":\"Int\",\"modifier\":null},\"29\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Perception\",\"abilityScore\":\"Wis\",\"modifier\":null},\"30\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Performance\",\"abilityScore\":\"Cha\",\"modifier\":null},\"31\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Persuasion\",\"abilityScore\":\"Cha\",\"modifier\":null},\"32\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Religion\",\"abilityScore\":\"Int\",\"modifier\":null},\"33\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Sleight of Hand\",\"abilityScore\":\"Dex\",\"modifier\":null},\"34\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Stealth\",\"abilityScore\":\"Dex\",\"modifier\":null},\"35\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Survival\",\"abilityScore\":\"Wis\",\"modifier\":null}}"
 };
 
-var mock_110_migration = {
+export const mock_110_migration = {
     name: 'TESTING MIGRATION',
     version: '1.1.0',
     migration: function() {
@@ -239,7 +241,7 @@ var mock_110_migration = {
     }
 };
 
-var mock_110_migration_fail = {
+export const mock_110_migration_fail = {
     name: 'TESTING MIGRATION',
     version: '1.1.0',
     migration: function() {
@@ -253,7 +255,7 @@ var mock_110_migration_fail = {
     }
 };
 
-var mock_134_migration = {
+export const mock_134_migration = {
     name: 'TESTING MIGRATION',
     version: '1.3.0',
     migration: function() {
@@ -261,7 +263,7 @@ var mock_134_migration = {
     }
 };
 
-var skillDataFixture = [
+export const skillDataFixture = [
     {
         id: 0,
         data: {
@@ -275,7 +277,7 @@ var skillDataFixture = [
     }
 ];
 
-var statDataFixture = [
+export const statDataFixture = [
     {
         id: 0,
         data: {
@@ -284,7 +286,7 @@ var statDataFixture = [
     }
 ];
 
-var spellDataFixture = [
+export const spellDataFixture = [
     {
         id: 0,
         data: {
@@ -297,7 +299,7 @@ var spellDataFixture = [
 ];
 
 
-var weaponDataFixture = [
+export const weaponDataFixture = [
     {
         id: 0,
         data: {
@@ -311,7 +313,7 @@ var weaponDataFixture = [
     }
 ];
 
-var featureFeatsTraitsFixture = [
+export const featureFeatsTraitsFixture = [
     {
         id: 0,
         data: {
@@ -323,7 +325,7 @@ var featureFeatsTraitsFixture = [
     }
 ];
 
-var dailyFeaturesFixture = [
+export const dailyFeaturesFixture = [
     {
         id: 0,
         data: {

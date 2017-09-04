@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Weapon } from 'charactersheet/models/character/common'
+import { WeaponsViewModel } from 'charactersheet/viewmodels/character'
+
 describe('WeaponsViewModel', function(){
 
     describe('Add Weapon', function() {

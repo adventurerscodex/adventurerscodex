@@ -1,4 +1,7 @@
-  'use strict';
+'use strict';
+
+import { TreasureViewModel } from 'charactersheet/viewmodels/character'
+
 
   describe('Treasure View Model', function() {
       var treasure_fixture = {

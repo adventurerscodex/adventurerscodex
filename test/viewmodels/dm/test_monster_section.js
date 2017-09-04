@@ -1,5 +1,13 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Encounter } from 'charactersheet/models/dm/encounter'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Monster } from 'charactersheet/models/dm/encounter_sections/monster'
+import { MonsterSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/monster_section'
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('MonsterSectionViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

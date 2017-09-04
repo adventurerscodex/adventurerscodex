@@ -1,5 +1,8 @@
 'use strict';
 
+import { AppearanceFixture } from '../test'
+import { CharacterAppearance } from 'charactersheet/models/character/appearance'
+
 describe('Appearance Model', function() {
     describe('Clear', function() {
         it('should clear all the values', function() {

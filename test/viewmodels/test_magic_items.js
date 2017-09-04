@@ -1,3 +1,12 @@
+'use strict';
+
+import simple from 'simple-mock'
+
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { MagicItem } from 'charactersheet/models/common'
+import { MagicItemsViewModel } from 'charactersheet/viewmodels/character'
+import { PersistenceService, SortService } from 'charactersheet/services/common'
+
 describe('Magic Items View Model', function(){
     //Clean up after each test.
     afterEach(function() {

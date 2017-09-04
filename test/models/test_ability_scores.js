@@ -1,4 +1,10 @@
-'use strict';
+import simple from 'simple-mock'
+
+
+import Should from 'should'
+
+import { AbilitiesFixture } from '../test'
+import { AbilityScores } from 'charactersheet/models/character/ability_scores'
 
 describe('Ability Scores Model', function() {
     describe('Clear', function() {

@@ -1,6 +1,11 @@
 /*eslint no-console:0*/
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Character } from 'charactersheet/models/common/character'
+import { PlayerTypes } from 'charactersheet/models/common/player_types'
+
 describe('Character Model', function() {
     //Clean up after each test.
     afterEach(function() {

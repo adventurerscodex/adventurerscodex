@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { NotesTabViewModel } from 'charactersheet/viewmodels/common/notes'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 describe('NotesTabViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

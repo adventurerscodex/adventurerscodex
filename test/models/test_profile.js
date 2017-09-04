@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Profile } from 'charactersheet/models/common/profile'
+import { ProfileFixture } from '../test'
+
 describe('Profile Model', function() {
     //Clean up after each test.
     afterEach(function() {

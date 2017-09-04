@@ -1,5 +1,10 @@
 'use strict';
 
+import { simple } from 'simple-mock'
+
+import { feat } from 'charactersheet/models/character/feat'
+
+
 describe('Feat Model', function() {
     //Clean up after each test.
     afterEach(function() {

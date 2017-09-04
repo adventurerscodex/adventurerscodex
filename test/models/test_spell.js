@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Spell } from 'charactersheet/models/common/spell'
+
 describe('Spell Model', function() {
     //Clean up after each test.
     afterEach(function() {

@@ -1,5 +1,11 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { ImageFixture } from '../test'
+import { ImageModel } from 'charactersheet/models/common/image'
+
+
 describe('Image Model', function() {
     //Clean up after each test.
     afterEach(function() {

@@ -1,5 +1,8 @@
 'use strict';
 
+import { MagicItem } from 'charactersheet/models/common/magic_item'
+import { MagicItemFixture } from '../test'
+
 describe('Magic Item Model', function() {
     describe('Clear', function() {
         it('should clear all the data in it', function() {

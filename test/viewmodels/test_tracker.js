@@ -1,5 +1,11 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+import { TrackerViewModel } from 'charactersheet/viewmodels/character'
+
 describe('Tracker View Model', function() {
     //Clean up after each test.
     afterEach(function() {

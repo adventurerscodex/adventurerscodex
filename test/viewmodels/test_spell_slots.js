@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService, SortService } from 'charactersheet/services/common'
+import { Slot } from 'charactersheet/models/character'
+import { SpellSlotsViewModel } from 'charactersheet/viewmodels/character'
+
 describe('Spell Slots View Model', function() {
     describe('Add Slots', function() {
         it('should add a new slot to the list of slots', function() {

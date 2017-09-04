@@ -1,5 +1,8 @@
 'use strict';
 
+import { ArmorFixture } from '../test'
+import { Armor } from 'charactersheet/models/common/armor'
+
 describe('Armor Model', function() {
     describe('Clear', function() {
         it('should clear all the data in it', function() {

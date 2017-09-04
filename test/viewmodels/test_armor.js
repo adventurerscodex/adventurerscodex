@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Armor } from 'charactersheet/models/common'
+import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('ArmorViewModel', function(){
     //Clean up after each test.
     afterEach(function() {
