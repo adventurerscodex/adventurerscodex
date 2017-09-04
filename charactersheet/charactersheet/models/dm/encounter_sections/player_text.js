@@ -1,6 +1,12 @@
 'use strict';
 
-function PlayerText() {
+import ko from 'knockout'
+
+import { PlayerText } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+import { Utility } from 'charactersheet/utilities'
+
+export function PlayerText() {
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.LONG_DESCRIPTION_MAX_LENGTH = 200;

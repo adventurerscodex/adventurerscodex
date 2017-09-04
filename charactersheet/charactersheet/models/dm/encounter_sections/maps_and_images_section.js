@@ -1,6 +1,11 @@
 'use strict';
 
-function MapsAndImagesSection() {
+import ko from 'knockout'
+
+import { MapsAndImagesSection } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function MapsAndImagesSection() {
     var self = this;
     self.ps = PersistenceService.register(MapsAndImagesSection, self);
     self.mapping = {

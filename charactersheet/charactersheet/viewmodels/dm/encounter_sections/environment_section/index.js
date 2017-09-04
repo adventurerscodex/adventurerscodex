@@ -1,6 +1,6 @@
 'use strict';
 import ko from 'knockout'
-import Strophe from 'strophe'
+import Strophe from 'Strophe'
 
 import { Message, Environment, EnvironmentSection } from 'charactersheet/models'
 import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'

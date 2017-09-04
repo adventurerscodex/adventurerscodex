@@ -1,6 +1,11 @@
 'use strict';
 
-function NPCSection() {
+import ko from 'knockout'
+
+import { NPCSection } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function NPCSection() {
     var self = this;
     self.ps = PersistenceService.register(NPCSection, self);
     self.mapping = {

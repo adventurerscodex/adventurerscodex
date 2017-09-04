@@ -1,10 +1,11 @@
 'use strict';
 
-/*
- * Model for notes section.
- */
+import ko from 'knockout'
 
-function NotesSection() {
+import { NotesSection } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function NotesSection() {
     var self = this;
     self.ps = PersistenceService.register(NotesSection, self);
     self.mapping = {

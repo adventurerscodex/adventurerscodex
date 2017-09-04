@@ -1,6 +1,11 @@
 'use strict';
 
-function MonsterAbilityScore() {
+import ko from 'knockout'
+
+import { MonsterAbilityScore } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function MonsterAbilityScore() {
     var self = this;
     self.ps = PersistenceService.register(MonsterAbilityScore, self);
     self.mapping = {

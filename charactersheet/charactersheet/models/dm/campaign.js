@@ -1,9 +1,14 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { Campaign } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
 /**
  * A Root Level DM Object containing overview information about a campaign.
  */
-function Campaign() {
+export function Campaign() {
     var self = this;
     self.ps = PersistenceService.register(Campaign, self);
     self.mapping = {

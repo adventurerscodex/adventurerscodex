@@ -1,5 +1,10 @@
 'use strict';
 
+import ko from 'knockout'
+
+import { Exhibit } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
 function Exhibit() {
     var self = this;
     self.ps = PersistenceService.register(Exhibit, self);

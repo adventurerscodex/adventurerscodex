@@ -1,6 +1,11 @@
 'use strict';
 
-function PlayerTextSection() {
+import ko from 'knockout'
+
+import { PlayerTextSection } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function PlayerTextSection() {
     var self = this;
     self.ps = PersistenceService.register(PlayerTextSection, self);
     self.mapping = {

@@ -1,6 +1,11 @@
 'use strict';
 
-function PointOfInterestSection() {
+import ko from 'knockout'
+
+import { PointOfInterestSection } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function PointOfInterestSection() {
     var self = this;
     self.ps = PersistenceService.register(PointOfInterestSection, self);
     self.mapping = {

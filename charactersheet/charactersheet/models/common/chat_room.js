@@ -1,7 +1,7 @@
 'use strict';
 
 import ko from 'knockout'
-import Strophe from 'strophe'
+import Strophe from 'Strophe'
 
 import { ChatRoom } from 'charactersheet/models/character'
 import { Message } from 'charactersheet/models/common'

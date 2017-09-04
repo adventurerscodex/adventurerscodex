@@ -1,6 +1,12 @@
 'use strict';
 
-function EncounterMagicItem() {
+import ko from 'knockout'
+
+import { MagicItem,
+    EncounterMagicItem } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function EncounterMagicItem() {
     var self = new MagicItem();
 
     self.ps = PersistenceService.register(EncounterMagicItem, self);

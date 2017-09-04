@@ -1,6 +1,11 @@
 'use strict';
 
-function Environment() {
+import ko from 'knockout'
+
+import { Environment } from 'charactersheet/models'
+import { PersistenceService } from 'charactersheet/services'
+
+export function Environment() {
     var self = this;
     self.ps = PersistenceService.register(Environment, self);
     self.mapping = {

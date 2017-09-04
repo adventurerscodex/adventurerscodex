@@ -1,7 +1,7 @@
 'use strict';
 
 import ko from 'knockout'
-import Strophe from 'strophe'
+import Strophe from 'Strophe'
 
 import { Message } from 'charactersheet/models'
 import { CHAT_MESSAGE_TYPES, PersistenceService } from 'charactersheet/services/common'
