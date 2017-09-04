@@ -1,5 +1,7 @@
 'use strict';
 
+import { PlusMinusComponentViewModel } from 'charactersheet/components/plus-minus'
+
 describe('Plus-Minus Component', function() {
     describe('Increase', function() {
         it('should increase the value up to a threshold', function() {

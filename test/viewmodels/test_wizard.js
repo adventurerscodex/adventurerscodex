@@ -1,5 +1,15 @@
 'use strict';
 
+import Should from 'should'
+import simple from 'simple-mock'
+
+import { WizardViewModel } from 'charactersheet/viewmodels/common'
+import {
+    WizardIntroStepViewModel,
+    WizardProfileStepViewModel,
+    WizardAbilityScoresStepViewModel
+} from 'charactersheet/viewmodels/wizard/steps'
+
 describe('Wizard ViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

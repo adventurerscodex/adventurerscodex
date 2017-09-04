@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { SavingThrows } from 'charactersheet/models/character/savings_throws'
+
 describe('Saving Throws Model', function() {
     //Clean up after each test.
     afterEach(function() {

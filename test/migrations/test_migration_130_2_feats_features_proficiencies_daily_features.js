@@ -1,6 +1,10 @@
 'use strict';
 /*eslint no-console:0 */
 
+import simple from 'simple-mock'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('130 Features, Feats, and Traits Migration', function() {
     describe('Migration', function() {
         it('Migrates all Features Feats and Traits to an archived object in the new style.', function() {

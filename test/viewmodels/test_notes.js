@@ -1,5 +1,11 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Notifications } from 'charactersheet/utilities'
+import { NotesViewModel } from 'charactersheet/viewmodels/common/notes'
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('NotesViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

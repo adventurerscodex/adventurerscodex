@@ -1,6 +1,10 @@
 'use strict';
 /*eslint no-console:0 */
 
+import simple from 'simple-mock'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('110 Skills Migration', function() {
     describe('Migration', function() {
         it('should change all values of proficiency from true/false to prof enum', function() {

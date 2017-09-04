@@ -1,5 +1,13 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Encounter } from 'charactersheet/models/dm/encounter'
+import { PersistenceService } from 'charactersheet/services/common'
+import { PointOfInterestSection } from 'charactersheet/models/dm/encounter_sections/point_of_interest_section'
+import { PointOfInterestSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/point_of_interest_section'
+
 describe('PointOfInterestSectionViewModel', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -13,20 +21,20 @@ describe('PointOfInterestSectionViewModel', function(){
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.load();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
         });
-    });  
+    });
 
     describe('Unload', function() {
         it('should unsubscribe from notifications', function() {
             var vm = new PointOfInterestSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'remove');
             var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-            
+
             vm.unload();
 
             spy1.called.should.equal(true);
@@ -46,10 +54,10 @@ describe('PointOfInterestSectionViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PointOfInterestSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.save();
-        });        
-    });    
+        });
+    });
 
     describe('Delete', function() {
         it('should delete model', function() {
@@ -62,10 +70,10 @@ describe('PointOfInterestSectionViewModel', function(){
         it('should do nothing since it can\'t find the model', function() {
             var vm = new PointOfInterestSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.delete();
-        });        
-    });    
+        });
+    });
 
     /* UI Methods */
 
@@ -95,7 +103,7 @@ describe('PointOfInterestSectionViewModel', function(){
             vm.sortArrow('name').should.equal('fa fa-arrow-up fa-color');
             vm.sortArrow('description').should.equal('');
         });
-    });       
+    });
 
     describe('modalFinishedOpening', function() {
         it('perform actions after a modal has opened', function() {
@@ -105,7 +113,7 @@ describe('PointOfInterestSectionViewModel', function(){
             vm.modalFinishedOpening();
             vm.firstElementInModalHasFocus().should.equal(true);
         });
-    });    
+    });
 
     describe('modalFinishedClosing', function() {
         it('perform actions after a modal has closed', function() {
@@ -129,7 +137,7 @@ describe('PointOfInterestSectionViewModel', function(){
             vm.previewTabStatus().should.equal('active');
             vm.editTabStatus().should.equal('');
         });
-    });       
+    });
 
     describe('selectEditTab', function() {
         it('perform actions after the preview tab has been selected', function() {
@@ -141,29 +149,29 @@ describe('PointOfInterestSectionViewModel', function(){
             vm.previewTabStatus().should.equal('');
             vm.editTabStatus().should.equal('active');
         });
-    });   
+    });
 
     describe('Data has changed', function() {
         it('should load new data', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PointOfInterestSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm._dataHasChanged();
         });
-    });     
+    });
 
     describe('Toggle modal', function() {
         it('should toggle modal and add AS to point of interest', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PointOfInterestSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.openModal().should.equal(false);
             vm.toggleModal();
             vm.openModal().should.equal(true);
         });
-    });    
+    });
 
     /* CRUD */
 
@@ -178,7 +186,7 @@ describe('PointOfInterestSectionViewModel', function(){
             vm.pointsOfInterest().length.should.equal(1);
             Should.not.exist(vm.blankPointOfInterest().name());
         });
-    });   
+    });
 
     describe('Remove point of interest', function() {
         it('should remove point of interest from array', function() {
@@ -191,7 +199,7 @@ describe('PointOfInterestSectionViewModel', function(){
 
             vm.pointsOfInterest().length.should.equal(0);
         });
-    });  
+    });
 
     describe('Edit point of interest', function() {
         it('should put a point of interest from the list of pointsOfInterest into the selected slot', function() {
@@ -202,5 +210,5 @@ describe('PointOfInterestSectionViewModel', function(){
             vm.pointsOfInterest().length.should.equal(1);
             vm.editPointOfInterest (vm.pointsOfInterest()[0]);
         });
-    });                                            
+    });
 });

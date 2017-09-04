@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('Persistence Service', function() {
     //Clean up after each test.
     afterEach(function() {

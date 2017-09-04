@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService, SortService } from 'charactersheet/services/common'
+import { Spell } from 'charactersheet/models/character'
+import { SpellsViewModel } from 'charactersheet/viewmodels/character'
+
 describe('SpellsViewModel', function(){
     PersistenceService._save = function(){};
     PersistenceService._delete = function(){};

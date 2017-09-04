@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Tracked } from 'charactersheet/models/common/tracked'
+
 describe('Tracked Model', function() {
     //Clean up after each test.
     afterEach(function() {

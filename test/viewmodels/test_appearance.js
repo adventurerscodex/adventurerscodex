@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance'
+import { CharacterAppearance } from 'charactersheet/models/character'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('Appearance', function() {
     //Clean up after each test.
     afterEach(function() {

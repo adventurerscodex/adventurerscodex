@@ -1,6 +1,10 @@
 'use strict';
 /*eslint no-console:0 */
 
+import simple from 'simple-mock'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('110 Stats Migration', function() {
     describe('Migration', function() {
         it('should change proficiency to 0', function() {

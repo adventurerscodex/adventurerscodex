@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { OtherStats } from 'charactersheet/models/character/other_stats'
+
 describe('Other Stats Model', function() {
     //Clean up after each test.
     afterEach(function() {

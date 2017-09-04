@@ -1,5 +1,14 @@
 'use strict';
 
+import Should from 'should'
+import simple from 'simple-mock'
+
+import { AbilityScores } from 'charactersheet/models/character'
+import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('AbilityScoresViewModel', function(){
     //Clean up after each test.
     afterEach(function() {
