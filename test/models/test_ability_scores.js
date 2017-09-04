@@ -1,4 +1,5 @@
-'use strict';
+import simple from 'simple-mock'
+
 
 import Should from 'should'
 

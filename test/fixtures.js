@@ -1,3 +1,5 @@
+import ko from 'knockout'
+
 export const AppearanceFixture = {
     'height':'5\'1"',
     'weight':'123',
@@ -212,7 +214,7 @@ export const HealthFixture = {
   'damage': '1',
 };
 
-OtherStatsFixture = {
+var OtherStatsFixture = {
   'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
   'ac': '13',
   'initiative': 0,
