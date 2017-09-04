@@ -1,10 +1,9 @@
 import simple from 'simple-mock'
 
-
 import Should from 'should'
 
 import { AbilitiesFixture } from '../test'
-import { AbilityScores } from 'charactersheet/models/character/ability_scores'
+import { CharacterManager } from 'charactersheet/charactersheet/utilities'
 
 describe('Ability Scores Model', function() {
     describe('Clear', function() {

@@ -37,6 +37,8 @@
     "mr-doc-theme-cayman": "^1.4.1",
     "phantomjs-prebuilt": "^2.1.14",
     "serve": "^1.4.0",
+    "should": "^12.0.0",
+    "signals": "^1.0.0",
     "simple-mock": "^0.8.0",
     "webpack": "^3.5.4",
     "webpack-dev-server": "^2.7.1"

@@ -1,9 +1,9 @@
 'use strict';
 
-import { signals } from 'signals'
+import { Signal } from 'signals'
 
 /**
- * A central repository of signals used in Adventurer's Codex
+ * A central repository of used in Adventurer's Codex
  * To be notified of changes to an outside module, subscribe to a
  * given notification.
  */
@@ -19,30 +19,30 @@ export var Notifications = {
         /**
          * Called when the app should initialize.
          */
-        init: new signals.Signal(),
+        init: new Signal(),
 
         /**
          * Called when the app should load it's data.
          */
-        load: new signals.Signal(),
+        load: new Signal(),
 
         /**
          * Called when the app should save it's data.
          */
-        save: new signals.Signal(),
+        save: new Signal(),
 
         /**
          * Called when the app should unload it's data.
          */
-        unload: new signals.Signal()
+        unload: new Signal()
     },
 
     authentication: {
-        loggedIn: new signals.Signal()
+        loggedIn: new Signal()
     },
 
     user: {
-        exists: new signals.Signal()
+        exists: new Signal()
     },
 
     userNotification: {
@@ -50,30 +50,30 @@ export var Notifications = {
          * Notifies the user of changes.
          * REQUIRES: message parameter
          */
-        infoNotification: new signals.Signal(),
+        infoNotification: new Signal(),
 
         /**
          * Notifies the user of a successful action.
          * REQUIRES: message parameter
          */
-        successNotification: new signals.Signal(),
+        successNotification: new Signal(),
 
         /**
          * Notifies the user of a warning.
          * REQUIRES: message parameter
          */
-        warningNotification: new signals.Signal(),
+        warningNotification: new Signal(),
 
         /**
          * Notifies the user of something critical.
          * REQUIRES: message parameter
          */
-        dangerNotification: new signals.Signal()
+        dangerNotification: new Signal()
     },
 
     characterManager: {
-        changing: new signals.Signal(),
-        changed: new signals.Signal()
+        changing: new Signal(),
+        changed: new Signal()
     },
 
     /*****************************
@@ -85,12 +85,12 @@ export var Notifications = {
         /**
          * Fired whenever a short rest is activated.
          */
-        shortRest: new signals.Signal(),
+        shortRest: new Signal(),
 
         /**
          * Fired whenever a long rest is activated.
          */
-        longRest: new signals.Signal()
+        longRest: new Signal()
     },
 
     /*****************************
@@ -98,104 +98,104 @@ export var Notifications = {
      *****************************/
 
     actionsToolbar: {
-        toggle: new signals.Signal()
+        toggle: new Signal()
     },
 
     abilityScores: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         intelligence: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         dexterity: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     armor: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     armorClass: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     campaign: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     characters: {
-        changed: new signals.Signal(),
-        allRemoved: new signals.Signal()
+        changed: new Signal(),
+        allRemoved: new Signal()
     },
 
     chat: {
-        message: new signals.Signal(),
-        iq: new signals.Signal(),
-        presence: new signals.Signal(),
-        room: new signals.Signal(),
+        message: new Signal(),
+        iq: new Signal(),
+        presence: new Signal(),
+        room: new Signal(),
         member: {
-            joined: new signals.Signal(),
-            left: new signals.Signal()
+            joined: new Signal(),
+            left: new Signal()
         }
     },
 
     exhibit: {
-        changed: new signals.Signal(),
-        toggle: new signals.Signal()
+        changed: new Signal(),
+        toggle: new Signal()
     },
 
     feat: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     feature: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     health: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         maxHitPoints: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         tempHitPoints: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         damage: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     hitDice: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     hitDiceType: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     item: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     magicItem: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     notes: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     encounters: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     otherStats: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         proficiency: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         inspiration: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
@@ -204,124 +204,124 @@ export var Notifications = {
          * The first parameter is the node you have joined and the second parameter is a boolean
          * that determines if you successfully connected to the party.
          */
-        joined: new signals.Signal(),
-        left: new signals.Signal(),
+        joined: new Signal(),
+        left: new Signal(),
         roster: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         /**
          * A new player update is available.
          * NOTE: The first parameter is the list of pCards.
          */
         players: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     playerImage: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     playerInfo: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     profile: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         level: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         experience: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         characterName: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         playerName: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         playerSummary: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         playerType: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         race: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         playerClass: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     proficiency: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     proficiencyBonus: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     settings: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     skills: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         perception: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     spellSlots: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     spellStats: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     stats: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         armorClassModifier: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     status: {
-        changed: new signals.Signal(),
+        changed: new Signal(),
         healthiness: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         magic: {
-            changed: new signals.Signal()
+            changed: new Signal()
         },
         tracked: {
-            changed: new signals.Signal()
+            changed: new Signal()
         }
     },
 
     trait: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     tracked: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     weapon: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     treasure: {
-        changed: new signals.Signal()
+        changed: new Signal()
     },
 
     wizard: {
         /**
          * Dispatched when the Wizard has completed making a character.
          */
-        completed: new signals.Signal()
+        completed: new Signal()
     },
 
     /**
@@ -333,30 +333,30 @@ export var Notifications = {
          * Dispatched when a new connection object has been created, but before
          * it is connected to the service.
          */
-        initialized: new signals.Signal(),
+        initialized: new Signal(),
         /**
          * Dispatched when the XMPP connection is successfully established,
          * the given user is authenticated, and the connection is now usable.
          */
-        connected: new signals.Signal(),
+        connected: new Signal(),
         /**
          * Dispatched when the XMPP connection has been successfully terminated.
          * @param shouldNotify {bool} whether the event deserves to notify the user.
          */
-        disconnected: new signals.Signal(),
-        reconnected: new signals.Signal(),
-        error: new signals.Signal(),
-        conflict: new signals.Signal(),
+        disconnected: new Signal(),
+        reconnected: new Signal(),
+        error: new Signal(),
+        conflict: new Signal(),
 
         routes: {
-            chat: new signals.Signal(),
-            pcard: new signals.Signal()
+            chat: new Signal(),
+            pcard: new Signal()
         },
 
         pubsub: {
-            created: new signals.Signal(),
-            subscribed: new signals.Signal(),
-            unsubscribed: new signals.Signal()
+            created: new Signal(),
+            subscribed: new Signal(),
+            unsubscribed: new Signal()
         }
     }
 };
