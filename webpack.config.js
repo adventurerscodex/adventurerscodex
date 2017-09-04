@@ -30,6 +30,15 @@ module.exports = {
   ],
   module: {
     rules: [
+      {
+        test: /\.(html)$/,
+        use: {
+          loader: 'html-loader',
+          options: {
+            attrs: [':data-src']
+          }
+        }
+      },
       {  // for loading in css files
         test: /\.css$/,
         use: [
@@ -49,8 +58,5 @@ module.exports = {
       exclude: /node_modules/,
       }
     ],
-    loaders: [
-      { test: /\.html$/, loader: 'html' }
-    ]
   }
 }
