@@ -1,1 +1,3 @@
+import './hooks'
+
 import './models'
