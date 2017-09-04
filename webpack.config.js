@@ -42,10 +42,15 @@ module.exports = {
         use: [
           'file-loader'
         ]
+      },
+      { // for loading tests
+      test: /test\.js$/,
+      use: 'mocha-loader',
+      exclude: /node_modules/,
       }
     ],
     loaders: [
       { test: /\.html$/, loader: 'html' }
     ]
   }
-};
+}
