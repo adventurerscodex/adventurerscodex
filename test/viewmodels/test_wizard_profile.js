@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { DataRepository } from 'charactersheet/utilities'
+import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/wizard/steps'
+
 describe('Wizard Profile ViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

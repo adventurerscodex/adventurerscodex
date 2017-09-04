@@ -1,5 +1,8 @@
 'use strict';
 
+import { Character } from 'charactersheet/models/common/character'
+import { PlayerTypes } from 'charactersheet/models/common/player_types'
+
 var MockCharacterManager = {};
 
 

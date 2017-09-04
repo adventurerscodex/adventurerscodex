@@ -1,5 +1,7 @@
 'use strict';
 
+import { Note } from 'charactersheet/models/common/note'
+
 describe('Notes Model', function() {
     describe('Clear', function() {
         it('should clear all the values in notes', function() {

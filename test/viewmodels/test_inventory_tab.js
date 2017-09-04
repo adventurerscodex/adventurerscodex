@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { ItemsViewModel } from 'charactersheet/viewmodels/items'
+import { MagicItemsViewModel } from 'charactersheet/viewmodels/magic_items'
+import { TreasureViewModel } from 'charactersheet/viewmodels/treasure'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 describe('InventoryTabViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

@@ -1,5 +1,10 @@
 'use strict';
 
+import Should from 'should'
+
+import { AbilitiesFixture } from '../test'
+import { AbilityScores } from 'charactersheet/models/character/ability_scores'
+
 describe('Ability Scores Model', function() {
     describe('Clear', function() {
         it('should clear all the values in it', function() {

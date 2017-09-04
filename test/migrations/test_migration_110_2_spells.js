@@ -1,6 +1,10 @@
 'use strict';
 /*eslint no-console:0 */
 
+import simple from 'simple-mock'
+
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('110 Spells Migration', function() {
     describe('Migration', function() {
         it('should change spell values to match SRD', function() {

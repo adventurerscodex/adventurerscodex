@@ -1,5 +1,7 @@
 'use strict';
 
+import { Slot } from 'charactersheet/models/common/spell_slot'
+
 describe('Slot Model', function() {
     describe('Spell Slots', function() {
         it('should yield the number of total slots remaining.', function() {

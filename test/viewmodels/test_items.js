@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Items } from 'charactersheet/common/models'
+import { ItemsViewModel } from 'charactersheet/common/models'
+import { PersistenceService, SortService } from 'charactersheet/services/common'
+
 describe('InventoryViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

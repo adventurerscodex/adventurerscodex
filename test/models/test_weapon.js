@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Weapon } from 'charactersheet/models/common/weapon'
+import { WeaponFixture } from '../test'
+
 describe('Weapon Model', function() {
     //Clean up after each test.
     afterEach(function() {

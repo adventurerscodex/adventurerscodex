@@ -1,5 +1,12 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { FeaturesTraits } from 'charactersheet/models/models'
+import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feats_traits'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
+
 describe('FeaturesTraitsViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { StatsViewModel } from 'charactersheet/viewmodels/character'
+
 describe('Stats View Model', function() {
     //Clean up after each test.
     afterEach(function() {

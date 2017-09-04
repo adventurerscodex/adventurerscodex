@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Skill } from 'charactersheet/models/character/skill'
+
 describe('Skill Model', function() {
     //Clean up after each test.
     afterEach(function() {

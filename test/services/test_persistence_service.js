@@ -1,6 +1,11 @@
 'use strict';
 /*eslint no-console:0*/
 
+import simple from 'simple-mock'
+
+import { PersistenceService } from 'charactersheet/services/common'
+import { Skill } from 'charactersheet/models/character/skill'
+
 describe('Persistence Service', function() {
     //Clean up after each test.
     afterEach(function() {

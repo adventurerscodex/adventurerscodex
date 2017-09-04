@@ -1,5 +1,9 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { SortServiceFixture } from '../test'
+
 describe('Sort Service', function() {
     //Clean up after each test.
     afterEach(function() {

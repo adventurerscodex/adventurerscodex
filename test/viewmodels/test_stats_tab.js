@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { StatsTabViewModel } from 'charactersheet/viewmodels/character/stats_tab'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 describe('StatsTabViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

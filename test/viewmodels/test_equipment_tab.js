@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { ArmorViewModel, WeaponsViewModel } from 'charactersheet/viewmodels/character/armor'
+import { ViewModelUtilities } from 'charactersheet/utilities'
+
 describe('EquipmentTabViewModel', function(){
     //Clean up after each test.
     afterEach(function() {

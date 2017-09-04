@@ -1,5 +1,10 @@
 'use strict';
 
+import simple from 'simple-mock'
+
+import { Treasure } from 'charactersheet/models/common/treasure'
+import { Treasure } from '../test'
+
 describe('Treasure Model', function() {
     //Clean up after each test.
     afterEach(function() {

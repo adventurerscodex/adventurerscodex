@@ -1,5 +1,7 @@
 'use strict';
 
+import { SpellStats } from 'charactersheet/models/character/spell_stats'
+
 describe('SpellStats Model', function() {
     describe('Clear', function() {
         it('should clear all the values', function() {
