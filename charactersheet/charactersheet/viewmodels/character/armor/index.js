@@ -2,7 +2,7 @@
 
 import ko from 'knockout'
 
-import { Armor} from 'charactersheet/common/models'
+import { Armor} from 'charactersheet/models/common'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'

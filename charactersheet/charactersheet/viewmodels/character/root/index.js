@@ -9,7 +9,7 @@ import { EquipmentTabViewModel } from 'charactersheet/viewmodels/character/equip
 import { ExhibitTabViewModel } from 'charactersheet/viewmodels/character/exhibit_tab'
 import { HotkeysService } from 'charactersheet/services/common'
 import { InventoryTabViewModel } from 'charactersheet/viewmodels/character/inventory_tab'
-import { NotesTabViewModel } from 'charactersheet/viewmodels/character/notes_tab'
+import { NotesTabViewModel } from 'charactersheet/viewmodels/common/notes_tab'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { PlayerImageViewModel } from 'charactersheet/viewmodels/common/player_image'

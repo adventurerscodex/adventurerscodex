@@ -3,7 +3,7 @@
 import ko from 'knockout'
 
 import { CharacterManager } from 'charactersheet/utilities'
-import { MagicItem } from 'charactersheet/common/models'
+import { MagicItem } from 'charactersheet/models/common'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SortService } from 'charactersheet/services/common'

@@ -5,7 +5,7 @@ import ko from 'knockout'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
-import { SpellStats } from 'charactersheet/character/models'
+import { SpellStats } from 'charactersheet/models/character'
 
 import template from './index.html'
 

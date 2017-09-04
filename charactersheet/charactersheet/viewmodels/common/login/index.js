@@ -2,11 +2,11 @@
 
 import ko from 'knockout'
 
-import { AuthenticationServiceManager } from 'charactersheet/services/common/account'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { UserServiceManager } from 'charactersheet/services/common/account'
-import { ViewModelUtilities } from 'charactersheet/utilities'
+import { AuthenticationServiceManager,
+    PersistenceService,
+    UserServiceManager } from 'charactersheet/services/common'
+import { Notifications,
+    ViewModelUtilities } from 'charactersheet/utilities'
 
 export function LoginViewModel() {
     var self = this;

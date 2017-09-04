@@ -5,7 +5,7 @@ import ko from 'knockout'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
-import { Treasure } from 'charactersheet/common/models'
+import { Treasure } from 'charactersheet/models/common'
 
 import template from './index.html'
 

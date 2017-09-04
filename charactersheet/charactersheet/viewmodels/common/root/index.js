@@ -3,9 +3,9 @@
 import ko from 'knockout'
 
 import { CharacterManager } from 'charactersheet/utilities'
-import { NodeServiceManager, ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { NodeServiceManager, ChatServiceManager } from 'charactersheet/services/common'
 import { Notifications } from 'charactersheet/utilities'
-import { NotificationsServiceManager, XMPPService } from 'charactersheet/services/common/account'
+import { NotificationsServiceManager, XMPPService } from 'charactersheet/services/common'
 import { PersistenceService } from 'charactersheet/services/common'
 
 /**

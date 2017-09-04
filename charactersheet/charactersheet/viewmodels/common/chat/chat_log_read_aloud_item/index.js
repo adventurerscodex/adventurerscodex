@@ -2,7 +2,7 @@
 
 import ko from 'knockout'
 
-import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common/account/sync'
+import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common'
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'

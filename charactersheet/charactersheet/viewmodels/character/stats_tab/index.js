@@ -2,9 +2,9 @@
 
 import ko from 'knockout'
 
-import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores'
-import { SavingThrowsViewModel } from 'charactersheet/viewmodels/character/savings_throws'
-import { StatsViewModel } from 'charactersheet/viewmodels/character/stats'
+import { AbilityScoresViewModel,
+    SavingThrowsViewModel,
+    StatsViewModel } from 'charactersheet/viewmodels/character'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 
 /**

@@ -6,7 +6,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { DataRepository } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
-import { Proficiency } from 'charactersheet/character/models'
+import { Proficiency } from 'charactersheet/models/character'
 import { SortService } from 'charactersheet/services/common'
 
 import template from './index.html'

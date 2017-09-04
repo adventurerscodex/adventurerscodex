@@ -2,7 +2,7 @@
 
 import ko from 'knockout'
 
-import { ExhibitViewModel } from 'charactersheet/viewmodels/exhibit'
+import { ExhibitViewModel } from 'charactersheet/viewmodels/character'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 
 /**

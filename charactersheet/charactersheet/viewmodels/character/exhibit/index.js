@@ -5,7 +5,7 @@ import ko from 'knockout'
 import { CharacterManager } from 'charactersheet/utilities'
 import { ChatServiceManager } from 'charactersheet/services/common'
 import { Notifications } from 'charactersheet/utilities'
-import { PlayerTypes } from 'charactersheet/common/models'
+import { PlayerTypes } from 'charactersheet/models/common'
 
 import template from './index.html'
 

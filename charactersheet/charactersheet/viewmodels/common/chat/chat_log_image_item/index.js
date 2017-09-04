@@ -2,9 +2,10 @@
 
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications, Utility } from 'charactersheet/utilities'
-import { XMPPService } from 'charactersheet/services/common/account'
+import { Notifications,
+    Utility,
+    CharacterManager } from 'charactersheet/utilities'
+import { XMPPService } from 'charactersheet/services/common'
 
 import template from './index.html'
 

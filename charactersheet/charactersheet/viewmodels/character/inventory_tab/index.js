@@ -2,9 +2,9 @@
 
 import ko from 'knockout'
 
-import { ItemsViewModel } from 'charactersheet/viewmodels/items'
-import { MagicItemsViewModel } from 'charactersheet/viewmodels/magic_items'
-import { TreasureViewModel } from 'charactersheet/viewmodels/treasure'
+import { ItemsViewModel,
+    MagicItemsViewModel,
+    TreasureViewModel } from 'charactersheet/viewmodels/character'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 
 /**

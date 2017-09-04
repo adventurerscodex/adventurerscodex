@@ -3,12 +3,12 @@
 import ko from 'knockout'
 
 import { CharacterManager } from 'charactersheet/utilities'
-import { Health } from 'charactersheet/character/models'
-import { HitDice } from 'charactersheet/character/models'
-import { HitDiceType } from 'charactersheet/character/models'
+import { Health,
+    HitDice,
+    HitDiceType,
+    OtherStats } from 'charactersheet/models/character'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
-import { OtherStats } from 'charactersheet/character/models'
 
 import template from './index.html'
 

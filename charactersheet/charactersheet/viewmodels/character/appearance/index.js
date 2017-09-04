@@ -2,7 +2,7 @@
 
 import ko from 'knockout'
 
-import { CharacterAppearance } from 'charactersheet/character/models'
+import { CharacterAppearance } from 'charactersheet/models/character'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'

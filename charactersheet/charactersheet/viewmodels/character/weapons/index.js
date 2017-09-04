@@ -7,7 +7,7 @@ import { DataRepository } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SortService } from 'charactersheet/services/common'
-import { Weapon } from 'charactersheet/common/models'
+import { Weapon } from 'charactersheet/models/common'
 
 import template from './index.html'
 

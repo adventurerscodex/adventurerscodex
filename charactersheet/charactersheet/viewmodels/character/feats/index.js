@@ -4,11 +4,11 @@ import ko from 'knockout'
 
 import { CharacterManager } from 'charactersheet/utilities'
 import { DataRepository } from 'charactersheet/utilities'
-import { Feat } from 'charactersheet/character/models'
+import { Feat,
+    Tracked } from 'charactersheet/models/character'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SortService } from 'charactersheet/services/common'
-import { Tracked } from 'charactersheet/character/models'
 
 import template from './index.html'
 

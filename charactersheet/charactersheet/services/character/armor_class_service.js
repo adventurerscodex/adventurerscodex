@@ -1,6 +1,6 @@
 'use strict';
 
-import { ko } from 'ko'
+import ko from 'knockout'
 
 import { AbilityScores, Armor, OtherStats } from 'charactersheet/models'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
