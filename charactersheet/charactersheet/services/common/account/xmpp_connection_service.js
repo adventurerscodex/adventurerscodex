@@ -1,4 +1,4 @@
-'use strict';
+import { SharedServiceManager } from '../shared_service_manager'
 /*eslint no-console:0*/
 
 /**

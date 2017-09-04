@@ -1,4 +1,4 @@
-'use strict';
+import { SharedServiceManager } from '../shared_service_manager'
 
 /**
  * A global service that fetches the user's account information.

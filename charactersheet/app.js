@@ -6,4 +6,6 @@ import 'charactersheet/services'
 import 'charactersheet/utilities'
 import 'charactersheet/viewmodels'
 
+import template from './charactersheet/index.html'
+
 ko.applyBindings()

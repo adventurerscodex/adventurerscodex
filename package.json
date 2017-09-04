@@ -21,6 +21,7 @@
     "grunt-eslint": "^18.1.0",
     "grunt-karma": "~0.12.0",
     "grunt-karma-coveralls": "^2.5.4",
+    "html-webpack-plugin": "^2.30.1",
     "isparta": "^4.0.0",
     "istanbul": "^0.3.22",
     "jasmine-core": "^2.3.4",
@@ -51,7 +52,7 @@
     "deploy": "bash deploy.sh",
     "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
     "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --no-inline"
   },
   "dependencies": {
     "cryptojs": "^2.5.3",

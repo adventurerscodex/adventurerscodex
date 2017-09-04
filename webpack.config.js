@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
 //   context: path.resolve(__dirname, './charactersheet'),
   entry: {
@@ -17,6 +19,15 @@ module.exports = {
     ]
   },
   plugins: [
+      // Injects bundles in your index.html instead of wiring all manually.
+      // It also adds hash to all injected assets so we don't have problems
+      // with cache purging during deployment.
+      new HtmlWebpackPlugin({
+        template: 'charactersheet/charactersheet/index.html',
+        inject: 'body',
+        hash: true
+      }),
+
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: function isExternal(module) {
@@ -28,6 +39,10 @@ module.exports = {
         }
       })
   ],
+  devServer: {
+     contentBase: './dist',
+     port: 3000
+  },
   module: {
     rules: [
       {
@@ -61,7 +76,7 @@ module.exports = {
   },
   externals: {
     jquery: 'jQuery',
-    dropbox: 'dropbox',
+    dropbox: 'Dropbox',
     marked: 'marked',
   }
 }
