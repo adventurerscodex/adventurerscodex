@@ -54,6 +54,12 @@
   },
   "dependencies": {
     "cryptojs": "^2.5.3",
-    "socket.io": "^1.3.7"
+    "css-loader": "^0.28.7",
+    "file-loader": "^0.11.2",
+    "html-loader": "^0.5.1",
+    "isparta-loader": "^2.0.0",
+    "socket.io": "^1.3.7",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9"
   }
 }
