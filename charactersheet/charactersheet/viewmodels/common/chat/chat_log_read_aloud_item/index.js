@@ -3,11 +3,11 @@
 import ko from 'knockout'
 
 import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common'
-import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { ChatServiceManager } from 'charactersheet/services/common'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
-import { XMPPService } from 'charactersheet/services/common/account'
+import { XMPPService } from 'charactersheet/services/common'
 
 import template from './index.html'
 

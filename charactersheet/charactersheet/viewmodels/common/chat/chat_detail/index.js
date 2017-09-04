@@ -6,7 +6,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Message } from 'charactersheet/models/common'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
-import { XMPPService } from 'charactersheet/services/common/account'
+import { XMPPService } from 'charactersheet/services/common'
 
 export function ChatDetailViewModel(chatCell, parent) {
     var self = this;
