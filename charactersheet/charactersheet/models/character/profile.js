@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { Profile } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 export function Profile() {

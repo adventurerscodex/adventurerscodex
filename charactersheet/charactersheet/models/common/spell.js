@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { Spell,
-    SpellStats } from 'charactersheet/models'
+import { SpellStats } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 
 export function Spell() {

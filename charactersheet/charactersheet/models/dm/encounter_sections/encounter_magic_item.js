@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { MagicItem,
-    EncounterMagicItem } from 'charactersheet/models'
+import { MagicItem } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function EncounterMagicItem() {

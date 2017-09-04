@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { Encounter } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 /**

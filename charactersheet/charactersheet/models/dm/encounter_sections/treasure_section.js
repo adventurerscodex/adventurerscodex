@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { TreasureSection } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function TreasureSection() {

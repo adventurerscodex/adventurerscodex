@@ -2,7 +2,6 @@
 
 import ko from 'knockout'
 
-import { MonsterAbilityScore } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function MonsterAbilityScore() {

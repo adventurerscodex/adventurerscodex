@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { EncounterCoins,
-    Treasure } from 'charactersheet/models'
+import { Treasure } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function EncounterCoins() {

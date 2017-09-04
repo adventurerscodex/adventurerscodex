@@ -2,8 +2,7 @@
 
 import ko from 'knockout'
 
-import { Weapon,
-    EncounterWeapon } from 'charactersheet/models'
+import { Weapon } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services'
 
 export function EncounterWeapon() {
