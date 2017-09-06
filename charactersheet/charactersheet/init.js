@@ -1,7 +1,13 @@
-import $ from jquery
+import $ from 'jquery'
 import ko from 'knockout'
+import URI from 'urijs'
+import Clipboard from 'clipboard'
 
-import Settings from 'charactersheet'
+import { Settings } from 'charactersheet/settings'
+import { DataRepository,
+    Migrations
+} from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services'
 
 import {
     AuthenticationServiceManager,
@@ -23,9 +29,9 @@ import {
  * This global function handles initializing the Knockout Application
  * and set up the environment.
  */
-var init = function(viewModel) {
+export var init = function(viewModel) {
     // Always ignore values in this list when mapping.
-    ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
+//     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
     // Set global URI settings.
     URI.fragmentPrefix = '';

@@ -4,6 +4,7 @@
 import ko from 'knockout'
 
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { ChatCellViewModel } from './chat_cell'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'

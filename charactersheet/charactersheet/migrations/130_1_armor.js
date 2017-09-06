@@ -1,9 +1,9 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
 
 /**
-* Changes Armor property from 'Shields' to 'Shield'.
-*/
-var migration_130_1_armors = {
+ * Changes Armor property from 'Shields' to 'Shield'.
+ */
+export var migration_130_1_armors = {
     name: 'Armor type migration',
     version: '1.3.0',
     migration: function() {

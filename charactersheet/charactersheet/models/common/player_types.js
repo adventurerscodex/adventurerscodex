@@ -1,4 +1,5 @@
-'use strict';
+import { CharacterRootViewModel, DMRootViewModel } from 'charactersheet/viewmodels'
+
 
 export var PlayerTypes = {
     characterPlayerType: {

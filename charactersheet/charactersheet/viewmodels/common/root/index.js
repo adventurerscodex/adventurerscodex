@@ -3,10 +3,18 @@
 import ko from 'knockout'
 
 import { CharacterManager } from 'charactersheet/utilities'
+import { HotkeysService } from 'charactersheet/services'
 import { NodeServiceManager, ChatServiceManager } from 'charactersheet/services/common'
 import { Notifications } from 'charactersheet/utilities'
 import { NotificationsServiceManager, XMPPService } from 'charactersheet/services/common'
 import { PersistenceService } from 'charactersheet/services/common'
+import { WizardViewModel,
+    UserNotificationViewModel,
+    CharactersViewModel,
+    LoginViewModel,
+    PartyManagerViewModel } from  'charactersheet/viewmodels'
+
+import template from './index.html'
 
 /**
  * All of the possible states that the app globally can render.

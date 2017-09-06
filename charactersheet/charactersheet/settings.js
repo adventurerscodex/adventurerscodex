@@ -1,7 +1,7 @@
 /**
  * A global list of settings and static values.
  */
-var Settings = {
+export var Settings = {
 
     /**
      * Application's version number.

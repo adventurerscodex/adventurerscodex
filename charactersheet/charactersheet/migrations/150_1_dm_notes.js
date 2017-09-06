@@ -1,9 +1,11 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
+
+// import { Note } from 'charactersheet/models'
 
 /**
  * If a Campaign had Notes, they will be migrated to the new DM Notes tab.
  */
-var migration_150_1_dm_notes = {
+export var migration_150_1_dm_notes = {
     name: 'Migrate Campaign Notes to new DM Notes',
     version: '1.5.0',
     migration: function() {

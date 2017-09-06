@@ -8,6 +8,8 @@ import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { XMPPService } from 'charactersheet/services/common'
 
+import template from './index.html'
+
 export function ChatDetailViewModel(chatCell, parent) {
     var self = this;
 
@@ -247,6 +249,6 @@ var ChatDetailViewModelMemberTemplate = '\
 ';
 
 ko.components.register('chat-detail', {
-  viewModel: ChatCellViewModel,
-  template: ChatDetailViewModelMemberTemplate
+  viewModel: ChatDetailViewModel,
+  template: template
 })

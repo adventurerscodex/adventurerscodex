@@ -13,6 +13,7 @@
     "babel-register": "^6.26.0",
     "bower": "^1.5.2",
     "chai": "^4.1.1",
+    "clipboard": "^1.7.1",
     "codecov.io": "~0.1.5",
     "coveralls": "^2.11.4",
     "eslint": "^2.8.0",
@@ -42,6 +43,7 @@
     "signals": "^1.0.0",
     "simple-mock": "^0.8.0",
     "strophe": "^1.2.4",
+    "urijs": "^1.18.12",
     "webpack": "^3.5.4",
     "webpack-dev-server": "^2.7.1"
   },

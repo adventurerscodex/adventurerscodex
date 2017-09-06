@@ -23,7 +23,7 @@ module.exports = {
       // It also adds hash to all injected assets so we don't have problems
       // with cache purging during deployment.
       new HtmlWebpackPlugin({
-        template: 'charactersheet/charactersheet/index.html',
+        template: 'charactersheet/index.html',
         inject: 'body',
         hash: true
       }),

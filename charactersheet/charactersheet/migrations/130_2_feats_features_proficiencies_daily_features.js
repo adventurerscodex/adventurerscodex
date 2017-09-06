@@ -1,9 +1,16 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
+//
+// import {
+//     Feature,
+//     Feat,
+//     Proficiency,
+//     Tracked
+// } from 'charactersheet/models'
 
 /**
-* Migrates Feats, Features, Proficiencies, and Daily Features to new models.
-*/
-var migration_130_2_feats_features_proficiencies_daily_features = {
+ * Migrates Feats, Features, Proficiencies, and Daily Features to new models.
+ */
+export var migration_130_2_feats_features_proficiencies_daily_features = {
     name: 'Feats, Features, Proficiencies, and Daily Features to new models migration',
     version: '1.3.0',
     migration: function() {

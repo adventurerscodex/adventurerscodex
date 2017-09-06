@@ -32,5 +32,3 @@ import './tracker'
 import './traits'
 import './treasure'
 import './weapons'
-
-ko.applyBindings()

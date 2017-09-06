@@ -27,7 +27,8 @@
 	<link href="/style/site.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=IM+Fell+English+SC" rel="stylesheet">
 </head>
-<body data-bind="event: {keypress: HotkeysService.hotkeyHandler}">
+<!-- <body data-bind="event: { keypress: HotkeysService.hotkeyHandler }"> -->
+<body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T24P7ZM"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -59,157 +60,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                target="_blank">Become a Patron</a>
         </li>
       </ul>
-      <!-- ko with: loginViewModel -->
-      <ul class="nav navbar-nav navbar-right">
-        <!-- ko ifnot: loggedIn -->
-        <li class="secondary-nav">
-          <a data-bind="attr: { href: loginLink }">
-            Login
-          </a>
-        </li>
-        <li class="secondary-nav">
-          <a data-bind="attr: { href: signupLink }">
-            Sign Up
-          </a>
-        </li>
-        <!-- /ko -->
-        <!-- ko if: loggedIn -->
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-            role="button" aria-haspopup="true" aria-expanded="false">
-              <span data-bind="text: username"></span>
-              <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><a href="/accounts/profile/">Account</a></li>
-            <li role="separator" class="divider"></li>
-            <li class="secondary-nav">
-              <a data-bind="click: logoutLinkWasClicked, attr: { href: _logoutLink }">
-                <span>Logout</span>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!-- /ko -->
-      </ul>
-      <!-- /ko -->
+<!--
+  TODO Add login view model
+-->
     </div>
   <!--/.nav-collapse -->
   </div>
 </div>
 </nav>
-<!-- ko if: shouldShowApp -->
-<div class="container-fluid main">
-  <div class="col-lg-10 col-xs-12 col-lg-offset-1">
-  <div id="characters" class="container-fluid characters-module-style">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="row">
-          <!-- ko with: childRootViewModel -->
-          <div class="col-padded col-sm-2 col-xs-12" data-bind="template: {
-            name: 'player_image.tmpl',
-            templateUrl: 'templates/common',
-            data: playerImageViewModel
-          }"></div>
-          <!-- /ko -->
-          <div class="col-padded col-sm-10 col-xs-12 characters-player-name">
-            <!-- ko with: childRootViewModel -->
-            <!-- ko if: playerType().key == 'character' -->
-            <!-- ko with: profileTabViewModel().profileViewModel -->
-            <div class="row">
-              <div class="col-md-12 text-center-xs text-left-sm">
-                <div class="h3" id="characterName" autocomplete="off" autocorrect="off"
-                  spellcheck="false" data-bind="contenteditable: {
-                  text: characterName,
-                  placeholder: placeholderText
-                }"></div>
-              </div>
-            </div>
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- ko with: childRootViewModel -->
-            <!-- ko if: playerType().key == 'dm' -->
-            <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
-            <div class="row">
-              <div class="col-md-12 text-center-xs text-left-sm">
-                <div class="h3" id="dmName" autocomplete="off" autocorrect="off"
-                  spellcheck="false" data-bind="contenteditable: {
-                  text: name,
-                  placeholder: placeholderText
-                }"></div>
-              </div>
-            </div>
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
-            <div class="row">
-              <div class="col-md-12 text-center-xs text-left-sm">
-                <i class="small underline"><a data-toggle="modal"
-                  data-target="#newModal" href="#">New/Import</a>
-                </i>
-                &nbsp;
-                <i class="small underline"><a data-toggle="modal"
-                  data-target="#charactersModal" href="#">Characters and Games</a>
-                </i>
-                &nbsp;
-                <i class="small underline">
-                  <a data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
-                </i>
-                &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#exportModal"
-                  data-bind="click: charactersViewModel.selectCharacter"
-                  href="#">Export</a></i>
-              </div>
-            </div>
-            <!-- ko with: childRootViewModel -->
-            <!-- ko if: playerType().key == 'character' -->
-            <div class="row row-padded">
-              <div class="col-xs-12">
-                <div data-bind="template: {
-                  name: 'status_line.tmpl',
-                  templateUrl: 'templates/character',
-                  data: statusLineViewModel
-                 }"></div>
-              </div>
-            </div>
-            <!-- /ko -->
-            <!-- ko if: playerType().key == 'dm' -->
-            <div class="row row-padded">
-              <div class="col-xs-12">
-                <div data-bind="template: {
-                  name: 'status_line.tmpl',
-                  templateUrl: 'templates/character',
-                  data: partyStatusLineViewModel
-                 }"></div>
-              </div>
-            </div>
-            <!-- /ko -->
-            <div class="row">
-              <div class="col-xs-12">
-                <small data-bind="html: partyStatus"></small>
-              </div>
-            </div>
-            <!-- /ko -->
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-    <div class="spacer"></div>
-    <!-- ko with: childRootViewModel -->
-		<div data-bind="template: {
-		    data: $data,
-		    name: TEMPLATE_FILE,
-		    templateUrl: 'templates'
-			}"></div>
-      <!-- /ko -->
-	</div>
-</div>
-<!-- /ko -->
 
-<!-- ko if: shouldShowWizard -->
+<!--
+<!~~ ko if: shouldShowApp ~~>
+  TODO Add app
+<!~ /ko ~~>
+-->
+
+<!--
+
+<!~~ ko if: shouldShowWizard ~~>
 <div id="wizard" class="container-fluid main"
   data-bind="with: wizardViewModel">
   <div data-bind="template: {
@@ -217,9 +85,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     templateUrl: 'templates/common',
     data: $data }"></div>
 </div>
-<!-- /ko -->
+<!~~ /ko ~~>
 
-<!-- ko if: shouldShowPicker -->
+<!~~ ko if: shouldShowPicker ~~>
 <div id="picker" class="container-fluid main"
   data-bind="with: charactersViewModel">
   <div data-bind="template: {
@@ -227,7 +95,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     templateUrl: 'templates/common',
     data: $data }"></div>
 </div>
-<!-- /ko -->
+<!~~ /ko ~~>
+ -->
 
 </div>
 
@@ -282,16 +151,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-<!-- Switch Characters Modal -->
-<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
+<!--
+Switch Characters Modal<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
   aria-labelledby="charactersModalLabel"
   data-bind="template: {
       name: 'characters.tmpl',
       templateUrl: 'templates/common',
       data: charactersViewModel }">
 </div>
+ -->
 
 <!-- Export Modal -->
+<!--
 <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
   data-bind="with: charactersViewModel"
   aria-labelledby="exportModalLabel">
@@ -304,22 +175,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="modal-body">
         <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
         <p>Note: Safari users will need to save the contents of the page.</p>
-        <!-- ko ifnot: $parent.isLoggedIn -->
+        <!~~ ko ifnot: $parent.isLoggedIn ~~>
         <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
-        <!-- /ko-->
-      <!-- Add export form. -->
+        <!~~ /ko~~>
+      <!~~ Add export form. ~~>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export to file</button>
-        <!-- ko if: $parent.isLoggedIn -->
+        <!~~ ko if: $parent.isLoggedIn ~~>
         <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
-        <!-- /ko-->
+        <!~~ /ko~~>
       </div>
     </div>
   </div>
 </div>
+ -->
 
 <!-- Party Manager Modal -->
+<!--
 <div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
   aria-labelledby="partyModalLabel"
   data-bind="template: {
@@ -331,8 +204,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     onclose: partyModalFinishedClosing
     }">
 </div>
+ -->
 
 <!-- New Modal -->
+<!--
 <div class="modal fade" id="newModal" tabindex="-1" role="dialog"
   aria-labelledby="newLabel">
   <div class="modal-dialog" role="document">
@@ -360,6 +235,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </div>
+ -->
 
 <!-- CDNs -->
 <script src="http://code.jquery.com/jquery-2.2.4.min.js"
@@ -416,13 +292,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
  -->
 
 <script type="text/javascript">
-	$(function(){
-	  window.viewModel = new AdventurersCodexViewModel();
-    init(window.viewModel);
-	  ko.applyBindings(window.viewModel, $('#html')[0]);
-    //Setup automatic saving.
-    window.onbeforeunload = viewModel.unload;
-	});
+// 	$(function(){
+// 	  window.viewModel = new AdventurersCodexViewModel();
+//     init(window.viewModel);
+// 	  ko.applyBindings(window.viewModel, $('#html')[0]);
+//     //Setup automatic saving.
+//     window.onbeforeunload = viewModel.unload;
+// 	});
 	</script>
 </body>
 </html>

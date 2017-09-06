@@ -1,5 +1,3 @@
-'use strict';
-
 import {
     migration_110_1_skills,
     migration_110_2_spells,
@@ -8,12 +6,12 @@ import {
     migration_130_1_armors,
     migration_130_2_feats_features_proficiencies_daily_features,
     migration_150_1_dm_notes
-} from 'migrations'
+} from 'charactersheet/migrations'
 
 
 export var Migrations = {
     // List all migrations that should be applied
-    scripts : [
+    scripts: [
         // v1.1
         migration_110_1_skills,
         migration_110_2_spells,

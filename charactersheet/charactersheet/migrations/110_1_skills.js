@@ -1,4 +1,4 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
 
 /**
  * Converts the values of skill proficiency from a boolean

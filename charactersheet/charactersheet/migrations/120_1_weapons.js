@@ -1,9 +1,9 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
 
 /**
-* Sets weaponhandedness to '' if 'light'.
-*/
-var migration_120_1_weapons = {
+ * Sets weaponhandedness to '' if 'light'.
+ */
+export var migration_120_1_weapons = {
     name: 'Weapon Light Handedness to Blank Migration',
     version: '1.2.0',
     migration: function() {

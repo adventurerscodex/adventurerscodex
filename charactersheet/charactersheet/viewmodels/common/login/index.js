@@ -1,5 +1,3 @@
-'use strict';
-
 import ko from 'knockout'
 
 import { AuthenticationServiceManager,
@@ -7,6 +5,9 @@ import { AuthenticationServiceManager,
     UserServiceManager } from 'charactersheet/services/common'
 import { Notifications,
     ViewModelUtilities } from 'charactersheet/utilities'
+
+import template from './index.html'
+
 
 export function LoginViewModel() {
     var self = this;
@@ -66,3 +67,7 @@ export function LoginViewModel() {
     };
 }
 
+ko.components.register('login', {
+  viewModel: LoginViewModel,
+  template: template
+})

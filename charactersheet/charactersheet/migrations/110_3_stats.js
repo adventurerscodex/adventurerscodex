@@ -1,10 +1,10 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
 
 /**
 * Sets proficiency to 0. This attribute is now considered a modifer and should
 * be zero after the migration
 */
-var migration_110_3_stats = {
+export var migration_110_3_stats = {
     name: 'Stats Proficiency Values Migration',
     version: '1.1.0',
     migration: function() {
