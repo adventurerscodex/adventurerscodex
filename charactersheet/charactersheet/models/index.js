@@ -1,5 +1,3 @@
-import './character'
-import './common'
-import './dm'
-import './character'
-import './common'
+export * from './character'
+export * from './common'
+export * from './dm'
