@@ -8,7 +8,7 @@ import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SortService } from 'charactersheet/services/common'
 import { Tracked,
-    Feature } from 'charactersheet/models/character'
+    Feature } from 'charactersheet/models'
 
 import template from './index.html'
 

@@ -3,9 +3,8 @@ import ko from 'knockout'
 
 import { CampaignMapOrImage,
     Message,
-    PlayerPushModalViewModel,
     MapOrImage } from 'charactersheet/models'
-
+import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import template from './index.html'
 
 export function CampaignMapsAndImagesViewModel() {

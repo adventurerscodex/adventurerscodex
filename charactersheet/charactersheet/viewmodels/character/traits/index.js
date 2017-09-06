@@ -8,7 +8,7 @@ import { CharacterManager,
 import { PersistenceService,
     SortService } from 'charactersheet/services/common'
 import { Tracked,
-    Trait } from 'charactersheet/models/common'
+    Trait } from 'charactersheet/models'
 
 import template from './index.html'
 

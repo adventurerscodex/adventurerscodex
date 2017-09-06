@@ -6,7 +6,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SortService } from 'charactersheet/services/common'
-import { Spell } from 'charactersheet/models/character'
+import { Spell } from 'charactersheet/models'
 
 import template from './index.html'
 

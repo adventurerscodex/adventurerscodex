@@ -1,9 +1,9 @@
 'use strict';
 
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Health, HitDice } from 'charactersheet/models/character'
+import { Health, HitDice } from 'charactersheet/models'
 import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
-import { Status, StatusWeightPair } from 'charactersheet/models/common'
+import { Status, StatusWeightPair } from 'charactersheet/models'
 
 
 /**

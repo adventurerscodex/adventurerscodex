@@ -3,7 +3,7 @@
 import ko from 'knockout'
 
 import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance'
-import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/features'
+import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feat_traits'
 import { ProfileViewModel } from 'charactersheet/viewmodels/character/profile'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 

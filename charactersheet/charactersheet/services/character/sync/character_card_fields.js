@@ -1,6 +1,6 @@
 'use strict';
 
-import { AbilityScores, Health, HitDice, HitDiceType, Profile, SpellStats, Treasure } from 'charactersheet/models/character'
+import { AbilityScores, Health, HitDice, HitDiceType, Profile, SpellStats, Treasure } from 'charactersheet/models'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPService } from 'charactersheet/services/common'
 import { PlayerImage, PlayerInfo, Status, StatusWeightPair } from 'charactersheet/models/common'

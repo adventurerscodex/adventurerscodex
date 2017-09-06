@@ -7,7 +7,7 @@ import { PersistenceService } from 'charactersheet/services'
 /**
  * A directory-like container with meta-data information about a container.
  */
-function Encounter() {
+export function Encounter() {
     var self = this;
     self.ps = PersistenceService.register(Encounter, self);
     self.mapping = {

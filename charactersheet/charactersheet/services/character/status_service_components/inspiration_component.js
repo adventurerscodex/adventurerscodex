@@ -2,8 +2,8 @@
 
 import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { OtherStats } from 'charactersheet/models/character'
-import { Status, StatusWeightPair } from 'charactersheet/models/common'
+import { OtherStats } from 'charactersheet/models'
+import { Status, StatusWeightPair } from 'charactersheet/models'
 
 
 /**

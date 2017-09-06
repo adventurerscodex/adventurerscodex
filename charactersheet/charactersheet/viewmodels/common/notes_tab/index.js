@@ -2,7 +2,7 @@
 
 import ko from 'knockout'
 
-import { NotesViewModel } from 'charactersheet/viewmodels/common'
+import { NotesViewModel } from 'charactersheet/viewmodels/common/notes'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 
 /**

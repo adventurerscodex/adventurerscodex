@@ -3,8 +3,9 @@ import ko from 'knockout'
 import Strophe from 'Strophe'
 
 import { Message,
-    MapOrImage } from 'charactersheet/models'
-import { PlayerPushModalViewModel, MapsAndImagesSection } from 'charactersheet/viewmodels/dm'
+    MapOrImage,
+    MapsAndImagesSection } from 'charactersheet/models'
+import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { ImageServiceManager,
     PersistenceService,
     ChatServiceManager,
