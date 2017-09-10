@@ -1,7 +1,6 @@
 import Should from 'should'
 
 import { AppearanceFixture } from '../fixtures'
->>>>>>> Stashed changes
 import { CharacterAppearance } from 'charactersheet/models/character/appearance'
 
 describe('Appearance Model', function() {
