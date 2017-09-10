@@ -1,5 +1,3 @@
-'use strict';
-
 import Should from 'should'
 import simple from 'simple-mock'
 

@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/actions_toolbar'

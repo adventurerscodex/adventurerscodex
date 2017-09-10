@@ -1,5 +1,3 @@
-'use strict';
-
 import ko from 'knockout'
 
 import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores'

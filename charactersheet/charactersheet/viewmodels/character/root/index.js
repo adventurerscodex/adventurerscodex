@@ -1,5 +1,3 @@
-'use strict';
-
 import ko from 'knockout'
 
 import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/actions_toolbar'

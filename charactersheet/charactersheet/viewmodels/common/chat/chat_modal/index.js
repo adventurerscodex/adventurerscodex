@@ -1,5 +1,3 @@
-'use strict';
-
 function ChatModalViewModel(parent) {
     var self = this;
 

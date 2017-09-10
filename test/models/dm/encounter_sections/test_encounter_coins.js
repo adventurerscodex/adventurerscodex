@@ -1,5 +1,3 @@
-'use strict';
-
 describe('EncounterCoins', function(){
     //Clean up after each test.
     afterEach(function() {

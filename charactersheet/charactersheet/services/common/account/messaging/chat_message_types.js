@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Every message sent through the chat will have a type that tells
  * the chat interface and the various chat subsystems how to render

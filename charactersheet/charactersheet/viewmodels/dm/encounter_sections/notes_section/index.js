@@ -1,5 +1,3 @@
-'use strict';
-
 import ko from 'knockout'
 
 import { NotesSection } from 'charactersheet/models'

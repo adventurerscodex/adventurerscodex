@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A global service that observes changes in various modules, and calculates
  * relevant statuses based on their values. This service works in the background

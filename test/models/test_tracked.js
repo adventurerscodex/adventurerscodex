@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Tracked } from 'charactersheet/models/common/tracked'

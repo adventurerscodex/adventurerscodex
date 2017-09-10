@@ -1,5 +1,3 @@
-'use strict';
-
 import ko from 'knockout'
 
 import { MagicItem } from 'charactersheet/models/common/magic_item'

@@ -7,23 +7,23 @@ import { Settings } from 'charactersheet/settings'
 import { DataRepository,
     Migrations
 } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services'
+import { HealthinessStatusServiceComponent,
+         InspirationStatusServiceComponent,
+         MagicalStatusServiceComponent,
+         PersistenceService,
+         TotalWeightStatusServiceComponent,
+         TrackedStatusServiceComponent
+} from 'charactersheet/services'
 
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
-    HealthinessStatusServiceComponent,
-    InspirationStatusServiceComponent,
-    MagicalStatusServiceComponent,
     NodeServiceManager,
     NotificationsServiceManager,
     StatusService,
-    TotalWeightStatusServiceComponent,
-    TrackedStatusServiceComponent,
     UserServiceManager,
     XMPPService,
 } from 'charactersheet/services/common'
-
 
 /**
  * This global function handles initializing the Knockout Application

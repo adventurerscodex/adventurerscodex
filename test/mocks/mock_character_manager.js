@@ -1,5 +1,3 @@
-'use strict';
-
 import { Character } from 'charactersheet/charactersheet/models/common/character'
 import { PlayerTypes } from 'charactersheet/charactersheet/models/common/player_types'
 

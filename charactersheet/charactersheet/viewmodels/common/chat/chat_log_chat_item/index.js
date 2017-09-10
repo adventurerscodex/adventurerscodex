@@ -1,5 +1,3 @@
-'use strict';
-
 import ko from 'knockout'
 
 import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common'

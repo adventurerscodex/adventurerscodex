@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Encounter } from 'charactersheet/models/dm/encounter'

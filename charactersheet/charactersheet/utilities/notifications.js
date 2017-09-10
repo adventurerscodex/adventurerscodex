@@ -1,5 +1,3 @@
-'use strict';
-
 import { Signal } from 'signals'
 
 /**

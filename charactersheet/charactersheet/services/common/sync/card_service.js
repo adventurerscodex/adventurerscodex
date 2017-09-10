@@ -1,5 +1,3 @@
-'use strict';
-
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
     compression: 'lz-string',

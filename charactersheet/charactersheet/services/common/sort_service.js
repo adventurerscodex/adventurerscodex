@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A utility class that provides helpers for sorting, filtering, and
  * determining the various properties of sortable tables.

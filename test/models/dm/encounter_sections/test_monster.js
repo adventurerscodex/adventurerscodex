@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Monster', function(){
     //Clean up after each test.
     afterEach(function() {

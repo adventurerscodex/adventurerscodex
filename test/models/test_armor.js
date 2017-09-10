@@ -1,5 +1,3 @@
-'use strict';
-
 import { ArmorFixture } from '../test'
 import { Armor } from 'charactersheet/models/common/armor'
 

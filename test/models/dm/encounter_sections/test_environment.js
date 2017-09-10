@@ -1,5 +1,3 @@
-'use strict';
-
 describe('Environment', function(){
     //Clean up after each test.
     afterEach(function() {

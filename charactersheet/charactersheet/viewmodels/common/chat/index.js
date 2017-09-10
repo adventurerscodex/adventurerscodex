@@ -1,4 +1,3 @@
-'use strict';
 /*eslint no-console:0*/
 
 import ko from 'knockout'

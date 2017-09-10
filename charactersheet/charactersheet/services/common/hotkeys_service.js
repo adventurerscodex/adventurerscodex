@@ -1,4 +1,3 @@
-'use strict';
 /*
  * A utility class that provides helpers for parsing
  * input keys and registers new [hotkey, function] combinations.

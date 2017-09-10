@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { HitDiceType } from 'charactersheet/models/character/hit_dice_type'

@@ -1,5 +1,3 @@
-'use strict';
-
 function DMRootViewModel() {
     var self = this;
 

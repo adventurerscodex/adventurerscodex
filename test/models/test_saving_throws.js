@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { SavingThrows } from 'charactersheet/models/character/savings_throws'

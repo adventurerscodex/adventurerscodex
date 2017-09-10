@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A global service that observes changes in account statuses
  * and holds onto the global account state per session.

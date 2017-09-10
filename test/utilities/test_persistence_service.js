@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { PersistenceService } from 'charactersheet/services/common'

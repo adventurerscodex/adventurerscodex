@@ -1,5 +1,3 @@
-'use strict';
-
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { OtherStats, Profile } from 'charactersheet/models/character'
 import { PersistenceService, SharedServiceManager } from 'charactersheet/services/common'

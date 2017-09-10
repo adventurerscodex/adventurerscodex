@@ -1,5 +1,3 @@
-'use strict';
-
 describe('PlayerTextSection', function(){
     //Clean up after each test.
     afterEach(function() {

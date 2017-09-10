@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A set of general utilities that provide common functionality to view models.
  */

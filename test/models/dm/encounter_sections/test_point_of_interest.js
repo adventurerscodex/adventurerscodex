@@ -1,5 +1,3 @@
-'use strict';
-
 describe('PointOfInterest', function(){
     //Clean up after each test.
     afterEach(function() {

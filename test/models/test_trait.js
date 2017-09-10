@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Trait } from 'charactersheet/models/character/trait'

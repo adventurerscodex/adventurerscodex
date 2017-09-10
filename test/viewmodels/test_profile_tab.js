@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance'

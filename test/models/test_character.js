@@ -1,6 +1,4 @@
 /*eslint no-console:0*/
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Character } from 'charactersheet/models/common/character'

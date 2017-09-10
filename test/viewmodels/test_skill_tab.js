@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_tab'

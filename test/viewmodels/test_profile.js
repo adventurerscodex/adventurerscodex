@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { CharacterManager, Fixtures, Notifications } from 'charactersheet/utilities'

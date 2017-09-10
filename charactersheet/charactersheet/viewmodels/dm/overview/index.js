@@ -1,4 +1,3 @@
-'use strict';
 //TODO: do we need math or date?
 import ko from 'knockout'
 

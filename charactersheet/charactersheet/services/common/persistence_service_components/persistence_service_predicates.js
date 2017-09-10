@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A convenience class for constructing multi-property queries for
  * the persistence service.

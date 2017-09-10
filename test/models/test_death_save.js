@@ -1,5 +1,3 @@
-'use strict';
-
 import { simple } from 'simple-mock'
 
 import { DeathSave } from 'charactersheet/models/character/death_save'

@@ -1,5 +1,3 @@
-'use strict';
-
 import { Campaign, Exhibit } from 'charactersheet/models/dm'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPService } from 'charactersheet/services/common'

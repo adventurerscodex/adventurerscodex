@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * This file contains a number of generic utility functions used throughout
  * Adventurer's Codex

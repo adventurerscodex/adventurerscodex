@@ -1,5 +1,3 @@
-'use strict';
-
 import { PlusMinusComponentViewModel } from 'charactersheet/components/plus-minus'
 
 describe('Plus-Minus Component', function() {

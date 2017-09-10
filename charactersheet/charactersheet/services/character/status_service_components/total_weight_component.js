@@ -1,5 +1,3 @@
-'use strict';
-
 import { AbilityScores } from 'charactersheet/models/character'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'

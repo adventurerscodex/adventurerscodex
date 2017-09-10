@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Feature } from 'charactersheet/models/character/feature'

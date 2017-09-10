@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { PlayerInfo } from 'charactersheet/models/common/player_info'

@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Weapon } from 'charactersheet/models/character/common'

@@ -1,5 +1,3 @@
-'use strict';
-
 import { Note } from 'charactersheet/models/common/note'
 
 describe('Notes Model', function() {

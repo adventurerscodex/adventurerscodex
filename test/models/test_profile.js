@@ -1,5 +1,3 @@
-'use strict';
-
 import simple from 'simple-mock'
 
 import { Profile } from 'charactersheet/models/common/profile'

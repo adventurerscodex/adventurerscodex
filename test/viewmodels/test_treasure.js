@@ -1,5 +1,3 @@
-'use strict';
-
 import { TreasureViewModel } from 'charactersheet/viewmodels/character'
 
 

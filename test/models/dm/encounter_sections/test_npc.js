@@ -1,5 +1,3 @@
-'use strict';
-
 describe('NPC', function(){
     //Clean up after each test.
     afterEach(function() {

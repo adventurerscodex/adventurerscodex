@@ -1,5 +1,3 @@
-'use strict';
-
 import { AppearanceFixture } from '../test'
 import { CharacterAppearance } from 'charactersheet/models/character/appearance'
 

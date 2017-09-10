@@ -1,5 +1,3 @@
-'use strict';
-
 import { SpellStats } from 'charactersheet/models/character/spell_stats'
 
 describe('SpellStats Model', function() {
