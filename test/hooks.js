@@ -1,8 +1,8 @@
 import simple from 'simple-mock'
 
-import { CharacterManager } from 'charactersheet/charactersheet/utilities'
+import { CharacterManager } from 'charactersheet/utilities'
 
-import { MockCharacterManager } from './mocks/mock_character_manager.js'
+import { MockCharacterManager } from './mocks'
 
 beforeEach(function() {
     simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);

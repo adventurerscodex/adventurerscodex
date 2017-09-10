@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout.mapping'
-
 import 'charactersheet/components'
 import 'charactersheet/migrations'
 import 'charactersheet/models'

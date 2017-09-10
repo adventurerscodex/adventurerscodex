@@ -1,7 +1,7 @@
 import simple from 'simple-mock'
 
 import { DataRepository } from 'charactersheet/utilities'
-import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/wizard/steps'
+import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps'
 
 describe('Wizard Profile ViewModel', function(){
     //Clean up after each test.

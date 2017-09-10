@@ -6,7 +6,7 @@ import {
     WizardIntroStepViewModel,
     WizardProfileStepViewModel,
     WizardAbilityScoresStepViewModel
-} from 'charactersheet/viewmodels/wizard/steps'
+} from 'charactersheet/viewmodels/common/wizard/steps'
 
 describe('Wizard ViewModel', function(){
     //Clean up after each test.

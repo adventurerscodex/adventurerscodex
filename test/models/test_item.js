@@ -1,4 +1,4 @@
-import simple from { 'simple-mock' }
+import simple from 'simple-mock'
 
 import { Item } from 'charactersheet/models/common/item'
 

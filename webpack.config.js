@@ -4,10 +4,8 @@ const webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-//   context: path.resolve(__dirname, './charactersheet'),
-  entry: {
-    ac: './charactersheet/app.js'
-  },
+  context: path.resolve(__dirname, './charactersheet'),
+  entry: './app.js' ,
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].bundle.js',
@@ -23,21 +21,21 @@ module.exports = {
       // It also adds hash to all injected assets so we don't have problems
       // with cache purging during deployment.
       new HtmlWebpackPlugin({
-        template: 'charactersheet/index.html',
+        template: 'index.html',
         inject: 'body',
         hash: true
       }),
 
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: function isExternal(module) {
-        var context = module.context;
-        if (typeof context !== 'string') {
-            return false;
-        }
-        return context.indexOf('node_modules') !== -1;
-        }
-      })
+//       new webpack.optimize.CommonsChunkPlugin({
+//         name: 'vendor',
+//         minChunks: function isExternal(module) {
+//         var context = module.context;
+//         if (typeof context !== 'string') {
+//             return false;
+//         }
+//         return context.indexOf('node_modules') !== -1;
+//         }
+//       })
   ],
   devServer: {
      contentBase: './dist',
@@ -67,11 +65,6 @@ module.exports = {
           'file-loader'
         ]
       },
-      { // for loading tests
-      test: /test\.js$/,
-      use: 'mocha-loader',
-      exclude: /node_modules/,
-      }
     ],
   },
   externals: {
