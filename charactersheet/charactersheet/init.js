@@ -12,18 +12,15 @@ import { HealthinessStatusServiceComponent,
          MagicalStatusServiceComponent,
          PersistenceService,
          TotalWeightStatusServiceComponent,
-         TrackedStatusServiceComponent
+         TrackedStatusServiceComponent,
+         AuthenticationServiceManager,
+         ChatServiceManager,
+         NodeServiceManager,
+         NotificationsServiceManager,
+         StatusService,
+         UserServiceManager,
+         XMPPService
 } from 'charactersheet/services'
-
-import {
-    AuthenticationServiceManager,
-    ChatServiceManager,
-    NodeServiceManager,
-    NotificationsServiceManager,
-    StatusService,
-    UserServiceManager,
-    XMPPService,
-} from 'charactersheet/services/common'
 
 /**
  * This global function handles initializing the Knockout Application

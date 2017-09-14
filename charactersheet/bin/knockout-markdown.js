@@ -1,4 +1,4 @@
-'use strict';
+import 'charactersheet/bin/textarea-markdown-editor/marked'
 
 /**
  * A binding to apply a markdown editor to a text area. This binding has 2

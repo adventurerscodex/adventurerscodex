@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Knockout jQuery Autocomplete Binding
  * author: Brian Schrader
