@@ -43,7 +43,6 @@
     "lz-string": "^1.4.4",
     "mocha": "^3.5.0",
     "mocha-loader": "^1.1.1",
-    "mocha-webpack": "^0.7.0",
     "mr-doc": "^3.2.1",
     "mr-doc-theme-cayman": "^1.4.1",
     "phantomjs-prebuilt": "^2.1.14",
@@ -58,7 +57,6 @@
     "webpack-dev-server": "^2.7.1"
   },
   "scripts": {
-    "postinstall": "bower install --force && cp -r charactersheet/bin/fonts charactersheet/bower_components/bootstrap-theme-bootswatch-flatly/fonts",
     "test": "karma start",
     "coveralls": "grunt coveralls",
     "deploy": "bash deploy.sh",
