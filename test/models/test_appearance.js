@@ -36,5 +36,6 @@ describe('Appearance Model', function() {
             p.skinColor().should.equal(AppearanceFixture.skinColor);
         });
     });
+
 });
 

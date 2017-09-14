@@ -1,4 +1,4 @@
 import './hooks'
 
-// Add test imports here.
+// Add tests import here.
 import './models'
