@@ -8,13 +8,22 @@ import 'charactersheet/models'
 import 'charactersheet/services'
 import 'charactersheet/utilities'
 
-import 'charactersheet/viewmodels/common/root'
+import { AdventurersCodexViewModel, template } from 'charactersheet/viewmodels/common/root'
+import template from 'charactersheet/viewmodels/common/root/index.html'
+
 import { init } from 'charactersheet/init'
 
-// init(window.viewModel);
 
-//Setup automatic saving.
-// window.onbeforeunload = viewModel.unload;
+var viewModel = new AdventurersCodexViewModel();
+init(viewModel);
+
+// Setup automatic saving.
+window.onbeforeunload = viewModel.unload;
+
+ko.components.register('app', {
+  viewModel: { instance: viewModel },
+  template: template
+});
 
 ko.applyBindings();
 

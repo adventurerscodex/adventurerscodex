@@ -14,7 +14,6 @@ import { WizardViewModel,
 import { Character } from 'charactersheet/models/common'
 import 'charactersheet/viewmodels/common/character_picker'
 
-import template from './index.html'
 
 /**
  * All of the possible states that the app globally can render.
@@ -92,10 +91,11 @@ export function AdventurersCodexViewModel() {
         self.wizardViewModel.init();
         self.loginViewModel.load();
 
-        XMPPService.sharedService().init();
-        NodeServiceManager.sharedService().init();
-        ChatServiceManager.sharedService().init();
-        NotificationsServiceManager.sharedService().init();
+// TODO
+//         XMPPService.sharedService().init();
+//         NodeServiceManager.sharedService().init();
+//         ChatServiceManager.sharedService().init();
+//         NotificationsServiceManager.sharedService().init();
 
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
@@ -124,7 +124,7 @@ export function AdventurersCodexViewModel() {
         } else if (self.state() == APP_STATE.WIZARD) {
             self.wizardViewModel.load();
         } else {
-            self.charactersViewModel.load();
+//             self.charactersViewModel.load();
         }
         self._dummy.valueHasMutated();
     };
@@ -208,9 +208,3 @@ export function AdventurersCodexViewModel() {
         });
     };
 }
-
-
-ko.components.register('app', {
-  viewModel: AdventurersCodexViewModel,
-  template: template
-});

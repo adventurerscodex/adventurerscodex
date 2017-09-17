@@ -20,16 +20,15 @@ function resolveViewModel(errorCallback, viewModelConfig, callback) {
             var viewModel = new viewModelConfig(params)
             if ('load' in viewModel) {
                 viewModel.load();
-
             }
             return viewModel;
         });
     } else if ('viewModel' in viewModelConfig) {
         resolveViewModel(errorCallback, viewModelConfig['viewModel'], callback);
+    } else {
+        // Hand the work off to another loader.
+        callback(null);
     }
-
-    // Hand the work off to another loader.
-    return null;
 }
 
 
