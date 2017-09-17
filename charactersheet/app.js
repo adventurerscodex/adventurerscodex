@@ -1,19 +1,20 @@
 import ko from 'knockout'
 
+import 'bootstrap'
+
 import 'charactersheet/components'
 import 'charactersheet/migrations'
 import 'charactersheet/models'
 import 'charactersheet/services'
 import 'charactersheet/utilities'
 
-import  { AdventurersCodexViewModel } from 'charactersheet/viewmodels/common/root'
+import 'charactersheet/viewmodels/common/root'
 import { init } from 'charactersheet/init'
 
-import template from './index.html'
-
-window.viewModel = new AdventurersCodexViewModel();
-init(window.viewModel);
-ko.applyBindings(window.viewModel, $('#html')[0]);
+// init(window.viewModel);
 
 //Setup automatic saving.
-window.onbeforeunload = viewModel.unload;
+// window.onbeforeunload = viewModel.unload;
+
+ko.applyBindings();
+

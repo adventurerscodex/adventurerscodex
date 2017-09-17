@@ -24,7 +24,7 @@ module.exports = {
         template: 'index.html',
         inject: 'body',
         hash: true
-      }),
+      })
 
 //       new webpack.optimize.CommonsChunkPlugin({
 //         name: 'vendor',
@@ -71,5 +71,6 @@ module.exports = {
     jquery: 'jQuery',
     dropbox: 'Dropbox',
     marked: 'marked',
+    strophe : "Strophe"
   }
 }

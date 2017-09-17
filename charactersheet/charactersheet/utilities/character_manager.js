@@ -1,4 +1,9 @@
 /*eslint no-console:0 */
+
+import { Character } from 'charactersheet/models/common'
+import { PersistenceService } from 'charactersheet/services/common'
+import { Notifications } from 'charactersheet/utilities'
+
 export var CharacterManager = {
     __activeCharacter__: null
 };
