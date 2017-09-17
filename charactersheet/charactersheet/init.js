@@ -8,18 +8,18 @@ import { DataRepository,
     Migrations
 } from 'charactersheet/utilities'
 import { HealthinessStatusServiceComponent,
-         InspirationStatusServiceComponent,
-         MagicalStatusServiceComponent,
-         PersistenceService,
-         TotalWeightStatusServiceComponent,
-         TrackedStatusServiceComponent,
-         AuthenticationServiceManager,
-         ChatServiceManager,
-         NodeServiceManager,
-         NotificationsServiceManager,
-         StatusService,
-         UserServiceManager,
-         XMPPService
+    InspirationStatusServiceComponent,
+    MagicalStatusServiceComponent,
+    PersistenceService,
+    TotalWeightStatusServiceComponent,
+    TrackedStatusServiceComponent,
+    AuthenticationServiceManager,
+    ChatServiceManager,
+    NodeServiceManager,
+    NotificationsServiceManager,
+    StatusService,
+    UserServiceManager,
+    XMPPService
 } from 'charactersheet/services'
 
 /**

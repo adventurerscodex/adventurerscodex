@@ -4,7 +4,7 @@ import { SharedServiceManager } from '../shared_service_manager'
  * A global service that observes changes in account statuses
  * and holds onto the global account state per session.
  */
-var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationService, null);
+export var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationService, null);
 
 /**
  * An internal service implementation that holds onto data regarding the
@@ -13,7 +13,7 @@ var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationServi
  * This service contains all of the relevant information for keeping
  * track of a user's authentication state.
  */
-export function _AuthenticationService(config) {
+function _AuthenticationService(config) {
     var self = this;
 
     self.validationUrl = '/api/o/validate/';
