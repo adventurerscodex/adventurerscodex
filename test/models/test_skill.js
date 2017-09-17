@@ -1,6 +1,8 @@
-import simple from 'simple-mock'
+import Should from 'should';
+import simple from 'simple-mock';
 
-import { Skill } from 'charactersheet/models/character/skill'
+import { ProficiencyService } from 'charactersheet/services';
+import { Skill } from 'charactersheet/models/character/skill';
 
 describe('Skill Model', function() {
     //Clean up after each test.

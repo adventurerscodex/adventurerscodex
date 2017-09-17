@@ -1,7 +1,7 @@
-import Should from 'should'
+import Should from 'should';
 
-import { AppearanceFixture } from '../fixtures'
-import { CharacterAppearance } from 'charactersheet/models/character/appearance'
+import { AppearanceFixture } from '../fixtures';
+import { CharacterAppearance } from 'charactersheet/models/character/appearance';
 
 describe('Appearance Model', function() {
     describe('Clear', function() {

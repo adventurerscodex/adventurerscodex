@@ -1,7 +1,7 @@
 import ko from 'knockout'
 
 import { AbilityScores } from 'charactersheet/models'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService, ProficiencyService } from 'charactersheet/services'
 
 export function SavingThrows() {
     var self = this;

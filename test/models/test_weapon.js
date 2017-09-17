@@ -1,7 +1,8 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Weapon } from 'charactersheet/models/common/weapon'
-import { WeaponFixture } from '../test'
+import { ProficiencyService } from 'charactersheet/services';
+import { Weapon } from 'charactersheet/models/common/weapon';
+import { WeaponFixture } from '../fixtures';
 
 describe('Weapon Model', function() {
     //Clean up after each test.
@@ -52,7 +53,7 @@ describe('Weapon Model', function() {
         describe('Delete', function() {
             it('should call the token delete.', function() {
                 var weap = new Weapon();
-                var spy = simple.mock(weap.ps, 'delete');
+                var spy = simple.mock(weap.ps, 'delete', function(){});
                 weap.delete();
                 spy.called.should.equal(true);
             });

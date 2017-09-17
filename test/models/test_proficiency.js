@@ -1,6 +1,6 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Proficiency } from 'charactersheet/models/character/proficiency'
+import { Proficiency } from 'charactersheet/models/character/proficiency';
 
 describe('Proficiency Model', function() {
     //Clean up after each test.
@@ -22,7 +22,7 @@ describe('Proficiency Model', function() {
     describe('Delete', function() {
         it('should save the values.', function() {
             var proficiency = new Proficiency();
-            var deleteSpy = simple.mock(proficiency.ps, 'delete');
+            var deleteSpy = simple.mock(proficiency.ps, 'delete', function() {});
 
             deleteSpy.called.should.equal(false);
             proficiency.delete();

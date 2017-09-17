@@ -1,6 +1,6 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { HitDice } from 'charactersheet/models/characer/hit_dice'
+import { HitDice } from 'charactersheet/models/character/hit_dice';
 
 describe('Hit Dice Model', function() {
     //Clean up after each test.

@@ -1,8 +1,9 @@
 import ko from 'knockout'
 
+import { Fixtures } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 
-function HitDiceType() {
+export function HitDiceType() {
     var self = this;
     self.ps = PersistenceService.register(HitDiceType, self);
     self.mapping = {

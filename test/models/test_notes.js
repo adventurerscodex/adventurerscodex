@@ -1,4 +1,4 @@
-import { Note } from 'charactersheet/models/common/note'
+import { Note } from 'charactersheet/models/common/note';
 
 describe('Notes Model', function() {
     describe('Clear', function() {

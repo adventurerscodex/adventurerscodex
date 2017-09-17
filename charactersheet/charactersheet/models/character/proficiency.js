@@ -1,5 +1,6 @@
 import ko from 'knockout'
 
+import { Fixtures } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 
 export function Proficiency() {

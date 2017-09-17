@@ -1,5 +1,5 @@
-import { ArmorFixture } from '../test'
-import { Armor } from 'charactersheet/models/common/armor'
+import { ArmorFixture } from '../fixtures';
+import { Armor } from 'charactersheet/models/common/armor';
 
 describe('Armor Model', function() {
     describe('Clear', function() {

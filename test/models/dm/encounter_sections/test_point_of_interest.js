@@ -1,3 +1,8 @@
+import Should from 'should';
+import simple from 'simple-mock';
+
+import { PointOfInterest } from 'charactersheet/models';
+
 describe('PointOfInterest', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +22,7 @@ describe('PointOfInterest', function(){
     describe('Delete', function() {
         it('should delete pointOfInterest', function() {
             var pointOfInterest = new PointOfInterest();
-            var pointOfInterestSpy = simple.mock(pointOfInterest.ps, 'delete');
+            var pointOfInterestSpy = simple.mock(pointOfInterest.ps, 'delete', function() {});
 
             pointOfInterest.delete();
             pointOfInterestSpy.called.should.equal(true);

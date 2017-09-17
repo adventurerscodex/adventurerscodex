@@ -1,6 +1,7 @@
 import ko from 'knockout'
 
-import { PersistenceService } from 'charactersheet/services/common'
+import { CharacterManager } from 'charactersheet/utilities'
+import { PersistenceService, ProficiencyService } from 'charactersheet/services'
 
 export function Skill() {
     var self = this;

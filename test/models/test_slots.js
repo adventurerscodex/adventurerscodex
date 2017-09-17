@@ -1,4 +1,6 @@
-import { Slot } from 'charactersheet/models/common/spell_slot'
+import Should from 'should';
+
+import { Slot } from 'charactersheet/models/character/spell_slot';
 
 describe('Slot Model', function() {
     describe('Spell Slots', function() {

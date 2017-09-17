@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { PointOfInterestSection } from 'charactersheet/models';
+
 describe('PointOfInterestSection', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +21,7 @@ describe('PointOfInterestSection', function(){
     describe('Delete', function() {
         it('should delete pointOfInterestSection', function() {
             var pointOfInterestSection = new PointOfInterestSection();
-            var pointOfInterestSectionSpy = simple.mock(pointOfInterestSection.ps, 'delete');
+            var pointOfInterestSectionSpy = simple.mock(pointOfInterestSection.ps, 'delete', function() {});
 
             pointOfInterestSection.delete();
             pointOfInterestSectionSpy.called.should.equal(true);

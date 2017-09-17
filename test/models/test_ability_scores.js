@@ -1,11 +1,10 @@
-import simple from 'simple-mock'
+import Should from 'should';
+import simple from 'simple-mock';
 
-import Should from 'should'
-
-import { AbilitiesFixture } from '../test'
-import { CharacterManager } from 'charactersheet/utilities'
-import { AbilityScores } from  'charactersheet/models/character/ability_scores'
-import { AbilitiesFixture } from '../fixtures'
+import { AbilitiesFixture } from '../test';
+import { CharacterManager } from 'charactersheet/utilities';
+import { AbilityScores } from  'charactersheet/models/character/ability_scores';
+import { AbilitiesFixture } from '../fixtures';
 
 
 describe('Ability Scores Model', function() {

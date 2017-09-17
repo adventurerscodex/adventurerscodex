@@ -1,3 +1,8 @@
+import Should from 'should';
+import simple from 'simple-mock';
+
+import { MonsterAbilityScore } from 'charactersheet/models';
+
 describe('MonsterAbilityScore', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -66,7 +71,7 @@ describe('MonsterAbilityScore', function(){
     describe('Delete', function() {
         it('should delete monsterAbilityScore', function() {
             var monsterAbilityScore = new MonsterAbilityScore();
-            var monsterAbilityScoreSpy = simple.mock(monsterAbilityScore.ps, 'delete');
+            var monsterAbilityScoreSpy = simple.mock(monsterAbilityScore.ps, 'delete', function() {});
 
             monsterAbilityScore.delete();
             monsterAbilityScoreSpy.called.should.equal(true);

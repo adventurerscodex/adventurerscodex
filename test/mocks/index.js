@@ -1,11 +1,10 @@
 import ko from 'knockout'
 
-export var MockCharacterManager = {};
-
-
 /**
  * Returns a player character with the key '1234'.
  */
+let MockCharacterManager = {};
+
 MockCharacterManager.activeCharacter = function() {
     return {
         key: ko.observable('12345'),
@@ -19,3 +18,5 @@ MockCharacterManager.activeCharacter = function() {
         })
     };
 };
+
+export { MockCharacterManager };

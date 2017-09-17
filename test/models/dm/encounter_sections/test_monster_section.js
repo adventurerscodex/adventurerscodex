@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { MonsterSection } from 'charactersheet/models';
+
 describe('MonsterSection', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +21,7 @@ describe('MonsterSection', function(){
     describe('Delete', function() {
         it('should delete monsterSection', function() {
             var monsterSection = new MonsterSection();
-            var monsterSectionSpy = simple.mock(monsterSection.ps, 'delete');
+            var monsterSectionSpy = simple.mock(monsterSection.ps, 'delete', function() {});
 
             monsterSection.delete();
             monsterSectionSpy.called.should.equal(true);

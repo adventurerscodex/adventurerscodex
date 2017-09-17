@@ -1,6 +1,7 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { PersistenceService } from 'charactersheet/services/common'
+import { Fixtures } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common';
 
 export function SpellStats() {
     var self = this;

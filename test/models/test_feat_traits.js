@@ -1,6 +1,6 @@
-import { simple } from 'simple-mock'
+import simple from 'simple-mock';
 
-import { FeaturesTraits } from 'charactersheet/models/character/feat_traits'
+import { FeaturesTraits } from 'charactersheet/models/character/feat_traits';
 
 describe('Features and Traits Model', function() {
     //Clean up after each test.
