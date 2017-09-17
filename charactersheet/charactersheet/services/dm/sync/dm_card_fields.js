@@ -1,5 +1,6 @@
 import { Campaign, Exhibit } from 'charactersheet/models/dm'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities/notifications.js'
 import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPService } from 'charactersheet/services/common'
 import { PlayerImage, PlayerInfo, Status, StatusWeightPair } from 'charactersheet/models/common'
 

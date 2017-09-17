@@ -1,10 +1,14 @@
 import ko from 'knockout'
 import Dropbox from 'dropbox'
 
-import { PlayerImage,
+import {
+    Campaign,
     ImageModel,
+    PlayerImage,
     PlayerInfo,
-    PlayerTypes } from 'charactersheet/models'
+    PlayerTypes,
+    Profile
+ } from 'charactersheet/models'
 import { Utility } from 'charactersheet/utilities'
 import { Settings } from 'charactersheet/settings.js'
 import { PersistenceService } from 'charactersheet/services/common'

@@ -9,7 +9,7 @@
       <div class="container-fluid text-left">
         <div class="col-sm-12">
           <div class="list-group">
-            <!-- ko foreach: $data.characters -->
+            <!-- ko foreach: characters -->
             <a href="#" class="list-group-item"
                 data-bind="click: $parent.changeCharacter">
               <div class="row">
@@ -29,7 +29,9 @@
               </div>
             </a>
             <!-- /ko -->
-            <a href="#" class="list-group-item" data-bind="click: $root.showWizard">
+<!-- TODO: Add click handler back
+            <a href="#" class="list-group-item" data-bind="click: $root.showWizard"> -->
+            <a href="#" class="list-group-item" data-bind="">
               <div class="row">
                 <div class="col-xs-12 text-center">
                   <i class="fa fa-plus"></i>&nbsp;
