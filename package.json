@@ -51,7 +51,7 @@
     "should": "^12.0.0",
     "signals": "^1.0.0",
     "simple-mock": "^0.8.0",
-    "strophe": "^1.2.4",
+    "strophe.js": "1.2.12",
     "urijs": "^1.18.12",
     "util-deprecate": "^1.0.2",
     "webpack": "^3.5.4",

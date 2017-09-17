@@ -3,7 +3,8 @@ import Dropbox from 'dropbox'
 
 import { PlayerImage,
     ImageModel,
-    PlayerInfo } from 'charactersheet/models'
+    PlayerInfo,
+    PlayerTypes } from 'charactersheet/models'
 import { Utility } from 'charactersheet/utilities'
 import { Settings } from 'charactersheet/settings.js'
 import { PersistenceService } from 'charactersheet/services/common'

@@ -11,6 +11,7 @@ import { WizardViewModel,
     CharactersViewModel,
     LoginViewModel,
     PartyManagerViewModel } from  'charactersheet/viewmodels'
+import { Character } from 'charactersheet/models/common'
 
 import template from './index.html'
 

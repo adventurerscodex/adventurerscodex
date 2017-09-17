@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import toastr from 'toastr'
 
 import { CharacterManager,
     Notifications,

@@ -1,4 +1,8 @@
+import Strophe from 'strophe'
 import { SharedServiceManager } from '../shared_service_manager'
+import { UserServiceManager,
+    PersistenceService } from 'charactersheet/services'
+import { Notifications } from 'charactersheet/utilities'
 /*eslint no-console:0*/
 
 /**

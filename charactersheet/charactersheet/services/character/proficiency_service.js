@@ -1,6 +1,7 @@
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { OtherStats, Profile } from 'charactersheet/models/character'
-import { PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common'
+import { SharedServiceManager } from '../common/shared_service_manager'
 
 export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
 

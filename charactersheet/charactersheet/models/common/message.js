@@ -1,5 +1,5 @@
 import ko from 'knockout'
-import Strophe from 'Strophe'
+import Strophe from 'strophe'
 
 import { CHAT_MESSAGE_TYPES, PersistenceService } from 'charactersheet/services/common'
 import { JSONPayload } from 'charactersheet/utilities'

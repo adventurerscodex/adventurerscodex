@@ -2,8 +2,11 @@ import ko from 'knockout'
 
 import { SharedServiceManager } from '../../shared_service_manager'
 import { Notifications,
-    Utility } from 'charactersheet/utilities'
-import { XMPPService } from 'charactersheet/services'
+    Utility,
+    CharacterManager,
+    DataRepository } from 'charactersheet/utilities'
+import { XMPPService,
+    KeyValuePredicate } from 'charactersheet/services'
 
 /**
  * The default configuration object for the Chat service.

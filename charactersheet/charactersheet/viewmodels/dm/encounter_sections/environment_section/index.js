@@ -1,5 +1,5 @@
 import ko from 'knockout'
-import Strophe from 'Strophe'
+import Strophe from 'strophe'
 
 import { Message, Environment, EnvironmentSection } from 'charactersheet/models'
 import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
