@@ -11,6 +11,7 @@ import { WizardViewModel,
     CharactersViewModel,
     LoginViewModel,
     PartyManagerViewModel } from  'charactersheet/viewmodels'
+import 'charactersheet/viewmodels/common/character_picker'
 
 import template from './index.html'
 
@@ -152,7 +153,7 @@ export function AdventurersCodexViewModel() {
         self.partyManagerModalStatus(false);
     };
 
-    //Private Methods
+    // Private Methods
 
     self._setNewCharacter = function(character) {
         // Init the correct view model for each type.
@@ -206,3 +207,9 @@ export function AdventurersCodexViewModel() {
         });
     };
 }
+
+
+ko.components.register('app', {
+  viewModel: AdventurersCodexViewModel,
+  template: template
+});

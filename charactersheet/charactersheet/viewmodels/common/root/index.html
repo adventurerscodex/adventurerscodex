@@ -1,3 +1,4 @@
+<!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
   <div id="characters" class="container-fluid characters-module-style">
@@ -106,3 +107,30 @@
       <!-- /ko -->
 	</div>
 </div>
+<!-- /ko -->
+
+<!-- ko if: shouldShowWizard -->
+<wizard></wizard>
+<!--
+<div id="wizard" class="container-fluid main"
+  data-bind="with: wizardViewModel">
+  <div data-bind="template: {
+    name: 'wizard.tmpl',
+    templateUrl: 'templates/common',
+    data: $data }"></div>
+</div>
+ -->
+<!-- /ko -->
+
+<!-- ko if: shouldShowPicker -->
+<character-picker></character-picker>
+<!--
+<div id="picker" class="container-fluid main"
+  data-bind="with: charactersViewModel">
+  <div data-bind="template: {
+    name: 'character_picker.tmpl',
+    templateUrl: 'templates/common',
+    data: $data }"></div>
+</div>
+ -->
+<!-- /ko -->
