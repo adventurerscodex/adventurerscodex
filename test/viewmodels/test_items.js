@@ -1,8 +1,9 @@
 import simple from 'simple-mock'
 
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Items } from 'charactersheet/models/common'
-import { ItemsViewModel } from 'charactersheet/models/common'
+import { Item } from 'charactersheet/models/common'
+import { ItemsViewModel } from 'charactersheet/viewmodels/character/items'
+import { MockCharacterManager } from '../mocks'
 import { PersistenceService, SortService } from 'charactersheet/services/common'
 
 describe('InventoryViewModel', function(){

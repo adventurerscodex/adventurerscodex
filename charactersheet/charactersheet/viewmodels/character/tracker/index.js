@@ -1,10 +1,11 @@
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { SortService } from 'charactersheet/services/common'
-import { Utility } from 'charactersheet/utilities'
+import { CharacterManager,
+    Fixtures,
+    Notifications,
+    Utility } from 'charactersheet/utilities'
+import { Feat, Feature, Trait, Tracked } from 'charactersheet/models/character'
+import { PersistenceService, SortService } from 'charactersheet/services/common'
 
 import template from './index.html'
 

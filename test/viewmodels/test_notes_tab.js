@@ -1,6 +1,6 @@
 import simple from 'simple-mock'
 
-import { NotesTabViewModel } from 'charactersheet/viewmodels/common/notes'
+import { NotesTabViewModel } from 'charactersheet/viewmodels/common/notes_tab'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 
 describe('NotesTabViewModel', function(){

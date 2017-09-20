@@ -1,9 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { FeaturesTraits } from 'charactersheet/models/models'
-import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feats_traits'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { FeaturesTraits } from 'charactersheet/models';
+import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feat_traits';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { MockCharacterManager } from '../mocks'
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('FeaturesTraitsViewModel', function(){
     //Clean up after each test.
@@ -30,7 +31,7 @@ describe('FeaturesTraitsViewModel', function(){
             var featsVM = new FeaturesTraitsViewModel();
 
             featsVM.load();
-            featsVM.featTraits().characterId().should.equal('1234');
+            featsVM.featTraits().characterId().should.equal('12345');
         });
     });
 

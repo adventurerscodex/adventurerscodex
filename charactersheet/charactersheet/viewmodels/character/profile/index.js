@@ -4,6 +4,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Fixtures } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
+import { Profile } from 'charactersheet/models/character'
 
 import template from './index.html'
 

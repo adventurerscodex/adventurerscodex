@@ -1,9 +1,9 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { Armor} from 'charactersheet/models/common'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { Armor} from 'charactersheet/models/common';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
+import { PersistenceService, SortService } from 'charactersheet/services/common';
 
 import template from './index.html'
 

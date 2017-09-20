@@ -1,7 +1,8 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { ArmorViewModel, WeaponsViewModel } from 'charactersheet/viewmodels/character/armor'
-import { ViewModelUtilities } from 'charactersheet/utilities'
+import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor';
+import { EquipmentTabViewModel } from 'charactersheet/viewmodels/character/equipment_tab'
+import { ViewModelUtilities } from 'charactersheet/utilities';
 
 describe('EquipmentTabViewModel', function(){
     //Clean up after each test.

@@ -1,6 +1,6 @@
 import simple from 'simple-mock'
 
-import { SpellTabViewModel } from 'charactersheet/viewmodels/character/spells_tab'
+import { SpellsTabViewModel } from 'charactersheet/viewmodels/character/spells_tab'
 import { ViewModelUtilities } from 'charactersheet/utilities'
 
 describe('SpellsTabViewModel', function(){

@@ -1,9 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance'
-import { CharacterAppearance } from 'charactersheet/models/character'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance';
+import { CharacterAppearance } from 'charactersheet/models/character';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { MockCharacterManager } from '../mocks';
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('Appearance', function() {
     //Clean up after each test.
@@ -31,7 +32,7 @@ describe('Appearance', function() {
             var a = new AppearanceViewModel();
 
             a.load();
-            a.appearance().characterId().should.equal('1234');
+            a.appearance().characterId().should.equal('12345');
         });
     });
 

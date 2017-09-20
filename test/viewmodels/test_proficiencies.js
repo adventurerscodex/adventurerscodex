@@ -1,6 +1,7 @@
 import simple from 'simple-mock'
 
 import { CharacterManager, DataRepository, Notifications } from 'charactersheet/utilities'
+import { MockCharacterManager } from '../mocks'
 import { PersistenceService, SortService } from 'charactersheet/services/common'
 import { Proficiency } from 'charactersheet/models/character'
 import { ProficienciesViewModel } from 'charactersheet/viewmodels/character/proficiencies'

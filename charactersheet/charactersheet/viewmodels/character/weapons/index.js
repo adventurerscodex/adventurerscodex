@@ -1,13 +1,15 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { DataRepository } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { SortService } from 'charactersheet/services/common'
-import { Weapon } from 'charactersheet/models/common'
+import { CharacterManager,
+ DataRepository,
+ Notifications,
+ Fixtures
+} from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
+import { Weapon } from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function WeaponsViewModel() {
     var self = this;

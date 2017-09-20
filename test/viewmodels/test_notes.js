@@ -1,6 +1,8 @@
 import simple from 'simple-mock'
 
-import { Notifications } from 'charactersheet/utilities'
+import { MockCharacterManager } from '../mocks'
+import { Note } from 'charactersheet/models/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { NotesViewModel } from 'charactersheet/viewmodels/common/notes'
 import { PersistenceService } from 'charactersheet/services/common'
 
@@ -29,7 +31,7 @@ describe('NotesViewModel', function(){
             var notesVM = new NotesViewModel();
 
             notesVM.load();
-            notesVM.notes()[0].characterId().should.equal('1234');
+            notesVM.notes()[0].characterId().should.equal('12345');
         });
     });
 

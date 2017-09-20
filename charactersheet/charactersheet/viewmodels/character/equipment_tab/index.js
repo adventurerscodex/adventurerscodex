@@ -1,10 +1,10 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor'
-import { ViewModelUtilities } from 'charactersheet/utilities'
-import { WeaponsViewModel } from 'charactersheet/viewmodels/character/weapons'
+import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor';
+import { ViewModelUtilities } from 'charactersheet/utilities';
+import { WeaponsViewModel } from 'charactersheet/viewmodels/character/weapons';
 
-import template from './index.html'
+import template from './index.html';
 
 /**
  * This view model contains the player's equipment information.
