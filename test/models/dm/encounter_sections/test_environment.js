@@ -1,3 +1,8 @@
+import simple from 'simple-mock';
+import Should from 'should';
+
+import { Environment } from 'charactersheet/models';
+
 describe('Environment', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +22,7 @@ describe('Environment', function(){
     describe('Delete', function() {
         it('should delete environment', function() {
             var environment = new Environment();
-            var environmentSpy = simple.mock(environment.ps, 'delete');
+            var environmentSpy = simple.mock(environment.ps, 'delete', function() {});
 
             environment.delete();
             environmentSpy.called.should.equal(true);

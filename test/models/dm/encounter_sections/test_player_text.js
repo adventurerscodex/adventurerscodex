@@ -1,3 +1,9 @@
+import Should from 'should';
+import simple from 'simple-mock';
+
+import { PlayerText } from 'charactersheet/models';
+import { Utility } from 'charactersheet/utilities';
+
 describe('PlayerText', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -53,7 +59,7 @@ describe('PlayerText', function(){
     describe('Delete', function() {
         it('should delete playerText', function() {
             var playerText = new PlayerText();
-            var playerTextSpy = simple.mock(playerText.ps, 'delete');
+            var playerTextSpy = simple.mock(playerText.ps, 'delete', function() {});
 
             playerText.delete();
             playerTextSpy.called.should.equal(true);

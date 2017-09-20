@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { PlayerTextSection } from 'charactersheet/models';
+
 describe('PlayerTextSection', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +21,7 @@ describe('PlayerTextSection', function(){
     describe('Delete', function() {
         it('should delete playerTextSection', function() {
             var playerTextSection = new PlayerTextSection();
-            var playerTextSectionSpy = simple.mock(playerTextSection.ps, 'delete');
+            var playerTextSectionSpy = simple.mock(playerTextSection.ps, 'delete', function() {});
 
             playerTextSection.delete();
             playerTextSectionSpy.called.should.equal(true);

@@ -11,6 +11,7 @@ module.exports = function(config) {
 			//Stuff to test.
             {pattern: 'http://code.jquery.com/jquery-2.2.4.min.js', watched: false},
             {pattern: 'https://www.dropbox.com/static/api/2/dropins.js', watched: false},
+            {pattern: 'https://cdnjs.cloudflare.com/ajax/libs/strophe.js/1.2.14/strophe.js', watched: false},
             {pattern: 'test/test.js', watched: false},
         ],
         browsers: ['PhantomJS'],

@@ -1,3 +1,8 @@
+import simple from 'simple-mock';
+
+import { EncounterMagicItem } from 'charactersheet/models';
+import { Utility } from 'charactersheet/utilities';
+
 describe('EncounterMagicItem', function(){
     //Clean up after each test.
     afterEach(function() {

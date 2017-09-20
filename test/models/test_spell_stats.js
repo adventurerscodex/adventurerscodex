@@ -1,4 +1,4 @@
-import { SpellStats } from 'charactersheet/models/character/spell_stats'
+import { SpellStats } from 'charactersheet/models/character/spell_stats';
 
 describe('SpellStats Model', function() {
     describe('Clear', function() {

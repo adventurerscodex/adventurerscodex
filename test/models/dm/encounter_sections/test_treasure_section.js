@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { TreasureSection } from 'charactersheet/models';
+
 describe('TreasureSection', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +21,7 @@ describe('TreasureSection', function(){
     describe('Delete', function() {
         it('should delete treasureSection', function() {
             var treasureSection = new TreasureSection();
-            var treasureSectionSpy = simple.mock(treasureSection.ps, 'delete');
+            var treasureSectionSpy = simple.mock(treasureSection.ps, 'delete', function() {});
 
             treasureSection.delete();
             treasureSectionSpy.called.should.equal(true);

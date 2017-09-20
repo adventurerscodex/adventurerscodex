@@ -1,6 +1,7 @@
 import ko from 'knockout'
 
-import { Notifications } from 'charactersheet/utilities'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Note } from 'charactersheet/models/common'
 import { PersistenceService } from 'charactersheet/services/common'
 
 import template from './index.html'

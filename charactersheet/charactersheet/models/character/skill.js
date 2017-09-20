@@ -3,7 +3,8 @@ import 'knockout-mapping'
 
 import 'bin/knockout-mapping-autoignore'
 
-import { PersistenceService } from 'charactersheet/services/common'
+import { CharacterManager } from 'charactersheet/utilities'
+import { PersistenceService, ProficiencyService } from 'charactersheet/services'
 
 
 export function Skill() {

@@ -1,7 +1,7 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Profile } from 'charactersheet/models/common/profile'
-import { ProfileFixture } from '../test'
+import { Profile } from 'charactersheet/models/character/profile';
+import { ProfileFixture } from '../fixtures';
 
 describe('Profile Model', function() {
     //Clean up after each test.

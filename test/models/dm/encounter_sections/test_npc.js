@@ -1,3 +1,9 @@
+import Should from 'should';
+import simple from 'simple-mock';
+
+import { NPC } from 'charactersheet/models';
+import { Utility } from 'charactersheet/utilities';
+
 describe('NPC', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -39,7 +45,7 @@ describe('NPC', function(){
     describe('Delete', function() {
         it('should delete npc', function() {
             var npc = new NPC();
-            var npcSpy = simple.mock(npc.ps, 'delete');
+            var npcSpy = simple.mock(npc.ps, 'delete', function() {});
 
             npc.delete();
             npcSpy.called.should.equal(true);

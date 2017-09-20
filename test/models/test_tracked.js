@@ -1,6 +1,6 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Tracked } from 'charactersheet/models/common/tracked'
+import { Tracked } from 'charactersheet/models/character/tracked';
 
 describe('Tracked Model', function() {
     //Clean up after each test.
@@ -22,7 +22,7 @@ describe('Tracked Model', function() {
     describe('Delete', function() {
         it('should save the values.', function() {
             var tracked = new Tracked();
-            var deleteSpy = simple.mock(tracked.ps, 'delete');
+            var deleteSpy = simple.mock(tracked.ps, 'delete', function(){});
 
             deleteSpy.called.should.equal(false);
             tracked.delete();

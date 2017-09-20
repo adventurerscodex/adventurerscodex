@@ -5,6 +5,7 @@ import 'bin/knockout-mapping-autoignore'
 
 import { Weapon } from 'charactersheet/models'
 import { PersistenceService,
+    ProficiencyService,
     SharedServiceManager } from 'charactersheet/services'
 import { Fixtures } from 'charactersheet/utilities'
 

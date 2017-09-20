@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { NotesSection } from 'charactersheet/models';
+
 describe('NotesSection', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -49,7 +53,7 @@ describe('NotesSection', function(){
     describe('Delete', function() {
         it('should delete notes', function() {
             var notes = new NotesSection();
-            var notesSpy = simple.mock(notes.ps, 'delete');
+            var notesSpy = simple.mock(notes.ps, 'delete', function() {});
 
             notes.delete();
             notesSpy.called.should.equal(true);

@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import { Armor} from 'charactersheet/models/common'
 import { CharacterManager,

@@ -1,8 +1,11 @@
 /*eslint no-console:0*/
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Character } from 'charactersheet/models/common/character'
-import { PlayerTypes } from 'charactersheet/models/common/player_types'
+import { Character, Profile } from 'charactersheet/models';
+import { CharacterFixture, ProfileFixture, WeaponFixture } from '../fixtures';
+import { jebeddo_data } from '../characters/jebeddo_data';
+import { PersistenceService } from 'charactersheet/services';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
 
 describe('Character Model', function() {
     //Clean up after each test.

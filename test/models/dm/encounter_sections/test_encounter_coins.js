@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { EncounterCoins } from 'charactersheet/models';
+
 describe('EncounterCoins', function(){
     //Clean up after each test.
     afterEach(function() {

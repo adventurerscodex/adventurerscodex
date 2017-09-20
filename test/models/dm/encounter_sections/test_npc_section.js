@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { NPCSection } from 'charactersheet/models';
+
 describe('NPCSection', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +21,7 @@ describe('NPCSection', function(){
     describe('Delete', function() {
         it('should delete npcSection', function() {
             var npcSection = new NPCSection();
-            var npcSectionSpy = simple.mock(npcSection.ps, 'delete');
+            var npcSectionSpy = simple.mock(npcSection.ps, 'delete', function() {});
 
             npcSection.delete();
             npcSectionSpy.called.should.equal(true);

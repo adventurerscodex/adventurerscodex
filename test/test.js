@@ -6,3 +6,4 @@ import './hooks'
 
 // Add tests import here.
 import './models'
+import './viewmodels'

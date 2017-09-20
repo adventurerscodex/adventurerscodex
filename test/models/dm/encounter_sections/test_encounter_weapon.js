@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { EncounterWeapon } from 'charactersheet/models';
+
 describe('EncounterWeapon', function(){
     //Clean up after each test.
     afterEach(function() {

@@ -1,3 +1,7 @@
+import simple from 'simple-mock';
+
+import { EncounterArmor } from 'charactersheet/models';
+
 describe('EncounterArmor', function(){
     //Clean up after each test.
     afterEach(function() {

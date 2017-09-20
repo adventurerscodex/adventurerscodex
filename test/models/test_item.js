@@ -1,6 +1,6 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Item } from 'charactersheet/models/common/item'
+import { Item } from 'charactersheet/models/common/item';
 
 describe('Item Model', function() {
     //Clean up after each test.

@@ -1,5 +1,5 @@
-import { MagicItem } from 'charactersheet/models/common/magic_item'
-import { MagicItemFixture } from '../test'
+import { MagicItem } from 'charactersheet/models/common/magic_item';
+import { MagicItemFixture } from '../fixtures';
 
 describe('Magic Item Model', function() {
     describe('Clear', function() {

@@ -5,7 +5,7 @@ import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPServic
 import { PlayerImage, PlayerInfo, Status, StatusWeightPair } from 'charactersheet/models/common'
 
 
-var DMCardFields = [
+export var DMCardFields = [
     {
         name: 'publisherJid',
         refreshOn: Notifications.item.changed,

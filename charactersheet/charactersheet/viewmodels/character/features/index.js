@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import uuid from 'node-uuid'
 
 import { Notifications,
     DataRepository,
@@ -8,6 +9,7 @@ import { PersistenceService,
     SortService } from 'charactersheet/services/common'
 import { Tracked,
     Feature } from 'charactersheet/models'
+import { Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
 

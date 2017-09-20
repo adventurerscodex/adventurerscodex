@@ -1,3 +1,8 @@
+import Should from 'should';
+import simple from 'simple-mock';
+
+import { Campaign } from 'charactersheet/models';
+
 describe('Campaign', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -17,7 +22,7 @@ describe('Campaign', function(){
     describe('Delete', function() {
         it('should delete campaign', function() {
             var campaign = new Campaign();
-            var campaignSpy = simple.mock(campaign.ps, 'delete');
+            var campaignSpy = simple.mock(campaign.ps, 'delete', function() {});
 
             campaign.delete();
             campaignSpy.called.should.equal(true);

@@ -1,3 +1,8 @@
+import simple from 'simple-mock';
+
+import { EncounterItem } from 'charactersheet/models';
+import { Utility } from 'charactersheet/utilities';
+
 describe('EncounterItem', function(){
     //Clean up after each test.
     afterEach(function() {

@@ -1,6 +1,6 @@
-import { simple } from 'simple-mock'
+import simple from 'simple-mock';
 
-import { feat } from 'charactersheet/models/character/feat'
+import { Feat } from 'charactersheet/models/character/feat';
 
 
 describe('Feat Model', function() {
@@ -23,7 +23,7 @@ describe('Feat Model', function() {
     describe('Delete', function() {
         it('should save the values.', function() {
             var feat = new Feat();
-            var deleteSpy = simple.mock(feat.ps, 'delete');
+            var deleteSpy = simple.mock(feat.ps, 'delete', function() {});
 
             deleteSpy.called.should.equal(false);
             feat.delete();
