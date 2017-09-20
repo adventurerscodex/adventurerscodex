@@ -1,9 +1,15 @@
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Fixtures } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import 'bin/knockout-custom-loader'
+
+import { CharacterManager, Fixtures, Notifications, Utility } from 'charactersheet/utilities'
+import { PersistenceService, XMPPService } from 'charactersheet/services/common'
+import {
+    ImageModel,
+    PlayerImage,
+    PlayerInfo
+} from 'charactersheet/models/common'
+import { OtherStats } from 'charactersheet/models/character'
 
 import template from './index.html'
 
@@ -201,7 +207,7 @@ export function PlayerImageViewModel() {
     };
 }
 
-ko.components.register('party-image', {
+ko.components.register('player-image', {
   viewModel: PlayerImageViewModel,
   template: template
 })
