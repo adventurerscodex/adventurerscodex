@@ -4,7 +4,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Health,
     HitDice,
     HitDiceType,
-    OtherStats } from 'charactersheet/models/character'
+    OtherStats } from 'charactersheet/models'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 

@@ -2,7 +2,8 @@ import ko from 'knockout'
 
 import { CharacterManager,
     DataRepository,
-    Notifications } from 'charactersheet/utilities'
+    Notifications,
+    Fixtures } from 'charactersheet/utilities'
 import { PersistenceService,
     SortService } from 'charactersheet/services/common'
 import { Tracked,

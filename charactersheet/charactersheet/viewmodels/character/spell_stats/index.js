@@ -1,7 +1,7 @@
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SpellStats } from 'charactersheet/models/character'
 

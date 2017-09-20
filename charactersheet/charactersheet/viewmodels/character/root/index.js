@@ -16,6 +16,11 @@ import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_t
 import { SpellsTabViewModel } from 'charactersheet/viewmodels/character/spells_tab'
 import { StatsTabViewModel } from 'charactersheet/viewmodels/character/stats_tab'
 import { StatusLineViewModel } from 'charactersheet/viewmodels/character/status_line'
+import { StatusService,
+    CharacterCardPublishingService } from 'charactersheet/services/common'
+import { ProficiencyService,
+    ArmorClassService } from 'charactersheet/services/character'
+import { ChatServiceManager } from 'charactersheet/services/common'
 
 import template from './index.html'
 

@@ -1,7 +1,18 @@
-import { AbilityScores } from 'charactersheet/models/character'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
-import { Status, StatusWeightPair } from 'charactersheet/models'
+import ko from 'knockout'
+
+import { AbilityScores,
+    Treasure,
+    MagicItem,
+    Item,
+    Weapon,
+    Armor,
+    Status,
+    StatusWeightPair } from 'charactersheet/models'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
+import { KeyValuePredicate,
+    PersistenceService,
+    SharedServiceManager } from 'charactersheet/services/common'
 
 
 /**
@@ -97,7 +108,7 @@ export function TotalWeightStatusServiceComponent() {
         }
     };
 
-    self._getWeightFor = function(model, property)  {
+    self._getWeightFor = function(model, property) {
         var weight = 0;
         var key = CharacterManager.activeCharacter().key();
         PersistenceService.findBy(model, 'characterId', key).forEach(function(instance, idx, _) {

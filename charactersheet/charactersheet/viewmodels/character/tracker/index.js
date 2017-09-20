@@ -5,6 +5,7 @@ import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { SortService } from 'charactersheet/services/common'
 import { Utility } from 'charactersheet/utilities'
+import { Feat, Trait, Feature } from 'charactersheet/models'
 
 import template from './index.html'
 
