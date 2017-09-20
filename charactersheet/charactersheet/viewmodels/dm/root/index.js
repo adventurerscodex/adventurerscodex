@@ -1,4 +1,24 @@
-function DMRootViewModel() {
+import ko from 'knockout'
+
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
+import { PartyTabViewModel,
+    EncounterTabViewModel,
+    CampaignTabViewModel } from 'charactersheet/viewmodels/dm'
+import { ImageServiceManager,
+    DMCardPublishingService,
+    PersistenceService,
+    HotkeysService,
+    ChatServiceManager } from 'charactersheet/services'
+import { Campaign } from 'charactersheet/models/dm'
+import { ChatTabViewModel } from 'charactersheet/viewmodels/common/chat_tab'
+import { PartyStatusLineViewModel } from 'charactersheet/viewmodels/dm/status_line'
+import { PlayerImageViewModel } from 'charactersheet/viewmodels/common/player_image'
+import { NotesTabViewModel } from 'charactersheet/viewmodels/common/notes_tab'
+
+import template from './index.html'
+
+export function DMRootViewModel() {
     var self = this;
 
     self.playerType = function() {
@@ -179,3 +199,8 @@ function DMRootViewModel() {
         self._updatePartyStatus(success);
     };
 }
+
+ko.components.register('dm-root', {
+    viewModel: DMRootViewModel,
+    template: template
+  })

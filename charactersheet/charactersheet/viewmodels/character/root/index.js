@@ -276,7 +276,7 @@ export function CharacterRootViewModel() {
     };
 }
 
-ko.components.register('root', {
+ko.components.register('character-root', {
   viewModel: CharacterRootViewModel,
   template: template
 })
