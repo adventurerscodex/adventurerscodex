@@ -4,6 +4,7 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import { PersistenceService } from 'charactersheet/services/common'
+import { Utility } from 'charactersheet/utilities'
 
 
 export function CampaignMapOrImage() {

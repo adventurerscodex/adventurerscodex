@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { ChatServiceManager,
     DMCardPublishingService,
     CharacterCardPublishingService } from 'charactersheet/services/common'

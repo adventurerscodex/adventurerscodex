@@ -1,6 +1,8 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
 
+import 'bin/knockout-custom-loader'
+
 import { Message,
     MapOrImage,
     MapsAndImagesSection } from 'charactersheet/models'
@@ -8,7 +10,8 @@ import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { ImageServiceManager,
     PersistenceService,
     ChatServiceManager,
-    XMPPService } from 'charactersheet/services/common'
+    XMPPService,
+    SortService } from 'charactersheet/services/common'
 import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'

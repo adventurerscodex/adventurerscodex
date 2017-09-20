@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import uuid from 'node-uuid'
 
 import { PersistenceService } from 'charactersheet/services'
 

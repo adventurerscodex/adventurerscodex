@@ -1,7 +1,12 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { PointOfInterest,
     PointOfInterestSection } from 'charactersheet/models'
+import { PersistenceService,
+    SortService } from 'charactersheet/services/common'
+import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
 

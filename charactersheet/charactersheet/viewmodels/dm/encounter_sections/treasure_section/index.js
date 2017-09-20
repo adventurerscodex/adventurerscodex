@@ -1,12 +1,19 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { TreasureSection,
     EncounterArmor,
     EncounterItem,
     EncounterMagicItem,
     EncounterWeapon,
     EncounterCoins } from 'charactersheet/models'
-//todo import fixtures, datarepo
+import { Fixtures,
+    DataRepository,
+    CharacterManager,
+    Notifications } from 'charactersheet/utilities'
+import { SortService,
+    PersistenceService } from 'charactersheet/services'
 
 import template from './index.html'
 

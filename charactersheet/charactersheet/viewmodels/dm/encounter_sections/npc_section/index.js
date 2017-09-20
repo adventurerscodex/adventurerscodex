@@ -1,7 +1,14 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { NPC,
     NPCSection } from 'charactersheet/models'
+import { Fixtures } from 'charactersheet/utilities'
+import { SortService,
+    PersistenceService } from 'charactersheet/services'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
 

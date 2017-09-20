@@ -1,3 +1,6 @@
+// import 'charactersheet/bin/textarea-markdown-editor/marked'
+// TODO: Issue with importing marked here
+
 /**
  * This file contains a number of generic utility functions used throughout
  * Adventurer's Codex
@@ -21,7 +24,8 @@ export var Utility = {
  */
 Utility.markdown.asPlaintext = function(markdown) {
     var myString = markdown || '';
-    return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
+    // return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
+    return myString;
 };
 
 /* String Util */

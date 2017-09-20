@@ -1,8 +1,11 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { Encounter } from 'charactersheet/models/dm'
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
 
 export function EncounterCellViewModel(encounter) {
     var self = this;

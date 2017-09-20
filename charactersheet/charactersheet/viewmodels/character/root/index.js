@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/actions_toolbar'
 import { CharacterManager } from 'charactersheet/utilities'
 import { ChatTabViewModel } from 'charactersheet/viewmodels/common/chat_tab'
@@ -24,6 +26,7 @@ import { ChatServiceManager } from 'charactersheet/services/common'
 
 import template from './index.html'
 
+
 export function CharacterRootViewModel() {
     var self = this;
 
@@ -37,20 +40,20 @@ export function CharacterRootViewModel() {
     self.currentPartyNode = ko.observable(null);
     self.partyStatus = ko.observable('');
 
-    //Player Child View Models
-    self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
-    self.statusLineViewModel       = ko.observable(new StatusLineViewModel());
-
-    self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
-    self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
-    self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());
-    self.spellsTabViewModel        = ko.observable(new SpellsTabViewModel());
-    self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
-    self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
-    self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
-    self.exhibitTabViewModel       = ko.observable(new ExhibitTabViewModel());
-    self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
-    self.chatTabViewModel          = ko.observable(new ChatTabViewModel());
+//     Player Child View Models
+//     self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
+//     self.statusLineViewModel       = ko.observable(new StatusLineViewModel());
+//
+//     self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
+//     self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
+//     self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());
+//     self.spellsTabViewModel        = ko.observable(new SpellsTabViewModel());
+//     self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
+//     self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
+//     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
+//     self.exhibitTabViewModel       = ko.observable(new ExhibitTabViewModel());
+//     self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
+//     self.chatTabViewModel          = ko.observable(new ChatTabViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();
@@ -217,7 +220,7 @@ export function CharacterRootViewModel() {
     self.load = function() {
         self.activeTab(self.playerType().defaultTab);
 
-        ViewModelUtilities.loadSubViewModels(self);
+//         ViewModelUtilities.loadSubViewModels(self);
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
@@ -225,7 +228,7 @@ export function CharacterRootViewModel() {
     };
 
     self.unload = function() {
-        ViewModelUtilities.unloadSubViewModels(self);
+//         ViewModelUtilities.unloadSubViewModels(self);
 
         HotkeysService.flushHotkeys();
 

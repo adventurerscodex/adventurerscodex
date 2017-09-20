@@ -1,11 +1,16 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { CampaignMapOrImage,
     Message,
     MapOrImage } from 'charactersheet/models'
 import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { SortService,
-    PersistenceService } from 'charactersheet/services/common'
+    PersistenceService,
+    ChatServiceManager } from 'charactersheet/services'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
 

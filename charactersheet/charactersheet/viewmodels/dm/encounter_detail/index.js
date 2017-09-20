@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { Encounter } from 'charactersheet/models/dm'
 import { EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities,
@@ -42,11 +44,9 @@ export function EncounterDetailViewModel(encounter, allSections) {
     /* Public Methods */
     self.load = function() {
         self._initializeSectionVMs();
-        ViewModelUtilities.loadSubViewModels(self);
     };
 
     self.unload = function() {
-        ViewModelUtilities.unloadSubViewModels(self);
     };
 
     self.save = function() {

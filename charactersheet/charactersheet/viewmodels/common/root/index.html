@@ -41,13 +41,12 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="row">
-          <!-- ko with: childRootViewModel -->
           <player-image></player-image>
-          <!-- /ko -->
           <div class="col-padded col-sm-10 col-xs-12 characters-player-name">
-            <!-- ko with: childRootViewModel -->
-            <!-- ko if: playerType().key == 'character' -->
-            <!-- ko with: profileTabViewModel().profileViewModel -->
+            <!-- TODO: Fix these and break them into their own components -->
+            <!-- with: childRootViewModel -->
+            <!-- if: playerType().key == 'character' -->
+            <!-- with: profileTabViewModel().profileViewModel -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
                 <div class="h3" id="characterName" autocomplete="off" autocorrect="off"
@@ -57,12 +56,12 @@
                 }"></div>
               </div>
             </div>
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- ko with: childRootViewModel -->
-            <!-- ko if: playerType().key == 'dm' -->
-            <!-- ko with: campaignTabViewModel().campaignOverviewViewModel -->
+            <!-- / -->
+            <!-- / -->
+            <!-- / -->
+            <!-- with: childRootViewModel -->
+            <!-- if: playerType().key == 'dm' -->
+            <!-- with: campaignTabViewModel().campaignOverviewViewModel -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
                 <div class="h3" id="dmName" autocomplete="off" autocorrect="off"
@@ -72,9 +71,9 @@
                 }"></div>
               </div>
             </div>
-            <!-- /ko -->
-            <!-- /ko -->
-            <!-- /ko -->
+            <!-- / -->
+            <!-- / -->
+            <!-- / -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
                 <i class="small underline"><a data-toggle="modal"
@@ -103,6 +102,7 @@
               </div>
             </div>
             <!-- /ko -->
+            <!-- TODO: Convert this to the new component style -->
             <!-- ko if: playerType().key == 'dm' -->
             <div class="row row-padded">
               <div class="col-xs-12">
@@ -122,8 +122,10 @@
       </div>
     </div>
     <div class="spacer"></div>
+    <!-- TODO: This if/else is ugly and unneeded.  -->
     <!-- ko with: childRootViewModel -->
       <!-- ko if: playerType().key == 'character' -->
+      <character-root></character-root>
       <!-- /ko -->
       <!-- ko if: playerType().key == 'dm' -->
       <dm-root></dm-root>
