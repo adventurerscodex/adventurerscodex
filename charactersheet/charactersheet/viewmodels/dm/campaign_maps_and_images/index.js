@@ -4,6 +4,9 @@ import { CampaignMapOrImage,
     Message,
     MapOrImage } from 'charactersheet/models'
 import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
+import { SortService,
+    PersistenceService } from 'charactersheet/services/common'
+
 import template from './index.html'
 
 export function CampaignMapsAndImagesViewModel() {

@@ -2,12 +2,29 @@ import ko from 'knockout'
 
 import { EncounterDetailViewModel,
     EncounterCellViewModel,
-    EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
+    EncounterSectionVisibilityViewModel,
+    NotesSectionViewModel,
+    TreasureSectionViewModel,
+    PlayerTextSectionViewModel,
+    MonsterSectionViewModel,
+    NPCSectionViewModel,
+    PointOfInterestSectionViewModel,
+    MapsAndImagesSectionViewModel,
+    EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities,
     Notifications,
     CharacterManager } from 'charactersheet/utilities'
 import { Encounter } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
+import { EnvironmentSection,
+    NotesSection,
+    TreasureSection,
+    PlayerTextSection,
+    MonsterSection,
+    NPCSection,
+    PointOfInterestSection,
+    MapsAndImagesSection,
+    EnvironmentSection } from 'charactersheet/models/dm'
 
 import template from './index.html'
 

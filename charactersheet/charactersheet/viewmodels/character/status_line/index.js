@@ -52,7 +52,7 @@ export function StatusLineViewModel() {
     };
 }
 
-ko.components.register('status-line', {
+ko.components.register('player-status-line', {
   viewModel: StatusLineViewModel,
   template: template
 })

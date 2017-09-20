@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
 import { PartyTabViewModel,
@@ -150,15 +152,12 @@ export function DMRootViewModel() {
     self.load = function() {
         self.activeTab(self.playerType().defaultTab);
 
-        ViewModelUtilities.loadSubViewModels(self);
-
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
         Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
-        ViewModelUtilities.unloadSubViewModels(self);
         HotkeysService.flushHotkeys();
 
         Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
@@ -203,4 +202,4 @@ export function DMRootViewModel() {
 ko.components.register('dm-root', {
     viewModel: DMRootViewModel,
     template: template
-  })
+})

@@ -42,11 +42,7 @@
       <div class="col-sm-12">
         <div class="row">
           <!-- ko with: childRootViewModel -->
-          <div class="col-padded col-sm-2 col-xs-12" data-bind="template: {
-            name: 'player_image.tmpl',
-            templateUrl: 'templates/common',
-            data: playerImageViewModel
-          }"></div>
+          <player-image></player-image>
           <!-- /ko -->
           <div class="col-padded col-sm-10 col-xs-12 characters-player-name">
             <!-- ko with: childRootViewModel -->
@@ -103,22 +99,14 @@
             <!-- ko if: playerType().key == 'character' -->
             <div class="row row-padded">
               <div class="col-xs-12">
-                <div data-bind="template: {
-                  name: 'status_line.tmpl',
-                  templateUrl: 'templates/character',
-                  data: statusLineViewModel
-                 }"></div>
+                  <player-status-line></player-status-line>
               </div>
             </div>
             <!-- /ko -->
             <!-- ko if: playerType().key == 'dm' -->
             <div class="row row-padded">
               <div class="col-xs-12">
-                <div data-bind="template: {
-                  name: 'status_line.tmpl',
-                  templateUrl: 'templates/character',
-                  data: partyStatusLineViewModel
-                 }"></div>
+                <party-status-line></party-status-line>
               </div>
             </div>
             <!-- /ko -->
@@ -135,12 +123,12 @@
     </div>
     <div class="spacer"></div>
     <!-- ko with: childRootViewModel -->
-		<div data-bind="template: {
-		    data: $data,
-		    name: TEMPLATE_FILE,
-		    templateUrl: 'templates'
-			}"></div>
+      <!-- ko if: playerType().key == 'character' -->
       <!-- /ko -->
+      <!-- ko if: playerType().key == 'dm' -->
+      <dm-root></dm-root>
+      <!-- /ko -->
+    <!-- /ko -->
 	</div>
 </div>
 <!-- /ko -->
