@@ -1,5 +1,8 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
 
 import { Message } from 'charactersheet/models/common'
 import { CharacterManager,

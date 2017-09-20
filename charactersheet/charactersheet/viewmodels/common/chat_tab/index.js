@@ -4,6 +4,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { ViewModelUtilities } from 'charactersheet/utilities'
+import { ChatViewModel } from 'charactersheet/viewmodels/common/chat'
 
 export function ChatTabViewModel() {
     var self = this;

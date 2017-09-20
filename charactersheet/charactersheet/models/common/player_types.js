@@ -1,4 +1,5 @@
-import { CharacterRootViewModel, DMRootViewModel } from 'charactersheet/viewmodels'
+import { CharacterRootViewModel } from 'charactersheet/viewmodels/character/root';
+import { DMRootViewModel } from 'charactersheet/viewmodels/dm/root';
 
 
 export var PlayerTypes = {

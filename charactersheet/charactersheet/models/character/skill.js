@@ -1,7 +1,11 @@
 import ko from 'knockout'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
 
 import { CharacterManager } from 'charactersheet/utilities'
 import { PersistenceService, ProficiencyService } from 'charactersheet/services'
+
 
 export function Skill() {
     var self = this;

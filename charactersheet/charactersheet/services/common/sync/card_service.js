@@ -1,16 +1,19 @@
+import { CharacterCardFields } from 'charactersheet/services/character/sync/character_card_fields'
+import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields'
+import { SharedServiceManager } from '../shared_service_manager'
+import { Notifications } from 'charactersheet/utilities'
+
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
     compression: 'lz-string',
     fields: CharacterCardFields
 };
 
-
 var DMCardPublishingServiceConfiguration = {
     enableCompression: true,
     compression: 'lz-string',
     fields: DMCardFields
 };
-
 
 export var CharacterCardPublishingService = new SharedServiceManager(_pCardService, CharacterCardPublishingServiceConfiguration);
 export var DMCardPublishingService = new SharedServiceManager(_pCardService, DMCardPublishingServiceConfiguration);

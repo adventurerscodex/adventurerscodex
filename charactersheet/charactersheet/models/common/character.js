@@ -1,5 +1,8 @@
 import ko from 'knockout'
 import Dropbox from 'dropbox'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
 
 import {
     Campaign,

@@ -8,6 +8,7 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { XMPPService } from 'charactersheet/services/common/account'
+import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail'
 
 import template from './index.html'
 

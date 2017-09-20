@@ -8,11 +8,14 @@ import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 
 import template from './index.html'
+import logo from 'images/logo-full-circle-icon.png'
+
 
 export function CharacterPickerViewModel() {
     var self = this;
 
     self.totalLocalStorage = 5; //MB
+    self.logo = logo;
 
     self.isLoggedIn = ko.observable(false);
 

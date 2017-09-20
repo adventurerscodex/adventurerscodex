@@ -1,4 +1,8 @@
 import ko from 'knockout'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
+
 import Strophe from 'strophe'
 
 import { PersistenceService,

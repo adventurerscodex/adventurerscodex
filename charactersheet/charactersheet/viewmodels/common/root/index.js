@@ -14,7 +14,9 @@ import { WizardViewModel,
 import { Character } from 'charactersheet/models/common'
 import 'charactersheet/viewmodels/common/character_picker'
 
-import template from './index.html'
+import navLogo from 'images/logo-full-circle-icon.png'
+import style from 'style/site.css'
+
 
 /**
  * All of the possible states that the app globally can render.
@@ -50,6 +52,7 @@ export function AdventurersCodexViewModel() {
     self.state = ko.observable(APP_STATE.SELECT);
     self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
+    self.navLogo = navLogo;
 
     // View Models
     self.childRootViewModel = ko.observable();
@@ -124,7 +127,7 @@ export function AdventurersCodexViewModel() {
         } else if (self.state() == APP_STATE.WIZARD) {
             self.wizardViewModel.load();
         } else {
-            self.charactersViewModel.load();
+//             self.charactersViewModel.load();
         }
         self._dummy.valueHasMutated();
     };
@@ -208,9 +211,3 @@ export function AdventurersCodexViewModel() {
         });
     };
 }
-
-
-ko.components.register('app', {
-  viewModel: AdventurersCodexViewModel,
-  template: template
-});
