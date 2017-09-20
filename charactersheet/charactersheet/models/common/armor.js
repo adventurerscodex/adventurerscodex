@@ -1,4 +1,7 @@
 import ko from 'knockout'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
 
 import { AbilityScores } from 'charactersheet/models'
 import { CharacterManager,

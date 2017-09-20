@@ -20,10 +20,9 @@ init(viewModel);
 // Setup automatic saving.
 window.onbeforeunload = viewModel.unload;
 
-ko.components.register('app', {
+ko.components.register('application', {
   viewModel: { instance: viewModel },
   template: template
 });
 
 ko.applyBindings();
-

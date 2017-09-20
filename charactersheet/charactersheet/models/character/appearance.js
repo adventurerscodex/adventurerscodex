@@ -5,6 +5,7 @@ import 'bin/knockout-mapping-autoignore'
 
 import { PersistenceService } from 'charactersheet/services/common'
 
+
 export function CharacterAppearance() {
     var self = this;
     self.ps = PersistenceService.register(CharacterAppearance, self);

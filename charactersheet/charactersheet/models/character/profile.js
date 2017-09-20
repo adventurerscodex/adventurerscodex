@@ -1,6 +1,10 @@
 import ko from 'knockout'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
 
 import { PersistenceService } from 'charactersheet/services/common'
+
 
 export function Profile() {
     var self = this;

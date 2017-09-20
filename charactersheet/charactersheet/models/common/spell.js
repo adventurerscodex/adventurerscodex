@@ -1,4 +1,7 @@
 import ko from 'knockout'
+import 'knockout-mapping'
+
+import 'bin/knockout-mapping-autoignore'
 
 import { SpellStats } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'

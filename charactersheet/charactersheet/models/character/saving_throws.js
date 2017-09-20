@@ -1,7 +1,11 @@
 import ko from 'knockout'
+import 'knockout-mapping'
 
-import { AbilityScores } from 'charactersheet/models'
+import 'bin/knockout-mapping-autoignore'
+
 import { PersistenceService } from 'charactersheet/services/common'
+import { AbilityScores } from 'charactersheet/models'
+
 
 export function SavingThrows() {
     var self = this;
