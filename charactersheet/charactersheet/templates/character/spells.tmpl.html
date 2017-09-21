@@ -3,9 +3,9 @@
     <table class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('spellPrepared');}">
+          <th data-bind="click: function(){sortBy('spellIsCastable');}">
             <span class="glyphicon glyphicon-check"></span>
-            <span data-bind="css: sortArrow('spellPrepared')"></span>
+            <span data-bind="css: sortArrow('spellIsCastable')"></span>
           </th>
           <th data-bind="click: function(){sortBy('spellName');}">
             Spell
@@ -15,9 +15,9 @@
             Level
             <span data-bind="css: sortArrow('spellLevel')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellType');}">
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellTypeLabel');}">
             Type
-            <span data-bind="css: sortArrow('spellType')"></span>
+            <span data-bind="css: sortArrow('spellTypeLabel')"></span>
           </th>
           <th class="hidden-xs" data-bind="click: function(){sortBy('spellDmg');}">
             Damage
@@ -31,6 +31,10 @@
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
+          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellDuration');}">
+            Duration
+            <span data-bind="css: sortArrow('spellDuration')"></span>
+          </th>
           <th>
             <a data-toggle="modal"
                data-target="#addSpell" href="#">
@@ -41,10 +45,10 @@
       </thead>
       <tbody>
       <!-- ko foreach: filteredAndSortedSpells -->
-        <tr class="clickable">
-          <td>
+        <tr class="clickable" data-bind="css: {'spell-not-prepared': !spellIsCastable(), 'spell-ritual': isRitual}">
+          <td class="spell">
             <!-- ko if: spellLevel() != 0 -->
-              <input data-bind="checked: spellPrepared || spellAlwaysPrepared,
+              <input data-bind="checked: spellPrepared,
                 disable: spellAlwaysPrepared" type="checkbox" href="#"></input>
             <!-- /ko -->
           </td>
@@ -52,15 +56,19 @@
                href="#"></td>
           <td data-bind="text: spellLevelLabel, click: $parent.editSpell"
                href="#"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
+          <td class="hidden-sm hidden-xs" data-bind="text: spellTypeLabel, click: $parent.editSpell"
                href="#"></td>
           <td class="hidden-xs" data-bind="text: spellDamageLabel, click: $parent.editSpell"
                href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="text: spellCastingTime, click: $parent.editSpell"
                href="#"></td>
-          <td class="hidden-xs" data-bind="text: spellRange, click: $parent.editSpell"
-               href="#"></td>
+               <td class="hidden-xs" data-bind="text: spellRange, click: $parent.editSpell"
+                    href="#"></td>
+         <td class="hidden-sm hidden-xs" data-bind="text: spellDuration, click: $parent.editSpell"
+              href="#">
+          </td>
           <td>
+
             <a data-bind="click: $parent.removeSpell" href="#">
               <i class="fa fa-trash-o fa-color-hover">
               </i>

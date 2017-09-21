@@ -211,6 +211,17 @@ div.progress-text {
   background-color: #2F972F !important;
 }
 
+.table > tbody > tr.spell-not-prepared > td,
+.table > tbody > tr > td.spell-prepared  {
+  background-color:rgba(217,83,79, 0.15);
+  color: black
+}
+
+.table > tbody > tr.spell-not-prepared.spell-ritual > td,
+.table > tbody > tr > td.spell-prepared.spell-ritual  {
+  background-color:rgba(240, 173, 78, 0.15);
+  color: black
+}
 
 /*******
  * Experimental stuff

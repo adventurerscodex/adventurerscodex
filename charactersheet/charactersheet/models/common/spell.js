@@ -40,6 +40,22 @@ function Spell() {
         self._dummy.notifySubscribers();
     };
 
+    self.spellIsCastable = ko.pureComputed(function() {
+        if (self.spellPrepared() === true || self.spellAlwaysPrepared() === true || self.spellLevel() === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    self.spellTypeLabel = ko.pureComputed(function() {
+        if (self.spellType() === 'Savings Throw') {
+            return ('Savings Throw' + ': ' + self.spellSaveAttr());
+        } else {
+            return self.spellType();
+        }
+    });
+
     self.spellNameLabel = ko.pureComputed(function() {
         if (self.isRitual() === true) {
             return (self.spellName() + ' (Ritual)');
