@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { Encounter } from 'charactersheet/models/dm'
 import { EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities,

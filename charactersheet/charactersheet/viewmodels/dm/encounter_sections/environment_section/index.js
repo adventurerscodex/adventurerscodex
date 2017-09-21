@@ -1,8 +1,6 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
 
-import 'bin/knockout-custom-loader'
-
 import { Message, Environment, EnvironmentSection } from 'charactersheet/models'
 import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { ImageServiceManager,

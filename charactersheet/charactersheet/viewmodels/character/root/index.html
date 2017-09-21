@@ -48,7 +48,7 @@
     </a>
   </li>
   <!-- Right tabs -->
-  <li role="presentation" data-bind="with: actionsToolbarViewModel" class="secondary-nav">
+  <!-- <li role="presentation" class="secondary-nav">
     <button class="btn btn-sm btn-primary" data-toggle="collapse"
       data-bind="click: toggleWellOpen"
       data-target="#actionsCollapse" aria-expanded="false"
@@ -56,11 +56,11 @@
         Actions
         <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
     </button>
-  </li>
+  </li> -->
 </ul>
 <div class="tab-content">
-<actions-toolbar></actions-toolbar>
-<div role="tabpanel" class="tab-pane" id="stats" data-bind="with: statsTabViewModel, css: statsTabStatus">
+  <!-- <actions-toolbar></actions-toolbar> -->
+<div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img alt="A heart icon" src="/images/nested-hearts.svg">
@@ -110,7 +110,7 @@
 </div>
 <!-- End Stats Tab -->
 
-<div role="tabpanel" class="tab-pane" id="skills" data-bind="with: skillsTabViewModel, css: skillsTabStatus">
+<div role="tabpanel" class="tab-pane" id="skills" data-bind="css: skillsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img alt="A sword in stone" src="/images/sword-spin.svg" />
@@ -151,7 +151,7 @@
   </div>
 </div>
 <!-- End Skills Tab -->
-<div role="tabpanel" class="tab-pane" id="spells" data-bind="with: spellsTabViewModel, css: spellsTabStatus">
+<div role="tabpanel" class="tab-pane" id="spells" data-bind="css: spellsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img src="/images/enlightenment.svg" alt="Spells image"/>
@@ -188,7 +188,7 @@
   </div>
 </div>
 <!-- End Spells Tab -->
-<div role="tabpanel" class="tab-pane" id="items" data-bind="with: equipmentTabViewModel, css: equipmentTabStatus">
+<div role="tabpanel" class="tab-pane" id="items" data-bind="css: equipmentTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img alt="A sword in stone" src="/images/spinning-sword.svg" />
@@ -220,7 +220,7 @@
   </div>
 </div>
 <!-- End Equipment Tab -->
-<div role="tabpanel" class="tab-pane" id="inventory" data-bind="with: inventoryTabViewModel, css: inventoryTabStatus">
+<div role="tabpanel" class="tab-pane" id="inventory" data-bind="css: inventoryTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img src="/images/misc_icons/locked-chest.svg" alt="Inventory tab"/>
@@ -257,7 +257,7 @@
     </div>
 </div>
 <!-- End Inventory Tab -->
-<div role="tabpanel" class="tab-pane" id="notes" data-bind="with: notesTabViewModel, css: notesTabStatus">
+<div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
   <div class="row">
     <div class="col-sm-12 col-padded">
       <div class="h3">
@@ -269,7 +269,7 @@
   </div>
 </div>
 <!-- End Notes Tab -->
-<div role="tabpanel" class="tab-pane" id="profile" data-bind="with: profileTabViewModel, css: profileTabStatus">
+<div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
   <div class="row">
     <div class="col-sm-4 hidden-xs">
       <img src="/images/standing-man-3.svg" alt="Profile tab" style="width:100%;"/>
@@ -290,11 +290,11 @@
   </div>
 </div>
 <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
-  <div id="player.tab.chat" data-bind="template: { name: 'master.tmpl', templateUrl: 'templates/common/master-detail', data: chatTabViewModel }"></div>
+  <!-- <master-detail></master-detail> -->
 </div>
 <!-- End Chat Tab -->
 <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
-  <div id="player.tab.exhibit" data-bind="template: { name: 'exhibit.tmpl', templateUrl: 'templates/character', data: exhibitTabViewModel }"></div>
+  <exhibit></exhibit>
 </div>
 <!-- End Exhibit Tab -->
 </div>

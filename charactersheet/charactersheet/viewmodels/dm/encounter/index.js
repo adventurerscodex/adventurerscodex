@@ -196,11 +196,11 @@ export function EncounterViewModel() {
     };
 
     self._initializeDetailViewModel = function() {
-        self.encounterDetailViewModel().load();
+        // self.encounterDetailViewModel().load();
     };
 
     self._deinitializeDetailViewModel = function(vm) {
-        self.encounterDetailViewModel().unload();
+        // self.encounterDetailViewModel().unload();
     };
 
     self._getEncounterCells = function() {

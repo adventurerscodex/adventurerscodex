@@ -4,7 +4,8 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import { PersistenceService } from 'charactersheet/services/common'
-
+import { getStrModifier,
+    getModifier } from 'charactersheet/viewmodels/character/ability_scores'
 
 export function AbilityScores() {
     var self = this;

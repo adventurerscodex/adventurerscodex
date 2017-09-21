@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { PointOfInterest,
     PointOfInterestSection } from 'charactersheet/models'
 import { PersistenceService,

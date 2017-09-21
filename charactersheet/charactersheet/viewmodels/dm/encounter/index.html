@@ -26,7 +26,8 @@
       </div>
       <div class="col-xs-12 col-sm-8 col-md-9">
         <!-- ko if: encounterDetailViewModel -->
-        <encounter-detail></encounter-detail>
+        <encounter-detail params="encounter: selectedCell,
+          allSections:sections"></encounter-detail>
         <!-- /ko -->
         <!-- ko ifnot: encounterDetailViewModel -->
         <div class="encounter-detail-place-holder well text-center"
