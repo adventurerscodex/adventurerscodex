@@ -1,49 +1,49 @@
 <ul class="nav nav-tabs tabs">
   <li role="presentation" data-bind="click: activateStatsTab, css: statsTabStatus">
     <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/weight-lifting-up.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: statsTab }"/></br>
       <span class="text-center"><small>Stats</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateSkillsTab, css: skillsTabStatus">
     <a href="#skills" aria-controls="skills" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/jump-across.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: skillsTab }"></img></br>
       <span class="text-center"><small>Skills</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateSpellsTab, css: spellsTabStatus">
     <a href="#spells" aria-controls="spells" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/fire-tail.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: spellsTab }"></img></br>
       <span class="text-center"><small>Spells</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateInventoryTab, css: inventoryTabStatus">
     <a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/knapsack.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: inventoryTab }"></img></br>
       <span class="text-center"><small>Inventory</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateNotesTab, css: notesTabStatus">
     <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/quill-ink.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: notesTab }"></img></br>
       <span class="text-center"><small>Notes</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateProfileTab, css: profileTabStatus">
     <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/read.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: profileTab }"></img></br>
       <span class="text-center"><small>Profile</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateChatTab, css: chatTabStatus">
     <a href="#chat-header" aria-controls="chat-tab" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/conversation.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: chatTab }"></img></br>
       <span class="text-center"><small>Chat</small></span>
     </a>
   </li>
   <li role="presentation" data-bind="click: activateExhibitTab, css: exhibitTabStatus">
     <a href="#exhibit-header" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" src="/images/tab_icons/film-projector.svg"></img></br>
+      <img class="tab-icon" data-bind="attr: { src: exhibitTab }"></img></br>
       <span class="text-center"><small>Exhibit</small></span>
     </a>
   </li>
@@ -63,7 +63,7 @@
 <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A heart icon" src="/images/nested-hearts.svg">
+      <img alt="A heart icon" data-bind="attr: { src: healthSection }"/>
     </div>
     <div class="col-sm-8 col-lg-9 col-padded">
       <div class="h3">
@@ -113,7 +113,7 @@
 <div role="tabpanel" class="tab-pane" id="skills" data-bind="css: skillsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A sword in stone" src="/images/sword-spin.svg" />
+      <img alt="A sword in stone" data-bind="attr: { src: skillSection }" />
     </div>
     <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
       <div class="h3">
@@ -154,7 +154,7 @@
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="css: spellsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img src="/images/enlightenment.svg" alt="Spells image"/>
+      <img data-bind="attr: { src: spellSection }" alt="Spells image"/>
     </div>
     <div class="col-sm-8 col-lg-9 col-padded">
       <div class="h3">
@@ -191,7 +191,7 @@
 <div role="tabpanel" class="tab-pane" id="items" data-bind="css: equipmentTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A sword in stone" src="/images/spinning-sword.svg" />
+      <img alt="A sword in stone" data-bind="attr: { src: weaponSection }"/>
     </div>
     <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
       <div class="h3">
@@ -215,7 +215,7 @@
       <armors></armors>
     </div>
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A sword in stone" src="/images/checked-shield.svg" />
+      <img alt="A sword in stone" data-bind="attr: { src: armorSection }"/>
     </div>
   </div>
 </div>
@@ -223,7 +223,7 @@
 <div role="tabpanel" class="tab-pane" id="inventory" data-bind="css: inventoryTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img src="/images/misc_icons/locked-chest.svg" alt="Inventory tab"/>
+      <img data-bind="attr: { src: inventorySection }" alt="Inventory tab"/>
     </div>
     <div class="col-sm-8 col-lg-9 col-padded">
       <div class="h3">
@@ -272,7 +272,7 @@
 <div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
   <div class="row">
     <div class="col-sm-4 hidden-xs">
-      <img src="/images/standing-man-3.svg" alt="Profile tab" style="width:100%;"/>
+      <img data-bind="attr: { src: profileSection }" alt="Profile tab" style="width:100%;"/>
     </div>
     <div class="col-sm-8 col-padded">
       <div class="h3">

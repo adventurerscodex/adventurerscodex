@@ -6,8 +6,8 @@ import { AbilityScores,
     Skill,
     SpellStats,
     Treasure } from 'charactersheet/models'
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+import { CharacterManager } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities/notifications.js'
 import { KeyValuePredicate,
     PersistenceService,
     SharedServiceManager,

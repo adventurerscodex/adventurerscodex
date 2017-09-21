@@ -234,7 +234,7 @@ div.hr {
 
 .dice-full {
   cursor:pointer;
-  background: url('/images/dice-twenty-faces-twenty.svg');
+  background: url('../images/dice-twenty-faces-twenty.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -243,7 +243,7 @@ div.hr {
 
 .dice-empty {
   cursor:pointer;
-  background: url('/images/dice-twenty-faces-twenty-clear.svg');
+  background: url('../images/dice-twenty-faces-twenty-clear.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -252,7 +252,7 @@ div.hr {
 
 .ds-failure-full {
   cursor:pointer;
-  background: url('/images/harry-potter-skull.svg');
+  background: url('../images/harry-potter-skull.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -261,7 +261,7 @@ div.hr {
 
 .ds-failure-empty {
   cursor:pointer;
-  background: url('/images/harry-potter-skull-empty.svg');
+  background: url('../images/harry-potter-skull-empty.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -270,7 +270,7 @@ div.hr {
 
 .ds-success-full {
   cursor:pointer;
-  background: url('/images/hospital-cross.svg');
+  background: url('../images/hospital-cross.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -279,7 +279,7 @@ div.hr {
 
 .ds-success-empty {
   cursor:pointer;
-  background: url('/images/hospital-cross-empty.svg');
+  background: url('../images/hospital-cross-empty.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -658,49 +658,49 @@ ul.ui-autocomplete .ui-state-active {
  */
 
 .abjuration {
-  background-image: url('/images/spell_icons/abjuration.svg');
+  background-image: url('../images/spell_icons/abjuration.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .conjuration {
-  background-image: url('/images/spell_icons/conjuration.svg');
+  background-image: url('../images/spell_icons/conjuration.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .divination {
-  background-image: url('/images/spell_icons/divination.svg');
+  background-image: url('../images/spell_icons/divination.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .enchantment {
-  background-image: url('/images/spell_icons/enchantment.svg');
+  background-image: url('../images/spell_icons/enchantment.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .evocation {
-  background-image: url('/images/spell_icons/evocation.svg');
+  background-image: url('../images/spell_icons/evocation.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .illusion {
-  background-image: url('/images/spell_icons/illusion.svg');
+  background-image: url('../images/spell_icons/illusion.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .necromancy {
-  background-image: url('/images/spell_icons/necromancy.svg');
+  background-image: url('../images/spell_icons/necromancy.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .transmutation {
-  background-image: url('/images/spell_icons/transmutation.svg');
+  background-image: url('../images/spell_icons/transmutation.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -710,67 +710,67 @@ ul.ui-autocomplete .ui-state-active {
  */
 
 .armor-magic-item-card {
-  background-image: url('/images/magic_items_icons/armor.svg');
+  background-image: url('../images/magic_items_icons/armor.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .potion-magic-item-card {
-  background-image: url('/images/magic_items_icons/potion.svg');
+  background-image: url('../images/magic_items_icons/potion.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .ring-magic-item-card {
-  background-image: url('/images/magic_items_icons/ring.svg');
+  background-image: url('../images/magic_items_icons/ring.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .rod-magic-item-card {
-  background-image: url('/images/magic_items_icons/rod.svg');
+  background-image: url('../images/magic_items_icons/rod.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .scroll-magic-item-card {
-  background-image: url('/images/magic_items_icons/scroll.svg');
+  background-image: url('../images/magic_items_icons/scroll.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .staff-magic-item-card {
-  background-image: url('/images/magic_items_icons/staff.svg');
+  background-image: url('../images/magic_items_icons/staff.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .sword-magic-item-card {
-  background-image: url('/images/magic_items_icons/sword.svg');
+  background-image: url('../images/magic_items_icons/sword.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .armor-wand-item-card {
-  background-image: url('/images/magic_items_icons/armor.svg');
+  background-image: url('../images/magic_items_icons/armor.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .wand-magic-item-card {
-  background-image: url('/images/magic_items_icons/wand.svg');
+  background-image: url('../images/magic_items_icons/wand.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .weapon-magic-item-card {
-  background-image: url('/images/magic_items_icons/weapon.svg');
+  background-image: url('../images/magic_items_icons/weapon.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .wondrous-magic-item-card {
-  background-image: url('/images/magic_items_icons/wondrous.svg');
+  background-image: url('../images/magic_items_icons/wondrous.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
