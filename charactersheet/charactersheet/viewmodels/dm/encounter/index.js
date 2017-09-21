@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { EncounterDetailViewModel,
     EncounterCellViewModel,
     EncounterSectionVisibilityViewModel,
@@ -36,8 +34,15 @@ export function EncounterViewModel() {
     self.modalEncounter = ko.observable();
     self.nameHasFocus = ko.observable(false);
     self.selectedCell = ko.observable();
+    self.selectedEncounter = ko.pureComputed(function() {
+        return PersistenceService.findFirstBy(
+            Encounter, 'encounterId', self.selectedCell().encounterId()
+        );
+    });
+
     self.encounterCells = ko.observableArray();
     self.encounterDetailViewModel = ko.observable();
+
     self.visibilityViewModels = ko.observableArray([]);
 
     /* Encounter Sections */
@@ -196,11 +201,11 @@ export function EncounterViewModel() {
     };
 
     self._initializeDetailViewModel = function() {
-        self.encounterDetailViewModel().load();
+//         self.encounterDetailViewModel().load();
     };
 
     self._deinitializeDetailViewModel = function(vm) {
-        self.encounterDetailViewModel().unload();
+//         self.encounterDetailViewModel().unload();
     };
 
     self._getEncounterCells = function() {

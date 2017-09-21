@@ -25,8 +25,10 @@
         </div>
       </div>
       <div class="col-xs-12 col-sm-8 col-md-9">
-        <!-- ko if: encounterDetailViewModel -->
-        <encounter-detail></encounter-detail>
+        <!-- ko if: selectedEncounter -->
+        <encounter-detail
+          params="encounter: self.selectedEncounter, allSections: sections">
+        </encounter-detail>
         <!-- /ko -->
         <!-- ko ifnot: encounterDetailViewModel -->
         <div class="encounter-detail-place-holder well text-center"

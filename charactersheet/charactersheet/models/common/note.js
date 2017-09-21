@@ -2,7 +2,7 @@ import ko from 'knockout'
 import 'knockout-mapping'
 
 import 'bin/knockout-mapping-autoignore'
-import 'bin/textarea-markdown-editor/marked.min.js'
+import marked from 'bin/textarea-markdown-editor/marked.min.js'
 
 import { PersistenceService } from 'charactersheet/services/common'
 

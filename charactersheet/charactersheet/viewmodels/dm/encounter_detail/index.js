@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { Encounter } from 'charactersheet/models/dm'
 import { EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities,
@@ -25,18 +23,24 @@ export function EncounterDetailViewModel(encounter, allSections) {
     self.visibilityVMs = ko.observableArray([]);
 
     /* Encounter Sections */
+    self.selectedEncounter = ko.pureComputed(function() {
+        if (!self.encounterId) { return; }
+        return PersistenceService.findFirstBy(
+            Encounter, 'encounterId', self.encounterId()
+        );
+    });
 
     self.sections = allSections;
 
-    self.environmentSectionViewModel = ko.observable();
-    self.mapsAndImagesSectionViewModel = ko.observable();
-    self.treasureSectionViewModel = ko.observable();
-    self.notesSectionViewModel = ko.observable();
-    self.playerTextSectionViewModel = ko.observable();
-    self.pointOfInterestSectionViewModel = ko.observable();
-    self.npcSectionViewModel = ko.observable();
-    self.monsterSectionViewModel = ko.observable();
-    // TODO: Add more sections...
+//     self.environmentSectionViewModel = ko.observable();
+//     self.mapsAndImagesSectionViewModel = ko.observable();
+//     self.treasureSectionViewModel = ko.observable();
+//     self.notesSectionViewModel = ko.observable();
+//     self.playerTextSectionViewModel = ko.observable();
+//     self.pointOfInterestSectionViewModel = ko.observable();
+//     self.npcSectionViewModel = ko.observable();
+//     self.monsterSectionViewModel = ko.observable();
+//     // TODO: Add more sections...
 
     self.openModal = ko.observable(false);
     self.nameHasFocus = ko.observable(false);
@@ -102,16 +106,16 @@ export function EncounterDetailViewModel(encounter, allSections) {
      * a query by encounter id.
      */
     self._initializeSectionVMs = function() {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
-        self.sections.forEach(function(section, idx, _) {
-            var childViewModel = new section.vm(encounter);
-            try {
-                self[section.property](childViewModel);
-            } catch (err) {
-                throw 'Unable to set child view models for '+ section.property
-                    +'. You probably forgot to add the property to the detail VM.\n' + err;
-            }
-        });
+//         var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+//         self.sections.forEach(function(section, idx, _) {
+//             var childViewModel = new section.vm(encounter);
+//             try {
+//                 self[section.property](childViewModel);
+//             } catch (err) {
+//                 throw 'Unable to set child view models for '+ section.property
+//                     +'. You probably forgot to add the property to the detail VM.\n' + err;
+//             }
+//         });
     };
 
     // Modal Visibility VMs
