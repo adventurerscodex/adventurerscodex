@@ -1,12 +1,13 @@
 import Should from 'should'
 import simple from 'simple-mock'
 
-import { WizardViewModel } from 'charactersheet/viewmodels/common'
-import {
-    WizardIntroStepViewModel,
+import { Character } from 'charactersheet/models'
+import { CharacterManager, Fixtures } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services'
+import { WizardViewModel } from 'charactersheet/viewmodels/common/wizard'
+import { WizardIntroStepViewModel,
     WizardProfileStepViewModel,
-    WizardAbilityScoresStepViewModel
-} from 'charactersheet/viewmodels/common/wizard/steps'
+    WizardAbilityScoresStepViewModel} from 'charactersheet/viewmodels/common/wizard/steps'
 
 describe('Wizard ViewModel', function(){
     //Clean up after each test.

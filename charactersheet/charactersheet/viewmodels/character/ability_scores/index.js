@@ -1,17 +1,17 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { AbilityScores } from 'charactersheet/models/character'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { AbilityScores } from 'charactersheet/models/character';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common';
 
 import template from './index.html'
 
-var isNumeric = function(n) {
+export var isNumeric = function(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 };
 
-var getModifier = function(value){
+export var getModifier = function(value){
     if (isNumeric(value)){
         return Math.floor((value - 10) / 2);
     }
@@ -20,7 +20,7 @@ var getModifier = function(value){
     }
 };
 
-var getStrModifier = function(modifier){
+export var getStrModifier = function(modifier){
     if (modifier === null || modifier === '') {
         return '';
     }

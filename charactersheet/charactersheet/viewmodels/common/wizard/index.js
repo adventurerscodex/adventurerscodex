@@ -9,6 +9,11 @@ import { Character,
     PlayerInfo,
     Item,
     Trait } from 'charactersheet/models'
+import { WizardAbilityScoresStepViewModel,
+    WizardIntroStepViewModel,
+    WizardPlayerTypeStepViewModel,
+    WizardProfileStepViewModel
+    } from 'charactersheet/viewmodels/common/wizard/steps'
 
 import template from './index.html'
 

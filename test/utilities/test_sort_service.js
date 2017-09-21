@@ -1,6 +1,7 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { SortServiceFixture } from '../test'
+import { SortService } from 'charactersheet/services';
+import { SortServiceFixture } from '../fixtures';
 
 describe('Sort Service', function() {
     //Clean up after each test.

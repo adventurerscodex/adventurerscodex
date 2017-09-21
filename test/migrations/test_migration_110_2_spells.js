@@ -2,7 +2,9 @@
 
 import simple from 'simple-mock'
 
-import { PersistenceService } from 'charactersheet/services/common'
+import { migration_110_2_spells } from 'charactersheet/migrations';
+import { PersistenceService } from 'charactersheet/services/common';
+import { spellDataFixture } from '../fixtures';
 
 describe('110 Spells Migration', function() {
     describe('Migration', function() {
