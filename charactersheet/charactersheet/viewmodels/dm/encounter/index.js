@@ -2,12 +2,29 @@ import ko from 'knockout'
 
 import { EncounterDetailViewModel,
     EncounterCellViewModel,
-    EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm'
+    EncounterSectionVisibilityViewModel,
+    NotesSectionViewModel,
+    TreasureSectionViewModel,
+    PlayerTextSectionViewModel,
+    MonsterSectionViewModel,
+    NPCSectionViewModel,
+    PointOfInterestSectionViewModel,
+    MapsAndImagesSectionViewModel,
+    EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities,
     Notifications,
     CharacterManager } from 'charactersheet/utilities'
 import { Encounter } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
+import { EnvironmentSection,
+    NotesSection,
+    TreasureSection,
+    PlayerTextSection,
+    MonsterSection,
+    NPCSection,
+    PointOfInterestSection,
+    MapsAndImagesSection,
+    EnvironmentSection } from 'charactersheet/models/dm'
 
 import template from './index.html'
 
@@ -17,8 +34,15 @@ export function EncounterViewModel() {
     self.modalEncounter = ko.observable();
     self.nameHasFocus = ko.observable(false);
     self.selectedCell = ko.observable();
+    self.selectedEncounter = ko.pureComputed(function() {
+        return PersistenceService.findFirstBy(
+            Encounter, 'encounterId', self.selectedCell().encounterId()
+        );
+    });
+
     self.encounterCells = ko.observableArray();
     self.encounterDetailViewModel = ko.observable();
+
     self.visibilityViewModels = ko.observableArray([]);
 
     /* Encounter Sections */
@@ -177,11 +201,11 @@ export function EncounterViewModel() {
     };
 
     self._initializeDetailViewModel = function() {
-        self.encounterDetailViewModel().load();
+//         self.encounterDetailViewModel().load();
     };
 
     self._deinitializeDetailViewModel = function(vm) {
-        self.encounterDetailViewModel().unload();
+//         self.encounterDetailViewModel().unload();
     };
 
     self._getEncounterCells = function() {

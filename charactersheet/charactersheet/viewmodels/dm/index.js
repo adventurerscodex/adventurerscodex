@@ -9,4 +9,5 @@ export { CampaignOverviewViewModel } from 'charactersheet/viewmodels/dm/overview
 export { PartyViewModel } from 'charactersheet/viewmodels/dm/party'
 export { PartyTabViewModel } from 'charactersheet/viewmodels/dm/party_tab'
 export { PartyStatusLineViewModel } from 'charactersheet/viewmodels/dm/status_line'
+export { DMScreenViewModel } from './dmscreen'
 export * from 'charactersheet/viewmodels/dm/encounter_sections'

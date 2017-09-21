@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { Note } from 'charactersheet/models/common'
 import { PersistenceService } from 'charactersheet/services/common'

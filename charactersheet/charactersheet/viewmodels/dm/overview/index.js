@@ -1,7 +1,11 @@
-//TODO: do we need math or date?
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import { Campaign } from 'charactersheet/models'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
 
 import template from './index.html'
 
@@ -71,7 +75,7 @@ export function CampaignOverviewViewModel() {
     self.timeSinceLabel = ko.pureComputed(function() {
         if (!self.createdDate()) { return ''; }
         var since = self._daysSince(self.createdDate());
-        var dateCreated = self.createdDate().format('longDate');
+        var dateCreated = self.createdDate().toDateString();
         var msg = 'Created on: ' + dateCreated + '.';
         if (since > 0) {
             msg += ' This adventure has been in progress for ' + since + ' days.';
@@ -87,7 +91,7 @@ export function CampaignOverviewViewModel() {
     };
 }
 
-ko.components.register('overview', {
+ko.components.register('campaign-overview', {
   viewModel: CampaignOverviewViewModel,
   template: template
 })

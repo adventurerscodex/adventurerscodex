@@ -2,6 +2,9 @@ import ko from 'knockout'
 
 import { PointOfInterest,
     PointOfInterestSection } from 'charactersheet/models'
+import { PersistenceService,
+    SortService } from 'charactersheet/services/common'
+import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
 

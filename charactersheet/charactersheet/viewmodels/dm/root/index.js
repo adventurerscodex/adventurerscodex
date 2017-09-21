@@ -1,4 +1,21 @@
-function DMRootViewModel() {
+import ko from 'knockout'
+
+import 'bin/knockout-custom-loader'
+
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
+import { ImageServiceManager,
+    DMCardPublishingService,
+    PersistenceService,
+    HotkeysService,
+    ChatServiceManager } from 'charactersheet/services'
+import { Campaign } from 'charactersheet/models/dm'
+// import { PartyStatusLineViewModel } from 'charactersheet/viewmodels/dm/status_line'
+// import { PlayerImageViewModel } from 'charactersheet/viewmodels/common/player_image'
+
+import template from './index.html'
+
+export function DMRootViewModel() {
     var self = this;
 
     self.playerType = function() {
@@ -10,15 +27,6 @@ function DMRootViewModel() {
     self.currentPartyNode = ko.observable(null);
     self.partyStatus = ko.observable('');
     self.TEMPLATE_FILE = 'dm/index.tmpl';
-
-    //Player Child View Models
-    self.playerImageViewModel = ko.observable(new PlayerImageViewModel());
-    self.campaignTabViewModel = ko.observable(new CampaignTabViewModel());
-    self.encounterTabViewModel = ko.observable(new EncounterTabViewModel());
-    self.partyTabViewModel = ko.observable(new PartyTabViewModel());
-    self.chatTabViewModel = ko.observable(new ChatTabViewModel());
-    self.partyStatusLineViewModel = ko.observable(new PartyStatusLineViewModel());
-    self.notesTabViewModel = ko.observable(new NotesTabViewModel());
 
     self.dmCardService = DMCardPublishingService.sharedService();
     self.imageService = ImageServiceManager.sharedService();
@@ -130,15 +138,12 @@ function DMRootViewModel() {
     self.load = function() {
         self.activeTab(self.playerType().defaultTab);
 
-        ViewModelUtilities.loadSubViewModels(self);
-
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
         Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
-        ViewModelUtilities.unloadSubViewModels(self);
         HotkeysService.flushHotkeys();
 
         Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
@@ -179,3 +184,8 @@ function DMRootViewModel() {
         self._updatePartyStatus(success);
     };
 }
+
+ko.components.register('dm-root', {
+    viewModel: DMRootViewModel,
+    template: template
+})

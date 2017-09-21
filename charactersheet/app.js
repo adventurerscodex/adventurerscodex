@@ -1,6 +1,7 @@
 import ko from 'knockout'
 
 import 'bootstrap'
+import 'font-awesome-webpack'
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'

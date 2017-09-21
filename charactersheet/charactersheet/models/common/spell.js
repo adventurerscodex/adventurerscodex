@@ -5,7 +5,8 @@ import 'bin/knockout-mapping-autoignore'
 
 import { SpellStats } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
-import { Fixtures } from 'charactersheet/utilities'
+import { Fixtures,
+    CharacterManager } from 'charactersheet/utilities'
 
 export function Spell() {
     var self = this;

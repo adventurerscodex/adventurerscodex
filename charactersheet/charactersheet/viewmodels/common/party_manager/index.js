@@ -2,8 +2,13 @@
 
 import ko from 'knockout'
 
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { AuthenticationToken, ChatRoom } from 'charactersheet/models/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import {
+    PersistenceService,
+    KeyValuePredicate,
+    XMPPService
+} from 'charactersheet/services/common'
 
 import template from './index.html'
 

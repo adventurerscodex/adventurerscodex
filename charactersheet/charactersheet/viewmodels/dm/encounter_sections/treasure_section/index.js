@@ -6,7 +6,12 @@ import { TreasureSection,
     EncounterMagicItem,
     EncounterWeapon,
     EncounterCoins } from 'charactersheet/models'
-//todo import fixtures, datarepo
+import { Fixtures,
+    DataRepository,
+    CharacterManager,
+    Notifications } from 'charactersheet/utilities'
+import { SortService,
+    PersistenceService } from 'charactersheet/services'
 
 import template from './index.html'
 

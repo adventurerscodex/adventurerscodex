@@ -3,6 +3,10 @@ import ko from 'knockout'
 import { MonsterAbilityScore,
     MonsterSection,
     Monster } from 'charactersheet/models'
+import { SortService,
+    PersistenceService } from 'charactersheet/services'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
 

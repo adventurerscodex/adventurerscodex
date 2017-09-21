@@ -3,6 +3,7 @@ import ko from 'knockout'
 import { Encounter } from 'charactersheet/models/dm'
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm'
 import { ViewModelUtilities } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common'
 
 export function EncounterCellViewModel(encounter) {
     var self = this;

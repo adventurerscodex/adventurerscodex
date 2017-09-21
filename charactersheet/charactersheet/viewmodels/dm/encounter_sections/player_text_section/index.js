@@ -3,6 +3,11 @@ import ko from 'knockout'
 import { PlayerTextSection,
     PlayerText,
     Message } from 'charactersheet/models'
+import { SortService,
+    PersistenceService,
+    ChatServiceManager } from 'charactersheet/services'
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
 

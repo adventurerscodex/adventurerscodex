@@ -1,3 +1,5 @@
+import marked from 'bin/textarea-markdown-editor/marked.min.js'
+
 /**
  * This file contains a number of generic utility functions used throughout
  * Adventurer's Codex

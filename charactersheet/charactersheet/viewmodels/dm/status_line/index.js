@@ -1,6 +1,11 @@
 import ko from 'knockout'
 
-import { PlayerCard } from 'charactersheet/models'
+import { PlayerCard,
+    PlayerTypes } from 'charactersheet/models'
+import { Notifications } from 'charactersheet/utilities'
+import { ChatServiceManager } from 'charactersheet/services'
+
+import template from './index.html'
 
 export function PartyStatusLineViewModel() {
     var self = this;
@@ -91,3 +96,8 @@ export function PartyStatusLineViewModel() {
         }).join('') + '.';
     };
 }
+
+ko.components.register('party-status-line', {
+    viewModel: PartyStatusLineViewModel,
+    template: template
+  })

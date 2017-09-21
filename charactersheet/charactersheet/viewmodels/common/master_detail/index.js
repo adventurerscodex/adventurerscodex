@@ -1,12 +1,10 @@
 import ko from 'knockout'
 
+import 'bin/knockout-custom-loader'
+
 import template from './index.html'
 
 /**
- *
- *
- *
- *
  */
 export function MasterDetailViewModel() {
     var self = this;
@@ -27,9 +25,6 @@ export function MasterDetailViewModel() {
     self.modalIsOpen = ko.observable(false);
 
     /**
-     *
-     *
-     *
      */
     self.cells = ko.observableArray();
 
