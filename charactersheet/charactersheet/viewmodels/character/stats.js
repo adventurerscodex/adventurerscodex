@@ -23,6 +23,29 @@ function StatsViewModel() {
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
 
+    self.damageHandler = ko.computed({
+      read: function() {
+        return self.health().damage()},
+      write: function(value) {
+        if (self.health().tempHitpoints()) {
+           var damageChange = value - self.health().damage();
+           if (damageChange > 0) {
+             var remainingTempHP = self.health().tempHitpoints() - damageChange;
+             if (remainingTempHP >= 0 ) {
+               self.health().tempHitpoints(remainingTempHP);
+               value = self.health().damage();
+             } else {
+               self.health().tempHitpoints(0);
+               value = self.health().damage() + remainingTempHP; // remainingTempHP is negative.
+             }
+           }
+        }
+        self.health().damage(value);
+      },
+      owner: self,
+    });
+
+
     self.load = function() {
         Notifications.global.save.add(self.save);
 

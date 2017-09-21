@@ -16,25 +16,19 @@ function Health() {
     self.damage = ko.observable(0);
 
     self.hitpoints = ko.pureComputed(function() {
-        var damage = self.damage() ? self.damage() : 0;
-        return self.totalHitpoints() - damage;
+        return parseInt(self.regularHitpointsRemaining()) + parseInt(self.tempHitpointsRemaining());
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
-        var maxHP = self.maxHitpoints() ? self.maxHitpoints() : 0;
-        var tempHP = self.tempHitpoints() ? self.tempHitpoints() : 0;
-        return parseInt(maxHP) + parseInt(tempHP);
+        return parseInt(self.maxHitpoints()) + parseInt(self.tempHitpoints());
     }, self);
 
     self.tempHitpointsRemaining = ko.pureComputed(function() {
-        return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
+        return (parseInt(self.tempHitpoints()));
     }, self);
 
     self.regularHitpointsRemaining = ko.pureComputed(function() {
-        if (self.tempHitpointsRemaining() > 0) {
-            return parseInt(self.maxHitpoints());
-        }
-        return (parseInt(self.maxHitpoints()) - ((self.damage() ? parseInt(self.damage()) : 0) - parseInt(self.tempHitpoints())));
+        return parseInt(self.maxHitpoints()) - parseInt(self.damage());
     }, self);
 
     //Progress bar methods.

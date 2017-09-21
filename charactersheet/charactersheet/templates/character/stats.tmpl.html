@@ -36,7 +36,7 @@
                   <span data-bind="text: health().maxHitpoints"></span>
               </td>
               <td>
-                <plus-minus params="value: health().damage,
+                <plus-minus params="value: damageHandler,
                   max: health().totalHitpoints">
                   </plus-minus>
               </td>
@@ -48,20 +48,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="input-group">
-          <span class="input-group-addon">Hit Dice:</span>
-          <div class="form-control hit-dice-list">
-            <!-- ko foreach: hitDiceList -->
-            <span data-bind="attr: { id: $index, name: $index },
-              css: hitDiceIcon, click: toggleHitDice"></span>
-            <!-- /ko -->
-            <!-- ko if: hitDiceList().length == 0 -->
-            <span class="hit-dice-list-empty-fill">&nbsp;</span>
-            <!-- /ko -->
-          </div>
-        </div>
-        <br />
-        <div class="row row-padded">
+        <div class="row row-padded" data-bind="visible: health().damage() === health().totalHitpoints()">
           <div class="col-md-6 col-sm-12 col-padded">
             <div class="input-group">
               <span class="input-group-addon">Death Save Successes</span>
@@ -81,7 +68,20 @@
             </div>
           </div>
         </div>
+        <br />
+        <div class="input-group">
+          <span class="input-group-addon">Hit Dice:</span>
+          <div class="form-control hit-dice-list">
+            <!-- ko foreach: hitDiceList -->
+            <span data-bind="attr: { id: $index, name: $index },
+              css: hitDiceIcon, click: toggleHitDice"></span>
+            <!-- /ko -->
+            <!-- ko if: hitDiceList().length == 0 -->
+            <span class="hit-dice-list-empty-fill">&nbsp;</span>
+            <!-- /ko -->
+          </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
