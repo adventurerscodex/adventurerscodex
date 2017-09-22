@@ -1,5 +1,7 @@
 import ko from 'knockout';
 
+import 'bin/knockout-bootstrap-modal'
+
 import { AbilityScores } from 'charactersheet/models/character';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';

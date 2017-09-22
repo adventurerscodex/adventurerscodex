@@ -72,8 +72,8 @@
            up. Click on a die icon to track expended hit dice.</small>
       </div>
       <stats></stats>
-      </div>
     </div>
+  </div>
   <div class="row">
     <div class="col-sm-12 col-padded">
       <div class="h3">
@@ -88,12 +88,11 @@
   <div class="row">
     <div class="col-sm-12 col-padded">
       <ability-scores></ability-scores>
-      </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-4 col-sm-6 col-padded">
-      <saving-throws></saving-throws>
+      <savings-throws></savings-throws>
     </div>
     <div class="col-md-8 col-sm-6 col-padded">
       <div class="panel panel-default">
@@ -121,7 +120,7 @@
         <small>Configure to reset on a short or long rest.</small>
       </div>
       <tracker></tracker>
-      </div>
+    </div>
   </div>
   <div class="row">
     <div class="col-xs-12">
@@ -151,6 +150,7 @@
   </div>
 </div>
 <!-- End Skills Tab -->
+
 <div role="tabpanel" class="tab-pane" id="spells" data-bind="css: spellsTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
@@ -188,6 +188,7 @@
   </div>
 </div>
 <!-- End Spells Tab -->
+
 <div role="tabpanel" class="tab-pane" id="items" data-bind="css: equipmentTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
@@ -215,11 +216,12 @@
       <armors></armors>
     </div>
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A sword in stone" data-bind="attr: { src: armorSection }"/>
+      <img alt="Shield" data-bind="attr: { src: armorSection }"/>
     </div>
   </div>
 </div>
 <!-- End Equipment Tab -->
+
 <div role="tabpanel" class="tab-pane" id="inventory" data-bind="css: inventoryTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
@@ -239,8 +241,6 @@
         </div>
       </div>
     </div>
-    <div class="row">
-    </div>
     </div>
     <div class="row">
       <div class="col-sm-8 col-lg-9 col-padded">
@@ -257,6 +257,7 @@
     </div>
 </div>
 <!-- End Inventory Tab -->
+
 <div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
   <div class="row">
     <div class="col-sm-12 col-padded">
@@ -269,6 +270,7 @@
   </div>
 </div>
 <!-- End Notes Tab -->
+
 <div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
   <div class="row">
     <div class="col-sm-4 hidden-xs">
@@ -285,14 +287,17 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-padded">
-      <feats-traits></feats-traits>
+      <feat-traits></feat-traits>
     </div>
   </div>
 </div>
+<!-- End Profile tab -->
+
 <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
   <!-- <master-detail></master-detail> -->
 </div>
 <!-- End Chat Tab -->
+
 <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
   <exhibit></exhibit>
 </div>

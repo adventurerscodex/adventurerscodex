@@ -1,4 +1,4 @@
-'use strict';
+import ko from 'knockout'
 
 /**
  * Knockout Bootstrap Modal Binding

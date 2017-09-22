@@ -11,6 +11,8 @@ import { SortService } from 'charactersheet/services/common'
 import { Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
+import campingTent from 'images/camping-tent.svg'
+import meditation from 'images/meditation.svg'
 
 export function FeatsViewModel() {
     var self = this;
@@ -36,6 +38,8 @@ export function FeatsViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.meditation = meditation;
+    self.campingTent = campingTent;
 
     self.load = function() {
         Notifications.global.save.add(self.save);

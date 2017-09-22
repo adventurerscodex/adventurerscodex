@@ -5,6 +5,8 @@ import { PersistenceService, SortService } from 'charactersheet/services/common'
 import { Slot } from 'charactersheet/models/character'
 
 import template from './index.html'
+import campingTent from 'images/camping-tent-blue.svg'
+import meditation from 'images/meditation-blue.svg'
 
 export function SpellSlotsViewModel() {
     var self = this;
@@ -29,6 +31,8 @@ export function SpellSlotsViewModel() {
     self.modifierHasFocus = ko.observable(false);
     self.sort = ko.observable(self.sorts['level asc']);
     self.filter = ko.observable('');
+    self.meditation = meditation;
+    self.campingTent = campingTent;
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -68,9 +72,9 @@ export function SpellSlotsViewModel() {
 
     self.resetsOnImgSource = function(slot){
         if(slot.resetsOn() === 'long') {
-            return '/images/camping-tent-blue.svg';
+            return campingTent;
         } else if (slot.resetsOn() === 'short') {
-            return '/images/meditation-blue.svg';
+            return meditation;
         } else {
             throw 'Unexpected feature resets on string.';
         }

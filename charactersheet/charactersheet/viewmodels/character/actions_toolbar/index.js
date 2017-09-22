@@ -6,11 +6,15 @@ import { Fixtures,
     Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
+import campingTent from 'images/camping-tent.svg'
+import meditation from 'images/meditation.svg'
 
 export function ActionsToolbarViewModel() {
     var self = this;
 
     self.wellOpen = ko.observable(false);
+    self.meditation = meditation;
+    self.campingTent = campingTent;
 
     self.load = function() {
         Notifications.actionsToolbar.toggle.add(self.toggleWellOpen);
