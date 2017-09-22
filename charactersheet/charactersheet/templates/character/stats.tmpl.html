@@ -48,7 +48,7 @@
             </tr>
           </tbody>
         </table>
-        <div class="row row-padded" data-bind="visible: health().damage() === health().totalHitpoints()">
+        <div class="row row-padded" data-bind="visible: health().isKnockedOut">
           <div class="col-md-6 col-sm-12 col-padded">
             <div class="input-group">
               <span class="input-group-addon">Death Save Successes</span>

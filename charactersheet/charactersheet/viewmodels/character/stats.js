@@ -24,25 +24,26 @@ function StatsViewModel() {
     self.armorClassPopover = ko.observable();
 
     self.damageHandler = ko.computed({
-      read: function() {
-        return self.health().damage()},
-      write: function(value) {
-        if (self.health().tempHitpoints()) {
-           var damageChange = value - self.health().damage();
-           if (damageChange > 0) {
-             var remainingTempHP = self.health().tempHitpoints() - damageChange;
-             if (remainingTempHP >= 0 ) {
-               self.health().tempHitpoints(remainingTempHP);
-               value = self.health().damage();
-             } else {
-               self.health().tempHitpoints(0);
-               value = self.health().damage() + remainingTempHP; // remainingTempHP is negative.
-             }
-           }
-        }
-        self.health().damage(value);
-      },
-      owner: self,
+        read: function() {
+            return self.health().damage();
+        },
+        write: function(value) {
+            if (self.health().tempHitpoints()) {
+                var damageChange = value - self.health().damage();
+                if (damageChange > 0) {
+                    var remainingTempHP = self.health().tempHitpoints() - damageChange;
+                    if (remainingTempHP >= 0 ) {
+                        self.health().tempHitpoints(remainingTempHP);
+                        value = self.health().damage();
+                    } else {
+                        value = damageChange - self.health().tempHitpoints();
+                        self.health().tempHitpoints(0);
+                    }
+                }
+            }
+            self.health().damage(value);
+        },
+        owner: self
     });
 
 
