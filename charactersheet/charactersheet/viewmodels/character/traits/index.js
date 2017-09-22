@@ -3,11 +3,13 @@ import ko from 'knockout'
 import { CharacterManager,
     DataRepository,
     Fixtures,
-    Notifications } from 'charactersheet/utilities'
+    Notifications,
+    Utility } from 'charactersheet/utilities'
 import { PersistenceService,
     SortService } from 'charactersheet/services/common'
 import { Tracked,
     Trait } from 'charactersheet/models'
+import uuid from 'node-uuid'
 
 import template from './index.html'
 

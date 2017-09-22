@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { NotesSection } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
 import { CharacterManager,

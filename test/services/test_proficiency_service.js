@@ -1,5 +1,6 @@
 import simple from 'simple-mock'
 
+import { Notifications } from 'charactersheet/utilities'
 import { OtherStats } from 'charactersheet/models/character/other_stats'
 import { Profile } from 'charactersheet/models/character/profile'
 import { PersistenceService } from 'charactersheet/services/common'

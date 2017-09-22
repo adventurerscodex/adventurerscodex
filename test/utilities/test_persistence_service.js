@@ -1,5 +1,6 @@
 import simple from 'simple-mock'
 
+import { MockLocalStorage } from '../fixtures'
 import { PersistenceService } from 'charactersheet/services/common'
 
 describe('Persistence Service', function() {

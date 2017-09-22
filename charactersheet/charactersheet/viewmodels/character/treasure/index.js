@@ -6,9 +6,20 @@ import { PersistenceService } from 'charactersheet/services/common'
 import { Treasure } from 'charactersheet/models/common'
 
 import template from './index.html'
+import ppCoins from 'images/pp-coin.svg'
+import gpCoins from 'images/gp-coin.svg'
+import epCoins from 'images/ep-coin.svg'
+import spCoins from 'images/sp-coin.svg'
+import cpCoins from 'images/cp-coin.svg'
 
 export function TreasureViewModel() {
     var self = this;
+
+    self.ppCoins = ppCoins;
+    self.gpCoins = gpCoins;
+    self.epCoins = epCoins;
+    self.spCoins = spCoins;
+    self.cpCoins = cpCoins;
 
     self.treasure = ko.observable(new Treasure());
 

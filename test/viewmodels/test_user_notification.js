@@ -1,4 +1,5 @@
 import simple from 'simple-mock'
+import toastr from 'toastr'
 
 import { UserNotificationViewModel } from 'charactersheet/viewmodels/common'
 

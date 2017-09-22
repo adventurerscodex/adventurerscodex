@@ -7,7 +7,8 @@ import { Health,
     HitDice,
     HitDiceType,
     OtherStats,
-    Profile } from 'charactersheet/models/character'
+    Profile,
+    DeathSave } from 'charactersheet/models/character'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 

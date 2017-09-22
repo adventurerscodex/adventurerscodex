@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { NPC,
     NPCSection } from 'charactersheet/models'
 import { Fixtures } from 'charactersheet/utilities'

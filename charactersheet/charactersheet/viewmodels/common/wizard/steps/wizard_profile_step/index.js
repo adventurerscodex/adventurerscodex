@@ -1,5 +1,8 @@
 import ko from 'knockout'
 
+import { DataRepository } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities'
+
 import template from './index.html'
 
 export function WizardProfileStepViewModel() {

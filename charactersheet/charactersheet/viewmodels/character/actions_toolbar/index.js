@@ -2,8 +2,8 @@ import ko from 'knockout'
 
 import 'bin/knockout-custom-loader'
 
-import { Fixtures } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
+import { Fixtures,
+    Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
 

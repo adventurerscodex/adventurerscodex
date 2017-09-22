@@ -1,5 +1,4 @@
-// import 'charactersheet/bin/textarea-markdown-editor/marked'
-// TODO: Issue with importing marked here
+import marked from 'bin/textarea-markdown-editor/marked.min.js'
 
 /**
  * This file contains a number of generic utility functions used throughout
@@ -24,8 +23,7 @@ export var Utility = {
  */
 Utility.markdown.asPlaintext = function(markdown) {
     var myString = markdown || '';
-    // return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
-    return myString;
+    return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
 };
 
 /* String Util */

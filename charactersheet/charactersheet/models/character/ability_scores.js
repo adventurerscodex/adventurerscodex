@@ -1,10 +1,11 @@
-import ko from 'knockout'
-import 'knockout-mapping'
+import ko from 'knockout';
+import 'knockout-mapping';
 
-import 'bin/knockout-mapping-autoignore'
+import 'bin/knockout-mapping-autoignore';
 
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { getModifier,
+    getStrModifier } from 'charactersheet/viewmodels/character/ability_scores';
+import { PersistenceService } from 'charactersheet/services/common';
 
 export function AbilityScores() {
     var self = this;

@@ -1,8 +1,6 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
 
-import 'bin/knockout-custom-loader'
-
 import { Message,
     MapOrImage,
     MapsAndImagesSection } from 'charactersheet/models'

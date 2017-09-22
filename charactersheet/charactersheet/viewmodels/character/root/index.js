@@ -25,12 +25,43 @@ import { ProficiencyService,
 import { ChatServiceManager } from 'charactersheet/services/common'
 
 import template from './index.html'
+import statsTab from 'images/tab_icons/weight-lifting-up.svg'
+import skillsTab from 'images/tab_icons/jump-across.svg'
+import spellsTab from 'images/tab_icons/fire-tail.svg'
+import inventoryTab from 'images/tab_icons/knapsack.svg'
+import notesTab from 'images/tab_icons/quill-ink.svg'
+import profileTab from 'images/tab_icons/read.svg'
+import chatTab from 'images/tab_icons/conversation.svg'
+import exhibitTab from 'images/tab_icons/film-projector.svg'
+import healthSection from 'images/nested-hearts.svg'
+import skillSection from 'images/sword-spin.svg'
+import spellSection from 'images/enlightenment.svg'
+import weaponSection from 'images/spinning-sword.svg'
+import armorSection from 'images/checked-shield.svg'
+import inventorySection from 'images/misc_icons/locked-chest.svg'
+import profileSection from 'images/standing-man-3.svg'
 
 
 export function CharacterRootViewModel() {
     var self = this;
 
     self.TEMPLATE_FILE = 'character/index.tmpl';
+    self.statsTab = statsTab;
+    self.skillsTab = skillsTab;
+    self.spellsTab = spellsTab;
+    self.inventoryTab = inventoryTab;
+    self.notesTab = notesTab;
+    self.profileTab = profileTab;
+    self.chatTab = chatTab;
+    self.exhibitTab = exhibitTab;
+    self.healthSection = healthSection;
+    self.skillSection = skillSection;
+    self.spellSection = spellSection;
+    self.weaponSection = weaponSection;
+    self.armorSection = armorSection;
+    self.inventorySection = inventorySection;
+    self.profileSection = profileSection;
+
     self.playerType = function() {
         return CharacterManager.activeCharacter().playerType();
     };
