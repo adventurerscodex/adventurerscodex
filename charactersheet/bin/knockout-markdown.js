@@ -1,4 +1,6 @@
-import 'charactersheet/bin/textarea-markdown-editor/marked'
+import ko from 'knockout'
+import 'bin/textarea-markdown-editor/jquery.textarea-markdown-editor'
+import marked from 'bin/textarea-markdown-editor/marked.min.js'
 
 /**
  * A binding to apply a markdown editor to a text area. This binding has 2

@@ -69,6 +69,7 @@
     "start": "webpack-dev-server --no-inline"
   },
   "dependencies": {
+    "ansi-html": "0.0.7",
     "blueimp-md5": "^2.10.0",
     "bootstrap": "^3.3.7",
     "browserfy": "^1.0.0",
@@ -77,15 +78,18 @@
     "cryptojs": "^2.5.3",
     "filesaver.js": "^0.2.0",
     "font-awesome": "^4.7.0",
+    "html-entities": "^1.2.1",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
     "knockout": "~3.3.0",
     "knockout-mapping": "^2.6.0",
+    "loglevel": "^1.5.0",
     "lz-string": "^1.4.4",
     "node-libs-browser": "^2.0.0",
     "node-uuid": "^1.4.8",
     "select2": "^4.0.3",
     "signals": "^1.0.0",
+    "sockjs-client": "^1.1.4",
     "toastr": "^2.1.2",
     "urijs": "^1.18.12"
   }

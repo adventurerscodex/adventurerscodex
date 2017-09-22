@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import 'bin/knockout-markdown'
 
 /**
  * markdown-edit-preview component
