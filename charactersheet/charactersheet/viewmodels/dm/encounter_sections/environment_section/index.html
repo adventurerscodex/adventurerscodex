@@ -1,3 +1,4 @@
+<!-- ko if: visible -->
 <div class="h3">
   <img class="encounter-section-img" src="/images/encounters/night-sky.svg">
   Environment<br />
@@ -100,10 +101,10 @@
                      data-bind="value: description, markdownEditor: true"></textarea>
             </div>
         </div>
+      </form>
       </div>
     </div>
   </div>
-</div>
 
 <!-- Push Modal -->
 <!-- The parent is the detail vm and its parent is the master vm -->
@@ -146,8 +147,11 @@
                       data-dismiss="modal"></button>
             </div>
           </div>
-        </form>
+        </div>
+      </form>
+
       </div>
     </div>
   </div>
 </div>
+<!-- /ko -->

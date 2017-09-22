@@ -11,11 +11,11 @@ import { Notifications, CharacterManager, Utility } from 'charactersheet/utiliti
 
 import template from './index.html'
 
-export function EnvironmentSectionViewModel(parentEncounter) {
+export function EnvironmentSectionViewModel(params) {
     var self = this;
 
     self.template = 'environment_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.encounterId = params.encounter().encounterId;
 
     self.name = ko.observable();
     self.tagline = ko.observable();

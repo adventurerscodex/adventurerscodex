@@ -14,23 +14,15 @@ import template from './index.html'
  * is given the encounter it will display. When the user selects another
  * encounter to focus on, the current encounter is cleaned up.
  */
-export function EncounterDetailViewModel(encounter, allSections) {
+export function EncounterDetailViewModel(params) {
     var self = this;
 
-    self.encounterId = encounter.encounterId;
-    self.name = encounter.name;
-    self.encounterLocation = encounter.encounterLocation;
+    self.encounter = params.encounter;
+    self.name = params.encounter().name;
+    self.encounterLocation = params.encounter().encounterLocation;
     self.visibilityVMs = ko.observableArray([]);
 
-    /* Encounter Sections */
-    self.selectedEncounter = ko.pureComputed(function() {
-        if (!self.encounterId) { return; }
-        return PersistenceService.findFirstBy(
-            Encounter, 'encounterId', self.encounterId()
-        );
-    });
-
-    self.sections = allSections;
+    self.sections = params.allSections;
 
 //     self.environmentSectionViewModel = ko.observable();
 //     self.mapsAndImagesSectionViewModel = ko.observable();

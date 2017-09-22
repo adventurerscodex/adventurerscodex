@@ -14,6 +14,12 @@ import { Campaign } from 'charactersheet/models/dm'
 // import { PlayerImageViewModel } from 'charactersheet/viewmodels/common/player_image'
 
 import template from './index.html'
+import overviewTabImage from 'images/tab_icons/bookmarklet.svg'
+import encounterTabImage from 'images/tab_icons/treasure-map.svg'
+import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg'
+import notesTabImage from 'images/tab_icons/quill-ink.svg'
+import partyTabImage from 'images/tab_icons/backup.svg'
+import chatTabImage from 'images/tab_icons/conversation.svg'
 
 export function DMRootViewModel() {
     var self = this;
@@ -30,6 +36,13 @@ export function DMRootViewModel() {
 
     self.dmCardService = DMCardPublishingService.sharedService();
     self.imageService = ImageServiceManager.sharedService();
+
+    self.overviewTabImage = overviewTabImage;
+    self.encounterTabImage = encounterTabImage;
+    self.dmScreenTabImage = dmScreenTabImage;
+    self.notesTabImage = notesTabImage;
+    self.partyTabImage = partyTabImage;
+    self.chatTabImage = chatTabImage;
 
     //Tooltips
     // TODO: Add

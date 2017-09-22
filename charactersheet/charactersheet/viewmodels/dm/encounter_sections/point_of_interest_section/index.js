@@ -10,11 +10,11 @@ import { Notifications, CharacterManager, Utility } from 'charactersheet/utiliti
 
 import template from './index.html'
 
-export function PointOfInterestSectionViewModel(parentEncounter) {
+export function PointOfInterestSectionViewModel(params) {
     var self = this;
 
     self.template = 'point_of_interest.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.encounterId = params.encounter().encounterId;
     self.characterId = ko.observable();
 
     self.visible = ko.observable();

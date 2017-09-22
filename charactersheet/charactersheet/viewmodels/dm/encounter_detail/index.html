@@ -13,6 +13,14 @@
   <div class="panel-body tight-inner">
     <!-- Encounter Sections -->
     <!-- TODO: Add encounter sections -->
+    <!-- ko if: encounter -->
+    <environment-section
+      params="encounter: encounter, allSections: sections">
+    </environment-section>
+    <point-of-interest-section
+      params="encounter: encounter, allSections: sections">
+    </point-of-interest-section>
+    <!-- /ko -->
   </div>
 </div>
 

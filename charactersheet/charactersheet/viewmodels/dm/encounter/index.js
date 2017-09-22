@@ -34,7 +34,8 @@ export function EncounterViewModel() {
     self.modalEncounter = ko.observable();
     self.nameHasFocus = ko.observable(false);
     self.selectedCell = ko.observable();
-    self.selectedEncounter = ko.pureComputed(function() {
+    self.selectedEncounter = ko.computed(function() {
+        if (!self.selectedCell()) { return; }
         return PersistenceService.findFirstBy(
             Encounter, 'encounterId', self.selectedCell().encounterId()
         );
@@ -60,7 +61,7 @@ export function EncounterViewModel() {
 
     /* Public Methods */
     self.load = function() {
-        self.selectedCell.subscribe(self.setEncounterDetailViewModel);
+//         self.selectedCell.subscribe(self.setEncounterDetailViewModel);
 
         self.encounterCells(self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
