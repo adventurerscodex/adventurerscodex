@@ -1,5 +1,6 @@
+<!-- ko if: visible -->
 <div class="h3">
-<img class="encounter-section-img" src="/images/encounters/read.svg">
+<img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
   Read-Aloud Text<br />
   <small data-bind="text: tagline"></small>
 </div>
@@ -69,6 +70,7 @@
     <!-- /ko -->
   </tbody>
 </table>
+<!-- /ko -->
 
 <!-- Add Modal -->
 <div class="modal fade"

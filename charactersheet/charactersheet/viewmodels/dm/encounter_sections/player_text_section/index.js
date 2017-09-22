@@ -10,12 +10,18 @@ import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/read.svg'
 
-export function PlayerTextSectionViewModel(parentEncounter) {
+export function PlayerTextSectionViewModel(params) {
     var self = this;
 
-    self.template = 'player_text_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.sectionIcon = sectionIcon;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
+
     self.characterId = ko.observable();
 
     self.visible = ko.observable();
@@ -56,21 +62,10 @@ export function PlayerTextSectionViewModel(parentEncounter) {
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
-        var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
-        if (playerTexts) {
-            self.playerTexts(playerTexts);
-        }
-
-        var section = PersistenceService.findFirstBy(PlayerTextSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new PlayerTextSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-        self.name(section.name());
-        self.visible(section.visible());
-        self.tagline(section.tagline());
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
 
         self._connectionHasChanged();
     };
@@ -263,6 +258,7 @@ export function PlayerTextSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 
     self._connectionHasChanged = function() {

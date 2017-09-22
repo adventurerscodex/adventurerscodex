@@ -2,19 +2,24 @@ import ko from 'knockout'
 
 import { NotesSection } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/quill-ink.svg'
 
-export function NotesSectionViewModel(parentEncounter) {
+
+export function NotesSectionViewModel(params) {
     var self = this;
 
+    self.sectionIcon = sectionIcon;
     self.notes = ko.observable('');
     self.visible = ko.observable(false);
 
-    self.template = 'notes_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
 
     self.name = 'Notes';
     self.tagline = ko.observable();
@@ -27,16 +32,10 @@ export function NotesSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
-        if (!notesSection) {
-            notesSection = new NotesSection();
-            notesSection.characterId(CharacterManager.activeCharacter().key());
-            notesSection.encounterId(self.encounterId());
-            notesSection.save();
-        }
-        self.notes(notesSection.notes());
-        self.visible(notesSection.visible());
-        self.tagline(notesSection.tagline());
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
     };
 
     self.unload = function() {
@@ -72,10 +71,15 @@ export function NotesSectionViewModel(parentEncounter) {
 
     self._dataHasChanged = function() {
         var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
-        if (notesSection) {
-            self.notes(notesSection.notes());
-            self.visible(notesSection.visible());
+        if (!notesSection) {
+            notesSection = new NotesSection();
+            notesSection.characterId(CharacterManager.activeCharacter().key());
+            notesSection.encounterId(self.encounterId());
+            notesSection.save();
         }
+        self.notes(notesSection.notes());
+        self.visible(notesSection.visible());
+        self.tagline(notesSection.tagline());
     };
 }
 

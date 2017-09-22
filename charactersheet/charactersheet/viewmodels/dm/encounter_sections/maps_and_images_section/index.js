@@ -13,12 +13,18 @@ import { ImageServiceManager,
 import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/globe.svg'
 
-export function MapsAndImagesSectionViewModel(parentEncounter) {
+
+export function MapsAndImagesSectionViewModel(params) {
     var self = this;
 
-    self.template = 'maps_and_images_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.sectionIcon = sectionIcon;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
     self.characterId = ko.observable();
 
     self.visible = ko.observable();
@@ -62,21 +68,10 @@ export function MapsAndImagesSectionViewModel(parentEncounter) {
         Notifications.party.left.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
-        var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
-        if (map) {
-            self.mapsOrImages(map);
-        }
-
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new MapsAndImagesSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-        self.name(section.name());
-        self.visible(section.visible());
-        self.tagline(section.tagline());
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
 
         self._connectionHasChanged();
     };
@@ -274,9 +269,9 @@ export function MapsAndImagesSectionViewModel(parentEncounter) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var mapOrImage = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
-        if (mapOrImage) {
-            self.mapsOrImages(mapOrImage);
+        var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
+        if (map) {
+            self.mapsOrImages(map);
         }
 
         var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
@@ -287,6 +282,7 @@ export function MapsAndImagesSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 
     self._connectionHasChanged = function() {

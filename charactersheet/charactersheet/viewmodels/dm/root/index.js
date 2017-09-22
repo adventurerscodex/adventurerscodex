@@ -21,6 +21,7 @@ import notesTabImage from 'images/tab_icons/quill-ink.svg'
 import partyTabImage from 'images/tab_icons/backup.svg'
 import chatTabImage from 'images/tab_icons/conversation.svg'
 
+
 export function DMRootViewModel() {
     var self = this;
 
@@ -44,13 +45,7 @@ export function DMRootViewModel() {
     self.partyTabImage = partyTabImage;
     self.chatTabImage = chatTabImage;
 
-    //Tooltips
-    // TODO: Add
-
-    //Tab Properties
-    // TODO: Add
-
-    //UI Methods
+   //UI Methods
 
     self.playerSummary = ko.pureComputed(function() {
         var key = CharacterManager.activeCharacter().key();

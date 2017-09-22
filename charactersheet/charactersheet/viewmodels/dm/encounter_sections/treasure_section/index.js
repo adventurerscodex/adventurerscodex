@@ -14,12 +14,18 @@ import { SortService,
     PersistenceService } from 'charactersheet/services'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/open-treasure-chest.svg'
 
-export function TreasureSectionViewModel(parentEncounter) {
+
+export function TreasureSectionViewModel(params) {
     var self = this;
 
-    self.template = 'treasure_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.sectionIcon = sectionIcon;
+    self.encounter   = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
     self.characterId = ko.observable();
 
     self.visible = ko.observable();
@@ -71,23 +77,11 @@ export function TreasureSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
-        var treasure = [];
-        self.treasureTypes.forEach(function(type, idx, _){
-            var result = PersistenceService.findBy(type, 'encounterId', self.encounterId());
-            treasure = treasure.concat(result);
-        });
-        self.treasure(treasure);
 
-        var section = PersistenceService.findFirstBy(TreasureSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new TreasureSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-        self.name(section.name());
-        self.visible(section.visible());
-        self.tagline(section.tagline());
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
     };
 
     self.unload = function() {
@@ -317,6 +311,7 @@ export function TreasureSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 }
 

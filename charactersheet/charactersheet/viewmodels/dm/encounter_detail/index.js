@@ -18,8 +18,6 @@ export function EncounterDetailViewModel(params) {
     var self = this;
 
     self.encounter = params.encounter;
-    self.name = params.encounter().name;
-    self.encounterLocation = params.encounter().encounterLocation;
     self.visibilityVMs = ko.observableArray([]);
 
     self.sections = params.allSections;
@@ -38,8 +36,8 @@ export function EncounterDetailViewModel(params) {
     self.nameHasFocus = ko.observable(false);
 
     /* Public Methods */
+
     self.load = function() {
-        self._initializeSectionVMs();
     };
 
     self.unload = function() {
@@ -60,6 +58,14 @@ export function EncounterDetailViewModel(params) {
     };
 
     /* UI Methods */
+
+    self.name = ko.pureComputed(function() {
+        return self.encounter().name();
+    });
+
+    self.encounterLocation = ko.pureComputed(function() {
+        return self.encounter().encounterLocation();
+    });
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
@@ -85,29 +91,6 @@ export function EncounterDetailViewModel(params) {
         });
         self._deinitializeVisibilityVMs();
         Notifications.encounters.changed.dispatch();
-    };
-
-    /* Private Methods */
-
-    /**
-     * Using the list of sections, sets the value of the child
-     * section view models.
-     * Sections are identified using their properties set in the sections list,
-     * and are instantiated with 2 parameters being the current encounter, and
-     * the view model's data model object (if it exists, or null)  that matched
-     * a query by encounter id.
-     */
-    self._initializeSectionVMs = function() {
-//         var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
-//         self.sections.forEach(function(section, idx, _) {
-//             var childViewModel = new section.vm(encounter);
-//             try {
-//                 self[section.property](childViewModel);
-//             } catch (err) {
-//                 throw 'Unable to set child view models for '+ section.property
-//                     +'. You probably forgot to add the property to the detail VM.\n' + err;
-//             }
-//         });
     };
 
     // Modal Visibility VMs

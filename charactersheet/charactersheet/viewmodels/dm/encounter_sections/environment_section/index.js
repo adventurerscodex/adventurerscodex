@@ -10,12 +10,20 @@ import { ImageServiceManager,
 import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/night-sky.svg'
+
 
 export function EnvironmentSectionViewModel(params) {
     var self = this;
 
     self.template = 'environment_section.tmpl';
-    self.encounterId = params.encounter().encounterId;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
+
+    self.sectionIcon = sectionIcon;
 
     self.name = ko.observable();
     self.tagline = ko.observable();
@@ -70,29 +78,12 @@ export function EnvironmentSectionViewModel(params) {
         self.terrain.subscribe(self.save);
         self.description.subscribe(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
-        var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
-        if (environmentSection) {
-            self.name(environmentSection.name());
-            self.visible(environmentSection.visible());
-            self.tagline(environmentSection.tagline());
-        }
-
-        var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());
-        if (environment) {
-            self.imageUrl(environment.imageUrl());
-            self.weather(environment.weather());
-            self.terrain(environment.terrain());
-            self.description(environment.description());
-            self.isExhibited(environment.isExhibited());
-        }
-
-        // If there's no data to show, then prefer the edit tab.
-        if (!self.imageUrl() && !self.weather() && !self.terrain() && !self.description()) {
-            self.selectEditTab();
-        }
-
         self._connectionHasChanged();
+
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
     };
 
     self.unload = function() {
@@ -233,6 +224,7 @@ export function EnvironmentSectionViewModel(params) {
         if (environmentSection) {
             self.name(environmentSection.name());
             self.visible(environmentSection.visible());
+            self.tagline(environmentSection.tagline());
         }
 
         var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());
@@ -242,6 +234,13 @@ export function EnvironmentSectionViewModel(params) {
             self.terrain(environment.terrain());
             self.description(environment.description());
             self.isExhibited(environment.isExhibited());
+        }
+
+        // If there's no data to show, then prefer the edit tab.
+        if (!self.imageUrl() && !self.weather() && !self.terrain() && !self.description()) {
+            self.selectEditTab();
+        } else {
+            self.selectPreviewTab();
         }
     };
 

@@ -9,12 +9,19 @@ import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/swordman.svg'
 
-export function NPCSectionViewModel(parentEncounter) {
+
+export function NPCSectionViewModel(params) {
     var self = this;
 
-    self.template = 'npc_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.sectionIcon = sectionIcon;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
+
     self.characterId = ko.observable();
 
     self.visible = ko.observable();
@@ -51,21 +58,11 @@ export function NPCSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
-        var npc = PersistenceService.findBy(NPC, 'encounterId', self.encounterId());
-        if (npc) {
-            self.npcs(npc);
-        }
 
-        var section = PersistenceService.findFirstBy(NPCSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new NPCSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-        self.name(section.name());
-        self.visible(section.visible());
-        self.tagline(section.tagline());
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
     };
 
     self.unload = function() {
@@ -204,6 +201,7 @@ export function NPCSectionViewModel(parentEncounter) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 }
 

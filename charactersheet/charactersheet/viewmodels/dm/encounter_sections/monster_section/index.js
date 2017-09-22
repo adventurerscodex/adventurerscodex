@@ -9,12 +9,18 @@ import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/wyvern.svg'
 
-export function MonsterSectionViewModel(parentEncounter) {
+export function MonsterSectionViewModel(params) {
     var self = this;
 
-    self.template = 'monster_section.tmpl';
-    self.encounterId = parentEncounter.encounterId;
+    self.sectionIcon = sectionIcon;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
+
     self.characterId = ko.observable();
 
     self.visible = ko.observable();
@@ -54,23 +60,11 @@ export function MonsterSectionViewModel(parentEncounter) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
-        var monster = PersistenceService.findBy(Monster, 'encounterId', self.encounterId());
-        if (monster) {
-            self.monsters(monster);
-            self.monsters().forEach(function(monster, idx, _) {
-                var abilityScores = PersistenceService.findBy(MonsterAbilityScore,
-                    'monsterId', monster.monsterId());
-                monster.abilityScores(abilityScores);
-            });
-        }
 
-        var section = PersistenceService.findFirstBy(MonsterSection, 'encounterId', self.encounterId());
-        if (section) {
-            self.name(section.name());
-            self.visible(section.visible());
-            self.tagline(section.tagline());
-        }
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
     };
 
     self.unload = function() {
@@ -264,16 +258,19 @@ export function MonsterSectionViewModel(parentEncounter) {
         var monster = PersistenceService.findBy(Monster, 'encounterId', self.encounterId());
         if (monster) {
             self.monsters(monster);
+            self.monsters().forEach(function(monster, idx, _) {
+                var abilityScores = PersistenceService.findBy(MonsterAbilityScore,
+                    'monsterId', monster.monsterId());
+                monster.abilityScores(abilityScores);
+            });
         }
 
         var section = PersistenceService.findFirstBy(MonsterSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new MonsterSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
+        if (section) {
+            self.name(section.name());
+            self.visible(section.visible());
+            self.tagline(section.tagline());
         }
-        self.name(section.name());
-        self.visible(section.visible());
     };
 }
 

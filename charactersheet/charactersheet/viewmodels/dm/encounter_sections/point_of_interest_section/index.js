@@ -7,12 +7,18 @@ import { PersistenceService,
 import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
+import sectionIcon from 'images/encounters/rune-stone.svg'
+
 
 export function PointOfInterestSectionViewModel(params) {
     var self = this;
 
-    self.template = 'point_of_interest.tmpl';
-    self.encounterId = params.encounter().encounterId;
+    self.sectionIcon = sectionIcon;
+    self.encounter = params.encounter;
+    self.encounterId = ko.pureComputed(function() {
+        if (!self.encounter()) { return; }
+        return self.encounter().encounterId();
+    });
     self.characterId = ko.observable();
 
     self.visible = ko.observable();
@@ -44,21 +50,10 @@ export function PointOfInterestSectionViewModel(params) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
-        var poi = PersistenceService.findBy(PointOfInterest, 'encounterId', self.encounterId());
-        if (poi) {
-            self.pointsOfInterest(poi);
-        }
-
-        var section = PersistenceService.findFirstBy(PointOfInterestSection, 'encounterId', self.encounterId());
-        if (!section) {
-            section = new PointOfInterestSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-        self.name(section.name());
-        self.visible(section.visible());
-        self.tagline(section.tagline());
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+        self._dataHasChanged();
     };
 
     self.unload = function() {
@@ -188,6 +183,7 @@ export function PointOfInterestSectionViewModel(params) {
         }
         self.name(section.name());
         self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 }
 

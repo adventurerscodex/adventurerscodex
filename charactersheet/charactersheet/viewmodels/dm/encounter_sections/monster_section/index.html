@@ -1,5 +1,6 @@
+<!-- ko if: visible -->
 <div class="h3">
-  <img class="encounter-section-img" src="/images/encounters/wyvern.svg">
+  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
   Monsters<br />
   <small data-bind="text: tagline"></small>
 </div>
@@ -70,6 +71,7 @@
     <!-- /ko -->
   </tbody>
 </table>
+<!-- /ko -->
 
 <!-- Add Modal -->
 <div class="modal fade"
@@ -300,7 +302,7 @@
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button" 
+            <button type="button"
                     class="btn btn-default"
                     data-dismiss="modal">Cancel</button>
             <button type="button"

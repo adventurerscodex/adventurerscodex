@@ -1,5 +1,6 @@
+<!-- ko if: visible -->
 <div class="h3">
-  <img class="encounter-section-img" src="/images/encounters/globe.svg">
+  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
   Maps &amp; Images<br />
   <small data-bind="text: tagline"></small>
 </div>
@@ -142,6 +143,7 @@
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
+<!-- /ko -->
 
 <!-- ViewEdit Modal -->
 <div class="modal fade"
