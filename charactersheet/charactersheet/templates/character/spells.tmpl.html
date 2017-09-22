@@ -31,10 +31,6 @@
             Range
             <span data-bind="css: sortArrow('spellRange')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellDuration');}">
-            Duration
-            <span data-bind="css: sortArrow('spellDuration')"></span>
-          </th>
           <th>
             <a data-toggle="modal"
                data-target="#addSpell" href="#">
@@ -64,9 +60,6 @@
                href="#"></td>
                <td class="hidden-xs" data-bind="text: spellRange, click: $parent.editSpell"
                     href="#"></td>
-         <td class="hidden-sm hidden-xs" data-bind="text: spellDuration, click: $parent.editSpell"
-              href="#">
-          </td>
           <td>
 
             <a data-bind="click: $parent.removeSpell" href="#">

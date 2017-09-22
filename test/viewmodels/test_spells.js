@@ -102,10 +102,10 @@ describe('SpellsViewModel', function(){
             book.sort().should.equal(book.sorts['spellName desc']);
             book.sortBy('spellName');
             book.sort().should.equal(book.sorts['spellName asc']);
-            book.sortBy('spellPrepared');
-            book.sort().should.equal(book.sorts['spellPrepared asc']);
-            book.sortBy('spellPrepared');
-            book.sort().should.equal(book.sorts['spellPrepared desc']);
+            book.sortBy('spellIsCastable');
+            book.sort().should.equal(book.sorts['spellIsCastable asc']);
+            book.sortBy('spellIsCastable');
+            book.sort().should.equal(book.sorts['spellIsCastable desc']);
             book.sortBy('spellLevel');
             book.sort().should.equal(book.sorts['spellLevel asc']);
             book.sortBy('spellLevel');
@@ -119,9 +119,9 @@ describe('SpellsViewModel', function(){
             book.sortBy('spellName');
             book.sort().should.equal(book.sorts['spellName desc']);
             book.sortArrow('spellName').should.equal('fa fa-arrow-down fa-color');
-            book.sortBy('spellPrepared');
-            book.sort().should.equal(book.sorts['spellPrepared asc']);
-            book.sortArrow('spellPrepared').should.equal('fa fa-arrow-up fa-color');
+            book.sortBy('spellIsCastable');
+            book.sort().should.equal(book.sorts['spellIsCastable asc']);
+            book.sortArrow('spellIsCastable').should.equal('fa fa-arrow-up fa-color');
             book.sortArrow('spellLevel').should.equal('');
             book.sortBy('spellName');
             book.sort().should.equal(book.sorts['spellName asc']);
