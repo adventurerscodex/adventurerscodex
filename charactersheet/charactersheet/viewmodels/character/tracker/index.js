@@ -8,6 +8,8 @@ import { Feat, Feature, Trait, Tracked } from 'charactersheet/models/character'
 import { PersistenceService, SortService } from 'charactersheet/services/common'
 
 import template from './index.html'
+import campingTent from 'images/camping-tent-blue.svg'
+import meditation from 'images/meditation-blue.svg'
 
 export function TrackerViewModel() {
     var self = this;
@@ -23,6 +25,8 @@ export function TrackerViewModel() {
     self.editModalTitle = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
+    self.meditation = meditation;
+    self.campingTent = campingTent;
     // List of all models that can be tracked
     self.trackedTypes = [ Feat, Trait, Feature ];
 

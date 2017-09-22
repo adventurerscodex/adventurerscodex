@@ -143,14 +143,14 @@
                         data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
                     <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                             data-bind="checked: blankTracked().resetsOn"/>
-                      <img class="action-bar-icon" src="/images/meditation.svg"></img>
+                      <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
                       &nbsp;&nbsp;&nbsp;Short Rest
                   </label>
                   <label class="btn btn-default"
                   data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
                     <input type="radio" class="hide-block" name="blankresetsOnLong"
                             value="long" data-bind="checked: blankTracked().resetsOn"/>
-                    <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
                       &nbsp;&nbsp;&nbsp;Long Rest
                   </label>
                 </div>
@@ -327,14 +327,14 @@
                             data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                                 data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                          <img class="action-bar-icon" src="/images/meditation.svg"></img>
+                          <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
                           &nbsp;&nbsp;&nbsp;Short Rest
                       </label>
                       <label class="btn btn-default"
                       data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnLong"
                                 value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                        <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+                        <img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
                           &nbsp;&nbsp;&nbsp;Long Rest
                       </label>
                     </div>

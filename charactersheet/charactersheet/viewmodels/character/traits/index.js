@@ -12,6 +12,8 @@ import { Tracked,
 import uuid from 'node-uuid'
 
 import template from './index.html'
+import campingTent from 'images/camping-tent.svg'
+import meditation from 'images/meditation.svg'
 
 export function TraitsViewModel() {
     var self = this;
@@ -39,6 +41,8 @@ export function TraitsViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.meditation = meditation;
+    self.campingTent = campingTent;
 
     //Static Data
     self.raceOptions = Fixtures.profile.raceOptions;

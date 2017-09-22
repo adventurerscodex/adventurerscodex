@@ -41,7 +41,7 @@
               data-bind="click: $parent.editSlot"
               href="#">
             <!-- ko if: $parent.needsResetsOnImg($data) -->
-            <img class="action-bar-icon" data-bind="attr: { 'src': $parent.resetsOnImgSource($data) }">
+            <img class="action-bar-icon" data-bind="attr: { src: $parent.resetsOnImgSource($data) }">
             </img>
             <!-- /ko -->
           </td>
@@ -127,7 +127,7 @@
                           class="hide-block"
                           name="blankresetsOnShort" value="short"
                           data-bind="checked: blankSlot().resetsOn"/>
-                    <img class="action-bar-icon" src="/images/meditation.svg"></img>
+                    <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
                     &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
                 <label class="btn btn-default"
@@ -137,7 +137,7 @@
                           name="blankresetsOnLong"
                           value="long"
                           data-bind="checked: blankSlot().resetsOn"/>
-                   <img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+                   <img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
                     &nbsp;&nbsp;&nbsp;Long Rest
                 </label>
               </div>
@@ -214,7 +214,7 @@
                          value="short"
                          data-bind="checked: resetsOn"/>
                   <img class="action-bar-icon"
-                       src="/images/meditation.svg"></img>
+                    data-bind="attr: { src: meditation }"></img>
                        &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
                 <label class="btn btn-default"
@@ -225,7 +225,7 @@
                        value="long"
                        data-bind="checked: resetsOn"/>
                 <img class="action-bar-icon"
-                     src="/images/camping-tent.svg"></img>
+                  data-bind="attr: { src: campingTent }"></img>
                      &nbsp;&nbsp;&nbsp;Long Rest
                 </label>
               </div>

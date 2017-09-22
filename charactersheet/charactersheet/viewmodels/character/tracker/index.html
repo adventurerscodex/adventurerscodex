@@ -38,8 +38,8 @@
 
 					<td class="col-content-vertical hidden-sm hidden-xs feature-row"
             data-bind="click: $parent.editTracked" href="#" data-toggle="modal">
-            <img class="action-bar-icon" src="/images/meditation-blue.svg" data-bind="visible: tracked().resetsOn() === 'short'"></img>
-            <img class="action-bar-icon" src="/images/camping-tent-blue.svg" data-bind="visible: tracked().resetsOn() === 'long'"></img>
+            <img class="action-bar-icon" data-bind="visible: tracked().resetsOn() === 'short', attr: { src: meditation }"></img>
+            <img class="action-bar-icon" data-bind="visible: tracked().resetsOn() === 'long', attr: { src: campingTent }"></img>
 					</td>
 
 					<td>
@@ -93,14 +93,14 @@
 								data-bind="css: { active: resetsOn() == 'short'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" src="/images/meditation.svg"></img>
+									<img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
 									&nbsp;&nbsp;&nbsp;Short Rest
 								</label>
 								<label class="btn btn-default"
 								data-bind="css: { active: resetsOn() == 'long'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" src="/images/camping-tent.svg"></img>
+									<img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
 									&nbsp;&nbsp;&nbsp;Long Rest
 								</label>
 							</div>
