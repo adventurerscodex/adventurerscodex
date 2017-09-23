@@ -4,10 +4,13 @@ const webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+//   devtool: "source-map",
   context: path.resolve(__dirname, './charactersheet'),
   entry: './app.js' ,
   output: {
     path: path.resolve(__dirname, './dist'),
+//     pathinfo: true,
+//     sourceMapFilename: "[name].bundle.js.map",
     filename: '[name].bundle.js',
   },
   resolve: {
@@ -20,12 +23,11 @@ module.exports = {
       // Injects bundles in your index.html instead of wiring all manually.
       // It also adds hash to all injected assets so we don't have problems
       // with cache purging during deployment.
-      new HtmlWebpackPlugin({
-        template: 'index.html',
-        inject: 'body',
-        hash: true
-      })
-
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      inject: 'body',
+      hash: true
+    })
 //       new webpack.optimize.CommonsChunkPlugin({
 //         name: 'vendor',
 //         minChunks: function isExternal(module) {
