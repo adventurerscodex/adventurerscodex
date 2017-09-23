@@ -1,5 +1,7 @@
 import ko from 'knockout'
 import uuid from 'node-uuid'
+import 'bin/knockout-bootstrap-modal'
+// import 'bin/knockout-jquery-autocomplete'
 
 import { Notifications,
     DataRepository,

@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager,
     Fixtures,
@@ -10,6 +11,8 @@ import { PersistenceService, SortService } from 'charactersheet/services/common'
 import template from './index.html'
 import campingTent from 'images/camping-tent-blue.svg'
 import meditation from 'images/meditation-blue.svg'
+import campingTentWhite from 'images/camping-tent.svg'
+import meditationWhite from 'images/meditation.svg'
 
 export function TrackerViewModel() {
     var self = this;
@@ -27,6 +30,8 @@ export function TrackerViewModel() {
     self.filter = ko.observable('');
     self.meditation = meditation;
     self.campingTent = campingTent;
+    self.meditationWhite = meditationWhite;
+    self.campingTentWhite = campingTentWhite;
     // List of all models that can be tracked
     self.trackedTypes = [ Feat, Trait, Feature ];
 

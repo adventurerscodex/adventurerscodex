@@ -1,3 +1,5 @@
+import ko from 'knockout'
+
 /**
  * Knockout jQuery Autocomplete Binding
  * author: Brian Schrader

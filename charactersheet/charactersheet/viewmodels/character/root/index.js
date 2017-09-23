@@ -40,6 +40,7 @@ import weaponSection from 'images/spinning-sword.svg'
 import armorSection from 'images/checked-shield.svg'
 import inventorySection from 'images/misc_icons/locked-chest.svg'
 import profileSection from 'images/standing-man-3.svg'
+import battleGear from 'images/tab_icons/battle-gear.svg'
 
 
 export function CharacterRootViewModel() {
@@ -61,6 +62,7 @@ export function CharacterRootViewModel() {
     self.armorSection = armorSection;
     self.inventorySection = inventorySection;
     self.profileSection = profileSection;
+    self.battleGear = battleGear;
 
     self.playerType = function() {
         return CharacterManager.activeCharacter().playerType();
@@ -74,17 +76,6 @@ export function CharacterRootViewModel() {
 //     Player Child View Models
 //     self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
 //     self.statusLineViewModel       = ko.observable(new StatusLineViewModel());
-//
-//     self.profileTabViewModel       = ko.observable(new ProfileTabViewModel());
-//     self.statsTabViewModel         = ko.observable(new StatsTabViewModel());
-//     self.skillsTabViewModel        = ko.observable(new SkillsTabViewModel());
-//     self.spellsTabViewModel        = ko.observable(new SpellsTabViewModel());
-//     self.equipmentTabViewModel     = ko.observable(new EquipmentTabViewModel());
-//     self.inventoryTabViewModel     = ko.observable(new InventoryTabViewModel());
-//     self.notesTabViewModel         = ko.observable(new NotesTabViewModel());
-//     self.exhibitTabViewModel       = ko.observable(new ExhibitTabViewModel());
-//     self.playerImageViewModel      = ko.observable(new PlayerImageViewModel());
-//     self.chatTabViewModel          = ko.observable(new ChatTabViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();

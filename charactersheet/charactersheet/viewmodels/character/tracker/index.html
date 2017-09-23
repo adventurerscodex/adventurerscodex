@@ -24,22 +24,24 @@
 			<!-- ko foreach: filteredAndSortedTrackables -->
 				<tr class="clickable">
 					<td data-bind="click: $parent.editTracked"
-					href="#" class="feature-row table-data-overflow"
+					class="feature-row table-data-overflow"
           data-toggle="modal">
             <span data-bind="css: tracked().color()" class="form-control pull-left color-picker-item"></span>
-  					<span href="#" data-bind="html: $parent.shortName(name)" class="hidden-lg hidden-md"></span>
-						<span href="#" data-bind="text: name" class="hidden-sm hidden-xs"></span>
+  					<span data-bind="html: $parent.shortName(name)" class="hidden-lg hidden-md"></span>
+						<span data-bind="text: name" class="hidden-sm hidden-xs"></span>
 					</td>
 
 					<td class="col-content-vertical feature-row hidden-xs"
-            data-bind="click: $parent.editTracked" href="#"  data-toggle="modal">
+            data-bind="click: $parent.editTracked" data-toggle="modal">
 						<span data-bind="text: tracked().maxUses()"></span>
 					</td>
 
 					<td class="col-content-vertical hidden-sm hidden-xs feature-row"
-            data-bind="click: $parent.editTracked" href="#" data-toggle="modal">
-            <img class="action-bar-icon" data-bind="visible: tracked().resetsOn() === 'short', attr: { src: meditation }"></img>
-            <img class="action-bar-icon" data-bind="visible: tracked().resetsOn() === 'long', attr: { src: campingTent }"></img>
+            data-bind="click: $parent.editTracked" data-toggle="modal">
+						<img class="action-bar-icon"
+							data-bind="visible: tracked().resetsOn() === 'short', attr: { src: $parent.meditation }"></img>
+						<img class="action-bar-icon"
+							data-bind="visible: tracked().resetsOn() === 'long', attr: { src: $parent.campingTent }"></img>
 					</td>
 
 					<td>
@@ -47,7 +49,7 @@
 					</td>
 
 					<td class="col-content-vertical"> <!--Refresh -->
-						<a data-bind="click: $parent.refreshTracked" href="#">
+						<a data-bind="click: $parent.refreshTracked">
 							<i class="fa fa-refresh fa-color"> </i>
 						</a>
           </td>
@@ -93,14 +95,14 @@
 								data-bind="css: { active: resetsOn() == 'short'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
+									<img class="action-bar-icon" data-bind="attr: { src: $parent.meditationWhite }"></img>
 									&nbsp;&nbsp;&nbsp;Short Rest
 								</label>
 								<label class="btn btn-default"
 								data-bind="css: { active: resetsOn() == 'long'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
+									<img class="action-bar-icon" data-bind="attr: { src: $parent.campingTentWhite }"></img>
 									&nbsp;&nbsp;&nbsp;Long Rest
 								</label>
 							</div>

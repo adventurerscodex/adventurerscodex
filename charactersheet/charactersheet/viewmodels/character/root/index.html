@@ -17,6 +17,12 @@
       <span class="text-center"><small>Spells</small></span>
     </a>
   </li>
+  <li role="presentation" data-bind="click: activateEquipmentTab, css: equipmentTabStatus">
+      <a href="#items" aria-controls="items" role="tab" data-toggle="tab" class="tab-subtext">
+        <img class="tab-icon" data-bind="attr: { src: battleGear }"></img></br>
+        <span class="text-center"><small>Equipment</small></span>
+      </a>
+  </li>
   <li role="presentation" data-bind="click: activateInventoryTab, css: inventoryTabStatus">
     <a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" data-bind="attr: { src: inventoryTab }"></img></br>
@@ -213,7 +219,7 @@
                Be sure to Don your armor and/or shield so your AC will be calculated.
         </small>
       </div>
-      <armors></armors>
+      <armor></armor>
     </div>
     <div class="col-sm-4 col-lg-3 hidden-xs">
       <img alt="Shield" data-bind="attr: { src: armorSection }"/>

@@ -1,5 +1,6 @@
 import ko from 'knockout'
 import uuid from 'node-uuid'
+import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager } from 'charactersheet/utilities'
 import { DataRepository } from 'charactersheet/utilities'

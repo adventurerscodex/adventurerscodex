@@ -1,7 +1,9 @@
 import ko from 'knockout'
+import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications,
+    Utility } from 'charactersheet/utilities'
 import { PersistenceService,
     SortService } from 'charactersheet/services/common'
 import { Spell } from 'charactersheet/models'

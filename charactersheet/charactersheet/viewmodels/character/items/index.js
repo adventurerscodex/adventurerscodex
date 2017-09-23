@@ -1,6 +1,9 @@
 import ko from 'knockout'
+import 'bin/knockout-bootstrap-modal'
 
-import { CharacterManager, Fixtures } from 'charactersheet/utilities'
+import { CharacterManager,
+    Fixtures,
+    Utility } from 'charactersheet/utilities'
 import { Item } from 'charactersheet/models/common'
 import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService, SortService } from 'charactersheet/services/common'

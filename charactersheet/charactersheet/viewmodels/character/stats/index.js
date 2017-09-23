@@ -1,7 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-
 import { CharacterManager } from 'charactersheet/utilities'
 import { Health,
     HitDice,
@@ -10,7 +8,8 @@ import { Health,
     Profile,
     DeathSave } from 'charactersheet/models/character'
 import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService,
+    ArmorClassService } from 'charactersheet/services'
 
 import template from './index.html'
 

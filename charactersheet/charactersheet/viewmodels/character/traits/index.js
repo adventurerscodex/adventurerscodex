@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager,
     DataRepository,
