@@ -1,3 +1,5 @@
+import ko from 'knockout'
+
 /**
  * Obtained this binding from:
  * http://stackoverflow.com/questions/14822018/knockout-twitter-bootstrap-popover-binding

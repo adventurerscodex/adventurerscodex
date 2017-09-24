@@ -4,7 +4,8 @@ import 'bin/knockout-bootstrap-modal'
 import { Armor} from 'charactersheet/models/common'
 import { CharacterManager,
     Notifications,
-    Fixtures } from 'charactersheet/utilities'
+    Fixtures,
+    Utility } from 'charactersheet/utilities'
 import { PersistenceService,
     SortService } from 'charactersheet/services/common'
 

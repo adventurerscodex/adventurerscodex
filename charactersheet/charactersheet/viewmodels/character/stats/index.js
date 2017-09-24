@@ -4,7 +4,6 @@ import { CharacterManager } from 'charactersheet/utilities'
 import { Health,
     HitDice,
     HitDiceType,
-    OtherStats,
     Profile,
     DeathSave } from 'charactersheet/models/character'
 import { Notifications } from 'charactersheet/utilities'
@@ -17,8 +16,6 @@ export function StatsViewModel() {
     var self = this;
 
     self.health = ko.observable(new Health());
-    self.otherStats = ko.observable(new OtherStats());
-    self.armorClass = ko.observable();
     self.blankHitDice = ko.observable(new HitDice());
     self.hitDiceList = ko.observableArray([]);
     self.hitDiceType = ko.observable(new HitDiceType());
@@ -27,14 +24,6 @@ export function StatsViewModel() {
     self.editHealthItem = ko.observable();
     self.editHitDiceItem = ko.observable();
     self.modalOpen = ko.observable(false);
-    self.level = ko.observable('');
-    self.experience = ko.observable('');
-    self._dummy = ko.observable();
-    self._otherStatsDummy = ko.observable();
-
-    self.initiativePopover = ko.observable();
-    self.proficiencyPopover = ko.observable();
-    self.armorClassPopover = ko.observable();
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -47,14 +36,6 @@ export function StatsViewModel() {
             self.health(new Health());
         }
         self.health().characterId(key);
-
-        var otherStats = PersistenceService.findBy(OtherStats, 'characterId', key);
-        if (otherStats.length > 0) {
-            self.otherStats(otherStats[0]);
-        } else {
-            self.otherStats(new OtherStats());
-        }
-        self.otherStats().characterId(key);
 
         var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
         if (hitDiceList.length > 0) {
@@ -92,12 +73,6 @@ export function StatsViewModel() {
             }
         }
 
-        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
-        if (profile) {
-            self.level(profile.level());
-            self.experience(profile.exp());
-        }
-
         self.deathSaveSuccessList().forEach(function(e, i, _) {
             e.characterId(key);
         });
@@ -113,12 +88,6 @@ export function StatsViewModel() {
             hitDice.hitDiceUsed.subscribe(self.hitDiceDataHasChanged);
         });
         self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
-        self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
-        self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
-        self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
-        self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
-        self.level.subscribe(self.levelDataHasChanged);
-        self.experience.subscribe(self.experienceDataHasChanged);
         self.deathSaveFailureList().forEach(function(save, idx, _) {
             save.deathSaveFailure.subscribe(self._alertPlayerHasDied);
         });
@@ -126,17 +95,13 @@ export function StatsViewModel() {
             save.deathSaveSuccess.subscribe(self._alertPlayerIsStable);
         });
 
-        Notifications.profile.changed.add(self._dummy.valueHasMutated);
-        Notifications.profile.level.changed.add(self.calculateHitDice);
         Notifications.events.longRest.add(self.resetOnLongRest);
-        Notifications.armorClass.changed.add(self.updateArmorClass);
-        Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
+        Notifications.profile.level.changed.add(self.calculateHitDice);
         self.healthDataHasChange();
     };
 
     self.unload = function() {
         self.health().save();
-        self.otherStats().save();
         self.hitDiceList().forEach(function(e, i, _) {
             e.save();
         });
@@ -149,7 +114,7 @@ export function StatsViewModel() {
         self.hitDiceType().save();
 
         Notifications.profile.changed.remove(self.calculatedProficiencyLabel);
-        Notifications.profile.changed.remove(self.calculateHitDice);
+        Notifications.profile.changed.level.remove(self.calculateHitDice);
         Notifications.events.longRest.remove(self.resetOnLongRest);
         Notifications.armorClass.changed.remove(self.updateArmorClass);
         Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
@@ -158,7 +123,6 @@ export function StatsViewModel() {
 
     self.save = function() {
         self.health().save();
-        self.otherStats().save();
         self.hitDiceList().forEach(function(e, i, _) {
             e.save();
         });
@@ -173,7 +137,6 @@ export function StatsViewModel() {
 
     self.clear = function() {
         self.health().clear();
-        self.otherStats().clear();
         self.deathSaveSuccessList().forEach(function(e, i, _) {
             e.clear();
         });
@@ -254,66 +217,6 @@ export function StatsViewModel() {
         self.hitDiceDataHasChanged();
     };
 
-    // Calculate proficiency label and popover
-    self.calculatedProficiencyLabel = ko.pureComputed(function() {
-        self._dummy();
-        var proficiencyService = ProficiencyService.sharedService();
-        var level = proficiencyService.proficiencyBonusByLevel();
-        var proficiency = proficiencyService.proficiencyModifier();
-        self.updateProficiencyPopoverMessage(level, proficiency);
-
-        return ProficiencyService.sharedService().proficiency();
-    });
-
-    self.updateProficiencyPopoverMessage = function(level, proficiency) {
-        self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
-            + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />Proficiency = '
-            + level + ' + 1 + ' + proficiency);
-    };
-
-    // Calculate initiative label and popover
-    self.calculateInitiativeLabel = ko.pureComputed(function() {
-        self._otherStatsDummy();
-        var key = CharacterManager.activeCharacter().key();
-        var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
-        var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
-        var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
-        self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
-
-        return dexterityModifier + initiativeModifier;
-    });
-
-    self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
-        self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
-        'Dexterity Modifier + Modifier</span><br />'
-            + 'Initiative = ' + dexterityModifier + ' + ' +  initiativeModifier );
-    };
-
-    self.updateArmorClassPopoverMessage = function(dexterityModifier, initiativeModifier) {
-        var acService = ArmorClassService.sharedService();
-        var baseAC = acService.baseArmorClass(),
-            dexMod = acService.dexBonus(),
-            magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
-            shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
-
-        var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId',
-            CharacterManager.activeCharacter().key());
-        var modifier = 0;
-        if (otherStats) {
-            modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;
-        }
-
-        self.armorClassPopover('<span><strong>Armor Class</strong> = ' +
-        'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />' +
-        '<strong>Armor Class</strong> = ' + baseAC + ' + ' + dexMod + ' + ' +  magicModifiers +
-        ' + ' + shield + ' + ' + modifier);
-    };
-
-    self.updateArmorClass = function() {
-        self.updateArmorClassPopoverMessage();
-        self.armorClass(ArmorClassService.sharedService().armorClass());
-    };
-
     // Modal methods
     self.modifierHasFocus = ko.observable(false);
 
@@ -333,35 +236,9 @@ export function StatsViewModel() {
 
     /* Utility Methods */
 
-    self.inspirationHasChanged = function() {
-        self.otherStats().save();
-        Notifications.otherStats.inspiration.changed.dispatch();
-    };
-
     self.healthDataHasChange = function() {
         self.health().save();
         Notifications.health.changed.dispatch();
-    };
-
-    self.armorClassModifierDataHasChanged = function() {
-        self.otherStats().save();
-        Notifications.stats.armorClassModifier.changed.dispatch();
-    };
-
-    self.levelDataHasChanged = function() {
-        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key());
-        profile.level(self.level());
-        profile.save();
-        Notifications.profile.level.changed.dispatch();
-    };
-
-    self.experienceDataHasChanged = function() {
-        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key());
-        profile.exp(self.experience());
-        profile.save();
-        Notifications.profile.experience.changed.dispatch();
     };
 
     self.maxHpDataHasChanged = function() {
@@ -392,11 +269,6 @@ export function StatsViewModel() {
     self.hitDiceTypeDataHasChanged = function() {
         self.hitDiceType().save();
         Notifications.hitDiceType.changed.dispatch();
-    };
-
-    self.proficiencyHasChanged = function() {
-        self.otherStats().save();
-        Notifications.otherStats.proficiency.changed.dispatch();
     };
 
     self._alertPlayerHasDied = function() {
