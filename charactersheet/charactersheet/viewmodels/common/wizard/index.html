@@ -1,12 +1,20 @@
 <div class="row">
   <div class="col-sm-offset-1 col-sm-11 col-xs-12">
     <div class="container-fluid">
-      <!-- ko with: currentStep -->
-			<div data-bind="template: {
-			    data: $data,
-			    name: TEMPLATE_FILE,
-			    templateUrl: 'templates/common'
-			  }"></div>
+      <!-- ko if: currentStep.IDENTIFIER == 'WizardAbilityScoresStep' -->
+			<wizard-ability-score-step></wizard-ability-score-step>
+      <!-- /ko -->
+      <!-- ko if: currentStep.IDENTIFIER == 'WizardCampaignStep' -->
+			<wizard-campaign-step></wizard-campaign-step>
+      <!-- /ko -->
+      <!-- ko if: currentStep.IDENTIFIER == 'WizardIntroStep' -->
+			<wizard-intro-step></wizard-intro-step>
+      <!-- /ko -->
+      <!-- ko if: currentStep.IDENTIFIER == 'WizardPlayerTypeStep' -->
+			<wizard-player-type-step></wizard-player-type-step>
+      <!-- /ko -->
+      <!-- ko if: currentStep.IDENTIFIER == 'WizardProfileStep' -->
+			<wizard-profile-step></wizard-profile-step>
       <!-- /ko -->
 			<hr />
       <div class="spacer"></div>

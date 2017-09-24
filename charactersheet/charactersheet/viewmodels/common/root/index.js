@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager } from 'charactersheet/utilities'
 import { HotkeysService } from 'charactersheet/services'

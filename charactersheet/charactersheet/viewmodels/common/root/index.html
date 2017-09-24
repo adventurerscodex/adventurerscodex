@@ -135,6 +135,75 @@
     <!-- /ko -->
 	</div>
 </div>
+<!-- New Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog"
+aria-labelledby="newLabel">
+<div class="modal-dialog" role="document">
+  <div class="modal-content container-fluid">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal"
+        aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title" id="settingsLabel"
+        data-dismiss="modal">Create a new character or campaign</h4>
+    </div>
+    <div class="modal-body">
+      <p>If you play more than one character,
+        run multiple campaigns, or do a little of both, you're
+        in luck! Create a new character or campaign and then use
+        the "Characters and Games" menu to switch between them.</p>
+    </div>
+    <div class="modal-footer">
+      <button data-bind="click: showWizard"
+        data-dismiss="modal" type="submit"
+        class="btn btn-primary">Get started!
+      </button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- Switch Characters Modal -->
+<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
+  aria-labelledby="charactersModalLabel">
+  <characters></characters>
+</div>
+<!-- Party Manager Modal -->
+<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
+  aria-labelledby="partyModalLabel"
+  data-bind="modal: {
+  open: partyManagerModalStatus,
+  onclose: partyModalFinishedClosing
+  }">
+  <party-manager></party-manager>
+</div>
+<!-- Export Modal -->
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
+data-bind="with: charactersViewModel"
+aria-labelledby="exportModalLabel">
+<div class="modal-dialog" role="document" data-bind="with: selectedCharacter">
+  <div class="modal-content container-fluid">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+    </div>
+    <div class="modal-body">
+      <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+      <p>Note: Safari users will need to save the contents of the page.</p>
+      <!-- ko ifnot: $parent.isLoggedIn -->
+      <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
+      <!-- /ko-->
+    <!-- Add export form. -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export to file</button>
+      <!-- ko if: $parent.isLoggedIn -->
+      <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
+      <!-- /ko-->
+    </div>
+  </div>
+</div>
+</div>
 <!-- /ko -->
 
 <!-- ko if: shouldShowWizard -->
