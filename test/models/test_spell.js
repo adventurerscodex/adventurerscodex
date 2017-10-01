@@ -3,7 +3,7 @@ import simple from 'simple-mock';
 import { CharacterManager } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services';
-import { Spell } from 'charactersheet/models/common/spell';
+import { Spell, SpellStats } from 'charactersheet/models';
 
 describe('Spell Model', function() {
     //Clean up after each test.

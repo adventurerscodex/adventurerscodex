@@ -5,7 +5,9 @@ import { AbilitiesFixture } from '../test';
 import { CharacterManager } from 'charactersheet/utilities';
 import { AbilityScores } from  'charactersheet/models/character/ability_scores';
 import { AbilitiesFixture } from '../fixtures';
-
+import { getModifier,
+    getStrModifier,
+    isNumeric } from 'charactersheet/viewmodels/character/ability_scores';
 
 describe('Ability Scores Model', function() {
     describe('Clear', function() {

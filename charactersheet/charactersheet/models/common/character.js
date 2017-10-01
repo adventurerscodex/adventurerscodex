@@ -12,7 +12,7 @@ import {
     PlayerTypes,
     Profile
  } from 'charactersheet/models'
-import { Utility } from 'charactersheet/utilities'
+import { Notifications, Utility } from 'charactersheet/utilities'
 import { Settings } from 'charactersheet/settings.js'
 import { PersistenceService } from 'charactersheet/services/common'
 
