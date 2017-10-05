@@ -1,20 +1,20 @@
 <div class="row">
   <div class="col-sm-offset-1 col-sm-11 col-xs-12">
     <div class="container-fluid">
-      <!-- ko if: currentStep.IDENTIFIER == 'WizardAbilityScoresStep' -->
-			<wizard-ability-score-step></wizard-ability-score-step>
+      <!-- ko if: currentStep() === 'WizardIntroStep' -->
+			<wizard-intro-step params="stepReady: stepReady, results: stepResult"></wizard-intro-step>
       <!-- /ko -->
-      <!-- ko if: currentStep.IDENTIFIER == 'WizardCampaignStep' -->
-			<wizard-campaign-step></wizard-campaign-step>
+      <!-- ko if: currentStep() === 'WizardPlayerTypeStep' -->
+			<wizard-player-type-step params="stepReady:stepReady, results: stepResult"></wizard-player-type-step>
       <!-- /ko -->
-      <!-- ko if: currentStep.IDENTIFIER == 'WizardIntroStep' -->
-			<wizard-intro-step></wizard-intro-step>
+      <!-- ko if: currentStep() === 'WizardAbilityScoresStep' -->
+			<wizard-ability-score-step params="stepReady:stepReady, results: stepResult"></wizard-ability-score-step>
       <!-- /ko -->
-      <!-- ko if: currentStep.IDENTIFIER == 'WizardPlayerTypeStep' -->
-			<wizard-player-type-step></wizard-player-type-step>
+      <!-- ko if: currentStep() === 'WizardCampaignStep' -->
+			<wizard-campaign-step params="stepReady:stepReady, results: stepResult"></wizard-campaign-step>
       <!-- /ko -->
-      <!-- ko if: currentStep.IDENTIFIER == 'WizardProfileStep' -->
-			<wizard-profile-step></wizard-profile-step>
+      <!-- ko if: currentStep() === 'WizardProfileStep' -->
+			<wizard-profile-step params="stepReady:stepReady, results: stepResult"></wizard-profile-step>
       <!-- /ko -->
 			<hr />
       <div class="spacer"></div>

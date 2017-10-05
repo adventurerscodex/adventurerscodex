@@ -1,3 +1,5 @@
+import { WizardIntroStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps'
+
 /**
  * A global list of settings and static values.
  */

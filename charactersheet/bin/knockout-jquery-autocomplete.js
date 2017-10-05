@@ -1,5 +1,5 @@
 import ko from 'knockout'
-
+import autocomplete from 'jquery-ui'
 /**
  * Knockout jQuery Autocomplete Binding
  * author: Brian Schrader

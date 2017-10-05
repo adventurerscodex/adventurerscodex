@@ -1,15 +1,23 @@
 import ko from 'knockout'
+import 'bin/knockout-required-extender'
+// TODO: Fix autocomplete binding
+// import 'bin/knockout-jquery-autocomplete'
 
 import { DataRepository } from 'charactersheet/utilities'
 import { Fixtures } from 'charactersheet/utilities'
 
 import template from './index.html'
+import icon from 'images/logo-full-circle-icon.png'
 
-export function WizardProfileStepViewModel() {
+export function WizardProfileStepViewModel(params) {
     var self = this;
 
+    self.icon = icon;
     self.TEMPLATE_FILE = 'wizard_profile_step.tmpl';
     self.IDENTIFIER = 'WizardProfileStep';
+
+    self.stepReady = params.stepReady;
+    self.stepResult = params.results;
 
     self.REQUIRED_FIELDS = ['characterName', 'playerName'];
 
@@ -17,7 +25,10 @@ export function WizardProfileStepViewModel() {
 
     self.init = function() { };
 
-    self.load = function() { };
+    self.load = function() {
+        self.characterName.subscribe(self.dataHasChanged);
+        self.playerName.subscribe(self.dataHasChanged);
+    };
 
     self.unload = function() { };
 
@@ -101,6 +112,11 @@ export function WizardProfileStepViewModel() {
 
     // Wizard Step Methods
 
+    self.dataHasChanged = function() {
+        self.results();
+        self.ready();
+    }
+
     /**
      * Returns true if all required fields are filled.
      */
@@ -108,7 +124,7 @@ export function WizardProfileStepViewModel() {
         var emptyFields = self.REQUIRED_FIELDS.filter(function(field, idx, _) {
             return self[field]() ? !self[field]().trim() : true;
         });
-        return emptyFields.length === 0;
+        self.stepReady(emptyFields.length === 0);
     });
 
     /**
@@ -116,7 +132,7 @@ export function WizardProfileStepViewModel() {
      * the fields in the form.
      */
     self.results = ko.pureComputed(function() {
-        return {
+        self.stepResult( {
             playerName: self.playerName(),
             characterName: self.characterName(),
             background: self.background(),
@@ -130,7 +146,7 @@ export function WizardProfileStepViewModel() {
             exp: self.exp(),
             traits: self.populateTraits(),
             items: self.populateBackpackItems()
-        };
+        });
     });
 }
 

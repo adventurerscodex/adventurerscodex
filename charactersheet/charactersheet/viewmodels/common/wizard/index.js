@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import uuid from 'node-uuid'
 
 import { CharacterManager } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
@@ -12,8 +13,7 @@ import { Character,
 import { WizardAbilityScoresStepViewModel,
     WizardIntroStepViewModel,
     WizardPlayerTypeStepViewModel,
-    WizardProfileStepViewModel
-    } from 'charactersheet/viewmodels/common/wizard/steps'
+    WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps'
 
 import template from './index.html'
 
@@ -48,6 +48,9 @@ export function WizardViewModel() {
     self._isComplete = ko.observable(false);
 
     self._currentStepReadySubscription = null;
+    self.stepReady = ko.observable(false);
+    self.aggregateResults = ko.observable({});
+    self.stepResult = ko.observable({});
 
     // View Model Methods
 
@@ -99,7 +102,6 @@ export function WizardViewModel() {
         self.getNextStep();
     };
 
-
     /**
      * Fetches the next step based on the results of the current step,
      * and initializes that step.
@@ -112,7 +114,7 @@ export function WizardViewModel() {
     */
     self.getNextStep = function() {
         // Do not progress if the step isn't ready.
-        if (self.currentStep() && !self.currentStep().ready()) { return; }
+        if (self.currentStep() && !self.stepReady()) { return; }
 
         var nextStepDescriptor = self._determineStepAfterStep(self.currentStep());
         if (!nextStepDescriptor.viewModel) {
@@ -124,6 +126,10 @@ export function WizardViewModel() {
         }
         self.nextStep(nextStepDescriptor);
     };
+
+    self.saveStepResult = function() {
+        self.aggregateResults()[self.currentStep()] = self.stepResult();
+    }
 
     /**
      * When called, immediately terminate the wizard and notify the
@@ -156,24 +162,14 @@ export function WizardViewModel() {
         var character = new Character();
         character.key(uuid.v4());
         character.save();
-
-        var typeStepViewModel = self.allSteps().filter(function(step, idx, _) {
-            return step.IDENTIFIER === 'WizardPlayerTypeStep';
-        })[0];
-
-        var playerType = typeStepViewModel.results().playerType;
+        var playerType = self.aggregateResults()['WizardPlayerTypeStep'].playerType;
         character.playerType(playerType);
         character.save();
 
         if (playerType.key == 'character') {
             // Profile
-
             var profile = new Profile();
-            var profileStepViewModel = self.allSteps().filter(function(step, idx, _) {
-                return step.IDENTIFIER === 'WizardProfileStep';
-            });
-
-            var data = profileStepViewModel[0].results();
+            var data = self.aggregateResults()['WizardProfileStep'];
             data.characterId = character.key();
             profile.importValues(data);
             profile.save();
@@ -186,7 +182,6 @@ export function WizardViewModel() {
                 trait.importValues(item);
                 trait.save();
             });
-
 
             // Pre populate items by backpack
             var items = data.items;
@@ -202,13 +197,8 @@ export function WizardViewModel() {
             playerInfo.save();
 
             // Ability Scores
-
-            var abilityScoresStepViewModel = self.allSteps().filter(function(step, idx, _) {
-                return step.IDENTIFIER === 'WizardAbilityScoresStep';
-            });
-
             var abilityScores = new AbilityScores();
-            var abData = abilityScoresStepViewModel[0].results();
+            var abData = self.aggregateResults()['WizardAbilityScoresStep'];
             abData.characterId = character.key();
             abilityScores.importValues(abData);
             abilityScores.save();
@@ -216,29 +206,25 @@ export function WizardViewModel() {
             // Campaign
 
             var campaign = new Campaign();
-            var campaignStep = self.allSteps().filter(function(step, idx, _) {
-                return step.IDENTIFIER === 'WizardCampaignStep';
-            });
 
-            data = campaignStep[0].results();
+            data = self.aggregateResults()['WizardCampaignStep'];
             campaign.characterId = character.key();
             campaign.playerName(data.playerName);
             campaign.name(data.campaignName);
             campaign.createdDate(new Date());
             campaign.save();
         }
-        //TODO: Save the results of all child steps.
     };
 
     // UI Helper Methods
 
-    self.shouldShowStartButton =  ko.pureComputed(function() {
+    self.shouldShowStartButton = ko.pureComputed(function() {
         return self.previousSteps().length === 0;
     });
 
     self.shouldShowNextButton = ko.pureComputed(function() {
         return self.currentStep()
-            && self.currentStep().ready()
+            && self.stepReady()
             && !self.shouldShowFinishButton()
             && !self.shouldShowStartButton();
     });
@@ -254,7 +240,9 @@ export function WizardViewModel() {
     // Button Methods
 
     self.nextButton = function() {
+        self.saveStepResult();
         self.goForward();
+        self.stepReady(false);
     };
 
     self.backButton = function() {
@@ -262,6 +250,7 @@ export function WizardViewModel() {
     };
 
     self.finishButton = function() {
+        self.saveStepResult();
         self.save();
         self.terminate();
         self.reset();
@@ -271,14 +260,14 @@ export function WizardViewModel() {
 
     self._initializeStep = function(step) {
         //Set the determination to occur when the current step is deemed ready.
-        self._currentStepReadySubscription = step.ready.subscribe(self.getNextStep);
+        self._currentStepReadySubscription = self.stepReady.subscribe(self.getNextStep);
 
-        step.init();
-        step.load();
+        // step.init();
+        // step.load();
     };
 
     self._deinitializeStep = function(step) {
-        step.unload();
+        // step.unload();
         self._currentStepReadySubscription.dispose();
     };
 
@@ -295,37 +284,37 @@ export function WizardViewModel() {
     self._determineStepAfterStep = function(currentStep) {
         var nextStep = null;
         if (!currentStep) {
-            return new NextStepDescriptor(new WizardIntroStepViewModel(), false);
+            return new NextStepDescriptor('WizardIntroStep', false);
         }
 
-        var results = currentStep.results();
-        if (currentStep.IDENTIFIER === 'WizardIntroStep') {
+        var results = self.stepResult();
+        if (currentStep === 'WizardIntroStep') {
             if (results['import']) {
                 return new NextStepDescriptor(null, true);
             } else if (results['PlayerType'] === 'player') {
-                return new NextStepDescriptor(new WizardPlayerTypeStepViewModel(), false);
+                return new NextStepDescriptor('WizardPlayerTypeStep', false);
             } else {
                 throw 'Assertion Failure: Unknown Result Type';
             }
         }
 
-        if (currentStep.IDENTIFIER === 'WizardPlayerTypeStep') {
+        if (currentStep === 'WizardPlayerTypeStep') {
             if (results.playerType.key === 'character') {
-                return new NextStepDescriptor(new WizardProfileStepViewModel(), false);
+                return new NextStepDescriptor('WizardProfileStep', false);
             } else {
-                return new NextStepDescriptor(new WizardCampaignStepViewModel(), false);
+                return new NextStepDescriptor('WizardCampaignStep', false);
             }
         }
 
-        if (currentStep.IDENTIFIER === 'WizardProfileStep') {
-            return new NextStepDescriptor(new WizardAbilityScoresStepViewModel(), false);
+        if (currentStep === 'WizardProfileStep') {
+            return new NextStepDescriptor('WizardAbilityScoresStep', false);
         }
 
-        if (currentStep.IDENTIFIER === 'WizardAbilityScoresStep') {
+        if (currentStep === 'WizardAbilityScoresStep') {
             return new NextStepDescriptor(null, false);
         }
 
-        if (currentStep.IDENTIFIER === 'WizardCampaignStep') {
+        if (currentStep === 'WizardCampaignStep') {
             return new NextStepDescriptor(null, false);
         }
 

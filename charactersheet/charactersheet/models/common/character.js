@@ -1,5 +1,6 @@
 import ko from 'knockout'
 import Dropbox from 'dropbox'
+import uuid from 'node-uuid'
 import 'knockout-mapping'
 
 import 'bin/knockout-mapping-autoignore'
@@ -12,7 +13,9 @@ import {
     PlayerTypes,
     Profile
  } from 'charactersheet/models'
-import { Utility } from 'charactersheet/utilities'
+import { Utility,
+    Notifications,
+    Migrations } from 'charactersheet/utilities'
 import { Settings } from 'charactersheet/settings.js'
 import { PersistenceService } from 'charactersheet/services/common'
 
@@ -229,7 +232,6 @@ Character._injectCharacter = function(data) {
     tableNames.forEach(function(table, i, _) {
         data[table].forEach(function(obj, idx, _1) {
             PersistenceService.saveObj(table, idx, obj);
-
             if (table.toLowerCase() === 'character') {
                 character = obj;
             }

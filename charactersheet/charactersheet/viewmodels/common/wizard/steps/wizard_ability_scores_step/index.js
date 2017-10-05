@@ -1,12 +1,16 @@
 import ko from 'knockout'
 
 import template from './index.html'
+import icon from 'images/logo-full-circle-icon.png'
 
-export function WizardAbilityScoresStepViewModel() {
+export function WizardAbilityScoresStepViewModel(params) {
     var self = this;
 
+    self.icon = icon;
     self.TEMPLATE_FILE = 'wizard_ability_scores_step.tmpl';
     self.IDENTIFIER = 'WizardAbilityScoresStep';
+    self.stepReady = params.stepReady;
+    self.stepResult = params.results;
 
     self.REQUIRED_FIELDS = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
 
@@ -14,7 +18,14 @@ export function WizardAbilityScoresStepViewModel() {
 
     self.init = function() { };
 
-    self.load = function() { };
+    self.load = function() {
+        self.str.subscribe(self.dataHasChanged);
+        self.dex.subscribe(self.dataHasChanged);
+        self.con.subscribe(self.dataHasChanged);
+        self.int.subscribe(self.dataHasChanged);
+        self.wis.subscribe(self.dataHasChanged);
+        self.cha.subscribe(self.dataHasChanged);
+    };
 
     self.unload = function() { };
 
@@ -29,6 +40,11 @@ export function WizardAbilityScoresStepViewModel() {
 
     // Wizard Step Methods
 
+    self.dataHasChanged = function() {
+        self.results();
+        self.ready();
+    }
+
     /**
      * Returns true if all required fields are filled.
      */
@@ -36,7 +52,7 @@ export function WizardAbilityScoresStepViewModel() {
         var emptyFields = self.REQUIRED_FIELDS.filter(function(field, idx, _) {
             return self[field]() ? !self[field]().trim() : true;
         });
-        return emptyFields.length === 0;
+        self.stepReady(emptyFields.length === 0);
     });
 
     /**
@@ -44,14 +60,14 @@ export function WizardAbilityScoresStepViewModel() {
      * the fields in the form.
      */
     self.results = ko.pureComputed(function() {
-        return {
+        self.stepResult( {
             str: self.str(),
             dex: self.dex(),
             con: self.con(),
             int: self.int(),
             wis: self.wis(),
             cha: self.cha()
-        };
+        });
     });
 }
 

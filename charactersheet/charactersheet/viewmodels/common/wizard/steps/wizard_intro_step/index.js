@@ -1,14 +1,21 @@
+import $ from 'jquery'
 import ko from 'knockout'
 
-import template from './index.html'
+import { Settings } from 'charactersheet/settings'
+import { Character } from 'charactersheet/models'
 
-export function WizardIntroStepViewModel() {
+import template from './index.html'
+import logo from 'images/logo-all-icons.png'
+
+export function WizardIntroStepViewModel(params) {
     var self = this;
 
+    self.logo = logo;
     self.TEMPLATE_FILE = 'wizard_intro_step.tmpl';
     self.IDENTIFIER = 'WizardIntroStep';
 
-    self.ready = ko.observable(false);
+    self.ready = params.stepReady;
+    self.results = params.results;
 
     /**
      * Results for this view model contain either a `PlayerType` field,
@@ -16,17 +23,17 @@ export function WizardIntroStepViewModel() {
      *
      * - Possible values of Player type are: player, dm, import.
      */
-    self.results = ko.observable(null);
     self.wellOpen = ko.observable(false);
 
     self.fileContents = ko.observable();
-    self.fileReader = new FileReader();
+    self.fileReader = new window.FileReader();
     self.character = null;
     self.fromRemoteFile = false;
 
     // View Model Methods
 
-    self.init = function() { };
+    self.init = function() {
+     };
 
     self.load = function() {
         //Set default value to player atm.
@@ -73,12 +80,14 @@ export function WizardIntroStepViewModel() {
     };
 
     WizardIntroStepViewModel.importRemoteFile = function(files) {
-        $.get(files[0].link).done(function(data) {
-            self.fromRemoteFile = true;
-            self.character = Character.importCharacter(JSON.parse(decodeURIComponent(data)));
-        }).error(function(err) {
-            //TODO: Alert user of error
-        });
+        try {
+            $.get(files[0].link).done(function(data) {
+                self.fromRemoteFile = true;
+                self.character = Character.importCharacter(JSON.parse(decodeURIComponent(data)));
+            });
+        } catch(error) {
+            Notifications.userNotification.dangerNotification.dispatch('There was an error importing your character or campaign from Dropbox. Please try again.','');
+        }
     };
 
     // Private Methods

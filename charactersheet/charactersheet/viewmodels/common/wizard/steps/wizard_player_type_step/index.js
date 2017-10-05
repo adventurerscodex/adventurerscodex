@@ -1,12 +1,18 @@
 import ko from 'knockout'
 
-import template from './index.html'
+import { PlayerTypes } from 'charactersheet/models/common'
 
-export function WizardPlayerTypeStepViewModel() {
+import template from './index.html'
+import icon from 'images/logo-all-icons.png'
+
+export function WizardPlayerTypeStepViewModel(params) {
     var self = this;
 
+    self.icon = icon;
     self.TEMPLATE_FILE = 'wizard_player_type_step.tmpl';
     self.IDENTIFIER = 'WizardPlayerTypeStep';
+    self.stepReady = params.stepReady;
+    self.stepResult = params.results;
 
     self.REQUIRED_FIELDS = ['playerType'];
 
@@ -16,6 +22,7 @@ export function WizardPlayerTypeStepViewModel() {
 
     self.load = function() {
         self.playerType(null);
+        self.playerType.subscribe(self.dataHasChanged);
     };
 
     self.unload = function() {};
@@ -26,24 +33,29 @@ export function WizardPlayerTypeStepViewModel() {
 
     // Wizard Step Methods
 
+    self.dataHasChanged = function() {
+        self.results();
+        self.ready();
+    }
+
     /**
      * Returns true if all required fields are filled.
      */
-    self.ready = ko.pureComputed(function() {
+    self.ready = function() {
         var emptyFields = self.REQUIRED_FIELDS.filter(function(field, idx, _) {
             return self[field]() ? !self[field]().trim() : true;
         });
-        return emptyFields.length === 0;
-    });
+        self.stepReady(emptyFields.length === 0);
+    };
 
     /**
      * Returns an object containing the current values for
      * the fields in the form.
      */
     self.results = ko.pureComputed(function() {
-        return {
+        self.stepResult( {
             playerType: PlayerTypes[self.playerType()]
-        };
+        });
     });
 }
 
