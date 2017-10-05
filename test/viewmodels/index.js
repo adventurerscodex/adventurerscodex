@@ -2,8 +2,8 @@ import './test_appearance'
 import './test_armor'
 import './test_equipment_tab'
 import './test_feat_traits'
-/*import './test_feats'*/
-/*import './test_features'*/
+import './test_feats'
+import './test_features'
 import './test_inventory_tab'
 import './test_items'
 import './test_magic_items'

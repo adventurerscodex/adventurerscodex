@@ -1,6 +1,6 @@
 import simple from 'simple-mock';
 
-import { PlayerInfo } from 'charactersheet/models/common/player_info';
+import { PlayerInfo } from 'charactersheet/models';
 import { PlayerInfoFixture } from '../fixtures';
 
 describe('Player Info Model', function() {

@@ -4,6 +4,7 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import { AbilityScores } from 'charactersheet/models'
+import { CharacterManager } from 'charactersheet/utilities'
 import { PersistenceService, ProficiencyService } from 'charactersheet/services'
 
 export function SavingThrows() {

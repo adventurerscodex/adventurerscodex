@@ -1,8 +1,7 @@
-// import './test_ability_scores'
+import './test_ability_scores'
 import './test_appearance'
 import './test_armor'
-// needs player typeshttps://cdnjs.cloudflare.com/ajax/libs/strophe.js/1.2.14/strophe.js
-/*import './test_character'*/
+import './test_character'
 import './test_death_save'
 import './test_feat'
 import './test_feat_traits'
@@ -14,13 +13,13 @@ import './test_item'
 import './test_magic_item'
 import './test_notes'
 import './test_other_stats'
-/*import './test_player_info'*/
+import './test_player_info'
 import './test_proficiency'
 import './test_profile'
-/*import './test_saving_throws'*/
+import './test_saving_throws'
 import './test_skill'
 import './test_slots'
-/*import './test_spell'*/
+import './test_spell'
 import './test_spell_stats'
 import './test_tracked'
 import './test_trait'
