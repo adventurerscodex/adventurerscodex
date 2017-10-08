@@ -3,6 +3,8 @@ import 'knockout-mapping'
 
 import 'bin/knockout-mapping-autoignore'
 
+import 'bin/knockout-mapping-autoignore'
+
 import { Fixtures } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import { Fixtures } from 'charactersheet/utilities'

@@ -7,6 +7,7 @@ import { AbilityScores } from 'charactersheet/models'
 import { CharacterManager } from 'charactersheet/utilities'
 import { PersistenceService, ProficiencyService } from 'charactersheet/services'
 
+
 export function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);

@@ -16,10 +16,9 @@ import sectionIcon from 'images/encounters/night-sky.svg'
 export function EnvironmentSectionViewModel(params) {
     var self = this;
 
-    self.template = 'environment_section.tmpl';
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
-        if (!self.encounter()) { return; }
+        if (!ko.unwrap(self.encounter)) { return; }
         return self.encounter().encounterId();
     });
 

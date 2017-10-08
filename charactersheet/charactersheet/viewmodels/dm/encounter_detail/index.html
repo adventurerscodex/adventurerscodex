@@ -12,113 +12,19 @@
   </div>
   <div class="panel-body tight-inner">
     <!-- Encounter Sections -->
-    <!-- TODO: Add encounter sections -->
     <!-- ko if: encounter -->
-    <environment-section
-      params="encounter: encounter, allSections: sections">
-    </environment-section>
-    <maps-and-images-section
-      params="encounter: encounter, allSections: sections">
-    </maps-and-images-section>
-    <point-of-interest-section
-      params="encounter: encounter, allSections: sections">
-    </point-of-interest-section>
-    <player-text-section
-      params="encounter: encounter, allSections: sections">
-    </player-text-section>
-    <npc-section
-      params="encounter: encounter, allSections: sections">
-    </npc-section>
-    <monster-section
-      params="encounter: encounter, allSections: sections">
-    </monster-section>
-    <treasure-section
-      params="encounter: encounter, allSections: sections">
-    </treasure-section>
-    <notes-section
-      params="encounter: encounter, allSections: sections">
-    </notes-section>
+    <environment-section params="encounter: encounter"></environment-section>
+    <maps-and-images-section params="encounter: encounter"></maps-and-images-section>
+    <point-of-interest-section params="encounter: encounter"></point-of-interest-section>
+    <player-text-section params="encounter: encounter"></player-text-section>
+    <npc-section params="encounter: encounter"></npc-section>
+    <monster-section params="encounter: encounter"></monster-section>
+    <treasure-section params="encounter: encounter"></treasure-section>
+    <notes-section params="encounter: encounter"></notes-section>
     <!-- /ko -->
   </div>
 </div>
 
-<!-- Edit Modal -->
-<div class="modal fade" tabindex="-1" role="dialog"
-   data-bind="modal: {
-      open: openModal,
-      onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
-    }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"> <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">
-          Edit this Encounter's Details
-        </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" onsubmit="return false">
-          <div class="form-group">
-            <div class="row row-padded">
-              <label for="encounter.name" class="col-sm-3 control-label">
-                Encounter Name
-              </label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control" id=""
-                       data-bind="value: name,
-                        hasFocus: nameHasFocus" />
-              </div>
-            </div>
-            <div class="row row-padded">
-              <label for="encounter.location" class="col-sm-3 control-label">
-                Location
-              </label>
-              <div class="col-sm-8">
-                <input type="text" class="form-control"
-                       data-bind="value: encounterLocation" />
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div class="h4">
-            Which sections would you like to include?<br />
-            <small>You can always change these later</small>
-          </div>
-          <!-- Encounter Section Show/Hide -->
-          <!-- ko foreach: { data: visibilityVMs } -->
-          <hr class="no-top-or-bottom-margin">
-          <div class="row text-left">
-            <div class="col-sm-8 col-sm-offset-1 h5"
-              data-bind="text: name">
-            </div>
-            <div class="col-sm-3">
-              <input type="checkbox" class="form-control" id=""
-                     data-bind="checked: visible" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-8 col-sm-offset-1">
-              <i class="text-muted" data-bind="text: tagline"></i>
-            </div>
-          </div>
-          <!-- /ko -->
-          <div class="spacer"></div>
-          <div class="modal-footer">
-            <div class="form-group">
-              <div class="col-xs-offset-7 col-xs-5">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<encounter-add-edit-modal
+  params="encounter: encounter, sections: sections, openModal: openModal, onsave: notifySections">
+</encounter-add-edit-modal>

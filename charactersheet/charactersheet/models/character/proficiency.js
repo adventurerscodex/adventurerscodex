@@ -3,9 +3,8 @@ import 'knockout-mapping'
 
 import 'bin/knockout-mapping-autoignore'
 
-import { Fixtures } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { Fixtures } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities/fixtures'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 
 
 export function Proficiency() {

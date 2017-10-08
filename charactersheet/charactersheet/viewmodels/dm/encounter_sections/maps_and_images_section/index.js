@@ -1,6 +1,8 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
 
+import 'bin/knockout-bootstrap-modal'
+
 import { Message,
     MapOrImage,
     MapsAndImagesSection } from 'charactersheet/models'

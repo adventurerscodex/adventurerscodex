@@ -1,18 +1,10 @@
 import ko from 'knockout'
 
 import { EncounterDetailViewModel,
+    EncounterAddEditModalViewModel,
     EncounterCellViewModel,
-    EncounterSectionVisibilityViewModel,
-    NotesSectionViewModel,
-    TreasureSectionViewModel,
-    PlayerTextSectionViewModel,
-    MonsterSectionViewModel,
-    NPCSectionViewModel,
-    PointOfInterestSectionViewModel,
-    MapsAndImagesSectionViewModel,
-    EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm'
-import { ViewModelUtilities,
-    Notifications,
+ } from 'charactersheet/viewmodels/dm'
+import { Notifications,
     CharacterManager } from 'charactersheet/utilities'
 import { Encounter } from 'charactersheet/models'
 import { PersistenceService } from 'charactersheet/services/common'
@@ -28,13 +20,16 @@ import { EnvironmentSection,
 
 import template from './index.html'
 
+
 export function EncounterViewModel() {
     var self = this;
 
     self.modalEncounter = ko.observable();
-    self.nameHasFocus = ko.observable(false);
+    self.modalEncounterSections = ko.observableArray([]);
     self.selectedCell = ko.observable();
-    self.selectedEncounter = ko.computed(function() {
+    self.openModal = ko.observable(false);
+
+    self.selectedEncounter = ko.pureComputed(function() {
         if (!self.selectedCell()) { return; }
         return PersistenceService.findFirstBy(
             Encounter, 'encounterId', self.selectedCell().encounterId()
@@ -42,102 +37,68 @@ export function EncounterViewModel() {
     });
 
     self.encounterCells = ko.observableArray();
-    self.encounterDetailViewModel = ko.observable();
-
-    self.visibilityViewModels = ko.observableArray([]);
 
     /* Encounter Sections */
 
-    self.sections = [
-        { property: 'environmentSectionViewModel', vm: EnvironmentSectionViewModel, model: EnvironmentSection },
-        { property: 'mapsAndImagesSectionViewModel', vm: MapsAndImagesSectionViewModel, model: MapsAndImagesSection },
-        { property: 'pointOfInterestSectionViewModel', vm: PointOfInterestSectionViewModel, model: PointOfInterestSection },
-        { property: 'npcSectionViewModel', vm: NPCSectionViewModel, model: NPCSection },
-        { property: 'monsterSectionViewModel', vm: MonsterSectionViewModel, model: MonsterSection },
-        { property: 'playerTextSectionViewModel', vm: PlayerTextSectionViewModel, model: PlayerTextSection },
-        { property: 'treasureSectionViewModel', vm: TreasureSectionViewModel, model: TreasureSection },
-        { property: 'notesSectionViewModel', vm: NotesSectionViewModel, model: NotesSection }
+    self.sectionModels = [
+        { model: EnvironmentSection },
+        { model: MapsAndImagesSection },
+        { model: PointOfInterestSection },
+        { model: NPCSection },
+        { model: MonsterSection },
+        { model: PlayerTextSection },
+        { model: TreasureSection },
+        { model: NotesSection }
     ];
 
     /* Public Methods */
     self.load = function() {
-//         self.selectedCell.subscribe(self.setEncounterDetailViewModel);
-
         self.encounterCells(self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
         Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
-    self.unload = function() {
-        if (self.encounterDetailViewModel()) {
-            self.encounterDetailViewModel().unload();
-        }
-        self.encounterCells().forEach(function(cell, idx, _) {
-            cell.save();
-        });
-
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-    };
-
-    /* UI Methods */
-
-    /**
-     * Sets the current encounter detail view model, if the encounter
-     * changes then it deinitializes the old value and spins up a new
-     * EncounterDetailViewModel with the value of the current encounter.
-     */
-    self.setEncounterDetailViewModel = function() {
-        if (self.encounterDetailViewModel()) {
-            self._deinitializeDetailViewModel();
-        }
-
-        var cell = self.selectedCell();
-        if (!cell) { return null; }
-
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId());
-        self.encounterDetailViewModel(new EncounterDetailViewModel(encounter, self.sections));
-        self._initializeDetailViewModel();
-    };
-
     /* Modal Methods */
 
     self.openAddModal = function() {
+        var key = CharacterManager.activeCharacter().key();
         self.modalEncounter(new Encounter());
-        self._initializeVisibilityViewModel();
+        self.modalEncounter().characterId(key);
+        self.modalEncounterSections(
+            self._getSectionsForEncounter(self.modalEncounter().encounterId())
+        );
+
+        self.openModal(true);
     };
 
     self.openAddModalWithParent = function(parent) {
+        var key = CharacterManager.activeCharacter().key();
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
-        self._initializeVisibilityViewModel();
+
+        self.modalEncounterSections(
+            self._getSectionsForEncounter(self.modalEncounter().encounterId())
+        );
+
+        self.openModal(true);
     };
 
-    self.modalFinishedOpening = function() {
-        self.nameHasFocus(true);
-    };
+    self.modalSave = function(encounter, sections) {
+        encounter().save();
 
-    self.modalFinishedClosing = function() {
-        self.modalEncounter(null);
-        self._deinitializeVisibilityViewModel();
+        sections().forEach(function(section, i, _) {
+            section.save();
+        });
+        sections([]);
+
+        Notifications.encounters.changed.dispatch();
+
+        self.addEncounterToList(encounter());
     };
 
     /* Manage Encounter Methods */
 
-    self.addEncounter = function() {
-        var key = CharacterManager.activeCharacter().key();
-
-        // Create the encounter.
-        var encounter = self.modalEncounter();
-        encounter.characterId(key);
-
-        if (!encounter.name()) {
-            encounter.name('Untitled Encounter');
-        }
-        encounter.save();
-        self.visibilityViewModels().forEach(function(vm, idx, _) {
-            vm.save();
-        });
-
+    self.addEncounterToList = function(encounter) {
         // Add the cell to the UI.
         if (encounter.parent()) {
             var parent = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
@@ -151,7 +112,6 @@ export function EncounterViewModel() {
         var cellToSelect = self._findCell(self.encounterCells(), 'encounterId', encounter.encounterId());
         if (cellToSelect) {
             self.selectedCell(cellToSelect);
-            self.encounterDetailViewModel().save();
         }
     };
 
@@ -178,36 +138,10 @@ export function EncounterViewModel() {
         if (!parentCell) {
             self.encounterCells.remove(cell);
         }
-
-        self.encounterDetailViewModel().delete();
-        self.encounterDetailViewModel(null);
         self.selectedCell(self.encounterCells()[0]);
     };
 
     /* Private Methods */
-
-    self._initializeVisibilityViewModel = function() {
-        self.visibilityViewModels(self.sections.map(function(section, idx, _) {
-            var visibilityViewModel = new EncounterSectionVisibilityViewModel(self.modalEncounter(), section.model);
-            visibilityViewModel.load();
-            return visibilityViewModel;
-        }));
-    };
-
-    self._deinitializeVisibilityViewModel = function() {
-        self.visibilityViewModels().forEach(function(vm, idx, _) {
-            vm.unload();
-        });
-        self.visibilityViewModels([]);
-    };
-
-    self._initializeDetailViewModel = function() {
-//         self.encounterDetailViewModel().load();
-    };
-
-    self._deinitializeDetailViewModel = function(vm) {
-//         self.encounterDetailViewModel().unload();
-    };
 
     self._getEncounterCells = function() {
         var key = CharacterManager.activeCharacter().key();
@@ -236,14 +170,26 @@ export function EncounterViewModel() {
         return cell;
     };
 
+    self._getSectionsForEncounter = function(id) {
+        return self.sectionModels.map(function(sectionModel, i, _) {
+            var section = PersistenceService.findFirstBy(sectionModel.model, 'encounterId', id);
+            if (!section) {
+                section = new sectionModel.model();
+                section.encounterId(id);
+            }
+            return section;
+        });
+    }
+
     self._dataHasChanged = function() {
         self.encounterCells().forEach(function(cell, idx, _) {
             cell.reloadData();
         });
+        self.selectedCell.valueHasMutated();
     };
 }
 
 ko.components.register('encounter', {
   viewModel: EncounterViewModel,
   template: template
-})
+});

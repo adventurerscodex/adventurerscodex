@@ -30,6 +30,13 @@ export function Encounter() {
 
     /* Public Methods */
 
+    self.displayName = ko.pureComputed(function() {
+        if (!ko.unwrap(self.name)) {
+            return 'Untitled Encounter';
+        }
+        return self.name();
+    });
+
     self.removeChild = function(childId) {
         self.children(self.children().filter(function(id, idx, _) {
             return id !== childId;

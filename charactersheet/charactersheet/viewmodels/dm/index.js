@@ -2,6 +2,7 @@ export { CampaignMapsAndImagesViewModel } from 'charactersheet/viewmodels/dm/cam
 export { CampaignTabViewModel } from 'charactersheet/viewmodels/dm/campaign_tab'
 export { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter'
 export { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell'
+export { EncounterAddEditModalViewModel } from 'charactersheet/viewmodels/dm/encounter_add_edit_modal'
 export { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail'
 export { EncounterSectionVisibilityViewModel } from 'charactersheet/viewmodels/dm/encounter_section_visibility'
 export { EncounterTabViewModel } from 'charactersheet/viewmodels/dm/encounter_tab'
