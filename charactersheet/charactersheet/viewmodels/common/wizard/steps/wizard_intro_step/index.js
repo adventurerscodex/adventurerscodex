@@ -3,6 +3,7 @@ import ko from 'knockout'
 
 import { Settings } from 'charactersheet/settings'
 import { Character } from 'charactersheet/models'
+import 'bin/knockout-file-bind'
 
 import template from './index.html'
 import logo from 'images/logo-all-icons.png'

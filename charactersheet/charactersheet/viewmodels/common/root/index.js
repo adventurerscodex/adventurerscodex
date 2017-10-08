@@ -7,8 +7,7 @@ import { NodeServiceManager, ChatServiceManager } from 'charactersheet/services/
 import { Notifications } from 'charactersheet/utilities'
 import { NotificationsServiceManager, XMPPService } from 'charactersheet/services/common'
 import { PersistenceService } from 'charactersheet/services/common'
-import { WizardViewModel,
-    UserNotificationViewModel,
+import { UserNotificationViewModel,
     CharactersViewModel,
     LoginViewModel,
     PartyManagerViewModel } from  'charactersheet/viewmodels'
@@ -57,7 +56,6 @@ export function AdventurersCodexViewModel() {
 
     // View Models
     self.childRootViewModel = ko.observable();
-    self.wizardViewModel = new WizardViewModel();
     self.userNotificationViewModel = new UserNotificationViewModel();
     self.charactersViewModel = new CharactersViewModel();
     self.loginViewModel = new LoginViewModel();
@@ -75,15 +73,15 @@ export function AdventurersCodexViewModel() {
     };
 
     self.shouldShowApp = ko.pureComputed(function() {
-        return  self.state() == APP_STATE.CHOSEN;
+        return self.state() == APP_STATE.CHOSEN;
     });
 
     self.shouldShowWizard = ko.pureComputed(function() {
-        return  self.state() == APP_STATE.WIZARD;
+        return self.state() == APP_STATE.WIZARD;
     });
 
     self.shouldShowPicker = ko.pureComputed(function() {
-        return  self.state() == APP_STATE.SELECT;
+        return self.state() == APP_STATE.SELECT;
     });
 
     //Public Methods
@@ -93,7 +91,6 @@ export function AdventurersCodexViewModel() {
      */
     self.init = function() {
         self.charactersViewModel.init();
-        self.wizardViewModel.init();
         self.loginViewModel.load();
 
         XMPPService.sharedService().init();
@@ -126,7 +123,7 @@ export function AdventurersCodexViewModel() {
             self.charactersViewModel.load();
             self.partyManagerViewModel.load();
         } else if (self.state() == APP_STATE.WIZARD) {
-            self.wizardViewModel.load();
+            // self.wizardViewModel.load();
         } else {
 //             self.charactersViewModel.load();
         }
@@ -139,7 +136,6 @@ export function AdventurersCodexViewModel() {
         if (self.state() != APP_STATE.SELECT) {
             self.childRootViewModel().unload();
             self.charactersViewModel.unload();
-            self.wizardViewModel.unload();
             self.partyManagerViewModel.unload();
         } else {
             self.charactersViewModel.unload();

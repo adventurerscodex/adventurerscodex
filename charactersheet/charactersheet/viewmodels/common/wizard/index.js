@@ -10,10 +10,6 @@ import { Character,
     PlayerInfo,
     Item,
     Trait } from 'charactersheet/models'
-import { WizardAbilityScoresStepViewModel,
-    WizardIntroStepViewModel,
-    WizardPlayerTypeStepViewModel,
-    WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps'
 
 import template from './index.html'
 
@@ -137,7 +133,6 @@ export function WizardViewModel() {
      */
     self.terminate = function() {
         // Newest character will be at the back.
-        //Notifications.wizard.completed.dispatch();
         var character = PersistenceService.findAll(Character).reverse()[0];
         if (character) {
             CharacterManager.changeCharacter(character.key());
@@ -261,13 +256,9 @@ export function WizardViewModel() {
     self._initializeStep = function(step) {
         //Set the determination to occur when the current step is deemed ready.
         self._currentStepReadySubscription = self.stepReady.subscribe(self.getNextStep);
-
-        // step.init();
-        // step.load();
     };
 
     self._deinitializeStep = function(step) {
-        // step.unload();
         self._currentStepReadySubscription.dispose();
     };
 

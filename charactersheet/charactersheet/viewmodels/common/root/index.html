@@ -211,14 +211,5 @@ aria-labelledby="exportModalLabel">
 <!-- /ko -->
 
 <!-- ko if: shouldShowPicker -->
-<character-picker></character-picker>
-<!--
-<div id="picker" class="container-fluid main"
-  data-bind="with: charactersViewModel">
-  <div data-bind="template: {
-    name: 'character_picker.tmpl',
-    templateUrl: 'templates/common',
-    data: $data }"></div>
-</div>
- -->
+<character-picker params="state: state"></character-picker>
 <!-- /ko -->

@@ -11,7 +11,7 @@ import template from './index.html'
 import logo from 'images/logo-full-circle-icon.png'
 
 
-export function CharacterPickerViewModel() {
+export function CharacterPickerViewModel(params) {
     var self = this;
 
     self.totalLocalStorage = 5; //MB
@@ -23,6 +23,7 @@ export function CharacterPickerViewModel() {
 
     self.characters = ko.observableArray([]);
     self.defaultCharacterKey = ko.observable(null);
+    self.state = params.state;
 
 // TODO: Move to Load if required.
 //     self.init = function() {
@@ -38,6 +39,10 @@ export function CharacterPickerViewModel() {
     self.load = function() {
         self.characters(PersistenceService.findAll(Character));
     };
+
+    self.showWizard = function() {
+        self.state('wizard');
+    }
 
     self.changeCharacter = function(character) {
         // Don't switch to the same character.

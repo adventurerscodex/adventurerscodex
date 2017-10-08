@@ -140,8 +140,7 @@ export function Character() {
 Character.exportCharacter = function(characterId) {
     var data = {};
     PersistenceService.listAll().forEach(function(e1, i1, _1) {
-        // TODO: Check for deleted models somehow
-        // if (window[e1] === undefined) { return; } //Checks for deleted models.
+        if (PersistenceService.registry[e1] === undefined) { return; } //Checks for deleted models.
         var items = PersistenceService.findAllByName(e1).filter(function(e2, i2, _2) {
             var res = false;
             try {
@@ -201,7 +200,7 @@ Character._importCharacter = function(data) {
     var tableNames = Object.keys(data);
     var characterId = uuid.v4();
     tableNames.forEach(function(e, i, _) {
-        var model = window[e];
+        var model = PersistenceService.registry[e];
         data[e].forEach(function(e1, i1, _1) {
             var inst = new model();
             e1 = Character._changeIdForData(characterId, e1);
