@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-bootstrap-modal'
+
 import { NPC,
     NPCSection } from 'charactersheet/models'
 import { Fixtures } from 'charactersheet/utilities'

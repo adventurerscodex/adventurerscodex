@@ -7,6 +7,7 @@ import { getModifier,
     getStrModifier } from 'charactersheet/viewmodels/character/ability_scores';
 import { PersistenceService } from 'charactersheet/services/common';
 
+
 export function AbilityScores() {
     var self = this;
     self.ps = PersistenceService.register(AbilityScores, self);

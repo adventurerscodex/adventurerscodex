@@ -7,6 +7,7 @@ import { PersistenceService } from 'charactersheet/services/common'
 import { Utility } from 'charactersheet/utilities'
 
 
+
 export function CampaignMapOrImage() {
     var self = this;
 

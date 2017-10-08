@@ -1,13 +1,18 @@
 import ko from 'knockout'
 
+import 'bin/knockout-bootstrap-modal'
+
 import { PlayerTextSection,
     PlayerText,
     Message } from 'charactersheet/models'
 import { SortService,
     PersistenceService,
     ChatServiceManager } from 'charactersheet/services'
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+import {
+    CharacterManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/read.svg'

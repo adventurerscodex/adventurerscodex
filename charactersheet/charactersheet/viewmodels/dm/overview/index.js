@@ -8,9 +8,12 @@ import { CharacterManager,
 import { PersistenceService } from 'charactersheet/services/common'
 
 import template from './index.html'
+import largeIcon from 'images/encounters/compass.svg'
 
 export function CampaignOverviewViewModel() {
     var self = this;
+
+    self.largeIcon = largeIcon;
 
     self.playerName = ko.observable();
     self.createdDate = ko.observable();

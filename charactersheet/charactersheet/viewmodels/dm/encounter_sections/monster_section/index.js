@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import 'bin/knockout-bootstrap-modal'
+
 import { MonsterAbilityScore,
     MonsterSection,
     Monster } from 'charactersheet/models'
