@@ -8,7 +8,6 @@ import {
     migration_150_1_dm_notes
 } from 'charactersheet/migrations'
 
-
 export var Migrations = {
     // List all migrations that should be applied
     scripts: [
