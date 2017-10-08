@@ -73,6 +73,3 @@ export function getMagicTypeEnum() {
 export function getTrackedTypeEnum() {
     return 'tracked';
 }
-
-
-PersistenceService.addToRegistry(StatusWeightPair);

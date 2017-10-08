@@ -348,13 +348,7 @@ PersistenceService.register = function(model, inst) {
  * Usage
  * -----
  * ```javascript
- * function Person() {
- *         var self = this;
- *         self.ps = PersistenceService.register(Person, self);
- * .
- * .
- * .
- * }
+ * function Person() {...}
  * PersistenceService.addToRegistry(Person);
  * ```
  */
@@ -525,7 +519,7 @@ PersistenceService._findAll = function(model) {
 
 PersistenceService._findAllByName = function(modelName) {
     var objs = PersistenceService._findAllObjs(modelName);
-    return PersistenceService._mapModels(objs, modelName);
+    return PersistenceService._mapModels(objs, PersistenceService.registry[modelName]);
 };
 
 
