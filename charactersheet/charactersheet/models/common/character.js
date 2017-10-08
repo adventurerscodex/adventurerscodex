@@ -140,8 +140,9 @@ export function Character() {
 Character.exportCharacter = function(characterId) {
     var data = {};
     PersistenceService.listAll().forEach(function(e1, i1, _1) {
-        if (window[e1] === undefined) { return; } //Checks for deleted models.
-        var items = PersistenceService.findAll(window[e1]).filter(function(e2, i2, _2) {
+        // TODO: Check for deleted models somehow
+        // if (window[e1] === undefined) { return; } //Checks for deleted models.
+        var items = PersistenceService.findAllByName(e1).filter(function(e2, i2, _2) {
             var res = false;
             try {
                 res = e2.characterId() === characterId;
@@ -183,7 +184,7 @@ Character.importCharacter = function(data) {
     PersistenceService.withTemporaryDataStore({}, function() {
         PersistenceService._setVersion(version);
         var character = Character._injectCharacter(data);
-        PersistenceService.migrate(Migrations.scripts, Settings.version);
+        // PersistenceService.migrate(Migrations.scripts, Settings.version);
         migratedData = Character.exportCharacter(character.key);
     });
 

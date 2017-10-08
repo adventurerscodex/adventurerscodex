@@ -8,7 +8,8 @@ export var PersistenceService = {
     enableCompression: false,
     master: '__master__',
     version: '__version__',
-    storage: localStorage
+    storage: localStorage,
+    registry: {}
 };
 
 /**
@@ -65,6 +66,29 @@ PersistenceService.findAll = function(model) {
     return PersistenceService._findAll(model);
 };
 
+/** TODO: UPDATE
+ * Given a model class, return all of the stored instances of that class.
+ *
+ * Parameters
+ * ----------
+ *
+ * model: The prototype for the type of model that is being searched for.
+ *
+ * Returns
+ * -------
+ *
+ * A list of objects of the desired type.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * function Person() {...}
+ *
+ * var people = PersistenceService.findAll(Person);```
+ */
+PersistenceService.findAllByName = function(modelName) {
+    return PersistenceService._findAllByName(modelName);
+};
 
 
 /**
@@ -308,6 +332,38 @@ PersistenceService.register = function(model, inst) {
 
 
 /**
+ * Add the given model to the registry. The registry will be used to map model names
+ * to the model object.
+ *
+ * Parameters
+ * ----------
+ *
+ * model: The model to be added to the registry.
+ *
+ * Returns
+ * -------
+ *
+ * Nothing.
+ *
+ * Usage
+ * -----
+ * ```javascript
+ * function Person() {
+ *         var self = this;
+ *         self.ps = PersistenceService.register(Person, self);
+ * .
+ * .
+ * .
+ * }
+ * PersistenceService.addToRegistry(Person);
+ * ```
+ */
+PersistenceService.addToRegistry = function(model) {
+    PersistenceService.registry[model.name] = model;
+};
+
+
+/**
  * Migrate will go through the list of given migrations and
  * determine if migrations should be applied based on the app
  * version number.
@@ -463,8 +519,13 @@ PersistenceService._findAllObjs = function(key) {
 
 
 PersistenceService._findAll = function(model) {
-    var objs = PersistenceService._findAllObjs(model.name);
-    return PersistenceService._mapModels(objs, model);
+    return PersistenceService._findAllByName(model.name);
+};
+
+
+PersistenceService._findAllByName = function(modelName) {
+    var objs = PersistenceService._findAllObjs(modelName);
+    return PersistenceService._mapModels(objs, modelName);
 };
 
 
