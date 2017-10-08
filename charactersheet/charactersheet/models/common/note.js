@@ -62,3 +62,6 @@ export function Note() {
         return words.slice(0, words.length - 2).join(' ');
     };
 }
+
+
+PersistenceService.addToRegistry(Note);

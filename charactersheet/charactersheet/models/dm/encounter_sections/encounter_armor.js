@@ -27,3 +27,6 @@ export function EncounterArmor() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterArmor);

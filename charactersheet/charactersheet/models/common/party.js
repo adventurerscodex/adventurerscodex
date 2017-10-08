@@ -42,3 +42,6 @@ export function Party() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Party);

@@ -55,3 +55,6 @@ export function PointOfInterest() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
+
+
+PersistenceService.addToRegistry(PointOfInterest);

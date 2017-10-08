@@ -60,3 +60,6 @@ export function MonsterAbilityScore() {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
 }
+
+
+PersistenceService.addToRegistry(MonsterAbilityScore);

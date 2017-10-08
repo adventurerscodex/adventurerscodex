@@ -46,3 +46,6 @@ export function Feat() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Feat);

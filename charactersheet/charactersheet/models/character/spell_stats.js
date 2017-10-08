@@ -49,3 +49,6 @@ export function SpellStats() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(SpellStats);

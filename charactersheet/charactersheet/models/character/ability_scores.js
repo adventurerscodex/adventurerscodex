@@ -93,3 +93,6 @@ export function AbilityScores() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(AbilityScores);

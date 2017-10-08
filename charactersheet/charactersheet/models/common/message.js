@@ -178,3 +178,6 @@ Message.fromTree = function(msg) {
 
     return chat;
 };
+
+
+PersistenceService.addToRegistry(Message);

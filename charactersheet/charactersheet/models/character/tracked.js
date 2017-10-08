@@ -47,3 +47,6 @@ export function Tracked() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Tracked);

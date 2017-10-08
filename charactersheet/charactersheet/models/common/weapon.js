@@ -235,3 +235,6 @@ export function Weapon() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Weapon);

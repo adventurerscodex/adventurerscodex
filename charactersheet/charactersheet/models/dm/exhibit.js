@@ -40,3 +40,6 @@ export function Exhibit() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Exhibit);

@@ -60,3 +60,6 @@ export function Profile() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Profile);

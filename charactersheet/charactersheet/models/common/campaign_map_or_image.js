@@ -64,3 +64,6 @@ export function CampaignMapOrImage() {
         return 'New image in chat';
     };
 }
+
+
+PersistenceService.addToRegistry(CampaignMapOrImage);

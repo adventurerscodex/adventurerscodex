@@ -48,3 +48,6 @@ export function Campaign() {
         return 'A long long time ago...';
     };
 }
+
+
+PersistenceService.addToRegistry(Campaign);

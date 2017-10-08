@@ -48,3 +48,6 @@ export function Feature() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Feature);

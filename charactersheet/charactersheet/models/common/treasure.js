@@ -80,3 +80,6 @@ export function Treasure() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Treasure);

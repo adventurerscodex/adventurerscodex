@@ -27,3 +27,6 @@ export function EncounterItem() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterItem);

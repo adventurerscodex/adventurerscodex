@@ -120,3 +120,6 @@ export function Skill() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Skill);

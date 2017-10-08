@@ -41,3 +41,6 @@ export function MapsAndImagesSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(MapsAndImagesSection);

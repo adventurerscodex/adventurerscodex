@@ -66,3 +66,6 @@ export function PlayerText() {
         );
     };
 }
+
+
+PersistenceService.addToRegistry(PlayerText);

@@ -89,3 +89,6 @@ export function Monster() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Monster);

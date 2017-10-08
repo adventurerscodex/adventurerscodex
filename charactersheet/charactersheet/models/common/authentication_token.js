@@ -94,3 +94,6 @@ export function AuthenticationToken() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(AuthenticationToken);

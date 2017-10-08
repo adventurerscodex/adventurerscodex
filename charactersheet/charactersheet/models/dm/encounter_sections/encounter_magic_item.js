@@ -27,3 +27,6 @@ export function EncounterMagicItem() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterMagicItem);

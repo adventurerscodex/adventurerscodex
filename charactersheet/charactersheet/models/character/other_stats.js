@@ -41,3 +41,6 @@ export function OtherStats() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(OtherStats);

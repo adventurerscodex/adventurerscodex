@@ -46,3 +46,6 @@ export function Proficiency() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Proficiency);

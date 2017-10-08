@@ -41,3 +41,6 @@ export function PointOfInterestSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(PointOfInterestSection);

@@ -43,3 +43,6 @@ export function CharacterAppearance() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(CharacterAppearance);

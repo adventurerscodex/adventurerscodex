@@ -41,3 +41,6 @@ export function PlayerTextSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(PlayerTextSection);

@@ -43,3 +43,6 @@ export function HitDiceType() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(HitDiceType);

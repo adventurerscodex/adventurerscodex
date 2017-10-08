@@ -165,3 +165,6 @@ export function Armor() {
         return totalBonus;
     });
 }
+
+
+PersistenceService.addToRegistry(Armor);

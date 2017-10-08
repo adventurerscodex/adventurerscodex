@@ -255,3 +255,6 @@ Character._changeIdForData = function(characterId, data) {
     }
     return data;
 };
+
+
+PersistenceService.addToRegistry(Character);

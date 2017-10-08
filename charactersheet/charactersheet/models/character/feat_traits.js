@@ -39,3 +39,6 @@ export function FeaturesTraits() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(FeaturesTraits);

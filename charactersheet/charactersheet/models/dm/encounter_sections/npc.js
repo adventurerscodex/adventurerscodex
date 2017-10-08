@@ -55,3 +55,6 @@ export function NPC() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
+
+
+PersistenceService.addToRegistry(NPC);

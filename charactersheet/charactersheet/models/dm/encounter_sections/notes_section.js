@@ -42,3 +42,6 @@ export function NotesSection() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(NotesSection);

@@ -114,3 +114,6 @@ export function Spell() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Spell);

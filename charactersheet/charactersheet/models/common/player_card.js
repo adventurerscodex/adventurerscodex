@@ -170,3 +170,6 @@ export function PlayerCard(pCard) {
 
     self.map(pCard);
 }
+
+
+PersistenceService.addToRegistry(PlayerCard);

@@ -27,3 +27,6 @@ export function EncounterCoins() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterCoins);

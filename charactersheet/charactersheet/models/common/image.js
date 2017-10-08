@@ -44,3 +44,6 @@ export function ImageModel() {
         }
     });
 }
+
+
+PersistenceService.addToRegistry(ImageModel);

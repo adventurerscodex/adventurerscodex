@@ -63,3 +63,6 @@ export function Status() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Status);

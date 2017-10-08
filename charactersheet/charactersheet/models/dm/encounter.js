@@ -75,3 +75,6 @@ export function Encounter() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Encounter);

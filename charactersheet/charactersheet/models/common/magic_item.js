@@ -90,3 +90,6 @@ export function MagicItem() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(MagicItem);

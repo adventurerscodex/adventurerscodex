@@ -41,3 +41,6 @@ export function TreasureSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(TreasureSection);

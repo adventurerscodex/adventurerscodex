@@ -118,3 +118,6 @@ Presence.fromTree = function(element) {
     });
     return presence;
 };
+
+
+PersistenceService.addToRegistry(Presence);

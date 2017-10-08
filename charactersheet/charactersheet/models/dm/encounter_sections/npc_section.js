@@ -41,3 +41,6 @@ export function NPCSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(NPCSection);

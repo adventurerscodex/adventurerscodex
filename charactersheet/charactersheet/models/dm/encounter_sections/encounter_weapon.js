@@ -27,3 +27,6 @@ export function EncounterWeapon() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterWeapon);

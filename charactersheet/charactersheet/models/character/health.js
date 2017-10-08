@@ -102,3 +102,6 @@ export function Health() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(Health);

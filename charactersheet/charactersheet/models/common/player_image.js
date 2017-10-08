@@ -36,3 +36,6 @@ export function PlayerImage() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(PlayerImage);

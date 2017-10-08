@@ -103,3 +103,6 @@ export function SavingThrows() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(SavingThrows);

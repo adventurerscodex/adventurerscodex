@@ -47,3 +47,6 @@ export function Trait() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Trait);

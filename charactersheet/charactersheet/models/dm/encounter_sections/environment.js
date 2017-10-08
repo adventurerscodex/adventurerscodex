@@ -62,3 +62,6 @@ export function Environment() {
         return 'New environment';
     };
 }
+
+
+PersistenceService.addToRegistry(Environment);

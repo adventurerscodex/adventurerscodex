@@ -99,3 +99,6 @@ export function ChatRoom() {
         return occupantCardsOrNames;
     };
 }
+
+
+PersistenceService.addToRegistry(ChatRoom);

@@ -41,3 +41,6 @@ export function MonsterSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(MonsterSection);

@@ -77,3 +77,6 @@ export function DeathSave() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(DeathSave);

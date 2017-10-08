@@ -50,3 +50,6 @@ export function HitDice() {
         return css;
     });
 }
+
+
+PersistenceService.addToRegistry(HitDice);
