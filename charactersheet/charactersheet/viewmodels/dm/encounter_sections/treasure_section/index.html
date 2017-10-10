@@ -83,32 +83,33 @@
               <div class="btn-group btn-group-justified" role="group">
                 <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'armor'}">
-                  <img class="action-bar-icon" src="/images/misc_icons/breastplate.svg"></img>
+                  <img class="action-bar-icon" data-bind="attr: { src: breastplate }">
+                  </img>
                   <input type="radio" class="hide-block"
                     data-bind="checked: itemType, click: setTreasure"
                     name="armor" value="armor"/>Armor
                 </label>
                 <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'coins'}">
-                 <img class="action-bar-icon" src="/images/misc_icons/coins.svg"></img>
+                 <img class="action-bar-icon" data-bind="attr: { src: coins }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="coins" value="coins"/>Coins
                 </label>
                 <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'item'}">
-                  <img class="action-bar-icon" src="/images/misc_icons/drink-me.svg"></img>
+                  <img class="action-bar-icon" data-bind="attr: { src: potion }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="item" value="item"/>Item
                 </label>
                 <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'magicItem'}">
-                  <img class="action-bar-icon" src="/images/misc_icons/fairy-wand.svg"></img>
+                  <img class="action-bar-icon" data-bind="attr: { src: wand }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                        name="magicItem" value="magicItem"/>Magic Item
                 </label>
                 <label class="btn btn-default btn-group-padding"
                        data-bind="css: { active: itemType() == 'weapon'}">
-                  <img class="action-bar-icon" src="/images/misc_icons/broadsword.svg"></img>
+                  <img class="action-bar-icon" data-bind="attr: { src: broadsword }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                         name="weapon" value="weapon"/>Weapon
                 </label>
@@ -362,7 +363,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/pp-coin.svg" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+          <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: blankTreasure().platinum, hasFocus: coinsFirstElementFocus'/>
@@ -371,7 +372,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/gp-coin.svg" width="30px" title="Gold Coins" alt="Gold Coins"/>
+          <img data-bind="attr: { src: gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: blankTreasure().gold'/>
@@ -380,7 +381,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/ep-coin.svg" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+          <img data-bind="attr: { src: epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: blankTreasure().electrum'>
@@ -389,7 +390,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/sp-coin.svg" width="30px" title="Silver Coins" alt="Silver Coins"/>
+          <img data-bind="attr: { src: spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: blankTreasure().silver'>
@@ -398,7 +399,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/cp-coin.svg" width="30px" title="Copper Coins" alt="Copper Coins"/>
+          <img data-bind="attr: { src: cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: blankTreasure().copper'>
@@ -963,7 +964,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/pp-coin.svg" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+          <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: platinum, hasFocus: $parent.editFirstModalElementHasFocus'/>
