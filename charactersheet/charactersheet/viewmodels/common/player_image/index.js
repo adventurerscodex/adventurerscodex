@@ -11,6 +11,23 @@ import {
 } from 'charactersheet/models/common'
 import { OtherStats } from 'charactersheet/models/character'
 
+import elfHead from 'images/sample-headshots/elf-head.png'
+import elfHead2 from 'images/sample-headshots/elf-head-2.png'
+import emoHead from 'images/sample-headshots/emo-head.png'
+import sorceress from 'images/sample-headshots/sorceress-head.png'
+import warriorHead from 'images/sample-headshots/warrior-head.png'
+import warlockHead from 'images/sample-headshots/warlock-head.png'
+import orcHead from 'images/sample-headshots/orc-head.png'
+import druidHead from 'images/sample-headshots/druid-head.png'
+import druidHead2 from 'images/sample-headshots/druid-head-2.png'
+import dudeHead from 'images/sample-headshots/dude-head.png'
+import dwarfHead from 'images/sample-headshots/dwarf-head.png'
+import knightHead from 'images/sample-headshots/knight-head.png'
+import mechanicHead from 'images/sample-headshots/mechanic-head.png'
+import merchantHead from 'images/sample-headshots/merchant-head.png'
+import randgerHead from 'images/sample-headshots/ranger-head.png'
+import trollHead from 'images/sample-headshots/troll-head.png'
+
 import template from './index.html'
 
 export function PlayerImageViewModel() {
@@ -22,7 +39,42 @@ export function PlayerImageViewModel() {
     self.imageUrl = ko.observable('');
     self.email = ko.observable('');
 
-    self.defaultImages = ko.observableArray(Fixtures.defaultProfilePictures);
+    self.elfHead = elfHead;
+    self.elfHead2 = elfHead2;
+    self.emoHead = emoHead;
+    self.sorceress = sorceress;
+    self.warriorHead = warriorHead;
+    self.warlockHead = warlockHead;
+    self.orcHead = orcHead;
+    self.druidHead = druidHead;
+    self.druidHead2 = druidHead2;
+    self.dudeHead = dudeHead;
+    self.dwarfHead = dwarfHead;
+    self.knightHead = knightHead;
+    self.mechanicHead = mechanicHead;
+    self.merchantHead = merchantHead;
+    self.randgerHead = randgerHead;
+    self.trollHead = trollHead;
+
+    self.defaultImages = ko.observableArray([
+        {'image': elfHead},
+        {'image': elfHead2},
+        {'image': emoHead},
+        {'image': sorceress},
+        {'image': warriorHead},
+        {'image': warlockHead},
+        {'image': orcHead},
+        {'image': druidHead},
+        {'image': druidHead2},
+        {'image': dudeHead},
+        {'image': dwarfHead},
+        {'image': knightHead},
+        {'image': mechanicHead},
+        {'image': merchantHead},
+        {'image': randgerHead},
+        {'image': trollHead}
+    ]);
+
     self.selectedDefaultImages = ko.observableArray();
     self.height = ko.observable(80);
     self.width = ko.observable(80);
