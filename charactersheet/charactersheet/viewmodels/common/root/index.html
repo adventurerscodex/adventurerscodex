@@ -25,9 +25,7 @@
                target="_blank">Become a Patron</a>
         </li>
       </ul>
-<!--
-  TODO Add login view model
--->
+      <!-- TODO Add login view model -->
     </div>
   <!--/.nav-collapse -->
   </div>
@@ -61,6 +59,7 @@
             <!-- / -->
             <!-- / -->
             <!-- / -->
+            <!-- TODO: Fix these and break them into their own components -->
             <!-- with: childRootViewModel -->
             <!-- if: playerType().key == 'dm' -->
             <!-- with: campaignTabViewModel().campaignOverviewViewModel -->
@@ -92,12 +91,13 @@
                 &nbsp;
                 <i class="small underline"><a class="" data-toggle="modal"
                   data-target="#exportModal"
-                  data-bind="click: charactersViewModel.selectCharacter"
+                  data-bind="click: function() {}"
                   href="#">Export</a></i>
               </div>
             </div>
-            <!-- ko with: childRootViewModel -->
-            <!-- ko if: playerType().key == 'character' -->
+            <!-- TODO: Convert this to the new component style -->
+            <!-- with: childRootViewModel -->
+            <!-- if: playerType().key == 'character' -->
             <div class="row row-padded">
               <div class="col-xs-12">
                   <player-status-line></player-status-line>
@@ -105,34 +105,31 @@
             </div>
             <!-- /ko -->
             <!-- TODO: Convert this to the new component style -->
-            <!-- ko if: playerType().key == 'dm' -->
+            <!-- if: playerType().key == 'dm' -->
             <div class="row row-padded">
               <div class="col-xs-12">
                 <party-status-line></party-status-line>
               </div>
             </div>
-            <!-- /ko -->
+            <!-- / -->
             <div class="row">
               <div class="col-xs-12">
                 <small data-bind="html: partyStatus"></small>
               </div>
             </div>
-            <!-- /ko -->
+            <!-- / -->
           </div>
         </div>
       </div>
       </div>
     </div>
     <div class="spacer"></div>
-    <!-- TODO: This if/else is ugly and unneeded.  -->
-    <!-- ko with: childRootViewModel -->
-      <!-- ko if: playerType().key == 'character' -->
+      <!-- ko if: selectedCharacter().playerType().key == 'character' -->
       <character-root></character-root>
       <!-- /ko -->
-      <!-- ko if: playerType().key == 'dm' -->
+      <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
       <dm-root></dm-root>
       <!-- /ko -->
-    <!-- /ko -->
 	</div>
 </div>
 <!-- New Modal -->
@@ -179,9 +176,9 @@ aria-labelledby="newLabel">
 </div>
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
-data-bind="with: charactersViewModel"
+data-bd="with: charactersViewModel"
 aria-labelledby="exportModalLabel">
-<div class="modal-dialog" role="document" data-bind="with: selectedCharacter">
+<div class="modal-dialog" role="document" data-bd="with: selectedCharacter">
   <div class="modal-content container-fluid">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -190,16 +187,16 @@ aria-labelledby="exportModalLabel">
     <div class="modal-body">
       <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
       <p>Note: Safari users will need to save the contents of the page.</p>
-      <!-- ko ifnot: $parent.isLoggedIn -->
+      <!-- ifnot: $parent.isLoggedIn -->
       <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
-      <!-- /ko-->
+      <!-- /-->
     <!-- Add export form. -->
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export to file</button>
-      <!-- ko if: $parent.isLoggedIn -->
-      <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
-      <!-- /ko-->
+      <button type="button" class="btn btn-primary" data-bd="click: saveToFile" data-dismiss="modal">Export to file</button>
+      <!-- if: $parent.isLoggedIn -->
+      <button type="button" class="btn btn-primary" data-bd="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
+      <!-- /-->
     </div>
   </div>
 </div>

@@ -74,6 +74,12 @@ export var init = function(viewModel) {
     ChatServiceManager.sharedService();
     NotificationsServiceManager.sharedService();
 
+    XMPPService.sharedService().init();
+    NodeServiceManager.sharedService().init();
+    ChatServiceManager.sharedService().init();
+    NotificationsServiceManager.sharedService().init();
+
+
     // Initialize the View Model
     viewModel.init();
 };

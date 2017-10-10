@@ -1,6 +1,7 @@
 import ko from 'knockout'
 
 import 'bin/knockout-custom-loader'
+import 'charactersheet/viewmodels/dm'
 
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
@@ -10,8 +11,7 @@ import { ImageServiceManager,
     HotkeysService,
     ChatServiceManager } from 'charactersheet/services'
 import { Campaign } from 'charactersheet/models/dm'
-// import { PartyStatusLineViewModel } from 'charactersheet/viewmodels/dm/status_line'
-// import { PlayerImageViewModel } from 'charactersheet/viewmodels/common/player_image'
+
 
 import template from './index.html'
 import overviewTabImage from 'images/tab_icons/bookmarklet.svg'

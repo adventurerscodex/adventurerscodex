@@ -1,16 +1,15 @@
 import ko from 'knockout'
 import 'bin/knockout-bootstrap-modal'
 
-import { CharacterManager } from 'charactersheet/utilities'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { HotkeysService } from 'charactersheet/services'
-import { NodeServiceManager, ChatServiceManager } from 'charactersheet/services/common'
-import { Notifications } from 'charactersheet/utilities'
-import { NotificationsServiceManager, XMPPService } from 'charactersheet/services/common'
-import { PersistenceService } from 'charactersheet/services/common'
-import { UserNotificationViewModel,
-    CharactersViewModel,
-    LoginViewModel,
-    PartyManagerViewModel } from  'charactersheet/viewmodels'
+import {
+    NodeServiceManager,
+    ChatServiceManager,
+    NotificationsServiceManager,
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common'
 import { Character } from 'charactersheet/models/common'
 import 'charactersheet/viewmodels/common/character_picker'
 
@@ -50,16 +49,10 @@ export function AdventurersCodexViewModel() {
      * and the init process has finished.
       */
     self.state = ko.observable(APP_STATE.SELECT);
+    self.selectedCharacter = ko.observable();
     self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.navLogo = navLogo;
-
-    // View Models
-    self.childRootViewModel = ko.observable();
-    self.userNotificationViewModel = new UserNotificationViewModel();
-    self.charactersViewModel = new CharactersViewModel();
-    self.loginViewModel = new LoginViewModel();
-    self.partyManagerViewModel = new PartyManagerViewModel();
 
     //UI Methods
 
@@ -90,14 +83,6 @@ export function AdventurersCodexViewModel() {
      * Call Init on each sub-module.
      */
     self.init = function() {
-        self.charactersViewModel.init();
-        self.loginViewModel.load();
-
-        XMPPService.sharedService().init();
-        NodeServiceManager.sharedService().init();
-        ChatServiceManager.sharedService().init();
-        NotificationsServiceManager.sharedService().init();
-
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
@@ -117,36 +102,18 @@ export function AdventurersCodexViewModel() {
      * Signal all modules to load their data.
      */
     self.load = function() {
-        self.userNotificationViewModel.load();
-        if (self.state() == APP_STATE.CHOSEN) {
-            self.childRootViewModel().load();
-            self.charactersViewModel.load();
-            self.partyManagerViewModel.load();
-        } else if (self.state() == APP_STATE.WIZARD) {
-            // self.wizardViewModel.load();
-        } else {
-//             self.charactersViewModel.load();
-        }
         self._dummy.valueHasMutated();
     };
 
     self.unload = function() {
-        self.loginViewModel.unload();
-        self.userNotificationViewModel.unload();
-        if (self.state() != APP_STATE.SELECT) {
-            self.childRootViewModel().unload();
-            self.charactersViewModel.unload();
-            self.partyManagerViewModel.unload();
-        } else {
-            self.charactersViewModel.unload();
-        }
         self._purgeStrayDBEntries();
     };
 
     self.togglePartyManagerModal = function() {
-        if (self.partyManagerViewModel.parties().length > 0) {
-            self.partyManagerViewModel.createOrJoin('join');
-        }
+//         TODO: Find a place for this.
+//         if (self.partyManagerViewModel.parties().length > 0) {
+//             self.partyManagerViewModel.createOrJoin('join');
+//         }
         self.partyManagerModalStatus(!self.partyManagerModalStatus());
     };
 
@@ -155,13 +122,6 @@ export function AdventurersCodexViewModel() {
     };
 
     // Private Methods
-
-    self._setNewCharacter = function(character) {
-        // Init the correct view model for each type.
-        var vm = character.playerType().rootViewModel;
-        self.childRootViewModel(new vm());
-        self.childRootViewModel().init();
-    };
 
     self._handleAllCharactersRemoved = function() {
         self.showWizard();
@@ -172,10 +132,11 @@ export function AdventurersCodexViewModel() {
         if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
+        self.selectedCharacter(null);
     };
 
     self._handleChangedCharacter = function() {
-        self._setNewCharacter(CharacterManager.activeCharacter());
+        self.selectedCharacter(CharacterManager.activeCharacter());
         self.state(APP_STATE.CHOSEN);
         try {
             self.load();
