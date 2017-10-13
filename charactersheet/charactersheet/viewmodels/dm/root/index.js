@@ -186,7 +186,13 @@ export function DMRootViewModel() {
         self.currentPartyNode(null);
         self._updatePartyStatus(success);
     };
+
+    self.dispose = function() {
+        self.unload();
+    }
 }
+
+
 
 ko.components.register('dm-root', {
     viewModel: DMRootViewModel,

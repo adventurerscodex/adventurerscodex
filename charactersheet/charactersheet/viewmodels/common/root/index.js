@@ -2,10 +2,7 @@ import ko from 'knockout'
 import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import {
-    HotkeysService,
-    PersistenceService
-} from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common'
 import { Character } from 'charactersheet/models/common'
 import 'charactersheet/viewmodels/common/character_picker'
 import 'charactersheet/viewmodels/common/characters'

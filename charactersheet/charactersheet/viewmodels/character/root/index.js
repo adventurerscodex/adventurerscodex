@@ -276,6 +276,10 @@ export function CharacterRootViewModel() {
         self.currentPartyNode(null);
         self._updatePartyStatus(success);
     };
+
+    self.dispose = function() {
+        self.unload();
+    }
 }
 
 ko.components.register('character-root', {
