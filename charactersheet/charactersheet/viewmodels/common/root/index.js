@@ -7,6 +7,8 @@ import {
     PersistenceService
 } from 'charactersheet/services/common'
 import { Character } from 'charactersheet/models/common'
+import 'charactersheet/viewmodels/common/character_picker'
+import 'charactersheet/viewmodels/common/characters'
 
 import navLogo from 'images/logo-full-circle-icon.png'
 import style from 'style/site.css'
@@ -47,6 +49,7 @@ export function AdventurersCodexViewModel() {
     self.selectedCharacter = ko.observable();
     self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
+    self.characterAndGamesModalStatus = ko.observable(false);
     self.navLogo = navLogo;
 
     //UI Methods
@@ -105,11 +108,11 @@ export function AdventurersCodexViewModel() {
     };
 
     self.togglePartyManagerModal = function() {
-//         TODO: Find a place for this.
-//         if (self.partyManagerViewModel.parties().length > 0) {
-//             self.partyManagerViewModel.createOrJoin('join');
-//         }
-        self.partyManagerModalStatus(!self.partyManagerModalStatus());
+        self.partyManagerModalStatus(true);
+    };
+
+    self.toggleCharacterAndGamesModal = function() {
+        self.characterAndGamesModalStatus(true);
     };
 
     self.partyModalFinishedClosing = function() {
@@ -127,7 +130,6 @@ export function AdventurersCodexViewModel() {
         if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
-        self.selectedCharacter(null);
     };
 
     self._handleChangedCharacter = function() {

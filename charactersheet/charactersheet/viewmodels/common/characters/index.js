@@ -5,66 +5,25 @@ import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common'
 import {
     Character,
-    PlayerTypes
- } from 'charactersheet/models/common'
+    PlayerTypes } from 'charactersheet/models/common'
 
 import template from './index.html'
 
 
-export function CharactersViewModel() {
+export function CharactersViewModel(params) {
     var self = this;
 
     self.totalLocalStorage = 5; //MB
-
-    self.isLoggedIn = ko.observable(false);
-
-    self.selectedCharacter = ko.observable();
-
     self.characters = ko.observableArray([]);
-    self.defaultCharacterKey = ko.observable(null);
-
-    self.init = function() {
-        Notifications.characters.changed.add(function() {
-            self.load();
-        });
-        Notifications.profile.changed.add(function() {
-            self.load();
-        });
-        Notifications.user.exists.add(self._handleUserChanged);
-    };
+    self.modalStatus = params.modalStatus || ko.observable(false);
 
     self.load = function() {
         self.characters(PersistenceService.findAll(Character));
-        var defaultKey = '';
-        try {
-            defaultKey = self.characters().filter(function(e, i, _) {
-                return e.isDefault();
-            })[0].key();
-        } catch(err) { /*Ignore*/ }
-        self.defaultCharacterKey(defaultKey);
-
-        //Subscriptions
-        self.characters().forEach(function(e, i, _) {
-            e.isDefault.subscribe(function() {
-                e.save();
-            });
-        });
-        self.defaultCharacterKey.subscribe(function() {
-            self.characters().forEach(function(e, i, _) {
-                if (self.defaultCharacterKey() === e.key()) {
-                    e.isDefault(true);
-                } else {
-                    e.isDefault(false);
-                }
-                e.save();
-            });
-        });
+        self.modalStatus(true);
     };
 
     self.unload = function() {
-        self.characters().forEach(function(e, i, _) {
-            e.save();
-        });
+        self.modalStatus(false);
     };
 
     self.changeCharacter = function(character) {
@@ -78,10 +37,6 @@ export function CharactersViewModel() {
         if (character.key() !== activeCharacterKey) {
             CharacterManager.changeCharacter(character.key());
         }
-    };
-
-    self.selectCharacter = function(character) {
-        self.selectedCharacter(CharacterManager.activeCharacter());
     };
 
     self.addCharacter = function() {
@@ -102,7 +57,6 @@ export function CharactersViewModel() {
         //Remove the character.
         character.delete();
         self.characters.remove(character);
-        Notifications.characters.changed.dispatch();
 
         if (self.characters().length === 0) {
             Notifications.characters.allRemoved.dispatch();
@@ -118,10 +72,9 @@ export function CharactersViewModel() {
         return (used / self.totalLocalStorage * 100).toFixed(2);
     });
 
-    self._handleUserChanged = function() {
-        var userExists = UserServiceManager.sharedService().user() != null;
-        self.isLoggedIn(userExists);
-    };
+    self.closeModal = function() {
+        self.modalStatus(false);
+    }
 }
 
 ko.components.register('characters', {

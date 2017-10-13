@@ -9,11 +9,11 @@ export var CharacterManager = {
 };
 
 CharacterManager.changeCharacter = function(characterId) {
-    var newChar = PersistenceService.findBy(Character, 'key', characterId);
+    var newChar = PersistenceService.findFirstBy(Character, 'key', characterId);
     try {
         Notifications.characterManager.changing.dispatch(
-            CharacterManager.activeCharacter(), newChar[0]);
-        CharacterManager.__activeCharacter__ = newChar[0];
+            CharacterManager.activeCharacter(), newChar);
+        CharacterManager.__activeCharacter__ = newChar;
         Notifications.characterManager.changed.dispatch(
             CharacterManager.activeCharacter());
     } catch(err) {

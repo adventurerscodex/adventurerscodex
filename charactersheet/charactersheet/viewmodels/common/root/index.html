@@ -78,22 +78,29 @@
             <!-- / -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
-                <i class="small underline"><a data-toggle="modal"
-                  data-target="#newModal" href="#">New/Import</a>
-                </i>
-                &nbsp;
-                <i class="small underline"><a data-toggle="modal"
-                  data-target="#charactersModal" href="#">Characters and Games</a>
+                <i class="small underline">
+                  <a data-toggle="modal" data-target="#newModal" href="#">
+                    New/Import
+                  </a>
                 </i>
                 &nbsp;
                 <i class="small underline">
-                  <a data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                  <a data-bind="click: toggleCharacterAndGamesModal" href="#">
+                    Characters and Games
+                  </a>
                 </i>
                 &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#exportModal"
-                  data-bind="click: function() {}"
-                  href="#">Export</a></i>
+                <i class="small underline">
+                  <a data-bind="click: togglePartyManagerModal" href="#">
+                    Manage Party
+                  </a>
+                </i>
+                &nbsp;
+                <i class="small underline">
+                  <a data-toggle="modal" data-target="#exportModal" href="#">
+                    Export
+                  </a>
+                </i>
               </div>
             </div>
             <div class="row row-padded">
@@ -120,10 +127,10 @@
     </div>
     <div class="spacer"></div>
       <!-- ko if: selectedCharacter().playerType().key == 'character' -->
-      <character-root></character-root>
+      <character-root params="activeCharacter: selectedCharacter"></character-root>
       <!-- /ko -->
       <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
-      <dm-root></dm-root>
+      <dm-root params="activeCharacter: selectedCharacter"></dm-root>
       <!-- /ko -->
 	</div>
 </div>
@@ -158,35 +165,43 @@ aria-labelledby="newLabel">
 </div>
 
 <!-- Switch Characters Modal -->
-<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
-  aria-labelledby="charactersModalLabel">
-  <characters></characters>
-</div>
+<!-- ko if: characterAndGamesModalStatus -->
+<characters params="modalStatus: characterAndGamesModalStatus"></characters>
+<!-- /ko -->
 <!-- Party Manager Modal -->
-<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
+<!-- <div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
   aria-labelledby="partyModalLabel"
   data-bind="modal: {
   open: partyManagerModalStatus,
   onclose: partyModalFinishedClosing
   }">
   <party-manager></party-manager>
+</div> -->
+<!-- Export Modal -->
+<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
+aria-labelledby="partyModalLabel"
+data-bind="modal: {
+open: partyManagerModalStatus,
+onclose: partyModalFinishedClosing
+}">
+<party-manager></party-manager>
 </div>
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
 data-bd="with: charactersViewModel"
 aria-labelledby="exportModalLabel">
 <div class="modal-dialog" role="document" data-bd="with: selectedCharacter">
-  <div class="modal-content container-fluid">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
-    </div>
-    <div class="modal-body">
-      <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
-      <p>Note: Safari users will need to save the contents of the page.</p>
-      <!-- ifnot: $parent.isLoggedIn -->
-      <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
-      <!-- /-->
+<div class="modal-content container-fluid">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
+  </div>
+  <div class="modal-body">
+    <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
+    <p>Note: Safari users will need to save the contents of the page.</p>
+    <!-- ifnot: $parent.isLoggedIn -->
+    <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
+    <!-- /-->
     <!-- Add export form. -->
     </div>
     <div class="modal-footer">
@@ -197,7 +212,7 @@ aria-labelledby="exportModalLabel">
     </div>
   </div>
 </div>
-</div>
+</div> -->
 <!-- /ko -->
 
 <!-- ko if: shouldShowWizard -->
