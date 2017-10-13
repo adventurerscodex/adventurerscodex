@@ -1,4 +1,4 @@
-// export * from  './character_picker' TODO: What to do with only tmpl files?
+export * from  './character_picker'
 export * from  './characters'
 export * from  './chat/chat_cell'
 export * from  './chat/chat_detail'

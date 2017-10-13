@@ -11,6 +11,7 @@ import { HealthinessStatusServiceComponent,
     InspirationStatusServiceComponent,
     MagicalStatusServiceComponent,
     PersistenceService,
+    HotkeysService,
     TotalWeightStatusServiceComponent,
     TrackedStatusServiceComponent,
     AuthenticationServiceManager,
@@ -73,6 +74,8 @@ export var init = function(viewModel) {
     NodeServiceManager.sharedService();
     ChatServiceManager.sharedService();
     NotificationsServiceManager.sharedService();
+
+    window.hotkeyHandler = HotkeysService.hotkeyHandler;
 
     XMPPService.sharedService().init();
     NodeServiceManager.sharedService().init();

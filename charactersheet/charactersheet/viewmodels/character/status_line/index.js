@@ -8,13 +8,17 @@ import { PersistenceService } from 'charactersheet/services/common'
 
 import template from './index.html'
 
-export function StatusLineViewModel() {
+export function StatusLineViewModel(params) {
     var self = this;
 
     self.statusLine = ko.observable('');
+    self.character = params.character;
 
     self.load = function() {
         Notifications.status.changed.add(self.dataHasChanged);
+        self.character.subscribe(self.dataHasChanged);
+
+        self.dataHasChanged();
     };
 
     self.unload = function() {

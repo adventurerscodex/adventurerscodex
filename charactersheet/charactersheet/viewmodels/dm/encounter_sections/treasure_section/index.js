@@ -17,12 +17,31 @@ import { SortService,
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/open-treasure-chest.svg'
-
+import breastplate from 'images/misc_icons/breastplate.svg'
+import coins from 'images/misc_icons/coins.svg'
+import potion from 'images/misc_icons/drink-me.svg'
+import wand from 'images/misc_icons/fairy-wand.svg'
+import broadsword from 'images/misc_icons/broadsword.svg'
+import epCoin from 'images/ep-coin.svg'
+import gpCoin from 'images/gp-coin.svg'
+import spCoin from 'images/sp-coin.svg'
+import cpCoin from 'images/cp-coin.svg'
+import ppCoin from 'images/pp-coin.svg'
 
 export function TreasureSectionViewModel(params) {
     var self = this;
 
     self.sectionIcon = sectionIcon;
+    self.breastplate = breastplate;
+    self.coins = coins;
+    self.potion = potion;
+    self.wand = wand;
+    self.broadsword = broadsword;
+    self.epCoin = epCoin;
+    self.gpCoin = gpCoin;
+    self.spCoin = spCoin;
+    self.cpCoin = spCoin;
+    self.ppCoin = ppCoin;
     self.encounter   = params.encounter;
     self.encounterId = ko.pureComputed(function() {
         if (!self.encounter()) { return; }

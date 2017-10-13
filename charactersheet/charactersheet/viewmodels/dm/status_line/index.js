@@ -1,16 +1,19 @@
 import ko from 'knockout'
 
-import { PlayerCard,
-    PlayerTypes } from 'charactersheet/models'
+import {
+    PlayerCard,
+    PlayerTypes
+} from 'charactersheet/models'
 import { Notifications } from 'charactersheet/utilities'
 import { ChatServiceManager } from 'charactersheet/services'
 
 import template from './index.html'
 
-export function PartyStatusLineViewModel() {
+export function PartyStatusLineViewModel(params) {
     var self = this;
 
     self.statusLine = ko.observable('');
+    self.character = params.character;
 
     self.load = function() {
         Notifications.party.players.changed.add(self.dataHasChanged);

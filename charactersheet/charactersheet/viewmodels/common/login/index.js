@@ -1,5 +1,7 @@
 import ko from 'knockout'
 
+import { Settings } from 'charactersheet/settings'
+import { AuthenticationToken } from 'charactersheet/models/common'
 import { AuthenticationServiceManager,
     PersistenceService,
     UserServiceManager } from 'charactersheet/services/common'

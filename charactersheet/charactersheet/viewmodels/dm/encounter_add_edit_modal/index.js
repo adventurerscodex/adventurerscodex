@@ -37,7 +37,6 @@ export function EncounterAddEditModalViewModel(params) {
     self.encounterName = ko.observable();
 
     self.load = function() {
-        // TODO: add knowledge of parentage.
         self.encounter.subscribe(self._dataHasChanged);
         self._dataHasChanged();
     };
