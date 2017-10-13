@@ -8,11 +8,12 @@ import 'bin/knockout-jquery-autocomplete'
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'
+import 'charactersheet/viewmodels/common'
 import 'charactersheet/models'
 import 'charactersheet/services'
 import 'charactersheet/utilities'
 
-import { AdventurersCodexViewModel, template } from 'charactersheet/viewmodels/common/root'
+import { AdventurersCodexViewModel } from 'charactersheet/viewmodels/common/root'
 import template from 'charactersheet/viewmodels/common/root/index.html'
 
 import { init } from 'charactersheet/init'

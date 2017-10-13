@@ -7,7 +7,6 @@ import {
     PersistenceService
 } from 'charactersheet/services/common'
 import { Character } from 'charactersheet/models/common'
-import 'charactersheet/viewmodels/common/character_picker'
 
 import navLogo from 'images/logo-full-circle-icon.png'
 import style from 'style/site.css'
