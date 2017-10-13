@@ -10,7 +10,8 @@ import { SortService,
     PersistenceService,
     ChatServiceManager } from 'charactersheet/services'
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications,
+    Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
 

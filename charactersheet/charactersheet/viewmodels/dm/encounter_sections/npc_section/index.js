@@ -8,7 +8,8 @@ import { Fixtures } from 'charactersheet/utilities'
 import { SortService,
     PersistenceService } from 'charactersheet/services'
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications,
+    Utility } from 'charactersheet/utilities'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/swordman.svg'

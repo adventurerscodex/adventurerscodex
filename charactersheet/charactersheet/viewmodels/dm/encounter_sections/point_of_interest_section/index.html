@@ -27,16 +27,13 @@
   <!-- ko foreach: filteredAndSortedPointsOfInterest -->
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editPointOfInterest"
-          href="#"
-          data-toggle="modal"></td>
+          href="#"></td>
       <td data-bind="html: shortDescription, click: $parent.editPointOfInterest"
           class="col-xs-12 hidden-md hidden-lg"
-          href="#"
-          data-toggle="modal"></td>
+          href="#"></td>
       <td data-bind="html: longDescription, click: $parent.editPointOfInterest"
           class="col-md-12 hidden-sm hidden-xs"
-          href="#"
-          data-toggle="modal"></td>
+          href="#"></td>
       <td>
         <a data-bind="click: $parent.removePointOfInterest" href="#">
           <i class="fa fa-trash-o fa-color-hover">
