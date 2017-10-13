@@ -1,27 +1,18 @@
 import ko from 'knockout'
 
 import 'bin/knockout-custom-loader'
+import 'charactersheet/viewmodels/character'
 
-import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/actions_toolbar'
-import { CharacterManager } from 'charactersheet/utilities'
-import { ChatTabViewModel } from 'charactersheet/viewmodels/common/chat_tab'
-import { EquipmentTabViewModel } from 'charactersheet/viewmodels/character/equipment_tab'
-import { ExhibitTabViewModel } from 'charactersheet/viewmodels/character/exhibit_tab'
-import { HotkeysService } from 'charactersheet/services/common'
-import { InventoryTabViewModel } from 'charactersheet/viewmodels/character/inventory_tab'
-import { NotesTabViewModel } from 'charactersheet/viewmodels/common/notes_tab'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { PlayerImageViewModel } from 'charactersheet/viewmodels/common/player_image'
-import { ProfileTabViewModel } from 'charactersheet/viewmodels/character/profile_tab'
-import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_tab'
-import { SpellsTabViewModel } from 'charactersheet/viewmodels/character/spells_tab'
-import { StatsTabViewModel } from 'charactersheet/viewmodels/character/stats_tab'
-import { StatusLineViewModel } from 'charactersheet/viewmodels/character/status_line'
-import { StatusService,
-    CharacterCardPublishingService } from 'charactersheet/services/common'
-import { ProficiencyService,
-    ArmorClassService } from 'charactersheet/services/character'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import {
+    HotkeysService,
+    StatusService,
+    CharacterCardPublishingService
+} from 'charactersheet/services/common'
+import {
+    ProficiencyService,
+    ArmorClassService
+} from 'charactersheet/services/character'
 import { ChatServiceManager } from 'charactersheet/services/common'
 
 import template from './index.html'
@@ -46,23 +37,24 @@ import battleGear from 'images/tab_icons/battle-gear.svg'
 export function CharacterRootViewModel() {
     var self = this;
 
-    self.TEMPLATE_FILE = 'character/index.tmpl';
-    self.statsTab = statsTab;
-    self.skillsTab = skillsTab;
-    self.spellsTab = spellsTab;
-    self.inventoryTab = inventoryTab;
-    self.notesTab = notesTab;
-    self.profileTab = profileTab;
-    self.chatTab = chatTab;
-    self.exhibitTab = exhibitTab;
-    self.healthSection = healthSection;
-    self.skillSection = skillSection;
-    self.spellSection = spellSection;
-    self.weaponSection = weaponSection;
-    self.armorSection = armorSection;
-    self.inventorySection = inventorySection;
-    self.profileSection = profileSection;
-    self.battleGear = battleGear;
+    self.icons = {
+        statsTab: statsTab,
+        skillsTab: skillsTab,
+        spellsTab: spellsTab,
+        inventoryTab: inventoryTab,
+        notesTab: notesTab,
+        profileTab: profileTab,
+        chatTab: chatTab,
+        exhibitTab: exhibitTab,
+        healthSection: healthSection,
+        skillSection: skillSection,
+        spellSection: spellSection,
+        weaponSection: weaponSection,
+        armorSection: armorSection,
+        inventorySection: inventorySection,
+        profileSection: profileSection,
+        battleGear: battleGear
+    };
 
     self.playerType = function() {
         return CharacterManager.activeCharacter().playerType();
@@ -72,10 +64,6 @@ export function CharacterRootViewModel() {
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
     self.partyStatus = ko.observable('');
-
-//     Player Child View Models
-//     self.actionsToolbarViewModel   = ko.observable(new ActionsToolbarViewModel());
-//     self.statusLineViewModel       = ko.observable(new StatusLineViewModel());
 
     // Services
     self.statusLineService = StatusService.sharedService();
@@ -210,10 +198,13 @@ export function CharacterRootViewModel() {
 
     //Public Methods
 
-    /**
-     * Call Init on services
-     */
-    self.init = function() {
+    self.load = function() {
+        self.activeTab(self.playerType().defaultTab);
+
+        Notifications.party.joined.add(self._updateCurrentNode);
+        Notifications.party.left.add(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
+
         self.statusLineService.init();
         self.proficiencyService.init();
         self.armorClassService.init();
@@ -234,24 +225,10 @@ export function CharacterRootViewModel() {
         HotkeysService.registerHotkey('7', self.activateProfileTab);
         HotkeysService.registerHotkey('8', self.activateChatTab);
         HotkeysService.registerHotkey('9', self.activateExhibitTab);
-    };
 
-    /**
-     * Signal all modules to load their data.
-     */
-    self.load = function() {
-        self.activeTab(self.playerType().defaultTab);
-
-//         ViewModelUtilities.loadSubViewModels(self);
-
-        Notifications.party.joined.add(self._updateCurrentNode);
-        Notifications.party.left.add(self._removeCurrentNode);
-        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {
-//         ViewModelUtilities.unloadSubViewModels(self);
-
         HotkeysService.flushHotkeys();
 
         Notifications.party.joined.remove(self._updateCurrentNode);

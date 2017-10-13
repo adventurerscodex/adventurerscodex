@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html id='html'>
+<html>
 <head>
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -9,9 +9,7 @@
   })(window,document,'script','dataLayer','GTM-T24P7ZM');</script>
   <!-- End Google Tag Manager -->
 
-  <!-- ko with: childRootViewModel -->
-	<title data-bind='text: pageTitle'></title>
-	<!-- /ko -->
+	<title>Adventurer's Codex</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,153 +22,15 @@
     integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT"
     crossorigin="anonymous">
 </head>
-<!-- <body data-bind="event: { keypress: HotkeysService.hotkeyHandler }"> -->
-<body>
+<body data-bind="event: { keypress: window.hotkeyHandler }">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T24P7ZM"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<div id="content">
-  <application>
-    Loading...
-  </application>
-</div>
 
-<!-- Footer -->
-<div class="container-fluid footer">
-  <div class="col-lg-10 col-lg-offset-1">
-    <ul class="footer-icons" style="padding:0px;">
-      <li>
-        <a href="//facebook.com/adventurerscodex" target="_blank">
-          <i class="fa fa-facebook social-media" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="//twitter.com/adventurercodex" target="_blank">
-          <i class="fa fa-twitter social-media" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="//www.reddit.com/r/adventurerscodex/" target="_blank">
-          <i class="fa fa-reddit social-media" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="//plus.google.com/105624626079092258118" target="_blank">
-          <i class="fa fa-google-plus social-media" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="//github.com/adventurerscodex" target="_blank">
-          <i class="fa fa-github social-media" aria-hidden="true"></i>
-        </a>
-      </li>
-      <li>
-        <a href="//adventurerscodex.com/feed.xml" target="_blank">
-          <i class="fa fa-rss social-media" aria-hidden="true"></i>
-        </a>
-      </li>
-    </ul>
-    <center>
-      <p class="text-muted">&copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
-        <a href="//adventurerscodex.com/contact.html">Contact Us</a>
-      </p>
-      <p class="text-muted">
-        Autofilled data is distributed under the
-          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-            target='_blank'>
-            OGL</a><br/>
-            Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-      </p>
-    </center>
-  </div>
-</div>
-
-<!--
-Switch Characters Modal<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
-  aria-labelledby="charactersModalLabel"
-  data-bind="template: {
-      name: 'characters.tmpl',
-      templateUrl: 'templates/common',
-      data: charactersViewModel }">
-</div>
- -->
-
-<!-- Export Modal -->
-<!--
-<div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
-  data-bind="with: charactersViewModel"
-  aria-labelledby="exportModalLabel">
-  <div class="modal-dialog" role="document" data-bind="with: selectedCharacter">
-    <div class="modal-content container-fluid">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
-      </div>
-      <div class="modal-body">
-        <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
-        <p>Note: Safari users will need to save the contents of the page.</p>
-        <!~~ ko ifnot: $parent.isLoggedIn ~~>
-        <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
-        <!~~ /ko~~>
-      <!~~ Add export form. ~~>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bind="click: saveToFile" data-dismiss="modal">Export to file</button>
-        <!~~ ko if: $parent.isLoggedIn ~~>
-        <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
-        <!~~ /ko~~>
-      </div>
-    </div>
-  </div>
-</div>
- -->
-
-<!-- Party Manager Modal -->
-<!--
-<div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
-  aria-labelledby="partyModalLabel"
-  data-bind="template: {
-    name: 'party_manager.tmpl',
-    templateUrl: 'templates/common',
-    data: partyManagerViewModel },
-    modal: {
-    open: partyManagerModalStatus,
-    onclose: partyModalFinishedClosing
-    }">
-</div>
- -->
-
-<!-- New Modal -->
-<!--
-<div class="modal fade" id="newModal" tabindex="-1" role="dialog"
-  aria-labelledby="newLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content container-fluid">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="settingsLabel"
-          data-dismiss="modal">Create a new character or campaign</h4>
-      </div>
-      <div class="modal-body">
-        <p>If you play more than one character,
-					run multiple campaigns, or do a little of both, you're
-					in luck! Create a new character or campaign and then use
-					the "Characters and Games" menu to switch between them.</p>
-      </div>
-      <div class="modal-footer">
-        <button data-bind="click: showWizard"
-          data-dismiss="modal" type="submit"
-          class="btn btn-primary">Get started!
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
- -->
+<application>
+  Loading...
+</application>
 
 <!-- CDNs -->
 <script type="text/javascript"

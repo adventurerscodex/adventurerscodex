@@ -125,9 +125,15 @@ export function DMRootViewModel() {
     //Public Methods
 
     /**
-     * Call Init on each sub-module.
+     * Signal all modules to load their data.
      */
-    self.init = function() {
+    self.load = function() {
+        self.activeTab(self.playerType().defaultTab);
+
+        Notifications.party.joined.add(self._updateCurrentNode);
+        Notifications.party.left.add(self._removeCurrentNode);
+        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
+
         HotkeysService.registerHotkey('1', self.activateOverviewTab);
         HotkeysService.registerHotkey('2', self.activateEncounterTab);
         HotkeysService.registerHotkey('3', self.activateDmScreenTab);
@@ -138,17 +144,6 @@ export function DMRootViewModel() {
         self.dmCardService.init();
         self.imageService.init();
         self._updatePartyStatus(true);
-    };
-
-    /**
-     * Signal all modules to load their data.
-     */
-    self.load = function() {
-        self.activeTab(self.playerType().defaultTab);
-
-        Notifications.party.joined.add(self._updateCurrentNode);
-        Notifications.party.left.add(self._removeCurrentNode);
-        Notifications.xmpp.disconnected.add(self._removeCurrentNode);
     };
 
     self.unload = function() {

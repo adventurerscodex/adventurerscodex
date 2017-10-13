@@ -1,3 +1,4 @@
+<div id="content">
 <!-- Begin Nav -->
 <nav class="navbar navbar-default navbar-static-top">
 <div class="container-fluid">
@@ -95,26 +96,20 @@
                   href="#">Export</a></i>
               </div>
             </div>
-            <!-- TODO: Convert this to the new component style -->
-            <!-- with: childRootViewModel -->
-            <!-- if: playerType().key == 'character' -->
             <div class="row row-padded">
               <div class="col-xs-12">
-                  <player-status-line></player-status-line>
+                <!-- ko if: selectedCharacter().playerType().key == 'character' -->
+                  <player-status-line params="character: selectedCharacter"></player-status-line>
+                <!-- /ko -->
+                <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
+                  <party-status-line params="character: selectedCharacter"></party-status-line>
+                <!-- /ko -->
               </div>
             </div>
             <!-- /ko -->
-            <!-- TODO: Convert this to the new component style -->
-            <!-- if: playerType().key == 'dm' -->
-            <div class="row row-padded">
-              <div class="col-xs-12">
-                <party-status-line></party-status-line>
-              </div>
-            </div>
-            <!-- / -->
             <div class="row">
               <div class="col-xs-12">
-                <small data-bind="html: partyStatus"></small>
+                <small data-bd="html: partyStatus"></small>
               </div>
             </div>
             <!-- / -->
@@ -132,6 +127,7 @@
       <!-- /ko -->
 	</div>
 </div>
+
 <!-- New Modal -->
 <div class="modal fade" id="newModal" tabindex="-1" role="dialog"
 aria-labelledby="newLabel">
@@ -160,6 +156,7 @@ aria-labelledby="newLabel">
   </div>
 </div>
 </div>
+
 <!-- Switch Characters Modal -->
 <div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
   aria-labelledby="charactersModalLabel">
@@ -210,3 +207,54 @@ aria-labelledby="exportModalLabel">
 <!-- ko if: shouldShowPicker -->
 <character-picker params="state: state"></character-picker>
 <!-- /ko -->
+</div>
+
+<!-- Footer -->
+<div class="container-fluid footer">
+  <div class="col-lg-10 col-lg-offset-1">
+    <ul class="footer-icons" style="padding:0px;">
+      <li>
+        <a href="//facebook.com/adventurerscodex" target="_blank">
+          <i class="fa fa-facebook social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="//twitter.com/adventurercodex" target="_blank">
+          <i class="fa fa-twitter social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="//www.reddit.com/r/adventurerscodex/" target="_blank">
+          <i class="fa fa-reddit social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="//plus.google.com/105624626079092258118" target="_blank">
+          <i class="fa fa-google-plus social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="//github.com/adventurerscodex" target="_blank">
+          <i class="fa fa-github social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+      <li>
+        <a href="//adventurerscodex.com/feed.xml" target="_blank">
+          <i class="fa fa-rss social-media" aria-hidden="true"></i>
+        </a>
+      </li>
+    </ul>
+    <center>
+      <p class="text-muted">&copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
+        <a href="//adventurerscodex.com/contact.html">Contact Us</a>
+      </p>
+      <p class="text-muted">
+        Autofilled data is distributed under the
+          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+            target='_blank'>
+            OGL</a><br/>
+            Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+      </p>
+    </center>
+  </div>
+</div>
