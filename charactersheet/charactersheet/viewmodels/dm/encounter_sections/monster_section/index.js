@@ -1,6 +1,7 @@
 import ko from 'knockout'
 
 import 'bin/knockout-bootstrap-modal'
+import uuid from 'node-uuid'
 
 import { MonsterAbilityScore,
     MonsterSection,
@@ -8,7 +9,8 @@ import { MonsterAbilityScore,
 import { SortService,
     PersistenceService } from 'charactersheet/services'
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications,
+    DataRepository } from 'charactersheet/utilities'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/wyvern.svg'

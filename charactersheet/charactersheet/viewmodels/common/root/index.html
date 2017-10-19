@@ -33,6 +33,32 @@
 </div>
 </nav>
 
+<!-- New Modal -->
+<div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal">
+  <div class="modal-dialog" role="document">
+      <div class="modal-content container-fluid">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title" data-dismiss="modal">Create a new character or campaign</h4>
+          </div>
+          <div class="modal-body">
+              <p>If you play more than one character,
+                  run multiple campaigns, or do a little of both, you're
+                  in luck! Create a new character or campaign and then use
+                  the "Characters and Games" menu to switch between them.</p>
+          </div>
+          <div class="modal-footer">
+              <button data-bind="click: showWizard"
+                  type="button" data-dismiss="modal"
+                  class="btn btn-primary">Get started!
+              </button>
+          </div>
+      </div>
+  </div>
+</div>
+
 <!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
@@ -78,22 +104,29 @@
             <!-- / -->
             <div class="row">
               <div class="col-md-12 text-center-xs text-left-sm">
-                <i class="small underline"><a data-toggle="modal"
-                  data-target="#newModal" href="#">New/Import</a>
-                </i>
-                &nbsp;
-                <i class="small underline"><a data-toggle="modal"
-                  data-target="#charactersModal" href="#">Characters and Games</a>
+                <i class="small underline">
+                    <a data-toggle="modal" data-target="#newModal" href="#">
+                    New/Import
+                  </a>
                 </i>
                 &nbsp;
                 <i class="small underline">
-                  <a data-bind="click: togglePartyManagerModal" href="#">Manage Party</a>
+                  <a data-bind="click: toggleCharacterAndGamesModal" href="#">
+                    Characters and Games
+                  </a>
                 </i>
                 &nbsp;
-                <i class="small underline"><a class="" data-toggle="modal"
-                  data-target="#exportModal"
-                  data-bind="click: function() {}"
-                  href="#">Export</a></i>
+                <i class="small underline">
+                  <a data-bind="click: togglePartyManagerModal" href="#">
+                    Manage Party
+                  </a>
+                </i>
+                &nbsp;
+                <i class="small underline">
+                  <a data-toggle="modal" data-target="#exportModal" href="#">
+                    Export
+                  </a>
+                </i>
               </div>
             </div>
             <div class="row row-padded">
@@ -120,62 +153,31 @@
     </div>
     <div class="spacer"></div>
       <!-- ko if: selectedCharacter().playerType().key == 'character' -->
-      <character-root></character-root>
+      <character-root params="activeCharacter: selectedCharacter"></character-root>
       <!-- /ko -->
       <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
-      <dm-root></dm-root>
+      <dm-root params="activeCharacter: selectedCharacter"></dm-root>
       <!-- /ko -->
 	</div>
 </div>
 
-<!-- New Modal -->
-<div class="modal fade" id="newModal" tabindex="-1" role="dialog"
-aria-labelledby="newLabel">
-<div class="modal-dialog" role="document">
-  <div class="modal-content container-fluid">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal"
-        aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title" id="settingsLabel"
-        data-dismiss="modal">Create a new character or campaign</h4>
-    </div>
-    <div class="modal-body">
-      <p>If you play more than one character,
-        run multiple campaigns, or do a little of both, you're
-        in luck! Create a new character or campaign and then use
-        the "Characters and Games" menu to switch between them.</p>
-    </div>
-    <div class="modal-footer">
-      <button data-bind="click: showWizard"
-        data-dismiss="modal" type="submit"
-        class="btn btn-primary">Get started!
-      </button>
-    </div>
-  </div>
-</div>
-</div>
-
 <!-- Switch Characters Modal -->
-<div class="modal fade" id="charactersModal" tabindex="-1" role="dialog"
-  aria-labelledby="charactersModalLabel">
-  <characters></characters>
-</div>
+<!-- ko if: characterAndGamesModalStatus -->
+<characters params="modalStatus: characterAndGamesModalStatus"></characters>
+<!-- /ko -->
 <!-- Party Manager Modal -->
 <div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
-  aria-labelledby="partyModalLabel"
-  data-bind="modal: {
-  open: partyManagerModalStatus,
-  onclose: partyModalFinishedClosing
-  }">
-  <party-manager></party-manager>
+aria-labelledby="partyModalLabel"
+data-bind="modal: {
+open: partyManagerModalStatus,
+onclose: partyModalFinishedClosing
+}">
+<party-manager></party-manager>
 </div>
 <!-- Export Modal -->
 <div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
-data-bd="with: charactersViewModel"
-aria-labelledby="exportModalLabel">
-<div class="modal-dialog" role="document" data-bd="with: selectedCharacter">
+  aria-labelledby="exportModalLabel">
+  <div class="modal-dialog" role="document" data-bind="with: selectedCharacter">
   <div class="modal-content container-fluid">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -187,16 +189,17 @@ aria-labelledby="exportModalLabel">
       <!-- ifnot: $parent.isLoggedIn -->
       <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
       <!-- /-->
-    <!-- Add export form. -->
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" data-bd="click: saveToFile" data-dismiss="modal">Export to file</button>
-      <!-- if: $parent.isLoggedIn -->
-      <button type="button" class="btn btn-primary" data-bd="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
-      <!-- /-->
+      <!-- Add export form. -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bind="click: saveToFile"
+          data-dismiss="modal">Export to file</button>
+        <!-- if: $parent.isLoggedIn -->
+        <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
+        <!-- /-->
+      </div>
     </div>
   </div>
-</div>
 </div>
 <!-- /ko -->
 

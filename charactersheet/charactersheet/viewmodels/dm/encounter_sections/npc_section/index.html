@@ -31,17 +31,13 @@
   <!-- ko foreach: filteredAndSortedNpcs -->
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editNPC"
-          href="#"
-          data-toggle="modal"></td>
+          href="#"></td>
       <td data-bind="text: race, click: $parent.editNPC"
-          href="#"
-          data-toggle="modal"></td>
+          href="#"></td>
       <td data-bind="text: shortDescription, click: $parent.editNPC"
-          href="#" class="hidden-md hidden-lg"
-          data-toggle="modal"></td>
+          href="#" class="hidden-md hidden-lg"></td>
       <td data-bind="text: longDescription, click: $parent.editNPC"
-          href="#" class="hidden-sm hidden-xs"
-          data-toggle="modal"></td>
+          href="#" class="hidden-sm hidden-xs"></td>
       <td>
         <a data-bind="click: $parent.removeNPC" href="#">
           <i class="fa fa-trash-o fa-color-hover">

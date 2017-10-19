@@ -1,8 +1,8 @@
 import ko from 'knockout'
 import Dropbox from 'dropbox'
 import uuid from 'node-uuid'
+import { saveAs } from 'FileSaver.js'
 import 'knockout-mapping'
-
 import 'bin/knockout-mapping-autoignore'
 
 import {
