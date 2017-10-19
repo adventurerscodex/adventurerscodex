@@ -1,7 +1,5 @@
 import ko from 'knockout'
 import 'bin/knockout-required-extender'
-// TODO: Fix autocomplete binding
-// import 'bin/knockout-jquery-autocomplete'
 
 import { DataRepository } from 'charactersheet/utilities'
 import { Fixtures } from 'charactersheet/utilities'

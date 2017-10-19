@@ -2,6 +2,21 @@ import ko from 'knockout'
 import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { HealthinessStatusServiceComponent,
+    InspirationStatusServiceComponent,
+    MagicalStatusServiceComponent,
+    PersistenceService,
+    HotkeysService,
+    TotalWeightStatusServiceComponent,
+    TrackedStatusServiceComponent,
+    AuthenticationServiceManager,
+    ChatServiceManager,
+    NodeServiceManager,
+    NotificationsServiceManager,
+    StatusService,
+    UserServiceManager,
+    XMPPService
+} from 'charactersheet/services'
 import {
     HotkeysService,
     PersistenceService
@@ -90,7 +105,12 @@ export function AdventurersCodexViewModel() {
             //If no current character exists, fire the load process anyway.
             self.state(APP_STATE.WIZARD);
         }
-        self.load();
+
+        XMPPService.sharedService().init();
+        NodeServiceManager.sharedService().init();
+        ChatServiceManager.sharedService().init();
+        NotificationsServiceManager.sharedService().init();
+        AuthenticationServiceManager.sharedService().init();
     };
 
     /**

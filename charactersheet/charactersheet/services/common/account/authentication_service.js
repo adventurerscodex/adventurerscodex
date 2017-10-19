@@ -1,4 +1,5 @@
 import URI from 'urijs'
+import 'urijs/src/URI.fragmentQuery'
 
 import { SharedServiceManager } from '../shared_service_manager'
 import { Notifications,

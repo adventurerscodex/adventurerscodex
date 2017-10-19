@@ -1,5 +1,8 @@
 import marked from 'bin/textarea-markdown-editor/marked.min.js'
 
+import { PersistenceService } from 'charactersheet/services/common'
+import { AuthenticationToken } from 'charactersheet/models/common'
+
 /**
  * This file contains a number of generic utility functions used throughout
  * Adventurer's Codex
