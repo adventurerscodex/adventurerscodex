@@ -192,8 +192,6 @@ export function DMRootViewModel() {
     }
 }
 
-
-
 ko.components.register('dm-root', {
     viewModel: DMRootViewModel,
     template: template
