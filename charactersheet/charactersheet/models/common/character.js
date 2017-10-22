@@ -6,6 +6,7 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import {
+    AuthenticationToken,
     Campaign,
     ImageModel,
     PlayerImage,

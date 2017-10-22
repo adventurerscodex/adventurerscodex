@@ -65,6 +65,7 @@ export function AdventurersCodexViewModel() {
     self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
+    self.exportModalStatus = ko.observable(false);
     self.navLogo = navLogo;
 
     //UI Methods
@@ -133,6 +134,10 @@ export function AdventurersCodexViewModel() {
 
     self.toggleCharacterAndGamesModal = function() {
         self.characterAndGamesModalStatus(true);
+    };
+
+    self.toggleExportModal = function() {
+        self.exportModalStatus(true);
     };
 
     self.partyModalFinishedClosing = function() {
