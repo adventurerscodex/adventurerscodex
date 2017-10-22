@@ -4,12 +4,12 @@ import 'knockout-mapping'
 
 import 'bin/knockout-mapping-autoignore'
 
-import { Message } from 'charactersheet/models/common'
+import { Message,
+    Presence } from 'charactersheet/models/common'
 import {
     CharacterManager,
     Notifications,
-    Fixtures,
-    Presence
+    Fixtures
 } from 'charactersheet/utilities'
 import {
     KeyValuePredicate,

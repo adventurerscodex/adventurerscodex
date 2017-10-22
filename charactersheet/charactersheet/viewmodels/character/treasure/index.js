@@ -26,13 +26,11 @@ export function TreasureViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var t = PersistenceService.findBy(Treasure, 'characterId',
+        var existingTreasure = PersistenceService.findFirstBy(Treasure, 'characterId',
             CharacterManager.activeCharacter().key());
 
-        if (t.length > 0) {
-            self.treasure(t[0]);
-        } else {
-            self.treasure(new Treasure());
+        if (existingTreasure) {
+            self.treasure(existingTreasure);
         }
         self.treasure().characterId(CharacterManager.activeCharacter().key());
 

@@ -2,7 +2,8 @@ import ko from 'knockout'
 
 import 'bin/knockout-custom-loader'
 
-import { PlayerCard } from 'charactersheet/models'
+import { PlayerCard,
+    pCard } from 'charactersheet/models'
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
 import { XMPPService,
