@@ -5,6 +5,7 @@ import 'font-awesome-webpack'
 
 // Load Global KO Bindings
 import 'bin/knockout-jquery-autocomplete'
+import 'bin/xmpp/muc.strophe.js'
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'

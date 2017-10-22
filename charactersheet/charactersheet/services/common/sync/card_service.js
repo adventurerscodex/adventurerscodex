@@ -5,8 +5,11 @@ import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields'
 import { SharedServiceManager } from '../shared_service_manager'
 import { Notifications } from 'charactersheet/utilities'
 import { pCard } from 'charactersheet/models/common'
-import { XMPPService,
-    NodeServiceManager } from 'charactersheet/services'
+import {
+    ChatServiceManager,
+    XMPPService,
+    NodeServiceManager
+} from 'charactersheet/services'
 
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
