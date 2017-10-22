@@ -58,6 +58,7 @@
       </div>
   </div>
 </div>
+<user-notifications></user-notifications>
 
 <!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
@@ -123,7 +124,7 @@
                 </i>
                 &nbsp;
                 <i class="small underline">
-                  <a data-toggle="modal" data-target="#exportModal" href="#">
+                  <a data-bind="click: toggleExportModal" href="#">
                     Export
                   </a>
                 </i>
@@ -175,32 +176,9 @@
   <party-manager></party-manager>
 </div>
 <!-- Export Modal -->
-<div class="modal fade" id="exportModal" tabindex="-1" role="dialog"
-  aria-labelledby="exportModalLabel">
-  <div class="modal-dialog" role="document" data-bind="with: selectedCharacter">
-  <div class="modal-content container-fluid">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <h4 class="modal-title" id="exportModalLabel" data-dismiss="modal">Export</h4>
-    </div>
-    <div class="modal-body">
-      <p>Save your character or campaign to a file for easy access in the future! Put it in Dropbox for added convenience.</p>
-      <p>Note: Safari users will need to save the contents of the page.</p>
-      <!-- ifnot: $parent.isLoggedIn -->
-      <p class="text-warning">You must be logged in to export directly to Dropbox.</p>
-      <!-- /-->
-      <!-- Add export form. -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bind="click: saveToFile"
-          data-dismiss="modal">Export to file</button>
-        <!-- if: $parent.isLoggedIn -->
-        <button type="button" class="btn btn-primary" data-bind="click: saveToDropbox" data-dismiss="modal">Export to Dropbox</button>
-        <!-- /-->
-      </div>
-    </div>
-  </div>
-</div>
+<!-- ko if: exportModalStatus -->
+<export params="selectedCharacter: selectedCharacter, modalStatus: exportModalStatus"></export>
+<!-- /ko -->
 <!-- /ko -->
 
 <!-- ko if: shouldShowWizard -->

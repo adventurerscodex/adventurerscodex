@@ -70,3 +70,8 @@ export function UserNotificationViewModel() {
         toastr.error(message, title, args);
     };
 }
+
+ko.components.register('user-notifications', {
+    viewModel: UserNotificationViewModel,
+    template: '<span></span>'
+})
