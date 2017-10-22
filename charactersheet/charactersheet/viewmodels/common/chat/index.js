@@ -4,11 +4,16 @@ import ko from 'knockout'
 
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
 import { ChatCellViewModel } from './chat_cell'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import {
+    ChatServiceManager,
+    PersistenceService,
+    KeyValuePredicate,
+    OrPredicate
+} from 'charactersheet/services/common'
 import { XMPPService } from 'charactersheet/services/common/account'
 import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail'
+import { ChatRoom } from 'charactersheet/models'
 
 import template from './index.html'
 
@@ -17,6 +22,10 @@ export function ChatViewModel() {
 
     self.chats = ko.observableArray();
     self.isConnectedToParty = ko.observable(false);
+
+    self.selectedRoom = ko.pureComputed(function() {
+        return
+    });
 
     self.title = 'Chats';
     self.shouldDisplayModelOnNewItem = true;
@@ -100,11 +109,8 @@ export function ChatViewModel() {
         return new ChatModalViewModel(self);
     };
 
-    self.getDetailViewModel = function(cell) {
-        if (cell) {
-            return new ChatDetailViewModel(cell, self);
-        }
-        return null;
+    self.getDetailObject = function(cell) {
+        return cell;
     };
 
     self.modalFinishedOpening = function() {};
@@ -258,7 +264,7 @@ export function ChatViewModel() {
     return self;
 }
 
-ko.components.register('chat-modal', {
+ko.components.register('chat', {
   viewModel: ChatViewModel,
   template: template
 })

@@ -5,12 +5,19 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import { Message } from 'charactersheet/models/common'
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { Fixtures } from 'charactersheet/utilities'
-import { KeyValuePredicate,
+import {
+    CharacterManager,
+    Notifications,
+    Fixtures,
+    Presence
+} from 'charactersheet/utilities'
+import {
+    KeyValuePredicate,
     PersistenceService,
-    SharedServiceManager } from 'charactersheet/services/common'
+    SharedServiceManager,
+    ChatServiceManager,
+    CharacterCardPublishingService
+} from 'charactersheet/services/common'
 
 export function ChatRoom() {
     var self = this;

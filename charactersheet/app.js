@@ -2,10 +2,11 @@ import ko from 'knockout'
 
 import 'bootstrap'
 import 'font-awesome-webpack'
+import Spinner from 'spin'
 
 // Load Global KO Bindings
 import 'bin/knockout-jquery-autocomplete'
-import 'bin/xmpp/muc.strophe.js'
+import 'bin/xmpp/muc.strophe'
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'
@@ -20,6 +21,10 @@ import template from 'charactersheet/viewmodels/common/root/index.html'
 import { init } from 'charactersheet/init'
 
 
+var spinner = new Spinner({color:'#b4bcc2', lines: 12}).spin(
+    document.getElementsByTagName('body')[0]
+);
+
 var viewModel = new AdventurersCodexViewModel();
 init(viewModel);
 
@@ -31,4 +36,6 @@ ko.components.register('application', {
   template: template
 });
 
+
 ko.applyBindings();
+spinner.stop();

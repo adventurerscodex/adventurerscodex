@@ -1,34 +1,40 @@
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="container-fluid">
-      <div class="row" data-bind="html: name"></div>
+<!--ko if: !isConnectedToParty()-->
+<div class="detail-place-holder well text-center">
+  <p class="lead text-muted heading">You are not connected to a Party.</p>
+  <p class="text-muted">Create or join a Party with friends to Chat!<br/>
+    Create a free account <a href="https://app.adventurerscodex.com/accounts/register/">here</a> or learn more about the Chat <a href="https://adventurerscodex.com/collaboration.html#chat" target="_blank">here</a>.</p>
+</div>
+<!-- /ko -->
+<div class="row">
+  <!--ko if: isConnectedToParty()-->
+  <div data-bind="css: listCSS">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="panel-heading">
+          <div class="h4">
+            <span data-bind="html: title"></span>
+            <div class="pull-right">
+              <span class="fa fa-plus fa-lg" style="cursor:pointer;"
+                data-bind="click: addButtonWasClicked"></span>
+            </div>
+          </div>
+        </div>
+        <nested-list params="cells: cells, selectedCell: selectedCell, ondelete: deleteButtonWasClicked, onadd: addButtonWasClickedWithParent">
+        </nested-list>
+      </div>
     </div>
   </div>
-  <div class="panel-body">
-		<div class="form-horizontal">
-			<form data-bind="submit: sendMessage">
-			  <div class="container-fluid">
-				  <ul class="list-group chat-style"
-				    data-bind="foreach: log, bottomsUp: true">
-					  <li class="list-group-item" data-bind="css: listItemClass">
-              <div class="row" data-bind="template: {
-                data: $data, name: templateName, templateUrl: templateUrl }"></div>
-					  </li>
-				  </ul>
-			  </div>
-			  <div class="row">
-          <div class="col-sm-12">
-            <div class="input-group">
-              <input type="text" class="form-control" id="text"
-                data-bind="textInput: message, hasFocus: $parent.messageFieldShouldHaveFocus,
-                  disable: sendButtonShouldBeDisabled" autocomplete="off">
-              <span class="input-group-btn">
-                <button data-bind="disable: sendButtonShouldBeDisabled"
-                  type="submit" class="btn btn-default">Send</button>
-              </span>
-          </div>
-  			</div>
-			</div>
-		</div>
+  <div data-bind="css: detailViewModelCSS">
+    <chat-detail params="room: selectedObject"></chat-detail>
+    <!-- ko if: modalViewModel -->
+    <!-- ko with: modalViewModel -->
+    <div data-bind="template: {
+      name: templateName,
+      templateUrl: templateUrl,
+      data: $data
+    }"></div>
+    <!-- /ko -->
+    <!-- /ko -->
   </div>
+  <!-- /ko -->
 </div>

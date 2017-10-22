@@ -17,10 +17,8 @@ export function ChatTabViewModel() {
      * Signal all modules to load their data.
      */
     self.load = function() {
-        ViewModelUtilities.loadSubViewModels(self);
     };
 
     self.unload = function() {
-        ViewModelUtilities.unloadSubViewModels(self);
     };
 }

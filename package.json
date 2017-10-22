@@ -57,6 +57,7 @@
     "serve": "^1.4.0",
     "should": "^12.0.0",
     "simple-mock": "^0.8.0",
+    "spin": "0.0.1",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9",
     "util-deprecate": "^1.0.2",

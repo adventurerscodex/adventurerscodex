@@ -1,21 +1,20 @@
 import ko from 'knockout'
 
 import { CharacterManager } from 'charactersheet/utilities'
-import { Message } from 'charactersheet/models/common'
+import { Message, Presence, ChatRoom } from 'charactersheet/models/common'
 import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { XMPPService } from 'charactersheet/services/common'
+import { PersistenceService, XMPPService, CHAT_MESSAGE_TYPES } from 'charactersheet/services/common'
 
 import template from './index.html'
 
-export function ChatDetailViewModel(chatCell, parent) {
+export function ChatDetailViewModel(params) {
     var self = this;
 
-    self.id = chatCell.id;
-    self.members = chatCell.members;
-    self.isGroupChat = chatCell.isGroupChat;
-    self._getRoomMembers = chatCell._getRoomMembers;
-    self.parent = parent;
+    self.id = params.room().id;
+    self.members = params.room().members;
+    self.isGroupChat = params.room().isGroupChat;
+    self._getRoomMembers = params.room()._getRoomMembers;
+//     self.parent = parent;
 
     self.templateUrl = 'templates/common/chat';
     self.templateName = 'chat.tmpl';

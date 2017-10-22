@@ -1,3 +1,4 @@
+<!-- ko if: chat -->
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="container-fluid">
@@ -32,3 +33,10 @@
 		</div>
   </div>
 </div>
+<!-- /ko -->
+<!-- ko ifnot: chat -->
+<div class="detail-place-holder well text-center"
+  style="cursor:pointer;" data-bind="click: addButtonWasClicked">
+  <p class="lead text-muted heading" data-bind="html: addNewItemText"></p>
+</div>
+<!-- /ko -->

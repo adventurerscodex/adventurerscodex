@@ -11,9 +11,9 @@ export function MasterDetailViewModel() {
 
     self._modalValue = ko.observable();
     self.selectedCell = ko.observable();
+    self.selectedObject = ko.observable();
 
     self.modalViewModel = ko.observable();
-    self.detailViewModel = ko.observable();
 
     self.shouldDisplayModelOnNewItem = false;
     self.supportsNestedCells = false;
@@ -35,9 +35,6 @@ export function MasterDetailViewModel() {
     };
 
     self.unload = function() {
-        self._deinitializeDetailViewModel();
-        self._deinitializeModalViewModel();
-
         self.cells().forEach(function(cell, idx, _) {
             cell.save();
         });
@@ -112,8 +109,8 @@ export function MasterDetailViewModel() {
         }
     };
 
-    self.getDetailViewModel = function(cell) {
-        throw Error('Not properly configured: getDetailViewModel');
+    self.getDetailObject = function(cell) {
+        throw Error('Not properly configured: getDetailViewObject');
     };
 
     /**
@@ -166,13 +163,9 @@ export function MasterDetailViewModel() {
     };
 
     self.listCellWasClicked = function() {
-        self._deinitializeDetailViewModel();
-
         var cell = self.selectedCell();
-        var detailViewModel = self.getDetailViewModel(cell);
-        self.detailViewModel(detailViewModel);
-
-        self._initializeDetailViewModel();
+        var detailObject = self.getDetailObject(cell);
+        self.selectedObject(detailObject);
     };
 
     /* Private Methods */
@@ -221,18 +214,6 @@ export function MasterDetailViewModel() {
     self._deinitializeModalViewModel = function() {
         if (self.modalViewModel()) {
             self.modalViewModel().unload();
-        }
-    };
-
-    self._initializeDetailViewModel = function() {
-        if (self.detailViewModel()) {
-            self.detailViewModel().load();
-        }
-    };
-
-    self._deinitializeDetailViewModel = function() {
-        if (self.detailViewModel()) {
-            self.detailViewModel().unload();
         }
     };
 }
