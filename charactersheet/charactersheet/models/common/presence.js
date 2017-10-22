@@ -5,8 +5,12 @@ import 'bin/knockout-mapping-autoignore'
 
 import Strophe from 'strophe'
 
-import { PersistenceService,
-    SharedServiceManager } from 'charactersheet/services'
+import {
+    CHAT_MESSAGE_TYPES,
+    ChatServiceManager,
+    PersistenceService,
+    SharedServiceManager,
+} from 'charactersheet/services'
 
 /**
 An object representation of an XMPP presence message.
