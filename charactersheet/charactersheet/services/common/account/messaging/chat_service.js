@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import uuid from 'node-uuid'
 
 import { SharedServiceManager } from '../../shared_service_manager'
 import { Notifications, Utility, CharacterManager, DataRepository } from 'charactersheet/utilities'
