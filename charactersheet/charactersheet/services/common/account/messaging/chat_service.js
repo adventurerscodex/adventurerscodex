@@ -2,8 +2,8 @@ import ko from 'knockout'
 
 import { SharedServiceManager } from '../../shared_service_manager'
 import { Notifications, Utility, CharacterManager, DataRepository } from 'charactersheet/utilities'
-import { XMPPService, KeyValuePredicate } from 'charactersheet/services'
-import { Presence, Message } from 'charactersheet/models'
+import { XMPPService, KeyValuePredicate, PersistenceService } from 'charactersheet/services'
+import { ChatRoom, Presence, Message } from 'charactersheet/models'
 
 
 /**

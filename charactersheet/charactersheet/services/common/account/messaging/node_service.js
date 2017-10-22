@@ -1,8 +1,7 @@
 import Strophe from 'strophe'
 
-import { SharedServiceManager } from '../../shared_service_manager'
-import { XMPPService } from 'charactersheet/services/common'
-import { Notifications } from 'charactersheet/utilities'
+import { XMPPService, ChatServiceManager, SharedServiceManager } from 'charactersheet/services/common'
+import { Notifications, JSONPayload } from 'charactersheet/utilities'
 
 /*eslint no-console:0*/
 
