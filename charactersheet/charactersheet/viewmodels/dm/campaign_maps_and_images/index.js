@@ -8,7 +8,8 @@ import { CampaignMapOrImage,
 import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { SortService,
     PersistenceService,
-    ChatServiceManager } from 'charactersheet/services'
+    ChatServiceManager,
+    ImageServiceManager } from 'charactersheet/services'
 import { CharacterManager,
     Notifications,
     Utility } from 'charactersheet/utilities'
