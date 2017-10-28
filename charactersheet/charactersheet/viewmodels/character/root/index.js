@@ -63,7 +63,6 @@ export function CharacterRootViewModel() {
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
-    self.partyStatus = ko.observable('');
     self.wellState = ko.observable(false);
 
     // Services
@@ -214,7 +213,6 @@ export function CharacterRootViewModel() {
         self.proficiencyService.init();
         self.armorClassService.init();
         self.characterCardPublishingService.init();
-        self._updatePartyStatus(true);
 
         //Subscriptions
         Notifications.profile.changed.add(function() {
@@ -261,25 +259,12 @@ export function CharacterRootViewModel() {
         }
     };
 
-    self._updatePartyStatus = function(success) {
-        if (!success) { return; }
-        var chat = ChatServiceManager.sharedService();
-        self.isConnectedAndInAParty(chat.currentPartyNode);
-        if (chat.currentPartyNode) {
-            self.partyStatus('<i>You\'re connected to <span class=\"text-info\">' + Strophe.getNodeFromJid(chat.currentPartyNode) + '</span></i>.');
-        } else {
-            self.partyStatus('<i>You\'re not connected to a party.</i>');
-        }
-    };
-
     self._updateCurrentNode = function(node, success) {
         self.currentPartyNode(node);
-        self._updatePartyStatus(success);
     };
 
     self._removeCurrentNode = function(node, success) {
         self.currentPartyNode(null);
-        self._updatePartyStatus(success);
     };
 
     self.dispose = function() {
