@@ -15,7 +15,8 @@ import {
     PersistenceService,
     SharedServiceManager,
     ChatServiceManager,
-    CharacterCardPublishingService
+    CharacterCardPublishingService,
+    DMCardPublishingService
 } from 'charactersheet/services/common'
 
 export function ChatRoom() {
