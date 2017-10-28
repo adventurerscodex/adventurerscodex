@@ -5,7 +5,8 @@ import Clipboard from 'clipboard'
 
 import { Settings } from 'charactersheet/settings'
 import { DataRepository,
-    Migrations
+    Migrations,
+    Notifications
 } from 'charactersheet/utilities'
 import { HealthinessStatusServiceComponent,
     InspirationStatusServiceComponent,

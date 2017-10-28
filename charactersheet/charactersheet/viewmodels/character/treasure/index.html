@@ -8,7 +8,7 @@
             <img data-bind="attr: { src: ppCoins }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
           </span>
           <input type="number" class="form-control coin-input" min="0"
-            data-bind='value: treasure.platinum'/>
+            data-bind='value: treasure().platinum'/>
         </div>
       </div>
       <div class="col-sm-2 coin-input">
@@ -17,7 +17,7 @@
             <img data-bind="attr: { src: gpCoins }" width="30px" title="Gold Coins" alt="Gold Coins"/>
           </span>
           <input type="number" class="form-control" min="0"
-            data-bind='value: treasure.gold'/>
+            data-bind='value: treasure().gold'/>
         </div>
       </div>
       <div class="col-sm-2 coin-input">
@@ -26,7 +26,7 @@
             <img data-bind="attr: { src: epCoins }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
           </span>
           <input type="number" class="form-control coin-input" min="0"
-            data-bind='value: treasure.electrum'>
+            data-bind='value: treasure().electrum'>
         </div>
       </div>
       <div class="col-sm-2 coin-input">
@@ -35,7 +35,7 @@
             <img data-bind="attr: { src: spCoins }" width="30px" title="Silver Coins" alt="Silver Coins"/>
           </span>
           <input type="number" class="form-control coin-input" min="0"
-            data-bind='value: treasure.silver'>
+            data-bind='value: treasure().silver'>
         </div>
       </div>
       <div class="col-sm-2 coin-input">
@@ -44,7 +44,7 @@
             <img data-bind="attr: { src: cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
           </span>
           <input type="number" class="form-control coin-input" min="0"
-            data-bind='value: treasure.copper'>
+            data-bind='value: treasure().copper'>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
               <img data-bind="attr: { src: ppCoins }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.platinum'/>
+            data-bind='value: treasure().platinum'/>
         </div>
       </div>
       <div class="col-sm-4">
@@ -67,7 +67,7 @@
             <img data-bind="attr: { src: gpCoins }" width="30px" title="Gold Coins" alt="Gold Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.gold'/>
+            data-bind='value: treasure().gold'/>
         </div>
       </div>
       <div class="col-sm-4">
@@ -76,7 +76,7 @@
             <img data-bind="attr: { src: epCoins }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.electrum'>
+            data-bind='value: treasure().electrum'>
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
             <img data-bind="attr: { src: spCoins }" width="30px" title="Silver Coins" alt="Silver Coins"/>
           </span>
         <input type="number" class="form-control" min="1"
-          data-bind='value: treasure.silver'>
+          data-bind='value: treasure().silver'>
         </div>
       </div>
       <div class="col-sm-6">
@@ -96,7 +96,7 @@
             <img data-bind="attr: { src: cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-              data-bind='value: treasure.copper'>
+              data-bind='value: treasure().copper'>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
             <img data-bind="attr: { src: ppCoins }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.platinum'/>
+            data-bind='value: treasure().platinum'/>
         </div>
       </div>
       <div class="col-sm-12 row-padded">
@@ -119,7 +119,7 @@
             <img data-bind="attr: { src: gpCoins }" width="30px" title="Gold Coins" alt="Gold Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.gold'/>
+            data-bind='value: treasure().gold'/>
         </div>
       </div>
       <div class="col-sm-12 row-padded">
@@ -128,7 +128,7 @@
             <img data-bind="attr: { src: epCoins }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.electrum'>
+            data-bind='value: treasure().electrum'>
         </div>
       </div>
       <div class="col-sm-12 row-padded">
@@ -137,7 +137,7 @@
             <img data-bind="attr: { src: spCoins }" width="30px" title="Silver Coins" alt="Silver Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.silver'>
+            data-bind='value: treasure().silver'>
         </div>
       </div>
       <div class="col-sm-12 row-padded">
@@ -146,15 +146,20 @@
             <img data-bind="attr: { src: cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
           </span>
           <input type="number" class="form-control" min="1"
-            data-bind='value: treasure.copper'>
+            data-bind='value: treasure().copper'>
         </div>
       </div>
     </div>
   </div><!-- End lg row-->
 </div> <!-- end panel body  -->
 <div class="container-fluid panel-footer">
-    <span class="pull-left">Total gold:&nbsp;<span data-bind='text: treasure.worthInGold'></span>&nbsp;(gp)</span>
+    <span class="pull-left">
+      Total gold:&nbsp;
+      <span data-bind='text: treasure().worthInGold'>
+      </span>
+      &nbsp;(gp)
+    </span>
     <span class="pull-right">Total weight:&nbsp;
-      <span data-bind="text: treasure.totalWeightLabel"></span>
+      <span data-bind="text: treasure().totalWeightLabel"></span>
     </span>
 </div> <!-- end panel footer -->

@@ -149,10 +149,16 @@ export function PartyManagerViewModel() {
 
     self._getParties = function() {
         var key = CharacterManager.activeCharacter().key();
-        return PersistenceService.findByPredicates(ChatRoom, [
+        var foundParties = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isParty', true)
         ]);
+        if (foundParties.length > 0) {
+            self.createOrJoin('join');
+        } else {
+            self.createOrJoin('create');
+        }
+        return foundParties;
     };
 
     self._leaveOnSwitch = function() {

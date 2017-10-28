@@ -2,8 +2,12 @@ import ko from 'knockout'
 
 import {
     PlayerCard,
-    PlayerTypes
+    PlayerTypes,
+    StatusWeightPair
 } from 'charactersheet/models'
+import { getHealthTypeEnum,
+    getTrackedTypeEnum,
+    getMagicTypeEnum } from 'charactersheet/models/common/status_weight_pair'
 import { Notifications } from 'charactersheet/utilities'
 import { ChatServiceManager } from 'charactersheet/services'
 

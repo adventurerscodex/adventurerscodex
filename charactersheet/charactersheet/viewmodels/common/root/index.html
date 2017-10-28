@@ -166,7 +166,9 @@
 <!-- ko if: characterAndGamesModalStatus -->
 <characters params="modalStatus: characterAndGamesModalStatus"></characters>
 <!-- /ko -->
+
 <!-- Party Manager Modal -->
+<!-- ko if: partyManagerModalStatus -->
 <div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
   aria-labelledby="partyModalLabel"
   data-bind="modal: {
@@ -175,6 +177,8 @@
   }">
   <party-manager></party-manager>
 </div>
+<!-- /ko -->
+
 <!-- Export Modal -->
 <!-- ko if: exportModalStatus -->
 <export params="selectedCharacter: selectedCharacter, modalStatus: exportModalStatus"></export>

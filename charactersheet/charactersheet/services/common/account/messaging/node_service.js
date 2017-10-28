@@ -1,7 +1,10 @@
 import Strophe from 'strophe'
 
-import { XMPPService, ChatServiceManager, SharedServiceManager } from 'charactersheet/services/common'
-import { Notifications, JSONPayload } from 'charactersheet/utilities'
+import { XMPPService,
+    ChatServiceManager,
+    SharedServiceManager } from 'charactersheet/services/common'
+import { Notifications,
+    JSONPayload } from 'charactersheet/utilities'
 
 /*eslint no-console:0*/
 
@@ -130,11 +133,10 @@ function _NodeService(config) {
         if (!self._isListeningForXMPPEvents) {
             // Subscribe to all push events.
             var xmpp = XMPPService.sharedService();
-            // TODO FIX ISSUES WITH STROPHE
-            // xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
-            // xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
-            // xmpp.connection.addHandler(self._handlePresence, null, 'presence');
-            // xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
+            xmpp.connection.addHandler(self._handleEvent, null, 'message', null, null, null);
+            xmpp.connection.addHandler(self._handlePresenceRequest, null, 'presence', 'subscribe');
+            xmpp.connection.addHandler(self._handlePresence, null, 'presence');
+            xmpp.connection.addHandler(self._handleSuccessfulPresenceSubscription, null, 'presence', 'subscribed');
         }
         self._isListeningForXMPPEvents = true;
     };
