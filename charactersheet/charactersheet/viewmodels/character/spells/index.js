@@ -2,6 +2,7 @@ import ko from 'knockout'
 import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager,
+    DataRepository,
     Notifications,
     Utility } from 'charactersheet/utilities'
 import { PersistenceService,
