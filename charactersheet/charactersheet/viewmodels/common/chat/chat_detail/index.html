@@ -9,19 +9,19 @@
 		<div class="form-horizontal">
 			<form data-bind="submit: sendMessage">
 			  <div class="container-fluid">
-				  <ul class="list-group chat-style"
+				  <ul class="list-group chat-style" data-scroll="true"
 				    data-bind="foreach: { data: log, as: 'message' }, bottomsUp: true">
             <!-- ko if: message.messageType() == 'chat' -->
-              <chat-log-chat-item params="message: message"></chat-log-chat-item>
+              <chat-log-chat-item params="message: message, onrender: $parent.onitemrender"></chat-log-chat-item>
             <!-- /ko -->
             <!-- ko if: message.messageType() == 'system' -->
-              <chat-log-system-item params="message: message"></chat-log-system-item>
+              <chat-log-system-item params="message: message, onrender: $parent.onitemrender"></chat-log-system-item>
             <!-- /ko -->
             <!-- ko if: message.messageType() == 'read-aloud' -->
-              <chat-log-read-aloud-item params="message: message"></chat-log-read-aloud-item>
+              <chat-log-read-aloud-item params="message: message, onrender: $parent.onitemrender"></chat-log-read-aloud-item>
             <!-- /ko -->
             <!-- ko if: message.messageType() == 'image' -->
-              <chat-log-image-item params="message: message"></chat-log-image-item>
+              <chat-log-image-item params="message: message, onrender: $parent.onitemrender"></chat-log-image-item>
             <!-- /ko -->
 				  </ul>
 			  </div>

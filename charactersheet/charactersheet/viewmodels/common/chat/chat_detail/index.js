@@ -15,6 +15,7 @@ export function ChatDetailViewModel(params) {
     self.isGroupChat = params.room().isGroupChat;
     self._getRoomMembers = params.room()._getRoomMembers;
     self.badgeHandler = params.badgeHandler;
+    self.wasAtBottom = ko.observable(true);
 
     self.log = ko.observableArray();
     self.message = ko.observable('');
@@ -74,6 +75,18 @@ export function ChatDetailViewModel(params) {
     self.updateBadge = function() {
         var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
         self.badgeHandler(room);
+    };
+
+    self.onitemrender = function() {
+        // Hack to scroll the element after it's been loaded and rendered.
+        // The old plugin relied on DOM events which fire at the wrong time now.
+        // Note: Copies code from ko bottomsUp plugin.
+        var element = $('[data-scroll="true"]')[0];
+        var isAtBottom = element.scrollHeight - element.scrollTop - 5 <= element.clientHeight;
+        if (!isAtBottom && self.wasAtBottom()) {
+            self.wasAtBottom(true);
+            element.scrollTop = element.scrollHeight - element.clientHeight;
+        }
     };
 
     /* UI Methods */

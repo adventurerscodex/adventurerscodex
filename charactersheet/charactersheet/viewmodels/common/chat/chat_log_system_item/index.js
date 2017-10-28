@@ -15,6 +15,10 @@ export function ChatLogSystemItem(params) {
     });
     self.listItemClass = ko.observable('');
 
+    self.load = function() {
+        params.onrender();
+    };
+
     // UI Methods
 
     self.html = ko.pureComputed(function() {

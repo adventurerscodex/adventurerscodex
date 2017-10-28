@@ -22,6 +22,11 @@ export function ChatLogReadAloudItem(params) {
         return self.message.dateReceived();
     });
     self.listItemClass = ko.observable('info-chat-highlight');
+
+    self.load = function() {
+        params.onrender();
+    };
+
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {
