@@ -4,14 +4,12 @@ import template from './index.html'
 /**
  * A View that handles displaying Messages of type SYSTEM.
  */
-export function ChatLogSystemItem(message) {
+export function ChatLogSystemItem(params) {
     var self = this;
 
-    self.message = message;
+    self.message = params.message;
 
     // Chat Item Methods
-    self.templateUrl = 'templates/common/chat';
-    self.templateName = 'system_item.tmpl';
     self.timestamp = ko.pureComputed(function() {
         return self.message.dateReceived();
     });

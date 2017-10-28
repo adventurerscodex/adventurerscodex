@@ -1,8 +1,7 @@
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { Message, Presence, ChatRoom } from 'charactersheet/models/common'
-import { Notifications } from 'charactersheet/utilities'
 import { PersistenceService, XMPPService, CHAT_MESSAGE_TYPES } from 'charactersheet/services/common'
 
 import template from './index.html'
@@ -11,13 +10,11 @@ export function ChatDetailViewModel(params) {
     var self = this;
 
     self.id = params.room().id;
+    self.room = params.room;
     self.members = params.room().members;
     self.isGroupChat = params.room().isGroupChat;
     self._getRoomMembers = params.room()._getRoomMembers;
-//     self.parent = parent;
-
-    self.templateUrl = 'templates/common/chat';
-    self.templateName = 'chat.tmpl';
+    self.badgeHandler = params.badgeHandler;
 
     self.log = ko.observableArray();
     self.message = ko.observable('');
@@ -32,6 +29,8 @@ export function ChatDetailViewModel(params) {
         self.updateBadge();
         self._updateStatus();
 
+        self.room.subscribe(self.reloadData);
+
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
         Notifications.chat.room.add(self.reloadData);
@@ -42,7 +41,7 @@ export function ChatDetailViewModel(params) {
         Notifications.party.players.changed.add(self.reloadData);
     };
 
-    self.unload = function() {
+    self.dispose = function() {
         Notifications.xmpp.connected.remove(self._updateStatus);
         Notifications.xmpp.disconnected.remove(self._updateStatus);
         Notifications.chat.room.remove(self.reloadData);
@@ -74,7 +73,7 @@ export function ChatDetailViewModel(params) {
 
     self.updateBadge = function() {
         var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
-        self.parent.updateBadge(room);
+        self.badgeHandler(room);
     };
 
     /* UI Methods */
@@ -190,26 +189,12 @@ export function ChatDetailViewModel(params) {
         }
     };
 
-    self._getLogItem = function(message) {
-        if (message.messageType() == CHAT_MESSAGE_TYPES.CHAT) {
-            return new ChatLogChatItem(message);
-        } else if (message.messageType() == CHAT_MESSAGE_TYPES.SYSTEM) {
-            return new ChatLogSystemItem(message);
-        } else if (message.messageType() == CHAT_MESSAGE_TYPES.READ_ALOUD) {
-            return new ChatLogReadAloudItem(message);
-        } else if (message.messageType() == CHAT_MESSAGE_TYPES.IMAGE) {
-            return new ChatLogImageItem(message);
-        } else {
-            throw Error('Undefined chat message type');
-        }
-    };
-
     self._getLatestTimeStamp = function() {
         var last = self.log().length - 1;
         if (last < 0) {
             return 0;
         }
-        return self.log()[last].timestamp();
+        return self.log()[last].dateReceived();
     };
 
     self._getRecentItems = function() {
@@ -226,12 +211,9 @@ export function ChatDetailViewModel(params) {
                 Strophe.getBareJidFromJid(pres.from) == self.id() &&
                 pres.dateReceived > latestTime
             );
-        })).map(function(msg, idx, _) {
-            return self._getLogItem(msg);
-        }).sort(function(a, b) {
-            return a.timestamp() - b.timestamp();
+        })).sort(function(a, b) {
+            return a.dateReceived() - b.dateReceived();
         });
-
         return log;
     };
 }

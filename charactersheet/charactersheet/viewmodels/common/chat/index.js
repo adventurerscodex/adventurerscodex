@@ -17,14 +17,15 @@ import { ChatRoom } from 'charactersheet/models'
 
 import template from './index.html'
 
-export function ChatViewModel() {
+export function ChatViewModel(params) {
     var self = new MasterDetailViewModel();
 
     self.chats = ko.observableArray();
+    self.isActive = params.isActive;
     self.isConnectedToParty = ko.observable(false);
 
     self.selectedRoom = ko.pureComputed(function() {
-        return
+        return;
     });
 
     self.title = 'Chats';
@@ -33,6 +34,8 @@ export function ChatViewModel() {
     /* View Model Methods */
 
     self.didLoad = function() {
+        self._purgeChats();
+
         self.reloadCells();
         self.selectedCell(self.cells()[0]);
         self.checkForParty();
@@ -48,7 +51,6 @@ export function ChatViewModel() {
     };
 
     self.didUnload = function() {
-        self._purgeChats();
 
         // Message Notifications
         Notifications.chat.message.remove(self._deliverMessageToRoom);
@@ -199,7 +201,7 @@ export function ChatViewModel() {
      * Tell the child view model that it should update its chat messages.
      */
     self._childViewModelShouldUpdate = function() {
-        self.detailViewModel().reloadData();
+        self.selectedObject.valueHasMutated();
     };
 
     /**
@@ -218,7 +220,7 @@ export function ChatViewModel() {
             self.updateBadge(room);
         }
 
-        var chatTabIsForground = viewModel.childRootViewModel().activeTab() == 'chat';
+        var chatTabIsForground = self.isActive() == 'active';
         if (!chatTabIsForground && !delay && msg.messageType() != CHAT_MESSAGE_TYPES.META) {
             if (!hideTitle) {
                 Notifications.userNotification.infoNotification.dispatch(msg.shortHtml(), msg.fromUsername());

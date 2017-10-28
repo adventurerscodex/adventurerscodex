@@ -6,6 +6,7 @@ import Spinner from 'spin'
 
 // Load Global KO Bindings
 import 'bin/knockout-jquery-autocomplete'
+import 'bin/knockout-bottomsup'
 import 'bin/xmpp/muc.strophe'
 
 import 'charactersheet/components'

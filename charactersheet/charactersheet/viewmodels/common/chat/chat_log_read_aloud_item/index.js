@@ -12,14 +12,12 @@ import template from './index.html'
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-export function ChatLogReadAloudItem(message) {
+export function ChatLogReadAloudItem(params) {
     var self = this;
 
-    self.message = message;
+    self.message = params.message;
 
     // Chat Item Methods
-    self.templateUrl = 'templates/common/chat';
-    self.templateName = 'read_aloud_item.tmpl';
     self.timestamp = ko.pureComputed(function() {
         return self.message.dateReceived();
     });

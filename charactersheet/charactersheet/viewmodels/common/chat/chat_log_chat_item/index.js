@@ -1,23 +1,22 @@
 import ko from 'knockout'
+import linkifyStr from 'linkifyjs/string'
 
+import { Settings } from 'charactersheet/settings'
+import { PlayerTypes } from 'charactersheet/models/common/player_types'
 import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { XMPPService } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService, ChatServiceManager, XMPPService } from 'charactersheet/services/common'
 
 import template from './index.html'
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-export function ChatLogChatItem(message) {
+export function ChatLogChatItem(params) {
     var self = this;
 
-    self.message = message;
+    self.message = params.message;
 
     // Chat Item Methods
-    self.templateUrl = 'templates/common/chat';
-    self.templateName = 'chat_item.tmpl';
     self.timestamp = ko.pureComputed(function() {
         return self.message.dateReceived();
     });

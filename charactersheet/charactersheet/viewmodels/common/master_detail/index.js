@@ -34,7 +34,7 @@ export function MasterDetailViewModel() {
         self.didLoad();
     };
 
-    self.unload = function() {
+    self.dispose = function() {
         self.cells().forEach(function(cell, idx, _) {
             cell.save();
         });

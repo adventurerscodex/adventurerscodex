@@ -1,4 +1,4 @@
-<!-- ko if: chat -->
+<!-- ko if: room -->
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="container-fluid">
@@ -10,11 +10,19 @@
 			<form data-bind="submit: sendMessage">
 			  <div class="container-fluid">
 				  <ul class="list-group chat-style"
-				    data-bind="foreach: log, bottomsUp: true">
-					  <li class="list-group-item" data-bind="css: listItemClass">
-              <div class="row" data-bind="template: {
-                data: $data, name: templateName, templateUrl: templateUrl }"></div>
-					  </li>
+				    data-bind="foreach: { data: log, as: 'message' }, bottomsUp: true">
+            <!-- ko if: message.messageType() == 'chat' -->
+              <chat-log-chat-item params="message: message"></chat-log-chat-item>
+            <!-- /ko -->
+            <!-- ko if: message.messageType() == 'system' -->
+              <chat-log-system-item params="message: message"></chat-log-system-item>
+            <!-- /ko -->
+            <!-- ko if: message.messageType() == 'read-aloud' -->
+              <chat-log-read-aloud-item params="message: message"></chat-log-read-aloud-item>
+            <!-- /ko -->
+            <!-- ko if: message.messageType() == 'image' -->
+              <chat-log-image-item params="message: message"></chat-log-image-item>
+            <!-- /ko -->
 				  </ul>
 			  </div>
 			  <div class="row">
@@ -34,7 +42,7 @@
   </div>
 </div>
 <!-- /ko -->
-<!-- ko ifnot: chat -->
+<!-- ko ifnot: room -->
 <div class="detail-place-holder well text-center"
   style="cursor:pointer;" data-bind="click: addButtonWasClicked">
   <p class="lead text-muted heading" data-bind="html: addNewItemText"></p>
