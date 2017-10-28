@@ -54,7 +54,7 @@
     </a>
   </li>
   <!-- Right tabs -->
-  <!-- <li role="presentation" class="secondary-nav">
+  <li role="presentation" class="secondary-nav">
     <button class="btn btn-sm btn-primary" data-toggle="collapse"
       data-bind="click: toggleWellOpen"
       data-target="#actionsCollapse" aria-expanded="false"
@@ -62,57 +62,57 @@
         Actions
         <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
     </button>
-  </li> -->
+  </li>
 </ul>
 <div class="tab-content">
-  <!-- <actions-toolbar></actions-toolbar> -->
-<div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
-  <div class="row">
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/>
-    </div>
-    <div class="col-sm-8 col-lg-9 col-padded">
-      <div class="h3">
-        Hit Points and Hit Dice<br />
-        <small>Click on your max Hit Points to increase them when you level
-           up. Click on a die icon to track expended hit dice.</small>
+  <actions-toolbar params="wellState: wellState"></actions-toolbar>
+  <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
+    <div class="row">
+      <div class="col-sm-4 col-lg-3 hidden-xs">
+        <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/>
       </div>
-      <stats></stats>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-padded">
-      <div class="h3">
-        Ability Scores, Savings Throw, and Other Stats<br />
-        <small>Click on your Ability Scores to add or edit them. Savings
-          Throw modifiers automatically include your Ability Score modifier
-          and Proficiency Bonus.
-        </small>
+      <div class="col-sm-8 col-lg-9 col-padded">
+        <div class="h3">
+          Hit Points and Hit Dice<br />
+          <small>Click on your max Hit Points to increase them when you level
+            up. Click on a die icon to track expended hit dice.</small>
+        </div>
+        <stats></stats>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-padded">
-      <ability-scores></ability-scores>
+    <div class="row">
+      <div class="col-sm-12 col-padded">
+        <div class="h3">
+          Ability Scores, Savings Throw, and Other Stats<br />
+          <small>Click on your Ability Scores to add or edit them. Savings
+            Throw modifiers automatically include your Ability Score modifier
+            and Proficiency Bonus.
+          </small>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-sm-6 col-padded">
-      <savings-throws></savings-throws>
+    <div class="row">
+      <div class="col-sm-12 col-padded">
+        <ability-scores></ability-scores>
+      </div>
     </div>
-    <div class="col-md-8 col-sm-6 col-padded">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-sm-12 col-padded">
-              <other-stats></other-stats>
+    <div class="row">
+      <div class="col-md-4 col-sm-6 col-padded">
+        <savings-throws></savings-throws>
+      </div>
+      <div class="col-md-8 col-sm-6 col-padded">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-sm-12 col-padded">
+                <other-stats></other-stats>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 <!-- End Stats Tab -->
 
 <div role="tabpanel" class="tab-pane" id="skills" data-bind="css: skillsTabStatus">

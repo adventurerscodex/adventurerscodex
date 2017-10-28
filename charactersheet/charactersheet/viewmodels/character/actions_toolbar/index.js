@@ -9,10 +9,10 @@ import template from './index.html'
 import campingTent from 'images/camping-tent.svg'
 import meditation from 'images/meditation.svg'
 
-export function ActionsToolbarViewModel() {
+export function ActionsToolbarViewModel(params) {
     var self = this;
 
-    self.wellOpen = ko.observable(false);
+    self.wellOpen = params.wellState;
     self.meditation = meditation;
     self.campingTent = campingTent;
 
