@@ -22,6 +22,10 @@ export function ChatLogChatItem(params) {
     });
     self.listItemClass = ko.observable('');
 
+    self.load = function() {
+        params.onrender();
+    };
+
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {

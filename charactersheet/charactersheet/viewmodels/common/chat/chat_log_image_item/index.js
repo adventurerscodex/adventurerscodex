@@ -22,6 +22,10 @@ export function ChatLogImageItem(params) {
     });
     self.listItemClass = ko.observable('image-chat-highlight');
 
+    self.load = function() {
+        params.onrender();
+    };
+
     // UI Methods
 
     self.shouldShowSaveToNotesButton = ko.pureComputed(function() {

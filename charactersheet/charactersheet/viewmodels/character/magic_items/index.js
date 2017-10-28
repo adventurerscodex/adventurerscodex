@@ -2,6 +2,7 @@ import ko from 'knockout'
 import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager,
+    DataRepository,
     Utility } from 'charactersheet/utilities'
 import { MagicItem } from 'charactersheet/models/common'
 import { Notifications } from 'charactersheet/utilities'

@@ -6,7 +6,6 @@ import 'bin/knockout-bootstrap-modal'
 import { Message,
     MapOrImage,
     MapsAndImagesSection } from 'charactersheet/models'
-import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { ImageServiceManager,
     PersistenceService,
     ChatServiceManager,
@@ -55,8 +54,8 @@ export function MapsAndImagesSectionViewModel(params) {
 
     // Push to Player
     self.selectedMapOrImageToPush = ko.observable();
-    self.pushModalViewModel = ko.observable();
     self.openPushModal = ko.observable(false);
+    self.pushType = ko.observable('image');
     self.convertedDisplayUrl = ko.observable();
 
     self._isConnectedToParty = ko.observable(false);
@@ -214,57 +213,14 @@ export function MapsAndImagesSectionViewModel(params) {
         return self._isConnectedToParty();
     });
 
-    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
-        self.selectedMapOrImageToPush(mapOrImage);
-        self.pushModalViewModel(new PlayerPushModalViewModel(self));
-        self.pushModalViewModel().load();
-        self.openPushModal(true);
-    };
-
     self.pushModalFinishedClosing = function() {
-        self.pushModalViewModel().unload();
-        self.pushModalViewModel(null);
         self.selectedMapOrImageToPush(null);
         self.openPushModal(false);
     };
 
-    self.pushModalDoneButtonWasClicked = function() {
-        var selected = self.pushModalViewModel().selectedPartyMembers();
-        var mapOrImage = self.selectedMapOrImageToPush();
-
-        self.pushMapOrImageToPlayers(mapOrImage, selected);
-    };
-
-    /**
-     * Given an map or image to push, send it as an HTML message
-     * to the given player/players.
-     */
-    self.pushMapOrImageToPlayers = function(mapOrImage, players) {
-        var chat = ChatServiceManager.sharedService();
-        var currentParty = chat.currentPartyNode;
-        var xmpp = XMPPService.sharedService();
-
-        players.forEach(function(player, idx, _) {
-            var bare = Strophe.getBareJidFromJid(player.jid);
-            var nick = chat.getNickForBareJidInParty(bare);
-
-            var message = new Message();
-            message.importValues({
-                to: currentParty + '/' + nick,
-                type: 'chat',
-                from: xmpp.connection.jid,
-                id: xmpp.connection.getUniqueId(),
-                html: mapOrImage.toHTML(),
-                body: ''
-            });
-
-            message.item({
-                xmlns: Strophe.NS.JSON + '#image',
-                json: mapOrImage.toJSON()
-            });
-
-            xmpp.connection.send(message.tree());
-        });
+    self.pushModalToPlayerButtonWasPressed = function(mapOrImage) {
+        self.selectedMapOrImageToPush(mapOrImage);
+        self.openPushModal(true);
     };
 
     /* Private Methods */

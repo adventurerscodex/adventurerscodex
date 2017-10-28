@@ -22,7 +22,6 @@ export function OtherStatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
     self._dummy = ko.observable();
-    self._otherStatsDummy = ko.observable();
 
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
@@ -48,13 +47,14 @@ export function OtherStatsViewModel() {
         // Subscriptions
         self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
         self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
-        self.otherStats().initiative.subscribe(self._otherStatsDummy.valueHasMutated);
+        self.otherStats().initiative.subscribe(self.initiativeHasChanged);
         self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
+        self.otherStats().speed.subscribe(self.dataHasChanged);
         self.level.subscribe(self.levelDataHasChanged);
         self.experience.subscribe(self.experienceDataHasChanged);
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.armorClass.changed.add(self.updateArmorClass);
-        Notifications.abilityScores.changed.add(self._otherStatsDummy.valueHasMutated);
+        Notifications.abilityScores.changed.add(self.calculateInitiativeLabel);
     }
 
     self.unload = function() {
@@ -62,7 +62,7 @@ export function OtherStatsViewModel() {
 
         Notifications.profile.changed.remove(self._dummy.valueHasMutated);
         Notifications.armorClass.changed.remove(self.updateArmorClass);
-        Notifications.abilityScores.changed.remove(self._otherStatsDummy.valueHasMutated);
+        Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
     }
 
     // Calculate proficiency label and popover
@@ -84,7 +84,6 @@ export function OtherStatsViewModel() {
 
     // Calculate initiative label and popover
     self.calculateInitiativeLabel = ko.pureComputed(function() {
-        self._otherStatsDummy();
         var key = CharacterManager.activeCharacter().key();
         var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
         var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
@@ -128,6 +127,15 @@ export function OtherStatsViewModel() {
     self.inspirationHasChanged = function() {
         self.otherStats().save();
         Notifications.otherStats.inspiration.changed.dispatch();
+    };
+
+    self.dataHasChanged = function() {
+        self.otherStats().save();
+    };
+
+    self.initiativeHasChanged = function() {
+        self.otherStats().save();
+        self.calculateInitiativeLabel();
     };
 
     self.armorClassModifierDataHasChanged = function() {
