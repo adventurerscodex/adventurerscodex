@@ -12,7 +12,7 @@ export function PartyStatusViewModel() {
 
     self.load = function() {
         Notifications.party.joined.add(self._updatePartyStatus);
-        Notifications.party.left.add(self._updatePartyStatus);
+        Notifications.party.left.add(self._clearPartyStatus);
         Notifications.xmpp.disconnected.add(self._updatePartyStatus);
         Notifications.characterManager.changed.add(self._clearPartyStatus);
         // Make sure the first message is set
