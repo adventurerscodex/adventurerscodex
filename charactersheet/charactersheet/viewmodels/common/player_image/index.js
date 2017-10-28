@@ -88,6 +88,29 @@ export function PlayerImageViewModel() {
     };
 
     self.load = function() {
+        // Prime the pump.
+        self.updateImage();
+        self.inspirationHasChanged();
+        self._handleConnectionStatusChanged();
+
+        //Subscriptions
+        self.email.subscribe(self.dataHasChanged);
+        self.imageUrl.subscribe(self.dataHasChanged);
+        self.imageSource.subscribe(self.dataHasChanged);
+        self.selectedDefaultImages.subscribe(self.updateImageUrl);
+        Notifications.playerInfo.changed.add(self.dataHasChanged);
+        Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
+        Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
+        Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
+        Notifications.characterManager.changed.add(self.updateImage);
+    };
+
+    self.dataHasChanged = function() {
+        self.save();
+        Notifications.playerImage.changed.dispatch();
+    };
+
+    self.updateImage = function() {
         var key = CharacterManager.activeCharacter().key();
         var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
         if (image) {
@@ -115,33 +138,6 @@ export function PlayerImageViewModel() {
             playerImageSource.characterId(key);
             playerImageSource.save();
         }
-
-        // Prime the pump.
-        self.inspirationHasChanged();
-        self._handleConnectionStatusChanged();
-
-        //Subscriptions
-        self.email.subscribe(self.dataHasChanged);
-        self.imageUrl.subscribe(self.dataHasChanged);
-        self.imageSource.subscribe(self.dataHasChanged);
-        self.selectedDefaultImages.subscribe(self.updateImageUrl);
-        Notifications.playerInfo.changed.add(self.dataHasChanged);
-        Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
-        Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
-        Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.playerInfo.changed.remove(self.dataHasChanged);
-        Notifications.otherStats.inspiration.changed.remove(self.inspirationHasChanged);
-        Notifications.xmpp.connected.remove(self._handleConnectionStatusChanged);
-        Notifications.xmpp.disconnected.remove(self._handleConnectionStatusChanged);
-    };
-
-    self.dataHasChanged = function() {
-        self.save();
-        Notifications.playerImage.changed.dispatch();
     };
 
     self.updateImageUrl = function() {

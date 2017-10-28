@@ -17,7 +17,7 @@ export function PartyStatusViewModel() {
         Notifications.characterManager.changed.add(self._clearPartyStatus);
         // Make sure the first message is set
         self._updatePartyStatus(null, true);
-    }
+    };
 
     self._updatePartyStatus = function(node, success) {
         if (!success) { return; }
@@ -30,7 +30,7 @@ export function PartyStatusViewModel() {
 
     self._clearPartyStatus = function() {
         self.partyStatus('<i>You\'re not connected to a party.</i>');
-    }
+    };
 }
 
 ko.components.register('party-status', {
