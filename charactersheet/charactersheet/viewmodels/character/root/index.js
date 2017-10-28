@@ -64,6 +64,7 @@ export function CharacterRootViewModel() {
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
     self.partyStatus = ko.observable('');
+    self.wellState = ko.observable(false);
 
     // Services
     self.statusLineService = StatusService.sharedService();
@@ -146,9 +147,13 @@ export function CharacterRootViewModel() {
         self.activeTab('exhibit');
     };
 
-    self.toggleWell = function() {
-        Notifications.actionsToolbar.toggle.dispatch();
+    self.toggleWellOpen = function() {
+        self.wellState(!self.wellState());
     };
+
+    self.arrowIconClass = ko.pureComputed(function() {
+        return self.wellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
+    });
 
     //UI Methods
 
