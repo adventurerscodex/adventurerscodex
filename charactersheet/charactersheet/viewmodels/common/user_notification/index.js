@@ -1,5 +1,6 @@
 import ko from 'knockout'
 import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 
 import { CharacterManager,
     Notifications,
