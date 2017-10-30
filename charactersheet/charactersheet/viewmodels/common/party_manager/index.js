@@ -39,22 +39,12 @@ export function PartyManagerViewModel() {
         Notifications.xmpp.error.add(self._handleConnectionError);
         Notifications.xmpp.conflict.add(self._handleConflict);
         self.parties(self._getParties());
+        self.checkIfInAParty();
 
         Notifications.party.joined.add(self._handleSubscription);
         Notifications.party.left.add(self._handleUnsubscription);
 
         self.dataHasChanged();
-    };
-
-    self.unload = function() {
-        Notifications.xmpp.connected.remove(self.dataHasChanged);
-        Notifications.xmpp.reconnected.remove(self._handleReconnection);
-        Notifications.xmpp.disconnected.remove(self._handleDisconnection);
-        Notifications.xmpp.error.remove(self._handleConnectionError);
-        Notifications.xmpp.conflict.remove(self._handleConflict);
-        Notifications.party.joined.remove(self._handleSubscription);
-        Notifications.party.left.remove(self._handleUnsubscription);
-        Notifications.characterManager.changing.add(self._leaveOnSwitch);
     };
 
     /* UI Methods */
@@ -94,6 +84,15 @@ export function PartyManagerViewModel() {
     };
 
     /* Public Methods */
+
+    self.checkIfInAParty = function() {
+        var chatManager = ChatServiceManager.sharedService();
+        var node = chatManager.currentPartyNode;
+        if (node) {
+            self.roomId(Strophe.getNodeFromJid(node));
+            self.inAParty(true);
+        }
+    };
 
     /**
      * Create a new party node with a random id, and once that's

@@ -40,7 +40,7 @@ export function ExhibitViewModel() {
             return PlayerTypes.dmPlayerType.key == card.get('playerType')[0];
         })[0];
 
-        var image = dmCard.get('exhibitImage')[0];
+        var image = dmCard ? dmCard.get('exhibitImage')[0] : null;
 
         if (image) {
             if (image.name == self.name() && image.url == self.url()) {

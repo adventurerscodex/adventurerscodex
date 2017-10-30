@@ -23,11 +23,16 @@ export function FeaturesTraitsViewModel() {
             self.featTraits(new FeaturesTraits());
         }
         self.featTraits().characterId(CharacterManager.activeCharacter().key());
+
+        // Subscriptions
+        self.featTraits().background.subscribe(self.dataHasChanged);
+        self.featTraits().ideals.subscribe(self.dataHasChanged);
+        self.featTraits().flaws.subscribe(self.dataHasChanged);
+        self.featTraits().bonds.subscribe(self.dataHasChanged);
     };
 
-    self.unload = function() {
+    self.dataHasChanged = function() {
         self.featTraits().save();
-        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {

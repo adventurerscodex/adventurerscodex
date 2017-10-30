@@ -25,11 +25,16 @@ export function AppearanceViewModel() {
             self.appearance(new CharacterAppearance());
         }
         self.appearance().characterId(key);
+        // Subscriptions
+        self.appearance().height.subscribe(self.dataHasChanged);
+        self.appearance().weight.subscribe(self.dataHasChanged);
+        self.appearance().hairColor.subscribe(self.dataHasChanged);
+        self.appearance().eyeColor.subscribe(self.dataHasChanged);
+        self.appearance().skinColor.subscribe(self.dataHasChanged);
     };
 
-    self.unload = function() {
+    self.dataHasChanged = function() {
         self.appearance().save();
-        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
