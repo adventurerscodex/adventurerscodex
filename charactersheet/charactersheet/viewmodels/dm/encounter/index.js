@@ -7,7 +7,7 @@ import { EncounterDetailViewModel,
 import { Notifications,
     CharacterManager } from 'charactersheet/utilities'
 import { Encounter } from 'charactersheet/models'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { EnvironmentSection,
     NotesSection,
     TreasureSection,

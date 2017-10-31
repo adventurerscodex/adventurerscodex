@@ -1,10 +1,11 @@
 import ko from 'knockout'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-import { Character,
-    PlayerTypes } from 'charactersheet/models/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+import {
+    Character,
+    PlayerTypes
+} from 'charactersheet/models/common'
 
 import template from './index.html'
 

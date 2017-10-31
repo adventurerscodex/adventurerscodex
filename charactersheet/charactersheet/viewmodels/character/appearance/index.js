@@ -5,8 +5,7 @@ import 'bin/knockout-custom-loader'
 import { CharacterAppearance } from 'charactersheet/models/character'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import template from './index.html'
 
 export function AppearanceViewModel() {

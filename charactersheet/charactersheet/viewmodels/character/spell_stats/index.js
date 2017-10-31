@@ -3,7 +3,7 @@ import 'bin/knockout-bootstrap-modal'
 
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { SpellStats } from 'charactersheet/models/character'
 
 import template from './index.html'

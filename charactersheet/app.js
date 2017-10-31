@@ -14,7 +14,7 @@ import 'bin/select2-bootstrap-flatly.css'
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'
-import 'charactersheet/viewmodels/common'
+import 'charactersheet/viewmodels'
 import 'charactersheet/models'
 import 'charactersheet/services'
 import 'charactersheet/utilities'

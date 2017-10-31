@@ -2,7 +2,7 @@ import ko from 'knockout'
 import uuid from 'node-uuid'
 
 import { CharacterManager } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { Character,
     Profile,
     Campaign,

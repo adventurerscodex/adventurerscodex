@@ -2,39 +2,12 @@ import ko from 'knockout';
 
 import 'bin/knockout-bootstrap-modal'
 
-import { AbilityScores } from 'charactersheet/models/character';
-import { CharacterManager } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common';
+import { AbilityScores, getModifier, getStrModifier } from 'charactersheet/models/character/ability_scores';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 import template from './index.html'
 
-export var isNumeric = function(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-};
-
-export var getModifier = function(value){
-    if (isNumeric(value)){
-        return Math.floor((value - 10) / 2);
-    }
-    else {
-        return null;
-    }
-};
-
-export var getStrModifier = function(modifier){
-    if (modifier === null || modifier === '') {
-        return '';
-    }
-    modifier = getModifier(modifier);
-    if (modifier >= 0) {
-        modifier = '+ ' + modifier;
-    }
-    else {
-        modifier = '- ' + Math.abs(modifier);
-    }
-    return modifier;
-};
 
 export function AbilityScoresViewModel() {
     var self = this;

@@ -3,9 +3,37 @@ import 'knockout-mapping';
 
 import 'bin/knockout-mapping-autoignore';
 
-import { getModifier,
-    getStrModifier } from 'charactersheet/viewmodels/character/ability_scores';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+
+
+export var isNumeric = function(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+
+export var getModifier = function(value){
+    if (isNumeric(value)){
+        return Math.floor((value - 10) / 2);
+    }
+    else {
+        return null;
+    }
+};
+
+
+export var getStrModifier = function(modifier){
+    if (modifier === null || modifier === '') {
+        return '';
+    }
+    modifier = getModifier(modifier);
+    if (modifier >= 0) {
+        modifier = '+ ' + modifier;
+    }
+    else {
+        modifier = '- ' + Math.abs(modifier);
+    }
+    return modifier;
+};
 
 
 export function AbilityScores() {

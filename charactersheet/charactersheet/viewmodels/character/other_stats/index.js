@@ -5,7 +5,7 @@ import 'bin/popover_bind'
 import { OtherStats,
     Profile,
     AbilityScores } from 'charactersheet/models/character'
-import { getModifier } from 'charactersheet/viewmodels/character/ability_scores';
+import { getModifier } from 'charactersheet/models/character/ability_scores';
 import { Notifications,
     CharacterManager } from 'charactersheet/utilities'
 import { PersistenceService,

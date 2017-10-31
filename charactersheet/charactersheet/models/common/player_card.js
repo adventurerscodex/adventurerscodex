@@ -4,8 +4,7 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import { Status } from 'charactersheet/models'
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 
 /**
  * Fields from a pCard will be extracted to create the UI representation of a player.

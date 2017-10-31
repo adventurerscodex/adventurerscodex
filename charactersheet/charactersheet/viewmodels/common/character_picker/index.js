@@ -2,11 +2,9 @@ import ko from 'knockout'
 
 import 'bin/knockout-custom-loader'
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Character } from 'charactersheet/models/common'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { Character } from 'charactersheet/models/common/character'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import template from './index.html'
 import logo from 'images/logo-full-circle-icon.png'
 

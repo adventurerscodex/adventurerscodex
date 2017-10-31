@@ -1,6 +1,6 @@
 import marked from 'bin/textarea-markdown-editor/marked.min.js'
 
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { AuthenticationToken } from 'charactersheet/models/common'
 
 /**

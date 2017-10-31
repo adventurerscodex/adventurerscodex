@@ -7,7 +7,7 @@ import { DataRepository } from 'charactersheet/utilities'
 import { Feat,
     Tracked } from 'charactersheet/models/character'
 import { Fixtures, Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { SortService } from 'charactersheet/services/common'
 import { Utility } from 'charactersheet/utilities'
 

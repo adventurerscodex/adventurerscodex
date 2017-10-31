@@ -2,23 +2,25 @@ import ko from 'knockout'
 import Dropbox from 'dropbox'
 import uuid from 'node-uuid'
 import { saveAs } from 'FileSaver.js'
+
 import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import {
-    AuthenticationToken,
-    Campaign,
-    ImageModel,
-    PlayerImage,
-    PlayerInfo,
-    PlayerTypes,
-    Profile
- } from 'charactersheet/models'
-import { Utility,
+    Utility,
     Notifications,
-    Migrations } from 'charactersheet/utilities'
-import { Settings } from 'charactersheet/settings.js'
-import { PersistenceService } from 'charactersheet/services/common'
+    Migrations
+} from 'charactersheet/utilities'
+import { Settings } from 'charactersheet/settings'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+
+import { AuthenticationToken } from './authentication_token'
+import { Campaign } from '../dm/campaign'
+import { ImageModel } from './image'
+import { PlayerImage } from './player_image'
+import { PlayerInfo } from './player_info'
+import { PlayerTypes } from './player_types'
+import { Profile } from '../character/profile'
 
 
 /**

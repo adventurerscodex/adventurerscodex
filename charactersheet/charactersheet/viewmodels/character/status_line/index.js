@@ -4,8 +4,7 @@ import { Status,
     Profile } from 'charactersheet/models'
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import template from './index.html'
 
 export function StatusLineViewModel(params) {
