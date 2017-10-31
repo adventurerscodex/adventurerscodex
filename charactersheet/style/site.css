@@ -75,7 +75,7 @@ small {
   position: relative;
   height: 150px;
 	clear:both;
-  margin-top:-150px;
+  margin-top:0px;
   padding-top:30px;
   background-color: #ecf0f1;
   padding-bottom: 20px;
