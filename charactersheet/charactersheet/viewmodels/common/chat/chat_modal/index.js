@@ -1,4 +1,6 @@
-function ChatModalViewModel(parent) {
+import ko from 'knockout'
+
+export function ChatModalViewModel(parent) {
     var self = this;
 
     self.templateUrl = 'templates/common/chat';
