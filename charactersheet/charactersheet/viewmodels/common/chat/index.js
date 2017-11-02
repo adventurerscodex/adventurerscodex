@@ -4,12 +4,14 @@ import ko from 'knockout'
 
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
 import { ChatCellViewModel } from './chat_cell'
+import { ChatModalViewModel } from './chat_modal'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import {
     ChatServiceManager,
     PersistenceService,
     KeyValuePredicate,
-    OrPredicate
+    OrPredicate,
+    CHAT_MESSAGE_TYPES
 } from 'charactersheet/services/common'
 import { XMPPService } from 'charactersheet/services/common/account'
 import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail'

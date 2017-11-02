@@ -3,7 +3,11 @@ import ko from 'knockout'
 import { Notifications,
     Utility,
     CharacterManager } from 'charactersheet/utilities'
-import { XMPPService } from 'charactersheet/services/common'
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+import { CharacterCardPublishingService,
+    DMCardPublishingService,
+    XMPPService } from 'charactersheet/services/common'
+import { PlayerTypes } from 'charactersheet/models/common'
 
 import template from './index.html'
 

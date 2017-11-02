@@ -1,4 +1,5 @@
 import ko from 'knockout'
+import marked from 'bin/textarea-markdown-editor/marked.min.js'
 
 import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { Utility } from 'charactersheet/utilities'

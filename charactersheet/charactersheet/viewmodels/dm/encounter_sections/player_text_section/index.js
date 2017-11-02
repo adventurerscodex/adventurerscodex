@@ -13,6 +13,7 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities'
+import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/read.svg'
@@ -47,6 +48,7 @@ export function PlayerTextSectionViewModel(params) {
     self.selectedItemToPush = ko.observable();
     self.pushModalViewModel = ko.observable();
     self.openPushModal = ko.observable(false);
+    self.pushType = ko.observable('text');
 
     self._isConnectedToParty = ko.observable(false);
 
@@ -165,18 +167,14 @@ export function PlayerTextSectionViewModel(params) {
         return self._isConnectedToParty();
     });
 
-    self.pushModalToPlayerButtonWasPressed = function(item) {
-        self.selectedItemToPush(item);
-        self.pushModalViewModel(new PlayerPushModalViewModel(self));
-        self.pushModalViewModel().load();
-        self.openPushModal(true);
-    };
-
     self.pushModalFinishedClosing = function() {
-        self.pushModalViewModel().unload();
-        self.pushModalViewModel(null);
         self.selectedItemToPush(null);
         self.openPushModal(false);
+    };
+
+    self.pushModalToPlayerButtonWasPressed = function(playerText) {
+        self.selectedItemToPush(playerText);
+        self.openPushModal(true);
     };
 
     self.pushModalDoneButtonWasClicked = function() {
