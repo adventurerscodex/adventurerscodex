@@ -1,5 +1,5 @@
-import { WizardIntroStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps'
-import { Notifications } from 'charactersheet/utilities'
+// import { WizardIntroStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps/wizard_intro_step'
+import { Notifications } from 'charactersheet/utilities/notifications'
 
 /**
  * A global list of settings and static values.
@@ -42,7 +42,8 @@ export var Settings = {
     dropboxPickerConfigOptions: {
         // Required. Called when a user selects an item in the Chooser.
         success: function(files) {
-            WizardIntroStepViewModel.importRemoteFile(files);
+            // TODO: This shouldn't work anymore!!!
+            //WizardIntroStepViewModel.importRemoteFile(files);
         },
         // Optional. Called when the user closes the dialog without selecting a file
         // and does not include any parameters.

@@ -5,8 +5,7 @@ import 'bin/knockout-custom-loader'
 import { Campaign } from 'charactersheet/models'
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import template from './index.html'
 import largeIcon from 'images/encounters/compass.svg'
 

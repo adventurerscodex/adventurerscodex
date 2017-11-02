@@ -3,7 +3,7 @@ import 'bin/knockout-binding-contenteditable'
 
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { Profile,
     Campaign } from 'charactersheet/models'
 

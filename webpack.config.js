@@ -28,14 +28,14 @@ module.exports = {
       template: 'index.html',
       inject: 'body',
       hash: true
-    })
+    }),
     // TODO: Add this back in when we want to solve this
-    // new CircularDependencyPlugin({
-    // // exclude detection of files based on a RegExp
-    // exclude: /node_modules/,
-    // // add errors to webpack instead of warnings
-    // failOnError: false
-    // })
+    new CircularDependencyPlugin({
+    // exclude detection of files based on a RegExp
+    exclude: /node_modules/,
+    // add errors to webpack instead of warnings
+    failOnError: false
+    })
 //       new webpack.optimize.CommonsChunkPlugin({
 //         name: 'vendor',
 //         minChunks: function isExternal(module) {

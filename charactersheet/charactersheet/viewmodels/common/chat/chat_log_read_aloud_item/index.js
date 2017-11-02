@@ -4,7 +4,7 @@ import { CharacterCardPublishingService, DMCardPublishingService } from 'charact
 import { ChatServiceManager } from 'charactersheet/services/common'
 import { CharacterManager } from 'charactersheet/utilities'
 import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { XMPPService } from 'charactersheet/services/common'
 
 import template from './index.html'

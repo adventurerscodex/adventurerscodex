@@ -90,9 +90,11 @@ export function StatsViewModel() {
         self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
         self.deathSaveFailureList().forEach(function(save, idx, _) {
             save.deathSaveFailure.subscribe(self._alertPlayerHasDied);
+            save.deathSaveFailure.subscribe(self.deathSaveFailureDataHasChanged);
         });
         self.deathSaveSuccessList().forEach(function(save, idx, _) {
             save.deathSaveSuccess.subscribe(self._alertPlayerIsStable);
+            save.deathSaveSuccess.subscribe(self.deathSaveSuccessDataHasChanged);
         });
 
         Notifications.events.longRest.add(self.resetOnLongRest);
@@ -235,6 +237,18 @@ export function StatsViewModel() {
     };
 
     /* Utility Methods */
+
+    self.deathSaveSuccessDataHasChanged = function() {
+        self.deathSaveSuccessList().forEach(function(save, idx, _) {
+            save.save();
+        });
+    };
+
+    self.deathSaveFailureDataHasChanged = function() {
+        self.deathSaveFailureList().forEach(function(save, idx, _) {
+            save.save();
+        });
+    };
 
     self.healthDataHasChange = function() {
         self.health().save();

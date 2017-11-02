@@ -4,8 +4,7 @@ import 'bin/knockout-custom-loader'
 
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import { Note } from 'charactersheet/models/common'
-import { PersistenceService } from 'charactersheet/services/common'
-
+import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import template from './index.html'
 
 export function NotesViewModel() {
