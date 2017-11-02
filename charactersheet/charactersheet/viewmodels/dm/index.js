@@ -8,5 +8,6 @@ export { CampaignOverviewViewModel } from 'charactersheet/viewmodels/dm/overview
 export { PartyViewModel } from 'charactersheet/viewmodels/dm/party'
 export { PartyStatusLineViewModel } from 'charactersheet/viewmodels/dm/status_line'
 export { DMScreenViewModel } from './dmscreen'
+export { DMRootViewModel } from './root'
 export { PlayerPushModal } from 'charactersheet/viewmodels/dm/player_push_modal'
 export * from 'charactersheet/viewmodels/dm/encounter_sections'
