@@ -22,13 +22,13 @@ export function OtherStatsViewModel() {
     self.level = ko.observable('');
     self.experience = ko.observable('');
     self._dummy = ko.observable();
+    self.initiativeLabel = ko.observable();
 
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
 
     self.load = function() {
-
         var key = CharacterManager.activeCharacter().key();
         var otherStats = PersistenceService.findBy(OtherStats, 'characterId', key);
         if (otherStats.length > 0) {
@@ -44,6 +44,8 @@ export function OtherStatsViewModel() {
             self.experience(profile.exp());
         }
 
+        self.calculateInitiativeLabel();
+
         // Subscriptions
         self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
         self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
@@ -54,16 +56,8 @@ export function OtherStatsViewModel() {
         self.experience.subscribe(self.experienceDataHasChanged);
         Notifications.profile.changed.add(self._dummy.valueHasMutated);
         Notifications.armorClass.changed.add(self.updateArmorClass);
-        Notifications.abilityScores.changed.add(self.calculateInitiativeLabel);
-    }
-
-    self.unload = function() {
-        self.otherStats().save();
-
-        Notifications.profile.changed.remove(self._dummy.valueHasMutated);
-        Notifications.armorClass.changed.remove(self.updateArmorClass);
-        Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
-    }
+        Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
+    };
 
     // Calculate proficiency label and popover
     self.calculatedProficiencyLabel = ko.pureComputed(function() {
@@ -83,20 +77,20 @@ export function OtherStatsViewModel() {
     };
 
     // Calculate initiative label and popover
-    self.calculateInitiativeLabel = ko.pureComputed(function() {
+    self.calculateInitiativeLabel = function() {
         var key = CharacterManager.activeCharacter().key();
         var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
         var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
         var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
         self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
 
-        return dexterityModifier + initiativeModifier;
-    });
+        self.initiativeLabel(dexterityModifier + initiativeModifier);
+    };
 
     self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
         self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
         'Dexterity Modifier + Modifier</span><br />'
-            + 'Initiative = ' + dexterityModifier + ' + ' +  initiativeModifier );
+            + 'Initiative = ' + dexterityModifier + ' + ' + initiativeModifier );
     };
 
     self.updateArmorClassPopoverMessage = function(dexterityModifier, initiativeModifier) {
