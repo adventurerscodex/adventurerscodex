@@ -26,6 +26,16 @@ export function WizardProfileStepViewModel(params) {
     self.load = function() {
         self.characterName.subscribe(self.dataHasChanged);
         self.playerName.subscribe(self.dataHasChanged);
+        self.race.subscribe(self.dataHasChanged);
+        self.background.subscribe(self.dataHasChanged);
+        self.backpack.subscribe(self.dataHasChanged);
+        self.typeClass.subscribe(self.dataHasChanged);
+        self.alignment.subscribe(self.dataHasChanged);
+        self.age.subscribe(self.dataHasChanged);
+        self.gender.subscribe(self.dataHasChanged);
+        self.diety.subscribe(self.dataHasChanged);
+        self.level.subscribe(self.dataHasChanged);
+        self.exp.subscribe(self.dataHasChanged);
     };
 
     self.unload = function() { };
