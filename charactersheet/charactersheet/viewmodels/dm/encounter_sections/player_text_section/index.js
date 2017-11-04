@@ -47,9 +47,8 @@ export function PlayerTextSectionViewModel(params) {
 
     // Push to Player
     self.selectedItemToPush = ko.observable();
-    self.pushModalViewModel = ko.observable();
     self.openPushModal = ko.observable(false);
-    self.pushType = ko.observable('text');
+    self.pushType = ko.observable('read-aloud');
 
     self._isConnectedToParty = ko.observable(false);
 
@@ -176,45 +175,6 @@ export function PlayerTextSectionViewModel(params) {
     self.pushModalToPlayerButtonWasPressed = function(playerText) {
         self.selectedItemToPush(playerText);
         self.openPushModal(true);
-    };
-
-    self.pushModalDoneButtonWasClicked = function() {
-        var selected = self.pushModalViewModel().selectedPartyMembers();
-        var item = self.selectedItemToPush();
-
-        self.pushTextToPlayers(item, selected);
-    };
-
-    /**
-     * Given an item of text to push, send it as an HTML message
-     * to the given player/players.
-     */
-    self.pushTextToPlayers = function(item, players) {
-        var chat = ChatServiceManager.sharedService();
-        var currentParty = chat.currentPartyNode;
-        var xmpp = XMPPService.sharedService();
-
-        players.forEach(function(player, idx, _) {
-            var bare = Strophe.getBareJidFromJid(player.jid);
-            var nick = chat.getNickForBareJidInParty(bare);
-
-            var message = new Message();
-            message.importValues({
-                to: currentParty + '/' + nick,
-                type: 'chat',
-                from: xmpp.connection.jid,
-                id: xmpp.connection.getUniqueId(),
-                html: item.toHTML(),
-                body: ''
-            });
-
-            message.item({
-                xmlns: Strophe.NS.JSON + '#read-aloud',
-                json: { html: item.toHTML() }
-            });
-
-            xmpp.connection.send(message.tree());
-        });
     };
 
     /* Modal Methods */

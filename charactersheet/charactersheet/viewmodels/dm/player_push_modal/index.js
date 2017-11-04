@@ -86,6 +86,7 @@ export function PlayerPushModalViewModel(params) {
 
             xmpp.connection.send(message.tree());
         });
+        self.selectedPartyMembers([]);
     };
 
     /* Private Methods */

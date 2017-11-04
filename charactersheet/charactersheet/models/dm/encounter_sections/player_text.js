@@ -61,10 +61,16 @@ export function PlayerText() {
         var description = self.description() ? self.description() : '';
         var name = self.name() ? self.name() : '';
         return '<h3>{name}</h3>&nbsp;<p>{description}</p>'.replace(
-            '{description}', marked(description)
-        ).replace(
             '{name}', name
+        ).replace(
+            '{description}', marked(description)
         );
+    };
+
+    self.toJSON = function() {
+        return {
+            html: self.toHTML()
+        };
     };
 }
 
