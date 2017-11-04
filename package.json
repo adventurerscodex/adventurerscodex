@@ -16,6 +16,7 @@
     "chai": "^4.1.1",
     "circular-dependency-plugin": "^4.2.1",
     "codecov.io": "~0.1.5",
+    "copy-webpack-plugin": "^4.2.0",
     "coveralls": "^2.11.4",
     "css-loader": "^0.28.7",
     "es6-promise": "^4.1.1",
