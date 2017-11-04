@@ -101,11 +101,13 @@
             </div>
             <div class="row row-padded">
               <div class="col-xs-12">
-                <!-- ko if: selectedCharacter().playerType().key == 'character' -->
-                  <player-status-line params="character: selectedCharacter"></player-status-line>
-                <!-- /ko -->
-                <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
-                  <party-status-line params="character: selectedCharacter"></party-status-line>
+                <!-- ko if: selectedCharacter -->
+                  <!-- ko if: selectedCharacter().playerType().key == 'character' -->
+                    <player-status-line params="character: selectedCharacter"></player-status-line>
+                  <!-- /ko -->
+                  <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
+                    <party-status-line params="character: selectedCharacter"></party-status-line>
+                  <!-- /ko -->
                 <!-- /ko -->
               </div>
             </div>
@@ -118,11 +120,13 @@
       </div>
     </div>
     <div class="spacer"></div>
-      <!-- ko if: selectedCharacter().playerType().key == 'character' -->
-      <character-root params="activeCharacter: selectedCharacter"></character-root>
-      <!-- /ko -->
-      <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
-      <dm-root params="activeCharacter: selectedCharacter"></dm-root>
+      <!-- ko if: selectedCharacter -->
+        <!-- ko if: selectedCharacter().playerType().key == 'character' -->
+        <character-root params="activeCharacter: selectedCharacter"></character-root>
+        <!-- /ko -->
+        <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
+        <dm-root params="activeCharacter: selectedCharacter"></dm-root>
+        <!-- /ko -->
       <!-- /ko -->
 	</div>
 </div>

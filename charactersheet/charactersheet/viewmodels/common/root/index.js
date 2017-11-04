@@ -155,6 +155,7 @@ export function AdventurersCodexViewModel() {
         if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
+        self.selectedCharacter(null);
     };
 
     self._handleChangedCharacter = function() {
