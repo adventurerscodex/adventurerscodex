@@ -1,8 +1,5 @@
 import ko from 'knockout'
 
-import 'bin/knockout-custom-loader'
-import 'charactersheet/viewmodels/character'
-
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import {
     HotkeysService,

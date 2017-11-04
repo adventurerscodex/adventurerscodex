@@ -1,16 +1,17 @@
 import ko from 'knockout'
-import Strophe from 'strophe'
 
-import 'bin/knockout-bootstrap-modal'
-
-import { Message,
+import {
+    Message,
     MapOrImage,
-    MapsAndImagesSection } from 'charactersheet/models'
-import { ImageServiceManager,
+} from 'charactersheet/models/common'
+import { MapsAndImagesSection } from 'charactersheet/models/dm'
+import {
+    ImageServiceManager,
     PersistenceService,
     ChatServiceManager,
     XMPPService,
-    SortService } from 'charactersheet/services/common'
+    SortService
+} from 'charactersheet/services/common'
 import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
 
 import template from './index.html'

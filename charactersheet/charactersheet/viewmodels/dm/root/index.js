@@ -1,7 +1,6 @@
 import ko from 'knockout'
 
 import 'bin/knockout-custom-loader'
-import 'charactersheet/viewmodels/dm'
 
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities'

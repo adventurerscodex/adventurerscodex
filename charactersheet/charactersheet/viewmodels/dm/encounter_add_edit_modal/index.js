@@ -1,7 +1,6 @@
 import ko from 'knockout'
 
 import { Encounter } from 'charactersheet/models/dm'
-import { EncounterAddEditModalViewModel } from 'charactersheet/viewmodels/dm'
 import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 import { Notifications } from 'charactersheet/utilities'
 

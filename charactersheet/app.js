@@ -1,7 +1,6 @@
 import ko from 'knockout'
 
 import 'bootstrap'
-import 'font-awesome-webpack'
 import Spinner from 'spin'
 
 // Load Global KO Bindings

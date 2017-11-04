@@ -1,16 +1,20 @@
 import ko from 'knockout'
-
-import 'bin/knockout-bootstrap-modal'
 import uuid from 'node-uuid'
 
-import { MonsterAbilityScore,
+import {
+    MonsterAbilityScore,
     MonsterSection,
-    Monster } from 'charactersheet/models'
-import { SortService,
-    PersistenceService } from 'charactersheet/services'
-import { CharacterManager,
+    Monster
+} from 'charactersheet/models/dm'
+import {
+    SortService,
+    PersistenceService
+} from 'charactersheet/services'
+import {
+    CharacterManager,
     Notifications,
-    DataRepository } from 'charactersheet/utilities'
+    DataRepository
+} from 'charactersheet/utilities'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/wyvern.svg'

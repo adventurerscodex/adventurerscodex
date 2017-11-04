@@ -2,14 +2,20 @@ import ko from 'knockout'
 
 import 'bin/knockout-bootstrap-modal'
 
-import { NPC,
-    NPCSection } from 'charactersheet/models'
+import {
+    NPC,
+    NPCSection
+} from 'charactersheet/models/dm'
 import { Fixtures } from 'charactersheet/utilities'
-import { SortService,
-    PersistenceService } from 'charactersheet/services'
-import { CharacterManager,
+import {
+    SortService,
+    PersistenceService
+} from 'charactersheet/services'
+import {
+    CharacterManager,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility
+} from 'charactersheet/utilities'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/swordman.svg'

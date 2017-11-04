@@ -1,7 +1,7 @@
 import ko from 'knockout'
 import Strophe from 'strophe'
 
-import { Message, Environment, EnvironmentSection } from 'charactersheet/models'
+import { Message, Environment, EnvironmentSection } from 'charactersheet/models/dm'
 import {
     ImageServiceManager,
     PersistenceService,
