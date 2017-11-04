@@ -3,13 +3,15 @@ import uuid from 'node-uuid'
 
 import { CharacterManager } from 'charactersheet/utilities'
 import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Character,
+import {
+    Character,
     Profile,
     Campaign,
     AbilityScores,
     PlayerInfo,
     Item,
-    Trait } from 'charactersheet/models'
+    Trait
+} from 'charactersheet/models'
 
 import template from './index.html'
 

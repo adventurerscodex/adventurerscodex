@@ -8,6 +8,29 @@ import 'bin/knockout-file-bind'
 import template from './index.html'
 import logo from 'images/logo-all-icons.png'
 
+const dropboxPickerConfigOptions = {
+    // Required. Called when a user selects an item in the Chooser.
+    success: function(files) {
+        WizardIntroStepViewModel.importRemoteFile(files);
+    },
+    // Optional. Called when the user closes the dialog without selecting a file
+    // and does not include any parameters.
+    cancel: function() {},
+    // Optional. "preview" (default) is a preview link to the document for sharing,
+    // "direct" is an expiring link to download the contents of the file. For more
+    // information about link types, see Link types below.
+    linkType: 'direct', // or "direct"
+    // Optional. A value of false (default) limits selection to a single file, while
+    // true enables multiple file selection.
+    multiselect: false, // or true
+    // Optional. This is a list of file extensions. If specified, the user will
+    // only be able to select files with these extensions. You may also specify
+    // file types, such as "video" or "images" in the list. For more information,
+    // see File types below. By default, all extensions are allowed.
+    extensions: ['.json']
+};
+
+
 export function WizardIntroStepViewModel(params) {
     var self = this;
 
@@ -54,7 +77,7 @@ export function WizardIntroStepViewModel(params) {
         //Make sure only one dropbox button is created
         var dropboxContainer = document.getElementById('dropbox-container');
         if(dropboxContainer.childNodes.length < 1){
-            var button = Dropbox.createChooseButton(Settings.dropboxPickerConfigOptions);
+            var button = Dropbox.createChooseButton(dropboxPickerConfigOptions);
             dropboxContainer.appendChild(button);
         }
     };
@@ -102,7 +125,6 @@ export function WizardIntroStepViewModel(params) {
         self.ready(false);
         self.ready(true);
     };
-
 }
 
 ko.components.register('wizard-intro-step', {
