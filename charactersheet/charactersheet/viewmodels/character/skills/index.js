@@ -87,7 +87,7 @@ export function SkillsViewModel() {
         });
     };
 
-    self.unload = function() {
+    self.dispose = function() {
         self.save();
         self.skills([]);
         Notifications.abilityScores.changed.remove(self.dataHasChanged);

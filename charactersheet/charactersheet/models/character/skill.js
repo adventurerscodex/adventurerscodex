@@ -4,6 +4,7 @@ import 'knockout-mapping'
 import 'bin/knockout-mapping-autoignore'
 
 import { CharacterManager } from 'charactersheet/utilities'
+import { AbilityScores } from './ability_scores'
 import { PersistenceService, ProficiencyService } from 'charactersheet/services'
 
 
