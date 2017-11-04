@@ -85,6 +85,10 @@ export function MagicItemsViewModel() {
 
         var key = CharacterManager.activeCharacter().key();
         self.magicItems(PersistenceService.findBy(MagicItem, 'characterId', key));
+
+        self.magicItems().forEach(function(e, i, _) {
+            e.magicItemAttuned.subscribe(self.attunedHasChanged);
+        });
     };
 
     self.unload = function() {
@@ -97,6 +101,12 @@ export function MagicItemsViewModel() {
             e.save();
         });
     };
+
+    self.attunedHasChanged = function() {
+        self.magicItems().forEach(function(e, i, _) {
+            e.save();
+        });
+    }
 
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];
