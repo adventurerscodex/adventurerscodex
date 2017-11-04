@@ -1,17 +1,23 @@
 import ko from 'knockout'
 
-import { TreasureSection,
+import {
+    TreasureSection,
     EncounterArmor,
     EncounterItem,
     EncounterMagicItem,
     EncounterWeapon,
-    EncounterCoins } from 'charactersheet/models'
-import { Fixtures,
+    EncounterCoins
+} from 'charactersheet/models'
+import {
+    Fixtures,
     DataRepository,
     CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { SortService,
-    PersistenceService } from 'charactersheet/services'
+    Notifications
+} from 'charactersheet/utilities'
+import {
+    SortService,
+    PersistenceService
+} from 'charactersheet/services'
 
 import template from './index.html'
 import sectionIcon from 'images/encounters/open-treasure-chest.svg'
@@ -25,6 +31,7 @@ import gpCoin from 'images/gp-coin.svg'
 import spCoin from 'images/sp-coin.svg'
 import cpCoin from 'images/cp-coin.svg'
 import ppCoin from 'images/pp-coin.svg'
+
 
 export function TreasureSectionViewModel(params) {
     var self = this;

@@ -1,6 +1,6 @@
 import ko from 'knockout'
 
-import { Treasure } from 'charactersheet/models'
+import { Treasure } from 'charactersheet/models/common'
 import { PersistenceService } from 'charactersheet/services/common/persistence_service'
 
 export function EncounterCoins() {

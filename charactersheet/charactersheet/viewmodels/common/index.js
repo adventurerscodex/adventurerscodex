@@ -1,5 +1,6 @@
 export * from  './character_picker'
 export * from  './characters'
+export * from  './chat'
 export * from  './chat/chat_cell'
 export * from  './chat/chat_detail'
 export * from  './chat/chat_log_chat_item'

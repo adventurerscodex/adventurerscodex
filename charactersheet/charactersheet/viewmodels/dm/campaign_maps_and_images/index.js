@@ -5,7 +5,6 @@ import 'bin/knockout-custom-loader'
 import { CampaignMapOrImage,
     Message,
     MapOrImage } from 'charactersheet/models'
-import { PlayerPushModalViewModel } from 'charactersheet/viewmodels/dm'
 import { SortService,
     PersistenceService,
     ChatServiceManager,

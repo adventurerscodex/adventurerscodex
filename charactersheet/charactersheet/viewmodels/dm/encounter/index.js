@@ -1,14 +1,14 @@
 import ko from 'knockout'
 
-import { EncounterDetailViewModel,
-    EncounterAddEditModalViewModel,
-    EncounterCellViewModel,
- } from 'charactersheet/viewmodels/dm'
-import { Notifications,
-    CharacterManager } from 'charactersheet/utilities'
-import { Encounter } from 'charactersheet/models'
+import {
+    Notifications,
+    CharacterManager
+} from 'charactersheet/utilities'
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm'
 import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { EnvironmentSection,
+import {
+    Encounter,
+    EnvironmentSection,
     NotesSection,
     TreasureSection,
     PlayerTextSection,
@@ -16,7 +16,8 @@ import { EnvironmentSection,
     NPCSection,
     PointOfInterestSection,
     MapsAndImagesSection,
-    EnvironmentSection } from 'charactersheet/models/dm'
+    EnvironmentSection
+} from 'charactersheet/models/dm'
 
 import template from './index.html'
 
