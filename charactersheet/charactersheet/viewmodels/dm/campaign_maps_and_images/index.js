@@ -1,18 +1,20 @@
-import ko from 'knockout';
-
 import 'bin/knockout-custom-loader';
-
 import { CampaignMapOrImage,
-    Message,
-    MapOrImage } from 'charactersheet/models';
-import { SortService,
-    PersistenceService,
-    ChatServiceManager,
-    ImageServiceManager } from 'charactersheet/services';
-import { CharacterManager,
+    MapOrImage,
+    Message
+ } from 'charactersheet/models';
+import {
+    CharacterManager,
     Notifications,
-    Utility } from 'charactersheet/utilities';
-
+    Utility
+} from 'charactersheet/utilities';
+import {
+    ChatServiceManager,
+    ImageServiceManager,
+    PersistenceService,
+    SortService
+} from 'charactersheet/services';
+import ko from 'knockout';
 import template from './index.html';
 
 export function CampaignMapsAndImagesViewModel() {
