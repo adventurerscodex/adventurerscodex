@@ -1,9 +1,9 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { PlayerTypes } from 'charactersheet/models/common'
+import { PlayerTypes } from 'charactersheet/models/common';
 
-import template from './index.html'
-import icon from 'images/logo-all-icons.png'
+import template from './index.html';
+import icon from 'images/logo-all-icons.png';
 
 export function WizardPlayerTypeStepViewModel(params) {
     var self = this;
@@ -36,7 +36,7 @@ export function WizardPlayerTypeStepViewModel(params) {
     self.dataHasChanged = function() {
         self.results();
         self.ready();
-    }
+    };
 
     /**
      * Returns true if all required fields are filled.
@@ -62,4 +62,4 @@ export function WizardPlayerTypeStepViewModel(params) {
 ko.components.register('wizard-player-type-step', {
     viewModel: WizardPlayerTypeStepViewModel,
     template: template
-  })
+});

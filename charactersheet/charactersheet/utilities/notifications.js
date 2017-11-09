@@ -1,4 +1,4 @@
-import { Signal } from 'signals'
+import { Signal } from 'signals';
 
 /**
  * A central repository of used in Adventurer's Codex

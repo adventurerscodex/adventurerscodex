@@ -1,9 +1,9 @@
-import ko from 'knockout'
-import Strophe from 'strophe'
+import ko from 'knockout';
+import Strophe from 'strophe';
 
-import { Notifications } from 'charactersheet/utilities'
+import { Notifications } from 'charactersheet/utilities';
 
-import template from './index.html'
+import template from './index.html';
 
 export function PartyStatusViewModel() {
     var self = this;
@@ -36,4 +36,4 @@ export function PartyStatusViewModel() {
 ko.components.register('party-status', {
     viewModel: PartyStatusViewModel,
     template: template
-})
+});

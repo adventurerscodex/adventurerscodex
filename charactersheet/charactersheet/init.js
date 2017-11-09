@@ -1,13 +1,13 @@
-import $ from 'jquery'
-import ko from 'knockout'
-import URI from 'urijs'
-import Clipboard from 'clipboard'
+import $ from 'jquery';
+import ko from 'knockout';
+import URI from 'urijs';
+import Clipboard from 'clipboard';
 
-import { Settings } from 'charactersheet/settings'
+import { Settings } from 'charactersheet/settings';
 import { DataRepository,
     Migrations,
     Notifications
-} from 'charactersheet/utilities'
+} from 'charactersheet/utilities';
 import { HealthinessStatusServiceComponent,
     InspirationStatusServiceComponent,
     MagicalStatusServiceComponent,
@@ -22,7 +22,7 @@ import { HealthinessStatusServiceComponent,
     StatusService,
     UserServiceManager,
     XMPPService
-} from 'charactersheet/services'
+} from 'charactersheet/services';
 
 /**
  * This global function handles initializing the Knockout Application

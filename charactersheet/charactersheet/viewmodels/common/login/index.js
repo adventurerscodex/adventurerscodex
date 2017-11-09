@@ -1,14 +1,14 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { Settings } from 'charactersheet/settings'
-import { AuthenticationToken } from 'charactersheet/models/common'
+import { Settings } from 'charactersheet/settings';
+import { AuthenticationToken } from 'charactersheet/models/common';
 import { AuthenticationServiceManager,
     PersistenceService,
-    UserServiceManager } from 'charactersheet/services/common'
+    UserServiceManager } from 'charactersheet/services/common';
 import { Notifications,
-    ViewModelUtilities } from 'charactersheet/utilities'
+    ViewModelUtilities } from 'charactersheet/utilities';
 
-import template from './index.html'
+import template from './index.html';
 
 
 export function LoginViewModel() {
@@ -70,6 +70,6 @@ export function LoginViewModel() {
 }
 
 ko.components.register('login', {
-  viewModel: LoginViewModel,
-  template: template
-})
+    viewModel: LoginViewModel,
+    template: template
+});

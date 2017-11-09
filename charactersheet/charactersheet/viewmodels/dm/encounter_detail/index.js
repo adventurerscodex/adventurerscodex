@@ -1,11 +1,8 @@
-import ko from 'knockout'
-
-import { Encounter } from 'charactersheet/models/dm'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-
-import template from './index.html'
-
+import { Encounter } from 'charactersheet/models/dm';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+import template from './index.html';
 
 export function EncounterDetailViewModel(params) {
     var self = this;
@@ -77,6 +74,6 @@ export function EncounterDetailViewModel(params) {
 }
 
 ko.components.register('encounter-detail', {
-  viewModel: EncounterDetailViewModel,
-  template: template
+    viewModel: EncounterDetailViewModel,
+    template: template
 });

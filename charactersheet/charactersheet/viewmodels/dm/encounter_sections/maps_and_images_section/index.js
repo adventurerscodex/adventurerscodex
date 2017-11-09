@@ -1,22 +1,23 @@
-import ko from 'knockout'
-
 import {
-    Message,
-    MapOrImage,
-} from 'charactersheet/models/common'
-import { MapsAndImagesSection } from 'charactersheet/models/dm'
+    CharacterManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import {
+    ChatServiceManager,
     ImageServiceManager,
     PersistenceService,
-    ChatServiceManager,
-    XMPPService,
-    SortService
-} from 'charactersheet/services/common'
-import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
-
-import template from './index.html'
-import sectionIcon from 'images/encounters/globe.svg'
-
+    SortService,
+    XMPPService
+} from 'charactersheet/services/common';
+import {
+    MapOrImage,
+    Message
+} from 'charactersheet/models/common';
+import { MapsAndImagesSection } from 'charactersheet/models/dm';
+import ko from 'knockout';
+import sectionIcon from 'images/encounters/globe.svg';
+import template from './index.html';
 
 export function MapsAndImagesSectionViewModel(params) {
     var self = this;
@@ -251,6 +252,6 @@ export function MapsAndImagesSectionViewModel(params) {
 }
 
 ko.components.register('maps-and-images-section', {
-  viewModel: MapsAndImagesSectionViewModel,
-  template: template
-})
+    viewModel: MapsAndImagesSectionViewModel,
+    template: template
+});

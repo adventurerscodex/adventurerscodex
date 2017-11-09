@@ -1,17 +1,17 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
-import { CharacterManager, Fixtures, Notifications, Utility } from 'charactersheet/utilities'
-import { PersistenceService, XMPPService } from 'charactersheet/services/common'
+import { CharacterManager, Fixtures, Notifications, Utility } from 'charactersheet/utilities';
+import { PersistenceService, XMPPService } from 'charactersheet/services/common';
 import {
     ImageModel,
     PlayerImage,
     PlayerInfo
-} from 'charactersheet/models/common'
-import { OtherStats } from 'charactersheet/models/character'
+} from 'charactersheet/models/common';
+import { OtherStats } from 'charactersheet/models/character';
 
-import template from './index.html'
+import template from './index.html';
 
 export function PlayerImageViewModel() {
     var self = this;
@@ -205,6 +205,6 @@ export function PlayerImageViewModel() {
 }
 
 ko.components.register('player-image', {
-  viewModel: PlayerImageViewModel,
-  template: template
-})
+    viewModel: PlayerImageViewModel,
+    template: template
+});

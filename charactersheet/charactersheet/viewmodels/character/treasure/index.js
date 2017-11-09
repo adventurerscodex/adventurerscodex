@@ -1,16 +1,16 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Treasure } from 'charactersheet/models/common'
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Treasure } from 'charactersheet/models/common';
 
-import template from './index.html'
-import ppCoins from 'images/pp-coin.svg'
-import gpCoins from 'images/gp-coin.svg'
-import epCoins from 'images/ep-coin.svg'
-import spCoins from 'images/sp-coin.svg'
-import cpCoins from 'images/cp-coin.svg'
+import template from './index.html';
+import ppCoins from 'images/pp-coin.svg';
+import gpCoins from 'images/gp-coin.svg';
+import epCoins from 'images/ep-coin.svg';
+import spCoins from 'images/sp-coin.svg';
+import cpCoins from 'images/cp-coin.svg';
 
 export function TreasureViewModel() {
     var self = this;
@@ -64,6 +64,6 @@ export function TreasureViewModel() {
 }
 
 ko.components.register('treasure', {
-  viewModel: TreasureViewModel,
-  template: template
-})
+    viewModel: TreasureViewModel,
+    template: template
+});

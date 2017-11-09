@@ -1,11 +1,11 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Note } from 'charactersheet/models/common'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import template from './index.html'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Note } from 'charactersheet/models/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import template from './index.html';
 
 export function NotesViewModel() {
     var self = this;
@@ -70,6 +70,6 @@ export function NotesViewModel() {
 }
 
 ko.components.register('notes', {
-  viewModel: NotesViewModel,
-  template: template
-})
+    viewModel: NotesViewModel,
+    template: template
+});

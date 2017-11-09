@@ -1,11 +1,11 @@
-import { Feature } from 'charactersheet/models/character/feature'
-import { Feat } from 'charactersheet/models/character/feat'
-import { Proficiency } from 'charactersheet/models/character/proficiency'
-import { Tracked } from 'charactersheet/models/character/tracked'
+import { Feature } from 'charactersheet/models/character/feature';
+import { Feat } from 'charactersheet/models/character/feat';
+import { Proficiency } from 'charactersheet/models/character/proficiency';
+import { Tracked } from 'charactersheet/models/character/tracked';
 
-import { Fixtures } from 'charactersheet/utilities/fixtures'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
-import uuid from 'node-uuid'
+import { Fixtures } from 'charactersheet/utilities/fixtures';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js';
+import uuid from 'node-uuid';
 
 /**
  * Migrates Feats, Features, Proficiencies, and Daily Features to new models.

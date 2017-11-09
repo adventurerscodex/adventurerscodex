@@ -1,10 +1,10 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { FeaturesTraits } from 'charactersheet/models/character'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import template from './index.html'
+import { FeaturesTraits } from 'charactersheet/models/character';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import template from './index.html';
 
 export function FeaturesTraitsViewModel() {
     var self = this;
@@ -40,6 +40,6 @@ export function FeaturesTraitsViewModel() {
 }
 
 ko.components.register('feat-traits', {
-  viewModel: FeaturesTraitsViewModel,
-  template: template
-})
+    viewModel: FeaturesTraitsViewModel,
+    template: template
+});

@@ -1,9 +1,9 @@
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Health, HitDice } from 'charactersheet/models'
-import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Health, HitDice } from 'charactersheet/models';
+import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common';
 import { Status,
-    StatusWeightPair } from 'charactersheet/models'
-import { getHealthTypeEnum } from 'charactersheet/models/common/status_weight_pair'
+    StatusWeightPair } from 'charactersheet/models';
+import { getHealthTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 
 
 /**

@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import { AbilityScores,
     Treasure,
@@ -7,12 +7,12 @@ import { AbilityScores,
     Weapon,
     Armor,
     Status,
-    StatusWeightPair } from 'charactersheet/models'
+    StatusWeightPair } from 'charactersheet/models';
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications } from 'charactersheet/utilities';
 import { KeyValuePredicate,
     PersistenceService,
-    SharedServiceManager } from 'charactersheet/services/common'
+    SharedServiceManager } from 'charactersheet/services/common';
 
 
 /**

@@ -1,7 +1,5 @@
-import ko from 'knockout'
-
-import template from './index.html'
-
+import ko from 'knockout';
+import template from './index.html';
 
 export function EncounterSectionVisibilityViewModel(params) {
     var self = this;
@@ -15,6 +13,6 @@ export function EncounterSectionVisibilityViewModel(params) {
 
 
 ko.components.register('encounter-section-visibility', {
-  viewModel: EncounterSectionVisibilityViewModel,
-  template: template
+    viewModel: EncounterSectionVisibilityViewModel,
+    template: template
 });

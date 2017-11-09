@@ -6,7 +6,7 @@ import {
     migration_130_1_armors,
     migration_130_2_feats_features_proficiencies_daily_features,
     migration_150_1_dm_notes
-} from 'charactersheet/migrations'
+} from 'charactersheet/migrations';
 
 export var Migrations = {
     // List all migrations that should be applied

@@ -1,15 +1,15 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
     DataRepository,
     Fixtures,
-    Utility } from 'charactersheet/utilities'
-import { Item } from 'charactersheet/models/common'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService, SortService } from 'charactersheet/services/common'
+    Utility } from 'charactersheet/utilities';
+import { Item } from 'charactersheet/models/common';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService, SortService } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function ItemsViewModel() {
     var self = this;
@@ -188,6 +188,6 @@ export function ItemsViewModel() {
 }
 
 ko.components.register('items', {
-  viewModel: ItemsViewModel,
-  template: template
-})
+    viewModel: ItemsViewModel,
+    template: template
+});

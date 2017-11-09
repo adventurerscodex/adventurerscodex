@@ -1,6 +1,6 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 /**
  * A Root Level DM Object containing overview information about a campaign.

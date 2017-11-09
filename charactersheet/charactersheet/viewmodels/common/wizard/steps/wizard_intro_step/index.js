@@ -1,12 +1,12 @@
-import $ from 'jquery'
-import ko from 'knockout'
+import $ from 'jquery';
+import ko from 'knockout';
 
-import { Settings } from 'charactersheet/settings'
-import { Character } from 'charactersheet/models'
-import 'bin/knockout-file-bind'
+import { Settings } from 'charactersheet/settings';
+import { Character } from 'charactersheet/models';
+import 'bin/knockout-file-bind';
 
-import template from './index.html'
-import logo from 'images/logo-all-icons.png'
+import template from './index.html';
+import logo from 'images/logo-all-icons.png';
 
 const dropboxPickerConfigOptions = {
     // Required. Called when a user selects an item in the Chooser.
@@ -57,7 +57,7 @@ export function WizardIntroStepViewModel(params) {
     // View Model Methods
 
     self.init = function() {
-     };
+    };
 
     self.load = function() {
         //Set default value to player atm.
@@ -130,4 +130,4 @@ export function WizardIntroStepViewModel(params) {
 ko.components.register('wizard-intro-step', {
     viewModel: WizardIntroStepViewModel,
     template: template
-  })
+});

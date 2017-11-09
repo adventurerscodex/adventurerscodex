@@ -1,34 +1,34 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
 import {
     HotkeysService,
     StatusService,
     CharacterCardPublishingService
-} from 'charactersheet/services/common'
+} from 'charactersheet/services/common';
 import {
     ProficiencyService,
     ArmorClassService
-} from 'charactersheet/services/character'
-import { ChatServiceManager } from 'charactersheet/services/common'
+} from 'charactersheet/services/character';
+import { ChatServiceManager } from 'charactersheet/services/common';
 
-import template from './index.html'
-import statsTab from 'images/tab_icons/weight-lifting-up.svg'
-import skillsTab from 'images/tab_icons/jump-across.svg'
-import spellsTab from 'images/tab_icons/fire-tail.svg'
-import inventoryTab from 'images/tab_icons/knapsack.svg'
-import notesTab from 'images/tab_icons/quill-ink.svg'
-import profileTab from 'images/tab_icons/read.svg'
-import chatTab from 'images/tab_icons/conversation.svg'
-import exhibitTab from 'images/tab_icons/film-projector.svg'
-import healthSection from 'images/nested-hearts.svg'
-import skillSection from 'images/sword-spin.svg'
-import spellSection from 'images/enlightenment.svg'
-import weaponSection from 'images/spinning-sword.svg'
-import armorSection from 'images/checked-shield.svg'
-import inventorySection from 'images/misc_icons/locked-chest.svg'
-import profileSection from 'images/standing-man-3.svg'
-import battleGear from 'images/tab_icons/battle-gear.svg'
+import template from './index.html';
+import statsTab from 'images/tab_icons/weight-lifting-up.svg';
+import skillsTab from 'images/tab_icons/jump-across.svg';
+import spellsTab from 'images/tab_icons/fire-tail.svg';
+import inventoryTab from 'images/tab_icons/knapsack.svg';
+import notesTab from 'images/tab_icons/quill-ink.svg';
+import profileTab from 'images/tab_icons/read.svg';
+import chatTab from 'images/tab_icons/conversation.svg';
+import exhibitTab from 'images/tab_icons/film-projector.svg';
+import healthSection from 'images/nested-hearts.svg';
+import skillSection from 'images/sword-spin.svg';
+import spellSection from 'images/enlightenment.svg';
+import weaponSection from 'images/spinning-sword.svg';
+import armorSection from 'images/checked-shield.svg';
+import inventorySection from 'images/misc_icons/locked-chest.svg';
+import profileSection from 'images/standing-man-3.svg';
+import battleGear from 'images/tab_icons/battle-gear.svg';
 
 
 export function CharacterRootViewModel() {
@@ -266,10 +266,10 @@ export function CharacterRootViewModel() {
 
     self.dispose = function() {
         self.unload();
-    }
+    };
 }
 
 ko.components.register('character-root', {
-  viewModel: CharacterRootViewModel,
-  template: template
-})
+    viewModel: CharacterRootViewModel,
+    template: template
+});

@@ -1,12 +1,12 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Character } from 'charactersheet/models/common/character'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import template from './index.html'
-import logo from 'images/logo-full-circle-icon.png'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Character } from 'charactersheet/models/common/character';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import template from './index.html';
+import logo from 'images/logo-full-circle-icon.png';
 
 
 export function CharacterPickerViewModel(params) {
@@ -40,7 +40,7 @@ export function CharacterPickerViewModel(params) {
 
     self.showWizard = function() {
         self.state('wizard');
-    }
+    };
 
     self.changeCharacter = function(character) {
         // Don't switch to the same character.
@@ -63,6 +63,6 @@ export function CharacterPickerViewModel(params) {
 }
 
 ko.components.register('character-picker', {
-  viewModel: CharacterPickerViewModel,
-  template: template
-})
+    viewModel: CharacterPickerViewModel,
+    template: template
+});

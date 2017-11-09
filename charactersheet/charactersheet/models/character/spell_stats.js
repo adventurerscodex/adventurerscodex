@@ -1,10 +1,10 @@
-import ko from 'knockout'
-import 'knockout-mapping'
+import ko from 'knockout';
+import 'knockout-mapping';
 
-import 'bin/knockout-mapping-autoignore'
+import 'bin/knockout-mapping-autoignore';
 
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Fixtures } from 'charactersheet/utilities'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Fixtures } from 'charactersheet/utilities';
 
 
 export function SpellStats() {

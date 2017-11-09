@@ -1,11 +1,8 @@
-import ko from 'knockout'
-
-import { Encounter } from 'charactersheet/models/dm'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Notifications } from 'charactersheet/utilities'
-
-import template from './index.html'
-
+import { Encounter } from 'charactersheet/models/dm';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+import template from './index.html';
 
 /**
  * This component manages the editing and creation of encounters and their
@@ -80,6 +77,6 @@ export function EncounterAddEditModalViewModel(params) {
 
 
 ko.components.register('encounter-add-edit-modal', {
-  viewModel: EncounterAddEditModalViewModel,
-  template: template
+    viewModel: EncounterAddEditModalViewModel,
+    template: template
 });

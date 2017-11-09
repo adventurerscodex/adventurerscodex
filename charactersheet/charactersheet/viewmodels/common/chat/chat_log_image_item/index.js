@@ -1,15 +1,15 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import { Notifications,
     Utility,
-    CharacterManager } from 'charactersheet/utilities'
-import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
+    CharacterManager } from 'charactersheet/utilities';
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import { CharacterCardPublishingService,
     DMCardPublishingService,
-    XMPPService } from 'charactersheet/services/common'
-import { PlayerTypes } from 'charactersheet/models/common'
+    XMPPService } from 'charactersheet/services/common';
+import { PlayerTypes } from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 /**
  * A View that handles displaying Messages of type CHAT.
@@ -106,6 +106,6 @@ export function ChatLogImageItem(params) {
 }
 
 ko.components.register('chat-log-image-item', {
-  viewModel: ChatLogImageItem,
-  template: template
-})
+    viewModel: ChatLogImageItem,
+    template: template
+});

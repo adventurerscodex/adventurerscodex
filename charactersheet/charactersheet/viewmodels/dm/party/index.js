@@ -1,15 +1,13 @@
-import ko from 'knockout'
-
-import 'bin/knockout-custom-loader'
-
-import { PlayerCard,
-    pCard } from 'charactersheet/models'
+import 'bin/knockout-custom-loader';
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { XMPPService,
-    ChatServiceManager } from 'charactersheet/services'
-
-import template from './index.html'
+    Notifications } from 'charactersheet/utilities';
+import { ChatServiceManager,
+    XMPPService
+} from 'charactersheet/services';
+import { PlayerCard,
+    pCard } from 'charactersheet/models';
+import ko from 'knockout';
+import template from './index.html';
 
 export function PartyViewModel() {
     var self = this;
@@ -74,6 +72,6 @@ export function PartyViewModel() {
 }
 
 ko.components.register('party', {
-  viewModel: PartyViewModel,
-  template: template
-})
+    viewModel: PartyViewModel,
+    template: template
+});

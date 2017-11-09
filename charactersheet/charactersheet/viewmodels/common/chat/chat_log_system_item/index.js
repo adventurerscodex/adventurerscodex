@@ -1,6 +1,6 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import template from './index.html'
+import template from './index.html';
 /**
  * A View that handles displaying Messages of type SYSTEM.
  */
@@ -27,6 +27,6 @@ export function ChatLogSystemItem(params) {
 }
 
 ko.components.register('chat-log-system-item', {
-  viewModel: ChatLogSystemItem,
-  template: template
-})
+    viewModel: ChatLogSystemItem,
+    template: template
+});

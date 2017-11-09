@@ -1,23 +1,21 @@
-import ko from 'knockout'
-
-import {
-    PlayerTextSection,
-    PlayerText,
-    Message
-} from 'charactersheet/models'
-import {
-    SortService,
-    PersistenceService,
-    ChatServiceManager
-} from 'charactersheet/services'
 import {
     CharacterManager,
     Notifications,
     Utility
-} from 'charactersheet/utilities'
-
-import template from './index.html'
-import sectionIcon from 'images/encounters/read.svg'
+} from 'charactersheet/utilities';
+import {
+    ChatServiceManager,
+    PersistenceService,
+    SortService
+} from 'charactersheet/services';
+import {
+    Message,
+    PlayerText,
+    PlayerTextSection
+} from 'charactersheet/models';
+import ko from 'knockout';
+import sectionIcon from 'images/encounters/read.svg';
+import template from './index.html';
 
 export function PlayerTextSectionViewModel(params) {
     var self = this;
@@ -232,6 +230,6 @@ export function PlayerTextSectionViewModel(params) {
 }
 
 ko.components.register('player-text-section', {
-  viewModel: PlayerTextSectionViewModel,
-  template: template
-})
+    viewModel: PlayerTextSectionViewModel,
+    template: template
+});

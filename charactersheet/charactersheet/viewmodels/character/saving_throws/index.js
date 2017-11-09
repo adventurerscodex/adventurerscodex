@@ -1,14 +1,14 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
-    Utility } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { SavingThrows } from 'charactersheet/models/character'
-import { SortService } from 'charactersheet/services/common'
+    Utility } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SavingThrows } from 'charactersheet/models/character';
+import { SortService } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function SavingThrowsViewModel() {
     var self = this;
@@ -151,6 +151,6 @@ export function SavingThrowsViewModel() {
 }
 
 ko.components.register('savings-throws', {
-  viewModel: SavingThrowsViewModel,
-  template: template
-})
+    viewModel: SavingThrowsViewModel,
+    template: template
+});

@@ -1,7 +1,7 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Utility } from 'charactersheet/utilities/convenience'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Utility } from 'charactersheet/utilities/convenience';
 
 export function NPC() {
     var self = this;

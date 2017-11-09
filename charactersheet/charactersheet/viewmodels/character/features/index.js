@@ -1,21 +1,21 @@
-import ko from 'knockout'
-import uuid from 'node-uuid'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import uuid from 'node-uuid';
+import 'bin/knockout-bootstrap-modal';
 // import 'bin/knockout-jquery-autocomplete'
 
 import { Notifications,
     DataRepository,
     CharacterManager,
-    Fixtures } from 'charactersheet/utilities'
+    Fixtures } from 'charactersheet/utilities';
 import { PersistenceService,
-    SortService } from 'charactersheet/services/common'
+    SortService } from 'charactersheet/services/common';
 import { Tracked,
-    Feature } from 'charactersheet/models'
-import { Utility } from 'charactersheet/utilities'
+    Feature } from 'charactersheet/models';
+import { Utility } from 'charactersheet/utilities';
 
-import template from './index.html'
-import campingTent from 'images/camping-tent.svg'
-import meditation from 'images/meditation.svg'
+import template from './index.html';
+import campingTent from 'images/camping-tent.svg';
+import meditation from 'images/meditation.svg';
 
 export function FeaturesViewModel() {
     var self = this;
@@ -209,6 +209,6 @@ export function FeaturesViewModel() {
 }
 
 ko.components.register('features', {
-  viewModel: FeaturesViewModel,
-  template: template
-})
+    viewModel: FeaturesViewModel,
+    template: template
+});

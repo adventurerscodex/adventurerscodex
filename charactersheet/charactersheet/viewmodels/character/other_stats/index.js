@@ -1,18 +1,18 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/popover_bind'
+import 'bin/popover_bind';
 
 import { OtherStats,
     Profile,
-    AbilityScores } from 'charactersheet/models/character'
+    AbilityScores } from 'charactersheet/models/character';
 import { getModifier } from 'charactersheet/models/character/ability_scores';
 import { Notifications,
-    CharacterManager } from 'charactersheet/utilities'
+    CharacterManager } from 'charactersheet/utilities';
 import { PersistenceService,
     ArmorClassService,
-    ProficiencyService } from 'charactersheet/services'
+    ProficiencyService } from 'charactersheet/services';
 
-import template from './index.html'
+import template from './index.html';
 
 export function OtherStatsViewModel() {
     var self = this;
@@ -162,4 +162,4 @@ export function OtherStatsViewModel() {
 ko.components.register('other-stats', {
     viewModel: OtherStatsViewModel,
     template: template
-  })
+});
