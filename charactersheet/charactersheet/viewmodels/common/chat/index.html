@@ -26,15 +26,7 @@
   </div>
   <div data-bind="css: detailViewModelCSS">
     <chat-detail params="room: selectedObject, badgeHandler: updateBadge"></chat-detail>
-    <!-- ko if: modalViewModel -->
-    <!-- ko with: modalViewModel -->
-    <div data-bind="template: {
-      name: templateName,
-      templateUrl: templateUrl,
-      data: $data
-    }"></div>
-    <!-- /ko -->
-    <!-- /ko -->
   </div>
 </div>
-  <!-- /ko -->
+<chat-modal params="isOpen: modalIsOpen, onopen: modalFinishedOpening, onclose: modalFinishedClosing"></chat-modal>
+<!-- /ko -->

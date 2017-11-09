@@ -9,7 +9,6 @@ import template from './index.html'
 export function ChatDetailViewModel(params) {
     var self = this;
 
-    self.id = params.room().id;
     self.room = params.room;
     self.members = params.room().members;
     self.isGroupChat = params.room().isGroupChat;
@@ -22,6 +21,10 @@ export function ChatDetailViewModel(params) {
 
     self._xmppIsConnected = ko.observable(false);
 
+    self.id = ko.pureComputed(function() {
+        return self.room().id();
+    });
+
     /* Public Methods */
 
     self.load = function() {
@@ -30,7 +33,7 @@ export function ChatDetailViewModel(params) {
         self.updateBadge();
         self._updateStatus();
 
-        self.room.subscribe(self.reloadData);
+        self.room.subscribe(self.cleanReload);
 
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
@@ -53,14 +56,9 @@ export function ChatDetailViewModel(params) {
         Notifications.party.players.changed.remove(self.reloadData);
     };
 
-    self.save = function() {};
-
-    self.delete = function() {
-        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
-        if (chat) {
-            chat.purge();
-            chat.delete();
-        }
+    self.cleanReload = function() {
+        self.log([]);
+        self.reloadData();
     };
 
     self.reloadData = function() {
@@ -104,15 +102,6 @@ export function ChatDetailViewModel(params) {
     self.sendButtonShouldBeDisabled = ko.pureComputed(function() {
         return !self._xmppIsConnected();
     });
-
-    self.toggleModal = function() {
-        self.parent.modalIsOpen(!self.parent.modalIsOpen());
-
-        // Modal will open.
-        if (self.parent.modalIsOpen()) {
-            //todo
-        }
-    };
 
     self.sendMessage = function() {
         var message = self._buildMessage();

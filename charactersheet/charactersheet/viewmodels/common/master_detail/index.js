@@ -13,8 +13,6 @@ export function MasterDetailViewModel() {
     self.selectedCell = ko.observable();
     self.selectedObject = ko.observable();
 
-    self.modalViewModel = ko.observable();
-
     self.shouldDisplayModelOnNewItem = false;
     self.supportsNestedCells = false;
 
@@ -95,18 +93,8 @@ export function MasterDetailViewModel() {
      *
      *
      */
-    self.getModalViewModel = function() {
-        throw Error('Not properly configured: getModalViewModel');
-    };
-
-    /**
-     *
-     *
-     */
-    self.getModalViewModelWithParent = function(parent) {
-        if (self.supportsNestedCells) {
-            throw Error('Not properly configured: getModalViewModelWithParent');
-        }
+    self.getModalObject = function() {
+        throw Error('Not properly configured: getModalObject');
     };
 
     self.getDetailObject = function(cell) {
@@ -139,9 +127,6 @@ export function MasterDetailViewModel() {
 
     self.addButtonWasClicked = function() {
         if (self.shouldDisplayModelOnNewItem) {
-            var modalViewModel = self.getModalViewModel();
-            self.modalViewModel(modalViewModel);
-            self._initializeModalViewModel();
             self.modalIsOpen(true);
         } else {
             self.addItem();
@@ -150,8 +135,6 @@ export function MasterDetailViewModel() {
 
     self.addButtonWasClickedWithParent = function(parent) {
         if (self.shouldDisplayModelOnNewItem) {
-            self.openModalWithParent(parent);
-            self._initializeModalViewModel();
             self.modalIsOpen(true);
         } else {
             self.addItemWithParent(null, parent);
@@ -184,7 +167,6 @@ export function MasterDetailViewModel() {
 
     self._modalFinishedClosing = function() {
         self.modalFinishedClosing();
-        self._deinitializeModalViewModel();
     };
 
     /* Utility Methods */
@@ -203,18 +185,6 @@ export function MasterDetailViewModel() {
             }
         }
         return cell;
-    };
-
-    self._initializeModalViewModel = function() {
-        if (self.modalViewModel()) {
-            self.modalViewModel().load();
-        }
-    };
-
-    self._deinitializeModalViewModel = function() {
-        if (self.modalViewModel()) {
-            self.modalViewModel().unload();
-        }
     };
 }
 

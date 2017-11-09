@@ -1,24 +1,36 @@
 import ko from 'knockout'
 
-export function ChatModalViewModel(parent) {
+import { CharacterManager } from 'charactersheet/utilities/character_manager'
+import {
+    ChatServiceManager,
+    CharacterCardPublishingService,
+    DMCardPublishingService
+} from 'charactersheet/services/common'
+
+import template from './index.html'
+
+export function ChatModalViewModel(params) {
     var self = this;
 
-    self.templateUrl = 'templates/common/chat';
-    self.templateName = 'chat_modal.tmpl';
+    self.isOpen = params.isOpen;
+    self.modalFinishedClosing = params.onclose;
+    self.modalFinishedOpening = params.onopen;
 
-    self.parent = parent;
     self.partyMembers = ko.observableArray();
     self.partyMembersToAdd = ko.observableArray();
     self.isSubmitButtonDisabled = ko.observable(false);
     self.isErrorMessageVisible = ko.observable(false);
 
     self.load = function() {
-        self.partyMembers(self.getAllPartyMembers());
         self.partyMembersToAdd.subscribe(self.isRoomDuplicate);
+        self.isOpen.subscribe(self.dataHasChanged);
     };
 
-    self.unload = function() {
-
+    self.dataHasChanged = function() {
+        if (self.isOpen()) {
+            self.modalFinishedOpening();
+            self.partyMembers(self.getAllPartyMembers());
+        }
     };
 
     self.isRoomDuplicate = function() {
@@ -67,4 +79,14 @@ export function ChatModalViewModel(parent) {
             };
         });
     };
+
+    self._modalDoneButtonWasClicked = function() {
+        self.isOpen(false);
+        self.modalFinishedClosing(self.partyMembersToAdd());
+    };
 }
+
+ko.components.register('chat-modal', {
+    template: template,
+    viewModel: ChatModalViewModel
+});

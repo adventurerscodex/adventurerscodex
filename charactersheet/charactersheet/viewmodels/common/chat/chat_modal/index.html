@@ -1,9 +1,7 @@
 <!-- Edit Modal -->
-<!-- The parent is the detail vm and its parent is the master vm -->
-<!-- ko with: $parent.parent -->
 <div class="modal fade" tabindex="-1" role="dialog"
    data-bind="modal: {
-      open: modalIsOpen,
+      open: isOpen,
       onopen: modalFinishedOpening,
       onclose: modalFinishedClosing
     }">
@@ -20,7 +18,7 @@
           Create a new Chat Room
         </h4>
       </div>
-      <div class="modal-body" data-bind="with: modalViewModel">
+      <div class="modal-body">
         <form class="form-horizontal" onsubmit="return false">
           <div class="h4">
             Invite your party members to the room
@@ -37,7 +35,7 @@
           <div class="col-xs-offset-7 col-xs-5">
             <button type="button"
                     class="btn btn-primary"
-                    data-bind="click: $parent._modalDoneButtonWasClicked, disable: isSubmitButtonDisabled"
+                    data-bind="click: _modalDoneButtonWasClicked, disable: isSubmitButtonDisabled"
                     data-dismiss="modal">Done</button>
           </div>
         </div>
@@ -47,4 +45,3 @@
     </div>
   </div>
 </div>
-<!-- /ko -->

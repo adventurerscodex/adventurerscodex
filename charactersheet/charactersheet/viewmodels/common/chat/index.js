@@ -1,10 +1,10 @@
 /*eslint no-console:0*/
 
 import ko from 'knockout'
+import uuid from 'node-uuid'
 
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
 import { ChatCellViewModel } from './chat_cell'
-import { ChatModalViewModel } from './chat_modal'
 import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import {
     ChatServiceManager,
@@ -16,8 +16,10 @@ import {
 import { XMPPService } from 'charactersheet/services/common/account'
 import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail'
 import { ChatRoom } from 'charactersheet/models'
+import { Settings } from 'charactersheet/settings'
 
 import template from './index.html'
+
 
 export function ChatViewModel(params) {
     var self = new MasterDetailViewModel();
@@ -25,10 +27,6 @@ export function ChatViewModel(params) {
     self.chats = ko.observableArray();
     self.isActive = params.isActive;
     self.isConnectedToParty = ko.observable(false);
-
-    self.selectedRoom = ko.pureComputed(function() {
-        return;
-    });
 
     self.title = 'Chats';
     self.shouldDisplayModelOnNewItem = true;
@@ -77,9 +75,8 @@ export function ChatViewModel(params) {
      * Note: New rooms are created with the following JID format:
      * <user's chosen room name>.<PARTY_ID>@<MUC_SERVICE>
      */
-    self.addItem = function() {
+    self.addItem = function(invitees) {
         var name = uuid.v4().substring(0,6);
-        var invitees = self.modalViewModel().partyMembersToAdd();
         if (invitees.length === 0) { return; }
 
         var chatService = ChatServiceManager.sharedService();
@@ -98,20 +95,20 @@ export function ChatViewModel(params) {
      * Clear the detail view model and reload the list of chats.
      */
     self.deleteCell = function(cell) {
-        self.detailViewModel().delete();
-
         var chatService = ChatServiceManager.sharedService();
         chatService.leave(cell.id(), 'test', console.log);
+
+        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', cell.id());
+        if (chat) {
+            chat.purge();
+            chat.delete();
+        }
 
         self.reloadCells();
         self.selectedCell(self.cells()[0]);
     };
 
     /* Event Methods */
-
-    self.getModalViewModel = function() {
-        return new ChatModalViewModel(self);
-    };
 
     self.getDetailObject = function(cell) {
         return cell;
@@ -123,8 +120,11 @@ export function ChatViewModel(params) {
      * Once a modal is closed, if it was closed by clicking done, then create
      * a new room and add the selected users to it.
      */
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = function(partyMembersToAdd) {
         self.modalIsOpen(false);
+        if (partyMembersToAdd.length > 0) {
+            self.addItem(partyMembersToAdd);
+        }
     };
 
     /**
