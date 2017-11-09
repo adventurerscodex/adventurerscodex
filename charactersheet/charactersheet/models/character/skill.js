@@ -1,11 +1,11 @@
-import ko from 'knockout'
-import 'knockout-mapping'
+import ko from 'knockout';
+import 'knockout-mapping';
 
-import 'bin/knockout-mapping-autoignore'
+import 'bin/knockout-mapping-autoignore';
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { AbilityScores } from './ability_scores'
-import { PersistenceService, ProficiencyService } from 'charactersheet/services'
+import { CharacterManager } from 'charactersheet/utilities';
+import { AbilityScores } from './ability_scores';
+import { PersistenceService, ProficiencyService } from 'charactersheet/services';
 
 
 export function Skill() {

@@ -1,15 +1,15 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
     DataRepository,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 import { PersistenceService,
-    SortService } from 'charactersheet/services/common'
-import { Spell } from 'charactersheet/models'
+    SortService } from 'charactersheet/services/common';
+import { Spell } from 'charactersheet/models';
 
-import template from './index.html'
+import template from './index.html';
 
 export function SpellbookViewModel() {
     var self = this;
@@ -216,6 +216,6 @@ export function SpellbookViewModel() {
 }
 
 ko.components.register('spells', {
-  viewModel: SpellbookViewModel,
-  template: template
-})
+    viewModel: SpellbookViewModel,
+    template: template
+});

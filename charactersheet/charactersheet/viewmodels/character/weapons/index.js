@@ -1,16 +1,16 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
     Fixtures,
     DataRepository,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 import { PersistenceService,
-    SortService } from 'charactersheet/services/common'
-import { Weapon } from 'charactersheet/models/common'
+    SortService } from 'charactersheet/services/common';
+import { Weapon } from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function WeaponsViewModel() {
     var self = this;
@@ -191,6 +191,6 @@ export function WeaponsViewModel() {
 }
 
 ko.components.register('weapons', {
-  viewModel: WeaponsViewModel,
-  template: template
-})
+    viewModel: WeaponsViewModel,
+    template: template
+});

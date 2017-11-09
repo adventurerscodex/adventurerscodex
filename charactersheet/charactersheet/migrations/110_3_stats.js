@@ -1,4 +1,4 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js';
 
 /**
 * Sets proficiency to 0. This attribute is now considered a modifer and should

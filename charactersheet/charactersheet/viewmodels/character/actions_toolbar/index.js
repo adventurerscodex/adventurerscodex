@@ -1,13 +1,13 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
 import { Fixtures,
-    Notifications } from 'charactersheet/utilities'
+    Notifications } from 'charactersheet/utilities';
 
-import template from './index.html'
-import campingTent from 'images/camping-tent.svg'
-import meditation from 'images/meditation.svg'
+import template from './index.html';
+import campingTent from 'images/camping-tent.svg';
+import meditation from 'images/meditation.svg';
 
 export function ActionsToolbarViewModel(params) {
     var self = this;
@@ -46,6 +46,6 @@ export function ActionsToolbarViewModel(params) {
 }
 
 ko.components.register('actions-toolbar', {
-  viewModel: ActionsToolbarViewModel,
-  template: template
-})
+    viewModel: ActionsToolbarViewModel,
+    template: template
+});

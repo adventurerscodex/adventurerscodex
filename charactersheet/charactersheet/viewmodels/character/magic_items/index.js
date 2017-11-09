@@ -1,15 +1,15 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
     DataRepository,
-    Utility } from 'charactersheet/utilities'
-import { MagicItem } from 'charactersheet/models/common'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { SortService } from 'charactersheet/services/common'
+    Utility } from 'charactersheet/utilities';
+import { MagicItem } from 'charactersheet/models/common';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SortService } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function MagicItemsViewModel() {
     var self = this;
@@ -106,7 +106,7 @@ export function MagicItemsViewModel() {
         self.magicItems().forEach(function(e, i, _) {
             e.save();
         });
-    }
+    };
 
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];
@@ -206,6 +206,6 @@ export function MagicItemsViewModel() {
 }
 
 ko.components.register('magic-items', {
-  viewModel: MagicItemsViewModel,
-  template: template
-})
+    viewModel: MagicItemsViewModel,
+    template: template
+});

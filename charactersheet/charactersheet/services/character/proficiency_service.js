@@ -1,9 +1,9 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { OtherStats, Profile } from 'charactersheet/models/character'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { SharedServiceManager } from '../common/shared_service_manager'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { OtherStats, Profile } from 'charactersheet/models/character';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from '../common/shared_service_manager';
 
 export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
 

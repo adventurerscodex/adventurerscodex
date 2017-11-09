@@ -1,24 +1,24 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-bootstrap-modal'
+import 'bin/knockout-bootstrap-modal';
 
 import {
     NPC,
     NPCSection
-} from 'charactersheet/models/dm'
-import { Fixtures } from 'charactersheet/utilities'
+} from 'charactersheet/models/dm';
+import { Fixtures } from 'charactersheet/utilities';
 import {
     SortService,
     PersistenceService
-} from 'charactersheet/services'
+} from 'charactersheet/services';
 import {
     CharacterManager,
     Notifications,
     Utility
-} from 'charactersheet/utilities'
+} from 'charactersheet/utilities';
 
-import template from './index.html'
-import sectionIcon from 'images/encounters/swordman.svg'
+import template from './index.html';
+import sectionIcon from 'images/encounters/swordman.svg';
 
 
 export function NPCSectionViewModel(params) {
@@ -215,6 +215,6 @@ export function NPCSectionViewModel(params) {
 }
 
 ko.components.register('npc-section', {
-  viewModel: NPCSectionViewModel,
-  template: template
-})
+    viewModel: NPCSectionViewModel,
+    template: template
+});

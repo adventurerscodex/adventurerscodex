@@ -1,13 +1,13 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import {
     Character,
     PlayerTypes
-} from 'charactersheet/models/common'
+} from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 
 export function CharactersViewModel(params) {
@@ -74,10 +74,10 @@ export function CharactersViewModel(params) {
 
     self.closeModal = function() {
         self.modalStatus(false);
-    }
+    };
 }
 
 ko.components.register('characters', {
-  viewModel: CharactersViewModel,
-  template: template
-})
+    viewModel: CharactersViewModel,
+    template: template
+});

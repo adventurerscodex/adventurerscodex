@@ -1,19 +1,19 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
 import { CampaignMapOrImage,
     Message,
-    MapOrImage } from 'charactersheet/models'
+    MapOrImage } from 'charactersheet/models';
 import { SortService,
     PersistenceService,
     ChatServiceManager,
-    ImageServiceManager } from 'charactersheet/services'
+    ImageServiceManager } from 'charactersheet/services';
 import { CharacterManager,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 
-import template from './index.html'
+import template from './index.html';
 
 export function CampaignMapsAndImagesViewModel() {
     var self = this;
@@ -200,6 +200,6 @@ export function CampaignMapsAndImagesViewModel() {
 }
 
 ko.components.register('campaign-maps-and-images', {
-  viewModel: CampaignMapsAndImagesViewModel,
-  template: template
-})
+    viewModel: CampaignMapsAndImagesViewModel,
+    template: template
+});

@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 export function ChatModalViewModel(parent) {
     var self = this;

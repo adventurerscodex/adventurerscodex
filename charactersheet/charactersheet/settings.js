@@ -1,5 +1,5 @@
 // import { WizardIntroStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps/wizard_intro_step'
-import { Notifications } from 'charactersheet/utilities/notifications'
+import { Notifications } from 'charactersheet/utilities/notifications';
 
 /**
  * A global list of settings and static values.

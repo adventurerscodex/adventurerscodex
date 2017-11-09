@@ -1,10 +1,10 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { Encounter } from 'charactersheet/models/dm'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Notifications } from 'charactersheet/utilities'
+import { Encounter } from 'charactersheet/models/dm';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Notifications } from 'charactersheet/utilities';
 
-import template from './index.html'
+import template from './index.html';
 
 
 /**
@@ -80,6 +80,6 @@ export function EncounterAddEditModalViewModel(params) {
 
 
 ko.components.register('encounter-add-edit-modal', {
-  viewModel: EncounterAddEditModalViewModel,
-  template: template
+    viewModel: EncounterAddEditModalViewModel,
+    template: template
 });

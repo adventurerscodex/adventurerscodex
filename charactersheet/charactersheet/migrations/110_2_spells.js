@@ -1,4 +1,4 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js';
 
 /**
 * Converts legacy spell values to current spell values.

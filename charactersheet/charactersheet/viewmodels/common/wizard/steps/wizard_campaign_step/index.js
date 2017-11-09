@@ -1,6 +1,6 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import template from './index.html'
+import template from './index.html';
 
 export function WizardCampaignStepViewModel(params) {
     var self = this;
@@ -32,7 +32,7 @@ export function WizardCampaignStepViewModel(params) {
     self.dataHasChanged = function() {
         self.results();
         self.ready();
-    }
+    };
 
     /**
      * Returns true if all required fields are filled.
@@ -59,4 +59,4 @@ export function WizardCampaignStepViewModel(params) {
 ko.components.register('wizard-campaign-step', {
     viewModel: WizardCampaignStepViewModel,
     template: template
-  })
+});

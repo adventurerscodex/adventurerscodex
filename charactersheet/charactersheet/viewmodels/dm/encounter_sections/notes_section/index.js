@@ -1,11 +1,11 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { NotesSection } from 'charactersheet/models'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
+import { NotesSection } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
 
-import template from './index.html'
-import sectionIcon from 'images/encounters/quill-ink.svg'
+import template from './index.html';
+import sectionIcon from 'images/encounters/quill-ink.svg';
 
 
 export function NotesSectionViewModel(params) {
@@ -84,6 +84,6 @@ export function NotesSectionViewModel(params) {
 }
 
 ko.components.register('notes-section', {
-  viewModel: NotesSectionViewModel,
-  template: template
-})
+    viewModel: NotesSectionViewModel,
+    template: template
+});

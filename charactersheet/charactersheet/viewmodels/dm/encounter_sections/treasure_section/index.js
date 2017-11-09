@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import {
     TreasureSection,
@@ -7,30 +7,30 @@ import {
     EncounterMagicItem,
     EncounterWeapon,
     EncounterCoins
-} from 'charactersheet/models'
+} from 'charactersheet/models';
 import {
     Fixtures,
     DataRepository,
     CharacterManager,
     Notifications
-} from 'charactersheet/utilities'
+} from 'charactersheet/utilities';
 import {
     SortService,
     PersistenceService
-} from 'charactersheet/services'
+} from 'charactersheet/services';
 
-import template from './index.html'
-import sectionIcon from 'images/encounters/open-treasure-chest.svg'
-import breastplate from 'images/misc_icons/breastplate.svg'
-import coins from 'images/misc_icons/coins.svg'
-import potion from 'images/misc_icons/drink-me.svg'
-import wand from 'images/misc_icons/fairy-wand.svg'
-import broadsword from 'images/misc_icons/broadsword.svg'
-import epCoin from 'images/ep-coin.svg'
-import gpCoin from 'images/gp-coin.svg'
-import spCoin from 'images/sp-coin.svg'
-import cpCoin from 'images/cp-coin.svg'
-import ppCoin from 'images/pp-coin.svg'
+import template from './index.html';
+import sectionIcon from 'images/encounters/open-treasure-chest.svg';
+import breastplate from 'images/misc_icons/breastplate.svg';
+import coins from 'images/misc_icons/coins.svg';
+import potion from 'images/misc_icons/drink-me.svg';
+import wand from 'images/misc_icons/fairy-wand.svg';
+import broadsword from 'images/misc_icons/broadsword.svg';
+import epCoin from 'images/ep-coin.svg';
+import gpCoin from 'images/gp-coin.svg';
+import spCoin from 'images/sp-coin.svg';
+import cpCoin from 'images/cp-coin.svg';
+import ppCoin from 'images/pp-coin.svg';
 
 
 export function TreasureSectionViewModel(params) {
@@ -342,6 +342,6 @@ export function TreasureSectionViewModel(params) {
 }
 
 ko.components.register('treasure-section', {
-  viewModel: TreasureSectionViewModel,
-  template: template
-})
+    viewModel: TreasureSectionViewModel,
+    template: template
+});

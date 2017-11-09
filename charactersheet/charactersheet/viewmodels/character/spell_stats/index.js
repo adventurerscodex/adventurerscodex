@@ -1,12 +1,12 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { SpellStats } from 'charactersheet/models/character'
+    Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SpellStats } from 'charactersheet/models/character';
 
-import template from './index.html'
+import template from './index.html';
 
 export function SpellStatsViewModel() {
     var self = this;
@@ -75,6 +75,6 @@ export function SpellStatsViewModel() {
 }
 
 ko.components.register('spell-stats', {
-  viewModel: SpellStatsViewModel,
-  template: template
-})
+    viewModel: SpellStatsViewModel,
+    template: template
+});

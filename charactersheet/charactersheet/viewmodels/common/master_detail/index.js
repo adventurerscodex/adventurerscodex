@@ -1,8 +1,8 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
-import template from './index.html'
+import template from './index.html';
 
 /**
  */
@@ -219,6 +219,6 @@ export function MasterDetailViewModel() {
 }
 
 ko.components.register('master-detail', {
-  viewModel: MasterDetailViewModel,
-  template: template
-})
+    viewModel: MasterDetailViewModel,
+    template: template
+});

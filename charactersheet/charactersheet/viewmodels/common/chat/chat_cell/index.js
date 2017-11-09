@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 export function ChatCellViewModel(chat) {
     var self = this;
@@ -49,6 +49,6 @@ var ChatCellViewModelMemberTemplate = '\
 ';
 
 ko.components.register('chat-cell', {
-  viewModel: ChatCellViewModel,
-  template: ChatCellViewModelMemberTemplate
-})
+    viewModel: ChatCellViewModel,
+    template: ChatCellViewModelMemberTemplate
+});

@@ -1,8 +1,8 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { UserServiceManager } from 'charactersheet/services/common'
+import { UserServiceManager } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 
 export function ExportViewModel(params) {
@@ -23,14 +23,14 @@ export function ExportViewModel(params) {
     self.doesUserExist = function() {
         var userExists = UserServiceManager.sharedService().user() != null;
         self.isLoggedIn(userExists);
-    }
+    };
 
     self.closeModal = function() {
         self.modalStatus(false);
-    }
+    };
 }
 
 ko.components.register('export', {
-  viewModel: ExportViewModel,
-  template: template
-})
+    viewModel: ExportViewModel,
+    template: template
+});

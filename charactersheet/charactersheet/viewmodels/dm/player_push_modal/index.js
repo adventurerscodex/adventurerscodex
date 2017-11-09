@@ -1,15 +1,15 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import {
     ChatServiceManager,
     DMCardPublishingService,
     CharacterCardPublishingService,
     XMPPService
-} from 'charactersheet/services/common'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Message } from 'charactersheet/models/common'
+} from 'charactersheet/services/common';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Message } from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 
 export function PlayerPushModalViewModel(params) {
@@ -18,7 +18,7 @@ export function PlayerPushModalViewModel(params) {
     self.isOpen = params.isOpen;
     self.payload = params.payload;
     self.type = params.type;
-    self.onclose = params.onclose
+    self.onclose = params.onclose;
 
     self.partyMembers = ko.observableArray();
     self.selectedPartyMembers = ko.observableArray();
@@ -120,4 +120,4 @@ export function PlayerPushModalViewModel(params) {
 ko.components.register('player-push-modal', {
     viewModel: PlayerPushModalViewModel,
     template: template
-  })
+});

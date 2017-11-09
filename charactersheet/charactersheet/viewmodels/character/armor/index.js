@@ -1,16 +1,16 @@
 import ko from 'knockout';
-import 'bin/knockout-bootstrap-modal'
+import 'bin/knockout-bootstrap-modal';
 
-import { Armor} from 'charactersheet/models/common'
+import { Armor} from 'charactersheet/models/common';
 import { CharacterManager,
     DataRepository,
     Fixtures,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 import { PersistenceService,
-    SortService } from 'charactersheet/services/common'
+    SortService } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function ArmorViewModel() {
     var self = this;
@@ -202,6 +202,6 @@ export function ArmorViewModel() {
 }
 
 ko.components.register('armor', {
-  viewModel: ArmorViewModel,
-  template: template
-})
+    viewModel: ArmorViewModel,
+    template: template
+});

@@ -1,23 +1,23 @@
-import ko from 'knockout'
-import uuid from 'node-uuid'
+import ko from 'knockout';
+import uuid from 'node-uuid';
 
 import {
     MonsterAbilityScore,
     MonsterSection,
     Monster
-} from 'charactersheet/models/dm'
+} from 'charactersheet/models/dm';
 import {
     SortService,
     PersistenceService
-} from 'charactersheet/services'
+} from 'charactersheet/services';
 import {
     CharacterManager,
     Notifications,
     DataRepository
-} from 'charactersheet/utilities'
+} from 'charactersheet/utilities';
 
-import template from './index.html'
-import sectionIcon from 'images/encounters/wyvern.svg'
+import template from './index.html';
+import sectionIcon from 'images/encounters/wyvern.svg';
 
 export function MonsterSectionViewModel(params) {
     var self = this;
@@ -283,6 +283,6 @@ export function MonsterSectionViewModel(params) {
 }
 
 ko.components.register('monster-section', {
-  viewModel: MonsterSectionViewModel,
-  template: template
-})
+    viewModel: MonsterSectionViewModel,
+    template: template
+});

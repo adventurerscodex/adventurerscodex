@@ -1,7 +1,7 @@
-import marked from 'bin/textarea-markdown-editor/marked.min.js'
+import marked from 'bin/textarea-markdown-editor/marked.min.js';
 
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { AuthenticationToken } from 'charactersheet/models/common/authentication_token'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 
 /**
  * This file contains a number of generic utility functions used throughout

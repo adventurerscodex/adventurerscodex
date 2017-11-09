@@ -1,8 +1,8 @@
-import ko from 'knockout'
-import uuid from 'node-uuid'
+import ko from 'knockout';
+import uuid from 'node-uuid';
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+import { CharacterManager } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import {
     Character,
     Profile,
@@ -11,9 +11,9 @@ import {
     PlayerInfo,
     Item,
     Trait
-} from 'charactersheet/models'
+} from 'charactersheet/models';
 
-import template from './index.html'
+import template from './index.html';
 
 /**
  * This view model contains the root implementation of the wizard.
@@ -127,7 +127,7 @@ export function WizardViewModel() {
 
     self.saveStepResult = function() {
         self.aggregateResults()[self.currentStep()] = self.stepResult();
-    }
+    };
 
     /**
      * When called, immediately terminate the wizard and notify the
@@ -330,6 +330,6 @@ function NextStepDescriptor(viewModel, terminate) {
 }
 
 ko.components.register('wizard', {
-  viewModel: WizardViewModel,
-  template: template
-})
+    viewModel: WizardViewModel,
+    template: template
+});

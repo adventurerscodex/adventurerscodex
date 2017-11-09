@@ -1,24 +1,24 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications } from 'charactersheet/utilities';
 import { ImageServiceManager,
     DMCardPublishingService,
     PersistenceService,
     HotkeysService,
-    ChatServiceManager } from 'charactersheet/services'
-import { Campaign } from 'charactersheet/models/dm'
+    ChatServiceManager } from 'charactersheet/services';
+import { Campaign } from 'charactersheet/models/dm';
 
 
-import template from './index.html'
-import overviewTabImage from 'images/tab_icons/bookmarklet.svg'
-import encounterTabImage from 'images/tab_icons/treasure-map.svg'
-import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg'
-import notesTabImage from 'images/tab_icons/quill-ink.svg'
-import partyTabImage from 'images/tab_icons/backup.svg'
-import chatTabImage from 'images/tab_icons/conversation.svg'
+import template from './index.html';
+import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
+import encounterTabImage from 'images/tab_icons/treasure-map.svg';
+import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
+import notesTabImage from 'images/tab_icons/quill-ink.svg';
+import partyTabImage from 'images/tab_icons/backup.svg';
+import chatTabImage from 'images/tab_icons/conversation.svg';
 
 
 export function DMRootViewModel() {
@@ -173,10 +173,10 @@ export function DMRootViewModel() {
 
     self.dispose = function() {
         self.unload();
-    }
+    };
 }
 
 ko.components.register('dm-root', {
     viewModel: DMRootViewModel,
     template: template
-})
+});

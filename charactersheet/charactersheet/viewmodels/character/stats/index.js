@@ -1,16 +1,16 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager } from 'charactersheet/utilities'
+import { CharacterManager } from 'charactersheet/utilities';
 import { Health,
     HitDice,
     HitDiceType,
     Profile,
-    DeathSave } from 'charactersheet/models/character'
-import { Notifications } from 'charactersheet/utilities'
+    DeathSave } from 'charactersheet/models/character';
+import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService,
-    ArmorClassService } from 'charactersheet/services'
+    ArmorClassService } from 'charactersheet/services';
 
-import template from './index.html'
+import template from './index.html';
 
 export function StatsViewModel() {
     var self = this;
@@ -315,6 +315,6 @@ export function StatsViewModel() {
 }
 
 ko.components.register('stats', {
-  viewModel: StatsViewModel,
-  template: template
-})
+    viewModel: StatsViewModel,
+    template: template
+});

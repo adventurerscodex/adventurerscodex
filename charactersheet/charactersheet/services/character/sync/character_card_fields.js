@@ -5,19 +5,19 @@ import { AbilityScores,
     Profile,
     Skill,
     SpellStats,
-    Treasure } from 'charactersheet/models'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities/notifications.js'
+    Treasure } from 'charactersheet/models';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities/notifications.js';
 import { KeyValuePredicate,
     PersistenceService,
     SharedServiceManager,
     XMPPService,
-    ArmorClassService } from 'charactersheet/services'
+    ArmorClassService } from 'charactersheet/services';
 import { PlayerImage,
     PlayerInfo,
     Status,
     StatusWeightPair,
-    ImageModel } from 'charactersheet/models/common'
+    ImageModel } from 'charactersheet/models/common';
 
 
 export var CharacterCardFields = [

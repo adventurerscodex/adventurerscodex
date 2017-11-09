@@ -1,13 +1,13 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
-import { Campaign } from 'charactersheet/models'
+import { Campaign } from 'charactersheet/models';
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import template from './index.html'
-import largeIcon from 'images/encounters/compass.svg'
+    Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import template from './index.html';
+import largeIcon from 'images/encounters/compass.svg';
 
 export function CampaignOverviewViewModel() {
     var self = this;
@@ -94,6 +94,6 @@ export function CampaignOverviewViewModel() {
 }
 
 ko.components.register('campaign-overview', {
-  viewModel: CampaignOverviewViewModel,
-  template: template
-})
+    viewModel: CampaignOverviewViewModel,
+    template: template
+});

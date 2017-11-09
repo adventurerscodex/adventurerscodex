@@ -1,17 +1,17 @@
-import ko from 'knockout'
-import Strophe from 'strophe'
+import ko from 'knockout';
+import Strophe from 'strophe';
 
-import { Message, Environment, EnvironmentSection } from 'charactersheet/models/dm'
+import { Message, Environment, EnvironmentSection } from 'charactersheet/models/dm';
 import {
     ImageServiceManager,
     PersistenceService,
     ChatServiceManager,
     XMPPService
-} from 'charactersheet/services/common'
-import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities'
+} from 'charactersheet/services/common';
+import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities';
 
-import template from './index.html'
-import sectionIcon from 'images/encounters/night-sky.svg'
+import template from './index.html';
+import sectionIcon from 'images/encounters/night-sky.svg';
 
 
 export function EnvironmentSectionViewModel(params) {
@@ -210,6 +210,6 @@ export function EnvironmentSectionViewModel(params) {
 }
 
 ko.components.register('environment-section', {
-  viewModel: EnvironmentSectionViewModel,
-  template: template
-})
+    viewModel: EnvironmentSectionViewModel,
+    template: template
+});

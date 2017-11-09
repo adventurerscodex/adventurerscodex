@@ -1,15 +1,15 @@
-import ko from 'knockout'
-import Strophe from 'strophe'
-import 'knockout-mapping'
+import ko from 'knockout';
+import Strophe from 'strophe';
+import 'knockout-mapping';
 
-import 'bin/knockout-mapping-autoignore'
+import 'bin/knockout-mapping-autoignore';
 
-import { Message, Presence } from 'charactersheet/models/common'
+import { Message, Presence } from 'charactersheet/models/common';
 import {
     CharacterManager,
     Notifications,
-    Fixtures,
-} from 'charactersheet/utilities'
+    Fixtures
+} from 'charactersheet/utilities';
 import {
     KeyValuePredicate,
     PersistenceService,
@@ -17,7 +17,7 @@ import {
     ChatServiceManager,
     CharacterCardPublishingService,
     DMCardPublishingService
-} from 'charactersheet/services/common'
+} from 'charactersheet/services/common';
 
 export function ChatRoom() {
     var self = this;

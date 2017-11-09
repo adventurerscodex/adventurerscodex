@@ -1,10 +1,10 @@
-import ko from 'knockout'
-import uuid from 'node-uuid'
+import ko from 'knockout';
+import uuid from 'node-uuid';
 
-import { SharedServiceManager } from '../../shared_service_manager'
-import { Notifications, Utility, CharacterManager, DataRepository } from 'charactersheet/utilities'
-import { XMPPService, KeyValuePredicate, OrPredicate, PersistenceService } from 'charactersheet/services'
-import { ChatRoom, Presence, Message } from 'charactersheet/models'
+import { SharedServiceManager } from '../../shared_service_manager';
+import { Notifications, Utility, CharacterManager, DataRepository } from 'charactersheet/utilities';
+import { XMPPService, KeyValuePredicate, OrPredicate, PersistenceService } from 'charactersheet/services';
+import { ChatRoom, Presence, Message } from 'charactersheet/models';
 
 
 /**

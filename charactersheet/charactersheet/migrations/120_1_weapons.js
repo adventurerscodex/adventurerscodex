@@ -1,4 +1,4 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service.js'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service.js';
 
 /**
  * Sets weaponhandedness to '' if 'light'.
