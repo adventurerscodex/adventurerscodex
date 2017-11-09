@@ -1,10 +1,10 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Message, Presence, ChatRoom } from 'charactersheet/models/common'
-import { PersistenceService, XMPPService, CHAT_MESSAGE_TYPES } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Message, Presence, ChatRoom } from 'charactersheet/models/common';
+import { PersistenceService, XMPPService, CHAT_MESSAGE_TYPES } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function ChatDetailViewModel(params) {
     var self = this;
@@ -230,6 +230,6 @@ var ChatDetailViewModelMemberTemplate = '\
 ';
 
 ko.components.register('chat-detail', {
-  viewModel: ChatDetailViewModel,
-  template: template
-})
+    viewModel: ChatDetailViewModel,
+    template: template
+});

@@ -1,13 +1,14 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common'
-import { ChatServiceManager } from 'charactersheet/services/common'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { XMPPService } from 'charactersheet/services/common'
+import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common';
+import { ChatServiceManager } from 'charactersheet/services/common';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { XMPPService } from 'charactersheet/services/common';
+import { PlayerTypes } from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 /**
  * A View that handles displaying Messages of type CHAT.
@@ -99,6 +100,6 @@ export function ChatLogReadAloudItem(params) {
 }
 
 ko.components.register('chat-log-read-aloud-item', {
-  viewModel: ChatLogReadAloudItem,
-  template: template
-})
+    viewModel: ChatLogReadAloudItem,
+    template: template
+});

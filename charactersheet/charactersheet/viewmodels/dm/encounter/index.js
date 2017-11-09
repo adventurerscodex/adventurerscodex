@@ -1,26 +1,22 @@
-import ko from 'knockout'
-
 import {
-    Notifications,
-    CharacterManager
-} from 'charactersheet/utilities'
-import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
 import {
     Encounter,
     EnvironmentSection,
-    NotesSection,
-    TreasureSection,
-    PlayerTextSection,
+    MapsAndImagesSection,
     MonsterSection,
     NPCSection,
+    NotesSection,
+    PlayerTextSection,
     PointOfInterestSection,
-    MapsAndImagesSection,
-    EnvironmentSection
-} from 'charactersheet/models/dm'
-
-import template from './index.html'
-
+    TreasureSection
+} from 'charactersheet/models/dm';
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+import template from './index.html';
 
 export function EncounterViewModel() {
     var self = this;
@@ -180,7 +176,7 @@ export function EncounterViewModel() {
             }
             return section;
         });
-    }
+    };
 
     self._dataHasChanged = function() {
         self.encounterCells().forEach(function(cell, idx, _) {
@@ -191,6 +187,6 @@ export function EncounterViewModel() {
 }
 
 ko.components.register('encounter', {
-  viewModel: EncounterViewModel,
-  template: template
+    viewModel: EncounterViewModel,
+    template: template
 });

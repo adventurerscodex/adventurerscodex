@@ -1,10 +1,10 @@
-import ko from 'knockout'
-import 'knockout-mapping'
+import ko from 'knockout';
+import 'knockout-mapping';
 
-import 'bin/knockout-mapping-autoignore'
-import marked from 'bin/textarea-markdown-editor/marked.min.js'
+import 'bin/knockout-mapping-autoignore';
+import marked from 'bin/textarea-markdown-editor/marked.min.js';
 
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 export function Note() {
     var self = this;

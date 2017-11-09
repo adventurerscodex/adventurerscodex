@@ -1,15 +1,15 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
     DataRepository,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 import { PersistenceService,
-    SortService } from 'charactersheet/services/common'
-import { Spell } from 'charactersheet/models'
+    SortService } from 'charactersheet/services/common';
+import { Spell } from 'charactersheet/models';
 
-import template from './index.html'
+import template from './index.html';
 
 export function SpellbookViewModel() {
     var self = this;
@@ -66,13 +66,10 @@ export function SpellbookViewModel() {
 
         var key = CharacterManager.activeCharacter().key();
         self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
+        self.spellbook().forEach(function(spell, idx, _) {
+            spell.spellPrepared.subscribe(self.save);
+        });
         Notifications.spellStats.changed.add(self.valueHasChanged);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.spellStats.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
@@ -188,6 +185,7 @@ export function SpellbookViewModel() {
         var spell = self.blankSpell();
         spell.characterId(CharacterManager.activeCharacter().key());
         spell.save();
+        spell.spellPrepared.subscribe(self.save);
         self.spellbook.push(spell);
         self.blankSpell(new Spell());
     };
@@ -216,6 +214,6 @@ export function SpellbookViewModel() {
 }
 
 ko.components.register('spells', {
-  viewModel: SpellbookViewModel,
-  template: template
-})
+    viewModel: SpellbookViewModel,
+    template: template
+});

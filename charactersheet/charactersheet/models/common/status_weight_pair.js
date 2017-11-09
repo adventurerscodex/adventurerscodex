@@ -1,4 +1,4 @@
-import { Fixtures } from 'charactersheet/utilities'
+import { Fixtures } from 'charactersheet/utilities';
 
 /**
  * A convenience class for constructing pairs of percentages that will be processed later.

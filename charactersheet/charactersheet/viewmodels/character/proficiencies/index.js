@@ -1,15 +1,15 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
-    Utility } from 'charactersheet/utilities'
-import { DataRepository } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import { Proficiency } from 'charactersheet/models/character'
-import { SortService } from 'charactersheet/services/common'
+    Utility } from 'charactersheet/utilities';
+import { DataRepository } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Proficiency } from 'charactersheet/models/character';
+import { SortService } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function ProficienciesViewModel() {
     var self = this;
@@ -140,6 +140,6 @@ export function ProficienciesViewModel() {
 }
 
 ko.components.register('proficiencies', {
-  viewModel: ProficienciesViewModel,
-  template: template
-})
+    viewModel: ProficienciesViewModel,
+    template: template
+});

@@ -1,13 +1,13 @@
-import ko from 'knockout'
-import linkifyStr from 'linkifyjs/string'
+import ko from 'knockout';
+import linkifyStr from 'linkifyjs/string';
 
-import { Settings } from 'charactersheet/settings'
-import { PlayerTypes } from 'charactersheet/models/common/player_types'
-import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { PersistenceService, ChatServiceManager, XMPPService } from 'charactersheet/services/common'
+import { Settings } from 'charactersheet/settings';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
+import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { PersistenceService, ChatServiceManager, XMPPService } from 'charactersheet/services/common';
 
-import template from './index.html'
+import template from './index.html';
 /**
  * A View that handles displaying Messages of type CHAT.
  */
@@ -97,6 +97,6 @@ export function ChatLogChatItem(params) {
 }
 
 ko.components.register('chat-log-chat-item', {
-  viewModel: ChatLogChatItem,
-  template: template
-})
+    viewModel: ChatLogChatItem,
+    template: template
+});

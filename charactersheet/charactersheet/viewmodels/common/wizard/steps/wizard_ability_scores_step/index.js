@@ -1,7 +1,7 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import template from './index.html'
-import icon from 'images/logo-full-circle-icon.png'
+import template from './index.html';
+import icon from 'images/logo-full-circle-icon.png';
 
 export function WizardAbilityScoresStepViewModel(params) {
     var self = this;
@@ -43,7 +43,7 @@ export function WizardAbilityScoresStepViewModel(params) {
     self.dataHasChanged = function() {
         self.results();
         self.ready();
-    }
+    };
 
     /**
      * Returns true if all required fields are filled.
@@ -74,4 +74,4 @@ export function WizardAbilityScoresStepViewModel(params) {
 ko.components.register('wizard-ability-score-step', {
     viewModel: WizardAbilityScoresStepViewModel,
     template: template
-  })
+});

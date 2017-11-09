@@ -1,11 +1,11 @@
-import ko from 'knockout'
-import 'bin/knockout-required-extender'
+import ko from 'knockout';
+import 'bin/knockout-required-extender';
 
-import { DataRepository } from 'charactersheet/utilities'
-import { Fixtures } from 'charactersheet/utilities'
+import { DataRepository } from 'charactersheet/utilities';
+import { Fixtures } from 'charactersheet/utilities';
 
-import template from './index.html'
-import icon from 'images/logo-full-circle-icon.png'
+import template from './index.html';
+import icon from 'images/logo-full-circle-icon.png';
 
 export function WizardProfileStepViewModel(params) {
     var self = this;
@@ -123,7 +123,7 @@ export function WizardProfileStepViewModel(params) {
     self.dataHasChanged = function() {
         self.results();
         self.ready();
-    }
+    };
 
     /**
      * Returns true if all required fields are filled.
@@ -161,4 +161,4 @@ export function WizardProfileStepViewModel(params) {
 ko.components.register('wizard-profile-step', {
     viewModel: WizardProfileStepViewModel,
     template: template
-  })
+});

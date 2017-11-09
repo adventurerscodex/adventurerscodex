@@ -1,10 +1,10 @@
-import Strophe from 'strophe'
+import Strophe from 'strophe';
 
 import { XMPPService,
     ChatServiceManager,
-    SharedServiceManager } from 'charactersheet/services/common'
+    SharedServiceManager } from 'charactersheet/services/common';
 import { Notifications,
-    JSONPayload } from 'charactersheet/utilities'
+    JSONPayload } from 'charactersheet/utilities';
 
 /*eslint no-console:0*/
 

@@ -1,20 +1,20 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
+import ko from 'knockout';
+import 'bin/knockout-bootstrap-modal';
 
 import { CharacterManager,
     DataRepository,
     Fixtures,
     Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 import { PersistenceService,
-    SortService } from 'charactersheet/services/common'
+    SortService } from 'charactersheet/services/common';
 import { Tracked,
-    Trait } from 'charactersheet/models'
-import uuid from 'node-uuid'
+    Trait } from 'charactersheet/models';
+import uuid from 'node-uuid';
 
-import template from './index.html'
-import campingTent from 'images/camping-tent.svg'
-import meditation from 'images/meditation.svg'
+import template from './index.html';
+import campingTent from 'images/camping-tent.svg';
+import meditation from 'images/meditation.svg';
 
 export function TraitsViewModel() {
     var self = this;
@@ -207,6 +207,6 @@ export function TraitsViewModel() {
 }
 
 ko.components.register('traits', {
-  viewModel: TraitsViewModel,
-  template: template
-})
+    viewModel: TraitsViewModel,
+    template: template
+});

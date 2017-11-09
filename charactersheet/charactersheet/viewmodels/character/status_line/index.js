@@ -1,11 +1,11 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import { Status,
-    Profile } from 'charactersheet/models'
+    Profile } from 'charactersheet/models';
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import template from './index.html'
+    Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import template from './index.html';
 
 export function StatusLineViewModel(params) {
     var self = this;
@@ -58,6 +58,6 @@ export function StatusLineViewModel(params) {
 }
 
 ko.components.register('player-status-line', {
-  viewModel: StatusLineViewModel,
-  template: template
-})
+    viewModel: StatusLineViewModel,
+    template: template
+});

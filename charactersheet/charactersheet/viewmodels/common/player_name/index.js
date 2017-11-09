@@ -1,13 +1,13 @@
-import ko from 'knockout'
-import 'bin/knockout-binding-contenteditable'
+import ko from 'knockout';
+import 'bin/knockout-binding-contenteditable';
 
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+    Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Profile,
-    Campaign } from 'charactersheet/models'
+    Campaign } from 'charactersheet/models';
 
-import template from './index.html'
+import template from './index.html';
 
 export function PlayerNameViewModel() {
     var self = this;
@@ -21,7 +21,7 @@ export function PlayerNameViewModel() {
         self.dataHasChanged();
         Notifications.characterManager.changed.add(self.dataHasChanged);
         self.name.subscribe(self.nameHasChanged);
-    }
+    };
 
     self.placeholderText = ko.pureComputed(function() {
         if (self.playerType() == 'character') {
@@ -41,7 +41,7 @@ export function PlayerNameViewModel() {
             self.campaign().save();
             Notifications.campaign.changed.dispatch();
         }
-    }
+    };
 
     self.dataHasChanged = function() {
         var character = CharacterManager.activeCharacter();
@@ -65,4 +65,4 @@ export function PlayerNameViewModel() {
 ko.components.register('player-name', {
     viewModel: PlayerNameViewModel,
     template: template
-})
+});

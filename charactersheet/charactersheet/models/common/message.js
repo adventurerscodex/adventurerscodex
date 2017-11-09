@@ -1,8 +1,11 @@
-import ko from 'knockout'
-import Strophe from 'strophe'
+import ko from 'knockout';
+import Strophe from 'strophe';
 
-import { CHAT_MESSAGE_TYPES, PersistenceService } from 'charactersheet/services/common'
-import { CharacterManager, JSONPayload } from 'charactersheet/utilities'
+import { CHAT_MESSAGE_TYPES,
+    PersistenceService } from 'charactersheet/services/common';
+import { CharacterManager,
+    JSONPayload,
+    Utility } from 'charactersheet/utilities';
 
 
 /**

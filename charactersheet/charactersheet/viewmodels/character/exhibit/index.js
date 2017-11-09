@@ -1,12 +1,12 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 import { CharacterManager,
     Notifications,
-    Utility } from 'charactersheet/utilities'
-import { ChatServiceManager } from 'charactersheet/services/common'
-import { PlayerTypes } from 'charactersheet/models/common'
+    Utility } from 'charactersheet/utilities';
+import { ChatServiceManager } from 'charactersheet/services/common';
+import { PlayerTypes } from 'charactersheet/models/common';
 
-import template from './index.html'
+import template from './index.html';
 
 export function ExhibitViewModel() {
     var self = this;
@@ -57,6 +57,6 @@ export function ExhibitViewModel() {
 }
 
 ko.components.register('exhibit', {
-  viewModel: ExhibitViewModel,
-  template: template
-})
+    viewModel: ExhibitViewModel,
+    template: template
+});

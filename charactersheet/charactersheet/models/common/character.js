@@ -1,26 +1,26 @@
-import ko from 'knockout'
-import Dropbox from 'dropbox'
-import uuid from 'node-uuid'
-import { saveAs } from 'FileSaver.js'
+import ko from 'knockout';
+import Dropbox from 'dropbox';
+import uuid from 'node-uuid';
+import { saveAs } from 'FileSaver.js';
 
-import 'knockout-mapping'
-import 'bin/knockout-mapping-autoignore'
+import 'knockout-mapping';
+import 'bin/knockout-mapping-autoignore';
 
 import {
     Utility,
     Notifications,
     Migrations
-} from 'charactersheet/utilities'
-import { Settings } from 'charactersheet/settings'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+} from 'charactersheet/utilities';
+import { Settings } from 'charactersheet/settings';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
-import { AuthenticationToken } from './authentication_token'
-import { Campaign } from '../dm/campaign'
-import { ImageModel } from './image'
-import { PlayerImage } from './player_image'
-import { PlayerInfo } from './player_info'
-import { PlayerTypes } from './player_types'
-import { Profile } from '../character/profile'
+import { AuthenticationToken } from './authentication_token';
+import { Campaign } from '../dm/campaign';
+import { ImageModel } from './image';
+import { PlayerImage } from './player_image';
+import { PlayerInfo } from './player_info';
+import { PlayerTypes } from './player_types';
+import { Profile } from '../character/profile';
 
 
 /**

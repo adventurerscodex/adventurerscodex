@@ -1,12 +1,12 @@
 import ko from 'knockout';
 
-import 'bin/knockout-bootstrap-modal'
+import 'bin/knockout-bootstrap-modal';
 
 import { AbilityScores, getModifier, getStrModifier } from 'charactersheet/models/character/ability_scores';
 import { CharacterManager, Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
-import template from './index.html'
+import template from './index.html';
 
 
 export function AbilityScoresViewModel() {
@@ -89,6 +89,6 @@ export function AbilityScoresViewModel() {
 }
 
 ko.components.register('ability-scores', {
-  viewModel: AbilityScoresViewModel,
-  template: template
-})
+    viewModel: AbilityScoresViewModel,
+    template: template
+});

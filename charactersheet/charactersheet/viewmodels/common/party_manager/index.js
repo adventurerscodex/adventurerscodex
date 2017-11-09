@@ -1,18 +1,18 @@
 /*eslint no-console:0*/
 
-import ko from 'knockout'
+import ko from 'knockout';
 
 import { AuthenticationToken,
-    ChatRoom } from 'charactersheet/models/common'
+    ChatRoom } from 'charactersheet/models/common';
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities'
+    Notifications } from 'charactersheet/utilities';
 import { PersistenceService,
     KeyValuePredicate,
     XMPPService,
-    ChatServiceManager } from 'charactersheet/services/common'
-import { Settings } from 'charactersheet/settings'
+    ChatServiceManager } from 'charactersheet/services/common';
+import { Settings } from 'charactersheet/settings';
 
-import template from './index.html'
+import template from './index.html';
 
 export function PartyManagerViewModel() {
     var self = this;
@@ -260,6 +260,6 @@ export function PartyManagerViewModel() {
 }
 
 ko.components.register('party-manager', {
-  viewModel: PartyManagerViewModel,
-  template: template
-})
+    viewModel: PartyManagerViewModel,
+    template: template
+});

@@ -1,7 +1,7 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { MonsterAbilityScore } from 'charactersheet/models'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
+import { MonsterAbilityScore } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 export function Monster() {
     var self = this;

@@ -1,17 +1,17 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { AbilityScores } from 'charactersheet/models/character'
+import { AbilityScores } from 'charactersheet/models/character';
 import {
     CharacterManager,
     Fixtures,
     Notifications
-} from 'charactersheet/utilities'
+} from 'charactersheet/utilities';
 
 import {
     KeyValuePredicate,
     PersistenceService,
     SharedServiceManager
-} from 'charactersheet/services/common'
+} from 'charactersheet/services/common';
 
 export function Armor() {
     var self = this;

@@ -1,8 +1,8 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import { SharedServiceManager } from '../shared_service_manager'
+import { SharedServiceManager } from '../shared_service_manager';
 import { Notifications,
-    Utility } from 'charactersheet/utilities'
+    Utility } from 'charactersheet/utilities';
 
 /**
  * A global service that fetches the user's account information.

@@ -1,12 +1,12 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
-import 'bin/knockout-custom-loader'
+import 'bin/knockout-custom-loader';
 
-import { CharacterAppearance } from 'charactersheet/models/character'
-import { CharacterManager } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common/persistence_service'
-import template from './index.html'
+import { CharacterAppearance } from 'charactersheet/models/character';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import template from './index.html';
 
 export function AppearanceViewModel() {
     var self = this;
@@ -46,6 +46,6 @@ export function AppearanceViewModel() {
 }
 
 ko.components.register('appearance', {
-  viewModel: AppearanceViewModel,
-  template: template
-})
+    viewModel: AppearanceViewModel,
+    template: template
+});
