@@ -66,13 +66,10 @@ export function SpellbookViewModel() {
 
         var key = CharacterManager.activeCharacter().key();
         self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
+        self.spellbook().forEach(function(spell, idx, _) {
+            spell.spellPrepared.subscribe(self.save);
+        });
         Notifications.spellStats.changed.add(self.valueHasChanged);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.spellStats.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
@@ -188,6 +185,7 @@ export function SpellbookViewModel() {
         var spell = self.blankSpell();
         spell.characterId(CharacterManager.activeCharacter().key());
         spell.save();
+        spell.spellPrepared.subscribe(self.save);
         self.spellbook.push(spell);
         self.blankSpell(new Spell());
     };

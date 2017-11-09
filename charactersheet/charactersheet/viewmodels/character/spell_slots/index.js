@@ -8,8 +8,10 @@ import { PersistenceService, SortService } from 'charactersheet/services/common'
 import { Slot } from 'charactersheet/models/character'
 
 import template from './index.html'
-import campingTent from 'images/camping-tent.svg'
-import meditation from 'images/meditation.svg'
+import campingTent from 'images/camping-tent-blue.svg'
+import meditation from 'images/meditation-blue.svg'
+import campingTentWhite from 'images/camping-tent.svg'
+import meditationWhite from 'images/meditation.svg'
 
 export function SpellSlotsViewModel() {
     var self = this;
@@ -36,6 +38,8 @@ export function SpellSlotsViewModel() {
     self.filter = ko.observable('');
     self.meditation = meditation;
     self.campingTent = campingTent;
+    self.meditationWhite = meditationWhite;
+    self.campingTentWhite = campingTentWhite;
 
     self.load = function() {
         Notifications.global.save.add(self.save);
