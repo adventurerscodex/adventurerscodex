@@ -1,13 +1,11 @@
-import ko from 'knockout';
-
 import 'bin/knockout-custom-loader';
-
-import { Campaign } from 'charactersheet/models';
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities';
+import { Campaign } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import template from './index.html';
+import ko from 'knockout';
 import largeIcon from 'images/encounters/compass.svg';
+import template from './index.html';
 
 export function CampaignOverviewViewModel() {
     var self = this;

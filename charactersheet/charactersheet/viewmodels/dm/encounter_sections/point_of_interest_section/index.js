@@ -1,20 +1,20 @@
-import ko from 'knockout';
-
 import 'bin/knockout-bootstrap-modal';
-
 import {
-    PointOfInterest,
-    PointOfInterestSection
-} from 'charactersheet/models/dm';
+    CharacterManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import {
     PersistenceService,
     SortService
 } from 'charactersheet/services/common';
-import { Notifications, CharacterManager, Utility } from 'charactersheet/utilities';
-
-import template from './index.html';
+import {
+    PointOfInterest,
+    PointOfInterestSection
+} from 'charactersheet/models/dm';
+import ko from 'knockout';
 import sectionIcon from 'images/encounters/rune-stone.svg';
-
+import template from './index.html';
 
 export function PointOfInterestSectionViewModel(params) {
     var self = this;

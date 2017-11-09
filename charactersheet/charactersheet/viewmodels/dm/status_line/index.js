@@ -1,16 +1,15 @@
-import ko from 'knockout';
-
 import {
     PlayerCard,
     PlayerTypes,
     StatusWeightPair
 } from 'charactersheet/models';
 import { getHealthTypeEnum,
-    getTrackedTypeEnum,
-    getMagicTypeEnum } from 'charactersheet/models/common/status_weight_pair';
-import { Notifications } from 'charactersheet/utilities';
+    getMagicTypeEnum,
+    getTrackedTypeEnum
+} from 'charactersheet/models/common/status_weight_pair';
 import { ChatServiceManager } from 'charactersheet/services';
-
+import { Notifications } from 'charactersheet/utilities';
+import ko from 'knockout';
 import template from './index.html';
 
 export function PartyStatusLineViewModel(params) {

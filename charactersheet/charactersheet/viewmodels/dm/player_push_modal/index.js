@@ -1,16 +1,15 @@
-import ko from 'knockout';
-
 import {
+    CharacterCardPublishingService,
     ChatServiceManager,
     DMCardPublishingService,
-    CharacterCardPublishingService,
     XMPPService
 } from 'charactersheet/services/common';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
 import { Message } from 'charactersheet/models/common';
-
+import ko from 'knockout';
 import template from './index.html';
-
 
 export function PlayerPushModalViewModel(params) {
     var self = this;

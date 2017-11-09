@@ -1,25 +1,21 @@
-import ko from 'knockout';
-
 import 'bin/knockout-custom-loader';
-
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities';
-import { ImageServiceManager,
+import { ChatServiceManager,
     DMCardPublishingService,
-    PersistenceService,
     HotkeysService,
-    ChatServiceManager } from 'charactersheet/services';
+    ImageServiceManager,
+    PersistenceService
+ } from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
-
-
-import template from './index.html';
-import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
-import encounterTabImage from 'images/tab_icons/treasure-map.svg';
-import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
-import notesTabImage from 'images/tab_icons/quill-ink.svg';
-import partyTabImage from 'images/tab_icons/backup.svg';
 import chatTabImage from 'images/tab_icons/conversation.svg';
-
+import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
+import encounterTabImage from 'images/tab_icons/treasure-map.svg';
+import ko from 'knockout';
+import notesTabImage from 'images/tab_icons/quill-ink.svg';
+import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
+import partyTabImage from 'images/tab_icons/backup.svg';
+import template from './index.html';
 
 export function DMRootViewModel() {
     var self = this;
