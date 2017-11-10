@@ -1,15 +1,17 @@
-import ko from 'knockout';
-
-import { CharacterManager } from 'charactersheet/utilities';
-import { Health,
+import {
+    ArmorClassService,
+    PersistenceService
+} from 'charactersheet/services';
+import {
+    DeathSave,
+    Health,
     HitDice,
     HitDiceType,
-    Profile,
-    DeathSave } from 'charactersheet/models/character';
+    Profile
+} from 'charactersheet/models/character';
+import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService,
-    ArmorClassService } from 'charactersheet/services';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function StatsViewModel() {

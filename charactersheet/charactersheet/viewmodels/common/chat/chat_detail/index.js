@@ -1,9 +1,18 @@
+import {
+    CHAT_MESSAGE_TYPES,
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    ChatRoom,
+    Message,
+    Presence
+} from 'charactersheet/models/common';
 import ko from 'knockout';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { Message, Presence, ChatRoom } from 'charactersheet/models/common';
-import { PersistenceService, XMPPService, CHAT_MESSAGE_TYPES } from 'charactersheet/services/common';
-
 import template from './index.html';
 
 export function ChatDetailViewModel(params) {

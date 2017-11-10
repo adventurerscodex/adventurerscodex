@@ -1,14 +1,16 @@
-import ko from 'knockout';
-
-import { Notifications,
-    Utility,
-    CharacterManager } from 'charactersheet/utilities';
-import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
-import { CharacterCardPublishingService,
+import {
+    CharacterCardPublishingService,
     DMCardPublishingService,
-    XMPPService } from 'charactersheet/services/common';
+    XMPPService
+} from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import { PlayerTypes } from 'charactersheet/models/common';
-
+import ko from 'knockout';
 import template from './index.html';
 
 /**

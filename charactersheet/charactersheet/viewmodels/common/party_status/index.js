@@ -1,8 +1,6 @@
-import ko from 'knockout';
-import Strophe from 'strophe';
-
 import { Notifications } from 'charactersheet/utilities';
-
+import Strophe from 'strophe';
+import ko from 'knockout';
 import template from './index.html';
 
 export function PartyStatusViewModel() {

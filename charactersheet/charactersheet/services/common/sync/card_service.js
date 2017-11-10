@@ -1,15 +1,14 @@
-import uuid from 'node-uuid';
-
-import { CharacterCardFields } from 'charactersheet/services/character/sync/character_card_fields';
-import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields';
-import { SharedServiceManager } from '../shared_service_manager';
-import { Notifications } from 'charactersheet/utilities';
-import { pCard } from 'charactersheet/models/common';
 import {
     ChatServiceManager,
-    XMPPService,
-    NodeServiceManager
+    NodeServiceManager,
+    XMPPService
 } from 'charactersheet/services';
+import { CharacterCardFields } from 'charactersheet/services/character/sync/character_card_fields';
+import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields';
+import { Notifications } from 'charactersheet/utilities';
+import { SharedServiceManager } from '../shared_service_manager';
+import { pCard } from 'charactersheet/models/common';
+import uuid from 'node-uuid';
 
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,

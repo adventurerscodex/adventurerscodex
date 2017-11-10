@@ -1,11 +1,10 @@
-import ko from 'knockout';
-
-import { CharacterManager,
+import {
+    CharacterManager,
     Notifications,
     Utility } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import { PlayerTypes } from 'charactersheet/models/common';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function ExhibitViewModel() {

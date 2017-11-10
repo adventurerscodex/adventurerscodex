@@ -1,15 +1,16 @@
-import ko from 'knockout';
-
-import { Settings } from 'charactersheet/settings';
-import { AuthenticationToken } from 'charactersheet/models/common';
-import { AuthenticationServiceManager,
+import {
+    AuthenticationServiceManager,
     PersistenceService,
-    UserServiceManager } from 'charactersheet/services/common';
-import { Notifications,
-    ViewModelUtilities } from 'charactersheet/utilities';
-
+    UserServiceManager
+} from 'charactersheet/services/common';
+import {
+    Notifications,
+    ViewModelUtilities
+} from 'charactersheet/utilities';
+import { AuthenticationToken } from 'charactersheet/models/common';
+import { Settings } from 'charactersheet/settings';
+import ko from 'knockout';
 import template from './index.html';
-
 
 export function LoginViewModel() {
     var self = this;

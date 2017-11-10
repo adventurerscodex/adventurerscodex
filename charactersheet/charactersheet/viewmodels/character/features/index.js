@@ -1,21 +1,24 @@
-import ko from 'knockout';
-import uuid from 'node-uuid';
 import 'bin/knockout-bootstrap-modal';
-// import 'bin/knockout-jquery-autocomplete'
-
-import { Notifications,
-    DataRepository,
+import {
     CharacterManager,
-    Fixtures } from 'charactersheet/utilities';
-import { PersistenceService,
-    SortService } from 'charactersheet/services/common';
-import { Tracked,
-    Feature } from 'charactersheet/models';
+    DataRepository,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Feature,
+    Tracked
+} from 'charactersheet/models';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
-
-import template from './index.html';
 import campingTent from 'images/camping-tent.svg';
+import ko from 'knockout';
 import meditation from 'images/meditation.svg';
+import template from './index.html';
+import uuid from 'node-uuid';
 
 export function FeaturesViewModel() {
     var self = this;

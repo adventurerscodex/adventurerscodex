@@ -1,12 +1,18 @@
-import { SharedServiceManager } from '../shared_service_manager';
-import { PersistenceService,
-    KeyValuePredicate } from 'charactersheet/services/common';
-import { Notifications,
-    CharacterManager } from 'charactersheet/utilities';
-import { Environment,
+import {
     CampaignMapOrImage,
-    MapOrImage,
-    Exhibit } from 'charactersheet/models';
+    Environment,
+    Exhibit,
+    MapOrImage
+} from 'charactersheet/models';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
+    PersistenceService
+} from 'charactersheet/services/common';
+import { SharedServiceManager } from '../shared_service_manager';
 
 /**
  * The default configuration object for the Image service.

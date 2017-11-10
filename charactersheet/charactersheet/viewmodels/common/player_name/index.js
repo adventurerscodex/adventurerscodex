@@ -1,12 +1,12 @@
-import ko from 'knockout';
 import 'bin/knockout-binding-contenteditable';
-
+import {
+    Campaign,
+    Profile
+} from 'charactersheet/models';
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Profile,
-    Campaign } from 'charactersheet/models';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function PlayerNameViewModel() {

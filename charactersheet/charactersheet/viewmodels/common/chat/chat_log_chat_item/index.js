@@ -1,12 +1,20 @@
+import {
+    CharacterCardPublishingService,
+    DMCardPublishingService
+} from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    ChatServiceManager,
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
+import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import linkifyStr from 'linkifyjs/string';
-
-import { Settings } from 'charactersheet/settings';
-import { PlayerTypes } from 'charactersheet/models/common/player_types';
-import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { PersistenceService, ChatServiceManager, XMPPService } from 'charactersheet/services/common';
-
 import template from './index.html';
 /**
  * A View that handles displaying Messages of type CHAT.

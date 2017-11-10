@@ -1,14 +1,16 @@
-import ko from 'knockout';
 import 'bin/knockout-bootstrap-modal';
-
-import { CharacterManager,
+import {
+    CharacterManager,
     DataRepository,
     Notifications,
-    Utility } from 'charactersheet/utilities';
-import { PersistenceService,
-    SortService } from 'charactersheet/services/common';
+    Utility
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { Spell } from 'charactersheet/models';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function SpellbookViewModel() {

@@ -1,17 +1,20 @@
 /*eslint no-console:0*/
-
-import ko from 'knockout';
-
-import { AuthenticationToken,
-    ChatRoom } from 'charactersheet/models/common';
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
-import { PersistenceService,
+import {
+    AuthenticationToken,
+    ChatRoom
+} from 'charactersheet/models/common';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    ChatServiceManager,
     KeyValuePredicate,
-    XMPPService,
-    ChatServiceManager } from 'charactersheet/services/common';
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
 import { Settings } from 'charactersheet/settings';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function PartyManagerViewModel() {

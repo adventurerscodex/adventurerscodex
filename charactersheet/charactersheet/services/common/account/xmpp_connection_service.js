@@ -1,10 +1,11 @@
-import Strophe from 'strophe';
-import { SharedServiceManager } from '../shared_service_manager';
-import { UserServiceManager,
-    PersistenceService } from 'charactersheet/services';
-import { Notifications } from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    UserServiceManager
+} from 'charactersheet/services';
 import { AuthenticationToken } from  'charactersheet/models/common';
-
+import { Notifications } from 'charactersheet/utilities';
+import { SharedServiceManager } from '../shared_service_manager';
+import Strophe from 'strophe';
 
 /*eslint no-console:0*/
 

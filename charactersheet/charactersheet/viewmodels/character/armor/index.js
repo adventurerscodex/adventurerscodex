@@ -1,15 +1,17 @@
-import ko from 'knockout';
 import 'bin/knockout-bootstrap-modal';
-
-import { Armor} from 'charactersheet/models/common';
-import { CharacterManager,
+import {
+    CharacterManager,
     DataRepository,
     Fixtures,
     Notifications,
-    Utility } from 'charactersheet/utilities';
-import { PersistenceService,
-    SortService } from 'charactersheet/services/common';
-
+    Utility
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
+import { Armor} from 'charactersheet/models/common';
+import ko from 'knockout';
 import template from './index.html';
 
 export function ArmorViewModel() {

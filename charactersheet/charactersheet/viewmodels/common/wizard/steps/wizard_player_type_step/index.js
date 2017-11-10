@@ -1,9 +1,7 @@
-import ko from 'knockout';
-
 import { PlayerTypes } from 'charactersheet/models/common';
-
-import template from './index.html';
 import icon from 'images/logo-all-icons.png';
+import ko from 'knockout';
+import template from './index.html';
 
 export function WizardPlayerTypeStepViewModel(params) {
     var self = this;

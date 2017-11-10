@@ -1,18 +1,25 @@
-import ko from 'knockout';
 import 'bin/knockout-bootstrap-modal';
-
-import { CharacterManager,
+import {
+    CharacterManager,
     Fixtures,
     Notifications,
     Utility } from 'charactersheet/utilities';
-import { Feat, Feature, Trait, Tracked } from 'charactersheet/models/character';
-import { PersistenceService, SortService } from 'charactersheet/services/common';
-
-import template from './index.html';
+import {
+    Feat,
+    Feature,
+    Tracked,
+    Trait
+} from 'charactersheet/models/character';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import campingTent from 'images/camping-tent-blue.svg';
-import meditation from 'images/meditation-blue.svg';
 import campingTentWhite from 'images/camping-tent.svg';
+import ko from 'knockout';
+import meditation from 'images/meditation-blue.svg';
 import meditationWhite from 'images/meditation.svg';
+import template from './index.html';
 
 export function TrackerViewModel() {
     var self = this;

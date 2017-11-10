@@ -1,9 +1,22 @@
-import { Campaign, Exhibit } from 'charactersheet/models/dm';
+import {
+    Campaign,
+    Exhibit
+} from 'charactersheet/models/dm';
+import {
+    ImageModel,
+    PlayerImage,
+    PlayerInfo,
+    Status,
+    StatusWeightPair
+} from 'charactersheet/models/common';
+import {
+    KeyValuePredicate,
+    PersistenceService,
+    SharedServiceManager,
+    XMPPService
+} from 'charactersheet/services/common';
 import { CharacterManager } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities/notifications.js';
-import { KeyValuePredicate, PersistenceService, SharedServiceManager, XMPPService } from 'charactersheet/services/common';
-import { ImageModel, PlayerImage, PlayerInfo, Status, StatusWeightPair } from 'charactersheet/models/common';
-
+import { Notifications } from 'charactersheet/utilities/notifications';
 
 export var DMCardFields = [
     {

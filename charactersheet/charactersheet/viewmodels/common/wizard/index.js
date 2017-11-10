@@ -1,19 +1,17 @@
-import ko from 'knockout';
-import uuid from 'node-uuid';
-
-import { CharacterManager } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import {
-    Character,
-    Profile,
-    Campaign,
     AbilityScores,
-    PlayerInfo,
+    Campaign,
+    Character,
     Item,
+    PlayerInfo,
+    Profile,
     Trait
 } from 'charactersheet/models';
-
+import { CharacterManager } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import template from './index.html';
+import uuid from 'node-uuid';
 
 /**
  * This view model contains the root implementation of the wizard.

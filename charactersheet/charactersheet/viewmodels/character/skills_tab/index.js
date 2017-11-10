@@ -1,5 +1,3 @@
-import ko from 'knockout';
-
 import { FeatsViewModel } from 'charactersheet/viewmodels/character/feats';
 import { FeaturesViewModel } from 'charactersheet/viewmodels/character/features';
 import { ProficienciesViewModel } from 'charactersheet/viewmodels/character/proficiencies';
@@ -7,7 +5,7 @@ import { SkillsViewModel } from 'charactersheet/viewmodels/character/skills';
 import { TrackerViewModel } from 'charactersheet/viewmodels/character/tracker';
 import { TraitsViewModel } from 'charactersheet/viewmodels/character/traits';
 import { ViewModelUtilities } from 'charactersheet/utilities';
-
+import ko from 'knockout';
 /**
  * This view model contains the player's skills information.
  */

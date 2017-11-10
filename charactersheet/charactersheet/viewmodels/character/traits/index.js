@@ -1,7 +1,6 @@
-import ko from 'knockout';
 import 'bin/knockout-bootstrap-modal';
-
-import { CharacterManager,
+import {
+    CharacterManager,
     DataRepository,
     Fixtures,
     Notifications,
@@ -10,11 +9,11 @@ import { PersistenceService,
     SortService } from 'charactersheet/services/common';
 import { Tracked,
     Trait } from 'charactersheet/models';
-import uuid from 'node-uuid';
-
-import template from './index.html';
 import campingTent from 'images/camping-tent.svg';
+import ko from 'knockout';
 import meditation from 'images/meditation.svg';
+import template from './index.html';
+import uuid from 'node-uuid';
 
 export function TraitsViewModel() {
     var self = this;

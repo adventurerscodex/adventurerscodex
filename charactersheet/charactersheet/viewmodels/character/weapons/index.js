@@ -1,15 +1,15 @@
-import ko from 'knockout';
 import 'bin/knockout-bootstrap-modal';
-
-import { CharacterManager,
-    Fixtures,
+import {
+    CharacterManager,
     DataRepository,
+    Fixtures,
     Notifications,
     Utility } from 'charactersheet/utilities';
-import { PersistenceService,
+import {
+    PersistenceService,
     SortService } from 'charactersheet/services/common';
 import { Weapon } from 'charactersheet/models/common';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function WeaponsViewModel() {

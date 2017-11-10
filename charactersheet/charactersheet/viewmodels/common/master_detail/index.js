@@ -1,7 +1,5 @@
-import ko from 'knockout';
-
 import 'bin/knockout-custom-loader';
-
+import ko from 'knockout';
 import template from './index.html';
 
 /**

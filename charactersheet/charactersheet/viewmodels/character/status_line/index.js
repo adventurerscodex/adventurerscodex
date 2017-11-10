@@ -1,10 +1,13 @@
-import ko from 'knockout';
-
-import { Status,
-    Profile } from 'charactersheet/models';
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Profile,
+    Status
+} from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import template from './index.html';
 
 export function StatusLineViewModel(params) {
