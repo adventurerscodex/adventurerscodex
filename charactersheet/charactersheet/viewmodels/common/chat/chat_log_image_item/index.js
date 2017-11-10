@@ -6,8 +6,10 @@ import { Notifications,
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import { CharacterCardPublishingService,
     DMCardPublishingService,
+    KeyValuePredicate,
     XMPPService } from 'charactersheet/services/common';
-import { PlayerTypes } from 'charactersheet/models/common';
+import { Note,
+    PlayerTypes } from 'charactersheet/models/common';
 
 import template from './index.html';
 

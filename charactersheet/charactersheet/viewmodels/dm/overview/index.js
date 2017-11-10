@@ -1,9 +1,11 @@
+import ko from 'knockout';
 import 'bin/knockout-custom-loader';
+
 import { CharacterManager,
     Notifications } from 'charactersheet/utilities';
 import { Campaign } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import ko from 'knockout';
+
 import largeIcon from 'images/encounters/compass.svg';
 import template from './index.html';
 
@@ -29,23 +31,9 @@ export function CampaignOverviewViewModel() {
         }
 
         // Subscriptions
+        self.playerName.subscribe(self.save);
+        self.setting.subscribe(self.save);
         Notifications.global.save.add(self.save);
-    };
-
-    self.unload = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
-        if (!overview) {
-            overview = new Campaign();
-            overview.characterId(key);
-        }
-        overview.playerName(self.playerName());
-        overview.createdDate(self.createdDate());
-        overview.setting(self.setting());
-        overview.name(self.name());
-        overview.save();
-
-        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {

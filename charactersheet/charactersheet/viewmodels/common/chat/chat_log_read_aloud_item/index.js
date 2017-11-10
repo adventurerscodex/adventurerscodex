@@ -1,12 +1,15 @@
 import ko from 'knockout';
 
-import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common';
+import { CharacterCardPublishingService,
+    DMCardPublishingService } from 'charactersheet/services/common';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { XMPPService } from 'charactersheet/services/common';
-import { PlayerTypes } from 'charactersheet/models/common';
+import { KeyValuePredicate,
+    XMPPService } from 'charactersheet/services/common';
+import { Note,
+    PlayerTypes } from 'charactersheet/models/common';
 
 import template from './index.html';
 
@@ -61,13 +64,14 @@ export function ChatLogReadAloudItem(params) {
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isSavedChatNotes', true)
         ])[0];
+        var date = (new Date()).toDateString();
         if (!note) {
             note = new Note();
             note.characterId(key);
             note.text('# Saved from Chat');
             note.isSavedChatNotes(true);
         }
-        note.text(note.text() + '\n\n' + self.html());
+        note.text(note.text() + '\n\n' + '**' + date + '**' + '\n\n' + self.html());
         note.save();
 
         Notifications.notes.changed.dispatch();

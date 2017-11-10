@@ -143,12 +143,10 @@ export function CampaignMapsAndImagesViewModel() {
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
-        self.firstElementInModalHasFocus(true);
+        self.selectPreviewTab();
     };
 
     self.modalFinishedClosing = function() {
-        self.selectPreviewTab();
-
         if (self.openModal()) {
             Utility.array.updateElement(self.mapsOrImages(), self.currentEditItem(), self.editItemIndex);
         }

@@ -2,10 +2,16 @@ import ko from 'knockout';
 import linkifyStr from 'linkifyjs/string';
 
 import { Settings } from 'charactersheet/settings';
-import { PlayerTypes } from 'charactersheet/models/common/player_types';
-import { CharacterCardPublishingService, DMCardPublishingService } from 'charactersheet/services/common';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { PersistenceService, ChatServiceManager, XMPPService } from 'charactersheet/services/common';
+import { Note,
+    PlayerTypes } from 'charactersheet/models/common';
+import { CharacterCardPublishingService,
+    DMCardPublishingService } from 'charactersheet/services/common';
+import { CharacterManager,
+    Notifications } from 'charactersheet/utilities';
+import { PersistenceService,
+    ChatServiceManager,
+    KeyValuePredicate,
+    XMPPService } from 'charactersheet/services/common';
 
 import template from './index.html';
 /**
