@@ -1,13 +1,11 @@
-import ko from 'knockout';
-
-import { CharacterManager } from 'charactersheet/utilities/character_manager'
 import {
-    ChatServiceManager,
     CharacterCardPublishingService,
+    ChatServiceManager,
     DMCardPublishingService
-} from 'charactersheet/services/common'
-
-import template from './index.html'
+} from 'charactersheet/services/common';
+import { CharacterManager } from 'charactersheet/utilities/character_manager';
+import ko from 'knockout';
+import template from './index.html';
 
 export function ChatModalViewModel(params) {
     var self = this;

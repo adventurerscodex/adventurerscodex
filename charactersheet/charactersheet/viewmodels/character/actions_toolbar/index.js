@@ -1,13 +1,12 @@
-import ko from 'knockout';
-
 import 'bin/knockout-custom-loader';
-
-import { Fixtures,
-    Notifications } from 'charactersheet/utilities';
-
-import template from './index.html';
+import {
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
 import campingTent from 'images/camping-tent.svg';
+import ko from 'knockout';
 import meditation from 'images/meditation.svg';
+import template from './index.html';
 
 export function ActionsToolbarViewModel(params) {
     var self = this;

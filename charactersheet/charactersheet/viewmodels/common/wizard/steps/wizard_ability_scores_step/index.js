@@ -1,7 +1,6 @@
-import ko from 'knockout';
-
-import template from './index.html';
 import icon from 'images/logo-full-circle-icon.png';
+import ko from 'knockout';
+import template from './index.html';
 
 export function WizardAbilityScoresStepViewModel(params) {
     var self = this;

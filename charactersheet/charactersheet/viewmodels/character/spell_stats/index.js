@@ -1,11 +1,11 @@
-import ko from 'knockout';
 import 'bin/knockout-bootstrap-modal';
-
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SpellStats } from 'charactersheet/models/character';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function SpellStatsViewModel() {

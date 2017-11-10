@@ -1,11 +1,12 @@
+import 'toastr/build/toastr.min.css';
+import { CharacterManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import toastr from 'toastr';
-import 'toastr/build/toastr.min.css';
 
-import { CharacterManager,
-    Notifications,
-    Fixtures } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 /**
  * This view model is responsible for responding to and displaying
  * user related notifications.

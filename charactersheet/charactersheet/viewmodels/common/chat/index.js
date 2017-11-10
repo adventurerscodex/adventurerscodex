@@ -1,25 +1,22 @@
 /*eslint no-console:0*/
-
-import ko from 'knockout'
-import uuid from 'node-uuid'
-
-import { ChatServiceManager } from 'charactersheet/services/common/account/messaging'
-import { ChatCellViewModel } from './chat_cell'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
 import {
+    CHAT_MESSAGE_TYPES,
     ChatServiceManager,
-    PersistenceService,
     KeyValuePredicate,
     OrPredicate,
-    CHAT_MESSAGE_TYPES
-} from 'charactersheet/services/common'
-import { XMPPService } from 'charactersheet/services/common/account'
-import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail'
-import { ChatRoom } from 'charactersheet/models'
-import { Settings } from 'charactersheet/settings'
-
-import template from './index.html'
-
+    PersistenceService
+} from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { ChatRoom } from 'charactersheet/models';
+import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail';
+import { Settings } from 'charactersheet/settings';
+import { XMPPService } from 'charactersheet/services/common/account';
+import ko from 'knockout';
+import template from './index.html';
+import uuid from 'node-uuid';
 
 export function ChatViewModel(params) {
     var self = new MasterDetailViewModel();
@@ -269,6 +266,6 @@ export function ChatViewModel(params) {
 }
 
 ko.components.register('chat', {
-  viewModel: ChatViewModel,
-  template: template
-})
+    viewModel: ChatViewModel,
+    template: template
+});

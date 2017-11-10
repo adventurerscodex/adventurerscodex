@@ -1,14 +1,14 @@
-import ko from 'knockout';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import {
     Character,
     PlayerTypes
 } from 'charactersheet/models/common';
-
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import template from './index.html';
-
 
 export function CharactersViewModel(params) {
     var self = this;

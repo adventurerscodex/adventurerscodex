@@ -1,11 +1,9 @@
-import ko from 'knockout';
 import 'bin/knockout-required-extender';
-
 import { DataRepository } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
-
-import template from './index.html';
 import icon from 'images/logo-full-circle-icon.png';
+import ko from 'knockout';
+import template from './index.html';
 
 export function WizardProfileStepViewModel(params) {
     var self = this;

@@ -1,19 +1,22 @@
-import ko from 'knockout';
-import uuid from 'node-uuid';
 import 'bin/knockout-bootstrap-modal';
-
+import {
+    Feat,
+    Tracked
+} from 'charactersheet/models/character';
+import {
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
 import { CharacterManager } from 'charactersheet/utilities';
 import { DataRepository } from 'charactersheet/utilities';
-import { Feat,
-    Tracked } from 'charactersheet/models/character';
-import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
-
-import template from './index.html';
 import campingTent from 'images/camping-tent.svg';
+import ko from 'knockout';
 import meditation from 'images/meditation.svg';
+import template from './index.html';
+import uuid from 'node-uuid';
 
 export function FeatsViewModel() {
     var self = this;

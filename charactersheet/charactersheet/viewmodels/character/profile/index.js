@@ -1,11 +1,9 @@
-import ko from 'knockout';
-
 import { CharacterManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Profile } from 'charactersheet/models/character';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function ProfileViewModel() {

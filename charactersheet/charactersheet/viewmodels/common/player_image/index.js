@@ -1,16 +1,21 @@
-import ko from 'knockout';
-
 import 'bin/knockout-custom-loader';
-
-import { CharacterManager, Fixtures, Notifications, Utility } from 'charactersheet/utilities';
-import { PersistenceService, XMPPService } from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Fixtures,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import {
     ImageModel,
     PlayerImage,
     PlayerInfo
 } from 'charactersheet/models/common';
+import {
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
 import { OtherStats } from 'charactersheet/models/character';
-
+import ko from 'knockout';
 import template from './index.html';
 
 export function PlayerImageViewModel() {

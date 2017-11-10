@@ -1,9 +1,6 @@
-import ko from 'knockout';
-
 import { UserServiceManager } from 'charactersheet/services/common';
-
+import ko from 'knockout';
 import template from './index.html';
-
 
 export function ExportViewModel(params) {
     var self = this;

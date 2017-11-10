@@ -1,32 +1,29 @@
-import ko from 'knockout'
-import 'bin/knockout-bootstrap-modal'
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { HealthinessStatusServiceComponent,
-    InspirationStatusServiceComponent,
-    MagicalStatusServiceComponent,
-    PersistenceService,
-    HotkeysService,
-    TotalWeightStatusServiceComponent,
-    TrackedStatusServiceComponent,
+import 'bin/knockout-bootstrap-modal';
+import 'charactersheet/viewmodels/common/character_picker';
+import 'charactersheet/viewmodels/common/characters';
+import {
     AuthenticationServiceManager,
     ChatServiceManager,
+    HealthinessStatusServiceComponent,
+    InspirationStatusServiceComponent,
+    MagicalStatusServiceComponent,
     NodeServiceManager,
     NotificationsServiceManager,
     StatusService,
+    TotalWeightStatusServiceComponent,
+    TrackedStatusServiceComponent,
     UserServiceManager,
     XMPPService
-} from 'charactersheet/services'
+} from 'charactersheet/services';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
 import {
     HotkeysService,
     PersistenceService
-} from 'charactersheet/services/common'
-import { Character } from 'charactersheet/models/common'
-import 'charactersheet/viewmodels/common/character_picker'
-import 'charactersheet/viewmodels/common/characters'
-
-import navLogo from 'images/logo-full-circle-icon.png'
-import style from 'style/site.css'
+} from 'charactersheet/services/common';
+import { Character } from 'charactersheet/models/common';
+import ko from 'knockout';
+import navLogo from 'images/logo-full-circle-icon.png';
+import style from 'style/site.css';
 
 
 /**

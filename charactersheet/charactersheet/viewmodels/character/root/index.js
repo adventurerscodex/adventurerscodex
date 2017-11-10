@@ -1,35 +1,35 @@
-import ko from 'knockout';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
 import {
+    ArmorClassService,
+    ProficiencyService
+} from 'charactersheet/services/character';
+import {
+    CharacterCardPublishingService,
     HotkeysService,
-    StatusService,
-    CharacterCardPublishingService
+    StatusService
 } from 'charactersheet/services/common';
 import {
-    ProficiencyService,
-    ArmorClassService
-} from 'charactersheet/services/character';
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
-
-import template from './index.html';
-import statsTab from 'images/tab_icons/weight-lifting-up.svg';
-import skillsTab from 'images/tab_icons/jump-across.svg';
-import spellsTab from 'images/tab_icons/fire-tail.svg';
-import inventoryTab from 'images/tab_icons/knapsack.svg';
-import notesTab from 'images/tab_icons/quill-ink.svg';
-import profileTab from 'images/tab_icons/read.svg';
+import armorSection from 'images/checked-shield.svg';
+import battleGear from 'images/tab_icons/battle-gear.svg';
 import chatTab from 'images/tab_icons/conversation.svg';
 import exhibitTab from 'images/tab_icons/film-projector.svg';
 import healthSection from 'images/nested-hearts.svg';
-import skillSection from 'images/sword-spin.svg';
-import spellSection from 'images/enlightenment.svg';
-import weaponSection from 'images/spinning-sword.svg';
-import armorSection from 'images/checked-shield.svg';
 import inventorySection from 'images/misc_icons/locked-chest.svg';
+import inventoryTab from 'images/tab_icons/knapsack.svg';
+import ko from 'knockout';
+import notesTab from 'images/tab_icons/quill-ink.svg';
 import profileSection from 'images/standing-man-3.svg';
-import battleGear from 'images/tab_icons/battle-gear.svg';
-
+import profileTab from 'images/tab_icons/read.svg';
+import skillSection from 'images/sword-spin.svg';
+import skillsTab from 'images/tab_icons/jump-across.svg';
+import spellSection from 'images/enlightenment.svg';
+import spellsTab from 'images/tab_icons/fire-tail.svg';
+import statsTab from 'images/tab_icons/weight-lifting-up.svg';
+import template from './index.html';
+import weaponSection from 'images/spinning-sword.svg';
 
 export function CharacterRootViewModel() {
     var self = this;
