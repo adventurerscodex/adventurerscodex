@@ -1,10 +1,16 @@
-import simple from 'simple-mock';
-
-import { CharacterManager, DataRepository, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    DataRepository,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { MockCharacterManager } from '../mocks';
-import { PersistenceService, SortService } from 'charactersheet/services/common';
-import { Proficiency } from 'charactersheet/models/character';
 import { ProficienciesViewModel } from 'charactersheet/viewmodels/character/proficiencies';
+import { Proficiency } from 'charactersheet/models/character';
+import simple from 'simple-mock';
 
 describe('ProficienciesViewModel', function() {
     //Clean up after each test.

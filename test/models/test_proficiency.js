@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { Proficiency } from 'charactersheet/models/character/proficiency';
+import simple from 'simple-mock';
 
 describe('Proficiency Model', function() {
     //Clean up after each test.

@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { NotesSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('NotesSection', function(){
     //Clean up after each test.

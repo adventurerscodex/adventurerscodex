@@ -1,9 +1,11 @@
-import simple from 'simple-mock';
-
+import {
+    Spell,
+    SpellStats
+} from 'charactersheet/models';
 import { CharacterManager } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services';
-import { Spell, SpellStats } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('Spell Model', function() {
     //Clean up after each test.

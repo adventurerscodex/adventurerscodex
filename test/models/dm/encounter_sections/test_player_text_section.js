@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { PlayerTextSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('PlayerTextSection', function(){
     //Clean up after each test.

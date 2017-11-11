@@ -1,8 +1,7 @@
-import simple from 'simple-mock';
-
 import { ProficiencyService } from 'charactersheet/services';
 import { Weapon } from 'charactersheet/models/common/weapon';
 import { WeaponFixture } from '../fixtures';
+import simple from 'simple-mock';
 
 describe('Weapon Model', function() {
     //Clean up after each test.

@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { MonsterSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('MonsterSection', function(){
     //Clean up after each test.

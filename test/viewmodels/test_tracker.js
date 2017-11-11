@@ -1,12 +1,13 @@
-import simple from 'simple-mock';
-
-import { Feat,
+import {
+    Feat,
     Feature,
-    Trait,
-    Tracked } from 'charactersheet/models';
+    Tracked,
+    Trait
+} from 'charactersheet/models';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common';
 import { TrackerViewModel } from 'charactersheet/viewmodels/character/tracker';
+import simple from 'simple-mock';
 
 describe('Tracker View Model', function() {
     //Clean up after each test.

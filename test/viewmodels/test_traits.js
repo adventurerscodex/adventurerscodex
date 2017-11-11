@@ -1,9 +1,11 @@
-import simple from 'simple-mock';
-
+import {
+    Tracked,
+    Trait
+} from 'charactersheet/models/character';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common';
-import { Tracked, Trait } from 'charactersheet/models/character';
 import { TraitsViewModel } from 'charactersheet/viewmodels/character/traits';
+import simple from 'simple-mock';
 
 describe('TraitsViewModel', function() {
     //Clean up after each test.

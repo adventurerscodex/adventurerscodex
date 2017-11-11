@@ -1,13 +1,12 @@
-import Should from 'should';
-import simple from 'simple-mock';
-
-import { AbilitiesFixture } from '../test';
-import { CharacterManager } from 'charactersheet/utilities';
-import { AbilityScores } from  'charactersheet/models/character/ability_scores';
-import { AbilitiesFixture } from '../fixtures';
 import { getModifier,
     getStrModifier,
     isNumeric } from 'charactersheet/viewmodels/character/ability_scores';
+import { AbilitiesFixture } from '../fixtures';
+import { AbilityScores } from  'charactersheet/models/character/ability_scores';
+import { CharacterManager } from 'charactersheet/utilities';
+import Should from 'should';
+import simple from 'simple-mock';
+
 
 describe('Ability Scores Model', function() {
     describe('Clear', function() {

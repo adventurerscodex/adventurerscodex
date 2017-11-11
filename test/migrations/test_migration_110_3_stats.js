@@ -1,9 +1,7 @@
 /*eslint no-console:0 */
-
-import simple from 'simple-mock';
-
-import { migration_110_3_stats } from 'charactersheet/migrations';
 import { PersistenceService } from 'charactersheet/services/common';
+import { migration_110_3_stats } from 'charactersheet/migrations';
+import simple from 'simple-mock';
 import { statDataFixture } from '../fixtures';
 
 describe('110 Stats Migration', function() {

@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { EnvironmentSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('EnvironmentSection', function(){
     //Clean up after each test.

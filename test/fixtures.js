@@ -236,7 +236,6 @@ export const mock_110_migration = {
         PersistenceService._findAllObjs('Skill').forEach(function(e, i, _) {
             e.data.name = 'Test';
             PersistenceService.saveObj('Skill', e.data, e.id);
-            console.log('HI');
         });
     }
 };
@@ -249,7 +248,6 @@ export const mock_110_migration_fail = {
         PersistenceService._findAllObjs('Skill').forEach(function(e, i, _) {
             e.data.name = 'Test';
             PersistenceService.saveObj('Skill', e.data, e.id);
-            console.log('HI');
         });
         throw 'ERROR';
     }

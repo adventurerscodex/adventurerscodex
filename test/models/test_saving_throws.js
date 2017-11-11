@@ -1,9 +1,11 @@
+import {
+    PersistenceService,
+    ProficiencyService
+} from 'charactersheet/services';
+import { AbilityScores } from 'charactersheet/models';
+import { SavingThrows } from 'charactersheet/models/character/saving_throws';
 import Should from 'should';
 import simple from 'simple-mock';
-
-import { AbilityScores } from 'charactersheet/models';
-import { PersistenceService, ProficiencyService } from 'charactersheet/services';
-import { SavingThrows } from 'charactersheet/models/character/saving_throws';
 
 describe('Saving Throws Model', function() {
     //Clean up after each test.

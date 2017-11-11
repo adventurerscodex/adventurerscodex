@@ -1,6 +1,5 @@
-import ko from 'knockout';
-
 import { PlusMinusComponentViewModel } from 'charactersheet/components/plus-minus';
+import ko from 'knockout';
 
 describe('Plus-Minus Component', function() {
     describe('Increase', function() {

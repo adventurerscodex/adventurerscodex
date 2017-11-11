@@ -1,10 +1,9 @@
-import simple from 'simple-mock';
-
 import { CharacterManager } from 'charactersheet/utilities';
 import { HitDice } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services';
 import { StatsViewModel } from 'charactersheet/viewmodels/character/stats';
+import simple from 'simple-mock';
 
 describe('Stats View Model', function() {
     //Clean up after each test.

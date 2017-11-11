@@ -1,8 +1,10 @@
-import simple from 'simple-mock';
-
+import {
+    BackpacksRepositoryFixture,
+    ItemsRepositoryFixture
+} from '../fixtures';
 import { DataRepository } from 'charactersheet/utilities';
-import { ItemsRepositoryFixture, BackpacksRepositoryFixture } from '../fixtures';
 import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps';
+import simple from 'simple-mock';
 
 describe('Wizard Profile ViewModel', function(){
     //Clean up after each test.

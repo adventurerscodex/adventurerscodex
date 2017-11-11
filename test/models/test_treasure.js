@@ -1,7 +1,6 @@
-import simple from 'simple-mock';
-
 import { Treasure } from 'charactersheet/models/common/treasure';
 import { TreasureFixture } from '../fixtures';
+import simple from 'simple-mock';
 
 describe('Treasure Model', function() {
     //Clean up after each test.

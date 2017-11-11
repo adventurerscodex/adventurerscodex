@@ -1,10 +1,13 @@
-import simple from 'simple-mock';
-
-import { CharacterManager, Fixtures, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
-import { Profile } from 'charactersheet/models/character';
 import { PersistenceService } from 'charactersheet/services/common';
+import { Profile } from 'charactersheet/models/character';
 import { ProfileViewModel } from 'charactersheet/viewmodels/character/profile';
+import simple from 'simple-mock';
 
 describe('Profile View Model', function() {
     //Clean up after each test.

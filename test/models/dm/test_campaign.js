@@ -1,7 +1,6 @@
+import { Campaign } from 'charactersheet/models';
 import Should from 'should';
 import simple from 'simple-mock';
-
-import { Campaign } from 'charactersheet/models';
 
 describe('Campaign', function(){
     //Clean up after each test.

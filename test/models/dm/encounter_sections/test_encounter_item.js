@@ -1,7 +1,6 @@
-import simple from 'simple-mock';
-
 import { EncounterItem } from 'charactersheet/models';
 import { Utility } from 'charactersheet/utilities';
+import simple from 'simple-mock';
 
 describe('EncounterItem', function(){
     //Clean up after each test.

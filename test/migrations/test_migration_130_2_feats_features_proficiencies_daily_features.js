@@ -1,11 +1,11 @@
 /*eslint no-console:0 */
-
-import simple from 'simple-mock';
-
-import { migration_130_2_feats_features_proficiencies_daily_features } from 'charactersheet/migrations';
+import {
+    dailyFeaturesFixture,
+    featureFeatsTraitsFixture
+} from '../fixtures';
 import { PersistenceService } from 'charactersheet/services/common';
-import { featureFeatsTraitsFixture,
-    dailyFeaturesFixture } from '../fixtures';
+import { migration_130_2_feats_features_proficiencies_daily_features } from 'charactersheet/migrations';
+import simple from 'simple-mock';
 
 describe('130 Features, Feats, and Traits Migration', function() {
     describe('Migration', function() {

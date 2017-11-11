@@ -1,9 +1,7 @@
 /*eslint no-console:0 */
-
-import simple from 'simple-mock';
-
-import { migration_120_1_weapons } from 'charactersheet/migrations';
 import { PersistenceService } from 'charactersheet/services/common';
+import { migration_120_1_weapons } from 'charactersheet/migrations';
+import simple from 'simple-mock';
 import { weaponDataFixture } from '../fixtures';
 
 describe('120 Weapons Migration', function() {

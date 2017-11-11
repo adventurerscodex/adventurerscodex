@@ -1,8 +1,7 @@
-import Should from 'should';
-import simple from 'simple-mock';
-
 import { PlayerText } from 'charactersheet/models';
+import Should from 'should';
 import { Utility } from 'charactersheet/utilities';
+import simple from 'simple-mock';
 
 describe('PlayerText', function(){
     //Clean up after each test.

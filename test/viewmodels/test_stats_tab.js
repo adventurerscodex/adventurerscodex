@@ -1,7 +1,6 @@
-import simple from 'simple-mock';
-
 import { StatsTabViewModel } from 'charactersheet/viewmodels/character/stats_tab';
 import { ViewModelUtilities } from 'charactersheet/utilities';
+import simple from 'simple-mock';
 
 describe('StatsTabViewModel', function(){
     //Clean up after each test.

@@ -1,10 +1,12 @@
-import simple from 'simple-mock';
-
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
 import { FeaturesTraits } from 'charactersheet/models';
 import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feat_traits';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common';
+import simple from 'simple-mock';
 
 describe('FeaturesTraitsViewModel', function(){
     //Clean up after each test.

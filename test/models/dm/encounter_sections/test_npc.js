@@ -1,8 +1,7 @@
-import Should from 'should';
-import simple from 'simple-mock';
-
 import { NPC } from 'charactersheet/models';
+import Should from 'should';
 import { Utility } from 'charactersheet/utilities';
+import simple from 'simple-mock';
 
 describe('NPC', function(){
     //Clean up after each test.

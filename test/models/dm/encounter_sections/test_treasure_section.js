@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { TreasureSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('TreasureSection', function(){
     //Clean up after each test.

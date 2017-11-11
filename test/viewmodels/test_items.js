@@ -1,10 +1,15 @@
-import simple from 'simple-mock';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { Item } from 'charactersheet/models/common';
 import { ItemsViewModel } from 'charactersheet/viewmodels/character/items';
 import { MockCharacterManager } from '../mocks';
-import { PersistenceService, SortService } from 'charactersheet/services/common';
+import simple from 'simple-mock';
 
 describe('InventoryViewModel', function(){
     //Clean up after each test.

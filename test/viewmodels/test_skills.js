@@ -1,10 +1,15 @@
-import simple from 'simple-mock';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { MockCharacterManager } from '../mocks';
-import { PersistenceService, SortService } from 'charactersheet/services/common';
 import { Skill } from 'charactersheet/models/character';
 import { SkillsViewModel } from 'charactersheet/viewmodels/character/skills';
+import simple from 'simple-mock';
 
 describe('Skill Tree', function() {
     var delShim = function() {};

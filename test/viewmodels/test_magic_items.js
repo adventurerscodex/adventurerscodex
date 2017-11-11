@@ -1,10 +1,18 @@
-import simple from 'simple-mock';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { Item, MagicItem } from 'charactersheet/models/common';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Item,
+    MagicItem
+} from 'charactersheet/models/common';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { MagicItemsViewModel } from 'charactersheet/viewmodels/character/magic_items';
 import { MockCharacterManager } from '../mocks';
-import { PersistenceService, SortService } from 'charactersheet/services/common';
+import simple from 'simple-mock';
 
 describe('Magic Items View Model', function(){
     //Clean up after each test.

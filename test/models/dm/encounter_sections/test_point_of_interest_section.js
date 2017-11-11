@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { PointOfInterestSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('PointOfInterestSection', function(){
     //Clean up after each test.

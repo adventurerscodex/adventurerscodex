@@ -1,9 +1,7 @@
 /*eslint no-console:0 */
-
-import simple from 'simple-mock';
-
-import { migration_110_1_skills } from 'charactersheet/migrations';
 import { PersistenceService } from 'charactersheet/services';
+import { migration_110_1_skills } from 'charactersheet/migrations';
+import simple from 'simple-mock';
 import { skillDataFixture } from '../fixtures';
 
 describe('110 Skills Migration', function() {

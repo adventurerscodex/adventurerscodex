@@ -1,7 +1,6 @@
+import { PointOfInterest } from 'charactersheet/models';
 import Should from 'should';
 import simple from 'simple-mock';
-
-import { PointOfInterest } from 'charactersheet/models';
 
 describe('PointOfInterest', function(){
     //Clean up after each test.

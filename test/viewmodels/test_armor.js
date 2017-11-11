@@ -1,10 +1,12 @@
-import simple from 'simple-mock';
-
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
 import { Armor } from 'charactersheet/models/common';
 import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common';
+import simple from 'simple-mock';
 
 describe('ArmorViewModel', function(){
     //Clean up after each test.

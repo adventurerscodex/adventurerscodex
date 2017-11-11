@@ -1,7 +1,6 @@
+import { MonsterAbilityScore } from 'charactersheet/models';
 import Should from 'should';
 import simple from 'simple-mock';
-
-import { MonsterAbilityScore } from 'charactersheet/models';
 
 describe('MonsterAbilityScore', function(){
     //Clean up after each test.

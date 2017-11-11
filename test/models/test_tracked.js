@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { Tracked } from 'charactersheet/models/character/tracked';
+import simple from 'simple-mock';
 
 describe('Tracked Model', function() {
     //Clean up after each test.

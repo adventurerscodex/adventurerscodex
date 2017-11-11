@@ -1,7 +1,6 @@
-import simple from 'simple-mock';
-
 import { ImageFixture } from '../fixtures';
 import { ImageModel } from 'charactersheet/models/common/image';
+import simple from 'simple-mock';
 
 describe('Image Model', function() {
     //Clean up after each test.

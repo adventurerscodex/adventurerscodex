@@ -1,7 +1,6 @@
+import { UserNotificationViewModel } from 'charactersheet/viewmodels/common';
 import simple from 'simple-mock';
 import toastr from 'toastr';
-
-import { UserNotificationViewModel } from 'charactersheet/viewmodels/common';
 
 describe('UserNotificationViewModel', function(){
     //Clean up after each test.

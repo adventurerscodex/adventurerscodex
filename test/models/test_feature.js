@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { Feature } from 'charactersheet/models/character/feature';
+import simple from 'simple-mock';
 
 describe('Feature Model', function() {
     //Clean up after each test.

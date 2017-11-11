@@ -1,7 +1,6 @@
-import simple from 'simple-mock';
-
 import { PlayerInfo } from 'charactersheet/models';
 import { PlayerInfoFixture } from '../fixtures';
+import simple from 'simple-mock';
 
 describe('Player Info Model', function() {
     //Clean up after each test.

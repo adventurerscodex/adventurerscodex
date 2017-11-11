@@ -1,6 +1,5 @@
-import simple from 'simple-mock';
-
 import { NPCSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('NPCSection', function(){
     //Clean up after each test.

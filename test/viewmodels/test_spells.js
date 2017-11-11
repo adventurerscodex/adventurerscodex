@@ -1,10 +1,15 @@
-import simple from 'simple-mock';
-
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
 import { MockCharacterManager } from '../mocks';
-import { PersistenceService, SortService } from 'charactersheet/services/common';
 import { Spell } from 'charactersheet/models/common';
 import { SpellbookViewModel } from 'charactersheet/viewmodels/character/spells';
+import simple from 'simple-mock';
 
 describe('SpellsViewModel', function(){
     PersistenceService._save = function(){};

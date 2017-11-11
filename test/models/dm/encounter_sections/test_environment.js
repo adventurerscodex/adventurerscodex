@@ -1,7 +1,7 @@
-import simple from 'simple-mock';
-import Should from 'should';
-
 import { Environment } from 'charactersheet/models';
+import Should from 'should';
+import simple from 'simple-mock';
+
 
 describe('Environment', function(){
     //Clean up after each test.
