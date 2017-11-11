@@ -14,7 +14,7 @@ import {
 } from 'charactersheet/services/common';
 import { Note,
     PlayerTypes
- } from 'charactersheet/models/common/player_types';
+} from 'charactersheet/models/common';
 import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import linkifyStr from 'linkifyjs/string';
