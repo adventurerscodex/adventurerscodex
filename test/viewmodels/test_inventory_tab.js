@@ -1,11 +1,11 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
 import { ItemsViewModel,
     MagicItemsViewModel,
     TreasureViewModel
-} from 'charactersheet/viewmodels/common'
-import { InventoryTabViewModel } from 'charactersheet/viewmodels/character/inventory_tab'
-import { ViewModelUtilities } from 'charactersheet/utilities'
+} from 'charactersheet/viewmodels/common';
+import { InventoryTabViewModel } from 'charactersheet/viewmodels/character/inventory_tab';
+import { ViewModelUtilities } from 'charactersheet/utilities';
 
 describe('InventoryTabViewModel', function(){
     //Clean up after each test.

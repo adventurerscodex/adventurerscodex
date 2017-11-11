@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Encounter } from 'charactersheet/models/dm/encounter'
-import { PersistenceService } from 'charactersheet/services/common'
-import { PointOfInterestSection } from 'charactersheet/models/dm/encounter_sections/point_of_interest_section'
-import { PointOfInterestSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/point_of_interest_section'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm/encounter';
+import { PersistenceService } from 'charactersheet/services/common';
+import { PointOfInterestSection } from 'charactersheet/models/dm/encounter_sections/point_of_interest_section';
+import { PointOfInterestSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/point_of_interest_section';
 
 describe('PointOfInterestSectionViewModel', function(){
     //Clean up after each test.

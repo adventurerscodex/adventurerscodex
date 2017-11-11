@@ -44,7 +44,7 @@ describe('EnvironmentSection', function(){
             var environmentSection = new EnvironmentSection();
 
             environmentSection.visible().should.equal(false);
-            environmentSection.importValues({"visible": true});
+            environmentSection.importValues({'visible': true});
             environmentSection.visible().should.equal(true);
         });
     });

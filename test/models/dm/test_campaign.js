@@ -45,7 +45,7 @@ describe('Campaign', function(){
             var campaign = new Campaign();
 
             Should.not.exist(campaign.playerName());
-            campaign.importValues({"playerName": 'blah'});
+            campaign.importValues({'playerName': 'blah'});
             campaign.playerName().should.equal('blah');
         });
     });

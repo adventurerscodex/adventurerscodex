@@ -1,9 +1,9 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { CharacterManager } from 'charactersheet/utilities'
-import { Encounter } from 'charactersheet/models/dm'
-import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail'
-import { PersistenceService } from 'charactersheet/services/common'
+import { CharacterManager } from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm';
+import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('EncounterDetailViewModel', function(){
     //Clean up after each test.

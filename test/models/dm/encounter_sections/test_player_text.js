@@ -82,7 +82,7 @@ describe('PlayerText', function(){
             var playerText = new PlayerText();
 
             Should.not.exist(playerText.description());
-            playerText.importValues({"description": 'blah'});
+            playerText.importValues({'description': 'blah'});
             playerText.description().should.equal('blah');
         });
     });

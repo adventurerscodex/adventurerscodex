@@ -94,7 +94,7 @@ describe('MonsterAbilityScore', function(){
             var monsterAbilityScore = new MonsterAbilityScore();
 
             Should.not.exist(monsterAbilityScore.name());
-            monsterAbilityScore.importValues({"name": 'blah'});
+            monsterAbilityScore.importValues({'name': 'blah'});
             monsterAbilityScore.name().should.equal('blah');
         });
     });

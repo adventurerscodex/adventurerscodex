@@ -1,11 +1,11 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
 import { AbilityScores,
     Armor,
-    OtherStats } from 'charactersheet/models'
-import { ArmorClassService } from 'charactersheet/services/character'
-import { Notifications } from 'charactersheet/utilities'
-import { PersistenceService } from 'charactersheet/services/common'
+    OtherStats } from 'charactersheet/models';
+import { ArmorClassService } from 'charactersheet/services/character';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('Armor Class Service', function() {
     //Clean up after each test.

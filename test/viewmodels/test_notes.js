@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { MockCharacterManager } from '../mocks'
-import { Note } from 'charactersheet/models/common'
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { NotesViewModel } from 'charactersheet/viewmodels/common/notes'
-import { PersistenceService } from 'charactersheet/services/common'
+import { MockCharacterManager } from '../mocks';
+import { Note } from 'charactersheet/models/common';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { NotesViewModel } from 'charactersheet/viewmodels/common/notes';
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('NotesViewModel', function(){
     //Clean up after each test.

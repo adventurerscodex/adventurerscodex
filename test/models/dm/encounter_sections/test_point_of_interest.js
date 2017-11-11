@@ -45,7 +45,7 @@ describe('PointOfInterest', function(){
             var pointOfInterest = new PointOfInterest();
 
             Should.not.exist(pointOfInterest.description());
-            pointOfInterest.importValues({"description": 'blah'});
+            pointOfInterest.importValues({'description': 'blah'});
             pointOfInterest.description().should.equal('blah');
         });
     });

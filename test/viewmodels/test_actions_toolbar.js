@@ -1,8 +1,8 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/actions_toolbar'
-import { Fixtures } from 'charactersheet/utilities'
-import { Notifications } from 'charactersheet/utilities'
+import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/actions_toolbar';
+import { Fixtures } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
 
 describe('Actions Toolbar View Model', function(){
     //Clean up after each test.

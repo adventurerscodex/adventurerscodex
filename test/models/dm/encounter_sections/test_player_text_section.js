@@ -44,7 +44,7 @@ describe('PlayerTextSection', function(){
             var playerTextSection = new PlayerTextSection();
 
             playerTextSection.visible().should.equal(true);
-            playerTextSection.importValues({"visible": false});
+            playerTextSection.importValues({'visible': false});
             playerTextSection.visible().should.equal(false);
         });
     });

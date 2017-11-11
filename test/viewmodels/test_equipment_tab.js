@@ -1,7 +1,7 @@
 import simple from 'simple-mock';
 
 import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor';
-import { EquipmentTabViewModel } from 'charactersheet/viewmodels/character/equipment_tab'
+import { EquipmentTabViewModel } from 'charactersheet/viewmodels/character/equipment_tab';
 import { ViewModelUtilities } from 'charactersheet/utilities';
 
 describe('EquipmentTabViewModel', function(){

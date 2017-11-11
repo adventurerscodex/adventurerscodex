@@ -68,7 +68,7 @@ describe('NPC', function(){
             var npc = new NPC();
 
             Should.not.exist(npc.description());
-            npc.importValues({"description": 'blah'});
+            npc.importValues({'description': 'blah'});
             npc.description().should.equal('blah');
         });
     });

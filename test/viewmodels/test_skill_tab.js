@@ -1,7 +1,7 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_tab'
-import { ViewModelUtilities } from 'charactersheet/utilities'
+import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_tab';
+import { ViewModelUtilities } from 'charactersheet/utilities';
 
 describe('SkillsTabViewModel', function(){
     //Clean up after each test.

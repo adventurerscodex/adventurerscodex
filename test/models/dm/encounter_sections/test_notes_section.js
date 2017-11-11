@@ -24,7 +24,7 @@ describe('NotesSection', function(){
             var notes = new NotesSection();
 
             notes.notes().should.equal('');
-            notes.importValues({"notes": 'blah'});
+            notes.importValues({'notes': 'blah'});
             notes.notes().should.equal('blah');
         });
     });

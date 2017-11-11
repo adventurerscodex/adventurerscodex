@@ -44,7 +44,7 @@ describe('NPCSection', function(){
             var npcSection = new NPCSection();
 
             npcSection.visible().should.equal(false);
-            npcSection.importValues({"visible": true});
+            npcSection.importValues({'visible': true});
             npcSection.visible().should.equal(true);
         });
     });

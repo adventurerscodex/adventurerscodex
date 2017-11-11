@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 export const AppearanceFixture = {
     'height':'5\'1"',
@@ -26,7 +26,7 @@ export const FeatsProfFixture = {
 export const SpellStatsFixture = {
     'spellcastingAbility':'INT',
     'spellSaveDc':3,
-    'spellAttackBonus':4,
+    'spellAttackBonus':4
 };
 
 export const ArmorFixture = {
@@ -120,12 +120,12 @@ export const ProfileFixture = {
     race: 'Dragonborn',
     gender: 'female',
     level: 2,
-    typeClass: 'Wizard',
+    typeClass: 'Wizard'
 };
 
 export const NPCFixture = {
     characterId: '1234',
-    npcId: '1234222',
+    npcId: '1234222'
 };
 
 export const MessageFixture = {
@@ -162,7 +162,7 @@ export const SortServiceFixture = {
             name: ko.observable('Nate'),
             age: ko.observable(12),
             dead: ko.observable(true)
-        },
+        }
     ]
 
 };
@@ -208,24 +208,24 @@ export const DMCharacterFixture = {
 };
 
 export const HealthFixture = {
-  'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
-  'maxHitpoints': '9',
-  'tempHitpoints': 0,
-  'damage': '1',
+    'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
+    'maxHitpoints': '9',
+    'tempHitpoints': 0,
+    'damage': '1'
 };
 
 var OtherStatsFixture = {
-  'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
-  'ac': '13',
-  'initiative': 0,
-  'speed': '35',
-  'inspiration': 0,
-  'proficiency': '2'
+    'characterId': '507a7252-4128-43d3-bd38-b264f9b493f5',
+    'ac': '13',
+    'initiative': 0,
+    'speed': '35',
+    'inspiration': 0,
+    'proficiency': '2'
 };
 
 export const MockLocalStorage = {
-    __master__: "[\"Character\",\"Profile\",\"PlayerInfo\",\"Skill\",\"Item\",\"CharacterAppearance\",\"FeaturesTraits\",\"Health\",\"OtherStats\",\"DeathSave\",\"HitDiceType\",\"AbilityScores\",\"SavingThrows\",\"SpellStats\",\"FeatsProf\",\"Treasure\",\"Note\",\"HitDice\",\"Spell\",\"Armor\",\"Slot\",\"Weapon\",\"DailyFeature\",\"ImageModel\"]",
-    Skill: "{\"18\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Acrobatics\",\"abilityScore\":\"Dex\",\"modifier\":null},\"19\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Animal Handling\",\"abilityScore\":\"Wis\",\"modifier\":null},\"20\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Arcana\",\"abilityScore\":\"Int\",\"modifier\":null},\"21\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Athletics\",\"abilityScore\":\"Str\",\"modifier\":null},\"22\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Deception\",\"abilityScore\":\"Cha\",\"modifier\":null},\"23\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"History\",\"abilityScore\":\"Int\",\"modifier\":null},\"24\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Insight\",\"abilityScore\":\"Wis\",\"modifier\":null},\"25\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Intimidation\",\"abilityScore\":\"Cha\",\"modifier\":null},\"26\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Investigation\",\"abilityScore\":\"Int\",\"modifier\":null},\"27\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Medicine\",\"abilityScore\":\"Wis\",\"modifier\":null},\"28\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Nature\",\"abilityScore\":\"Int\",\"modifier\":null},\"29\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Perception\",\"abilityScore\":\"Wis\",\"modifier\":null},\"30\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Performance\",\"abilityScore\":\"Cha\",\"modifier\":null},\"31\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Persuasion\",\"abilityScore\":\"Cha\",\"modifier\":null},\"32\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Religion\",\"abilityScore\":\"Int\",\"modifier\":null},\"33\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Sleight of Hand\",\"abilityScore\":\"Dex\",\"modifier\":null},\"34\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Stealth\",\"abilityScore\":\"Dex\",\"modifier\":null},\"35\":{\"characterId\":\"f563af87-1382-479d-8bb8-5f61145fc84d\",\"name\":\"Survival\",\"abilityScore\":\"Wis\",\"modifier\":null}}"
+    __master__: '["Character","Profile","PlayerInfo","Skill","Item","CharacterAppearance","FeaturesTraits","Health","OtherStats","DeathSave","HitDiceType","AbilityScores","SavingThrows","SpellStats","FeatsProf","Treasure","Note","HitDice","Spell","Armor","Slot","Weapon","DailyFeature","ImageModel"]',
+    Skill: '{"18":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Acrobatics","abilityScore":"Dex","modifier":null},"19":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Animal Handling","abilityScore":"Wis","modifier":null},"20":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Arcana","abilityScore":"Int","modifier":null},"21":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Athletics","abilityScore":"Str","modifier":null},"22":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Deception","abilityScore":"Cha","modifier":null},"23":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"History","abilityScore":"Int","modifier":null},"24":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Insight","abilityScore":"Wis","modifier":null},"25":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Intimidation","abilityScore":"Cha","modifier":null},"26":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Investigation","abilityScore":"Int","modifier":null},"27":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Medicine","abilityScore":"Wis","modifier":null},"28":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Nature","abilityScore":"Int","modifier":null},"29":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Perception","abilityScore":"Wis","modifier":null},"30":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Performance","abilityScore":"Cha","modifier":null},"31":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Persuasion","abilityScore":"Cha","modifier":null},"32":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Religion","abilityScore":"Int","modifier":null},"33":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Sleight of Hand","abilityScore":"Dex","modifier":null},"34":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Stealth","abilityScore":"Dex","modifier":null},"35":{"characterId":"f563af87-1382-479d-8bb8-5f61145fc84d","name":"Survival","abilityScore":"Wis","modifier":null}}'
 };
 
 export const mock_110_migration = {
@@ -236,7 +236,7 @@ export const mock_110_migration = {
         PersistenceService._findAllObjs('Skill').forEach(function(e, i, _) {
             e.data.name = 'Test';
             PersistenceService.saveObj('Skill', e.data, e.id);
-            console.log('HI')
+            console.log('HI');
         });
     }
 };
@@ -303,12 +303,12 @@ export const weaponDataFixture = [
     {
         id: 0,
         data: {
-            weaponHandedness: 'Light',
+            weaponHandedness: 'Light'
         }
     }, {
         id: 1,
         data: {
-            weaponHandedness: 'Heavy',
+            weaponHandedness: 'Heavy'
         }
     }
 ];

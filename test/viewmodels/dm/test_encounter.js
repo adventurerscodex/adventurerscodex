@@ -1,9 +1,9 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Encounter } from 'charactersheet/models/dm'
-import { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter'
-import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell'
-import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail'
+import { Encounter } from 'charactersheet/models/dm';
+import { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter';
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
+import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
 
 describe('Encounter View Model', function() {
 
@@ -89,7 +89,7 @@ describe('Encounter View Model', function() {
             vm.openAddModalWithParent(parent);
             modalEncounterSpy.called.should.equal(true);
 
-            vm.modalEncounter().parent().should.equal(parent.encounterId())
+            vm.modalEncounter().parent().should.equal(parent.encounterId());
         });
     });
 

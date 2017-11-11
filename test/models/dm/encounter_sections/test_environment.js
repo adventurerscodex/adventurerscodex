@@ -45,7 +45,7 @@ describe('Environment', function(){
             var environment = new Environment();
 
             Should.not.exist(environment.description());
-            environment.importValues({"description": 'blah'});
+            environment.importValues({'description': 'blah'});
             environment.description().should.equal('blah');
         });
     });

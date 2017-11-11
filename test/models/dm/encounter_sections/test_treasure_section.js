@@ -44,7 +44,7 @@ describe('TreasureSection', function(){
             var treasureSection = new TreasureSection();
 
             treasureSection.visible().should.equal(false);
-            treasureSection.importValues({"visible": true});
+            treasureSection.importValues({'visible': true});
             treasureSection.visible().should.equal(true);
         });
     });

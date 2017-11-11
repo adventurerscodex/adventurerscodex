@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Encounter } from 'charactersheet/models/dm/encounter'
-import { PersistenceService } from 'charactersheet/services/common'
-import { PlayerTextSection } from 'charactersheet/models/dm/encounter_sections/player_text_section'
-import { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm/encounter';
+import { PersistenceService } from 'charactersheet/services/common';
+import { PlayerTextSection } from 'charactersheet/models/dm/encounter_sections/player_text_section';
+import { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section';
 
 describe('PlayerTextSectionViewModel', function(){
     //Clean up after each test.

@@ -1,7 +1,7 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { ViewModelUtilities } from 'charactersheet/utilities'
-import { EncounterTabViewModel } from 'charactersheet/viewmodels/dm/encounter_tab'
+import { ViewModelUtilities } from 'charactersheet/utilities';
+import { EncounterTabViewModel } from 'charactersheet/viewmodels/dm/encounter_tab';
 
 describe('EncounterTabViewModel', function(){
     //Clean up after each test.

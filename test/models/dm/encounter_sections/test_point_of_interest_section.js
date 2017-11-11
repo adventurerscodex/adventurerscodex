@@ -44,7 +44,7 @@ describe('PointOfInterestSection', function(){
             var pointOfInterestSection = new PointOfInterestSection();
 
             pointOfInterestSection.visible().should.equal(false);
-            pointOfInterestSection.importValues({"visible": true});
+            pointOfInterestSection.importValues({'visible': true});
             pointOfInterestSection.visible().should.equal(true);
         });
     });

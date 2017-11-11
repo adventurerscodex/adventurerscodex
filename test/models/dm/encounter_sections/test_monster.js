@@ -117,7 +117,7 @@ describe('Monster', function(){
             var monster = new Monster();
 
             Should.not.exist(monster.description());
-            monster.importValues({"description": 'blah'});
+            monster.importValues({'description': 'blah'});
             monster.description().should.equal('blah');
         });
     });

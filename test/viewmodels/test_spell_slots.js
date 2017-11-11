@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { MockCharacterManager } from '../mocks'
-import { PersistenceService, SortService } from 'charactersheet/services/common'
-import { Slot } from 'charactersheet/models/character'
-import { SpellSlotsViewModel } from 'charactersheet/viewmodels/character/spell_slots'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { MockCharacterManager } from '../mocks';
+import { PersistenceService, SortService } from 'charactersheet/services/common';
+import { Slot } from 'charactersheet/models/character';
+import { SpellSlotsViewModel } from 'charactersheet/viewmodels/character/spell_slots';
 
 describe('Spell Slots View Model', function() {
     describe('Add Slots', function() {

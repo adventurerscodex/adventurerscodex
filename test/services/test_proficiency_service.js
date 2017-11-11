@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { Notifications } from 'charactersheet/utilities'
-import { OtherStats } from 'charactersheet/models/character/other_stats'
-import { Profile } from 'charactersheet/models/character/profile'
-import { PersistenceService } from 'charactersheet/services/common'
-import { ProficiencyService } from 'charactersheet/services/character'
+import { Notifications } from 'charactersheet/utilities';
+import { OtherStats } from 'charactersheet/models/character/other_stats';
+import { Profile } from 'charactersheet/models/character/profile';
+import { PersistenceService } from 'charactersheet/services/common';
+import { ProficiencyService } from 'charactersheet/services/character';
 
 describe('Proficiency Service', function() {
     //Clean up after each test.

@@ -1,6 +1,6 @@
 /*eslint no-console:0 */
 
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
 import { migration_110_2_spells } from 'charactersheet/migrations';
 import { PersistenceService } from 'charactersheet/services/common';

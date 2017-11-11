@@ -44,7 +44,7 @@ describe('MonsterSection', function(){
             var monsterSection = new MonsterSection();
 
             monsterSection.visible().should.equal(false);
-            monsterSection.importValues({"visible": true});
+            monsterSection.importValues({'visible': true});
             monsterSection.visible().should.equal(true);
         });
     });

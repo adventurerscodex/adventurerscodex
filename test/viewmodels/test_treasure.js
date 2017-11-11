@@ -1,4 +1,4 @@
-import { TreasureViewModel } from 'charactersheet/viewmodels/character/treasure'
+import { TreasureViewModel } from 'charactersheet/viewmodels/character/treasure';
 
 describe('Treasure View Model', function() {
     var treasure_fixture = {

@@ -1,9 +1,9 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance'
-import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/features'
-import { ProfileTabViewModel } from 'charactersheet/viewmodels/character/profile_tab'
-import { ViewModelUtilities } from 'charactersheet/utilities'
+import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance';
+import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/features';
+import { ProfileTabViewModel } from 'charactersheet/viewmodels/character/profile_tab';
+import { ViewModelUtilities } from 'charactersheet/utilities';
 
 describe('ProfileTabViewModel', function(){
     //Clean up after each test.

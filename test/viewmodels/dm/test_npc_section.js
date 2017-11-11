@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Encounter } from 'charactersheet/models/dm/encounter'
-import { NPCSection } from 'charactersheet/models/dm/encounter_sections/npc_section'
-import { NPCSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/npc_section'
-import { PersistenceService } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm/encounter';
+import { NPCSection } from 'charactersheet/models/dm/encounter_sections/npc_section';
+import { NPCSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/npc_section';
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('NPCSectionViewModel', function(){
     //Clean up after each test.

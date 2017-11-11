@@ -1,10 +1,10 @@
-import simple from 'simple-mock'
+import simple from 'simple-mock';
 
-import { CharacterManager, Notifications } from 'charactersheet/utilities'
-import { Encounter } from 'charactersheet/models/dm/encounter'
-import { EnvironmentSection } from 'charactersheet/models/dm/environment_sections/environment_section'
-import { EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm/environment_sections/environment_section'
-import { PersistenceService } from 'charactersheet/services/common'
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm/encounter';
+import { EnvironmentSection } from 'charactersheet/models/dm/environment_sections/environment_section';
+import { EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm/environment_sections/environment_section';
+import { PersistenceService } from 'charactersheet/services/common';
 
 describe('EnvironmentSectionViewModel', function(){
     //Clean up after each test.

@@ -3,7 +3,7 @@ import simple from 'simple-mock';
 import { FeaturesTraits } from 'charactersheet/models';
 import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feat_traits';
 import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { MockCharacterManager } from '../mocks'
+import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common';
 
 describe('FeaturesTraitsViewModel', function(){
