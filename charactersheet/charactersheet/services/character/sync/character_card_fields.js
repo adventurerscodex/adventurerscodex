@@ -1,24 +1,29 @@
-import { AbilityScores,
+import {
+    AbilityScores,
     Health,
     HitDice,
     HitDiceType,
     Profile,
     Skill,
     SpellStats,
-    Treasure } from 'charactersheet/models';
-import { CharacterManager } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities/notifications.js';
-import { KeyValuePredicate,
+    Treasure
+} from 'charactersheet/models';
+import {
+    ArmorClassService,
+    KeyValuePredicate,
     PersistenceService,
     SharedServiceManager,
-    XMPPService,
-    ArmorClassService } from 'charactersheet/services';
-import { PlayerImage,
+    XMPPService
+} from 'charactersheet/services';
+import {
+    ImageModel,
+    PlayerImage,
     PlayerInfo,
     Status,
-    StatusWeightPair,
-    ImageModel } from 'charactersheet/models/common';
-
+    StatusWeightPair
+} from 'charactersheet/models/common';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities/notifications';
 
 export var CharacterCardFields = [
     {

@@ -1,7 +1,7 @@
 import {
     CharacterCardPublishingService,
-    KeyValuePredicate,
     DMCardPublishingService,
+    KeyValuePredicate,
     XMPPService
 } from 'charactersheet/services/common';
 import {
@@ -9,10 +9,10 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import { Note,
     PlayerTypes
 } from 'charactersheet/models/common';
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import ko from 'knockout';
 import template from './index.html';
 

@@ -1,7 +1,6 @@
-import ko from 'knockout';
-
 import { Armor } from 'charactersheet/models/common';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 export function EncounterArmor() {
     var self = new Armor();

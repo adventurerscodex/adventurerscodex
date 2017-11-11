@@ -1,10 +1,9 @@
-import ko from 'knockout';
-import 'knockout-mapping';
-
 import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import md5 from 'blueimp-md5';
 
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 export function PlayerInfo() {
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);

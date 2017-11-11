@@ -2,13 +2,13 @@ import { CharacterCardPublishingService,
     DMCardPublishingService,
     KeyValuePredicate
 } from 'charactersheet/services/common';
+import { Note,
+    PlayerTypes
+} from 'charactersheet/models/common';
 import { CharacterManager } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Note,
-    PlayerTypes
-} from 'charactersheet/models/common';
 import { XMPPService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';

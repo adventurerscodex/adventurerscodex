@@ -1,7 +1,6 @@
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import uuid from 'node-uuid';
-
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 /**
  * A directory-like container with meta-data information about a container.

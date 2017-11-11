@@ -1,13 +1,14 @@
-import ko from 'knockout';
-import Strophe from 'strophe';
-
-import { CHAT_MESSAGE_TYPES,
-    PersistenceService } from 'charactersheet/services/common';
-import { CharacterManager,
+import {
+    CHAT_MESSAGE_TYPES,
+    PersistenceService
+} from 'charactersheet/services/common';
+import {
+    CharacterManager,
     JSONPayload,
-    Utility } from 'charactersheet/utilities';
-
-
+    Utility
+} from 'charactersheet/utilities';
+import Strophe from 'strophe';
+import ko from 'knockout';
 /**
 An object that represents any possible configuration of an XMPP Message element.
 This class also provides the functionality of a DB mapped model for convenience.

@@ -1,5 +1,5 @@
-import ko from 'knockout';
 import 'bin/knockout-markdown';
+import ko from 'knockout';
 
 /**
  * markdown-edit-preview component

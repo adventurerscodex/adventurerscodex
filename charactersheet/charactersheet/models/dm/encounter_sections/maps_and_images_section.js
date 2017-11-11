@@ -1,6 +1,5 @@
-import ko from 'knockout';
-
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 export function MapsAndImagesSection() {
     var self = this;

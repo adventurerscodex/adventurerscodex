@@ -1,13 +1,12 @@
-import ko from 'knockout'
-import 'knockout-mapping'
-
-import 'bin/knockout-mapping-autoignore'
-
-import { Weapon } from 'charactersheet/models'
-import { PersistenceService,
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
     ProficiencyService,
-    SharedServiceManager } from 'charactersheet/services'
-import { Fixtures } from 'charactersheet/utilities'
+    SharedServiceManager
+} from 'charactersheet/services';
+import { Fixtures } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 export function Weapon() {
     var self = this;

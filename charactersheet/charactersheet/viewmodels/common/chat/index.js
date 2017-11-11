@@ -10,7 +10,7 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-import { ChatCellViewModel } from './chat_cell'
+import { ChatCellViewModel } from './chat_cell';
 import { ChatRoom } from 'charactersheet/models';
 import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail';
 import { Settings } from 'charactersheet/settings';

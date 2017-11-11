@@ -1,11 +1,8 @@
-import ko from 'knockout';
-import 'knockout-mapping';
-
 import 'bin/knockout-mapping-autoignore';
-
+import 'knockout-mapping';
 import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-
+import ko from 'knockout';
 
 export function Proficiency() {
     var self = this;

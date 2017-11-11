@@ -1,19 +1,23 @@
-import ko from 'knockout';
-
-import { AbilityScores,
-    Treasure,
-    MagicItem,
-    Item,
-    Weapon,
+import {
+    AbilityScores,
     Armor,
+    Item,
+    MagicItem,
     Status,
-    StatusWeightPair } from 'charactersheet/models';
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
-import { KeyValuePredicate,
+    StatusWeightPair,
+    Treasure,
+    Weapon
+} from 'charactersheet/models';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
     PersistenceService,
-    SharedServiceManager } from 'charactersheet/services/common';
-
+    SharedServiceManager
+} from 'charactersheet/services/common';
+import ko from 'knockout';
 
 /**
  * A Status Service Component that tracks the total weight that a character

@@ -1,23 +1,24 @@
-import ko from 'knockout';
-import Strophe from 'strophe';
-import 'knockout-mapping';
-
 import 'bin/knockout-mapping-autoignore';
-
-import { Message, Presence } from 'charactersheet/models/common';
+import 'knockout-mapping';
 import {
-    CharacterManager,
-    Notifications,
-    Fixtures
-} from 'charactersheet/utilities';
-import {
+    CharacterCardPublishingService,
+    ChatServiceManager,
+    DMCardPublishingService,
     KeyValuePredicate,
     PersistenceService,
-    SharedServiceManager,
-    ChatServiceManager,
-    CharacterCardPublishingService,
-    DMCardPublishingService
+    SharedServiceManager
 } from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Message,
+    Presence
+} from 'charactersheet/models/common';
+import Strophe from 'strophe';
+import ko from 'knockout';
 
 export function ChatRoom() {
     var self = this;

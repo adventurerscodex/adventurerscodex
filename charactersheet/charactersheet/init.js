@@ -1,28 +1,29 @@
-import $ from 'jquery';
-import ko from 'knockout';
-import URI from 'urijs';
-import Clipboard from 'clipboard';
-
-import { Settings } from 'charactersheet/settings';
-import { DataRepository,
-    Migrations,
-    Notifications
-} from 'charactersheet/utilities';
-import { HealthinessStatusServiceComponent,
-    InspirationStatusServiceComponent,
-    MagicalStatusServiceComponent,
-    PersistenceService,
-    HotkeysService,
-    TotalWeightStatusServiceComponent,
-    TrackedStatusServiceComponent,
+import {
     AuthenticationServiceManager,
     ChatServiceManager,
+    HealthinessStatusServiceComponent,
+    HotkeysService,
+    InspirationStatusServiceComponent,
+    MagicalStatusServiceComponent,
     NodeServiceManager,
     NotificationsServiceManager,
+    PersistenceService,
     StatusService,
+    TotalWeightStatusServiceComponent,
+    TrackedStatusServiceComponent,
     UserServiceManager,
     XMPPService
 } from 'charactersheet/services';
+import {
+    DataRepository,
+    Migrations,
+    Notifications
+} from 'charactersheet/utilities';
+import $ from 'jquery';
+import Clipboard from 'clipboard';
+import { Settings } from 'charactersheet/settings';
+import URI from 'urijs';
+import ko from 'knockout';
 
 /**
  * This global function handles initializing the Knockout Application

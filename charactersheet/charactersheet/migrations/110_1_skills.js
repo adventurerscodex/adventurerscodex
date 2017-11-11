@@ -1,4 +1,4 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service.js';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 /**
  * Converts the values of skill proficiency from a boolean

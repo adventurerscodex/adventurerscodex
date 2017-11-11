@@ -1,7 +1,6 @@
-import ko from 'knockout';
-
 import { MagicItem } from 'charactersheet/models/common/magic_item';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 export function EncounterMagicItem() {
     var self = new MagicItem();

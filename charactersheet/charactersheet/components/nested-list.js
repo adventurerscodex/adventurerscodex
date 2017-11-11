@@ -1,6 +1,5 @@
-import ko from 'knockout';
-
 import 'bin/knockout-bootstrap-collapse';
+import ko from 'knockout';
 
 /**
  * nested-list component

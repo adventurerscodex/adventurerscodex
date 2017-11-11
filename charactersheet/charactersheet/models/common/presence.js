@@ -1,16 +1,13 @@
-import ko from 'knockout';
-import 'knockout-mapping';
-
 import 'bin/knockout-mapping-autoignore';
-
-import Strophe from 'strophe';
-
+import 'knockout-mapping';
 import {
     CHAT_MESSAGE_TYPES,
     ChatServiceManager,
-    PersistenceService,
     SharedServiceManager
 } from 'charactersheet/services';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Strophe from 'strophe';
+import ko from 'knockout';
 
 /**
 An object representation of an XMPP presence message.

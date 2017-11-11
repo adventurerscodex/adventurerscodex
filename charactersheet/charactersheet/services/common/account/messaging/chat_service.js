@@ -1,11 +1,23 @@
+import {
+    CharacterManager,
+    DataRepository,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import {
+    ChatRoom,
+    Message,
+    Presence
+} from 'charactersheet/models';
+import {
+    KeyValuePredicate,
+    OrPredicate,
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services';
+import { SharedServiceManager } from '../../shared_service_manager';
 import ko from 'knockout';
 import uuid from 'node-uuid';
-
-import { SharedServiceManager } from '../../shared_service_manager';
-import { Notifications, Utility, CharacterManager, DataRepository } from 'charactersheet/utilities';
-import { XMPPService, KeyValuePredicate, OrPredicate, PersistenceService } from 'charactersheet/services';
-import { ChatRoom, Presence, Message } from 'charactersheet/models';
-
 
 /**
  * The default configuration object for the Chat service.

@@ -1,10 +1,8 @@
-import ko from 'knockout';
-import 'knockout-mapping';
-
 import 'bin/knockout-mapping-autoignore';
-
-import { Status } from 'charactersheet/models';
+import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Status } from 'charactersheet/models';
+import ko from 'knockout';
 
 /**
  * Fields from a pCard will be extracted to create the UI representation of a player.

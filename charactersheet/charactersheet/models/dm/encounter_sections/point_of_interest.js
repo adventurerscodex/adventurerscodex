@@ -1,8 +1,7 @@
-import ko from 'knockout';
-
-import { PlayerTextSection } from 'charactersheet/models/dm';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { PlayerTextSection } from 'charactersheet/models/dm';
 import { Utility } from 'charactersheet/utilities/convenience';
+import ko from 'knockout';
 
 export function PointOfInterest() {
     var self = this;

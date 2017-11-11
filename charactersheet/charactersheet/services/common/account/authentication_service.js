@@ -1,11 +1,12 @@
-import URI from 'urijs';
 import 'urijs/src/URI.fragmentQuery';
-
-import { SharedServiceManager } from '../shared_service_manager';
-import { Notifications,
-    Utility } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services';
+import {
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import { AuthenticationToken } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services';
+import { SharedServiceManager } from '../shared_service_manager';
+import URI from 'urijs';
 
 /**
  * A global service that observes changes in account statuses

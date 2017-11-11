@@ -1,15 +1,19 @@
-import ko from 'knockout';
-
-import { AbilityScores,
+import {
+    AbilityScores,
     Armor,
-    OtherStats } from 'charactersheet/models';
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
-import { KeyValuePredicate,
+    OtherStats
+} from 'charactersheet/models';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
     NotPredicate,
-    PersistenceService } from 'charactersheet/services/common';
+    PersistenceService
+} from 'charactersheet/services/common';
 import { SharedServiceManager } from '../common/shared_service_manager';
-
+import ko from 'knockout';
 
 export var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
 

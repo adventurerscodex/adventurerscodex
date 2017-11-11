@@ -1,5 +1,5 @@
-import { ImagePickerComponentViewModel } from './image-picker.js';
-import { MarkdownEditPreviewComponentViewModel } from './markdown-edit-preview.js';
-import { NestedListComponentViewModel } from './nested-list.js';
-import { PlusMinusComponentViewModel } from './plus-minus.js';
-import { ProficiencyTypeComponentViewModel } from './proficiency-marker.js';
+import { ImagePickerComponentViewModel } from './image-picker';
+import { MarkdownEditPreviewComponentViewModel } from './markdown-edit-preview';
+import { NestedListComponentViewModel } from './nested-list';
+import { PlusMinusComponentViewModel } from './plus-minus';
+import { ProficiencyTypeComponentViewModel } from './proficiency-marker';

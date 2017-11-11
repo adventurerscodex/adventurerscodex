@@ -1,12 +1,12 @@
-import ko from 'knockout';
-import 'knockout-mapping';
-
 import 'bin/knockout-mapping-autoignore';
-
-import { SpellStats } from 'charactersheet/models';
+import 'knockout-mapping';
+import {
+    CharacterManager,
+    Fixtures
+} from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Fixtures,
-    CharacterManager } from 'charactersheet/utilities';
+import { SpellStats } from 'charactersheet/models';
+import ko from 'knockout';
 
 export function Spell() {
     var self = this;
