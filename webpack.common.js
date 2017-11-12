@@ -2,17 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 
 let HtmlWebpackPlugin = require('html-webpack-plugin');
-let CircularDependencyPlugin = require('circular-dependency-plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-//   devtool: "source-map",
   context: path.resolve(__dirname, './charactersheet'),
   entry: './app.js' ,
   output: {
     path: path.resolve(__dirname, './dist'),
-//     pathinfo: true,
-//     sourceMapFilename: "[name].bundle.js.map",
     filename: '[name].bundle.js',
   },
   resolve: {
@@ -30,34 +26,13 @@ module.exports = {
       inject: 'body',
       hash: true
     }),
-    // TODO: Add this back in when we want to solve this
-    new CircularDependencyPlugin({
-        // exclude detection of files based on a RegExp
-        exclude: /node_modules/,
-        // add errors to webpack instead of warnings
-    failOnError: false
-    }),
     new CopyWebpackPlugin([
         {
             from: 'images/sample-headshots',
             to: 'images/sample-headshots'
         }
     ]),
-//       new webpack.optimize.CommonsChunkPlugin({
-//         name: 'vendor',
-//         minChunks: function isExternal(module) {
-//         var context = module.context;
-//         if (typeof context !== 'string') {
-//             return false;
-//         }
-//         return context.indexOf('node_modules') !== -1;
-//         }
-//       })
   ],
-  devServer: {
-     contentBase: './dist',
-     port: 3000
-  },
   module: {
     rules: [
       {

@@ -62,10 +62,12 @@
     "simple-mock": "^0.8.0",
     "spin": "0.0.1",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^1.0.1",
     "url-loader": "^0.5.9",
     "util-deprecate": "^1.0.2",
     "webpack": "^3.5.4",
-    "webpack-dev-server": "^2.7.1"
+    "webpack-dev-server": "^2.7.1",
+    "webpack-merge": "^4.1.1"
   },
   "scripts": {
     "test": "karma start",
@@ -73,8 +75,9 @@
     "coveralls": "grunt coveralls",
     "deploy": "bash deploy.sh",
     "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
-    "build": "webpack --config webpack.config.js",
-    "start": "webpack-dev-server --no-inline"
+    "build": "webpack --config webpack.prod.js",
+    "build:test": "webpack --config webpack.test.js",
+    "start": "webpack-dev-server --no-inline --config webpack.dev.js"
   },
   "dependencies": {
     "ansi-html": "0.0.7",
