@@ -1,12 +1,12 @@
 import {
-    CHAT_MESSAGE_TYPES,
-    PersistenceService
-} from 'charactersheet/services/common';
-import {
     CharacterManager,
     JSONPayload,
     Utility
 } from 'charactersheet/utilities';
+import {
+    CHAT_MESSAGE_TYPES
+} from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Strophe from 'strophe';
 import ko from 'knockout';
 /**

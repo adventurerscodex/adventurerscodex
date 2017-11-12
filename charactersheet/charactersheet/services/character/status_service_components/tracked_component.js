@@ -1,6 +1,7 @@
 import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { KeyValuePredicate, PersistenceService, SharedServiceManager } from 'charactersheet/services/common';
+import { KeyValuePredicate, SharedServiceManager } from 'charactersheet/services/common';
 import { Status, StatusWeightPair } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Tracked } from 'charactersheet/models';
 import { getTrackedTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 

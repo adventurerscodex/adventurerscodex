@@ -5,7 +5,7 @@ import {
     mock_110_migration_fail,
     mock_134_migration
 } from '../fixtures';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Skill } from 'charactersheet/models/character/skill';
 import simple from 'simple-mock';
 

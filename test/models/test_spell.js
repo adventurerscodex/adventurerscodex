@@ -4,7 +4,7 @@ import {
 } from 'charactersheet/models';
 import { CharacterManager } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
-import { PersistenceService } from 'charactersheet/services';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
 
 describe('Spell Model', function() {

@@ -4,7 +4,6 @@ import {
 } from 'charactersheet/utilities';
 import {
     KeyValuePredicate,
-    PersistenceService,
     SharedServiceManager
 } from 'charactersheet/services/common';
 import {
@@ -12,6 +11,7 @@ import {
     StatusWeightPair
 } from 'charactersheet/models';
 import { OtherStats } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 /**
  * A Status Service Component that tracks the total weight that a character

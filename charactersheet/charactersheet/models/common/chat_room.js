@@ -5,7 +5,6 @@ import {
     ChatServiceManager,
     DMCardPublishingService,
     KeyValuePredicate,
-    PersistenceService,
     SharedServiceManager
 } from 'charactersheet/services/common';
 import {
@@ -17,6 +16,7 @@ import {
     Message,
     Presence
 } from 'charactersheet/models/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Strophe from 'strophe';
 import ko from 'knockout';
 

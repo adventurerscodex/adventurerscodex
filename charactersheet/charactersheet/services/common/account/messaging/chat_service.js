@@ -12,9 +12,9 @@ import {
 import {
     KeyValuePredicate,
     OrPredicate,
-    PersistenceService,
     XMPPService
 } from 'charactersheet/services';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../../shared_service_manager';
 import ko from 'knockout';
 import uuid from 'node-uuid';

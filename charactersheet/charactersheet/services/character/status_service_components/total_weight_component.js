@@ -14,9 +14,9 @@ import {
 } from 'charactersheet/utilities';
 import {
     KeyValuePredicate,
-    PersistenceService,
     SharedServiceManager
 } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
 /**

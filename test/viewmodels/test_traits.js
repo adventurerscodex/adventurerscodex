@@ -3,7 +3,7 @@ import {
     Trait
 } from 'charactersheet/models/character';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { TraitsViewModel } from 'charactersheet/viewmodels/character/traits';
 import simple from 'simple-mock';
 

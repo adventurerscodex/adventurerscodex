@@ -5,7 +5,7 @@ import {
     Trait
 } from 'charactersheet/models';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { TrackerViewModel } from 'charactersheet/viewmodels/character/tracker';
 import simple from 'simple-mock';
 

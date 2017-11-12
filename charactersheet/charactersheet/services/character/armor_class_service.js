@@ -9,9 +9,9 @@ import {
 } from 'charactersheet/utilities';
 import {
     KeyValuePredicate,
-    NotPredicate,
-    PersistenceService
+    NotPredicate
 } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../common/shared_service_manager';
 import ko from 'knockout';
 

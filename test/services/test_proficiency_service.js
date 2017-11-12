@@ -1,6 +1,6 @@
 import { Notifications } from 'charactersheet/utilities';
 import { OtherStats } from 'charactersheet/models/character/other_stats';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ProficiencyService } from 'charactersheet/services/character';
 import { Profile } from 'charactersheet/models/character/profile';
 import simple from 'simple-mock';

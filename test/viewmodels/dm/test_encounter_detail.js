@@ -1,7 +1,7 @@
 import { CharacterManager } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
 
 describe('EncounterDetailViewModel', function(){

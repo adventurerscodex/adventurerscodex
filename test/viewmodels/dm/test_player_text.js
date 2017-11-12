@@ -3,7 +3,7 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm/encounter';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { PlayerTextSection } from 'charactersheet/models/dm/encounter_sections/player_text_section';
 import { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section';
 import simple from 'simple-mock';

@@ -2,7 +2,7 @@ import { AbilityScores } from 'charactersheet/models/character';
 import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
 import simple from 'simple-mock';
 

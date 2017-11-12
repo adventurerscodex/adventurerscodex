@@ -1,5 +1,5 @@
 /*eslint no-console:0 */
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { migration_120_1_weapons } from 'charactersheet/migrations';
 import simple from 'simple-mock';
 import { weaponDataFixture } from '../fixtures';

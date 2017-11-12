@@ -5,7 +5,7 @@ import {
 import { Encounter } from 'charactersheet/models/dm/encounter';
 import { EnvironmentSection } from 'charactersheet/models/dm/environment_sections/environment_section';
 import { EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm/environment_sections/environment_section';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
 
 describe('EnvironmentSectionViewModel', function(){

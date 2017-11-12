@@ -11,7 +11,6 @@ import {
 import {
     ArmorClassService,
     KeyValuePredicate,
-    PersistenceService,
     SharedServiceManager,
     XMPPService
 } from 'charactersheet/services';
@@ -24,6 +23,7 @@ import {
 } from 'charactersheet/models/common';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities/notifications';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 export var CharacterCardFields = [
     {

@@ -8,7 +8,7 @@ import {
     ProfileFixture,
     WeaponFixture
 } from '../fixtures';
-import { PersistenceService } from 'charactersheet/services';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { jebeddo_data } from '../characters/jebeddo_data';
 import simple from 'simple-mock';

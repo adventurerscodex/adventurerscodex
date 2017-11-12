@@ -5,10 +5,10 @@ import {
 } from 'charactersheet/utilities';
 import {
     KeyValuePredicate,
-    PersistenceService,
     SharedServiceManager
 } from 'charactersheet/services/common';
 import { AbilityScores } from 'charactersheet/models/character';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
 export function Armor() {

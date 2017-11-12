@@ -5,7 +5,7 @@ import {
 import { Encounter } from 'charactersheet/models/dm/encounter';
 import { Monster } from 'charactersheet/models/dm/encounter_sections/monster';
 import { MonsterSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/monster_section';
-import { PersistenceService } from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
 
 describe('MonsterSectionViewModel', function(){
