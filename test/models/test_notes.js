@@ -1,4 +1,5 @@
 import { Note } from 'charactersheet/models/common/note';
+import Should from 'should';
 
 describe('Notes Model', function() {
     describe('Clear', function() {

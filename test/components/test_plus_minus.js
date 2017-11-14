@@ -1,4 +1,5 @@
 import { PlusMinusComponentViewModel } from 'charactersheet/components/plus-minus';
+import Should from 'should';
 import ko from 'knockout';
 
 describe('Plus-Minus Component', function() {
