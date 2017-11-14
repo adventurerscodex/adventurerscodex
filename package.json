@@ -22,6 +22,7 @@
     "css-loader": "^0.28.7",
     "es6-promise": "^4.1.1",
     "eslint": "^2.8.0",
+    "eslint-plugin-import": "^2.8.0",
     "file-loader": "^0.11.2",
     "font-awesome-webpack": "0.0.5-beta.2",
     "graceful-fs": "^4.1.11",
