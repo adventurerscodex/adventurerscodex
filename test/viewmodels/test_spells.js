@@ -10,6 +10,7 @@ import { MockCharacterManager } from '../mocks';
 import { Spell } from 'charactersheet/models/common';
 import { SpellbookViewModel } from 'charactersheet/viewmodels/character/spells';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('SpellsViewModel', function(){
     PersistenceService._save = function(){};
@@ -24,34 +25,6 @@ describe('SpellsViewModel', function(){
             spellsVM.spellbook().length.should.equal(0);
             spellsVM.load();
             spellsVM.spellbook().length.should.equal(2);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the data to the spells db.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
-            var saved = [false, false];
-            var spells = [new Spell(), new Spell()].map(function(e, i, _) {
-                e.save = function() { saved[i] = true; };
-                return e;
-            });
-            PersistenceService.findBy = function(key) { return spells; };
-
-            saved.forEach(function(e, i, _) {
-                e.should.equal(false);
-            });
-            //Test
-            var spellsVM = new SpellbookViewModel();
-            spellsVM.spellbook().length.should.equal(0);
-            spellsVM.load();
-            spellsVM.spellbook().length.should.equal(2);
-            spellsVM.unload();
-            spellsVM.spellbook().length.should.equal(2);
-
-            saved.forEach(function(e, i, _) {
-                e.should.equal(true);
-            });
         });
     });
 

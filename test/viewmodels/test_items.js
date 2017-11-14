@@ -10,6 +10,7 @@ import { Item } from 'charactersheet/models/common';
 import { ItemsViewModel } from 'charactersheet/viewmodels/character/items';
 import { MockCharacterManager } from '../mocks';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('InventoryViewModel', function(){
     //Clean up after each test.
@@ -27,26 +28,6 @@ describe('InventoryViewModel', function(){
                 p.items().length.should.equal(0);
                 p.load();
                 p.items().length.should.equal(2);
-            });
-        });
-
-        describe('Unload', function() {
-            it('should unload the data to the items db.', function() {
-                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
-                var items = [new Item(), new Item()].map(function(e, i, _) {
-                    e._spy = simple.mock(e, 'save');
-                    return e;
-                });
-
-                var equipVM = new ItemsViewModel();
-                equipVM.items(items);
-                equipVM.unload();
-                equipVM.items().length.should.equal(2);
-
-                equipVM.items().forEach(function(e, i, _) {
-                    e._spy.called.should.equal(true);
-                });
             });
         });
 

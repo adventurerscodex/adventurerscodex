@@ -13,6 +13,7 @@ import {
 } from 'charactersheet/services/common';
 import { FeatsViewModel } from 'charactersheet/viewmodels/character/feats';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('FeatsViewModel', function() {
     //Clean up after each test.
@@ -74,17 +75,6 @@ describe('FeatsViewModel', function() {
             featsViewModel.feats().length.should.equal(0);
             featsViewModel.load();
             featsViewModel.feats().length.should.equal(1);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the saved list of feats', function() {
-            var notificationSpy = simple.mock(Notifications.global.save, 'remove');
-
-            var featsViewModel = new FeatsViewModel();
-            notificationSpy.called.should.equal(false);
-            featsViewModel.unload();
-            notificationSpy.called.should.equal(true);
         });
     });
 

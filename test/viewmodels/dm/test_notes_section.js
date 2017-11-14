@@ -7,6 +7,7 @@ import { NotesSection } from 'charactersheet/models/dm/encounter_sections/notes_
 import { NotesSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/notes_section';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('NotesSectionViewModel', function(){
     //Clean up after each test.
@@ -23,19 +24,6 @@ describe('NotesSectionViewModel', function(){
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
 
             vm.load();
-
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unsubscribe from notifications', function() {
-            var vm = new NotesSectionViewModel(new Encounter());
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-
-            vm.unload();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);

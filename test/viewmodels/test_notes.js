@@ -7,6 +7,7 @@ import { Note } from 'charactersheet/models/common';
 import { NotesViewModel } from 'charactersheet/viewmodels/common/notes';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('NotesViewModel', function(){
     //Clean up after each test.
@@ -34,19 +35,6 @@ describe('NotesViewModel', function(){
 
             notesVM.load();
             notesVM.notes()[0].characterId().should.equal('12345');
-        });
-    });
-
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var note = new Note();
-            var notesVM = new NotesViewModel();
-            simple.mock(notesVM, 'notes').returnWith([note]);
-            var notifySpy = simple.mock(note, 'save');
-
-            notesVM.unload();
-
-            notifySpy.called.should.equal(true);
         });
     });
 });

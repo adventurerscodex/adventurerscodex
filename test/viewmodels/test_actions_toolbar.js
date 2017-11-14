@@ -2,6 +2,7 @@ import { ActionsToolbarViewModel } from 'charactersheet/viewmodels/character/act
 import { Fixtures } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('Actions Toolbar View Model', function(){
     //Clean up after each test.

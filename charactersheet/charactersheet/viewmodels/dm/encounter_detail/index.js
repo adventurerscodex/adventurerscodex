@@ -60,7 +60,7 @@ export function EncounterDetailViewModel(params) {
 
     self._dataHasChanged = function() {
         if (!ko.unwrap(self.encounter)) { return; }
-        var sections =  self.sectionModels.map(function(sectionModel, i, _) {
+        var sections = self.sectionModels.map(function(sectionModel, i, _) {
             var key = self.encounter().encounterId();
             var section = PersistenceService.findFirstBy(sectionModel.model, 'encounterId', key);
             if (!section) {

@@ -7,6 +7,7 @@ import { NPCSection } from 'charactersheet/models/dm/encounter_sections/npc_sect
 import { NPCSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/npc_section';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('NPCSectionViewModel', function(){
     //Clean up after each test.
@@ -23,19 +24,6 @@ describe('NPCSectionViewModel', function(){
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
 
             vm.load();
-
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unsubscribe from notifications', function() {
-            var vm = new NPCSectionViewModel(new Encounter());
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-
-            vm.unload();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);

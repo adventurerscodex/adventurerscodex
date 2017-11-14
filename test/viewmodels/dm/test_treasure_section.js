@@ -5,6 +5,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { TreasureSection } from 'charactersheet/models/dm/encounter_sections/treasure_section';
 import { TreasureSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/treasure_section';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('TreasureSectionViewModel', function(){
     //Clean up after each test.
@@ -33,19 +34,6 @@ describe('TreasureSectionViewModel', function(){
             simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
 
             vm.load();
-
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unsubscribe from notifications', function() {
-            var vm = new TreasureSectionViewModel(new Encounter());
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-
-            vm.unload();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);

@@ -7,6 +7,7 @@ import { CharacterAppearance } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('Appearance', function() {
     //Clean up after each test.
@@ -38,20 +39,9 @@ describe('Appearance', function() {
         });
     });
 
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var app = new AppearanceViewModel();
-            var notifySpy = simple.mock(app.appearance(), 'save');
-
-            app.unload();
-
-            notifySpy.called.should.equal(true);
-        });
-    });
-
     describe('Clear', function() {
         it('should clear the values of the model', function() {
-            var a   = new AppearanceViewModel();
+            var a = new AppearanceViewModel();
             var notifySpy = simple.mock(a.appearance(), 'clear');
 
             a.clear();

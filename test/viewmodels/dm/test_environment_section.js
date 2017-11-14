@@ -3,10 +3,11 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm/encounter';
-import { EnvironmentSection } from 'charactersheet/models/dm/environment_sections/environment_section';
-import { EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm/environment_sections/environment_section';
+import { EnvironmentSection } from 'charactersheet/models/dm';
+import { EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('EnvironmentSectionViewModel', function(){
     //Clean up after each test.
@@ -43,19 +44,6 @@ describe('EnvironmentSectionViewModel', function(){
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
 
             vm.load();
-
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unsubscribe from notifications', function() {
-            var vm = new EnvironmentSectionViewModel(new Encounter());
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-
-            vm.unload();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);

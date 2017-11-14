@@ -12,6 +12,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import Should from 'should';
 import { WizardViewModel } from 'charactersheet/viewmodels/common/wizard';
 import simple from 'simple-mock';
+import should from 'Should';
 
 
 describe('Wizard ViewModel', function(){
@@ -36,18 +37,6 @@ describe('Wizard ViewModel', function(){
         });
     });
 
-    describe('Unload', function() {
-        it('should reset all steps', function() {
-            var wizard = new WizardViewModel();
-            var resetStub = simple.mock(wizard, 'reset').callFn(function(){});
-
-            resetStub.called.should.equal(false);
-
-            wizard.unload();
-
-            resetStub.called.should.equal(true);
-        });
-    });
     describe('Should Show Start Button', function() {
         it('should determine if the user can start the creation proces (false)', function() {
             var wizard = new WizardViewModel();
@@ -72,7 +61,7 @@ describe('Wizard ViewModel', function(){
         });
         it('should determine if the user can go back (true)', function() {
             var wizard = new WizardViewModel();
-            wizard.previousSteps([1,2,4]);  // dummy values. It only checks length.
+            wizard.previousSteps([1,2,4]); // dummy values. It only checks length.
 
             var result = wizard.shouldShowBackButton();
             result.should.equal(true);
@@ -81,18 +70,17 @@ describe('Wizard ViewModel', function(){
     describe('Should Show Next Button', function() {
         it('should determine if the user can go forward (false)', function() {
             var wizard = new WizardViewModel();
-            var step = new WizardIntroStepViewModel();
-            step.ready(false);
-            wizard.currentStep(step);
+            wizard.currentStep('WizardIntroStepViewModel');
+            wizard.stepReady(false);
 
             var result = wizard.shouldShowNextButton();
             result.should.equal(false);
         });
         it('should determine if the user can go forward (true)', function() {
             var wizard = new WizardViewModel();
-            var step = new WizardIntroStepViewModel();
-            step.ready(true);
-            wizard.currentStep(step);
+            var step = new WizardIntroStepViewModel({});
+            wizard.stepReady(true);
+            wizard.currentStep('WizardIntroStepViewModel');
 
             simple.mock(wizard, 'shouldShowFinishButton').returnWith(false);
             simple.mock(wizard, 'shouldShowStartButton').returnWith(false);
@@ -219,29 +207,24 @@ describe('Wizard ViewModel', function(){
 
         it('should determine the next step given an "import" intro step.', function() {
             var wizard = new WizardViewModel();
-            var currentStep = new WizardIntroStepViewModel();
-            currentStep.results({ 'import': 'player'});
-
-            var step = wizard._determineStepAfterStep(currentStep);
+            wizard.stepResult({import: 'charId'});
+            var step = wizard._determineStepAfterStep('WizardIntroStep');
             step.terminate.should.equal(true);
             Should.not.exist(step.viewModel);
         });
         it('should determine the next step given a "player" intro step.', function() {
             var wizard = new WizardViewModel();
-            var currentStep = new WizardIntroStepViewModel();
-            currentStep.results({ 'PlayerType': 'player'});
-
-            var step = wizard._determineStepAfterStep(currentStep);
+            wizard.stepResult({ 'PlayerType': 'player'});
+            var step = wizard._determineStepAfterStep('WizardIntroStep');
             step.terminate.should.equal(false);
             Should.exist(step.viewModel);
         });
         it('should determine the next step given an incorrect intro step.', function() {
             var wizard = new WizardViewModel();
-            var currentStep = new WizardIntroStepViewModel();
-            currentStep.results({ 'PlayerTypo': 'player'});
+            wizard.stepResult({ 'PlayerTypo': 'player'});
 
             try {
-                wizard._determineStepAfterStep(currentStep);
+                wizard._determineStepAfterStep('WizardIntroStep');
                 (true).should.equal(false);
             } catch(err) {
                 (true).should.equal(true);
@@ -250,20 +233,14 @@ describe('Wizard ViewModel', function(){
 
         it('should determine the next step given a profile step.', function() {
             var wizard = new WizardViewModel();
-            var currentStep = new WizardProfileStepViewModel();
-            simple.mock(currentStep, 'results').callFn(function() {});
-
-            var step = wizard._determineStepAfterStep(currentStep);
+            var step = wizard._determineStepAfterStep('WizardProfileStep');
             step.terminate.should.equal(false);
-            Should.exist(step.viewModel);
+            step.viewModel.should.equal('WizardAbilityScoresStep');
         });
+
         it('should do nothing given an incorrect current step.', function() {
             var wizard = new WizardViewModel();
-            var currentStep = new WizardProfileStepViewModel();
-            simple.mock(currentStep, 'results').callFn(function() {});
-            currentStep.IDENTIFIER = 'SOME INVALID ID';
-
-            var step = wizard._determineStepAfterStep(currentStep);
+            var step = wizard._determineStepAfterStep('Not A Step');
             Should.not.exist(step);
         });
 
@@ -271,7 +248,7 @@ describe('Wizard ViewModel', function(){
 
         it('should move forward given an correct current step.', function() {
             var wizard = new WizardViewModel();
-            var currentStep = new WizardAbilityScoresStepViewModel();
+            var currentStep = new WizardAbilityScoresStepViewModel({});
             simple.mock(currentStep, 'results').callFn(function() {});
             currentStep.IDENTIFIER = 'SOME INVALID ID';
 

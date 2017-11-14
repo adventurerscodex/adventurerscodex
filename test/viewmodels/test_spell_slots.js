@@ -10,6 +10,7 @@ import { MockCharacterManager } from '../mocks';
 import { Slot } from 'charactersheet/models/character';
 import { SpellSlotsViewModel } from 'charactersheet/viewmodels/character/spell_slots';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('Spell Slots View Model', function() {
     describe('Add Slots', function() {

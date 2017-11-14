@@ -8,6 +8,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { Profile } from 'charactersheet/models/character';
 import { ProfileViewModel } from 'charactersheet/viewmodels/character/profile';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('Profile View Model', function() {
     //Clean up after each test.

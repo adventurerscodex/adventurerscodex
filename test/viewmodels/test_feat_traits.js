@@ -7,6 +7,7 @@ import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/fea
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('FeaturesTraitsViewModel', function(){
     //Clean up after each test.
@@ -34,17 +35,6 @@ describe('FeaturesTraitsViewModel', function(){
 
             featsVM.load();
             featsVM.featTraits().characterId().should.equal('12345');
-        });
-    });
-
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var featsVM = new FeaturesTraitsViewModel();
-            var notifySpy = simple.mock(featsVM.featTraits(), 'save');
-
-            featsVM.unload();
-
-            notifySpy.called.should.equal(true);
         });
     });
 });

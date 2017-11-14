@@ -7,6 +7,7 @@ import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('ArmorViewModel', function(){
     //Clean up after each test.
@@ -97,26 +98,6 @@ describe('ArmorViewModel', function(){
             armors.armors().length.should.equal(0);
             armors.load();
             armors.armors().length.should.equal(2);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the data to the items db.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-
-            var armors = [new Armor(), new Armor()].map(function(e, i, _) {
-                e._spy = simple.mock(e, 'save');
-                return e;
-            });
-
-            var armorsVM = new ArmorViewModel();
-            armorsVM.armors(armors);
-            armorsVM.unload();
-            armorsVM.armors().length.should.equal(2);
-
-            armorsVM.armors().forEach(function(e, i, _) {
-                e._spy.called.should.equal(true);
-            });
         });
     });
 

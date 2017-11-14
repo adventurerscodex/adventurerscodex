@@ -3,6 +3,7 @@ import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_c
 import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
 import { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('Encounter View Model', function() {
 

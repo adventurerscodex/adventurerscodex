@@ -4,6 +4,7 @@ import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { StatsViewModel } from 'charactersheet/viewmodels/character/stats';
 import simple from 'simple-mock';
+import should from 'Should';
 
 describe('Stats View Model', function() {
     //Clean up after each test.

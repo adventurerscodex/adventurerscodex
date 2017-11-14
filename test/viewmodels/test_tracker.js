@@ -68,26 +68,6 @@ describe('Tracker View Model', function() {
         });
     });
 
-    describe('Unload', function() {
-        it('unsubscribe from notifications and save iteself.', function() {
-            var trackerViewModel = new TrackerViewModel();
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.feat.changed, 'remove');
-            var spy3 = simple.mock(Notifications.trait.changed, 'remove');
-            var spy4 = simple.mock(Notifications.feature.changed, 'remove');
-            var spy5 = simple.mock(Notifications.events.shortRest, 'remove');
-            var spy6 = simple.mock(Notifications.events.longRest, 'remove');
-
-            trackerViewModel.unload();
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-            spy3.called.should.equal(true);
-            spy4.called.should.equal(true);
-            spy5.called.should.equal(true);
-            spy6.called.should.equal(true);
-        });
-    });
-
     describe('Sort By', function() {
         it('should sort the list of trackables by given criteria', function() {
             var trackerViewModel = new TrackerViewModel();
