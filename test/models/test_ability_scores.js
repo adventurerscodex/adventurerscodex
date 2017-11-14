@@ -1,8 +1,9 @@
-import { getModifier,
+import {
+    AbilityScores,
+    getModifier,
     getStrModifier,
-    isNumeric } from 'charactersheet/viewmodels/character/ability_scores';
+    isNumeric } from 'charactersheet/models/character/ability_scores';
 import { AbilitiesFixture } from '../fixtures';
-import { AbilityScores } from  'charactersheet/models/character/ability_scores';
 import { CharacterManager } from 'charactersheet/utilities';
 import Should from 'should';
 import simple from 'simple-mock';

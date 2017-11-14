@@ -4,6 +4,7 @@ import {
     featureFeatsTraitsFixture
 } from '../fixtures';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Should from 'should';
 import { migration_130_2_feats_features_proficiencies_daily_features } from 'charactersheet/migrations';
 import simple from 'simple-mock';
 
