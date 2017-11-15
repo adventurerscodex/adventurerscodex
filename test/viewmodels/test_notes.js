@@ -6,8 +6,8 @@ import { MockCharacterManager } from '../mocks';
 import { Note } from 'charactersheet/models/common';
 import { NotesViewModel } from 'charactersheet/viewmodels/common/notes';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('NotesViewModel', function(){
     //Clean up after each test.

@@ -4,8 +4,8 @@ import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { TreasureSection } from 'charactersheet/models/dm/encounter_sections/treasure_section';
 import { TreasureSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/treasure_section';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('TreasureSectionViewModel', function(){
     //Clean up after each test.

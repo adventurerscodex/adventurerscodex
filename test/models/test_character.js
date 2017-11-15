@@ -1,4 +1,5 @@
 /*eslint no-console:0*/
+import * as fileSaver from 'FileSaver.js';
 import {
     Character,
     Profile
@@ -8,7 +9,6 @@ import {
     ProfileFixture,
     WeaponFixture
 } from '../fixtures';
-import * as fileSaver from 'FileSaver.js';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import Should from 'should';

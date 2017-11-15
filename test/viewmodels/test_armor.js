@@ -6,8 +6,8 @@ import { Armor } from 'charactersheet/models/common';
 import { ArmorViewModel } from 'charactersheet/viewmodels/character/armor';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('ArmorViewModel', function(){
     //Clean up after each test.

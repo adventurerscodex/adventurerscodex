@@ -9,8 +9,8 @@ import {
 import { Item } from 'charactersheet/models/common';
 import { ItemsViewModel } from 'charactersheet/viewmodels/character/items';
 import { MockCharacterManager } from '../mocks';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('InventoryViewModel', function(){
     //Clean up after each test.

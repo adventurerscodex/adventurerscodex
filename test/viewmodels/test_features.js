@@ -12,8 +12,8 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { FeaturesViewModel } from 'charactersheet/viewmodels/character/features';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('FeaturesViewModel', function() {
     //Clean up after each test.

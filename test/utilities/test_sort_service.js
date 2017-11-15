@@ -1,6 +1,6 @@
+import Should from 'should';
 import { SortService } from 'charactersheet/services';
 import { SortServiceFixture } from '../fixtures';
-import Should from 'should';
 import simple from 'simple-mock';
 
 describe('Sort Service', function() {

@@ -6,8 +6,8 @@ import { Encounter } from 'charactersheet/models/dm/encounter';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { PointOfInterestSection } from 'charactersheet/models/dm/encounter_sections/point_of_interest_section';
 import { PointOfInterestSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/point_of_interest_section';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('PointOfInterestSectionViewModel', function(){
     //Clean up after each test.

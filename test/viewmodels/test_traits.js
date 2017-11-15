@@ -5,8 +5,8 @@ import {
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { TraitsViewModel } from 'charactersheet/viewmodels/character/traits';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('TraitsViewModel', function() {
     //Clean up after each test.

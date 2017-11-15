@@ -2,8 +2,8 @@ import { Encounter } from 'charactersheet/models/dm';
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
 import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
 import { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Encounter View Model', function() {
 

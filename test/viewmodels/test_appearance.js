@@ -6,8 +6,8 @@ import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appeara
 import { CharacterAppearance } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Appearance', function() {
     //Clean up after each test.

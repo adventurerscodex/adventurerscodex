@@ -9,8 +9,8 @@ import {
 import { MockCharacterManager } from '../mocks';
 import { Skill } from 'charactersheet/models/character';
 import { SkillsViewModel } from 'charactersheet/viewmodels/character/skills';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Skill Tree', function() {
     var delShim = function() {};

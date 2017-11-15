@@ -4,9 +4,9 @@ import {
 } from '../fixtures';
 import { DataRepository } from 'charactersheet/utilities';
 import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps';
-import simple from 'simple-mock';
-import should from 'Should';
 import ko from 'knockout';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Wizard Profile ViewModel', function(){
     //Clean up after each test.

@@ -6,8 +6,8 @@ import { Encounter } from 'charactersheet/models/dm/encounter';
 import { EnvironmentSection } from 'charactersheet/models/dm';
 import { EnvironmentSectionViewModel } from 'charactersheet/viewmodels/dm';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import simple from 'simple-mock';
 import should from 'Should';
+import simple from 'simple-mock';
 
 describe('EnvironmentSectionViewModel', function(){
     //Clean up after each test.
