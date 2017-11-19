@@ -74,7 +74,6 @@
     "test": "karma start",
     "lint": "eslint test/ && eslint charactersheet/charactersheet/",
     "coveralls": "grunt coveralls",
-    "deploy": "bash deploy.sh",
     "docs": "mr-doc --source charactersheet/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
     "build": "webpack --config webpack.prod.js",
     "build:test": "webpack --config webpack.test.js",
