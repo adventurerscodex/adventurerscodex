@@ -12,8 +12,8 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import Should from 'should';
 import { jebeddo_data } from '../characters/jebeddo_data';
+import saveAs from 'save-as';
 import simple from 'simple-mock';
-import saveAs from 'save-as'
 
 describe('Character Model', function() {
     //Clean up after each test.
