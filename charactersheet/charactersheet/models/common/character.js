@@ -16,7 +16,7 @@ import { PlayerTypes } from './player_types';
 import { Profile } from '../character/profile';
 import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
-import { saveAs } from 'FileSaver.js';
+import saveAs from 'save-as';
 import uuid from 'node-uuid';
 
 

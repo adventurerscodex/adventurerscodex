@@ -99,6 +99,7 @@
     "lz-string": "^1.4.4",
     "node-libs-browser": "^2.0.0",
     "node-uuid": "^1.4.8",
+    "save-as": "^0.1.8",
     "select2": "^3.5.1",
     "signals": "^1.0.0",
     "sockjs-client": "^1.1.4",
