@@ -1,4 +1,11 @@
-'use strict';
+import { AuthenticationToken } from  'charactersheet/models/common';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from '../shared_service_manager';
+import Strophe from 'strophe';
+import { UserServiceManager } from 'charactersheet/services';
+
+
 /*eslint no-console:0*/
 
 /**
@@ -34,7 +41,7 @@ var XMPPServiceDefaultConfig = {
  * A single, shared connection to the XMPP server is shared across
  * the application instance, and can be accessed via `sharedConnection`.
  */
-var XMPPService = new SharedServiceManager(_XMPPService, XMPPServiceDefaultConfig);
+export var XMPPService = new SharedServiceManager(_XMPPService, XMPPServiceDefaultConfig);
 
 
 function _XMPPService(config) {

@@ -1,4 +1,24 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
+    Migrations,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import { AuthenticationToken } from './authentication_token';
+import { Campaign } from '../dm/campaign';
+import Dropbox from 'dropbox';
+import { ImageModel } from './image';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { PlayerImage } from './player_image';
+import { PlayerInfo } from './player_info';
+import { PlayerTypes } from './player_types';
+import { Profile } from '../character/profile';
+import { Settings } from 'charactersheet/settings';
+import ko from 'knockout';
+import saveAs from 'save-as';
+import uuid from 'node-uuid';
+
 
 /**
  * Character Model
@@ -8,7 +28,7 @@
  * top of the relational model of data for Adventurer's Codex and also provides
  * a few convenience methods for fetching common data regarding a character.
  */
-function Character() {
+export function Character() {
     var self = this;
     self.ps = PersistenceService.register(Character, self);
 
@@ -120,8 +140,8 @@ function Character() {
 Character.exportCharacter = function(characterId) {
     var data = {};
     PersistenceService.listAll().forEach(function(e1, i1, _1) {
-        if (window[e1] === undefined) { return; } //Checks for deleted models.
-        var items = PersistenceService.findAll(window[e1]).filter(function(e2, i2, _2) {
+        if (PersistenceService.registry[e1] === undefined) { return; } //Checks for deleted models.
+        var items = PersistenceService.findAllByName(e1).filter(function(e2, i2, _2) {
             var res = false;
             try {
                 res = e2.characterId() === characterId;
@@ -163,7 +183,7 @@ Character.importCharacter = function(data) {
     PersistenceService.withTemporaryDataStore({}, function() {
         PersistenceService._setVersion(version);
         var character = Character._injectCharacter(data);
-        PersistenceService.migrate(Migrations.scripts, Settings.version);
+        // PersistenceService.migrate(Migrations.scripts, Settings.version);
         migratedData = Character.exportCharacter(character.key);
     });
 
@@ -180,7 +200,7 @@ Character._importCharacter = function(data) {
     var tableNames = Object.keys(data);
     var characterId = uuid.v4();
     tableNames.forEach(function(e, i, _) {
-        var model = window[e];
+        var model = PersistenceService.registry[e];
         data[e].forEach(function(e1, i1, _1) {
             var inst = new model();
             e1 = Character._changeIdForData(characterId, e1);
@@ -212,7 +232,6 @@ Character._injectCharacter = function(data) {
     tableNames.forEach(function(table, i, _) {
         data[table].forEach(function(obj, idx, _1) {
             PersistenceService.saveObj(table, idx, obj);
-
             if (table.toLowerCase() === 'character') {
                 character = obj;
             }
@@ -235,3 +254,6 @@ Character._changeIdForData = function(characterId, data) {
     }
     return data;
 };
+
+
+PersistenceService.addToRegistry(Character);

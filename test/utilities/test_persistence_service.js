@@ -1,4 +1,7 @@
-'use strict';
+import { MockLocalStorage } from '../fixtures';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Should from 'should';
+import simple from 'simple-mock';
 
 describe('Persistence Service', function() {
     //Clean up after each test.

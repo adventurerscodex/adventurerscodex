@@ -1,6 +1,7 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Exhibit() {
+export function Exhibit() {
     var self = this;
     self.ps = PersistenceService.register(Exhibit, self);
     self.mapping = {
@@ -38,3 +39,6 @@ function Exhibit() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Exhibit);

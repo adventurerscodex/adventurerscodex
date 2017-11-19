@@ -1,0 +1,32 @@
+<!--ko ifnot: isConnectedToParty()-->
+<div class="detail-place-holder well text-center">
+  <p class="lead text-muted heading">You are not connected to a Party.</p>
+  <p class="text-muted">Create or join a Party with friends to Chat!<br/>
+    Create a free account <a href="https://app.adventurerscodex.com/accounts/register/">here</a> or learn more about the Chat <a href="https://adventurerscodex.com/collaboration.html#chat" target="_blank">here</a>.</p>
+</div>
+<!-- /ko -->
+<!--ko if: isConnectedToParty()-->
+<div class="row">
+  <div data-bind="css: listCSS">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="panel-heading">
+          <div class="h4">
+            <span data-bind="html: title"></span>
+            <div class="pull-right">
+              <span class="fa fa-plus fa-lg" style="cursor:pointer;"
+                data-bind="click: addButtonWasClicked"></span>
+            </div>
+          </div>
+        </div>
+        <nested-list params="cells: cells, selectedCell: selectedCell, ondelete: deleteButtonWasClicked, onadd: addButtonWasClickedWithParent">
+        </nested-list>
+      </div>
+    </div>
+  </div>
+  <div data-bind="css: detailViewModelCSS">
+    <chat-detail params="room: selectedObject, badgeHandler: updateBadge"></chat-detail>
+  </div>
+</div>
+<chat-modal params="isOpen: modalIsOpen, onopen: modalFinishedOpening, onclose: modalFinishedClosing"></chat-modal>
+<!-- /ko -->

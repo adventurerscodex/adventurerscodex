@@ -1,4 +1,13 @@
-'use strict';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appearance';
+import { CharacterAppearance } from 'charactersheet/models/character';
+import { MockCharacterManager } from '../mocks';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Appearance', function() {
     //Clean up after each test.
@@ -26,24 +35,13 @@ describe('Appearance', function() {
             var a = new AppearanceViewModel();
 
             a.load();
-            a.appearance().characterId().should.equal('1234');
-        });
-    });
-
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var app = new AppearanceViewModel();
-            var notifySpy = simple.mock(app.appearance(), 'save');
-
-            app.unload();
-
-            notifySpy.called.should.equal(true);
+            a.appearance().characterId().should.equal('12345');
         });
     });
 
     describe('Clear', function() {
         it('should clear the values of the model', function() {
-            var a   = new AppearanceViewModel();
+            var a = new AppearanceViewModel();
             var notifySpy = simple.mock(a.appearance(), 'clear');
 
             a.clear();

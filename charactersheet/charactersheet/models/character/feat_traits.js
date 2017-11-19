@@ -1,6 +1,9 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function FeaturesTraits() {
+export function FeaturesTraits() {
     var self = this;
     self.ps = PersistenceService.register(FeaturesTraits, self);
     self.mapping = {
@@ -33,3 +36,6 @@ function FeaturesTraits() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(FeaturesTraits);

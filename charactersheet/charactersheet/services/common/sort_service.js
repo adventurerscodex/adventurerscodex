@@ -1,10 +1,8 @@
-'use strict';
-
 /**
  * A utility class that provides helpers for sorting, filtering, and
  * determining the various properties of sortable tables.
  */
-var SortService = {
+export var SortService = {
 
     /**
      * Given an array of data, a sort to apply, and an optional

@@ -1,4 +1,5 @@
-'use strict';
+import { NPCSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('NPCSection', function(){
     //Clean up after each test.
@@ -19,7 +20,7 @@ describe('NPCSection', function(){
     describe('Delete', function() {
         it('should delete npcSection', function() {
             var npcSection = new NPCSection();
-            var npcSectionSpy = simple.mock(npcSection.ps, 'delete');
+            var npcSectionSpy = simple.mock(npcSection.ps, 'delete', function() {});
 
             npcSection.delete();
             npcSectionSpy.called.should.equal(true);
@@ -42,7 +43,7 @@ describe('NPCSection', function(){
             var npcSection = new NPCSection();
 
             npcSection.visible().should.equal(false);
-            npcSection.importValues({"visible": true});
+            npcSection.importValues({'visible': true});
             npcSection.visible().should.equal(true);
         });
     });

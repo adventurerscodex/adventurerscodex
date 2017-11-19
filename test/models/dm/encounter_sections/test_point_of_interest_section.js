@@ -1,4 +1,5 @@
-'use strict';
+import { PointOfInterestSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('PointOfInterestSection', function(){
     //Clean up after each test.
@@ -19,7 +20,7 @@ describe('PointOfInterestSection', function(){
     describe('Delete', function() {
         it('should delete pointOfInterestSection', function() {
             var pointOfInterestSection = new PointOfInterestSection();
-            var pointOfInterestSectionSpy = simple.mock(pointOfInterestSection.ps, 'delete');
+            var pointOfInterestSectionSpy = simple.mock(pointOfInterestSection.ps, 'delete', function() {});
 
             pointOfInterestSection.delete();
             pointOfInterestSectionSpy.called.should.equal(true);
@@ -42,7 +43,7 @@ describe('PointOfInterestSection', function(){
             var pointOfInterestSection = new PointOfInterestSection();
 
             pointOfInterestSection.visible().should.equal(false);
-            pointOfInterestSection.importValues({"visible": true});
+            pointOfInterestSection.importValues({'visible': true});
             pointOfInterestSection.visible().should.equal(true);
         });
     });

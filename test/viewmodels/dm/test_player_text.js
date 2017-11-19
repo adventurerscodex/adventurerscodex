@@ -1,4 +1,13 @@
-'use strict';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm/encounter';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { PlayerTextSection } from 'charactersheet/models/dm/encounter_sections/player_text_section';
+import { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('PlayerTextSectionViewModel', function(){
     //Clean up after each test.
@@ -13,21 +22,8 @@ describe('PlayerTextSectionViewModel', function(){
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.load();
-
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-        });
-    });  
-
-    describe('Unload', function() {
-        it('should unsubscribe from notifications', function() {
-            var vm = new PlayerTextSectionViewModel(new Encounter());
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-            
-            vm.unload();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);
@@ -46,10 +42,10 @@ describe('PlayerTextSectionViewModel', function(){
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PlayerTextSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.save();
-        });        
-    });    
+        });
+    });
 
     describe('Delete', function() {
         it('should delete model', function() {
@@ -62,10 +58,10 @@ describe('PlayerTextSectionViewModel', function(){
         it('should do nothing since it can\'t find the model', function() {
             var vm = new PlayerTextSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.delete();
-        });        
-    });    
+        });
+    });
 
     /* UI Methods */
 
@@ -95,7 +91,7 @@ describe('PlayerTextSectionViewModel', function(){
             vm.sortArrow('name').should.equal('fa fa-arrow-down fa-color');
             vm.sortArrow('description').should.equal('');
         });
-    });       
+    });
 
     describe('modalFinishedOpening', function() {
         it('perform actions after a modal has opened', function() {
@@ -105,7 +101,7 @@ describe('PlayerTextSectionViewModel', function(){
             vm.modalFinishedOpening();
             vm.firstElementInModalHasFocus().should.equal(true);
         });
-    });    
+    });
 
     describe('modalFinishedClosing', function() {
         it('perform actions after a modal has closed', function() {
@@ -129,7 +125,7 @@ describe('PlayerTextSectionViewModel', function(){
             vm.previewTabStatus().should.equal('active');
             vm.editTabStatus().should.equal('');
         });
-    });       
+    });
 
     describe('selectEditTab', function() {
         it('perform actions after the preview tab has been selected', function() {
@@ -141,29 +137,29 @@ describe('PlayerTextSectionViewModel', function(){
             vm.previewTabStatus().should.equal('');
             vm.editTabStatus().should.equal('active');
         });
-    });   
+    });
 
     describe('Data has changed', function() {
         it('should load new data', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PlayerTextSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm._dataHasChanged();
         });
-    });     
+    });
 
     describe('Toggle modal', function() {
         it('should toggle modal and add AS to player text', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PlayerTextSectionViewModel(new Encounter());
             simple.mock(PersistenceService, 'findFirstBy').returnWith(null);
-            
+
             vm.openModal().should.equal(false);
             vm.toggleModal();
             vm.openModal().should.equal(true);
         });
-    });    
+    });
 
     /* CRUD */
 
@@ -178,7 +174,7 @@ describe('PlayerTextSectionViewModel', function(){
             vm.playerTexts().length.should.equal(1);
             Should.not.exist(vm.blankPlayerText().name());
         });
-    });   
+    });
 
     describe('Remove player text', function() {
         it('should remove player text from array', function() {
@@ -191,7 +187,7 @@ describe('PlayerTextSectionViewModel', function(){
 
             vm.playerTexts().length.should.equal(0);
         });
-    });  
+    });
 
     describe('Edit player text', function() {
         it('should put a player text from the list of playerTexts into the selected slot', function() {
@@ -202,5 +198,5 @@ describe('PlayerTextSectionViewModel', function(){
             vm.playerTexts().length.should.equal(1);
             vm.editPlayerText(vm.playerTexts()[0]);
         });
-    });                                            
+    });
 });

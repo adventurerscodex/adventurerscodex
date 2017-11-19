@@ -1,6 +1,10 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { Fixtures } from 'charactersheet/utilities/fixtures';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Proficiency() {
+export function Proficiency() {
     var self = this;
 
     self.ps = PersistenceService.register(Proficiency, self);
@@ -38,3 +42,6 @@ function Proficiency() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Proficiency);

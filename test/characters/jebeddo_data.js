@@ -1,8 +1,7 @@
-'use strict';
 /*eslint quotes: 0 */
 /*eslint indent: 0 */
 
-var jebeddo_data = {
+export var jebeddo_data = {
   "Character": [
     {
       "key": "3ad59319-3f74-42e0-ab2a-67f3e0fc62b5",

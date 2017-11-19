@@ -1,11 +1,14 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Profile() {
+export function Profile() {
     var self = this;
     self.ps = PersistenceService.register(Profile, self);
     self.mapping = {
-        include: ['characterId', 'characterName', 'background', 'playerName', 'race', 'alignment', 'diety', 'typeClass',
-            'gender', 'age', 'level', 'exp']
+        include: ['characterId', 'characterName', 'background', 'playerName',
+            'race', 'alignment', 'diety', 'typeClass', 'gender', 'age', 'level', 'exp']
     };
 
     self.characterId = ko.observable(null);
@@ -54,3 +57,6 @@ function Profile() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Profile);

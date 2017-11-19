@@ -1,10 +1,14 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Utility } from 'charactersheet/utilities';
+import ko from 'knockout';
 
 /**
  * Models an item in the user's backpack or something they
  * have equipped.
  */
-function Item() {
+export function Item() {
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 200;
@@ -74,3 +78,6 @@ function Item() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Item);

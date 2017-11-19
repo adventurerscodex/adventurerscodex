@@ -1,6 +1,12 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { AbilityScores } from 'charactersheet/models';
+import { CharacterManager } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { ProficiencyService } from 'charactersheet/services';
+import ko from 'knockout';
 
-function SavingThrows() {
+export function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
     self.mapping = {
@@ -96,3 +102,6 @@ function SavingThrows() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(SavingThrows);

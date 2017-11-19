@@ -1,6 +1,9 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Treasure() {
+export function Treasure() {
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
     self.mapping = {
@@ -75,3 +78,6 @@ function Treasure() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Treasure);

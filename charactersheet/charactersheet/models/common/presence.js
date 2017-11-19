@@ -1,4 +1,13 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
+    CHAT_MESSAGE_TYPES,
+    ChatServiceManager,
+    SharedServiceManager
+} from 'charactersheet/services';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Strophe from 'strophe';
+import ko from 'knockout';
 
 /**
 An object representation of an XMPP presence message.
@@ -6,7 +15,7 @@ An object representation of an XMPP presence message.
 This class provides a number of different convenience methods for routing, and
 reasoning about presence messages.
 */
-function Presence() {
+export function Presence() {
     var self = this;
     self.ps = PersistenceService.register(Presence, self);
     self.mapping = {
@@ -110,3 +119,6 @@ Presence.fromTree = function(element) {
     });
     return presence;
 };
+
+
+PersistenceService.addToRegistry(Presence);

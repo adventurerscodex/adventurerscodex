@@ -1,4 +1,5 @@
-'use strict';
+import { HitDiceType } from 'charactersheet/models/character/hit_dice_type';
+import simple from 'simple-mock';
 
 describe('Hit Dice Type Model', function() {
     //Clean up after each test.

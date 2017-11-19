@@ -1,4 +1,17 @@
-'use strict';
+import {
+    CharacterManager,
+    DataRepository,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
+import { MockCharacterManager } from '../mocks';
+import { ProficienciesViewModel } from 'charactersheet/viewmodels/character/proficiencies';
+import { Proficiency } from 'charactersheet/models/character';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('ProficienciesViewModel', function() {
     //Clean up after each test.
@@ -50,17 +63,6 @@ describe('ProficienciesViewModel', function() {
             proficienciesViewModel.proficiencies().length.should.equal(0);
             proficienciesViewModel.load();
             proficienciesViewModel.proficiencies().length.should.equal(1);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the saved list of proficiencies', function() {
-            var notificationSpy = simple.mock(Notifications.global.save, 'remove');
-
-            var proficienciesViewModel = new ProficienciesViewModel();
-            notificationSpy.called.should.equal(false);
-            proficienciesViewModel.unload();
-            notificationSpy.called.should.equal(true);
         });
     });
 

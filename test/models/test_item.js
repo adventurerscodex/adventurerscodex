@@ -1,4 +1,5 @@
-'use strict';
+import { Item } from 'charactersheet/models/common/item';
+import simple from 'simple-mock';
 
 describe('Item Model', function() {
     //Clean up after each test.

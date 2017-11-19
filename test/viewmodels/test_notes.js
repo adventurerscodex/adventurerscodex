@@ -1,4 +1,13 @@
-'use strict';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { MockCharacterManager } from '../mocks';
+import { Note } from 'charactersheet/models/common';
+import { NotesViewModel } from 'charactersheet/viewmodels/common/notes';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('NotesViewModel', function(){
     //Clean up after each test.
@@ -25,20 +34,7 @@ describe('NotesViewModel', function(){
             var notesVM = new NotesViewModel();
 
             notesVM.load();
-            notesVM.notes()[0].characterId().should.equal('1234');
-        });
-    });
-
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var note = new Note();
-            var notesVM = new NotesViewModel();
-            simple.mock(notesVM, 'notes').returnWith([note]);
-            var notifySpy = simple.mock(note, 'save');
-
-            notesVM.unload();
-
-            notifySpy.called.should.equal(true);
+            notesVM.notes()[0].characterId().should.equal('12345');
         });
     });
 });

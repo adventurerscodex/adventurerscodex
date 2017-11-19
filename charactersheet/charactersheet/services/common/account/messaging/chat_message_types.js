@@ -1,11 +1,9 @@
-'use strict';
-
 /**
  * Every message sent through the chat will have a type that tells
  * the chat interface and the various chat subsystems how to render
  * and route the given chat message.
  */
-var CHAT_MESSAGE_TYPES = {
+export var CHAT_MESSAGE_TYPES = {
     /**
      * Messages of type META detail something about the chat room:
      * Like a subject, or other room message.

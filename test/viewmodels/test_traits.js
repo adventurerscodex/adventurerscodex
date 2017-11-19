@@ -1,4 +1,12 @@
-'use strict';
+import {
+    Tracked,
+    Trait
+} from 'charactersheet/models/character';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { TraitsViewModel } from 'charactersheet/viewmodels/character/traits';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('TraitsViewModel', function() {
     //Clean up after each test.
@@ -69,17 +77,6 @@ describe('TraitsViewModel', function() {
             traitsViewModel.traits().length.should.equal(0);
             traitsViewModel.load();
             traitsViewModel.traits().length.should.equal(1);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the saved list of traits', function() {
-            var notificationSpy = simple.mock(Notifications.global.save, 'remove');
-
-            var traitsViewModel = new TraitsViewModel();
-            notificationSpy.called.should.equal(false);
-            traitsViewModel.unload();
-            notificationSpy.called.should.equal(true);
         });
     });
 

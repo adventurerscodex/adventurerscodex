@@ -1,4 +1,12 @@
-'use strict';
+import {
+    BackpacksRepositoryFixture,
+    ItemsRepositoryFixture
+} from '../fixtures';
+import { DataRepository } from 'charactersheet/utilities';
+import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps';
+import ko from 'knockout';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Wizard Profile ViewModel', function(){
     //Clean up after each test.
@@ -8,7 +16,7 @@ describe('Wizard Profile ViewModel', function(){
 
     describe('Init', function() {
         it('should hit init', function() {
-            var wizard = new WizardProfileStepViewModel();
+            var wizard = new WizardProfileStepViewModel({});
             var init = simple.mock(wizard, 'init').callFn(function(){});
 
             init.called.should.equal(false);
@@ -21,7 +29,7 @@ describe('Wizard Profile ViewModel', function(){
 
     describe('Load', function() {
         it('should hit load', function() {
-            var wizard = new WizardProfileStepViewModel();
+            var wizard = new WizardProfileStepViewModel({});
             var load = simple.mock(wizard, 'load').callFn(function(){});
 
             load.called.should.equal(false);
@@ -32,22 +40,9 @@ describe('Wizard Profile ViewModel', function(){
         });
     });
 
-    describe('Unload', function() {
-        it('should hit unload', function() {
-            var wizard = new WizardProfileStepViewModel();
-            var unload = simple.mock(wizard, 'unload').callFn(function(){});
-
-            unload.called.should.equal(false);
-
-            wizard.unload();
-
-            unload.called.should.equal(true);
-        });
-    });
-
     describe('Prepopulate', function() {
         it('should populate race', function() {
-            var wizard = new WizardProfileStepViewModel();
+            var wizard = new WizardProfileStepViewModel({});
 
             wizard.setRace('label', 'Elf');
 
@@ -55,7 +50,7 @@ describe('Wizard Profile ViewModel', function(){
         });
 
         it('should populate class', function() {
-            var wizard = new WizardProfileStepViewModel();
+            var wizard = new WizardProfileStepViewModel({});
 
             wizard.setClass('label', 'Wizard');
 
@@ -64,7 +59,7 @@ describe('Wizard Profile ViewModel', function(){
     });
 
     describe('Populate Traits from Race', function() {
-        var wizard = new WizardProfileStepViewModel();
+        var wizard = new WizardProfileStepViewModel({});
         wizard.setRace('label', 'Elf');
 
         wizard.race().should.equal('Elf');
@@ -83,7 +78,7 @@ describe('Wizard Profile ViewModel', function(){
     });
 
     describe('Populate Backpack Items', function() {
-        var wizard = new WizardProfileStepViewModel();
+        var wizard = new WizardProfileStepViewModel({});
         wizard.setBackpack('label', 'Burglar\'s Pack');
 
         wizard.backpack().should.equal('Burglar\'s Pack');
@@ -95,24 +90,5 @@ describe('Wizard Profile ViewModel', function(){
         items.length.should.equal(1);
         items[0].itemName.should.equal('Backpack');
         items[0].itemQty.should.equal(5);
-    });
-
-    describe('Ready', function() {
-        it('should determine if step is ready', function() {
-            var wizard = new WizardProfileStepViewModel();
-
-            var ready = wizard.ready();
-            ready.should.equal(false);
-
-            wizard.characterName('Bob');
-
-            ready = wizard.ready();
-            ready.should.equal(false);
-
-            wizard.playerName('Bobby');
-
-            ready = wizard.ready();
-            ready.should.equal(true);
-        });
     });
 });

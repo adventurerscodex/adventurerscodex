@@ -1,4 +1,7 @@
-'use strict';
+import Should from 'should';
+import { SortService } from 'charactersheet/services';
+import { SortServiceFixture } from '../fixtures';
+import simple from 'simple-mock';
 
 describe('Sort Service', function() {
     //Clean up after each test.

@@ -1,4 +1,5 @@
-'use strict';
+import { MonsterSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('MonsterSection', function(){
     //Clean up after each test.
@@ -19,7 +20,7 @@ describe('MonsterSection', function(){
     describe('Delete', function() {
         it('should delete monsterSection', function() {
             var monsterSection = new MonsterSection();
-            var monsterSectionSpy = simple.mock(monsterSection.ps, 'delete');
+            var monsterSectionSpy = simple.mock(monsterSection.ps, 'delete', function() {});
 
             monsterSection.delete();
             monsterSectionSpy.called.should.equal(true);
@@ -42,7 +43,7 @@ describe('MonsterSection', function(){
             var monsterSection = new MonsterSection();
 
             monsterSection.visible().should.equal(false);
-            monsterSection.importValues({"visible": true});
+            monsterSection.importValues({'visible': true});
             monsterSection.visible().should.equal(true);
         });
     });

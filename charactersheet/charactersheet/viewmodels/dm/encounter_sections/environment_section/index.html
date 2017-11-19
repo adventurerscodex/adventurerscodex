@@ -1,0 +1,110 @@
+<!-- ko if: visible -->
+<div class="h3">
+  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
+  Environment<br />
+  <small data-bind="text: tagline"></small>
+</div>
+<div class="container-fluid">
+  <!-- Begin Tabs -->
+  <ul class="nav nav-tabs tabs">
+    <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+      <a href="#" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
+          <b>Preview</b>
+      </a>
+    </li>
+    <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+      <a href="#" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
+          <b>Edit</b>
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div role="tabpanel" data-bind="css: previewTabStatus" class="tab-pane">
+      <div class="row row-padded">
+        <div data-bind="col-xs-12">
+          <div class="row">
+            <div class="col-xs-8">
+              <b>Weather:</b>&nbsp;<span data-bind="text: weatherLabel"></span><br>
+              <b>Terrain:</b>&nbsp;<span data-bind="text: terrainLabel"></span>
+              </div>
+              <div class="col-xs-4 text-right">
+                <!-- ko if: shouldShowPushButton -->
+                <div class="text-center inline-block">
+                  <span style="font-weight: bold;">Send</span><br>
+                  <a data-bind="click: pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
+                    <i class="fa fa-paper-plane-o fa-color-hover">
+                    </i>
+                  </a>
+                </div>&nbsp;&nbsp;
+                <div class="text-center inline-block">
+                  <span style="font-weight: bold;">Exhibit</span><br>
+                  <a data-bind="click: toggleExhibit" href="#" title="Send Player's Exhibit">
+                    <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+                    </i>
+                  </a>
+                </div>
+                <!-- /ko -->
+                <!-- ko ifnot: shouldShowPushButton -->
+                <div class="text-center inline-block">
+                  <span style="font-weight: bold;">Send</span><br>
+                    <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
+                      data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+                    </span>
+                </div>&nbsp;&nbsp;
+                <div class="text-center inline-block">
+                  <span style="font-weight: bold;">Exhibit</span><br>
+                  <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+                    data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+                  </span>
+                </div>
+                <!-- /ko -->
+              </div>
+          </div>
+          <hr data-bind="visible: shouldShowDividingMarker"/>
+          <div>
+            <!-- ko if: imageUrl -->
+            <img data-bind="attr: { src: convertedImageLink, width: imageWidth }, css: imageClass"
+              class="img-responsive img-rounded">
+            <!-- /ko -->
+            <span data-bind="markdownPreview: description"
+               class="preview-modal-overflow-sm">
+            </span>
+          </div>
+        </div>
+      </div>
+    </div> <!-- End Preview Tab -->
+    <div role="tabpanel" data-bind="css: editTabStatus" class="tab-pane">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 col-padded control-label">Image Link</label>
+          <div class="col-sm-10 col-padded">
+            <input type="text"
+                   class="form-control"
+                   data-bind="value: imageUrl">
+          </div>
+          <label class="col-sm-2 col-padded control-label">Weather</label>
+          <div class="col-sm-10 col-padded">
+            <input type="text"
+                   class="form-control"
+                   data-bind="value: weather">
+          </div>
+          <label class="col-sm-2 col-padded control-label">Terrain</label>
+          <div class="col-sm-10 col-padded">
+            <input type="text"
+                   class="form-control"
+                   data-bind="value: terrain">
+          </div>
+          <label class="col-sm-2 col-padded control-label">Description</label>
+            <div class="col-sm-10 col-padded">
+              <textarea type="text"
+                     class="form-control" rows="4"
+                     data-bind="value: description, markdownEditor: true"></textarea>
+            </div>
+        </div>
+      </form>
+      </div>
+    </div>
+</div>
+
+<player-push-modal params="isOpen: openPushModal, type: pushType, payload: environment, onclose: pushModalFinishedClosing"></player-push-modal>
+<!-- /ko -->

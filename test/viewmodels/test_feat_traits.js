@@ -1,4 +1,13 @@
-'use strict';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { FeaturesTraits } from 'charactersheet/models';
+import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feat_traits';
+import { MockCharacterManager } from '../mocks';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('FeaturesTraitsViewModel', function(){
     //Clean up after each test.
@@ -25,18 +34,7 @@ describe('FeaturesTraitsViewModel', function(){
             var featsVM = new FeaturesTraitsViewModel();
 
             featsVM.load();
-            featsVM.featTraits().characterId().should.equal('1234');
-        });
-    });
-
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var featsVM = new FeaturesTraitsViewModel();
-            var notifySpy = simple.mock(featsVM.featTraits(), 'save');
-
-            featsVM.unload();
-
-            notifySpy.called.should.equal(true);
+            featsVM.featTraits().characterId().should.equal('12345');
         });
     });
 });

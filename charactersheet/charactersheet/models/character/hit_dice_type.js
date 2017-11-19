@@ -1,4 +1,10 @@
-function HitDiceType() {
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { Fixtures } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+
+export function HitDiceType() {
     var self = this;
     self.ps = PersistenceService.register(HitDiceType, self);
     self.mapping = {
@@ -33,3 +39,6 @@ function HitDiceType() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(HitDiceType);

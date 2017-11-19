@@ -1,4 +1,9 @@
-'use strict';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm';
+import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('EncounterDetailViewModel', function(){
     //Clean up after each test.
@@ -8,31 +13,15 @@ describe('EncounterDetailViewModel', function(){
 
     describe('Load', function() {
         it('should load encounter\'s data', function() {
-            var vm = new EncounterDetailViewModel(new Encounter(), []);
-            var setupSpy = simple.mock(vm, '_initializeSectionVMs').callFn(function() {});
-            var loadSpy = simple.mock(ViewModelUtilities, 'loadSubViewModels').callFn(function() {});
-
+            var vm = new EncounterDetailViewModel({
+                encounter: new Encounter(),
+                sectionModels: []
+            });
+            var setupSpy = simple.mock(vm, '_dataHasChanged').callFn(function() {});
             setupSpy.called.should.equal(false);
-            loadSpy.called.should.equal(false);
 
             vm.load();
-
             setupSpy.called.should.equal(true);
-            loadSpy.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload encounter\'s data', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            var vm = new EncounterDetailViewModel(new Encounter(), []);
-            var unloadSpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels').callFn(function() {});
-
-            unloadSpy.called.should.equal(false);
-
-            vm.unload();
-
-            unloadSpy.called.should.equal(true);
         });
     });
 

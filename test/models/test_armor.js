@@ -1,4 +1,5 @@
-'use strict';
+import { Armor } from 'charactersheet/models/common/armor';
+import { ArmorFixture } from '../fixtures';
 
 describe('Armor Model', function() {
     describe('Clear', function() {

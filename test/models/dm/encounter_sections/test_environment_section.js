@@ -1,4 +1,5 @@
-'use strict';
+import { EnvironmentSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('EnvironmentSection', function(){
     //Clean up after each test.
@@ -19,7 +20,7 @@ describe('EnvironmentSection', function(){
     describe('Delete', function() {
         it('should delete environmentSection', function() {
             var environmentSection = new EnvironmentSection();
-            var environmentSectionSpy = simple.mock(environmentSection.ps, 'delete');
+            var environmentSectionSpy = simple.mock(environmentSection.ps, 'delete', function() {});
 
             environmentSection.delete();
             environmentSectionSpy.called.should.equal(true);
@@ -42,7 +43,7 @@ describe('EnvironmentSection', function(){
             var environmentSection = new EnvironmentSection();
 
             environmentSection.visible().should.equal(false);
-            environmentSection.importValues({"visible": true});
+            environmentSection.importValues({'visible': true});
             environmentSection.visible().should.equal(true);
         });
     });

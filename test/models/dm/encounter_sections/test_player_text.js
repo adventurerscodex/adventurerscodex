@@ -1,4 +1,7 @@
-'use strict';
+import { PlayerText } from 'charactersheet/models';
+import Should from 'should';
+import { Utility } from 'charactersheet/utilities';
+import simple from 'simple-mock';
 
 describe('PlayerText', function(){
     //Clean up after each test.
@@ -55,7 +58,7 @@ describe('PlayerText', function(){
     describe('Delete', function() {
         it('should delete playerText', function() {
             var playerText = new PlayerText();
-            var playerTextSpy = simple.mock(playerText.ps, 'delete');
+            var playerTextSpy = simple.mock(playerText.ps, 'delete', function() {});
 
             playerText.delete();
             playerTextSpy.called.should.equal(true);
@@ -78,7 +81,7 @@ describe('PlayerText', function(){
             var playerText = new PlayerText();
 
             Should.not.exist(playerText.description());
-            playerText.importValues({"description": 'blah'});
+            playerText.importValues({'description': 'blah'});
             playerText.description().should.equal('blah');
         });
     });

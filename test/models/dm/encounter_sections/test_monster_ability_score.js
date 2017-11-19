@@ -1,4 +1,6 @@
-'use strict';
+import { MonsterAbilityScore } from 'charactersheet/models';
+import Should from 'should';
+import simple from 'simple-mock';
 
 describe('MonsterAbilityScore', function(){
     //Clean up after each test.
@@ -68,7 +70,7 @@ describe('MonsterAbilityScore', function(){
     describe('Delete', function() {
         it('should delete monsterAbilityScore', function() {
             var monsterAbilityScore = new MonsterAbilityScore();
-            var monsterAbilityScoreSpy = simple.mock(monsterAbilityScore.ps, 'delete');
+            var monsterAbilityScoreSpy = simple.mock(monsterAbilityScore.ps, 'delete', function() {});
 
             monsterAbilityScore.delete();
             monsterAbilityScoreSpy.called.should.equal(true);
@@ -91,7 +93,7 @@ describe('MonsterAbilityScore', function(){
             var monsterAbilityScore = new MonsterAbilityScore();
 
             Should.not.exist(monsterAbilityScore.name());
-            monsterAbilityScore.importValues({"name": 'blah'});
+            monsterAbilityScore.importValues({'name': 'blah'});
             monsterAbilityScore.name().should.equal('blah');
         });
     });

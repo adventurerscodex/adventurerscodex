@@ -1,4 +1,5 @@
-/*global ko*/
+import ko from 'knockout'
+
 (function (root, factory) {
     if (typeof exports === 'object') {
         module.exports = factory(require('knockout'));

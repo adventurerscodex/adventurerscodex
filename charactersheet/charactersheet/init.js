@@ -1,10 +1,37 @@
+import {
+    AuthenticationServiceManager,
+    ChatServiceManager,
+    HealthinessStatusServiceComponent,
+    HotkeysService,
+    InspirationStatusServiceComponent,
+    MagicalStatusServiceComponent,
+    NodeServiceManager,
+    NotificationsServiceManager,
+    PersistenceService,
+    StatusService,
+    TotalWeightStatusServiceComponent,
+    TrackedStatusServiceComponent,
+    UserServiceManager,
+    XMPPService
+} from 'charactersheet/services';
+import {
+    DataRepository,
+    Migrations,
+    Notifications
+} from 'charactersheet/utilities';
+import $ from 'jquery';
+import Clipboard from 'clipboard';
+import { Settings } from 'charactersheet/settings';
+import URI from 'urijs';
+import ko from 'knockout';
+
 /**
  * This global function handles initializing the Knockout Application
  * and set up the environment.
  */
-var init = function(viewModel) {
+export var init = function(viewModel) {
     // Always ignore values in this list when mapping.
-    ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
+//     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
     // Set global URI settings.
     URI.fragmentPrefix = '';
@@ -49,6 +76,8 @@ var init = function(viewModel) {
     NodeServiceManager.sharedService();
     ChatServiceManager.sharedService();
     NotificationsServiceManager.sharedService();
+
+    window.hotkeyHandler = HotkeysService.hotkeyHandler;
 
     // Initialize the View Model
     viewModel.init();

@@ -1,10 +1,13 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { PlayerTextSection } from 'charactersheet/models/dm';
+import { Utility } from 'charactersheet/utilities/convenience';
+import ko from 'knockout';
 
-function PointOfInterest() {
+export function PointOfInterest() {
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.LONG_DESCRIPTION_MAX_LENGTH = 200;
-        
+
     self.ps = PersistenceService.register(PointOfInterest, self);
     self.mapping = {
         include: ['characterId', 'encounterId', 'name', 'description']
@@ -51,3 +54,6 @@ function PointOfInterest() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
+
+
+PersistenceService.addToRegistry(PointOfInterest);

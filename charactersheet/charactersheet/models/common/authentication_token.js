@@ -1,11 +1,14 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 /**
  * Persisted Model for an OAuth Token.
  * For more information regarding OAuth tokens see:
  * https://django-oauth-toolkit.readthedocs.io/en/latest/rest-framework/getting_started.html#step-4-get-your-token-and-use-your-api
  */
-function AuthenticationToken() {
+export function AuthenticationToken() {
     var self = this;
     self.ps = PersistenceService.register(AuthenticationToken, self);
     self.mapping = {
@@ -67,7 +70,7 @@ function AuthenticationToken() {
     // CRUD Methods
 
     self.clear = function() {
-        var values = new Weapon().exportValues();
+        var values = new AuthenticationToken().exportValues();
         ko.mapping.fromJS(values, self.mapping, self);
     };
 
@@ -89,3 +92,6 @@ function AuthenticationToken() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(AuthenticationToken);

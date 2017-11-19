@@ -1,0 +1,355 @@
+<div class="panel panel-default bio">
+  <div class="panel-body tight-inner">
+    <table class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+        <tr>
+          <th data-bind="click: function(){sortBy('name');}" class="col-md-7">
+            Feature
+            <span data-bind="css: sortArrow('name')"></span>
+          </th>
+          <th data-bind="click: function(){sortBy('characterClass');}" class="col-md-4">
+            Class
+            <span data-bind="css: sortArrow('characterClass')"></span>
+          </th>
+          <th class="col-md-1">
+            <a data-toggle="modal"
+              data-target="#addFeature" href="#">
+              <i class="fa fa-plus fa-color"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- ko foreach: filteredAndSortedFeatures -->
+        <tr class="clickable">
+          <td data-bind="text: name, click: $parent.editFeature" href="#"></td>
+          <td data-bind="text: characterClass, click: $parent.editFeature" href="#"></td>
+          <td class="col-content-vertical">
+            <a data-bind="click: $parent.removeFeature" href="#">
+              <i class="fa fa-trash-o fa-color-hover">
+              </i>
+            </a>
+          </td>
+        </tr>
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedFeatures().length == 0 -->
+        <tr class="clickable">
+          <td data-toggle="modal" data-target="#addFeature" href="#"
+            colspan="12" class="text-center">
+            <i class="fa fa-plus fa-color"></i>
+            Add a new Feature
+          </td>
+        </tr>
+      <!-- /ko -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade"
+     id="addFeature"
+     tabindex="-1"
+     role="dialog" data-bind="modal: {
+      onopen: modalFinishedOpening, onclose: modalFinishedClosing}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"
+            id="addFeatureLabel">Add a new Feature.</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-10">
+                <input type="text"
+                        class="form-control"
+                        id="featureName"
+                        placeholder="Rage"
+                        data-bind='textInput: blankFeature().name,
+                        autocomplete: { source: featuresPrePopFilter,
+                        onselect: populateFeature }, hasFocus: firstModalElementHasFocus'>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="class" class="col-sm-2 control-label">Class</label>
+              <div class="col-sm-10">
+                <input type="text"
+                        class="form-control"
+                        id="class"
+                        placeholder="Barbarian"
+                        data-bind='textInput: blankFeature().characterClass,
+                                   autocomplete: { source: classOptions,
+                                   onselect: populateClass }'>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="level" class="col-sm-2 control-label">Level</label>
+              <div class="col-sm-10">
+                <input type="number"
+                        class="form-control"
+                        id="class"
+                        placeholder="1"
+                        data-bind='textInput: blankFeature().level'>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="featureDescription" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea type="password"
+                          class="form-control"
+                          id="featureDescription"
+                          rows="4"
+                          placeholder="While you are not wearing any armor, your Armor Class..."
+                          data-bind='textInput: blankFeature().description'>
+                </textarea>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="featureDescription" class="col-sm-3 control-label content-left">
+              <span class="fa fa-info-circle" style="cursor:pointer;"
+                      data-bind="popover: { content: trackedPopoverText }"></span>&nbsp;Tracked?</label>
+              <div class="col-sm-7">
+                <input type="checkbox"
+                         class="form-control"
+                         id="tracked"
+                         data-bind='checked: blankFeature().isTracked'>
+              </div>
+          </div>
+          <div data-bind="visible: blankFeature().isTracked">
+            <div class="form-group">
+              <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
+              </div>
+              <label for="bonus" class="col-sm-2 control-label">Max</label>
+              <div class="col-sm-9">
+                <input type="number" class="form-control" id="max" min="1"
+                      data-bind='textInput: blankTracked().maxUses'>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:50px">
+              </div>
+              <label class="col-sm-2 control-label">Resets on...</label>
+              <div class="col-sm-9">
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default"
+                        data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
+                    <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
+                            data-bind="checked: blankTracked().resetsOn"/>
+                      <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
+                      &nbsp;&nbsp;&nbsp;Short Rest
+                  </label>
+                  <label class="btn btn-default"
+                  data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
+                    <input type="radio" class="hide-block" name="blankresetsOnLong"
+                            value="long" data-bind="checked: blankTracked().resetsOn"/>
+                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
+                      &nbsp;&nbsp;&nbsp;Long Rest
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-bind='click: addFeature'
+                    data-dismiss="modal">Add</button>
+            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+              <sm><i>This data is distributed under the
+                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                  target='_blank'>
+                  OGL</a><br/>
+                  Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
+                </i><sm>
+            </p>
+          </div>
+        </form>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+     id="viewWeapon"
+     tabindex="-1"
+     role="dialog"
+     data-bind="modal: {
+      open: modalOpen,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit a Feature.</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Begin Tabs -->
+        <ul class="nav nav-tabs tabs">
+          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#" aria-controls="featureModalPreview" role="tab" data-toggle="tab">
+                <b>Preview</b>
+            </a>
+          </li>
+          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#" aria-controls="featureModalEdit" role="tab" data-toggle="tab">
+                <b>Edit</b>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-bind="with: currentEditItem">
+          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
+            <div class="h3">
+              <span data-bind="text: name"></span>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 col-xs-12"><b>Class: </b>&nbsp;
+                <span data-bind="text: characterClass"></span>
+              </div>
+              <div class="col-sm-6 col-xs-12"><b>Level: </b>&nbsp;
+                <span data-bind="text: level"></span>
+              </div>
+            </div>
+            <!-- ko if: isTracked -->
+            <div class="row" >
+              <div class="col-sm-6 col-xs-12">
+                <b>Max Uses:</b>&nbsp;
+                <span data-bind="text: $parent.currentEditTracked().maxUses"></span>
+              </div>
+              <div class="col-sm-6 col-xs-12">
+                <b>Resets on:</b>&nbsp;
+                <span data-bind="visible: $parent.currentEditTracked().resetsOn() === 'short'">
+                  Short Rest
+                </span>
+                <span data-bind="visible: $parent.currentEditTracked().resetsOn() === 'long'">
+                  Long Rest
+                </span>
+              </div>
+            </div>
+            <!-- /ko -->
+            <hr />
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: description"
+                     class="preview-modal-overflow-sm">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"
+                      class="btn btn-primary"
+                      data-dismiss="modal">Done</button>
+            </div>
+          </div> <!-- End Preview Tab -->
+          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                        class="form-control"
+                        id="featureName"
+                        placeholder="Rage"
+                        data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="class" class="col-sm-2 control-label">Class</label>
+                <div class="col-sm-10">
+                  <input type="text"
+                        class="form-control"
+                        id="class"
+                        placeholder="Barbarian"
+                        data-bind='textInput: characterClass,
+                                   autocomplete: { source: $parent.classOptions,
+                                   onselect: $parent.populateClassEdit }'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="level" class="col-sm-2 control-label">Level</label>
+                <div class="col-sm-10">
+                  <input type="number"
+                        class="form-control"
+                        id="class"
+                        placeholder="1"
+                        data-bind='textInput: level'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="featureDescription"
+                       class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea type="text" rows="6"
+                           class="form-control"
+                           placeholder="While you are not wearing any armor, your Armor Class..."
+                           data-bind='value: description, markdownEditor: true'></textarea>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="featureDescription" class="col-sm-2 control-label">Tracked?</label>
+                  <div class="col-sm-10">
+                    <input type="checkbox" class="form-control" id="tracked"
+                            data-bind='checked: isTracked'>
+                  </div>
+              </div>
+              <!-- ko if: isTracked -->
+                <div class="form-group">
+                  <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
+                  </div>
+                  <label for="bonus" class="col-sm-2 control-label">Max</label>
+                  <div class="col-sm-9">
+                    <input type="number" class="form-control" id="max" min="1"
+                          data-bind='textInput: $parent.currentEditTracked().maxUses'>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:50px">
+                  </div>
+                  <label class="col-sm-2 control-label">Resets on...</label>
+                  <div class="col-sm-9">
+                    <div class="btn-group btn-group-justified" role="group">
+                      <label class="btn btn-default"
+                            data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
+                        <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
+                                data-bind="checked: $parent.currentEditTracked().resetsOn"/>
+                          <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }"></img>
+                          &nbsp;&nbsp;&nbsp;Short Rest
+                      </label>
+                      <label class="btn btn-default"
+                      data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
+                        <input type="radio" class="hide-block" name="blankresetsOnLong"
+                                value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
+                        <img class="action-bar-icon" data-bind="attr: { src: $parent.campingTent }"></img>
+                          &nbsp;&nbsp;&nbsp;Long Rest
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <!-- /ko -->
+              <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal">Done</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->

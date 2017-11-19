@@ -1,6 +1,7 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function MonsterSection() {
+export function MonsterSection() {
     var self = this;
     self.ps = PersistenceService.register(MonsterSection, self);
     self.mapping = {
@@ -39,3 +40,6 @@ function MonsterSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(MonsterSection);

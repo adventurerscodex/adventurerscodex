@@ -1,5 +1,9 @@
-'use strict';
-
+import {
+    Monster,
+    MonsterAbilityScore
+} from 'charactersheet/models';
+import Should from 'should';
+import simple from 'simple-mock';
 describe('Monster', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -91,7 +95,7 @@ describe('Monster', function(){
     describe('Delete', function() {
         it('should delete monster', function() {
             var monster = new Monster();
-            var monsterSpy = simple.mock(monster.ps, 'delete');
+            var monsterSpy = simple.mock(monster.ps, 'delete', function() {});
 
             monster.delete();
             monsterSpy.called.should.equal(true);
@@ -114,7 +118,7 @@ describe('Monster', function(){
             var monster = new Monster();
 
             Should.not.exist(monster.description());
-            monster.importValues({"description": 'blah'});
+            monster.importValues({'description': 'blah'});
             monster.description().should.equal('blah');
         });
     });

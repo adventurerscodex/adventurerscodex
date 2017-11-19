@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="h2">
+      Encounters<br/>
+      <small>Create and manage events and sections of your campaign.</small>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 col-md-3 tight-right">
+        <div class="panel panel-default">
+          <div class="panel-body tight-inner">
+            <div class="panel-heading">
+              <div class="h4">
+                Encounters
+                <div class="pull-right">
+                  <span class="fa fa-plus fa-lg" style="cursor:pointer;"
+                    data-bind="click: openAddModal"></span>
+                </div>
+              </div>
+            </div>
+            <nested-list params="cells: encounterCells,
+              selectedCell: selectedCell, ondelete: deleteEncounter,
+              onadd: openAddModalWithParent">
+            </nested-list>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-9">
+        <!-- ko if: selectedEncounter -->
+        <encounter-detail
+          params="encounter: selectedEncounter, sectionModels: sectionModels">
+        </encounter-detail>
+        <!-- /ko -->
+        <!-- ko ifnot: selectedEncounter -->
+        <div class="encounter-detail-place-holder well text-center"
+          style="cursor:pointer;" data-bind="click: openAddModal">
+          <p class="lead text-muted heading">Add a new encounter to get started.</p>
+        </div>
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<encounter-add-edit-modal
+  params="encounter: modalEncounter, openModal: openModal, sections: modalEncounterSections, , onsave: modalSave">
+</encounter-add-edit-modal>

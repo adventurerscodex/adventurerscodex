@@ -1,7 +1,31 @@
-'use strict';
+import {
+    AbilityScores,
+    Health,
+    HitDice,
+    HitDiceType,
+    Profile,
+    Skill,
+    SpellStats,
+    Treasure
+} from 'charactersheet/models';
+import {
+    ArmorClassService,
+    KeyValuePredicate,
+    SharedServiceManager,
+    XMPPService
+} from 'charactersheet/services';
+import {
+    ImageModel,
+    PlayerImage,
+    PlayerInfo,
+    Status,
+    StatusWeightPair
+} from 'charactersheet/models/common';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities/notifications';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
-
-var CharacterCardFields = [
+export var CharacterCardFields = [
     {
         name: 'publisherJid',
         refreshOn: Notifications.item.changed,

@@ -1,4 +1,7 @@
-'use strict';
+import 'knockout-mapping';
+import 'bin/knockout-mapping-autoignore';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 /**
 # pCard Specification
@@ -197,7 +200,7 @@ An entry for a weapon.
  * cCards contain information about the player type and their details.
  * See the individual fields for more information.
  */
-function pCard() {
+export function pCard() {
     var self = this;
 
     self.entries = [];

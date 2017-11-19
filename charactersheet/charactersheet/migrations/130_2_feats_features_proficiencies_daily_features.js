@@ -1,9 +1,15 @@
-'use strict';
+import { Feat } from 'charactersheet/models/character/feat';
+import { Feature } from 'charactersheet/models/character/feature';
+import { Fixtures } from 'charactersheet/utilities/fixtures';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Proficiency } from 'charactersheet/models/character/proficiency';
+import { Tracked } from 'charactersheet/models/character/tracked';
+import uuid from 'node-uuid';
 
 /**
-* Migrates Feats, Features, Proficiencies, and Daily Features to new models.
-*/
-var migration_130_2_feats_features_proficiencies_daily_features = {
+ * Migrates Feats, Features, Proficiencies, and Daily Features to new models.
+ */
+export var migration_130_2_feats_features_proficiencies_daily_features = {
     name: 'Feats, Features, Proficiencies, and Daily Features to new models migration',
     version: '1.3.0',
     migration: function() {

@@ -1,4 +1,5 @@
-'use strict';
+import { Feat } from 'charactersheet/models/character/feat';
+import simple from 'simple-mock';
 
 describe('Feat Model', function() {
     //Clean up after each test.
@@ -20,7 +21,7 @@ describe('Feat Model', function() {
     describe('Delete', function() {
         it('should save the values.', function() {
             var feat = new Feat();
-            var deleteSpy = simple.mock(feat.ps, 'delete');
+            var deleteSpy = simple.mock(feat.ps, 'delete', function() {});
 
             deleteSpy.called.should.equal(false);
             feat.delete();

@@ -1,6 +1,10 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { Fixtures } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Slot() {
+export function Slot() {
     var self = this;
     self.ps = PersistenceService.register(Slot, self);
     self.mapping = {
@@ -20,16 +24,20 @@ function Slot() {
     });
 
     self.spellSlots = ko.pureComputed(function() {
-        return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots()));
-    }, self);
-
-    self.progressLabel = ko.pureComputed(function() {
-        return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots())) + '/' + parseInt(self.maxSpellSlots());
+        return self.getMaxSpellSlots() - self.getUsedSpellSlots();
     });
 
     self.progressWidth = ko.pureComputed(function() {
-        return (parseInt(self.maxSpellSlots()) - parseInt(self.usedSpellSlots())) / parseInt(self.maxSpellSlots());
+        return (self.getMaxSpellSlots() - self.getUsedSpellSlots()) / self.getMaxSpellSlots();
     });
+
+    self.getMaxSpellSlots = function() {
+        return self.maxSpellSlots() ? parseInt(self.maxSpellSlots()) : 0;
+    };
+
+    self.getUsedSpellSlots = function() {
+        return self.usedSpellSlots() ? parseInt(self.usedSpellSlots()) : 0;
+    };
 
     self.clear = function() {
         var values = new Slot().exportValues();
@@ -60,3 +68,6 @@ Slot.REST_TYPE = {
     SHORT_REST: 'short',
     LONG_REST: 'long'
 };
+
+
+PersistenceService.addToRegistry(Slot);

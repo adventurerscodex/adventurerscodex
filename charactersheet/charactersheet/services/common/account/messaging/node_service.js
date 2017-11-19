@@ -1,4 +1,14 @@
-'use strict';
+import {
+    ChatServiceManager,
+    SharedServiceManager,
+    XMPPService
+} from 'charactersheet/services/common';
+import {
+    JSONPayload,
+    Notifications
+} from 'charactersheet/utilities';
+import Strophe from 'strophe';
+
 /*eslint no-console:0*/
 
 /**
@@ -73,7 +83,7 @@ var NodeServiceConfiguration = {
 /**
  * The shared instance manager for the Node Service.
  */
-var NodeServiceManager = new SharedServiceManager(_NodeService, NodeServiceConfiguration);
+export var NodeServiceManager = new SharedServiceManager(_NodeService, NodeServiceConfiguration);
 
 /**
  * An internal service implementation that holds onto data regarding the

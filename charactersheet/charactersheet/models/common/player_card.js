@@ -1,9 +1,14 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Status } from 'charactersheet/models';
+import ko from 'knockout';
+
 /**
  * Fields from a pCard will be extracted to create the UI representation of a player.
  * @param pCard  contains all the fields that make up a player
  */
-function PlayerCard(pCard) {
+export function PlayerCard(pCard) {
 
     var self = this;
 
@@ -162,3 +167,6 @@ function PlayerCard(pCard) {
 
     self.map(pCard);
 }
+
+
+PersistenceService.addToRegistry(PlayerCard);

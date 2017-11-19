@@ -1,4 +1,6 @@
-'use strict';
+import { AppearanceFixture } from '../fixtures';
+import { CharacterAppearance } from 'charactersheet/models/character/appearance';
+import Should from 'should';
 
 describe('Appearance Model', function() {
     describe('Clear', function() {
@@ -33,5 +35,6 @@ describe('Appearance Model', function() {
             p.skinColor().should.equal(AppearanceFixture.skinColor);
         });
     });
+
 });
 

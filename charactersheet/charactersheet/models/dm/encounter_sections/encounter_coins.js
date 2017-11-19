@@ -1,6 +1,8 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Treasure } from 'charactersheet/models/common';
+import ko from 'knockout';
 
-function EncounterCoins() {
+export function EncounterCoins() {
     var self = new Treasure();
 
     self.ps = PersistenceService.register(EncounterCoins, self);
@@ -24,3 +26,6 @@ function EncounterCoins() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterCoins);

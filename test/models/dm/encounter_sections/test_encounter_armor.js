@@ -1,4 +1,5 @@
-'use strict';
+import { EncounterArmor } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('EncounterArmor', function(){
     //Clean up after each test.

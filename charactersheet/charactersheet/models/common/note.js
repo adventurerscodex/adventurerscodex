@@ -1,6 +1,10 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+import marked from 'bin/textarea-markdown-editor/marked.min';
 
-function Note() {
+export function Note() {
     var self = this;
     self.ps = PersistenceService.register(Note, self);
     self.mapping = {
@@ -55,3 +59,6 @@ function Note() {
         return words.slice(0, words.length - 2).join(' ');
     };
 }
+
+
+PersistenceService.addToRegistry(Note);

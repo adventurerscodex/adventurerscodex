@@ -1,4 +1,4 @@
-'use strict';
+import ko from 'knockout';
 
 /**
  * plus-minus component
@@ -11,7 +11,7 @@
  *
  * Note: This template adapts the button size based on the device size.
  */
-function PlusMinusComponentViewModel(params) {
+export function PlusMinusComponentViewModel(params) {
     var self = this;
 
     self.value = params.value;

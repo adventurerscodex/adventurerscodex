@@ -1,3 +1,5 @@
+import ko from 'knockout'
+
 /*
  * File input binding for knockout.js
  * Jesse Kipp - Nov 14, 2013

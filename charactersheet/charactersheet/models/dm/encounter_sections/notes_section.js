@@ -1,10 +1,7 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-/*
- * Model for notes section.
- */
-
-function NotesSection() {
+export function NotesSection() {
     var self = this;
     self.ps = PersistenceService.register(NotesSection, self);
     self.mapping = {
@@ -44,3 +41,6 @@ function NotesSection() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(NotesSection);

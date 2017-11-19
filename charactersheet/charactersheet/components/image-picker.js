@@ -1,4 +1,4 @@
-'use strict';
+import ko from 'knockout';
 
 /**
  * image-picker component
@@ -7,7 +7,7 @@
  * @param selectedCells {Array Objects} The observable used to store the selected cells.
  * @param multiselect {Bool} Defaults to True.
  */
-function ImagePickerComponentViewModel(params) {
+export function ImagePickerComponentViewModel(params) {
     var self = this;
 
     self.cells = params.cells || ko.observableArray();

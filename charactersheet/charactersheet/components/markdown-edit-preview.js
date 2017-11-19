@@ -1,4 +1,5 @@
-'use strict';
+import 'bin/knockout-markdown';
+import ko from 'knockout';
 
 /**
  * markdown-edit-preview component
@@ -12,7 +13,7 @@
  * Usage:
  * <markdown-edit-preview params="text: myValue, rows: 15"></markdown-edit-preview>
  */
-function MarkdownEditPreviewComponentViewModel(params) {
+export function MarkdownEditPreviewComponentViewModel(params) {
     var self = this;
 
     self.text = params.text;

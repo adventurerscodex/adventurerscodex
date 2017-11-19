@@ -1,4 +1,4 @@
-'use strict';
+import { Fixtures } from 'charactersheet/utilities';
 
 /**
  * A convenience class for constructing pairs of percentages that will be processed later.
@@ -9,7 +9,7 @@
  * Sample object:
  * StatusWeightPair(0.89, 0.30)
  */
-function StatusWeightPair(value, weight) {
+export function StatusWeightPair(value, weight) {
     var self = this;
 
     self.value = value;
@@ -64,12 +64,12 @@ StatusWeightPair.determinePhraseAndColor = function(statusType, totalStatusWeigh
     }
 };
 
-function getHealthTypeEnum() {
+export function getHealthTypeEnum() {
     return 'health';
 }
-function getMagicTypeEnum() {
+export function getMagicTypeEnum() {
     return 'magic';
 }
-function getTrackedTypeEnum() {
+export function getTrackedTypeEnum() {
     return 'tracked';
 }

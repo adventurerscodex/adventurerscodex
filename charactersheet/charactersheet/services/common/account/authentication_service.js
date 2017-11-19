@@ -1,10 +1,18 @@
-'use strict';
+import 'urijs/src/URI.fragmentQuery';
+import {
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import { AuthenticationToken } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services';
+import { SharedServiceManager } from '../shared_service_manager';
+import URI from 'urijs';
 
 /**
  * A global service that observes changes in account statuses
  * and holds onto the global account state per session.
  */
-var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationService, null);
+export var AuthenticationServiceManager = new SharedServiceManager(_AuthenticationService, null);
 
 /**
  * An internal service implementation that holds onto data regarding the

@@ -1,4 +1,5 @@
-'use strict';
+import { Trait } from 'charactersheet/models/character/trait';
+import simple from 'simple-mock';
 
 describe('Trait Model', function() {
     //Clean up after each test.
@@ -18,9 +19,9 @@ describe('Trait Model', function() {
     });
 
     describe('Delete', function() {
-        it('should save the values.', function() {
+        it('should delete the values.', function() {
             var trait = new Trait();
-            var deleteSpy = simple.mock(trait.ps, 'delete');
+            var deleteSpy = simple.mock(trait.ps, 'delete', function(){});
 
             deleteSpy.called.should.equal(false);
             trait.delete();

@@ -1,6 +1,13 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
+    Fixtures,
+    Utility
+} from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function MagicItem() {
+export function MagicItem() {
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 145;
@@ -25,8 +32,8 @@ function MagicItem() {
     self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
     self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
-    self.chargesDisplay = ko.pureComputed(function(){
-        if(self.magicItemMaxCharges() == 0){
+    self.chargesDisplay = ko.pureComputed(function() {
+        if (self.magicItemMaxCharges() == 0) {
             return 'N/A';
         }
         else {
@@ -82,3 +89,6 @@ function MagicItem() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(MagicItem);

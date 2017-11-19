@@ -1,11 +1,18 @@
-'use strict';
+import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { Health, HitDice } from 'charactersheet/models';
+import { KeyValuePredicate, SharedServiceManager } from 'charactersheet/services/common';
+import { Status,
+    StatusWeightPair } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { getHealthTypeEnum } from 'charactersheet/models/common/status_weight_pair';
+
 
 /**
  * A Status Service Component that calculates the player's overall healthiness.
  * Hit Dice will have a weight of 30% and Hit Points will have a weight 70%.
  */
 
-function HealthinessStatusServiceComponent() {
+export function HealthinessStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Healthiness';

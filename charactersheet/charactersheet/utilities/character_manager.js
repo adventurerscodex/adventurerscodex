@@ -1,17 +1,21 @@
-'use strict';
 /*eslint no-console:0 */
-var CharacterManager = {
+
+import { Character } from 'charactersheet/models/common/character';
+import { Notifications } from 'charactersheet/utilities/notifications';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+
+export var CharacterManager = {
     __activeCharacter__: null
 };
 
 CharacterManager.changeCharacter = function(characterId) {
-    var newChar = PersistenceService.findBy(Character, 'key', characterId);
+    var newChar = PersistenceService.findFirstBy(Character, 'key', characterId);
     try {
-        Notifications.characterManager.changing.dispatch(
-            CharacterManager.activeCharacter(), newChar[0]);
-        CharacterManager.__activeCharacter__ = newChar[0];
-        Notifications.characterManager.changed.dispatch(
-            CharacterManager.activeCharacter());
+        Notifications.characterManager.changing
+            .dispatch(CharacterManager.activeCharacter(), newChar);
+        CharacterManager.__activeCharacter__ = newChar;
+        Notifications.characterManager.changed
+            .dispatch(CharacterManager.activeCharacter());
     } catch(err) {
         console.log(err);
     }

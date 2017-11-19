@@ -1,9 +1,13 @@
-'use strict';
-
+import {
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import { SharedServiceManager } from '../shared_service_manager';
+import ko from 'knockout';
 /**
  * A global service that fetches the user's active notifications.
  */
-var NotificationsServiceManager = new SharedServiceManager(_NotificationsService, null);
+export var NotificationsServiceManager = new SharedServiceManager(_NotificationsService, null);
 
 /**
  * An internal service implementation that holds onto data regarding the

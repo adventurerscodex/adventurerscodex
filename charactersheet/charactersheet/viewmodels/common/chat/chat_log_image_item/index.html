@@ -1,0 +1,33 @@
+<li class="list-group-item" data-bind="css: listItemClass">
+  <div class="row">
+   <div class="col-xs-1 hidden-xs" style="width:32px; padding-top:10px; margin-right:5px;">
+     <img class="img img-circle" width="30px" height="30px" data-bind="attr: { src: image }" />
+   </div>
+   <div class="col-xs-11">
+     <div class="row">
+       <div class="col-xs-12">
+         <small class="text-muted" data-bind="html: name"></small>
+       </div>
+     </div>
+     <div class="row">
+       <!-- ko if: shouldShowSaveToNotesButton -->
+       <div class="col-xs-11">
+         <span data-bind="html: html"></span>
+         <img data-bind="attr: { src: messageImage }" width="100%" />
+       </div>
+       <div class="col-xs-1">
+         <div class="input-group">
+           <i class="fa fa-save fa-color-hover-success clickable" data-bind="click: saveToNotes"></i>
+         </div>
+       </div>
+       <!-- /ko -->
+       <!-- ko ifnot: shouldShowSaveToNotesButton -->
+       <div class="col-xs-12">
+         <h3 data-bind="text: name"></h3>
+         <img data-bind="attr: { src: messageImage }" width="100%" />
+       </div>
+       <!-- /ko -->
+     </div>
+   </div>
+ </div>
+</li>

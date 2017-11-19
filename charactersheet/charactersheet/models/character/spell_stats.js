@@ -1,6 +1,10 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { Fixtures } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function SpellStats() {
+export function SpellStats() {
     var self = this;
     self.ps = PersistenceService.register(SpellStats, self);
     self.mapping = {
@@ -43,3 +47,6 @@ function SpellStats() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(SpellStats);

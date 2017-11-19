@@ -1,4 +1,10 @@
-'use strict';
+import { AbilityScores } from 'charactersheet/models/character';
+import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('AbilityScoresViewModel', function(){
     //Clean up after each test.
@@ -25,17 +31,6 @@ describe('AbilityScoresViewModel', function(){
 
             asVM.load();
             asVM.abilityScores().characterId().should.equal('1234');
-        });
-    });
-
-    describe('Unload', function() {
-        it('should save values to the database', function() {
-            var asVM = new AbilityScoresViewModel();
-            var notifySpy = simple.mock(asVM.abilityScores(), 'save');
-
-            asVM.unload();
-
-            notifySpy.called.should.equal(true);
         });
     });
 

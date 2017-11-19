@@ -1,6 +1,8 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Weapon } from 'charactersheet/models/common';
+import ko from 'knockout';
 
-function EncounterWeapon() {
+export function EncounterWeapon() {
     var self = new Weapon();
 
     self.ps = PersistenceService.register(EncounterWeapon, self);
@@ -24,3 +26,6 @@ function EncounterWeapon() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterWeapon);

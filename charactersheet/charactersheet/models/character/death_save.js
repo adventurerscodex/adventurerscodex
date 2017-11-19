@@ -1,4 +1,9 @@
-function DeathSave() {
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+
+export function DeathSave() {
     var self = this;
     self.ps = PersistenceService.register(DeathSave, self);
     self.mapping = {
@@ -69,3 +74,6 @@ function DeathSave() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(DeathSave);

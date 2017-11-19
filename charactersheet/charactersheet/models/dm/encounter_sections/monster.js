@@ -1,6 +1,8 @@
-'use strict';
+import { MonsterAbilityScore } from 'charactersheet/models';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Monster() {
+export function Monster() {
     var self = this;
     self.ps = PersistenceService.register(Monster, self);
     self.mapping = {
@@ -86,3 +88,6 @@ function Monster() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Monster);

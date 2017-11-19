@@ -1,9 +1,9 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 
 /**
 * Converts legacy spell values to current spell values.
 */
-var migration_110_2_spells = {
+export var migration_110_2_spells = {
     name: 'Spell Values Migration',
     version: '1.1.0',
     migration: function() {

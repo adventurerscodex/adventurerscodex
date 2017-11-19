@@ -1,4 +1,5 @@
-'use strict';
+import { NotesSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('NotesSection', function(){
     //Clean up after each test.
@@ -22,7 +23,7 @@ describe('NotesSection', function(){
             var notes = new NotesSection();
 
             notes.notes().should.equal('');
-            notes.importValues({"notes": 'blah'});
+            notes.importValues({'notes': 'blah'});
             notes.notes().should.equal('blah');
         });
     });
@@ -51,7 +52,7 @@ describe('NotesSection', function(){
     describe('Delete', function() {
         it('should delete notes', function() {
             var notes = new NotesSection();
-            var notesSpy = simple.mock(notes.ps, 'delete');
+            var notesSpy = simple.mock(notes.ps, 'delete', function() {});
 
             notes.delete();
             notesSpy.called.should.equal(true);

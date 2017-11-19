@@ -1,4 +1,5 @@
-'use strict';
+import { TreasureSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('TreasureSection', function(){
     //Clean up after each test.
@@ -19,7 +20,7 @@ describe('TreasureSection', function(){
     describe('Delete', function() {
         it('should delete treasureSection', function() {
             var treasureSection = new TreasureSection();
-            var treasureSectionSpy = simple.mock(treasureSection.ps, 'delete');
+            var treasureSectionSpy = simple.mock(treasureSection.ps, 'delete', function() {});
 
             treasureSection.delete();
             treasureSectionSpy.called.should.equal(true);
@@ -42,7 +43,7 @@ describe('TreasureSection', function(){
             var treasureSection = new TreasureSection();
 
             treasureSection.visible().should.equal(false);
-            treasureSection.importValues({"visible": true});
+            treasureSection.importValues({'visible': true});
             treasureSection.visible().should.equal(true);
         });
     });

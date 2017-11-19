@@ -1,4 +1,23 @@
-'use strict';
+import {
+    CharacterManager,
+    DataRepository,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import {
+    ChatRoom,
+    Message,
+    Presence
+} from 'charactersheet/models';
+import {
+    KeyValuePredicate,
+    OrPredicate,
+    XMPPService
+} from 'charactersheet/services';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from '../../shared_service_manager';
+import ko from 'knockout';
+import uuid from 'node-uuid';
 
 /**
  * The default configuration object for the Chat service.
@@ -12,7 +31,7 @@ var ChatServiceConfiguration = {
 /**
  * The shared instance manager for the Chat Service.
  */
-var ChatServiceManager = new SharedServiceManager(_ChatService, ChatServiceConfiguration);
+export var ChatServiceManager = new SharedServiceManager(_ChatService, ChatServiceConfiguration);
 
 /**
  * An internal service implementation that holds onto data regarding the

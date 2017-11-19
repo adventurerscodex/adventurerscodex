@@ -1,4 +1,9 @@
-'use strict';
+import 'jquery-ui/ui/core'
+import 'jquery-ui/ui/widgets/autocomplete'
+import 'jquery-ui/themes/base/all.css'
+
+import ko from 'knockout'
+import $ from 'jquery'
 
 /**
  * Knockout jQuery Autocomplete Binding

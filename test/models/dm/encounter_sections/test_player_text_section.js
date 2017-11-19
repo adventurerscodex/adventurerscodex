@@ -1,4 +1,5 @@
-'use strict';
+import { PlayerTextSection } from 'charactersheet/models';
+import simple from 'simple-mock';
 
 describe('PlayerTextSection', function(){
     //Clean up after each test.
@@ -19,7 +20,7 @@ describe('PlayerTextSection', function(){
     describe('Delete', function() {
         it('should delete playerTextSection', function() {
             var playerTextSection = new PlayerTextSection();
-            var playerTextSectionSpy = simple.mock(playerTextSection.ps, 'delete');
+            var playerTextSectionSpy = simple.mock(playerTextSection.ps, 'delete', function() {});
 
             playerTextSection.delete();
             playerTextSectionSpy.called.should.equal(true);
@@ -42,7 +43,7 @@ describe('PlayerTextSection', function(){
             var playerTextSection = new PlayerTextSection();
 
             playerTextSection.visible().should.equal(true);
-            playerTextSection.importValues({"visible": false});
+            playerTextSection.importValues({'visible': false});
             playerTextSection.visible().should.equal(false);
         });
     });

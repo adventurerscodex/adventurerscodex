@@ -1,4 +1,4 @@
-'use strict';
+import ko from 'knockout'
 
 /**
  * This extender validates the input observeable that it is assigned to. Currently,

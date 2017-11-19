@@ -1,4 +1,7 @@
-'use strict';
+import { ProficiencyService } from 'charactersheet/services';
+import Should from 'should';
+import { Skill } from 'charactersheet/models/character/skill';
+import simple from 'simple-mock';
 
 describe('Skill Model', function() {
     //Clean up after each test.

@@ -1,6 +1,9 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function ImageModel() {
+export function ImageModel() {
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);
 
@@ -38,3 +41,6 @@ function ImageModel() {
         }
     });
 }
+
+
+PersistenceService.addToRegistry(ImageModel);

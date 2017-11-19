@@ -1,4 +1,6 @@
-'use strict';
+import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import marked from 'bin/textarea-markdown-editor/marked.min';
 
 /**
  * This file contains a number of generic utility functions used throughout
@@ -8,7 +10,7 @@
  * @author Nathaniel Arellano
  */
 
-var Utility = {
+export var Utility = {
     markdown: {},
     string: {},
     array: {},

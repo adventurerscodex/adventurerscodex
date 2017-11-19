@@ -1,6 +1,10 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Utility } from 'charactersheet/utilities';
+import ko from 'knockout';
 
-function CampaignMapOrImage() {
+export function CampaignMapOrImage() {
     var self = this;
 
     self.ps = PersistenceService.register(CampaignMapOrImage, self);
@@ -57,3 +61,6 @@ function CampaignMapOrImage() {
         return 'New image in chat';
     };
 }
+
+
+PersistenceService.addToRegistry(CampaignMapOrImage);

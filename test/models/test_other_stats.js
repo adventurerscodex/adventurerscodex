@@ -1,4 +1,6 @@
-'use strict';
+import { OtherStats } from 'charactersheet/models/character/other_stats';
+import Should from 'should';
+import simple from 'simple-mock';
 
 describe('Other Stats Model', function() {
     //Clean up after each test.

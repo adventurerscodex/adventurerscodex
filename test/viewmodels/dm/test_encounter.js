@@ -1,4 +1,9 @@
-'use strict';
+import { Encounter } from 'charactersheet/models/dm';
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
+import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
+import { EncounterViewModel } from 'charactersheet/viewmodels/dm/encounter';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Encounter View Model', function() {
 
@@ -84,7 +89,7 @@ describe('Encounter View Model', function() {
             vm.openAddModalWithParent(parent);
             modalEncounterSpy.called.should.equal(true);
 
-            vm.modalEncounter().parent().should.equal(parent.encounterId())
+            vm.modalEncounter().parent().should.equal(parent.encounterId());
         });
     });
 

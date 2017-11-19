@@ -1,6 +1,17 @@
-'use strict';
+import {
+    CharacterManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
+    SharedServiceManager
+} from 'charactersheet/services/common';
+import { AbilityScores } from 'charactersheet/models/character';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Armor() {
+export function Armor() {
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {
@@ -56,7 +67,7 @@ function Armor() {
 
     self.armorSummaryLabel = ko.pureComputed(function() {
         if (self.armorMagicalModifier() != 0) {
-            if (self.acLabel()){
+            if (self.acLabel()) {
                 return self.magicalModifierLabel() + ', ' + self.acLabel();
             } else {
                 return self.magicalModifierLabel();
@@ -125,11 +136,11 @@ function Armor() {
     self.abilityScoreBonus = ko.pureComputed(function() {
         self._dummy();
         var dexAbilityScore = self.dexAbilityScoreModifier();
-        if(dexAbilityScore){
-            if(self.armorType() === 'Light'){
+        if (dexAbilityScore) {
+            if (self.armorType() === 'Light') {
                 return dexAbilityScore;
             }
-            else if(self.armorType() === 'Medium'){
+            else if (self.armorType() === 'Medium') {
                 return dexAbilityScore >= 2 ? 2 : dexAbilityScore;
             }
         }
@@ -144,13 +155,16 @@ function Armor() {
         var abilityScoreBonus = self.abilityScoreBonus();
         var armorClass = parseInt(self.armorClass());
 
-        if(abilityScoreBonus){
+        if (abilityScoreBonus) {
             totalBonus += abilityScoreBonus;
         }
-        if(armorClass){
+        if (armorClass) {
             totalBonus += armorClass;
         }
 
         return totalBonus;
     });
 }
+
+
+PersistenceService.addToRegistry(Armor);

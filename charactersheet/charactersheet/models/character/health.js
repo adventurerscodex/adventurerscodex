@@ -1,6 +1,9 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Health() {
+export function Health() {
     var self = this;
     self.ps = PersistenceService.register(Health, self);
     self.mapping = {
@@ -16,25 +19,30 @@ function Health() {
     self.damage = ko.observable(0);
 
     self.hitpoints = ko.pureComputed(function() {
-        var damage = self.damage() ? self.damage() : 0;
+        var damage = self.damage() ? parseInt(self.damage()) : 0;
         return self.totalHitpoints() - damage;
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
-        var maxHP = self.maxHitpoints() ? self.maxHitpoints() : 0;
-        var tempHP = self.tempHitpoints() ? self.tempHitpoints() : 0;
-        return parseInt(maxHP) + parseInt(tempHP);
+        var maxHP = self.maxHitpoints() ? parseInt(self.maxHitpoints()) : 0;
+        var tempHP = self.tempHitpoints() ? parseInt(self.tempHitpoints()) : 0;
+        return maxHP + tempHP;
     }, self);
 
     self.tempHitpointsRemaining = ko.pureComputed(function() {
-        return (parseInt(self.tempHitpoints()) - parseInt(self.damage()));
+        var damage = self.damage() ? parseInt(self.damage()) : 0;
+        var tempHP = self.tempHitpoints() ? parseInt(self.tempHitpoints()) : 0;
+        return tempHP - damage;
     }, self);
 
     self.regularHitpointsRemaining = ko.pureComputed(function() {
         if (self.tempHitpointsRemaining() > 0) {
             return parseInt(self.maxHitpoints());
         }
-        return (parseInt(self.maxHitpoints()) - ((self.damage() ? parseInt(self.damage()) : 0) - parseInt(self.tempHitpoints())));
+        var damage = self.damage() ? parseInt(self.damage()) : 0;
+        var tempHP = self.tempHitpoints() ? parseInt(self.tempHitpoints()) : 0;
+        var maxHP = self.maxHitpoints() ? parseInt(self.maxHitpoints()) : 0;
+        return maxHP - (damage - tempHP);
     }, self);
 
     //Progress bar methods.
@@ -43,7 +51,7 @@ function Health() {
         return 'HP: ' + self.hitpoints().toString();
     });
 
-    self.isKnockedOut =  ko.pureComputed(function() {
+    self.isKnockedOut = ko.pureComputed(function() {
         return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= 0 ? true : false;
     }, self);
 
@@ -96,3 +104,6 @@ function Health() {
         self.ps.save();
     };
 }
+
+
+PersistenceService.addToRegistry(Health);

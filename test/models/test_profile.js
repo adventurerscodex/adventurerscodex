@@ -1,4 +1,6 @@
-'use strict';
+import { Profile } from 'charactersheet/models/character/profile';
+import { ProfileFixture } from '../fixtures';
+import simple from 'simple-mock';
 
 describe('Profile Model', function() {
     //Clean up after each test.

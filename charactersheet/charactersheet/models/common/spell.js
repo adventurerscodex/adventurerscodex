@@ -1,6 +1,14 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
+    CharacterManager,
+    Fixtures
+} from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SpellStats } from 'charactersheet/models';
+import ko from 'knockout';
 
-function Spell() {
+export function Spell() {
     var self = this;
     self.ps = PersistenceService.register(Spell, self);
     self.mapping = {
@@ -106,3 +114,6 @@ function Spell() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Spell);

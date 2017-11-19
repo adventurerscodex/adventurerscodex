@@ -1,4 +1,7 @@
-'use strict';
+import { Environment } from 'charactersheet/models';
+import Should from 'should';
+import simple from 'simple-mock';
+
 
 describe('Environment', function(){
     //Clean up after each test.
@@ -19,7 +22,7 @@ describe('Environment', function(){
     describe('Delete', function() {
         it('should delete environment', function() {
             var environment = new Environment();
-            var environmentSpy = simple.mock(environment.ps, 'delete');
+            var environmentSpy = simple.mock(environment.ps, 'delete', function() {});
 
             environment.delete();
             environmentSpy.called.should.equal(true);
@@ -42,7 +45,7 @@ describe('Environment', function(){
             var environment = new Environment();
 
             Should.not.exist(environment.description());
-            environment.importValues({"description": 'blah'});
+            environment.importValues({'description': 'blah'});
             environment.description().should.equal('blah');
         });
     });

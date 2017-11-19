@@ -1,4 +1,13 @@
-'use strict';
+import {
+    AbilityScores,
+    getModifier,
+    getStrModifier,
+    isNumeric } from 'charactersheet/models/character/ability_scores';
+import { AbilitiesFixture } from '../fixtures';
+import { CharacterManager } from 'charactersheet/utilities';
+import Should from 'should';
+import simple from 'simple-mock';
+
 
 describe('Ability Scores Model', function() {
     describe('Clear', function() {

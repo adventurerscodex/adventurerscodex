@@ -1,6 +1,8 @@
-'use strict';
+import { Armor } from 'charactersheet/models/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function EncounterArmor() {
+export function EncounterArmor() {
     var self = new Armor();
 
     self.ps = PersistenceService.register(EncounterArmor, self);
@@ -24,3 +26,6 @@ function EncounterArmor() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterArmor);

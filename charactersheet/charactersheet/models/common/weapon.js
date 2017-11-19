@@ -1,6 +1,14 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
+    ProficiencyService,
+    SharedServiceManager
+} from 'charactersheet/services';
+import { Fixtures } from 'charactersheet/utilities';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Weapon() {
+export function Weapon() {
     var self = this;
 
     self.FINESSE = 'finesse';
@@ -226,3 +234,6 @@ function Weapon() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Weapon);

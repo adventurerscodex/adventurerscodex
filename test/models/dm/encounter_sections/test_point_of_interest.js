@@ -1,4 +1,6 @@
-'use strict';
+import { PointOfInterest } from 'charactersheet/models';
+import Should from 'should';
+import simple from 'simple-mock';
 
 describe('PointOfInterest', function(){
     //Clean up after each test.
@@ -19,7 +21,7 @@ describe('PointOfInterest', function(){
     describe('Delete', function() {
         it('should delete pointOfInterest', function() {
             var pointOfInterest = new PointOfInterest();
-            var pointOfInterestSpy = simple.mock(pointOfInterest.ps, 'delete');
+            var pointOfInterestSpy = simple.mock(pointOfInterest.ps, 'delete', function() {});
 
             pointOfInterest.delete();
             pointOfInterestSpy.called.should.equal(true);
@@ -42,7 +44,7 @@ describe('PointOfInterest', function(){
             var pointOfInterest = new PointOfInterest();
 
             Should.not.exist(pointOfInterest.description());
-            pointOfInterest.importValues({"description": 'blah'});
+            pointOfInterest.importValues({'description': 'blah'});
             pointOfInterest.description().should.equal('blah');
         });
     });

@@ -1,3 +1,19 @@
+import {
+    CampaignMapOrImage,
+    Environment,
+    Exhibit,
+    MapOrImage
+} from 'charactersheet/models';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
+    PersistenceService
+} from 'charactersheet/services/common';
+import { SharedServiceManager } from '../shared_service_manager';
+
 /**
  * The default configuration object for the Image service.
  */
@@ -9,7 +25,7 @@ var ImageServiceConfiguration = {
 /**
  * The shared instance manager for the Image Service.
  */
-var ImageServiceManager = new SharedServiceManager(_ImageService, ImageServiceConfiguration);
+export var ImageServiceManager = new SharedServiceManager(_ImageService, ImageServiceConfiguration);
 
 /**
  * An internal service implementation that manages Exhibit images and the states of the associated

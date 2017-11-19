@@ -1,7 +1,24 @@
-'use strict';
+import {
+    Campaign,
+    Exhibit
+} from 'charactersheet/models/dm';
+import {
+    ImageModel,
+    PlayerImage,
+    PlayerInfo,
+    Status,
+    StatusWeightPair
+} from 'charactersheet/models/common';
+import {
+    KeyValuePredicate,
+    PersistenceService,
+    SharedServiceManager,
+    XMPPService
+} from 'charactersheet/services/common';
+import { CharacterManager } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities/notifications';
 
-
-var DMCardFields = [
+export var DMCardFields = [
     {
         name: 'publisherJid',
         refreshOn: Notifications.item.changed,

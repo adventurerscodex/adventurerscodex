@@ -1,4 +1,13 @@
-'use strict';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { Encounter } from 'charactersheet/models/dm/encounter';
+import { Monster } from 'charactersheet/models/dm/encounter_sections/monster';
+import { MonsterSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/monster_section';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('MonsterSectionViewModel', function(){
     //Clean up after each test.
@@ -35,19 +44,6 @@ describe('MonsterSectionViewModel', function(){
             });
 
             vm.load();
-
-            spy1.called.should.equal(true);
-            spy2.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unsubscribe from notifications', function() {
-            var vm = new MonsterSectionViewModel(new Encounter());
-            var spy1 = simple.mock(Notifications.global.save, 'remove');
-            var spy2 = simple.mock(Notifications.encounters.changed, 'remove');
-
-            vm.unload();
 
             spy1.called.should.equal(true);
             spy2.called.should.equal(true);

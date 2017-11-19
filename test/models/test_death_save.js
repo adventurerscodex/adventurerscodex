@@ -1,4 +1,5 @@
-'use strict';
+import { DeathSave } from 'charactersheet/models/character/death_save';
+import simple from 'simple-mock';
 
 describe('Death Save Model', function() {
     //Clean up after each test.

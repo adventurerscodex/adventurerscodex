@@ -1,9 +1,14 @@
+import ko from 'knockout'
+import $ from 'jquery'
+
+import 'select2'
+import 'select2/select2.css';
+
+
 ko.bindingHandlers.select2 = {
     init: function(element, valueAccessor) {
-      var options = valueAccessor() || {};
-      setTimeout(function() {
-          $(element).select2(options);
-      }, 0);
+        var options = valueAccessor() || {};
+        $(element).select2(options);
     },
     update: function(element, valueAccessor, allBindingsAccessor) {
         var allBindings = allBindingsAccessor(),

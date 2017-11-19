@@ -1,7 +1,26 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import {
+    CharacterCardPublishingService,
+    ChatServiceManager,
+    DMCardPublishingService,
+    KeyValuePredicate,
+    SharedServiceManager
+} from 'charactersheet/services/common';
+import {
+    CharacterManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Message,
+    Presence
+} from 'charactersheet/models/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Strophe from 'strophe';
+import ko from 'knockout';
 
-
-function ChatRoom() {
+export function ChatRoom() {
     var self = this;
 
     self.ps = PersistenceService.register(ChatRoom, self);
@@ -88,3 +107,6 @@ function ChatRoom() {
         return occupantCardsOrNames;
     };
 }
+
+
+PersistenceService.addToRegistry(ChatRoom);

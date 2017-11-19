@@ -1,5 +1,14 @@
-'use strict';
 /*eslint no-console:0*/
+import {
+    MockLocalStorage,
+    mock_110_migration,
+    mock_110_migration_fail,
+    mock_134_migration
+} from '../fixtures';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Should from 'should';
+import { Skill } from 'charactersheet/models/character/skill';
+import simple from 'simple-mock';
 
 describe('Persistence Service', function() {
     //Clean up after each test.

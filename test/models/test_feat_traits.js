@@ -1,11 +1,12 @@
-'use strict';
+import { FeaturesTraits } from 'charactersheet/models/character/feat_traits';
+import simple from 'simple-mock';
 
 describe('Features and Traits Model', function() {
     //Clean up after each test.
     afterEach(function() {
         simple.restore();
     });
-    
+
     var vals = {
         'background':'A background',
         'ideals':'LOTS OF THEM',

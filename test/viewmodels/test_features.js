@@ -1,4 +1,19 @@
-'use strict';
+import {
+    CharacterManager,
+    DataRepository,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Feature,
+    Tracked
+} from 'charactersheet/models/character';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
+import { FeaturesViewModel } from 'charactersheet/viewmodels/character/features';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('FeaturesViewModel', function() {
     //Clean up after each test.
@@ -60,17 +75,6 @@ describe('FeaturesViewModel', function() {
             featuresViewModel.features().length.should.equal(0);
             featuresViewModel.load();
             featuresViewModel.features().length.should.equal(1);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the saved list of features', function() {
-            var notificationSpy = simple.mock(Notifications.global.save, 'remove');
-
-            var featuresViewModel = new FeaturesViewModel();
-            notificationSpy.called.should.equal(false);
-            featuresViewModel.unload();
-            notificationSpy.called.should.equal(true);
         });
     });
 

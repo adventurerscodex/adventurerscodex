@@ -1,5 +1,9 @@
-'use strict';
 /*eslint no-console:0 */
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Should from 'should';
+import { migration_110_3_stats } from 'charactersheet/migrations';
+import simple from 'simple-mock';
+import { statDataFixture } from '../fixtures';
 
 describe('110 Stats Migration', function() {
     describe('Migration', function() {

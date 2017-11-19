@@ -1,4 +1,5 @@
-'use strict';
+import ko from 'knockout'
+import 'knockout-mapping'
 
 /**
  * A Knockout Mapping addition that will automatically add any field not
@@ -14,13 +15,16 @@
  *   var fullMapping = ko.mapping.autoignore(this, this.mapping);
  *  }
  */
-ko.mapping.autoignore = function(obj, config) {
-    var includes = config.include || [];
-    var keys = Object.keys(obj);
 
-    config.ignore = config.ignore || [];
-    config.ignore = config.ignore.concat(keys.filter(function(key, idx, _) {
-        return includes.indexOf(key) === -1;
-    }));
-    return config;
-};
+if (!ko.mapping.autoignore) {
+    ko.mapping.autoignore = function(obj, config) {
+        var includes = config.include || [];
+        var keys = Object.keys(obj);
+
+        config.ignore = config.ignore || [];
+        config.ignore = config.ignore.concat(keys.filter(function(key, idx, _) {
+            return includes.indexOf(key) === -1;
+        }));
+        return config;
+    };
+}

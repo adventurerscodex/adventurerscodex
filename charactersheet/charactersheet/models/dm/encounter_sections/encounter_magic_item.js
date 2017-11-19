@@ -1,6 +1,8 @@
-'use strict';
+import { MagicItem } from 'charactersheet/models/common/magic_item';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function EncounterMagicItem() {
+export function EncounterMagicItem() {
     var self = new MagicItem();
 
     self.ps = PersistenceService.register(EncounterMagicItem, self);
@@ -24,3 +26,6 @@ function EncounterMagicItem() {
 
     return self;
 }
+
+
+PersistenceService.addToRegistry(EncounterMagicItem);

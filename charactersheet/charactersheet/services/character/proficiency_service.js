@@ -1,6 +1,16 @@
-'use strict';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    OtherStats,
+    Profile
+} from 'charactersheet/models/character';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from '../common/shared_service_manager';
+import ko from 'knockout';
 
-var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
+export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {});
 
 function _ProficiencyService(configuration) {
     var self = this;

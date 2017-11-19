@@ -1,10 +1,29 @@
-'use strict';
+import {
+    AbilityScores,
+    Armor,
+    Item,
+    MagicItem,
+    Status,
+    StatusWeightPair,
+    Treasure,
+    Weapon
+} from 'charactersheet/models';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
+    SharedServiceManager
+} from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
 /**
  * A Status Service Component that tracks the total weight that a character
  * is carrying, and any modifiers that are applied due to this weight.
  */
-function TotalWeightStatusServiceComponent() {
+export function TotalWeightStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Encumbrance';
@@ -93,7 +112,7 @@ function TotalWeightStatusServiceComponent() {
         }
     };
 
-    self._getWeightFor = function(model, property)  {
+    self._getWeightFor = function(model, property) {
         var weight = 0;
         var key = CharacterManager.activeCharacter().key();
         PersistenceService.findBy(model, 'characterId', key).forEach(function(instance, idx, _) {

@@ -1,6 +1,7 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function MapsAndImagesSection() {
+export function MapsAndImagesSection() {
     var self = this;
     self.ps = PersistenceService.register(MapsAndImagesSection, self);
     self.mapping = {
@@ -39,3 +40,6 @@ function MapsAndImagesSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(MapsAndImagesSection);

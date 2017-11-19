@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * A global service that observes changes in various modules, and calculates
  * relevant statuses based on their values. This service works in the background
@@ -18,7 +16,7 @@
  * To add additional status components, create a component and add it to the
  * list of default components in the Fixtures.
  */
-var StatusService = {
+export var StatusService = {
     _sharedService: null,
 
     /**

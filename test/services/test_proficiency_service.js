@@ -1,4 +1,10 @@
-'use strict';
+import { Notifications } from 'charactersheet/utilities';
+import { OtherStats } from 'charactersheet/models/character/other_stats';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { ProficiencyService } from 'charactersheet/services/character';
+import { Profile } from 'charactersheet/models/character/profile';
+import Should from 'should';
+import simple from 'simple-mock';
 
 describe('Proficiency Service', function() {
     //Clean up after each test.

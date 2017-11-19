@@ -1,6 +1,7 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function TreasureSection() {
+export function TreasureSection() {
     var self = this;
     self.ps = PersistenceService.register(TreasureSection, self);
     self.mapping = {
@@ -39,3 +40,6 @@ function TreasureSection() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(TreasureSection);

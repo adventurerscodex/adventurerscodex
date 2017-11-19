@@ -1,6 +1,8 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Utility } from 'charactersheet/utilities/convenience';
+import ko from 'knockout';
 
-function NPC() {
+export function NPC() {
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.LONG_DESCRIPTION_MAX_LENGTH = 200;
@@ -52,3 +54,6 @@ function NPC() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
+
+
+PersistenceService.addToRegistry(NPC);

@@ -1,6 +1,21 @@
-'use strict';
+import {
+    AbilityScores,
+    Armor,
+    OtherStats
+} from 'charactersheet/models';
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    KeyValuePredicate,
+    NotPredicate
+} from 'charactersheet/services/common';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from '../common/shared_service_manager';
+import ko from 'knockout';
 
-var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
+export var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
 
 function _ArmorClassService(configuration) {
     var self = this;

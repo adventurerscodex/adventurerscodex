@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-xs-12">
+    <!-- Begin About Section -->
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-11 col-xs-12">
+        <div class="h1">Ability Scores<br />
+          <small>These scores are the core of all of your abilities. Choose them wisely.</small>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-offset-1 col-sm-7 col-xs-12">
+        <div class="h3">Rolling for Ability Scores<br />
+          <small>One method is to roll four D6 dice and record the total of the highest
+          three; do this until you have six numbers. Or you can use
+          the following scores instead: 15, 14, 13, 12, 10, 8.
+          </small>
+        </div>
+        <p></p>
+        <div class="row">
+          <div class="col-md-4 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Strength
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="18"
+                data-bind='textInput: str, valueUpdate: "afterkeydown"'>
+            </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: str.hasError, html: str.validationMessage,
+              css: { errormessagetext: str.hasError }'> </span>
+          </div>
+          <div class="col-md-4 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Dexterity
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="18"
+                data-bind='textInput: dex, valueUpdate: "afterkeydown"'>
+            </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: dex.hasError, html: dex.validationMessage,
+              css: { errormessagetext: dex.hasError }'> </span>
+          </div>
+        </div>
+        <div class="row">
+        <!-- Race, Gender, Class, Alignment -->
+          <div class="col-md-4 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Constitution</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="18"
+                data-bind='textInput: con, valueUpdate: "afterkeydown"'>
+            </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: con.hasError, html: con.validationMessage,
+              css: { errormessagetext: con.hasError }'> </span>
+          </div>
+          <div class="col-md-4 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Intelligence</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="18"
+                data-bind='textInput: int, valueUpdate: "afterkeydown"'>
+            </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: int.hasError, html: int.validationMessage,
+              css: { errormessagetext: int.hasError }'> </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Wisdom
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="18"
+                data-bind='textInput: wis, valueUpdate: "afterkeydown"'>
+            </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: wis.hasError, html: wis.validationMessage,
+              css: { errormessagetext: wis.hasError }'> </span>
+          </div>
+          <div class="col-md-4 col-padded">
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon2">Charisma
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              <input type="number"
+                     class="form-control"
+                     aria-describedby="basic-addon2"
+                     min="1"
+                     max="18"
+                     data-bind='textInput: cha, valueUpdate: "afterkeydown"'>
+            </div>
+          </div>
+          <div class="col-md-2 col-padded">
+            <span data-bind='visible: cha.hasError, html: cha.validationMessage,
+              css: { errormessagetext: cha.hasError }'> </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3 hidden-xs">
+        <img data-bind="attr: { src: icon }" width="100%">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,9 +1,11 @@
-'use strict';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
+import uuid from 'node-uuid';
 
 /**
  * A directory-like container with meta-data information about a container.
  */
-function Encounter() {
+export function Encounter() {
     var self = this;
     self.ps = PersistenceService.register(Encounter, self);
     self.mapping = {
@@ -26,6 +28,13 @@ function Encounter() {
     self.children = ko.observableArray([]);
 
     /* Public Methods */
+
+    self.displayName = ko.pureComputed(function() {
+        if (!ko.unwrap(self.name)) {
+            return 'Untitled Encounter';
+        }
+        return self.name();
+    });
 
     self.removeChild = function(childId) {
         self.children(self.children().filter(function(id, idx, _) {
@@ -72,3 +81,6 @@ function Encounter() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+
+PersistenceService.addToRegistry(Encounter);

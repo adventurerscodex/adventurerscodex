@@ -1,4 +1,14 @@
-'use strict';
+import {
+    CharacterManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
+import { MockCharacterManager } from '../mocks';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Profile } from 'charactersheet/models/character';
+import { ProfileViewModel } from 'charactersheet/viewmodels/character/profile';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('Profile View Model', function() {
     //Clean up after each test.
@@ -37,7 +47,7 @@ describe('Profile View Model', function() {
             var p = new Profile();
             simple.mock(PersistenceService, 'findBy').returnWith([p]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            
+
             pVM.dataHasChanged();
 
             notifySpy2.called.should.equal(true);

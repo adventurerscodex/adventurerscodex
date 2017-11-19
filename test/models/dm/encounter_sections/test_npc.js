@@ -1,4 +1,7 @@
-'use strict';
+import { NPC } from 'charactersheet/models';
+import Should from 'should';
+import { Utility } from 'charactersheet/utilities';
+import simple from 'simple-mock';
 
 describe('NPC', function(){
     //Clean up after each test.
@@ -41,7 +44,7 @@ describe('NPC', function(){
     describe('Delete', function() {
         it('should delete npc', function() {
             var npc = new NPC();
-            var npcSpy = simple.mock(npc.ps, 'delete');
+            var npcSpy = simple.mock(npc.ps, 'delete', function() {});
 
             npc.delete();
             npcSpy.called.should.equal(true);
@@ -64,7 +67,7 @@ describe('NPC', function(){
             var npc = new NPC();
 
             Should.not.exist(npc.description());
-            npc.importValues({"description": 'blah'});
+            npc.importValues({'description': 'blah'});
             npc.description().should.equal('blah');
         });
     });

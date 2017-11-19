@@ -1,4 +1,7 @@
-'use strict';
+import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_tab';
+import { ViewModelUtilities } from 'charactersheet/utilities';
+import should from 'Should';
+import simple from 'simple-mock';
 
 describe('SkillsTabViewModel', function(){
     //Clean up after each test.
@@ -14,17 +17,6 @@ describe('SkillsTabViewModel', function(){
 
 
             vm.load();
-
-            notifySpy.called.should.equal(true);
-        });
-    });
-
-    describe('Unload', function() {
-        it('should unload the sub view models', function() {
-            var vm = new SkillsTabViewModel();
-            var notifySpy = simple.mock(ViewModelUtilities, 'unloadSubViewModels');
-
-            vm.unload();
 
             notifySpy.called.should.equal(true);
         });

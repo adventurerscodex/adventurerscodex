@@ -1,3 +1,20 @@
+import {
+    CharacterManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Item,
+    MagicItem
+} from 'charactersheet/models/common';
+import {
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
+import { MagicItemsViewModel } from 'charactersheet/viewmodels/character/magic_items';
+import { MockCharacterManager } from '../mocks';
+import should from 'Should';
+import simple from 'simple-mock';
+
 describe('Magic Items View Model', function(){
     //Clean up after each test.
     afterEach(function() {
@@ -32,7 +49,7 @@ describe('Magic Items View Model', function(){
     describe('Clear', function() {
         it('should clear all the values in the MagicItemsViewModel', function() {
             var magicItems = new MagicItemsViewModel();
-            var magicItem= [new MagicItem()];
+            var magicItem = [new MagicItem()];
             magicItems.magicItems(magicItem);
             magicItems.magicItems().should.equal(magicItem);
             magicItems.clear();
@@ -104,7 +121,7 @@ describe('Magic Items View Model', function(){
                 return e;
             });
 
-            magicItems = new MagicItemsViewModel();
+            var magicItems = new MagicItemsViewModel();
             magicItems.magicItems(items);
             magicItems.magicItems().length.should.equal(2);
             magicItems.totalMagicItemWeight().should.equal('0 (lbs)');

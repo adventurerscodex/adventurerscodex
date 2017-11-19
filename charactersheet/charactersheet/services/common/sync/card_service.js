@@ -1,4 +1,14 @@
-'use strict';
+import {
+    ChatServiceManager,
+    NodeServiceManager,
+    XMPPService
+} from 'charactersheet/services';
+import { CharacterCardFields } from 'charactersheet/services/character/sync/character_card_fields';
+import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields';
+import { Notifications } from 'charactersheet/utilities';
+import { SharedServiceManager } from '../shared_service_manager';
+import { pCard } from 'charactersheet/models/common';
+import uuid from 'node-uuid';
 
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
@@ -6,16 +16,14 @@ var CharacterCardPublishingServiceConfiguration = {
     fields: CharacterCardFields
 };
 
-
 var DMCardPublishingServiceConfiguration = {
     enableCompression: true,
     compression: 'lz-string',
     fields: DMCardFields
 };
 
-
-var CharacterCardPublishingService = new SharedServiceManager(_pCardService, CharacterCardPublishingServiceConfiguration);
-var DMCardPublishingService = new SharedServiceManager(_pCardService, DMCardPublishingServiceConfiguration);
+export var CharacterCardPublishingService = new SharedServiceManager(_pCardService, CharacterCardPublishingServiceConfiguration);
+export var DMCardPublishingService = new SharedServiceManager(_pCardService, DMCardPublishingServiceConfiguration);
 
 /**
  * A service responsible for publishing the current pCard.

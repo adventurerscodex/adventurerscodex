@@ -1,6 +1,9 @@
-'use strict';
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 
-function Status() {
+export function Status() {
     var self = this;
     self.ps = PersistenceService.register(Status, self);
     self.mapping = {
@@ -58,3 +61,6 @@ function Status() {
         self.ps.delete();
     };
 }
+
+
+PersistenceService.addToRegistry(Status);
