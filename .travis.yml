@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - "8"
+script:
+  - npm run lint
+  - npm test
 after_script:
   - npm run coveralls
   - mr-doc -s charactersheet/charactersheet/ -o docs/ -n "CharacterSheet" -t "cayman"
