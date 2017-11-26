@@ -8,7 +8,7 @@
 if [[ "$TRAVIS_BRANCH" -eq "develop" ]]; then
     if [ -z "$NIGHTLY_URL" ]; then
         echo "No value for variable NIGHTLY_URL was set. Nowhere to push."
-        exit -1;
+        exit 0;
     fi
 
     git branch --set-upstream -f origin $NIGHTLY_URL
@@ -18,7 +18,7 @@ fi
 if [[ "$TRAVIS_BRANCH" -eq "master" ]]; then
     if [ -z "$MASTER_URL" ]; then
         echo "No value for variable MASTER_URL was set. Nowhere to push."
-        exit -1;
+        exit 0;
     fi
 
     git branch --set-upstream -f origin $MASTER_URL
