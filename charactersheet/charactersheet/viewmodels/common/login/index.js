@@ -8,7 +8,6 @@ import {
     ViewModelUtilities
 } from 'charactersheet/utilities';
 import { AuthenticationToken } from 'charactersheet/models/common';
-import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -36,7 +35,7 @@ export function LoginViewModel() {
 
     self.loginLink = ko.pureComputed(function() {
         self._dummy();
-        return self._loginLink.replace('{client_id}', Settings.CLIENT_ID);
+        return self._loginLink.replace('{client_id}', CLIENT_ID);
     });
 
     self.loggedIn = ko.pureComputed(function() {
@@ -59,7 +58,7 @@ export function LoginViewModel() {
             token.delete();
             $.post(self._revokeToken, {
                 token: token.accessToken,
-                client_id: Settings.CLIENT_ID
+                client_id: CLIENT_ID
             });
         }
         return true; // Navigate to the link.

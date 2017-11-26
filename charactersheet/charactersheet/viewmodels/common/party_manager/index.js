@@ -13,7 +13,6 @@ import {
     PersistenceService,
     XMPPService
 } from 'charactersheet/services/common';
-import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -32,7 +31,7 @@ export function PartyManagerViewModel() {
     self.roomId = ko.observable('');
 
     self.roomJid = function() {
-        return self.roomId() + '@' + Settings.MUC_SERVICE;
+        return self.roomId() + '@' + MUC_SERVICE;
     };
 
     self.load = function() {
@@ -54,7 +53,7 @@ export function PartyManagerViewModel() {
 
     self.roomLink = ko.pureComputed(function() {
         if (self.roomId()) {
-            return encodeURI(Settings.HOST_URL + '?party_node=' + self.roomId());
+            return encodeURI(HOST_URL + '?party_node=' + self.roomId());
         }
         return '';
     });
@@ -113,7 +112,7 @@ export function PartyManagerViewModel() {
     self.joinParty = function(node) {
         var xmpp = XMPPService.sharedService();
         var chatManager = ChatServiceManager.sharedService();
-        chatManager.join(node+'@'+Settings.MUC_SERVICE,
+        chatManager.join(node + '@' + MUC_SERVICE,
             Strophe.getNodeFromJid(xmpp.connection.jid), true);
     };
 

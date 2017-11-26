@@ -276,7 +276,7 @@ function _ChatService(config) {
     self._handleConnect = function() {
         if (!self._toJoinParty) { return; }
         var xmpp = XMPPService.sharedService();
-        var jid = self._toJoinParty+'@'+Settings.MUC_SERVICE;
+        var jid = self._toJoinParty + '@' + MUC_SERVICE;
         var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
 
         var party = self._getOrCreateParty(jid);

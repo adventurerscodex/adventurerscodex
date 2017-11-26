@@ -9,7 +9,11 @@ module.exports = merge(common, {
             sourceMap: true
         }),
         new webpack.DefinePlugin({
-            'PRODUCTION': JSON.stringify(true)
+            'version': JSON.stringify('1.5.1'),
+            'CLIENT_ID': JSON.stringify('5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD'),
+            'HOST_URL': JSON.stringify('https://app.adventurerscodex.com/charactersheet/'),
+            'PUBSUB_HOST_JID': JSON.stringify('pubsub.adventurerscodex.com'),
+            'MUC_SERVICE': JSON.stringify('chat.adventurerscodex.com')
         })
     ]
 });
