@@ -4,6 +4,7 @@ node_js:
 script:
   - npm run lint
   - npm test
+  - ./scripts/deploy.sh
 after_script:
   - npm run coveralls
   - mr-doc -s charactersheet/charactersheet/ -o docs/ -n "CharacterSheet" -t "cayman"
