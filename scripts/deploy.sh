@@ -5,9 +5,25 @@
 # Author: Brian Schrader
 # Since: 2017-11-25
 
-if [ -z "$NIGHTLY_URL" ]; then
-    echo "No value for variable NIGHLY_URL was set. Nowhere to push."
-    exit -1;
+if [[ "$TRAVIS_BRANCH" -eq "develop" ]]; then
+    if [ -z "$NIGHTLY_URL" ]; then
+        echo "No value for variable NIGHTLY_URL was set. Nowhere to push."
+        exit -1;
+    fi
+
+    git branch --set-upstream -f origin $NIGHTLY_URL
+    exit 0;
 fi
 
-git branch --set-upstream -f origin $NIGHTLY_URL
+if [[ "$TRAVIS_BRANCH" -eq "master" ]]; then
+    if [ -z "$MASTER_URL" ]; then
+        echo "No value for variable MASTER_URL was set. Nowhere to push."
+        exit -1;
+    fi
+
+    git branch --set-upstream -f origin $MASTER_URL
+    exit 0;
+fi
+
+
+echo "No relevant branch to push to... use either `develop` or `master`."
