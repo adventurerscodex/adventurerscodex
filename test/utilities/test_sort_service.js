@@ -1,5 +1,5 @@
 import Should from 'should';
-import { SortService } from 'charactersheet/services';
+import { SortService } from 'charactersheet/services/common/sort_service';
 import { SortServiceFixture } from '../fixtures';
 import simple from 'simple-mock';
 

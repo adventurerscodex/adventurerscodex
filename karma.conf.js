@@ -4,7 +4,6 @@ var entry = path.resolve(webpackConfig.context, webpackConfig.entry);
 
 module.exports = function(config) {
     config.set({
-        basePath: '',
         autoWatch: false,
         frameworks: ['mocha'],
         files: [
@@ -15,27 +14,28 @@ module.exports = function(config) {
             {pattern: 'test/test.js', watched: false},
         ],
         browsers: ['PhantomJS'],
-//         reporters: ['progress', 'coverage'],
+        reporters: ['progress', 'coverage'],
         preprocessors: {
-            entry: ['webpack',],
-        	'test/test.js': ['webpack', 'babel'],
-		},
+            'test/test.js': ['webpack', 'sourcemap']
+        },
         coverageReporter: {
-			type: "lcov",
-			dir: "coverage/"
-		},
+            reporters: [
+                { type: "lcov", dir: "coverage/" },
+                { type: 'text-summary' }
+            ]
+        },
 		plugins: [
             'karma-babel-preprocessor',
             'karma-coverage',
             'karma-webpack',
             'karma-mocha',
             'karma-phantomjs-launcher',
-            'karma-sourcemap-loader',
+            'karma-sourcemap-loader'
 		],
         singleRun: true,
-        webpack: webpackConfig,
         webpackMiddleware: {
           stats: 'errors-only'
-        }
+        },
+        webpack: webpackConfig
     });
 };
