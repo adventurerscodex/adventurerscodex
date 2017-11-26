@@ -2,6 +2,13 @@ var path = require('path');
 var webpackConfig = require('./webpack.dev');
 var entry = path.resolve(webpackConfig.context, webpackConfig.entry);
 
+webpack = webpackConfig;
+webpack.module.rules.push({
+    test: /\.js$/,
+    loader: "isparta-loader",
+    exclude: /node_modules|bin|test$/ // exclude node_modules and test files
+})
+
 module.exports = function(config) {
     config.set({
         autoWatch: false,
@@ -36,6 +43,6 @@ module.exports = function(config) {
         webpackMiddleware: {
           stats: 'errors-only'
         },
-        webpack: webpackConfig
+        webpack: webpack
     });
 };
