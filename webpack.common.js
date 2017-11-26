@@ -65,11 +65,6 @@ module.exports = {
         test: /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: "file-loader"
       },
-//      {
-//         test: /\.js$/,
-//         loader: "isparta-loader",
-//         exclude: /node_modules|bin|test$/ // exclude node_modules and test files
-//       }
     ],
   },
   externals: {
