@@ -31,7 +31,7 @@ import ko from 'knockout';
  */
 export var init = function(viewModel) {
     // Always ignore values in this list when mapping.
-//     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
+    ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
     // Set global URI settings.
     URI.fragmentPrefix = '';
