@@ -1,6 +1,6 @@
+import { AbilityScores } from 'charactersheet/models/character/ability_scores';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ProficiencyService } from 'charactersheet/services';
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
 import { SavingThrows } from 'charactersheet/models/character/saving_throws';
 import Should from 'should';
 import simple from 'simple-mock';
