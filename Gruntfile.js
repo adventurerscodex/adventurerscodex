@@ -2,23 +2,9 @@
 
 module.exports = function(grunt) {
 
-  require('load-grunt-tasks')(grunt); // npm install --save-dev load-grunt-tasks
+  require('load-grunt-tasks')(grunt);
   grunt.initConfig({
 
-	eslint: {
-		target: [
-    		'charactersheet/charactersheet/*/*.js',
-    		'test/*/*.js',
-    		'charactersheet/charactersheet/*.js',
-        'charactersheet/charactersheet/*/*/*.js',
-        'charactersheet/charactersheet/*/*/*/*.js',
-        'charactersheet/charactersheet/*/*/*/*/*.js']
-	},
-    karma: {
-        test: {
-            configFile: 'karma.conf.js'
-        }
-    },
 	coveralls: {
 		options: {
 			coverageDir: 'coverage',
@@ -27,7 +13,6 @@ module.exports = function(grunt) {
 		}
 	}
   });
-  grunt.registerTask('default', ['eslint']);
-  grunt.loadNpmTasks('grunt-karma');
+
   grunt.loadNpmTasks('grunt-karma-coveralls');
 };
