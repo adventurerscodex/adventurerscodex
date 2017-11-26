@@ -49,7 +49,7 @@ export var init = function(viewModel) {
     });
 
     // Run migration
-    PersistenceService.migrate(Migrations.scripts, version);
+    PersistenceService.migrate(Migrations.scripts, VERSION);
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
