@@ -5,13 +5,22 @@
 # Author: Brian Schrader
 # Since: 2017-11-25
 
+
+do_push() {
+    URL="$1"
+
+    git remote add deploy "$URL"
+    git push -u -f deploy "$TRAVIS_BRANCH"
+}
+
+
 if [[ "$TRAVIS_BRANCH" -eq "develop" ]]; then
     if [ -z "$NIGHTLY_URL" ]; then
         echo "No value for variable NIGHTLY_URL was set. Nowhere to push."
         exit 0;
     fi
 
-    git branch --set-upstream -f origin $NIGHTLY_URL
+    do_push $NIGHTLY_URL
     exit 0;
 fi
 
@@ -21,7 +30,7 @@ if [[ "$TRAVIS_BRANCH" -eq "master" ]]; then
         exit 0;
     fi
 
-    git branch --set-upstream -f origin $MASTER_URL
+    do_push $MASTER_URL
     exit 0;
 fi
 
