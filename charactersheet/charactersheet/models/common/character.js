@@ -156,7 +156,7 @@ Character.exportCharacter = function(characterId) {
             return e.exportValues();
         });
     });
-    data.__version__ = Settings.version;
+    data.__version__ = VERSION;
     return data;
 };
 
@@ -183,7 +183,7 @@ Character.importCharacter = function(data) {
     PersistenceService.withTemporaryDataStore({}, function() {
         PersistenceService._setVersion(version);
         var character = Character._injectCharacter(data);
-        // PersistenceService.migrate(Migrations.scripts, Settings.version);
+        PersistenceService.migrate(Migrations.scripts, VERSION);
         migratedData = Character.exportCharacter(character.key);
     });
 

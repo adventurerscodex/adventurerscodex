@@ -5,36 +5,10 @@ import { Notifications } from 'charactersheet/utilities/notifications';
  * A global list of settings and static values.
  */
 export var Settings = {
-
-    /**
-     * Application's version number.
-     * Used to determine which migration scripts to run.
-     */
-    version: '1.5.1',
     /**
      * A series of values to always ignore when mapping KO Objects.
      */
     mappingAlwaysIgnore: ['__id'],
-
-    /**
-     * The App's Client ID for the API.
-     */
-    CLIENT_ID: '5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD',
-
-    /**
-     * The URL of the host application.
-     */
-    HOST_URL: 'https://app.adventurerscodex.com/charactersheet/',
-
-    /**
-     * The HOST URL of the pubsub services.
-     */
-    PUBSUB_HOST_JID: 'pubsub.adventurerscodex.com',
-
-    /**
-     * The MUC Service URL.
-     */
-    MUC_SERVICE: 'chat.adventurerscodex.com',
 
     dropboxSaveOptions: {
         // Success is called once all files have been successfully added to the user's

@@ -13,7 +13,6 @@ import {
 import { ChatCellViewModel } from './chat_cell';
 import { ChatRoom } from 'charactersheet/models';
 import { MasterDetailViewModel } from 'charactersheet/viewmodels/common/master_detail';
-import { Settings } from 'charactersheet/settings';
 import { XMPPService } from 'charactersheet/services/common/account';
 import ko from 'knockout';
 import template from './index.html';
@@ -78,7 +77,7 @@ export function ChatViewModel(params) {
         if (invitees.length === 0) { return; }
 
         var chatService = ChatServiceManager.sharedService();
-        var jid = name+'@'+Settings.MUC_SERVICE;
+        var jid = name + '@' + MUC_SERVICE;
         var room = chatService.createRoomAndInvite(jid, invitees);
 
         self.reloadCells();
