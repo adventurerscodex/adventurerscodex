@@ -8,7 +8,6 @@
 
 do_push() {
     URL="$1"
-    BRANCH="$2"
 
     git remote add deploy "$URL"
     git push -u -f deploy "$TRAVIS_BRANCH"
