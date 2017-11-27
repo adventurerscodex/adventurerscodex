@@ -21,7 +21,7 @@ module.exports = merge(common, {
             /**
              * The App's Client ID for the API.
              */
-            'CLIENT_ID': JSON.stringify('5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD'),
+            'CLIENT_ID': JSON.stringify('Sv2vHrQx6z7thqq4E3svVundNM0jMKRP0idNXozn'),
             /**
              * The URL of the host application.
              */
