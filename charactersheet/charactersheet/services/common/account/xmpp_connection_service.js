@@ -13,7 +13,7 @@ import { UserServiceManager } from 'charactersheet/services';
  * custom configurations.
  */
 var XMPPServiceDefaultConfig = {
-    url: 'wss://adventurerscodex.com:5280/websocket/',
+    url: XMPP_WS_URL,
 
     connection: {
         // Specify a custom callback here.
