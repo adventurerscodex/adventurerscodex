@@ -23,6 +23,10 @@ module.exports = merge(common, {
              */
             'CLIENT_ID': JSON.stringify('5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD'),
             /**
+             * The URL of the host application.
+             */
+            'HOST_URL': JSON.stringify('https://nightly.adventurerscodex.com/charactersheet/'),
+            /**
              * The HOST URL of the pubsub services.
              */
             'PUBSUB_HOST_JID': JSON.stringify('pubsub.adventurerscodex.com'),
