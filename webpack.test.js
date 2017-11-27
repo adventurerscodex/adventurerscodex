@@ -23,17 +23,17 @@ module.exports = merge(common, {
              */
             'CLIENT_ID': JSON.stringify('5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD'),
             /**
-             * The URL of the host application.
-             */
-            'HOST_URL': JSON.stringify('https://app.adventurerscodex.com/charactersheet/'),
-            /**
              * The HOST URL of the pubsub services.
              */
             'PUBSUB_HOST_JID': JSON.stringify('pubsub.adventurerscodex.com'),
             /**
              * The MUC Service URL.
              */
-            'MUC_SERVICE': JSON.stringify('chat.adventurerscodex.com')
+            'MUC_SERVICE': JSON.stringify('chat.adventurerscodex.com'),
+            /**
+             * The connection URL for the XMPP service.
+             */
+            'XMPP_WS_URL': JSON.stringify('wss://nightly.adventurerscodex.com:5280/websocket/')
         })
     ]
 });

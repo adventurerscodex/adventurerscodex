@@ -39,7 +39,11 @@ module.exports = merge(common, {
             /**
              * The MUC Service URL.
              */
-            'MUC_SERVICE': JSON.stringify('chat.adventurerscodex.com')
+            'MUC_SERVICE': JSON.stringify('chat.adventurerscodex.com'),
+            /**
+             * The connection URL for the XMPP service.
+             */
+            'XMPP_WS_URL': JSON.stringify('wss://adventurerscodex.com:5280/websocket/')
         })
     ]
 });
