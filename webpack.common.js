@@ -5,7 +5,7 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  context: path.resolve(__dirname, './charactersheet'),
+  context: path.resolve(__dirname, './src'),
   entry: './app.js' ,
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -13,7 +13,7 @@ module.exports = {
   },
   resolve: {
     modules: [
-        path.resolve('./charactersheet'),
+        path.resolve('./src'),
         path.resolve('./node_modules')
     ]
   },
