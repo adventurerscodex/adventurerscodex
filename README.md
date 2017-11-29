@@ -52,7 +52,7 @@ Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventure
 How can I contribute?
 =====================
 
-You should check out our [Contributing][contributing] wiki! We'd love the help! There you'll find information on how to set up your dev environment and how to submit PRs for new features and bugs. We have a slightly different branch structure than a lot of projects to please read our guidelines before starting. We don't want you to write the next big fix or feature and not be able to PR it.
+You should check out our [Contributing][contributing] wiki! We'd love the help! There you'll find information on how to set up your dev environment and how to submit PRs for new features and bugs. We have a slightly different branch structure than a lot of projects so please read our guidelines before starting. We don't want you to write the next big fix or feature and not be able to PR it.
 
 If you're already familiar with contributing to open source projects, check out our [Issue Label Guide][issues] to see what kind of tickets are available and what they mean.
 
