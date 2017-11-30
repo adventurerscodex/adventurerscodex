@@ -46,15 +46,18 @@ Adventurer's Codex is hosted at [adventurerscodex.com](https://adventurerscodex.
 Have questions or just want to chat?
 =====================
 
-Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventurerscodex)
+Join the conversations on [Gitter](https://gitter.im/Sonictherocketman/adventurerscodex) or chat with us in the issues. We tend to hold a lot of discussions there and new features are always being hashed out. We'd love your feedback.
 
 
 How can I contribute?
 =====================
 
-You should check out our [Contributing][contributing] wiki! We'd love the help!
+You should check out our [Contributing][contributing] wiki! We'd love the help! There you'll find information on how to set up your dev environment and how to submit PRs for new features and bugs. We have a slightly different branch structure than a lot of projects so please read our guidelines before starting. We don't want you to write the next big fix or feature and not be able to PR it.
+
+If you're already familiar with contributing to open source projects, check out our [Issue Label Guide][issues] to see what kind of tickets are available and what they mean.
 
 [blog]: https://adventurerscodex.com/blog.html
 [ac]: https://adventurerscodex.com
 [gs]: https://github.com/adventurerscodex/adventurerscodex/wiki/Getting-Started
 [contributing]: https://github.com/adventurerscodex/adventurerscodex/wiki/Contributing
+[issues]: https://github.com/adventurerscodex/adventurerscodex/wiki/Issue-Label-Guide
