@@ -72,7 +72,7 @@
   },
   "scripts": {
     "test": "karma start",
-    "lint": "eslint --fix test/ && eslint --fix src/charactersheet/",
+    "lint": "eslint test/ && eslint src/charactersheet/",
     "coveralls": "grunt coveralls",
     "docs": "mr-doc --source src/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
     "build": "./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
