@@ -15,7 +15,7 @@ import { SharedServiceManager } from 'charactersheet/services/common/shared_serv
 import { Skill } from 'charactersheet/models/character/skill';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
 import { Status } from 'charactersheet/models/common/status';
-import { StatusWeightPair } from 'charactersheet/models/common';
+import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { Treasure } from 'charactersheet/models/common/treasure';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 

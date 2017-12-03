@@ -1,4 +1,4 @@
-import { MonsterAbilityScore } from 'charactersheet/models';
+import { MonsterAbilityScore } from './monster_ability_score';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 

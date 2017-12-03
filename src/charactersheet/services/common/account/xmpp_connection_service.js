@@ -1,9 +1,9 @@
-import { AuthenticationToken } from  'charactersheet/models/common';
+import { AuthenticationToken } from  'charactersheet/models/common/authentication_token';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../shared_service_manager';
 import Strophe from 'strophe';
-import { UserServiceManager } from 'charactersheet/services';
+import { UserServiceManager } from 'charactersheet/services/common/account/user_service';
 
 
 /*eslint no-console:0*/

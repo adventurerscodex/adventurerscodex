@@ -5,7 +5,7 @@ import { NodeServiceManager } from 'charactersheet/services/common/account/messa
 import { Notifications } from 'charactersheet/utilities';
 import { SharedServiceManager } from '../shared_service_manager';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
-import { pCard } from 'charactersheet/models/common';
+import { pCard } from 'charactersheet/models/common/pCard';
 import uuid from 'node-uuid';
 
 var CharacterCardPublishingServiceConfiguration = {
