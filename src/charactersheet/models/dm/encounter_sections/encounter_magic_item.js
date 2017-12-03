@@ -4,7 +4,6 @@ import ko from 'knockout';
 
 
 export function EncounterMagicItem() {
-
     var self = new MagicItem();
 
     self.ps = PersistenceService.register(EncounterMagicItem, self);

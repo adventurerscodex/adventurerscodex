@@ -3,7 +3,6 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 
 export function EncounterArmor() {
-
     var self = new Armor();
 
     self.ps = PersistenceService.register(EncounterArmor, self);

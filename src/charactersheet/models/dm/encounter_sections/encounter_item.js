@@ -4,7 +4,6 @@ import ko from 'knockout';
 
 
 export function EncounterItem() {
-
     var self = new Item();
 
     self.ps = PersistenceService.register(EncounterItem, self);

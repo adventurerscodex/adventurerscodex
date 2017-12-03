@@ -4,7 +4,6 @@ import ko from 'knockout';
 
 
 export function EncounterCoins() {
-
     var self = new Treasure();
 
     self.ps = PersistenceService.register(EncounterCoins, self);
