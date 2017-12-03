@@ -7,9 +7,9 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { MockCharacterManager } from '../mocks';
+import Should from 'should';
 import { Spell } from 'charactersheet/models/common';
 import { SpellbookViewModel } from 'charactersheet/viewmodels/character/spells';
-import Should from 'should';
 import simple from 'simple-mock';
 
 describe('SpellsViewModel', function(){

@@ -9,8 +9,8 @@ import {
 } from 'charactersheet/viewmodels/common/wizard/steps';
 import { Character } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { WizardViewModel } from 'charactersheet/viewmodels/common/wizard';
 import Should from 'should';
+import { WizardViewModel } from 'charactersheet/viewmodels/common/wizard';
 import simple from 'simple-mock';
 
 describe('Wizard ViewModel', function(){
