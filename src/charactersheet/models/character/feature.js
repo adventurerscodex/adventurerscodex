@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function Feature() {
-
     var self = this;
 
     self.ps = PersistenceService.register(Feature, self);

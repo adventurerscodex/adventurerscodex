@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function PointOfInterest() {
-
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.LONG_DESCRIPTION_MAX_LENGTH = 200;

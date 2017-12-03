@@ -6,7 +6,6 @@ import ko from 'knockout';
 
 
 export function SpellStats() {
-
     var self = this;
     self.ps = PersistenceService.register(SpellStats, self);
     self.mapping = {

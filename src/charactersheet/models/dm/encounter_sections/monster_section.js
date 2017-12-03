@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function MonsterSection() {
-
     var self = this;
     self.ps = PersistenceService.register(MonsterSection, self);
     self.mapping = {

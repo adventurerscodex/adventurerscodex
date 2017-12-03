@@ -13,7 +13,6 @@ import ko from 'knockout';
 
 
 export function Armor() {
-
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {

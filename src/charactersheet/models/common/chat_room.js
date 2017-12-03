@@ -22,7 +22,6 @@ import ko from 'knockout';
 
 
 export function ChatRoom() {
-
     var self = this;
 
     self.ps = PersistenceService.register(ChatRoom, self);

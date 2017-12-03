@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function ImageModel() {
-
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);
 

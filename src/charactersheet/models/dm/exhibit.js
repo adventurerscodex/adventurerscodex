@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function Exhibit() {
-
     var self = this;
     self.ps = PersistenceService.register(Exhibit, self);
     self.mapping = {

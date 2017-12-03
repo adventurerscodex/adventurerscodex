@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function EnvironmentSection() {
-
     var self = this;
     self.ps = PersistenceService.register(EnvironmentSection, self);
     self.mapping = {

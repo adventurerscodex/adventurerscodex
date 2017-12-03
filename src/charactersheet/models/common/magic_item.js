@@ -9,7 +9,6 @@ import ko from 'knockout';
 
 
 export function MagicItem() {
-
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 145;

@@ -6,7 +6,6 @@ import ko from 'knockout';
 
 
 export function Slot() {
-
     var self = this;
     self.ps = PersistenceService.register(Slot, self);
     self.mapping = {

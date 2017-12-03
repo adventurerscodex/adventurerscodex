@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function CharacterAppearance() {
-
     var self = this;
     self.ps = PersistenceService.register(CharacterAppearance, self);
     self.mapping = {

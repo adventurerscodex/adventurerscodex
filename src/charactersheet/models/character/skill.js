@@ -8,7 +8,6 @@ import ko from 'knockout';
 
 
 export function Skill() {
-
     var self = this;
     self.ps = PersistenceService.register(Skill, self);
     self.mapping = {

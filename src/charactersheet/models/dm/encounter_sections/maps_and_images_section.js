@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function MapsAndImagesSection() {
-
     var self = this;
     self.ps = PersistenceService.register(MapsAndImagesSection, self);
     self.mapping = {

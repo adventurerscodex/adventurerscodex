@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function PointOfInterestSection() {
-
     var self = this;
     self.ps = PersistenceService.register(PointOfInterestSection, self);
     self.mapping = {

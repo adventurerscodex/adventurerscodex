@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function MonsterAbilityScore() {
-
     var self = this;
     self.ps = PersistenceService.register(MonsterAbilityScore, self);
     self.mapping = {

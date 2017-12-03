@@ -5,7 +5,6 @@ import marked from 'bin/textarea-markdown-editor/marked.min';
 
 
 export function PlayerText() {
-
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.LONG_DESCRIPTION_MAX_LENGTH = 200;

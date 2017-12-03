@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function Party() {
-
     var self = this;
     self.ps = PersistenceService.register(Party, self);
 

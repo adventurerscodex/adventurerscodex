@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function TreasureSection() {
-
     var self = this;
     self.ps = PersistenceService.register(TreasureSection, self);
     self.mapping = {

@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function PlayerTextSection() {
-
     var self = this;
     self.ps = PersistenceService.register(PlayerTextSection, self);
     self.mapping = {

@@ -10,7 +10,6 @@ import ko from 'knockout';
 
 
 export function Weapon() {
-
     var self = this;
 
     self.FINESSE = 'finesse';

@@ -4,7 +4,6 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 
 export function Feat() {
-
     var self = this;
 
     self.ps = PersistenceService.register(Feat, self);

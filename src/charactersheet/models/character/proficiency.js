@@ -6,7 +6,6 @@ import ko from 'knockout';
 
 
 export function Proficiency() {
-
     var self = this;
 
     self.ps = PersistenceService.register(Proficiency, self);

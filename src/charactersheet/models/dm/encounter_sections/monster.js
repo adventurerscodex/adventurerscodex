@@ -4,7 +4,6 @@ import ko from 'knockout';
 
 
 export function Monster() {
-
     var self = this;
     self.ps = PersistenceService.register(Monster, self);
     self.mapping = {

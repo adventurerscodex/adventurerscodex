@@ -6,7 +6,6 @@ import ko from 'knockout';
 
 
 export function MapOrImage() {
-
     var self = this;
 
     self.ps = PersistenceService.register(MapOrImage, self);

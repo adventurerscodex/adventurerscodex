@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function FeaturesTraits() {
-
     var self = this;
     self.ps = PersistenceService.register(FeaturesTraits, self);
     self.mapping = {

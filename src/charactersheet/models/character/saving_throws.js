@@ -8,7 +8,6 @@ import ko from 'knockout';
 
 
 export function SavingThrows() {
-
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
     self.mapping = {

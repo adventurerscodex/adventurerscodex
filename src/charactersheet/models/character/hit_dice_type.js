@@ -6,7 +6,6 @@ import ko from 'knockout';
 
 
 export function HitDiceType() {
-
     var self = this;
     self.ps = PersistenceService.register(HitDiceType, self);
     self.mapping = {

@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function Treasure() {
-
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
     self.mapping = {

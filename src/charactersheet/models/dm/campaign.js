@@ -5,7 +5,6 @@ import ko from 'knockout';
  * A Root Level DM Object containing overview information about a campaign.
  */
 export function Campaign() {
-
     var self = this;
     self.ps = PersistenceService.register(Campaign, self);
     self.mapping = {

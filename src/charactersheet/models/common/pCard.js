@@ -201,7 +201,6 @@ An entry for a weapon.
  * See the individual fields for more information.
  */
 export function pCard() {
-
     var self = this;
 
     self.entries = [];

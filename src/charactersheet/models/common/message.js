@@ -23,7 +23,6 @@ on a series of rules.
 @see messageType for more information.
 */
 export function Message() {
-
     var self = this;
 
     self.ps = PersistenceService.register(Message, self);

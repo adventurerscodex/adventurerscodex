@@ -20,13 +20,7 @@ export function EncounterDetailViewModel(params) {
         self._dataHasChanged();
     };
 
-    self.save = function() {
-        if (encounter) {
-            encounter.name(self.name());
-            encounter.encounterLocation(self.encounterLocation());
-            encounter.save();
-        }
-    };
+    self.save = function() {};
 
     self.delete = function() {
         self.encounter().delete();
@@ -37,10 +31,14 @@ export function EncounterDetailViewModel(params) {
      * notify the subscribers.
      */
     self.notifySections = function(encounter, sections) {
+        encounter().name(self.name());
+        encounter().encounterLocation(self.encounterLocation());
         encounter().save();
+
         sections().forEach(function(section, i, _) {
             section.save();
         });
+
         encounter.notifySubscribers();
     };
 

@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function Tracked() {
-
     var self = this;
 
     self.ps = PersistenceService.register(Tracked, self);

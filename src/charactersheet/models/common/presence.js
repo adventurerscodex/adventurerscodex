@@ -17,7 +17,6 @@ This class provides a number of different convenience methods for routing, and
 reasoning about presence messages.
 */
 export function Presence() {
-
     var self = this;
     self.ps = PersistenceService.register(Presence, self);
     self.mapping = {

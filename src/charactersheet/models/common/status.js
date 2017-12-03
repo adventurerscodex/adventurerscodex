@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function Status() {
-
     var self = this;
     self.ps = PersistenceService.register(Status, self);
     self.mapping = {

@@ -9,7 +9,6 @@ import ko from 'knockout';
  * have equipped.
  */
 export function Item() {
-
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 200;

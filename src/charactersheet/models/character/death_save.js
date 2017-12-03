@@ -5,7 +5,6 @@ import ko from 'knockout';
 
 
 export function DeathSave() {
-
     var self = this;
     self.ps = PersistenceService.register(DeathSave, self);
     self.mapping = {

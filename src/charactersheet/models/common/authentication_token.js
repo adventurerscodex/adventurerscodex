@@ -9,7 +9,6 @@ import ko from 'knockout';
  * https://django-oauth-toolkit.readthedocs.io/en/latest/rest-framework/getting_started.html#step-4-get-your-token-and-use-your-api
  */
 export function AuthenticationToken() {
-
     var self = this;
     self.ps = PersistenceService.register(AuthenticationToken, self);
     self.mapping = {

@@ -6,7 +6,6 @@ import uuid from 'node-uuid';
  * A directory-like container with meta-data information about a container.
  */
 export function Encounter() {
-
     var self = this;
     self.ps = PersistenceService.register(Encounter, self);
     self.mapping = {

@@ -10,7 +10,6 @@ import { Fixtures } from 'charactersheet/utilities';
  * StatusWeightPair(0.89, 0.30)
  */
 export function StatusWeightPair(value, weight) {
-
     var self = this;
 
     self.value = value;

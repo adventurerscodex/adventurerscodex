@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function NotesSection() {
-
     var self = this;
     self.ps = PersistenceService.register(NotesSection, self);
     self.mapping = {

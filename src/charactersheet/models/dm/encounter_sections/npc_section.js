@@ -3,7 +3,6 @@ import ko from 'knockout';
 
 
 export function NPCSection() {
-
     var self = this;
     self.ps = PersistenceService.register(NPCSection, self);
     self.mapping = {

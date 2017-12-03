@@ -6,7 +6,6 @@ import md5 from 'blueimp-md5';
 
 
 export function PlayerInfo() {
-
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);
 

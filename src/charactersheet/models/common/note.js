@@ -6,7 +6,6 @@ import marked from 'bin/textarea-markdown-editor/marked.min';
 
 
 export function Note() {
-
     var self = this;
     self.ps = PersistenceService.register(Note, self);
     self.mapping = {
