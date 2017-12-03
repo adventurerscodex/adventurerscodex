@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function PlayerImage() {
     var self = this;
     self.ps = PersistenceService.register(PlayerImage, self);
@@ -34,6 +35,7 @@ export function PlayerImage() {
         self.ps.save();
     };
 }
+PlayerImage.__name = "PlayerImage";
 
 
 PersistenceService.addToRegistry(PlayerImage);

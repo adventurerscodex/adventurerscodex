@@ -6,6 +6,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { ProficiencyService } from 'charactersheet/services';
 import ko from 'knockout';
 
+
 export function SavingThrows() {
     var self = this;
     self.ps = PersistenceService.register(SavingThrows, self);
@@ -102,6 +103,6 @@ export function SavingThrows() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+SavingThrows.__name = "SavingThrows";
 
 PersistenceService.addToRegistry(SavingThrows);

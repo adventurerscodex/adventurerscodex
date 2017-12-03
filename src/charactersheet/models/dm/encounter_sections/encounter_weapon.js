@@ -2,6 +2,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { Weapon } from 'charactersheet/models/common';
 import ko from 'knockout';
 
+
 export function EncounterWeapon() {
     var self = new Weapon();
 
@@ -26,6 +27,6 @@ export function EncounterWeapon() {
 
     return self;
 }
-
+EncounterWeapon.__name = "EncounterWeapon";
 
 PersistenceService.addToRegistry(EncounterWeapon);

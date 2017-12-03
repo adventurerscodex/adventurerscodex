@@ -20,6 +20,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import Strophe from 'strophe';
 import ko from 'knockout';
 
+
 export function ChatRoom() {
     var self = this;
 
@@ -107,6 +108,6 @@ export function ChatRoom() {
         return occupantCardsOrNames;
     };
 }
-
+ChatRoom.__name = "ChatRoom";
 
 PersistenceService.addToRegistry(ChatRoom);

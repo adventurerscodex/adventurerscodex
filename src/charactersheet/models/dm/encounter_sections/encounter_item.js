@@ -2,6 +2,7 @@ import { Item } from 'charactersheet/models/common';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function EncounterItem() {
     var self = new Item();
 
@@ -26,6 +27,6 @@ export function EncounterItem() {
 
     return self;
 }
-
+EncounterItem.__name = "EncounterItem";
 
 PersistenceService.addToRegistry(EncounterItem);

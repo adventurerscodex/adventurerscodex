@@ -47,6 +47,6 @@ export function Campaign() {
         return 'A long long time ago...';
     };
 }
-
+Campaign.__name = "Campaign";
 
 PersistenceService.addToRegistry(Campaign);

@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function FeaturesTraits() {
     var self = this;
     self.ps = PersistenceService.register(FeaturesTraits, self);
@@ -36,6 +37,6 @@ export function FeaturesTraits() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+FeaturesTraits.__name = "FeaturesTraits";
 
 PersistenceService.addToRegistry(FeaturesTraits);

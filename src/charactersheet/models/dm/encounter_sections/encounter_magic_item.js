@@ -2,6 +2,7 @@ import { MagicItem } from 'charactersheet/models/common/magic_item';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function EncounterMagicItem() {
     var self = new MagicItem();
 
@@ -26,6 +27,6 @@ export function EncounterMagicItem() {
 
     return self;
 }
-
+EncounterMagicItem.__name = "EncounterMagicItem";
 
 PersistenceService.addToRegistry(EncounterMagicItem);

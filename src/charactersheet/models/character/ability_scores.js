@@ -119,6 +119,6 @@ export function AbilityScores() {
         self.ps.save();
     };
 }
-
+AbilityScores.__name = "AbilityScores";
 
 PersistenceService.addToRegistry(AbilityScores);

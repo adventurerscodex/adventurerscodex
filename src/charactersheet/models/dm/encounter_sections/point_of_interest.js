@@ -3,6 +3,7 @@ import { PlayerTextSection } from 'charactersheet/models/dm';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 
+
 export function PointOfInterest() {
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
@@ -54,6 +55,6 @@ export function PointOfInterest() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
-
+PointOfInterest.__name = "PointOfInterest";
 
 PersistenceService.addToRegistry(PointOfInterest);

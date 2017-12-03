@@ -43,6 +43,6 @@ export function Feat() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+Feat.__name = "Feat";
 
 PersistenceService.addToRegistry(Feat);

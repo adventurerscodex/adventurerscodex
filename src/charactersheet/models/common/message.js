@@ -9,6 +9,7 @@ import {
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Strophe from 'strophe';
 import ko from 'knockout';
+
 /**
 An object that represents any possible configuration of an XMPP Message element.
 This class also provides the functionality of a DB mapped model for convenience.
@@ -182,6 +183,6 @@ Message.fromTree = function(msg) {
 
     return chat;
 };
-
+Message.__name = "Message";
 
 PersistenceService.addToRegistry(Message);

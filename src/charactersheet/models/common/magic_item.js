@@ -7,6 +7,7 @@ import {
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function MagicItem() {
     var self = this;
 
@@ -89,6 +90,6 @@ export function MagicItem() {
         self.ps.delete();
     };
 }
-
+MagicItem.__name = "MagicItem";
 
 PersistenceService.addToRegistry(MagicItem);

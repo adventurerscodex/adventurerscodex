@@ -38,6 +38,7 @@ export function OtherStats() {
         self.ps.save();
     };
 }
+OtherStats.__name = "OtherStats";
 
 
 PersistenceService.addToRegistry(OtherStats);

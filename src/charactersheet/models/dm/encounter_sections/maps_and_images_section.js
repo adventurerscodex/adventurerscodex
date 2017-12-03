@@ -1,6 +1,7 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function MapsAndImagesSection() {
     var self = this;
     self.ps = PersistenceService.register(MapsAndImagesSection, self);
@@ -40,6 +41,6 @@ export function MapsAndImagesSection() {
         self.ps.delete();
     };
 }
-
+MapsAndImagesSection.__name = "MapsAndImagesSection";
 
 PersistenceService.addToRegistry(MapsAndImagesSection);

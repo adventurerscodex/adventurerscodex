@@ -78,6 +78,6 @@ export function Item() {
         self.ps.delete();
     };
 }
-
+Item.__name = "Item";
 
 PersistenceService.addToRegistry(Item);

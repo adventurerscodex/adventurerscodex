@@ -4,6 +4,7 @@ import { Fixtures } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Slot() {
     var self = this;
     self.ps = PersistenceService.register(Slot, self);
@@ -68,6 +69,6 @@ Slot.REST_TYPE = {
     SHORT_REST: 'short',
     LONG_REST: 'long'
 };
-
+Slot.__name = "Slot";
 
 PersistenceService.addToRegistry(Slot);

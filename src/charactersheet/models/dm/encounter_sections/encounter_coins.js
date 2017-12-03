@@ -2,6 +2,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { Treasure } from 'charactersheet/models/common';
 import ko from 'knockout';
 
+
 export function EncounterCoins() {
     var self = new Treasure();
 
@@ -26,6 +27,6 @@ export function EncounterCoins() {
 
     return self;
 }
-
+EncounterCoins.__name = "EncounterCoins";
 
 PersistenceService.addToRegistry(EncounterCoins);

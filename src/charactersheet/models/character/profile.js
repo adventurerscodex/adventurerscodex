@@ -57,6 +57,7 @@ export function Profile() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+Profile.__name = "Profile";
 
 
 PersistenceService.addToRegistry(Profile);

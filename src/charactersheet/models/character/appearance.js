@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function CharacterAppearance() {
     var self = this;
     self.ps = PersistenceService.register(CharacterAppearance, self);
@@ -40,6 +41,6 @@ export function CharacterAppearance() {
         self.ps.save();
     };
 }
-
+CharacterAppearance.__name = "CharacterAppearance";
 
 PersistenceService.addToRegistry(CharacterAppearance);

@@ -232,7 +232,7 @@ PersistenceService.findFirstBy = function(model, property, value) {
  * PersistenceService.save(Person, new Person());```
  */
 PersistenceService.save = function(model, inst) {
-    PersistenceService._save(model.name, inst);
+    PersistenceService._save(model.__name, inst);
 };
 
 /**
@@ -279,7 +279,7 @@ PersistenceService.saveObj = function(key, id, object) {
  * PersistenceService.delete(Person, bob.__id);```
  */
 PersistenceService.delete = function(model, id) {
-    PersistenceService._delete(model.name, id);
+    PersistenceService._delete(model.__name, id);
 };
 
 PersistenceService.drop = function(table) {
@@ -353,7 +353,7 @@ PersistenceService.register = function(model, inst) {
  * ```
  */
 PersistenceService.addToRegistry = function(model) {
-    PersistenceService.registry[model.name] = model;
+    PersistenceService.registry[model.__name] = model;
 };
 
 
@@ -513,7 +513,7 @@ PersistenceService._findAllObjs = function(key) {
 
 
 PersistenceService._findAll = function(model) {
-    return PersistenceService._findAllByName(model.name);
+    return PersistenceService._findAllByName(model.__name);
 };
 
 
@@ -524,7 +524,7 @@ PersistenceService._findAllByName = function(modelName) {
 
 
 PersistenceService._findFiltered = function(model, filterFn) {
-    var objs = PersistenceService._findAllObjs(model.name);
+    var objs = PersistenceService._findAllObjs(model.__name);
     var filtered = objs.filter(function (element, idx, _) {
         return filterFn(element.data, idx);
     });
@@ -541,7 +541,7 @@ PersistenceService._mapModels = function(objs, model) {
                 o.importValues(objs[i].data);
                 o.__id = objs[i].id;
             } catch(err) {
-                var msg = 'Import of ' + model.name + ' at index ' + i + ' failed.';
+                var msg = 'Import of ' + model.__name + ' at index ' + i + ' failed.';
                 if (PersistenceService.logErrors) {
                     console.log(msg);
                 } else {

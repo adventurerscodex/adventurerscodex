@@ -1,6 +1,7 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function TreasureSection() {
     var self = this;
     self.ps = PersistenceService.register(TreasureSection, self);
@@ -40,6 +41,6 @@ export function TreasureSection() {
         self.ps.delete();
     };
 }
-
+TreasureSection.__name = "TreasureSection";
 
 PersistenceService.addToRegistry(TreasureSection);

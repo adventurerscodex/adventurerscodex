@@ -81,6 +81,6 @@ export function Encounter() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+Encounter.__name = "Encounter";
 
 PersistenceService.addToRegistry(Encounter);

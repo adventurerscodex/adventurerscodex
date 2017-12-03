@@ -2,6 +2,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 
+
 export function NPC() {
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
@@ -54,6 +55,6 @@ export function NPC() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
-
+NPC.__name = "NPC";
 
 PersistenceService.addToRegistry(NPC);

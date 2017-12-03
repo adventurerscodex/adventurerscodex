@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function DeathSave() {
     var self = this;
     self.ps = PersistenceService.register(DeathSave, self);
@@ -74,6 +75,6 @@ export function DeathSave() {
         self.ps.delete();
     };
 }
-
+DeathSave.__name = "DeathSave";
 
 PersistenceService.addToRegistry(DeathSave);

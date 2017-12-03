@@ -4,6 +4,7 @@ import { Fixtures } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function SpellStats() {
     var self = this;
     self.ps = PersistenceService.register(SpellStats, self);
@@ -47,6 +48,6 @@ export function SpellStats() {
         self.ps.save();
     };
 }
-
+SpellStats.__name = "SpellStats";
 
 PersistenceService.addToRegistry(SpellStats);
