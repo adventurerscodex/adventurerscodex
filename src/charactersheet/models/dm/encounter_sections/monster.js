@@ -89,6 +89,6 @@ export function Monster() {
         self.ps.delete();
     };
 }
-Monster.__name = "Monster";
+Monster.__name = 'Monster';
 
 PersistenceService.addToRegistry(Monster);

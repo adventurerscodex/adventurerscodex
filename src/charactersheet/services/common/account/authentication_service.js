@@ -3,8 +3,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { AuthenticationToken } from 'charactersheet/models';
-import { PersistenceService } from 'charactersheet/services';
+import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../shared_service_manager';
 import URI from 'urijs';
 

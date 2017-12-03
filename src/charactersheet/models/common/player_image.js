@@ -35,7 +35,7 @@ export function PlayerImage() {
         self.ps.save();
     };
 }
-PlayerImage.__name = "PlayerImage";
+PlayerImage.__name = 'PlayerImage';
 
 
 PersistenceService.addToRegistry(PlayerImage);

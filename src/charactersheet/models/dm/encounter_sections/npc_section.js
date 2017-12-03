@@ -41,6 +41,6 @@ export function NPCSection() {
         self.ps.delete();
     };
 }
-NPCSection.__name = "NPCSection";
+NPCSection.__name = 'NPCSection';
 
 PersistenceService.addToRegistry(NPCSection);

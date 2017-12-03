@@ -1,5 +1,5 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { PlayerTextSection } from 'charactersheet/models/dm';
+import { PlayerTextSection } from './player_text_section';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 
@@ -55,6 +55,6 @@ export function PointOfInterest() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
-PointOfInterest.__name = "PointOfInterest";
+PointOfInterest.__name = 'PointOfInterest';
 
 PersistenceService.addToRegistry(PointOfInterest);

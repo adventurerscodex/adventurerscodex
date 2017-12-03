@@ -1,17 +1,13 @@
 import {
-    CampaignMapOrImage,
-    Environment,
-    Exhibit,
-    MapOrImage
-} from 'charactersheet/models';
-import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    KeyValuePredicate,
-    PersistenceService
-} from 'charactersheet/services/common';
+import { CampaignMapOrImage } from 'charactersheet/models/common/campaign_map_or_image';
+import { Environment } from 'charactersheet/models/dm/encounter_sections/environment';
+import { Exhibit } from 'charactersheet/models/dm/exhibit';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { MapOrImage } from 'charactersheet/models/common/map_or_image';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../shared_service_manager';
 
 /**

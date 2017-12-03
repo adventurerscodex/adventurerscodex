@@ -1,11 +1,10 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import {
-    ProficiencyService,
-    SharedServiceManager
-} from 'charactersheet/services';
 import { Fixtures } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+
 import ko from 'knockout';
 
 
@@ -235,6 +234,6 @@ export function Weapon() {
         self.ps.delete();
     };
 }
-Weapon.__name = "Weapon";
+Weapon.__name = 'Weapon';
 
 PersistenceService.addToRegistry(Weapon);

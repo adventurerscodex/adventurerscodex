@@ -69,6 +69,6 @@ Slot.REST_TYPE = {
     SHORT_REST: 'short',
     LONG_REST: 'long'
 };
-Slot.__name = "Slot";
+Slot.__name = 'Slot';
 
 PersistenceService.addToRegistry(Slot);

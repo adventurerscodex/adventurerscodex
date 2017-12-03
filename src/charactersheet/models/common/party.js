@@ -40,6 +40,6 @@ export function Party() {
         self.ps.delete();
     };
 }
-Party.__name = "Party";
+Party.__name = 'Party';
 
 PersistenceService.addToRegistry(Party);

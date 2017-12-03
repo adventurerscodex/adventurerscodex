@@ -73,6 +73,6 @@ export function PlayerText() {
         };
     };
 }
-PlayerText.__name = "PlayerText";
+PlayerText.__name = 'PlayerText';
 
 PersistenceService.addToRegistry(PlayerText);

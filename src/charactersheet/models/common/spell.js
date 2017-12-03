@@ -5,7 +5,7 @@ import {
     Fixtures
 } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { SpellStats } from 'charactersheet/models';
+import { SpellStats } from 'charactersheet/models/character/spell_stats';
 import ko from 'knockout';
 
 
@@ -115,6 +115,6 @@ export function Spell() {
         self.ps.delete();
     };
 }
-Spell.__name = "Spell";
+Spell.__name = 'Spell';
 
 PersistenceService.addToRegistry(Spell);

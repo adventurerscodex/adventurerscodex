@@ -2,16 +2,12 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    KeyValuePredicate,
-    SharedServiceManager
-} from 'charactersheet/services/common';
-import {
-    Status,
-    StatusWeightPair
-} from 'charactersheet/models';
-import { OtherStats } from 'charactersheet/models';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { OtherStats } from 'charactersheet/models/character/other_stats';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+import { Status } from 'charactersheet/models/common/status';
+import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 
 /**
  * A Status Service Component that tracks the total weight that a character

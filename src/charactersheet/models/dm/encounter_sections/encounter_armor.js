@@ -26,6 +26,6 @@ export function EncounterArmor() {
 
     return self;
 }
-EncounterArmor.__name = "EncounterArmor";
+EncounterArmor.__name = 'EncounterArmor';
 
 PersistenceService.addToRegistry(EncounterArmor);

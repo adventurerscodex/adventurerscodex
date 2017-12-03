@@ -62,6 +62,6 @@ export function Environment() {
         return 'New environment';
     };
 }
-Environment.__name = "Environment";
+Environment.__name = 'Environment';
 
 PersistenceService.addToRegistry(Environment);

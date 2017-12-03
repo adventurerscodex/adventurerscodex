@@ -43,6 +43,6 @@ export function PlayerInfo() {
         };
     };
 }
-PlayerInfo.__name = "PlayerInfo";
+PlayerInfo.__name = 'PlayerInfo';
 
 PersistenceService.addToRegistry(PlayerInfo);

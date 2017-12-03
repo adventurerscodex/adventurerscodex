@@ -63,6 +63,6 @@ export function MapOrImage() {
         return 'New image in chat';
     };
 }
-MapOrImage.__name = "MapOrImage";
+MapOrImage.__name = 'MapOrImage';
 
 PersistenceService.addToRegistry(MapOrImage);

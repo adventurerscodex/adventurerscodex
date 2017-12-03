@@ -27,6 +27,6 @@ export function EncounterItem() {
 
     return self;
 }
-EncounterItem.__name = "EncounterItem";
+EncounterItem.__name = 'EncounterItem';
 
 PersistenceService.addToRegistry(EncounterItem);

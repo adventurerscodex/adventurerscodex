@@ -62,6 +62,6 @@ export function CampaignMapOrImage() {
         return 'New image in chat';
     };
 }
-CampaignMapOrImage.__name = "CampaignMapOrImage";
+CampaignMapOrImage.__name = 'CampaignMapOrImage';
 
 PersistenceService.addToRegistry(CampaignMapOrImage);

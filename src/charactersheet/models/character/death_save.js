@@ -75,6 +75,6 @@ export function DeathSave() {
         self.ps.delete();
     };
 }
-DeathSave.__name = "DeathSave";
+DeathSave.__name = 'DeathSave';
 
 PersistenceService.addToRegistry(DeathSave);

@@ -27,6 +27,6 @@ export function EncounterCoins() {
 
     return self;
 }
-EncounterCoins.__name = "EncounterCoins";
+EncounterCoins.__name = 'EncounterCoins';
 
 PersistenceService.addToRegistry(EncounterCoins);

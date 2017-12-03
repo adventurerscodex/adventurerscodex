@@ -45,6 +45,6 @@ export function Tracked() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-Tracked.__name = "Tracked";
+Tracked.__name = 'Tracked';
 
 PersistenceService.addToRegistry(Tracked);
