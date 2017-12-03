@@ -10,6 +10,7 @@ import { Fixtures } from 'charactersheet/utilities';
  * StatusWeightPair(0.89, 0.30)
  */
 export function StatusWeightPair(value, weight) {
+
     var self = this;
 
     self.value = value;
@@ -64,12 +65,18 @@ StatusWeightPair.determinePhraseAndColor = function(statusType, totalStatusWeigh
     }
 };
 
+getHealthTypeEnum.__name = "getHealthTypeEnum";
 export function getHealthTypeEnum() {
+
     return 'health';
 }
+getMagicTypeEnum.__name = "getMagicTypeEnum";
 export function getMagicTypeEnum() {
+
     return 'magic';
 }
+getTrackedTypeEnum.__name = "getTrackedTypeEnum";
 export function getTrackedTypeEnum() {
+
     return 'tracked';
 }

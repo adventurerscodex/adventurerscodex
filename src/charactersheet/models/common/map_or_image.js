@@ -4,7 +4,9 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
+
 export function MapOrImage() {
+
     var self = this;
 
     self.ps = PersistenceService.register(MapOrImage, self);
@@ -62,6 +64,6 @@ export function MapOrImage() {
         return 'New image in chat';
     };
 }
-
+MapOrImage.__name = "MapOrImage";
 
 PersistenceService.addToRegistry(MapOrImage);

@@ -3,7 +3,9 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Tracked() {
+
     var self = this;
 
     self.ps = PersistenceService.register(Tracked, self);
@@ -44,6 +46,6 @@ export function Tracked() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+Tracked.__name = "Tracked";
 
 PersistenceService.addToRegistry(Tracked);

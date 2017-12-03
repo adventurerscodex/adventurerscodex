@@ -8,7 +8,9 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { SpellStats } from 'charactersheet/models';
 import ko from 'knockout';
 
+
 export function Spell() {
+
     var self = this;
     self.ps = PersistenceService.register(Spell, self);
     self.mapping = {
@@ -114,6 +116,6 @@ export function Spell() {
         self.ps.delete();
     };
 }
-
+Spell.__name = "Spell";
 
 PersistenceService.addToRegistry(Spell);

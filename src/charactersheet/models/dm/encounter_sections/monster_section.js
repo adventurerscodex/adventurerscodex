@@ -1,7 +1,9 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function MonsterSection() {
+
     var self = this;
     self.ps = PersistenceService.register(MonsterSection, self);
     self.mapping = {
@@ -40,6 +42,6 @@ export function MonsterSection() {
         self.ps.delete();
     };
 }
-
+MonsterSection.__name = "MonsterSection";
 
 PersistenceService.addToRegistry(MonsterSection);

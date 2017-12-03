@@ -9,6 +9,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import Strophe from 'strophe';
 import ko from 'knockout';
 
+
 /**
 An object representation of an XMPP presence message.
 
@@ -16,6 +17,7 @@ This class provides a number of different convenience methods for routing, and
 reasoning about presence messages.
 */
 export function Presence() {
+
     var self = this;
     self.ps = PersistenceService.register(Presence, self);
     self.mapping = {
@@ -119,6 +121,7 @@ Presence.fromTree = function(element) {
     });
     return presence;
 };
+Presence.__name = "Presence";
 
 
 PersistenceService.addToRegistry(Presence);

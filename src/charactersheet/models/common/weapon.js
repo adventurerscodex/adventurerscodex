@@ -8,7 +8,9 @@ import { Fixtures } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Weapon() {
+
     var self = this;
 
     self.FINESSE = 'finesse';
@@ -234,6 +236,6 @@ export function Weapon() {
         self.ps.delete();
     };
 }
-
+Weapon.__name = "Weapon";
 
 PersistenceService.addToRegistry(Weapon);

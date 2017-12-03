@@ -4,7 +4,9 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
 
+
 export function Note() {
+
     var self = this;
     self.ps = PersistenceService.register(Note, self);
     self.mapping = {
@@ -59,6 +61,6 @@ export function Note() {
         return words.slice(0, words.length - 2).join(' ');
     };
 }
-
+Note.__name = "Note";
 
 PersistenceService.addToRegistry(Note);

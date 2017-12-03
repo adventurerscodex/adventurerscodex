@@ -4,6 +4,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 
 export function Profile() {
+
     var self = this;
     self.ps = PersistenceService.register(Profile, self);
     self.mapping = {
@@ -57,6 +58,7 @@ export function Profile() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+Profile.__name = "Profile";
 
 
 PersistenceService.addToRegistry(Profile);

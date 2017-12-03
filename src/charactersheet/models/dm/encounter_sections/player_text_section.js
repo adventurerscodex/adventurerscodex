@@ -1,7 +1,9 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function PlayerTextSection() {
+
     var self = this;
     self.ps = PersistenceService.register(PlayerTextSection, self);
     self.mapping = {
@@ -40,6 +42,6 @@ export function PlayerTextSection() {
         self.ps.delete();
     };
 }
-
+PlayerTextSection.__name = "PlayerTextSection";
 
 PersistenceService.addToRegistry(PlayerTextSection);

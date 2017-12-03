@@ -5,6 +5,7 @@ import ko from 'knockout';
  * A Root Level DM Object containing overview information about a campaign.
  */
 export function Campaign() {
+
     var self = this;
     self.ps = PersistenceService.register(Campaign, self);
     self.mapping = {
@@ -47,6 +48,6 @@ export function Campaign() {
         return 'A long long time ago...';
     };
 }
-
+Campaign.__name = "Campaign";
 
 PersistenceService.addToRegistry(Campaign);

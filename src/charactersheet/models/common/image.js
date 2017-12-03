@@ -3,7 +3,9 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function ImageModel() {
+
     var self = this;
     self.ps = PersistenceService.register(ImageModel, self);
 
@@ -41,6 +43,6 @@ export function ImageModel() {
         }
     });
 }
-
+ImageModel.__name = "ImageModel";
 
 PersistenceService.addToRegistry(ImageModel);

@@ -1,7 +1,9 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function PointOfInterestSection() {
+
     var self = this;
     self.ps = PersistenceService.register(PointOfInterestSection, self);
     self.mapping = {
@@ -40,6 +42,6 @@ export function PointOfInterestSection() {
         self.ps.delete();
     };
 }
-
+PointOfInterestSection.__name = "PointOfInterestSection";
 
 PersistenceService.addToRegistry(PointOfInterestSection);

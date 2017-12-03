@@ -1,7 +1,9 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function NotesSection() {
+
     var self = this;
     self.ps = PersistenceService.register(NotesSection, self);
     self.mapping = {
@@ -41,6 +43,6 @@ export function NotesSection() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+NotesSection.__name = "NotesSection";
 
 PersistenceService.addToRegistry(NotesSection);

@@ -3,7 +3,9 @@ import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
 
+
 export function PlayerText() {
+
     var self = this;
     self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.LONG_DESCRIPTION_MAX_LENGTH = 200;
@@ -72,6 +74,6 @@ export function PlayerText() {
         };
     };
 }
-
+PlayerText.__name = "PlayerText";
 
 PersistenceService.addToRegistry(PlayerText);

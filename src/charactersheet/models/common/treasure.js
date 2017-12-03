@@ -3,7 +3,9 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Treasure() {
+
     var self = this;
     self.ps = PersistenceService.register(Treasure, self);
     self.mapping = {
@@ -78,6 +80,7 @@ export function Treasure() {
         self.ps.delete();
     };
 }
+Treasure.__name = "Treasure";
 
 
 PersistenceService.addToRegistry(Treasure);

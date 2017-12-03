@@ -1,7 +1,9 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function EnvironmentSection() {
+
     var self = this;
     self.ps = PersistenceService.register(EnvironmentSection, self);
     self.mapping = {
@@ -39,6 +41,6 @@ export function EnvironmentSection() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+EnvironmentSection.__name = "EnvironmentSection";
 
 PersistenceService.addToRegistry(EnvironmentSection);

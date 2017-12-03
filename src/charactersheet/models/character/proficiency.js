@@ -4,7 +4,9 @@ import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Proficiency() {
+
     var self = this;
 
     self.ps = PersistenceService.register(Proficiency, self);
@@ -42,6 +44,6 @@ export function Proficiency() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+Proficiency.__name = "Proficiency";
 
 PersistenceService.addToRegistry(Proficiency);

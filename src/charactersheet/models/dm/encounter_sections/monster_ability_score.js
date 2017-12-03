@@ -1,7 +1,9 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function MonsterAbilityScore() {
+
     var self = this;
     self.ps = PersistenceService.register(MonsterAbilityScore, self);
     self.mapping = {
@@ -59,6 +61,6 @@ export function MonsterAbilityScore() {
         return !isNaN(parseFloat(n)) && isFinite(n);
     };
 }
-
+MonsterAbilityScore.__name = "MonsterAbilityScore";
 
 PersistenceService.addToRegistry(MonsterAbilityScore);

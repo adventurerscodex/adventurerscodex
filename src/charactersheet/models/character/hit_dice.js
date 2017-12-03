@@ -4,6 +4,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 
 export function HitDice() {
+
     var self = this;
     self.ps = PersistenceService.register(HitDice, self);
 
@@ -47,6 +48,6 @@ export function HitDice() {
         return css;
     });
 }
-
+HitDice.__name = "HitDice";
 
 PersistenceService.addToRegistry(HitDice);

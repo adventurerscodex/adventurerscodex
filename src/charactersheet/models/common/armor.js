@@ -11,7 +11,9 @@ import { AbilityScores } from 'charactersheet/models/character';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Armor() {
+
     var self = this;
     self.ps = PersistenceService.register(Armor, self);
     self.mapping = {
@@ -165,6 +167,6 @@ export function Armor() {
         return totalBonus;
     });
 }
-
+Armor.__name = "Armor";
 
 PersistenceService.addToRegistry(Armor);

@@ -3,7 +3,9 @@ import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
+
 export function Status() {
+
     var self = this;
     self.ps = PersistenceService.register(Status, self);
     self.mapping = {
@@ -61,6 +63,7 @@ export function Status() {
         self.ps.delete();
     };
 }
+Status.__name = "Status";
 
 
 PersistenceService.addToRegistry(Status);

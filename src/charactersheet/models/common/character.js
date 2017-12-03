@@ -29,6 +29,7 @@ import uuid from 'node-uuid';
  * a few convenience methods for fetching common data regarding a character.
  */
 export function Character() {
+
     var self = this;
     self.ps = PersistenceService.register(Character, self);
 
@@ -254,6 +255,7 @@ Character._changeIdForData = function(characterId, data) {
     }
     return data;
 };
+Character.__name = "Character";
 
 
 PersistenceService.addToRegistry(Character);

@@ -9,7 +9,6 @@ import ko from 'knockout';
  * @param pCard  contains all the fields that make up a player
  */
 export function PlayerCard(pCard) {
-
     var self = this;
 
     self.DANGER_THRESHOLD = 0.30;

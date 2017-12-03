@@ -6,7 +6,9 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { ProficiencyService } from 'charactersheet/services';
 import ko from 'knockout';
 
+
 export function Skill() {
+
     var self = this;
     self.ps = PersistenceService.register(Skill, self);
     self.mapping = {
@@ -119,6 +121,6 @@ export function Skill() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-
+Skill.__name = "Skill";
 
 PersistenceService.addToRegistry(Skill);

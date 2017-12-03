@@ -9,6 +9,7 @@ import ko from 'knockout';
  * have equipped.
  */
 export function Item() {
+
     var self = this;
 
     self.DESCRIPTION_MAX_LENGTH = 200;
@@ -78,6 +79,6 @@ export function Item() {
         self.ps.delete();
     };
 }
-
+Item.__name = "Item";
 
 PersistenceService.addToRegistry(Item);

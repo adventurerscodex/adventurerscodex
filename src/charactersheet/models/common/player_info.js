@@ -4,7 +4,9 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 import md5 from 'blueimp-md5';
 
+
 export function PlayerInfo() {
+
     var self = this;
     self.ps = PersistenceService.register(PlayerInfo, self);
 
@@ -42,6 +44,6 @@ export function PlayerInfo() {
         };
     };
 }
-
+PlayerInfo.__name = "PlayerInfo";
 
 PersistenceService.addToRegistry(PlayerInfo);

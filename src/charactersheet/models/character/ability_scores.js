@@ -34,6 +34,7 @@ export var getStrModifier = function(modifier){
 
 
 export function AbilityScores() {
+
     var self = this;
     self.ps = PersistenceService.register(AbilityScores, self);
     self.mapping = {
@@ -119,6 +120,6 @@ export function AbilityScores() {
         self.ps.save();
     };
 }
-
+AbilityScores.__name = "AbilityScores";
 
 PersistenceService.addToRegistry(AbilityScores);
