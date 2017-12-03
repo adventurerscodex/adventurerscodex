@@ -1,13 +1,6 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
-    CharacterCardPublishingService,
-    ChatServiceManager,
-    DMCardPublishingService,
-    KeyValuePredicate,
-    SharedServiceManager
-} from 'charactersheet/services/common';
-import {
     CharacterManager,
     Fixtures,
     Notifications
@@ -16,7 +9,12 @@ import {
     Message,
     Presence
 } from 'charactersheet/models/common';
+import { CharacterCardPublishingService } from 'charactersheet/services/common/sync/card_service';
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging/chat_service';
+import { DMCardPublishingService } from 'charactersheet/services/common';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
 import ko from 'knockout';
 

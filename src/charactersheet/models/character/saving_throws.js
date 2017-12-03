@@ -1,9 +1,9 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { AbilityScores } from 'charactersheet/models';
+import { AbilityScores } from './ability_scores';
 import { CharacterManager } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { ProficiencyService } from 'charactersheet/services';
+import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
 
 

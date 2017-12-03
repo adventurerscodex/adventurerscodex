@@ -5,17 +5,15 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import {
-    ChatRoom,
-    Message,
-    Presence
-} from 'charactersheet/models';
-import {
     KeyValuePredicate,
-    OrPredicate,
-    XMPPService
-} from 'charactersheet/services';
+    OrPredicate
+ } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { ChatRoom } from 'charactersheet/models/common/chat_room';
+import { Message } from 'charactersheet/models/common/message';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Presence } from 'charactersheet/models/common/presence';
 import { SharedServiceManager } from '../../shared_service_manager';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 import ko from 'knockout';
 import uuid from 'node-uuid';
 

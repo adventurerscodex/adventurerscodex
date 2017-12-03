@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Status } from 'charactersheet/models';
+import { Status } from './status';
 import ko from 'knockout';
 
 /**

@@ -2,11 +2,9 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    OtherStats,
-    Profile
-} from 'charactersheet/models/character';
+import { OtherStats } from 'charactersheet/models/character/other_stats';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Profile } from 'charactersheet/models/character/profile';
 import { SharedServiceManager } from '../common/shared_service_manager';
 import ko from 'knockout';
 

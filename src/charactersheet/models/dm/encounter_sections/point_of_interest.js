@@ -1,5 +1,5 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { PlayerTextSection } from 'charactersheet/models/dm';
+import { PlayerTextSection } from './player_text_section';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 

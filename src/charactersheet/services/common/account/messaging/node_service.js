@@ -1,13 +1,12 @@
 import {
-    ChatServiceManager,
-    SharedServiceManager,
-    XMPPService
-} from 'charactersheet/services/common';
-import {
     JSONPayload,
     Notifications
 } from 'charactersheet/utilities';
+import { ChatServiceManager } from './chat_service';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
+
 
 /*eslint no-console:0*/
 

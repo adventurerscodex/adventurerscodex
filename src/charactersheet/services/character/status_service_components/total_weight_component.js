@@ -1,22 +1,18 @@
 import {
-    AbilityScores,
-    Armor,
-    Item,
-    MagicItem,
-    Status,
-    StatusWeightPair,
-    Treasure,
-    Weapon
-} from 'charactersheet/models';
-import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    KeyValuePredicate,
-    SharedServiceManager
-} from 'charactersheet/services/common';
+import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { Armor } from 'charactersheet/models/common/armor';
+import { Item } from 'charactersheet/models/common/item';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { MagicItem } from 'charactersheet/models/common/magic_item';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+import { Status } from 'charactersheet/models/common/status';
+import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
+import { Treasure } from 'charactersheet/models/common/treasure';
+import { Weapon } from 'charactersheet/models/common/weapon';
 import ko from 'knockout';
 
 /**

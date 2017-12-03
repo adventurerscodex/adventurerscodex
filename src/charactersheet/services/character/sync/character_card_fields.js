@@ -1,29 +1,23 @@
-import {
-    AbilityScores,
-    Health,
-    HitDice,
-    HitDiceType,
-    Profile,
-    Skill,
-    SpellStats,
-    Treasure
-} from 'charactersheet/models';
-import {
-    ArmorClassService,
-    KeyValuePredicate,
-    SharedServiceManager,
-    XMPPService
-} from 'charactersheet/services';
-import {
-    ImageModel,
-    PlayerImage,
-    PlayerInfo,
-    Status,
-    StatusWeightPair
-} from 'charactersheet/models/common';
+import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { ArmorClassService } from 'charactersheet/services/character/armor_class_service';
 import { CharacterManager } from 'charactersheet/utilities';
+import { Health } from 'charactersheet/models/character/health';
+import { HitDice } from 'charactersheet/models/character/hit_dice';
+import { HitDiceType } from 'charactersheet/models/character/hit_dice_type';
+import { ImageModel } from 'charactersheet/models/common/image';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { PlayerImage } from 'charactersheet/models/common/player_image';
+import { PlayerInfo } from 'charactersheet/models/common/player_info';
+import { Profile } from 'charactersheet/models/character/profile';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+import { Skill } from 'charactersheet/models/character/skill';
+import { SpellStats } from 'charactersheet/models/character/spell_stats';
+import { Status } from 'charactersheet/models/common/status';
+import { StatusWeightPair } from 'charactersheet/models/common';
+import { Treasure } from 'charactersheet/models/common/treasure';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 export var CharacterCardFields = [
     {
