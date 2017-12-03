@@ -11,7 +11,6 @@ import { Character } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
 import { WizardViewModel } from 'charactersheet/viewmodels/common/wizard';
-import should from 'Should';
 import simple from 'simple-mock';
 
 describe('Wizard ViewModel', function(){

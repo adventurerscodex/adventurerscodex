@@ -9,7 +9,7 @@ import {
 import { Item } from 'charactersheet/models/common';
 import { ItemsViewModel } from 'charactersheet/viewmodels/character/items';
 import { MockCharacterManager } from '../mocks';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('InventoryViewModel', function(){

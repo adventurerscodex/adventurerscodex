@@ -1,5 +1,5 @@
+import Should from 'should';
 import { TreasureViewModel } from 'charactersheet/viewmodels/character/treasure';
-import should from 'Should';
 
 describe('Treasure View Model', function() {
     var treasure_fixture = {

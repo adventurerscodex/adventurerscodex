@@ -7,7 +7,7 @@ import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Profile } from 'charactersheet/models/character';
 import { ProfileViewModel } from 'charactersheet/viewmodels/character/profile';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('Profile View Model', function() {

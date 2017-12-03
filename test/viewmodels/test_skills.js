@@ -7,9 +7,9 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { MockCharacterManager } from '../mocks';
+import Should from 'should';
 import { Skill } from 'charactersheet/models/character';
 import { SkillsViewModel } from 'charactersheet/viewmodels/character/skills';
-import should from 'Should';
 import simple from 'simple-mock';
 
 describe('Skill Tree', function() {

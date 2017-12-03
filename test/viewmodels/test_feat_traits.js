@@ -6,7 +6,7 @@ import { FeaturesTraits } from 'charactersheet/models';
 import { FeaturesTraitsViewModel } from 'charactersheet/viewmodels/character/feat_traits';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('FeaturesTraitsViewModel', function(){

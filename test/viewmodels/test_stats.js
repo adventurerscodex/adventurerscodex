@@ -2,8 +2,8 @@ import { CharacterManager } from 'charactersheet/utilities';
 import { HitDice } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import Should from 'should';
 import { StatsViewModel } from 'charactersheet/viewmodels/character/stats';
-import should from 'Should';
 import simple from 'simple-mock';
 
 describe('Stats View Model', function() {
@@ -144,9 +144,7 @@ describe('Stats View Model', function() {
         describe('resetHitDice', function() {
             var msg = 'should set hit dice to unused up to the floor of 1/2 of level';
             it(msg, function() {
-                simple.mock(
-                        CharacterManager, 'activeCharacter').callFn(
-                                MockCharacterManager.activeCharacter);
+                simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
 
                 var stats = new StatsViewModel();
 

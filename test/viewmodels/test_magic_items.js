@@ -12,7 +12,7 @@ import {
 } from 'charactersheet/services/common';
 import { MagicItemsViewModel } from 'charactersheet/viewmodels/character/magic_items';
 import { MockCharacterManager } from '../mocks';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('Magic Items View Model', function(){

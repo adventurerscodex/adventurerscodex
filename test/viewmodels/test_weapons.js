@@ -1,8 +1,8 @@
 import { CharacterManager } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
+import Should from 'should';
 import { Weapon } from 'charactersheet/models';
 import { WeaponsViewModel } from 'charactersheet/viewmodels/character/weapons';
-import should from 'Should';
 import simple from 'simple-mock';
 
 describe('WeaponsViewModel', function(){

@@ -6,7 +6,7 @@ import { Encounter } from 'charactersheet/models/dm/encounter';
 import { NotesSection } from 'charactersheet/models/dm/encounter_sections/notes_section';
 import { NotesSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/notes_section';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('NotesSectionViewModel', function(){

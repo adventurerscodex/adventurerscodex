@@ -6,7 +6,7 @@ webpack = webpackConfig;
 webpack.module.rules.push({
     test: /\.js$/,
     loader: "isparta-loader",
-    exclude: /node_modules|bin|test$/ // exclude node_modules and test files
+    exclude: /node_modules|test$/ // exclude node_modules and test files
 })
 
 module.exports = function(config) {

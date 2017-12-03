@@ -1,7 +1,4 @@
-import {
-    ArmorClassService,
-    PersistenceService
-} from 'charactersheet/services';
+import { ArmorClassService } from 'charactersheet/services';
 import {
     DeathSave,
     Health,
@@ -12,6 +9,7 @@ import {
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import template from './index.html';
 
 export function StatsViewModel() {
@@ -102,27 +100,6 @@ export function StatsViewModel() {
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.calculateHitDice);
         self.healthDataHasChange();
-    };
-
-    self.unload = function() {
-        self.health().save();
-        self.hitDiceList().forEach(function(e, i, _) {
-            e.save();
-        });
-        self.deathSaveSuccessList().forEach(function(e, i, _) {
-            e.save();
-        });
-        self.deathSaveFailureList().forEach(function(e, i, _) {
-            e.save();
-        });
-        self.hitDiceType().save();
-
-        Notifications.profile.changed.remove(self.calculatedProficiencyLabel);
-        Notifications.profile.changed.level.remove(self.calculateHitDice);
-        Notifications.events.longRest.remove(self.resetOnLongRest);
-        Notifications.armorClass.changed.remove(self.updateArmorClass);
-        Notifications.abilityScores.changed.remove(self.calculateInitiativeLabel);
-        Notifications.global.save.remove(self.save);
     };
 
     self.save = function() {
