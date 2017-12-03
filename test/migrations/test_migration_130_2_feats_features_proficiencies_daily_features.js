@@ -46,7 +46,7 @@ describe('130 Features, Feats, and Traits Migration', function() {
             });
 
             migration_130_2_feats_features_proficiencies_daily_features.migration();
-            saveObj.callCount.should.equal(5);
+            saveObj.callCount.should.equal(7);
             deleteObjs.callCount.should.equal(2);
             findAll.callCount.should.equal(2);
         });
