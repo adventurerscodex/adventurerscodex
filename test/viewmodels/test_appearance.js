@@ -6,7 +6,7 @@ import { AppearanceViewModel } from 'charactersheet/viewmodels/character/appeara
 import { CharacterAppearance } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('Appearance', function() {

@@ -3,7 +3,7 @@ import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/abil
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('AbilityScoresViewModel', function(){

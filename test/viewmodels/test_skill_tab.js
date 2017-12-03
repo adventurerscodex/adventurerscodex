@@ -1,6 +1,6 @@
 import { SkillsTabViewModel } from 'charactersheet/viewmodels/character/skills_tab';
 import { ViewModelUtilities } from 'charactersheet/utilities';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('SkillsTabViewModel', function(){

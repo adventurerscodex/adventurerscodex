@@ -6,7 +6,7 @@ import { Encounter } from 'charactersheet/models/dm/encounter';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { PlayerTextSection } from 'charactersheet/models/dm/encounter_sections/player_text_section';
 import { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('PlayerTextSectionViewModel', function(){

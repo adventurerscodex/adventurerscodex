@@ -3,7 +3,7 @@ import { Encounter } from 'charactersheet/models/dm';
 import { EncounterDetailViewModel } from 'charactersheet/viewmodels/dm/encounter_detail';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('EncounterDetailViewModel', function(){

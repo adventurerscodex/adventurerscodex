@@ -5,7 +5,7 @@ import {
 import { DataRepository } from 'charactersheet/utilities';
 import { WizardProfileStepViewModel } from 'charactersheet/viewmodels/common/wizard/steps';
 import ko from 'knockout';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('Wizard Profile ViewModel', function(){

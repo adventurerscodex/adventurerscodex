@@ -1,5 +1,5 @@
 import { UserNotificationViewModel } from 'charactersheet/viewmodels/common';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 import toastr from 'toastr';
 

@@ -10,7 +10,7 @@ import {
 import { MockCharacterManager } from '../mocks';
 import { ProficienciesViewModel } from 'charactersheet/viewmodels/character/proficiencies';
 import { Proficiency } from 'charactersheet/models/character';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('ProficienciesViewModel', function() {

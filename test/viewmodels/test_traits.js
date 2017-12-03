@@ -5,7 +5,7 @@ import {
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { TraitsViewModel } from 'charactersheet/viewmodels/character/traits';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('TraitsViewModel', function() {

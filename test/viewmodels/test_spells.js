@@ -9,7 +9,7 @@ import {
 import { MockCharacterManager } from '../mocks';
 import { Spell } from 'charactersheet/models/common';
 import { SpellbookViewModel } from 'charactersheet/viewmodels/character/spells';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('SpellsViewModel', function(){

@@ -12,7 +12,7 @@ import {
     SortService
 } from 'charactersheet/services/common';
 import { FeaturesViewModel } from 'charactersheet/viewmodels/character/features';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('FeaturesViewModel', function() {

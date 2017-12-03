@@ -6,7 +6,7 @@ import { Encounter } from 'charactersheet/models/dm/encounter';
 import { NPCSection } from 'charactersheet/models/dm/encounter_sections/npc_section';
 import { NPCSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/npc_section';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('NPCSectionViewModel', function(){

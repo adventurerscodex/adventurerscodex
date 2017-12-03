@@ -9,7 +9,7 @@ import {
 import { MockCharacterManager } from '../mocks';
 import { Skill } from 'charactersheet/models/character';
 import { SkillsViewModel } from 'charactersheet/viewmodels/character/skills';
-import should from 'Should';
+import Should from 'should';
 import simple from 'simple-mock';
 
 describe('Skill Tree', function() {
