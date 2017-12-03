@@ -64,6 +64,8 @@ export function AdventurersCodexViewModel() {
     self.characterAndGamesModalStatus = ko.observable(false);
     self.exportModalStatus = ko.observable(false);
     self.navLogo = navLogo;
+    self.version = VERSION;
+    self.buildDate = BUILD_DATE;
 
     //UI Methods
 
