@@ -1,4 +1,3 @@
-import { ArmorClassService } from 'charactersheet/services';
 import {
     DeathSave,
     Health,
@@ -6,10 +5,11 @@ import {
     HitDiceType,
     Profile
 } from 'charactersheet/models/character';
+import { ArmorClassService } from 'charactersheet/services';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import ko from 'knockout';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import template from './index.html';
 
 export function StatsViewModel() {

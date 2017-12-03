@@ -90,6 +90,6 @@ export function MagicItem() {
         self.ps.delete();
     };
 }
-MagicItem.__name = "MagicItem";
+MagicItem.__name = 'MagicItem';
 
 PersistenceService.addToRegistry(MagicItem);

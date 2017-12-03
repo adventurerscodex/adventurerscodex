@@ -40,6 +40,6 @@ export function HitDiceType() {
         self.ps.delete();
     };
 }
-HitDiceType.__name = "HitDiceType";
+HitDiceType.__name = 'HitDiceType';
 
 PersistenceService.addToRegistry(HitDiceType);

@@ -60,6 +60,6 @@ export function Note() {
         return words.slice(0, words.length - 2).join(' ');
     };
 }
-Note.__name = "Note";
+Note.__name = 'Note';
 
 PersistenceService.addToRegistry(Note);

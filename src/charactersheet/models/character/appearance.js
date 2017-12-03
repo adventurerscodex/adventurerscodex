@@ -41,6 +41,6 @@ export function CharacterAppearance() {
         self.ps.save();
     };
 }
-CharacterAppearance.__name = "CharacterAppearance";
+CharacterAppearance.__name = 'CharacterAppearance';
 
 PersistenceService.addToRegistry(CharacterAppearance);

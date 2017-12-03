@@ -41,6 +41,6 @@ export function MonsterSection() {
         self.ps.delete();
     };
 }
-MonsterSection.__name = "MonsterSection";
+MonsterSection.__name = 'MonsterSection';
 
 PersistenceService.addToRegistry(MonsterSection);

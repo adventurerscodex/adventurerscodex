@@ -106,6 +106,6 @@ export function ChatRoom() {
         return occupantCardsOrNames;
     };
 }
-ChatRoom.__name = "ChatRoom";
+ChatRoom.__name = 'ChatRoom';
 
 PersistenceService.addToRegistry(ChatRoom);

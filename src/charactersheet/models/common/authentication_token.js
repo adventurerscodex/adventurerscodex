@@ -92,6 +92,6 @@ export function AuthenticationToken() {
         self.ps.delete();
     };
 }
-AuthenticationToken.__name = "AuthenticationToken";
+AuthenticationToken.__name = 'AuthenticationToken';
 
 PersistenceService.addToRegistry(AuthenticationToken);

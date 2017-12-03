@@ -40,6 +40,6 @@ export function EnvironmentSection() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-EnvironmentSection.__name = "EnvironmentSection";
+EnvironmentSection.__name = 'EnvironmentSection';
 
 PersistenceService.addToRegistry(EnvironmentSection);

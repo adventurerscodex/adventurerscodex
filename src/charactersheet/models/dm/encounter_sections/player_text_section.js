@@ -41,6 +41,6 @@ export function PlayerTextSection() {
         self.ps.delete();
     };
 }
-PlayerTextSection.__name = "PlayerTextSection";
+PlayerTextSection.__name = 'PlayerTextSection';
 
 PersistenceService.addToRegistry(PlayerTextSection);

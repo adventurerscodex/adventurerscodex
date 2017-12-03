@@ -41,6 +41,6 @@ export function TreasureSection() {
         self.ps.delete();
     };
 }
-TreasureSection.__name = "TreasureSection";
+TreasureSection.__name = 'TreasureSection';
 
 PersistenceService.addToRegistry(TreasureSection);

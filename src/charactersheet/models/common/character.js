@@ -252,7 +252,7 @@ Character._changeIdForData = function(characterId, data) {
     }
     return data;
 };
-Character.__name = "Character";
+Character.__name = 'Character';
 
 
 PersistenceService.addToRegistry(Character);

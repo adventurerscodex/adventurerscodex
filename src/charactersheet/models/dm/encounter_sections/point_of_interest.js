@@ -55,6 +55,6 @@ export function PointOfInterest() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
-PointOfInterest.__name = "PointOfInterest";
+PointOfInterest.__name = 'PointOfInterest';
 
 PersistenceService.addToRegistry(PointOfInterest);

@@ -47,6 +47,6 @@ export function HitDice() {
         return css;
     });
 }
-HitDice.__name = "HitDice";
+HitDice.__name = 'HitDice';
 
 PersistenceService.addToRegistry(HitDice);

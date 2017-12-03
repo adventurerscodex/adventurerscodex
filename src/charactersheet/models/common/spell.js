@@ -115,6 +115,6 @@ export function Spell() {
         self.ps.delete();
     };
 }
-Spell.__name = "Spell";
+Spell.__name = 'Spell';
 
 PersistenceService.addToRegistry(Spell);

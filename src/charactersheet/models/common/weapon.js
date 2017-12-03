@@ -234,6 +234,6 @@ export function Weapon() {
         self.ps.delete();
     };
 }
-Weapon.__name = "Weapon";
+Weapon.__name = 'Weapon';
 
 PersistenceService.addToRegistry(Weapon);

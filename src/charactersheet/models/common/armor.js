@@ -165,6 +165,6 @@ export function Armor() {
         return totalBonus;
     });
 }
-Armor.__name = "Armor";
+Armor.__name = 'Armor';
 
 PersistenceService.addToRegistry(Armor);

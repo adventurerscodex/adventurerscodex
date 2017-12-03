@@ -103,6 +103,6 @@ export function SavingThrows() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-SavingThrows.__name = "SavingThrows";
+SavingThrows.__name = 'SavingThrows';
 
 PersistenceService.addToRegistry(SavingThrows);

@@ -183,6 +183,6 @@ Message.fromTree = function(msg) {
 
     return chat;
 };
-Message.__name = "Message";
+Message.__name = 'Message';
 
 PersistenceService.addToRegistry(Message);

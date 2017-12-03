@@ -43,6 +43,6 @@ export function Proficiency() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-Proficiency.__name = "Proficiency";
+Proficiency.__name = 'Proficiency';
 
 PersistenceService.addToRegistry(Proficiency);
