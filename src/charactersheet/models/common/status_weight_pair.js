@@ -65,14 +65,11 @@ StatusWeightPair.determinePhraseAndColor = function(statusType, totalStatusWeigh
 };
 
 export function getHealthTypeEnum() {
-
     return 'health';
 }
 export function getMagicTypeEnum() {
-
     return 'magic';
 }
 export function getTrackedTypeEnum() {
-
     return 'tracked';
 }
