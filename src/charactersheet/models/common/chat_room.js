@@ -5,15 +5,13 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    Message,
-    Presence
-} from 'charactersheet/models/common';
 import { CharacterCardPublishingService } from 'charactersheet/services/common/sync/card_service';
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging/chat_service';
-import { DMCardPublishingService } from 'charactersheet/services/common';
+import { DMCardPublishingService } from 'charactersheet/services/common/sync/card_service';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { Message } from './message';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Presence } from './presence';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
 import ko from 'knockout';
