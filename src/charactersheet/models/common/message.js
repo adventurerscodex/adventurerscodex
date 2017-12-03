@@ -5,7 +5,7 @@ import {
 } from 'charactersheet/utilities';
 import {
     CHAT_MESSAGE_TYPES
-} from 'charactersheet/services/common';
+} from 'charactersheet/services/common/account/messaging/chat_message_types';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Strophe from 'strophe';
 import ko from 'knockout';
@@ -183,6 +183,6 @@ Message.fromTree = function(msg) {
 
     return chat;
 };
-Message.__name = "Message";
+Message.__name = 'Message';
 
 PersistenceService.addToRegistry(Message);

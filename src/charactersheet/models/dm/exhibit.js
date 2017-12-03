@@ -40,6 +40,6 @@ export function Exhibit() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-Exhibit.__name = "Exhibit";
+Exhibit.__name = 'Exhibit';
 
 PersistenceService.addToRegistry(Exhibit);

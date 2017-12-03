@@ -42,6 +42,6 @@ export function ImageModel() {
         }
     });
 }
-ImageModel.__name = "ImageModel";
+ImageModel.__name = 'ImageModel';
 
 PersistenceService.addToRegistry(ImageModel);

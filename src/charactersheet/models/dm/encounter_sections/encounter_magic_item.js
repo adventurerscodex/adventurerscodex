@@ -27,6 +27,6 @@ export function EncounterMagicItem() {
 
     return self;
 }
-EncounterMagicItem.__name = "EncounterMagicItem";
+EncounterMagicItem.__name = 'EncounterMagicItem';
 
 PersistenceService.addToRegistry(EncounterMagicItem);

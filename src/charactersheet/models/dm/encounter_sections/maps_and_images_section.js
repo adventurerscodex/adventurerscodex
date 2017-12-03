@@ -41,6 +41,6 @@ export function MapsAndImagesSection() {
         self.ps.delete();
     };
 }
-MapsAndImagesSection.__name = "MapsAndImagesSection";
+MapsAndImagesSection.__name = 'MapsAndImagesSection';
 
 PersistenceService.addToRegistry(MapsAndImagesSection);

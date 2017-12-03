@@ -3,12 +3,11 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    KeyValuePredicate,
-    SharedServiceManager
-} from 'charactersheet/services/common';
-import { AbilityScores } from 'charactersheet/models/character';
+import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+
 import ko from 'knockout';
 
 
@@ -166,6 +165,6 @@ export function Armor() {
         return totalBonus;
     });
 }
-Armor.__name = "Armor";
+Armor.__name = 'Armor';
 
 PersistenceService.addToRegistry(Armor);

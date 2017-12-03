@@ -1,16 +1,14 @@
 import {
-    AbilityScores,
-    Armor,
-    OtherStats
-} from 'charactersheet/models';
-import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
 import {
     KeyValuePredicate,
     NotPredicate
-} from 'charactersheet/services/common';
+} from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { Armor } from 'charactersheet/models/common/armor';
+import { OtherStats } from 'charactersheet/models/character/other_stats';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../common/shared_service_manager';
 import ko from 'knockout';

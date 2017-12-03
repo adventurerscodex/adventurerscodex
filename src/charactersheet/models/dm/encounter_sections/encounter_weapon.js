@@ -27,6 +27,6 @@ export function EncounterWeapon() {
 
     return self;
 }
-EncounterWeapon.__name = "EncounterWeapon";
+EncounterWeapon.__name = 'EncounterWeapon';
 
 PersistenceService.addToRegistry(EncounterWeapon);

@@ -120,7 +120,7 @@ Presence.fromTree = function(element) {
     });
     return presence;
 };
-Presence.__name = "Presence";
+Presence.__name = 'Presence';
 
 
 PersistenceService.addToRegistry(Presence);

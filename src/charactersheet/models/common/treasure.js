@@ -79,7 +79,7 @@ export function Treasure() {
         self.ps.delete();
     };
 }
-Treasure.__name = "Treasure";
+Treasure.__name = 'Treasure';
 
 
 PersistenceService.addToRegistry(Treasure);

@@ -41,6 +41,6 @@ export function PointOfInterestSection() {
         self.ps.delete();
     };
 }
-PointOfInterestSection.__name = "PointOfInterestSection";
+PointOfInterestSection.__name = 'PointOfInterestSection';
 
 PersistenceService.addToRegistry(PointOfInterestSection);

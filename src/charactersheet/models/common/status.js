@@ -62,7 +62,7 @@ export function Status() {
         self.ps.delete();
     };
 }
-Status.__name = "Status";
+Status.__name = 'Status';
 
 
 PersistenceService.addToRegistry(Status);

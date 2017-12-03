@@ -45,6 +45,6 @@ export function Trait() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-Trait.__name = "Trait";
+Trait.__name = 'Trait';
 
 PersistenceService.addToRegistry(Trait);

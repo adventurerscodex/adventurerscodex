@@ -105,7 +105,7 @@ export function Health() {
         self.ps.save();
     };
 }
-Health.__name = "Health";
+Health.__name = 'Health';
 
 
 PersistenceService.addToRegistry(Health);

@@ -1,20 +1,18 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import {
-    Migrations,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
 import { AuthenticationToken } from './authentication_token';
 import { Campaign } from '../dm/campaign';
 import Dropbox from 'dropbox';
 import { ImageModel } from './image';
+import { Migrations } from 'charactersheet/utilities/migrations';
+import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { PlayerImage } from './player_image';
 import { PlayerInfo } from './player_info';
 import { PlayerTypes } from './player_types';
 import { Profile } from '../character/profile';
 import { Settings } from 'charactersheet/settings';
+import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 import saveAs from 'save-as';
 import uuid from 'node-uuid';
@@ -254,7 +252,7 @@ Character._changeIdForData = function(characterId, data) {
     }
     return data;
 };
-Character.__name = "Character";
+Character.__name = 'Character';
 
 
 PersistenceService.addToRegistry(Character);

@@ -55,6 +55,6 @@ export function NPC() {
         return Utility.string.truncateStringAtLength(self.description(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
-NPC.__name = "NPC";
+NPC.__name = 'NPC';
 
 PersistenceService.addToRegistry(NPC);

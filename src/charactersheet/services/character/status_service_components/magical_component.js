@@ -2,16 +2,12 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    KeyValuePredicate,
-    SharedServiceManager
-} from 'charactersheet/services/common';
-import {
-    Status,
-    StatusWeightPair
-} from 'charactersheet/models';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Slot } from 'charactersheet/models';
+import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+import { Slot } from 'charactersheet/models/character/spell_slot';
+import { Status } from 'charactersheet/models/common/status';
+import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { getMagicTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 
 

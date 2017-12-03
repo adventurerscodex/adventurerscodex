@@ -48,6 +48,6 @@ export function SpellStats() {
         self.ps.save();
     };
 }
-SpellStats.__name = "SpellStats";
+SpellStats.__name = 'SpellStats';
 
 PersistenceService.addToRegistry(SpellStats);

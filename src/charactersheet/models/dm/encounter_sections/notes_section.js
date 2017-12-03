@@ -42,6 +42,6 @@ export function NotesSection() {
         return ko.mapping.toJS(self, mapping);
     };
 }
-NotesSection.__name = "NotesSection";
+NotesSection.__name = 'NotesSection';
 
 PersistenceService.addToRegistry(NotesSection);

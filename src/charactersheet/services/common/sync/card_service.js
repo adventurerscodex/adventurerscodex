@@ -1,12 +1,10 @@
-import {
-    ChatServiceManager,
-    NodeServiceManager,
-    XMPPService
-} from 'charactersheet/services';
 import { CharacterCardFields } from 'charactersheet/services/character/sync/character_card_fields';
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging/chat_service';
 import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields';
+import { NodeServiceManager } from 'charactersheet/services/common/account/messaging/node_service';
 import { Notifications } from 'charactersheet/utilities';
 import { SharedServiceManager } from '../shared_service_manager';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 import { pCard } from 'charactersheet/models/common';
 import uuid from 'node-uuid';
 
