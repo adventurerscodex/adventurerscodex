@@ -89,7 +89,10 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
+        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         if (!section) {
             section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());
@@ -106,7 +109,11 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -229,12 +236,18 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
+        var mapS =  PersistenceService.findByPredicates(MapOrImage, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ]);
         if (map) {
-            self.mapsOrImages(map);
+            self.mapsOrImages(mapS);
         }
 
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
+        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         if (!section) {
             section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());

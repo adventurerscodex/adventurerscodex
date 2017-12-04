@@ -46,13 +46,21 @@ export function Encounter() {
      * Returns the list of encounter objects corresponding to the child ids.
      */
     self.getChildren = function() {
+        var key = CharacterManager.activeCharacter().key();
         return self.children().map(function(id, idx, _) {
-            return PersistenceService.findFirstBy(Encounter, 'encounterId', id);
+            return PersistenceService.findByPredicates(Encounter, [
+                new KeyValuePredicate('encounterId', id,
+                new KeyValuePredicate('characterId', key,
+            ])[0];
         });
     };
 
     self.getParent = function() {
-        return PersistenceService.findFirstBy(Encounter, 'encounterId', self.parent());
+        var key = CharacterManager.activeCharacter().key();
+        return PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', self.parent()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
     };
 
     /* View Model Methods */

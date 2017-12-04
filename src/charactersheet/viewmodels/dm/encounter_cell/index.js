@@ -40,7 +40,11 @@ export function EncounterCellViewModel(encounter) {
 
     self.addChild = function(child) {
         // Update the data.
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var encounter =  PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         encounter.children.push(child.encounterId());
         encounter.save();
 
@@ -57,7 +61,11 @@ export function EncounterCellViewModel(encounter) {
     /* View Model Methods */
 
     self.save = function() {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var encounter =  PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         encounter.name(self.name());
         encounter.encounterLocation(self.encounterLocation());
         encounter.isOpen(self.isOpen());
@@ -65,7 +73,11 @@ export function EncounterCellViewModel(encounter) {
     };
 
     self.delete = function() {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var encounter =  PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         encounter.delete();
         self.children().forEach(function(child, idx, _) {
             child.delete();
@@ -75,7 +87,11 @@ export function EncounterCellViewModel(encounter) {
     /* Data Refresh Methods */
 
     self.reloadData = function() {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var encounter =  PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         self.name(encounter.name());
         self.encounterLocation(encounter.encounterLocation());
         self.children().forEach(function(child, idx, _) {

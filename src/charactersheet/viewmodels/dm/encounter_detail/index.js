@@ -4,13 +4,13 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import ko from 'knockout';
 import template from './index.html';
 
+
 export function EncounterDetailViewModel(params) {
     var self = this;
 
     self.encounter = params.encounter;
     self.sectionModels = params.sectionModels;
     self.sections = ko.observableArray([]);
-
     self.openModal = ko.observable(false);
 
     /* Public Methods */
@@ -20,28 +20,18 @@ export function EncounterDetailViewModel(params) {
         self._dataHasChanged();
     };
 
-    self.save = function() {
-        if (encounter) {
-            encounter.name(self.name());
-            encounter.encounterLocation(self.encounterLocation());
-            encounter.save();
-        }
-    };
-
-    self.delete = function() {
-        self.encounter().delete();
-    };
-
     /**
      * The modal's done button has been clicked. Save the results and
      * notify the subscribers.
      */
     self.notifySections = function(encounter, sections) {
-        encounter().save();
+        encounter.save();
+
         sections().forEach(function(section, i, _) {
             section.save();
         });
-        encounter.notifySubscribers();
+
+        Notifications.encounters.changed.dispatch();
     };
 
     /* UI Methods */
@@ -60,9 +50,13 @@ export function EncounterDetailViewModel(params) {
 
     self._dataHasChanged = function() {
         if (!ko.unwrap(self.encounter)) { return; }
+        var key = self.encounter().encounterId();
         var sections = self.sectionModels.map(function(sectionModel, i, _) {
-            var key = self.encounter().encounterId();
-            var section = PersistenceService.findFirstBy(sectionModel.model, 'encounterId', key);
+            var key = CharacterManager.activeCharacter().key();
+            var section =  PersistenceService.findByPredicates(sectionModel.model, [
+                new KeyValuePredicate('encounterId', id),
+                new KeyValuePredicate('characterId', key,
+            ])[0];
             if (!section) {
                 section = new sectionModel.model();
                 section.encounterId(self.encounter().encounterId());

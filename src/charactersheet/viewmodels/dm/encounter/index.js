@@ -28,9 +28,11 @@ export function EncounterViewModel() {
 
     self.selectedEncounter = ko.pureComputed(function() {
         if (!self.selectedCell()) { return; }
-        return PersistenceService.findFirstBy(
-            Encounter, 'encounterId', self.selectedCell().encounterId()
-        );
+        var key = CharacterManager.activeCharacter().key();
+        return PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', self.selectedCell().encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
     });
 
     self.encounterCells = ko.observableArray();
@@ -52,6 +54,7 @@ export function EncounterViewModel() {
     self.load = function() {
         self.encounterCells(self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
+
         Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
@@ -118,14 +121,21 @@ export function EncounterViewModel() {
      * take care of removing the element from the UI.
      */
     self.deleteEncounter = function(cell) {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var encounter = PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', cell.encounterId()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
 
         var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
         if (parentCell) {
             parentCell.removeChild(cell);
         }
 
-        var parentEncounter = PersistenceService.findFirstBy(Encounter, 'encounterId', encounter.parent());
+        var parentEncounter =  PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', encounter.parent()),
+            new KeyValuePredicate('characterId', key,
+        ])[0];
         if (parentEncounter) {
             parentEncounter.removeChild(encounter.encounterId());
             parentEncounter.save();
@@ -169,7 +179,11 @@ export function EncounterViewModel() {
 
     self._getSectionsForEncounter = function(id) {
         return self.sectionModels.map(function(sectionModel, i, _) {
-            var section = PersistenceService.findFirstBy(sectionModel.model, 'encounterId', id);
+            var key = CharacterManager.activeCharacter().key();
+            var section =  PersistenceService.findByPredicates(sectionModel.model, [
+                new KeyValuePredicate('encounterId', id),
+                new KeyValuePredicate('characterId', key,
+            ])[0];
             if (!section) {
                 section = new sectionModel.model();
                 section.encounterId(id);
