@@ -1,6 +1,8 @@
+import { CharacterManager } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -54,8 +56,8 @@ export function EncounterDetailViewModel(params) {
         var sections = self.sectionModels.map(function(sectionModel, i, _) {
             var key = CharacterManager.activeCharacter().key();
             var section =  PersistenceService.findByPredicates(sectionModel.model, [
-                new KeyValuePredicate('encounterId', id),
-                new KeyValuePredicate('characterId', key,
+                new KeyValuePredicate('encounterId', self.encounter().encounterId()),
+                new KeyValuePredicate('characterId', key),
             ])[0];
             if (!section) {
                 section = new sectionModel.model();

@@ -10,6 +10,7 @@ import {
     SortService,
     XMPPService
 } from 'charactersheet/services/common';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import {
     MapOrImage,
     Message
@@ -91,7 +92,7 @@ export function MapsAndImagesSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (!section) {
             section = new MapsAndImagesSection();
@@ -112,7 +113,7 @@ export function MapsAndImagesSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (section) {
             section.delete();
@@ -236,17 +237,17 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var mapS =  PersistenceService.findByPredicates(MapOrImage, [
+        var map =  PersistenceService.findByPredicates(MapOrImage, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ]);
         if (map) {
-            self.mapsOrImages(mapS);
+            self.mapsOrImages(map);
         }
 
         var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (!section) {
             section = new MapsAndImagesSection();

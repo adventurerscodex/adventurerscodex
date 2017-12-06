@@ -16,6 +16,7 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 
 import breastplate from 'images/misc_icons/breastplate.svg';
 import broadsword from 'images/misc_icons/broadsword.svg';
@@ -115,7 +116,10 @@ export function TreasureSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(TreasureSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(TreasureSection, [
+            new KeyValuePredicate('encounterId', cell.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
         if (!section) {
             section = new TreasureSection();
             section.encounterId(self.encounterId());
@@ -132,7 +136,11 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(TreasureSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section = PersistenceService.findByPredicates(TreasureSection, [
+            new KeyValuePredicate('encounterId', cell.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -322,12 +330,19 @@ export function TreasureSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var treasure = [];
         self.treasureTypes.forEach(function(type, idx, _){
-            var result = PersistenceService.findBy(type, 'encounterId', self.encounterId());
+            var result = PersistenceService.findByPredicates(type, [
+                new KeyValuePredicate('encounterId', self.encounterId()),
+                new KeyValuePredicate('characterId', key),
+            ]);
             treasure = treasure.concat(result);
         });
         self.treasure(treasure);
 
-        var section = PersistenceService.findFirstBy(TreasureSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section = PersistenceService.findByPredicates(TreasureSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
         if (!section) {
             section = new TreasureSection();
             section.encounterId(self.encounterId());

@@ -9,6 +9,7 @@ import {
     PersistenceService,
     XMPPService
 } from 'charactersheet/services/common';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import {
     Environment,
     EnvironmentSection,
@@ -104,7 +105,7 @@ export function EnvironmentSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var environment =  PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (!environment) {
             var key = CharacterManager.activeCharacter().key();
@@ -124,7 +125,7 @@ export function EnvironmentSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var environment =  PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (environment) {
             environment.delete();
@@ -193,7 +194,7 @@ export function EnvironmentSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var environmentSection =  PersistenceService.findByPredicates(EnvironmentSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (environmentSection) {
             self.name(environmentSection.name());
@@ -203,7 +204,7 @@ export function EnvironmentSectionViewModel(params) {
 
         var environment =  PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
         if (environment) {
             self.environment(environment);

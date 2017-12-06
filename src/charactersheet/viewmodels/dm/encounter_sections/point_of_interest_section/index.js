@@ -12,6 +12,7 @@ import {
     PointOfInterest,
     PointOfInterestSection
 } from 'charactersheet/models/dm';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/rune-stone.svg';
 import template from './index.html';
@@ -69,7 +70,10 @@ export function PointOfInterestSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(PointOfInterestSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(PointOfInterestSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
         if (!section) {
             section = new PointOfInterestSection();
             section.encounterId(self.encounterId());
@@ -86,7 +90,11 @@ export function PointOfInterestSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(PointOfInterestSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section = PersistenceService.findByPredicates(PointOfInterestSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -176,12 +184,18 @@ export function PointOfInterestSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var poi = PersistenceService.findBy(PointOfInterest, 'encounterId', self.encounterId());
+        var poi = PersistenceService.findByPredicates(PointOfInterest, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ]);
         if (poi) {
             self.pointsOfInterest(poi);
         }
 
-        var section = PersistenceService.findFirstBy(PointOfInterestSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(PointOfInterestSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
         if (!section) {
             section = new PointOfInterestSection();
             section.encounterId(self.encounterId());

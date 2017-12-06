@@ -1,4 +1,6 @@
+import { CharacterManager } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import uuid from 'node-uuid';
 
@@ -49,8 +51,8 @@ export function Encounter() {
         var key = CharacterManager.activeCharacter().key();
         return self.children().map(function(id, idx, _) {
             return PersistenceService.findByPredicates(Encounter, [
-                new KeyValuePredicate('encounterId', id,
-                new KeyValuePredicate('characterId', key,
+                new KeyValuePredicate('encounterId', id),
+                new KeyValuePredicate('characterId', key)
             ])[0];
         });
     };
@@ -59,7 +61,7 @@ export function Encounter() {
         var key = CharacterManager.activeCharacter().key();
         return PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.parent()),
-            new KeyValuePredicate('characterId', key,
+            new KeyValuePredicate('characterId', key),
         ])[0];
     };
 
