@@ -1,6 +1,10 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { Fixtures } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Fixtures
+} from 'charactersheet/utilities';
+import { AbilityScores } from 'charactersheet/models/character/ability_scores';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
