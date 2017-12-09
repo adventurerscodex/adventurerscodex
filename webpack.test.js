@@ -17,7 +17,7 @@ module.exports = merge(common, {
              * Application's version number.
              * Used to determine which migration scripts to run.
              */
-            'VERSION': JSON.stringify('1.5.1'),
+            'VERSION': JSON.stringify(package_.version),
             /**
              * The App's Client ID for the API.
              */
