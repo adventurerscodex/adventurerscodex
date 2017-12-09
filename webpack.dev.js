@@ -1,7 +1,9 @@
+const package_ = require('./package.json');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
 let CircularDependencyPlugin = require('circular-dependency-plugin');
+
 
 module.exports = merge(common, {
     devtool: 'inline-source-map',
@@ -23,7 +25,7 @@ module.exports = merge(common, {
              * Application's version number.
              * Used to determine which migration scripts to run.
              */
-            'VERSION': JSON.stringify('1.5.1'),
+            'VERSION': JSON.stringify(package_.version),
             /**
              * The App's Client ID for the API.
              */
