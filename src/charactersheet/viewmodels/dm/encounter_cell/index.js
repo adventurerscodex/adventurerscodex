@@ -1,3 +1,4 @@
+import { CharacterManager } from 'charactersheet/utilities/character_manager'
 import { Encounter } from 'charactersheet/models/dm';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';

@@ -19,22 +19,15 @@ import { KeyValuePredicate } from 'charactersheet/services/common/persistence_se
 import ko from 'knockout';
 import template from './index.html';
 
+
 export function EncounterViewModel() {
     var self = this;
 
     self.modalEncounter = ko.observable();
     self.modalEncounterSections = ko.observableArray([]);
     self.selectedCell = ko.observable();
+    self.selectedEncounter = ko.observable();
     self.openModal = ko.observable(false);
-
-    self.selectedEncounter = ko.pureComputed(function() {
-        if (!self.selectedCell()) { return; }
-        var key = CharacterManager.activeCharacter().key();
-        return PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('encounterId', self.selectedCell().encounterId()),
-            new KeyValuePredicate('characterId', key),
-        ])[0];
-    });
 
     self.encounterCells = ko.observableArray();
 
@@ -55,6 +48,7 @@ export function EncounterViewModel() {
     self.load = function() {
         self.encounterCells(self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
+        self._updateSelectedEncounter();
 
         Notifications.encounters.changed.add(self._dataHasChanged);
     };
@@ -99,6 +93,12 @@ export function EncounterViewModel() {
 
     /* Manage Encounter Methods */
 
+    self.selectEncounter = function(cell) {
+        // Note: The nested-list has already selected the encounter...
+        // we just need to be notified when a selection has occurred.
+        self._updateSelectedEncounter();
+    };
+
     self.addEncounterToList = function(encounter) {
         // Add the cell to the UI.
         if (encounter.parent()) {
@@ -113,6 +113,7 @@ export function EncounterViewModel() {
         var cellToSelect = self._findCell(self.encounterCells(), 'encounterId', encounter.encounterId());
         if (cellToSelect) {
             self.selectedCell(cellToSelect);
+            self._updateSelectedEncounter();
         }
     };
 
@@ -147,6 +148,7 @@ export function EncounterViewModel() {
             self.encounterCells.remove(cell);
         }
         self.selectedCell(self.encounterCells()[0]);
+        self._updateSelectedEncounter();
     };
 
     /* Private Methods */
@@ -199,7 +201,23 @@ export function EncounterViewModel() {
         self.encounterCells().forEach(function(cell, idx, _) {
             cell.reloadData();
         });
-        self.selectedCell.valueHasMutated();
+    };
+
+    self._updateSelectedEncounter = function() {
+        // Update the selected encounter.
+        if (!self.selectedCell()) {
+            self.selectedEncounter(null);
+        }
+
+        var id = self.selectedCell().encounterId()
+        var key = CharacterManager.activeCharacter().key();
+        var selectedEncounter = PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', id),
+            new KeyValuePredicate('characterId', key),
+        ])[0];
+        if (selectedEncounter) {
+            self.selectedEncounter(selectedEncounter);
+        }
     };
 }
 

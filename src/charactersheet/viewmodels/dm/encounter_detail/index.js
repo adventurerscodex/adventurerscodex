@@ -27,7 +27,7 @@ export function EncounterDetailViewModel(params) {
      * notify the subscribers.
      */
     self.notifySections = function(encounter, sections) {
-        encounter.save();
+        encounter().save();
 
         sections().forEach(function(section, i, _) {
             section.save();
