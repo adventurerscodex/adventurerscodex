@@ -204,7 +204,7 @@ export function NPCSectionViewModel(params) {
         var npc = PersistenceService.findByPredicates(NPC, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
-        ])[0];
+        ]);
         if (npc) {
             self.npcs(npc);
         }
