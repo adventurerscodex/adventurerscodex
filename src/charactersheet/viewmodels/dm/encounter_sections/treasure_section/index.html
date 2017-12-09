@@ -964,7 +964,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+          <img data-bind="attr: { src: $parent.ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: platinum, hasFocus: $parent.editFirstModalElementHasFocus'/>
@@ -973,7 +973,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/gp-coin.svg" width="30px" title="Gold Coins" alt="Gold Coins"/>
+          <img data-bind="attr: { src: $parent.gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: gold'/>
@@ -982,7 +982,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/ep-coin.svg" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+          <img data-bind="attr: { src: $parent.epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: electrum'>
@@ -991,7 +991,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group ">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/sp-coin.svg" width="30px" title="Silver Coins" alt="Silver Coins"/>
+          <img data-bind="attr: { src: $parent.spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: silver'>
@@ -1000,7 +1000,7 @@
     <div class="col-sm-12 row-padded">
       <div class="input-group">
         <span class="input-group-addon no-top-bottom-padding">
-          <img src="/images/cp-coin.svg" width="30px" title="Copper Coins" alt="Copper Coins"/>
+          <img data-bind="attr: { src: $parent.cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/>
         </span>
         <input type="number" class="form-control" min="1"
           data-bind='value: copper'>

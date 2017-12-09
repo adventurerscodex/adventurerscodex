@@ -43,7 +43,7 @@ export function TreasureSectionViewModel(params) {
     self.epCoin = epCoin;
     self.gpCoin = gpCoin;
     self.spCoin = spCoin;
-    self.cpCoin = spCoin;
+    self.cpCoin = cpCoin;
     self.ppCoin = ppCoin;
     self.encounter   = params.encounter;
     self.encounterId = ko.pureComputed(function() {
