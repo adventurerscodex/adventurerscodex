@@ -83,7 +83,7 @@ export function MonsterSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section =  PersistenceService.findByPredicates(MonsterSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!section) {
             section = new MonsterSection();
@@ -104,7 +104,7 @@ export function MonsterSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section =  PersistenceService.findByPredicates(MonsterSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (section) {
             section.delete();
@@ -271,7 +271,7 @@ export function MonsterSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var monster =  PersistenceService.findByPredicates(Monster, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ]);
         if (monster) {
             self.monsters(monster);
@@ -283,7 +283,7 @@ export function MonsterSectionViewModel(params) {
         }
         var section =  PersistenceService.findByPredicates(MonsterSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (section) {
             self.name(section.name());

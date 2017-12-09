@@ -72,7 +72,7 @@ export function PointOfInterestSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(PointOfInterestSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!section) {
             section = new PointOfInterestSection();
@@ -93,7 +93,7 @@ export function PointOfInterestSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(PointOfInterestSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (section) {
             section.delete();
@@ -186,7 +186,7 @@ export function PointOfInterestSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var poi = PersistenceService.findByPredicates(PointOfInterest, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ]);
         if (poi) {
             self.pointsOfInterest(poi);
@@ -194,7 +194,7 @@ export function PointOfInterestSectionViewModel(params) {
 
         var section = PersistenceService.findByPredicates(PointOfInterestSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!section) {
             section = new PointOfInterestSection();

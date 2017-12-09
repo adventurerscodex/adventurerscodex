@@ -87,7 +87,7 @@ export function PlayerTextSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(PlayerTextSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!section) {
             section = new PlayerTextSection();
@@ -108,7 +108,7 @@ export function PlayerTextSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(PlayerTextSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (section) {
             section.delete();
@@ -217,7 +217,7 @@ export function PlayerTextSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var playerTexts = PersistenceService.findByPredicates(PlayerText, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ]);
         if (playerTexts) {
             self.playerTexts(playerTexts);
@@ -225,7 +225,7 @@ export function PlayerTextSectionViewModel(params) {
 
         var section = PersistenceService.findByPredicates(PlayerTextSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!section) {
             section = new PlayerTextSection();

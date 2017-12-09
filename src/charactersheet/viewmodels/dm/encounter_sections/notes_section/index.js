@@ -2,9 +2,9 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { NotesSection } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/quill-ink.svg';
 import template from './index.html';
@@ -43,7 +43,7 @@ export function NotesSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var notes = PersistenceService.findByPredicates(NotesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!notes) {
             notes = new NotesSection();
@@ -61,7 +61,7 @@ export function NotesSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var notes = PersistenceService.findByPredicates(NotesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (notes) {
             notes.notes(self.notes());
@@ -75,7 +75,7 @@ export function NotesSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var notes = PersistenceService.findByPredicates(NotesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         notes.delete();
     };
@@ -86,7 +86,7 @@ export function NotesSectionViewModel(params) {
         var key = CharacterManager.activeCharacter().key();
         var notesSection = PersistenceService.findByPredicates(NotesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (!notesSection) {
             notesSection = new NotesSection();

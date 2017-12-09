@@ -1,7 +1,7 @@
-import { CharacterManager } from 'charactersheet/utilities/character_manager'
+import { CharacterManager } from 'charactersheet/utilities/character_manager';
 import { Encounter } from 'charactersheet/models/dm';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ViewModelUtilities } from 'charactersheet/utilities';
 import ko from 'knockout';
 
@@ -45,7 +45,7 @@ export function EncounterCellViewModel(encounter) {
         var key = CharacterManager.activeCharacter().key();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         encounter.children.push(child.encounterId());
         encounter.save();
@@ -66,7 +66,7 @@ export function EncounterCellViewModel(encounter) {
         var key = CharacterManager.activeCharacter().key();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         encounter.name(self.name());
         encounter.encounterLocation(self.encounterLocation());
@@ -78,7 +78,7 @@ export function EncounterCellViewModel(encounter) {
         var key = CharacterManager.activeCharacter().key();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         encounter.delete();
         self.children().forEach(function(child, idx, _) {
@@ -92,7 +92,7 @@ export function EncounterCellViewModel(encounter) {
         var key = CharacterManager.activeCharacter().key();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         self.name(encounter.name());
         self.encounterLocation(encounter.encounterLocation());

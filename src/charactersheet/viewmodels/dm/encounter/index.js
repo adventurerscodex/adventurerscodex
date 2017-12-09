@@ -13,9 +13,9 @@ import {
     PointOfInterestSection,
     TreasureSection
 } from 'charactersheet/models/dm';
-import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -126,7 +126,7 @@ export function EncounterViewModel() {
         var key = CharacterManager.activeCharacter().key();
         var encounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', cell.encounterId()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
 
         var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
@@ -136,7 +136,7 @@ export function EncounterViewModel() {
 
         var parentEncounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', encounter.parent()),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (parentEncounter) {
             parentEncounter.removeChild(encounter.encounterId());
@@ -156,7 +156,7 @@ export function EncounterViewModel() {
     self._getEncounterCells = function() {
         var key = CharacterManager.activeCharacter().key();
         var allEncounters = PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ]);
         var topLevel = allEncounters.filter(function(enc, idx, _) {
             return !enc.parent();
@@ -187,7 +187,7 @@ export function EncounterViewModel() {
             var key = CharacterManager.activeCharacter().key();
             var section =  PersistenceService.findByPredicates(sectionModel.model, [
                 new KeyValuePredicate('encounterId', id),
-                new KeyValuePredicate('characterId', key),
+                new KeyValuePredicate('characterId', key)
             ])[0];
             if (!section) {
                 section = new sectionModel.model();
@@ -209,11 +209,11 @@ export function EncounterViewModel() {
             self.selectedEncounter(null);
         }
 
-        var id = self.selectedCell().encounterId()
+        var id = self.selectedCell().encounterId();
         var key = CharacterManager.activeCharacter().key();
         var selectedEncounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', id),
-            new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('characterId', key)
         ])[0];
         if (selectedEncounter) {
             self.selectedEncounter(selectedEncounter);
