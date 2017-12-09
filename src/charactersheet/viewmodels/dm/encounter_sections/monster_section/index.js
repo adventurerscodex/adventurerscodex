@@ -12,6 +12,7 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/wyvern.svg';
 import template from './index.html';
@@ -80,7 +81,10 @@ export function MonsterSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(MonsterSection, 'encounterId', self.encounterId());
+        var section =  PersistenceService.findByPredicates(MonsterSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new MonsterSection();
             section.encounterId(self.encounterId());
@@ -97,7 +101,11 @@ export function MonsterSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(MonsterSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section =  PersistenceService.findByPredicates(MonsterSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -261,7 +269,10 @@ export function MonsterSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var monster = PersistenceService.findBy(Monster, 'encounterId', self.encounterId());
+        var monster =  PersistenceService.findByPredicates(Monster, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ]);
         if (monster) {
             self.monsters(monster);
             self.monsters().forEach(function(monster, idx, _) {
@@ -270,8 +281,10 @@ export function MonsterSectionViewModel(params) {
                 monster.abilityScores(abilityScores);
             });
         }
-
-        var section = PersistenceService.findFirstBy(MonsterSection, 'encounterId', self.encounterId());
+        var section =  PersistenceService.findByPredicates(MonsterSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (section) {
             self.name(section.name());
             self.visible(section.visible());

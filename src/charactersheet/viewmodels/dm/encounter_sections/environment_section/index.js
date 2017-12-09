@@ -14,6 +14,7 @@ import {
     EnvironmentSection,
     Message
 } from 'charactersheet/models/dm';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import Strophe from 'strophe';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/night-sky.svg';
@@ -101,9 +102,12 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self.save = function() {
-        var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var environment =  PersistenceService.findByPredicates(Environment, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!environment) {
-            var key = CharacterManager.activeCharacter().key();
             environment = new Environment();
             environment.characterId(key);
             environment.encounterId(self.encounterId());
@@ -117,7 +121,11 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var environment =  PersistenceService.findByPredicates(Environment, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (environment) {
             environment.delete();
         }
@@ -183,14 +191,20 @@ export function EnvironmentSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var environmentSection = PersistenceService.findFirstBy(EnvironmentSection, 'encounterId', self.encounterId());
+        var environmentSection =  PersistenceService.findByPredicates(EnvironmentSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (environmentSection) {
             self.name(environmentSection.name());
             self.visible(environmentSection.visible());
             self.tagline(environmentSection.tagline());
         }
 
-        var environment = PersistenceService.findFirstBy(Environment, 'encounterId', self.encounterId());
+        var environment =  PersistenceService.findByPredicates(Environment, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (environment) {
             self.environment(environment);
             self.imageUrl(environment.imageUrl());

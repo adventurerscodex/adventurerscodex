@@ -1,4 +1,3 @@
-import 'bin/knockout-bootstrap-modal';
 import {
     CharacterManager,
     Notifications,
@@ -13,9 +12,11 @@ import {
     SortService
 } from 'charactersheet/services';
 import { Fixtures } from 'charactersheet/utilities';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/swordman.svg';
 import template from './index.html';
+
 
 export function NPCSectionViewModel(params) {
     var self = this;
@@ -77,7 +78,10 @@ export function NPCSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(NPCSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(NPCSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new NPCSection();
             section.encounterId(self.encounterId());
@@ -94,7 +98,11 @@ export function NPCSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(NPCSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section = PersistenceService.findByPredicates(NPCSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -193,12 +201,18 @@ export function NPCSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var npc = PersistenceService.findBy(NPC, 'encounterId', self.encounterId());
+        var npc = PersistenceService.findByPredicates(NPC, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ]);
         if (npc) {
             self.npcs(npc);
         }
 
-        var section = PersistenceService.findFirstBy(NPCSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(NPCSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new NPCSection();
             section.encounterId(self.encounterId());

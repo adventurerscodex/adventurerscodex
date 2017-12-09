@@ -13,10 +13,12 @@ import {
     PointOfInterestSection,
     TreasureSection
 } from 'charactersheet/models/dm';
-import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm/encounter_cell';
+import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
+
 
 export function EncounterViewModel() {
     var self = this;
@@ -24,14 +26,8 @@ export function EncounterViewModel() {
     self.modalEncounter = ko.observable();
     self.modalEncounterSections = ko.observableArray([]);
     self.selectedCell = ko.observable();
+    self.selectedEncounter = ko.observable();
     self.openModal = ko.observable(false);
-
-    self.selectedEncounter = ko.pureComputed(function() {
-        if (!self.selectedCell()) { return; }
-        return PersistenceService.findFirstBy(
-            Encounter, 'encounterId', self.selectedCell().encounterId()
-        );
-    });
 
     self.encounterCells = ko.observableArray();
 
@@ -52,6 +48,8 @@ export function EncounterViewModel() {
     self.load = function() {
         self.encounterCells(self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
+        self._updateSelectedEncounter();
+
         Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
@@ -95,6 +93,12 @@ export function EncounterViewModel() {
 
     /* Manage Encounter Methods */
 
+    self.selectEncounter = function(cell) {
+        // Note: The nested-list has already selected the encounter...
+        // we just need to be notified when a selection has occurred.
+        self._updateSelectedEncounter();
+    };
+
     self.addEncounterToList = function(encounter) {
         // Add the cell to the UI.
         if (encounter.parent()) {
@@ -109,6 +113,7 @@ export function EncounterViewModel() {
         var cellToSelect = self._findCell(self.encounterCells(), 'encounterId', encounter.encounterId());
         if (cellToSelect) {
             self.selectedCell(cellToSelect);
+            self._updateSelectedEncounter();
         }
     };
 
@@ -118,14 +123,21 @@ export function EncounterViewModel() {
      * take care of removing the element from the UI.
      */
     self.deleteEncounter = function(cell) {
-        var encounter = PersistenceService.findFirstBy(Encounter, 'encounterId', cell.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var encounter = PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', cell.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
 
         var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
         if (parentCell) {
             parentCell.removeChild(cell);
         }
 
-        var parentEncounter = PersistenceService.findFirstBy(Encounter, 'encounterId', encounter.parent());
+        var parentEncounter =  PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', encounter.parent()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (parentEncounter) {
             parentEncounter.removeChild(encounter.encounterId());
             parentEncounter.save();
@@ -136,13 +148,16 @@ export function EncounterViewModel() {
             self.encounterCells.remove(cell);
         }
         self.selectedCell(self.encounterCells()[0]);
+        self._updateSelectedEncounter();
     };
 
     /* Private Methods */
 
     self._getEncounterCells = function() {
         var key = CharacterManager.activeCharacter().key();
-        var allEncounters = PersistenceService.findBy(Encounter, 'characterId', key);
+        var allEncounters = PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('characterId', key)
+        ]);
         var topLevel = allEncounters.filter(function(enc, idx, _) {
             return !enc.parent();
         });
@@ -169,7 +184,11 @@ export function EncounterViewModel() {
 
     self._getSectionsForEncounter = function(id) {
         return self.sectionModels.map(function(sectionModel, i, _) {
-            var section = PersistenceService.findFirstBy(sectionModel.model, 'encounterId', id);
+            var key = CharacterManager.activeCharacter().key();
+            var section =  PersistenceService.findByPredicates(sectionModel.model, [
+                new KeyValuePredicate('encounterId', id),
+                new KeyValuePredicate('characterId', key)
+            ])[0];
             if (!section) {
                 section = new sectionModel.model();
                 section.encounterId(id);
@@ -182,7 +201,23 @@ export function EncounterViewModel() {
         self.encounterCells().forEach(function(cell, idx, _) {
             cell.reloadData();
         });
-        self.selectedCell.valueHasMutated();
+    };
+
+    self._updateSelectedEncounter = function() {
+        // Update the selected encounter.
+        if (!self.selectedCell()) {
+            self.selectedEncounter(null);
+        }
+
+        var id = self.selectedCell().encounterId();
+        var key = CharacterManager.activeCharacter().key();
+        var selectedEncounter = PersistenceService.findByPredicates(Encounter, [
+            new KeyValuePredicate('encounterId', id),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
+        if (selectedEncounter) {
+            self.selectedEncounter(selectedEncounter);
+        }
     };
 }
 

@@ -19,7 +19,7 @@
             </div>
             <nested-list params="cells: encounterCells,
               selectedCell: selectedCell, ondelete: deleteEncounter,
-              onadd: openAddModalWithParent">
+              onadd: openAddModalWithParent, onselect: selectEncounter">
             </nested-list>
           </div>
         </div>
@@ -42,5 +42,5 @@
 </div>
 
 <encounter-add-edit-modal
-  params="encounter: modalEncounter, openModal: openModal, sections: modalEncounterSections, , onsave: modalSave">
+  params="encounter: modalEncounter, openModal: openModal, sections: modalEncounterSections, onsave: modalSave">
 </encounter-add-edit-modal>
