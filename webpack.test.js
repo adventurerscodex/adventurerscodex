@@ -1,3 +1,4 @@
+const package_ = require('./package.json');
 const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
