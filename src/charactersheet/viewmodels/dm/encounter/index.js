@@ -70,6 +70,7 @@ export function EncounterViewModel() {
         var key = CharacterManager.activeCharacter().key();
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
+        self.modalEncounter().characterId(key);
 
         self.modalEncounterSections(
             self._getSectionsForEncounter(self.modalEncounter().encounterId())
@@ -185,13 +186,14 @@ export function EncounterViewModel() {
     self._getSectionsForEncounter = function(id) {
         return self.sectionModels.map(function(sectionModel, i, _) {
             var key = CharacterManager.activeCharacter().key();
-            var section =  PersistenceService.findByPredicates(sectionModel.model, [
+            var section = PersistenceService.findByPredicates(sectionModel.model, [
                 new KeyValuePredicate('encounterId', id),
                 new KeyValuePredicate('characterId', key)
             ])[0];
             if (!section) {
                 section = new sectionModel.model();
                 section.encounterId(id);
+                section.characterId(key);
             }
             return section;
         });
