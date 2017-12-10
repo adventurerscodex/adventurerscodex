@@ -33,7 +33,7 @@ export function NotesSectionViewModel(params) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        self.notes.subscribe(self.save)
+        self.notes.subscribe(self.save);
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
