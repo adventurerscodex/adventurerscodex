@@ -66,6 +66,7 @@ export function AdventurersCodexViewModel() {
     self.navLogo = navLogo;
     self.version = VERSION;
     self.buildDate = BUILD_DATE;
+    self.environment = ENVIRONMENT;
 
     //UI Methods
 
