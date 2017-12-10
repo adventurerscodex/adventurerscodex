@@ -52,16 +52,16 @@ export function EncounterDetailViewModel(params) {
 
     self._dataHasChanged = function() {
         if (!ko.unwrap(self.encounter)) { return; }
-        var key = self.encounter().encounterId();
+        var key = CharacterManager.activeCharacter().key();
         var sections = self.sectionModels.map(function(sectionModel, i, _) {
-            var key = CharacterManager.activeCharacter().key();
-            var section =  PersistenceService.findByPredicates(sectionModel.model, [
+            var section = PersistenceService.findByPredicates(sectionModel.model, [
                 new KeyValuePredicate('encounterId', self.encounter().encounterId()),
                 new KeyValuePredicate('characterId', key)
             ])[0];
             if (!section) {
                 section = new sectionModel.model();
                 section.encounterId(self.encounter().encounterId());
+                section.characterId(key);
             }
             return section;
         });
