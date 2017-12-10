@@ -33,28 +33,11 @@ export function NotesSectionViewModel(params) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
+        self.notes.subscribe(self.save)
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         self._dataHasChanged();
-    };
-
-    self.unload = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var notes = PersistenceService.findByPredicates(NotesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!notes) {
-            notes = new NotesSection();
-        }
-
-        notes.notes(self.notes());
-        notes.visible(self.visible());
-
-        notes.save();
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
     };
 
     self.save = function() {
