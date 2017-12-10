@@ -22,7 +22,6 @@ export function ChatDetailViewModel(params) {
     self.members = params.room().members;
     self.isGroupChat = params.room().isGroupChat;
     self._getRoomMembers = params.room()._getRoomMembers;
-    self.badgeHandler = params.badgeHandler;
     self.wasAtBottom = ko.observable(true);
 
     self.log = ko.observableArray();
@@ -37,12 +36,9 @@ export function ChatDetailViewModel(params) {
     /* Public Methods */
 
     self.load = function() {
-        self.reloadData();
-        self._markAllAsRead();
-        self.updateBadge();
-        self._updateStatus();
 
         self.room.subscribe(self.cleanReload);
+        self.cleanReload();
 
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
@@ -67,8 +63,10 @@ export function ChatDetailViewModel(params) {
 
     self.cleanReload = function() {
         self.log([]);
+        self._markAllAsRead();
         self.reloadData();
-    };
+        self._updateStatus();
+   };
 
     self.reloadData = function() {
         var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
@@ -77,11 +75,6 @@ export function ChatDetailViewModel(params) {
 
         var log = self._getRecentItems();
         ko.utils.arrayPushAll(self.log, log);
-    };
-
-    self.updateBadge = function() {
-        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
-        self.badgeHandler(room);
     };
 
     self.onitemrender = function() {
