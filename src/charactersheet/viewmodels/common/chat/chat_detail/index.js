@@ -66,7 +66,7 @@ export function ChatDetailViewModel(params) {
         self._markAllAsRead();
         self.reloadData();
         self._updateStatus();
-   };
+    };
 
     self.reloadData = function() {
         var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
