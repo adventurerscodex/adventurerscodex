@@ -209,6 +209,7 @@ export function EncounterViewModel() {
         // Update the selected encounter.
         if (!self.selectedCell()) {
             self.selectedEncounter(null);
+            return;
         }
 
         var id = self.selectedCell().encounterId();

@@ -117,7 +117,7 @@ export function TreasureSectionViewModel(params) {
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(TreasureSection, [
-            new KeyValuePredicate('encounterId', cell.encounterId()),
+            new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
         if (!section) {
@@ -138,7 +138,7 @@ export function TreasureSectionViewModel(params) {
     self.delete = function() {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(TreasureSection, [
-            new KeyValuePredicate('encounterId', cell.encounterId()),
+            new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
         if (section) {
