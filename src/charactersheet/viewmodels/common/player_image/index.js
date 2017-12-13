@@ -18,6 +18,7 @@ import { OtherStats } from 'charactersheet/models/character';
 import ko from 'knockout';
 import template from './index.html';
 
+
 export function PlayerImageViewModel() {
     var self = this;
 
@@ -37,34 +38,31 @@ export function PlayerImageViewModel() {
 
     self.firstFieldHasFocus = ko.observable(false);
 
-    self.init = function() {
-        Notifications.global.save.add(self.save);
-    };
-
     self.load = function() {
-        // Prime the pump.
-        self.updateImage();
-        self.inspirationHasChanged();
-        self._handleConnectionStatusChanged();
-
         //Subscriptions
-        self.email.subscribe(self.dataHasChanged);
-        self.imageUrl.subscribe(self.dataHasChanged);
-        self.imageSource.subscribe(self.dataHasChanged);
-        self.selectedDefaultImages.subscribe(self.updateImageUrl);
-        Notifications.playerInfo.changed.add(self.dataHasChanged);
+        self.selectedDefaultImages.subscribe(self.dataHasChangedUrl);
+        Notifications.playerInfo.changed.add(self.saveAndNotify);
         Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
         Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
         Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
-        Notifications.characterManager.changed.add(self.updateImage);
+        Notifications.characterManager.changed.add(self.dataHasChanged);
+
+        // Prime the pump.
+        self.dataHasChanged();
+        self.inspirationHasChanged();
+        self._handleConnectionStatusChanged();
     };
 
-    self.dataHasChanged = function() {
+    self.doneButtonClicked = () => {
+        self.saveAndNotify();
+    };
+
+    self.saveAndNotify = () => {
         self.save();
         Notifications.playerImage.changed.dispatch();
     };
 
-    self.updateImage = function() {
+    self.dataHasChanged = () => {
         var key = CharacterManager.activeCharacter().key();
         var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
         if (image) {
@@ -94,7 +92,7 @@ export function PlayerImageViewModel() {
         }
     };
 
-    self.updateImageUrl = function() {
+    self.dataHasChangedUrl = function() {
         var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
         self.imageUrl(url);
     };
