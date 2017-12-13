@@ -68,11 +68,10 @@ export function EncounterAddEditModalViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        if (!ko.unwrap(self.encounter)) {
-            self.encounter(new Encounter());
+        if (ko.unwrap(self.encounter)) {
+            self.encounterName(self.encounter().name());
+            self.encounterLocation(self.encounter().encounterLocation());
         }
-        self.encounterName(self.encounter().name());
-        self.encounterLocation(self.encounter().encounterLocation());
     };
 }
 
