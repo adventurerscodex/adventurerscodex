@@ -168,12 +168,11 @@ export function MonsterSectionViewModel(params) {
         self.editItemIndex = monster.__id;
         self.currentEditItem(new Monster());
         self.currentEditItem().importValues(monster.exportValues());
-        self.currentEditItem().abilityScores(monster.abilityScores().map(function(e, i, _) {
+        self.currentEditItem().abilityScores(monster.abilityScores().forEach(function(e, i, _) {
             var abilityScore = new MonsterAbilityScore();
             abilityScore.importValues(e);
             return abilityScore;
-        })
-        );
+        }));
         self.openEditModal(true);
     };
 
@@ -237,11 +236,16 @@ export function MonsterSectionViewModel(params) {
         self.selectPreviewTab();
 
         if (self.openEditModal()) {
+            var key = ChracterManager.activeCharacter().key();
             self.monsters().forEach(function(item, idx, _) {
                 if (item.__id === self.editItemIndex) {
                     item.importValues(self.currentEditItem().exportValues());
                     item.abilityScores(self.currentEditItem().abilityScores().map(function(e, i, _) {
-                        var abilityScore = new MonsterAbilityScore();
+                        var abilityScore = PersistenceService.findByPredicates(MonsterAbilityScore, [
+                            new KeyValuePredicate('characterId', key),
+                            new KeyValuePredicate('encounterId', e.encounterId()),
+                            new KeyValuePredicate('monsterId', e.monsterId())
+                        ])[0];
                         abilityScore.importValues(e);
                         return abilityScore;
                     })
