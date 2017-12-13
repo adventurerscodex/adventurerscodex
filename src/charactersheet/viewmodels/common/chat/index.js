@@ -105,6 +105,11 @@ export function ChatViewModel(params) {
         self.selectedCell(self.cells()[0]);
     };
 
+    self.selectCell = function(cell) {
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', cell.id());
+        self.updateBadge(room);
+    };
+
     /* Event Methods */
 
     self.getDetailObject = function(cell) {

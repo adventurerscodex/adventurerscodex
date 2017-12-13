@@ -48,6 +48,7 @@
     "webpack-dev-server": "^2.7.1"
   },
   "scripts": {
+    "preflight": "npm run lint && npm test",
     "test": "karma start",
     "lint": "eslint test/ && eslint src/charactersheet/",
     "coveralls": "grunt coveralls",

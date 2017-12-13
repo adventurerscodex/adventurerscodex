@@ -19,13 +19,13 @@
             </div>
           </div>
         </div>
-        <nested-list params="cells: cells, selectedCell: selectedCell, ondelete: deleteButtonWasClicked, onadd: addButtonWasClickedWithParent">
+        <nested-list params="cells: cells, selectedCell: selectedCell, onselect: selectCell, ondelete: deleteButtonWasClicked, onadd: addButtonWasClickedWithParent">
         </nested-list>
       </div>
     </div>
   </div>
   <div data-bind="css: detailViewModelCSS">
-    <chat-detail params="room: selectedObject, badgeHandler: updateBadge"></chat-detail>
+    <chat-detail params="room: selectedObject"></chat-detail>
   </div>
 </div>
 <chat-modal params="isOpen: modalIsOpen, onopen: modalFinishedOpening, onclose: modalFinishedClosing"></chat-modal>
