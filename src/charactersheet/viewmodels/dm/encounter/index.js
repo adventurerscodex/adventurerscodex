@@ -86,10 +86,8 @@ export function EncounterViewModel() {
             section.save();
         });
         sections([]);
-
-        Notifications.encounters.changed.dispatch();
-
         self.addEncounterToList(encounter());
+        Notifications.encounters.changed.dispatch();
     };
 
     /* Manage Encounter Methods */

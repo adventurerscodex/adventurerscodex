@@ -64,7 +64,7 @@ export function EncounterCellViewModel(encounter) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var encounter =  PersistenceService.findByPredicates(Encounter, [
+        var encounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -76,7 +76,7 @@ export function EncounterCellViewModel(encounter) {
 
     self.delete = function() {
         var key = CharacterManager.activeCharacter().key();
-        var encounter =  PersistenceService.findByPredicates(Encounter, [
+        var encounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
