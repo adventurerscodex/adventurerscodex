@@ -133,7 +133,7 @@ export function EncounterViewModel() {
             parentCell.removeChild(cell);
         }
 
-        var parentEncounter =  PersistenceService.findByPredicates(Encounter, [
+        var parentEncounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', encounter.parent()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -146,7 +146,12 @@ export function EncounterViewModel() {
         if (!parentCell) {
             self.encounterCells.remove(cell);
         }
-        self.selectedCell(self.encounterCells()[0]);
+
+        if (self.encounterCells() && !self.encounterCells()[0]) {
+            self.selectedCell(null);
+        } else {
+            self.selectedCell(self.encounterCells()[0]);
+        }
         self._updateSelectedEncounter();
     };
 
