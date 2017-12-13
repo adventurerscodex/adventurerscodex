@@ -76,13 +76,6 @@ export function PlayerTextSectionViewModel(params) {
         self._connectionHasChanged();
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-        Notifications.party.joined.remove(self._connectionHasChanged);
-        Notifications.party.left.remove(self._connectionHasChanged);
-    };
-
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
         var section = PersistenceService.findByPredicates(PlayerTextSection, [

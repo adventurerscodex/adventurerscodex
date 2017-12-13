@@ -80,14 +80,6 @@ export function MapsAndImagesSectionViewModel(params) {
         self._connectionHasChanged();
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-        Notifications.party.joined.remove(self._connectionHasChanged);
-        Notifications.party.left.remove(self._connectionHasChanged);
-        Notifications.exhibit.toggle.remove(self._dataHasChanged);
-    };
-
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
         var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
