@@ -223,7 +223,7 @@ export function EnvironmentSectionViewModel(params) {
         self.terrain('');
         self.description('');
         self.isExhibited('');
-    }
+    };
 
     self._connectionHasChanged = function() {
         var chat = ChatServiceManager.sharedService();
