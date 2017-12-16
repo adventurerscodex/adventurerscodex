@@ -18,6 +18,7 @@ import sectionIcon from 'images/encounters/wyvern.svg';
 import template from './index.html';
 import uuid from 'node-uuid';
 
+
 export function MonsterSectionViewModel(params) {
     var self = this;
 
@@ -164,11 +165,10 @@ export function MonsterSectionViewModel(params) {
         self.currentEditItem(new Monster());
         self.currentEditItem().importValues(monster.exportValues());
         self.currentEditItem().abilityScores(monster.abilityScores().map(function(e, i, _) {
-                var abilityScore = new MonsterAbilityScore();
-                abilityScore.importValues(e);
-                return abilityScore;
-            })
-        );
+            var abilityScore = new MonsterAbilityScore();
+            abilityScore.importValues(e);
+            return abilityScore;
+        }));
         self.openEditModal(true);
     };
 
