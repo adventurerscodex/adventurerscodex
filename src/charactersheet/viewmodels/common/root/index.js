@@ -181,12 +181,12 @@ export function AdventurersCodexViewModel() {
             return  character.key();
         });
         PersistenceService.listAll().forEach(function(table, idx, _) {
-            if (!window[table] || table === 'Character' || table === 'AuthenticationToken') { return; }
+            if (table === 'Character' || table === 'AuthenticationToken') { return; }
             PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
                 var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
                 var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;
                 if (expiredID || invalidID) {
-                    PersistenceService.delete(window[table], e1.id);
+                    PersistenceService._delete(table, e1.id);
                 }
             });
         });
