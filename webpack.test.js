@@ -30,7 +30,7 @@ module.exports = merge(common, {
             /**
              * The URL of the homepage.
              */
-            'HOME_URL': JSON.stringify('https://nightly.adventurerscodex.com/'),
+            'HOME_URL': JSON.stringify('https://nightly.adventurerscodex.com'),
             /**
              * The HOST URL of the pubsub services.
              */
