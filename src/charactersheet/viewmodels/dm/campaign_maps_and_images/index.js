@@ -142,6 +142,10 @@ export function CampaignMapsAndImagesViewModel() {
 
     /* Modal Methods */
 
+    self.addModalFinishedOpening = function() {
+        self.firstElementInModalHasFocus(true);
+    }
+
     self.modalFinishedOpening = function() {
         self.selectPreviewTab();
     };
