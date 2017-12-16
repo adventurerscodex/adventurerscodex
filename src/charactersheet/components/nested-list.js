@@ -27,6 +27,9 @@ export function NestedListComponentViewModel(params) {
 
     self.cells = params.cells || ko.observableArray();
     self.selectedCell = params.selectedCell || ko.observable();
+
+    // Callback Handlers
+    self.onselect = params.onselect;
     self.ondelete = params.ondelete;
     self.onadd = params.onadd;
 
@@ -38,6 +41,9 @@ export function NestedListComponentViewModel(params) {
 
     self.selectCell = function(cell) {
         self.selectedCell(cell);
+        if (self.onselect) {
+            self.onselect(cell);
+        }
     };
 
     /**
@@ -116,7 +122,8 @@ ko.components.register('nested-list', {
                         levels: $parent.levels - 1, \
                         selectedCell: $parent.selectedCell, \
                         onadd: $parent.onadd, \
-                        ondelete: $parent.ondelete"></nested-list>\
+                        ondelete: $parent.ondelete, \
+                        onselect: $parent.onselect"></nested-list>\
                 </div>\
             </div>\
             <!-- /ko -->\

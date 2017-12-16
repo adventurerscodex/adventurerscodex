@@ -1,4 +1,5 @@
 import { Encounter } from 'charactersheet/models/dm';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
@@ -67,11 +68,10 @@ export function EncounterAddEditModalViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        if (!ko.unwrap(self.encounter)) {
-            self.encounter(new Encounter());
+        if (ko.unwrap(self.encounter)) {
+            self.encounterName(self.encounter().name());
+            self.encounterLocation(self.encounter().encounterLocation());
         }
-        self.encounterName(self.encounter().name());
-        self.encounterLocation(self.encounter().encounterLocation());
     };
 }
 

@@ -1,6 +1,5 @@
+import { Note } from 'charactersheet/models/common/note';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-
-// import { Note } from 'charactersheet/models'
 
 /**
  * If a Campaign had Notes, they will be migrated to the new DM Notes tab.

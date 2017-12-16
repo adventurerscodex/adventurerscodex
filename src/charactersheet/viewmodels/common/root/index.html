@@ -1,3 +1,16 @@
+<!-- ko if: environment == 'dev' -->
+<div class="" style="background-color: lightgray;">
+  <div class="text-center" style="text-transform: uppercase;"
+    data-bind="text: environment"></div>
+</div>
+<!-- /ko -->
+<!-- ko if: environment == 'test' -->
+<div class="" style="background-color: orange;">
+  <div class="text-center" style="text-transform: uppercase;"
+    data-bind="text: environment"></div>
+</div>
+<!-- /ko -->
+
 <div id="content">
 <!-- Begin Nav -->
 <nav class="navbar navbar-default navbar-static-top">
@@ -9,7 +22,7 @@
         <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span><span class="icon-bar"></span>
       </button>
-      <a href='//app.adventurerscodex.com' class="navbar-brand">
+      <a data-bind="attr: { href: homeURL }" class="navbar-brand">
     	  <img data-bind="attr: { src: navLogo }"
     	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
     	       alt="Adventurer's Codex"/>

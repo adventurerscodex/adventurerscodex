@@ -57,7 +57,11 @@ export function NotesViewModel() {
     self.deleteNote = function(note) {
         self.notes.remove(note);
         note.delete();
-        self.selectNote(self.notes()[0]);
+        if (self.notes().length > 0) {
+            self.selectNote(self.notes()[0]);
+        } else {
+            self.addNote();
+        }
     };
 
     self.selectNote = function(note) {

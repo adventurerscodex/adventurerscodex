@@ -2,6 +2,7 @@ import {
     CharacterManager,
     Notifications
 } from 'charactersheet/utilities';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { NotesSection } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
@@ -32,28 +33,19 @@ export function NotesSectionViewModel(params) {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
+        self.notes.subscribe(self.save);
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         self._dataHasChanged();
     };
 
-    self.unload = function() {
-        var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
-        if (!notes) {
-            notes = new NotesSection();
-        }
-
-        notes.notes(self.notes());
-        notes.visible(self.visible());
-
-        notes.save();
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-    };
-
     self.save = function() {
-        var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var notes = PersistenceService.findByPredicates(NotesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (notes) {
             notes.notes(self.notes());
             notes.visible(self.visible());
@@ -63,14 +55,22 @@ export function NotesSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var notes = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var notes = PersistenceService.findByPredicates(NotesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         notes.delete();
     };
 
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var notesSection = PersistenceService.findFirstBy(NotesSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var notesSection = PersistenceService.findByPredicates(NotesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!notesSection) {
             notesSection = new NotesSection();
             notesSection.characterId(CharacterManager.activeCharacter().key());

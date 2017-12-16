@@ -14,6 +14,7 @@ import {
     MapOrImage,
     Message
 } from 'charactersheet/models/common';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { MapsAndImagesSection } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/globe.svg';
@@ -79,17 +80,12 @@ export function MapsAndImagesSectionViewModel(params) {
         self._connectionHasChanged();
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-        Notifications.party.joined.remove(self._connectionHasChanged);
-        Notifications.party.left.remove(self._connectionHasChanged);
-        Notifications.exhibit.toggle.remove(self._dataHasChanged);
-    };
-
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
+        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());
@@ -106,7 +102,11 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -229,12 +229,18 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var map = PersistenceService.findBy(MapOrImage, 'encounterId', self.encounterId());
+        var map =  PersistenceService.findByPredicates(MapOrImage, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ]);
         if (map) {
             self.mapsOrImages(map);
         }
 
-        var section = PersistenceService.findFirstBy(MapsAndImagesSection, 'encounterId', self.encounterId());
+        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new MapsAndImagesSection();
             section.encounterId(self.encounterId());

@@ -13,6 +13,7 @@ import {
     PlayerText,
     PlayerTextSection
 } from 'charactersheet/models';
+import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/read.svg';
 import template from './index.html';
@@ -75,16 +76,12 @@ export function PlayerTextSectionViewModel(params) {
         self._connectionHasChanged();
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-        Notifications.party.joined.remove(self._connectionHasChanged);
-        Notifications.party.left.remove(self._connectionHasChanged);
-    };
-
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findFirstBy(PlayerTextSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(PlayerTextSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new PlayerTextSection();
             section.encounterId(self.encounterId());
@@ -101,7 +98,11 @@ export function PlayerTextSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var section = PersistenceService.findFirstBy(PlayerTextSection, 'encounterId', self.encounterId());
+        var key = CharacterManager.activeCharacter().key();
+        var section = PersistenceService.findByPredicates(PlayerTextSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (section) {
             section.delete();
         }
@@ -207,12 +208,18 @@ export function PlayerTextSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var playerTexts = PersistenceService.findBy(PlayerText, 'encounterId', self.encounterId());
+        var playerTexts = PersistenceService.findByPredicates(PlayerText, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ]);
         if (playerTexts) {
             self.playerTexts(playerTexts);
         }
 
-        var section = PersistenceService.findFirstBy(PlayerTextSection, 'encounterId', self.encounterId());
+        var section = PersistenceService.findByPredicates(PlayerTextSection, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
         if (!section) {
             section = new PlayerTextSection();
             section.encounterId(self.encounterId());
