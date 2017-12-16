@@ -232,7 +232,7 @@ export function MonsterSectionViewModel(params) {
         self.selectPreviewTab();
 
         if (self.openEditModal()) {
-            var key = ChracterManager.activeCharacter().key();
+            var key = CharacterManager.activeCharacter().key();
             self.monsters().forEach(function(item, idx, _) {
                 if (item.__id === self.editItemIndex) {
                     item.importValues(self.currentEditItem().exportValues());
