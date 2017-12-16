@@ -15,15 +15,12 @@ export function CharactersViewModel(params) {
 
     self.totalLocalStorage = 5; //MB
     self.characters = ko.observableArray([]);
-    self.modalStatus = params.modalStatus || ko.observable(false);
+    self.componentStatus = params.modalStatus || ko.observable(false);
+    self.modalStatus = ko.observable(false);
 
     self.load = function() {
         self.characters(PersistenceService.findAll(Character));
-        self.modalStatus(true);
-    };
-
-    self.unload = function() {
-        self.modalStatus(false);
+        self.modalStatus(self.componentStatus());
     };
 
     self.changeCharacter = function(character) {
@@ -59,11 +56,18 @@ export function CharactersViewModel(params) {
         self.characters.remove(character);
 
         if (self.characters().length === 0) {
-            Notifications.characters.allRemoved.dispatch();
+            self.modalStatus(false);
         } else {
-            //Change the active character.
+            // Change to the first character in the list
             CharacterManager.changeCharacter(self.characters()[0].key());
         }
+    };
+
+    self.modalFinishedClosing = function() {
+        if (self.characters().length === 0) {
+            Notifications.characters.allRemoved.dispatch();
+        }
+        self.componentStatus(false);
     };
 
     self.localStoragePercent = ko.computed(function() {
@@ -71,10 +75,6 @@ export function CharactersViewModel(params) {
         var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
         return (used / self.totalLocalStorage * 100).toFixed(2);
     });
-
-    self.closeModal = function() {
-        self.modalStatus(false);
-    };
 }
 
 ko.components.register('characters', {
