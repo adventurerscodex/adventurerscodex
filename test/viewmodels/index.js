@@ -20,3 +20,4 @@ import './test_weapons';
 import './test_wizard';
 import './test_wizard_profile';
 import './dm';
+import './common';
