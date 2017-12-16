@@ -1,8 +1,8 @@
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import { Notifications } from 'charactersheet/utilities';
 import { PartyStatusViewModel } from 'charactersheet/viewmodels/common/party_status';
-import Strophe from 'strophe';
 import Should from 'should';
+import Strophe from 'strophe';
 import simple from 'simple-mock';
 
 describe('PartyStatusViewModel', function(){
@@ -25,7 +25,7 @@ describe('PartyStatusViewModel', function(){
             spy2.called.should.equal(true);
             spy3.called.should.equal(true);
             spy4.called.should.equal(true);
-            vm.partyStatus().should.equal('<i>You\'re not connected to a party.</i>')
+            vm.partyStatus().should.equal('<i>You\'re not connected to a party.</i>');
         });
     });
 
@@ -37,13 +37,13 @@ describe('PartyStatusViewModel', function(){
             var stropheMock = simple.mock(Strophe, 'getNodeFromJid').returnWith('blah');
 
             vm._updatePartyStatus('node', true);
-            vm.partyStatus().should.equal('<i>You\'re connected to <span class=\"text-info\">blah</span></i>.')
+            vm.partyStatus().should.equal('<i>You\'re connected to <span class=\"text-info\">blah</span></i>.');
         });
 
         it('should return immediately', function() {
             var vm = new PartyStatusViewModel();
             vm._updatePartyStatus('node', false);
-            Should.not.exist(vm.partyStatus())
+            Should.not.exist(vm.partyStatus());
         });
     });
 
@@ -54,7 +54,7 @@ describe('PartyStatusViewModel', function(){
             vm.partyStatus('hi');
             vm.partyStatus().should.equal('hi');
             vm._clearPartyStatus();
-            vm.partyStatus().should.equal('<i>You\'re not connected to a party.</i>')
+            vm.partyStatus().should.equal('<i>You\'re not connected to a party.</i>');
         });
     });
 });

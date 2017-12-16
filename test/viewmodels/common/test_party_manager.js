@@ -12,7 +12,7 @@ import {
     PersistenceService,
     XMPPService
 } from 'charactersheet/services/common';
-import { PartyManagerViewModel } from 'charactersheet/viewmodels/common/party_manager'
+import { PartyManagerViewModel } from 'charactersheet/viewmodels/common/party_manager';
 import Should from 'should';
 import simple from 'simple-mock';
 
@@ -61,7 +61,7 @@ describe('PartyManagerViewModel', function(){
             vm.roomId('hi');
             vm.roomId().should.equal('hi');
             var roomName = vm.roomJid();
-            roomName.should.equal('hi@chat.adventurerscodex.com')
+            roomName.should.equal('hi@chat.adventurerscodex.com');
         });
     });
 
