@@ -83,14 +83,4 @@ describe('PartyManagerViewModel', function(){
             roomLink.should.equal('');
         });
     });
-
-    // describe('createPartyWasClicked', function() {
-    //     it('should create a room name', function() {
-    //         var vm = new PartyManagerViewModel();
-    //         simple.mock(ChatServiceManager, 'sharedService').returnWith(function(){});
-    //         simple.mock(ChatServiceManager, 'join').callFn(function(){});
-    //         vm.createPartyWasClicked();
-    //     });
-    // });
-
 });
