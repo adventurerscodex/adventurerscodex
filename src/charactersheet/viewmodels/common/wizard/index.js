@@ -241,6 +241,7 @@ export function WizardViewModel() {
     };
 
     self.backButton = function() {
+        self.stepReady(false);
         self.goBackward();
     };
 
