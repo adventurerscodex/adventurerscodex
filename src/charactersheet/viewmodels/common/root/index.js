@@ -67,6 +67,7 @@ export function AdventurersCodexViewModel() {
     self.version = VERSION;
     self.buildDate = BUILD_DATE;
     self.environment = ENVIRONMENT;
+    self.homeURL = HOME_URL;
 
     //UI Methods
 
