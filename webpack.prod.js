@@ -28,6 +28,10 @@ module.exports = merge(common, {
              */
             'HOST_URL': JSON.stringify('https://app.adventurerscodex.com/charactersheet/'),
             /**
+             * The URL of the homepage.
+             */
+            'HOME_URL': JSON.stringify('https://app.adventurerscodex.com'),
+            /**
              * The HOST URL of the pubsub services.
              */
             'PUBSUB_HOST_JID': JSON.stringify('pubsub.adventurerscodex.com'),
