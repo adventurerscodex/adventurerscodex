@@ -93,14 +93,6 @@ export function EnvironmentSectionViewModel(params) {
         self._dataHasChanged();
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-        Notifications.party.joined.remove(self._connectionHasChanged);
-        Notifications.party.left.remove(self._connectionHasChanged);
-        Notifications.exhibit.toggle.remove(self._dataHasChanged);
-    };
-
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
         var environment =  PersistenceService.findByPredicates(Environment, [
@@ -122,7 +114,7 @@ export function EnvironmentSectionViewModel(params) {
 
     self.delete = function() {
         var key = CharacterManager.activeCharacter().key();
-        var environment =  PersistenceService.findByPredicates(Environment, [
+        var environment = PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -191,7 +183,7 @@ export function EnvironmentSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var environmentSection =  PersistenceService.findByPredicates(EnvironmentSection, [
+        var environmentSection = PersistenceService.findByPredicates(EnvironmentSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -201,7 +193,7 @@ export function EnvironmentSectionViewModel(params) {
             self.tagline(environmentSection.tagline());
         }
 
-        var environment =  PersistenceService.findByPredicates(Environment, [
+        var environment = PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -212,6 +204,8 @@ export function EnvironmentSectionViewModel(params) {
             self.terrain(environment.terrain());
             self.description(environment.description());
             self.isExhibited(environment.isExhibited());
+        } else {
+            self.clearFields();
         }
 
         // If there's no data to show, then prefer the edit tab.
@@ -220,6 +214,15 @@ export function EnvironmentSectionViewModel(params) {
         } else {
             self.selectPreviewTab();
         }
+    };
+
+    self.clearFields = function() {
+        self.environment(null);
+        self.imageUrl('');
+        self.weather('');
+        self.terrain('');
+        self.description('');
+        self.isExhibited('');
     };
 
     self._connectionHasChanged = function() {

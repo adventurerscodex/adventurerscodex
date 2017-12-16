@@ -74,11 +74,6 @@ export function MonsterSectionViewModel(params) {
         self._dataHasChanged();
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-        Notifications.encounters.changed.remove(self._dataHasChanged);
-    };
-
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
         var section =  PersistenceService.findByPredicates(MonsterSection, [
