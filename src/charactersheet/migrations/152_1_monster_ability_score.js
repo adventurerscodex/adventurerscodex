@@ -7,19 +7,22 @@ const SCORE_TABLE_NAME = 'MonsterAbilityScore';
 /**
  * Generate a unique hash for any unique ability score. This allows comparison
  * between identical scores in a given monster and encounter.
+ *
+ * Note: The table is parsed in reverse to account for newer records
+ * (the one's we want) being inserted later in the table.
  */
 const hashAbilityScore = (score) => {
-    return `${score.characterId}_${score.monsterId}_${score.encounterId}_${score.name}_${score.value}`;
+    return `${score.characterId}_${score.monsterId}_${score.encounterId}_${score.name}`;
 };
 
-const getUniqueScores = (scores) => {
+export const getUniqueScores = (scores) => {
     const scoresAndHashes = scores.map((score, i, _) => {
         return [score.data, hashAbilityScore(score.data)];
     });
 
     var uniqueScores = [];
     var uniqueHashes = [];
-    for (var i=0; i<scoresAndHashes.length; i++) {
+    for (var i=scoresAndHashes.length-1; i>=0; i--) {
         const [score, hash] = scoresAndHashes[i];
         if (uniqueHashes.indexOf(hash) === -1) {
             uniqueHashes.push(hash);
@@ -46,7 +49,7 @@ export var migration_152_1_monster_ability_scores = {
         // Add unique scores back.
         for (var i=0; i<uniqueScores.length; i++) {
             const score = uniqueScores[i];
-            PersistenceService._saveObj(SCORE_TABLE_NAME, i, score)
+            PersistenceService._saveObj(SCORE_TABLE_NAME, i, score);
         }
     }
 };

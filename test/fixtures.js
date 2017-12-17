@@ -336,3 +336,91 @@ export const dailyFeaturesFixture = [
         }
     }
 ];
+
+
+export const scoresFixture = [
+    {
+        'id': 0,
+        'data': {
+            'characterId':'06f0566c-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'strength',
+            'value':19
+        }
+    },
+    {
+        'id': 1,
+        'data': {
+            'characterId':'06f0566c-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'dexterity',
+            'value':10
+        }
+    },
+    // Repeat of 0
+    {
+        'id': 2,
+        'data': {
+            'characterId':'06f0566c-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'strength',
+            'value':19
+        }
+    },
+    // Repeat of 1
+    {
+        'id': 3,
+        'data': {
+            'characterId':'06f0566c-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'dexterity',
+            'value':10
+        }
+    },
+    // Repeat of 0
+    {
+        'id': 4,
+        'data': {
+            'characterId':'06f0566c-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'strength',
+            'value':19
+        }
+    },
+    {
+        'id': 6,
+        'data': {
+            'characterId':'5555555-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'dexterity',
+            'value':10
+        }
+    },
+    {
+        'id': 7,
+        'data': {
+            'characterId':'5555555-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'strength',
+            'value':19
+        }
+    },
+    // Repeat of 6
+    {
+        'id': 8,
+        'data': {
+            'characterId':'5555555-56c0-44f2-94ea-a56e45ef92d7',
+            'encounterId':'0790ce6f-1bf7-4f03-9196-565a98db86d9',
+            'monsterId':'df0596f4-02b0-4d71-b336-ef5a3e8aacd3',
+            'name':'dexterity',
+            'value':10
+        }
+    }
+];
