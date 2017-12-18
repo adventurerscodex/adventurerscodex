@@ -433,6 +433,14 @@ export var Fixtures = {
             'value': 0.0,
             'status': 'unconcious',
             'color': 'danger'
+        },{
+            'value': -1,
+            'status': 'unconcious and stable',
+            'color': 'danger'
+        },{
+            'value': -2,
+            'status': 'dead',
+            'color': 'danger'
         }],
         magic: [{
             'value': 1.0,

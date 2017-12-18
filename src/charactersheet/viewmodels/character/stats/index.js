@@ -20,10 +20,13 @@ export function StatsViewModel() {
     self.hitDiceList = ko.observableArray([]);
     self.hitDiceType = ko.observable(new HitDiceType());
     self.deathSaveSuccessList = ko.observableArray([]);
+    self.deathSaveSuccessVisible = ko.observable(true);
     self.deathSaveFailureList = ko.observableArray([]);
+    self.deathSaveFailureVisible = ko.observable(true);
     self.editHealthItem = ko.observable();
     self.editHitDiceItem = ko.observable();
     self.modalOpen = ko.observable(false);
+    self._dummy = ko.observable();
 
     self.load = function() {
         Notifications.global.save.add(self.save);
@@ -99,6 +102,8 @@ export function StatsViewModel() {
 
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.calculateHitDice);
+        self._alertPlayerHasDied();
+/*        self._alertPlayerIsStable();*/
         self.healthDataHasChange();
     };
 
@@ -198,6 +203,25 @@ export function StatsViewModel() {
         self.hitDiceDataHasChanged();
     };
 
+    // Reset death and success saves when char drops to 0 hp
+    self.resetDeathSaves = ko.computed(function() {
+        self._dummy();
+        if (self.health().hitpoints() >= 1){
+            self.deathSaveFailureList().forEach(function(save, idx, _) {
+                save.deathSaveFailure(false);
+            });
+            self.deathSaveSuccessList().forEach(function(save, idx, _) {
+                save.deathSaveSuccess(false);
+            });
+        }
+    });
+
+    // Determine if death saves should be visible
+    self.deathSavesVisible = ko.computed(function() {
+        self._dummy();
+        return self.health().hitpoints() === 0;
+    });
+
     // Modal methods
     self.modifierHasFocus = ko.observable(false);
 
@@ -274,6 +298,11 @@ export function StatsViewModel() {
                 'You have died.', {
                     timeOut: 0
                 });
+            Notifications.stats.deathSaves.fail.changed.dispatch();
+            self.deathSaveSuccessVisible(false);
+        } else {
+            Notifications.stats.deathSaves.notFail.changed.dispatch();
+            self.deathSaveSuccessVisible(true);
         }
 
     };
@@ -288,6 +317,11 @@ export function StatsViewModel() {
                 'You are now stable.', {
                     timeOut: 0
                 });
+            Notifications.stats.deathSaves.success.changed.dispatch();
+            self.deathSaveFailureVisible(false);
+        } else {
+            Notifications.stats.deathSaves.notSuccess.changed.dispatch();
+            self.deathSaveFailureVisible(true);
         }
 
     };
