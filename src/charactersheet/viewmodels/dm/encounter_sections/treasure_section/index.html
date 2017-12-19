@@ -277,10 +277,9 @@
     <label for="armorType"
            class="col-sm-2 control-label">Type</label>
       <div class="col-sm-10">
-      <select class="form-control"
-              data-bind="options: blankTreasure().armorTypeOptions,
-                         value: blankTreasure().armorType,
-                         select2: {theme: 'classic'}"></select>
+      <input class="form-control"
+              placeholder="Light"
+              data-bind="textInput: blankTreasure().armorType, autocomplete: { source: blankTreasure().armorTypeOptions }">
       </div>
   </div>
   <div class="form-group">
@@ -296,20 +295,20 @@
     <label for="armorPrice"
            class="col-sm-2 control-label">Price</label>
     <div class="col-sm-10">
-      <div class="input-group">
+      <div class="input-group override-tight-inner">
         <input type="text"
-             class="form-control input-select2-addon"
+             class="form-control input-jquery-addon"
              id="armorPrice"
              placeholder="5"
              data-bind='textInput: blankTreasure().armorPrice'>
-         <span class="input-group-addon">
-          <select class="form-control"
-          data-bind="options: currencyDenominationList,
-          value: blankTreasure().armorCurrencyDenomination,
-          select2: {theme: 'classic'}"></select>
+         <span class="input-group-addon input-group-addon-jquery">
+          <input class="form-control"
+                 placeholder="GP"
+                data-bind="textInput: blankTreasure().armorCurrencyDenomination, autocomplete: {
+                          source: blankTreasure().armorCurrencyDenominationOptions }">
         </span>
       </div>
-      </div>
+    </div>
   </div>
   <div class="form-group">
     <label for="armorWeight"
@@ -337,10 +336,9 @@
     <label for="armorSize"
            class="col-sm-2 control-label">Stealth</label>
       <div class="col-sm-10">
-      <select class="form-control"
-              data-bind="options: blankTreasure().armorStealthOptions,
-                         value: blankTreasure().armorStealth,
-                         select2: {theme: 'classic'}"></select>
+      <input class="form-control"
+             placeholder="Advantage"
+             data-bind="textInput: blankTreasure().armorStealth, autocomplete: { source: blankTreasure().armorStealthOptions }">
       </div>
   </div>
   <div class="form-group">
@@ -425,7 +423,7 @@
      <label for="itemWeight"
        class="col-sm-2 control-label">Weight</label>
      <div class="col-sm-10">
-       <div class="input-group">
+       <div class="input-group override-tight-inner">
          <input type="number"
                 class="form-control"
                 min="0"
@@ -453,16 +451,16 @@
      <label
        class="col-sm-2 control-label">Cost</label>
      <div class="col-sm-10">
-       <div class="input-group">
+       <div class="input-group override-tight-inner">
        <input type="number"
          min="0"
-         class="form-control input-select2-addon"
+         class="form-control input-jquery-addon"
          data-bind="value: blankTreasure().itemCost" />
-       <span class="input-group-addon">
-         <select class="form-control"
-            data-bind="options: currencyDenominationList,
-            value: blankTreasure().itemCurrencyDenomination,
-            select2: {theme: 'classic'}"></select>
+       <span class="input-group-addon input-group-addon-jquery">
+         <input class="form-control"
+                placeholder="GP"
+                data-bind="textInput: blankTreasure().itemCurrencyDenomination, autocomplete: {
+                          source: blankTreasure().itemCurrencyDenominationOptions }">
         </span>
        </div>
       </div>
@@ -499,20 +497,20 @@
       <label for="magicItemType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().magicItemTypeOptions,
-                           value: blankTreasure().magicItemType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Wand"
+               data-bind="textInput: blankTreasure().magicItemType,
+                         autocomplete: { source: blankTreasure().magicItemTypeOptions }">
         </div>
     </div>
     <div class="form-group">
       <label for="magicItemType"
              class="col-sm-2 control-label">Rarity</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().magicItemRarityOptions,
-                           value: blankTreasure().magicItemRarity,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Legendary"
+               data-bind="textInput: blankTreasure().magicItemRarity,
+                         autocomplete: { source: blankTreasure().magicItemRarityOptions }">
         </div>
     </div>
     <div class="form-group">
@@ -631,47 +629,47 @@
       <label for="weaponType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().weaponTypeOptions,
-                           value: blankTreasure().weaponType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Ranged"
+               data-bind="textInput: blankTreasure().weaponType, autocomplete: {
+                          source: blankTreasure().weaponTypeOptions }">
         </div>
     </div>
     <div class="form-group">
       <label for="weaponHandedness"
              class="col-sm-2 control-label">Handedness</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().weaponHandednessOptions,
-                           value: blankTreasure().weaponHandedness,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="One-Handed"
+                data-bind="textInput: blankTreasure().weaponHandedness, autocomplete: {
+                          source: blankTreasure().weaponHandednessOptions }">
         </div>
     </div>
     <div class="form-group">
       <label for="weaponProficiency"
              class="col-sm-2 control-label">Proficiency</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().weaponProficiencyOptions,
-                           value: blankTreasure().weaponProficiency,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Simple"
+                data-bind="textInput: blankTreasure().weaponProficiency, autocomplete: {
+                          source: blankTreasure().weaponProficiencyOptions }">
         </div>
     </div>
     <div class="form-group">
       <label for="weaponPrice"
              class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
-        <div class="input-group">
-          <input type="number" min="0" class="form-control input-select2-addon"
+        <div class="input-group override-tight-inner">
+          <input type="number" min="0" class="form-control input-jquery-addon"
                id="weaponPrice"
                placeholder="5"
                data-bind='textInput: blankTreasure().weaponPrice'>
                <span data-bind="console.log($parent.id)"></span>
-           <span class="input-group-addon">
-            <select class="form-control"
-            data-bind="options: currencyDenominationList,
-            value: blankTreasure().weaponCurrencyDenomination,
-            select2: {theme: 'classic'}"></select>
+           <span class="input-group-addon input-group-addon-jquery">
+            <input class="form-control"
+                   placeholder="GP"
+                   data-bind="textInput: blankTreasure().weaponCurrencyDenomination, autocomplete: {
+                          source: blankTreasure().weaponCurrencyDenominationOptions }">
           </span>
         </div>
       </div>
@@ -701,20 +699,20 @@
       <label for="weaponDamageType"
              class="col-sm-2 control-label">Damage Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().weaponDamageTypeOptions,
-                           value: blankTreasure().weaponDamageType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Fire"
+               data-bind="textInput: blankTreasure().weaponDamageType, autocomplete: {
+                          source: blankTreasure().weaponDamageTypeOptions }">
         </div>
     </div>
     <div class="form-group">
       <label for="weaponProperty"
              class="col-sm-2 control-label">Property</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: blankTreasure().weaponPropertyOptions,
-                           value: blankTreasure().weaponProperty,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Finesse"
+                data-bind="textInput: blankTreasure().weaponProperty, autocomplete: {
+                          source: blankTreasure().weaponPropertyOptions }">
         </div>
     </div>
     <div class="form-group">
@@ -878,10 +876,9 @@
       <label for="armorType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: armorTypeOptions,
-                           value: armorType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Light"
+               data-bind="textInput: armorType">
         </div>
     </div>
     <div class="form-group">
@@ -897,17 +894,16 @@
       <label for="armorPrice"
              class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
-        <div class="input-group">
+        <div class="input-group override-tight-inner">
           <input type="text"
-               class="form-control input-select2-addon"
+               class="form-control input-jquery-addon"
                id="armorPrice"
                placeholder="5"
                data-bind='textInput: armorPrice'>
-           <span class="input-group-addon">
-            <select class="form-control"
-            data-bind="options: $parent.currencyDenominationList,
-            value: armorCurrencyDenomination,
-            select2: {theme: 'classic'}"></select>
+           <span class="input-group-addon input-group-addon-jquery">
+            <input class="form-control"
+                   placeholder="GP"
+                   data-bind="textInput: armorCurrencyDenomination">
           </span>
         </div>
       </div>
@@ -938,10 +934,9 @@
       <label for="armorSize"
              class="col-sm-2 control-label">Stealth</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: armorStealthOptions,
-                           value: armorStealth,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Advantage"
+               data-bind="textInput: armorStealth">
         </div>
     </div>
     <div class="form-group">
@@ -1026,7 +1021,7 @@
       <label for="itemWeight"
              class="col-sm-2 control-label">Weight</label>
       <div class="col-sm-10">
-        <div class="input-group">
+        <div class="input-group override-tight-inner">
           <input type="number"
                  class="form-control"
                  min="0"
@@ -1053,16 +1048,15 @@
     <div class="form-group">
       <label class="col-sm-2 control-label">Cost</label>
         <div class="col-sm-10">
-          <div class="input-group">
+          <div class="input-group override-tight-inner">
             <input type="number"
                    min="0"
-                   class="form-control input-select2-addon"
+                   class="form-control input-jquery-addon"
                    data-bind="value: itemCost" />
-            <span class="input-group-addon">
-            <select class="form-control"
-                    data-bind="options: $parent.currencyDenominationList,
-                             value: itemCurrencyDenomination,
-                             select2: {theme: 'classic'}"></select>
+            <span class="input-group-addon input-group-addon-jquery">
+            <input class="form-control"
+                    placeholder="GP"
+                    data-bind="textInput: itemCurrencyDenomination">
             </span>
           </div>
         </div>
@@ -1098,20 +1092,18 @@
       <label for="magicItemType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: magicItemTypeOptions,
-                           value: magicItemType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Wand"
+                data-bind="textInput: magicItemType">
         </div>
     </div>
     <div class="form-group">
       <label for="magicItemType"
              class="col-sm-2 control-label">Rarity</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: magicItemRarityOptions,
-                           value: magicItemRarity,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Legendary"
+                data-bind="textInput: magicItemRarity">
         </div>
     </div>
     <div class="form-group">
@@ -1229,46 +1221,42 @@
       <label for="weaponType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: weaponTypeOptions,
-                           value: weaponType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Ranged"
+                data-bind="textInput: weaponType">
         </div>
     </div>
     <div class="form-group">
       <label for="weaponHandedness"
              class="col-sm-2 control-label">Handedness</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: weaponHandednessOptions,
-                           value: weaponHandedness,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="One-Handed"
+              data-bind="textInput: weaponHandedness"></select>
         </div>
     </div>
     <div class="form-group">
       <label for="weaponProficiency"
              class="col-sm-2 control-label">Proficiency</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: weaponProficiencyOptions,
-                           value: weaponProficiency,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Simple"
+                data-bind="textInput: weaponProficiency">
         </div>
     </div>
     <div class="form-group">
       <label for="weaponPrice"
              class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
-        <div class="input-group">
-          <input type="number" min="0" class="form-control input-select2-addon"
+        <div class="input-group override-tight-inner">
+          <input type="number" min="0" class="form-control input-jquery-addon"
                id="weaponPrice"
                placeholder="5"
                data-bind='textInput: weaponPrice'>
-           <span class="input-group-addon">
-            <select class="form-control"
-                    data-bind="options: $parent.currencyDenominationList,
-                               value: weaponCurrencyDenomination,
-                               select2: {theme: 'classic'}"></select>
+           <span class="input-group-addon input-group-addon-jquery">
+            <input class="form-control"
+                   placeholder="GP"
+                   data-bind="textInput: weaponCurrencyDenomination">
           </span>
         </div>
       </div>
@@ -1298,20 +1286,18 @@
       <label for="weaponDamageType"
              class="col-sm-2 control-label">Damage Type</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: weaponDamageTypeOptions,
-                           value: weaponDamageType,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+               placeholder="Fire"
+               data-bind="textInput: weaponDamageType">
         </div>
         </div>
       <div class="form-group">
       <label for="weaponProperty"
              class="col-sm-2 control-label">Property</label>
         <div class="col-sm-10">
-        <select class="form-control"
-                data-bind="options: weaponPropertyOptions,
-                           value: weaponProperty,
-                           select2: {theme: 'classic'}"></select>
+        <input class="form-control"
+                placeholder="Finesse"
+                data-bind="textInput: weaponProperty">
         </div>
     </div>
 

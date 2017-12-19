@@ -130,13 +130,13 @@
       		   <div class="input-group">
       			 <input type="number"
       			   min="0"
-      			   class="form-control input-select2-addon"
+      			   class="form-control input-jquery-addon"
       			   data-bind="value: blankItem().itemCost" />
-      			 <span class="input-group-addon">
-               <select class="form-control"
-      						data-bind="options: currencyDenominationList,
-      						value: blankItem().itemCurrencyDenomination,
-      						select2: {theme: 'classic'}"></select>
+      			 <span class="input-group-addon input-group-addon-jquery">
+               <input class="form-control"
+                      placeholder="GP"
+      						    data-bind="textInput: blankItem().itemCurrencyDenomination, autocomplete: {
+                          source: blankItem().itemCurrencyDenominationOptions }">
               </span>
       		   </div>
     	      </div>
@@ -293,13 +293,12 @@
           		      <div class="input-group">
           			      <input type="number"
           			             min="0"
-          			             class="form-control input-select2-addon"
+          			             class="form-control input-jquery-addon"
           			             data-bind="value: itemCost" />
-          			      <span class="input-group-addon">
-                      <select class="form-control"
-          					         	data-bind="options: $parent.currencyDenominationList,
-          						                 value: itemCurrencyDenomination,
-          						                 select2: {theme: 'classic'}"></select>
+          			      <span class="input-group-addon input-group-addon-jquery">
+                      <input class="form-control"
+          					         placeholder="GP"
+                             data-bind="textInput: itemCurrencyDenomination">
                       </span>
           		      </div>
         	        </div>

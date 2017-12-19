@@ -83,7 +83,6 @@
     "lz-string": "^1.4.4",
     "node-uuid": "^1.4.8",
     "save-as": "^0.1.8",
-    "select2": "^3.5.1",
     "signals": "^1.0.0",
     "spin": "0.0.1",
     "style-loader": "^0.18.2",

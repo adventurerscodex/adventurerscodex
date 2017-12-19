@@ -124,9 +124,11 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Hit Dice Type</label>
             <div class="col-sm-10">
-              <select class="form-control" data-bind="options: editHitDiceItem().hitDiceOptions,
-                         value: editHitDiceItem().hitDiceType,
-                         select2: {theme: 'classic'}"></select>
+              <input class="form-control"
+                     placeholder="D4"
+                     data-bind="textInput: editHitDiceItem().hitDiceType, autocomplete: {
+                          source: editHitDiceItem().hitDiceOptions}">
+
             </div>
           </div>
 					<div class="modal-footer">

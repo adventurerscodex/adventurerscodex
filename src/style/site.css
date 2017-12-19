@@ -445,7 +445,7 @@ textarea.dark-area {
   line-height:1.5em;
 }
 
-.input-select2-addon {
+.input-jquery-addon {
   height:100%;
   padding:18px;
 }
@@ -878,6 +878,11 @@ li.image-chat-highlight {
   margin-right:15px;
 }
 
+.override-tight-inner {
+  margin-left:0px !important;
+  margin-right:0px !important;
+}
+
 .connection-status {
   position: relative;
   width:15px;
@@ -910,4 +915,10 @@ div.toggle-arrow-container {
   padding-right: 5px;
   display: inline;
   text-align: center;
+}
+
+.input-group-addon-jquery {
+  min-width:125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

@@ -30,6 +30,7 @@ export function MagicItem() {
     self.magicItemCharges = ko.observable(0);
     self.magicItemWeight = ko.observable(0);
     self.magicItemDescription = ko.observable('');
+
     self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
     self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
