@@ -175,20 +175,20 @@
                 <label for="spellSchool"
                        class="col-sm-2 control-label">School</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankSpell().spellSchoolOptions,
-                                     value: blankSpell().spellSchool,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Abjuration"
+                         data-bind="textInput: blankSpell().spellSchool,
+                          autocomplete: { source: blankSpell().spellSchoolOptions }">
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellType"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankSpell().spellTypeOptions,
-                                     value: blankSpell().spellType,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Automatic"
+                         data-bind="textInput: blankSpell().spellType,
+                          autocomplete: { source: blankSpell().spellTypeOptions }">
                   </div>
               </div>
               <div data-bind="visible: blankSpell().spellType() == 'Savings Throw'">
@@ -196,10 +196,10 @@
                   <label for="spellType"
                          class="col-sm-2 control-label">Save Attr</label>
                     <div class="col-sm-10">
-                    <select class="form-control"
-                            data-bind="options: blankSpell().spellSaveAttrOptions,
-                                       value: blankSpell().spellSaveAttr,
-                                       select2: {theme: 'classic'}"></select>
+                    <input class="form-control"
+                            placeholder="Str"
+                            data-bind="textInput: blankSpell().spellSaveAttr,
+                          autocomplete: { source: blankSpell().spellSaveAttrOptions }">
                     </div>
                 </div>
               </div>
@@ -218,30 +218,31 @@
                 <label for="spellCastingTime"
                        class="col-sm-2 control-label">Cast Time</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankSpell().spellCastingTimeOptions,
-                                     value: blankSpell().spellCastingTime,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                          placeholder="1 action"
+                          data-bind="textInput: blankSpell().spellCastingTime,
+                          autocomplete: { source: blankSpell().spellCastingTimeOptions }">
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellRange"
                        class="col-sm-2 control-label">Range</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankSpell().spellRangeOptions,
-                                     value: blankSpell().spellRange,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="1 mile"
+                         data-bind="textInput: blankSpell().spellRange,
+                          autocomplete: { source: blankSpell().spellRangeOptions,
+                          onselect: setSpellRange }">
                   </div>
               </div>
               <div class="form-group">
                 <label for="spellComponents"
                        class="col-sm-2 control-label">Components</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankSpell().spellComponentsOptions,
-                                     value: blankSpell().spellComponents,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="V, S, M"
+                         data-bind="textInput: blankSpell().spellComponents,
+                          autocomplete: { source: blankSpell().spellComponentsOptions }">
                   </div>
               </div>
               <div class="form-group">
@@ -259,10 +260,10 @@
                 <label for="spellDuration"
                        class="col-sm-2 control-label">Duration</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankSpell().spellDurationOptions,
-                                     value: blankSpell().spellDuration,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="1 day"
+                         data-bind="textInput: blankSpell().spellDuration,
+                          autocomplete: { source: blankSpell().spellDurationOptions }">
                   </div>
               </div>
               <div class="form-group">
@@ -424,20 +425,18 @@
                     <label for="spellSchool"
                            class="col-sm-2 control-label">School</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: spellSchoolOptions,
-                                         value: spellSchool,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                              placeholder="Abjuration"
+                              data-bind="textInput: spellSchool">
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="spellType"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
-                        <select class="form-control"
-                              data-bind="options: spellTypeOptions,
-                                         value: spellType,
-                                         select2: {theme: 'classic'}"></select>
+                        <input class="form-control"
+                               placeholder="Automatic"
+                               data-bind="textInput: spellType">
                       </div>
                   </div>
                   <div data-bind="visible: spellType() == 'Savings Throw'">
@@ -445,10 +444,9 @@
                       <label for="spellType"
                              class="col-sm-2 control-label">Save Attr</label>
                         <div class="col-sm-10">
-                        <select class="form-control"
-                                data-bind="options: spellSaveAttrOptions,
-                                           value: spellSaveAttr,
-                                           select2: {theme: 'classic'}"></select>
+                        <input class="form-control"
+                               placeholder="Str"
+                               data-bind="textInput: spellSaveAttr">
                         </div>
                     </div>
                   </div>
@@ -467,30 +465,27 @@
                     <label for="spellCastingTime"
                            class="col-sm-2 control-label">Cast Time</label>
                       <div class="col-sm-10">
-                        <select class="form-control"
-                              data-bind="options: spellCastingTimeOptions,
-                                         value: spellCastingTime,
-                                         select2: {theme: 'classic'}"></select>
+                        <input class="form-control"
+                               placeholder="1 action"
+                               data-bind="textInput: spellCastingTime">
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="spellRange"
                            class="col-sm-2 control-label">Range</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: spellRangeOptions,
-                                         value: spellRange,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="1 mile"
+                             data-bind="textInput: spellRange">
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="spellComponents"
                            class="col-sm-2 control-label">Components</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: spellComponentsOptions,
-                                         value: spellComponents,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="V, S, M"
+                             data-bind="textInput: spellComponents">
                       </div>
                   </div>
                   <div class="form-group">
@@ -508,10 +503,9 @@
                     <label for="spellDuration"
                            class="col-sm-2 control-label">Duration</label>
                       <div class="col-sm-10">
-                        <select class="form-control"
-                              data-bind="options: spellDurationOptions,
-                                         value: spellDuration,
-                                         select2: {theme: 'classic'}"></select>
+                        <input class="form-control"
+                               placeholder="1 day"
+                               data-bind="textInput: spellDuration">
                       </div>
                   </div>
                   <div class="form-group">
