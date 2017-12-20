@@ -9,7 +9,7 @@ describe('152 Monster Ability Score', () => {
     describe('Get Unique Hashes', () => {
         it('should return a list of scores that are unique', () => {
             const scores = scoresFixture;
-            uniqueScores.length.should.equal(9);
+            scores.length.should.equal(8);
             const uniqueScores = getUniqueScores(scores);
             uniqueScores.length.should.equal(4);
         });
