@@ -158,31 +158,10 @@ export function EncounterViewModel() {
             parentEncounter.save();
         }
 
-        // Delete the sections.
-
-        self.sectionModels.map(({ section }) => {
-            PersistenceService.findByPredicates(section, [
-                new KeyValuePredicate('encounterId', cell.encounterId()),
-                new KeyValuePredicate('characterId', key)
-            ]).forEach((section) => {
-                section.delete();
-            });
-        });
-        self.sectionModels.map(({ models }) => {
-            if (!models) { return; }
-            models.forEach((model) => {
-                PersistenceService.findByPredicates(model, [
-                    new KeyValuePredicate('encounterId', cell.encounterId()),
-                    new KeyValuePredicate('characterId', key)
-                ]).forEach((model) => {
-                    model.delete();
-                });
-            });
-        });
-
         // Delete the cell.
 
-        cell.delete();
+        self._deleteEncounterRelatedModels(encounter);
+        encounter.delete();
 
         // Update UI.
 
@@ -199,6 +178,34 @@ export function EncounterViewModel() {
     };
 
     /* Private Methods */
+
+    self._deleteEncounterRelatedModels = (encounter) => {
+        encounter.getChildren().forEach(function(child, idx, _) {
+            self._deleteEncounterRelatedModels(child);
+            child.delete();
+        });
+
+        var key = CharacterManager.activeCharacter().key();
+        self.sectionModels.map(({ section }) => {
+            PersistenceService.findByPredicates(section, [
+                new KeyValuePredicate('encounterId', encounter.encounterId()),
+                new KeyValuePredicate('characterId', key)
+            ]).forEach((section) => {
+                section.delete();
+            });
+        });
+        self.sectionModels.map(({ models }) => {
+            if (!models) { return; }
+            models.forEach((model) => {
+                PersistenceService.findByPredicates(model, [
+                    new KeyValuePredicate('encounterId', encounter.encounterId()),
+                    new KeyValuePredicate('characterId', key)
+                ]).forEach((model) => {
+                    model.delete();
+                });
+            });
+        });
+    };
 
     self._getEncounterCells = function() {
         var key = CharacterManager.activeCharacter().key();

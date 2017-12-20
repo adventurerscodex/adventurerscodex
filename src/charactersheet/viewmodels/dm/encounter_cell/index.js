@@ -74,18 +74,6 @@ export function EncounterCellViewModel(encounter) {
         encounter.save();
     };
 
-    self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var encounter = PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        encounter.delete();
-        self.children().forEach(function(child, idx, _) {
-            child.delete();
-        });
-    };
-
     /* Data Refresh Methods */
 
     self.reloadData = function() {

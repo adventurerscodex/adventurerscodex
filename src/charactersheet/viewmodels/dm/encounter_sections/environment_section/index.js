@@ -20,6 +20,7 @@ import ko from 'knockout';
 import sectionIcon from 'images/encounters/night-sky.svg';
 import template from './index.html';
 
+
 export function EnvironmentSectionViewModel(params) {
     var self = this;
 
@@ -87,6 +88,19 @@ export function EnvironmentSectionViewModel(params) {
 
         self._connectionHasChanged();
 
+        // Search for the current environment and if it doesn't exist, then create.
+        var key = CharacterManager.activeCharacter().key();
+        var environment =  PersistenceService.findByPredicates(Environment, [
+            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('characterId', key)
+        ])[0];
+        if (!environment) {
+            environment = new Environment();
+            environment.characterId(key);
+            environment.encounterId(self.encounterId());
+            environment.save();
+        }
+
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
@@ -99,17 +113,14 @@ export function EnvironmentSectionViewModel(params) {
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
-        if (!environment) {
-            environment = new Environment();
-            environment.characterId(key);
-            environment.encounterId(self.encounterId());
+        if (environment) {
+            environment.imageUrl(self.imageUrl());
+            environment.weather(self.weather());
+            environment.terrain(self.terrain());
+            environment.description(self.description());
+            environment.isExhibited(self.isExhibited());
+            environment.save();
         }
-        environment.imageUrl(self.imageUrl());
-        environment.weather(self.weather());
-        environment.terrain(self.terrain());
-        environment.description(self.description());
-        environment.isExhibited(self.isExhibited());
-        environment.save();
     };
 
     /* UI Methods */
