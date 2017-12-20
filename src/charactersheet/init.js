@@ -78,6 +78,7 @@ export var init = function(viewModel) {
     NotificationsServiceManager.sharedService();
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
+    window.PersistenceService = PersistenceService;
 
     // Initialize the View Model
     viewModel.init();
