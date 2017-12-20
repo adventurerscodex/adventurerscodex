@@ -112,17 +112,6 @@ export function EnvironmentSectionViewModel(params) {
         environment.save();
     };
 
-    self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var environment = PersistenceService.findByPredicates(Environment, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (environment) {
-            environment.delete();
-        }
-    };
-
     /* UI Methods */
 
     self.weatherLabel = ko.pureComputed(function() {
