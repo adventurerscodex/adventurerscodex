@@ -27,14 +27,5 @@ describe('NotesViewModel', function(){
             notesVM.load();
             notesVM.notes()[0].text().should.equal('test');
         });
-
-        it('should not load values from database.', function() {
-            simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
-            simple.mock(Note, 'findBy').returnWith([]);
-            var notesVM = new NotesViewModel();
-
-            notesVM.load();
-            notesVM.notes()[0].characterId().should.equal('12345');
-        });
     });
 });
