@@ -90,7 +90,6 @@ export function EncounterViewModel() {
         });
         sections([]);
         self.addEncounterToList(encounter());
-        Notifications.encounters.changed.dispatch();
     };
 
     /* Manage Encounter Methods */

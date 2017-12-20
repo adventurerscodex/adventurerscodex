@@ -14,7 +14,7 @@ export function NotesSectionViewModel(params) {
 
     self.sectionIcon = sectionIcon;
     self.notes = ko.observable('');
-    self.visible = ko.observable(false);
+    self.visible = ko.observable();
 
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
