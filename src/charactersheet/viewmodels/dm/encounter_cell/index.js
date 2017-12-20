@@ -94,10 +94,12 @@ export function EncounterCellViewModel(encounter) {
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
-        self.name(encounter.name());
-        self.encounterLocation(encounter.encounterLocation());
-        self.children().forEach(function(child, idx, _) {
-            child.reloadData();
-        });
+        if (encounter) {
+            self.name(encounter.name());
+            self.encounterLocation(encounter.encounterLocation());
+            self.children().forEach(function(child, idx, _) {
+                child.reloadData();
+            });
+        }
     };
 }
