@@ -135,6 +135,8 @@ export function EncounterViewModel() {
             parentCell.removeChild(cell);
         }
 
+        // Remove the current encounter from it's parents if it has any.
+
         var parentEncounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', encounter.parent()),
             new KeyValuePredicate('characterId', key)
@@ -144,7 +146,22 @@ export function EncounterViewModel() {
             parentEncounter.save();
         }
 
+        // Delete the sections.
+
+        self.sectionModels.map(({ model }) => {
+            var section = PersistenceService.findByPredicates(model, [
+                new KeyValuePredicate('encounterId', cell.encounterId()),
+                new KeyValuePredicate('characterId', key)
+            ])[0];
+            section.delete();
+        });
+
+        // Delete the cell.
+
         cell.delete();
+
+        // Update UI.
+
         if (!parentCell) {
             self.encounterCells.remove(cell);
         }
