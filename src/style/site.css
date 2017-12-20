@@ -576,7 +576,9 @@ ul.footer-icons li {
 .notes-place-holder {
   height: 548px;
   padding-top:175px;
-  background-color: #ecf0f1;;
+  background-color: #ecf0f1;
+  border-radius: 4px;
+  border: 1px solid #d4d8dc;
 }
 
 .preview-modal-overflow-sm {
