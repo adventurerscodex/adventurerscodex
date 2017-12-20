@@ -5,7 +5,8 @@ import {
     migration_120_1_weapons,
     migration_130_1_armors,
     migration_130_2_feats_features_proficiencies_daily_features,
-    migration_150_1_dm_notes
+    migration_150_1_dm_notes,
+    migration_152_1_monster_ability_scores
 } from 'charactersheet/migrations';
 
 export var Migrations = {
@@ -21,6 +22,8 @@ export var Migrations = {
         migration_130_1_armors,
         migration_130_2_feats_features_proficiencies_daily_features,
         // v1.5
-        migration_150_1_dm_notes
+        migration_150_1_dm_notes,
+        // v1.5.2
+        migration_152_1_monster_ability_scores
     ]
 };
