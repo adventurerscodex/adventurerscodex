@@ -573,6 +573,12 @@ ul.footer-icons li {
   padding-top:175px;
 }
 
+.notes-place-holder {
+  height: 548px;
+  padding-top:175px;
+  background-color: #ecf0f1;;
+}
+
 .preview-modal-overflow-sm {
   max-height: 225px;
   overflow-y: auto;

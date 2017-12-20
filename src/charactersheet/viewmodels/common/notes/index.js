@@ -60,7 +60,7 @@ export function NotesViewModel() {
         if (self.notes().length > 0) {
             self.selectNote(self.notes()[0]);
         } else {
-            self.addNote();
+            self.selectedNote(false);
         }
     };
 
