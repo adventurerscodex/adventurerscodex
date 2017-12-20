@@ -80,6 +80,9 @@ export function EncounterViewModel() {
     };
 
     self.modalSave = function(encounter, sections) {
+        if (!encounter().name()) {
+            encounter().name('Untitled Encounter');
+        }
         encounter().save();
 
         sections().forEach(function(section, i, _) {
