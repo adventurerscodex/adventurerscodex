@@ -48,7 +48,7 @@ General Styling
 html, body {height: 100%;}
 
 #content {
-  max-width: 1800px;
+  max-width: 100%;
   font-family: "Lato", sans-serif;
   min-height: 100%;
 }
