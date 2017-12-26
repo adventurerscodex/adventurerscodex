@@ -1,4 +1,5 @@
 import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { DeathSave } from 'charactersheet/models/character/death_save';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
@@ -24,34 +25,81 @@ export function HealthinessStatusServiceComponent() {
     self.init = function() {
         Notifications.health.changed.add(self.dataHasChanged);
         Notifications.hitDice.changed.add(self.dataHasChanged);
+        Notifications.stats.deathSaves.fail.changed.add(self._initDeathSavesFail);
+        Notifications.stats.deathSaves.notFail.changed.add(self._initDeathSavesNotFail);
+        Notifications.stats.deathSaves.success.changed.add(self._initDeathSavesSuccess);
+        Notifications.stats.deathSaves.notSuccess.changed.add(self._initDeathSavesNotSuccess);
         self.dataHasChanged();
     };
 
     /**
-     * This method determines wether to update or remove the Healthiness status
+     * This method determines whether to update or remove the Healthiness status
      * component from the player's status line.
      */
     self.dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
         var health = PersistenceService.findFirstBy(Health, 'characterId', key);
         var hitDice = PersistenceService.findBy(HitDice, 'characterId', key);
+        var deathSaves = PersistenceService.findBy(DeathSave, 'characterId', key);
+
+        var deathSavesDidFail = false;
+        var deathSavesDidSucceed = false;
 
         if (!health && !hitDice) { return; }
 
         if (health || hitDice) {
-            self._updateStatus();
-        } else {
-            self._removeStatus();
+            var deathSaveSuccesses = 0;
+            var deathSaveFailures = 0;
+
+            if (deathSaves.length > 0) {
+                for(var i=0; i<3; i++) {
+                    if(deathSaves[i].deathSaveSuccess()) {
+                        deathSaveSuccesses++;
+                    }
+                }
+                for(var j=3; j<6; j++) {
+                    if(deathSaves[j].deathSaveFailure()) {
+                        deathSaveFailures++;
+                    }
+                }
+                if (deathSaveSuccesses === 3) {
+                    deathSavesDidSucceed = true;
+                }
+                if (deathSaveFailures === 3) {
+                    deathSavesDidFail = true;
+                }
+            }
         }
+        self._updateStatus(deathSavesDidFail, deathSavesDidSucceed);
     };
 
     /* Private Methods */
 
-    self._updateStatus = function() {
+    // 3 death saves failed
+    self._initDeathSavesFail = function() {
+        self._updateStatus(true, false);
+    };
+
+    // _alertPlayerHasDied was called and all 3 death saves did not fail
+    self._initDeathSavesNotFail = function() {
+        self._updateStatus(false, false);
+    };
+
+    // 3 death saves succeeded
+    self._initDeathSavesSuccess = function() {
+        self._updateStatus(false, true);
+    };
+
+    // _alertPlayerIsStable was called and all 3 death saves did not succeed
+    self._initDeathSavesNotSuccess = function() {
+        self._updateStatus(false, false);
+    };
+
+    self._updateStatus = function(deathSavesDidFail,
+                                  deathSavesDidSucceed) {
         var key = CharacterManager.activeCharacter().key();
         var health = PersistenceService.findFirstBy(Health, 'characterId', key);
         var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
-        var valueWeightPairs = [];
 
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
@@ -62,15 +110,11 @@ export function HealthinessStatusServiceComponent() {
             status.identifier(self.statusIdentifier);
         }
 
-        if (health) {
-            valueWeightPairs.push(self.prepareHealthValueWeightPairs(health));
-        }
+        var weightedTotal = self._getWeightedTotal(health,
+                                                   hitDiceList,
+                                                   deathSavesDidFail,
+                                                   deathSavesDidSucceed);
 
-        if (hitDiceList.length > 0) {
-            valueWeightPairs.push(self.prepareHitDiceValueWeightPairs(hitDiceList));
-        }
-
-        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
         var phrase = StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), weightedTotal);
 
         status.name(phrase.status);
@@ -82,16 +126,50 @@ export function HealthinessStatusServiceComponent() {
         Notifications.status.healthiness.changed.dispatch();
     };
 
-    self._removeStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
-        if (status) {
-            status.delete();
-            Notifications.status.changed.dispatch();
-            Notifications.status.healthiness.changed.dispatch();
+    /**
+     * This method calculates the weighted values and performs special handling
+     * for dead, unconscious and stable, and unconscious states.
+     */
+    self._getWeightedTotal = function(health,
+                                      hitDiceList,
+                                      deathSavesDidFail,
+                                      deathSavesDidSucceed) {
+
+        var valueWeightPairs = [];
+
+        // Character is in a state of no health after character creation
+        if (!health) {
+            return 1;
         }
+
+        // Character is dead
+        if (health.hitpoints() === 0 && deathSavesDidFail){
+            return -2;
+        }
+
+        // Character is unconscious and stable
+        if (health.hitpoints() === 0 && deathSavesDidSucceed){
+            return -1;
+        }
+
+        // Character is unconscious
+        if (health.hitpoints() === 0){
+            return 0.0;
+        }
+
+        if (health) {
+            valueWeightPairs.push(self.prepareHealthValueWeightPairs(health));
+        }
+
+        if (hitDiceList.length > 0) {
+            valueWeightPairs.push(
+                self.prepareHitDiceValueWeightPairs(hitDiceList)
+            );
+        }
+
+        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
+
+        return weightedTotal;
     };
 
     /**
@@ -113,13 +191,13 @@ export function HealthinessStatusServiceComponent() {
      * @return StatusWeightPair
      */
     self.prepareHitDiceValueWeightPairs = function(hitDiceList) {
-        var avaialableHitDice = 0;
+        var availableHitDice = 0;
         hitDiceList.forEach(function(hitDice, i, _) {
             if (!hitDice.hitDiceUsed()) {
-                avaialableHitDice++;
+                availableHitDice++;
             }
         });
-        var value = avaialableHitDice / hitDiceList.length;
+        var value = availableHitDice / hitDiceList.length;
 
         return new StatusWeightPair(value, self.HIT_DICE_WEIGHT);
     };

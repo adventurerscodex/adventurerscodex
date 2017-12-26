@@ -61,8 +61,10 @@
           </div>
         </div>
         <br />
+        <!-- ko if: deathSavesVisible() -->
         <div class="row row-padded">
           <div class="col-md-6 col-sm-12 col-padded">
+            <!-- ko if: deathSaveSuccessVisible() -->
             <div class="input-group">
               <span class="input-group-addon">Death Save Successes</span>
               <div class="form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
@@ -70,8 +72,10 @@
                       css: deathSaveSuccessIcon"></span>
               </div>
             </div>
+            <!-- /ko -->
           </div>
           <div class="col-md-6 col-sm-12 col-padded">
+            <!-- ko if: deathSaveFailureVisible() -->
             <div class="input-group">
               <span class="input-group-addon">Death Save Failures</span>
               <div class="form-control hit-dice-list" data-bind="foreach: deathSaveFailureList">
@@ -79,8 +83,10 @@
                     css: deathSaveFailureIcon"></span>
               </div>
             </div>
+            <!-- /ko -->
           </div>
         </div>
+        <!-- /ko -->
         </div>
       </div>
     </div>
