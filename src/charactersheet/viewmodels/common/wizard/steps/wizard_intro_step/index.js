@@ -50,7 +50,8 @@ export function WizardIntroStepViewModel(params) {
     self.fileContents = ko.observable();
     self.fileReader = new window.FileReader();
     self.character = null;
-    self.fromRemoteFile = false;
+    self.fromRemoteFile = ko.observable();
+    self.dropboxCharacterData = null;
 
     // View Model Methods
 
@@ -87,7 +88,7 @@ export function WizardIntroStepViewModel(params) {
     self.importFromFile = function() {
         //The first comma in the result file string is the last
         //character in the string before the actual json data
-        if(!self.fromRemoteFile){
+        if (!self.fromRemoteFile()) {
             var length = self.fileReader.result.indexOf(',') + 1;
             var values = JSON.parse(decodeURIComponent(atob(
                 self.fileReader.result.substring(
@@ -95,17 +96,24 @@ export function WizardIntroStepViewModel(params) {
             var character = Character.importCharacter(values);
 
             self._setImportReady(character.key());
-        }
-        else {
+        } else {
+            self.character = Character.importCharacter(self.dropboxCharacterData);
             self._setImportReady(self.character.key());
         }
     };
 
+    self.disableImportButton = ko.pureComputed(function() {
+        if (self.fileContents() || self.fromRemoteFile()) {
+            return false;
+        }
+        return true;
+    });
+
     WizardIntroStepViewModel.importRemoteFile = function(files) {
         try {
             $.get(files[0].link).done(function(data) {
-                self.fromRemoteFile = true;
-                self.character = Character.importCharacter(JSON.parse(decodeURIComponent(data)));
+                self.fromRemoteFile(true);
+                self.dropboxCharacterData = JSON.parse(decodeURIComponent(data));
             });
         } catch(error) {
             Notifications.userNotification.dangerNotification.dispatch('There was an error importing your character or campaign from Dropbox. Please try again.','');
