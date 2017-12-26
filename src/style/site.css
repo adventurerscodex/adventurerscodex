@@ -47,6 +47,11 @@ General Styling
 */
 html, body {height: 100%;}
 
+nav.navbar {
+  /* Bootstrap adds too much top padding below the nav-bar. */
+  margin-bottom:15px;
+}
+
 #content {
   max-width: 100%;
   font-family: "Lato", sans-serif;
