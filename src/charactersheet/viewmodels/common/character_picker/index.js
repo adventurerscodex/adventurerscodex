@@ -23,17 +23,6 @@ export function CharacterPickerViewModel(params) {
     self.defaultCharacterKey = ko.observable(null);
     self.state = params.state;
 
-// TODO: Move to Load if required.
-//     self.init = function() {
-//         Notifications.characters.changed.add(function() {
-//             self.load();
-//         });
-//         Notifications.profile.changed.add(function() {
-//             self.load();
-//         });
-//         Notifications.user.exists.add(self._handleUserChanged);
-//     };
-
     self.load = function() {
         self.characters(PersistenceService.findAll(Character));
     };

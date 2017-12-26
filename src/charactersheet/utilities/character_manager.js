@@ -14,6 +14,7 @@ import URI from 'urijs';
 export var CharacterManager = {
     __activeCharacter__: null,
     CHARACTER_ID_FRAGMENT_KEY: 'c',
+    CHARACTER_ID_NULL_FRAGMENT: '',
 
     /**
      * Do Initial Character Manager Setup.
@@ -21,7 +22,7 @@ export var CharacterManager = {
      * Note: The Character Manager init must be called for the character manager
      * to detect any character IDs in the URL.
      */
-    init: function() {
+    init: () => {
         var fragments = (new URI()).fragment(true);
         var key = fragments[CharacterManager.CHARACTER_ID_FRAGMENT_KEY];
         if (key) {
@@ -38,7 +39,7 @@ export var CharacterManager = {
      * Note: This method will dispatch notifications to the rest of the app
      * to notify others of this change.
      */
-    changeCharacter: function(characterId) {
+    changeCharacter: (characterId) => {
         var newCharacter = PersistenceService.findFirstBy(Character, 'key', characterId);
         try {
             Notifications.characterManager.changing.dispatch(
@@ -58,7 +59,7 @@ export var CharacterManager = {
     /**
      * Fetch the current Active Character if there is one.
      */
-    activeCharacter: function() {
+    activeCharacter: () => {
         if (CharacterManager.__activeCharacter__) {
             return CharacterManager.__activeCharacter__;
         } else {
@@ -67,18 +68,31 @@ export var CharacterManager = {
     },
 
     /**
+     * Sets the current URL fragment to the given key, or clears the fragment
+     * if the given key is null.
+     *
+     * Note: Deleting the URL fragment entirely causes a page refresh, so instead
+     * we set the fragment to some empty value.
+     */
+    setActiveCharacterFragment: (key) => {
+        var uri = new URI();
+        uri.removeFragment(CharacterManager.CHARACTER_ID_FRAGMENT_KEY);
+
+        key = key ? key : CharacterManager.CHARACTER_ID_NULL_FRAGMENT;
+
+        uri.addFragment(
+            CharacterManager.CHARACTER_ID_FRAGMENT_KEY,
+            key
+        );
+        window.location = uri.toString();
+    },
+
+    /**
      * Sets the character id fragment in the URL and the full
      * character to internal storage.
      */
-    _setActiveCharacter: function(character) {
-        var uri = new URI();
-        uri.removeFragment(CharacterManager.CHARACTER_ID_FRAGMENT_KEY);
-        uri.addFragment(
-            CharacterManager.CHARACTER_ID_FRAGMENT_KEY,
-            character.key()
-        );
-        window.location = uri.toString();
-
+    _setActiveCharacter: (character) => {
+        CharacterManager.setActiveCharacterFragment(character.key());
         CharacterManager.__activeCharacter__ = character;
     }
 };
