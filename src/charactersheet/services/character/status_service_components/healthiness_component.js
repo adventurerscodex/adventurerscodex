@@ -1,4 +1,5 @@
 import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { DeathSave } from 'charactersheet/models/character/death_save';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
@@ -39,37 +40,63 @@ export function HealthinessStatusServiceComponent() {
         var key = CharacterManager.activeCharacter().key();
         var health = PersistenceService.findFirstBy(Health, 'characterId', key);
         var hitDice = PersistenceService.findBy(HitDice, 'characterId', key);
+        var deathSaves = PersistenceService.findBy(DeathSave, 'characterId', key);
+
+        var deathSavesDidFail = false;
+        var deathSavesDidSucceed = false;
 
         if (!health && !hitDice) { return; }
 
         if (health || hitDice) {
-            self._updateStatus();
-        } else {
-/*            self._removeStatus();*/
-            self._updateStatus(false, false);
+            var deathSaveSuccesses = 0;
+            var deathSaveFailures = 0;
+
+            if (deathSaves.length > 0) {
+                for(var i=0; i<3; i++) {
+                    if(deathSaves[i].deathSaveSuccess()) {
+                        deathSaveSuccesses++;
+                    }
+                }
+                for(var j=3; j<6; j++) {
+                    if(deathSaves[j].deathSaveFailure()) {
+                        deathSaveFailures++;
+                    }
+                }
+                if (deathSaveSuccesses === 3) {
+                    deathSavesDidSucceed = true;
+                }
+                if (deathSaveFailures === 3) {
+                    deathSavesDidFail = true;
+                }
+            }
         }
+        self._updateStatus(deathSavesDidFail, deathSavesDidSucceed);
     };
 
     /* Private Methods */
 
+    // 3 death saves failed
     self._initDeathSavesFail = function() {
         self._updateStatus(true, false);
     };
 
+    // _alertPlayerHasDied was called and all 3 death saves did not fail
     self._initDeathSavesNotFail = function() {
         self._updateStatus(false, false);
     };
 
+    // 3 death saves succeeded
     self._initDeathSavesSuccess = function() {
         self._updateStatus(false, true);
     };
 
+    // _alertPlayerIsStable was called and all 3 death saves did not succeed
     self._initDeathSavesNotSuccess = function() {
         self._updateStatus(false, false);
     };
 
     self._updateStatus = function(deathSavesDidFail,
-                                  deathSavesDidSucced) {
+                                  deathSavesDidSucceed) {
         var key = CharacterManager.activeCharacter().key();
         var health = PersistenceService.findFirstBy(Health, 'characterId', key);
         var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
@@ -86,7 +113,7 @@ export function HealthinessStatusServiceComponent() {
         var weightedTotal = self._getWeightedTotal(health,
                                                    hitDiceList,
                                                    deathSavesDidFail,
-                                                   deathSavesDidSucced);
+                                                   deathSavesDidSucceed);
 
         var phrase = StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), weightedTotal);
 
@@ -106,17 +133,26 @@ export function HealthinessStatusServiceComponent() {
     self._getWeightedTotal = function(health,
                                       hitDiceList,
                                       deathSavesDidFail,
-                                      deathSavesDidSucced) {
+                                      deathSavesDidSucceed) {
+
         var valueWeightPairs = [];
 
+        // Character is in a state of no health after character creation
+        if (!health) {
+            return 1;
+        }
+
+        // Character is dead
         if (health.hitpoints() === 0 && deathSavesDidFail){
             return -2;
         }
 
-        if (health.hitpoints() === 0 && deathSavesDidSucced){
+        // Character is unconscious and stable
+        if (health.hitpoints() === 0 && deathSavesDidSucceed){
             return -1;
         }
 
+        // Character is unconscious
         if (health.hitpoints() === 0){
             return 0.0;
         }
