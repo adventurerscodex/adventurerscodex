@@ -55,7 +55,7 @@ export function NotesViewModel() {
     };
 
     self.noteToSelect = function(note) {
-        var previousNote = self.notes().indexOf(note) -1;
+        var previousNote = self.notes().indexOf(note) - 1;
         if (previousNote === -1) {
             previousNote = 0;
         }
