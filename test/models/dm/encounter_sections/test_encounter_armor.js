@@ -39,7 +39,7 @@ describe('EncounterArmor', function(){
             encounterArmor.armorDescription('Blah');
 
             var label = encounterArmor.descriptionLabel();
-            label.should.equal('Blah');
+            label.should.equal('Blah\n');
         });
     });
 });
