@@ -12,6 +12,7 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
+import URI from 'urijs';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
 import chatTab from 'images/tab_icons/conversation.svg';
@@ -30,7 +31,6 @@ import spellsTab from 'images/tab_icons/fire-tail.svg';
 import statsTab from 'images/tab_icons/weight-lifting-up.svg';
 import template from './index.html';
 import weaponSection from 'images/spinning-sword.svg';
-import URI from 'urijs';
 
 
 export function CharacterRootViewModel() {

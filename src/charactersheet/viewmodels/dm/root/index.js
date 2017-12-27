@@ -8,6 +8,7 @@ import { ChatServiceManager,
     PersistenceService
  } from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
+import URI from 'urijs';
 import chatTabImage from 'images/tab_icons/conversation.svg';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
 import encounterTabImage from 'images/tab_icons/treasure-map.svg';
@@ -16,7 +17,6 @@ import notesTabImage from 'images/tab_icons/quill-ink.svg';
 import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
 import template from './index.html';
-import URI from 'urijs';
 
 
 export function DMRootViewModel() {
