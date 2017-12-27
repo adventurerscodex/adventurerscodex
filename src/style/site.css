@@ -317,7 +317,11 @@ div.hr {
 }
 
 .tab-icon {
-  width: 35px;
+  width: 28px;
+}
+
+.nav-tabs li a {
+  padding: 8px 12px;
 }
 
 .tab-subtext {
