@@ -15,7 +15,7 @@
       <div class="modal-body">
         <div class='container-fluid'>
           <table data-bind='foreach: characters' class="table table-hover table-ac-bordered">
-            <tr>
+            <tr data-bind="css: $parent.playerSelectedCSS($data)">
               <td class="clickable"
                 data-bind="click: $parent.changeCharacter"
                 data-dismiss="modal">
