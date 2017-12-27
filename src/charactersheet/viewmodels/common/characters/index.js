@@ -27,6 +27,19 @@ export function CharactersViewModel(params) {
         self._updatedSelectedCharacter();
     };
 
+    self.changeCharacter = (character) => {
+        // Don't switch to the same character.
+        var activeCharacterKey = null;
+        if (CharacterManager.activeCharacter()) {
+            activeCharacterKey = CharacterManager.activeCharacter().key();
+        }
+
+        // Do switch
+        if (character.key() !== activeCharacterKey) {
+            CharacterManager.changeCharacter(character.key());
+        }
+    };
+
     self.addCharacter = () => {
         var character = new Character();
         character.key(uuid.v4());
