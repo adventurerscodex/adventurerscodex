@@ -30,9 +30,14 @@ import spellsTab from 'images/tab_icons/fire-tail.svg';
 import statsTab from 'images/tab_icons/weight-lifting-up.svg';
 import template from './index.html';
 import weaponSection from 'images/spinning-sword.svg';
+import URI from 'urijs';
+
 
 export function CharacterRootViewModel() {
     var self = this;
+
+    self.TAB_FRAGMENT_KEY = 't';
+    self.TAB_NULL_FRAGMENT = '';
 
     self.icons = {
         statsTab: statsTab,
@@ -53,7 +58,7 @@ export function CharacterRootViewModel() {
         battleGear: battleGear
     };
 
-    self.playerType = function() {
+    self.playerType = () => {
         return CharacterManager.activeCharacter().playerType();
     };
     self._dummy = ko.observable(false);
@@ -81,79 +86,79 @@ export function CharacterRootViewModel() {
     self.exhibitTooltip = ko.observable('Exhibit');
 
     //Tab Properties
-    self.profileTabStatus = ko.pureComputed(function() {
+    self.profileTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('profile');
     });
-    self.statsTabStatus = ko.pureComputed(function() {
+    self.statsTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('stats');
     });
-    self.skillsTabStatus = ko.pureComputed(function() {
+    self.skillsTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('skills');
     });
-    self.spellsTabStatus = ko.pureComputed(function() {
+    self.spellsTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('spells');
     });
-    self.equipmentTabStatus = ko.pureComputed(function() {
+    self.equipmentTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('equipment');
     });
-    self.inventoryTabStatus = ko.pureComputed(function() {
+    self.inventoryTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('inventory');
     });
-    self.notesTabStatus = ko.pureComputed(function() {
+    self.notesTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('notes');
     });
-    self.chatTabStatus = ko.pureComputed(function() {
+    self.chatTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('chat');
     });
-    self.partyTabStatus = ko.pureComputed(function() {
+    self.partyTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('party');
     });
-    self.exhibitTabStatus = ko.pureComputed(function() {
+    self.exhibitTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('exhibit');
     });
 
-    self.activateProfileTab = function() {
-        self.activeTab('profile');
+    self.activateProfileTab = () => {
+        self._setActiveTab('profile');
     };
-    self.activateStatsTab = function() {
-        self.activeTab('stats');
+    self.activateStatsTab = () => {
+        self._setActiveTab('stats');
     };
-    self.activateSkillsTab = function() {
-        self.activeTab('skills');
+    self.activateSkillsTab = () => {
+        self._setActiveTab('skills');
     };
-    self.activateSpellsTab = function() {
-        self.activeTab('spells');
+    self.activateSpellsTab = () => {
+        self._setActiveTab('spells');
     };
-    self.activateEquipmentTab = function() {
-        self.activeTab('equipment');
+    self.activateEquipmentTab = () => {
+        self._setActiveTab('equipment');
     };
-    self.activateInventoryTab = function() {
-        self.activeTab('inventory');
+    self.activateInventoryTab = () => {
+        self._setActiveTab('inventory');
     };
-    self.activateNotesTab = function() {
-        self.activeTab('notes');
+    self.activateNotesTab = () => {
+        self._setActiveTab('notes');
     };
-    self.activatePartyTab = function() {
-        self.activeTab('party');
+    self.activatePartyTab = () => {
+        self._setActiveTab('party');
     };
-    self.activateChatTab = function() {
-        self.activeTab('chat');
+    self.activateChatTab = () => {
+        self._setActiveTab('chat');
     };
-    self.activateExhibitTab = function() {
-        self.activeTab('exhibit');
+    self.activateExhibitTab = () => {
+        self._setActiveTab('exhibit');
     };
 
-    self.toggleWellOpen = function() {
+    self.toggleWellOpen = () => {
         self.wellState(!self.wellState());
     };
 
-    self.arrowIconClass = ko.pureComputed(function() {
+    self.arrowIconClass = ko.pureComputed(() => {
         return self.wellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
     });
 
     //UI Methods
 
-    self.playerSummary = ko.pureComputed(function() {
+    self.playerSummary = ko.pureComputed(() => {
         self._dummy();
         var summary = '';
         var key = CharacterManager.activeCharacter().key();
@@ -165,7 +170,7 @@ export function CharacterRootViewModel() {
         return summary;
     });
 
-    self.playerTitle = ko.pureComputed(function() {
+    self.playerTitle = ko.pureComputed(() => {
         self._dummy();
         var name = '';
         var key = CharacterManager.activeCharacter().key();
@@ -177,7 +182,7 @@ export function CharacterRootViewModel() {
         return name;
     });
 
-    self.playerAuthor = ko.pureComputed(function() {
+    self.playerAuthor = ko.pureComputed(() => {
         self._dummy();
         var name = '';
         var key = CharacterManager.activeCharacter().key();
@@ -189,7 +194,7 @@ export function CharacterRootViewModel() {
         return name;
     });
 
-    self.pageTitle = ko.pureComputed(function() {
+    self.pageTitle = ko.pureComputed(() => {
         self._dummy();
         try {
             return self.playerTitle() + ' by ' + self.playerAuthor()
@@ -199,8 +204,8 @@ export function CharacterRootViewModel() {
 
     //Public Methods
 
-    self.load = function() {
-        self.activeTab(self.playerType().defaultTab);
+    self.load = () => {
+        self._initActiveTab();
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
@@ -212,7 +217,7 @@ export function CharacterRootViewModel() {
         self.characterCardPublishingService.init();
 
         //Subscriptions
-        Notifications.profile.changed.add(function() {
+        Notifications.profile.changed.add(() => {
             self._dummy.valueHasMutated();
         });
 
@@ -228,7 +233,7 @@ export function CharacterRootViewModel() {
 
     };
 
-    self.unload = function() {
+    self.unload = () => {
         HotkeysService.flushHotkeys();
 
         Notifications.party.joined.remove(self._updateCurrentNode);
@@ -240,7 +245,7 @@ export function CharacterRootViewModel() {
 
     //Private Methods
 
-    self._tabIsVisible = function(tabName) {
+    self._tabIsVisible = (tabName) => {
         if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
             return self.activeTab() === tabName ? 'active' : '';
         } else {
@@ -248,7 +253,7 @@ export function CharacterRootViewModel() {
         }
     };
 
-    self._tabIsVisibleAndConnected = function(tabName) {
+    self._tabIsVisibleAndConnected = (tabName) => {
         if (self.playerType().visibleTabs.indexOf(tabName) > -1 && self.connected()) {
             return self.activeTab() === tabName ? 'active' : '';
         } else {
@@ -256,15 +261,40 @@ export function CharacterRootViewModel() {
         }
     };
 
-    self._updateCurrentNode = function(node, success) {
+    self._updateCurrentNode = (node, success) => {
         self.currentPartyNode(node);
     };
 
-    self._removeCurrentNode = function(node, success) {
+    self._removeCurrentNode = (node, success) => {
         self.currentPartyNode(null);
     };
 
-    self.dispose = function() {
+    self._setActiveTab = (tab) => {
+        self.activeTab(tab);
+
+        // Save the current tab in the URL.
+        var uri = new URI();
+        uri.removeFragment(self.TAB_FRAGMENT_KEY);
+        tab = tab ? tab : self.TAB_NULL_FRAGMENT;
+        uri.addFragment(
+            self.TAB_FRAGMENT_KEY,
+            tab
+        );
+        window.location = uri.toString();
+    };
+
+    self._initActiveTab = () => {
+        const fragments = (new URI()).fragment(true);
+        const tab = fragments[self.TAB_FRAGMENT_KEY];
+        if (tab) {
+            self._setActiveTab(tab);
+        }
+        else {
+            self.activeTab(self.playerType().defaultTab);
+        }
+    };
+
+    self.dispose = () => {
         self.unload();
     };
 }
