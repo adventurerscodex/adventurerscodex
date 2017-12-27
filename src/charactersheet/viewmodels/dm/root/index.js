@@ -16,11 +16,16 @@ import notesTabImage from 'images/tab_icons/quill-ink.svg';
 import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
 import partyTabImage from 'images/tab_icons/backup.svg';
 import template from './index.html';
+import URI from 'urijs';
+
 
 export function DMRootViewModel() {
     var self = this;
 
-    self.playerType = function() {
+    self.TAB_FRAGMENT_KEY = 't';
+    self.TAB_NULL_FRAGMENT = '';
+
+    self.playerType = () => {
         return CharacterManager.activeCharacter().playerType();
     };
     self._dummy = ko.observable(false);
@@ -41,25 +46,25 @@ export function DMRootViewModel() {
 
    //UI Methods
 
-    self.playerSummary = ko.pureComputed(function() {
+    self.playerSummary = ko.pureComputed(() => {
         var key = CharacterManager.activeCharacter().key();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.summary() ? campaign.summary() : '';
     });
 
-    self.playerTitle = ko.pureComputed(function() {
+    self.playerTitle = ko.pureComputed(() => {
         var key = CharacterManager.activeCharacter().key();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.name() ? campaign.name() : '';
     });
 
-    self.playerAuthor = ko.pureComputed(function() {
+    self.playerAuthor = ko.pureComputed(() => {
         var key = CharacterManager.activeCharacter().key();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.playerName() ? campaign.playerName() : '';
     });
 
-    self.pageTitle = ko.pureComputed(function() {
+    self.pageTitle = ko.pureComputed(() => {
         self._dummy();
         try {
             return self.playerTitle() + ' by ' + self.playerAuthor()
@@ -69,51 +74,51 @@ export function DMRootViewModel() {
 
     // Tab statuses
 
-    self.overviewTabStatus = ko.pureComputed(function() {
+    self.overviewTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('overview');
     });
 
-    self.encounterTabStatus = ko.pureComputed(function() {
+    self.encounterTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('encounter');
     });
 
-    self.dmscreenTabStatus = ko.pureComputed(function() {
+    self.dmscreenTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('dmscreen');
     });
-    self.chatTabStatus = ko.pureComputed(function() {
+    self.chatTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('chat');
     });
 
-    self.partyTabStatus = ko.pureComputed(function() {
+    self.partyTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('party');
     });
 
-    self.notesTabStatus = ko.pureComputed(function() {
+    self.notesTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('notes');
     });
 
-    self.activateOverviewTab = function() {
-        self.activeTab('overview');
+    self.activateOverviewTab = () => {
+        self._setActiveTab('overview');
     };
 
-    self.activateEncounterTab = function() {
-        self.activeTab('encounter');
+    self.activateEncounterTab = () => {
+        self._setActiveTab('encounter');
     };
 
-    self.activateDmScreenTab = function() {
-        self.activeTab('dmscreen');
+    self.activateDmScreenTab = () => {
+        self._setActiveTab('dmscreen');
     };
 
-    self.activatePartyTab = function() {
-        self.activeTab('party');
+    self.activatePartyTab = () => {
+        self._setActiveTab('party');
     };
 
-    self.activateChatTab = function() {
-        self.activeTab('chat');
+    self.activateChatTab = () => {
+        self._setActiveTab('chat');
     };
 
-    self.activateNotesTab = function() {
-        self.activeTab('notes');
+    self.activateNotesTab = () => {
+        self._setActiveTab('notes');
     };
 
     //Public Methods
@@ -121,8 +126,8 @@ export function DMRootViewModel() {
     /**
      * Signal all modules to load their data.
      */
-    self.load = function() {
-        self.activeTab(self.playerType().defaultTab);
+    self.load = () => {
+        self._initActiveTab();
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
@@ -139,7 +144,7 @@ export function DMRootViewModel() {
         self.imageService.init();
     };
 
-    self.unload = function() {
+    self.unload = () => {
         HotkeysService.flushHotkeys();
 
         Notifications.xmpp.pubsub.subscribed.remove(self._updateCurrentNode);
@@ -151,7 +156,7 @@ export function DMRootViewModel() {
 
     //Private Methods
 
-    self._tabIsVisible = function(tabName) {
+    self._tabIsVisible = (tabName) => {
         if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
             return self.activeTab() === tabName ? 'active' : '';
         } else {
@@ -159,15 +164,39 @@ export function DMRootViewModel() {
         }
     };
 
-    self._updateCurrentNode = function(node, success) {
+    self._updateCurrentNode = (node, success) => {
         self.currentPartyNode(node);
     };
 
-    self._removeCurrentNode = function(node, success) {
+    self._removeCurrentNode = (node, success) => {
         self.currentPartyNode(null);
     };
 
-    self.dispose = function() {
+    self._setActiveTab = (tab) => {
+        self.activeTab(tab);
+
+        // Save the current tab in the URL.
+        var uri = new URI();
+        uri.removeFragment(self.TAB_FRAGMENT_KEY);
+        tab = tab ? tab : self.TAB_NULL_FRAGMENT;
+        uri.addFragment(
+            self.TAB_FRAGMENT_KEY,
+            tab
+        );
+        window.location = uri.toString();
+    };
+
+    self._initActiveTab = () => {
+        const fragments = (new URI()).fragment(true);
+        const tab = fragments[self.TAB_FRAGMENT_KEY];
+        if (tab) {
+            self._setActiveTab(tab);
+        }
+        else {
+            self.activeTab(self.playerType().defaultTab);
+        }
+    };
+    self.dispose = () => {
         self.unload();
     };
 }
