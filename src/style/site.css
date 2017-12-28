@@ -931,6 +931,9 @@ div.toggle-arrow-container {
   color: #1a242f;
 }
 
+/*
+ * jQuery Autocomplete
+ */
 .input-group-addon-jquery {
   min-width:125px;
   padding-top: 5px;
