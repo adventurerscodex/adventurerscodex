@@ -53,6 +53,8 @@ export function WizardViewModel() {
     self.init = function() { };
 
     self.load = function() {
+        CharacterManager.setActiveCharacterFragment(null);
+
         self.getNextStep();
         self.goForward();
     };

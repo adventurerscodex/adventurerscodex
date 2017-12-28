@@ -23,7 +23,7 @@
         Speed
         <span data-bind="css: sortArrow('speed')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('experience');}" class="col-md-2">
+      <th data-bind="click: function(){sortBy('experience');}" class="col-md-2 hidden-sm hidden-xs">
         Experience
         <span data-bind="css: sortArrow('experience')"></span>
       </th>
@@ -46,7 +46,7 @@
       <td data-bind="text: speed, click: $parent.editMonster"
           data-toggle="modal"></td>
       <td data-bind="text: experience, click: $parent.editMonster"
-          data-toggle="modal"></td>
+          data-toggle="modal" class="hidden-sm hidden-xs"></td>
       <td>
         <a data-bind="click: $parent.removeMonster" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -58,7 +58,7 @@
     <!-- ko if: filteredAndSortedMonsters().length == 0 -->
     <tr class="clickable">
       <td data-bind="click: toggleModal" href="#"
-        colspan="7" class="text-center">
+        colspan="12" class="text-center">
         <i class="fa fa-plus fa-color"></i>
         Add a new Monster
       </td>
