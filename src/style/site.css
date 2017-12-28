@@ -937,3 +937,8 @@ div.toggle-arrow-container {
   padding-bottom: 5px;
 }
 
+.ui-autocomplete {
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

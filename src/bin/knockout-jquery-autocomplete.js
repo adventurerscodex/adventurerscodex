@@ -35,15 +35,18 @@ ko.bindingHandlers.autocomplete = {
         var source = ko.utils.unwrapObservable(value.source);
         var onselect = ko.utils.unwrapObservable(value.onselect);
         var delay = ko.utils.unwrapObservable(value.delay || 150);
-
         $(element).autocomplete({
             delay: delay,
             source: source,
+            minLength: 0,
             select: function(event, ui) {
                 if (onselect) {
                     onselect(ui.item.label, ui.item.value);
                 }
             }
-        });
+        })
+        $(element).focus(function() {
+            $(element).autocomplete('search', '');
+        })
     }
 };
