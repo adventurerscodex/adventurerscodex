@@ -923,6 +923,12 @@ div.toggle-arrow-container {
   text-align: center;
 }
 
+.input-group-addon-jquery {
+  min-width:125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .close {
   color: #2c3e50;
 }
@@ -945,3 +951,4 @@ div.toggle-arrow-container {
   overflow-y: auto;
   overflow-x: hidden;
 }
+
