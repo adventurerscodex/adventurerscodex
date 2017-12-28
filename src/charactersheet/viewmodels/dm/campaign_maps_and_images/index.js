@@ -30,6 +30,7 @@ export function CampaignMapsAndImagesViewModel() {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
     self.convertedDisplayUrl = ko.observable();
+    self.fullScreen = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -169,6 +170,10 @@ export function CampaignMapsAndImagesViewModel() {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
     };
 
     /* Push to Player Methods */

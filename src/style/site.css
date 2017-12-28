@@ -925,3 +925,21 @@ div.toggle-arrow-container {
 .close:hover {
   color: #1a242f;
 }
+
+.full-screen {
+  position: relative;
+  height: 90%;
+  margin: 0 auto;
+  display: block;
+  margin-top: 2.5%;
+}
+
+.overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+}

@@ -84,6 +84,11 @@
   </div>
 </div>
 
+<!-- The visibility is managed internally -->
+<full-screen-image params="imageSource: convertedDisplayUrl, fullScreenStatus: fullScreen">
+</full-screen-image>
+
+
 <!-- Add Modal -->
 <div class="modal fade"
      id="addCampaignMapOrImage"
@@ -111,7 +116,7 @@
                      class="form-control"
                      placeholder="A really cool place or image"
                      data-bind="textInput: blankMapOrImage().name,
-                        hasFocus: firstElementInModalHasFocus">
+                        hasFocus: firstElementInModalHasFocus" />
             </div>
           </div>
           <div class="form-group">
@@ -120,7 +125,7 @@
               <input type="text"
                      class="form-control"
                      placeholder=""
-                     data-bind="textInput: blankMapOrImage().imageUrl">
+                     data-bind="textInput: blankMapOrImage().imageUrl" />
             </div>
           </div>
           <div class="form-group">
@@ -186,7 +191,8 @@
             <hr />
             <div class="row row-padded">
               <div class="col-xs-12 col-padded text-center">
-                <img data-bind="attr: { src: $parent.convertedDisplayUrl }" width="100%" />
+                <em class="text-muted">Note: Click on the image to view it in Full Screen.</em>
+                <img data-bind="attr: { src: $parent.convertedDisplayUrl }, click: $parent.toggleFullScreen" width="100%" class="clickable" />
               </div>
             </div>
             <hr />
@@ -206,7 +212,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
-                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
+                         data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus" />
                 </div>
               </div>
               <div class="form-group">
@@ -214,7 +220,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
-                         data-bind="textInput: imageUrl">
+                         data-bind="textInput: imageUrl" />
                 </div>
               </div>
               <div class="form-group">

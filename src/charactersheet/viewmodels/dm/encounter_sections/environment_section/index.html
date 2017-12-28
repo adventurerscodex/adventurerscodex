@@ -61,10 +61,11 @@
               </div>
           </div>
           <hr data-bind="visible: shouldShowDividingMarker"/>
-          <div>
+          <div class="row">
             <!-- ko if: imageUrl -->
-            <img data-bind="attr: { src: convertedImageLink, width: imageWidth }, css: imageClass"
-              class="img-responsive img-rounded">
+            <em class="text-muted text-center col-xs-12">Note: Click on the image to view it in Full Screen.</em>
+            <img data-bind="attr: { src: convertedImageLink, width: imageWidth },
+              css: imageClass, click: toggleFullScreen" class="img-responsive img-rounded clickable">
             <!-- /ko -->
             <span data-bind="markdownPreview: description"
                class="preview-modal-overflow-sm">
@@ -107,4 +108,8 @@
 </div>
 
 <player-push-modal params="isOpen: openPushModal, type: pushType, payload: environment, onclose: pushModalFinishedClosing"></player-push-modal>
+
+<!-- The visibility is managed internally -->
+<full-screen-image params="imageSource: convertedImageLink, fullScreenStatus: fullScreen">
+</full-screen-image>
 <!-- /ko -->
