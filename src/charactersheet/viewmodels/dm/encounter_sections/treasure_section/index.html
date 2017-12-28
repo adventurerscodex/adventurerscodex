@@ -261,7 +261,7 @@
 
 <!-- Add templates -->
 <script type="text/html" id="armorTemplate">
-  <div class="form-group">
+  <div class="form-group ui-front">
     <label for="armorName"
            class="col-sm-2 control-label">Armor</label>
     <div class="col-sm-10">
@@ -273,7 +273,7 @@
               autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group ui-front">
     <label for="armorType"
            class="col-sm-2 control-label">Type</label>
       <div class="col-sm-10">
@@ -291,7 +291,7 @@
              data-bind='textInput: blankTreasure().armorMagicalModifier'>
       </div>
   </div>
-  <div class="form-group">
+  <div class="form-group ui-front">
     <label for="armorPrice"
            class="col-sm-2 control-label">Price</label>
     <div class="col-sm-10">
@@ -332,7 +332,7 @@
                data-bind='textInput: blankTreasure().armorClass'>
       </div>
   </div>
-  <div class="form-group">
+  <div class="form-group ui-front">
     <label for="armorSize"
            class="col-sm-2 control-label">Stealth</label>
       <div class="col-sm-10">
@@ -407,7 +407,7 @@
 </script>
 
 <script type="text/html" id="itemTemplate">
-    <div class="form-group">
+    <div class="form-group ui-front">
      <label for="itemName"
        class="col-sm-2 control-label">Name</label>
      <div class="col-sm-10">
@@ -447,7 +447,7 @@
          data-bind='textInput: blankTreasure().itemQty'>
      </div>
    </div>
-   <div class="form-group">
+   <div class="form-group ui-front">
      <label
        class="col-sm-2 control-label">Cost</label>
      <div class="col-sm-10">
@@ -481,7 +481,7 @@
 </script>
 
 <script type="text/html" id="magicItemTemplate">
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="magicItemName"
              class="col-sm-2 control-label">Item</label>
       <div class="col-sm-10">
@@ -493,7 +493,7 @@
                   autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="magicItemType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
@@ -503,7 +503,7 @@
                          autocomplete: { source: blankTreasure().magicItemTypeOptions }">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="magicItemType"
              class="col-sm-2 control-label">Rarity</label>
         <div class="col-sm-10">
@@ -592,7 +592,7 @@
 </script>
 
 <script type="text/html" id="weaponTemplate">
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponName"
              class="col-sm-2 control-label">Name</label>
       <div class="col-sm-10">
@@ -625,7 +625,7 @@
                data-bind='textInput: blankTreasure().weaponHit'>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponType"
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
@@ -635,7 +635,7 @@
                           source: blankTreasure().weaponTypeOptions }">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponHandedness"
              class="col-sm-2 control-label">Handedness</label>
         <div class="col-sm-10">
@@ -645,7 +645,7 @@
                           source: blankTreasure().weaponHandednessOptions }">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponProficiency"
              class="col-sm-2 control-label">Proficiency</label>
         <div class="col-sm-10">
@@ -655,7 +655,7 @@
                           source: blankTreasure().weaponProficiencyOptions }">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponPrice"
              class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
@@ -695,7 +695,7 @@
                  data-bind='textInput: blankTreasure().weaponRange'>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponDamageType"
              class="col-sm-2 control-label">Damage Type</label>
         <div class="col-sm-10">
@@ -705,7 +705,7 @@
                           source: blankTreasure().weaponDamageTypeOptions }">
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group ui-front">
       <label for="weaponProperty"
              class="col-sm-2 control-label">Property</label>
         <div class="col-sm-10">
