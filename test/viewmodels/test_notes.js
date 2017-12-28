@@ -28,4 +28,30 @@ describe('NotesViewModel', function(){
             notesVM.notes()[0].text().should.equal('test');
         });
     });
+
+    describe('Get Note To Select', function() {
+        it('should get the index of the previous note', function() {
+            var note1 = new Note();
+            var note2 = new Note();
+
+            var notesVM = new NotesViewModel();
+            notesVM.notes.push(note1);
+            notesVM.notes.push(note2);
+
+            const index = notesVM.noteToSelect(note2);
+            index.should.equal(0);
+
+        });
+        it('should get the index after the selected note if it is the first note', function() {
+            var note1 = new Note();
+            var note2 = new Note();
+
+            var notesVM = new NotesViewModel();
+            notesVM.notes.push(note1);
+            notesVM.notes.push(note2);
+
+            const index = notesVM.noteToSelect(note1);
+            index.should.equal(0);
+        });
+    });
 });

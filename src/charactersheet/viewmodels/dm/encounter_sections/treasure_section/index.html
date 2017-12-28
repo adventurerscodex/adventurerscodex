@@ -7,17 +7,17 @@
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead>
     <tr>
-      <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
+      <th data-bind="click: function(){sortBy('name');}" class="col-xs-3">
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th class="col-md-3">
+      <th class="col-sm-3 hidden-xs">
         Property
       </th>
-      <th class="col-md-5">
+      <th class="col-sm-5 col-xs-8">
         Description
       </th>
-      <th class="col-md-1">
+      <th class="col-xs-1">
         <a data-toggle="modal"
            data-target="#addTreasure" href="#">
           <i class="fa fa-plus fa-color"></i>
@@ -29,12 +29,12 @@
   <!-- ko foreach: filteredAndSortedTreasure -->
     <tr class="clickable">
       <td data-bind="text: nameLabel, click: $parent.editTreasure"
-          href="#"></td>
+          href="#" class="col-xs-3"></td>
       <td data-bind="text: propertyLabel, click: $parent.editTreasure"
-          href="#"></td>
+          href="#" class="hidden-xs" class="col-sm-3 hidden-xs"></td>
       <td data-bind="text: descriptionLabel, click: $parent.editTreasure"
-          href="#"></td>
-      <td>
+          href="#" class="col-sm-5 col-xs-8"></td>
+      <td class="col-xs-1">
         <a data-bind="click: $parent.removeTreasure" href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>
@@ -45,9 +45,9 @@
     <!-- ko if: filteredAndSortedTreasure().length == 0 -->
     <tr class="clickable">
       <td data-toggle="modal" data-target="#addTreasure" href="#"
-        colspan="7" class="text-center">
+        colspan="12" class="text-center">
         <i class="fa fa-plus fa-color"></i>
-        Add a new item.
+        Add a new treasure.
       </td>
     </tr>
     <!-- /ko -->

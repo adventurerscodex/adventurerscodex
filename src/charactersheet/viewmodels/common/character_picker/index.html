@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row" style="margin-top:50px;">
-    <div class="col-sm-12 col-md-5 col-md-offset-2 text-center">
+    <div class="col-sm-12 col-md-6 col-md-offset-2 text-center">
       <div class="h2">
         Characters and Games
         <br />
@@ -10,14 +10,13 @@
         <div class="col-sm-12">
           <div class="list-group">
             <!-- ko foreach: characters -->
-            <a href="#" class="list-group-item"
-                data-bind="click: $parent.changeCharacter">
+            <a href="#" class="list-group-item">
               <div class="row">
-                <div class="col-xs-2">
+                <div class="col-xs-3 col-sm-2" data-bind="click: $parent.changeCharacter">
                   <img data-bind="attr: { src: playerImage }" class="img img-circle" width="60"
                     height="60" style="margin-top: 7px;" />
                 </div>
-                <div class="col-xs-10">
+                <div class="col-xs-7 col-sm-8" style="padding-top: 5px" data-bind="click: $parent.changeCharacter">
                   <span class="lead" data-bind='text: playerTitle'></span>
                   <small>
                     by <span data-bind='text: playerAuthor'></span>
@@ -25,6 +24,12 @@
                   <div>
                     <small data-bind='text: playerSummary'></small>
                   </div>
+                </div>
+                <div class="col-xs-2">
+                  <button class="close" style="padding-top: 20px"
+                    data-bind="click: $parent.removeCharacter">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
               </div>
             </a>
@@ -49,7 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-12 col-md-4 text-center">
+    <div class="col-sm-12 col-md-4 text-center hidden-sm hidden-xs">
       <img class="img-rounded" data-bind="attr: { src: logo }"
         style="width:90%; max-width:400px;" />
     </div>
