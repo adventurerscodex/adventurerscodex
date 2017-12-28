@@ -97,19 +97,19 @@ export function Weapon() {
 
     self.abilityScoreBonus = ko.pureComputed(function() {
         self._dummy();
-        if (self.weaponType().toLowerCase() === self.RANGED){
+        if (self.weaponType().toLowerCase() === self.RANGED) {
             return self.dexAbilityScoreModifier();
-        } else{
-            if (self.weaponProperty().toLowerCase().indexOf(self.FINESSE) >= 0){
+        } else {
+            if (self.weaponProperty().toLowerCase().indexOf(self.FINESSE) >= 0) {
                 var dexBonus = self.dexAbilityScoreModifier();
                 var strBonus = self.strAbilityScoreModifier();
 
-                if(dexBonus){
+                if (dexBonus) {
                     return dexBonus > strBonus ? dexBonus : strBonus;
-                } else{
+                } else {
                     return strBonus ? strBonus:0;
                 }
-            } else{
+            } else {
                 return self.strAbilityScoreModifier();
             }
         }
@@ -124,16 +124,16 @@ export function Weapon() {
         var weaponHit = parseInt(self.weaponHit());
         var toHitModifer = parseInt(self.weaponToHitModifier());
 
-        if(abilityScoreBonus){
+        if (abilityScoreBonus) {
             bonus += abilityScoreBonus;
         }
-        if(proficiencyBonus){
+        if (proficiencyBonus) {
             bonus += proficiencyBonus;
         }
-        if(weaponHit){
+        if (weaponHit) {
             bonus += weaponHit;
         }
-        if(toHitModifer){
+        if (toHitModifer) {
             bonus += toHitModifer;
         }
         return bonus;
@@ -152,7 +152,7 @@ export function Weapon() {
     });
 
     self.weaponRangeLabel = ko.pureComputed(function() {
-        if (self.weaponType().toLowerCase() === 'ranged'){
+        if (self.weaponType().toLowerCase() === 'ranged') {
             if(self.weaponRange()) {
                 return self.weaponRange() + ' ft.';
             } else {

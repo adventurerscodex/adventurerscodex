@@ -74,18 +74,6 @@ export function EncounterCellViewModel(encounter) {
         encounter.save();
     };
 
-    self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var encounter = PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        encounter.delete();
-        self.children().forEach(function(child, idx, _) {
-            child.delete();
-        });
-    };
-
     /* Data Refresh Methods */
 
     self.reloadData = function() {
@@ -94,10 +82,12 @@ export function EncounterCellViewModel(encounter) {
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
-        self.name(encounter.name());
-        self.encounterLocation(encounter.encounterLocation());
-        self.children().forEach(function(child, idx, _) {
-            child.reloadData();
-        });
+        if (encounter) {
+            self.name(encounter.name());
+            self.encounterLocation(encounter.encounterLocation());
+            self.children().forEach(function(child, idx, _) {
+                child.reloadData();
+            });
+        }
     };
 }

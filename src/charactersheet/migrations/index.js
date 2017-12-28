@@ -5,4 +5,5 @@ export { migration_120_1_weapons } from './120_1_weapons.js';
 export { migration_130_1_armors } from './130_1_armor.js';
 export { migration_130_2_feats_features_proficiencies_daily_features } from './130_2_feats_features_proficiencies_daily_features.js';
 export { migration_150_1_dm_notes } from './150_1_dm_notes.js';
+export { migration_152_1_monster_ability_scores } from './152_1_monster_ability_score.js';
 

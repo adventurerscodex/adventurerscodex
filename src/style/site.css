@@ -48,7 +48,7 @@ General Styling
 html, body {height: 100%;}
 
 #content {
-  max-width: 1800px;
+  max-width: 100%;
   font-family: "Lato", sans-serif;
   min-height: 100%;
 }
@@ -573,6 +573,12 @@ ul.footer-icons li {
   padding-top:175px;
 }
 
+.notes-place-holder {
+  height: 548px;
+  padding-top:175px;
+  background-color: #ecf0f1;;
+}
+
 .preview-modal-overflow-sm {
   max-height: 225px;
   overflow-y: auto;
@@ -921,4 +927,12 @@ div.toggle-arrow-container {
   min-width:125px;
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.close {
+  color: #2c3e50;
+}
+
+.close:hover {
+  color: #1a242f;
 }

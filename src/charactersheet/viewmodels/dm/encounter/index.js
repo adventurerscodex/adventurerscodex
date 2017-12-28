@@ -4,17 +4,29 @@ import {
 } from 'charactersheet/utilities';
 import {
     Encounter,
+    EncounterArmor,
+    EncounterCoins,
+    EncounterItem,
+    EncounterMagicItem,
+    EncounterWeapon,
+    Environment,
     EnvironmentSection,
     MapsAndImagesSection,
+    Monster,
+    MonsterAbilityScore,
     MonsterSection,
+    NPC,
     NPCSection,
     NotesSection,
+    PlayerText,
     PlayerTextSection,
+    PointOfInterest,
     PointOfInterestSection,
     TreasureSection
 } from 'charactersheet/models/dm';
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { MapOrImage } from 'charactersheet/models/common';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
@@ -34,14 +46,14 @@ export function EncounterViewModel() {
     /* Encounter Sections */
 
     self.sectionModels = [
-        { model: EnvironmentSection },
-        { model: MapsAndImagesSection },
-        { model: PointOfInterestSection },
-        { model: NPCSection },
-        { model: MonsterSection },
-        { model: PlayerTextSection },
-        { model: TreasureSection },
-        { model: NotesSection }
+        { section: EnvironmentSection, models: [Environment] },
+        { section: MapsAndImagesSection, models: [MapOrImage] },
+        { section: PointOfInterestSection, models: [PointOfInterest] },
+        { section: NPCSection , models: [NPC] },
+        { section: MonsterSection, models: [Monster, MonsterAbilityScore] },
+        { section: PlayerTextSection, models: [PlayerText] },
+        { section: TreasureSection, models: [EncounterArmor, EncounterCoins, EncounterItem, EncounterMagicItem, EncounterWeapon] },
+        { section: NotesSection, models: null }
     ];
 
     /* Public Methods */
@@ -80,6 +92,9 @@ export function EncounterViewModel() {
     };
 
     self.modalSave = function(encounter, sections) {
+        if (!encounter().name()) {
+            encounter().name('Untitled Encounter');
+        }
         encounter().save();
 
         sections().forEach(function(section, i, _) {
@@ -87,7 +102,6 @@ export function EncounterViewModel() {
         });
         sections([]);
         self.addEncounterToList(encounter());
-        Notifications.encounters.changed.dispatch();
     };
 
     /* Manage Encounter Methods */
@@ -133,6 +147,8 @@ export function EncounterViewModel() {
             parentCell.removeChild(cell);
         }
 
+        // Remove the current encounter from it's parents if it has any.
+
         var parentEncounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', encounter.parent()),
             new KeyValuePredicate('characterId', key)
@@ -142,7 +158,13 @@ export function EncounterViewModel() {
             parentEncounter.save();
         }
 
-        cell.delete();
+        // Delete the cell.
+
+        self._deleteEncounterRelatedModels(encounter);
+        encounter.delete();
+
+        // Update UI.
+
         if (!parentCell) {
             self.encounterCells.remove(cell);
         }
@@ -156,6 +178,34 @@ export function EncounterViewModel() {
     };
 
     /* Private Methods */
+
+    self._deleteEncounterRelatedModels = (encounter) => {
+        encounter.getChildren().forEach(function(child, idx, _) {
+            self._deleteEncounterRelatedModels(child);
+            child.delete();
+        });
+
+        var key = CharacterManager.activeCharacter().key();
+        self.sectionModels.map(({ section }) => {
+            PersistenceService.findByPredicates(section, [
+                new KeyValuePredicate('encounterId', encounter.encounterId()),
+                new KeyValuePredicate('characterId', key)
+            ]).forEach((section) => {
+                section.delete();
+            });
+        });
+        self.sectionModels.map(({ models }) => {
+            if (!models) { return; }
+            models.forEach((model) => {
+                PersistenceService.findByPredicates(model, [
+                    new KeyValuePredicate('encounterId', encounter.encounterId()),
+                    new KeyValuePredicate('characterId', key)
+                ]).forEach((model) => {
+                    model.delete();
+                });
+            });
+        });
+    };
 
     self._getEncounterCells = function() {
         var key = CharacterManager.activeCharacter().key();
@@ -189,12 +239,12 @@ export function EncounterViewModel() {
     self._getSectionsForEncounter = function(id) {
         return self.sectionModels.map(function(sectionModel, i, _) {
             var key = CharacterManager.activeCharacter().key();
-            var section = PersistenceService.findByPredicates(sectionModel.model, [
+            var section = PersistenceService.findByPredicates(sectionModel.section, [
                 new KeyValuePredicate('encounterId', id),
                 new KeyValuePredicate('characterId', key)
             ])[0];
             if (!section) {
-                section = new sectionModel.model();
+                section = new sectionModel.section();
                 section.encounterId(id);
                 section.characterId(key);
             }

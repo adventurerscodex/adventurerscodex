@@ -14,7 +14,7 @@ export function NotesSectionViewModel(params) {
 
     self.sectionIcon = sectionIcon;
     self.notes = ko.observable('');
-    self.visible = ko.observable(false);
+    self.visible = ko.observable();
 
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
@@ -54,15 +54,6 @@ export function NotesSectionViewModel(params) {
         }
     };
 
-    self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var notes = PersistenceService.findByPredicates(NotesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        notes.delete();
-    };
-
     /* Private Methods */
 
     self._dataHasChanged = function() {
@@ -71,15 +62,11 @@ export function NotesSectionViewModel(params) {
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
-        if (!notesSection) {
-            notesSection = new NotesSection();
-            notesSection.characterId(CharacterManager.activeCharacter().key());
-            notesSection.encounterId(self.encounterId());
-            notesSection.save();
+        if (notesSection) {
+            self.notes(notesSection.notes());
+            self.visible(notesSection.visible());
+            self.tagline(notesSection.tagline());
         }
-        self.notes(notesSection.notes());
-        self.visible(notesSection.visible());
-        self.tagline(notesSection.tagline());
     };
 }
 

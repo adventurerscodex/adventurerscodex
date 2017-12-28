@@ -13,7 +13,7 @@ import ko from 'knockout';
  */
 export function Item() {
     var self = this;
-
+    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.DESCRIPTION_MAX_LENGTH = 200;
 
     self.ps = PersistenceService.register(Item, self);
@@ -40,6 +40,10 @@ export function Item() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
+        return Utility.string.truncateStringAtLength(self.itemDesc(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    });
+
+    self.longDescription = ko.pureComputed(function() {
         return Utility.string.truncateStringAtLength(self.itemDesc(), self.DESCRIPTION_MAX_LENGTH);
     });
 

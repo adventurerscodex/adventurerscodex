@@ -1,3 +1,21 @@
+version 1.5.3 (12/27/2017)
+* fixes an issue with the latest version not working on older browser versions
+
+version 1.5.2 (12/19/2017)
+* Upgrades project build/deploy to webpack
+* Drastically simplifies build process
+* Fixes a number of internal code issues 
+* Adds support for continous deployment
+* Adds support for testing environment and environment dependent variables
+* Fixes an issue where deleting encounters would not not delete their data or their children.
+* Fixes issue with deleting last note.
+* Adds Dropbox Image support to all image fields.
+* Adds migration to fix issue with monster ability scores causing slow performance.
+* Fixes an issue with Monster Ability Scores continually saving new data.
+* Fixes support page link
+* Improves overall app load time and initial run performance.
+* Adds version info to footer.
+
 version 1.5.1 (8/01/2017)
 * Adds subraces to races dropdown
 * Fixes issue with switching characters

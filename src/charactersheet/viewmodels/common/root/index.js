@@ -103,8 +103,13 @@ export function AdventurersCodexViewModel() {
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
+        CharacterManager.init();
         var characters = PersistenceService.findAll(Character);
-        if (characters.length > 0) {
+
+        if (CharacterManager.activeCharacter()) {
+            // There might be an active character in the URL.
+            self._handleChangedCharacter();
+        } else if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
         } else {
             //If no current character exists, fire the load process anyway.
