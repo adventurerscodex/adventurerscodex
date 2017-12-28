@@ -1,3 +1,6 @@
+version 1.5.3 (12/27/2017)
+* fixes an issue with the latest version not working on older browser versions
+
 version 1.5.2 (12/19/2017)
 * Upgrades project build/deploy to webpack
 * Drastically simplifies build process
