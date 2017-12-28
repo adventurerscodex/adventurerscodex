@@ -103,7 +103,7 @@ export function StatsViewModel() {
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.calculateHitDice);
         self._alertPlayerHasDied();
-/*        self._alertPlayerIsStable();*/
+        self._alertPlayerIsStable();
         self.healthDataHasChange();
     };
 

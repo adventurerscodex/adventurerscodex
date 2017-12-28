@@ -917,3 +917,11 @@ div.toggle-arrow-container {
   display: inline;
   text-align: center;
 }
+
+.close {
+  color: #2c3e50;
+}
+
+.close:hover {
+  color: #1a242f;
+}

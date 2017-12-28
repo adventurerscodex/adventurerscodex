@@ -1,7 +1,10 @@
+version 1.5.3 (12/27/2017)
+* fixes an issue with the latest version not working on older browser versions
+
 version 1.5.2 (12/19/2017)
 * Upgrades project build/deploy to webpack
 * Drastically simplifies build process
-* Fixes a number of internal code issues 
+* Fixes a number of internal code issues
 * Adds support for continous deployment
 * Adds support for testing environment and environment dependent variables
 * Fixes an issue where deleting encounters would not not delete their data or their children.
