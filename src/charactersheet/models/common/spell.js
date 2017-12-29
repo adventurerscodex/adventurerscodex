@@ -37,6 +37,7 @@ export function Spell() {
     self.spellDuration = ko.observable('');
     self.spellMaterialComponents = ko.observable('');
     self.isRitual = ko.observable(false);
+
     self.spellTypeOptions = ko.observableArray(Fixtures.spell.spellTypeOptions);
     self.spellSaveAttrOptions = ko.observableArray(Fixtures.spell.spellSaveAttrOptions);
     self.spellSchoolOptions = ko.observableArray(Fixtures.spell.spellSchoolOptions);

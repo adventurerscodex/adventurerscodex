@@ -50,6 +50,7 @@ export function Weapon() {
     self.weaponTypeOptions = ko.observableArray(Fixtures.weapon.weaponTypeOptions);
     self.weaponPropertyOptions = ko.observableArray(Fixtures.weapon.weaponPropertyOptions);
     self.weaponDamageTypeOptions = ko.observableArray(Fixtures.weapon.weaponDamageTypeOptions);
+    self.weaponCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     self.updateValues = function() {
         self._dummy.notifySubscribers();

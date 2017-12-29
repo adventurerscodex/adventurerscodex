@@ -87,7 +87,7 @@
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="armorName"
                        class="col-sm-2 control-label">Armor</label>
                 <div class="col-sm-10">
@@ -99,14 +99,13 @@
                             onselect: populateArmor }, hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="armorType"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankArmor().armorTypeOptions,
-                                     value: blankArmor().armorType,
-                                     select2: { theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Light"
+                         data-bind="textInput: blankArmor().armorType, autocomplete: { source: blankArmor().armorTypeOptions }">
                   </div>
               </div>
               <div class="form-group">
@@ -118,24 +117,24 @@
                          data-bind='textInput: blankArmor().armorMagicalModifier'>
                   </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="armorPrice"
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
         					<div class="input-group">
         						<input type="text"
-        							   class="form-control input-select2-addon"
+        							   class="form-control input-jquery-addon"
         							   id="armorPrice"
         							   placeholder="5"
         							   data-bind='textInput: blankArmor().armorPrice'>
-        					   <span class="input-group-addon">
-        							<select class="form-control"
-        							data-bind="options: currencyDenominationList,
-        							value: blankArmor().armorCurrencyDenomination,
-        							select2: {theme: 'classic'}"></select>
+        					   <span class="input-group-addon input-group-addon-jquery">
+        							<input class="form-control"
+                             placeholder="GP"
+        							       data-bind="textInput: blankArmor().armorCurrencyDenomination, autocomplete: {
+                          source: blankArmor().armorCurrencyDenominationOptions }">
         						</span>
         					</div>
-				          </div>
+				        </div>
               </div>
               <div class="form-group">
                 <label for="armorWeight"
@@ -159,14 +158,13 @@
                            data-bind='textInput: blankArmor().armorClass'>
                   </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="armorSize"
                        class="col-sm-2 control-label">Stealth</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankArmor().armorStealthOptions,
-                                     value: blankArmor().armorStealth,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Advantage"
+                         data-bind="textInput: blankArmor().armorStealth, autocomplete: { source: blankArmor().armorStealthOptions }">
                   </div>
               </div>
               <div class="form-group">
@@ -310,10 +308,9 @@
                     <label for="armorType"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: armorTypeOptions,
-                                         value: armorType,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="Light"
+                             data-bind="textInput: armorType">
                       </div>
                   </div>
                   <div class="form-group">
@@ -331,15 +328,14 @@
                     <div class="col-sm-10">
             					<div class="input-group">
             						<input type="text"
-            							   class="form-control input-select2-addon"
+            							   class="form-control input-jquery-addon"
             							   id="armorPrice"
             							   placeholder="5"
             							   data-bind='textInput: armorPrice'>
-            					   <span class="input-group-addon">
-            							<select class="form-control"
-            							data-bind="options: $parent.currencyDenominationList,
-            							value: armorCurrencyDenomination,
-            							select2: {theme: 'classic'}"></select>
+            					   <span class="input-group-addon input-group-addon-jquery">
+            							<input class="form-control"
+                                 placeholder="GP"
+            							       data-bind="textInput: armorCurrencyDenomination">
             						</span>
             					</div>
     				        </div>
@@ -370,10 +366,9 @@
                     <label for="armorSize"
                            class="col-sm-2 control-label">Stealth</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: armorStealthOptions,
-                                         value: armorStealth,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="Advantage"
+                             data-bind="textInput: armorStealth">
                       </div>
                   </div>
                   <div class="form-group">
