@@ -29,6 +29,7 @@ ko.components.register('full-screen-image', {
     <!-- ko if: fullScreenStatus -->\
     <div class="overlay clickable" data-bind="click: toggleFullScreen">\
         <img class="full-screen" data-bind="click: toggleFullScreen, attr: { src: imageSource }"/>\
+        <div class="top-right circle-x">&times;</div>\
     </div>\
     <!-- /ko -->'
 });

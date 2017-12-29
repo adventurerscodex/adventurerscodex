@@ -11,9 +11,9 @@ describe('Full screen image Component', function() {
             };
             var vm = new FullScreenImageComponentViewModel(params);
             vm.imageSource().should.equal(params.imageSource());
-            vm.fullScreenStatus().should.equal(params.fullScreenStatus());
+            vm.fullScreenStatus().should.equal(false);
             vm.toggleFullScreen();
-            vm.fullScreenStatus().should.equal(!params.fullScreenStatus());
+            vm.fullScreenStatus().should.equal(true);
         });
     });
 });

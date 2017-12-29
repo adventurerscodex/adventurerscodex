@@ -23,6 +23,7 @@ export function ChatLogImageItem(params) {
     var self = this;
 
     self.message = params.message;
+    self.fullScreen = ko.observable(false);
 
     // Chat Item Methods
 
@@ -30,6 +31,10 @@ export function ChatLogImageItem(params) {
         return self.message.dateReceived();
     });
     self.listItemClass = ko.observable('image-chat-highlight');
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
+    };
 
     self.load = function() {
         params.onrender();

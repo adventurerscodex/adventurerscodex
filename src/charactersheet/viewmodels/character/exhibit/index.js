@@ -13,6 +13,7 @@ export function ExhibitViewModel() {
     self.name = ko.observable('');
     self.url = ko.observable('');
     self.isConnectedToParty = ko.observable(false);
+    self.fullScreen = ko.observable(false);
 
     self.load = function() {
         Notifications.party.players.changed.add(self.exhibitGivenImage);
@@ -30,6 +31,10 @@ export function ExhibitViewModel() {
     self.checkForParty = function() {
         var chat = ChatServiceManager.sharedService();
         self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
+    };
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
     };
 
     self.exhibitGivenImage = function(pcards) {
