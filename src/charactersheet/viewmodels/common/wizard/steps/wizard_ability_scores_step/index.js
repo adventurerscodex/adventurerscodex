@@ -89,6 +89,40 @@ export function WizardAbilityScoresStepViewModel(params) {
         }
     });
 
+    self.pointsLeftColor = ko.computed(function() {
+        if (self.pointsLeft() >= 0) {
+            return 'text-success';
+        } else {
+            return 'text-danger';
+        }
+    });
+
+    self.isManual = ko.pureComputed(function() {
+        return self.rollMethod() === 'manual';
+    });
+
+    self.initPointBuy = function() {
+        if (self.isPointBuy()) {
+            self.str(8);
+            self.dex(8);
+            self.con(8);
+            self.int(8);
+            self.wis(8);
+            self.cha(8);
+        }
+    };
+
+    self.initManual = function() {
+        if (self.isManual()) {
+            self.str('');
+            self.dex('');
+            self.con('');
+            self.int('');
+            self.wis('');
+            self.cha('');
+        }
+    };
+
     /**
      * This is required because ready is invoked before pointsLeft is
      * calculated. This way, ready will evaluate pointsLeft after the stepper
