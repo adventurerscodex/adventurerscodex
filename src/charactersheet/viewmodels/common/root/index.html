@@ -22,25 +22,40 @@
         <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span><span class="icon-bar"></span>
       </button>
-      <a data-bind="attr: { href: homeURL }" class="navbar-brand">
+      <a data-bind="attr: { href: homeURL }, css: { 'navbar-divider': shouldShowApp }" class="navbar-brand">
     	  <img data-bind="attr: { src: navLogo }"
     	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
     	       alt="Adventurer's Codex"/>
         <span class="inline-block pull-right">Adventurer's Codex</span>
       </a>
     </div>
+    <!-- ko if: shouldShowApp -->
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="//adventurerscodex.com"
-               target="_blank">Blog</a></li>
-        <li><a href="//tinyletter.com/adventurerscodex"
-               target="_blank">Newsletter</a></li>
-        <li><a href="https://www.patreon.com/bePatron?u=5313385"
-               target="_blank">Become a Patron</a>
+        <li>
+          <a data-toggle="modal" data-target="#newModal" href="#">
+            New/Import
+          </a>
+        </li>
+        <li>
+          <a data-bind="click: toggleCharacterAndGamesModal" href="#">
+            Characters and Games
+          </a>
+        </li>
+        <li>
+          <a data-bind="click: togglePartyManagerModal" href="#">
+            Manage Party
+          </a>
+        </li>
+        <li>
+          <a data-bind="click: toggleExportModal" href="#">
+            Export
+          </a>
         </li>
       </ul>
       <login></login>
     </div>
+    <!-- /ko -->
   <!--/.nav-collapse -->
   </div>
 </div>
@@ -76,42 +91,15 @@
 <!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
-  <div id="characters" class="container-fluid characters-module-style">
+  <div id="characters" class="container-fluid">
     <div class="row">
       <div class="col-sm-12">
         <div class="row">
-          <div class="col-padded col-sm-2 col-xs-12">
+          <div class="col-sm-2 col-xs-12">
             <player-image></player-image>
           </div>
-          <div class="col-padded col-sm-10 col-xs-12 characters-player-name">
+          <div class="col-sm-10 col-xs-12 characters-player-name">
             <player-name></player-name>
-            <div class="row">
-              <div class="col-md-12 text-center-xs text-left-sm">
-                <i class="small underline">
-                    <a data-toggle="modal" data-target="#newModal" href="#">
-                    New/Import
-                  </a>
-                </i>
-                &nbsp;
-                <i class="small underline">
-                  <a data-bind="click: toggleCharacterAndGamesModal" href="#">
-                    Characters and Games
-                  </a>
-                </i>
-                &nbsp;
-                <i class="small underline">
-                  <a data-bind="click: togglePartyManagerModal" href="#">
-                    Manage Party
-                  </a>
-                </i>
-                &nbsp;
-                <i class="small underline">
-                  <a data-bind="click: toggleExportModal" href="#">
-                    Export
-                  </a>
-                </i>
-              </div>
-            </div>
             <div class="row row-padded">
               <div class="col-xs-12">
                 <!-- ko if: selectedCharacter -->
@@ -210,19 +198,26 @@
           <i class="fa fa-rss social-media" aria-hidden="true"></i>
         </a>
       </li>
+      <li>
+        <a href="//tinyletter.com/adventurerscodex" target="_blank">
+          <i class="fa fa-envelope social-media" aria-hidden="true"></i>
+        </a>
+      </li>
     </ul>
     <center>
-      <p class="text-muted">&copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
-        <a href="//adventurerscodex.com/support.html">Contact Us</a>
-      </p>
-      <p class="text-muted">Version: <span data-bind="text: version"></span>, Build Date: <span data-bind="text: buildDate"></span></p>
-      <p class="text-muted">
-        Autofilled data is distributed under the
-          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-            target='_blank'>
-            OGL</a><br/>
-            Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-      </p>
+      <small class="text-muted">
+      &copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved.<br />
+      <a href="//adventurerscodex.com">Check out our blog</a>&#32;&#32;&#124;&#32;
+      <a href="//adventurerscodex.com/support.html">Contact Us</a> &#32;&#32;&#124;&#32;
+      <a href="https://www.patreon.com/bePatron?u=5313385">Support us on Patreon</a><br />
+      Version: <span data-bind="text: version"></span>,
+        Build Date: <span data-bind="text: buildDate"></span><br/>
+      Autofilled data is distributed under the
+        <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+           target='_blank'>
+           OGL</a><br/>
+          Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+      </small>
     </center>
   </div>
 </div>

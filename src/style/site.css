@@ -47,6 +47,20 @@ General Styling
 */
 html, body {height: 100%;}
 
+nav.navbar {
+  /* Bootstrap adds too much top padding below the nav-bar. */
+  margin-bottom:15px;
+}
+
+a.navbar-brand.navbar-divider:after {
+  position: relative;
+  top: 0em;
+  left: 180px;
+  content: "";
+  height: 30px;
+  border-right: 1px solid #566472;
+}
+
 #content {
   max-width: 100%;
   font-family: "Lato", sans-serif;
@@ -520,7 +534,12 @@ textarea.dark-area {
 }
 
 .characters-player-name {
-  margin-top:-20px;
+  margin-top:-15px;
+}
+
+.characters-player-name div.h3 {
+  margin-top: 19px;
+  margin-bottom: 2px
 }
 
 .stats-health-border {
@@ -545,7 +564,6 @@ table.table-no-margin tbody td {
 div.h3 small {
   color: #6f7d88;
 }
-
 
 .ability-score-input {
   width: 65px;
@@ -956,4 +974,3 @@ div.toggle-arrow-container {
   position: fixed;
   z-index:2147483647;
 }
-
