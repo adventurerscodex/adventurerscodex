@@ -189,10 +189,10 @@ export function DMRootViewModel() {
     self._initActiveTab = () => {
         const fragments = (new URI()).fragment(true);
         const tab = fragments[self.TAB_FRAGMENT_KEY];
-        if (tab) {
+        const tabIsValid = self.playerType().visibleTabs.indexOf(tab) > -1;
+        if (tab && tabIsValid) {
             self._setActiveTab(tab);
-        }
-        else {
+        } else {
             self.activeTab(self.playerType().defaultTab);
         }
     };
