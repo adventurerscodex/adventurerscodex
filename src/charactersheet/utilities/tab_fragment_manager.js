@@ -18,7 +18,6 @@ export var TabFragmentManager = {
         const tab = fragments[TabFragmentManager.TAB_FRAGMENT_KEY];
         const character = CharacterManager.activeCharacter();
         if (!character) {
-            TabFragmentManager.changeTabFragment(null);
             return;
         }
 
