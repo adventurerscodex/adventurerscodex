@@ -17,6 +17,10 @@ export var TabFragmentManager = {
         const fragments = (new URI()).fragment(true);
         const tab = fragments[TabFragmentManager.TAB_FRAGMENT_KEY];
         const character = CharacterManager.activeCharacter();
+        if (!character) {
+            TabFragmentManager.changeTabFragment(null);
+            return;
+        }
 
         const tabIsValid = character.playerType().visibleTabs.indexOf(tab) > -1;
         if (tab && tabIsValid) {
