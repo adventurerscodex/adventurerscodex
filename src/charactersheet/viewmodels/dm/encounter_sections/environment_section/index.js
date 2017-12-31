@@ -42,6 +42,7 @@ export function EnvironmentSectionViewModel(params) {
     self.terrain = ko.observable();
     self.description = ko.observable('');
     self.isExhibited = ko.observable(false);
+    self.fullScreen = ko.observable(false);
 
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
@@ -90,7 +91,7 @@ export function EnvironmentSectionViewModel(params) {
 
         // Search for the current environment and if it doesn't exist, then create.
         var key = CharacterManager.activeCharacter().key();
-        var environment =  PersistenceService.findByPredicates(Environment, [
+        var environment = PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -109,7 +110,7 @@ export function EnvironmentSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var environment =  PersistenceService.findByPredicates(Environment, [
+        var environment = PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -164,6 +165,10 @@ export function EnvironmentSectionViewModel(params) {
     self.convertedImageLink = ko.pureComputed(function() {
         return Utility.string.createDirectDropboxLink(self.imageUrl());
     });
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
+    };
 
     /* Push to Player Methods */
 
