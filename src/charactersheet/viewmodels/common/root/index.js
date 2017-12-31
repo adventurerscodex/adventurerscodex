@@ -15,7 +15,11 @@ import {
     UserServiceManager,
     XMPPService
 } from 'charactersheet/services';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications,
+    TabFragmentManager
+} from 'charactersheet/utilities';
 import {
     HotkeysService,
     PersistenceService
@@ -106,6 +110,8 @@ export function AdventurersCodexViewModel() {
         CharacterManager.init();
         var characters = PersistenceService.findAll(Character);
 
+        TabFragmentManager.init();
+
         if (CharacterManager.activeCharacter()) {
             // There might be an active character in the URL.
             self._handleChangedCharacter();
@@ -162,6 +168,9 @@ export function AdventurersCodexViewModel() {
             self.unload();
         }
         self.selectedCharacter(null);
+
+        TabFragmentManager.changeTabFragment(null);
+
     };
 
     self._handleChangedCharacter = function() {
