@@ -37,6 +37,7 @@ export function WizardAbilityScoresStepViewModel(params) {
         self.cha.subscribe(self.dataHasChanged);
         self.isPointBuy.subscribe(self.initPointBuy);
         self.isManual.subscribe(self.initManual);
+        self.pointsLeftChanged.subscribe(self.pointsLeft);
     };
 
     self.unload = function() { };
@@ -88,6 +89,10 @@ export function WizardAbilityScoresStepViewModel(params) {
         }
     });
 
+    self.pointsLeftChanged = ko.pureComputed(function() {
+        self.ready();
+    });
+
     self.pointsLeftColor = ko.computed(function() {
         if (self.pointsLeft() >= 0) {
             return 'text-success';
@@ -122,7 +127,7 @@ export function WizardAbilityScoresStepViewModel(params) {
         }
     };
     /**
-     * Returns true if all required fields are filled.
+     * Determine if the finish button should be rendered.
      */
     self.ready = ko.pureComputed(function() {
         if (self.rollMethod() === 'pointBuy' && self.pointsLeft() === 0) {
