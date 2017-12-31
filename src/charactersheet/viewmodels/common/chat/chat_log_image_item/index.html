@@ -13,9 +13,11 @@
        <!-- ko if: shouldShowSaveToNotesButton -->
        <div class="col-xs-11">
          <span data-bind="html: html"></span>
-         <em class="text-muted text-center col-xs-12">Note: Click on the image to view it in Full Screen.</em>
          <img data-bind="attr: { src: messageImage }, click: toggleFullScreen"
           width="100%" class="clickable" />
+          <small>
+            <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
+          </small>
        </div>
        <div class="col-xs-1">
          <div class="input-group">
@@ -26,9 +28,11 @@
        <!-- ko ifnot: shouldShowSaveToNotesButton -->
        <div class="col-xs-12">
          <h3 data-bind="text: name"></h3>
-         <em class="text-muted text-center col-xs-12">Note: Click on the image to view it in Full Screen.</em>
          <img data-bind="attr: { src: messageImage }, click: toggleFullScreen"
           width="100%" class="clickable" />
+         <small>
+           <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
+         </small>
        </div>
        <!-- /ko -->
      </div>

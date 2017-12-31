@@ -61,16 +61,16 @@
               </div>
           </div>
           <hr data-bind="visible: shouldShowDividingMarker"/>
-          <div class="row">
             <!-- ko if: imageUrl -->
-            <em class="text-muted text-center col-xs-12">Note: Click on the image to view it in Full Screen.</em>
             <img data-bind="attr: { src: convertedImageLink, width: imageWidth },
               css: imageClass, click: toggleFullScreen" class="img-responsive img-rounded clickable">
+            <small>
+              <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
+            </small>
             <!-- /ko -->
             <span data-bind="markdownPreview: description"
                class="preview-modal-overflow-sm">
             </span>
-          </div>
         </div>
       </div>
     </div> <!-- End Preview Tab -->
