@@ -68,7 +68,7 @@ export function WizardAbilityScoresStepViewModel(params) {
     });
 
     self.pointsLeft = ko.pureComputed(function() {
-        if(self.isPointBuy()) {
+        if (self.isPointBuy()) {
             var pointsSpent = 0;
             const abilityScores = [
                 self.str(),
@@ -76,13 +76,12 @@ export function WizardAbilityScoresStepViewModel(params) {
                 self.con(),
                 self.int(),
                 self.wis(),
-                self.cha(),
+                self.cha()
             ];
 
             abilityScores.map(function(score, idx, _) {
-                pointsSpent += self.POINT_BUY_MAP[score]
-            })
-
+                pointsSpent += self.POINT_BUY_MAP[score];
+            });
             return self.POINT_BUY_MAX_POINTS - pointsSpent;
         } else {
             return 0;
@@ -90,7 +89,7 @@ export function WizardAbilityScoresStepViewModel(params) {
     });
 
     self.pointsLeftColor = ko.computed(function() {
-        if(self.pointsLeft() >= 0) {
+        if (self.pointsLeft() >= 0) {
             return 'text-success';
         } else {
             return 'text-danger';
@@ -102,7 +101,7 @@ export function WizardAbilityScoresStepViewModel(params) {
     });
 
     self.initPointBuy = function() {
-        if(self.isPointBuy()) {
+        if (self.isPointBuy()) {
             self.str(8);
             self.dex(8);
             self.con(8);
@@ -113,7 +112,7 @@ export function WizardAbilityScoresStepViewModel(params) {
     };
 
     self.initManual = function() {
-        if(self.isManual()) {
+        if (self.isManual()) {
             self.str('');
             self.dex('');
             self.con('');
@@ -126,10 +125,15 @@ export function WizardAbilityScoresStepViewModel(params) {
      * Returns true if all required fields are filled.
      */
     self.ready = ko.pureComputed(function() {
-        var emptyFields = self.REQUIRED_FIELDS.filter(function(field, idx, _) {
-            return self[field]() ? !self[field]() : true;
-        });
-        self.stepReady(emptyFields.length === 0);
+        if (self.rollMethod() === 'pointBuy' && self.pointsLeft() === 0) {
+            self.stepReady(true);
+        }
+        if (self.rollMethod() === 'manual') {
+            var emptyFields = self.REQUIRED_FIELDS.filter(function(field, idx, _) {
+                return self[field]() ? !self[field]() : true;
+            });
+            self.stepReady(emptyFields.length === 0);
+        }
     });
 
     /**
