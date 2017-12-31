@@ -37,16 +37,17 @@
         </div>
         <!-- ko if: isPointBuy -->
         <div class="h3">Point Buy Variant<br />
-          <small>In this method, you may spend 27 points assigning values to your
-                 ability scores. The highest allowed value in any ability score is 15.
-                 The higher the score, the more points it costs.
-          </small>
+          <p>
+            <small>In this method, you may spend 27 points assigning values to your
+                   ability scores. In any ability score, the minimum value allowed is 8, and the maximum value allowed is 15. The higher your score, the greater the cost.
+            </small>
+          </p>
         </div>
         <div class="row">
           <div class="col-md-6 col-md-push-3 col-md-pull-3 text-center">
             <div class="h3">
               Points left:&nbsp;&nbsp;<span class="text-success"
-                                            data-bind="text: pointsLeft"></span>
+                                            data-bind="text: pointsLeft, css: pointsLeftColor"></span>
             </div>
           </div>
         </div>
