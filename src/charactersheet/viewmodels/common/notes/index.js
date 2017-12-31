@@ -37,10 +37,8 @@ export function NotesViewModel() {
         var notes = PersistenceService.findBy(Note, 'characterId', key);
         if (notes.length > 0) {
             self.notes(notes);
-        } else {
-            self.addNote();
+            self.selectNote(self.notes()[0]);
         }
-        self.selectNote(self.notes()[0]);
     };
 
     /* UI Methods */

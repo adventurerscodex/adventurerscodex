@@ -331,7 +331,11 @@ div.hr {
 }
 
 .tab-icon {
-  width: 35px;
+  width: 28px;
+}
+
+.nav-tabs li a {
+  padding: 8px 12px;
 }
 
 .tab-subtext {
@@ -459,7 +463,7 @@ textarea.dark-area {
   line-height:1.5em;
 }
 
-.input-select2-addon {
+.input-jquery-addon {
   height:100%;
   padding:18px;
 }
@@ -594,7 +598,6 @@ ul.footer-icons li {
 .notes-place-holder {
   height: 548px;
   padding-top:175px;
-  background-color: #ecf0f1;;
 }
 
 .preview-modal-overflow-sm {
@@ -902,6 +905,11 @@ li.image-chat-highlight {
   margin-right:15px;
 }
 
+.override-tight-inner {
+  margin-left:0px !important;
+  margin-right:0px !important;
+}
+
 .connection-status {
   position: relative;
   width:15px;
@@ -936,10 +944,33 @@ div.toggle-arrow-container {
   text-align: center;
 }
 
+.input-group-addon-jquery {
+  min-width:125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .close {
   color: #2c3e50;
 }
 
 .close:hover {
   color: #1a242f;
+}
+
+/*
+ * jQuery Autocomplete
+ */
+.input-group-addon-jquery {
+  min-width:125px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.ui-autocomplete {
+  max-height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: fixed;
+  z-index:2147483647;
 }
