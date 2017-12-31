@@ -52,7 +52,7 @@ nav.navbar {
   margin-bottom:15px;
 }
 
-a.navbar-brand:after {
+a.navbar-brand.navbar-divider:after {
   position: relative;
   top: 0em;
   left: 180px;

@@ -22,7 +22,7 @@
         <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
         <span class="icon-bar"></span><span class="icon-bar"></span>
       </button>
-      <a data-bind="attr: { href: homeURL }" class="navbar-brand">
+      <a data-bind="attr: { href: homeURL }, css: { 'navbar-divider': shouldShowApp }" class="navbar-brand">
     	  <img data-bind="attr: { src: navLogo }"
     	       class="pull-left img-rounded inline-block brand-icon resize_logo_nav"
     	       alt="Adventurer's Codex"/>
@@ -198,19 +198,26 @@
           <i class="fa fa-rss social-media" aria-hidden="true"></i>
         </a>
       </li>
+      <li>
+        <a href="//tinyletter.com/adventurerscodex" target="_blank">
+          <i class="fa fa-envelope social-media" aria-hidden="true"></i>
+        </a>
+      </li>
     </ul>
     <center>
-      <p class="text-muted">&copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved. &#32;&#32;&#124;&#32;
-        <a href="//adventurerscodex.com/support.html">Contact Us</a>
-      </p>
-      <p class="text-muted">Version: <span data-bind="text: version"></span>, Build Date: <span data-bind="text: buildDate"></span></p>
-      <p class="text-muted">
-        Autofilled data is distributed under the
-          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-            target='_blank'>
-            OGL</a><br/>
-            Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-      </p>
+      <small class="text-muted">
+      &copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved.<br />
+      <a href="//adventurerscodex.com">Check out our blog</a>&#32;&#32;&#124;&#32;
+      <a href="//adventurerscodex.com/support.html">Contact Us</a> &#32;&#32;&#124;&#32;
+      <a href="https://www.patreon.com/bePatron?u=5313385">Support us on Patreon</a><br />
+      Version: <span data-bind="text: version"></span>,
+        Build Date: <span data-bind="text: buildDate"></span><br/>
+      Autofilled data is distributed under the
+        <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+           target='_blank'>
+           OGL</a><br/>
+          Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+      </small>
     </center>
   </div>
 </div>
