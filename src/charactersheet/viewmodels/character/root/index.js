@@ -13,7 +13,6 @@ import {
     TabFragmentManager
 } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
-import URI from 'urijs';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
 import chatTab from 'images/tab_icons/conversation.svg';
