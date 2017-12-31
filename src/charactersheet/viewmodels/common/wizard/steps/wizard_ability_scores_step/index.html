@@ -8,15 +8,126 @@
         </div>
       </div>
     </div>
+    <br />
     <div class="row">
       <div class="col-sm-offset-1 col-sm-7 col-xs-12">
+        <div class="row">
+          <div class="col-md-6 col-md-push-3 col-md-pull-3 text-center">
+            <div class="btn-group btn-group-justified" role="group">
+              <label class="btn btn-default"
+                     data-bind="css: { active: rollMethod() == 'manual'}">
+                <input type="radio"
+                       class="hide-block"
+                       name="manual"
+                       value="manual"
+                       data-bind="checked: rollMethod"
+                       />Manual
+                </label>
+                <label class="btn btn-default active"
+                       data-bind="css: { active: rollMethod() == 'pointBuy'}">
+                  <input type="radio"
+                         class="hide-block"
+                         name="pointBuy"
+                         value="pointBuy"
+                         data-bind="checked: rollMethod"
+                         />Point Buy
+                </label>
+            </div>
+          </div>
+        </div>
+        <!-- ko if: isPointBuy -->
+        <div class="h3">Point Buy Variant<br />
+          <small>In this method, you may spend 27 points assigning values to your
+                 ability scores. The highest allowed value in any ability score is 15.
+                 The higher the score, the more points it costs.
+          </small>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-md-push-3 col-md-pull-3 text-center">
+            <div class="h3">
+              Points left:&nbsp;&nbsp;<span class="text-success"
+                                            data-bind="text: pointsLeft"></span>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-6">
+            <row>
+              <div class="col-md-3">
+                <span>Strength&nbsp;&nbsp;</span>
+              </div>
+              <div class="col-md-9">
+                <plus-minus params="value: str, min: pointBuyMin, max: pointBuyMax"></plus-minus>
+              </div>
+            </row>
+          </div>
+          <div class="col-md-6">
+            <row>
+              <div class="col-md-3">
+                <span>Dexterity&nbsp;&nbsp;</span>
+              </div>
+              <div class="col-md-9">
+                <plus-minus params="value: dex, min: pointBuyMin, max: pointBuyMax"></plus-minus>
+              </div>
+            </row>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-6">
+            <row>
+              <div class="col-md-3">
+                <span>Constitution&nbsp;&nbsp;</span>
+              </div>
+              <div class="col-md-9">
+                <plus-minus params="value: con, min: pointBuyMin, max: pointBuyMax"></plus-minus>
+              </div>
+            </row>
+          </div>
+          <div class="col-md-6">
+            <row>
+              <div class="col-md-3">
+                <span>Intelligence&nbsp;&nbsp;</span>
+              </div>
+              <div class="col-md-9">
+                <plus-minus params="value: int, min: pointBuyMin, max: pointBuyMax"></plus-minus>
+              </div>
+            </row>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-md-6">
+            <row>
+              <div class="col-md-3">
+                <span>Wisdom&nbsp;&nbsp;</span>
+              </div>
+              <div class="col-md-9">
+                <plus-minus params="value: wis, min: pointBuyMin, max: pointBuyMax"></plus-minus>
+              </div>
+            </row>
+          </div>
+          <div class="col-md-6">
+            <row>
+              <div class="col-md-3">
+                <span>Charisma&nbsp;&nbsp;</span>
+              </div>
+              <div class="col-md-9">
+                <plus-minus params="value: cha, min: pointBuyMin, max: pointBuyMax"></plus-minus>
+              </div>
+            </row>
+          </div>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: isManual -->
         <div class="h3">Rolling for Ability Scores<br />
           <small>One method is to roll four D6 dice and record the total of the highest
           three; do this until you have six numbers. Or you can use
           the following scores instead: 15, 14, 13, 12, 10, 8.
           </small>
         </div>
-        <p></p>
+        <br />
         <div class="row">
           <div class="col-md-4 col-padded">
             <div class="input-group">
@@ -118,6 +229,7 @@
               css: { errormessagetext: cha.hasError }'> </span>
           </div>
         </div>
+        <!-- /ko -->
       </div>
       <div class="col-sm-3 hidden-xs">
         <img data-bind="attr: { src: icon }" width="100%">
