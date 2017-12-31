@@ -37,7 +37,7 @@ export function WizardAbilityScoresStepViewModel(params) {
         self.cha.subscribe(self.dataHasChanged);
         self.isPointBuy.subscribe(self.initPointBuy);
         self.isManual.subscribe(self.initManual);
-        self.pointsLeftChanged.subscribe(self.pointsLeft);
+        self.pointsLeft.subscribe(self.pointsLeftChanged);
     };
 
     self.unload = function() { };
@@ -89,9 +89,14 @@ export function WizardAbilityScoresStepViewModel(params) {
         }
     });
 
-    self.pointsLeftChanged = ko.pureComputed(function() {
+    /**
+     * This is required because ready is invoked before pointsLeft is
+     * calculated. This way, ready will evaluate pointsLeft after the stepper
+     * is finished.
+     */
+    self.pointsLeftChanged = function() {
         self.ready();
-    });
+    };
 
     self.pointsLeftColor = ko.computed(function() {
         if (self.pointsLeft() >= 0) {
@@ -132,6 +137,8 @@ export function WizardAbilityScoresStepViewModel(params) {
     self.ready = ko.pureComputed(function() {
         if (self.rollMethod() === 'pointBuy' && self.pointsLeft() === 0) {
             self.stepReady(true);
+        } else {
+            self.stepReady(false);
         }
         if (self.rollMethod() === 'manual') {
             var emptyFields = self.REQUIRED_FIELDS.filter(function(field, idx, _) {
