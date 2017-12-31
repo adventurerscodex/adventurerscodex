@@ -1,14 +1,15 @@
 import 'bin/knockout-custom-loader';
 import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
+    Notifications,
+    TabFragmentManager
+} from 'charactersheet/utilities';
 import { ChatServiceManager,
     DMCardPublishingService,
     HotkeysService,
     ImageServiceManager,
     PersistenceService
- } from 'charactersheet/services';
+} from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
-import URI from 'urijs';
 import chatTabImage from 'images/tab_icons/conversation.svg';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
 import encounterTabImage from 'images/tab_icons/treasure-map.svg';
@@ -21,9 +22,6 @@ import template from './index.html';
 
 export function DMRootViewModel() {
     var self = this;
-
-    self.TAB_FRAGMENT_KEY = 't';
-    self.TAB_NULL_FRAGMENT = '';
 
     self.playerType = () => {
         return CharacterManager.activeCharacter().playerType();
@@ -127,7 +125,7 @@ export function DMRootViewModel() {
      * Signal all modules to load their data.
      */
     self.load = () => {
-        self._initActiveTab();
+        self.activeTab(TabFragmentManager.activeTab());
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
@@ -174,28 +172,9 @@ export function DMRootViewModel() {
 
     self._setActiveTab = (tab) => {
         self.activeTab(tab);
-
-        // Save the current tab in the URL.
-        var uri = new URI();
-        uri.removeFragment(self.TAB_FRAGMENT_KEY);
-        tab = tab ? tab : self.TAB_NULL_FRAGMENT;
-        uri.addFragment(
-            self.TAB_FRAGMENT_KEY,
-            tab
-        );
-        window.location = uri.toString();
+        TabFragmentManager.changeTabFragment(tab);
     };
 
-    self._initActiveTab = () => {
-        const fragments = (new URI()).fragment(true);
-        const tab = fragments[self.TAB_FRAGMENT_KEY];
-        const tabIsValid = self.playerType().visibleTabs.indexOf(tab) > -1;
-        if (tab && tabIsValid) {
-            self._setActiveTab(tab);
-        } else {
-            self.activeTab(self.playerType().defaultTab);
-        }
-    };
     self.dispose = () => {
         self.unload();
     };

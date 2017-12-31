@@ -9,7 +9,8 @@ import {
 } from 'charactersheet/services/common';
 import {
     CharacterManager,
-    Notifications
+    Notifications,
+    TabFragmentManager
 } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import URI from 'urijs';
@@ -35,9 +36,6 @@ import weaponSection from 'images/spinning-sword.svg';
 
 export function CharacterRootViewModel() {
     var self = this;
-
-    self.TAB_FRAGMENT_KEY = 't';
-    self.TAB_NULL_FRAGMENT = '';
 
     self.icons = {
         statsTab: statsTab,
@@ -205,7 +203,7 @@ export function CharacterRootViewModel() {
     //Public Methods
 
     self.load = () => {
-        self._initActiveTab();
+        self.activeTab(TabFragmentManager.activeTab());
 
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
@@ -271,27 +269,7 @@ export function CharacterRootViewModel() {
 
     self._setActiveTab = (tab) => {
         self.activeTab(tab);
-
-        // Save the current tab in the URL.
-        var uri = new URI();
-        uri.removeFragment(self.TAB_FRAGMENT_KEY);
-        tab = tab ? tab : self.TAB_NULL_FRAGMENT;
-        uri.addFragment(
-            self.TAB_FRAGMENT_KEY,
-            tab
-        );
-        window.location = uri.toString();
-    };
-
-    self._initActiveTab = () => {
-        const fragments = (new URI()).fragment(true);
-        const tab = fragments[self.TAB_FRAGMENT_KEY];
-        const tabIsValid = self.playerType().visibleTabs.indexOf(tab) > -1;
-        if (tab && tabIsValid) {
-            self._setActiveTab(tab);
-        } else {
-            self.activeTab(self.playerType().defaultTab);
-        }
+        TabFragmentManager.changeTabFragment(tab);
     };
 
     self.dispose = () => {
