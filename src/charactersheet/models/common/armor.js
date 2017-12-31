@@ -35,6 +35,7 @@ export function Armor() {
 
     self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
     self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
+    self.armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     self.acLabel = ko.pureComputed(function() {
         if (self.armorClass()) {

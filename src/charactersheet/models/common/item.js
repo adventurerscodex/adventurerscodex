@@ -1,7 +1,10 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
+import {
+    Fixtures,
+    Utility
+} from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 /**
@@ -26,6 +29,8 @@ export function Item() {
     self.itemWeight = ko.observable(0);
     self.itemCost = ko.observable(0);
     self.itemCurrencyDenomination = ko.observable('');
+
+    self.itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
     self.totalWeight = ko.pureComputed(function() {
         if (self.itemQty() && self.itemWeight()) {
