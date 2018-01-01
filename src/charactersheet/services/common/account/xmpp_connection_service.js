@@ -91,7 +91,7 @@ function _XMPPService(config) {
 
         self._initializeConnection();
 
-        Notifications.characterManager.changed.addOnce(self._handleConnect);
+        Notifications.user.exists.addOnce(self._handleConnect);
     };
 
     self.deinit = function() {
