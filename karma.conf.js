@@ -6,7 +6,7 @@ webpack = webpackConfig;
 webpack.module.rules.push({
     test: /\.js$/,
     loader: "isparta-loader",
-    exclude: /node_modules|test$/ // exclude node_modules and test files
+    exclude: /(node_modules)/ // exclude node_modules and test files
 })
 
 module.exports = function(config) {
@@ -32,7 +32,6 @@ module.exports = function(config) {
             ]
         },
 		plugins: [
-            'karma-babel-preprocessor',
             'karma-coverage',
             'karma-webpack',
             'karma-mocha',

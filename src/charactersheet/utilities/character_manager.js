@@ -29,6 +29,7 @@ export var CharacterManager = {
             var character = PersistenceService.findFirstBy(Character, 'key', key);
             if (character) {
                 CharacterManager._setActiveCharacter(character);
+                Notifications.characterManager.changed.dispatch(character);
             }
         }
     },
