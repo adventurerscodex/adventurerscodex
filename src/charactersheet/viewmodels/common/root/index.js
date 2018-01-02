@@ -126,6 +126,7 @@ export function AdventurersCodexViewModel() {
         NodeServiceManager.sharedService().init();
         ChatServiceManager.sharedService().init();
         NotificationsServiceManager.sharedService().init();
+        UserServiceManager.sharedService().init();
         AuthenticationServiceManager.sharedService().init();
     };
 
