@@ -53,6 +53,8 @@ export function WizardViewModel() {
     self.init = function() { };
 
     self.load = function() {
+        CharacterManager.setActiveCharacterFragment(null);
+
         self.getNextStep();
         self.goForward();
     };
@@ -110,7 +112,11 @@ export function WizardViewModel() {
     */
     self.getNextStep = function() {
         // Do not progress if the step isn't ready.
-        if (self.currentStep() && !self.stepReady()) { return; }
+        if (self.currentStep() && !self.stepReady()) {
+            // Steps can be made "unready".
+            self._isComplete(false);
+            return;
+        }
 
         var nextStepDescriptor = self._determineStepAfterStep(self.currentStep());
         if (!nextStepDescriptor.viewModel) {

@@ -7,16 +7,16 @@
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead>
     <tr>
-      <th data-bind="click: function(){sortBy('name');}">
+      <th data-bind="click: function(){sortBy('name');}" class="col-xs-3">
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('description');}">
+      <th data-bind="click: function(){sortBy('description');}" class="col-xs-7">
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <th>Send</th>
-      <th>
+      <th class="col-xs-1">Send</th>
+      <th class="col-xs-1">
         <a data-toggle="modal"
            data-target="#addPlayerText" href="#">
           <i class="fa fa-plus fa-color"></i>
@@ -28,16 +28,13 @@
   <!-- ko foreach: filteredAndSortedPlayerText -->
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editPlayerText"
-          class="col-xs-12 col-sm-4 col-md-3"
-          href="#"></td>
+          class="col-xs-3" href="#"></td>
       <td data-bind="html: shortDescription, click: $parent.editPlayerText"
-          class="col-xs-12 hidden-md hidden-lg"
-          href="#"></td>
+          class="col-xs-7 hidden-md hidden-lg" href="#"></td>
       <td data-bind="html: longDescription, click: $parent.editPlayerText"
-          class="col-md-12 hidden-sm hidden-xs"
-          href="#"></td>
+          class="col-md-7 hidden-sm hidden-xs" href="#"></td>
       <!-- ko if: $parent.shouldShowPushButton -->
-      <td class="text-center">
+      <td class="text-center col-xs-1">
         <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
           <i class="fa fa-paper-plane-o fa-color-hover">
           </i>
@@ -45,13 +42,13 @@
       </td>
       <!-- /ko -->
       <!-- ko ifnot: $parent.shouldShowPushButton -->
-      <td class="text-center">
+      <td class="text-center col-xs-1">
         <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
           data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
         </span>
       </td>
       <!-- /ko -->
-      <td>
+      <td class="col-xs-1">
         <a data-bind="click: $parent.removePlayerText" href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>

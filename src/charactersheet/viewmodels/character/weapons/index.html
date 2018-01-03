@@ -114,7 +114,7 @@
         </div>
           <div class="modal-body">
             <form class="form-horizontal">
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponName"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
@@ -158,51 +158,51 @@
                          data-bind='textInput: blankWeapon().weaponToHitModifier'>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponType"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankWeapon().weaponTypeOptions,
-                                     value: blankWeapon().weaponType,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Ranged"
+                         data-bind="textInput: blankWeapon().weaponType, autocomplete: {
+                          source: blankWeapon().weaponTypeOptions }">
                   </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponHandedness"
                        class="col-sm-2 control-label">Handedness</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankWeapon().weaponHandednessOptions,
-                                     value: blankWeapon().weaponHandedness,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="One-Handed"
+                         data-bind="textInput: blankWeapon().weaponHandedness, autocomplete: {
+                          source: blankWeapon().weaponHandednessOptions }">
                   </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponProficiency"
                        class="col-sm-2 control-label">Proficiency</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankWeapon().weaponProficiencyOptions,
-                                     value: blankWeapon().weaponProficiency,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Simple"
+                         data-bind="textInput: blankWeapon().weaponProficiency, autocomplete: {
+                          source: blankWeapon().weaponProficiencyOptions }">
                   </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponPrice"
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
                   <div class="input-group">
-                    <input type="number" min="0" class="form-control input-select2-addon"
+                    <input type="number" min="0" class="form-control input-jquery-addon"
                          id="weaponPrice"
                          placeholder="5"
                          data-bind='textInput: blankWeapon().weaponPrice'>
                          <span data-bind="console.log($parent.id)"></span>
-                     <span class="input-group-addon">
-                      <select class="form-control"
-                      data-bind="options: currencyDenominationList,
-                      value: blankWeapon().weaponCurrencyDenomination,
-                      select2: {theme: 'classic'}"></select>
+                     <span class="input-group-addon input-group-addon-jquery">
+                      <input class="form-control"
+                             placeholder="GP"
+                             data-bind="textInput: blankWeapon().weaponCurrencyDenomination, autocomplete: {
+                          source: blankWeapon().weaponCurrencyDenominationOptions }">
                     </span>
                   </div>
                 </div>
@@ -228,24 +228,25 @@
                            data-bind='textInput: blankWeapon().weaponRange'>
                   </div>
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponDamageType"
                        class="col-sm-2 control-label">Damage Type</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankWeapon().weaponDamageTypeOptions,
-                                     value: blankWeapon().weaponDamageType,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Fire"
+                         data-bind="textInput: blankWeapon().weaponDamageType, autocomplete: {
+                          source: blankWeapon().weaponDamageTypeOptions }">
                   </div>
+
               </div>
-              <div class="form-group">
+              <div class="form-group ui-front">
                 <label for="weaponProperty"
                        class="col-sm-2 control-label">Property</label>
                   <div class="col-sm-10">
-                  <select class="form-control"
-                          data-bind="options: blankWeapon().weaponPropertyOptions,
-                                     value: blankWeapon().weaponProperty,
-                                     select2: {theme: 'classic'}"></select>
+                  <input class="form-control"
+                         placeholder="Finesse"
+                         data-bind="textInput: blankWeapon().weaponProperty, autocomplete: {
+                          source: blankWeapon().weaponPropertyOptions }">
                   </div>
               </div>
               <div class="form-group">
@@ -413,30 +414,27 @@
                     <label for="weaponType"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: weaponTypeOptions,
-                                         value: weaponType,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="Ranged"
+                             data-bind="textInput: weaponType">
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="weaponHandedness"
                            class="col-sm-2 control-label">Handedness</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: weaponHandednessOptions,
-                                         value: weaponHandedness,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="One-Handed"
+                             data-bind="textInput: weaponHandedness">
                       </div>
                   </div>
                   <div class="form-group">
                     <label for="weaponProficiency"
                            class="col-sm-2 control-label">Proficiency</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: weaponProficiencyOptions,
-                                         value: weaponProficiency,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="Simple"
+                             data-bind="textInput: weaponProficiency">
                       </div>
                   </div>
                   <div class="form-group">
@@ -444,15 +442,14 @@
                            class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-10">
                       <div class="input-group">
-                        <input type="number" min="0" class="form-control input-select2-addon"
+                        <input type="number" min="0" class="form-control input-jquery-addon"
                              id="weaponPrice"
                              placeholder="5"
                              data-bind='textInput: weaponPrice'>
-                         <span class="input-group-addon">
-                          <select class="form-control"
-                                  data-bind="options: $parent.currencyDenominationList,
-                                             value: weaponCurrencyDenomination,
-                                             select2: {theme: 'classic'}"></select>
+                         <span class="input-group-addon input-group-addon-jquery">
+                          <input class="form-control"
+                                 placeholder="GP"
+                                 data-bind="textInput: weaponCurrencyDenomination">
                         </span>
                       </div>
                     </div>
@@ -482,20 +479,18 @@
                     <label for="weaponDamageType"
                            class="col-sm-2 control-label">Damage Type</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: weaponDamageTypeOptions,
-                                         value: weaponDamageType,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="Fire"
+                             data-bind="textInput: weaponDamageType">
                       </div>
                       </div>
                     <div class="form-group">
                     <label for="weaponProperty"
                            class="col-sm-2 control-label">Property</label>
                       <div class="col-sm-10">
-                      <select class="form-control"
-                              data-bind="options: weaponPropertyOptions,
-                                         value: weaponProperty,
-                                         select2: {theme: 'classic'}"></select>
+                      <input class="form-control"
+                             placeholder="Finesse"
+                             data-bind="textInput: weaponProperty">
                       </div>
                   </div>
 

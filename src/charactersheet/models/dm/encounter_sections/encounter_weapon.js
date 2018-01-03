@@ -1,10 +1,12 @@
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Utility } from 'charactersheet/utilities/convenience';
 import { Weapon } from 'charactersheet/models/common';
 import ko from 'knockout';
 
 
 export function EncounterWeapon() {
     var self = new Weapon();
+    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     self.ps = PersistenceService.register(EncounterWeapon, self);
     self.mapping.include.push('encounterId');
@@ -22,7 +24,12 @@ export function EncounterWeapon() {
     });
 
     self.descriptionLabel = ko.pureComputed(function() {
-        return self.weaponDescription() ? self.weaponDescription() : '';
+        return self.shortDescription();
+    });
+
+    // UI Methods
+    self.shortDescription = ko.pureComputed(function() {
+        return Utility.string.truncateStringAtLength(self.weaponDescription(), self.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
     return self;

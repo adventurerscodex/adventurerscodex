@@ -283,6 +283,20 @@ export var Notifications = {
         changed: new Signal(),
         armorClassModifier: {
             changed: new Signal()
+        },
+        deathSaves: {
+            fail: {
+                changed: new Signal()
+            },
+            success: {
+                changed: new Signal()
+            },
+            notFail: {
+                changed: new Signal()
+            },
+            notSuccess: {
+                changed: new Signal()
+            }
         }
     },
 

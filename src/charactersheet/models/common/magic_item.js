@@ -10,7 +10,7 @@ import ko from 'knockout';
 
 export function MagicItem() {
     var self = this;
-
+    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.DESCRIPTION_MAX_LENGTH = 145;
 
     self.ps = PersistenceService.register(MagicItem, self);
@@ -30,6 +30,7 @@ export function MagicItem() {
     self.magicItemCharges = ko.observable(0);
     self.magicItemWeight = ko.observable(0);
     self.magicItemDescription = ko.observable('');
+
     self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
     self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
@@ -51,6 +52,10 @@ export function MagicItem() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
+        return Utility.string.truncateStringAtLength(self.magicItemDescription(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    });
+
+    self.longDescription = ko.pureComputed(function() {
         return Utility.string.truncateStringAtLength(self.magicItemDescription(), self.DESCRIPTION_MAX_LENGTH);
     });
 

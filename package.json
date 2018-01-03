@@ -1,7 +1,7 @@
 {
   "name": "AdventurersCodex",
   "description": "Experience the next step in tabletop RPGs",
-  "version": "1.5.3",
+  "version": "1.6.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/adventurerscodex/adventurerscodex"
@@ -63,6 +63,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.26.0",
@@ -86,7 +87,6 @@
     "lz-string": "^1.4.4",
     "node-uuid": "^1.4.8",
     "save-as": "^0.1.8",
-    "select2": "^3.5.1",
     "signals": "^1.0.0",
     "spin": "0.0.1",
     "style-loader": "^0.18.2",

@@ -23,12 +23,7 @@ export function LoginViewModel() {
 
     self.load = function() {
         Notifications.authentication.loggedIn.add(self.dataHasChanged);
-        UserServiceManager.sharedService().init();
-        AuthenticationServiceManager.sharedService().init();
-    };
-
-    self.unload = function() {
-        Notifications.authentication.loggedIn.remove(self.dataHasChanged);
+        self.dataHasChanged();
     };
 
     /* UI Methods */

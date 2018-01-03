@@ -1,7 +1,10 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
+import {
+    Fixtures,
+    Utility
+} from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 /**
@@ -10,7 +13,7 @@ import ko from 'knockout';
  */
 export function Item() {
     var self = this;
-
+    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
     self.DESCRIPTION_MAX_LENGTH = 200;
 
     self.ps = PersistenceService.register(Item, self);
@@ -27,6 +30,8 @@ export function Item() {
     self.itemCost = ko.observable(0);
     self.itemCurrencyDenomination = ko.observable('');
 
+    self.itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+
     self.totalWeight = ko.pureComputed(function() {
         if (self.itemQty() && self.itemWeight()) {
             return parseInt(self.itemQty()) * parseFloat(self.itemWeight());
@@ -35,6 +40,10 @@ export function Item() {
     });
 
     self.shortDescription = ko.pureComputed(function() {
+        return Utility.string.truncateStringAtLength(self.itemDesc(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    });
+
+    self.longDescription = ko.pureComputed(function() {
         return Utility.string.truncateStringAtLength(self.itemDesc(), self.DESCRIPTION_MAX_LENGTH);
     });
 

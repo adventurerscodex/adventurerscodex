@@ -39,7 +39,7 @@ describe('EncounterWeapon', function(){
             encounterWeapon.weaponDescription('Blah');
 
             var label = encounterWeapon.descriptionLabel();
-            label.should.equal('Blah');
+            label.should.equal('Blah\n');
         });
         it('should return a blank', function() {
             var encounterWeapon = new EncounterWeapon();

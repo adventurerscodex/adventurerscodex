@@ -37,10 +37,8 @@ export function NotesViewModel() {
         var notes = PersistenceService.findBy(Note, 'characterId', key);
         if (notes.length > 0) {
             self.notes(notes);
-        } else {
-            self.addNote();
+            self.selectNote(self.notes()[0]);
         }
-        self.selectNote(self.notes()[0]);
     };
 
     /* UI Methods */
@@ -54,11 +52,21 @@ export function NotesViewModel() {
         self.selectNote(note);
     };
 
+    self.noteToSelect = function(note) {
+        var previousNote = self.notes().indexOf(note) - 1;
+        if (previousNote === -1) {
+            previousNote = 0;
+        }
+
+        return previousNote;
+    };
+
     self.deleteNote = function(note) {
+        const selectNote = self.noteToSelect(note);
         self.notes.remove(note);
         note.delete();
         if (self.notes().length > 0) {
-            self.selectNote(self.notes()[0]);
+            self.selectNote(self.notes()[selectNote]);
         } else {
             self.selectedNote(false);
         }

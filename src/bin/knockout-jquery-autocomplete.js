@@ -35,15 +35,25 @@ ko.bindingHandlers.autocomplete = {
         var source = ko.utils.unwrapObservable(value.source);
         var onselect = ko.utils.unwrapObservable(value.onselect);
         var delay = ko.utils.unwrapObservable(value.delay || 150);
-
         $(element).autocomplete({
             delay: delay,
-            source: source,
+            source: (request, response) => {
+                // Clear the bindings on every search.
+                // https://stackoverflow.com/a/43393889/2085172
+
+                $(element).data('ui-autocomplete').menu.bindings = $();
+                // Call the source as normal.
+                return source(request, response)
+            },
+            minLength: 0,
             select: function(event, ui) {
                 if (onselect) {
                     onselect(ui.item.label, ui.item.value);
                 }
             }
-        });
+        })
+        $(element).focus(function() {
+            $(element).autocomplete('search', '');
+        })
     }
 };

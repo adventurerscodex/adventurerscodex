@@ -15,7 +15,10 @@
                 <!-- ko if: name && url -->
                     <h1 data-bind="html: name"></h1>
                     <hr>
-                    <img data-bind="attr: { src: url }" width="100%" class="img-responsive img-rounded"/>
+                    <img data-bind="attr: { src: url }, click: toggleFullScreen" width="100%" class="img-responsive img-rounded clickable"/>
+                    <small>
+                        <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
+                    </small>
                 <!-- /ko -->
                 <!-- ko if: !name() && !url() -->
                     <div class="detail-place-holder well text-center">
@@ -27,4 +30,8 @@
         </div>
     </div>
 </div>
+
+<!-- The visibility is managed internally -->
+<full-screen-image params="imageSource: url, fullScreenStatus: fullScreen">
+</full-screen-image>
 <!-- /ko -->

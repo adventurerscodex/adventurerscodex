@@ -23,17 +23,6 @@ export function CharacterPickerViewModel(params) {
     self.defaultCharacterKey = ko.observable(null);
     self.state = params.state;
 
-// TODO: Move to Load if required.
-//     self.init = function() {
-//         Notifications.characters.changed.add(function() {
-//             self.load();
-//         });
-//         Notifications.profile.changed.add(function() {
-//             self.load();
-//         });
-//         Notifications.user.exists.add(self._handleUserChanged);
-//     };
-
     self.load = function() {
         self.characters(PersistenceService.findAll(Character));
     };
@@ -53,6 +42,12 @@ export function CharacterPickerViewModel(params) {
         if (character.key() !== activeCharacterKey) {
             CharacterManager.changeCharacter(character.key());
         }
+    };
+
+    self.removeCharacter = function(character) {
+        //Remove the character.
+        character.delete();
+        self.characters.remove(character);
     };
 
     self.localStoragePercent = ko.computed(function() {

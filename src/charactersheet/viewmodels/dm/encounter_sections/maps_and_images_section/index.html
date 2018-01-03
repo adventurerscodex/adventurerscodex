@@ -84,6 +84,10 @@
   </tbody>
 </table>
 
+<!-- The visibility is managed internally -->
+<full-screen-image params="imageSource: convertedDisplayUrl, fullScreenStatus: fullScreen">
+</full-screen-image>
+
 <!-- Add Modal -->
 <div class="modal fade"
      id="addMapOrImage"
@@ -187,7 +191,11 @@
             <hr />
             <div class="row row-padded">
               <div class="col-xs-12 col-padded text-center">
-                <img data-bind="attr: { src: $parent.convertedDisplayUrl }" width="100%" />
+                <img data-bind="attr: { src: $parent.convertedDisplayUrl },
+                  click: $parent.toggleFullScreen" width="100%" class="clickable" />
+                <small>
+                  <em class="text-muted">Click on the image to view it in Full Screen.</em>
+                </small>
               </div>
             </div>
             <hr />

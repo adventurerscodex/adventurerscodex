@@ -44,6 +44,7 @@ export function MapsAndImagesSectionViewModel(params) {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.fullScreen = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -82,7 +83,7 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.save = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+        var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -103,7 +104,7 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.delete = function() {
         var key = CharacterManager.activeCharacter().key();
-        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+        var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
@@ -209,6 +210,10 @@ export function MapsAndImagesSectionViewModel(params) {
         self.editFirstModalElementHasFocus(true);
     };
 
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
+    };
+
     /* Push to Player Methods */
 
     self.shouldShowPushButton = ko.pureComputed(function() {
@@ -229,7 +234,7 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self._dataHasChanged = function() {
         var key = CharacterManager.activeCharacter().key();
-        var map =  PersistenceService.findByPredicates(MapOrImage, [
+        var map = PersistenceService.findByPredicates(MapOrImage, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ]);
@@ -237,7 +242,7 @@ export function MapsAndImagesSectionViewModel(params) {
             self.mapsOrImages(map);
         }
 
-        var section =  PersistenceService.findByPredicates(MapsAndImagesSection, [
+        var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];

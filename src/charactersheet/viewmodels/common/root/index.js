@@ -15,7 +15,11 @@ import {
     UserServiceManager,
     XMPPService
 } from 'charactersheet/services';
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import {
+    CharacterManager,
+    Notifications,
+    TabFragmentManager
+} from 'charactersheet/utilities';
 import {
     HotkeysService,
     PersistenceService
@@ -103,8 +107,15 @@ export function AdventurersCodexViewModel() {
         Notifications.characterManager.changing.add(self._handleChangingCharacter);
         Notifications.characterManager.changed.add(self._handleChangedCharacter);
 
+        CharacterManager.init();
         var characters = PersistenceService.findAll(Character);
-        if (characters.length > 0) {
+
+        TabFragmentManager.init();
+
+        if (CharacterManager.activeCharacter()) {
+            // There might be an active character in the URL.
+            self._handleChangedCharacter();
+        } else if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
         } else {
             //If no current character exists, fire the load process anyway.
@@ -115,6 +126,7 @@ export function AdventurersCodexViewModel() {
         NodeServiceManager.sharedService().init();
         ChatServiceManager.sharedService().init();
         NotificationsServiceManager.sharedService().init();
+        UserServiceManager.sharedService().init();
         AuthenticationServiceManager.sharedService().init();
     };
 
@@ -157,6 +169,9 @@ export function AdventurersCodexViewModel() {
             self.unload();
         }
         self.selectedCharacter(null);
+
+        TabFragmentManager.changeTabFragment(null);
+
     };
 
     self._handleChangedCharacter = function() {
