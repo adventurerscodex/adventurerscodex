@@ -1,3 +1,17 @@
+version 1.6.0 (1/3/2018)
+* App now stretches the whole screen on larger devices
+* Import button is now disabled if there is no character selected to import
+* Enhancement to death save and the health status line
+* Added delete button on the character picker screen
+* Notes section improvements
+* Deleting a character no longer changes you to the first character on the list
+* Various UI fixes for DM tools on mobile
+* Remove select2 and add jquery auto-complete
+* Move menu to the nav bar
+* Implemented point buy system in the wizard
+* Current character or campaign and tab is saved the URL so that those are loaded when the page is refreshed
+* Various UI improvements and performance enhancements
+
 version 1.5.3 (12/27/2017)
 * fixes an issue with the latest version not working on older browser versions
 
