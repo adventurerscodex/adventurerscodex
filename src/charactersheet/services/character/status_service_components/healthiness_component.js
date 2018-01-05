@@ -52,18 +52,14 @@ export function HealthinessStatusServiceComponent() {
             var deathSaveFailures = 0;
 
             if (deathSaves.length > 0) {
-                for(var i=0; i<3; i++) {
-                    if (deathSaves[i] !== undefined) {
-                        if (deathSaves[i].deathSaveSuccess()) {
-                            deathSaveSuccesses++;
-                        }
+                for (var i=0; i<3; i++) {
+                    if (deathSaves[i] !== undefined && deathSaves[i].deathSaveSuccess()) {
+                        deathSaveSuccesses++;
                     }
                 }
-                for(var j=3; j<6; j++) {
-                    if (deathSaves[j] !== undefined) {
-                        if (deathSaves[j].deathSaveFailure()) {
-                            deathSaveFailures++;
-                        }
+                for (var j=3; j<6; j++) {
+                    if (deathSaves[j] !== undefined && deathSaves[j].deathSaveFailure()) {
+                        deathSaveFailures++;
                     }
                 }
                 if (deathSaveSuccesses === 3) {
@@ -147,17 +143,17 @@ export function HealthinessStatusServiceComponent() {
         }
 
         // Character is dead
-        if (health.hitpoints() === 0 && deathSavesDidFail){
+        if (health.hitpoints() === 0 && deathSavesDidFail) {
             return -2;
         }
 
         // Character is unconscious and stable
-        if (health.hitpoints() === 0 && deathSavesDidSucceed){
+        if (health.hitpoints() === 0 && deathSavesDidSucceed) {
             return -1;
         }
 
         // Character is unconscious
-        if (health.hitpoints() === 0){
+        if (health.hitpoints() === 0) {
             return 0.0;
         }
 
