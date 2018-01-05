@@ -162,13 +162,14 @@ export function MonsterSectionViewModel(params) {
 
     self.editMonster = function(monster) {
         self.editItemIndex = monster.__id;
-        self.currentEditItem(new Monster());
-        self.currentEditItem().importValues(monster.exportValues());
-        self.currentEditItem().abilityScores(monster.abilityScores().map(function(e, i, _) {
+        var editMonster = new Monster();
+        editMonster.importValues(monster.exportValues());
+        editMonster.abilityScores(monster.abilityScores().map(function(e, i, _) {
             var abilityScore = new MonsterAbilityScore();
             abilityScore.importValues(e);
             return abilityScore;
         }));
+        self.currentEditItem(editMonster);
         self.openEditModal(true);
     };
 
