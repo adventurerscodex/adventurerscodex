@@ -53,13 +53,17 @@ export function HealthinessStatusServiceComponent() {
 
             if (deathSaves.length > 0) {
                 for(var i=0; i<3; i++) {
-                    if(deathSaves[i].deathSaveSuccess()) {
-                        deathSaveSuccesses++;
+                    if (deathSaves[i] !== undefined) {
+                        if (deathSaves[i].deathSaveSuccess()) {
+                            deathSaveSuccesses++;
+                        }
                     }
                 }
                 for(var j=3; j<6; j++) {
-                    if(deathSaves[j].deathSaveFailure()) {
-                        deathSaveFailures++;
+                    if (deathSaves[j] !== undefined) {
+                        if (deathSaves[j].deathSaveFailure()) {
+                            deathSaveFailures++;
+                        }
                     }
                 }
                 if (deathSaveSuccesses === 3) {
