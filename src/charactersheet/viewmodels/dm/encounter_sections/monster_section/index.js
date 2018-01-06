@@ -193,7 +193,7 @@ export function MonsterSectionViewModel(params) {
     };
 
     self.renderAbilityScoresInAddModal = function() {
-        if (self.blankMonster().abilityScores()[0].name()) {
+        if (self.blankMonster().abilityScores()[0]) {
             return true;
         } else {
             return false;
@@ -240,7 +240,8 @@ export function MonsterSectionViewModel(params) {
                         var abilityScore = PersistenceService.findByPredicates(MonsterAbilityScore, [
                             new KeyValuePredicate('characterId', key),
                             new KeyValuePredicate('encounterId', e.encounterId()),
-                            new KeyValuePredicate('monsterId', e.monsterId())
+                            new KeyValuePredicate('monsterId', e.monsterId()),
+                            new KeyValuePredicate('name', e.name())
                         ])[0];
                         abilityScore.importValues(e);
                         return abilityScore;
