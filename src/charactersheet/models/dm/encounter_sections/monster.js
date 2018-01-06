@@ -23,9 +23,7 @@ export function Monster() {
     self.armorClass = ko.observable();
     self.hitPoints = ko.observable();
     self.speed = ko.observable();
-    self.abilityScores = ko.observableArray([new MonsterAbilityScore(), new MonsterAbilityScore(),
-        new MonsterAbilityScore(), new MonsterAbilityScore(), new MonsterAbilityScore(),
-        new MonsterAbilityScore()]);
+    self.abilityScores = ko.observableArray([]);
     self.savingThrows = ko.observable();
     self.skills = ko.observable();
     self.senses = ko.observable();
