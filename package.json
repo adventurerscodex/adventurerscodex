@@ -1,7 +1,7 @@
 {
   "name": "AdventurersCodex",
   "description": "Experience the next step in tabletop RPGs",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/adventurerscodex/adventurerscodex"
