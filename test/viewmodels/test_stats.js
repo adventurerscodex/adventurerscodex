@@ -36,8 +36,8 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(0);
-                stats.health().hitpoints().should.equal(15);
+                stats.damageHandler(4);
+                stats.health().hitpoints().should.equal(11);
             });
         });
 
@@ -46,7 +46,7 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(4);
+                stats.damageHandler(4);
                 stats.health().tempHitpointsRemaining().should.equal(1);
             });
         });
@@ -57,7 +57,8 @@ describe('Stats View Model', function() {
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
                 stats.health().damage(8);
-                stats.health().regularHitpointsRemaining().should.equal(7);
+                stats.health().tempHitpointsRemaining().should.equal(5);
+                stats.health().regularHitpointsRemaining().should.equal(2);
             });
         });
 
@@ -66,9 +67,9 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(8);
+                stats.damageHandler(8);
                 stats.health().isKnockedOut().should.equal(false);
-                stats.health().damage(15);
+                stats.damageHandler(15);
                 stats.health().isKnockedOut().should.equal(true);
             });
         });
@@ -78,9 +79,9 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(8);
+                stats.damageHandler(8);
                 stats.health().isDangerous().should.equal(false);
-                stats.health().damage(14);
+                stats.damageHandler(9);
                 stats.health().isDangerous().should.equal(true);
             });
         });
@@ -90,9 +91,9 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(6);
+                stats.damageHandler(6);
                 stats.health().isWarning().should.equal(false);
-                stats.health().damage(8);
+                stats.damageHandler(8);
                 stats.health().isWarning().should.equal(true);
             });
         });
@@ -102,11 +103,11 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(6);
+                stats.damageHandler(6);
                 stats.health().progressType().should.equal('progress-bar-success');
-                stats.health().damage(8);
+                stats.damageHandler(7);
                 stats.health().progressType().should.equal('progress-bar-warning');
-                stats.health().damage(11);
+                stats.damageHandler(9);
                 stats.health().progressType().should.equal('progress-bar-danger');
             });
         });
@@ -116,11 +117,11 @@ describe('Stats View Model', function() {
                 var stats = new StatsViewModel();
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
-                stats.health().damage(13);
+                stats.health().damage(8);
                 var e = stats.health().exportValues();
                 e.maxHitpoints.should.equal(10);
                 e.tempHitpoints.should.equal(5);
-                e.damage.should.equal(13);
+                e.damage.should.equal(8);
             });
         });
 
