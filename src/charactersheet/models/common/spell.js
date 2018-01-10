@@ -79,6 +79,22 @@ export function Spell() {
         }
     });
 
+    self.spellIsCastable = ko.pureComputed(function() {
+        if (self.spellPrepared() === true || self.spellAlwaysPrepared() === true || self.spellLevel() === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    self.spellTypeLabel = ko.pureComputed(function() {
+        if (self.spellType() === 'Savings Throw') {
+            return ('Savings Throw' + ': ' + self.spellSaveAttr());
+        } else {
+            return self.spellType();
+        }
+    });
+
     self.spellSummaryLabel = ko.pureComputed(function() {
         var header = parseInt(self.spellLevel()) !== 0 ? 'Level ' : '';
         return self.spellSchool() + ', ' + header + self.spellLevelLabel();

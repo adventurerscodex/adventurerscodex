@@ -86,10 +86,6 @@ describe('SpellsViewModel', function(){
             book.sort().should.equal(book.sorts['spellName desc']);
             book.sortBy('spellName');
             book.sort().should.equal(book.sorts['spellName asc']);
-            book.sortBy('spellPrepared');
-            book.sort().should.equal(book.sorts['spellPrepared asc']);
-            book.sortBy('spellPrepared');
-            book.sort().should.equal(book.sorts['spellPrepared desc']);
             book.sortBy('spellLevel');
             book.sort().should.equal(book.sorts['spellLevel asc']);
             book.sortBy('spellLevel');
@@ -97,15 +93,28 @@ describe('SpellsViewModel', function(){
         });
     });
 
+    describe('filteredAndSortedSpells', function() {
+        it('should display only spellIsCastable spells when filtered', function() {
+            var book = new SpellbookViewModel();
+            var spell = new Spell();
+            spell.spellLevel(1);
+            var spell2 = new Spell();
+            spell2.spellLevel(1);
+            spell2.spellPrepared(true);
+            book.spellbook([spell, spell2]);
+            book.filteredAndSortedSpells().length.should.equal(2);
+            book.filteredByCastable(true);
+            book.filteredAndSortedSpells().length.should.equal(1);
+        });
+    });
+
+
     describe('Sort Arrow', function() {
         it('should sort the list of skills by given criteria', function() {
             var book = new SpellbookViewModel();
             book.sortBy('spellName');
             book.sort().should.equal(book.sorts['spellName desc']);
             book.sortArrow('spellName').should.equal('fa fa-arrow-down fa-color');
-            book.sortBy('spellPrepared');
-            book.sort().should.equal(book.sorts['spellPrepared asc']);
-            book.sortArrow('spellPrepared').should.equal('fa fa-arrow-up fa-color');
             book.sortArrow('spellLevel').should.equal('');
             book.sortBy('spellName');
             book.sort().should.equal(book.sorts['spellName asc']);

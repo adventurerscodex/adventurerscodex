@@ -127,4 +127,30 @@ describe('Spell Model', function() {
             spell.spellLevelLabel().should.equal(1);
         });
     });
+
+    describe('A Castable Spell', function() {
+        it('should be castable if it is a cantrip', function() {
+            var cantrip = new Spell();
+            cantrip.spellLevel(0);
+            cantrip.spellIsCastable().should.equal(true);
+        });
+        it('should be castable if it is prepared', function() {
+            var spell = new Spell();
+            spell.spellLevel(1);
+            spell.spellPrepared(true);
+            spell.spellIsCastable().should.equal(true);
+        });
+        it('should be castable if it is always prepared', function() {
+            var spell = new Spell();
+            spell.spellLevel(1);
+            spell.spellAlwaysPrepared(true);
+            spell.spellIsCastable().should.equal(true);
+        });
+        it('should not be castable if it is not prepared', function() {
+            var spell = new Spell();
+            spell.spellLevel(1);
+            spell.spellIsCastable().should.equal(false);
+        });
+    });
+
 });
