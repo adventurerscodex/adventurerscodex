@@ -971,6 +971,6 @@ div.toggle-arrow-container {
   max-height: 150px;
   overflow-y: auto;
   overflow-x: hidden;
-  position: fixed;
+  position: absolute;
   z-index:2147483647;
 }
