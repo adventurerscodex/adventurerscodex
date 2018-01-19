@@ -89,19 +89,6 @@ export function EnvironmentSectionViewModel(params) {
 
         self._connectionHasChanged();
 
-        // Search for the current environment and if it doesn't exist, then create.
-        var key = CharacterManager.activeCharacter().key();
-        var environment = PersistenceService.findByPredicates(Environment, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!environment) {
-            environment = new Environment();
-            environment.characterId(key);
-            environment.encounterId(self.encounterId());
-            environment.save();
-        }
-
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
@@ -198,6 +185,7 @@ export function EnvironmentSectionViewModel(params) {
             self.tagline(environmentSection.tagline());
         }
 
+        // Search for the current environment and if it doesn't exist, then create.
         var environment = PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -210,6 +198,11 @@ export function EnvironmentSectionViewModel(params) {
             self.description(environment.description());
             self.isExhibited(environment.isExhibited());
         } else {
+            environment = new Environment();
+            environment.characterId(key);
+            environment.encounterId(self.encounterId());
+            environment.save();
+
             self.clearFields();
         }
 
