@@ -96,15 +96,12 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self.save = function() {
-        console.log('SAVING ENV')
         var key = CharacterManager.activeCharacter().key();
         var environment = PersistenceService.findByPredicates(Environment, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
         ])[0];
-        console.log(environment)
         if (environment) {
-            console.log('SAVING ENV -- DATA')
             environment.imageUrl(self.imageUrl());
             environment.weather(self.weather());
             environment.terrain(self.terrain());
