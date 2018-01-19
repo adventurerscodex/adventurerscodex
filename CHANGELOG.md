@@ -1,4 +1,8 @@
-version 1.6.0 (1/3/2018)
+version 1.6.1 (1/19/2018)
+* Fix autocomplete issues
+* Fixed bug with the environment section in an encounter
+
+version 1.6.0 (1/03/2018)
 * App now stretches the whole screen on larger devices
 * Import button is now disabled if there is no character selected to import
 * Enhancement to death save and the health status line
