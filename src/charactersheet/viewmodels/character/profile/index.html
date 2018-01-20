@@ -5,17 +5,23 @@
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Player Name</span>
-            <input type="text" class="form-control" aria-describedby="basic-addon2"
-              data-bind='value: playerName' />
+            <input type="text"
+                   class="form-control"
+                   id="profilePlayerNameInput"
+                   aria-describedby="basic-addon2"
+                   data-bind='value: playerName' />
         </div>
       </div>
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Background</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='value: background,
-              autocomplete: { source: backgroundOptions,
-              onselect: setBackground }' />
+          <input type="text"
+                 class="form-control"
+                 id="profileBackgroundInput"
+                 aria-describedby="basic-addon2"
+                 data-bind='value: background,
+                 autocomplete: { source: backgroundOptions,
+                 onselect: setBackground }' />
         </div>
       </div>
     </div>
@@ -24,17 +30,23 @@
       <div class="col-md-6 col-padded">
     	  <div class="input-group">
 	      	<span class="input-group-addon" id="basic-addon2">Alignment</span>
-      		<input type="text" class="form-control" aria-describedby="basic-addon2"
-		      	data-bind='value: alignment,
-              autocomplete: { source: alignmentOptions,
-              onselect: setAlignment }'>
+      		<input type="text"
+                 class="form-control"
+                 id="profileAlignmentInput"
+                 aria-describedby="basic-addon2"
+		      	     data-bind='value: alignment,
+                 autocomplete: { source: alignmentOptions,
+                 onselect: setAlignment }'>
   	    </div>
 	    </div>
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Deity</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='value: diety'>
+          <input type="text"
+                 class="form-control"
+                 id="profileDeityInput"
+                 aria-describedby="basic-addon2"
+                 data-bind='value: diety'>
         </div>
       </div>
     </div>
@@ -43,19 +55,25 @@
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Race</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='value: race,
-              autocomplete: { source: raceOptions,
-              onselect: setRace }'>
+          <input type="text"
+                 class="form-control"
+                 id="profileRaceInput"
+                 aria-describedby="basic-addon2"
+                 data-bind='value: race,
+                 autocomplete: { source: raceOptions,
+                 onselect: setRace }'>
         </div>
       </div>
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Class</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='value: typeClass,
-              autocomplete: { source: classOptions,
-              onselect: setClass }'>
+          <input type="text"
+                 class="form-control"
+                 id="profileClassInput"
+                 aria-describedby="basic-addon2"
+                 data-bind='value: typeClass,
+                 autocomplete: { source: classOptions,
+                 onselect: setClass }'>
         </div>
       </div>
     </div>
@@ -63,15 +81,21 @@
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Gender</span>
-          <input type="text" class="form-control" aria-describedby="basic-addon2"
-            data-bind='value: gender'>
+          <input type="text"
+                 class="form-control"
+                 id="profileGenderInput"
+                 aria-describedby="basic-addon2"
+                 data-bind='value: gender'>
         </div>
       </div>
       <div class="col-md-6 col-padded">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon2">Age</span>
-          <input type="number" class="form-control" aria-describedby="basic-addon2"
-            data-bind='value: age'>
+          <input type="number"
+                 class="form-control"
+                 id="profileAgeInput"
+                 aria-describedby="basic-addon2"
+                 data-bind='value: age'>
         </div>
       </div>
     </div>
