@@ -1,6 +1,6 @@
 <div class="panel panel-default bio">
   <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover">
+    <table class="table table-responsive table-ac-bordered table-hover" id="traitTable">
       <thead>
         <tr>
           <th data-bind="click: function(){sortBy('name');}" class="col-md-7">
@@ -13,7 +13,7 @@
           </th>
           <th class="col-md-1">
             <a data-toggle="modal"
-              data-target="#addTrait" href="#">
+              data-target="#addTrait" id="traitAddIcon" href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -71,7 +71,7 @@
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
-                        id="traitName"
+                        id="traitAddNameInput"
                         placeholder="Trance"
                         data-bind='textInput: blankTrait().name, hasFocus: firstModalElementHasFocus,
                         autocomplete: { source: traitsPrePopFilter,
@@ -83,7 +83,7 @@
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
-                        id="race"
+                        id="traitAddRaceInput"
                         placeholder="Elf"
                         data-bind='textInput: blankTrait().race,
                         autocomplete: { source: raceOptions,
@@ -95,7 +95,7 @@
               <div class="col-sm-10">
                 <textarea type="password"
                           class="form-control"
-                          id="traitDescription"
+                          id="traitAddDescriptionTextarea"
                           rows="4"
                           placeholder="Elves don't need to sleep..."
                           data-bind='textInput: blankTrait().description'>
@@ -109,7 +109,7 @@
               <div class="col-sm-7">
                 <input type="checkbox"
                          class="form-control"
-                         id="tracked"
+                         id="traitAddTrackedCheckbox"
                          data-bind='checked: blankTrait().isTracked'>
               </div>
           </div>
@@ -119,7 +119,7 @@
               </div>
               <label for="bonus" class="col-sm-2 control-label">Max</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" id="max" min="1"
+                <input type="number" class="form-control" id="traitAddMaxInput" min="1"
                       data-bind='textInput: blankTracked().maxUses'>
               </div>
             </div>
@@ -129,14 +129,14 @@
               <label class="col-sm-2 control-label">Resets on...</label>
               <div class="col-sm-9">
                 <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default"
+                  <label class="btn btn-default" id="traitAddShortRestInput"
                         data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
                     <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                             data-bind="checked: blankTracked().resetsOn"/>
                       <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
                       &nbsp;&nbsp;&nbsp;Short Rest
                   </label>
-                  <label class="btn btn-default"
+                  <label class="btn btn-default" id="traitAddLongRestInput"
                   data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
                     <input type="radio" class="hide-block" name="blankresetsOnLong"
                             value="long" data-bind="checked: blankTracked().resetsOn"/>
@@ -149,6 +149,7 @@
           </div>
           <div class="modal-footer">
             <button type="button"
+                    id="traitAddAddButton"
                     class="btn btn-primary"
                     data-bind='click: addTrait'
                     data-dismiss="modal">Add</button>
@@ -191,12 +192,12 @@
       <div class="modal-body">
         <!-- Begin Tabs -->
         <ul class="nav nav-tabs tabs">
-          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+          <li role="presentation" id="traitModalPreview" data-bind="click: selectPreviewTab, css: previewTabStatus">
             <a href="#" aria-controls="traitModalPreview" role="tab" data-toggle="tab">
                 <b>Preview</b>
             </a>
           </li>
-          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+          <li role="presentation" id="traitModalEdit" data-bind="click: selectEditTab, css: editTabStatus">
             <a href="#" aria-controls="traitModalEdit" role="tab" data-toggle="tab">
                 <b>Edit</b>
             </a>
@@ -246,7 +247,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                         class="form-control"
-                        id="traitName"
+                        id="traitEditNameInput"
                         placeholder="Trance"
                         data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
                 </div>
@@ -256,7 +257,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
-                         id="race"
+                         id="traitEditRaceInput"
                          placeholder="Trance"
                          data-bind='textInput: race,
                         autocomplete: { source: $parent.raceOptions,
@@ -268,6 +269,7 @@
                        class="col-sm-2 control-label">Description</label>
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
+                           id="traitEditDescriptionTextarea"
                            class="form-control"
                            placeholder="Elves don't need to sleep..."
                            data-bind='value: description, markdownEditor: true'></textarea>
@@ -276,7 +278,7 @@
               <div class="form-group">
                 <label for="traitDescription" class="col-sm-2 control-label">Tracked?</label>
                   <div class="col-sm-10">
-                    <input type="checkbox" class="form-control" id="tracked"
+                    <input type="checkbox" class="form-control" id="traitEditTrackedCheckbox"
                             data-bind='checked: isTracked'>
                   </div>
               </div>
@@ -286,7 +288,7 @@
                   </div>
                   <label for="bonus" class="col-sm-2 control-label">Max</label>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" id="max" min="1"
+                    <input type="number" class="form-control" id="traitEditMaxInput" min="1"
                           data-bind='textInput: $parent.currentEditTracked().maxUses'>
                   </div>
                 </div>
@@ -296,14 +298,14 @@
                   <label class="col-sm-2 control-label">Resets on...</label>
                   <div class="col-sm-9">
                     <div class="btn-group btn-group-justified" role="group">
-                      <label class="btn btn-default"
+                      <label class="btn btn-default" id="traitEditShortRestInput"
                             data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                                 data-bind="checked: $parent.currentEditTracked().resetsOn"/>
                           <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }"></img>
                           &nbsp;&nbsp;&nbsp;Short Rest
                       </label>
-                      <label class="btn btn-default"
+                      <label class="btn btn-default" id="traitEditLongRestInput"
                       data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnLong"
                                 value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
@@ -316,6 +318,7 @@
                 <!-- /ko -->
               <div class="modal-footer">
                 <button type="button"
+                        id="traitEditDoneButton"
                         class="btn btn-primary"
                         data-dismiss="modal">Done</button>
               </div>
