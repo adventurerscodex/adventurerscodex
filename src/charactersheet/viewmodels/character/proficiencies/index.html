@@ -1,6 +1,6 @@
 <div class="panel panel-default bio">
   <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover">
+    <table class="table table-responsive table-ac-bordered table-hover" id="proficiencyTable">
       <thead>
         <tr>
           <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
@@ -13,7 +13,7 @@
           </th>
           <th class="col-md-1">
             <a data-toggle="modal"
-              data-target="#addProficiency" href="#">
+              data-target="#addProficiency" id="proficiencyAddIcon" href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -73,7 +73,7 @@
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
-                        id="proficiencyName"
+                        id="proficiencyAddNameInput"
                         placeholder="Daggers"
                         data-bind='textInput: blankProficiency().name,
                         autocomplete: { source: proficienciesPrePopFilter,
@@ -85,7 +85,7 @@
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
-                        id="proficiencyName"
+                        id="proficiencyAddTypeInput"
                         placeholder="Weapon"
                         data-bind='textInput: blankProficiency().type,
                         autocomplete: { source: blankProficiency().proficiencyType }'>
@@ -96,7 +96,7 @@
               <div class="col-sm-10">
                 <textarea type="password"
                           class="form-control"
-                          id="proficiencyDescription"
+                          id="proficiencyAddDescriptionTextarea"
                           rows="4"
                           placeholder="Proficiency gained from class."
                           data-bind='textInput: blankProficiency().description'>
@@ -106,6 +106,7 @@
           <div class="modal-footer">
             <button type="button"
                     class="btn btn-primary"
+                    id="proficiencyAddAddButton"
                     data-bind='click: addProficiency'
                     data-dismiss="modal">Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
@@ -147,12 +148,12 @@
       <div class="modal-body">
         <!-- Begin Tabs -->
         <ul class="nav nav-tabs tabs">
-          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+          <li role="presentation" id="proficiencyModalPreview" proficiencyModalPreview data-bind="click: selectPreviewTab, css: previewTabStatus">
             <a href="#" aria-controls="proficiencyModalPreview" role="tab" data-toggle="tab">
                 <b>Preview</b>
             </a>
           </li>
-          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+          <li role="presentation" id="proficiencyModalEdit" data-bind="click: selectEditTab, css: editTabStatus">
             <a href="#" aria-controls="proficiencyModalEdit" role="tab" data-toggle="tab">
                 <b>Edit</b>
             </a>
@@ -185,7 +186,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                         class="form-control"
-                        id="proficiencyName"
+                        id="proficiencyEditNameInput"
                         placeholder="Daggers"
                         data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
                 </div>
@@ -195,7 +196,7 @@
                   <div class="col-sm-10">
                   <input type="text"
                         class="form-control"
-                        id="proficiencyType"
+                        id="proficiencyEditTypeInput"
                         placeholder="Weapon"
                         data-bind='textInput: type'>
                   </div>
@@ -206,12 +207,14 @@
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
                            class="form-control"
+                           id="proficiencyEditDescriptionTextarea"
                            data-bind='value: description, markdownEditor: true'></textarea>
                   </div>
               </div>
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-primary"
+                        id="proficiencyEditDoneButton"
                         data-dismiss="modal">Done</button>
               </div>
             </form>

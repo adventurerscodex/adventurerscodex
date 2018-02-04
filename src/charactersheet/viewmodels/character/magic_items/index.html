@@ -1,6 +1,6 @@
 <div class="panel panel-default">
   <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover">
+    <table class="table table-responsive table-ac-bordered table-hover" id="magicItemsTable">
       <thead>
         <tr>
           <th data-bind="click: function(){sortBy('magicItemName');}" width="20%">
@@ -62,7 +62,7 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedMagicItems().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addMagicItem" href="#"
+          <td data-toggle="modal" data-target="#addMagicItem" id="magicItemsAddIcon" href="#"
             colspan="6" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new magic item
@@ -103,7 +103,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
-                         id="magicItemName"
+                         id="magicItemsAddItemInput"
                          placeholder="Dagger of Venom"
                          data-bind='textInput: blankMagicItem().magicItemName,
                          autocomplete: { source: magicItemsPrePopFilter,
@@ -115,6 +115,7 @@
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                   <input class="form-control"
+                         id="magicItemsAddTypeInput"
                          placeholder="Wand"
                          data-bind="textInput: blankMagicItem().magicItemType,
                          autocomplete: { source: blankMagicItem().magicItemTypeOptions }">
@@ -125,6 +126,7 @@
                        class="col-sm-2 control-label">Rarity</label>
                   <div class="col-sm-10">
                   <input class="form-control"
+                         id="magicItemsAddRarityInput"
                          placeholder="Legendary"
                          data-bind="textInput: blankMagicItem().magicItemRarity,
                          autocomplete: { source: blankMagicItem().magicItemRarityOptions }">
@@ -136,7 +138,7 @@
                   <div class="col-sm-10">
                     <input type="number"
                            class="form-control"
-                           id="magicItemMaxCharges"
+                           id="magicItemsAddMaxChargesInput"
                            placeholder="1"
                            min="0"
                            max="100"
@@ -150,7 +152,7 @@
                     <div class="col-sm-10">
                       <input type="number"
                              class="form-control"
-                             id="magicItemCharges"
+                             id="magicItemsAddChargesInput"
                              placeholder="1"
                              min="0"
                              max="100"
@@ -164,7 +166,7 @@
                   <div class="col-sm-10">
                     <input type="number"
                            class="form-control"
-                           id="magicItemWeight"
+                           id="magicItemsAddWeightInput"
                            placeholder="1"
                            min="0"
                            max="1000"
@@ -177,7 +179,7 @@
                   <div class="col-sm-10">
                     <input type="checkbox"
                            class="form-control"
-                           id="magicItemRequiresAttunement"
+                           id="magicItemsAddRequiresAttunementCheckbox"
                            data-bind='checked: blankMagicItem().magicItemRequiresAttunement'>
                   </div>
               </div>
@@ -188,7 +190,7 @@
                     <div class="col-sm-10">
                       <input type="checkbox"
                              class="form-control"
-                             id="magicItemAttuned"
+                             id="magicItemsAddAttunedCheckbox"
                              data-bind='checked: blankMagicItem().magicItemAttuned'>
                     </div>
                 </div>
@@ -199,7 +201,7 @@
                   <div class="col-sm-10">
                     <textarea type="password"
                               class="form-control"
-                              id="magicItemDescription"
+                              id="magicItemsAddDescriptionTextarea"
                               rows="4"
                               placeholder="Awesome stuff goes here"
                               data-bind='textInput: blankMagicItem().magicItemDescription'>
@@ -209,9 +211,11 @@
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-default"
+                        id="magicItemsAddCancelButton"
                         data-dismiss="modal">Cancel</button>
                 <button type="button"
                         class="btn btn-primary"
+                        id="magicItemsAddAddButton"
                         data-bind='click: addItem'
                         data-dismiss="modal">Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
@@ -254,12 +258,12 @@
           <div class="modal-body">
             <!-- Begin Tabs -->
             <ul class="nav nav-tabs tabs">
-              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus" id="magicItemsModalPreviewTab">
                 <a href="#magicItemsModalPreview" aria-controls="magicItemsModalPreview" role="tab" data-toggle="tab">
                     <b>Preview</b>
                 </a>
               </li>
-              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus" id="magicItemsModalEditTab">
                 <a href="#magicItemsModalEdit" aria-controls="magicItemsModalEdit" role="tab" data-toggle="tab">
                     <b>Edit</b>
                 </a>
@@ -269,27 +273,29 @@
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="magicItemsModalPreview">
               <div id="magicItemIcon" data-bind="css: $parent.magicItemIconCSS">
                 <div class="h3">
-                  <span data-bind="text: magicItemNameLabel"></span>&nbsp;
-                  <small data-bind="text: magicItemRarity"></small>
+                  <span data-bind="text: magicItemNameLabel" id="magicItemsPreviewItemInput"></span>&nbsp;
+                  <small data-bind="text: magicItemRarity" id="magicItemsPreviewRarityInput"></small>
                 </div>
                 <hr />
                 <div class="row">
-                  <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: magicItemType"></span></div>
-                  <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: magicItemWeightLabel"></span></div>
-                  <div class="col-sm-4 col-xs-12"><b>Max Charges:</b>&nbsp;<span data-bind="text: magicItemMaxCharges"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewTypeInput"><b>Type:</b>&nbsp;<span data-bind="text: magicItemType"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewWeightInput"><b>Weight:</b>&nbsp;<span data-bind="text: magicItemWeightLabel"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewMaxChargesInput"><b>Max Charges:</b>&nbsp;<span data-bind="text: magicItemMaxCharges"></span></div>
                 </div>
                 <hr />
                 <h4>Description</h4>
                 <div class="row row-padded">
                   <div class="col-xs-12 col-padded">
                     <div data-bind="html: magicItemDescriptionHTML"
-                         class="preview-modal-overflow">
+                         class="preview-modal-overflow"
+                         id="magicItemsPreviewDescriptionTextarea">
                     </div>
                   </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button"
                           class="btn btn-primary"
+                          id="magicItemsPreviewDoneButton"
                           data-dismiss="modal">Done</button>
                 </div>
                 </div>
@@ -302,7 +308,7 @@
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
-                             id="magicItemName"
+                             id="magicItemsEditItemInput"
                              placeholder="Dagger of Venom"
                              data-bind='textInput: magicItemName,
                               hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -313,6 +319,7 @@
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
                       <input class="form-control"
+                             id="magicItemsEditTypeInput"
                              placeholder="Wand"
                              data-bind="textInput: magicItemType">
                       </div>
@@ -322,6 +329,7 @@
                            class="col-sm-2 control-label">Rarity</label>
                       <div class="col-sm-10">
                       <input class="form-control"
+                             id="magicItemsEditRarityInput"
                              placeholder="Legendary"
                              data-bind="textInput: magicItemRarity">
                       </div>
@@ -332,7 +340,7 @@
                       <div class="col-sm-10">
                         <input type="number"
                                class="form-control"
-                               id="magicItemMaxCharges"
+                               id="magicItemsEditMaxChargesInput"
                                placeholder="1"
                                min="0"
                                max="100"
@@ -346,7 +354,7 @@
                         <div class="col-sm-10">
                           <input type="number"
                                  class="form-control"
-                                 id="magicItemCharges"
+                                 id="magicItemsEditChargesInput"
                                  placeholder="1"
                                  min="0"
                                  max="100"
@@ -360,7 +368,7 @@
                       <div class="col-sm-10">
                         <input type="number"
                                class="form-control"
-                               id="magicItemWeight"
+                               id="magicItemsEditWeightInput"
                                placeholder="1"
                                min="0"
                                max="1000"
@@ -373,7 +381,7 @@
                       <div class="col-sm-10">
                         <input type="checkbox"
                                class="form-control"
-                               id="magicItemRequiresAttunement"
+                               id="magicItemsEditRequiresAttunementCheckbox"
                                data-bind='checked: magicItemRequiresAttunement'>
                       </div>
                   </div>
@@ -384,7 +392,7 @@
                         <div class="col-sm-10">
                           <input type="checkbox"
                                  class="form-control"
-                                 id="magicItemAttuned"
+                                 id="magicItemsEditAttunedCheckbox"
                                  data-bind='checked: magicItemAttuned'>
                         </div>
                     </div>
@@ -395,7 +403,7 @@
                       <div class="col-sm-10">
                         <textarea type="password"
                                   class="form-control"
-                                  id="magicItemDescription"
+                                  id="magicItemsEditDescriptionTextarea"
                                   rows="4"
                                   placeholder="Awesome stuff goes here"
                                   data-bind='textInput: magicItemDescription'>
@@ -405,6 +413,7 @@
                   <div class="modal-footer">
                     <button type="button"
                             class="btn btn-primary"
+                            id="magicItemsEditDoneButton"
                             data-dismiss="modal">Done</button>
                   </div>
                 </form>
