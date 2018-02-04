@@ -175,15 +175,15 @@
               <label class="col-sm-2 control-label">Equipped</label>
                 <div class="col-sm-10">
                   <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default"
+                  <label class="btn btn-default" id="armorAddDoffButton"
                   data-bind="css: { active: blankArmor().armorEquipped() == ''}">
-                    <input type="radio" class="hide-block" id="armorAddDoffButton"
+                    <input type="radio" class="hide-block"
                     name="notEquipped" value="" data-bind="checked: blankArmor().armorEquipped"/>
                     Doff
                   </label>
-                  <label class="btn btn-default"
+                  <label class="btn btn-default" id="armorAddDonButton"
                   data-bind="css: { active: blankArmor().armorEquipped() == 'equipped'}">
-                    <input type="radio" class="hide-block" id="armorAddDonButton"
+                    <input type="radio" class="hide-block"
                     name="equipped" value="equipped" data-bind="checked: blankArmor().armorEquipped"/>
                     Don
                     </label>
@@ -387,16 +387,15 @@
                          class="col-sm-2 control-label">Equipped</label>
                     <div class="col-sm-10">
                       <div class="btn-group btn-group-justified" role="group">
-                      <label class="btn btn-default"
+                      <label class="btn btn-default" id="armorEditDoffButton"
                       data-bind="css: { active: armorEquipped() == ''}">
-                        <input type="radio" class="hide-block" id="armorEditDoffButton"
+                        <input type="radio" class="hide-block"
                         name="notEquipped" value="" data-bind="checked: armorEquipped"/>
                         Doff
                       </label>
                       <label class="btn btn-default"
-                      data-bind="css: { active: armorEquipped() == 'equipped'}">
-                        <input type="radio" class="hide-block" id="armorEditDonButton"
-                        name="equipped" value="equipped" data-bind="checked: armorEquipped"/>
+                      data-bind="css: { active: armorEquipped() == 'equipped'}" id="armorEditDonButton">
+                        <input type="radio" class="hide-block" name="equipped" value="equipped" data-bind="checked: armorEquipped"/>
                         Don
                         </label>
                       </div>
@@ -408,7 +407,7 @@
                       <div class="col-sm-10">
                         <textarea type="password"
                                   class="form-control"
-                                  id="ArmorEditDescriptionTextarea"
+                                  id="armorEditDescriptionTextarea"
                                   rows="4"
                                   placeholder="Armor of damage blocking"
                                   data-bind='textInput: armorDescription'>
