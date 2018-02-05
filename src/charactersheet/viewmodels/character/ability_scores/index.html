@@ -3,7 +3,7 @@
     <div class="row" data-bind="click: openModal, with: abilityScores"
          title="Click to edit Ability Scores.">
       <div class="table-responsive">
-        <table class="table table-hover table-no-margin">
+        <table class="table table-hover table-no-margin" id="abilityScoresTable">
           <thead>
             <tr class="clickable">
               <th width="16%" class="text-center">Strength</th>
@@ -17,39 +17,39 @@
           <tbody>
             <tr class="clickable">
               <td class="text-center">
-                <span data-bind='text: str'></span>
+                <span data-bind='text: str' id="abilityScoresTableStrengthSpan"></span>
                 <sup>
-                  <span class="badge" data-bind="text: strModifier"></span>
+                  <span class="badge" id="abilityScoresTableStrengthModifierSpan" data-bind="text: strModifier"></span>
                 </sup>
               </td>
               <td class="text-center">
-                <span data-bind='text: dex'></span>
+                <span data-bind='text: dex' id="abilityScoresTableDexteritySpan"></span>
                 <sup>
-                  <span class="badge" data-bind="text: dexModifier"></span>
+                  <span class="badge" id="abilityScoresTableDexterityModifierSpan" data-bind="text: dexModifier"></span>
                 </sup>
               </td>
               <td class="text-center">
-                <span data-bind='text: con'></span>
+                <span data-bind='text: con' id="abilityScoresTableConstitutionSpan"></span>
                 <sup>
-                  <span class="badge" data-bind="text: conModifier"></span>
+                  <span class="badge" id="abilityScoresTableConstitutionModifierSpan" data-bind="text: conModifier"></span>
                 </sup>
               </td>
               <td class="text-center">
-                <span data-bind='text: int'></span>
+                <span data-bind='text: int' id="abilityScoresTableIntelligIntelligenceSpan"></span>
                 <sup>
-                  <span class="badge" data-bind="text: intModifier"></span>
+                  <span class="badge" id="abilityScoresTableIntelligIntelligenceModifierSpan" data-bind="text: intModifier"></span>
                 </sup>
               </td>
               <td class="text-center">
-                <span data-bind='text: wis'></span>
+                <span data-bind='text: wis' id="abilityScoresTableWisdomSpan"></span>
                 <sup>
-                  <span class="badge" data-bind="text: wisModifier"></span>
+                  <span class="badge" id="abilityScoresTableWisdomModifierSpan" data-bind="text: wisModifier"></span>
                 </sup>
               </td>
               <td class="text-center">
-                <span data-bind='text: cha'></span>
+                <span data-bind='text: cha' id="abilityScoresTableCharismaSpan"></span>
                 <sup>
-                  <span class="badge" data-bind="text: chaModifier"></span>
+                  <span class="badge" id="abilityScoresTableCharismaModifierSpan" data-bind="text: chaModifier"></span>
                 </sup>
               </td>
             </tr>
@@ -60,7 +60,7 @@
   </div>
 </div>
 
-<!-- Add Modal -->
+<!-- Edit Modal -->
 <div class="modal fade" tabindex="-1" role="dialog"
    data-bind="modal: {
       open: modalStatus,
@@ -86,6 +86,7 @@
             <div class="col-xs-5">
               <input type="number"
                      class="form-control ability-score-input pull-left"
+                     id="abilityScoresEditStrengthInput"
                      min="0"
                      data-bind='value: str,
                       hasFocus: $parent.firstModalElementHasFocus'>
@@ -96,6 +97,7 @@
             <div class="col-xs-5">
               <input type="number"
                      class="form-control ability-score-input"
+                     id="abilityScoresEditDexterityInput"
                      min="0"
                      data-bind='value: dex'>
             </div>
@@ -105,6 +107,7 @@
             <div class="col-xs-5">
               <input type="number"
                      class="form-control ability-score-input"
+                     id="abilityScoresEditConstitutionInput"
                      min="0"
                      data-bind='value: con'>
             </div>
@@ -114,6 +117,7 @@
             <div class="col-xs-5">
               <input type="number"
                      class="form-control ability-score-input"
+                     id="abilityScoresEditIntelligenceInput"
                      min="0"
                      data-bind='value: int'>
             </div>
@@ -123,6 +127,7 @@
             <div class="col-xs-5">
               <input type="number"
                      class="form-control ability-score-input"
+                     id="abilityScoresEditWisdomInput"
                      min="0"
                      data-bind='value: wis'>
             </div>
@@ -132,6 +137,7 @@
             <div class="col-xs-5">
               <input type="number"
                      class="form-control ability-score-input"
+                     id="abilityScoresEditCharismaTextarea"
                      min="0"
                      data-bind='value: cha'>
             </div>
@@ -141,6 +147,7 @@
               <div class="col-xs-offset-7 col-xs-5">
                 <button type="button"
                         class="btn btn-primary"
+                        id="abilityScoresEditDoneButton"
                         data-dismiss="modal">Done</button>
               </div>
              </div>

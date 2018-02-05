@@ -18,12 +18,12 @@
           <div class="col-md-10 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Character Name</span>
-                <input type="text" class="form-control" aria-describedby="basic-addon2"
+                <input type="text" class="form-control" id="whoAreYouCharacterNameInput" aria-describedby="basic-addon2"
                   data-bind='textInput: characterName, valueUpdate: "afterkeydown"' />
             </div>
           </div>
           <div class="col-md-2 col-padded">
-            <span data-bind='visible: characterName.hasError, html: characterName.validationMessage,
+            <span id="whoAreYouCharacterNameInputRequired" data-bind='visible: characterName.hasError, html: characterName.validationMessage,
               css: { errormessagetext: characterName.hasError }'> </span>
           </div>
         </div>
@@ -31,12 +31,12 @@
           <div class="col-md-10 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Player Name</span>
-                <input type="text" class="form-control" aria-describedby="basic-addon2"
+                <input type="text" class="form-control" id="whoAreYouPlayerNameInput" aria-describedby="basic-addon2"
                   data-bind='textInput: playerName, valueUpdate: "afterkeydown"' />
             </div>
           </div>
           <div class="col-md-2 col-padded">
-            <span data-bind='visible: playerName.hasError, html: playerName.validationMessage,
+            <span id= "whoAreYouPlayerNameInputRequired" data-bind='visible: playerName.hasError, html: playerName.validationMessage,
               css: { errormessagetext: playerName.hasError }'> </span>
           </div>
         </div>
@@ -49,7 +49,7 @@
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Alignment</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
+              <input type="text" class="form-control" id="whoAreYouAlignmentInput" aria-describedby="basic-addon2"
                 data-bind='textInput: alignment,
                            autocomplete: { source: alignmentOptions,
                            onselect: setAlignment }'>
@@ -58,7 +58,7 @@
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Deity</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
+              <input type="text" class="form-control" id="whoAreYouDeityInput" aria-describedby="basic-addon2"
                 data-bind='textInput: diety'>
             </div>
           </div>
@@ -67,7 +67,7 @@
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Race</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
+              <input type="text" class="form-control" id="whoAreYouRaceInput" aria-describedby="basic-addon2"
                 data-bind='textInput: race, autocomplete: { source: raceOptions,
                   onselect: setRace }'>
             </div>
@@ -75,7 +75,7 @@
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Class</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
+              <input type="text" class="form-control" id="whoAreYouClassInput" aria-describedby="basic-addon2"
                 data-bind='textInput: typeClass, autocomplete: { source: classOptions,
                   onselect: setClass }'>
             </div>
@@ -85,7 +85,7 @@
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Gender</span>
-              <input type="text" class="form-control" aria-describedby="basic-addon2"
+              <input type="text" class="form-control" id="whoAreYouGenderInput" aria-describedby="basic-addon2"
                 data-bind='textInput: gender'>
             </div>
           </div>
@@ -94,6 +94,7 @@
               <span class="input-group-addon" id="basic-addon2">Age</span>
               <input type="number"
                      class="form-control"
+                     id="whoAreYouAgeInput"
                      aria-describedby="basic-addon2"
                      min="1"
                      max="1500"
@@ -106,6 +107,7 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Background</span>
               <input type="text" class="form-control" aria-describedby="basic-addon2"
+                     id="whoAreYouBackgroundInput"
                      data-bind='textInput: background,
                                 autocomplete: { source: backgroundOptions,
                                 onselect: setBackground }'>
@@ -120,6 +122,7 @@
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Backpack</span>
               <select  class="form-control"
+                       id="whoAreYouBackpackSelect"
                        data-bind="options: backpackOptions,
                                   value: backpack"></select>
             </div>
@@ -132,14 +135,14 @@
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Level</span>
-              <input type="number" class="form-control" aria-describedby="basic-addon2"
+              <input type="number" class="form-control" id="whoAreYouLevelInput" aria-describedby="basic-addon2"
                 data-bind='textInput: level'>
             </div>
           </div>
           <div class="col-md-6 col-padded">
             <div class="input-group">
               <span class="input-group-addon" id="basic-addon2">Experience</span>
-              <input type="number" class="form-control" aria-describedby="basic-addon2"
+              <input type="number" class="form-control" id="whoAreYouExperienceInput" aria-describedby="basic-addon2"
                 data-bind='textInput: exp'>
             </div>
           </div>

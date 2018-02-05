@@ -7,7 +7,7 @@
           <span class="input-group-addon no-top-bottom-padding">
             <img data-bind="attr: { src: ppCoins }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
           </span>
-          <input type="number" class="form-control coin-input" min="0"
+          <input type="number" class="form-control coin-input" id="coinsPlatinumInput" min="0"
             data-bind='value: treasure().platinum'/>
         </div>
       </div>
@@ -16,7 +16,7 @@
           <span class="input-group-addon no-top-bottom-padding">
             <img data-bind="attr: { src: gpCoins }" width="30px" title="Gold Coins" alt="Gold Coins"/>
           </span>
-          <input type="number" class="form-control" min="0"
+          <input type="number" class="form-control" id="coinsGoldInput" min="0"
             data-bind='value: treasure().gold'/>
         </div>
       </div>
@@ -25,7 +25,7 @@
           <span class="input-group-addon no-top-bottom-padding">
             <img data-bind="attr: { src: epCoins }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
           </span>
-          <input type="number" class="form-control coin-input" min="0"
+          <input type="number" class="form-control coin-input" id="coinsElectrumInput" min="0"
             data-bind='value: treasure().electrum'>
         </div>
       </div>
@@ -34,7 +34,7 @@
           <span class="input-group-addon no-top-bottom-padding">
             <img data-bind="attr: { src: spCoins }" width="30px" title="Silver Coins" alt="Silver Coins"/>
           </span>
-          <input type="number" class="form-control coin-input" min="0"
+          <input type="number" class="form-control coin-input" id="coinsSilverInput" min="0"
             data-bind='value: treasure().silver'>
         </div>
       </div>
@@ -43,7 +43,7 @@
           <span class="input-group-addon no-top-bottom-padding">
             <img data-bind="attr: { src: cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
           </span>
-          <input type="number" class="form-control coin-input" min="0"
+          <input type="number" class="form-control coin-input" id="coinsCopperInput" min="0"
             data-bind='value: treasure().copper'>
         </div>
       </div>

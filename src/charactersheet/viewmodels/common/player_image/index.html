@@ -15,7 +15,7 @@
       }">
     <!-- /ko -->
     <!-- ko ifnot: playerImageSrc -->
-    <div class="text-muted player-image-style">
+    <div class="text-muted player-image-style" id=profilePictureAddToggle">
       <small>Click to add a picture</small>
     </div>
     <!-- /ko -->
@@ -51,19 +51,19 @@
               <div class="btn-group btn-group-justified" role="group">
                 <label class="btn btn-default"
                 data-bind="css: { active: imageSource() == 'picker'}">
-                  <input type="radio" class="hide-block"
+                  <input type="radio" class="hide-block" id="profilePictureDefaultInput"
                   name="imageSourcePicker" value="picker" data-bind="checked: imageSource"/>
                   Choose a default
                 </label>
                 <label class="btn btn-default"
                 data-bind="css: { active: imageSource() == 'link'}">
-                  <input type="radio" class="hide-block"
+                  <input type="radio" class="hide-block" id="profilePictureImageLinkInput"
                   name="imageSourceLink" value="link" data-bind="checked: imageSource"/>
                   Image Link
                 </label>
                 <label class="btn btn-default"
                 data-bind="css: { active: imageSource() == 'email'}">
-                  <input type="radio" class="hide-block"
+                  <input type="radio" class="hide-block" id="profilePictureGravatarInput"
                   name="imageSourceEmail" value="email" data-bind="checked: imageSource"/>
                   Gravatar Email
                 </label>
@@ -71,7 +71,7 @@
             </div>
           </div>
           <!-- ko if: imageSource() == 'picker' -->
-          <div class="form-group center-block">
+          <div class="form-group center-block" id="profilePictureDefaultImageImg">
             <image-picker params="cells: defaultImages, selectedCells: selectedDefaultImages, multiselect: false"></image-picker>
           </div>
           <!-- /ko -->
@@ -83,6 +83,7 @@
             <div class="col-sm-8">
               <input type="text"
                      class="form-control"
+                     id="profilePictureLinkInput"
                      data-bind="value: imageUrl, hasFocus: firstFieldHasFocus">
             </div>
           </div>
@@ -100,6 +101,7 @@
             <div class="col-sm-8">
               <input type="text"
                      class="form-control"
+                     id="profilePictureGravatarEmailInput"
                      data-bind="value: email">
             </div>
           </div>
@@ -112,6 +114,7 @@
           <div class="modal-footer">
             <button type="button"
                     class="btn btn-primary"
+                    id="profilePictureDoneButton"
                     data-dismiss="modal"
                     data-bind="click: doneButtonClicked">Done</button>
           </div> <!-- Modal Footer -->
