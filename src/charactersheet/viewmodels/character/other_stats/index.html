@@ -3,20 +3,20 @@
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">AC&nbsp;
-          <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: armorClassPopover }"></span>
+          <span class="fa fa-info-circle" id="otherStatsAcPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: armorClassPopover }"></span>
        </span>
-       <span class="input-group-addon" id="basic-addon3" data-bind="text: armorClass"></span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier">
+       <span class="input-group-addon" id="otherStatsAcSpan" data-bind="text: armorClass"></span>
+       <input type="number" class="form-control" id="otherStatsAcModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier">
      </div>
    </div>
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">
         Proficiency Bonus&nbsp;
-         <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
+         <span class="fa fa-info-circle" id="otherStatsProficiencyPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
       </span>
-       <span class="input-group-addon" id="basic-addon3" data-bind="text: calculatedProficiencyLabel"></span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiency">
+       <span class="input-group-addon" id="otherStatsProficiencySpan" data-bind="text: calculatedProficiencyLabel"></span>
+       <input type="number" class="form-control" id="otherStatsProficiencyBonusModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiency">
      </div>
    </div>
  </div>
@@ -24,16 +24,16 @@
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">Initiative&nbsp;
-          <span class="fa fa-info-circle" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
+          <span class="fa fa-info-circle" id="otherStatsInitiativePopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
        </span>
-       <span class="input-group-addon" id="basic-addon3" data-bind="text: initiativeLabel"></span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind="value: otherStats().initiative">
+       <span class="input-group-addon" id="otherStatsInitiativeSpan" data-bind="text: initiativeLabel"></span>
+       <input type="number" class="form-control" id="otherStatsInitiativeModiferInput" aria-describedby="basic-addon2" data-bind="value: otherStats().initiative">
      </div>
    </div>
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">Speed</span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind="value: otherStats().speed" min="0">
+       <input type="number" class="form-control" id="otherStatsSpeedInput" aria-describedby="basic-addon2" data-bind="value: otherStats().speed" min="0">
      </div>
    </div>
  </div>
@@ -42,14 +42,14 @@
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">Level</span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2"
+       <input type="number" class="form-control" id="otherStatsLevelInput" aria-describedby="basic-addon2"
         data-bind="value: level" min="0">
      </div>
    </div>
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">Experience</span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2"
+       <input type="number" class="form-control" id="otherStatsExperienceInput" aria-describedby="basic-addon2"
         data-bind="value: experience" min="0">
      </div>
    </div>
@@ -57,8 +57,8 @@
  <div class="row">
    <div class="col-md-6 col-padded">
      <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Inspiration</span>
-       <input type="number" class="form-control" aria-describedby="basic-addon2" data-bind="value: otherStats().inspiration" min="0">
+       <span class="input-group-addon">Inspiration</span>
+       <input type="number" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="value: otherStats().inspiration" min="0">
      </div>
    </div>
  </div>
