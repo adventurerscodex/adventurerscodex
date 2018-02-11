@@ -3,16 +3,16 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="inventoryTable">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('itemName');}">
+          <th id="inventoryTableItemHeader" data-bind="click: function(){sortBy('itemName');}">
             Item
             <span data-bind="css: sortArrow('itemName')"></span></th>
-          <th data-bind="click: function(){sortBy('itemQty');}">
+          <th id="inventoryTableQuantityHeader" data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th data-bind="click: function(){sortBy('itemWeight');}">
+          <th id="inventoryTableWeightHeader" data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th data-bind="click: function(){sortBy('itemCost');}" class="hidden-xs">
+          <th id="inventoryTableCostHeader" data-bind="click: function(){sortBy('itemCost');}" class="hidden-xs">
             Cost
             <span data-bind="css: sortArrow('itemCost')"></span></th>
           <th class="hidden-sm hidden-xs">
