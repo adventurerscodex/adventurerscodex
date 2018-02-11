@@ -347,12 +347,12 @@
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
                 <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
                 <div class="h3">
-                  <span data-bind="text: spellNameLabel"></span>&nbsp;
-                  <small data-bind="text: spellSummaryLabel"></small>
+                  <span data-bind="text: spellNameLabel" id="spellsPreviewNameLabel"></span>&nbsp;
+                  <small data-bind="text: spellSummaryLabel" id="spellsPreviewSpellSummaryLabelLabel"></small>
                 </div>
                 <div class="row">
-                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: spellType" id="spellsPreviewNameLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel" id="spellsPreviewSpellSummaryLabelLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: spellType" id="spellsPreviewTypeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel" id="spellsPreviewDamageLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: spellCastingTime" id="spellsPreviewCastTimeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: spellRange" id="spellsPreviewRangeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: spellComponents" id="spellsPreviewCompenentsLabel"></span></div>
