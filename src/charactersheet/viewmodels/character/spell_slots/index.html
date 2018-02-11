@@ -5,7 +5,7 @@
         <span class="sr-only"></span>
       </div>
     </div>
-    <table id='spellSlotsTable' class="table table-responsive table-ac-bordered table-hover">
+    <table id="spellSlotsTable" class="table table-responsive table-ac-bordered table-hover">
       <thead>
         <tr class="row">
           <th class="col-sm-1 col-xs-1">Slot</th>
@@ -18,7 +18,7 @@
           <th class="col-md-3 col-sm-4 col-xs-8 text-center" data-bind="click: function(){sortBy('usedSpellSlots');}">Used
             <i data-bind="css: sortArrow('usedSpellSlots')"></i></th>
           <th class="col-md-1 hidden-sm hidden-xs">Reset</th>
-          <th class="col-xs-1"> <a data-toggle="modal" data-target="#addSpellSlot" href="#"><i class="fa fa-plus fa-color"></i></a></th>
+          <th class="col-xs-1"> <a data-toggle="modal" id="spellSlotsAddIcon" data-target="#addSpellSlot" href="#"><i class="fa fa-plus fa-color"></i></a></th>
         </tr>
       </thead>
       <tbody>
@@ -100,7 +100,7 @@
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
-                     id="level"
+                     id="spellSlotsAddModalLevelInput"
                      min="1"
                      max="9"
                      data-bind='textInput: blankSlot().level'>
@@ -111,7 +111,7 @@
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
-                     id="max"
+                     id="spellSlotsAddModalMaxInput"
                      min="1"
                      max="4"
                      data-bind='textInput: blankSlot().maxSpellSlots, hasFocus: modifierHasFocus'>
@@ -121,7 +121,7 @@
             <label class="col-sm-2 control-label">Resets on...</label>
             <div class="col-sm-10">
               <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default"
+                <label class="btn btn-default" id="spellSlotsAddModalShortRestButton"
                        data-bind="css: { active: blankSlot().resetsOn() == 'short'}">
                    <input type="radio"
                           class="hide-block"
@@ -130,7 +130,7 @@
                     <img class="action-bar-icon" data-bind="attr: { src: meditationWhite }"></img>
                     &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
-                <label class="btn btn-default"
+                <label class="btn btn-default" id="spellSlotsAddModalLongRestButton"
                  data-bind="css: { active: blankSlot().resetsOn() != 'short'}">
                    <input type="radio"
                           class="hide-block"
@@ -146,10 +146,12 @@
           <div class="modal-footer">
             <button type="button"
                     class="btn btn-default"
+                    id="spellSlotsAddModalCancelButton"
                     data-dismiss="modal">Cancel
             </button>
             <button type="button"
                     class="btn btn-primary"
+                    id="spellSlotsAddModalAddButton"
                     data-bind='click: addSlot'
                     data-dismiss="modal">Add
             </button>
@@ -185,7 +187,7 @@
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
-                     id="name"
+                     id="spellSlotsEditModalLevelInput"
                      min="1"
                      max="9"
                      data-bind="value: level">
@@ -196,7 +198,7 @@
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
-                     id="bonus"
+                     id="spellSlotsEditModalMaxInput"
                      min="1"
                      max="4"
                      data-bind="value: maxSpellSlots, hasFocus: $parent.editHasFocus">
@@ -206,7 +208,7 @@
           <label class="col-sm-2 control-label">Resets on...</label>
             <div class="col-sm-10">
               <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default"
+                <label class="btn btn-default" id="spellSlotsEditModalShortRestButton"
                        data-bind="css: { active: resetsOn() == 'short'}">
                   <input type="radio"
                          class="hide-block"
@@ -217,7 +219,7 @@
                     data-bind="attr: { src: $parent.meditationWhite }"></img>
                        &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
-                <label class="btn btn-default"
+                <label class="btn btn-default" id="spellSlotsEditModalLongRestButton"
                        data-bind="css: { active: resetsOn() != 'short'}">
                 <input type="radio"
                        class="hide-block"
@@ -234,6 +236,7 @@
         </div>
         <div class="modal-footer">
           <button type="button"
+                  id="spellSlotsEditModalDoneButton"
                   class="btn btn-primary"
                   data-dismiss="modal">Done</button>
         </div>
