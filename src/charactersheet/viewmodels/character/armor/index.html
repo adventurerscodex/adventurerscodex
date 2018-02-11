@@ -3,18 +3,18 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="armorTable">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('armorEquipped');}">
+          <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('armorEquipped');}">
             <span data-bind="css: sortArrow('armorEquipped')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('armorName');}">
+          <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('armorName');}">
             Armor
             <span data-bind="css: sortArrow('armorName')"></span>
           </th>
-          <th class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorType');}">
+          <th id="armorTableTypeHeader" class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorType');}">
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
-          <th>
+          <th id="armorTableAcHeader">
             Armor Class
           </th>
           <th>
@@ -65,7 +65,7 @@
     </div> <!-- end panel body -->
     <div class="container-fluid panel-footer">
       <span class="pull-right">Total weight:&nbsp;
-        <span data-bind="text: totalWeight"></span>
+        <span id="armorTableTotalWeightSpan" data-bind="text: totalWeight"></span>
       </span>
     </div> <!-- end panel footer -->
     <!-- Add Modal -->
