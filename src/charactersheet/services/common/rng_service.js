@@ -1,5 +1,5 @@
+import {SharedServiceManager} from './shared_service_manager';
 var Random = require('random-js');
-
 
 /**
  * A utility class that generates random numbers on demand.
@@ -11,36 +11,38 @@ var Random = require('random-js');
  * Default: Auto-seeded Mersenne Twister engine
  */
 
-export var RandomNumberGeneratorService = {
-    _RNG: new Random(Random.engines.mt19937().autoSeed()),
+export var RandomNumberGeneratorService = new SharedServiceManager(_RandomNumberGeneratorService, {});
 
+function _RandomNumberGeneratorService(configuration) {
+    var self = this;
+    self.RNG = new Random(Random.engines.mt19937().autoSeed());
     /**
      * Create a random number generator that uses Math.random()
      *
      * @returns Random()
      */
-    nativeMath: function() {
-        return new Random();
-    },
+    self.nativeMath = function() {
+        return self.RNG = new Random();
+    };
 
     /**
-     * Create and seed a Mersenne Twister engine for "more random" random number generation
+     * Create a seeded Mersenne Twister engine for "more random" random number generation
      * more random than Math.random()
      *
-     * @returns Random(engine) - a Mersenner Twister generator object
+     * @returns Random(Random.engines.mt19937)
      */
-    mersenneTwister: function() {
-        return this._RNG(Random.engines.mt19937().autoSeed());
-    },
+    self.mersenneTwister = function() {
+        return self.RNG = new Random(Random.engines.mt19937().autoSeed());
+    };
 
     /**
      * Roll a single dice using the global _RNG object
      *
      *  maxValue (int) - highest face value
      */
-    rollDie: function (maxValue) {
-        return this._RNG.integer(1, maxValue);
-    },
+    self.rollDie = function (maxValue) {
+        return self.RNG.integer(1, maxValue);
+    };
 
     /**
      * Roll multiple dice
@@ -50,35 +52,35 @@ export var RandomNumberGeneratorService = {
      * @param maxValue
      * @returns {Array}
      */
-    rollDice: function (numDice, maxValue) {
-        return this._RNG.integer(numDice, (maxValue * numDice));
-    },
+    self.rollDice = function (numDice, maxValue) {
+        return self.RNG.integer(numDice, (maxValue * numDice));
+    };
 
     /**
      * Roll multiple dice and store each result in the next array index until it is full
-     * example: mtRandom.rollDice(6, 3, 6) is equivalent to rolling 3 die 6, 6 times in a row
+     * example: _RNG.rollDice(6, 3, 6) is equivalent to rolling 3 die 6, 6 times in a row
      *
      * @param numRolls
      * @param numDice
      * @param maxValue
      * @returns {Array}
      */
-    rollDiceArray: function (numRolls, numDice, maxValue) {
+    self.rollDiceArray = function (numRolls, numDice, maxValue) {
         var array = [numRolls];
         for (var i = 0; i < numRolls; i++) {
             array[i] = this.rollDice(numDice, maxValue);
         }
         return array;
-    },
+    };
 
     /**
      * Simulates flipping a fair coin using booleans
      *
      * @returns bool
      */
-    flipFairCoin: function () {
-        return this._RNG.bool();
-    },
+    self.flipFairCoin = function () {
+        return self.RNG.bool();
+    };
 
     /**
      * Simulates flipping an unfair coin given a ratio which determines chance of returning True
@@ -87,7 +89,7 @@ export var RandomNumberGeneratorService = {
      * @param denominator
      * @returns bool
      */
-    flipUnfairCoin: function (numerator, denominator) {
-        return this._RNG.bool(numerator, denominator);
-    }
-};
+    self.flipUnfairCoin = function (numerator, denominator) {
+        return self.RNG.bool(numerator, denominator);
+    };
+}
