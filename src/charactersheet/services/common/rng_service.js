@@ -19,7 +19,7 @@ export var RandomNumberGeneratorService = {
      *
      * @returns Random()
      */
-    RNG: function() {
+    nativeMath: function() {
         return new Random();
     },
 
@@ -91,4 +91,3 @@ export var RandomNumberGeneratorService = {
         return this._RNG.bool(numerator, denominator);
     }
 };
-
