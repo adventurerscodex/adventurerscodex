@@ -24,7 +24,7 @@ export var RandomNumberGeneratorService = {
     },
 
     /**
-     * Create and seed a Mersenne Twister engine for more random number generation
+     * Create and seed a Mersenne Twister engine for "more random" random number generation
      * more random than Math.random()
      *
      * @returns Random(engine) - a Mersenner Twister generator object
