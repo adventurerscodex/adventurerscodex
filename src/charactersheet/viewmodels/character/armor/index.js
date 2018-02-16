@@ -30,10 +30,14 @@ export function ArmorViewModel() {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
+        'armorEquipped asc': { field: 'armorEquipped', direction: 'asc', booleanType: true},
+        'armorEquipped desc': { field: 'armorEquipped', direction: 'desc', booleanType: true},
         'armorName asc': { field: 'armorName', direction: 'asc'},
         'armorName desc': { field: 'armorName', direction: 'desc'},
         'armorType asc': { field: 'armorType', direction: 'asc'},
-        'armorType desc': { field: 'armorType', direction: 'desc'}
+        'armorType desc': { field: 'armorType', direction: 'desc'},
+        'armorClass asc': { field: 'armorClass', direction: 'asc', numeric: true},
+        'armorClass desc': { field: 'armorClass', direction: 'desc', numeric: true}
     };
 
     self.filter = ko.observable('');

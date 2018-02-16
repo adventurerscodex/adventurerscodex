@@ -3,21 +3,27 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="armorTable">
       <thead>
         <tr>
-          <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('armorEquipped');}">
+          <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('armorEquipped');}"
+            class="col-md-1 col-xs-2">
+            <span class="glyphicon glyphicon-check"></span>
             <span data-bind="css: sortArrow('armorEquipped')"></span>
           </th>
-          <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('armorName');}">
+          <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('armorName');}"
+            class="col-md-4 col-xs-5">
             Armor
             <span data-bind="css: sortArrow('armorName')"></span>
           </th>
-          <th id="armorTableTypeHeader" class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('armorType');}">
+          <th id="armorTableTypeHeader" class="hidden-sm hidden-xs col-md-2"
+            data-bind="click: function(){sortBy('armorType');}">
             Type
             <span data-bind="css: sortArrow('armorType')"></span>
           </th>
-          <th id="armorTableAcHeader">
+          <th id="armorTableAcHeader" data-bind="click: function(){sortBy('armorClass');}"
+            class="col-md-3 col-xs-4">
             Armor Class
+            <span data-bind="css: sortArrow('armorClass')"></span>
           </th>
-          <th>
+          <th class="col-md-1 col-xs-1">
             <a data-toggle="modal"
                id="armorAddIcon"
                data-target="#addArmor" href="#">
