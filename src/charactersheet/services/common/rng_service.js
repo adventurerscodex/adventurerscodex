@@ -15,14 +15,14 @@ export var RandomNumberGeneratorService = new SharedServiceManager(_RandomNumber
 
 function _RandomNumberGeneratorService(configuration) {
     var self = this;
-    self.RNG = new Random(Random.engines.mt19937().autoSeed());
+    self.RNG = Random.engines.mt19937().autoSeed();
     /**
      * Create a random number generator that uses Math.random()
      *
      * @returns Random()
      */
     self.nativeMath = function() {
-        return self.RNG = new Random();
+        return self.RNG = Random();
     };
 
     /**
@@ -31,18 +31,26 @@ function _RandomNumberGeneratorService(configuration) {
      *
      * @returns Random(Random.engines.mt19937)
      */
-    self.mersenneTwister = function() {
-        return self.RNG = new Random(Random.engines.mt19937().autoSeed());
+    self.mersenneTwister = function(seed = undefined) {
+        if(seed === undefined) {
+            return self.RNG = new Random(Random.engines.mt19937().autoSeed());
+        }
+        else if(!isNaN(seed)) {
+            return self.RNG = new Random(Random.engines.mt19937().seed(seed));
+        }
+        else if(seed.constructor === Array) {
+            return self.RNG = new Random(Random.engines.mt19937().seedWithArray(seed));
+        }
     };
 
     /**
      * Roll a single dice using the RNG object
      *
-     *  maxValue (int) - highest face value
+     *  numSides (int) - highest face value
      *  @returns number
      */
-    self.rollDie = function (maxValue) {
-        return self.RNG.integer(1, maxValue);
+    self.rollDie = function (numSides) {
+        return self.RNG.die(numSides);
     };
 
     /**
@@ -50,26 +58,26 @@ function _RandomNumberGeneratorService(configuration) {
      * example: RNG.rollDice(3, 6) is equivalent to rolling 3 die 6
      *
      * @param numDice
-     * @param maxValue
+     * @param numSides
      * @returns {Array}
      */
-    self.rollDice = function (numDice, maxValue) {
-        return self.RNG.integer(numDice, (maxValue * numDice));
+    self.rollDice = function (numDice, numSides) {
+        return self.RNG.integer(numDice, (numSides * numDice));
     };
 
     /**
      * Roll multiple dice and store each result in the next array index until it is full
-     * example: RNG.rollDice(6, 3, 6) is equivalent to rolling 3 die 6, 6 times in a row
+     * example: RNG.rollDiceArray(6, 3, 6) is equivalent to rolling 3 die 6, 6 times in a row
      *
      * @param numDice
-     * @param maxValue
+     * @param numSides
      * @param numRolls
      * @returns {Array}
      */
-    self.rollDiceArray = function (numDice, maxValue, numRolls) {
+    self.rollDiceArray = function (numDice, numSides, numRolls) {
         var array = [numRolls];
         for (var i = 0; i < numRolls; i++) {
-            array[i] = this.rollDice(numDice, maxValue);
+            array[i] = this.rollDice(numDice, numSides);
         }
         return array;
     };
@@ -84,13 +92,18 @@ function _RandomNumberGeneratorService(configuration) {
     };
 
     /**
-     * Simulates flipping an unfair coin given a ratio which determines chance of returning True
+     * Simulates flipping an unfair coin given a ratio or percentage
+     * which determines chance of returning True
      *
      * @param numerator
      * @param denominator
+     * @param percentage
      * @returns bool
      */
-    self.flipUnfairCoin = function (numerator, denominator) {
-        return self.RNG.bool(numerator, denominator);
+    self.flipUnfairCoin = function (percentage = undefined, numerator, denominator) {
+        if(percentage === undefined) {
+            return self.RNG.bool(numerator, denominator);
+        }
+        return self.RNG.bool(percentage)
     };
 }

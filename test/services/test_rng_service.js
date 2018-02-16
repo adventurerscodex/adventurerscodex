@@ -11,18 +11,30 @@ describe('Random Number Generator Service', function() {
     describe('Native Math', function() {
         it('should return a random number generator object that uses Math.random()', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
+            var rng = rngService.nativeMath();
 
-            rngService.nativeMath().should.be.instanceOf(Random);
-            rngService.nativeMath().engine.should.have.type(typeof Random.engines.nativeMath);
+            rng.should.be.instanceOf(Random);
+            rng.engine.should.have.type(typeof Random.engines.nativeMath);
         });
     });
 
     describe('Mersenne Twister', function() {
         it('should return a random number generator object that uses a seeded Mersenne Twister', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
+            var rng = rngService.mersenneTwister();
 
-            rngService.mersenneTwister().should.be.instanceOf(Random);
-            rngService.mersenneTwister().engine.should.have.type(typeof Random.engines.mt19937);
+            rng.should.be.instanceOf(Random);
+            rng.engine.should.have.type(typeof Random.engines.mt19937);
+
+            rng = rngService.mersenneTwister(9);
+
+            rng.should.be.instanceOf(Random);
+            rng.engine.should.have.type(typeof Random.engines.mt19937);
+
+            rng = rngService.mersenneTwister([1,5,6]);
+
+            rng.should.be.instanceOf(Random);
+            rng.engine.should.have.type(typeof Random.engines.mt19937);
         });
     });
 
@@ -30,12 +42,12 @@ describe('Random Number Generator Service', function() {
         it('should return a number', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
             var invalidMinValue = 0;
-            var maxFaceValue = 6;
-            var result = rngService.rollDie(maxFaceValue);
+            var numSides = 6;
+            var result = rngService.rollDie(numSides);
 
             result.should.be.type('number');
             result.should.be.above(invalidMinValue);
-            result.should.be.below(maxFaceValue + 1);
+            result.should.be.below(numSides + 1);
         });
     });
 
@@ -43,12 +55,12 @@ describe('Random Number Generator Service', function() {
         it('should return a number', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
             var numDice = 3;
-            var maxFaceValue = 6;
-            var result = rngService.rollDice(numDice, maxFaceValue);
+            var numSides = 6;
+            var result = rngService.rollDice(numDice, numSides);
 
             result.should.be.type('number');
             result.should.be.above(numDice - 1);
-            result.should.be.below((numDice * maxFaceValue) + 1);
+            result.should.be.below((numDice * numSides) + 1);
         });
     });
 
@@ -56,15 +68,15 @@ describe('Random Number Generator Service', function() {
         it('should return an array of numbers', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
             var numDice = 3;
-            var maxFaceValue = 6;
+            var numSides = 6;
             var numRolls = 6;
-            var result = rngService.rollDiceArray(numDice, maxFaceValue, numRolls);
+            var result = rngService.rollDiceArray(numDice, numSides, numRolls);
 
             result.should.have.length(numRolls);
             for(var i = 0; i < numRolls; i++) {
                 result[i].should.be.type('number');
                 result[i].should.be.above(numDice - 1);
-                result[i].should.be.below((numDice * maxFaceValue) + 1);
+                result[i].should.be.below((numDice * numSides) + 1);
             }
         });
     });
@@ -86,6 +98,8 @@ describe('Random Number Generator Service', function() {
             var result = rngService.flipUnfairCoin(numerator, denominator);
 
             result.should.be.type('boolean');
+
+            result = rngService.flipUnfairCoin(50);
         });
     });
 });
