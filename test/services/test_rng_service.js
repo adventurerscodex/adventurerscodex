@@ -12,8 +12,8 @@ describe('Random Number Generator Service', function() {
         it('should return a random number generator object that uses Math.random()', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
 
-            rngService.RNG.should.be.instanceOf(Random);
-            rngService.RNG.engine.should.type(typeof Random.engines.nativeMath);
+            rngService.nativeMath().should.be.instanceOf(Random);
+            rngService.nativeMath().engine.should.have.type(typeof Random.engines.nativeMath);
         });
     });
 
@@ -21,20 +21,21 @@ describe('Random Number Generator Service', function() {
         it('should return a random number generator object that uses a seeded Mersenne Twister', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
 
-            rngService.RNG.should.be.instanceOf(Random);
-            rngService.RNG.engine.should.type(typeof Random.engines.mt19937);
+            rngService.mersenneTwister().should.be.instanceOf(Random);
+            rngService.mersenneTwister().engine.should.have.type(typeof Random.engines.mt19937);
         });
     });
 
     describe('Roll Die', function() {
         it('should return a number', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
+            var invalidMinValue = 0;
             var maxFaceValue = 6;
             var result = rngService.rollDie(maxFaceValue);
 
             result.should.be.type('number');
-            result.should.be.above(0);
-            result.should.be.below(maxFaceValue+1);
+            result.should.be.above(invalidMinValue);
+            result.should.be.below(maxFaceValue + 1);
         });
     });
 
@@ -46,7 +47,7 @@ describe('Random Number Generator Service', function() {
             var result = rngService.rollDice(numDice, maxFaceValue);
 
             result.should.be.type('number');
-            result.should.be.above(numDice-1);
+            result.should.be.above(numDice - 1);
             result.should.be.below((numDice * maxFaceValue) + 1);
         });
     });
@@ -62,7 +63,7 @@ describe('Random Number Generator Service', function() {
             result.should.have.length(numRolls);
             for(var i = 0; i < numRolls; i++) {
                 result[i].should.be.type('number');
-                result[i].should.be.above(numDice-1);
+                result[i].should.be.above(numDice - 1);
                 result[i].should.be.below((numDice * maxFaceValue) + 1);
             }
         });
@@ -80,7 +81,9 @@ describe('Random Number Generator Service', function() {
     describe('Flip Unfair Coin', function() {
         it('should return a boolean value', function() {
             var rngService = RandomNumberGeneratorService.sharedService();
-            var result = rngService.flipUnfairCoin(1, 5);
+            var numerator = 1;
+            var denominator = 6;
+            var result = rngService.flipUnfairCoin(numerator, denominator);
 
             result.should.be.type('boolean');
         });
