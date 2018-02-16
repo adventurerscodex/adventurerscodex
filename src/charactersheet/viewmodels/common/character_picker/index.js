@@ -54,7 +54,7 @@ export function CharacterPickerViewModel(params) {
             top: 0,
             left: 0,
             behavior: 'smooth'
-          });
+        });
         self.selectedCharacter(character);
         self.deleteCollapse(true);
     };
