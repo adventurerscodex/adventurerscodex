@@ -36,9 +36,10 @@ function _RandomNumberGeneratorService(configuration) {
     };
 
     /**
-     * Roll a single dice using the global _RNG object
+     * Roll a single dice using the RNG object
      *
      *  maxValue (int) - highest face value
+     *  @returns number
      */
     self.rollDie = function (maxValue) {
         return self.RNG.integer(1, maxValue);
@@ -46,7 +47,7 @@ function _RandomNumberGeneratorService(configuration) {
 
     /**
      * Roll multiple dice
-     * example: _RNG.rollDice(3, 6) is equivalent to rolling 3 die 6
+     * example: RNG.rollDice(3, 6) is equivalent to rolling 3 die 6
      *
      * @param numDice
      * @param maxValue
@@ -58,14 +59,14 @@ function _RandomNumberGeneratorService(configuration) {
 
     /**
      * Roll multiple dice and store each result in the next array index until it is full
-     * example: _RNG.rollDice(6, 3, 6) is equivalent to rolling 3 die 6, 6 times in a row
+     * example: RNG.rollDice(6, 3, 6) is equivalent to rolling 3 die 6, 6 times in a row
      *
-     * @param numRolls
      * @param numDice
      * @param maxValue
+     * @param numRolls
      * @returns {Array}
      */
-    self.rollDiceArray = function (numRolls, numDice, maxValue) {
+    self.rollDiceArray = function (numDice, maxValue, numRolls) {
         var array = [numRolls];
         for (var i = 0; i < numRolls; i++) {
             array[i] = this.rollDice(numDice, maxValue);
