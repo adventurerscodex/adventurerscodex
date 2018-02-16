@@ -1,3 +1,4 @@
+import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 
 export function ChatCellViewModel(chat) {
@@ -36,7 +37,8 @@ export function ChatCellViewModel(chat) {
     /* Template Rendering Methods */
 
     self._getMemberTemplate = function(card) {
-        var url = (typeof card !== 'string') ? card.get('imageUrl')[0] : self.placeholder;
+        var url = (typeof card !== 'string') ?
+            Utility.string.createDirectDropboxLink(card.get('imageUrl')[0]) : self.placeholder;
         return ChatCellViewModelMemberTemplate.replace(
             '{card.imageUrl}', url
         );

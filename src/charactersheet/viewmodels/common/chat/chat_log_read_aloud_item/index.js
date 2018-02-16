@@ -9,6 +9,7 @@ import { CharacterManager } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Utility } from 'charactersheet/utilities/convenience';
 import { XMPPService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
@@ -43,7 +44,7 @@ export function ChatLogReadAloudItem(params) {
         if (!card) {
             return 'https://www.gravatar.com/avatar/{}?d=mm';
         }
-        return card.get('imageUrl');
+        return Utility.string.createDirectDropboxLink(card.get('imageUrl'));
     });
 
     self.name = ko.pureComputed(function() {
