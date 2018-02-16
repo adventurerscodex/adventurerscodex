@@ -18,6 +18,7 @@ export function CharactersViewModel(params) {
     self.componentStatus = params.modalStatus || ko.observable(false);
     self.modalStatus = ko.observable(false);
     self.selectedCharacter = ko.observable();
+    self.deleteCollapse = ko.observable(false);
 
     self.load = () => {
         self.characters(PersistenceService.findAll(Character));
@@ -54,16 +55,16 @@ export function CharactersViewModel(params) {
         window.location = character.url();
     };
 
-    self.removeCharacter = (character) => {
-        const deletedCharacterIndex = self.characters().indexOf(character);
+    self.removeCharacter = () => {
+        const deletedCharacterIndex = self.characters().indexOf(self.selectedCharacter());
 
         //Remove the character.
-        character.delete();
-        self.characters.remove(character);
+        self.selectedCharacter().delete();
+        self.characters.remove(self.selectedCharacter());
 
         if (self.characters().length === 0) {
             self.modalStatus(false);
-        } else if (character.key() === CharacterManager.activeCharacter().key()) {
+        } else if (self.selectedCharacter().key() === CharacterManager.activeCharacter().key()) {
             // If we've deleted the current character...
             // switch to the same index position bounded by list length.
             const index = (
@@ -73,6 +74,22 @@ export function CharactersViewModel(params) {
             );
             CharacterManager.changeCharacter(self.characters()[index].key());
         }
+        self.closeDelete();
+    };
+
+    self.openDelete = (character) => {
+        scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+        });
+        self.selectedCharacter(character);
+        self.deleteCollapse(true);
+    };
+
+    self.closeDelete = () => {
+        self.deleteCollapse(false);
+        self._updatedSelectedCharacter();
     };
 
     self.modalFinishedClosing = () => {

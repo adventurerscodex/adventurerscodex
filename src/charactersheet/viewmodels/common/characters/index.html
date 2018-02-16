@@ -12,6 +12,39 @@
           Characters and Games
         </h4>
       </div>
+      <div class="collapse" data-bind="well: { open: deleteCollapse }"
+        id="charactersAndGamesDeleteCollapse">
+        <div class="well no-bottom-margin well-top-shadow">
+          <h3 class="text-center text-warning">Are you sure you want to delete this Character or Campaign?</h3>
+          <div class="row rounded-border-div">
+            <!-- ko if: deleteCollapse -->
+            <div class="col-xs-2">
+              <img data-bind="attr: { src: selectedCharacter().playerImage }" class="img img-circle" width="50" height="50" style="margin-top: 3px;" />
+            </div>
+            <div class="col-xs-10">
+              <span class="lead" data-bind='text: selectedCharacter().playerTitle'></span>
+              <small>
+                by <span data-bind='text: selectedCharacter().playerAuthor'></span>
+              </small>
+              <div>
+                <small data-bind='text: selectedCharacter().playerSummary'></small>
+              </div>
+            </div>
+            <!-- /ko -->
+          </div>
+          <h5 class="text-danger text-center">Note: This action is irreversible.</h5>
+          <div class="row text-right">
+            <button type="button"
+              class="btn btn-danger"
+              id="charactersAndGamesDeleteButton"
+              data-bind='click: removeCharacter'>Delete</button>
+            <button type="button"
+              class="btn btn-default"
+              id="charactersAndGamesCancelButton"
+              data-bind='click: closeDelete'>Cancel</button>
+          </div>
+        </div>
+      </div>
       <div class="modal-body">
         <div class='container-fluid'>
           <table data-bind='foreach: characters' class="table table-hover table-ac-bordered">
@@ -37,8 +70,7 @@
               </td>
               <td>
                 <button class="close" style="padding-top: 20px"
-                  data-bind="click: $parent.removeCharacter"
-                  data-dismiss="modal">
+                  data-bind="click: $parent.openDelete">
                     <span aria-hidden="true">&times;</span>
                 </button>
               </td>

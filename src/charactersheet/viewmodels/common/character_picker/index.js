@@ -14,14 +14,12 @@ export function CharacterPickerViewModel(params) {
 
     self.totalLocalStorage = 5; //MB
     self.logo = logo;
-
     self.isLoggedIn = ko.observable(false);
-
     self.selectedCharacter = ko.observable();
-
     self.characters = ko.observableArray([]);
     self.defaultCharacterKey = ko.observable(null);
     self.state = params.state;
+    self.deleteCollapse = ko.observable(false);
 
     self.load = function() {
         self.characters(PersistenceService.findAll(Character));
@@ -44,10 +42,25 @@ export function CharacterPickerViewModel(params) {
         }
     };
 
-    self.removeCharacter = function(character) {
+    self.removeCharacter = function() {
         //Remove the character.
-        character.delete();
-        self.characters.remove(character);
+        self.selectedCharacter().delete();
+        self.characters.remove(self.selectedCharacter());
+        self.closeDelete();
+    };
+
+    self.openDelete = (character) => {
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+        self.selectedCharacter(character);
+        self.deleteCollapse(true);
+    };
+
+    self.closeDelete = () => {
+        self.deleteCollapse(false);
     };
 
     self.localStoragePercent = ko.computed(function() {

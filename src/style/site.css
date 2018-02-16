@@ -968,3 +968,10 @@ div.toggle-arrow-container {
   position: absolute;
   z-index: 2147483647;
 }
+
+.rounded-border-div {
+  border: solid;
+  border-width: 1px;
+  border-radius: 8px;
+  padding: 10px;
+}
