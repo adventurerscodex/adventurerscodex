@@ -14,7 +14,6 @@ describe('Random Number Generator Service', function() {
             var spy1 = simple.mock(rngService, 'nativeMath');
 
             rngService.RNG.should.be.instanceOf(Random);
-            // rngService.RNG.engines.should.hasOwnProperty('nativeMath');
             rngService.RNG.engine.should.type(typeof Random.engines.nativeMath);
         });
     });
@@ -25,7 +24,6 @@ describe('Random Number Generator Service', function() {
             var spy1 = simple.mock(rngService, 'mersenneTwister');
 
             rngService.RNG.should.be.instanceOf(Random);
-            // rngService.RNG.engines.should.hasOwnProperty('mt19937');
             rngService.RNG.engine.should.type(typeof Random.engines.mt19937);
         });
     });
