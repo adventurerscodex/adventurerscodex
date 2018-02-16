@@ -104,6 +104,6 @@ function _RandomNumberGeneratorService(configuration) {
         if(percentage === undefined) {
             return self.RNG.bool(numerator, denominator);
         }
-        return self.RNG.bool(percentage)
+        return self.RNG.bool(percentage);
     };
 }
