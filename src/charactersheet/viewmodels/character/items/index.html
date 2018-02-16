@@ -3,21 +3,25 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="inventoryTable">
       <thead>
         <tr>
-          <th id="inventoryTableItemHeader" data-bind="click: function(){sortBy('itemName');}">
+          <th id="inventoryTableItemHeader" class="col-md-2 col-xs-4"
+            data-bind="click: function(){sortBy('itemName');}">
             Item
             <span data-bind="css: sortArrow('itemName')"></span></th>
-          <th id="inventoryTableQuantityHeader" data-bind="click: function(){sortBy('itemQty');}">
+          <th id="inventoryTableQuantityHeader" class="col-md-1 col-xs-2"
+            data-bind="click: function(){sortBy('itemQty');}">
             Quantity
             <span data-bind="css: sortArrow('itemQty')"></span></th>
-          <th id="inventoryTableWeightHeader" data-bind="click: function(){sortBy('itemWeight');}">
+          <th id="inventoryTableWeightHeader" class="col-md-1 col-xs-2"
+            data-bind="click: function(){sortBy('itemWeight');}">
             Weight
             <span data-bind="css: sortArrow('itemWeight')"></span></th>
-          <th id="inventoryTableCostHeader" data-bind="click: function(){sortBy('itemCost');}" class="hidden-xs">
+          <th id="inventoryTableCostHeader" class="col-md-1 hidden-xs col-sm-2"
+            data-bind="click: function(){sortBy('itemCost');}">
             Cost
             <span data-bind="css: sortArrow('itemCost')"></span></th>
-          <th class="hidden-sm hidden-xs">
+          <th class="hidden-sm hidden-xs" class="col-md-5">
             Description</th>
-          <th>
+          <th class="col-md-1 col-xs-2 text-right">
            <a data-toggle="modal"
             data-target="#addItem" id="inventoryAddIcon" href="#">
               <i class="fa fa-plus fa-color"></i>
@@ -38,7 +42,7 @@
                   click: $parent.editItem" href="#"></td>
           <td class="hidden-sm hidden-xs" data-bind="html: longDescription,
             click: $parent.editItem" href="#"></td>
-          <td>
+          <td class="text-right">
             <a data-bind='click: $parent.removeItemButton' href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
