@@ -1,5 +1,5 @@
-import {SharedServiceManager} from './shared_service_manager';
 import Random from 'random-js';
+import {SharedServiceManager} from './shared_service_manager';
 
 /**
  * A utility class that generates random numbers on demand.
