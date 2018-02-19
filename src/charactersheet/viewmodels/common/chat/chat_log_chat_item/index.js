@@ -4,7 +4,8 @@ import {
 } from 'charactersheet/services/common';
 import {
     CharacterManager,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import {
     ChatServiceManager,
@@ -49,7 +50,7 @@ export function ChatLogChatItem(params) {
         if (!card) {
             return 'https://www.gravatar.com/avatar/{}?d=mm';
         }
-        return card.get('imageUrl');
+        return Utility.string.createDirectDropboxLink(card.get('imageUrl'));
     });
 
     self.name = ko.pureComputed(function() {

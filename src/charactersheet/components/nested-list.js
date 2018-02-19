@@ -93,7 +93,7 @@ ko.components.register('nested-list', {
             <a href="#" class="list-group-item" \
                 data-bind="css: $parent.isActiveCSS($data), \
                     click: $parent.selectCell">\
-                <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
+                <!-- ko if: $data.children && $parent.levels > 0 && children().length > 0 -->\
                 <div class="toggle-arrow-container" data-bind="click: toggleIsOpen">\
                     <i data-bind="css: arrowIconClass" aria-hidden="true"></i>&nbsp; \
                 </div>\
@@ -115,7 +115,7 @@ ko.components.register('nested-list', {
                 <!-- /ko -->\
                 </span> \
             </a>\
-            <!-- ko if: $data.children && $parent.levels > 0  && children().length > 0 -->\
+            <!-- ko if: $data.children && $parent.levels > 0 && children().length > 0 -->\
             <div class="row collapse" data-bind="well: { open: isOpen }">\
                 <div class="col-sm-offset-1 col-sm-11">\
                     <nested-list params="cells: children, \
