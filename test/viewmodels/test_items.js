@@ -99,6 +99,7 @@ describe('InventoryViewModel', function(){
                 p.items().length.should.equal(0);
             });
         });
+
         describe('Sort By', function() {
             it('should sort the list of spells by given criteria', function() {
                 var eq = new ItemsViewModel();
@@ -110,6 +111,8 @@ describe('InventoryViewModel', function(){
                 eq.sort().should.equal(eq.sorts['itemWeight asc']);
                 eq.sortBy('itemWeight');
                 eq.sort().should.equal(eq.sorts['itemWeight desc']);
+                eq.sortBy('itemCost');
+                eq.sort().should.equal(eq.sorts['itemCost asc']);
             });
         });
 
