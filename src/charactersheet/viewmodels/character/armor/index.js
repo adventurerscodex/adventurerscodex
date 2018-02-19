@@ -168,8 +168,7 @@ export function ArmorViewModel() {
      * Given a column name, determine the current sort type & order.
      */
     self.sortBy = function(columnName) {
-        self.sort(SortService.sortForName(self.sort(),
-            columnName, self.sorts));
+        self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
     //Manipulating armors
