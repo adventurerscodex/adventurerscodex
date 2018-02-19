@@ -1,5 +1,5 @@
 import {SharedServiceManager} from './shared_service_manager';
-var Random = require('random-js');
+import Random from 'random-js';
 
 /**
  * A utility class that generates random numbers on demand.
@@ -15,7 +15,9 @@ export var RandomNumberGeneratorService = new SharedServiceManager(_RandomNumber
 
 function _RandomNumberGeneratorService(configuration) {
     var self = this;
+
     self.RNG = Random.engines.mt19937().autoSeed();
+
     /**
      * Create a random number generator that uses Math.random()
      *
@@ -77,7 +79,7 @@ function _RandomNumberGeneratorService(configuration) {
     self.rollDiceArray = function (numDice, numSides, numRolls) {
         var array = [numRolls];
         for (var i = 0; i < numRolls; i++) {
-            array[i] = this.rollDice(numDice, numSides);
+            array[i] = self.rollDice(numDice, numSides);
         }
         return array;
     };
