@@ -125,7 +125,6 @@ export function MagicItemsViewModel() {
         self.blankMagicItem().magicItemRarity(value);
     };
 
-
     // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);

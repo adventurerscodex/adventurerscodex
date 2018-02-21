@@ -109,6 +109,7 @@ export function ArmorViewModel() {
     self.setArmorStealth = function(label, value) {
         self.blankArmor().armorStealth(value);
     };
+
     /* Modal Methods */
 
     self.armorsPrePopFilter = function(request, response) {
