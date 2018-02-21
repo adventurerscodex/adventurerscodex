@@ -69,9 +69,12 @@ describe('Treasure Model', function() {
     describe('Worth in gold', function() {
         it('should return the correct worth in gold', function() {
             var treasure = new Treasure();
+            treasure.platinum(2);
             treasure.gold(15);
-            treasure.electrum(2);
-            treasure.worthInGold().should.equal(16);
+            treasure.electrum(3);
+            treasure.silver(11);
+            treasure.copper(99);
+            treasure.worthInGold().should.equal(38);
         });
 
         var types = ['copper', 'silver', 'electrum', 'gold', 'electrum', 'platinum'];
