@@ -3,6 +3,13 @@ import {
     ProficiencyService
 } from 'charactersheet/services/character';
 import {
+    AuthenticationServiceManager,
+    NodeServiceManager,
+    NotificationsServiceManager,
+    UserServiceManager,
+    XMPPService
+} from 'charactersheet/services';
+import {
     CharacterCardPublishingService,
     HotkeysService,
     StatusService
@@ -202,6 +209,13 @@ export function CharacterRootViewModel() {
     //Public Methods
 
     self.load = () => {
+        XMPPService.sharedService().init();
+        NodeServiceManager.sharedService().init();
+        ChatServiceManager.sharedService().init();
+        NotificationsServiceManager.sharedService().init();
+        UserServiceManager.sharedService().init();
+        AuthenticationServiceManager.sharedService().init();
+
         self.activeTab(TabFragmentManager.activeTab());
 
         Notifications.party.joined.add(self._updateCurrentNode);

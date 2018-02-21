@@ -1,4 +1,11 @@
 import 'bin/knockout-custom-loader';
+import {
+    AuthenticationServiceManager,
+    NodeServiceManager,
+    NotificationsServiceManager,
+    UserServiceManager,
+    XMPPService
+} from 'charactersheet/services';
 import { CharacterManager,
     Notifications,
     TabFragmentManager
@@ -125,6 +132,13 @@ export function DMRootViewModel() {
      * Signal all modules to load their data.
      */
     self.load = () => {
+        XMPPService.sharedService().init();
+        NodeServiceManager.sharedService().init();
+        ChatServiceManager.sharedService().init();
+        NotificationsServiceManager.sharedService().init();
+        UserServiceManager.sharedService().init();
+        AuthenticationServiceManager.sharedService().init();
+
         self.activeTab(TabFragmentManager.activeTab());
 
         Notifications.party.joined.add(self._updateCurrentNode);

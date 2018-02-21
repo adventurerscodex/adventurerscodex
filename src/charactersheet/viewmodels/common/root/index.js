@@ -121,13 +121,6 @@ export function AdventurersCodexViewModel() {
             //If no current character exists, fire the load process anyway.
             self.state(APP_STATE.WIZARD);
         }
-
-        XMPPService.sharedService().init();
-        NodeServiceManager.sharedService().init();
-        ChatServiceManager.sharedService().init();
-        NotificationsServiceManager.sharedService().init();
-        UserServiceManager.sharedService().init();
-        AuthenticationServiceManager.sharedService().init();
     };
 
     /**
