@@ -1,5 +1,5 @@
-import { CharacterManager } from 'charactersheet/utilities';
 import { HitDice, HitDiceType } from 'charactersheet/models/character';
+import { CharacterManager } from 'charactersheet/utilities';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
@@ -145,7 +145,7 @@ describe('Stats View Model', function() {
             var stats = new StatsViewModel();
             var hitDie = new HitDiceType();
             hitDie.hitDiceType('D6');
-            stats.editHitDiceItem(hitDie)
+            stats.editHitDiceItem(hitDie);
             stats.setHitDiceType('label', 'D12');
             stats.editHitDiceItem().hitDiceType().should.equal('D12');
         });
