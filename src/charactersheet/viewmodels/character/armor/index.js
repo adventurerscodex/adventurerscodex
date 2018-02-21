@@ -96,6 +96,19 @@ export function ArmorViewModel() {
         }
     };
 
+    // Prepopulate methods
+
+    self.setArmorType = function(label, value) {
+        self.blankArmor().armorType(value);
+    };
+
+    self.setArmorCurrencyDenomination = function(label, value) {
+        self.blankArmor().armorCurrencyDenomination(value);
+    };
+
+    self.setArmorStealth = function(label, value) {
+        self.blankArmor().armorStealth(value);
+    };
     /* Modal Methods */
 
     self.armorsPrePopFilter = function(request, response) {

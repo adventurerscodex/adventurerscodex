@@ -1,5 +1,5 @@
 import { CharacterManager } from 'charactersheet/utilities';
-import { HitDice } from 'charactersheet/models/character';
+import { HitDice, HitDiceType } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
@@ -137,6 +137,17 @@ describe('Stats View Model', function() {
                 stats.health().tempHitpoints().should.equal(val.tempHitpoints);
                 stats.health().damage().should.equal(val.damage);
             });
+        });
+    });
+
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of hit dice type when an autocomplete is selected', function() {
+            var stats = new StatsViewModel();
+            var hitDie = new HitDiceType();
+            hitDie.hitDiceType('D6');
+            stats.editHitDiceItem(hitDie)
+            stats.setHitDiceType('label', 'D12');
+            stats.editHitDiceItem().hitDiceType().should.equal('D12');
         });
     });
 

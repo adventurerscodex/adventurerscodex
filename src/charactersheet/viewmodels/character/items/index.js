@@ -75,6 +75,11 @@ export function ItemsViewModel() {
         });
     };
 
+    // Prepopulate methods
+    self.setItemCurrencyDenomination = function(label, value) {
+        self.blankItem().itemCurrencyDenomination(value);
+    };
+
     // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);

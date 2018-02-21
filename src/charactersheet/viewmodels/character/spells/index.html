@@ -178,7 +178,8 @@
                   <input class="form-control" id="spellsAddSchoolInput"
                          placeholder="Abjuration"
                          data-bind="textInput: blankSpell().spellSchool,
-                          autocomplete: { source: blankSpell().spellSchoolOptions }">
+                          autocomplete: { source: blankSpell().spellSchoolOptions,
+                                          onselect: setSpellSchool }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -188,7 +189,8 @@
                   <input class="form-control" id="spellsAddTypeInput"
                          placeholder="Automatic"
                          data-bind="textInput: blankSpell().spellType,
-                          autocomplete: { source: blankSpell().spellTypeOptions }">
+                          autocomplete: { source: blankSpell().spellTypeOptions,
+                                          onselect: setSpellType }">
                   </div>
               </div>
               <div data-bind="visible: blankSpell().spellType() == 'Savings Throw'">
@@ -199,7 +201,8 @@
                     <input class="form-control" id="spellsAddSaveAttrInput"
                             placeholder="Str"
                             data-bind="textInput: blankSpell().spellSaveAttr,
-                          autocomplete: { source: blankSpell().spellSaveAttrOptions }">
+                          autocomplete: { source: blankSpell().spellSaveAttrOptions,
+                                          onselect: setSpellSaveAttr }">
                     </div>
                 </div>
               </div>
@@ -222,7 +225,8 @@
                           id="spellsAddCastTimeInput"
                           placeholder="1 action"
                           data-bind="textInput: blankSpell().spellCastingTime,
-                          autocomplete: { source: blankSpell().spellCastingTimeOptions }">
+                          autocomplete: { source: blankSpell().spellCastingTimeOptions,
+                                          onselect: setSpellCastingTime }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -233,7 +237,8 @@
                          id="spellsAddRangeInput"
                          placeholder="1 mile"
                          data-bind="textInput: blankSpell().spellRange,
-                          autocomplete: { source: blankSpell().spellRangeOptions }">
+                          autocomplete: { source: blankSpell().spellRangeOptions,
+                                          onselect: setSpellRange }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -244,7 +249,8 @@
                          id="spellsAddComponentsInput"
                          placeholder="V, S, M"
                          data-bind="textInput: blankSpell().spellComponents,
-                          autocomplete: { source: blankSpell().spellComponentsOptions }">
+                          autocomplete: { source: blankSpell().spellComponentsOptions,
+                                          onselect: setSpellComponents }">
                   </div>
               </div>
               <div class="form-group">
@@ -266,7 +272,8 @@
                          id="spellsAddDurationInput"
                          placeholder="1 day"
                          data-bind="textInput: blankSpell().spellDuration,
-                          autocomplete: { source: blankSpell().spellDurationOptions }">
+                          autocomplete: { source: blankSpell().spellDurationOptions,
+                                          onselect: setSpellDuration }">
                   </div>
               </div>
               <div class="form-group">

@@ -133,7 +133,8 @@
               <input class="form-control"
                      placeholder="D4"
                      data-bind="textInput: editHitDiceItem().hitDiceType, autocomplete: {
-                          source: editHitDiceItem().hitDiceOptions}">
+                          source: editHitDiceItem().hitDiceOptions,
+                          onselect: setHitDiceType}">
 
             </div>
           </div>
