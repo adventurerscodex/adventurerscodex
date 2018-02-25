@@ -26,10 +26,10 @@
                   </div>
                 </div>
                 <div class="col-xs-2">
-                  <button class="close" style="padding-top: 20px"
+                  <label type="button" class="close" style="padding-top: 20px"
                     data-bind="click: $parent.toggleDeleteWell">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
+                    <i class="fa fa-trash-o fa-color-hover"></i>
+                  </label>
                 </div>
               </div>
             </a>
@@ -41,16 +41,14 @@
                 </center>
                 <div class="row text-right">
                   <button type="button"
-                    class="btn btn-sm btn-default"
-                    data-bind="click: $parent.toggleDeleteWell"
-                  >
-                    Cancel
+                    class="btn btn-sm btn-danger"
+                    data-bind="click: $parent.removeCharacter">
+                    Delete
                   </button>
                   <button type="button"
-                    class="btn btn-sm btn-danger"
-                    data-bind="click: $parent.removeCharacter"
-                  >
-                    Delete
+                    class="btn btn-sm btn-default"
+                    data-bind="click: $parent.toggleDeleteWell">
+                    Cancel
                   </button>
                 </div>
               </div>
