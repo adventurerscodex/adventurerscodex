@@ -3,20 +3,20 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="magicItemsTable">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('magicItemName');}" width="20%">
+          <th id="magicItemsMagicItemHeader" data-bind="click: function(){sortBy('magicItemName');}" width="20%">
             Magic Item
             <span data-bind="css: sortArrow('magicItemName')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('magicItemCharges');}" width="9%">
+          <th id="magicItemsChargesHeader" data-bind="click: function(){sortBy('magicItemCharges');}" width="9%">
             Charges
             <span data-bind="css: sortArrow('magicItemCharges')"></span>
           </th>
-          <th data-bind="visible: noneAttuned() === false, click: function(){sortBy('magicItemAttuned');}"
+          <th id="magicItemsAttunedHeader" data-bind="visible: noneAttuned() === false, click: function(){sortBy('magicItemAttuned');}"
             width="9%">
             Attuned
             <span data-bind="css: sortArrow('magicItemAttuned')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('magicItemWeight');}" width="9%">
+          <th id="magicItemsWeightHeader" data-bind="click: function(){sortBy('magicItemWeight');}" width="9%">
             Weight
             <span data-bind="css: sortArrow('magicItemWeight')"></span>
           </th>
@@ -25,7 +25,9 @@
           </th>
           <th width="5%">
             <a data-toggle="modal"
-               data-target="#addMagicItem" href="#">
+               data-target="#addMagicItem"
+               id="magicItemsAddIcon"
+               href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -62,7 +64,7 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedMagicItems().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addMagicItem" id="magicItemsAddIcon" href="#"
+          <td data-toggle="modal" data-target="#addMagicItem" href="#"
             colspan="6" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new magic item
@@ -74,7 +76,7 @@
     </div> <!-- end panel body -->
     <div class="container-fluid panel-footer">
        <span class="pull-right">Total weight:&nbsp;
-        <span data-bind="text: totalMagicItemWeight"></span>
+        <span id="magicItemsTableTotalWeight" data-bind="text: totalMagicItemWeight"></span>
       </span>
     </div> <!-- end panel footer -->
     <!-- Add Modal -->
@@ -118,7 +120,8 @@
                          id="magicItemsAddTypeInput"
                          placeholder="Wand"
                          data-bind="textInput: blankMagicItem().magicItemType,
-                         autocomplete: { source: blankMagicItem().magicItemTypeOptions }">
+                         autocomplete: { source: blankMagicItem().magicItemTypeOptions,
+                                         onselect: setMagicItemType }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -129,7 +132,8 @@
                          id="magicItemsAddRarityInput"
                          placeholder="Legendary"
                          data-bind="textInput: blankMagicItem().magicItemRarity,
-                         autocomplete: { source: blankMagicItem().magicItemRarityOptions }">
+                         autocomplete: { source: blankMagicItem().magicItemRarityOptions,
+                                         onselect: setMagicItemRarity }">
                   </div>
               </div>
               <div class="form-group">

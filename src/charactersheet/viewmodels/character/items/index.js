@@ -23,7 +23,9 @@ export function ItemsViewModel() {
         'itemQty asc': { field: 'itemQty', direction: 'asc', numeric: true},
         'itemQty desc': { field: 'itemQty', direction: 'desc', numeric: true},
         'itemWeight asc': { field: 'itemWeight', direction: 'asc', numeric: true},
-        'itemWeight desc': { field: 'itemWeight', direction: 'desc', numeric: true}
+        'itemWeight desc': { field: 'itemWeight', direction: 'desc', numeric: true},
+        'itemCost asc': { field: 'itemCost', direction: 'asc', numeric: true},
+        'itemCost desc': { field: 'itemCost', direction: 'desc', numeric: true}
     };
 
     self.items = ko.observableArray([]);
@@ -71,6 +73,11 @@ export function ItemsViewModel() {
         self.items().forEach(function(e, i, _) {
             e.save();
         });
+    };
+
+    // Prepopulate methods
+    self.setItemCurrencyDenomination = function(label, value) {
+        self.blankItem().itemCurrencyDenomination(value);
     };
 
     // Modal methods

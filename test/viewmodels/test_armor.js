@@ -73,6 +73,8 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorName desc']);
             armors.sortBy('armorType');
             armors.sort().should.equal(armors.sorts['armorType asc']);
+            armors.sortBy('armorEquipped');
+            armors.sort().should.equal(armors.sorts['armorEquipped asc']);
         });
     });
 
@@ -176,6 +178,23 @@ describe('ArmorViewModel', function(){
             armorsVM.selectEditTab();
             armorsVM.editTabStatus().should.equal('active');
             armorsVM.previewTabStatus().should.equal('');
+        });
+    });
+
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of armor type when an autocomplete is selected', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.blankArmor().armorName('Plate');
+            armorsVM.setArmorType('label', 'Light');
+
+            armorsVM.blankArmor().armorType().should.equal('Light');
+        });
+        it('should set the value of armor currency denomination when an autocomplete is selected', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.blankArmor().armorName('Plate');
+            armorsVM.setArmorCurrencyDenomination('label', 'GP');
+
+            armorsVM.blankArmor().armorCurrencyDenomination().should.equal('GP');
         });
     });
 

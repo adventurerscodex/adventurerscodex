@@ -126,6 +126,88 @@ describe('TreasureSectionViewModel', function(){
         });
     });
 
+    /* Prepopulate Methods */
+
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of armor type when an autocomplete is selected', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.blankTreasure().armorName('Plate');
+            armorsVM.setArmorType('label', 'Light');
+
+            armorsVM.blankTreasure().armorType().should.equal('Light');
+        });
+        it('should set the value of armor currency denomination when an autocomplete is selected', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.blankTreasure().armorName('Plate');
+            armorsVM.setArmorCurrencyDenomination('label', 'GP');
+
+            armorsVM.blankTreasure().armorCurrencyDenomination().should.equal('GP');
+        });
+        it('should set the value of item currency denomination when an autocomplete is selected', function() {
+            var items = new ItemsViewModel();
+            items.blankTreasure().itemName('Tinder Box');
+            items.setItemCurrencyDenomination('label', 'GP');
+
+            items.blankTreasure().itemCurrencyDenomination().should.equal('GP');
+        });
+        it('should set the value of magic item type when an autocomplete is selected', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.blankTreasure().magicItemName('Armor of Resistence');
+            magicItems.setMagicItemType('label', 'Armor');
+
+            magicItems.blankTreasure().magicItemType().should.equal('Armor');
+        });
+        it('should set the value of magic item rarity when an autocomplete is selected', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.blankTreasure().magicItemName('Armor of Resistence');
+            magicItems.setMagicItemRarity('label', 'Legendary');
+
+            magicItems.blankTreasure().magicItemRarity().should.equal('Legendary');
+        });
+        it('should set the value of weapon type when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankTreasure().weaponName('Sword');
+            weapons.setWeaponType('label', 'Melee');
+
+            weapons.blankTreasure().weaponType().should.equal('Melee');
+        });
+        it('should set the value of weapon handedness when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankTreasure().weaponName('Sword');
+            weapons.setWeaponHandedness('label', 'One-Handed');
+
+            weapons.blankTreasure().weaponHandedness().should.equal('One-Handed');
+        });
+        it('should set the value of weapon proficiency when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankTreasure().weaponName('Sword');
+            weapons.setWeaponProficiency('label', 'Simple');
+
+            weapons.blankTreasure().weaponProficiency().should.equal('Simple');
+        });
+        it('should set the value of weapon currency denomination when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankTreasure().weaponName('Sword');
+            weapons.setWeaponCurrencyDenomination('label', 'GP');
+
+            weapons.blankTreasure().weaponCurrencyDenomination().should.equal('GP');
+        });
+        it('should set the value of weapon damage type when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankTreasure().weaponName('Sword');
+            weapons.setWeaponDamageType('label', 'Acid');
+
+            weapons.blankTreasure().weaponDamageType().should.equal('Acid');
+        });
+        it('should set the value of weapon property when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankTreasure().weaponName('Sword');
+            weapons.setWeaponProperty('label', 'Finesse');
+
+            weapons.blankTreasure().weaponProperty().should.equal('Finesse');
+        });
+    });
+
     /* UI Methods */
 
     describe('Sort By', function() {

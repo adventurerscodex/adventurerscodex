@@ -183,11 +183,6 @@ small {
 /**
  * Additional Progress Bar Colors
  */
-div.progress-text {
-  line-height: 2.5em;
-  position: absolute;
-}
-
 .progress-bar-blue {
   background-color: #337ab7 !important;
 }
@@ -974,4 +969,15 @@ div.toggle-arrow-container {
   border-width: 1px;
   border-radius: 8px;
   padding: 10px;
+}
+
+.progress {
+  text-align:center;
+}
+
+.progress-value {
+  line-height: 2.5em;
+  position:absolute;
+  right:0;
+  left:0;
 }

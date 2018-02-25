@@ -80,11 +80,40 @@ export function SpellbookViewModel() {
         });
     };
 
+    // Prepopulate methods
     self.populateSpell = function(label, value) {
         var spell = DataRepository.spells[label];
 
         self.blankSpell().importValues(spell);
         self.shouldShowDisclaimer(true);
+    };
+
+    self.setSpellSchool = function(label, value) {
+        self.blankSpell().spellSchool(value);
+    };
+
+    self.setSpellType = function(label, value) {
+        self.blankSpell().spellType(value);
+    };
+
+    self.setSpellSaveAttr = function(label, value) {
+        self.blankSpell().spellSaveAttr(value);
+    };
+
+    self.setSpellCastingTime = function(label, value) {
+        self.blankSpell().spellCastingTime(value);
+    };
+
+    self.setSpellRange = function(label, value) {
+        self.blankSpell().spellRange(value);
+    };
+
+    self.setSpellComponents = function(label, value) {
+        self.blankSpell().spellComponents(value);
+    };
+
+    self.setSpellDuration = function(label, value) {
+        self.blankSpell().spellDuration(value);
     };
 
     // Modal methods

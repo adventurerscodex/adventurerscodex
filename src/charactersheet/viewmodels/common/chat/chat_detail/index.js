@@ -5,7 +5,8 @@ import {
 } from 'charactersheet/services/common';
 import {
     CharacterManager,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import {
     ChatRoom,
@@ -186,7 +187,7 @@ export function ChatDetailViewModel(params) {
             );
         } else {
             return ChatDetailViewModelMemberTemplate.replace(
-                '{card.image}', card.get('imageUrl')[0]
+                '{card.image}', Utility.string.createDirectDropboxLink(card.get('imageUrl')[0])
             ).replace(
                 '{card.name}', card.get('name')[0]
             );
