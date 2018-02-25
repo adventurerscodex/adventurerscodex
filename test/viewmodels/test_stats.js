@@ -27,7 +27,7 @@ describe('Stats View Model', function() {
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
                 stats.health().damage(8);
-                stats.health().hitpoints().should.equal(7);
+                stats.health().hitpoints().should.equal(2);
             });
         });
 
@@ -37,7 +37,7 @@ describe('Stats View Model', function() {
                 stats.health().maxHitpoints(10);
                 stats.health().tempHitpoints(5);
                 stats.damageHandler(4);
-                stats.health().hitpoints().should.equal(11);
+                stats.health().totalHitpoints().should.equal(11);
             });
         });
 

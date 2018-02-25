@@ -20,7 +20,7 @@ export function Health() {
     self.damage = ko.observable(0);
 
     self.hitpoints = ko.pureComputed(function() {
-        return parseInt(self.regularHitpointsRemaining()) + parseInt(self.tempHitpointsRemaining());
+        return parseInt(self.regularHitpointsRemaining());
     }, self);
 
     self.totalHitpoints = ko.pureComputed(function() {
@@ -43,7 +43,11 @@ export function Health() {
     //Progress bar methods.
 
     self.hitpointsText = ko.pureComputed(function() {
-        return 'HP: ' + self.hitpoints().toString();
+        var text = 'HP: ' + self.hitpoints().toString();
+        if (self.tempHitpoints() > 0) {
+            return text + ', Temp HP: ' + self.tempHitpoints().toString();
+        }
+        return text;
     });
 
     self.isKnockedOut = ko.pureComputed(function() {
