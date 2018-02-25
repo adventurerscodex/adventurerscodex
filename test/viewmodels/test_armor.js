@@ -73,6 +73,8 @@ describe('ArmorViewModel', function(){
             armors.sort().should.equal(armors.sorts['armorName desc']);
             armors.sortBy('armorType');
             armors.sort().should.equal(armors.sorts['armorType asc']);
+            armors.sortBy('armorEquipped');
+            armors.sort().should.equal(armors.sorts['armorEquipped asc']);
         });
     });
 
