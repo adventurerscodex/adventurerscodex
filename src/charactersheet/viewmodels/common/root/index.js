@@ -70,6 +70,7 @@ export function AdventurersCodexViewModel() {
     self.navLogo = navLogo;
     self.version = VERSION;
     self.buildDate = BUILD_DATE;
+    self.currentYear = CURRENT_YEAR;
     self.environment = ENVIRONMENT;
     self.homeURL = HOME_URL;
 
