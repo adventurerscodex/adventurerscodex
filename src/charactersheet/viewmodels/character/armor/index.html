@@ -107,7 +107,8 @@
                   <input class="form-control"
                          id="armorAddTypeInput"
                          placeholder="Light"
-                         data-bind="textInput: blankArmor().armorType, autocomplete: { source: blankArmor().armorTypeOptions }">
+                         data-bind="textInput: blankArmor().armorType, autocomplete: { source: blankArmor().armorTypeOptions,
+                         onselect: setArmorType }">
                   </div>
               </div>
               <div class="form-group">
@@ -168,7 +169,8 @@
                   <input class="form-control"
                          id="armorAddStealthInput"
                          placeholder="Advantage"
-                         data-bind="textInput: blankArmor().armorStealth, autocomplete: { source: blankArmor().armorStealthOptions }">
+                         data-bind="textInput: blankArmor().armorStealth, autocomplete: { source: blankArmor().armorStealthOptions,
+                         onselect: setArmorStealth }">
                   </div>
               </div>
               <div class="form-group">

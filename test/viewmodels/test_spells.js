@@ -160,4 +160,56 @@ describe('SpellsViewModel', function(){
             book.preparedRowVisibleEdit(spell).should.equal(false);
         });
     });
+
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of spell school when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellSchool('label', 'Fire');
+
+            book.blankSpell().spellSchool().should.equal('Fire');
+        });
+        it('should set the value of spell type when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellType('label', 'Attack Roll');
+
+            book.blankSpell().spellType().should.equal('Attack Roll');
+        });
+        it('should set the value of spell save attr when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellSaveAttr('label', 'Wis');
+
+            book.blankSpell().spellSaveAttr().should.equal('Wis');
+        });
+        it('should set the value of spell casting time when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellCastingTime('label', '1 action');
+
+            book.blankSpell().spellCastingTime().should.equal('1 action');
+        });
+        it('should set the value of spell range when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellRange('label', '20 ft.');
+
+            book.blankSpell().spellRange().should.equal('20 ft.');
+        });
+        it('should set the value of spell components when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellComponents('label', 'S');
+
+            book.blankSpell().spellComponents().should.equal('S');
+        });
+        it('should set the value of spell duration when an autocomplete is selected', function() {
+            var book = new SpellbookViewModel();
+            book.blankSpell().spellLevel(1);
+            book.setSpellDuration('label', '1 hour');
+
+            book.blankSpell().spellDuration().should.equal('1 hour');
+        });
+    });
 });

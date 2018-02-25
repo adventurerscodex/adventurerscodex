@@ -279,7 +279,8 @@
       <div class="col-sm-10">
       <input class="form-control"
               placeholder="Light"
-              data-bind="textInput: blankTreasure().armorType, autocomplete: { source: blankTreasure().armorTypeOptions }">
+              data-bind="textInput: blankTreasure().armorType, autocomplete: { source: blankTreasure().armorTypeOptions,
+              onselect: setArmorType }">
       </div>
   </div>
   <div class="form-group">
@@ -305,7 +306,8 @@
           <input class="form-control"
                  placeholder="GP"
                 data-bind="textInput: blankTreasure().armorCurrencyDenomination, autocomplete: {
-                          source: blankTreasure().armorCurrencyDenominationOptions }">
+                          source: blankTreasure().armorCurrencyDenominationOptions,
+                          onselect: setArmorCurrencyDenomination }">
         </span>
       </div>
     </div>
@@ -338,7 +340,8 @@
       <div class="col-sm-10">
       <input class="form-control"
              placeholder="Advantage"
-             data-bind="textInput: blankTreasure().armorStealth, autocomplete: { source: blankTreasure().armorStealthOptions }">
+             data-bind="textInput: blankTreasure().armorStealth, autocomplete: { source: blankTreasure().armorStealthOptions,
+             onselect: setArmorStealth }">
       </div>
   </div>
   <div class="form-group">
@@ -460,7 +463,8 @@
          <input class="form-control"
                 placeholder="GP"
                 data-bind="textInput: blankTreasure().itemCurrencyDenomination, autocomplete: {
-                          source: blankTreasure().itemCurrencyDenominationOptions }">
+                          source: blankTreasure().itemCurrencyDenominationOptions,
+                          onselect: setItemCurrencyDenomination }">
         </span>
        </div>
       </div>
@@ -500,7 +504,8 @@
         <input class="form-control"
                placeholder="Wand"
                data-bind="textInput: blankTreasure().magicItemType,
-                         autocomplete: { source: blankTreasure().magicItemTypeOptions }">
+                         autocomplete: { source: blankTreasure().magicItemTypeOptions,
+                                         onselect: setMagicItemType }">
         </div>
     </div>
     <div class="form-group ui-front">
@@ -510,7 +515,8 @@
         <input class="form-control"
                placeholder="Legendary"
                data-bind="textInput: blankTreasure().magicItemRarity,
-                         autocomplete: { source: blankTreasure().magicItemRarityOptions }">
+                         autocomplete: { source: blankTreasure().magicItemRarityOptions,
+                                         onselect: setMagicItemRarity }">
         </div>
     </div>
     <div class="form-group">
@@ -632,7 +638,8 @@
         <input class="form-control"
                placeholder="Ranged"
                data-bind="textInput: blankTreasure().weaponType, autocomplete: {
-                          source: blankTreasure().weaponTypeOptions }">
+                          source: blankTreasure().weaponTypeOptions,
+                          onselect: setWeaponType }">
         </div>
     </div>
     <div class="form-group ui-front">
@@ -642,7 +649,8 @@
         <input class="form-control"
                 placeholder="One-Handed"
                 data-bind="textInput: blankTreasure().weaponHandedness, autocomplete: {
-                          source: blankTreasure().weaponHandednessOptions }">
+                          source: blankTreasure().weaponHandednessOptions,
+                          onselect: setWeaponHandedness }">
         </div>
     </div>
     <div class="form-group ui-front">
@@ -652,7 +660,8 @@
         <input class="form-control"
                 placeholder="Simple"
                 data-bind="textInput: blankTreasure().weaponProficiency, autocomplete: {
-                          source: blankTreasure().weaponProficiencyOptions }">
+                          source: blankTreasure().weaponProficiencyOptions,
+                          onselect: setWeaponProficiency }">
         </div>
     </div>
     <div class="form-group ui-front">
@@ -669,7 +678,8 @@
             <input class="form-control"
                    placeholder="GP"
                    data-bind="textInput: blankTreasure().weaponCurrencyDenomination, autocomplete: {
-                          source: blankTreasure().weaponCurrencyDenominationOptions }">
+                          source: blankTreasure().weaponCurrencyDenominationOptions,
+                          onselect: setWeaponCurrencyDenomination }">
           </span>
         </div>
       </div>
@@ -702,7 +712,8 @@
         <input class="form-control"
                placeholder="Fire"
                data-bind="textInput: blankTreasure().weaponDamageType, autocomplete: {
-                          source: blankTreasure().weaponDamageTypeOptions }">
+                          source: blankTreasure().weaponDamageTypeOptions,
+                          onselect: setWeaponDamageType }">
         </div>
     </div>
     <div class="form-group ui-front">
@@ -712,7 +723,8 @@
         <input class="form-control"
                 placeholder="Finesse"
                 data-bind="textInput: blankTreasure().weaponProperty, autocomplete: {
-                          source: blankTreasure().weaponPropertyOptions }">
+                          source: blankTreasure().weaponPropertyOptions,
+                          onselect: setWeaponProperty }">
         </div>
     </div>
     <div class="form-group">

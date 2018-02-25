@@ -115,6 +115,16 @@ describe('ProficienciesViewModel', function() {
         });
     });
 
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of proficiency type when an autocomplete is selected', function() {
+            var proficienciesViewModel = new ProficienciesViewModel();
+            proficienciesViewModel.blankProficiency().name('Bagpipes');
+            proficienciesViewModel.setType('label', 'Tools');
+
+            proficienciesViewModel.blankProficiency().type().should.equal('Tools');
+        });
+    });
+
     describe('Sort By', function() {
         it('should sort the list of proficiencies by given criteria', function() {
             var proficienciesViewModel = new ProficienciesViewModel();

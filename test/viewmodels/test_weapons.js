@@ -144,4 +144,49 @@ describe('WeaponsViewModel', function(){
         });
     });
 
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of weapon type when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankWeapon().weaponName('Sword');
+            weapons.setWeaponType('label', 'Melee');
+
+            weapons.blankWeapon().weaponType().should.equal('Melee');
+        });
+        it('should set the value of weapon handedness when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankWeapon().weaponName('Sword');
+            weapons.setWeaponHandedness('label', 'One-Handed');
+
+            weapons.blankWeapon().weaponHandedness().should.equal('One-Handed');
+        });
+        it('should set the value of weapon proficiency when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankWeapon().weaponName('Sword');
+            weapons.setWeaponProficiency('label', 'Simple');
+
+            weapons.blankWeapon().weaponProficiency().should.equal('Simple');
+        });
+        it('should set the value of weapon currency denomination when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankWeapon().weaponName('Sword');
+            weapons.setWeaponCurrencyDenomination('label', 'GP');
+
+            weapons.blankWeapon().weaponCurrencyDenomination().should.equal('GP');
+        });
+        it('should set the value of weapon damage type when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankWeapon().weaponName('Sword');
+            weapons.setWeaponDamageType('label', 'Acid');
+
+            weapons.blankWeapon().weaponDamageType().should.equal('Acid');
+        });
+        it('should set the value of weapon property when an autocomplete is selected', function() {
+            var weapons = new WeaponsViewModel();
+            weapons.blankWeapon().weaponName('Sword');
+            weapons.setWeaponProperty('label', 'Finesse');
+
+            weapons.blankWeapon().weaponProperty().should.equal('Finesse');
+        });
+    });
+
 });
