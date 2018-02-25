@@ -339,12 +339,12 @@
           <div class="modal-body">
             <!-- Begin Tabs -->
             <ul class="nav nav-tabs tabs">
-              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
+              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus" id="spellsModalPreviewTab">
                 <a href="#spellsModalPreview" aria-controls="spellsModalPreview" role="tab" data-toggle="tab">
                     <b>Preview</b>
                 </a>
               </li>
-              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
+              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus" id="spellsModalEditTab">
                 <a href="#spellsModalEdit" aria-controls="spellsModalEdit" role="tab" data-toggle="tab">
                     <b>Edit</b>
                 </a>
@@ -501,7 +501,7 @@
                            class="col-sm-2 control-label">Components</label>
                       <div class="col-sm-10">
                       <input class="form-control"
-                             id="spellsEditCompenentsInput"
+                             id="spellsEditComponentsInput"
                              placeholder="V, S, M"
                              data-bind="textInput: spellComponents">
                       </div>
