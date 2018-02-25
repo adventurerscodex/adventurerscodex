@@ -47,6 +47,9 @@ export function PartyManagerViewModel() {
         Notifications.party.left.add(self._handleUnsubscription);
 
         self.dataHasChanged();
+        if (self.loggedIn()) {
+            self.rejoinLastParty();
+        }
     };
 
     /* UI Methods */
