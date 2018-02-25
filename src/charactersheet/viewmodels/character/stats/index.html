@@ -8,13 +8,12 @@
             data-bind="style: { width: health().regularProgressWidth }, css: health().progressType">
             <span class="sr-only"></span>
           </div>
-          <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar" aria-valuemin="0"
-            data-bind="style: { width: health().tempProgressWidth }" aria-describedby="hitpointsCounter">
+          <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar"
+           aria-valuemin="0" data-bind="style: { width: health().tempProgressWidth }"
+           aria-describedby="hitpointsCounter">
             <span class="sr-only"></span>
           </div>
-          <div class="progress-text col-xs-3 col-xs-offset-5"
-            id="hitpointsCounter" data-bind="text: health().hitpointsText">
-          </div>
+          <span class="progress-value" id="hitpointsCounter" data-bind="text: health().hitpointsText"></span>
         </div>
         <table class="table table-responsive table-ac-bordered table-hover">
           <thead data-toggle="modal" data-bind="click: editHealth" class="clickable">
