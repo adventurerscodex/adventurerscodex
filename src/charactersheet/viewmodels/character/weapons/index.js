@@ -106,7 +106,7 @@ export function WeaponsViewModel() {
             columnName, self.sorts));
     };
 
-    /* Modal Methods */
+    // Prepopulate methods
 
     self.populateWeapon = function(label, value) {
         var weapon = DataRepository.weapons[label];
@@ -114,6 +114,32 @@ export function WeaponsViewModel() {
         self.blankWeapon().importValues(weapon);
         self.shouldShowDisclaimer(true);
     };
+
+    self.setWeaponType = function(label, value) {
+        self.blankWeapon().weaponType(value);
+    };
+
+    self.setWeaponHandedness = function(label, value) {
+        self.blankWeapon().weaponHandedness(value);
+    };
+
+    self.setWeaponProficiency = function(label, value) {
+        self.blankWeapon().weaponProficiency(value);
+    };
+
+    self.setWeaponCurrencyDenomination = function(label, value) {
+        self.blankWeapon().weaponCurrencyDenomination(value);
+    };
+
+    self.setWeaponDamageType = function(label, value) {
+        self.blankWeapon().weaponDamageType(value);
+    };
+
+    self.setWeaponProperty = function(label, value) {
+        self.blankWeapon().weaponProperty(value);
+    };
+
+    /* Modal Methods */
 
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);

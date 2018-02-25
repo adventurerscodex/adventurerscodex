@@ -167,7 +167,8 @@
                          id="weaponAddTypeInput"
                          placeholder="Ranged"
                          data-bind="textInput: blankWeapon().weaponType, autocomplete: {
-                          source: blankWeapon().weaponTypeOptions }">
+                          source: blankWeapon().weaponTypeOptions,
+                          onselect: setWeaponType }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -178,7 +179,8 @@
                          id="weaponAddHandednessInput"
                          placeholder="One-Handed"
                          data-bind="textInput: blankWeapon().weaponHandedness, autocomplete: {
-                          source: blankWeapon().weaponHandednessOptions }">
+                          source: blankWeapon().weaponHandednessOptions,
+                          onselect: setWeaponHandedness }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -189,7 +191,8 @@
                          id="weaponAddProficiencyInput"
                          placeholder="Simple"
                          data-bind="textInput: blankWeapon().weaponProficiency, autocomplete: {
-                          source: blankWeapon().weaponProficiencyOptions }">
+                          source: blankWeapon().weaponProficiencyOptions,
+                          onselect: setWeaponProficiency }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -207,7 +210,8 @@
                              id="weaponAddCurrencyDenominationInput"
                              placeholder="GP"
                              data-bind="textInput: blankWeapon().weaponCurrencyDenomination, autocomplete: {
-                          source: blankWeapon().weaponCurrencyDenominationOptions }">
+                          source: blankWeapon().weaponCurrencyDenominationOptions,
+                          onselect: setWeaponCurrencyDenomination }">
                     </span>
                   </div>
                 </div>
@@ -241,7 +245,8 @@
                          id="weaponAddDamageTypeInput"
                          placeholder="Fire"
                          data-bind="textInput: blankWeapon().weaponDamageType, autocomplete: {
-                          source: blankWeapon().weaponDamageTypeOptions }">
+                          source: blankWeapon().weaponDamageTypeOptions,
+                          onselect: setWeaponDamageType }">
                   </div>
 
               </div>
@@ -253,7 +258,8 @@
                          id="weaponAddPropertyInput"
                          placeholder="Finesse"
                          data-bind="textInput: blankWeapon().weaponProperty, autocomplete: {
-                          source: blankWeapon().weaponPropertyOptions }">
+                          source: blankWeapon().weaponPropertyOptions,
+                          onselect: setWeaponProperty }">
                   </div>
               </div>
               <div class="form-group">

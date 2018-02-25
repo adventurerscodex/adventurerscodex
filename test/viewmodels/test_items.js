@@ -157,6 +157,16 @@ describe('InventoryViewModel', function(){
             });
         });
 
+        describe('Should set autocomplete fields', function() {
+            it('should set the value of item currency denomination when an autocomplete is selected', function() {
+                var items = new ItemsViewModel();
+                items.blankItem().itemName('Tinder Box');
+                items.setItemCurrencyDenomination('label', 'GP');
+
+                items.blankItem().itemCurrencyDenomination().should.equal('GP');
+            });
+        });
+
         describe('Modal Finished Closing', function() {
             it('should switch default state to preview', function() {
                 var items = new ItemsViewModel();

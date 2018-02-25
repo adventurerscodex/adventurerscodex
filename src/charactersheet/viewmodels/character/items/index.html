@@ -143,7 +143,8 @@
                       id="inventoryAddCurrencyDenominationInput"
                       placeholder="GP"
       						    data-bind="textInput: blankItem().itemCurrencyDenomination, autocomplete: {
-                          source: blankItem().itemCurrencyDenominationOptions }">
+                          source: blankItem().itemCurrencyDenominationOptions,
+                          onselect: setItemCurrencyDenomination }">
               </span>
       		   </div>
     	      </div>

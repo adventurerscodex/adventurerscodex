@@ -314,7 +314,6 @@ export var Fixtures = {
     },
     weapon: {
         weaponDamageTypeOptions: [
-            '',
             'Acid',
             'Bludgeoning',
             'Cold',
@@ -339,7 +338,6 @@ export var Fixtures = {
             'Simple'
         ],
         weaponPropertyOptions: [
-            '',
             'Ammunition',
             'Ammunition and Heavy',
             'Ammunition and Loading',

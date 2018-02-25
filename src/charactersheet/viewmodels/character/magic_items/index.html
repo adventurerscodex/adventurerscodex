@@ -118,7 +118,8 @@
                          id="magicItemsAddTypeInput"
                          placeholder="Wand"
                          data-bind="textInput: blankMagicItem().magicItemType,
-                         autocomplete: { source: blankMagicItem().magicItemTypeOptions }">
+                         autocomplete: { source: blankMagicItem().magicItemTypeOptions,
+                                         onselect: setMagicItemType }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -129,7 +130,8 @@
                          id="magicItemsAddRarityInput"
                          placeholder="Legendary"
                          data-bind="textInput: blankMagicItem().magicItemRarity,
-                         autocomplete: { source: blankMagicItem().magicItemRarityOptions }">
+                         autocomplete: { source: blankMagicItem().magicItemRarityOptions,
+                                         onselect: setMagicItemRarity }">
                   </div>
               </div>
               <div class="form-group">

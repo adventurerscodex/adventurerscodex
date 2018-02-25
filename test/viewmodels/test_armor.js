@@ -179,6 +179,23 @@ describe('ArmorViewModel', function(){
         });
     });
 
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of armor type when an autocomplete is selected', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.blankArmor().armorName('Plate');
+            armorsVM.setArmorType('label', 'Light');
+
+            armorsVM.blankArmor().armorType().should.equal('Light');
+        });
+        it('should set the value of armor currency denomination when an autocomplete is selected', function() {
+            var armorsVM = new ArmorViewModel();
+            armorsVM.blankArmor().armorName('Plate');
+            armorsVM.setArmorCurrencyDenomination('label', 'GP');
+
+            armorsVM.blankArmor().armorCurrencyDenomination().should.equal('GP');
+        });
+    });
+
     describe('Modal Finished Closing', function() {
         it('should switch default state to preview', function() {
             var armorsVM = new ArmorViewModel();

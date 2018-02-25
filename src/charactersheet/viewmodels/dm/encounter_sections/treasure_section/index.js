@@ -278,6 +278,54 @@ export function TreasureSectionViewModel(params) {
         self.shouldShowDisclaimer(true);
     };
 
+    self.setArmorType = function(label, value) {
+        self.blankTreasure().armorType(value);
+    };
+
+    self.setArmorCurrencyDenomination = function(label, value) {
+        self.blankTreasure().armorCurrencyDenomination(value);
+    };
+
+    self.setArmorStealth = function(label, value) {
+        self.blankTreasure().armorStealth(value);
+    };
+
+    self.setItemCurrencyDenomination = function(label, value) {
+        self.blankTreasure().itemCurrencyDenomination(value);
+    };
+
+    self.setMagicItemType = function(label, value) {
+        self.blankTreasure().magicItemType(value);
+    };
+
+    self.setMagicItemRarity = function(label, value) {
+        self.blankTreasure().magicItemRarity(value);
+    };
+
+    self.setWeaponType = function(label, value) {
+        self.blankTreasure().weaponType(value);
+    };
+
+    self.setWeaponHandedness = function(label, value) {
+        self.blankTreasure().weaponHandedness(value);
+    };
+
+    self.setWeaponProficiency = function(label, value) {
+        self.blankTreasure().weaponProficiency(value);
+    };
+
+    self.setWeaponCurrencyDenomination = function(label, value) {
+        self.blankTreasure().weaponCurrencyDenomination(value);
+    };
+
+    self.setWeaponDamageType = function(label, value) {
+        self.blankTreasure().weaponDamageType(value);
+    };
+
+    self.setWeaponProperty = function(label, value) {
+        self.blankTreasure().weaponProperty(value);
+    };
+
     /* Modal Methods */
 
     self.toggleModal = function() {

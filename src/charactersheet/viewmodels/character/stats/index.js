@@ -239,6 +239,11 @@ export function StatsViewModel() {
         self.healthDataHasChange();
     };
 
+    // Prepopulate methods
+    self.setHitDiceType = function(label, value) {
+        self.editHitDiceItem().hitDiceType(value);
+    };
+
     /* Utility Methods */
 
     self.deathSaveSuccessDataHasChanged = function() {
