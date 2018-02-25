@@ -1,3 +1,4 @@
+import './style.css';
 import {
     Character,
     PlayerTypes
@@ -18,7 +19,9 @@ export function CharactersViewModel(params) {
     self.componentStatus = params.modalStatus || ko.observable(false);
     self.modalStatus = ko.observable(false);
     self.selectedCharacter = ko.observable();
-    self.deleteCollapse = ko.observable(false);
+    self.deleteCollapse = {
+        // Dynamically built map.
+    };
 
     self.load = () => {
         self.characters(PersistenceService.findAll(Character));
@@ -26,6 +29,11 @@ export function CharactersViewModel(params) {
 
         Notifications.characterManager.changed.add(self._updatedSelectedCharacter);
         self._updatedSelectedCharacter();
+
+        // Build the hash of key -> modal open.
+        self.characters().forEach(({key}) => {
+            self.deleteCollapse[key()] = ko.observable(false);
+        });
     };
 
     self.changeCharacter = (character) => {
@@ -55,16 +63,19 @@ export function CharactersViewModel(params) {
         window.location = character.url();
     };
 
-    self.removeCharacter = () => {
-        const deletedCharacterIndex = self.characters().indexOf(self.selectedCharacter());
+    self.removeCharacter = (character) => {
+        const deletedCharacterIndex = self.characters().indexOf(character);
 
         //Remove the character.
-        self.selectedCharacter().delete();
-        self.characters.remove(self.selectedCharacter());
+        character.delete();
+        self.characters.remove(character);
+
+        // Close the well.
+        self.deleteCollapse[character.key()](false);
 
         if (self.characters().length === 0) {
             self.modalStatus(false);
-        } else if (self.selectedCharacter().key() === CharacterManager.activeCharacter().key()) {
+        } else if (character.key() === CharacterManager.activeCharacter().key()) {
             // If we've deleted the current character...
             // switch to the same index position bounded by list length.
             const index = (
@@ -74,22 +85,17 @@ export function CharactersViewModel(params) {
             );
             CharacterManager.changeCharacter(self.characters()[index].key());
         }
-        self.closeDelete();
     };
 
-    self.openDelete = (character) => {
-        scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth'
+    self.toggleDeleteWell = ({key}) => {
+        // Set the others to close.
+        self.characters().forEach(({key}) => {
+            self.deleteCollapse[key()](false);
         });
-        self.selectedCharacter(character);
-        self.deleteCollapse(true);
-    };
 
-    self.closeDelete = () => {
-        self.deleteCollapse(false);
-        self._updatedSelectedCharacter();
+        // Open the one we need.
+        const value = !self.deleteCollapse[key()]();
+        self.deleteCollapse[key()](value);
     };
 
     self.modalFinishedClosing = () => {
@@ -101,7 +107,7 @@ export function CharactersViewModel(params) {
 
     self.playerSelectedCSS = (character) => {
         if (character.key() === self.selectedCharacter().key()) {
-            return 'active';
+            return 'light-active';
         }
         return '';
     };

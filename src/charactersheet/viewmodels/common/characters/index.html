@@ -12,70 +12,57 @@
           Characters and Games
         </h4>
       </div>
-      <div class="collapse" data-bind="well: { open: deleteCollapse }"
-        id="charactersAndGamesDeleteCollapse">
-        <div class="well no-bottom-margin well-top-shadow">
-          <h3 class="text-center text-warning">Are you sure you want to delete this Character or Campaign?</h3>
-          <div class="row rounded-border-div">
-            <!-- ko if: deleteCollapse -->
-            <div class="col-xs-2">
-              <img data-bind="attr: { src: selectedCharacter().playerImage }" class="img img-circle" width="50" height="50" style="margin-top: 3px;" />
-            </div>
-            <div class="col-xs-10">
-              <span class="lead" data-bind='text: selectedCharacter().playerTitle'></span>
-              <small>
-                by <span data-bind='text: selectedCharacter().playerAuthor'></span>
-              </small>
-              <div>
-                <small data-bind='text: selectedCharacter().playerSummary'></small>
+      <div class="modal-body">
+        <div class="container-fluid text-left">
+          <div class="list-group">
+            <!-- ko foreach: characters -->
+            <a href="#" class="list-group-item" data-bind="css: $parent.playerSelectedCSS($data)">
+              <div class="row">
+                <div class="col-xs-3 col-sm-2" data-bind="click: $parent.changeCharacter">
+                  <img data-bind="attr: { src: playerImage }" class="img img-circle" width="60"
+                    height="60" style="margin-top: 7px;" />
+                </div>
+                <div class="col-xs-7 col-sm-8" style="padding-top: 5px" data-bind="click: $parent.changeCharacter">
+                  <span class="lead" data-bind='text: playerTitle'></span>
+                  <small>
+                    by <span data-bind='text: playerAuthor'></span>
+                  </small>
+                  <div>
+                    <small data-bind='text: playerSummary'></small>
+                  </div>
+                </div>
+                <div class="col-xs-2">
+                  <button class="close" style="padding-top: 20px"
+                    data-bind="click: $parent.toggleDeleteWell">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              </div>
+            </a>
+            <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[key()] }">
+              <div class="well no-bottom-margin well-top-shadow text-center">
+                Are you sure you want to delete this Character or Campaign?
+                <center>
+                  <i class="text-danger text-center">This action cannot be undone.</i>
+                </center>
+                <div class="row text-right">
+                  <button type="button"
+                    class="btn btn-sm btn-default"
+                    data-bind="click: $parent.toggleDeleteWell"
+                  >
+                    Cancel
+                  </button>
+                  <button type="button"
+                    class="btn btn-sm btn-danger"
+                    data-bind="click: $parent.removeCharacter"
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
             <!-- /ko -->
           </div>
-          <h5 class="text-danger text-center">Note: This action is irreversible.</h5>
-          <div class="row text-right">
-            <button type="button"
-              class="btn btn-danger"
-              id="charactersAndGamesDeleteButton"
-              data-bind='click: removeCharacter'>Delete</button>
-            <button type="button"
-              class="btn btn-default"
-              id="charactersAndGamesCancelButton"
-              data-bind='click: closeDelete'>Cancel</button>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class='container-fluid'>
-          <table data-bind='foreach: characters' class="table table-hover table-ac-bordered">
-            <tr data-bind="css: $parent.playerSelectedCSS($data)">
-              <td class="clickable"
-                data-bind="click: $parent.changeCharacter"
-                data-dismiss="modal">
-                <div class="row">
-                  <div class="col-xs-2">
-                    <img data-bind="attr: { src: playerImage }" class="img img-circle"
-                      width="50" height="50" style="margin-top: 3px;" />
-                  </div>
-                  <div class="col-xs-10">
-                    <span class="lead" data-bind='text: playerTitle'></span>
-                    <small>
-                      by <span data-bind='text: playerAuthor'></span>
-                    </small>
-                    <div>
-                      <small data-bind='text: playerSummary'></small>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <button class="close" style="padding-top: 20px"
-                  data-bind="click: $parent.openDelete">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-              </td>
-            </tr>
-          </table>
         </div>
       </div>
       <div class="modal-footer">
