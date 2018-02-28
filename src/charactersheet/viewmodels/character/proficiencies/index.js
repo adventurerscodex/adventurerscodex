@@ -68,6 +68,10 @@ export function ProficienciesViewModel() {
         self.shouldShowDisclaimer(true);
     };
 
+    self.setType = function(label, value) {
+        self.blankProficiency().type(value);
+    };
+
     // Modal methods
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);

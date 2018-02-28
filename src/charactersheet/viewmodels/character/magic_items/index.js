@@ -108,11 +108,21 @@ export function MagicItemsViewModel() {
         });
     };
 
+    // Prepopulate methods
+
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];
 
         self.blankMagicItem().importValues(magicItems);
         self.shouldShowDisclaimer(true);
+    };
+
+    self.setMagicItemType = function(label, value) {
+        self.blankMagicItem().magicItemType(value);
+    };
+
+    self.setMagicItemRarity = function(label, value) {
+        self.blankMagicItem().magicItemRarity(value);
     };
 
     // Modal methods

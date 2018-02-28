@@ -52,7 +52,7 @@ export function ChatLogImageItem(params) {
         if (!card) {
             return 'https://www.gravatar.com/avatar/{}?d=mm';
         }
-        return card.get('imageUrl');
+        return Utility.string.createDirectDropboxLink(card.get('imageUrl')[0]);
     });
 
     self.name = ko.pureComputed(function() {

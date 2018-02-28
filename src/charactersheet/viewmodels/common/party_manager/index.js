@@ -35,7 +35,7 @@ export function PartyManagerViewModel() {
     };
 
     self.load = function() {
-        Notifications.xmpp.connected.add(self.dataHasChanged);
+        Notifications.xmpp.connected.add(self.rejoinLastParty);
         Notifications.xmpp.reconnected.add(self._handleReconnection);
         Notifications.xmpp.disconnected.add(self._handleDisconnection);
         Notifications.xmpp.error.add(self._handleConnectionError);
@@ -47,6 +47,9 @@ export function PartyManagerViewModel() {
         Notifications.party.left.add(self._handleUnsubscription);
 
         self.dataHasChanged();
+        if (self.loggedIn()) {
+            self.rejoinLastParty();
+        }
     };
 
     /* UI Methods */
@@ -138,6 +141,22 @@ export function PartyManagerViewModel() {
 
         // Reload parties.
         self.parties(self._getParties());
+    };
+
+    /**
+     * If the user has only one party, they will be automatically reconnected upon refresh
+     * or when the character or campaign is selected.
+    */
+    self.rejoinLastParty = () => {
+        self.dataHasChanged();
+        // Early return if, for some reason, we are not actually logged in
+        if (!self.loggedIn()) {
+            return;
+        }
+
+        if (self.parties().length == 1) {
+            self.joinParty(Strophe.getNodeFromJid(self.parties()[0].chatId()));
+        }
     };
 
     self.dataHasChanged = function() {

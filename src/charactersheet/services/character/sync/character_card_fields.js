@@ -17,6 +17,7 @@ import { SpellStats } from 'charactersheet/models/character/spell_stats';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { Treasure } from 'charactersheet/models/common/treasure';
+import { Utility } from 'charactersheet/utilities/convenience';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 export var CharacterCardFields = [
@@ -65,7 +66,8 @@ export var CharacterCardFields = [
             if (image.imageSource() === 'link') {
                 var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
                 if (!imageModel) { return defaultImage; }
-                return imageModel.imageUrl() !== '' ? imageModel.imageUrl() : defaultImage;
+                var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
+                return convertedImage !== '' ? convertedImage : defaultImage;
             } else if (image.imageSource() === 'email') {
                 var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
                 return info ? info.gravatarUrl() : defaultImage;

@@ -28,6 +28,32 @@ export function StatsViewModel() {
     self.modalOpen = ko.observable(false);
     self._dummy = ko.observable();
 
+
+    self.damageHandler = ko.computed({
+        read: function() {
+            return self.health().damage();},
+        write: function(value) {
+            if (self.health().tempHitpoints()) {
+                // Find the damage delta, then apply to temp hit points first.
+                var damageChange = value - self.health().damage();
+                if (damageChange > 0) {
+                    var remainingTempHP = self.health().tempHitpoints() - damageChange;
+                    if (remainingTempHP >= 0 ) {
+                        // New damage value did not eliminate temporary hit points
+                        // reduce temporary hit points, and do not apply to damage.
+                        self.health().tempHitpoints(remainingTempHP);
+                        value = self.health().damage();
+                    } else { // remainingTempHP is negative.
+                        self.health().tempHitpoints(0);
+                        value = self.health().damage() + remainingTempHP;
+                    }
+                }
+            }
+            self.health().damage(value);
+        },
+        owner: self
+    });
+
     self.load = function() {
         Notifications.global.save.add(self.save);
 
@@ -62,15 +88,21 @@ export function StatsViewModel() {
         var deathSaveList = PersistenceService.findBy(DeathSave, 'characterId', key);
         self.deathSaveSuccessList([]);
         self.deathSaveFailureList([]);
-        if (deathSaveList.length > 0) {
-            for(var i=0; i<3;i++){
+
+        if (deathSaveList.length === 6) {
+            for (var i=0; i<3; i++) {
                 self.deathSaveSuccessList.push(deathSaveList[i]);
             }
-            for(var j=3; j<6;j++){
+            for (var j=3; j<6; j++) {
                 self.deathSaveFailureList.push(deathSaveList[j]);
             }
-        } else{
-            for(var k=0; k<3;k++){
+        } else {
+            // FIXME: Purge all saves and remake...
+            deathSaveList.forEach(save => {
+                save.delete();
+            });
+
+            for (var k=0; k<3; k++) {
                 self.deathSaveSuccessList.push(new DeathSave());
                 self.deathSaveFailureList.push(new DeathSave());
             }
@@ -167,6 +199,7 @@ export function StatsViewModel() {
     self.resetOnLongRest = function() {
         self.resetHitDice();
         self.health().damage(0);
+        self.health().tempHitpoints(0);
         self.health().save();
         self.damageDataHasChanged();
     };
@@ -239,7 +272,13 @@ export function StatsViewModel() {
         self.healthDataHasChange();
     };
 
+    // Prepopulate methods
+    self.setHitDiceType = function(label, value) {
+        self.editHitDiceItem().hitDiceType(value);
+    };
+
     /* Utility Methods */
+
 
     self.deathSaveSuccessDataHasChanged = function() {
         self.deathSaveSuccessList().forEach(function(save, idx, _) {

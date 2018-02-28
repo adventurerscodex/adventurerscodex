@@ -26,13 +26,33 @@
                   </div>
                 </div>
                 <div class="col-xs-2">
-                  <button class="close" style="padding-top: 20px"
-                    data-bind="click: $parent.removeCharacter">
-                      <span aria-hidden="true">&times;</span>
-                  </button>
+                  <label type="button" class="close" style="padding-top: 20px"
+                    data-bind="click: $parent.toggleDeleteWell">
+                    <i class="fa fa-trash-o fa-color-hover"></i>
+                  </label>
                 </div>
               </div>
             </a>
+            <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[key()] }">
+              <div class="well no-bottom-margin well-top-shadow text-center">
+                Are you sure you want to delete this Character or Campaign?
+                <center>
+                  <i class="text-danger text-center">This action cannot be undone.</i>
+                </center>
+                <div class="row text-right">
+                  <button type="button"
+                    class="btn btn-sm btn-danger"
+                    data-bind="click: $parent.removeCharacter">
+                    Delete
+                  </button>
+                  <button type="button"
+                    class="btn btn-sm btn-default"
+                    data-bind="click: $parent.toggleDeleteWell">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
             <!-- /ko -->
             <a href="#" class="list-group-item" data-bind="click: showWizard">
               <div class="row">

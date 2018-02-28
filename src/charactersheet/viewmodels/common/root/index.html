@@ -34,22 +34,22 @@
       <ul class="nav navbar-nav">
         <li>
           <a data-toggle="modal" data-target="#newModal" href="#">
-            New/Import
+            <i class="fa fa-download"></i>&nbsp;&nbsp;New/Import
           </a>
         </li>
         <li>
           <a data-bind="click: toggleCharacterAndGamesModal" href="#">
-            Characters and Games
+            <i class="fa fa-address-card"></i>&nbsp;&nbsp;Characters and Games
           </a>
         </li>
         <li>
           <a data-bind="click: togglePartyManagerModal" href="#">
-            Manage Party
+            <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party
           </a>
         </li>
         <li>
           <a data-bind="click: toggleExportModal" href="#">
-            Export
+            <i class="fa fa-upload"></i>&nbsp;&nbsp;Export
           </a>
         </li>
       </ul>
@@ -141,7 +141,6 @@
 <!-- /ko -->
 
 <!-- Party Manager Modal -->
-<!-- ko if: partyManagerModalStatus -->
 <div class="modal fade" id="partyModal" tabindex="-1" role="dialog"
   aria-labelledby="partyModalLabel"
   data-bind="modal: {
@@ -150,7 +149,6 @@
   }">
   <party-manager></party-manager>
 </div>
-<!-- /ko -->
 
 <!-- Export Modal -->
 <!-- ko if: exportModalStatus -->
@@ -172,51 +170,58 @@
   <div class="col-lg-10 col-lg-offset-1">
     <ul class="footer-icons" style="padding:0px;">
       <li>
-        <a href="//facebook.com/adventurerscodex" target="_blank">
+        <a href="//facebook.com/adventurerscodex" id="footerFacebookLink" target="_blank">
           <i class="fa fa-facebook social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="//twitter.com/adventurercodex" target="_blank">
+        <a href="//twitter.com/adventurercodex" id="footerTwitterLink" target="_blank">
           <i class="fa fa-twitter social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="//www.reddit.com/r/adventurerscodex/" target="_blank">
+        <a href="//www.reddit.com/r/adventurerscodex/" id="footerRedditLink" target="_blank">
           <i class="fa fa-reddit social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="//plus.google.com/105624626079092258118" target="_blank">
+        <a href="//plus.google.com/105624626079092258118" id="footerGooglePlusLink" target="_blank">
           <i class="fa fa-google-plus social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="//github.com/adventurerscodex" target="_blank">
+        <a href="//github.com/adventurerscodex" id="footerGithubLink" target="_blank">
           <i class="fa fa-github social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="//adventurerscodex.com/feed.xml" target="_blank">
+        <a href="//adventurerscodex.com/feed.xml" id="footerRSSLink" target="_blank">
           <i class="fa fa-rss social-media" aria-hidden="true"></i>
         </a>
       </li>
       <li>
-        <a href="//tinyletter.com/adventurerscodex" target="_blank">
+        <a href="//tinyletter.com/adventurerscodex" id="footerTinyLetterLink" target="_blank">
           <i class="fa fa-envelope social-media" aria-hidden="true"></i>
         </a>
       </li>
     </ul>
     <center>
       <small class="text-muted">
-      &copy; 2016-2017 Adventurer's Codex, LLC. All rights reserved.<br />
-      <a href="//adventurerscodex.com">Check out our blog</a>&#32;&#32;&#124;&#32;
-      <a href="//adventurerscodex.com/support.html">Contact Us</a> &#32;&#32;&#124;&#32;
-      <a href="https://www.patreon.com/bePatron?u=5313385">Support us on Patreon</a><br />
+      &copy; 2016-<span data-bind="text: currentYear"></span> Adventurer's Codex, LLC. All rights reserved.<br />
+      <a href="//adventurerscodex.com"
+         id="footerBlogLink"
+         target='_blank'>Check out our blog</a>&#32;&#32;&#124;&#32;
+      <a href="//adventurerscodex.com/support.html"
+         id="footerContactUsLink"
+         target='_blank'>Contact Us</a> &#32;&#32;&#124;&#32;
+      <a href="https://www.patreon.com/bePatron?u=5313385"
+         id="footerPatreonLink"
+         target='_blank'>Support us on Patreon</a><br />
       Version: <span data-bind="text: version"></span>,
         Build Date: <span data-bind="text: buildDate"></span><br/>
       Autofilled data is distributed under the
         <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+           id="footerOGLLink"
            target='_blank'>
            OGL</a><br/>
           Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.

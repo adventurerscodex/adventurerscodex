@@ -20,13 +20,13 @@
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2">
                 <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default"
+                  <label class="btn btn-default" id="newCharCampaignPlayerButton"
                     data-bind="css: { active: playerType() == 'characterPlayerType'}">
                     <input type="radio" class="hide-block"
                     name="setPlayerTypePlayer" value="characterPlayerType" data-bind="checked: playerType"/>
                     I'm a Player
                   </label>
-                  <label class="btn btn-default"
+                  <label class="btn btn-default" id="newCharCampaignDMButton"
                     data-bind="css: { active: playerType() == 'dmPlayerType'}">
                     <input type="radio" class="hide-block"
                       name="setPlayerTypeDM" value="dmPlayerType" data-bind="checked: playerType"/>

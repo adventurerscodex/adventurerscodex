@@ -20,21 +20,26 @@ export function Treasure() {
     self.copper = ko.observable(0);
 
     self.worthInGold = ko.computed(function(){
-        var parsedPlatinum = parseInt(self.platinum()) || 0;
-        var parsedGold = parseInt(self.gold()) || 0;
-        var parsedElectrum = parseInt(self.electrum()) || 0;
-        var parsedSilver = parseInt(self.silver()) || 0;
-        var parsedCopper = parseInt(self.copper()) || 0;
+        const parsedPlatinum = parseInt(self.platinum()) || 0;
+        const parsedGold = parseInt(self.gold()) || 0;
+        const parsedElectrum = parseInt(self.electrum()) || 0;
+        const parsedSilver = parseInt(self.silver()) || 0;
+        const parsedCopper = parseInt(self.copper()) || 0;
 
-        var adjPlatinum = parsedPlatinum * 10;
-        var adjGold = parsedGold;
-        var adjElectrum = parsedElectrum / 2;
-        var adjSilver = parsedSilver / 10;
-        var adjCopper = parsedCopper / 100;
+        const copperToSilver = Math.floor(parsedCopper / 10);
+        const adjSilver = parsedSilver + copperToSilver;
 
-        var total = adjPlatinum + adjGold + adjElectrum + adjSilver + adjCopper;
+        const silverToElectrum = Math.floor(adjSilver / 5);
+        const adjElectrum = parsedElectrum + silverToElectrum;
 
-        return Math.round(total);
+        const electrumToGold = Math.floor(adjElectrum / 2);
+        const adjGold = parsedGold + electrumToGold;
+
+        const platinumToGold = parsedPlatinum * 10;
+
+        const total = platinumToGold + adjGold;
+
+        return total;
     });
 
     self.totalWeight = ko.pureComputed(function() {

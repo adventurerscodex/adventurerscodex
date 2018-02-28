@@ -53,7 +53,11 @@ module.exports = merge(common, {
             /**
              * Date and time the build was created
              */
-            'BUILD_DATE': JSON.stringify((new Date()).toLocaleString())
+            'BUILD_DATE': JSON.stringify((new Date()).toLocaleString()),
+            /**
+             * Current year in yyyy format.
+             */
+            'CURRENT_YEAR': JSON.stringify(new Date().getFullYear())
         })
     ]
 });

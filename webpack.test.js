@@ -42,11 +42,15 @@ module.exports = merge(common, {
             /**
              * The connection URL for the XMPP service.
              */
-            'XMPP_WS_URL': JSON.stringify('wss://nightly.adventurerscodex.com:5280/websocket/'),
+            'XMPP_WS_URL': JSON.stringify('wss://nightly.adventurerscodex.com/chat/'),
             /**
              * Date and time the build was created
              */
-            'BUILD_DATE': JSON.stringify((new Date()).toLocaleString())
+            'BUILD_DATE': JSON.stringify((new Date()).toLocaleString()),
+            /**
+             * Current year in yyyy format.
+             */
+            'CURRENT_YEAR': JSON.stringify(new Date().getFullYear())
         })
     ]
 });

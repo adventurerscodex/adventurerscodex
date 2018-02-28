@@ -1,3 +1,14 @@
+version 1.6.2 (02/27/2018)
+* Adds selenium testing compatibility.
+* Fixes dropbox profile pictures not rendering in chat section.
+* Fixes an issue with inventory and armor sorting.
+* Fixes worth in gold calculation
+* Fixes a longstanding issue with temp HP not being calculated properly with damage.
+* Moves XMPP websocket to standard port.
+* Players now auto-join party when they have only 1 saved party.
+* Adds Random Number Generator service
+* Applies a temporary workaround for Death Saves corrupting character sheets.
+
 version 1.6.1 (1/19/2018)
 * Fix autocomplete issues
 * Fixed bug with the environment section in an encounter

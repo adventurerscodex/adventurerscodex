@@ -128,6 +128,23 @@ describe('Magic Items View Model', function(){
         });
     });
 
+    describe('Should set autocomplete fields', function() {
+        it('should set the value of magic item type when an autocomplete is selected', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.blankMagicItem().magicItemName('Armor of Resistence');
+            magicItems.setMagicItemType('label', 'Armor');
+
+            magicItems.blankMagicItem().magicItemType().should.equal('Armor');
+        });
+        it('should set the value of magic item rarity when an autocomplete is selected', function() {
+            var magicItems = new MagicItemsViewModel();
+            magicItems.blankMagicItem().magicItemName('Armor of Resistence');
+            magicItems.setMagicItemRarity('label', 'Legendary');
+
+            magicItems.blankMagicItem().magicItemRarity().should.equal('Legendary');
+        });
+    });
+
     describe('Select Preview Tab', function() {
         it('should switch to preview tab status', function() {
             var magicItems = new MagicItemsViewModel();

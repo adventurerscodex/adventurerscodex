@@ -10,6 +10,7 @@ import { PlayerInfo } from 'charactersheet/models/common/player_info';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
+import { Utility } from 'charactersheet/utilities/convenience';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 export var DMCardFields = [
@@ -51,7 +52,8 @@ export var DMCardFields = [
             if (image.imageSource() === 'link') {
                 var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
                 if (!imageModel) { return defaultImage; }
-                return imageModel.imageUrl() !== '' ? imageModel.imageUrl() : defaultImage;
+                var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
+                return convertedImage !== '' ? convertedImage : defaultImage;
             } else if (image.imageSource() === 'email') {
                 var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
                 return info ? info.gravatarUrl() : defaultImage;
