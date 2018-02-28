@@ -88,15 +88,21 @@ export function StatsViewModel() {
         var deathSaveList = PersistenceService.findBy(DeathSave, 'characterId', key);
         self.deathSaveSuccessList([]);
         self.deathSaveFailureList([]);
-        if (deathSaveList.length > 0) {
-            for(var i=0; i<3;i++){
+
+        if (deathSaveList.length === 6) {
+            for (var i=0; i<3; i++) {
                 self.deathSaveSuccessList.push(deathSaveList[i]);
             }
-            for(var j=3; j<6;j++){
+            for (var j=3; j<6; j++) {
                 self.deathSaveFailureList.push(deathSaveList[j]);
             }
-        } else{
-            for(var k=0; k<3;k++){
+        } else {
+            // FIXME: Purge all saves and remake...
+            deathSaveList.forEach(save => {
+                save.delete();
+            });
+
+            for (var k=0; k<3; k++) {
                 self.deathSaveSuccessList.push(new DeathSave());
                 self.deathSaveFailureList.push(new DeathSave());
             }
