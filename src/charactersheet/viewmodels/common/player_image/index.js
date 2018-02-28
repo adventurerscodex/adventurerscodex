@@ -158,7 +158,7 @@ export function PlayerImageViewModel() {
 
     self._handleConnectionStatusChanged = function() {
         var xmpp = XMPPService.sharedService();
-        self._isConnectedToXMPP(xmpp.connection.connected);
+        self._isConnectedToXMPP(xmpp.connection ? xmpp.connection.connected : null);
     };
 
     //Player Image Handlers
