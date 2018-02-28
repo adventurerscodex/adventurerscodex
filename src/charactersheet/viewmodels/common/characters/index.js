@@ -1,3 +1,4 @@
+import './style.css';
 import {
     Character,
     PlayerTypes
@@ -18,6 +19,9 @@ export function CharactersViewModel(params) {
     self.componentStatus = params.modalStatus || ko.observable(false);
     self.modalStatus = ko.observable(false);
     self.selectedCharacter = ko.observable();
+    self.deleteCollapse = {
+        // Dynamically built map.
+    };
 
     self.load = () => {
         self.characters(PersistenceService.findAll(Character));
@@ -25,6 +29,11 @@ export function CharactersViewModel(params) {
 
         Notifications.characterManager.changed.add(self._updatedSelectedCharacter);
         self._updatedSelectedCharacter();
+
+        // Build the hash of key -> modal open.
+        self.characters().forEach(({key}) => {
+            self.deleteCollapse[key()] = ko.observable(false);
+        });
     };
 
     self.changeCharacter = (character) => {
@@ -61,6 +70,9 @@ export function CharactersViewModel(params) {
         character.delete();
         self.characters.remove(character);
 
+        // Close the well.
+        self.deleteCollapse[character.key()](false);
+
         if (self.characters().length === 0) {
             self.modalStatus(false);
         } else if (character.key() === CharacterManager.activeCharacter().key()) {
@@ -75,6 +87,17 @@ export function CharactersViewModel(params) {
         }
     };
 
+    self.toggleDeleteWell = ({key}) => {
+        // Set the others to close.
+        self.characters().forEach(({key}) => {
+            self.deleteCollapse[key()](false);
+        });
+
+        // Open the one we need.
+        const value = !self.deleteCollapse[key()]();
+        self.deleteCollapse[key()](value);
+    };
+
     self.modalFinishedClosing = () => {
         if (self.characters().length === 0) {
             Notifications.characters.allRemoved.dispatch();
@@ -84,7 +107,7 @@ export function CharactersViewModel(params) {
 
     self.playerSelectedCSS = (character) => {
         if (character.key() === self.selectedCharacter().key()) {
-            return 'active';
+            return 'light-active';
         }
         return '';
     };
