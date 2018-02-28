@@ -4,6 +4,7 @@ import {
     DMCardPublishingService
 } from 'charactersheet/services/common';
 import { CharacterManager } from 'charactersheet/utilities/character_manager';
+import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -72,7 +73,7 @@ export function ChatModalViewModel(params) {
         return cardService.getPCardsExceptMine().map(function(card, idx, _) {
             return {
                 name: card.get('name')[0],
-                image: card.get('imageUrl')[0],
+                image: Utility.string.createDirectDropboxLink(card.get('imageUrl')[0]),
                 jid: card.get('publisherJid')[0]
             };
         });

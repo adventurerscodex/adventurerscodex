@@ -5,7 +5,8 @@ import {
     XMPPService
 } from 'charactersheet/services/common';
 import { CharacterManager,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import { Message } from 'charactersheet/models/common';
 import ko from 'knockout';
@@ -109,7 +110,7 @@ export function PlayerPushModalViewModel(params) {
         return cardService.getPCardsExceptMine().map(function(card, idx, _) {
             return {
                 name: card.get('name')[0],
-                image: card.get('imageUrl')[0],
+                image: Utility.string.createDirectDropboxLink(card.get('imageUrl')[0]),
                 jid: card.get('publisherJid')[0]
             };
         });
