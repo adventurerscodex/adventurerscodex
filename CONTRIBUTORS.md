@@ -7,3 +7,6 @@
 * [valterlima](https://github.com/valterlima)
 * [nhutto](https://github.com/nhutto)
 * [m-martinez](https://github.com/m-martinez)
+* [Alejandroke](https://github.com/Alejandroke)
+* [davidmote](https://github.com/davidmote)
+* [OmnesPotens](https://github.com/OmnesPotens)
