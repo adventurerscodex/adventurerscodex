@@ -4,7 +4,20 @@ import 'jquery-validation';
 
 /**
 * Binds a form element to use jQuery validation tools
-* The argument should be a an object of settings.
+* The argument should be a an object of settings from jQuery Validate.
+*
+* jQuery Validation Docs:
+* https://jqueryvalidation.org/validate/
+*
+* Usage Example
+* -------------
+*  <form class="form-horizontal" data-bind="validate: validationSettings">
+*    <!-- Inputs in a validated form must have a name. -->
+*    <input name="name" value="" type="text" />
+*    <!-- Either buttons or input[type=submit] works fine.. -->
+*    <input type="submit" value="Add" />
+*  </form>
+*
 */
 ko.bindingHandlers.validate = {
     init: (element, valueAccessor) => {
