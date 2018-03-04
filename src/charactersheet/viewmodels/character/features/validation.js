@@ -6,5 +6,5 @@ export default {
     },
     messages: {
 //         name: "Please give me your name...",
-    },
+    }
 };

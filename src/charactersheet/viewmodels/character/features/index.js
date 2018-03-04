@@ -18,8 +18,8 @@ import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditation from 'images/meditation.svg';
 import template from './index.html';
-import validation from './validation';
 import uuid from 'node-uuid';
+import validation from './validation';
 
 export function FeaturesViewModel() {
     var self = this;
@@ -222,7 +222,7 @@ export function FeaturesViewModel() {
             self.addFormIsValid($element.valid());
         },
         rules: validation.rules,
-        messages: validation.messages,
+        messages: validation.messages
     };
 }
 

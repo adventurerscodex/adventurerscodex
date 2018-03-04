@@ -19,13 +19,12 @@ import {
     Migrations,
     Notifications
 } from 'charactersheet/utilities';
+import 'bin/knockout-validation';
 import $ from 'jquery';
 import Clipboard from 'clipboard';
 import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
-
-import 'bin/knockout-validation';
 
 /**
  * This global function handles initializing the Knockout Application
