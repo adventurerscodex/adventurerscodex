@@ -1,3 +1,4 @@
+import 'bin/knockout-validation';
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
@@ -19,7 +20,6 @@ import {
     Migrations,
     Notifications
 } from 'charactersheet/utilities';
-import 'bin/knockout-validation';
 import $ from 'jquery';
 import Clipboard from 'clipboard';
 import { Settings } from 'charactersheet/settings';

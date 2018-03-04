@@ -37,5 +37,5 @@ ko.bindingHandlers.validate = {
         };
 
         $(element).validate(ko.unwrap(value));
-    },
+    }
 };
