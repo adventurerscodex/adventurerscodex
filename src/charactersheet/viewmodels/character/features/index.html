@@ -65,7 +65,7 @@
             id="addFeatureLabel">Add a new Feature.</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
             <label for="name" class="col-sm-2 control-label">Name</label>
               <div class="col-sm-10">
@@ -73,6 +73,7 @@
                         class="form-control"
                         id="featureAddNameInput"
                         placeholder="Rage"
+                        name="name"
                         data-bind='textInput: blankFeature().name,
                         autocomplete: { source: featuresPrePopFilter,
                         onselect: populateFeature }, hasFocus: firstModalElementHasFocus'>
@@ -159,11 +160,12 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button"
+            <button type="submit"
                     class="btn btn-primary"
                     id="featureAddAddButton"
-                    data-bind='click: addFeature'
-                    data-dismiss="modal">Add</button>
+                    data-bind='disable: !addFormIsValid()'
+                    old-data-dismiss="modal"
+                    >Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'

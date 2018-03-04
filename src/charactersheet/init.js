@@ -25,6 +25,8 @@ import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
 
+import 'bin/knockout-validation';
+
 /**
  * This global function handles initializing the Knockout Application
  * and set up the environment.
@@ -79,6 +81,7 @@ export var init = function(viewModel) {
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
+    window.ko = ko;
 
     // Initialize the View Model
     viewModel.init();
