@@ -12,9 +12,14 @@ ko.bindingHandlers.validate = {
 
         // Add a new handler callback that adds the form as a param for
         // checking overall validity.
-        value.onfocusout = (input) => {
+        // Preserve the old onfocusout in case it was being used.
+        value.ogonfocusout = value.onfocusout;
+        value.onfocusout = (input, event) => {
             if (value.updateHandler) {
                 value.updateHandler($(element), input);
+            }
+            if (value.ogonfocusout) {
+                value.ogonfocusout(input, event);
             }
         };
 
