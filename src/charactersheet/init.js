@@ -81,7 +81,6 @@ export var init = function(viewModel) {
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
-    window.ko = ko;
 
     // Initialize the View Model
     viewModel.init();
