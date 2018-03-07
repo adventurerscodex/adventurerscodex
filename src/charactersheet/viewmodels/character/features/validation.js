@@ -1,7 +1,7 @@
 export default {
     rules: {
         name: {
-            required: true,
+            required: true
         }
     },
     messages: {
