@@ -25,6 +25,9 @@ import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
 
+// TODO: Remove this.... for debug only
+import PPersistenceService from 'charactersheet/services/common/promisy_persistence_service'
+
 /**
  * This global function handles initializing the Knockout Application
  * and set up the environment.
@@ -79,6 +82,13 @@ export var init = function(viewModel) {
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
+
+    // TODO: Remove this.... for debug only
+    const persistenceService = new PPersistenceService({
+        scheme: 'Bearer',
+        token: 'iOx1GHWdyYU6ZWUC1rZDGFgIpZm296',
+    });
+    window.persistenceService = persistenceService;
 
     // Initialize the View Model
     viewModel.init();
