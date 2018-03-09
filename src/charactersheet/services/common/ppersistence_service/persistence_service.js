@@ -4,17 +4,27 @@ import coreapi from 'coreapi';
 import FetchResponse from './fetch_response';
 
 /**
- * TODO
+ * The Persistence Service is a light-weight ORM for Javascript Web Clients.
+ * It uses a CoreAPI client and a given API schema to allow clients easy access
+ * to both raw response data and mapped custom Model objects.
  *
+ * Persistence Service returns all normal responses in the form of a FetchResponse
+ * which allows for easy navigation through paginated responses as well as automatic
+ * mapping to custom Models (see `Model` and `FetchResponse` for more information).
  *
+ * Once a Model is mapped from a response, it is also registered with the
+ * Persistence Service and has access to shortcut methods via it's `ps` property.
  *
+ * Example
+ * -------
  *
- *
- *
- *
- *
- *
- *
+ *     PersistenceService.retrieve(Book, { id: '1234' }).then(response => {
+ *         const book = response.object;
+ *         // Update the local properties of the book object.
+ *         book.title('My new favorite book');
+ *         // Persist your changes back to the API.
+ *         book.ps.save();
+ *     });
  */
 export class PersistenceService {
 
@@ -26,8 +36,10 @@ export class PersistenceService {
         this.client = new coreapi.Client({ auth: auth });
     }
 
+    // TODO: Implement Caching
+
     /**
-     * TODO
+     * TODO: Document
      */
     hash = (keys, params) => {
         // TODO: Implement hashing for caching purposes.
@@ -35,7 +47,7 @@ export class PersistenceService {
     };
 
     /**
-     * TODO
+     * TODO: Document
      */
     action = (keys, params, raw, ...rest) => (new Promise((resolve) => {
         this.client.action(this.schema, keys, params).then(response => {
