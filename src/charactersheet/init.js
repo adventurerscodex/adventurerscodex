@@ -24,9 +24,11 @@ import Clipboard from 'clipboard';
 import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
+import schema from 'schema';
 
 // TODO: Remove this.... for debug only
-import PPersistenceService from 'charactersheet/services/common/promisy_persistence_service'
+import {PersistenceService as persistenceService} from 'charactersheet/services/common/ppersistence_service/persistence_service';
+import {Core, Item} from 'charactersheet/models/common/core';
 
 /**
  * This global function handles initializing the Knockout Application
@@ -84,11 +86,12 @@ export var init = function(viewModel) {
     window.PersistenceService = PersistenceService;
 
     // TODO: Remove this.... for debug only
-    const persistenceService = new PPersistenceService({
+    window.persistenceService = new persistenceService({
         scheme: 'Bearer',
-        token: 'iOx1GHWdyYU6ZWUC1rZDGFgIpZm296',
-    });
-    window.persistenceService = persistenceService;
+        token: 'TESTING_TOKEN_2',
+    }, schema);
+    window.Core = Core;
+    window.Item = Item;
 
     // Initialize the View Model
     viewModel.init();
