@@ -4,7 +4,9 @@ import coreapi from 'coreapi';
 import FetchResponse from './fetch_response';
 
 /**
- * The Persistence Service is a light-weight ORM for Javascript Web Clients.
+ * The Persistence Service is a light-weight ORM and API Client for
+ * Javascript Web Clients.
+ *
  * It uses a CoreAPI client and a given API schema to allow clients easy access
  * to both raw response data and mapped custom Model objects.
  *
@@ -164,10 +166,7 @@ export class PersistenceService {
      * Example
      * -------
      *
-     *     PersistenceService.delete(Book, { id: '1234' }).then(response => {
-     *         const book = response.object;
-     *         // Do stuff with your updated book...
-     *     });
+     *     PersistenceService.delete(Book, { id: '1234' });
      */
     destroy = (model, params={}, raw=false) => {
         const keys = [...model.__skeys__, 'destroy'];
