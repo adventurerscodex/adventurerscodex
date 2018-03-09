@@ -1,7 +1,8 @@
 /*eslint no-console:0*/
 import coreapi from 'coreapi';
+import schema from 'schema';
 
-import FetchResponse from './fetch_response';
+import APIResponse from './response';
 
 /**
  * The Persistence Service is a light-weight ORM and API Client for
@@ -10,9 +11,9 @@ import FetchResponse from './fetch_response';
  * It uses a CoreAPI client and a given API schema to allow clients easy access
  * to both raw response data and mapped custom Model objects.
  *
- * Persistence Service returns all normal responses in the form of a FetchResponse
+ * Persistence Service returns all normal responses in the form of a APIResponse
  * which allows for easy navigation through paginated responses as well as automatic
- * mapping to custom Models (see `Model` and `FetchResponse` for more information).
+ * mapping to custom Models (see `Model` and `APIResponse` for more information).
  *
  * Once a Model is mapped from a response, it is also registered with the
  * Persistence Service and has access to shortcut methods via it's `ps` property.
@@ -35,7 +36,28 @@ import FetchResponse from './fetch_response';
  *         book.ps.delete();
  *     });
  */
-export class PersistenceService {
+// TODO: make this default....
+export class Persistence {
+    static configuration = {};
+
+    static _service = null;
+
+    static get service() {
+        if (!Persistence._service) {
+            Persistence._service = new _PersistenceService(
+                Persistence.configuration.credentials,
+                Persistence.configuration.schema
+            );
+        }
+        return Persistence._service;
+    }
+
+    static flush() {
+        this._service = null;
+    }
+}
+
+class _PersistenceService {
 
     constructor(credentials, schema) {
         this.schema = schema;
@@ -64,7 +86,7 @@ export class PersistenceService {
                 resolve(response);
             } else {
                 const hash = this.hash(keys, params);
-                resolve(new FetchResponse(response, keys, params, hash, ...rest));
+                resolve(new APIResponse(response, keys, params, hash, ...rest));
             }
         });
     }));
@@ -76,11 +98,11 @@ export class PersistenceService {
      * using the provided API Schema.
      * If you need functionality beyond the scope of these methods, refer to
      * the lower-level `action` API which simply wraps the coreapi.Client and
-     * returns a FetchResponse.
+     * returns a APIResponse.
      *
      * Unmapped Responses
      * ------------------
-     * To perform the query without mapping the results to a FetchResponse set
+     * To perform the query without mapping the results to a APIResponse set
      * `raw` to true. This will return the JSON results of the query directly.
      *
      * Using Custom Models
@@ -94,7 +116,7 @@ export class PersistenceService {
     /**
      * Given a model type and an optional set of parameters, perform a list query
      * against the backing API and return a promise of results in the form of a
-     * FetchResponse (see FetchResponse for more information).
+     * APIResponse (see APIResponse for more information).
      *
      * Example
      * -------
@@ -112,25 +134,25 @@ export class PersistenceService {
     /**
      * Given a model type and an optional set of parameters, perform a retrieve
      * query against the backing API and return a promise of results in the
-     * form of a FetchResponse (see FetchResponse for more information).
+     * form of a APIResponse (see APIResponse for more information).
      *
      * Example
      * -------
      *
-     *     PersistenceService.retrieve(Book, { id: '1234' }).then(response => {
+     *     PersistenceService.read(Book, { id: '1234' }).then(response => {
      *         const book = response.object;
      *         // Do stuff with your book...
      *     });
      */
-    retrieve = (model, params={}, raw=false) => {
-        const keys = [...model.__skeys__, 'retrieve'];
+    read = (model, params={}, raw=false) => {
+        const keys = [...model.__skeys__, 'read'];
         return this.action(keys, params, raw, model, false);
     };
 
     /**
      * Given a model type and an optional set of parameters, perform a create
      * against the backing API and return a promise of results in the
-     * form of a FetchResponse (see FetchResponse for more information).
+     * form of a APIResponse (see APIResponse for more information).
      *
      * Example
      * -------
@@ -149,7 +171,7 @@ export class PersistenceService {
     /**
      * Given a model type and an optional set of parameters, perform an update
      * against the backing API and return a promise of results in the
-     * form of a FetchResponse (see FetchResponse for more information).
+     * form of a APIResponse (see APIResponse for more information).
      *
      * Example
      * -------
@@ -168,15 +190,15 @@ export class PersistenceService {
     /**
      * Given a model type and an optional set of parameters, perform a destroy
      * against the backing API and return a promise of results in the
-     * form of a FetchResponse (see FetchResponse for more information).
+     * form of a APIResponse (see APIResponse for more information).
      *
      * Example
      * -------
      *
      *     PersistenceService.delete(Book, { id: '1234' });
      */
-    destroy = (model, params={}, raw=false) => {
-        const keys = [...model.__skeys__, 'destroy'];
+    delete = (model, params={}, raw=false) => {
+        const keys = [...model.__skeys__, 'delete'];
         return this.action(keys, params, raw, model, false);
     };
 };

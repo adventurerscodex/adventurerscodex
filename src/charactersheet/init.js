@@ -24,10 +24,9 @@ import Clipboard from 'clipboard';
 import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
-import schema from 'schema';
 
 // TODO: Remove this.... for debug only
-import {PersistenceService as persistenceService} from 'charactersheet/services/common/ppersistence_service/persistence_service';
+import {Persistence} from 'charactersheet/services/common/ppersistence_service/persistence_service';
 import {Core, Item} from 'charactersheet/models/common/core';
 
 /**
@@ -86,10 +85,14 @@ export var init = function(viewModel) {
     window.PersistenceService = PersistenceService;
 
     // TODO: Remove this.... for debug only
-    window.persistenceService = new persistenceService({
-        scheme: 'Bearer',
-        token: 'TESTING_TOKEN_2',
-    }, schema);
+    Persistence.configuration = {
+        credentials: {
+            scheme: 'Bearer',
+            token: 'TESTING_TOKEN_2',
+        },
+        schema: schema,
+    };
+    window.Persistence = Persistence;
     window.Core = Core;
     window.Item = Item;
 
