@@ -26,6 +26,10 @@ import FetchResponse from './fetch_response';
  *         book.title('My new favorite book');
  *         // Persist your changes back to the API.
  *         book.ps.save();
+ *         // ...You can even refresh your local object from the API.
+ *         book.ps.refresh();
+ *         // ...Or delete it easily.
+ *         book.ps.delete();
  *     });
  */
 export class PersistenceService {
