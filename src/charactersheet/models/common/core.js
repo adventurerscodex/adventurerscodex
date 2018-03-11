@@ -1,5 +1,5 @@
 import ko from 'knockout';
-import { KOModel } from 'charactersheet/services/common/ppersistence_service/model';
+import { KOModel } from 'hypnos';
 
 
 export class Core extends KOModel {
@@ -13,13 +13,4 @@ export class Core extends KOModel {
     summary = ko.pureComputed(() => {
         return `${this.playerName()}: a ${this.type.description()}.`;
     });
-}
-
-export class Item extends KOModel {
-
-    static __skeys__ = ['core', 'items'];
-
-    static mapping = {
-        include: [],
-    };
 }

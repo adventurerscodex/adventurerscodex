@@ -52,7 +52,8 @@ function _AuthenticationService(config) {
             accessToken = token.accessToken();
             self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL;
         } else {
-            return;
+            // Redirect to login
+            self._goToLogin();
         }
 
         self._doAuthCheck(accessToken);
@@ -79,7 +80,8 @@ function _AuthenticationService(config) {
         } else if (self._tokenOrigin == self.TOKEN_ORIGINS.LOCAL) {
             Notifications.authentication.loggedIn.dispatch();
         } else {
-            return;
+            // Redirect to login
+            self._goToLogin();
         }
     };
 
@@ -96,6 +98,8 @@ function _AuthenticationService(config) {
             if (token) {
                 token.delete();
             }
+            // Redirect to login
+            self._goToLogin();
         }
 
         // Alert the user of the error.
@@ -104,5 +108,10 @@ function _AuthenticationService(config) {
             timeOut: 0,
             extendedTimeOut: 0
         });
+    };
+
+    self._goToLogin = () => {
+        console.log('No token found... proceeding to login page.');
+        window.location = LOGIN_URL.replace('{CLIENT_ID}', CLIENT_ID);
     };
 }

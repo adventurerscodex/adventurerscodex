@@ -39,6 +39,10 @@ module.exports = merge(common, {
              */
             'HOME_URL': JSON.stringify('/'),
             /**
+             * The URL to the login page.
+             */
+            'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
+            /**
              * The HOST URL of the pubsub services.
              */
             'PUBSUB_HOST_JID': JSON.stringify('pubsub.adventurerscodex.com'),

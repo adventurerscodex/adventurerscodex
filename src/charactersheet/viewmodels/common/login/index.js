@@ -14,7 +14,6 @@ import template from './index.html';
 export function LoginViewModel() {
     var self = this;
 
-    self._loginLink = '/api/o/authorize?client_id={client_id}&response_type=token';
     self.signupLink = '/accounts/register/';
     self._logoutLink = '/accounts/logout/?next=/charactersheet/';
     self._revokeToken = '/api/o/revoke_token/';
@@ -30,7 +29,7 @@ export function LoginViewModel() {
 
     self.loginLink = ko.pureComputed(function() {
         self._dummy();
-        return self._loginLink.replace('{client_id}', CLIENT_ID);
+        return LOGIN_URL.replace('{CLIENT_ID}', CLIENT_ID);
     });
 
     self.loggedIn = ko.pureComputed(function() {
