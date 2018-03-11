@@ -21,12 +21,13 @@ import {
 } from 'charactersheet/utilities';
 import $ from 'jquery';
 import Clipboard from 'clipboard';
+import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
 
 // TODO: Remove this.... for debug only
-import {Persistence} from 'charactersheet/services/common/ppersistence_service/persistence_service';
+import { Hypnos } from 'hypnos';
 import {Core, Item} from 'charactersheet/models/common/core';
 
 /**
@@ -52,8 +53,20 @@ export var init = function(viewModel) {
         });
     });
 
-    // Run migration
+    // Run local migrations
     PersistenceService.migrate(Migrations.scripts, VERSION);
+
+    // Set up API client configuration handlers.
+    Notifications.authentication.loggedIn.add(() => {
+        var token = PersistenceService.findAll(AuthenticationToken)[0];
+        Hypnos.configuration = {
+            credentials: {
+                scheme: 'Bearer',
+                token: token.accessToken(),
+            },
+            schema: schema,
+        };
+    });
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
@@ -83,18 +96,6 @@ export var init = function(viewModel) {
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
-
-    // TODO: Remove this.... for debug only
-    Persistence.configuration = {
-        credentials: {
-            scheme: 'Bearer',
-            token: 'TESTING_TOKEN_2',
-        },
-        schema: schema,
-    };
-    window.Persistence = Persistence;
-    window.Core = Core;
-    window.Item = Item;
 
     // Initialize the View Model
     viewModel.init();
