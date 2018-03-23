@@ -1,3 +1,4 @@
+import 'bin/knockout-validation';
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
