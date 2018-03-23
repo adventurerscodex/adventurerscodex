@@ -1,5 +1,3 @@
-// Enables Async/Await
-import 'babel-polyfill';
 import 'bin/knockout-validation';
 import {
     AuthenticationServiceManager,
@@ -23,9 +21,7 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import $ from 'jquery';
-import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 import Clipboard from 'clipboard';
-import { Hypnos } from 'hypnos';
 import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
@@ -35,7 +31,6 @@ import ko from 'knockout';
  * and set up the environment.
  */
 export var init = function(viewModel) {
-    // Always ensure the user is logged in first...
     // Always ignore values in this list when mapping.
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
@@ -54,23 +49,8 @@ export var init = function(viewModel) {
         });
     });
 
-    // Run local migrations
+    // Run migration
     PersistenceService.migrate(Migrations.scripts, VERSION);
-
-    // Set up API client configuration handlers.
-    Notifications.authentication.loggedIn.add(() => {
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-        Hypnos.configuration = {
-            credentials: {
-                scheme: 'Bearer',
-                token: token.accessToken()
-            },
-            schema: schema
-        };
-    });
-
-    // Initialize the View Model
-    viewModel.init();
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
@@ -90,15 +70,17 @@ export var init = function(viewModel) {
     ];
 
     // Prime the services.
-    XMPPService.sharedService().init();
-    NodeServiceManager.sharedService().init();
-    ChatServiceManager.sharedService().init();
-    NotificationsServiceManager.sharedService().init();
-    UserServiceManager.sharedService().init();
-    AuthenticationServiceManager.sharedService().init();
+    XMPPService.sharedService();
     StatusService.sharedService();
+    AuthenticationServiceManager.sharedService();
+    UserServiceManager.sharedService();
+    NodeServiceManager.sharedService();
+    ChatServiceManager.sharedService();
+    NotificationsServiceManager.sharedService();
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
-    window.Hypnos = Hypnos;
+
+    // Initialize the View Model
+    viewModel.init();
 };
