@@ -9,7 +9,7 @@ import {
     PersistenceService,
     ProficiencyService } from 'charactersheet/services';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { getModifier } from 'charactersheet/models/character/ability_scores';
@@ -31,7 +31,7 @@ export function OtherStatsViewModel() {
     self.armorClassPopover = ko.observable();
 
     self.load = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var otherStats = PersistenceService.findBy(OtherStats, 'characterId', key);
         if (otherStats.length > 0) {
             self.otherStats(otherStats[0]);
@@ -80,7 +80,7 @@ export function OtherStatsViewModel() {
 
     // Calculate initiative label and popover
     self.calculateInitiativeLabel = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
         var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
         var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
@@ -103,7 +103,7 @@ export function OtherStatsViewModel() {
             shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
 
         var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
         var modifier = 0;
         if (otherStats) {
             modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;
@@ -141,7 +141,7 @@ export function OtherStatsViewModel() {
 
     self.levelDataHasChanged = function() {
         var profile = PersistenceService.findFirstBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
         profile.level(self.level());
         profile.save();
         Notifications.profile.level.changed.dispatch();
@@ -149,7 +149,7 @@ export function OtherStatsViewModel() {
 
     self.experienceDataHasChanged = function() {
         var profile = PersistenceService.findFirstBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
         profile.exp(self.experience());
         profile.save();
         Notifications.profile.experience.changed.dispatch();

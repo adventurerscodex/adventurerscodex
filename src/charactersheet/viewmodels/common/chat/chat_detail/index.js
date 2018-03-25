@@ -4,7 +4,7 @@ import {
     XMPPService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -146,7 +146,7 @@ export function ChatDetailViewModel(params) {
         }
 
         var xmpp = XMPPService.sharedService();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
 
         var message = new Message();
         message.importValues({
@@ -204,7 +204,7 @@ export function ChatDetailViewModel(params) {
 
     self._getRecentItems = function() {
         var latestTime = self._getLatestTimeStamp();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var log = PersistenceService.findFiltered(Message, function(msg, _) {
             return (
                 Strophe.getBareJidFromJid(msg.from) == self.id() &&

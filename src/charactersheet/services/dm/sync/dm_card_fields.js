@@ -1,5 +1,5 @@
 import { Campaign } from 'charactersheet/models/dm/campaign';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Exhibit } from 'charactersheet/models/dm/exhibit';
 import { ImageModel } from 'charactersheet/models/common/image';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
@@ -25,21 +25,21 @@ export var DMCardFields = [
         name: 'name',
         refreshOn: Notifications.campaign.changed,
         valueAccessor: function() {
-            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', CharacterManager.activeCharacter().key());
+            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', CoreManager.activeCore().uuid());
             return campaign ? campaign.name() : '';
         }
     }, {
         name: 'playerName',
         refreshOn: Notifications.campaign.changed,
         valueAccessor: function() {
-            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', CharacterManager.activeCharacter().key());
+            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', CoreManager.activeCore().uuid());
             return campaign ? campaign.playerName() : '';
         }
     }, {
         name: 'playerType',
         refreshOn: Notifications.characters.changed,
         valueAccessor: function() {
-            var character = CharacterManager.activeCharacter();
+            var character = CoreManager.activeCore();
             return character ? character.playerType().key : 'character';
         }
     }, {
@@ -47,15 +47,15 @@ export var DMCardFields = [
         refreshOn: Notifications.playerImage.changed,
         valueAccessor: function() {
             var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
-            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CharacterManager.activeCharacter().key());
+            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CoreManager.activeCore().uuid());
             if (!image) { return defaultImage; }
             if (image.imageSource() === 'link') {
-                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
+                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CoreManager.activeCore().uuid());
                 if (!imageModel) { return defaultImage; }
                 var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
                 return convertedImage !== '' ? convertedImage : defaultImage;
             } else if (image.imageSource() === 'email') {
-                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
+                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CoreManager.activeCore().uuid());
                 return info ? info.gravatarUrl() : defaultImage;
             } else {
                 return defaultImage;
@@ -65,7 +65,7 @@ export var DMCardFields = [
         name: 'exhibitImage',
         refreshOn: Notifications.exhibit.changed,
         valueAccessor: function() {
-            var exhibit = PersistenceService.findFirstBy(Exhibit, 'characterId', CharacterManager.activeCharacter().key());
+            var exhibit = PersistenceService.findFirstBy(Exhibit, 'characterId', CoreManager.activeCore().uuid());
             return exhibit ? exhibit.toJSON() : null;
         }
     }

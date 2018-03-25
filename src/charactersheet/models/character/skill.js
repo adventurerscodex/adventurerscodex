@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { AbilityScores } from './ability_scores';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
@@ -29,7 +29,7 @@ export function Skill() {
 
     self.proficiencyScore = function() {
         self._dummy();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var profBonus = ProficiencyService.sharedService().proficiency();
 
         if (self.proficiency() === 'half') {
@@ -49,7 +49,7 @@ export function Skill() {
         var score = null;
         try {
             score = PersistenceService.findBy(AbilityScores, 'characterId',
-                CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
+                CoreManager.activeCore().uuid())[0].modifierFor(self.abilityScore());
         } catch(err) { /*Ignore*/ }
 
         return score ? parseInt(score) : 0;

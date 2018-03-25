@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import {
@@ -68,7 +68,7 @@ export function EncounterViewModel() {
     /* Modal Methods */
 
     self.openAddModal = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.modalEncounter(new Encounter());
         self.modalEncounter().characterId(key);
         self.modalEncounterSections(
@@ -79,7 +79,7 @@ export function EncounterViewModel() {
     };
 
     self.openAddModalWithParent = function(parent) {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.modalEncounter(new Encounter());
         self.modalEncounter().parent(parent.encounterId());
         self.modalEncounter().characterId(key);
@@ -136,7 +136,7 @@ export function EncounterViewModel() {
      * take care of removing the element from the UI.
      */
     self.deleteEncounter = function(cell) {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var encounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', cell.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -185,7 +185,7 @@ export function EncounterViewModel() {
             child.delete();
         });
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.sectionModels.map(({ section }) => {
             PersistenceService.findByPredicates(section, [
                 new KeyValuePredicate('encounterId', encounter.encounterId()),
@@ -208,7 +208,7 @@ export function EncounterViewModel() {
     };
 
     self._getEncounterCells = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var allEncounters = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('characterId', key)
         ]);
@@ -238,7 +238,7 @@ export function EncounterViewModel() {
 
     self._getSectionsForEncounter = function(id) {
         return self.sectionModels.map(function(sectionModel, i, _) {
-            var key = CharacterManager.activeCharacter().key();
+            var key = CoreManager.activeCore().uuid();
             var section = PersistenceService.findByPredicates(sectionModel.section, [
                 new KeyValuePredicate('encounterId', id),
                 new KeyValuePredicate('characterId', key)
@@ -266,7 +266,7 @@ export function EncounterViewModel() {
         }
 
         var id = self.selectedCell().encounterId();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var selectedEncounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', id),
             new KeyValuePredicate('characterId', key)

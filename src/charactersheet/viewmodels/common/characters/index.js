@@ -4,7 +4,7 @@ import {
     PlayerTypes
 } from 'charactersheet/models/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -27,7 +27,7 @@ export function CharactersViewModel(params) {
         self.characters(PersistenceService.findAll(Character));
         self.modalStatus(self.componentStatus());
 
-        Notifications.characterManager.changed.add(self._updatedSelectedCharacter);
+        Notifications.coreManager.changed.add(self._updatedSelectedCharacter);
         self._updatedSelectedCharacter();
 
         // Build the hash of key -> modal open.
@@ -39,13 +39,13 @@ export function CharactersViewModel(params) {
     self.changeCharacter = (character) => {
         // Don't switch to the same character.
         var activeCharacterKey = null;
-        if (CharacterManager.activeCharacter()) {
-            activeCharacterKey = CharacterManager.activeCharacter().key();
+        if (CoreManager.activeCore()) {
+            activeCharacterKey = CoreManager.activeCore().uuid();
         }
 
         // Do switch
         if (character.key() !== activeCharacterKey) {
-            CharacterManager.changeCharacter(character.key());
+            CoreManager.changeCharacter(character.key());
         }
     };
 
@@ -55,7 +55,7 @@ export function CharactersViewModel(params) {
         character.playerType(PlayerTypes.characterPlayerType);
 
         self.characters.push(character);
-        if (!CharacterManager.defaultCharacter()) {
+        if (!CoreManager.defaultCharacter()) {
             character.isDefault(true);
         }
         character.save();
@@ -75,7 +75,7 @@ export function CharactersViewModel(params) {
 
         if (self.characters().length === 0) {
             self.modalStatus(false);
-        } else if (character.key() === CharacterManager.activeCharacter().key()) {
+        } else if (character.key() === CoreManager.activeCore().uuid()) {
             // If we've deleted the current character...
             // switch to the same index position bounded by list length.
             const index = (
@@ -83,7 +83,7 @@ export function CharactersViewModel(params) {
                 deletedCharacterIndex :
                 self.characters().length - 1
             );
-            CharacterManager.changeCharacter(self.characters()[index].key());
+            CoreManager.changeCharacter(self.characters()[index].key());
         }
     };
 
@@ -121,7 +121,7 @@ export function CharactersViewModel(params) {
     // Private Methods
 
     self._updatedSelectedCharacter = () => {
-        self.selectedCharacter(CharacterManager.activeCharacter());
+        self.selectedCharacter(CoreManager.activeCore());
     };
 }
 

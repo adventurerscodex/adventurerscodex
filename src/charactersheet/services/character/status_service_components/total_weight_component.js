@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { AbilityScores } from 'charactersheet/models/character/ability_scores';
@@ -39,7 +39,7 @@ export function TotalWeightStatusServiceComponent() {
      * the character's encumbrance.
      */
     self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var scores = PersistenceService.findBy(AbilityScores, 'characterId', key)[0];
         if (!scores || !scores.str()) {
             self._removeStatus();
@@ -70,7 +70,7 @@ export function TotalWeightStatusServiceComponent() {
     /* Private Methods */
 
     self._updateStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var scores = PersistenceService.findBy(AbilityScores, 'characterId', key)[0];
 
         var weight = 0;
@@ -98,7 +98,7 @@ export function TotalWeightStatusServiceComponent() {
     };
 
     self._removeStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
@@ -110,7 +110,7 @@ export function TotalWeightStatusServiceComponent() {
 
     self._getWeightFor = function(model, property) {
         var weight = 0;
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         PersistenceService.findBy(model, 'characterId', key).forEach(function(instance, idx, _) {
             var weightValue = parseFloat(ko.unwrap(instance[property]));
             if (weightValue) {

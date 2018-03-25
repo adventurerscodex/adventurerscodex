@@ -1,4 +1,4 @@
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Treasure } from 'charactersheet/models/common';
@@ -25,12 +25,12 @@ export function TreasureViewModel() {
         Notifications.global.save.add(self.save);
 
         var existingTreasure = PersistenceService.findFirstBy(Treasure, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
 
         if (existingTreasure) {
             self.treasure(existingTreasure);
         }
-        self.treasure().characterId(CharacterManager.activeCharacter().key());
+        self.treasure().characterId(CoreManager.activeCore().uuid());
 
         //Notifications
         self.treasure().platinum.subscribe(self._dataHasChanged);

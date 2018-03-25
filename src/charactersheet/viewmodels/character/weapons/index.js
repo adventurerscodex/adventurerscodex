@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Notifications,
@@ -50,7 +50,7 @@ export function WeaponsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.weapons(PersistenceService.findBy(Weapon, 'characterId', key));
 
         Notifications.abilityScores.changed.add(self.valueHasChanged);
@@ -183,7 +183,7 @@ export function WeaponsViewModel() {
     //Manipulating weapons
     self.addWeapon = function() {
         var weapon = self.blankWeapon();
-        weapon.characterId(CharacterManager.activeCharacter().key());
+        weapon.characterId(CoreManager.activeCore().uuid());
         weapon.save();
         self.weapons.push(weapon);
         self.blankWeapon(new Weapon());

@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { DataRepository } from 'charactersheet/utilities';
@@ -37,7 +37,7 @@ export function ProficienciesViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.proficiencies(PersistenceService.findBy(Proficiency, 'characterId', key));
     };
 
@@ -119,7 +119,7 @@ export function ProficienciesViewModel() {
 
     self.addProficiency = function() {
         var proficiency = self.blankProficiency();
-        proficiency.characterId(CharacterManager.activeCharacter().key());
+        proficiency.characterId(CoreManager.activeCore().uuid());
         proficiency.save();
         self.proficiencies.push(proficiency);
         self.blankProficiency(new Proficiency());

@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures
 } from 'charactersheet/utilities';
 import { AbilityScores } from 'charactersheet/models/character/ability_scores';
@@ -71,7 +71,7 @@ export function Weapon() {
         var score = null;
         try {
             score = PersistenceService.findBy(AbilityScores, 'characterId',
-                CharacterManager.activeCharacter().key())[0].modifierFor('Str');
+                CoreManager.activeCore().uuid())[0].modifierFor('Str');
         } catch(err) { /*Ignore*/ }
         if (score === null){
             return null;
@@ -85,7 +85,7 @@ export function Weapon() {
         var score = null;
         try {
             score = PersistenceService.findBy(AbilityScores, 'characterId',
-                CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
+                CoreManager.activeCore().uuid())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
         if (score === null){
             return null;

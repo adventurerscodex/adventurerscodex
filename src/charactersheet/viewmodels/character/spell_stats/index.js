@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -19,7 +19,7 @@ export function SpellStatsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var stats = PersistenceService.findBy(SpellStats, 'characterId', key);
         if (stats.length > 0) {
             self.spellStats(stats[0]);

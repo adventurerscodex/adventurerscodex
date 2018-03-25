@@ -3,7 +3,7 @@ import {
     ChatServiceManager,
     DMCardPublishingService
 } from 'charactersheet/services/common';
-import { CharacterManager } from 'charactersheet/utilities/character_manager';
+import { CoreManager } from 'charactersheet/utilities/core_manager';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 import template from './index.html';
@@ -59,7 +59,7 @@ export function ChatModalViewModel(params) {
     };
 
     self.getAllPartyMembers = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
 
         // Get the current card service.

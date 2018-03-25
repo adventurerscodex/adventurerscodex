@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures
 } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -60,7 +60,7 @@ export function Spell() {
 
     self.spellDamageLabel = ko.pureComputed(function() {
         self._dummy();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var spellStats = PersistenceService.findBy(SpellStats, 'characterId', key)[0];
         if (self.spellType() === 'Attack Roll') {
             var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;

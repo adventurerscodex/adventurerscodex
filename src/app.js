@@ -22,7 +22,6 @@ import template from 'charactersheet/viewmodels/common/root/index.html'
 
 import { init } from 'charactersheet/init'
 
-
 var spinner = new Spinner({color:'#b4bcc2', lines: 12}).spin(
     document.getElementsByTagName('body')[0]
 );

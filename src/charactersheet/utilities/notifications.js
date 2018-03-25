@@ -69,7 +69,7 @@ export var Notifications = {
         dangerNotification: new Signal()
     },
 
-    characterManager: {
+    coreManager: {
         changing: new Signal(),
         changed: new Signal()
     },

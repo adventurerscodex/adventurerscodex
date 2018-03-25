@@ -4,7 +4,7 @@ import { CampaignMapOrImage,
     Message
  } from 'charactersheet/models';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -72,7 +72,7 @@ export function CampaignMapsAndImagesViewModel() {
         Notifications.party.left.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var map = PersistenceService.findBy(CampaignMapOrImage, 'characterId', key);
         if (map) {
             self.mapsOrImages(map);
@@ -118,7 +118,7 @@ export function CampaignMapsAndImagesViewModel() {
 
     self.addMapOrImage = function() {
         var mapOrImage = self.blankMapOrImage();
-        mapOrImage.characterId(CharacterManager.activeCharacter().key());
+        mapOrImage.characterId(CoreManager.activeCore().uuid());
         mapOrImage.save();
         self.mapsOrImages.push(mapOrImage);
         self.blankMapOrImage(new CampaignMapOrImage());
@@ -200,7 +200,7 @@ export function CampaignMapsAndImagesViewModel() {
     };
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var mapOrImage = PersistenceService.findBy(CampaignMapOrImage, 'characterId', key);
         if (mapOrImage) {
             self.mapsOrImages(mapOrImage);

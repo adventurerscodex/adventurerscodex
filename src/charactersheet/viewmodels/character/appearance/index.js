@@ -1,6 +1,6 @@
 import 'bin/knockout-custom-loader';
 import { CharacterAppearance } from 'charactersheet/models/character';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
@@ -14,7 +14,7 @@ export function AppearanceViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var appear = PersistenceService.findBy(CharacterAppearance, 'characterId', key);
         if (appear.length > 0) {
             self.appearance(appear[0]);

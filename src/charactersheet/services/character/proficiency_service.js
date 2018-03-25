@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { OtherStats } from 'charactersheet/models/character/other_stats';
@@ -21,7 +21,7 @@ function _ProficiencyService(configuration) {
         Notifications.profile.level.changed.add(self.dataHasChanged);
 
         // Kick it off the first time.
-        self.characterId(CharacterManager.activeCharacter().key());
+        self.characterId(CoreManager.activeCore().uuid());
         self.dataHasChanged();
     };
 

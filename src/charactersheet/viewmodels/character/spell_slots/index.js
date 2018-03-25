@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -47,7 +47,7 @@ export function SpellSlotsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
         var slots = PersistenceService.findBy(Slot, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
         self.slots(slots);
         self.blankSlot().level(self.slots().length + 1);
 
@@ -186,7 +186,7 @@ export function SpellSlotsViewModel() {
 
     self.addSlot = function() {
         var slot = self.blankSlot();
-        slot.characterId(CharacterManager.activeCharacter().key());
+        slot.characterId(CoreManager.activeCore().uuid());
         slot.save();
         self.slots.push(slot);
 

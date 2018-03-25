@@ -1,4 +1,4 @@
-import { CharacterManager } from 'charactersheet/utilities/character_manager';
+import { CoreManager } from 'charactersheet/utilities/core_manager';
 import { Encounter } from 'charactersheet/models/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -42,7 +42,7 @@ export function EncounterCellViewModel(encounter) {
 
     self.addChild = function(child) {
         // Update the data.
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -63,7 +63,7 @@ export function EncounterCellViewModel(encounter) {
     /* View Model Methods */
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var encounter = PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -77,7 +77,7 @@ export function EncounterCellViewModel(encounter) {
     /* Data Refresh Methods */
 
     self.reloadData = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

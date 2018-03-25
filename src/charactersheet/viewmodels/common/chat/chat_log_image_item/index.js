@@ -5,7 +5,7 @@ import {
     XMPPService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -43,7 +43,7 @@ export function ChatLogImageItem(params) {
     // UI Methods
 
     self.shouldShowSaveToNotesButton = ko.pureComputed(function() {
-        var key = CharacterManager.activeCharacter().playerType().key;
+        var key = CoreManager.activeCore().playerType().key;
         return key == PlayerTypes.characterPlayerType.key;
     });
 
@@ -78,7 +78,7 @@ export function ChatLogImageItem(params) {
     };
 
     self.saveToNotes = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var date = (new Date()).toDateString();
 
         var note = new Note();
@@ -93,7 +93,7 @@ export function ChatLogImageItem(params) {
     /* Card Methods */
 
     self.getCard = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var chatRoom = chatService.rooms[self.message.fromBare()];
         if (!chatRoom) { return null; }

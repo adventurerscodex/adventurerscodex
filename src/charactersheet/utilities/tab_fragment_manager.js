@@ -1,4 +1,4 @@
-import { CharacterManager } from 'charactersheet/utilities/character_manager';
+import { CoreManager } from 'charactersheet/utilities/core_manager';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import URI from 'urijs';
 
@@ -16,7 +16,7 @@ export var TabFragmentManager = {
     init: () => {
         const fragments = (new URI()).fragment(true);
         const tab = fragments[TabFragmentManager.TAB_FRAGMENT_KEY];
-        const character = CharacterManager.activeCharacter();
+        const character = CoreManager.activeCore();
         if (!character) {
             return;
         }
@@ -38,7 +38,7 @@ export var TabFragmentManager = {
         if (TabFragmentManager.__active_tab__) {
             return TabFragmentManager.__active_tab__;
         } else {
-            const character = CharacterManager.activeCharacter();
+            const character = CoreManager.activeCore();
             return character.playerType().defaultTab;
         }
     },

@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Utility
 } from 'charactersheet/utilities';
@@ -83,7 +83,7 @@ export function MagicItemsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.magicItems(PersistenceService.findBy(MagicItem, 'characterId', key));
 
         self.magicItems().forEach(function(e, i, _) {
@@ -190,7 +190,7 @@ export function MagicItemsViewModel() {
     //Manipulating magic items
     self.addItem = function() {
         var item = self.blankMagicItem();
-        item.characterId(CharacterManager.activeCharacter().key());
+        item.characterId(CoreManager.activeCore().uuid());
         item.save();
         self.magicItems.push(item);
         self.blankMagicItem(new MagicItem());

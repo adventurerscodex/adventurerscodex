@@ -1,4 +1,4 @@
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { DeathSave } from 'charactersheet/models/character/death_save';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
@@ -37,7 +37,7 @@ export function HealthinessStatusServiceComponent() {
      * component from the player's status line.
      */
     self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var health = PersistenceService.findFirstBy(Health, 'characterId', key);
         var hitDice = PersistenceService.findBy(HitDice, 'characterId', key);
         var deathSaves = PersistenceService.findBy(DeathSave, 'characterId', key);
@@ -97,7 +97,7 @@ export function HealthinessStatusServiceComponent() {
 
     self._updateStatus = function(deathSavesDidFail,
                                   deathSavesDidSucceed) {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var health = PersistenceService.findFirstBy(Health, 'characterId', key);
         var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
 

@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
@@ -32,7 +32,7 @@ export function MagicalStatusServiceComponent() {
      * component from the player's status line.
      */
     self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var spellSlots = PersistenceService.findBy(Slot, 'characterId', key);
 
         if (!spellSlots) { return; }
@@ -47,7 +47,7 @@ export function MagicalStatusServiceComponent() {
     /* Private Methods */
 
     self._updateStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var spellSlots = PersistenceService.findBy(Slot, 'characterId', key);
         var valueWeightPairs = [];
 
@@ -75,7 +75,7 @@ export function MagicalStatusServiceComponent() {
     };
 
     self._removeStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];

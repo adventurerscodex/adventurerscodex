@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import {
@@ -98,7 +98,7 @@ function _ArmorClassService(configuration) {
     self.dexBonus = function() {
         var score = 0,
             rawDexBonus = 0,
-            characterId = CharacterManager.activeCharacter().key();
+            characterId = CoreManager.activeCore().uuid();
 
         try {
             var scores = PersistenceService.findFirstBy(AbilityScores, 'characterId', characterId);
@@ -121,7 +121,7 @@ function _ArmorClassService(configuration) {
     };
 
     self.armorClassModifier = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
         var armorClassModifier = 0;
 
@@ -153,7 +153,7 @@ function _ArmorClassService(configuration) {
     /* Private Methods */
 
     self._getEquippedArmors = function() {
-        var characterId = CharacterManager.activeCharacter().key();
+        var characterId = CoreManager.activeCore().uuid();
         var predicates = [
             new KeyValuePredicate('characterId', characterId),
             new KeyValuePredicate('armorEquipped', 'equipped'),
@@ -164,7 +164,7 @@ function _ArmorClassService(configuration) {
     };
 
     self._getEquippedShields = function() {
-        var characterId = CharacterManager.activeCharacter().key();
+        var characterId = CoreManager.activeCore().uuid();
         var predicates = [
             new KeyValuePredicate('characterId', characterId),
             new KeyValuePredicate('armorEquipped', 'equipped'),

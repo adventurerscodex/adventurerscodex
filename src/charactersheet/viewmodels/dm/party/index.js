@@ -1,5 +1,5 @@
 import 'bin/knockout-custom-loader';
-import { CharacterManager,
+import { CoreManager,
     Notifications } from 'charactersheet/utilities';
 import { ChatServiceManager,
     XMPPService

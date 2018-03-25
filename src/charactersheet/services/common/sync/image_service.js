@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { CampaignMapOrImage } from 'charactersheet/models/common/campaign_map_or_image';
@@ -56,14 +56,14 @@ function _ImageService(config) {
 
     self.createExhibitModel = function(image) {
         var exhibit = new Exhibit();
-        exhibit.characterId(CharacterManager.activeCharacter().key());
+        exhibit.characterId(CoreManager.activeCore().uuid());
         exhibit.name(image.name);
         exhibit.url(image.url);
         exhibit.save();
     };
 
     self.purgeExistingExibits = function() {
-        var exhibits = PersistenceService.findBy(Exhibit, 'characterId', CharacterManager.activeCharacter().key());
+        var exhibits = PersistenceService.findBy(Exhibit, 'characterId', CoreManager.activeCore().uuid());
         if (exhibits.length > 0) {
             exhibits.forEach(function(exhibit, idx, _) {
                 exhibit.delete();
@@ -73,7 +73,7 @@ function _ImageService(config) {
 
     self.clearExhibitFlag = function() {
         var predicates = [
-            new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+            new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
             new KeyValuePredicate('isExhibited', true)
         ];
         var mapOrImages = PersistenceService.findByPredicates(MapOrImage, predicates);

@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
@@ -41,7 +41,7 @@ export function NotesSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var notes = PersistenceService.findByPredicates(NotesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -57,7 +57,7 @@ export function NotesSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var notesSection = PersistenceService.findByPredicates(NotesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

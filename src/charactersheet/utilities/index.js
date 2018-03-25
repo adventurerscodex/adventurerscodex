@@ -1,4 +1,4 @@
-export { CharacterManager } from './character_manager.js';
+export { CoreManager } from './core_manager.js';
 export { DataRepository } from './data_repository.js';
 export { Fixtures } from './fixtures.js';
 export { JSONPayload } from './json_payload.js';

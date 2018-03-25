@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -77,7 +77,7 @@ export function PlayerTextSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(PlayerTextSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -98,7 +98,7 @@ export function PlayerTextSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(PlayerTextSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -137,7 +137,7 @@ export function PlayerTextSectionViewModel(params) {
 
     self.addPlayerText = function() {
         var playerText = self.blankPlayerText();
-        playerText.characterId(CharacterManager.activeCharacter().key());
+        playerText.characterId(CoreManager.activeCore().uuid());
         playerText.encounterId(self.encounterId());
         playerText.save();
         self.playerTexts.push(playerText);
@@ -207,7 +207,7 @@ export function PlayerTextSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var playerTexts = PersistenceService.findByPredicates(PlayerText, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

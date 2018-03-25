@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -82,7 +82,7 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -103,7 +103,7 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -142,7 +142,7 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.addMapOrImage = function() {
         var mapOrImage = self.blankMapOrImage();
-        mapOrImage.characterId(CharacterManager.activeCharacter().key());
+        mapOrImage.characterId(CoreManager.activeCore().uuid());
         mapOrImage.encounterId(self.encounterId());
         mapOrImage.save();
         self.mapsOrImages.push(mapOrImage);
@@ -233,7 +233,7 @@ export function MapsAndImagesSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var map = PersistenceService.findByPredicates(MapOrImage, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

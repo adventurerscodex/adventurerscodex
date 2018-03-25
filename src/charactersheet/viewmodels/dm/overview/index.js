@@ -1,6 +1,6 @@
 import 'bin/knockout-custom-loader';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { Campaign } from 'charactersheet/models';
@@ -21,7 +21,7 @@ export function CampaignOverviewViewModel() {
 
     /* Public Methods */
     self.load = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         if (overview) {
             self.playerName(overview.playerName());
@@ -37,7 +37,7 @@ export function CampaignOverviewViewModel() {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         if (!overview) {
             overview = new Campaign();

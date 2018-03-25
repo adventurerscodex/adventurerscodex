@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -64,7 +64,7 @@ export function PointOfInterestSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(PointOfInterestSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -85,7 +85,7 @@ export function PointOfInterestSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(PointOfInterestSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -124,7 +124,7 @@ export function PointOfInterestSectionViewModel(params) {
 
     self.addPointOfInterest = function() {
         var poi = self.blankPointOfInterest();
-        poi.characterId(CharacterManager.activeCharacter().key());
+        poi.characterId(CoreManager.activeCore().uuid());
         poi.encounterId(self.encounterId());
         poi.save();
         self.pointsOfInterest.push(poi);
@@ -178,7 +178,7 @@ export function PointOfInterestSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var poi = PersistenceService.findByPredicates(PointOfInterest, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

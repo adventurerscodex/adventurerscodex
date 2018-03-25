@@ -3,7 +3,7 @@ import {
     DMCardPublishingService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -41,7 +41,7 @@ export function ChatLogChatItem(params) {
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {
-        var key = CharacterManager.activeCharacter().playerType().key;
+        var key = CoreManager.activeCore().playerType().key;
         return key == PlayerTypes.characterPlayerType.key;
     });
 
@@ -66,7 +66,7 @@ export function ChatLogChatItem(params) {
     });
 
     self.saveToNotes = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var note = PersistenceService.findByPredicates(Note, [
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isSavedChatNotes', true)
@@ -86,7 +86,7 @@ export function ChatLogChatItem(params) {
     /* Card Methods */
 
     self.getCard = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var chatRoom = chatService.rooms[self.message.fromBare()];
         if (!chatRoom) { return null; }

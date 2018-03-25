@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
@@ -45,7 +45,7 @@ export function SkillsViewModel() {
         ];
         return skills.map(function(e, i, _) {
             var skill = new Skill(self);
-            e.characterId = CharacterManager.activeCharacter().key();
+            e.characterId = CoreManager.activeCore().uuid();
             skill.importValues(e);
             return skill;
         });
@@ -64,7 +64,7 @@ export function SkillsViewModel() {
         Notifications.global.save.add(self.save);
 
         var skills = PersistenceService.findBy(Skill, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
 
         if (skills.length === 0) {
             self.skills(self._defaultSkills());
@@ -163,7 +163,7 @@ export function SkillsViewModel() {
 
     self.addSkill = function() {
         var skill = self.blankSkill();
-        skill.characterId(CharacterManager.activeCharacter().key());
+        skill.characterId(CoreManager.activeCore().uuid());
         skill.save();
         self.addNotifiers(skill);
         self.skills.push(skill);

@@ -5,7 +5,7 @@ import { CharacterCardPublishingService,
 import { Note,
     PlayerTypes
 } from 'charactersheet/models/common';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -35,7 +35,7 @@ export function ChatLogReadAloudItem(params) {
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {
-        var key = CharacterManager.activeCharacter().playerType().key;
+        var key = CoreManager.activeCore().playerType().key;
         return key == PlayerTypes.characterPlayerType.key;
     });
 
@@ -60,7 +60,7 @@ export function ChatLogReadAloudItem(params) {
     });
 
     self.saveToNotes = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var note = PersistenceService.findByPredicates(Note, [
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isSavedChatNotes', true)
@@ -82,7 +82,7 @@ export function ChatLogReadAloudItem(params) {
     /* Card Methods */
 
     self.getCard = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var chatRoom = chatService.rooms[self.message.fromBare()];
         if (!chatRoom) { return null; }

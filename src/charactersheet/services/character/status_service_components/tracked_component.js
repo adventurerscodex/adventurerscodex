@@ -1,4 +1,4 @@
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { KeyValuePredicate, SharedServiceManager } from 'charactersheet/services/common';
 import { Status, StatusWeightPair } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -32,7 +32,7 @@ export function TrackedStatusServiceComponent() {
      * component from the player's status line.
      */
     self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var trackedAbilities = PersistenceService.findBy(Tracked, 'characterId', key);
 
         if (!trackedAbilities) { return; }
@@ -47,7 +47,7 @@ export function TrackedStatusServiceComponent() {
     /* Private Methods */
 
     self._updateStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var trackedAbilities = PersistenceService.findBy(Tracked, 'characterId', key);
         var valueWeightPairs = [];
 
@@ -82,7 +82,7 @@ export function TrackedStatusServiceComponent() {
     };
 
     self._removeStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];

@@ -7,7 +7,7 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { DataRepository } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SortService } from 'charactersheet/services/common';
@@ -48,7 +48,7 @@ export function FeatsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.feats(PersistenceService.findBy(Feat, 'characterId', key));
     };
 
@@ -141,7 +141,7 @@ export function FeatsViewModel() {
 
     self.addFeat = function() {
         var feat = self.blankFeat();
-        feat.characterId(CharacterManager.activeCharacter().key());
+        feat.characterId(CoreManager.activeCore().uuid());
         if (feat.isTracked()) {
             feat.trackedId(uuid.v4());
             self.addTracked(feat.trackedId(), feat.characterId(), self.blankTracked());

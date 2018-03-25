@@ -10,7 +10,22 @@ export class Core extends KOModel {
         include: [],
     };
 
+    title = ko.pureComputed(() => {
+        return `${this.playerName()}`;
+    });
+
     summary = ko.pureComputed(() => {
         return `${this.playerName()}: a ${this.type.description()}.`;
+    });
+
+    image = ko.pureComputed(() => {
+        const image = ko.unwrap(this.profileImage);
+        if (!image) {
+            return null;
+        } else if (image.type() === 'email') {
+            return image.gravatarUrl();
+        } else {
+            return image.sourceUrl();
+        }
     });
 }

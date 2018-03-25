@@ -1,6 +1,6 @@
 import { AbilityScores } from 'charactersheet/models/character/ability_scores';
 import { ArmorClassService } from 'charactersheet/services/character/armor_class_service';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
 import { HitDiceType } from 'charactersheet/models/character/hit_dice_type';
@@ -32,28 +32,28 @@ export var CharacterCardFields = [
         name: 'name',
         refreshOn: Notifications.profile.characterName.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.characterName() : '';
         }
     }, {
         name: 'playerName',
         refreshOn: Notifications.profile.playerName.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.playerName() : '';
         }
     }, {
         name: 'playerSummary',
         refreshOn: Notifications.profile.characterName.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.summary() : '';
         }
     }, {
         name: 'playerType',
         refreshOn: Notifications.characters.changed,
         valueAccessor: function() {
-            var character = CharacterManager.activeCharacter();
+            var character = CoreManager.activeCore();
             return character ? character.playerType().key : 'character';
         }
     }, {
@@ -61,15 +61,15 @@ export var CharacterCardFields = [
         refreshOn: Notifications.playerImage.changed,
         valueAccessor: function() {
             var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
-            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CharacterManager.activeCharacter().key());
+            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CoreManager.activeCore().uuid());
             if (!image) { return defaultImage; }
             if (image.imageSource() === 'link') {
-                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CharacterManager.activeCharacter().key());
+                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CoreManager.activeCore().uuid());
                 if (!imageModel) { return defaultImage; }
                 var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
                 return convertedImage !== '' ? convertedImage : defaultImage;
             } else if (image.imageSource() === 'email') {
-                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CharacterManager.activeCharacter().key());
+                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CoreManager.activeCore().uuid());
                 return info ? info.gravatarUrl() : defaultImage;
             } else {
                 return defaultImage;
@@ -79,28 +79,28 @@ export var CharacterCardFields = [
         name: 'race',
         refreshOn: Notifications.profile.race.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.race() : '';
         }
     }, {
         name: 'playerClass',
         refreshOn: Notifications.profile.playerClass.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.typeClass() : '';
         }
     }, {
         name: 'level',
         refreshOn: Notifications.profile.level.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.level() : '';
         }
     }, {
         name: 'experience',
         refreshOn: Notifications.profile.experience.changed,
         valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CharacterManager.activeCharacter().key());
+            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
             return profile ? profile.exp() : '';
         }
     }, {
@@ -114,42 +114,42 @@ export var CharacterCardFields = [
         name: 'gold',
         refreshOn: Notifications.treasure.changed,
         valueAccessor: function() {
-            var treasure = PersistenceService.findFirstBy(Treasure, 'characterId', CharacterManager.activeCharacter().key());
+            var treasure = PersistenceService.findFirstBy(Treasure, 'characterId', CoreManager.activeCore().uuid());
             return treasure ? treasure.worthInGold() : 0;
         }
     }, {
         name: 'maxHitPoints',
         refreshOn: Notifications.health.maxHitPoints.changed,
         valueAccessor: function() {
-            var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
+            var health = PersistenceService.findFirstBy(Health, 'characterId', CoreManager.activeCore().uuid());
             return health ? health.maxHitpoints() : 0;
         }
     }, {
         name: 'damage',
         refreshOn: Notifications.health.damage.changed,
         valueAccessor: function() {
-            var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
+            var health = PersistenceService.findFirstBy(Health, 'characterId', CoreManager.activeCore().uuid());
             return health ? health.damage() : 0;
         }
     }, {
         name: 'tempHitPoints',
         refreshOn: Notifications.health.tempHitPoints.changed,
         valueAccessor: function() {
-            var health = PersistenceService.findFirstBy(Health, 'characterId', CharacterManager.activeCharacter().key());
+            var health = PersistenceService.findFirstBy(Health, 'characterId', CoreManager.activeCore().uuid());
             return health ? health.tempHitpoints() : 0;
         }
     }, {
         name: 'hitDiceType',
         refreshOn: Notifications.hitDiceType.changed,
         valueAccessor: function() {
-            var hitDiceType = PersistenceService.findFirstBy(HitDiceType, 'characterId', CharacterManager.activeCharacter().key());
+            var hitDiceType = PersistenceService.findFirstBy(HitDiceType, 'characterId', CoreManager.activeCore().uuid());
             return hitDiceType ? hitDiceType.hitDiceType() : '';
         }
     }, {
         name: 'hitDice',
         refreshOn: Notifications.hitDice.changed,
         valueAccessor: function() {
-            var hitDice = PersistenceService.findBy(HitDice, 'characterId', CharacterManager.activeCharacter().key());
+            var hitDice = PersistenceService.findBy(HitDice, 'characterId', CoreManager.activeCore().uuid());
             if (!hitDice) { return; }
             var totalHitDice = 0;
             hitDice.forEach(function(die, idx, _) {
@@ -164,7 +164,7 @@ export var CharacterCardFields = [
         refreshOn: Notifications.skills.perception.changed,
         valueAccessor: function() {
             var predicates = [
-                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('name', 'Perception')
             ];
             var skill = PersistenceService.findByPredicates(Skill, predicates)[0];
@@ -175,7 +175,7 @@ export var CharacterCardFields = [
         name: 'passiveIntelligence',
         refreshOn: Notifications.abilityScores.intelligence.changed,
         valueAccessor: function() {
-            var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', CharacterManager.activeCharacter().key());
+            var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', CoreManager.activeCore().uuid());
             var modifier = abilityScores.modifierFor('int');
             modifier = modifier ? modifier : 0;
             return abilityScores ? 10 + modifier : 0;
@@ -184,7 +184,7 @@ export var CharacterCardFields = [
         name: 'spellSaveDC',
         refreshOn: Notifications.spellStats.changed,
         valueAccessor: function() {
-            var spellStats = PersistenceService.findFirstBy(SpellStats, 'characterId', CharacterManager.activeCharacter().key());
+            var spellStats = PersistenceService.findFirstBy(SpellStats, 'characterId', CoreManager.activeCore().uuid());
             return spellStats ? spellStats.spellSaveDc() : 0;
         }
     }, {
@@ -192,7 +192,7 @@ export var CharacterCardFields = [
         refreshOn: Notifications.status.healthiness.changed,
         valueAccessor: function() {
             var predicates = [
-                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('identifier', 'Status.Healthiness')
             ];
             var healthinessStatus = PersistenceService.findByPredicates(Status, predicates)[0];
@@ -203,7 +203,7 @@ export var CharacterCardFields = [
         refreshOn: Notifications.status.magic.changed,
         valueAccessor: function() {
             var predicates = [
-                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('identifier', 'Status.Magical')
             ];
             var magicStatus = PersistenceService.findByPredicates(Status, predicates)[0];
@@ -214,7 +214,7 @@ export var CharacterCardFields = [
         refreshOn: Notifications.status.tracked.changed,
         valueAccessor: function() {
             var predicates = [
-                new KeyValuePredicate('characterId', CharacterManager.activeCharacter().key()),
+                new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('identifier', 'Status.Tracked')
             ];
             var trackedStatus = PersistenceService.findByPredicates(Status, predicates)[0];

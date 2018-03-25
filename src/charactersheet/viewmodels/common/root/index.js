@@ -16,7 +16,7 @@ import {
     XMPPService
 } from 'charactersheet/services';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
@@ -79,7 +79,7 @@ export function AdventurersCodexViewModel() {
     self.showWizard = function() {
         //Unload the prior character.
         self.state(APP_STATE.WIZARD);
-        if (CharacterManager.activeCharacter()) {
+        if (CoreManager.activeCore()) {
             self.unload();
         }
         self.load();
@@ -105,23 +105,26 @@ export function AdventurersCodexViewModel() {
     self.init = function() {
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
-        Notifications.characterManager.changing.add(self._handleChangingCharacter);
-        Notifications.characterManager.changed.add(self._handleChangedCharacter);
+        Notifications.coreManager.changing.add(self._handleChangingCharacter);
+        Notifications.coreManager.changed.add(self._handleChangedCharacter);
 
-        CharacterManager.init();
-        var characters = PersistenceService.findAll(Character);
+        // Finish the setup once we're sure that we're logged in.
+        Notifications.authentication.loggedIn.add(() => {
+            CoreManager.init();
+            var characters = PersistenceService.findAll(Character);
 
-        TabFragmentManager.init();
+            TabFragmentManager.init();
 
-        if (CharacterManager.activeCharacter()) {
-            // There might be an active character in the URL.
-            self._handleChangedCharacter();
-        } else if (characters.length > 0) {
-            self.state(APP_STATE.SELECT);
-        } else {
-            //If no current character exists, fire the load process anyway.
-            self.state(APP_STATE.WIZARD);
-        }
+            if (CoreManager.activeCore()) {
+                // There might be an active character in the URL.
+                self._handleChangedCharacter();
+            } else if (characters.length > 0) {
+                self.state(APP_STATE.SELECT);
+            } else {
+                //If no current character exists, fire the load process anyway.
+                self.state(APP_STATE.WIZARD);
+            }
+        });
 
         XMPPService.sharedService().init();
         NodeServiceManager.sharedService().init();
@@ -166,7 +169,7 @@ export function AdventurersCodexViewModel() {
 
     self._handleChangingCharacter = function() {
         //Don't save an empty character.
-        if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
+        if (CoreManager.activeCore() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
         self.selectedCharacter(null);
@@ -176,7 +179,7 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangedCharacter = function() {
-        self.selectedCharacter(CharacterManager.activeCharacter());
+        self.selectedCharacter(CoreManager.activeCore());
         self.state(APP_STATE.CHOSEN);
         try {
             self.load();

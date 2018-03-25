@@ -1,4 +1,4 @@
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -47,7 +47,7 @@ export function ProfileViewModel() {
 
     self.load = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
+            CoreManager.activeCore().uuid())[0];
         Notifications.global.save.add(self.dataHasChanged);
 
         if (profile) {
@@ -142,7 +142,7 @@ export function ProfileViewModel() {
 
     self.saveProfile = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
+            CoreManager.activeCore().uuid())[0];
         profile.level(self.level());
         profile.playerName(self.playerName());
         profile.characterName(self.characterName());

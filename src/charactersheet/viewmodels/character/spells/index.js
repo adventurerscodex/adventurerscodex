@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Notifications,
     Utility
@@ -66,7 +66,7 @@ export function SpellbookViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
         self.spellbook().forEach(function(spell, idx, _) {
             spell.spellPrepared.subscribe(self.save);
@@ -214,7 +214,7 @@ export function SpellbookViewModel() {
     //Manipulating spells
     self.addSpell = function() {
         var spell = self.blankSpell();
-        spell.characterId(CharacterManager.activeCharacter().key());
+        spell.characterId(CoreManager.activeCore().uuid());
         spell.save();
         spell.spellPrepared.subscribe(self.save);
         self.spellbook.push(spell);

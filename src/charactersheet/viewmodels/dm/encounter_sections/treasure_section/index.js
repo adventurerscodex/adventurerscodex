@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Notifications
@@ -110,7 +110,7 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(TreasureSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -131,7 +131,7 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(TreasureSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -170,7 +170,7 @@ export function TreasureSectionViewModel(params) {
 
     self.addTreasure = function() {
         var treasure = self.blankTreasure();
-        treasure.characterId(CharacterManager.activeCharacter().key());
+        treasure.characterId(CoreManager.activeCore().uuid());
         treasure.encounterId(self.encounterId());
         treasure.treasureType(self.itemType());
         treasure.save();
@@ -370,7 +370,7 @@ export function TreasureSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var treasure = [];
         self.treasureTypes.forEach(function(type, idx, _){
             var result = PersistenceService.findByPredicates(type, [

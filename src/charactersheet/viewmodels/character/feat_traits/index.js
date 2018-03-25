@@ -1,4 +1,4 @@
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { FeaturesTraits } from 'charactersheet/models/character';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -14,13 +14,13 @@ export function FeaturesTraitsViewModel() {
         Notifications.global.save.add(self.save);
 
         var ft = PersistenceService.findBy(FeaturesTraits, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
         if (ft.length > 0) {
             self.featTraits(ft[0]);
         } else {
             self.featTraits(new FeaturesTraits());
         }
-        self.featTraits().characterId(CharacterManager.activeCharacter().key());
+        self.featTraits().characterId(CoreManager.activeCore().uuid());
 
         // Subscriptions
         self.featTraits().background.subscribe(self.dataHasChanged);

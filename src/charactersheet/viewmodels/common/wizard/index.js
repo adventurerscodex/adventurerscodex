@@ -7,7 +7,7 @@ import {
     Profile,
     Trait
 } from 'charactersheet/models';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
@@ -53,7 +53,7 @@ export function WizardViewModel() {
     self.init = function() { };
 
     self.load = function() {
-        CharacterManager.setActiveCharacterFragment(null);
+        CoreManager.setActiveCharacterFragment(null);
 
         self.getNextStep();
         self.goForward();
@@ -141,7 +141,7 @@ export function WizardViewModel() {
         // Newest character will be at the back.
         var character = PersistenceService.findAll(Character).reverse()[0];
         if (character) {
-            CharacterManager.changeCharacter(character.key());
+            CoreManager.changeCharacter(character.key());
         }
     };
 

@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Notifications
 } from 'charactersheet/utilities';
@@ -76,7 +76,7 @@ export function MonsterSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section =  PersistenceService.findByPredicates(MonsterSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -97,7 +97,7 @@ export function MonsterSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section =  PersistenceService.findByPredicates(MonsterSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -136,7 +136,7 @@ export function MonsterSectionViewModel(params) {
 
     self.addMonster = function() {
         var monster = self.blankMonster();
-        monster.characterId(CharacterManager.activeCharacter().key());
+        monster.characterId(CoreManager.activeCore().uuid());
         monster.encounterId(self.encounterId());
         monster.monsterId(uuid.v4());
 
@@ -184,7 +184,7 @@ export function MonsterSectionViewModel(params) {
         self.blankMonster().abilityScores(
             abilityScores.map(function(e, i, _) {
                 var abilityScore = new MonsterAbilityScore();
-                e.characterId = CharacterManager.activeCharacter().key();
+                e.characterId = CoreManager.activeCore().uuid();
                 abilityScore.importValues(e);
                 return abilityScore;
             })
@@ -232,7 +232,7 @@ export function MonsterSectionViewModel(params) {
         self.selectPreviewTab();
 
         if (self.openEditModal()) {
-            var key = CharacterManager.activeCharacter().key();
+            var key = CoreManager.activeCore().uuid();
             self.monsters().forEach(function(item, idx, _) {
                 if (item.__id === self.editItemIndex) {
                     item.importValues(self.currentEditItem().exportValues());
@@ -269,7 +269,7 @@ export function MonsterSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var monster =  PersistenceService.findByPredicates(Monster, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

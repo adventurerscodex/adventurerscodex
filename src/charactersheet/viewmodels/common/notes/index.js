@@ -1,6 +1,6 @@
 import 'bin/knockout-custom-loader';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { Note } from 'charactersheet/models/common';
@@ -33,7 +33,7 @@ export function NotesViewModel() {
     };
 
     self.reloadData = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var notes = PersistenceService.findBy(Note, 'characterId', key);
         if (notes.length > 0) {
             self.notes(notes);
@@ -44,7 +44,7 @@ export function NotesViewModel() {
     /* UI Methods */
 
     self.addNote = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var note = new Note();
         note.characterId(key);
         note.save();

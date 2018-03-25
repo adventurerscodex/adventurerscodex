@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
@@ -85,7 +85,7 @@ export function ChatRoom() {
 
     self.getRoomMembers = function() {
         var jid = self.chatId();
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var occupants = chatService.getOccupantsInRoom(jid);
 

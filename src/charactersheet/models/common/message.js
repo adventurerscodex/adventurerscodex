@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     JSONPayload,
     Utility
 } from 'charactersheet/utilities';
@@ -168,7 +168,7 @@ Message.fromTree = function(msg) {
 
     var chat = new Message();
     chat.importValues({
-        characterId: CharacterManager.activeCharacter().key(),
+        characterId: CoreManager.activeCore().uuid(),
         to: $(msg).attr('to'),
         from: $(msg).attr('from'),
         id: $(msg).attr('id'),

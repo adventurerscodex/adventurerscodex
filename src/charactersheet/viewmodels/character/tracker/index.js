@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures,
     Notifications,
     Utility } from 'charactersheet/utilities';
@@ -60,7 +60,7 @@ export function TrackerViewModel() {
     };
 
     self.loadTrackedItems = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var trackables = [];
         // Fetch all items that can be tracked
         self.trackedTypes.forEach(function(type, idx, _){

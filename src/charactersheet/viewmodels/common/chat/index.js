@@ -7,7 +7,7 @@ import {
     PersistenceService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { ChatCellViewModel } from './chat_cell';
@@ -173,7 +173,7 @@ export function ChatViewModel(params) {
     };
 
     self._getChats = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var chatService = ChatServiceManager.sharedService();
         var currentPartyNode = chatService.currentPartyNode;
         var chats = PersistenceService.findByPredicates(ChatRoom, [
@@ -260,7 +260,7 @@ export function ChatViewModel(params) {
 
     self._purgeChats = function() {
         // Chat logs are saved server-side.
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
         chats.forEach(function(chat, idx, _) {
             chat.purge();

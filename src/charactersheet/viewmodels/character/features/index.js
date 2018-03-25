@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Notifications
@@ -55,7 +55,7 @@ export function FeaturesViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.features(PersistenceService.findBy(Feature, 'characterId', key));
     };
 
@@ -157,7 +157,7 @@ export function FeaturesViewModel() {
 
     self.addFeature = function() {
         var feature = self.blankFeature();
-        feature.characterId(CharacterManager.activeCharacter().key());
+        feature.characterId(CoreManager.activeCore().uuid());
         if (feature.isTracked()) {
             feature.trackedId(uuid.v4());
             self.addTracked(feature.trackedId(), feature.characterId(), self.blankTracked());

@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { AbilityScores } from './ability_scores';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
@@ -28,7 +28,7 @@ export function SavingThrows() {
     self.abilityScoreModifier = function() {
         var score = null;
         try {
-            var key = CharacterManager.activeCharacter().key();
+            var key = CoreManager.activeCore().uuid();
             score = PersistenceService.findBy(AbilityScores, 'characterId', key)[0].modifierFor(self._abilityScore());
         } catch(err) { /*Ignore*/ }
         if (score === null){

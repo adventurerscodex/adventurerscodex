@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Notifications,
     Utility
@@ -57,7 +57,7 @@ function _ChatService(config) {
         Notifications.xmpp.initialized.add(self._setupConnection);
         Notifications.xmpp.connected.add(self._handleConnect);
         Notifications.xmpp.disconnected.add(self._teardownConnection);
-        Notifications.characterManager.changing.add(self._leaveAll);
+        Notifications.coreManager.changing.add(self._leaveAll);
         Notifications.party.joined.add(self._setupRooms);
         Notifications.party.left.add(self._teardownRooms);
     };
@@ -68,7 +68,7 @@ function _ChatService(config) {
         Notifications.xmpp.initialized.remove(self._setupConnection);
         Notifications.xmpp.connected.remove(self._handleConnect);
         Notifications.xmpp.disconnected.remove(self._teardownConnection);
-        Notifications.characterManager.changing.remove(self._leaveAll);
+        Notifications.coreManager.changing.remove(self._leaveAll);
         Notifications.party.joined.remove(self._setupRooms);
         Notifications.party.left.remove(self._teardownRooms);
     };
@@ -344,7 +344,7 @@ function _ChatService(config) {
     // Party Management
 
     self._getOrCreateParty = function(jid) {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var party = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('isParty', true),
             new KeyValuePredicate('chatId', jid),
@@ -361,7 +361,7 @@ function _ChatService(config) {
                 isGroupChat: true,
                 isParty: true,
                 partyId: null,
-                characterId: CharacterManager.activeCharacter().key()
+                characterId: CoreManager.activeCore().uuid()
             });
             party.save();
         }
@@ -378,7 +378,7 @@ function _ChatService(config) {
      */
     self._getOrCreateRoom = function(jid, isGroupChat) {
         if (!self.currentPartyNode) { return; }
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var room = PersistenceService.findByPredicates(ChatRoom, [
             // Has the current jid.
             new KeyValuePredicate('chatId', jid),
@@ -399,7 +399,7 @@ function _ChatService(config) {
                 isGroupChat: isGroupChat,
                 isParty: false,
                 partyId: self.currentPartyNode,
-                characterId: CharacterManager.activeCharacter().key()
+                characterId: CoreManager.activeCore().uuid()
             });
             room.save();
         }
@@ -418,7 +418,7 @@ function _ChatService(config) {
     self._rejoinRoomsForCurrentParty = function() {
         var xmpp = XMPPService.sharedService();
         var node = self.currentPartyNode;
-        var keys = CharacterManager.activeCharacter().key();
+        var keys = CoreManager.activeCore().uuid();
         var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
         var rooms = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('partyId', node),

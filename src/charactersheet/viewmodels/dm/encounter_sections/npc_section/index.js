@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -72,7 +72,7 @@ export function NPCSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(NPCSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -93,7 +93,7 @@ export function NPCSectionViewModel(params) {
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var section = PersistenceService.findByPredicates(NPCSection, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)
@@ -132,7 +132,7 @@ export function NPCSectionViewModel(params) {
 
     self.addNPC = function() {
         var npc = self.blankNPC();
-        npc.characterId(CharacterManager.activeCharacter().key());
+        npc.characterId(CoreManager.activeCore().uuid());
         npc.encounterId(self.encounterId());
         npc.save();
         self.npcs.push(npc);
@@ -195,7 +195,7 @@ export function NPCSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var npc = PersistenceService.findByPredicates(NPC, [
             new KeyValuePredicate('encounterId', self.encounterId()),
             new KeyValuePredicate('characterId', key)

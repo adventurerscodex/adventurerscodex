@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Utility
@@ -60,7 +60,7 @@ export function ItemsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.items(PersistenceService.findBy(Item, 'characterId', key));
     };
 
@@ -178,7 +178,7 @@ export function ItemsViewModel() {
 
     self.addItem = function(item) {
         self.items.push(item);
-        item.characterId(CharacterManager.activeCharacter().key());
+        item.characterId(CoreManager.activeCore().uuid());
         item.save();
         Notifications.item.changed.dispatch();
     };

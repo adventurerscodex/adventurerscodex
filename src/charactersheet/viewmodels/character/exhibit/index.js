@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     Utility } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';

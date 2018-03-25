@@ -6,7 +6,7 @@ import {
     Profile
 } from 'charactersheet/models/character';
 import { ArmorClassService } from 'charactersheet/services';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
@@ -57,7 +57,7 @@ export function StatsViewModel() {
     self.load = function() {
         Notifications.global.save.add(self.save);
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var health = PersistenceService.findBy(Health, 'characterId', key);
         if (health.length > 0) {
             self.health(health[0]);
@@ -174,7 +174,7 @@ export function StatsViewModel() {
 
     self.calculateHitDice = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
+            CoreManager.activeCore().uuid())[0];
 
         var difference = parseInt(profile.level()) - self.hitDiceList().length;
         var pushOrPop = difference > 0 ? 'push' : 'pop';
@@ -182,7 +182,7 @@ export function StatsViewModel() {
             var h;
             if (pushOrPop === 'push') {
                 h = new HitDice();
-                h.characterId(CharacterManager.activeCharacter().key());
+                h.characterId(CoreManager.activeCore().uuid());
                 h.save();
                 self.hitDiceList.push(h);
             } else {
@@ -218,7 +218,7 @@ export function StatsViewModel() {
      */
     self.resetHitDice = function() {
         var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
+            CoreManager.activeCore().uuid())[0];
         var level = profile.level();
         var restoredHitDice = Math.floor(level / 2) < 1 ? 1 : Math.floor(level / 2);
 

@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import {
@@ -35,7 +35,7 @@ export function StatusLineViewModel(params) {
     // Private Methods
 
     self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var statuses = PersistenceService.findBy(Status, 'characterId', key);
         var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
 

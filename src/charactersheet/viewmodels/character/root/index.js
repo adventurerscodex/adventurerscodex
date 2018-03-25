@@ -8,7 +8,7 @@ import {
     StatusService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
@@ -56,7 +56,7 @@ export function CharacterRootViewModel() {
     };
 
     self.playerType = () => {
-        return CharacterManager.activeCharacter().playerType();
+        return CoreManager.activeCore().playerType();
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
@@ -158,7 +158,7 @@ export function CharacterRootViewModel() {
     self.playerSummary = ko.pureComputed(() => {
         self._dummy();
         var summary = '';
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
                 summary = PersistenceService.findBy(Profile, 'characterId', key)[0].characterSummary();
@@ -170,7 +170,7 @@ export function CharacterRootViewModel() {
     self.playerTitle = ko.pureComputed(() => {
         self._dummy();
         var name = '';
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
                 name = PersistenceService.findBy(Profile, 'characterId', key)[0].characterName();
@@ -182,7 +182,7 @@ export function CharacterRootViewModel() {
     self.playerAuthor = ko.pureComputed(() => {
         self._dummy();
         var name = '';
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
                 name = PersistenceService.findBy(Profile, 'characterId', key)[0].playerName();

@@ -1,6 +1,6 @@
 import 'bin/knockout-custom-loader';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures,
     Notifications,
     Utility
@@ -45,7 +45,7 @@ export function PlayerImageViewModel() {
         Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
         Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
         Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
-        Notifications.characterManager.changed.add(self.dataHasChanged);
+        Notifications.coreManager.changed.add(self.dataHasChanged);
 
         // Prime the pump.
         self.dataHasChanged();
@@ -63,7 +63,7 @@ export function PlayerImageViewModel() {
     };
 
     self.dataHasChanged = () => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
         if (image) {
             self.imageUrl(image.imageUrl());
@@ -98,7 +98,7 @@ export function PlayerImageViewModel() {
     };
 
     self.inspirationHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
         self.hasInspiredGlow(otherStats && parseInt(otherStats.inspiration()));
     };
@@ -116,7 +116,7 @@ export function PlayerImageViewModel() {
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
         if (info) {
             info.email(self.email());
@@ -199,7 +199,7 @@ export function PlayerImageViewModel() {
     /* Private Methods */
 
     self._getEmailUrl = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
         if (info) {
             return info.gravatarUrl();

@@ -1,4 +1,4 @@
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities';
@@ -52,7 +52,7 @@ export function EncounterDetailViewModel(params) {
 
     self._dataHasChanged = function() {
         if (!ko.unwrap(self.encounter)) { return; }
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var sections = self.sectionModels.map(function(sectionModel, i, _) {
             var section = PersistenceService.findByPredicates(sectionModel.section, [
                 new KeyValuePredicate('encounterId', self.encounter().encounterId()),

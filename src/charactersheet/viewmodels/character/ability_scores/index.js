@@ -4,7 +4,7 @@ import {
     getModifier,
     getStrModifier } from 'charactersheet/models/character/ability_scores';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -22,7 +22,7 @@ export function AbilityScoresViewModel() {
 
     self.load = function() {
         Notifications.global.save.add(self.save);
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
         if (scores.length > 0) {
             self.abilityScores(scores[0]);

@@ -26,15 +26,14 @@ import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
 
-// TODO: Remove this.... for debug only
 import { Hypnos } from 'hypnos';
-import {Core, Item} from 'charactersheet/models/common/core';
 
 /**
  * This global function handles initializing the Knockout Application
  * and set up the environment.
  */
 export var init = function(viewModel) {
+    // Always ensure the user is logged in first...
     // Always ignore values in this list when mapping.
     ko.mapping.defaultOptions().ignore = Settings.mappingAlwaysIgnore;
 
@@ -58,7 +57,13 @@ export var init = function(viewModel) {
 
     // Set up API client configuration handlers.
     Notifications.authentication.loggedIn.add(() => {
+        if (!schema) {
+            console.log('No API schema found. Skipping...');
+            return;
+        }
+
         var token = PersistenceService.findAll(AuthenticationToken)[0];
+        console.log('Initializing API Schema...');
         Hypnos.configuration = {
             credentials: {
                 scheme: 'Bearer',

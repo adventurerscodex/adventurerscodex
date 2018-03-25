@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Notifications,
@@ -49,7 +49,7 @@ export function ArmorViewModel() {
             Notifications.armor.changed.dispatch();
         });
 
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         self.armors(PersistenceService.findBy(Armor, 'characterId', key));
 
         //Subscriptions
@@ -188,7 +188,7 @@ export function ArmorViewModel() {
     //Manipulating armors
     self.addArmor = function() {
         var armor = self.blankArmor();
-        armor.characterId(CharacterManager.activeCharacter().key());
+        armor.characterId(CoreManager.activeCore().uuid());
         armor.save();
 
         self.equipArmorHandler(armor, armor.__id);

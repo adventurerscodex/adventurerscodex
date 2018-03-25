@@ -4,7 +4,7 @@ import {
     ChatRoom
 } from 'charactersheet/models/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import {
@@ -168,7 +168,7 @@ export function PartyManagerViewModel() {
     /* Private Methods */
 
     self._getParties = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var foundParties = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isParty', true)

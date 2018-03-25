@@ -3,7 +3,7 @@ import {
     Campaign,
     Profile
 } from 'charactersheet/models';
-import { CharacterManager,
+import { CoreManager,
     Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
@@ -18,9 +18,8 @@ export function PlayerNameViewModel() {
     self.name = ko.observable('');
 
     self.load = function() {
+        Notifications.coreManager.changed.add(self.dataHasChanged);
         self.dataHasChanged();
-        Notifications.characterManager.changed.add(self.dataHasChanged);
-        self.name.subscribe(self.nameHasChanged);
     };
 
     self.placeholderText = ko.pureComputed(function() {
@@ -31,33 +30,44 @@ export function PlayerNameViewModel() {
         }
     });
 
-    self.nameHasChanged = function() {
-        if (self.playerType() == 'character') {
-            self.profile().characterName(self.name());
-            self.profile().save();
-            Notifications.profile.characterName.changed.dispatch();
-        } else {
-            self.campaign().name(self.name());
-            self.campaign().save();
-            Notifications.campaign.changed.dispatch();
-        }
-    };
+    self.name = ko.computed({
+        read: () => {
+            const profile = ko.unwrap(self.profile);
+            if (profile) {
+                return profile.characterName();
+            }
+            const campaign = ko.unwrap(self.campaign);
+            if (campaign) {
+                return campaign.name();
+            }
+            return '';
+        },
+        write: (newValue) => {
+            const profile = ko.unwrap(self.profile);
+            if (profile) {
+                profile.characterName(newValue);
+                profile.ps.save();
+            }
+            const campaign = ko.unwrap(self.campaign);
+            if (campaign) {
+                campaign.characterName(newValue);
+                campaign.ps.save();
+            }
+        },
+    });
 
     self.dataHasChanged = function() {
-        var character = CharacterManager.activeCharacter();
-        self.playerType(character.playerType().key);
-        if (self.playerType() == 'character') {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', character.key());
-            if (profile) {
-                self.profile(profile);
-                self.name(profile.characterName());
-            }
-        } else {
-            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', character.key());
-            if (campaign) {
-                self.campaign(campaign);
-                self.name(campaign.name());
-            }
+        var core = CoreManager.activeCore();
+        self.playerType(core.type.name());
+
+        if (core.type.name() == 'character') {
+            const profile = Profile.ps.read({ uuid: core.uuid() }).then(response => {
+                self.profile(response.object);
+            });
+        } else if (core.type.name() == 'dm') {
+            const campaign = Campaign.ps.read({ uuid: core.uuid() }).then(response => {
+                self.campaign(response.object);
+            });
         }
     };
 }

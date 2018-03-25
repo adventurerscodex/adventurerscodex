@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
@@ -123,7 +123,7 @@ export function Armor() {
         var score = null;
         try {
             score = PersistenceService.findBy(AbilityScores, 'characterId',
-                CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
+                CoreManager.activeCore().uuid())[0].modifierFor('Dex');
         } catch(err) { /*Ignore*/ }
 
         if (score === null){

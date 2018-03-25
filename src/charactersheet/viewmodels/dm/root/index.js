@@ -1,5 +1,5 @@
 import 'bin/knockout-custom-loader';
-import { CharacterManager,
+import { CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
@@ -24,7 +24,7 @@ export function DMRootViewModel() {
     var self = this;
 
     self.playerType = () => {
-        return CharacterManager.activeCharacter().playerType();
+        return CoreManager.activeCore().playerType();
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
@@ -45,19 +45,19 @@ export function DMRootViewModel() {
    //UI Methods
 
     self.playerSummary = ko.pureComputed(() => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.summary() ? campaign.summary() : '';
     });
 
     self.playerTitle = ko.pureComputed(() => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.name() ? campaign.name() : '';
     });
 
     self.playerAuthor = ko.pureComputed(() => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.playerName() ? campaign.playerName() : '';
     });

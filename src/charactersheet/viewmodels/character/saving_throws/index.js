@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
@@ -42,7 +42,7 @@ export function SavingThrowsViewModel() {
         ];
         return savingThrows.map(function(e,i, _) {
             var savingThrow = new SavingThrows();
-            e.characterId = CharacterManager.activeCharacter().key();
+            e.characterId = CoreManager.activeCore().uuid();
             savingThrow.importValues(e);
             return savingThrow;
         });
@@ -54,13 +54,13 @@ export function SavingThrowsViewModel() {
         Notifications.global.save.add(self.save);
 
         var savingThrows = PersistenceService.findBy(SavingThrows, 'characterId',
-            CharacterManager.activeCharacter().key());
+            CoreManager.activeCore().uuid());
         if (savingThrows.length > 0) {
             self.savingThrows(savingThrows);
         } else {
             self.savingThrows(self._defaultSavingThrows());
             self.savingThrows().forEach(function(e, i, _) {
-                e.characterId(CharacterManager.activeCharacter().key());
+                e.characterId(CoreManager.activeCore().uuid());
             });
             self.save();
         }

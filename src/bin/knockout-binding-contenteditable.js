@@ -17,11 +17,7 @@ ko.bindingHandlers.contenteditable = {
         var value = valueAccessor();
         $(element).attr('contenteditable', 'true');
         $(element).on('blur', function() {
-            try {
-                value.text($(element).text());
-            } catch(err) {
-                throw "Text variable provided is not observable."
-            }
+            value.text($(element).text());
         });
     },
 
