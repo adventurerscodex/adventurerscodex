@@ -2,7 +2,9 @@ import { CoreManager } from 'charactersheet/utilities/core_manager';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import URI from 'urijs';
 
-export var TabFragmentManager = {
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
+
+export const TabFragmentManager = {
     __active_tab__: null,
     TAB_FRAGMENT_KEY: 't',
     TAB_NULL_FRAGMENT: '',
@@ -11,21 +13,22 @@ export var TabFragmentManager = {
      * Do Initial Tab Manager Setup.
      *
      * Note: The Tab Manager init must be called for the tab manager
-     * to detect any character IDs in the URL.
+     * to detect any core IDs in the URL.
      */
     init: () => {
         const fragments = (new URI()).fragment(true);
         const tab = fragments[TabFragmentManager.TAB_FRAGMENT_KEY];
-        const character = CoreManager.activeCore();
-        if (!character) {
+        const core = CoreManager.activeCore();
+        if (!core) {
             return;
         }
 
-        const tabIsValid = character.playerType().visibleTabs.indexOf(tab) > -1;
+        const type = PlayerTypes[core.type.name()];
+        const tabIsValid = type.visibleTabs.indexOf(tab) > -1;
         if (tab && tabIsValid) {
             TabFragmentManager.changeTabFragment(tab);
         } else {
-            TabFragmentManager.changeTabFragment(character.playerType().defaultTab);
+            TabFragmentManager.changeTabFragment(type.defaultTab);
         }
     },
 
@@ -38,8 +41,12 @@ export var TabFragmentManager = {
         if (TabFragmentManager.__active_tab__) {
             return TabFragmentManager.__active_tab__;
         } else {
-            const character = CoreManager.activeCore();
-            return character.playerType().defaultTab;
+            const core = CoreManager.activeCore();
+            if (!core) {
+                return;
+            }
+            const type = PlayerTypes[core.type.name()];
+            return type.defaultTab;
         }
     },
 

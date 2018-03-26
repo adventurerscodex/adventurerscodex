@@ -12,6 +12,7 @@ import {
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { ChatServiceManager } from 'charactersheet/services/common';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
@@ -158,7 +159,8 @@ export function CharacterRootViewModel() {
     self.playerSummary = ko.pureComputed(() => {
         self._dummy();
         var summary = '';
-        var key = CoreManager.activeCore().uuid();
+        var core = CoreManager.activeCore();
+
         if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
             try {
                 summary = PersistenceService.findBy(Profile, 'characterId', key)[0].characterSummary();
@@ -243,6 +245,7 @@ export function CharacterRootViewModel() {
     //Private Methods
 
     self._tabIsVisible = (tabName) => {
+
         if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
             return self.activeTab() === tabName ? 'active' : '';
         } else {

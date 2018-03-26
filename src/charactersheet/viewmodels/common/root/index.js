@@ -62,7 +62,7 @@ export function AdventurersCodexViewModel() {
      * and the init process has finished.
       */
     self.state = ko.observable(APP_STATE.SELECT);
-    self.selectedCharacter = ko.observable();
+    self.selectedCore = ko.observable();
     self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
@@ -172,14 +172,14 @@ export function AdventurersCodexViewModel() {
         if (CoreManager.activeCore() && self.state() == APP_STATE.CHOSEN) {
             self.unload();
         }
-        self.selectedCharacter(null);
+        self.selectedCore(null);
 
         TabFragmentManager.changeTabFragment(null);
 
     };
 
     self._handleChangedCharacter = function() {
-        self.selectedCharacter(CoreManager.activeCore());
+        self.selectedCore(CoreManager.activeCore());
         self.state(APP_STATE.CHOSEN);
         try {
             self.load();

@@ -29,9 +29,10 @@ export var CoreManager = {
                 var core = response.object;
                 CoreManager._setActiveCore(core);
                 Notifications.coreManager.changed.dispatch(core);
-            }).catch(err => {
-                console.log(err);
-            });
+            })
+//             .catch(err => {
+//                 console.log(err);
+//             });
         }
     },
 

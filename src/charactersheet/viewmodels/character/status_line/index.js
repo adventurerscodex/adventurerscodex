@@ -17,14 +17,14 @@ export function StatusLineViewModel(params) {
     self.character = params.character;
 
     self.load = function() {
-        Notifications.status.changed.add(self.dataHasChanged);
-        self.character.subscribe(self.dataHasChanged);
+        Notifications.status.changed.add(self.coreHasChanged);
+        self.character.subscribe(self.coreHasChanged);
 
-        self.dataHasChanged();
+        self.coreHasChanged();
     };
 
     self.unload = function() {
-        Notifications.status.changed.remove(self.dataHasChanged);
+        Notifications.status.changed.remove(self.coreHasChanged);
         self.clear();
     };
 
@@ -34,12 +34,12 @@ export function StatusLineViewModel(params) {
 
     // Private Methods
 
-    self.dataHasChanged = function() {
-        var key = CoreManager.activeCore().uuid();
-        var statuses = PersistenceService.findBy(Status, 'characterId', key);
-        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
-
-        self.statusLine(self.getStatusLine(profile, statuses));
+    self.coreHasChanged = function() {
+        const key = CoreManager.activeCore().uuid();
+        const statuses = PersistenceService.findBy(Status, 'characterId', key);
+        Profile.ps.read({ uuid: key }).then(response => {
+            self.statusLine(self.getStatusLine(response.object, statuses));
+        });
     };
 
     self.getStatusLine = function(profile, statuses) {

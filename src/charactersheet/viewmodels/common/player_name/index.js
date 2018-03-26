@@ -18,8 +18,8 @@ export function PlayerNameViewModel() {
     self.name = ko.observable('');
 
     self.load = function() {
-        Notifications.coreManager.changed.add(self.dataHasChanged);
-        self.dataHasChanged();
+        Notifications.coreManager.changed.add(self.coreHasChanged);
+        self.coreHasChanged();
     };
 
     self.placeholderText = ko.pureComputed(function() {
@@ -56,16 +56,16 @@ export function PlayerNameViewModel() {
         },
     });
 
-    self.dataHasChanged = function() {
+    self.coreHasChanged = function() {
         var core = CoreManager.activeCore();
         self.playerType(core.type.name());
 
         if (core.type.name() == 'character') {
-            const profile = Profile.ps.read({ uuid: core.uuid() }).then(response => {
+            Profile.ps.read({ uuid: core.uuid() }).then(response => {
                 self.profile(response.object);
             });
         } else if (core.type.name() == 'dm') {
-            const campaign = Campaign.ps.read({ uuid: core.uuid() }).then(response => {
+            Campaign.ps.read({ uuid: core.uuid() }).then(response => {
                 self.campaign(response.object);
             });
         }

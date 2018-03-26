@@ -18,9 +18,4 @@ export class Profile extends KOModel {
 //             + 'internet can provide.';
 //         return desc;
 //     });
-
-//     self.save = function() {
-//         self.ps.save();
-//     };
-
 }
