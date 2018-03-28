@@ -60,21 +60,25 @@ export function CharacterRootViewModel() {
     };
 
     self.playerType = () => {
-        return CoreManager.activeCore().playerType();
+        const key = CoreManager.activeCore().type.name();
+        return PlayerTypes[key]
     };
+
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
     self.wellState = ko.observable(false);
 
-    // Services
+    /* Services */
+
     self.statusLineService = StatusService.sharedService();
     self.proficiencyService = ProficiencyService.sharedService();
     self.armorClassService = ArmorClassService.sharedService();
     self.characterCardPublishingService = CharacterCardPublishingService.sharedService();
 
-    //Tooltips
+    /* Tooltips */
+
     self.profileTooltip = ko.observable('Profile');
     self.statsTooltip = ko.observable('Stats');
     self.skillsTooltip = ko.observable('Skills');
@@ -86,7 +90,8 @@ export function CharacterRootViewModel() {
     self.chatTooltip = ko.observable('Chat');
     self.exhibitTooltip = ko.observable('Exhibit');
 
-    //Tab Properties
+    /* Tab Properties */
+
     self.profileTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('profile');
     });
@@ -157,7 +162,7 @@ export function CharacterRootViewModel() {
         return self.wellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
     });
 
-    //UI Methods
+    /* UI Methods */
 
     self.playerTitle = ko.pureComputed(() => {
         self._dummy();
@@ -191,7 +196,7 @@ export function CharacterRootViewModel() {
         } catch(err) { /*Ignore*/ }
     });
 
-    //Public Methods
+    /* Public Methods */
 
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
