@@ -21,14 +21,13 @@ export function CorePickerViewModel(params) {
         // Dynamically built map.
     };
 
-    self.load = () => {
-        Core.ps.list().then(response => {
-            self.cores(response.objects);
+    self.load = async () => {
+        const response = await Core.ps.list();
+        self.cores(response.objects);
 
-            // Build the hash of key -> modal open.
-            self.cores().forEach(({uuid}) => {
-                self.deleteCollapse[uuid()] = ko.observable(false);
-            });
+        // Build the hash of key -> modal open.
+        self.cores().forEach(({uuid}) => {
+            self.deleteCollapse[uuid()] = ko.observable(false);
         });
     };
 

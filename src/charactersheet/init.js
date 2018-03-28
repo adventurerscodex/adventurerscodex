@@ -26,6 +26,9 @@ import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
 
+// Enables Async/Await
+import 'babel-polyfill';
+
 import { Hypnos } from 'hypnos';
 
 /**

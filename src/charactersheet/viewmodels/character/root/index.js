@@ -1,4 +1,7 @@
 import {
+    Profile,
+} from 'charactersheet/models/character';
+import {
     ArmorClassService,
     ProficiencyService
 } from 'charactersheet/services/character';
@@ -155,19 +158,6 @@ export function CharacterRootViewModel() {
     });
 
     //UI Methods
-
-    self.playerSummary = ko.pureComputed(() => {
-        self._dummy();
-        var summary = '';
-        var core = CoreManager.activeCore();
-
-        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-            try {
-                summary = PersistenceService.findBy(Profile, 'characterId', key)[0].characterSummary();
-            } catch(err) { /*Ignore*/ }
-        }
-        return summary;
-    });
 
     self.playerTitle = ko.pureComputed(() => {
         self._dummy();
