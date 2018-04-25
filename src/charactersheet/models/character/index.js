@@ -12,7 +12,7 @@ export { Proficiency } from './proficiency.js';
 export { Profile } from './profile.js';
 export { SavingThrows } from './saving_throws.js';
 export { Skill } from './skill.js';
-export { Slot } from './spell_slot.js';
+export { SpellSlot } from './spell_slot.js';
 export { SpellStats } from './spell_stats.js';
 export { Tracked } from './tracked.js';
 export { Trait } from './trait.js';

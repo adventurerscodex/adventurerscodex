@@ -3,7 +3,6 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SpellStats } from 'charactersheet/models/character';
 import ko from 'knockout';
 import template from './index.html';
@@ -16,27 +15,11 @@ export function SpellStatsViewModel() {
     self.editItem = ko.observable();
     self.firstModalElementHasFocus = ko.observable(false);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        var stats = PersistenceService.findBy(SpellStats, 'characterId', key);
-        if (stats.length > 0) {
-            self.spellStats(stats[0]);
-        } else {
-            self.spellStats(new SpellStats());
-        }
-        self.spellStats().characterId(key);
+        var stats = await SpellStats.ps.read({uuid: key});
+        self.spellStats(stats.object);
         self.spellStats().spellAttackBonus.subscribe(self.dataHasChanged);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.spellStats().save();
     };
 
     self.clear = function() {
@@ -53,6 +36,7 @@ export function SpellStatsViewModel() {
         self.modalStatus(true);
         self.editItem(new SpellStats());
         self.editItem().importValues(self.spellStats().exportValues());
+        self.editItem().castingAbility(self.spellStats().castingAbility().shortName());
     };
 
     self.modalFinishedAnimating = function() {
@@ -60,17 +44,19 @@ export function SpellStatsViewModel() {
         self.firstModalElementHasFocus.valueHasMutated();
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         if (self.modalStatus()) {
             self.spellStats().importValues(self.editItem().exportValues());
+            // TODO: Make sure the casting ability is updated too
+            var response = await self.editItem().ps.save();
+            self.spellStats(response.object);
         }
-        self.dataHasChanged();
+
         self.modalStatus(false);
     };
 
     self.dataHasChanged = function() {
-        self.spellStats().save();
-        Notifications.spellStats.changed.dispatch();
+        // Notifications.spellStats.changed.dispatch();
     };
 }
 

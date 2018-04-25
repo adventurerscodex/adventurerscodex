@@ -45,21 +45,10 @@ export function FeatsViewModel() {
     self.meditation = meditation;
     self.campingTent = campingTent;
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        self.feats(PersistenceService.findBy(Feat, 'characterId', key));
-    };
-
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.feats().forEach(function(e, i, _) {
-            e.save();
-        });
+        const response = await Feat.ps.list({coreUuid: key});
+        self.feats(response.objects);
     };
 
     // Pre-pop methods
@@ -90,25 +79,13 @@ export function FeatsViewModel() {
         self.editTabStatus('');
 
         if (self.modalOpen()) {
-            if (self.currentEditItem().isTracked()) {
-                if (self.currentEditItem().trackedId()) {
-                    var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                    tracked.importValues(self.currentEditTracked().exportValues());
-                    tracked.save();
-                } else {
-                    self.currentEditItem().trackedId(uuid.v4());
-                    self.addTracked(self.currentEditItem().trackedId(),
-                        self.currentEditItem().characterId(), self.currentEditTracked());
-                }
-            } else if (self.currentEditItem().trackedId()) {
-                var trackedToDelete = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                trackedToDelete.delete();
-                self.currentEditItem().trackedId(null);
+            if (!self.currentEditItem().isTracked()) {
+                self.currentEditTracked(null);
             }
+            self.currentEditItem().tracked(self.currentEditTracked());
             Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
         }
 
-        self.save();
         self.currentEditItem(new Feat());
         self.currentEditTracked(new Tracked());
         self.modalOpen(false);
@@ -135,57 +112,42 @@ export function FeatsViewModel() {
     };
 
     self.sortBy = function(columnName) {
-        self.sort(SortService.sortForName(self.sort(),
-            columnName, self.sorts));
+        self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addFeat = function() {
+    self.addFeat = async () => {
+        // TODO: Adding Feats that are pre pop don't work because of the Feat serializer.
+        // TODO: It needs to be identical to the Feature one
         var feat = self.blankFeat();
-        feat.characterId(CoreManager.activeCore().uuid());
+        feat.coreUuid(CoreManager.activeCore().uuid());
         if (feat.isTracked()) {
-            feat.trackedId(uuid.v4());
-            self.addTracked(feat.trackedId(), feat.characterId(), self.blankTracked());
+            // todo: need logic to actually set the color
+            self.blankTracked().color('progress-bar-sky');
+            feat.tracked(self.blankTracked());
         }
-        feat.save();
-        self.feats.push(feat);
+        const newFeat = await feat.ps.create();
+        self.feats.push(newFeat.object);
         self.blankFeat(new Feat());
         self.blankTracked(new Tracked());
-    };
-
-    self.addTracked = function(uuid, characterId, tracked) {
-        var newTracked = new Tracked();
-        newTracked.characterId(characterId);
-        newTracked.trackedId(uuid);
-        newTracked.maxUses(tracked.maxUses());
-        newTracked.resetsOn(tracked.resetsOn());
-        newTracked.type(Feat);
-        var trackedList = PersistenceService.findBy(Tracked, 'characterId', characterId);
-        newTracked.color(Fixtures.general.colorList[trackedList.length
-          % Fixtures.general.colorList.length]);
-        newTracked.save();
     };
 
     self.clear = function() {
         self.feats([]);
     };
 
-    self.removeFeat = function(feat) {
-        if (feat.isTracked()) {
-            var tracked = PersistenceService.findFirstBy(
-                Tracked, 'trackedId', feat.trackedId());
-            tracked.delete();
-        }
+    self.removeFeat = async (feat) => {
+        await feat.ps.delete();
         self.feats.remove(feat);
-        feat.delete();
         Notifications.feat.changed.dispatch();
     };
 
     self.editFeat = function(feat) {
-        self.editItemIndex = feat.__id;
+        self.editItemIndex = feat.uuid;
         self.currentEditItem(new Feat());
         self.currentEditItem().importValues(feat.exportValues());
-        if (feat.isTracked()) {
-            self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feat.trackedId()));
+        if (feat.tracked()) {
+            self.currentEditItem().isTracked(true);
+            self.currentEditTracked(feat.tracked());
         }
         self.modalOpen(true);
     };

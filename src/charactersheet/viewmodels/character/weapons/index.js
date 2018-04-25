@@ -5,9 +5,7 @@ import {
     Fixtures,
     Notifications,
     Utility } from 'charactersheet/utilities';
-import {
-    PersistenceService,
-    SortService } from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import { Weapon } from 'charactersheet/models/common';
 import ko from 'knockout';
 import template from './index.html';
@@ -28,55 +26,39 @@ export function WeaponsViewModel() {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
-        'weaponName asc': { field: 'weaponName', direction: 'asc'},
-        'weaponName desc': { field: 'weaponName', direction: 'desc'},
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
         'totalBonus asc': { field: 'totalBonus', direction: 'asc', numeric: true},
         'totalBonus desc': { field: 'totalBonus', direction: 'desc', numeric: true},
-        'weaponDmg asc': { field: 'weaponDmg', direction: 'asc'},
-        'weaponDmg desc': { field: 'weaponDmg', direction: 'desc'},
-        'weaponRange asc': { field: 'weaponRange', direction: 'asc'},
-        'weaponRange desc': { field: 'weaponRange', direction: 'desc'},
-        'weaponDamageType asc': { field: 'weaponDamageType', direction: 'asc'},
-        'weaponDamageType desc': { field: 'weaponDamageType', direction: 'desc'},
-        'weaponProperty asc': { field: 'weaponProperty', direction: 'asc'},
-        'weaponProperty desc': { field: 'weaponProperty', direction: 'desc'},
-        'weaponQuantity asc': { field: 'weaponQuantity', direction: 'asc'},
-        'weaponQuantity desc': { field: 'weaponQuantity', direction: 'desc'}
+        'damage asc': { field: 'damage', direction: 'asc'},
+        'damage desc': { field: 'damage', direction: 'desc'},
+        'range asc': { field: 'range', direction: 'asc'},
+        'range desc': { field: 'range', direction: 'desc'},
+        'damageType asc': { field: 'damageType', direction: 'asc'},
+        'damageType desc': { field: 'damageType', direction: 'desc'},
+        'property asc': { field: 'property', direction: 'asc'},
+        'property desc': { field: 'property', direction: 'desc'},
+        'quantity asc': { field: 'quantity', direction: 'asc'},
+        'quantity desc': { field: 'quantity', direction: 'desc'}
     };
 
     self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['weaponName asc']);
+    self.sort = ko.observable(self.sorts['name asc']);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        self.weapons(PersistenceService.findBy(Weapon, 'characterId', key));
+        const response = await Weapon.ps.list({coreUuid: key});
+        self.weapons(response.objects);
 
         Notifications.abilityScores.changed.add(self.valueHasChanged);
         Notifications.stats.changed.add(self.valueHasChanged);
     };
 
-    self.unload = function() {
-        self.save();
-
-        self.weapons([]);
-        Notifications.abilityScores.changed.remove(self.valueHasChanged);
-        Notifications.stats.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.weapons().forEach(function(e, i, _) {
-            e.save();
-        });
-    };
-
-    self.totalWeight = ko.pureComputed(function() {
+    self.totalWeight = ko.pureComputed(() => {
         var weight = 0;
         if (self.weapons().length > 0) {
             self.weapons().forEach(function(e, i, _) {
-                weight += e.weaponWeight() ? parseInt(e.weaponWeight()) : 0;
+                weight += e.weight() ? parseInt(e.weight()) : 0;
             });
         }
         return weight + ' (lbs)';
@@ -116,27 +98,27 @@ export function WeaponsViewModel() {
     };
 
     self.setWeaponType = function(label, value) {
-        self.blankWeapon().weaponType(value);
+        self.blankWeapon().type(value);
     };
 
     self.setWeaponHandedness = function(label, value) {
-        self.blankWeapon().weaponHandedness(value);
+        self.blankWeapon().handedness(value);
     };
 
     self.setWeaponProficiency = function(label, value) {
-        self.blankWeapon().weaponProficiency(value);
+        self.blankWeapon().proficiency(value);
     };
 
     self.setWeaponCurrencyDenomination = function(label, value) {
-        self.blankWeapon().weaponCurrencyDenomination(value);
+        self.blankWeapon().currencyDenomination(value);
     };
 
     self.setWeaponDamageType = function(label, value) {
-        self.blankWeapon().weaponDamageType(value);
+        self.blankWeapon().damageType(value);
     };
 
     self.setWeaponProperty = function(label, value) {
-        self.blankWeapon().weaponProperty(value);
+        self.blankWeapon().property(value);
     };
 
     /* Modal Methods */
@@ -146,15 +128,13 @@ export function WeaponsViewModel() {
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
         if (self.modalOpen()) {
-            Utility.array.updateElement(self.weapons(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.weapons(), response.object, self.editItemIndex);
         }
-
-        // Just in case data was changed.
-        self.save();
 
         self.modalOpen(false);
         Notifications.weapon.changed.dispatch();
@@ -181,23 +161,23 @@ export function WeaponsViewModel() {
     };
 
     //Manipulating weapons
-    self.addWeapon = function() {
+    self.addWeapon = async () => {
         var weapon = self.blankWeapon();
-        weapon.characterId(CoreManager.activeCore().uuid());
-        weapon.save();
-        self.weapons.push(weapon);
+        weapon.coreUuid(CoreManager.activeCore().uuid());
+        const newWeapon = await weapon.ps.create();
+        self.weapons.push(newWeapon.object);
         self.blankWeapon(new Weapon());
         Notifications.weapon.changed.dispatch();
     };
 
-    self.removeWeapon = function(weapon) {
+    self.removeWeapon = async (weapon) => {
+        weapon.ps.delete();
         self.weapons.remove(weapon);
-        weapon.delete();
         Notifications.weapon.changed.dispatch();
     };
 
     self.editWeapon = function(weapon) {
-        self.editItemIndex = weapon.__id;
+        self.editItemIndex = weapon.uuid;
         self.currentEditItem(new Weapon());
         self.currentEditItem().importValues(weapon.exportValues());
         self.modalOpen(true);

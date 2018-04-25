@@ -18,14 +18,14 @@ export function ItemsViewModel() {
     var self = this;
 
     self.sorts = {
-        'itemName asc': { field: 'itemName', direction: 'asc'},
-        'itemName desc': { field: 'itemName', direction: 'desc'},
-        'itemQty asc': { field: 'itemQty', direction: 'asc', numeric: true},
-        'itemQty desc': { field: 'itemQty', direction: 'desc', numeric: true},
-        'itemWeight asc': { field: 'itemWeight', direction: 'asc', numeric: true},
-        'itemWeight desc': { field: 'itemWeight', direction: 'desc', numeric: true},
-        'itemCost asc': { field: 'itemCost', direction: 'asc', numeric: true},
-        'itemCost desc': { field: 'itemCost', direction: 'desc', numeric: true}
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'quantity asc': { field: 'quantity', direction: 'asc', numeric: true},
+        'quantity desc': { field: 'quantity', direction: 'desc', numeric: true},
+        'weight asc': { field: 'weight', direction: 'asc', numeric: true},
+        'weight desc': { field: 'weight', direction: 'desc', numeric: true},
+        'cost asc': { field: 'cost', direction: 'asc', numeric: true},
+        'cost desc': { field: 'cost', direction: 'desc', numeric: true}
     };
 
     self.items = ko.observableArray([]);
@@ -34,7 +34,7 @@ export function ItemsViewModel() {
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
-    self.sort = ko.observable(self.sorts['itemName asc']);
+    self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
     self.shouldShowDisclaimer = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
@@ -49,7 +49,7 @@ export function ItemsViewModel() {
             for (var i = 0; i < eqpLen; i++) {
                 weightTotal += self.items()[i].totalWeight();
             }
-            return weightTotal  + ' (lbs)';
+            return weightTotal + ' (lbs)';
         }
         else {
             return '0 (lbs)';
@@ -57,27 +57,15 @@ export function ItemsViewModel() {
     });
 
     //Responders
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        self.items(PersistenceService.findBy(Item, 'characterId', key));
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.items().forEach(function(e, i, _) {
-            e.save();
-        });
+        const response = await Item.ps.list({coreUuid: key});
+        self.items(response.objects);
     };
 
     // Prepopulate methods
     self.setItemCurrencyDenomination = function(label, value) {
-        self.blankItem().itemCurrencyDenomination(value);
+        self.blankItem().currencyDenomination(value);
     };
 
     // Modal methods
@@ -86,19 +74,19 @@ export function ItemsViewModel() {
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async() => {
         self.previewTabStatus('active');
         self.editTabStatus('');
         self.previewTabStatus.valueHasMutated();
         self.editTabStatus.valueHasMutated();
 
         if (self.modalOpen()) {
-            Utility.array.updateElement(self.items(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.items(), response.object, self.editItemIndex);
+            // Notifications.item.changed.dispatch();
         }
 
-        self.save();
         self.modalOpen(false);
-        Notifications.item.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -146,17 +134,6 @@ export function ItemsViewModel() {
     };
 
     //Manipulating items
-    self.removeItemButton = function(item) {
-        self.removeItem(item);
-    };
-
-    self.addItemButton = function() {
-        var item = new Item();
-        item.importValues(self.blankItem().exportValues());
-        self.addItem(item);
-        self.blankItem().clear();
-    };
-
     self.populateItem = function(label, value) {
         var item = DataRepository.items[label];
 
@@ -166,31 +143,28 @@ export function ItemsViewModel() {
 
     //Public Methods
 
-    self.addToItems = function(item) {
-        self.addItem(item);
-    };
-
     self.clear = function() {
         self.items([]);
     };
 
     //Private Methods
 
-    self.addItem = function(item) {
-        self.items.push(item);
-        item.characterId(CoreManager.activeCore().uuid());
-        item.save();
-        Notifications.item.changed.dispatch();
+    self.addItem = async() => {
+        self.blankItem().coreUuid(CoreManager.activeCore().uuid());
+        const newItem = await self.blankItem().ps.create();
+        self.items.push(newItem.object);
+        // Notifications.item.changed.dispatch();
+        self.blankItem(new Item());
     };
 
-    self.removeItem = function(item) {
+    self.removeItem = async(item) => {
+        await item.ps.delete();
         self.items.remove(item);
-        item.delete();
-        Notifications.item.changed.dispatch();
+        // Notifications.item.changed.dispatch();
     };
 
     self.editItem = function(item) {
-        self.editItemIndex = item.__id;
+        self.editItemIndex = item.uuid;
         self.currentEditItem(new Item());
         self.currentEditItem().importValues(item.exportValues());
         self.modalOpen(true);

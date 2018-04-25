@@ -1,92 +1,61 @@
-import 'bin/knockout-mapping-autoignore';
-import 'knockout-mapping';
 import {
     Fixtures,
     Utility
 } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
+import { KOModel } from 'hypnos';
 
 /**
  * Models an item in the user's backpack or something they
  * have equipped.
  */
-export function Item() {
-    var self = this;
-    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
-    self.DESCRIPTION_MAX_LENGTH = 200;
+export class Item extends KOModel {
+    static __skeys__ = ['core', 'items'];
 
-    self.ps = PersistenceService.register(Item, self);
-    self.mapping = {
-        include: ['characterId', 'itemName', 'itemDesc', 'itemQty', 'itemWeight',
-        'itemCost', 'itemCurrencyDenomination']
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable(null);
-    self.itemName = ko.observable('');
-    self.itemDesc = ko.observable('');
-    self.itemQty = ko.observable(1);
-    self.itemWeight = ko.observable(0);
-    self.itemCost = ko.observable(0);
-    self.itemCurrencyDenomination = ko.observable('');
+    coreUuid = ko.observable(null);
+    name = ko.observable('');
+    description = ko.observable('');
+    quantity = ko.observable(1);
+    weight = ko.observable(0);
+    cost = ko.observable(0);
+    currencyDenomination = ko.observable('');
 
-    self.itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    DESCRIPTION_MAX_LENGTH = 200;
+    itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
-    self.totalWeight = ko.pureComputed(function() {
-        if (self.itemQty() && self.itemWeight()) {
-            return parseInt(self.itemQty()) * parseFloat(self.itemWeight());
+    totalWeight = ko.pureComputed(() => {
+        if (this.quantity() && this.weight()) {
+            return parseInt(this.quantity()) * parseFloat(this.weight());
         }
         return 0;
     });
 
-    self.shortDescription = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.itemDesc(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    shortDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    self.longDescription = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.itemDesc(), self.DESCRIPTION_MAX_LENGTH);
+    longDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.description(), this.DESCRIPTION_MAX_LENGTH);
     });
 
-    self.itemDescriptionHTML = ko.pureComputed(function() {
-        if (self.itemDesc()){
-            return self.itemDesc().replace(/\n/g, '<br />');
+    itemDescriptionHTML = ko.pureComputed(() => {
+        if (this.description()) {
+            return this.description().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
     });
 
-    self.itemWeightLabel = ko.pureComputed(function() {
-        return self.itemWeight() !== '' && self.itemWeight() >= 0 ? self.itemWeight() + ' lbs.' : '0 lbs.';
+    itemWeightLabel = ko.pureComputed(() => {
+        return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 
-    self.costLabel = ko.pureComputed(function() {
-        return self.itemCost() ? self.itemCost() + ' ' + self.itemCurrencyDenomination() : '';
+    costLabel = ko.pureComputed(() => {
+        return this.cost() ? this.cost() + ' ' + this.currencyDenomination() : '';
     });
-
-    self.clear = function() {
-        var values = new Item().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
 }
-Item.__name = 'Item';
-
-PersistenceService.addToRegistry(Item);

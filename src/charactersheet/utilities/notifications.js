@@ -325,7 +325,7 @@ export var Notifications = {
         changed: new Signal()
     },
 
-    treasure: {
+    wealth: {
         changed: new Signal()
     },
 

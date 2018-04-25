@@ -1,7 +1,7 @@
 import Should from 'should';
-import { TreasureViewModel } from 'charactersheet/viewmodels/character/treasure';
+import { WealthViewModel } from 'charactersheet/viewmodels/character/treasure';
 
-describe('Treasure View Model', function() {
+describe('Wealth View Model', function() {
     var treasure_fixture = {
         'platinum': 1,
         'gold': 2,
@@ -12,7 +12,7 @@ describe('Treasure View Model', function() {
 
     describe('Clear', function() {
         it('should clear all the values in it', function() {
-            var coins = new TreasureViewModel();
+            var coins = new WealthViewModel();
             coins.treasure().platinum(treasure_fixture.platinum);
             coins.treasure().platinum().should.equal(treasure_fixture.platinum);
             coins.treasure().clear();
@@ -42,7 +42,7 @@ describe('Treasure View Model', function() {
 
     describe('Import', function() {
         it('should import an object with all the info supplied.', function() {
-            var coins = new TreasureViewModel();
+            var coins = new WealthViewModel();
             coins.treasure().importValues(treasure_fixture);
             coins.treasure().platinum().should.equal(treasure_fixture.platinum);
             coins.treasure().gold().should.equal(treasure_fixture.gold);
@@ -54,7 +54,7 @@ describe('Treasure View Model', function() {
 
     describe('Export', function() {
         it('should yield an object with all the info supplied.', function() {
-            var coins = new TreasureViewModel();
+            var coins = new WealthViewModel();
             coins.treasure().platinum(treasure_fixture.platinum);
             coins.treasure().gold(treasure_fixture.gold);
             coins.treasure().electrum(treasure_fixture.electrum);
@@ -71,7 +71,7 @@ describe('Treasure View Model', function() {
 
     describe('WorthInGold', function() {
         it('should test if work in gold calculates correctly.', function() {
-            var coins = new TreasureViewModel();
+            var coins = new WealthViewModel();
             coins.treasure().importValues(treasure_fixture);
             coins.treasure().worthInGold().should.equal(13);
         });

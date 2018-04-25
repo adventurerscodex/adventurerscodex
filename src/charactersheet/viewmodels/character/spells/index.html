@@ -3,33 +3,33 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="spellsTable">
       <thead>
         <tr>
-          <th id="spellsTablePreparedHeader" data-bind="click: function(){sortBy('spellPrepared');}">
+          <th id="spellsTablePreparedHeader" data-bind="click: function(){sortBy('prepared');}">
             <span class="glyphicon glyphicon-check"></span>
-            <span data-bind="css: sortArrow('spellPrepared')"></span>
+            <span data-bind="css: sortArrow('prepared')"></span>
           </th>
-          <th id="spellsTableSpellHeader" data-bind="click: function(){sortBy('spellName');}">
+          <th id="spellsTableSpellHeader" data-bind="click: function(){sortBy('name');}">
             Spell
-            <span data-bind="css: sortArrow('spellName')"></span>
+            <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th id="spellsTableLevelHeader" data-bind="click: function(){sortBy('spellLevel');}">
+          <th id="spellsTableLevelHeader" data-bind="click: function(){sortBy('level');}">
             Level
-            <span data-bind="css: sortArrow('spellLevel')"></span>
+            <span data-bind="css: sortArrow('level')"></span>
           </th>
-          <th id="spellsTableTypeHeader" class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellType');}">
+          <th id="spellsTableTypeHeader" class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('type');}">
             Type
-            <span data-bind="css: sortArrow('spellType')"></span>
+            <span data-bind="css: sortArrow('type')"></span>
           </th>
-          <th id="spellsTableDamageHeader" class="hidden-xs" data-bind="click: function(){sortBy('spellDmg');}">
+          <th id="spellsTableDamageHeader" class="hidden-xs" data-bind="click: function(){sortBy('damage');}">
             Damage
-            <span data-bind="css: sortArrow('spellDmg')"></span>
+            <span data-bind="css: sortArrow('damage')"></span>
           </th>
-          <th id="spellsTableCastingHeader" class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('spellCastingTime');}">
+          <th id="spellsTableCastingHeader" class="hidden-sm hidden-xs" data-bind="click: function(){sortBy('castingTime');}">
             Casting Time
-            <span data-bind="css: sortArrow('spellCastingTime')"></span>
+            <span data-bind="css: sortArrow('castingTime')"></span>
           </th>
-          <th id="spellsTableRangeHeader" class="hidden-xs" data-bind="click: function(){sortBy('spellRange');}">
+          <th id="spellsTableRangeHeader" class="hidden-xs" data-bind="click: function(){sortBy('range');}">
             Range
-            <span data-bind="css: sortArrow('spellRange')"></span>
+            <span data-bind="css: sortArrow('range')"></span>
           </th>
           <th>
             <a data-toggle="modal"
@@ -43,22 +43,22 @@
       <!-- ko foreach: filteredAndSortedSpells -->
         <tr class="clickable">
           <td>
-            <!-- ko if: spellLevel() != 0 -->
-              <input data-bind="checked: spellPrepared || spellAlwaysPrepared,
-                disable: spellAlwaysPrepared" type="checkbox" href="#"></input>
+            <!-- ko if: level() != 0 -->
+              <input data-bind="checked: prepared || alwaysPrepared,
+                disable: alwaysPrepared" type="checkbox" href="#"></input>
             <!-- /ko -->
           </td>
-          <td data-bind="text: spellNameLabel, click: $parent.editSpell"
+          <td data-bind="text: nameLabel, click: $parent.editSpell"
                href="#"></td>
-          <td data-bind="text: spellLevelLabel, click: $parent.editSpell"
+          <td data-bind="text: levelLabel, click: $parent.editSpell"
                href="#"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: spellType, click: $parent.editSpell"
+          <td class="hidden-sm hidden-xs" data-bind="text: type, click: $parent.editSpell"
                href="#"></td>
           <td class="hidden-xs" data-bind="text: spellDamageLabel, click: $parent.editSpell"
                href="#"></td>
-          <td class="hidden-sm hidden-xs" data-bind="text: spellCastingTime, click: $parent.editSpell"
+          <td class="hidden-sm hidden-xs" data-bind="text: castingTime, click: $parent.editSpell"
                href="#"></td>
-          <td class="hidden-xs" data-bind="text: spellRange, click: $parent.editSpell"
+          <td class="hidden-xs" data-bind="text: range, click: $parent.editSpell"
                href="#"></td>
           <td>
             <a data-bind="click: $parent.removeSpell" href="#">
@@ -109,14 +109,14 @@
           <div class="modal-body">
             <form class="form-horizontal">
               <div class="form-group ui-front">
-                <label for="spellName"
+                <label for="name"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
                          id="spellsAddNameInput"
                          placeholder="Magic Missile"
-                         data-bind="textInput: blankSpell().spellName,
+                         data-bind="textInput: blankSpell().name,
                           autocomplete: { source: spellsPrePopFilter,
                           onselect: populateSpell },
                           hasFocus: firstModalElementHasFocus">
@@ -124,13 +124,13 @@
               </div>
               <!-- ko if: preparedRowVisibleAdd() -->
               <div class="form-group">
-                <label for="spellPrepared"
+                <label for="prepared"
                        class="col-sm-2 control-label">Prepared</label>
                   <div class="col-sm-1">
                     <input type="checkbox"
                            class="form-control"
                            id="spellsAddPreparedCheckbox"
-                           data-bind='checked: blankSpell().spellPrepared,
+                           data-bind='checked: blankSpell().prepared,
                                       disable: blankSpell().spellAlwaysPrepared'>
                   </div>
 
@@ -145,7 +145,7 @@
                          class="form-control"
                          id="spellsAddAlwaysPreparedCheckbox"
                          data-bind='checked: blankSpell().spellAlwaysPrepared,
-                                    disable: blankSpell().spellPrepared'>
+                                    disable: blankSpell().prepared'>
 
                 </div>
                 <label for="spellIsRitual"
@@ -159,7 +159,7 @@
               </div>
               <!-- /ko -->
               <div class="form-group">
-                <label for="spellLevel"
+                <label for="level"
                        class="col-sm-2 control-label">Level</label>
                   <div class="col-sm-10">
                     <input type="number"
@@ -168,34 +168,34 @@
                            placeholder="1"
                            min="0"
                            max="9"
-                           data-bind='textInput: blankSpell().spellLevel'>
+                           data-bind='textInput: blankSpell().level'>
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="spellSchool"
+                <label for="school"
                        class="col-sm-2 control-label">School</label>
                   <div class="col-sm-10">
                   <input class="form-control" id="spellsAddSchoolInput"
                          placeholder="Abjuration"
-                         data-bind="textInput: blankSpell().spellSchool,
+                         data-bind="textInput: blankSpell().school,
                           autocomplete: { source: blankSpell().spellSchoolOptions,
                                           onselect: setSpellSchool }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="spellType"
+                <label for="type"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                   <input class="form-control" id="spellsAddTypeInput"
                          placeholder="Automatic"
-                         data-bind="textInput: blankSpell().spellType,
+                         data-bind="textInput: blankSpell().type,
                           autocomplete: { source: blankSpell().spellTypeOptions,
-                                          onselect: setSpellType }">
+                                          onselect: setType }">
                   </div>
               </div>
-              <div data-bind="visible: blankSpell().spellType() == 'Savings Throw'">
+              <div data-bind="visible: blankSpell().type() == 'Savings Throw'">
                 <div class="form-group ui-front">
-                  <label for="spellType"
+                  <label for="type"
                          class="col-sm-2 control-label">Save Attr</label>
                     <div class="col-sm-10">
                     <input class="form-control" id="spellsAddSaveAttrInput"
@@ -214,43 +214,56 @@
                            class="form-control"
                            id="spellsAddDamageInput"
                            placeholder="1d4 + 1"
-                           data-bind="textInput: blankSpell().spellDmg">
+                           data-bind="textInput: blankSpell().damage">
                   </div>
               </div>
+
+              <div class="form-group">
+                <label for="damageType"
+                       class="col-sm-2 control-label">Damage Type</label>
+                  <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="spellsAddDamageTypeInput"
+                           placeholder="Thunder"
+                           data-bind="textInput: blankSpell().damageType">
+                  </div>
+              </div>
+
               <div class="form-group ui-front">
-                <label for="spellCastingTime"
+                <label for="castingTime"
                        class="col-sm-2 control-label">Cast Time</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                           id="spellsAddCastTimeInput"
                           placeholder="1 action"
-                          data-bind="textInput: blankSpell().spellCastingTime,
+                          data-bind="textInput: blankSpell().castingTime,
                           autocomplete: { source: blankSpell().spellCastingTimeOptions,
-                                          onselect: setSpellCastingTime }">
+                                          onselect: setCastingTime }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="spellRange"
+                <label for="range"
                        class="col-sm-2 control-label">Range</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="spellsAddRangeInput"
                          placeholder="1 mile"
-                         data-bind="textInput: blankSpell().spellRange,
+                         data-bind="textInput: blankSpell().range,
                           autocomplete: { source: blankSpell().spellRangeOptions,
-                                          onselect: setSpellRange }">
+                                          onselect: setRange }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="spellComponents"
+                <label for="components"
                        class="col-sm-2 control-label">Components</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="spellsAddComponentsInput"
                          placeholder="V, S, M"
-                         data-bind="textInput: blankSpell().spellComponents,
+                         data-bind="textInput: blankSpell().components,
                           autocomplete: { source: blankSpell().spellComponentsOptions,
-                                          onselect: setSpellComponents }">
+                                          onselect: setComponents }">
                   </div>
               </div>
               <div class="form-group">
@@ -261,23 +274,23 @@
                            class="form-control"
                            id="spellsAddMaterialComponentsInput"
                            placeholder="Feather"
-                           data-bind="textInput: blankSpell().spellMaterialComponents">
+                           data-bind="textInput: blankSpell().materialComponents">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="spellDuration"
+                <label for="duration"
                        class="col-sm-2 control-label">Duration</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="spellsAddDurationInput"
                          placeholder="1 day"
-                         data-bind="textInput: blankSpell().spellDuration,
+                         data-bind="textInput: blankSpell().duration,
                           autocomplete: { source: blankSpell().spellDurationOptions,
-                                          onselect: setSpellDuration }">
+                                          onselect: setDuration }">
                   </div>
               </div>
               <div class="form-group">
-                <label for="spellDescription"
+                <label for="description"
                        class="col-sm-2 control-label">Description</label>
                   <div class="col-sm-10">
                     <textarea type="password"
@@ -285,7 +298,7 @@
                               id="spellsAddDescriptionTextarea"
                               rows="4"
                               placeholder="You create three glowing ..."
-                              data-bind='textInput: blankSpell().spellDescription'>
+                              data-bind='textInput: blankSpell().description'>
                     </textarea>
                   </div>
               </div>
@@ -354,22 +367,24 @@
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
                 <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
                 <div class="h3">
-                  <span data-bind="text: spellNameLabel" id="spellsPreviewNameLabel"></span>&nbsp;
+                  <span data-bind="text: nameLabel" id="spellsPreviewNameLabel"></span>&nbsp;
                   <small data-bind="text: spellSummaryLabel" id="spellsPreviewSpellSummaryLabelLabel"></small>
                 </div>
                 <div class="row">
-                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: spellType" id="spellsPreviewTypeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type" id="spellsPreviewTypeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel" id="spellsPreviewDamageLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: spellCastingTime" id="spellsPreviewCastTimeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: spellRange" id="spellsPreviewRangeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: spellComponents" id="spellsPreviewCompenentsLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Duration:</b>&nbsp;<span data-bind="text: spellDuration" id="spellsPreviewDurationLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: damageType" id="spellsPreviewDamageTypeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: castingTime" id="spellsPreviewCastTimeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: range" id="spellsPreviewRangeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: components" id="spellsPreviewCompenentsLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Material Components:</b>&nbsp;<span data-bind="text: materialComponents" id="spellsPreviewMaterialCompenentsLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Duration:</b>&nbsp;<span data-bind="text: duration" id="spellsPreviewDurationLabel"></span></div>
                 </div>
                 <hr />
                 <h4>Description</h4>
                 <div class="row row-padded">
                   <div class="col-xs-12 col-padded">
-                    <div data-bind="html: spellDescriptionHTML"
+                    <div data-bind="html: descriptionHTML"
                          class="preview-modal-overflow"></div>
                   </div>
                 </div>
@@ -378,27 +393,27 @@
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
                 <form class="form-horizontal">
                   <div class="form-group">
-                    <label for="spellName"
+                    <label for="name"
                            class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
                              id="spellsEditNameInput"
                              placeholder="Magic Missile"
-                             data-bind="textInput: spellName,
+                             data-bind="textInput: name,
                              hasFocus: $parent.editFirstModalElementHasFocus">
                     </div>
                   </div>
                   <!-- ko if: $parent.preparedRowVisibleEdit($data) -->
                   <div class="form-group">
-                    <label for="spellPrepared"
+                    <label for="prepared"
                            class="col-sm-2 control-label">Prepared</label>
                       <div class="col-sm-1">
                         <input type="checkbox"
                                class="form-control"
                                id="spellsEditPreparedCheckbox"
-                               data-bind='checked: spellPrepared,
-                                          disable: spellAlwaysPrepared'>
+                               data-bind='checked: prepared,
+                                          disable: alwaysPrepared'>
                       </div>
                     <label class="col-sm-4 control-label">
                     <span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
@@ -407,8 +422,8 @@
                         <input type="checkbox"
                                class="form-control"
                                id="spellsEditAlwaysPreparedCheckbox"
-                               data-bind='checked: spellAlwaysPrepared,
-                                          disable: spellPrepared'>
+                               data-bind='checked: alwaysPrepared,
+                                          disable: prepared'>
                       </div>
                     <label for="spellIsRitual"
                            class="col-sm-2 control-label">Ritual</label>
@@ -421,7 +436,7 @@
                   </div>
                   <!-- /ko -->
                   <div class="form-group">
-                    <label for="spellLevel"
+                    <label for="level"
                            class="col-sm-2 control-label">Level</label>
                       <div class="col-sm-10">
                         <input type="number"
@@ -430,32 +445,32 @@
                                min="0"
                                max="9"
                                placeholder="1"
-                               data-bind="value: spellLevel">
+                               data-bind="value: level">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="spellSchool"
+                    <label for="school"
                            class="col-sm-2 control-label">School</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                               id="spellsEditSchoolInput"
                               placeholder="Abjuration"
-                              data-bind="textInput: spellSchool">
+                              data-bind="textInput: school">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="spellType"
+                    <label for="type"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
                         <input class="form-control"
                                id="spellsEditTypeInput"
                                placeholder="Automatic"
-                               data-bind="textInput: spellType">
+                               data-bind="textInput: type">
                       </div>
                   </div>
-                  <div data-bind="visible: spellType() == 'Savings Throw'">
+                  <div data-bind="visible: type() == 'Savings Throw'">
                     <div class="form-group">
-                      <label for="spellType"
+                      <label for="type"
                              class="col-sm-2 control-label">Save Attr</label>
                         <div class="col-sm-10">
                         <input class="form-control"
@@ -465,45 +480,59 @@
                         </div>
                     </div>
                   </div>
+
                   <div class="form-group">
-                    <label for="spellDmg"
+                    <label for="damage"
                            class="col-sm-2 control-label">Damage</label>
                       <div class="col-sm-10">
                         <input type="text"
                                class="form-control"
                                id="spellsEditDamageInput"
                                placeholder="1d4 + 1"
-                               data-bind="value: spellDmg">
+                               data-bind="value: damage">
                       </div>
                   </div>
+
                   <div class="form-group">
-                    <label for="spellCastingTime"
+                    <label for="damage"
+                           class="col-sm-2 control-label">Damage Type</label>
+                      <div class="col-sm-10">
+                        <input type="text"
+                               class="form-control"
+                               id="spellsEditDamageInput"
+                               placeholder="Thunder"
+                               data-bind="textInput: damageType">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="castingTime"
                            class="col-sm-2 control-label">Cast Time</label>
                       <div class="col-sm-10">
                         <input class="form-control"
                                id="spellsEditCastTimeInput"
                                placeholder="1 action"
-                               data-bind="textInput: spellCastingTime">
+                               data-bind="textInput: castingTime">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="spellRange"
+                    <label for="range"
                            class="col-sm-2 control-label">Range</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="spellsEditRangeInput"
                              placeholder="1 mile"
-                             data-bind="textInput: spellRange">
+                             data-bind="textInput: range">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="spellComponents"
+                    <label for="components"
                            class="col-sm-2 control-label">Components</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="spellsEditComponentsInput"
                              placeholder="V, S, M"
-                             data-bind="textInput: spellComponents">
+                             data-bind="textInput: components">
                       </div>
                   </div>
                   <div class="form-group">
@@ -514,28 +543,28 @@
                                class="form-control"
                                id="spellsEditMaterialComponentsInput"
                                placeholder="Feather"
-                               data-bind="textInput: spellMaterialComponents">
+                               data-bind="textInput: materialComponents">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="spellDuration"
+                    <label for="duration"
                            class="col-sm-2 control-label">Duration</label>
                       <div class="col-sm-10">
                         <input class="form-control"
                                id="spellsEditDurationInput"
                                placeholder="1 day"
-                               data-bind="textInput: spellDuration">
+                               data-bind="textInput: duration">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="spellDescription"
+                    <label for="description"
                            class="col-sm-2 control-label">Description</label>
                       <div class="col-sm-10">
                         <textarea type="password"
                                   class="form-control"
                                   id="spellsEditDescriptionTextarea"
                                   placeholder="You create three glowing ..."
-                                  data-bind="value: spellDescription"
+                                  data-bind="value: description"
                                   rows="4">
                         </textarea>
                       </div>

@@ -16,8 +16,8 @@ import { Skill } from 'charactersheet/models/character/skill';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
-import { Treasure } from 'charactersheet/models/common/treasure';
 import { Utility } from 'charactersheet/utilities/convenience';
+import { Wealth } from 'charactersheet/models/common/wealth';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 export var CharacterCardFields = [
@@ -112,10 +112,10 @@ export var CharacterCardFields = [
         }
     }, {
         name: 'gold',
-        refreshOn: Notifications.treasure.changed,
+        refreshOn: Notifications.wealth.changed,
         valueAccessor: function() {
-            var treasure = PersistenceService.findFirstBy(Treasure, 'characterId', CoreManager.activeCore().uuid());
-            return treasure ? treasure.worthInGold() : 0;
+            var wealth = PersistenceService.findFirstBy(Wealth, 'characterId', CoreManager.activeCore().uuid());
+            return wealth ? wealth.worthInGold() : 0;
         }
     }, {
         name: 'maxHitPoints',

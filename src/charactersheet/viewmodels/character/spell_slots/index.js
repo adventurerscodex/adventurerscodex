@@ -8,7 +8,8 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services/common';
-import { Slot } from 'charactersheet/models/character';
+import { Fixtures } from 'charactersheet/utilities';
+import { SpellSlot } from 'charactersheet/models/character';
 import campingTent from 'images/camping-tent-blue.svg';
 import campingTentWhite from 'images/camping-tent.svg';
 import ko from 'knockout';
@@ -22,16 +23,16 @@ export function SpellSlotsViewModel() {
     self.sorts = {
         'level asc': { field: 'level', direction: 'asc', numeric: true},
         'level desc': { field: 'level', direction: 'desc', numeric: true},
-        'maxSpellSlots asc': { field: 'maxSpellSlots', direction: 'asc', numeric: true},
-        'maxSpellSlots desc': { field: 'maxSpellSlots', direction: 'desc', numeric: true},
-        'usedSpellSlots asc': { field: 'usedSpellSlots', direction: 'asc', numeric: true},
-        'usedSpellSlots desc': { field: 'usedSpellSlots', direction: 'desc', numeric: true},
+        'max asc': { field: 'max', direction: 'asc', numeric: true},
+        'max desc': { field: 'max', direction: 'desc', numeric: true},
+        'used asc': { field: 'used', direction: 'asc', numeric: true},
+        'used desc': { field: 'used', direction: 'desc', numeric: true},
         'resetsOn asc': { field: 'resetsOn', direction: 'asc'},
         'resetsOn desc': { field: 'resetsOn', direction: 'desc'}
     };
 
     self.slots = ko.observableArray([]);
-    self.blankSlot = ko.observable(new Slot());
+    self.blankSlot = ko.observable(new SpellSlot());
     self.openModal = ko.observable(false);
     self.editHasFocus = ko.observable(false);
     self.editItemIndex = null;
@@ -39,16 +40,16 @@ export function SpellSlotsViewModel() {
     self.modifierHasFocus = ko.observable(false);
     self.sort = ko.observable(self.sorts['level asc']);
     self.filter = ko.observable('');
+    self.slotColors = Fixtures.general.colorList;
     self.meditation = meditation;
     self.campingTent = campingTent;
     self.meditationWhite = meditationWhite;
     self.campingTentWhite = campingTentWhite;
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-        var slots = PersistenceService.findBy(Slot, 'characterId',
-            CoreManager.activeCore().uuid());
-        self.slots(slots);
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await SpellSlot.ps.list({coreUuid: key});
+        self.slots(response.objects);
         self.blankSlot().level(self.slots().length + 1);
 
         //Notifications
@@ -56,21 +57,8 @@ export function SpellSlotsViewModel() {
         Notifications.events.shortRest.add(self.resetShortRest);
 
         self.slots().forEach(function(slot, idx, _) {
-            slot.maxSpellSlots.subscribe(self.dataHasChanged);
-            slot.usedSpellSlots.subscribe(self.dataHasChanged);
-        });
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.events.longRest.remove(self.resetOnLongRest);
-        Notifications.events.shortRest.remove(self.resetShortRest);
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.slots().forEach(function(e, i, _) {
-            e.save();
+            slot.max.subscribe(self.dataHasChanged);
+            slot.used.subscribe(self.dataHasChanged);
         });
     };
 
@@ -119,7 +107,7 @@ export function SpellSlotsViewModel() {
      */
     self.resetOnLongRest = function() {
         ko.utils.arrayForEach(self.slots(), function(slot) {
-            slot.usedSpellSlots(0);
+            slot.used(0);
         });
     };
 
@@ -129,7 +117,7 @@ export function SpellSlotsViewModel() {
     self.resetShortRest = function() {
         ko.utils.arrayForEach(self.slots(), function(slot) {
             if (slot.resetsOn() === Slot.REST_TYPE.SHORT_REST) {
-                slot.usedSpellSlots(0);
+                slot.used(0);
             }
         });
     };
@@ -144,12 +132,12 @@ export function SpellSlotsViewModel() {
         self.editHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         if (self.openModal()) {
-            Utility.array.updateElement(self.slots(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.slots(), response.object, self.editItemIndex);
         }
 
-        self.save();
         self.dataHasChanged();
         self.openModal(false);
     };
@@ -159,64 +147,68 @@ export function SpellSlotsViewModel() {
     self.maxAvailableSlots = function() {
         var maxSlots = 0;
         self.slots().forEach(function(e, i, _) {
-            maxSlots = maxSlots + parseInt(e.maxSpellSlots());
+            maxSlots = maxSlots + parseInt(e.max());
         });
         return maxSlots;
     };
 
-    self.currentSlotWidth =  function(progressWidth, maxSlotsForLevel) {
+    self.currentSlotWidth = (progressWidth, maxSlotsForLevel) => {
         var maxSlots = self.maxAvailableSlots();
         maxSlotsForLevel = parseInt(maxSlotsForLevel);
         var maxSlotWidth = (100 * maxSlotsForLevel) / maxSlots;
         return (progressWidth * maxSlotWidth+ '%');
     };
 
+    self.getProgressWidth = (slot) => {
+        return (slot.max()-slot.used()) / slot.max();
+    }
 
-    self.editSlot = function(slot) {
-        self.editItemIndex = slot.__id;
-        self.currentEditItem(new Slot());
+    self.editSlot = async (slot) => {
+        self.editItemIndex = slot.uuid;
+        self.currentEditItem(new SpellSlot());
         self.currentEditItem().importValues(slot.exportValues());
         self.openModal(true);
         self.slots().forEach(function(slot, idx, _) {
-            slot.maxSpellSlots.subscribe(self.dataHasChanged);
-            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+            slot.max.subscribe(self.dataHasChanged);
+            slot.used.subscribe(self.dataHasChanged);
         });
         self.dataHasChanged();
     };
 
-    self.addSlot = function() {
+    self.addSlot = async () => {
         var slot = self.blankSlot();
-        slot.characterId(CoreManager.activeCore().uuid());
-        slot.save();
-        self.slots.push(slot);
+        slot.color(self.slotColors[slot.level()-1]);
+        slot.coreUuid(CoreManager.activeCore().uuid());
+        const newSlot = await slot.ps.create();
+        self.slots.push(newSlot.object);
 
-        self.blankSlot(new Slot());
+        self.blankSlot(new SpellSlot());
         self.blankSlot().level(self.slots().length + 1);
         self.slots().forEach(function(slot, idx, _) {
-            slot.maxSpellSlots.subscribe(self.dataHasChanged);
-            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+            slot.max.subscribe(self.dataHasChanged);
+            slot.used.subscribe(self.dataHasChanged);
         });
         self.dataHasChanged();
     };
 
-    self.removeSlot = function(slot) {
+    self.removeSlot = async (slot) => {
+        await slot.ps.delete();
         self.slots.remove(slot);
-        slot.delete();
         self.blankSlot().level(self.slots().length + 1);
         self.slots().forEach(function(slot, idx, _) {
-            slot.maxSpellSlots.subscribe(self.dataHasChanged);
-            slot.usedSpellSlots.subscribe(self.dataHasChanged);
+            slot.max.subscribe(self.dataHasChanged);
+            slot.used.subscribe(self.dataHasChanged);
         });
         self.dataHasChanged();
     };
 
     self.resetSlot = function(slot) {
-        slot.usedSpellSlots(0);
+        slot.used(0);
     };
 
     self.resetSlots = function() {
         self.slots().forEach(function(slot, i, _) {
-            slot.usedSpellSlots(0);
+            slot.used(0);
         });
     };
 
@@ -225,7 +217,6 @@ export function SpellSlotsViewModel() {
     };
 
     self.dataHasChanged = function() {
-        self.save();
         Notifications.spellSlots.changed.dispatch();
     };
 }

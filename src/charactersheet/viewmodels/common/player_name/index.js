@@ -53,7 +53,7 @@ export function PlayerNameViewModel() {
                 campaign.characterName(newValue);
                 campaign.ps.save();
             }
-        },
+        }
     });
 
     self.coreHasChanged = function() {

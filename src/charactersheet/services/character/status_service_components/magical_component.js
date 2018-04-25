@@ -5,7 +5,7 @@ import {
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
-import { Slot } from 'charactersheet/models/character/spell_slot';
+import { SpellSlot } from 'charactersheet/models/character/spell_slot';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { getMagicTypeEnum } from 'charactersheet/models/common/status_weight_pair';
@@ -31,14 +31,15 @@ export function MagicalStatusServiceComponent() {
      * This method determines wether to update or remove the Magical status
      * component from the player's status line.
      */
-    self.dataHasChanged = function() {
+    self.dataHasChanged = async () => {
         var key = CoreManager.activeCore().uuid();
-        var spellSlots = PersistenceService.findBy(Slot, 'characterId', key);
+        const response = await SpellSlot.ps.list({coreUuid: key});
+        var spellSlots = response.objects;
 
         if (!spellSlots) { return; }
 
         if (spellSlots.length > 0) {
-            self._updateStatus();
+            // self._updateStatus();
         } else {
             self._removeStatus();
         }
@@ -48,7 +49,7 @@ export function MagicalStatusServiceComponent() {
 
     self._updateStatus = function() {
         var key = CoreManager.activeCore().uuid();
-        var spellSlots = PersistenceService.findBy(Slot, 'characterId', key);
+        var spellSlots = PersistenceService.findBy(SpellSlot, 'characterId', key);
         var valueWeightPairs = [];
 
         var status = PersistenceService.findByPredicates(Status,

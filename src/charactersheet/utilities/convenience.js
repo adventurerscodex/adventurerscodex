@@ -1,6 +1,8 @@
 import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
+
 
 /**
  * This file contains a number of generic utility functions used throughout
@@ -71,7 +73,7 @@ Utility.string.createDirectDropboxLink = function(link) {
  */
 Utility.array.updateElement = function(array, updatedElement, elementId) {
     array.forEach(function(element, idx, _) {
-        if (element.__id === elementId) {
+        if (ko.unwrap(element.uuid) === ko.unwrap(elementId)) {
             element.importValues(updatedElement.exportValues());
         }
     });

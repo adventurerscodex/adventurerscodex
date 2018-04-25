@@ -31,11 +31,11 @@
           <tr class="clickable">
             <td data-bind="text: spellAttackBonus" class="text-center"></td>
             <td data-bind="text: spellSaveDc" class="text-center"></td>
-            <td data-bind="text: spellcastingAbility" class="text-center"></td>
+            <td data-bind="text: castingAbility().shortName" class="text-center"></td>
             <td data-bind="text: spellsKnown" class="text-center"></td>
-            <td data-bind="text: spellsCantripsKnown" class="text-center"></td>
-            <td data-bind="text: spellsMaxPrepared" class="text-center"></td>
-            <td data-bind="text: spellsInvocationsKnown" class="text-center"></td>
+            <td data-bind="text: cantripsKnown" class="text-center"></td>
+            <td data-bind="text: maxPrepared" class="text-center"></td>
+            <td data-bind="text: invocationsKnown" class="text-center"></td>
           </tr>
         </tbody>
       </table>
@@ -88,7 +88,7 @@
               <input type="text"
                      class="form-control ability-score-input"
                      id="spellStatsEditSpellCastingAbilityInput"
-                     data-bind='value: spellcastingAbility,
+                     data-bind='value: castingAbility,
         								autocomplete: { source: spellcastingAbilityOptions,
         								onselect: $parent.setSpellCastingAbility }'>
             </div>
@@ -108,7 +108,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      id="spellStatsEditCantripKnownInput"
-                     data-bind='textInput: spellsCantripsKnown'>
+                     data-bind='textInput: cantripsKnown'>
             </div>
           </div>
           <div class="form-group">
@@ -117,7 +117,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      id="spellStatsEditMaxPrepareInput"
-                     data-bind='textInput: spellsMaxPrepared'>
+                     data-bind='textInput: maxPrepared'>
             </div>
           </div>
           <div class="form-group">
@@ -126,7 +126,7 @@
               <input type="number"
                      class="form-control ability-score-input"
                      id= "spellStatsEditInvocationsKnownInput"
-                     data-bind='textInput: spellsInvocationsKnown'>
+                     data-bind='textInput: invocationsKnown'>
             </div>
           </div>
           <div class="modal-footer-ability-scores">

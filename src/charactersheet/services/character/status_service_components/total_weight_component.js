@@ -11,7 +11,7 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
-import { Treasure } from 'charactersheet/models/common/treasure';
+import { Wealth } from 'charactersheet/models/common/wealth';
 import { Weapon } from 'charactersheet/models/common/weapon';
 import ko from 'knockout';
 
@@ -30,7 +30,7 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.weapon.changed.add(self.dataHasChanged);
         Notifications.item.changed.add(self.dataHasChanged);
         Notifications.magicItem.changed.add(self.dataHasChanged);
-        Notifications.treasure.changed.add(self.dataHasChanged);
+        Notifications.wealth.changed.add(self.dataHasChanged);
         self.dataHasChanged();  //Calculate the first one.
     };
 
@@ -79,7 +79,7 @@ export function TotalWeightStatusServiceComponent() {
         weight += self._getWeightFor(Weapon, 'totalWeight');
         weight += self._getWeightFor(Item, 'totalWeight');
         weight += self._getWeightFor(MagicItem, 'magicItemWeight');
-        weight += self._getWeightFor(Treasure, 'totalWeight');
+        weight += self._getWeightFor(Wealth, 'totalWeight');
 
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),

@@ -194,14 +194,14 @@ export function PartyManagerViewModel() {
         self.inAParty(false);
 
         if (shouldNotify) {
-            Notifications.userNotification.warningNotification.dispatch(
-                'It looks like you\'ve been disconnected. Is your internet ok?',
-                '',
-                {
-                    timeOut: 0,
-                    extendedTimeOut: 0
-                }
-            );
+            // Notifications.userNotification.warningNotification.dispatch(
+            //     'It looks like you\'ve been disconnected. Is your internet ok?',
+            //     '',
+            //     {
+            //         timeOut: 0,
+            //         extendedTimeOut: 0
+            //     }
+            // );
         }
     };
 
@@ -243,41 +243,41 @@ export function PartyManagerViewModel() {
 
     self._handleConnectionError = function(code) {
         self.loggedIn(false);
-        Notifications.userNotification.warningNotification.dispatch(
-            'You will not be able to access party features until this issue is resolved. ' +
-            '<a href="https://adventurerscodex.com/faq.html#connection">Click here for ' +
-            'more info.</a>',
-            'A connection error has occurred.',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        // Notifications.userNotification.warningNotification.dispatch(
+        //     'You will not be able to access party features until this issue is resolved. ' +
+        //     '<a href="https://adventurerscodex.com/faq.html#connection">Click here for ' +
+        //     'more info.</a>',
+        //     'A connection error has occurred.',
+        //     {
+        //         timeOut: 0,
+        //         extendedTimeOut: 0
+        //     }
+        // );
     };
 
     self._handleReconnection = function(code) {
         self.inAParty(true);
-        Notifications.userNotification.successNotification.dispatch(
-            'You\'re back online.',
-            'Connection reestablished',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        // Notifications.userNotification.successNotification.dispatch(
+        //     'You\'re back online.',
+        //     'Connection reestablished',
+        //     {
+        //         timeOut: 0,
+        //         extendedTimeOut: 0
+        //     }
+        // );
     };
 
     self._handleConflict = function() {
-        Notifications.userNotification.dangerNotification.dispatch(
-            'It looks like you\'re trying to use your account in two places at once.\n\
-            To use the party features you\'ll have to log out of the other session \
-            and refresh this page.',
-            'Conflict',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        // Notifications.userNotification.dangerNotification.dispatch(
+        //     'It looks like you\'re trying to use your account in two places at once.\n\
+        //     To use the party features you\'ll have to log out of the other session \
+        //     and refresh this page.',
+        //     'Conflict',
+        //     {
+        //         timeOut: 0,
+        //         extendedTimeOut: 0
+        //     }
+        // );
     };
 }
 

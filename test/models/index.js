@@ -23,7 +23,7 @@ import './test_spell';
 import './test_spell_stats';
 import './test_tracked';
 import './test_trait';
-import './test_treasure';
+import './test_wealth';
 import './test_weapon';
 
 // DM Models

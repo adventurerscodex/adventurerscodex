@@ -13,13 +13,15 @@ import {
     PersistenceService,
     XMPPService
 } from 'charactersheet/services/common';
-import { Note,
+import {
+    Note,
     PlayerTypes
 } from 'charactersheet/models/common';
-import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import linkifyStr from 'linkifyjs/string';
 import template from './index.html';
+import { Settings } from 'charactersheet/settings';
+
 /**
  * A View that handles displaying Messages of type CHAT.
  */

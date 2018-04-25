@@ -20,6 +20,6 @@ export { StatsViewModel } from './stats';
 export { StatusLineViewModel } from './status_line';
 export { TrackerViewModel } from './tracker';
 export { TraitsViewModel } from './traits';
-export { TreasureViewModel } from './treasure';
+export { WealthViewModel } from './wealth';
 export { WeaponsViewModel } from './weapons';
 export { OtherStatsViewModel } from './other_stats';

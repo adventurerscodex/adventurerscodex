@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs tabs">
-  <li role="presentation"
+  <!-- <li role="presentation"
       id="tabStatsLink"
       data-bind="click: activateStatsTab, css: statsTabStatus">
     <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" data-bind="attr: { src: icons.statsTab }" /></br>
       <span class="text-center" id="tabStatsSpan"><small>Stats</small></span>
     </a>
-  </li>
+  </li> -->
   <li role="presentation"
       id="tabSkillsLink"
       data-bind="click: activateSkillsTab, css: skillsTabStatus">
@@ -39,6 +39,7 @@
       <span class="text-center" id="tabInventorySpan"><small>Inventory</small></span>
     </a>
   </li>
+  <!--
   <li role="presentation"
       id="tabNotesLink"
       data-bind="click: activateNotesTab, css: notesTabStatus">
@@ -70,9 +71,9 @@
       <img class="tab-icon" data-bind="attr: { src: icons.exhibitTab }" /></br>
       <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
     </a>
-  </li>
+  </li> -->
   <!-- Right tabs -->
-  <li role="presentation" class="secondary-nav">
+  <!-- <li role="presentation" class="secondary-nav">
     <button class="btn btn-sm btn-primary" id="actionsActionsButton" data-toggle="collapse"
       data-bind="click: toggleWellOpen"
       data-target="#actionsCollapse" aria-expanded="false"
@@ -80,10 +81,10 @@
         Actions
         <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
     </button>
-  </li>
+  </li> -->
 </ul>
 <div class="tab-content">
-  <actions-toolbar params="wellState: wellState"></actions-toolbar>
+  <!-- <actions-toolbar params="wellState: wellState"></actions-toolbar>
   <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
     <div class="row">
       <div class="col-sm-4 col-lg-3 hidden-xs">
@@ -130,7 +131,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 <!-- End Stats Tab -->
 
 <div role="tabpanel" class="tab-pane" id="skills" data-bind="css: skillsTabStatus">
@@ -249,7 +250,7 @@
 <div role="tabpanel" class="tab-pane" id="inventory" data-bind="css: inventoryTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img data-bind="attr: { src: icons.inventorySection }" alt="Inventory tab"/>
+      <!-- <img data-bind="attr: { src: icons.inventorySection }" alt="Inventory tab"/> -->
     </div>
     <div class="col-sm-8 col-lg-9 col-padded">
       <div class="h3">
@@ -258,7 +259,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12 col-padded">
-          <treasure></treasure>
+          <!-- <wealth></wealth> -->
         </div>
         <div class="col-sm-12 col-padded">
           <magic-items></magic-items>
@@ -282,7 +283,7 @@
 </div>
 <!-- End Inventory Tab -->
 
-<div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
+<!-- <div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
   <div class="row">
     <div class="col-sm-12 col-padded">
       <div class="h3">
@@ -292,10 +293,10 @@
       <notes></notes>
     </div>
   </div>
-</div>
+</div> -->
 <!-- End Notes Tab -->
 
-<div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
+<!-- <div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
   <div class="row">
     <div class="col-sm-4 hidden-xs">
       <img data-bind="attr: { src: icons.profileSection }" alt="Profile tab" style="width:100%;"/>
@@ -314,17 +315,17 @@
       <feat-traits></feat-traits>
     </div>
   </div>
-</div>
+</div> -->
 <!-- End Profile tab -->
 
-<div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
+<!-- <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
   <chat params="isActive: chatTabStatus"></chat>
-</div>
+</div> -->
 <!-- End Chat Tab -->
 
-<div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
+<!-- <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
   <exhibit></exhibit>
-</div>
+</div> -->
 <!-- End Exhibit Tab -->
 </div>
 

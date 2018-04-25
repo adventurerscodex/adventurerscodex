@@ -4,7 +4,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Skill } from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
@@ -22,35 +21,6 @@ export function SkillsViewModel() {
         'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
     };
 
-    self._defaultSkills = function() {
-        var skills = [
-            { name: 'Acrobatics', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Animal Handling', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Arcana', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not' },
-            { name: 'Athletics', abilityScore: 'Str', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Deception', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'History', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Insight', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Intimidation', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Investigation', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Medicine', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Nature', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Perception', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Performance', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Persuasion', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Religion', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Sleight of Hand', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Survival', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'}
-        ];
-        return skills.map(function(e, i, _) {
-            var skill = new Skill(self);
-            e.characterId = CoreManager.activeCore().uuid();
-            skill.importValues(e);
-            return skill;
-        });
-    };
-
     self.blankSkill = ko.observable(new Skill());
     self.newModalOpen = ko.observable(false);
     self.editModalOpen = ko.observable(false);
@@ -60,46 +30,30 @@ export function SkillsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
-        var skills = PersistenceService.findBy(Skill, 'characterId',
-            CoreManager.activeCore().uuid());
-
-        if (skills.length === 0) {
-            self.skills(self._defaultSkills());
-            self.skills().forEach(function(e, i, _) {
-                e.save();
-            });
-        } else {
-            self.skills(skills);
-        }
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Skill.ps.list({coreUuid: key});
+        self.skills(response.objects);
 
         //Subscriptions
         Notifications.abilityScores.changed.add(self.dataHasChanged);
         Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
         Notifications.profile.changed.add(self.dataHasChanged);
-        self.skills().forEach(function(e, i, _) {
-            self.addNotifiers(e);
-            if (e.name() === 'Perception'){
-                e.bonus.subscribe(self.perceptionHasChanged);
-            }
-        });
+        // do we even need this???
+        // self.skills().forEach(function(e, i, _) {
+        //     self.addNotifiers(e);
+        //     if (e.name() === 'Perception'){
+        //         e.bonus.subscribe(self.perceptionHasChanged);
+        //     }
+        // });
     };
 
     self.dispose = function() {
-        self.save();
         self.skills([]);
         Notifications.abilityScores.changed.remove(self.dataHasChanged);
         Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
         Notifications.profile.changed.remove(self.dataHasChanged);
         Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.skills().forEach(function(e, i, _) {
-            e.save();
-        });
     };
 
     /* UI Methods */
@@ -134,15 +88,12 @@ export function SkillsViewModel() {
         self.editModifierHasFocus(true);
     };
 
-    self.editModalFinishedClosing = function() {
+    self.editModalFinishedClosing = async () => {
         if (self.editModalOpen()) {
-            Utility.array.updateElement(self.skills(), self.currentEditItem(), self.editItemIndex);
+            self.currentEditItem().abilityScore('8761d2db-c176-44e1-8593-69cce2d95d81');
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.skills(), response.object, self.editItemIndex);
         }
-
-        self.save();
-        self.skills().forEach(function(skill, idx, _) {
-            skill.updateValues();
-        });
 
         self.editModalOpen(false);
     };
@@ -161,22 +112,23 @@ export function SkillsViewModel() {
 
     //Manipulating skills
 
-    self.addSkill = function() {
+    self.addSkill = async () => {
         var skill = self.blankSkill();
-        skill.characterId(CoreManager.activeCore().uuid());
-        skill.save();
-        self.addNotifiers(skill);
-        self.skills.push(skill);
+        skill.coreUuid(CoreManager.activeCore().uuid());
+        // TODO: NEED TO FIX THIS
+        skill.abilityScore('8761d2db-c176-44e1-8593-69cce2d95d81');
+        const newSkill = await skill.ps.create();
+        self.skills.push(newSkill.object);
         self.blankSkill(new Skill());
     };
 
-    self.removeSkill = function(skill) {
+    self.removeSkill = async (skill) => {
+        await skill.ps.delete();
         self.skills.remove(skill);
-        skill.delete();
     };
 
     self.editSkill = function(skill) {
-        self.editItemIndex = skill.__id;
+        self.editItemIndex = skill.uuid;
         self.currentEditItem(new Skill());
         self.currentEditItem().importValues(skill.exportValues());
         self.editModalOpen(true);
@@ -191,19 +143,16 @@ export function SkillsViewModel() {
     /**
      * Given a skill, tell it to alert the Notifications of changes to itself.
      */
-    self.addNotifiers = function(skill) {
-        var savefn = function() {
-            skill.save();
-            Notifications.skills.changed.dispatch();
-        };
-        skill.name.subscribe(savefn);
-        skill.bonus.subscribe(savefn);
-    };
+    // self.addNotifiers = function(skill) {
+    //     var savefn = function() {
+    //         skill.save();
+    //         Notifications.skills.changed.dispatch();
+    //     };
+    //     skill.name.subscribe(savefn);
+    //     skill.bonus.subscribe(savefn);
+    // };
 
     self.dataHasChanged = function() {
-        self.skills().forEach(function(e, i, _) {
-            e.updateValues();
-        });
         Notifications.skills.changed.dispatch();
     };
 

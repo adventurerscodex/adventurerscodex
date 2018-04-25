@@ -1,3 +1,5 @@
+// Enables Async/Await
+import 'babel-polyfill';
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
@@ -19,17 +21,13 @@ import {
     Migrations,
     Notifications
 } from 'charactersheet/utilities';
+import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
+import { Hypnos } from 'hypnos';
+import { Settings } from 'charactersheet/settings';
 import $ from 'jquery';
 import Clipboard from 'clipboard';
-import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
-import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
 import ko from 'knockout';
-
-// Enables Async/Await
-import 'babel-polyfill';
-
-import { Hypnos } from 'hypnos';
 
 /**
  * This global function handles initializing the Knockout Application
@@ -61,18 +59,16 @@ export var init = function(viewModel) {
     // Set up API client configuration handlers.
     Notifications.authentication.loggedIn.add(() => {
         if (!schema) {
-            console.log('No API schema found. Skipping...');
             return;
         }
 
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        console.log('Initializing API Schema...');
         Hypnos.configuration = {
             credentials: {
                 scheme: 'Bearer',
-                token: token.accessToken(),
+                token: token.accessToken()
             },
-            schema: schema,
+            schema: schema
         };
     });
 

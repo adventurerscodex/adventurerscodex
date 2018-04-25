@@ -111,7 +111,6 @@ function _AuthenticationService(config) {
     };
 
     self._goToLogin = () => {
-        console.log('No token found... proceeding to login page.');
         window.location = LOGIN_URL.replace('{CLIENT_ID}', CLIENT_ID);
     };
 }

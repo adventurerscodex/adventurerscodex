@@ -1,8 +1,8 @@
 import { CoreManager } from 'charactersheet/utilities/core_manager';
 import { Notifications } from 'charactersheet/utilities/notifications';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import URI from 'urijs';
 
-import { PlayerTypes } from 'charactersheet/models/common/player_types';
 
 export const TabFragmentManager = {
     __active_tab__: null,

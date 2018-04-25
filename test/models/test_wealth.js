@@ -1,8 +1,8 @@
-import { Treasure } from 'charactersheet/models/common/treasure';
+import { Wealth } from 'charactersheet/models/common/treasure';
 import { TreasureFixture } from '../fixtures';
 import simple from 'simple-mock';
 
-describe('Treasure Model', function() {
+describe('Wealth Model', function() {
     //Clean up after each test.
     afterEach(function() {
         simple.restore();
@@ -11,7 +11,7 @@ describe('Treasure Model', function() {
     describe('Instance Methods', function() {
         describe('Clear', function() {
             it('should clear all the data', function() {
-                var treasure = new Treasure();
+                var treasure = new Wealth();
                 treasure.gold(TreasureFixture.gold);
                 treasure.gold().should.equal(TreasureFixture.gold);
                 treasure.clear();
@@ -21,7 +21,7 @@ describe('Treasure Model', function() {
 
         describe('Import', function() {
             it('should import an object with all the info supplied.', function() {
-                var treasure = new Treasure();
+                var treasure = new Wealth();
                 treasure.importValues(TreasureFixture);
                 treasure.gold().should.equal(TreasureFixture.gold);
                 treasure.characterId().should.equal(TreasureFixture.characterId);
@@ -30,7 +30,7 @@ describe('Treasure Model', function() {
 
         describe('Export', function() {
             it('should yield an object with all the info supplied.', function() {
-                var treasure = new Treasure();
+                var treasure = new Wealth();
                 treasure.importValues(TreasureFixture);
                 var values = treasure.exportValues();
 
@@ -41,7 +41,7 @@ describe('Treasure Model', function() {
 
         describe('Save', function() {
             it('should call the token save.', function() {
-                var treasure = new Treasure();
+                var treasure = new Wealth();
                 var spy = simple.mock(treasure.ps, 'save');
                 treasure.save();
                 spy.called.should.equal(true);
@@ -49,17 +49,17 @@ describe('Treasure Model', function() {
         });
     });
 
-    describe('Treasure Weight Label', function() {
+    describe('Wealth Weight Label', function() {
         it('should return the correct label', function() {
-            var treasure = new Treasure();
+            var treasure = new Wealth();
             treasure.gold(151);
             treasure.totalWeightLabel().should.equal('3 (lbs)');
         });
     });
 
-    describe('Treasure Weight', function() {
+    describe('Wealth Weight', function() {
         it('should return the correct weight', function() {
-            var treasure = new Treasure();
+            var treasure = new Wealth();
             treasure.gold(151);
             treasure.copper(2);
             treasure.totalWeight().should.equal(3);
@@ -68,7 +68,7 @@ describe('Treasure Model', function() {
 
     describe('Worth in gold', function() {
         it('should return the correct worth in gold', function() {
-            var treasure = new Treasure();
+            var treasure = new Wealth();
             treasure.platinum(2);
             treasure.gold(15);
             treasure.electrum(3);
@@ -81,7 +81,7 @@ describe('Treasure Model', function() {
 
         types.forEach(function(type) {
             it('correctly converts blank ' + type + ' to zero (0)', function() {
-                var treasure = new Treasure();
+                var treasure = new Wealth();
                 treasure[type]('');
                 treasure.worthInGold().should.equal(0);
             });

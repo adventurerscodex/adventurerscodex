@@ -3,20 +3,20 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="armorTable">
       <thead>
         <tr>
-          <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('armorEquipped');}"
+          <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('equipped');}"
             class="col-md-1 col-xs-2">
             <span class="glyphicon glyphicon-check"></span>
-            <span data-bind="css: sortArrow('armorEquipped')"></span>
+            <span data-bind="css: sortArrow('equipped')"></span>
           </th>
-          <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('armorName');}"
+          <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('name');}"
             class="col-md-4 col-xs-5">
             Armor
-            <span data-bind="css: sortArrow('armorName')"></span>
+            <span data-bind="css: sortArrow('name')"></span>
           </th>
           <th id="armorTableTypeHeader" class="hidden-sm hidden-xs col-md-2"
-            data-bind="click: function(){sortBy('armorType');}">
+            data-bind="click: function(){sortBy('type');}">
             Type
-            <span data-bind="css: sortArrow('armorType')"></span>
+            <span data-bind="css: sortArrow('type')"></span>
           </th>
           <th id="armorTableAcHeader" data-bind="click: function(){sortBy('armorClass');}"
             class="col-md-3 col-xs-4">
@@ -41,11 +41,11 @@
           </td>
           <td data-bind="click: $parent.editArmor"
               href="#">
-              <span data-bind="text: armorName"></span>&nbsp;
+              <span data-bind="text: name"></span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span></td>
           <td class="hidden-sm hidden-xs"
-              data-bind="text: armorType, click: $parent.editArmor"
+              data-bind="text: type, click: $parent.editArmor"
               href="#"></td>
           <td data-bind="text: armorClass, click: $parent.editArmor"
               href="#"></td>
@@ -95,39 +95,39 @@
           <div class="modal-body">
             <form class="form-horizontal">
               <div class="form-group ui-front">
-                <label for="armorName"
+                <label for="name"
                        class="col-sm-2 control-label">Armor</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
                          id="armorAddNameInput"
                          placeholder="Chain Mail"
-                         data-bind='textInput: blankArmor().armorName, autocomplete: { source: armorsPrePopFilter,
+                         data-bind='textInput: blankArmor().name, autocomplete: { source: armorsPrePopFilter,
                             onselect: populateArmor }, hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group ui-front">
-                <label for="armorType"
+                <label for="type"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="armorAddTypeInput"
                          placeholder="Light"
-                         data-bind="textInput: blankArmor().armorType, autocomplete: { source: blankArmor().armorTypeOptions,
+                         data-bind="textInput: blankArmor().type, autocomplete: { source: blankArmor().armorTypeOptions,
                          onselect: setArmorType }">
                   </div>
               </div>
               <div class="form-group">
-                <label for="armorMagicalModifier"
+                <label for="magicalModifier"
                        class="col-sm-2 control-label">Magical Modifier</label>
                   <div class="col-sm-10">
                   <input type="number" class="form-control"
                          id="armorAddMagicalModifierInput"
-                         data-bind='textInput: blankArmor().armorMagicalModifier'>
+                         data-bind='textInput: blankArmor().magicalModifier'>
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="armorPrice"
+                <label for="price"
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
         					<div class="input-group">
@@ -135,26 +135,26 @@
         							   class="form-control input-jquery-addon"
         							   id="armorAddPriceInput"
         							   placeholder="5"
-        							   data-bind='textInput: blankArmor().armorPrice'>
+        							   data-bind='textInput: blankArmor().price'>
         					   <span class="input-group-addon input-group-addon-jquery">
         							<input class="form-control"
                              id="armorAddCurrencyDenominationInput"
                              placeholder="GP"
-        							       data-bind="textInput: blankArmor().armorCurrencyDenomination, autocomplete: {
-                          source: blankArmor().armorCurrencyDenominationOptions }">
+        							       data-bind="textInput: blankArmor().currencyDenomination, autocomplete: {
+                          source: blankArmor().currencyDenominationOptions }">
         						</span>
         					</div>
 				        </div>
               </div>
               <div class="form-group">
-                <label for="armorWeight"
+                <label for="weight"
                        class="col-sm-2 control-label">Weight</label>
                   <div class="col-sm-10">
                     <input type="number"
                            class="form-control"
                            id="armorAddWeightInput"
                            placeholder="6"
-                           data-bind='textInput: blankArmor().armorWeight'>
+                           data-bind='textInput: blankArmor().weight'>
                   </div>
               </div>
               <div class="form-group">
@@ -175,7 +175,7 @@
                   <input class="form-control"
                          id="armorAddStealthInput"
                          placeholder="Advantage"
-                         data-bind="textInput: blankArmor().armorStealth, autocomplete: { source: blankArmor().armorStealthOptions,
+                         data-bind="textInput: blankArmor().stealth, autocomplete: { source: blankArmor().armorStealthOptions,
                          onselect: setArmorStealth }">
                   </div>
               </div>
@@ -184,22 +184,22 @@
                 <div class="col-sm-10">
                   <div class="btn-group btn-group-justified" role="group">
                   <label class="btn btn-default" id="armorAddDoffButton"
-                  data-bind="css: { active: blankArmor().armorEquipped() == ''}">
+                  data-bind="css: { active: blankArmor().equipped() == false}">
                     <input type="radio" class="hide-block"
-                    name="notEquipped" value="" data-bind="checked: blankArmor().armorEquipped"/>
+                    name="notEquipped" value="false" data-bind="checked: blankArmor().equipped().toString()"/>
                     Doff
                   </label>
                   <label class="btn btn-default" id="armorAddDonButton"
-                  data-bind="css: { active: blankArmor().armorEquipped() == 'equipped'}">
+                  data-bind="css: { active: blankArmor().equipped() == true}">
                     <input type="radio" class="hide-block"
-                    name="equipped" value="equipped" data-bind="checked: blankArmor().armorEquipped"/>
+                    name="equipped" value="true" data-bind="checked: blankArmor().equipped().toString()"/>
                     Don
                     </label>
                   </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="armorDescription"
+                <label for="description"
                        class="col-sm-2 control-label">Description</label>
                   <div class="col-sm-10">
                     <textarea type="password"
@@ -207,7 +207,7 @@
                               id="armorAddDescriptionTextarea"
                               rows="4"
                               placeholder="Armor of damage blocking"
-                              data-bind='textInput: blankArmor().armorDescription'>
+                              data-bind='textInput: blankArmor().description'>
                     </textarea>
                   </div>
               </div>
@@ -277,15 +277,15 @@
             <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="armorModalPreview">
                 <div class="h3">
-                  <span data-bind="text: armorName" id="armorPreviewNameLabel"></span>&nbsp;
+                  <span data-bind="text: name" id="armorPreviewNameLabel"></span>&nbsp;
                   <small data-bind="text: armorSummaryLabel" id="armorPreviewSummaryLabel"></small>
                 </div>
 
                 <hr />
                 <div class="row">
-                  <div class="col-sm-4 col-xs-12" id="armorPreviewStealthLabel"><b>Stealth:</b>&nbsp;<span data-bind="text: armorStealth"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="armorPreviewStealthLabel"><b>Stealth:</b>&nbsp;<span data-bind="text: stealth"></span></div>
                   <div class="col-sm-4 col-xs-12" id="armorPreviewWeightLabel"><b>Weight:</b>&nbsp;<span data-bind="text: armorWeightLabel"></span></div>
-                  <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: armorType"></span></div>
+                  <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type"></span></div>
                 </div>
 
                 <hr />
@@ -309,38 +309,38 @@
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
                 <form class="form-horizontal">
                   <div class="form-group">
-                    <label for="armorName"
+                    <label for="name"
                            class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
                              id="armorEditNameInput"
                              placeholder="Chain Mail"
-                             data-bind='textInput: armorName,
+                             data-bind='textInput: name,
                               hasFocus: $parent.editFirstModalElementHasFocus'>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="armorType"
+                    <label for="type"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="armorEditTypeInput"
                              placeholder="Light"
-                             data-bind="textInput: armorType">
+                             data-bind="textInput: type">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="armorMagicalModifier"
+                    <label for="magicalModifier"
                            class="col-sm-2 control-label">Magical Modifier</label>
                       <div class="col-sm-10">
                       <input type="number" class="form-control"
                              id="armorEditMagicalModifierInput"
-                             data-bind='textInput: armorMagicalModifier'>
+                             data-bind='textInput: magicalModifier'>
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="armorPrice"
+                    <label for="price"
                            class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-10">
             					<div class="input-group">
@@ -348,25 +348,25 @@
             							   class="form-control input-jquery-addon"
             							   id="armorEditPriceInput"
             							   placeholder="5"
-            							   data-bind='textInput: armorPrice'>
+            							   data-bind='textInput: price'>
             					   <span class="input-group-addon input-group-addon-jquery">
             							<input class="form-control"
                                  id="armorEditCurrencyDenominationInput"
                                  placeholder="GP"
-            							       data-bind="textInput: armorCurrencyDenomination">
+            							       data-bind="textInput: currencyDenomination">
             						</span>
             					</div>
     				        </div>
                   </div>
                   <div class="form-group">
-                    <label for="armorWeight"
+                    <label for="weight"
                            class="col-sm-2 control-label">Weight</label>
                       <div class="col-sm-10">
                         <input type="number"
                                class="form-control"
                                id="armorEditWeightInput"
                                placeholder="6"
-                               data-bind='textInput: armorWeight'>
+                               data-bind='textInput: weight'>
                       </div>
                   </div>
                   <div class="form-group">
@@ -387,7 +387,7 @@
                       <input class="form-control"
                              id="armorEditStealthInput"
                              placeholder="Advantage"
-                             data-bind="textInput: armorStealth">
+                             data-bind="textInput: stealth">
                       </div>
                   </div>
                   <div class="form-group">
@@ -396,21 +396,21 @@
                     <div class="col-sm-10">
                       <div class="btn-group btn-group-justified" role="group">
                       <label class="btn btn-default" id="armorEditDoffButton"
-                      data-bind="css: { active: armorEquipped() == ''}">
+                      data-bind="css: { active: equipped() == false}">
                         <input type="radio" class="hide-block"
-                        name="notEquipped" value="" data-bind="checked: armorEquipped"/>
+                        name="notEquipped" value="false" data-bind="checked: equipped().toString()"/>
                         Doff
                       </label>
                       <label class="btn btn-default"
-                      data-bind="css: { active: armorEquipped() == 'equipped'}" id="armorEditDonButton">
-                        <input type="radio" class="hide-block" name="equipped" value="equipped" data-bind="checked: armorEquipped"/>
+                      data-bind="css: { active: equipped() == true}" id="armorEditDonButton">
+                        <input type="radio" class="hide-block" name="equipped" value="true" data-bind="checked: equipped().toString()"/>
                         Don
                         </label>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="armorDescription"
+                    <label for="description"
                            class="col-sm-2 control-label">Description</label>
                       <div class="col-sm-10">
                         <textarea type="password"
@@ -418,7 +418,7 @@
                                   id="armorEditDescriptionTextarea"
                                   rows="4"
                                   placeholder="Armor of damage blocking"
-                                  data-bind='textInput: armorDescription'>
+                                  data-bind='textInput: description'>
                         </textarea>
                       </div>
                   </div>

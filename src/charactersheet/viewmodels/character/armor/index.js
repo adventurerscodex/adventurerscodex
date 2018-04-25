@@ -30,70 +30,57 @@ export function ArmorViewModel() {
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
-        'armorEquipped asc': { field: 'armorEquipped', direction: 'asc', booleanType: true},
-        'armorEquipped desc': { field: 'armorEquipped', direction: 'desc', booleanType: true},
-        'armorName asc': { field: 'armorName', direction: 'asc'},
-        'armorName desc': { field: 'armorName', direction: 'desc'},
-        'armorType asc': { field: 'armorType', direction: 'asc'},
-        'armorType desc': { field: 'armorType', direction: 'desc'},
+        'equipped asc': { field: 'equipped', direction: 'asc', booleanType: true},
+        'equipped desc': { field: 'equipped', direction: 'desc', booleanType: true},
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'type asc': { field: 'type', direction: 'asc'},
+        'type desc': { field: 'type', direction: 'desc'},
         'armorClass asc': { field: 'armorClass', direction: 'asc', numeric: true},
         'armorClass desc': { field: 'armorClass', direction: 'desc', numeric: true}
     };
 
     self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['armorName asc']);
+    self.sort = ko.observable(self.sorts['name asc']);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-        self.armors.subscribe(function() {
-            Notifications.armor.changed.dispatch();
-        });
-
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        self.armors(PersistenceService.findBy(Armor, 'characterId', key));
+        const response = await Armor.ps.list({coreUuid: key});
+        self.armors(response.objects);
 
         //Subscriptions
-        Notifications.abilityScores.changed.add(self.valueHasChanged);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.abilityScores.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.armors().forEach(function(e, i, _) {
-            e.save();
-        });
+        // Notifications.abilityScores.changed.add(self.valueHasChanged);
+        // self.armors.subscribe(function() {
+        //     Notifications.armor.changed.dispatch();
+        // });
     };
 
     self.armorEquippedLabel = function(armor) {
-        return armor.armorEquipped() ? 'fa fa-check' : '';
+        return armor.equipped() ? 'fa fa-check' : '';
     };
 
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
         if(self.armors().length > 0) {
             self.armors().forEach(function(armor, idx, _) {
-                weight += armor.armorWeight() ? parseInt(armor.armorWeight()) : 0;
+                weight += armor.weight() ? parseInt(armor.weight()) : 0;
             });
         }
         return weight + ' (lbs)';
     });
 
     self.equipArmorHandler = function(selectedItem, index) {
-        if (selectedItem.armorEquipped()) {
-            if (selectedItem.armorType() === 'Shield') {
+        if (selectedItem.equipped()) {
+            if (selectedItem.type() === 'Shield') {
                 ko.utils.arrayForEach(self.armors(), function(item2) {
-                    if (index != item2.__id && item2.armorType() == 'Shield') {
-                        item2.armorEquipped('');
+                    if (index != item2.uuid && item2.type() == 'Shield') {
+                        item2.equipped(false);
                     }
                 });
             } else {
                 ko.utils.arrayForEach(self.armors(), function(item2) {
-                    if (index != item2.__id && item2.armorType() != 'Shield') {
-                        item2.armorEquipped('');
+                    if (index != item2.uuid && item2.type() != 'Shield') {
+                        item2.equipped(false);
                     }
                 });
             }
@@ -103,15 +90,15 @@ export function ArmorViewModel() {
     // Prepopulate methods
 
     self.setArmorType = function(label, value) {
-        self.blankArmor().armorType(value);
+        self.blankArmor().type(value);
     };
 
     self.setArmorCurrencyDenomination = function(label, value) {
-        self.blankArmor().armorCurrencyDenomination(value);
+        self.blankArmor().currencyDenomination(value);
     };
 
     self.setArmorStealth = function(label, value) {
-        self.blankArmor().armorStealth(value);
+        self.blankArmor().stealth(value);
     };
 
     /* Modal Methods */
@@ -137,18 +124,17 @@ export function ArmorViewModel() {
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
         if (self.modalOpen()) {
-            Utility.array.updateElement(self.armors(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.armors(), response.object, self.editItemIndex);
         }
 
         self.equipArmorHandler(self.currentEditItem(), self.editItemIndex);
-
-        self.save();
         self.modalOpen(false);
-        Notifications.armor.changed.dispatch();
+        // Notifications.armor.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -186,24 +172,23 @@ export function ArmorViewModel() {
     };
 
     //Manipulating armors
-    self.addArmor = function() {
+    self.addArmor = async () => {
         var armor = self.blankArmor();
-        armor.characterId(CoreManager.activeCore().uuid());
-        armor.save();
+        armor.coreUuid(CoreManager.activeCore().uuid());
+        const newArmor = await armor.ps.create();
 
-        self.equipArmorHandler(armor, armor.__id);
-
-        self.armors.push(armor);
+        self.equipArmorHandler(newArmor, newArmor.uuid);
+        self.armors.push(newArmor);
         self.blankArmor(new Armor());
     };
 
-    self.removeArmor = function(armor) {
-        armor.delete();
+    self.removeArmor = async (armor) => {
+        await armor.ps.delete();
         self.armors.remove(armor);
     };
 
     self.editArmor = function(armor) {
-        self.editItemIndex = armor.__id;
+        self.editItemIndex = armor.uuid;
         self.currentEditItem(new Armor());
         self.currentEditItem().importValues(armor.exportValues());
         self.modalOpen(true);

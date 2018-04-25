@@ -4,21 +4,21 @@
       <thead>
         <tr>
           <th id="inventoryTableItemHeader" class="col-md-2 col-xs-4"
-            data-bind="click: function(){sortBy('itemName');}">
+            data-bind="click: function(){sortBy('name');}">
             Item
-            <span data-bind="css: sortArrow('itemName')"></span></th>
+            <span data-bind="css: sortArrow('name')"></span></th>
           <th id="inventoryTableQuantityHeader" class="col-md-1 col-xs-2"
-            data-bind="click: function(){sortBy('itemQty');}">
+            data-bind="click: function(){sortBy('quantity');}">
             Quantity
-            <span data-bind="css: sortArrow('itemQty')"></span></th>
+            <span data-bind="css: sortArrow('quantity')"></span></th>
           <th id="inventoryTableWeightHeader" class="col-md-1 col-xs-2"
-            data-bind="click: function(){sortBy('itemWeight');}">
+            data-bind="click: function(){sortBy('weight');}">
             Weight
-            <span data-bind="css: sortArrow('itemWeight')"></span></th>
+            <span data-bind="css: sortArrow('weight')"></span></th>
           <th id="inventoryTableCostHeader" class="col-md-1 hidden-xs col-sm-2"
-            data-bind="click: function(){sortBy('itemCost');}">
+            data-bind="click: function(){sortBy('cost');}">
             Cost
-            <span data-bind="css: sortArrow('itemCost')"></span></th>
+            <span data-bind="css: sortArrow('cost')"></span></th>
           <th class="hidden-sm hidden-xs" class="col-md-5">
             Description</th>
           <th class="col-md-1 col-xs-2 text-right">
@@ -32,9 +32,9 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedEquipment -->
         <tr class="clickable">
-          <td data-bind="text: itemName, click: $parent.editItem"
+          <td data-bind="text: name, click: $parent.editItem"
                   href="#"></td>
-          <td data-bind="text: itemQty, click: $parent.editItem"
+          <td data-bind="text: quantity, click: $parent.editItem"
                   href="#"></td>
           <td data-bind="text: itemWeightLabel, click: $parent.editItem"
                   href="#"></td>
@@ -43,7 +43,7 @@
           <td class="hidden-sm hidden-xs" data-bind="html: longDescription,
             click: $parent.editItem" href="#"></td>
           <td class="text-right">
-            <a data-bind='click: $parent.removeItemButton' href="#">
+            <a data-bind='click: $parent.removeItem' href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
           </td>
@@ -87,20 +87,20 @@
       <div class="modal-body">
         <form class="form-horizontal">
           <div class="form-group ui-front">
-           <label for="itemName"
+           <label for="name"
              class="col-sm-2 control-label">Name</label>
            <div class="col-sm-10">
              <input type="text"
                class="form-control"
                id="inventoryAddNameInput"
                placeholder="Rations"
-               data-bind='textInput: blankItem().itemName,
+               data-bind='textInput: blankItem().name,
                  autocomplete: { source: itemsPrePopFilter, onselect: populateItem },
                  hasFocus: firstModalElementHasFocus'>
            </div>
          </div>
          <div class="form-group">
-           <label for="itemWeight"
+           <label for="weight"
              class="col-sm-2 control-label">Weight</label>
            <div class="col-sm-10">
              <div class="input-group">
@@ -110,7 +110,7 @@
                       min="0"
                       max="5000"
                  placeholder="Item Weight"
-                 data-bind='textInput: blankItem().itemWeight'>
+                 data-bind='textInput: blankItem().weight'>
                  <span class="input-group-addon">lbs.</span>
              </div>
            </div>
@@ -125,7 +125,7 @@
                max="5000"
                id="inventoryAddQuantityInput"
                placeholder="Item Quantity"
-               data-bind='textInput: blankItem().itemQty'>
+               data-bind='textInput: blankItem().quantity'>
            </div>
          </div>
          <div class="form-group ui-front">
@@ -137,12 +137,12 @@
       			   min="0"
       			   class="form-control input-jquery-addon"
                id="inventoryAddCostInput"
-      			   data-bind="value: blankItem().itemCost" />
+      			   data-bind="value: blankItem().cost" />
       			 <span class="input-group-addon input-group-addon-jquery">
                <input class="form-control"
                       id="inventoryAddCurrencyDenominationInput"
                       placeholder="GP"
-      						    data-bind="textInput: blankItem().itemCurrencyDenomination, autocomplete: {
+      						    data-bind="textInput: blankItem().currencyDenomination, autocomplete: {
                           source: blankItem().itemCurrencyDenominationOptions,
                           onselect: setItemCurrencyDenomination }">
               </span>
@@ -158,7 +158,7 @@
                id="inventoryAddDescriptionTextarea"
                placeholder="Rations consist of..."
                rows="4"
-               data-bind='textInput: blankItem().itemDesc'>
+               data-bind='textInput: blankItem().description'>
              </textarea>
            </div>
          </div>
@@ -175,7 +175,7 @@
           class="btn btn-primary"
           id="inventoryAddAddButton"
           data-dismiss="modal"
-          data-bind="click: addItemButton">
+          data-bind="click: addItem">
           Add
         </button>
         <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
@@ -231,12 +231,12 @@
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="itemsModalPreview">
             <div class="h3">
-              <span data-bind="text: itemName" id="inventoryPreviewNameLabel"></span>&nbsp;
+              <span data-bind="text: name" id="inventoryPreviewNameLabel"></span>&nbsp;
             </div>
             <hr />
             <div class="row">
               <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel" id="inventoryPreviewWeightLabel"></span></div>
-              <div class="col-sm-4 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty" id="inventoryPreviewQuantityInput"></span></div>
+              <div class="col-sm-4 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: quantity" id="inventoryPreviewQuantityInput"></span></div>
               <div class="col-sm-4 col-xs-12"><b>Cost:</b>&nbsp;<span data-bind="text: costLabel" id="inventoryPreviewCostInput"></span></div>
             </div>
             <hr />
@@ -259,7 +259,7 @@
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
             <form class="form-horizontal">
               <div class="form-group">
-                <label for="itemName"
+                <label for="name"
                        class="col-sm-2 control-label">Name
                 </label>
                 <div class="col-sm-10">
@@ -267,12 +267,12 @@
                          class="form-control"
                          id="inventoryEditNameInput"
                          placeholder="Rations"
-                         data-bind='textInput: itemName,
+                         data-bind='textInput: name,
                           hasFocus: $parent.editFirstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group">
-                <label for="itemWeight"
+                <label for="weight"
                        class="col-sm-2 control-label">Weight</label>
                 <div class="col-sm-10">
                   <div class="input-group">
@@ -282,7 +282,7 @@
                            min="0"
                            max="5000"
                            placeholder="Item Weight"
-                           data-bind='textInput: itemWeight'>
+                           data-bind='textInput: weight'>
                     <span class="input-group-addon">lbs.</span>
                   </div>
                  </div>
@@ -297,7 +297,7 @@
                          max="5000"
                          id="inventoryEditQuantityInput"
                          placeholder="Item Quantity"
-                         data-bind='textInput: itemQty'>
+                         data-bind='textInput: quantity'>
                 </div>
               </div>
               <div class="form-group">
@@ -308,12 +308,12 @@
           			             min="0"
           			             class="form-control input-jquery-addon"
                              id="inventoryEditCostInput"
-          			             data-bind="value: itemCost" />
+          			             data-bind="value: cost" />
           			      <span class="input-group-addon input-group-addon-jquery">
                       <input class="form-control"
                              id="inventoryEditCurrencyDenominationInput"
           					         placeholder="GP"
-                             data-bind="textInput: itemCurrencyDenomination">
+                             data-bind="textInput: currencyDenomination">
                       </span>
           		      </div>
         	        </div>
@@ -327,7 +327,7 @@
                             id="inventoryEditDescriptionTextarea"
                             placeholder="Rations consist of..."
                             rows="4"
-                            data-bind='textInput: itemDesc'>
+                            data-bind='textInput: description'>
                   </textarea>
                 </div>
               </div>

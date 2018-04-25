@@ -10,10 +10,7 @@ import {
     Tracked,
     Trait
 } from 'charactersheet/models/character';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import campingTent from 'images/camping-tent-blue.svg';
 import campingTentWhite from 'images/camping-tent.svg';
 import ko from 'knockout';
@@ -31,6 +28,7 @@ export function TrackerViewModel() {
 
     self.trackables = ko.observableArray([]);
     self.editItem = ko.observable();
+    self.editParent = ko.observable();
     self.modalOpen = ko.observable(false);
     self.editModalTitle = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
@@ -39,17 +37,9 @@ export function TrackerViewModel() {
     self.campingTent = campingTent;
     self.meditationWhite = meditationWhite;
     self.campingTentWhite = campingTentWhite;
-    // List of all models that can be tracked
-    self.trackedTypes = [ Feat, Trait, Feature ];
 
     self.load = function() {
-        Notifications.global.save.add(self.save);
         self.loadTrackedItems();
-
-        self.trackables().forEach(function(tracked, idx, _) {
-            tracked.tracked().maxUses.subscribe(self.dataHasChanged);
-            tracked.tracked().used.subscribe(self.dataHasChanged);
-        });
 
         //Notifications
         Notifications.events.shortRest.add(self.resetShortRestFeatures);
@@ -59,40 +49,49 @@ export function TrackerViewModel() {
         Notifications.feature.changed.add(self.loadTrackedItems);
     };
 
-    self.loadTrackedItems = function() {
+    self.loadTrackedItems = async () => {
         var key = CoreManager.activeCore().uuid();
         var trackables = [];
-        // Fetch all items that can be tracked
-        self.trackedTypes.forEach(function(type, idx, _){
-            var result = PersistenceService.findBy(type, 'characterId', key);
-            trackables = trackables.concat(result);
-        });
-        var tracked = trackables.filter(function(e, i, _) {
-            if (e.isTracked()) {
-                e.tracked(PersistenceService.findFirstBy(Tracked, 'trackedId', e.trackedId()));
-            }
-            return e.isTracked();
-        });
-        self.trackables(tracked);
+
+        // Fetch trackable objects
+        var features = await Feature.ps.list({coreUuid: key});
+        var feats = await Feat.ps.list({coreUuid: key});
+        var traits = await Trait.ps.list({coreUuid: key});
+
+        if (features.objects) {
+            features = features.objects.filter((e, i, _) => {
+                if (e.tracked()) {
+                    e.tracked().type = 'Feature';
+                    return true;
+                }
+            });
+            trackables = trackables.concat(features);
+        }
+
+        if (feats.objects) {
+            feats = feats.objects.filter((e, i, _) => {
+                if (e.tracked()) {
+                    e.tracked().type = 'Feat';
+                    return true;
+                }
+            });
+            trackables = trackables.concat(feats);
+        }
+
+        if (traits.objects) {
+            traits = traits.objects.filter((e, i, _) => {
+                if (e.tracked()) {
+                    e.tracked().type = 'Trait';
+                    return true;
+                }
+            });
+            trackables = trackables.concat(traits);
+        }
+
+        self.trackables(trackables);
         self.trackables().forEach(function(tracked, idx, _) {
-            tracked.tracked().maxUses.subscribe(self.dataHasChanged);
-            tracked.tracked().used.subscribe(self.dataHasChanged);
-        });
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.global.save.remove(self.save);
-        Notifications.events.longRest.remove(self.resetShortRestFeatures);
-        Notifications.events.shortRest.remove(self.resetShortRestFeatures);
-        Notifications.feat.changed.remove(self.loadTrackedItems);
-        Notifications.trait.changed.remove(self.loadTrackedItems);
-        Notifications.feature.changed.remove(self.loadTrackedItems);
-    };
-
-    self.save = function() {
-        self.trackables().forEach(function(item, idx, _){
-            item.tracked().save();
+            tracked.tracked().max.subscribe(self.dataHasChanged, tracked);
+            tracked.tracked().used.subscribe(self.dataHasChanged, tracked);
         });
     };
 
@@ -156,25 +155,35 @@ export function TrackerViewModel() {
         self.modifierHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         if (self.modalOpen()) {
-            var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId',
-                self.editItem().trackedId());
-            tracked.importValues(self.editItem().exportValues());
-            tracked.save();
-            self.trackables().forEach(function(item, idx, _) {
-                if (item.trackedId() === tracked.trackedId()) {
-                    item.tracked().importValues(tracked.exportValues());
-                }
-            });
+            if (self.editItem().type() == 'Feature') {
+                self.editParent().characterClass('58df7462-d4f6-40b1-a396-e2813e8f46ce');
+            }
+            if (self.editItem().type() == 'Trait') {
+                self.editParent().race('567fbf42-5d5f-41f0-b0b7-3698247857fb');
+            }
+            self.editParent().tracked().max(self.editItem().max());
+            self.editParent().tracked().resetsOn(self.editItem().resetsOn());
+            const response = await self.editParent().ps.save();
+            Utility.array.updateElement(self.trackables(), response.object, response.object.uuid());
         }
-        self.dataHasChanged();
+        // self.dataHasChanged();
         self.modalOpen(false);
     };
 
-    self.dataHasChanged = function() {
-        self.save();
-        Notifications.tracked.changed.dispatch();
+    self.dataHasChanged = async function() {
+        if (this.ps) {
+            // todo: FIX THIS WHEN THERE IS A HYPNOS UPDATE
+            if (this.tracked().type == 'Feature') {
+                this.characterClass('58df7462-d4f6-40b1-a396-e2813e8f46ce');
+            }
+            if (this.tracked().type == 'Trait') {
+                this.race('567fbf42-5d5f-41f0-b0b7-3698247857fb');
+            }
+            await this.ps.save();
+            Notifications.tracked.changed.dispatch();
+        }
     };
 
     self.editModalOpen = function() {
@@ -182,9 +191,25 @@ export function TrackerViewModel() {
     };
 
     self.editTracked = function(item) {
+        switch(item.tracked().type) {
+            case 'Feature':
+                self.editParent(new Feature());
+                self.editParent().importValues(item.exportValues());
+                break;
+            case 'Trait':
+                self.editParent(new Trait());
+                self.editParent().importValues(item.exportValues());
+                break;
+            case 'Feat':
+                self.editParent(new Feat());
+                self.editParent().importValues(item.exportValues());
+                break;
+        }
         self.editModalTitle(item.name());
         self.editItem(new Tracked());
-        self.editItem().importValues(item.tracked().exportValues());
+        self.editItem().max(item.tracked().max());
+        self.editItem().resetsOn(item.tracked().resetsOn());
+        self.editItem().type(item.tracked().type);
         self.modalOpen(true);
     };
 

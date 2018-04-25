@@ -6,7 +6,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import {
-    PersistenceService,
     SortService
 } from 'charactersheet/services/common';
 import { Spell } from 'charactersheet/models';
@@ -17,20 +16,20 @@ export function SpellbookViewModel() {
     var self = this;
 
     self.sorts = {
-        'spellName asc': { field: 'spellName', direction: 'asc'},
-        'spellName desc': { field: 'spellName', direction: 'desc'},
-        'spellPrepared asc': { field: 'spellPrepared', direction: 'asc', booleanType: true},
-        'spellPrepared desc': { field: 'spellPrepared', direction: 'desc', booleanType: true},
-        'spellType asc': { field: 'spellType', direction: 'asc'},
-        'spellType desc': { field: 'spellType', direction: 'desc'},
-        'spellDmg asc': { field: 'spellDmg', direction: 'asc'},
-        'spellDmg desc': { field: 'spellDmg', direction: 'desc'},
-        'spellLevel asc': { field: 'spellLevel', direction: 'asc', numeric: true},
-        'spellLevel desc': { field: 'spellLevel', direction: 'desc', numeric: true},
-        'spellCastingTime asc': { field: 'spellCastingTime', direction: 'asc'},
-        'spellCastingTime desc': { field: 'spellCastingTime', direction: 'desc'},
-        'spellRange asc': { field: 'spellRange', direction: 'asc'},
-        'spellRange desc': { field: 'spellRange', direction: 'desc'}
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'prepared asc': { field: 'prepared', direction: 'asc', booleanType: true},
+        'prepared desc': { field: 'prepared', direction: 'desc', booleanType: true},
+        'damageType asc': { field: 'damageType', direction: 'asc'},
+        'damageType desc': { field: 'damageType', direction: 'desc'},
+        'damage asc': { field: 'damage', direction: 'asc'},
+        'damage desc': { field: 'damage', direction: 'desc'},
+        'level asc': { field: 'level', direction: 'asc', numeric: true},
+        'level desc': { field: 'level', direction: 'desc', numeric: true},
+        'castingTime asc': { field: 'castingTime', direction: 'asc'},
+        'castingTime desc': { field: 'castingTime', direction: 'desc'},
+        'range asc': { field: 'range', direction: 'asc'},
+        'range desc': { field: 'range', direction: 'desc'}
     };
 
     self.blankSpell = ko.observable(new Spell());
@@ -46,12 +45,12 @@ export function SpellbookViewModel() {
     self.spellSchoolIconCSS = ko.observable('');
 
     self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['spellName asc']);
+    self.sort = ko.observable(self.sorts['name asc']);
 
     self.numberOfPrepared = ko.computed(function(){
         var prepared = 0;
         self.spellbook().forEach(function(spell) {
-            if (spell.spellPrepared() === true) {
+            if (spell.prepared() === true) {
                 prepared++;
             }
         });
@@ -63,22 +62,16 @@ export function SpellbookViewModel() {
         return self.spellbook() ? self.spellbook().length : 0;
     });
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        self.spellbook(PersistenceService.findBy(Spell, 'characterId', key));
-        self.spellbook().forEach(function(spell, idx, _) {
-            spell.spellPrepared.subscribe(self.save);
-        });
+        const response = await Spell.ps.list({coreUuid: key});
+        self.spellbook(response.objects);
+        // self.spellbook().forEach(function(spell, idx, _) {
+        //     spell.prepared.subscribe(self.save);
+        // });
         Notifications.spellStats.changed.add(self.valueHasChanged);
     };
 
-    self.save = function() {
-        self.spellbook().forEach(function(e, i, _) {
-            e.save();
-        });
-    };
 
     // Prepopulate methods
     self.populateSpell = function(label, value) {
@@ -89,30 +82,30 @@ export function SpellbookViewModel() {
     };
 
     self.setSpellSchool = function(label, value) {
-        self.blankSpell().spellSchool(value);
+        self.blankSpell().school(value);
     };
 
-    self.setSpellType = function(label, value) {
-        self.blankSpell().spellType(value);
+    self.setType = function(label, value) {
+        self.blankSpell().type(value);
     };
 
     self.setSpellSaveAttr = function(label, value) {
         self.blankSpell().spellSaveAttr(value);
     };
 
-    self.setSpellCastingTime = function(label, value) {
-        self.blankSpell().spellCastingTime(value);
+    self.setCastingTime = function(label, value) {
+        self.blankSpell().castingTime(value);
     };
 
-    self.setSpellRange = function(label, value) {
-        self.blankSpell().spellRange(value);
+    self.setRange = function(label, value) {
+        self.blankSpell().range(value);
     };
 
-    self.setSpellComponents = function(label, value) {
+    self.setComponents = function(label, value) {
         self.blankSpell().spellComponents(value);
     };
 
-    self.setSpellDuration = function(label, value) {
+    self.setDuration = function(label, value) {
         self.blankSpell().spellDuration(value);
     };
 
@@ -123,15 +116,15 @@ export function SpellbookViewModel() {
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async() => {
         self.previewTabStatus('active');
         self.editTabStatus('');
         self.firstModalElementHasFocus(false);
         self.spellSchoolIconCSS('');
         if (self.modalOpen()) {
-            Utility.array.updateElement(self.spellbook(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.spellbook(), response.object, self.editItemIndex);
         }
-        self.save();
 
         self.modalOpen(false);
     };
@@ -148,8 +141,8 @@ export function SpellbookViewModel() {
     };
 
     self.determineSpellSchoolIcon = ko.computed(function() {
-        if (self.currentEditItem() && self.currentEditItem().spellSchool()) {
-            var spellSchool = self.currentEditItem().spellSchool();
+        if (self.currentEditItem() && self.currentEditItem().school()) {
+            var spellSchool = self.currentEditItem().school();
             self.spellSchoolIconCSS(spellSchool.toLowerCase());
         }
     });
@@ -167,14 +160,14 @@ export function SpellbookViewModel() {
      * Returns true if the spell prepared row should be visible in the add modal
      */
     self.preparedRowVisibleAdd = function() {
-        return parseInt(self.blankSpell().spellLevel()) !== 0;
+        return parseInt(self.blankSpell().level()) !== 0;
     };
 
     /**
      * Returns true if the spell prepared row should be visible in the edit modal
      */
     self.preparedRowVisibleEdit = function(spell) {
-        return parseInt(spell.spellLevel()) !== 0;
+        return parseInt(spell.level()) !== 0;
     };
 
     /**
@@ -212,22 +205,22 @@ export function SpellbookViewModel() {
     };
 
     //Manipulating spells
-    self.addSpell = function() {
+    self.addSpell = async () => {
         var spell = self.blankSpell();
-        spell.characterId(CoreManager.activeCore().uuid());
-        spell.save();
-        spell.spellPrepared.subscribe(self.save);
-        self.spellbook.push(spell);
+        spell.coreUuid(CoreManager.activeCore().uuid());
+        const newSpell = await spell.ps.create();
+        // spell.prepared.subscribe(self.save);
+        self.spellbook.push(newSpell.object);
         self.blankSpell(new Spell());
     };
 
-    self.removeSpell = function(spell) {
+    self.removeSpell = async (spell) => {
+        await spell.ps.delete();
         self.spellbook.remove(spell);
-        spell.delete();
     };
 
     self.editSpell = function(spell) {
-        self.editItemIndex = spell.__id;
+        self.editItemIndex = spell.uuid;
         self.currentEditItem(new Spell());
         self.currentEditItem().importValues(spell.exportValues());
         self.modalOpen(true);

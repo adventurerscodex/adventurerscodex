@@ -1,7 +1,4 @@
 import {
-    Profile,
-} from 'charactersheet/models/character';
-import {
     ArmorClassService,
     ProficiencyService
 } from 'charactersheet/services/character';
@@ -15,8 +12,9 @@ import {
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { ChatServiceManager } from 'charactersheet/services/common';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
+import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
 import chatTab from 'images/tab_icons/conversation.svg';
@@ -61,7 +59,7 @@ export function CharacterRootViewModel() {
 
     self.playerType = () => {
         const key = CoreManager.activeCore().type.name();
-        return PlayerTypes[key]
+        return PlayerTypes[key];
     };
 
     self._dummy = ko.observable(false);

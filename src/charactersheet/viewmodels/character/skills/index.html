@@ -22,13 +22,13 @@
         </tr>
       </thead>
       <tbody data-bind='foreach: filteredAndSortedSkills'>
-        <tr class="clickable" data-bind="click: $parent.editSkill">
-          <td>
+        <tr class="clickable">
+          <td data-bind="click: $parent.editSkill">
             <prof-marker params="proficiency: proficiency"></prof-marker>
           </td>
-          <td data-bind="html: bonusLabel"></td>
-          <td data-bind="html: nameLabel"></td>
-          <td data-bind="text: passiveBonus"></td>
+          <td data-bind="html: bonusLabel, click: $parent.editSkill"></td>
+          <td data-bind="html: nameLabel, click: $parent.editSkill"></td>
+          <td data-bind="text: passiveBonus, click: $parent.editSkill"></td>
           <td class="col-content-vertical col-xs-1">
             <a data-bind="click: $parent.removeSkill" href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>

@@ -1,12 +1,14 @@
-import { CharacterCardPublishingService,
+import {
+    CharacterCardPublishingService,
     DMCardPublishingService,
     KeyValuePredicate
 } from 'charactersheet/services/common';
-import { Note,
+import {
+    Note,
     PlayerTypes
 } from 'charactersheet/models/common';
-import { CoreManager } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
+import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Utility } from 'charactersheet/utilities/convenience';

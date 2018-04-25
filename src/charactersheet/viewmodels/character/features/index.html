@@ -23,7 +23,7 @@
       <!-- ko foreach: filteredAndSortedFeatures -->
         <tr class="clickable">
           <td data-bind="text: name, click: $parent.editFeature" href="#"></td>
-          <td data-bind="text: characterClass, click: $parent.editFeature" href="#"></td>
+          <td data-bind="text: characterClass().name, click: $parent.editFeature" href="#"></td>
           <td class="col-content-vertical">
             <a data-bind="click: $parent.removeFeature" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -86,7 +86,7 @@
                         id="featureAddClassInput"
                         placeholder="Barbarian"
                         data-bind='textInput: blankFeature().characterClass,
-                                   autocomplete: { source: classOptions,
+                                   autocomplete: { source: $parent.classOptions,
                                    onselect: populateClass }'>
               </div>
           </div>
@@ -130,7 +130,7 @@
               <label for="bonus" class="col-sm-2 control-label">Max</label>
               <div class="col-sm-9">
                 <input type="number" class="form-control" id="featureAddMaxInput" min="1"
-                      data-bind='textInput: blankTracked().maxUses'>
+                      data-bind='textInput: blankTracked().max'>
               </div>
             </div>
             <div class="form-group">
@@ -221,7 +221,7 @@
             </div>
             <div class="row">
               <div class="col-sm-6 col-xs-12"><b>Class: </b>&nbsp;
-                <span data-bind="text: characterClass"></span>
+                <span data-bind="text: characterClass().name"></span>
               </div>
               <div class="col-sm-6 col-xs-12"><b>Level: </b>&nbsp;
                 <span data-bind="text: level"></span>
@@ -231,7 +231,7 @@
             <div class="row" >
               <div class="col-sm-6 col-xs-12">
                 <b>Max Uses:</b>&nbsp;
-                <span data-bind="text: $parent.currentEditTracked().maxUses"></span>
+                <span data-bind="text: $parent.currentEditTracked().max"></span>
               </div>
               <div class="col-sm-6 col-xs-12">
                 <b>Resets on:</b>&nbsp;
@@ -277,7 +277,7 @@
                         class="form-control"
                         id="featureEditClassInput"
                         placeholder="Barbarian"
-                        data-bind='textInput: characterClass,
+                        data-bind='textInput: characterClass().name,
                                    autocomplete: { source: $parent.classOptions,
                                    onselect: $parent.populateClassEdit }'>
                 </div>
@@ -317,7 +317,7 @@
                   <label for="bonus" class="col-sm-2 control-label">Max</label>
                   <div class="col-sm-9">
                     <input type="number" class="form-control" id="featureEditMaxInput" min="1"
-                          data-bind='textInput: $parent.currentEditTracked().maxUses'>
+                          data-bind='textInput: $parent.currentEditTracked().max'>
                   </div>
                 </div>
                 <div class="form-group">
