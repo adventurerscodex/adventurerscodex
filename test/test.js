@@ -10,4 +10,4 @@ import './viewmodels';
 import './utilities';
 import './services';
 import './components';
-import './migrations';
+import './migrations'

@@ -1,4 +1,4 @@
-import { Wealth } from 'charactersheet/models/common/treasure';
+import { Wealth } from 'charactersheet/models/common/wealth';
 import { TreasureFixture } from '../fixtures';
 import simple from 'simple-mock';
 

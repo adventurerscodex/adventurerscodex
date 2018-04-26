@@ -6,7 +6,6 @@ import {
 import { AbilitiesFixture } from '../fixtures';
 import { CharacterManager } from 'charactersheet/utilities';
 import Should from 'should';
-import simple from 'simple-mock';
 
 
 describe('Ability Scores Model', function() {
