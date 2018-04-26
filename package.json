@@ -7,6 +7,7 @@
     "url": "https://github.com/adventurerscodex/adventurerscodex"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
     "circular-dependency-plugin": "^4.2.1",
     "coveralls": "^3.0.0",
     "es6-promise": "^4.1.1",
@@ -35,7 +36,7 @@
   "scripts": {
     "preflight": "npm run lint && npm test",
     "test": "karma start",
-    "lint": "eslint test/ && eslint src/charactersheet/",
+    "lint": "eslint src/charactersheet/ test/",
     "docs": "mr-doc --source src/charactersheet/ --output _build_docs/ --name \"Adventurer's Codex\"",
     "build": "./node_modules/webpack/bin/webpack.js --config webpack.prod.js",
     "build:test": "./node_modules/webpack/bin/webpack.js --config webpack.test.js",

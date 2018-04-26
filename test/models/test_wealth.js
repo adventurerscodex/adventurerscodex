@@ -1,5 +1,5 @@
-import { Wealth } from 'charactersheet/models/common/wealth';
 import { TreasureFixture } from '../fixtures';
+import { Wealth } from 'charactersheet/models/common/wealth';
 import simple from 'simple-mock';
 
 describe('Wealth Model', function() {
