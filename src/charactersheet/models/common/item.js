@@ -2,8 +2,8 @@ import {
     Fixtures,
     Utility
 } from 'charactersheet/utilities';
-import ko from 'knockout';
 import { KOModel } from 'hypnos';
+import ko from 'knockout';
 
 /**
  * Models an item in the user's backpack or something they

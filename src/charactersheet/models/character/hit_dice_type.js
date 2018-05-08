@@ -14,7 +14,7 @@ export function HitDiceType() {
 
     self.characterId = ko.observable(null);
     self.hitDiceType = ko.observable('');
-    self.hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
+
 
     self.clear = function() {
         var values = new HitDiceType().exportValues();

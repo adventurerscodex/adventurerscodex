@@ -1,4 +1,4 @@
-import { AbilityScores,
+import { AbilityScore,
     Armor,
     OtherStats } from 'charactersheet/models';
 import { ArmorClassService } from 'charactersheet/services/character';
@@ -44,8 +44,8 @@ describe('Armor Class Service', function() {
                 }
             });
             simple.mock(PersistenceService, 'findFirstBy').callFn(function(model, property, value) {
-                if (model.name === 'AbilityScores') {
-                    var abilityScore = new AbilityScores();
+                if (model.name === 'AbilityScore') {
+                    var abilityScore = new AbilityScore();
                     abilityScore.dex(18);
                     abilityScore.modifierFor('Dex').should.equal(4);
                     return abilityScore;
@@ -149,7 +149,7 @@ describe('Armor Class Service', function() {
             armor.armorEquipped('equipped');
             armor.armorType('Light');
 
-            var abilityScore = new AbilityScores();
+            var abilityScore = new AbilityScore();
             abilityScore.dex(18);
             abilityScore.modifierFor('Dex').should.equal(4);
 
@@ -165,7 +165,7 @@ describe('Armor Class Service', function() {
             armor.armorEquipped('equipped');
             armor.armorType('Medium');
 
-            var abilityScore = new AbilityScores();
+            var abilityScore = new AbilityScore();
             abilityScore.dex(18);
             abilityScore.modifierFor('Dex').should.equal(4);
 
@@ -181,7 +181,7 @@ describe('Armor Class Service', function() {
             armor.armorEquipped('equipped');
             armor.armorType('Heavy');
 
-            var abilityScore = new AbilityScores();
+            var abilityScore = new AbilityScore();
             abilityScore.dex(18);
             abilityScore.modifierFor('Dex').should.equal(4);
 

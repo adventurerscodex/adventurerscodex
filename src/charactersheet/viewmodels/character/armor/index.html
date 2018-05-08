@@ -42,7 +42,8 @@
           <td data-bind="click: $parent.editArmor"
               href="#">
               <span data-bind="text: name"></span>&nbsp;
-              <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
+              <span data-bind="text: magicalModifierLabel,
+                css: { badge: applyMagicalModifierLabel }">
               </span></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: type, click: $parent.editArmor"
@@ -180,20 +181,20 @@
                   </div>
               </div>
               <div class="form-group">
-              <label class="col-sm-2 control-label">Equipped</label>
+                <label class="col-sm-2 control-label">Equipped</label>
                 <div class="col-sm-10">
                   <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default" id="armorAddDoffButton"
-                  data-bind="css: { active: blankArmor().equipped() == false}">
-                    <input type="radio" class="hide-block"
-                    name="notEquipped" value="false" data-bind="checked: blankArmor().equipped().toString()"/>
-                    Doff
-                  </label>
-                  <label class="btn btn-default" id="armorAddDonButton"
-                  data-bind="css: { active: blankArmor().equipped() == true}">
-                    <input type="radio" class="hide-block"
-                    name="equipped" value="true" data-bind="checked: blankArmor().equipped().toString()"/>
-                    Don
+                    <label class="btn btn-default" id="armorAddDoffButton"
+                      data-bind="css: { active: blankArmor().equipped() == false}">
+                      <input type="radio" class="hide-block" name="equipGroup" value="false"
+                        data-bind="checked: blankArmor().equipped, checkedValue: false"/>
+                        Doff
+                    </label>
+                    <label class="btn btn-default" id="armorAddDonButton"
+                      data-bind="css: { active: blankArmor().equipped() == true}">
+                      <input type="radio" class="hide-block" name="equipGroup" value="true"
+                        data-bind="checked: blankArmor().equipped, checkedValue: true"/>
+                        Don
                     </label>
                   </div>
                 </div>
@@ -275,7 +276,8 @@
             </ul>
 
             <div class="tab-content" data-bind="with: currentEditItem">
-              <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="armorModalPreview">
+              <div role="tabpanel" data-bind="css: $parent.previewTabStatus"
+                class="tab-pane" id="armorModalPreview">
                 <div class="h3">
                   <span data-bind="text: name" id="armorPreviewNameLabel"></span>&nbsp;
                   <small data-bind="text: armorSummaryLabel" id="armorPreviewSummaryLabel"></small>
@@ -283,9 +285,15 @@
 
                 <hr />
                 <div class="row">
-                  <div class="col-sm-4 col-xs-12" id="armorPreviewStealthLabel"><b>Stealth:</b>&nbsp;<span data-bind="text: stealth"></span></div>
-                  <div class="col-sm-4 col-xs-12" id="armorPreviewWeightLabel"><b>Weight:</b>&nbsp;<span data-bind="text: armorWeightLabel"></span></div>
-                  <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="armorPreviewStealthLabel">
+                    <b>Stealth:</b>&nbsp;<span data-bind="text: stealth"></span>
+                  </div>
+                  <div class="col-sm-4 col-xs-12" id="armorPreviewWeightLabel">
+                    <b>Weight:</b>&nbsp;<span data-bind="text: armorWeightLabel"></span>
+                  </div>
+                  <div class="col-sm-4 col-xs-12">
+                    <b>Type:</b>&nbsp;<span data-bind="text: type"></span>
+                  </div>
                 </div>
 
                 <hr />
@@ -306,7 +314,8 @@
                 </div>
               </div> <!-- End Preview Tab -->
 
-              <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
+              <div role="tabpanel" data-bind="css: $parent.editTabStatus"
+                class="tab-pane" id="magicItemsModalEdit">
                 <form class="form-horizontal">
                   <div class="form-group">
                     <label for="name"
@@ -396,15 +405,16 @@
                     <div class="col-sm-10">
                       <div class="btn-group btn-group-justified" role="group">
                       <label class="btn btn-default" id="armorEditDoffButton"
-                      data-bind="css: { active: equipped() == false}">
-                        <input type="radio" class="hide-block"
-                        name="notEquipped" value="false" data-bind="checked: equipped().toString()"/>
-                        Doff
+                        data-bind="css: { active: equipped() == false}">
+                        <input type="radio" class="hide-block" name="equipGroup"
+                          value="false" data-bind="checked: equipped, checkedValue: false"/>
+                          Doff
                       </label>
                       <label class="btn btn-default"
                       data-bind="css: { active: equipped() == true}" id="armorEditDonButton">
-                        <input type="radio" class="hide-block" name="equipped" value="true" data-bind="checked: equipped().toString()"/>
-                        Don
+                        <input type="radio" class="hide-block" name="equipGroup" value="true"
+                          data-bind="checked: equipped, checkedValue: true"/>
+                          Don
                         </label>
                       </div>
                     </div>

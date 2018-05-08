@@ -1,4 +1,4 @@
-import { FeaturesTraits } from 'charactersheet/models/character/feat_traits';
+import { Background } from 'charactersheet/models/character/background';
 import simple from 'simple-mock';
 
 describe('Features and Traits Model', function() {
@@ -16,7 +16,7 @@ describe('Features and Traits Model', function() {
 
     describe('Save', function() {
         it('should save the values.', function() {
-            var ft = new FeaturesTraits();
+            var ft = new Background();
             var saved = false;
             ft.ps.save = function() { saved = true; };
 
@@ -28,7 +28,7 @@ describe('Features and Traits Model', function() {
 
     describe('Clear', function() {
         it('should clear the values.', function() {
-            var ft = new FeaturesTraits();
+            var ft = new Background();
             ft.background('something something');
             ft.background().should.equal('something something');
             ft.clear();
@@ -38,7 +38,7 @@ describe('Features and Traits Model', function() {
 
     describe('Import', function() {
         it('should import the values.', function() {
-            var ft = new FeaturesTraits();
+            var ft = new Background();
             var e = {
                 background: 'something something'
             };
@@ -50,7 +50,7 @@ describe('Features and Traits Model', function() {
 
     describe('Export', function() {
         it('should export the values.', function() {
-            var ft = new FeaturesTraits();
+            var ft = new Background();
             ft.background('something something');
             ft.background().should.equal('something something');
             var e = ft.exportValues();

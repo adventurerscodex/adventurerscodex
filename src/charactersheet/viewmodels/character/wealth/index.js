@@ -34,18 +34,10 @@ export function WealthViewModel() {
         self.wealth().copper.subscribe(self._dataHasChanged);
     };
 
-    self.save = function() {
-        self.wealth().save();
-    };
-
-    self.clear = function() {
-        self.wealth().clear();
-    };
-
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        self.wealth().save();
+    self._dataHasChanged = async() => {
+        await self.wealth().ps.save();
         Notifications.wealth.changed.dispatch();
     };
 }

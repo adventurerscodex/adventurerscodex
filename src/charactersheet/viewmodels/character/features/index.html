@@ -23,7 +23,7 @@
       <!-- ko foreach: filteredAndSortedFeatures -->
         <tr class="clickable">
           <td data-bind="text: name, click: $parent.editFeature" href="#"></td>
-          <td data-bind="text: characterClass().name, click: $parent.editFeature" href="#"></td>
+          <td data-bind="text: characterClass, click: $parent.editFeature" href="#"></td>
           <td class="col-content-vertical">
             <a data-bind="click: $parent.removeFeature" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -221,7 +221,7 @@
             </div>
             <div class="row">
               <div class="col-sm-6 col-xs-12"><b>Class: </b>&nbsp;
-                <span data-bind="text: characterClass().name"></span>
+                <span data-bind="text: characterClass"></span>
               </div>
               <div class="col-sm-6 col-xs-12"><b>Level: </b>&nbsp;
                 <span data-bind="text: level"></span>
@@ -277,7 +277,7 @@
                         class="form-control"
                         id="featureEditClassInput"
                         placeholder="Barbarian"
-                        data-bind='textInput: characterClass().name,
+                        data-bind='textInput: characterClass,
                                    autocomplete: { source: $parent.classOptions,
                                    onselect: $parent.populateClassEdit }'>
                 </div>

@@ -2,8 +2,8 @@ import {
     Fixtures,
     Utility
 } from 'charactersheet/utilities';
-import ko from 'knockout';
 import { KOModel } from 'hypnos';
+import ko from 'knockout';
 
 
 export class MagicItem extends KOModel {

@@ -1,5 +1,5 @@
 import {
-    AbilityScores,
+    AbilityScore,
     Campaign,
     Character,
     Item,
@@ -198,7 +198,7 @@ export function WizardViewModel() {
             playerInfo.save();
 
             // Ability Scores
-            var abilityScores = new AbilityScores();
+            var abilityScores = new AbilityScore();
             var abData = self.aggregateResults()['WizardAbilityScoresStep'];
             abData.characterId = character.key();
             abilityScores.importValues(abData);

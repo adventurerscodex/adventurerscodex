@@ -36,24 +36,20 @@ export function SkillsViewModel() {
         self.skills(response.objects);
 
         //Subscriptions
-        Notifications.abilityScores.changed.add(self.dataHasChanged);
-        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
-        Notifications.profile.changed.add(self.dataHasChanged);
-        // do we even need this???
-        // self.skills().forEach(function(e, i, _) {
-        //     self.addNotifiers(e);
-        //     if (e.name() === 'Perception'){
-        //         e.bonus.subscribe(self.perceptionHasChanged);
-        //     }
-        // });
+        Notifications.abilityScores.changed.add(self.updateValues);
+        Notifications.otherStats.proficiency.changed.add(self.updateValues);
+        self.skills().forEach(function(e, i, _) {
+            e.updateBonuses();
+            if (e.name() === 'Perception') {
+                e.bonus.subscribe(self.perceptionHasChanged);
+            }
+        });
     };
 
-    self.dispose = function() {
-        self.skills([]);
-        Notifications.abilityScores.changed.remove(self.dataHasChanged);
-        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
-        Notifications.profile.changed.remove(self.dataHasChanged);
-        Notifications.global.save.remove(self.save);
+    self.updateValues = () => {
+        self.skills().forEach(function(e, i, _) {
+            e.updateBonuses();
+        });
     };
 
     /* UI Methods */
@@ -81,7 +77,6 @@ export function SkillsViewModel() {
     };
 
     // Edit Modal Methods
-
     self.editModifierHasFocus = ko.observable(false);
 
     self.editModalFinishedAnimating = function() {
@@ -90,7 +85,6 @@ export function SkillsViewModel() {
 
     self.editModalFinishedClosing = async () => {
         if (self.editModalOpen()) {
-            self.currentEditItem().abilityScore('8761d2db-c176-44e1-8593-69cce2d95d81');
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.skills(), response.object, self.editItemIndex);
         }
@@ -99,7 +93,6 @@ export function SkillsViewModel() {
     };
 
     // New Modal Methods
-
     self.newSkillFieldHasFocus = ko.observable(false);
 
     self.newModalFinishedAnimating = function() {
@@ -131,29 +124,14 @@ export function SkillsViewModel() {
         self.editItemIndex = skill.uuid;
         self.currentEditItem(new Skill());
         self.currentEditItem().importValues(skill.exportValues());
-        self.editModalOpen(true);
-    };
-
-    self.clear = function() {
-        self.skills().forEach(function(e, i, _) {
-            self.removeSkill(e);
+        self.currentEditItem().bonusLabel(skill.bonusLabel());
+        self.currentEditItem().proficiency.subscribe(() => {
+            self.currentEditItem().updateBonuses();
         });
-    };
-
-    /**
-     * Given a skill, tell it to alert the Notifications of changes to itself.
-     */
-    // self.addNotifiers = function(skill) {
-    //     var savefn = function() {
-    //         skill.save();
-    //         Notifications.skills.changed.dispatch();
-    //     };
-    //     skill.name.subscribe(savefn);
-    //     skill.bonus.subscribe(savefn);
-    // };
-
-    self.dataHasChanged = function() {
-        Notifications.skills.changed.dispatch();
+        self.currentEditItem().modifier.subscribe(() => {
+            self.currentEditItem().updateBonuses();
+        });
+        self.editModalOpen(true);
     };
 
     self.perceptionHasChanged = function() {

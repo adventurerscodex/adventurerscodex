@@ -1,4 +1,4 @@
-import { AbilityScores } from 'charactersheet/models/character';
+import { AbilityScore } from 'charactersheet/models/character';
 import { AbilityScoresViewModel } from 'charactersheet/viewmodels/character/ability_scores';
 import { CharacterManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
@@ -14,7 +14,7 @@ describe('AbilityScoresViewModel', function(){
 
     describe('Load', function() {
         it('should load values from db', function() {
-            var scores = new AbilityScores();
+            var scores = new AbilityScore();
             simple.mock(PersistenceService, 'findBy').returnWith([scores]);
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             scores.con(5);

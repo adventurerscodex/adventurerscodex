@@ -10,7 +10,7 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services/common';
-import { Armor} from 'charactersheet/models/common';
+import { Armor } from 'charactersheet/models/common';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -50,8 +50,9 @@ export function ArmorViewModel() {
 
         //Subscriptions
         // Notifications.abilityScores.changed.add(self.valueHasChanged);
-        // self.armors.subscribe(function() {
-        //     Notifications.armor.changed.dispatch();
+        // self.armors.subscribe(() => {
+        //     console.log(this);
+            // Notifications.armor.changed.dispatch();
         // });
     };
 
@@ -69,18 +70,20 @@ export function ArmorViewModel() {
         return weight + ' (lbs)';
     });
 
-    self.equipArmorHandler = function(selectedItem, index) {
+    self.equipArmorHandler = (selectedItem, index) => {
         if (selectedItem.equipped()) {
             if (selectedItem.type() === 'Shield') {
-                ko.utils.arrayForEach(self.armors(), function(item2) {
+                ko.utils.arrayForEach(self.armors(), async function(item2) {
                     if (index != item2.uuid && item2.type() == 'Shield') {
                         item2.equipped(false);
+                        await item2.ps.save();
                     }
                 });
             } else {
-                ko.utils.arrayForEach(self.armors(), function(item2) {
+                ko.utils.arrayForEach(self.armors(), async function(item2) {
                     if (index != item2.uuid && item2.type() != 'Shield') {
                         item2.equipped(false);
+                        await item2.ps.save();
                     }
                 });
             }
@@ -177,8 +180,8 @@ export function ArmorViewModel() {
         armor.coreUuid(CoreManager.activeCore().uuid());
         const newArmor = await armor.ps.create();
 
-        self.equipArmorHandler(newArmor, newArmor.uuid);
-        self.armors.push(newArmor);
+        self.equipArmorHandler(newArmor.object, newArmor.object.uuid);
+        self.armors.push(newArmor.object);
         self.blankArmor(new Armor());
     };
 

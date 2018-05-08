@@ -82,17 +82,20 @@ export function HealthinessStatusServiceComponent() {
 
     // _alertPlayerHasDied was called and all 3 death saves did not fail
     self._initDeathSavesNotFail = function() {
-        self._updateStatus(false, false);
+        // TODO: FIX DIS LATER
+        // self._updateStatus(false, false);
     };
 
     // 3 death saves succeeded
     self._initDeathSavesSuccess = function() {
-        self._updateStatus(false, true);
+        // TODO: FIX DIS LATER
+        // self._updateStatus(false, true);
     };
 
     // _alertPlayerIsStable was called and all 3 death saves did not succeed
     self._initDeathSavesNotSuccess = function() {
-        self._updateStatus(false, false);
+        // TODO: FIX DIS LATER
+        // self._updateStatus(false, false);
     };
 
     self._updateStatus = function(deathSavesDidFail,
@@ -122,8 +125,8 @@ export function HealthinessStatusServiceComponent() {
         status.value(weightedTotal);
 
         status.save();
-        Notifications.status.changed.dispatch();
-        Notifications.status.healthiness.changed.dispatch();
+        // Notifications.status.changed.dispatch();
+        // Notifications.status.healthiness.changed.dispatch();
     };
 
     /**

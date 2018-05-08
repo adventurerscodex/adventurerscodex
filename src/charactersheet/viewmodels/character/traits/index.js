@@ -93,7 +93,6 @@ export function TraitsViewModel() {
                 self.currentEditTracked(null);
             }
             self.currentEditItem().tracked(self.currentEditTracked());
-            self.currentEditItem().race('567fbf42-5d5f-41f0-b0b7-3698247857fb');
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.traits(), response.object, self.editItemIndex);
         }
@@ -130,7 +129,6 @@ export function TraitsViewModel() {
     self.addTrait = async () => {
         var trait = self.blankTrait();
         trait.coreUuid(CoreManager.activeCore().uuid());
-        trait.race('567fbf42-5d5f-41f0-b0b7-3698247857fb');
         if (trait.isTracked()) {
             // todo: need logic to actually set the color
             self.blankTracked().color('progress-bar-sky');

@@ -1,7 +1,7 @@
-export { AbilityScores } from './ability_scores.js';
+export { AbilityScore } from './ability_score.js';
+export { Background } from './background.js';
 export { CharacterAppearance } from './appearance.js';
 export { DeathSave } from './death_save.js';
-export { FeaturesTraits } from './feat_traits.js';
 export { Feature } from './feature.js';
 export { Feat } from './feat.js';
 export { Health } from './health.js';
@@ -10,7 +10,7 @@ export { HitDice } from './hit_dice.js';
 export { OtherStats } from './other_stats.js';
 export { Proficiency } from './proficiency.js';
 export { Profile } from './profile.js';
-export { SavingThrows } from './saving_throws.js';
+export { SavingThrow } from './saving_throw.js';
 export { Skill } from './skill.js';
 export { SpellSlot } from './spell_slot.js';
 export { SpellStats } from './spell_stats.js';

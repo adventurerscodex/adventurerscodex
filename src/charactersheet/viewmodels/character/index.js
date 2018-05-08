@@ -1,9 +1,10 @@
 export { AbilityScoresViewModel } from './ability_scores';
+export { AbilityScoresViewModelDelegate } from './ability_scores/delegate.js';
 export { ActionsToolbarViewModel } from './actions_toolbar';
 export { AppearanceViewModel } from './appearance';
 export { ArmorViewModel } from './armor';
 export { ExhibitViewModel } from './exhibit';
-export { FeaturesTraitsViewModel } from './feat_traits';
+export { BackgroundViewModel } from './background';
 export { FeatsViewModel } from './feats';
 export { FeaturesViewModel } from './features';
 export { ItemsViewModel } from './items';

@@ -1,18 +1,17 @@
 import 'bin/popover_bind';
 import {
-    AbilityScores,
+    AbilityScore,
     OtherStats,
     Profile
 } from 'charactersheet/models/character';
 import {
     ArmorClassService,
-    PersistenceService,
     ProficiencyService } from 'charactersheet/services';
 import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { getModifier } from 'charactersheet/models/character/ability_scores';
+import { getModifier } from 'charactersheet/models/character/ability_score';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -20,6 +19,7 @@ export function OtherStatsViewModel() {
     var self = this;
 
     self.otherStats = ko.observable(new OtherStats());
+    self.profile = ko.observable(new Profile());
     self.armorClass = ko.observable();
     self.level = ko.observable('');
     self.experience = ko.observable('');
@@ -30,33 +30,25 @@ export function OtherStatsViewModel() {
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
 
-    self.load = function() {
+    self.load = async () => {
         var key = CoreManager.activeCore().uuid();
-        var otherStats = PersistenceService.findBy(OtherStats, 'characterId', key);
-        if (otherStats.length > 0) {
-            self.otherStats(otherStats[0]);
-        } else {
-            self.otherStats(new OtherStats());
-        }
-        self.otherStats().characterId(key);
+        var otherStats = await OtherStats.ps.read({uuid: key});
+        self.otherStats(otherStats.object);
 
-        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
-        if (profile) {
-            self.level(profile.level());
-            self.experience(profile.exp());
-        }
+        const profile = await Profile.ps.read({uuid: key});
+        self.profile(profile.object);
 
         self.calculateInitiativeLabel();
+        self.updateArmorClass();
 
         // Subscriptions
-        self.otherStats().proficiency.subscribe(self.proficiencyHasChanged);
+        self.otherStats().proficiencyModifier.subscribe(self.proficiencyHasChanged);
         self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
-        self.otherStats().initiative.subscribe(self.initiativeHasChanged);
+        self.otherStats().initiativeModifier.subscribe(self.initiativeHasChanged);
         self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
         self.otherStats().speed.subscribe(self.dataHasChanged);
-        self.level.subscribe(self.levelDataHasChanged);
-        self.experience.subscribe(self.experienceDataHasChanged);
-        Notifications.profile.changed.add(self._dummy.valueHasMutated);
+        self.profile().level.subscribe(self.levelDataHasChanged);
+        self.profile().experience.subscribe(self.experienceDataHasChanged);
         Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
     };
@@ -64,12 +56,14 @@ export function OtherStatsViewModel() {
     // Calculate proficiency label and popover
     self.calculatedProficiencyLabel = ko.pureComputed(function() {
         self._dummy();
-        var proficiencyService = ProficiencyService.sharedService();
-        var level = proficiencyService.proficiencyBonusByLevel();
-        var proficiency = proficiencyService.proficiencyModifier();
+        // TODO: FIX WHEN SERVICE IS REFACTORED
+        // var proficiencyService = ProficiencyService.sharedService();
+        // var level = proficiencyService.proficiencyBonusByLevel();
+        const level = 1;
+        const proficiency = parseInt(self.otherStats().proficiencyModifier());
         self.updateProficiencyPopoverMessage(level, proficiency);
-
-        return ProficiencyService.sharedService().proficiency();
+        return level + proficiency + 1;
+        // return ProficiencyService.sharedService().proficiency();
     });
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
@@ -79,14 +73,17 @@ export function OtherStatsViewModel() {
     };
 
     // Calculate initiative label and popover
-    self.calculateInitiativeLabel = function() {
+    self.calculateInitiativeLabel = async () => {
         var key = CoreManager.activeCore().uuid();
-        var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', key);
-        var dexterityModifier = getModifier(abilityScores.dex()) ? getModifier(abilityScores.dex()) : 0;
-        var initiativeModifier = self.otherStats().initiative() ? parseInt(self.otherStats().initiative()) : 0;
+        const response = await AbilityScore.ps.list({coreUuid: key});
+        const dexterity = response.objects.filter((score, i, _) => {
+            return score.name() === 'Dexterity';
+        })[0];
+        var dexterityModifier = dexterity.getModifier();
+        var initiativeModifier = self.otherStats().initiativeModifier();
         self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
 
-        self.initiativeLabel(dexterityModifier + initiativeModifier);
+        self.initiativeLabel(parseInt(dexterityModifier) + parseInt(initiativeModifier));
     };
 
     self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
@@ -95,69 +92,69 @@ export function OtherStatsViewModel() {
             + 'Initiative = ' + dexterityModifier + ' + ' + initiativeModifier );
     };
 
-    self.updateArmorClassPopoverMessage = function(dexterityModifier, initiativeModifier) {
-        var acService = ArmorClassService.sharedService();
-        var baseAC = acService.baseArmorClass(),
-            dexMod = acService.dexBonus(),
-            magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
-            shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
+    self.updateArmorClassPopoverMessage = function() {
+        // TODO: FIX WHEN THE SERVICE IS REFACTORED
+        // var acService = ArmorClassService.sharedService();
+        // var baseAC = acService.baseArmorClass(),
+        //     dexMod = acService.dexBonus(),
+        //     magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
+        //     shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
+        var baseAC = 10,
+            dexMod = 1,
+            magicModifiers = 0,
+            shield = 0;
 
-        var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId',
-            CoreManager.activeCore().uuid());
-        var modifier = 0;
-        if (otherStats) {
-            modifier = otherStats.armorClassModifier() ? otherStats.armorClassModifier() : 0;
-        }
+        let modifier = self.otherStats().armorClassModifier() ? self.otherStats().armorClassModifier() : 0;
 
         self.armorClassPopover('<span><strong>Armor Class</strong> = ' +
         'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />' +
-        '<strong>Armor Class</strong> = ' + baseAC + ' + ' + dexMod + ' + ' +  magicModifiers +
+        '<strong>Armor Class</strong> = ' + baseAC + ' + ' + dexMod + ' + ' + magicModifiers +
         ' + ' + shield + ' + ' + modifier);
     };
 
     self.updateArmorClass = function() {
         self.updateArmorClassPopoverMessage();
-        self.armorClass(ArmorClassService.sharedService().armorClass());
+        // TODO: FIX WHEN SERVICE IS REFACTORED
+        // self.armorClass(ArmorClassService.sharedService().armorClass());
+        self.armorClass(15);
     };
 
     self.inspirationHasChanged = function() {
-        self.otherStats().save();
+        self.save();
         Notifications.otherStats.inspiration.changed.dispatch();
     };
 
     self.dataHasChanged = function() {
-        self.otherStats().save();
+        self.save();
     };
 
     self.initiativeHasChanged = function() {
-        self.otherStats().save();
+        self.save();
         self.calculateInitiativeLabel();
     };
 
     self.armorClassModifierDataHasChanged = function() {
-        self.otherStats().save();
+        self.save();
         Notifications.stats.armorClassModifier.changed.dispatch();
     };
 
-    self.levelDataHasChanged = function() {
-        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
-            CoreManager.activeCore().uuid());
-        profile.level(self.level());
-        profile.save();
+    self.levelDataHasChanged = async () => {
+        const profile = await self.profile().ps.save();
         Notifications.profile.level.changed.dispatch();
     };
 
-    self.experienceDataHasChanged = function() {
-        var profile = PersistenceService.findFirstBy(Profile, 'characterId',
-            CoreManager.activeCore().uuid());
-        profile.exp(self.experience());
-        profile.save();
+    self.experienceDataHasChanged = async () => {
+        const profile = await self.profile().ps.save();
         Notifications.profile.experience.changed.dispatch();
     };
 
     self.proficiencyHasChanged = function() {
-        self.otherStats().save();
+        self.save();
         Notifications.otherStats.proficiency.changed.dispatch();
+    };
+
+    self.save = async () => {
+        await self.otherStats().ps.save();
     };
 }
 

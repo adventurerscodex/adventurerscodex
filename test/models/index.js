@@ -1,10 +1,10 @@
 import './test_ability_scores';
 import './test_appearance';
 import './test_armor';
+import './test_background';
 import './test_character';
 import './test_death_save';
 import './test_feat';
-import './test_feat_traits';
 import './test_feature';
 import './test_hit_dice';
 import './test_hit_dice_type';

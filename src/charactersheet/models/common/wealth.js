@@ -1,5 +1,5 @@
-import ko from 'knockout';
 import { KOModel } from 'hypnos';
+import ko from 'knockout';
 
 
 export class Wealth extends KOModel {

@@ -2,7 +2,7 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { Armor } from 'charactersheet/models/common/armor';
 import { Item } from 'charactersheet/models/common/item';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
@@ -40,7 +40,7 @@ export function TotalWeightStatusServiceComponent() {
      */
     self.dataHasChanged = function() {
         var key = CoreManager.activeCore().uuid();
-        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key)[0];
+        var scores = PersistenceService.findBy(AbilityScore, 'characterId', key)[0];
         if (!scores || !scores.str()) {
             self._removeStatus();
         } else {

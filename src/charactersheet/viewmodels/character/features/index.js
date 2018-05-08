@@ -10,10 +10,7 @@ import {
     Tracked
 } from 'charactersheet/models';
 import { CharacterClass } from 'charactersheet/models/common';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
 import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
@@ -50,18 +47,10 @@ export function FeaturesViewModel() {
     self.meditation = meditation;
     self.campingTent = campingTent;
 
-    //Static Data
-    self.classOptions = ko.observableArray([]);
-
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Feature.ps.list({coreUuid: key});
         self.features(response.objects);
-
-        const classes = await CharacterClass.ps.list({coreUuid: key});
-        classes.objects.forEach((element, idx, _) => {
-            self.classOptions.push(element.name());
-        });
     };
 
     // Pre-pop methods
@@ -105,7 +94,6 @@ export function FeaturesViewModel() {
                 self.currentEditTracked(null);
             }
             self.currentEditItem().tracked(self.currentEditTracked());
-            self.currentEditItem().characterClass('58df7462-d4f6-40b1-a396-e2813e8f46ce');
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.features(), response.object, self.editItemIndex);
         }
@@ -143,7 +131,6 @@ export function FeaturesViewModel() {
     self.addFeature = async () => {
         var feature = self.blankFeature();
         feature.coreUuid(CoreManager.activeCore().uuid());
-        feature.characterClass('58df7462-d4f6-40b1-a396-e2813e8f46ce');
         if (feature.isTracked()) {
             // todo: need logic to actually set the color
             self.blankTracked().color('progress-bar-sky');

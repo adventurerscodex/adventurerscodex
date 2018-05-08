@@ -5,8 +5,25 @@ export class Profile extends KOModel {
     static __skeys__ = ['core', 'characters', 'profile'];
 
     static mapping = {
-        ignore: ['url'],
+        ignore: ['url']
     };
+
+    coreUuid = ko.observable(null);
+    characterName = ko.observable('');
+    background = ko.observable('');
+    alignment = ko.observable('');
+    diety = ko.observable('');
+    gender = ko.observable('');
+    age = ko.observable('');
+    experience = ko.observable('');
+    weight = ko.observable('');
+    height = ko.observable('');
+    hairColor = ko.observable('');
+    eyeColor = ko.observable('');
+    skinColor = ko.observable('');
+    level = ko.observable('');
+    characterClass = ko.observable('');
+    race = ko.observable('');
 
 //     self.summary = ko.pureComputed(function() {
 //         var desc = ((self.race() && self.race() !== '') &&

@@ -26,9 +26,9 @@ export class SpellSlot extends KOModel {
 
     getMaxSpellSlots() {
         return this.max() ? parseInt(this.max()) : 0;
-    };
+    }
 
     getUsedSpellSlots() {
         return this.used() ? parseInt(this.used()) : 0;
-    };
+    }
 }

@@ -157,30 +157,16 @@ export function TrackerViewModel() {
 
     self.modalFinishedClosing = async () => {
         if (self.modalOpen()) {
-            if (self.editItem().type() == 'Feature') {
-                self.editParent().characterClass('58df7462-d4f6-40b1-a396-e2813e8f46ce');
-            }
-            if (self.editItem().type() == 'Trait') {
-                self.editParent().race('567fbf42-5d5f-41f0-b0b7-3698247857fb');
-            }
             self.editParent().tracked().max(self.editItem().max());
             self.editParent().tracked().resetsOn(self.editItem().resetsOn());
             const response = await self.editParent().ps.save();
             Utility.array.updateElement(self.trackables(), response.object, response.object.uuid());
         }
-        // self.dataHasChanged();
         self.modalOpen(false);
     };
 
     self.dataHasChanged = async function() {
         if (this.ps) {
-            // todo: FIX THIS WHEN THERE IS A HYPNOS UPDATE
-            if (this.tracked().type == 'Feature') {
-                this.characterClass('58df7462-d4f6-40b1-a396-e2813e8f46ce');
-            }
-            if (this.tracked().type == 'Trait') {
-                this.race('567fbf42-5d5f-41f0-b0b7-3698247857fb');
-            }
             await this.ps.save();
             Notifications.tracked.changed.dispatch();
         }
@@ -192,18 +178,18 @@ export function TrackerViewModel() {
 
     self.editTracked = function(item) {
         switch(item.tracked().type) {
-            case 'Feature':
-                self.editParent(new Feature());
-                self.editParent().importValues(item.exportValues());
-                break;
-            case 'Trait':
-                self.editParent(new Trait());
-                self.editParent().importValues(item.exportValues());
-                break;
-            case 'Feat':
-                self.editParent(new Feat());
-                self.editParent().importValues(item.exportValues());
-                break;
+          case 'Feature':
+            self.editParent(new Feature());
+            self.editParent().importValues(item.exportValues());
+            break;
+          case 'Trait':
+            self.editParent(new Trait());
+            self.editParent().importValues(item.exportValues());
+            break;
+          case 'Feat':
+            self.editParent(new Feat());
+            self.editParent().importValues(item.exportValues());
+            break;
         }
         self.editModalTitle(item.name());
         self.editItem(new Tracked());

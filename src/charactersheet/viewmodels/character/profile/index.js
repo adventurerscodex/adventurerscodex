@@ -1,7 +1,6 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Profile } from 'charactersheet/models/character';
 import ko from 'knockout';
 import template from './index.html';
@@ -10,21 +9,17 @@ export function ProfileViewModel() {
     var self = this;
 
     self.placeholderText = '<i>Character Name</i>';
-    self.characterName =  ko.observable('');
+    self.profile = ko.observable();
     self.background = ko.observable('');
-    self.playerName = ko.observable('');
     self.race = ko.observable('');
     self.alignment = ko.observable('');
-    self.diety = ko.observable('');
-    self.typeClass = ko.observable('');
+    self.deity = ko.observable('');
+    self.characterClass = ko.observable('');
     self.gender = ko.observable('');
     self.age = ko.observable('');
-    self.level = ko.observable('');
-    self.experience = ko.observable('');
 
     //Static Data
     self.alignmentOptions = Fixtures.profile.alignmentOptions;
-    self.backgroundOptions = Fixtures.profile.backgroundOptions;
     self.classOptions = Fixtures.profile.classOptions;
     self.raceOptions = Fixtures.profile.raceOptions;
 
@@ -33,70 +28,45 @@ export function ProfileViewModel() {
         self.alignment(value);
     };
 
-    self.setBackground = function(label, value) {
-        self.background(value);
-    };
-
     self.setClass = function(label, value) {
-        self.typeClass(value);
+        self.characterClass(value);
     };
 
     self.setRace = function(label, value) {
         self.race(value);
     };
 
-    self.load = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CoreManager.activeCore().uuid())[0];
-        Notifications.global.save.add(self.dataHasChanged);
+    self.load = async function() {
+        var key = CoreManager.activeCore().uuid();
+        const profileResponse = await Profile.ps.read({uuid: key});
+        const profile = profileResponse.object;
+        self.profile(profile);
 
         if (profile) {
-            self.level(profile.level());
-            self.playerName(profile.playerName());
-            self.characterName(profile.characterName());
             self.background(profile.background());
             self.race(profile.race());
             self.alignment(profile.alignment());
-            self.diety(profile.diety());
-            self.typeClass(profile.typeClass());
+            self.deity(profile.deity());
+            self.characterClass(profile.characterClass());
             self.gender(profile.gender());
             self.age(profile.age());
-            self.experience(profile.exp());
         }
 
         //Subscriptions
-        self.level.subscribe(self.dataHasChanged);
-        self.playerName.subscribe(self.dataHasChanged);
-        self.characterName.subscribe(self.dataHasChanged);
         self.background.subscribe(self.dataHasChanged);
         self.race.subscribe(self.dataHasChanged);
         self.alignment.subscribe(self.dataHasChanged);
-        self.diety.subscribe(self.dataHasChanged);
-        self.typeClass.subscribe(self.dataHasChanged);
+        self.deity.subscribe(self.dataHasChanged);
+        self.characterClass.subscribe(self.dataHasChanged);
         self.gender.subscribe(self.dataHasChanged);
         self.age.subscribe(self.dataHasChanged);
-        self.experience.subscribe(self.dataHasChanged);
-
-        self.level.subscribe(self.levelDataHasChanged);
-        self.characterName.subscribe(self.characterNameDataHasChanged);
+        self.profile().height.subscribe(self.dataHasChanged);
+        self.profile().weight.subscribe(self.dataHasChanged);
+        self.profile().hairColor.subscribe(self.dataHasChanged);
+        self.profile().eyeColor.subscribe(self.dataHasChanged);
+        self.profile().skinColor.subscribe(self.dataHasChanged);
         self.race.subscribe(self.raceDataHasChanged);
-        self.typeClass.subscribe(self.typeClassDataHasChanged);
-        self.experience.subscribe(self.experienceDataHasChanged);
-        self.playerName.subscribe(self.playerNameHasChanged);
-    };
-
-    self.unload = function() {
-        Notifications.global.save.remove(self.dataHasChanged);
-    };
-
-    self.levelDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.level.changed.dispatch();
-    };
-
-    self.characterNameDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.characterName.changed.dispatch();
+        self.characterClass.subscribe(self.typeClassDataHasChanged);
     };
 
     self.raceDataHasChanged = function() {
@@ -109,16 +79,6 @@ export function ProfileViewModel() {
         Notifications.profile.playerClass.changed.dispatch();
     };
 
-    self.playerNameHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.playerName.changed.dispatch();
-    };
-
-    self.experienceDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.experience.changed.dispatch();
-    };
-
     self.dataHasChanged = function() {
         self.saveProfile();
         Notifications.profile.changed.dispatch();
@@ -126,35 +86,15 @@ export function ProfileViewModel() {
 
     //Public Methods
 
-    self.clear = function() {
-        self.characterName('');
-        self.background('');
-        self.playerName('');
-        self.race('');
-        self.alignment('');
-        self.diety('');
-        self.typeClass('');
-        self.gender('');
-        self.age('');
-        self.level('');
-        self.experience('');
-    };
-
-    self.saveProfile = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CoreManager.activeCore().uuid())[0];
-        profile.level(self.level());
-        profile.playerName(self.playerName());
-        profile.characterName(self.characterName());
-        profile.background(self.background());
-        profile.race(self.race());
-        profile.alignment(self.alignment());
-        profile.diety(self.diety());
-        profile.typeClass(self.typeClass());
-        profile.gender(self.gender());
-        profile.age(self.age());
-        profile.exp(self.experience());
-        profile.save();
+    self.saveProfile = async function() {
+        self.profile().background(self.background());
+        self.profile().race(self.race());
+        self.profile().alignment(self.alignment());
+        self.profile().deity(self.deity());
+        self.profile().characterClass(self.characterClass());
+        self.profile().gender(self.gender());
+        self.profile().age(self.age());
+        await self.profile().ps.save();
     };
 }
 

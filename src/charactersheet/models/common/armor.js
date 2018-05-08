@@ -2,7 +2,7 @@ import {
     CoreManager,
     Fixtures
 } from 'charactersheet/utilities';
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { KOModel } from 'hypnos';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 
@@ -13,7 +13,7 @@ export class Armor extends KOModel {
     static __skeys__ = ['core', 'armors'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid', 'equipped', 'magicalModifier']
     };
 
     _dummy = ko.observable(null);
@@ -89,53 +89,4 @@ export class Armor extends KOModel {
     updateValues = () => {
         this._dummy.notifySubscribers();
     };
-
-    dexAbilityScoreModifier = () => {
-        this._dummy();
-        var score = 2;
-        // TODO: FIX THIS WHEN ABILITY SCORES ARE AVAILABLE
-        // try {
-        //     score = PersistenceService.findBy(AbilityScores, 'characterId',
-        //         CoreManager.activeCore().uuid())[0].modifierFor('Dex');
-        // } catch(err) { /*Ignore*/ }
-
-        // if (score === null){
-        //     return null;
-        // }
-        // else {
-        //     return parseInt(score);
-        // }
-    };
-
-    abilityScoreBonus = ko.pureComputed(() => {
-        this._dummy();
-        var dexAbilityScore = this.dexAbilityScoreModifier();
-        if (dexAbilityScore) {
-            if (this.type() === 'Light') {
-                return dexAbilityScore;
-            }
-            else if (this.type() === 'Medium') {
-                return dexAbilityScore >= 2 ? 2 : dexAbilityScore;
-            }
-        }
-        else{
-            return 0;
-        }
-    });
-
-    armorClassLabel = ko.pureComputed(() => {
-        this._dummy();
-        var totalBonus = 0;
-        var abilityScoreBonus = this.abilityScoreBonus();
-        var armorClass = parseInt(this.armorClass());
-
-        if (abilityScoreBonus) {
-            totalBonus += abilityScoreBonus;
-        }
-        if (armorClass) {
-            totalBonus += armorClass;
-        }
-
-        return totalBonus;
-    });
 }

@@ -1,31 +1,5 @@
 <div class="panel panel-default bio">
   <div class="panel-body">
-  	<!-- Names -->
-	  <div class="row">
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Player Name</span>
-            <input type="text"
-                   class="form-control"
-                   id="profilePlayerNameInput"
-                   aria-describedby="basic-addon2"
-                   data-bind='value: playerName' />
-        </div>
-      </div>
-      <div class="col-md-6 col-padded">
-        <div class="input-group">
-          <span class="input-group-addon" id="basic-addon2">Background</span>
-          <input type="text"
-                 class="form-control"
-                 id="profileBackgroundInput"
-                 aria-describedby="basic-addon2"
-                 data-bind='value: background,
-                 autocomplete: { source: backgroundOptions,
-                 onselect: setBackground }' />
-        </div>
-      </div>
-    </div>
-
 	  <div class="row">
       <div class="col-md-6 col-padded">
     	  <div class="input-group">
@@ -46,7 +20,7 @@
                  class="form-control"
                  id="profileDeityInput"
                  aria-describedby="basic-addon2"
-                 data-bind='value: diety'>
+                 data-bind='value: deity'>
         </div>
       </div>
     </div>
@@ -71,7 +45,7 @@
                  class="form-control"
                  id="profileClassInput"
                  aria-describedby="basic-addon2"
-                 data-bind='value: typeClass,
+                 data-bind='value: characterClass,
                  autocomplete: { source: classOptions,
                  onselect: setClass }'>
         </div>
@@ -101,3 +75,53 @@
     </div>
 	</div>
 </div>
+<div class="panel panel-default">
+    <div class="panel-body" data-bind="with: profile">
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Height</span>
+            <input type="text" id="appearanceHeightInput" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: height'>
+          </div>
+        </div>
+        <div class="col-md-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Weight</span>
+            <input type="number"
+                   id="appearanceWeightInput"
+                   class="form-control"
+                   aria-describedby="basic-addon2"
+                   min="1"
+                   max="1500"
+                   data-bind='textInput: weight'>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Hair Color</span>
+            <input type="text" id="appearanceHairColorInput" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: hairColor'>
+          </div>
+        </div>
+        <div class="col-md-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Eye Color</span>
+            <input type="text" id="appearanceEyeColorInput" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: eyeColor'>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <div class="input-group">
+            <span class="input-group-addon" id="basic-addon2">Skin Color</span>
+            <input type="text" id="appearanceSkinColorInput" class="form-control" aria-describedby="basic-addon2"
+              data-bind='textInput: skinColor'>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -4,7 +4,7 @@ import {
     CoreManager,
     Fixtures
 } from 'charactersheet/utilities';
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { KOModel } from 'hypnos';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
@@ -13,13 +13,12 @@ import ko from 'knockout';
 
 
 export class Weapon extends KOModel {
-    static __skeys__ = ['core', 'weapon'];
+    static __skeys__ = ['core', 'weapons'];
 
     static mapping = {
         include: ['coreUuid']
     };
 
-    _dummy = ko.observable(null);
     coreUuid = ko.observable(null);
     name = ko.observable('');
     type = ko.observable('');
@@ -36,6 +35,7 @@ export class Weapon extends KOModel {
     property = ko.observable('');
     description = ko.observable('');
     quantity = ko.observable(1);
+    hitBonusLabel = ko.observable();
 
     weaponProficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
     weaponHandednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
@@ -46,10 +46,6 @@ export class Weapon extends KOModel {
     FINESSE = 'finesse';
     RANGED = 'ranged';
 
-    updateValues() {
-        this._dummy.notifySubscribers();
-    };
-
     totalWeight = ko.computed(() => {
         var qty = parseInt(this.quantity()) || 1;
         var perWeight = parseInt(this.weight()) || 0;
@@ -58,48 +54,54 @@ export class Weapon extends KOModel {
     });
 
     proficiencyScore() {
-        return ProficiencyService.sharedService().proficiency();
-    };
-
-    strAbilityScoreModifier() {
-        var score = null;
+        // TODO: FIX ONCE SERVICE IS REFACTORED
+        // return ProficiencyService.sharedService().proficiency();
         return 2;
-        // TODO: Fix when AS are available
-        // try {
-        //     score = PersistenceService.findBy(AbilityScores, 'characterId',
-        //         CoreManager.activeCore().uuid())[0].modifierFor('Str');
-        // } catch(err) { /*Ignore*/ }
-        // if (score === null){
-        //     return null;
-        // }
-        // else {
-        //     return parseInt(score);
-        // }
-    };
+    }
 
-    dexAbilityScoreModifier() {
+    strAbilityScoreModifier = async () => {
         var score = null;
-        return 1;
-        // try {
-        //     score = PersistenceService.findBy(AbilityScores, 'characterId',
-        //         CoreManager.activeCore().uuid())[0].modifierFor('Dex');
-        // } catch(err) { /*Ignore*/ }
-        // if (score === null){
-        //     return null;
-        // }
-        // else {
-        //     return parseInt(score);
-        // }
+        try {
+            var key = CoreManager.activeCore().uuid();
+            const response = await AbilityScore.ps.list({coreUuid: key});
+            score = response.objects.filter((score, i, _) => {
+                return score.name() === 'Strength';
+            })[0];
+        } catch(err) { /*Ignore*/ }
+
+        if (score === null) {
+            return null;
+        } else {
+            return score.getModifier();
+        }
     };
 
-    abilityScoreBonus = ko.pureComputed(() => {
-        this._dummy();
+    dexAbilityScoreModifier = async () => {
+        var score = null;
+        try {
+            var key = CoreManager.activeCore().uuid();
+            const response = await AbilityScore.ps.list({coreUuid: key});
+            score = response.objects.filter((score, i, _) => {
+                return score.name() === 'Dexterity';
+            })[0];
+        } catch(err) { /*Ignore*/ }
+
+        if (score === null) {
+            return null;
+        } else {
+            return score.getModifier();
+        }
+    };
+
+    abilityScoreBonus = async () => {
+        let dexBonus;
+        let strBonus;
         if (this.type().toLowerCase() === this.RANGED) {
-            return this.dexAbilityScoreModifier();
+            return await this.dexAbilityScoreModifier();
         } else {
             if (this.property().toLowerCase().indexOf(this.FINESSE) >= 0) {
-                var dexBonus = this.dexAbilityScoreModifier();
-                var strBonus = this.strAbilityScoreModifier();
+                dexBonus = await this.dexAbilityScoreModifier();
+                strBonus = await this.strAbilityScoreModifier();
 
                 if (dexBonus) {
                     return dexBonus > strBonus ? dexBonus : strBonus;
@@ -107,15 +109,14 @@ export class Weapon extends KOModel {
                     return strBonus ? strBonus:0;
                 }
             } else {
-                return this.strAbilityScoreModifier();
+                return strBonus;
             }
         }
-    });
+    };
 
-    totalBonus = ko.pureComputed(() => {
-        this._dummy();
+    totalBonus = async () => {
         var bonus = 0;
-        var abilityScoreBonus = this.abilityScoreBonus();
+        var abilityScoreBonus = await this.abilityScoreBonus();
         var proficiencyBonus = this.proficiencyScore();
         var magicalModifier = parseInt(this.magicalModifier());
         var toHitModifer = parseInt(this.toHitModifier());
@@ -133,19 +134,17 @@ export class Weapon extends KOModel {
             bonus += toHitModifer;
         }
         return bonus;
-    });
+    };
 
-    hitBonusLabel = ko.pureComputed(() => {
-        this._dummy();
-
-        var totalBonus = this.totalBonus();
+    updateHitBonusLabel = async () => {
+        var totalBonus = await this.totalBonus();
         if (totalBonus) {
-            return totalBonus >= 0 ? ('+ ' + totalBonus) : '- ' +
-            Math.abs(totalBonus);
+            this.hitBonusLabel(totalBonus >= 0 ? ('+ ' + totalBonus) : '- ' +
+            Math.abs(totalBonus));
         } else {
-            return '+ 0';
+            this.hitBonusLabel('+ 0');
         }
-    });
+    };
 
     weaponRangeLabel = ko.pureComputed(() => {
         if (this.type().toLowerCase() === 'ranged') {
@@ -169,8 +168,6 @@ export class Weapon extends KOModel {
     });
 
     magicalModifierLabel = ko.pureComputed(() => {
-        this._dummy();
-
         var magicalModifier = this.magicalModifier();
         if (magicalModifier) {
             return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
@@ -181,8 +178,6 @@ export class Weapon extends KOModel {
     });
 
     toHitModifierLabel = ko.pureComputed(() => {
-        this._dummy();
-
         var toHitModifier = this.toHitModifier();
         if (toHitModifier) {
             return toHitModifier >= 0 ? ('+ ' + toHitModifier) : '- ' +

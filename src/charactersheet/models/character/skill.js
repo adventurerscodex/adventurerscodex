@@ -1,4 +1,4 @@
-import { AbilityScores } from './ability_scores';
+import { AbilityScore } from './ability_score';
 import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import ko from 'knockout';
@@ -17,6 +17,14 @@ export class Skill extends KOModel {
     modifier = ko.observable(null);
     abilityScore = ko.observable(null);
     proficiency = ko.observable('');
+    bonusLabel = ko.observable('');
+    passiveBonus = ko.observable('');
+
+    toSchemaValues = (values) => {
+        const abilityScoreId = values.abilityScore.uuid;
+        values.abilityScore = abilityScoreId;
+        return values;
+    }
 
     proficiencyScore() {
         this._dummy();
@@ -37,45 +45,51 @@ export class Skill extends KOModel {
         return 0;
     }
 
-    abilityScoreModifier() {
-        this._dummy();
+    abilityScoreModifier = async () => {
         var score = null;
-        // TODO: FIX WHEN ABILITY SCORES ARE IN PLACE
-        // try {
-        //     score = PersistenceService.findBy(AbilityScores, 'characterId',
-        //         CoreManager.activeCore().uuid())[0].modifierFor(self.abilityScore());
-        // } catch(err) { /*Ignore*/ }
+        try {
+            var key = CoreManager.activeCore().uuid();
+            const response = await AbilityScore.ps.list({coreUuid: key});
+            score = response.objects.filter((score, i, _) => {
+                return score.name() === this.abilityScore().name();
+            })[0];
+        } catch(err) { /*Ignore*/ }
 
-        return score ? parseInt(score) : 0;
+        if (score === null) {
+            return null;
+        } else {
+            return score.getModifier();
+        }
     }
 
-    bonus = ko.pureComputed(() => {
-        this._dummy();
+    bonus = async () => {
         var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
+        const abilityScore = await this.abilityScoreModifier();
         if (this.proficiency()) {
-            bonus += this.proficiencyScore() + this.abilityScoreModifier();
-        } else if (this.abilityScoreModifier()) {
-            bonus += this.abilityScoreModifier();
+            bonus += this.proficiencyScore() + abilityScore;
+        } else if (abilityScore) {
+            bonus += abilityScore;
         }
 
         return bonus;
-    });
+    };
 
-    bonusLabel = ko.pureComputed(() => {
-        this._dummy();
+    updateBonuses = async () => {
         var str = '+ 0';
-        if (this.bonus()) {
-            str = this.bonus() >= 0 ? '+ ' + this.bonus() : '- ' +
-            Math.abs(this.bonus());
+        let bonus = await this.bonus();
+        if (bonus) {
+            str = bonus >= 0 ? '+ ' + bonus : '- ' +
+            Math.abs(bonus);
         }
 
         // TODO: FIND A FIX FOR THIS HACK
         try {
             str += ' <i><small>('
                 + this.abilityScore().name() + ')</small></i>';
-        } catch(e) {}
-        return str;
-    });
+        } catch(e) { }
+        this.bonusLabel(str);
+        this.passiveBonus(10 + bonus);
+    };
 
     nameLabel = ko.pureComputed(() => {
         this._dummy();
@@ -84,15 +98,8 @@ export class Skill extends KOModel {
         // TODO: FIND A FIX FOR THIS HACK
         try {
             str += ' <i><small class="skills-ability-type">(' + this.abilityScore().name() + ')</small></i>';
-        } catch(e) {}
+        } catch(e) { }
 
         return str;
-    });
-
-    passiveBonus = ko.pureComputed(() => {
-        this._dummy();
-        var bonus = 10 + this.bonus();
-
-        return bonus;
     });
 }

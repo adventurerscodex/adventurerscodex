@@ -1,12 +1,12 @@
 <ul class="nav nav-tabs tabs">
-  <!-- <li role="presentation"
+  <li role="presentation"
       id="tabStatsLink"
       data-bind="click: activateStatsTab, css: statsTabStatus">
     <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab" class="tab-subtext">
       <img class="tab-icon" data-bind="attr: { src: icons.statsTab }" /></br>
       <span class="text-center" id="tabStatsSpan"><small>Stats</small></span>
     </a>
-  </li> -->
+  </li>
   <li role="presentation"
       id="tabSkillsLink"
       data-bind="click: activateSkillsTab, css: skillsTabStatus">
@@ -39,7 +39,6 @@
       <span class="text-center" id="tabInventorySpan"><small>Inventory</small></span>
     </a>
   </li>
-  <!--
   <li role="presentation"
       id="tabNotesLink"
       data-bind="click: activateNotesTab, css: notesTabStatus">
@@ -56,6 +55,7 @@
       <span class="text-center" id="tabProfileSpan"><small>Profile</small></span>
     </a>
   </li>
+  <!--
   <li role="presentation"
       id="tabChatLink"
       data-bind="click: activateChatTab, css: chatTabStatus">
@@ -84,18 +84,18 @@
   </li> -->
 </ul>
 <div class="tab-content">
-  <!-- <actions-toolbar params="wellState: wellState"></actions-toolbar>
+  <!-- <actions-toolbar params="wellState: wellState"></actions-toolbar> -->
   <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
     <div class="row">
       <div class="col-sm-4 col-lg-3 hidden-xs">
-        <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/>
+        <!-- <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/> -->
       </div>
       <div class="col-sm-8 col-lg-9 col-padded">
-        <div class="h3">
+        <!-- <div class="h3">
           Hit Points and Hit Dice<br />
           <small>Click on your max Hit Points to increase them when you level
             up. Click on a die icon to track expended hit dice.</small>
-        </div>
+        </div> -->
         <stats></stats>
       </div>
     </div>
@@ -131,7 +131,7 @@
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 <!-- End Stats Tab -->
 
 <div role="tabpanel" class="tab-pane" id="skills" data-bind="css: skillsTabStatus">
@@ -259,7 +259,7 @@
       </div>
       <div class="row">
         <div class="col-sm-12 col-padded">
-          <!-- <wealth></wealth> -->
+          <wealth></wealth>
         </div>
         <div class="col-sm-12 col-padded">
           <magic-items></magic-items>
@@ -283,20 +283,20 @@
 </div>
 <!-- End Inventory Tab -->
 
-<!-- <div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
+<div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
   <div class="row">
     <div class="col-sm-12 col-padded">
       <div class="h3">
         Notes<br />
         <small>“Consult the Book of Armaments!” -King Arthur</small>
       </div>
-      <notes></notes>
+      <!-- <notes></notes> -->
     </div>
   </div>
-</div> -->
+</div>
 <!-- End Notes Tab -->
 
-<!-- <div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
+<div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
   <div class="row">
     <div class="col-sm-4 hidden-xs">
       <img data-bind="attr: { src: icons.profileSection }" alt="Profile tab" style="width:100%;"/>
@@ -307,15 +307,14 @@
         <small>This stuff doesn't change very often!</small>
       </div>
       <profile></profile>
-      <appearance></appearance>
     </div>
   </div>
   <div class="row">
     <div class="col-sm-12 col-padded">
-      <feat-traits></feat-traits>
+      <background></background>
     </div>
   </div>
-</div> -->
+</div>
 <!-- End Profile tab -->
 
 <!-- <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">

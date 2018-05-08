@@ -49,6 +49,9 @@ export function WeaponsViewModel() {
         var key = CoreManager.activeCore().uuid();
         const response = await Weapon.ps.list({coreUuid: key});
         self.weapons(response.objects);
+        self.weapons().forEach(function(e, i, _) {
+            e.updateHitBonusLabel();
+        });
 
         Notifications.abilityScores.changed.add(self.valueHasChanged);
         Notifications.stats.changed.add(self.valueHasChanged);
@@ -183,14 +186,9 @@ export function WeaponsViewModel() {
         self.modalOpen(true);
     };
 
-    self.clear = function() {
-        self.weapons([]);
-        Notifications.weapon.changed.dispatch();
-    };
-
     self.valueHasChanged = function() {
         self.weapons().forEach(function(e, i, _) {
-            e.updateValues();
+            e.updateHitBonusLabel();
         });
         Notifications.weapon.changed.dispatch();
     };

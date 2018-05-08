@@ -1,44 +1,19 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
-export function OtherStats() {
-    var self = this;
-    self.ps = PersistenceService.register(OtherStats, self);
-    self.mapping = {
-        include: ['characterId', 'armorClassModifier', 'initiative', 'speed',
-        'inspiration', 'proficiency']
+export class OtherStats extends KOModel {
+    static __skeys__ = ['core', 'characters', 'otherStats'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable(null);
-    self.armorClassModifier = ko.observable(0);
-    self.initiative = ko.observable(0);
-    self.speed = ko.observable(0);
-    self.inspiration = ko.observable(0);
-    self.proficiency = ko.observable(0);
-
-    self.clear = function() {
-        var values = new OtherStats().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
+    coreUuid = ko.observable(null);
+    armorClassModifier = ko.observable(0);
+    initiativeModifier = ko.observable(0);
+    speed = ko.observable(0);
+    inspiration = ko.observable(false);
+    proficiencyModifier = ko.observable(0);
 }
-OtherStats.__name = 'OtherStats';
-
-
-PersistenceService.addToRegistry(OtherStats);

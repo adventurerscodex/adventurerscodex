@@ -85,13 +85,13 @@ export function MagicItemsViewModel() {
         const response = await MagicItem.ps.list({coreUuid: key});
         self.magicItems(response.objects);
 
-        self.magicItems().forEach(function(e, i, _) {
+        self.magicItems().forEach(function(e) {
             e.attuned.subscribe(self.attunedHasChanged, e);
         });
     };
 
-    self.attunedHasChanged = function() {
-        this.ps.save();
+    self.attunedHasChanged = async function() {
+        await this.ps.save();
         // self.magicItems().forEach(function(e, i, _) {
         //     e.save();
         // });
@@ -195,10 +195,6 @@ export function MagicItemsViewModel() {
         self.currentEditItem(new MagicItem());
         self.currentEditItem().importValues(item.exportValues());
         self.modalOpen(true);
-    };
-
-    self.clear = function() {
-        self.magicItems([]);
     };
 }
 

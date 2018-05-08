@@ -1,6 +1,6 @@
 import './test_appearance';
 import './test_armor';
-import './test_feat_traits';
+import './test_background';
 import './test_feats';
 import './test_features';
 import './test_items';

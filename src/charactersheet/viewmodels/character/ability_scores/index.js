@@ -1,13 +1,10 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    AbilityScores,
-    getModifier,
-    getStrModifier } from 'charactersheet/models/character/ability_scores';
-import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
+import { AbilityScoresViewModelDelegate } from 'charactersheet/viewmodels/character/ability_scores/delegate';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -15,62 +12,29 @@ import template from './index.html';
 export function AbilityScoresViewModel() {
     var self = this;
 
-    self.abilityScores = ko.observable(new AbilityScores());
+    self.delegate;
+    self.abilityScores = ko.observableArray([]);
     self.modalStatus = ko.observable(false);
-    self.editItem = ko.observable();
+    self.editItems = ko.observableArray([]);
     self.firstModalElementHasFocus = ko.observable(false);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
+    self.load = async () => {
+        self.delegate = new AbilityScoresViewModelDelegate();
         var key = CoreManager.activeCore().uuid();
-        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key);
-        if (scores.length > 0) {
-            self.abilityScores(scores[0]);
-        } else {
-            self.abilityScores(new AbilityScores());
-        }
-        self.abilityScores().characterId(key);
-
-        //Subscriptions
-        self.abilityScores().str.subscribe(self.dataHasChanged);
-        self.abilityScores().dex.subscribe(self.dexterityHasChanged);
-        self.abilityScores().con.subscribe(self.dataHasChanged);
-        self.abilityScores().int.subscribe(self.intelligenceHasChanged);
-        self.abilityScores().wis.subscribe(self.dataHasChanged);
-        self.abilityScores().cha.subscribe(self.dataHasChanged);
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.abilityScores().save();
-    };
-
-    self.dataHasChanged = function() {
-        self.abilityScores().save();
-        Notifications.abilityScores.changed.dispatch();
-    };
-
-    self.intelligenceHasChanged = function() {
-        self.abilityScores().save();
-        Notifications.abilityScores.intelligence.changed.dispatch();
-        Notifications.abilityScores.changed.dispatch();
-    };
-
-    self.dexterityHasChanged = function() {
-        self.abilityScores().save();
-        Notifications.abilityScores.dexterity.changed.dispatch();
-        Notifications.abilityScores.changed.dispatch();
+        const response = await AbilityScore.ps.list({coreUuid: key});
+        self.abilityScores(response.objects);
     };
 
     // Modal Methods
 
     self.openModal = function() {
-        self.editItem(new AbilityScores());
-        self.editItem().importValues(self.abilityScores().exportValues());
+        // Copy existing array to new one
+        self.editItems([]);
+        self.abilityScores().forEach((score, i, _) => {
+            let editScore = new AbilityScore();
+            editScore.importValues(score.exportValues());
+            self.editItems.push(editScore);
+        });
 
         self.modalStatus(true);
          // Alert the modal even if the value didn't technically change.
@@ -78,16 +42,19 @@ export function AbilityScoresViewModel() {
     };
 
     self.modalFinishedAnimating = function() {
+        // TODO: Since the form is dynamically generated, we have lost the ability to give a
+        // TODO: specific field focus
         self.firstModalElementHasFocus(true);
         self.firstModalElementHasFocus.valueHasMutated();
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         if (self.modalStatus()) {
-            self.abilityScores().importValues(self.editItem().exportValues());
+            const response = await self.delegate.abilityScoresDidChange(
+                self.abilityScores(), self.editItems());
+            self.abilityScores(response);
         }
         self.modalStatus(false);
-        self.abilityScores().save();
     };
 }
 

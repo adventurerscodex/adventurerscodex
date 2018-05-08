@@ -16,7 +16,7 @@
          <span class="fa fa-info-circle" id="otherStatsProficiencyPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
       </span>
        <span class="input-group-addon" id="otherStatsProficiencySpan" data-bind="text: calculatedProficiencyLabel"></span>
-       <input type="number" class="form-control" id="otherStatsProficiencyBonusModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiency">
+       <input type="number" class="form-control" id="otherStatsProficiencyBonusModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiencyModifier">
      </div>
    </div>
  </div>
@@ -27,7 +27,7 @@
           <span class="fa fa-info-circle" id="otherStatsInitiativePopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
        </span>
        <span class="input-group-addon" id="otherStatsInitiativeSpan" data-bind="text: initiativeLabel"></span>
-       <input type="number" class="form-control" id="otherStatsInitiativeModiferInput" aria-describedby="basic-addon2" data-bind="value: otherStats().initiative">
+       <input type="number" class="form-control" id="otherStatsInitiativeModiferInput" aria-describedby="basic-addon2" data-bind="value: otherStats().initiativeModifier">
      </div>
    </div>
    <div class="col-md-6 col-padded">
@@ -43,14 +43,14 @@
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">Level</span>
        <input type="number" class="form-control" id="otherStatsLevelInput" aria-describedby="basic-addon2"
-        data-bind="value: level" min="0">
+        data-bind="value: profile().level" min="0">
      </div>
    </div>
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon" id="basic-addon2">Experience</span>
        <input type="number" class="form-control" id="otherStatsExperienceInput" aria-describedby="basic-addon2"
-        data-bind="value: experience" min="0">
+        data-bind="value: profile().experience" min="0">
      </div>
    </div>
  </div>
@@ -58,7 +58,7 @@
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon">Inspiration</span>
-       <input type="number" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="value: otherStats().inspiration" min="0">
+       <input type="checkbox" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="checked: otherStats().inspiration, value: otherStats().inspiration">
      </div>
    </div>
  </div>

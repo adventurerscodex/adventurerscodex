@@ -1,4 +1,4 @@
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { ArmorClassService } from 'charactersheet/services/character/armor_class_service';
 import { CoreManager } from 'charactersheet/utilities';
 import { Health } from 'charactersheet/models/character/health';
@@ -54,7 +54,7 @@ export var CharacterCardFields = [
         refreshOn: Notifications.characters.changed,
         valueAccessor: function() {
             var character = CoreManager.activeCore();
-            return character ? character.playerType().key : 'character';
+            return character ? character.type.name() : 'character';
         }
     }, {
         name: 'imageUrl',

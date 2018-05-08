@@ -23,7 +23,7 @@
       <!-- ko foreach: filteredAndSortedTraits -->
         <tr class="clickable">
           <td data-bind="text: name, click: $parent.editTrait" href="#"></td>
-          <td data-bind="text: race().name, click: $parent.editTrait" href="#"></td>
+          <td data-bind="text: race, click: $parent.editTrait" href="#"></td>
           <td class="col-content-vertical">
             <a data-bind="click: $parent.removeTrait" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -207,7 +207,7 @@
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>
-              <small data-bind="text: race().name"></small>
+              <small data-bind="text: race"></small>
             </div>
             <!-- ko if: isTracked -->
             <div class="row" >
@@ -259,7 +259,7 @@
                          class="form-control"
                          id="traitEditRaceInput"
                          placeholder="Trance"
-                         data-bind='textInput: race().name,
+                         data-bind='textInput: race,
                         autocomplete: { source: $parent.raceOptions,
                         onselect: $parent.populateRaceEdit }'>
                 </div>

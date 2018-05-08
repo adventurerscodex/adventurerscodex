@@ -1,52 +1,18 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { Fixtures } from 'charactersheet/utilities';
+import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
-export function HitDice() {
-    var self = this;
-    self.ps = PersistenceService.register(HitDice, self);
+export class HitDice extends KOModel {
+    static __skeys__ = ['core', 'characters', 'hitDice'];
 
-    self.characterId = ko.observable(null);
-    self.hitDiceUsed = ko.observable(false);
-
-    self.clear = function() {
-        self.hitDiceUsed(false);
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.hitDiceUsed(values.hitDiceUsed);
-    };
-
-    self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            hitDiceUsed: self.hitDiceUsed()
-        };
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
-
-    self.toggleHitDice = function() {
-        self.hitDiceUsed(!self.hitDiceUsed());
-        self.save();
-    };
-
-    self.hitDiceIcon = ko.pureComputed(function() {
-        var css = 'dice-full';
-        if (self.hitDiceUsed()) {
-            css = 'dice-empty';
-        }
-        return css;
-    });
+    coreUuid = ko.observable(null);
+    used = ko.observable(0);
+    type = ko.observable('');
+    hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
 }
-HitDice.__name = 'HitDice';
-
-PersistenceService.addToRegistry(HitDice);
