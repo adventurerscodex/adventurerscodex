@@ -1,7 +1,10 @@
 import ko from 'knockout'
 
-import 'bootstrap'
-import 'font-awesome-webpack'
+// Global bootstrap modules
+import 'bootstrap/js/collapse';
+import 'bootstrap/js/modal';
+import 'bootstrap/js/tooltip';
+import 'bootstrap/js/popover';
 import Spinner from 'spin'
 
 // Load Global KO Bindings
