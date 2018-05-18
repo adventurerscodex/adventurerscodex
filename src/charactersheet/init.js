@@ -37,15 +37,17 @@ export var init = function(viewModel) {
     // Set global URI settings.
     URI.fragmentPrefix = '';
 
-    // Import static data
-    Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
-        $.getJSON(location.url, function(data) {
-            DataRepository[location.key] = data.values;
-            if (location.key === 'features') {
-                DataRepository[location.key + 'DisplayNames'] = data.values.map(function(item, idx, _){
-                    return item.displayName;
-                });
-            }
+    // Import static data after application has finished loading its assets
+    $(window).on('load', function() {
+        Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
+            $.getJSON(location.url, function(data) {
+                DataRepository[location.key] = data.values;
+                if (location.key === 'features') {
+                    DataRepository[location.key + 'DisplayNames'] = data.values.map(function(item, idx, _){
+                        return item.displayName;
+                    });
+                }
+            });
         });
     });
 
