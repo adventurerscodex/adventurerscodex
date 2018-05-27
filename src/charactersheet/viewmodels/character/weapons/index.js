@@ -137,6 +137,7 @@ export function WeaponsViewModel() {
         if (self.modalOpen()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.weapons(), response.object, self.editItemIndex);
+            self.updateWeaponCalculations(self.editItemIndex());
         }
 
         self.modalOpen(false);
@@ -191,6 +192,13 @@ export function WeaponsViewModel() {
             e.updateHitBonusLabel();
         });
         Notifications.weapon.changed.dispatch();
+    };
+
+    self.updateWeaponCalculations = (itemId) => {
+        let weapon = self.weapons().filter((item) => {
+            return item.uuid() === itemId;
+        })[0];
+        weapon.updateHitBonusLabel();
     };
 }
 

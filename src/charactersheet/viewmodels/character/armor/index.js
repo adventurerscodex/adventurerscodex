@@ -49,11 +49,7 @@ export function ArmorViewModel() {
         self.armors(response.objects);
 
         //Subscriptions
-        // Notifications.abilityScores.changed.add(self.valueHasChanged);
-        // self.armors.subscribe(() => {
-        //     console.log(this);
-            // Notifications.armor.changed.dispatch();
-        // });
+        Notifications.abilityScores.changed.add(self.valueHasChanged);
     };
 
     self.armorEquippedLabel = function(armor) {
@@ -133,11 +129,11 @@ export function ArmorViewModel() {
         if (self.modalOpen()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.armors(), response.object, self.editItemIndex);
+            Notifications.armor.changed.dispatch();
         }
 
         self.equipArmorHandler(self.currentEditItem(), self.editItemIndex);
         self.modalOpen(false);
-        // Notifications.armor.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {

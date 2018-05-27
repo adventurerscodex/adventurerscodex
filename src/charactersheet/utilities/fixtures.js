@@ -89,6 +89,13 @@ export var Fixtures = {
         ]
     },
     armor : {
+        constants: {
+            types: {
+                shield: 'Shield',
+                light: 'Light',
+                medium: 'Medium'
+            }
+        },
         armorTypeOptions : [
             'Light', 'Medium', 'Heavy', 'Shield'],
         armorStealthOptions : [
@@ -478,5 +485,34 @@ export var Fixtures = {
             'status': 'out of abilities',
             'color': 'danger'
         }]
+    },
+
+    abilityScores: {
+        constants: {
+            strength: {
+                name: 'Strength',
+                shortName: 'STR'
+            },
+            dexterity: {
+                name: 'Dexterity',
+                shortName: 'DEX'
+            },
+            constitution: {
+                name: 'Constitution',
+                shortName: 'CON'
+            },
+            intelligence: {
+                name: 'Intelligence',
+                shortName: 'INT'
+            },
+            wisdom: {
+                name: 'Wisdom',
+                shortName: 'WIS'
+            },
+            charisma: {
+                name: 'Charisma',
+                shortName: 'CHA'
+            }
+        }
     }
 };

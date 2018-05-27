@@ -62,11 +62,9 @@ export class Weapon extends KOModel {
     strAbilityScoreModifier = async () => {
         var score = null;
         try {
-            var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid: key});
-            score = response.objects.filter((score, i, _) => {
-                return score.name() === 'Strength';
-            })[0];
+            var coreUuid = CoreManager.activeCore().uuid();
+            const response = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.strength.name});
+            score = response.objects[0];
         } catch(err) { /*Ignore*/ }
 
         if (score === null) {

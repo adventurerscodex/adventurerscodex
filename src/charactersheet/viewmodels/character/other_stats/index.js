@@ -6,7 +6,8 @@ import {
 } from 'charactersheet/models/character';
 import {
     ArmorClassService,
-    ProficiencyService } from 'charactersheet/services';
+    ProficiencyService
+} from 'charactersheet/services';
 import {
     CoreManager,
     Notifications
@@ -92,17 +93,12 @@ export function OtherStatsViewModel() {
             + 'Initiative = ' + dexterityModifier + ' + ' + initiativeModifier );
     };
 
-    self.updateArmorClassPopoverMessage = function() {
-        // TODO: FIX WHEN THE SERVICE IS REFACTORED
-        // var acService = ArmorClassService.sharedService();
-        // var baseAC = acService.baseArmorClass(),
-        //     dexMod = acService.dexBonus(),
-        //     magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
-        //     shield = acService.hasShield() ? acService.getEquippedShieldBonus() : 0;
-        var baseAC = 10,
-            dexMod = 1,
-            magicModifiers = 0,
-            shield = 0;
+    self.updateArmorClassPopoverMessage = async function() {
+        var acService = ArmorClassService.sharedService();
+        var baseAC = acService.baseArmorClass(),
+            dexMod = await acService.dexBonusFromArmor(),
+            magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
+            shield = acService.getEquippedShieldBonus();
 
         let modifier = self.otherStats().armorClassModifier() ? self.otherStats().armorClassModifier() : 0;
 
@@ -114,9 +110,7 @@ export function OtherStatsViewModel() {
 
     self.updateArmorClass = function() {
         self.updateArmorClassPopoverMessage();
-        // TODO: FIX WHEN SERVICE IS REFACTORED
-        // self.armorClass(ArmorClassService.sharedService().armorClass());
-        self.armorClass(15);
+        self.armorClass(ArmorClassService.sharedService().armorClass());
     };
 
     self.inspirationHasChanged = function() {

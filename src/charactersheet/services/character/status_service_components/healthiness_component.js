@@ -3,7 +3,6 @@ import { DeathSave } from 'charactersheet/models/character/death_save';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
@@ -23,53 +22,50 @@ export function HealthinessStatusServiceComponent() {
     self.HIT_DICE_WEIGHT = 0.30;
 
     self.init = function() {
-        Notifications.health.changed.add(self.dataHasChanged);
-        Notifications.hitDice.changed.add(self.dataHasChanged);
-        Notifications.stats.deathSaves.fail.changed.add(self._initDeathSavesFail);
-        Notifications.stats.deathSaves.notFail.changed.add(self._initDeathSavesNotFail);
-        Notifications.stats.deathSaves.success.changed.add(self._initDeathSavesSuccess);
-        Notifications.stats.deathSaves.notSuccess.changed.add(self._initDeathSavesNotSuccess);
-        self.dataHasChanged();
+        // Notifications.health.changed.add(self.dataHasChanged);
+        // Notifications.hitDice.changed.add(self.dataHasChanged);
+        // Notifications.stats.deathSaves.fail.changed.add(self._initDeathSavesFail);
+        // Notifications.stats.deathSaves.notFail.changed.add(self._initDeathSavesNotFail);
+        // Notifications.stats.deathSaves.success.changed.add(self._initDeathSavesSuccess);
+        // Notifications.stats.deathSaves.notSuccess.changed.add(self._initDeathSavesNotSuccess);
+        // self.dataHasChanged();
     };
 
     /**
      * This method determines whether to update or remove the Healthiness status
      * component from the player's status line.
      */
-    self.dataHasChanged = function() {
+    self.dataHasChanged = async function() {
         var key = CoreManager.activeCore().uuid();
-        var health = PersistenceService.findFirstBy(Health, 'characterId', key);
-        var hitDice = PersistenceService.findBy(HitDice, 'characterId', key);
-        var deathSaves = PersistenceService.findBy(DeathSave, 'characterId', key);
+
+        // Fetch Hit Dice
+        const hitDiceResponse = await HitDice.ps.read({uuid: key});
+        let hitDice = hitDiceResponse.object;
+
+        // Fetch death saves
+        const deathSavesResponse = await DeathSave.ps.list({coreUuid: key});
+        let deathSaves = deathSavesResponse.objects;
+
+        // Fetch Health
+        const healthResponse = await Health.ps.read({uuid: key});
+        let health = healthResponse.object;
 
         var deathSavesDidFail = false;
         var deathSavesDidSucceed = false;
 
-        if (!health && !hitDice) { return; }
+        if (deathSaves.length > 0) {
+            const deathSaveFailure = deathSaves.filter((save, i, _) => {
+                return save.type() === 'failure';
+            })[0];
 
-        if (health || hitDice) {
-            var deathSaveSuccesses = 0;
-            var deathSaveFailures = 0;
+            const deathSaveSuccess = deathSaves.filter((save, i, _) => {
+                return save.type() === 'success';
+            })[0];
 
-            if (deathSaves.length > 0) {
-                for (var i=0; i<3; i++) {
-                    if (deathSaves[i] !== undefined && deathSaves[i].deathSaveSuccess()) {
-                        deathSaveSuccesses++;
-                    }
-                }
-                for (var j=3; j<6; j++) {
-                    if (deathSaves[j] !== undefined && deathSaves[j].deathSaveFailure()) {
-                        deathSaveFailures++;
-                    }
-                }
-                if (deathSaveSuccesses === 3) {
-                    deathSavesDidSucceed = true;
-                }
-                if (deathSaveFailures === 3) {
-                    deathSavesDidFail = true;
-                }
-            }
+            deathSavesDidFail = deathSaveFailure.used() == 3 ? true : false;
+            deathSavesDidSucceed = deathSaveSuccess.used() == 3 ? true : false;
         }
+
         self._updateStatus(deathSavesDidFail, deathSavesDidSucceed);
     };
 
@@ -82,36 +78,36 @@ export function HealthinessStatusServiceComponent() {
 
     // _alertPlayerHasDied was called and all 3 death saves did not fail
     self._initDeathSavesNotFail = function() {
-        // TODO: FIX DIS LATER
-        // self._updateStatus(false, false);
+        self._updateStatus(false, false);
     };
 
     // 3 death saves succeeded
     self._initDeathSavesSuccess = function() {
-        // TODO: FIX DIS LATER
-        // self._updateStatus(false, true);
+        self._updateStatus(false, true);
     };
 
     // _alertPlayerIsStable was called and all 3 death saves did not succeed
     self._initDeathSavesNotSuccess = function() {
-        // TODO: FIX DIS LATER
-        // self._updateStatus(false, false);
+        self._updateStatus(false, false);
     };
 
-    self._updateStatus = function(deathSavesDidFail,
-                                  deathSavesDidSucceed) {
+    self._updateStatus = async function(deathSavesDidFail, deathSavesDidSucceed) {
         var key = CoreManager.activeCore().uuid();
-        var health = PersistenceService.findFirstBy(Health, 'characterId', key);
-        var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
+        const healthResponse = await Health.ps.read({uuid: key});
+        let health = healthResponse.object;
 
-        var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
-        if (!status) {
-            status = new Status();
-            status.characterId(key);
-            status.identifier(self.statusIdentifier);
-        }
+        const hitDiceResponse = await HitDice.ps.read({uuid: key});
+        let hitDice = hitDiceResponse.object;
+
+        // TODO: TALK TO BRIAN
+        // var status = PersistenceService.findByPredicates(Status,
+        //     [new KeyValuePredicate('characterId', key),
+        //     new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+        // if (!status) {
+        //     status = new Status();
+        //     status.characterId(key);
+        //     status.identifier(self.statusIdentifier);
+        // }
 
         var weightedTotal = self._getWeightedTotal(health,
                                                    hitDiceList,
