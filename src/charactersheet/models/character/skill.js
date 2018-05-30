@@ -1,6 +1,7 @@
 import { AbilityScore } from './ability_score';
 import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
 
 
@@ -28,10 +29,7 @@ export class Skill extends KOModel {
 
     proficiencyScore() {
         this._dummy();
-        var key = CoreManager.activeCore().uuid();
-        // TODO: FIX WHEN SERVICE IS UPDATED
-        // var profBonus = ProficiencyService.sharedService().proficiency();
-        var profBonus = 5;
+        var profBonus = ProficiencyService.sharedService().proficiency();
 
         if (this.proficiency() === 'half') {
             return Math.floor(profBonus / 2);

@@ -27,10 +27,8 @@ export class SavingThrow extends KOModel {
         return values;
     }
 
-    // TODO: FIX WHEN SERVICE IS REFACTORED
     proficiencyScore = () => {
-        // return ProficiencyService.sharedService().proficiency();
-        return 2;
+        return ProficiencyService.sharedService().proficiency();
     };
 
     abilityScoreModifier = async () => {

@@ -24,14 +24,16 @@ export function OtherStatsViewModel() {
     self.armorClass = ko.observable();
     self.level = ko.observable('');
     self.experience = ko.observable('');
-    self._dummy = ko.observable();
+    self.proficiencyService = ko.observable();
+    self.proficiencyLabel = ko.observable();
     self.initiativeLabel = ko.observable();
-
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
 
     self.load = async () => {
+        self.proficiencyService(ProficiencyService.sharedService());
+
         var key = CoreManager.activeCore().uuid();
         var otherStats = await OtherStats.ps.read({uuid: key});
         self.otherStats(otherStats.object);
@@ -41,6 +43,7 @@ export function OtherStatsViewModel() {
 
         self.calculateInitiativeLabel();
         self.updateArmorClass();
+        self.calculatedProficiencyLabel();
 
         // Subscriptions
         self.otherStats().proficiencyModifier.subscribe(self.proficiencyHasChanged);
@@ -55,17 +58,12 @@ export function OtherStatsViewModel() {
     };
 
     // Calculate proficiency label and popover
-    self.calculatedProficiencyLabel = ko.pureComputed(function() {
-        self._dummy();
-        // TODO: FIX WHEN SERVICE IS REFACTORED
-        // var proficiencyService = ProficiencyService.sharedService();
-        // var level = proficiencyService.proficiencyBonusByLevel();
-        const level = 1;
+    self.calculatedProficiencyLabel = function() {
+        var level = self.proficiencyService().proficiencyBonusByLevel();
         const proficiency = parseInt(self.otherStats().proficiencyModifier());
         self.updateProficiencyPopoverMessage(level, proficiency);
-        return level + proficiency + 1;
-        // return ProficiencyService.sharedService().proficiency();
-    });
+        self.proficiencyLabel(self.proficiencyService().proficiency());
+    };
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
         self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '

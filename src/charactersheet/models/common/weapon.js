@@ -54,9 +54,7 @@ export class Weapon extends KOModel {
     });
 
     proficiencyScore() {
-        // TODO: FIX ONCE SERVICE IS REFACTORED
-        // return ProficiencyService.sharedService().proficiency();
-        return 2;
+        return ProficiencyService.sharedService().proficiency();
     }
 
     strAbilityScoreModifier = async () => {
