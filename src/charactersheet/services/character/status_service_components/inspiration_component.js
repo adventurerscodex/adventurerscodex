@@ -20,25 +20,26 @@ export function InspirationStatusServiceComponent() {
 
     self.init = function() {
         Notifications.otherStats.inspiration.changed.add(self.dataHasChanged);
-        self.dataHasChanged();  //Calculate the first one.
+
+        // Calculate the first one.
+        self.dataHasChanged();
     };
 
     /**
      * This method generates and persists a status that reflects
      * the character's encumbrance.
      */
-    self.dataHasChanged = function() {
+    self.dataHasChanged = async () => {
         var key = CoreManager.activeCore().uuid();
-        var stats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
+        var otherStatsResponse = await OtherStats.ps.read({uuid: key});
+        let otherStats = otherStatsResponse.object;
 
-        if (!stats) { return; }
+        if (!otherStats) { return; }
 
-        if (stats) {
-            if (!parseInt(stats.inspiration())) {
-                self._removeStatus();
-            } else {
-                self._updateStatus();
-            }
+        if (!otherStats.inspiration()) {
+            self._removeStatus();
+        } else {
+            self._updateStatus();
         }
     };
 
@@ -50,6 +51,7 @@ export function InspirationStatusServiceComponent() {
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+
         if (!status) {
             status = new Status();
             status.characterId(key);

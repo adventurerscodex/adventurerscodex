@@ -56,7 +56,7 @@ export function SpellStatsViewModel() {
     };
 
     self.dataHasChanged = function() {
-        // Notifications.spellStats.changed.dispatch();
+        Notifications.spellStats.changed.dispatch();
     };
 }
 

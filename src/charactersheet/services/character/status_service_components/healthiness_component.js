@@ -3,7 +3,7 @@ import { DeathSave } from 'charactersheet/models/character/death_save';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
+import { Profile } from 'charactersheet/models/character/profile';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { getHealthTypeEnum } from 'charactersheet/models/common/status_weight_pair';
@@ -22,13 +22,14 @@ export function HealthinessStatusServiceComponent() {
     self.HIT_DICE_WEIGHT = 0.30;
 
     self.init = function() {
-        // Notifications.health.changed.add(self.dataHasChanged);
-        // Notifications.hitDice.changed.add(self.dataHasChanged);
-        // Notifications.stats.deathSaves.fail.changed.add(self._initDeathSavesFail);
-        // Notifications.stats.deathSaves.notFail.changed.add(self._initDeathSavesNotFail);
-        // Notifications.stats.deathSaves.success.changed.add(self._initDeathSavesSuccess);
-        // Notifications.stats.deathSaves.notSuccess.changed.add(self._initDeathSavesNotSuccess);
-        // self.dataHasChanged();
+        Notifications.health.changed.add(self.dataHasChanged);
+        Notifications.hitDice.changed.add(self.dataHasChanged);
+        Notifications.health.damage.changed.add(self.dataHasChanged);
+        Notifications.stats.deathSaves.fail.changed.add(self._initDeathSavesFail);
+        Notifications.stats.deathSaves.notFail.changed.add(self._initDeathSavesNotFail);
+        Notifications.stats.deathSaves.success.changed.add(self._initDeathSavesSuccess);
+        Notifications.stats.deathSaves.notSuccess.changed.add(self._initDeathSavesNotSuccess);
+        self.dataHasChanged();
     };
 
     /**
@@ -38,33 +39,23 @@ export function HealthinessStatusServiceComponent() {
     self.dataHasChanged = async function() {
         var key = CoreManager.activeCore().uuid();
 
-        // Fetch Hit Dice
-        const hitDiceResponse = await HitDice.ps.read({uuid: key});
-        let hitDice = hitDiceResponse.object;
-
-        // Fetch death saves
+        // // Fetch death saves
         const deathSavesResponse = await DeathSave.ps.list({coreUuid: key});
         let deathSaves = deathSavesResponse.objects;
-
-        // Fetch Health
-        const healthResponse = await Health.ps.read({uuid: key});
-        let health = healthResponse.object;
 
         var deathSavesDidFail = false;
         var deathSavesDidSucceed = false;
 
-        if (deathSaves.length > 0) {
-            const deathSaveFailure = deathSaves.filter((save, i, _) => {
-                return save.type() === 'failure';
-            })[0];
+        const deathSaveFailure = deathSaves.filter((save, i, _) => {
+            return save.type() === 'failure';
+        })[0];
 
-            const deathSaveSuccess = deathSaves.filter((save, i, _) => {
-                return save.type() === 'success';
-            })[0];
+        const deathSaveSuccess = deathSaves.filter((save, i, _) => {
+            return save.type() === 'success';
+        })[0];
 
-            deathSavesDidFail = deathSaveFailure.used() == 3 ? true : false;
-            deathSavesDidSucceed = deathSaveSuccess.used() == 3 ? true : false;
-        }
+        deathSavesDidFail = deathSaveFailure.used() == 3 ? true : false;
+        deathSavesDidSucceed = deathSaveSuccess.used() == 3 ? true : false;
 
         self._updateStatus(deathSavesDidFail, deathSavesDidSucceed);
     };
@@ -99,20 +90,20 @@ export function HealthinessStatusServiceComponent() {
         const hitDiceResponse = await HitDice.ps.read({uuid: key});
         let hitDice = hitDiceResponse.object;
 
-        // TODO: TALK TO BRIAN
-        // var status = PersistenceService.findByPredicates(Status,
-        //     [new KeyValuePredicate('characterId', key),
-        //     new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
-        // if (!status) {
-        //     status = new Status();
-        //     status.characterId(key);
-        //     status.identifier(self.statusIdentifier);
-        // }
+        const profileResponse = await Profile.ps.read({uuid: key});
+        let profile = profileResponse.object;
 
-        var weightedTotal = self._getWeightedTotal(health,
-                                                   hitDiceList,
-                                                   deathSavesDidFail,
-                                                   deathSavesDidSucceed);
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', key),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+        if (!status) {
+            status = new Status();
+            status.characterId(key);
+            status.identifier(self.statusIdentifier);
+        }
+
+        var weightedTotal = self._getWeightedTotal(health, hitDice, profile, deathSavesDidFail,
+            deathSavesDidSucceed);
 
         var phrase = StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), weightedTotal);
 
@@ -121,18 +112,16 @@ export function HealthinessStatusServiceComponent() {
         status.value(weightedTotal);
 
         status.save();
-        // Notifications.status.changed.dispatch();
-        // Notifications.status.healthiness.changed.dispatch();
+        Notifications.status.changed.dispatch();
+        Notifications.status.healthiness.changed.dispatch();
     };
 
     /**
      * This method calculates the weighted values and performs special handling
      * for dead, unconscious and stable, and unconscious states.
      */
-    self._getWeightedTotal = function(health,
-                                      hitDiceList,
-                                      deathSavesDidFail,
-                                      deathSavesDidSucceed) {
+    self._getWeightedTotal = function(health, hitDice, profile, deathSavesDidFail,
+            deathSavesDidSucceed) {
 
         var valueWeightPairs = [];
 
@@ -142,17 +131,17 @@ export function HealthinessStatusServiceComponent() {
         }
 
         // Character is dead
-        if (health.hitpoints() === 0 && deathSavesDidFail) {
+        if (health.regularHitpointsRemaining() === 0 && deathSavesDidFail) {
             return -2;
         }
 
         // Character is unconscious and stable
-        if (health.hitpoints() === 0 && deathSavesDidSucceed) {
+        if (health.regularHitpointsRemaining() === 0 && deathSavesDidSucceed) {
             return -1;
         }
 
         // Character is unconscious
-        if (health.hitpoints() === 0) {
+        if (health.regularHitpointsRemaining() === 0) {
             return 0.0;
         }
 
@@ -160,10 +149,8 @@ export function HealthinessStatusServiceComponent() {
             valueWeightPairs.push(self.prepareHealthValueWeightPairs(health));
         }
 
-        if (hitDiceList.length > 0) {
-            valueWeightPairs.push(
-                self.prepareHitDiceValueWeightPairs(hitDiceList)
-            );
+        if (hitDice) {
+            valueWeightPairs.push(self.prepareHitDiceValueWeightPairs(hitDice, profile));
         }
 
         var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
@@ -189,14 +176,8 @@ export function HealthinessStatusServiceComponent() {
      * @param hitDiceList  active character's list of HitDice models
      * @return StatusWeightPair
      */
-    self.prepareHitDiceValueWeightPairs = function(hitDiceList) {
-        var availableHitDice = 0;
-        hitDiceList.forEach(function(hitDice, i, _) {
-            if (!hitDice.hitDiceUsed()) {
-                availableHitDice++;
-            }
-        });
-        var value = availableHitDice / hitDiceList.length;
+    self.prepareHitDiceValueWeightPairs = function(hitDice, profile) {
+        var value = hitDice.used() / profile.level();
 
         return new StatusWeightPair(value, self.HIT_DICE_WEIGHT);
     };

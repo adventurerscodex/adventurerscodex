@@ -56,7 +56,6 @@ export function StatsViewModel() {
         self.health().tempHitPoints.subscribe(self.tempHpDataHasChanged);
         self.health.subscribe(self.resetDeathSaves);
 
-        // TODO: FIX WHEN ACTIONS HAS BEEN REFACTORED
         Notifications.events.longRest.add(self.resetOnLongRest);
         Notifications.profile.level.changed.add(self.updateProfile);
         self._alertPlayerHasDied();
@@ -138,7 +137,6 @@ export function StatsViewModel() {
         owner: self
     });
 
-    // TODO: FIX WHEN ACTIONS HAS BEEN REFACTORED
     self.calculateHitDice = () => {
         const level = self.profile().level();
 
@@ -288,7 +286,6 @@ export function StatsViewModel() {
      * Fired when a long rest notification is recieved.
      * Resets health and hit dice.
      */
-    // TODO: FIX WHEN ACTIONS HAS BEEN REFACTORED
     self.resetOnLongRest = function() {
         self.resetHitDice();
         self.health().damage(0);
@@ -307,26 +304,21 @@ export function StatsViewModel() {
      *
      * This will be used primarily for long rest resets.
      */
-    // TODO: FIX WHEN ACTIONS HAS BEEN REFACTORED
     self.resetHitDice = async () => {
         var key = CoreManager.activeCore().uuid();
-        const response = await Profile.ps.read({uuid: key});
-        const profile = response.object;
-        var level = profile.level();
+        var level = self.profile().level();
         var restoredHitDice = Math.floor(level / 2) < 1 ? 1 : Math.floor(level / 2);
 
-        ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
-            if (hitDice.hitDiceUsed() === true) {
-                if (restoredHitDice !== 0) {
-                    hitDice.hitDiceUsed(false);
-                    restoredHitDice -= 1;
-                }
-            }
-        });
+        var remainingHitDice = self.hitDice().used() - restoredHitDice;
+        if (remainingHitDice < 0) {
+            self.hitDice().used(0);
+        } else {
+            self.hitDice().used(remainingHitDice);
+        }
 
-        self.hitDiceList().forEach(function(e, i, _) {
-            e.save();
-        });
+        await self.saveHitDice();
+
+        self.calculateHitDice();
     };
 
     // Determine if death saves should be visible

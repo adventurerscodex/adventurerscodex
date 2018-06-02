@@ -46,10 +46,16 @@ export function FeatsViewModel() {
     self.campingTent = campingTent;
 
     self.load = async () => {
+        await self.loadFeats();
+
+        Notifications.tracked.feat.changed.add(self.loadFeats);
+    };
+
+    self.loadFeats = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Feat.ps.list({coreUuid: key});
         self.feats(response.objects);
-    };
+    }
 
     // Pre-pop methods
     self.featsPrePopFilter = function(request, response) {
@@ -74,7 +80,7 @@ export function FeatsViewModel() {
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
@@ -83,7 +89,8 @@ export function FeatsViewModel() {
                 self.currentEditTracked(null);
             }
             self.currentEditItem().tracked(self.currentEditTracked());
-            Utility.array.updateElement(self.feats(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.feats(), response.object, self.editItemIndex);
         }
 
         self.currentEditItem(new Feat());

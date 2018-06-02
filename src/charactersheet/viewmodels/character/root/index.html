@@ -73,7 +73,7 @@
     </a>
   </li> -->
   <!-- Right tabs -->
-  <!-- <li role="presentation" class="secondary-nav">
+  <li role="presentation" class="secondary-nav">
     <button class="btn btn-sm btn-primary" id="actionsActionsButton" data-toggle="collapse"
       data-bind="click: toggleWellOpen"
       data-target="#actionsCollapse" aria-expanded="false"
@@ -81,21 +81,21 @@
         Actions
         <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
     </button>
-  </li> -->
+  </li>
 </ul>
 <div class="tab-content">
-  <!-- <actions-toolbar params="wellState: wellState"></actions-toolbar> -->
+  <actions-toolbar params="wellState: wellState"></actions-toolbar>
   <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
     <div class="row">
       <div class="col-sm-4 col-lg-3 hidden-xs">
-        <!-- <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/> -->
+        <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/>
       </div>
       <div class="col-sm-8 col-lg-9 col-padded">
-        <!-- <div class="h3">
+        <div class="h3">
           Hit Points and Hit Dice<br />
           <small>Click on your max Hit Points to increase them when you level
             up. Click on a die icon to track expended hit dice.</small>
-        </div> -->
+        </div>
         <stats></stats>
       </div>
     </div>

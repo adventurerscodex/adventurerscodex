@@ -83,7 +83,7 @@ export function ItemsViewModel() {
         if (self.modalOpen()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.items(), response.object, self.editItemIndex);
-            // Notifications.item.changed.dispatch();
+            Notifications.item.changed.dispatch();
         }
 
         self.modalOpen(false);
@@ -153,14 +153,14 @@ export function ItemsViewModel() {
         self.blankItem().coreUuid(CoreManager.activeCore().uuid());
         const newItem = await self.blankItem().ps.create();
         self.items.push(newItem.object);
-        // Notifications.item.changed.dispatch();
+        Notifications.item.changed.dispatch();
         self.blankItem(new Item());
     };
 
     self.removeItem = async(item) => {
         await item.ps.delete();
         self.items.remove(item);
-        // Notifications.item.changed.dispatch();
+        Notifications.item.changed.dispatch();
     };
 
     self.editItem = function(item) {

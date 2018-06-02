@@ -161,7 +161,19 @@ export function TrackerViewModel() {
             self.editParent().tracked().resetsOn(self.editItem().resetsOn());
             const response = await self.editParent().ps.save();
             Utility.array.updateElement(self.trackables(), response.object, response.object.uuid());
+            switch(self.editItem().type()) {
+                case 'Feature':
+                    Notifications.tracked.feature.changed.dispatch();
+                    break;
+                case 'Trait':
+                    Notifications.tracked.trait.changed.dispatch();
+                    break;
+                case 'Feat':
+                    Notifications.tracked.feat.changed.dispatch();
+                    break;
+            }
         }
+
         self.modalOpen(false);
     };
 

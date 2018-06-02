@@ -34,12 +34,13 @@ export function StatusLineViewModel(params) {
 
     // Private Methods
 
-    self.coreHasChanged = function() {
+    self.coreHasChanged = async () => {
         const key = CoreManager.activeCore().uuid();
         const statuses = PersistenceService.findBy(Status, 'characterId', key);
-        Profile.ps.read({ uuid: key }).then(response => {
-            self.statusLine(self.getStatusLine(response.object, statuses));
-        });
+        const profileResponse = await Profile.ps.read({uuid: key});
+        let profile = profileResponse.object;
+
+        self.statusLine(self.getStatusLine(profile, statuses));
     };
 
     self.getStatusLine = function(profile, statuses) {

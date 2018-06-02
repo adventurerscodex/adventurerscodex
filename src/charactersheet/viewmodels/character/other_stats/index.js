@@ -111,8 +111,8 @@ export function OtherStatsViewModel() {
         self.armorClass(ArmorClassService.sharedService().armorClass());
     };
 
-    self.inspirationHasChanged = function() {
-        self.save();
+    self.inspirationHasChanged = async () => {
+        await self.save();
         Notifications.otherStats.inspiration.changed.dispatch();
     };
 
@@ -120,13 +120,13 @@ export function OtherStatsViewModel() {
         self.save();
     };
 
-    self.initiativeHasChanged = function() {
-        self.save();
+    self.initiativeHasChanged = async () => {
+        await self.save();
         self.calculateInitiativeLabel();
     };
 
-    self.armorClassModifierDataHasChanged = function() {
-        self.save();
+    self.armorClassModifierDataHasChanged = async () => {
+        await self.save();
         Notifications.stats.armorClassModifier.changed.dispatch();
     };
 
@@ -140,8 +140,8 @@ export function OtherStatsViewModel() {
         Notifications.profile.experience.changed.dispatch();
     };
 
-    self.proficiencyHasChanged = function() {
-        self.save();
+    self.proficiencyHasChanged = async () => {
+        await self.save();
         Notifications.otherStats.proficiency.changed.dispatch();
     };
 

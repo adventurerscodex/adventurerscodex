@@ -318,7 +318,16 @@ export var Notifications = {
     },
 
     tracked: {
-        changed: new Signal()
+        changed: new Signal(),
+        feat: {
+            changed: new Signal()
+        },
+        feature: {
+            changed: new Signal()
+        },
+        trait: {
+            changed: new Signal()
+        }
     },
 
     weapon: {

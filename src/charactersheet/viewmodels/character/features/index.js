@@ -48,6 +48,12 @@ export function FeaturesViewModel() {
     self.campingTent = campingTent;
 
     self.load = async () => {
+        await self.loadFeatures();
+
+        Notifications.tracked.feature.changed.add(self.loadFeatures);
+    };
+
+    self.loadFeatures = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Feature.ps.list({coreUuid: key});
         self.features(response.objects);

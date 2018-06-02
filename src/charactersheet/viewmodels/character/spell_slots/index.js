@@ -116,7 +116,7 @@ export function SpellSlotsViewModel() {
      */
     self.resetShortRest = function() {
         ko.utils.arrayForEach(self.slots(), function(slot) {
-            if (slot.resetsOn() === Slot.REST_TYPE.SHORT_REST) {
+            if (slot.resetsOn() === Fixtures.resting.shortRestEnum) {
                 slot.used(0);
             }
         });

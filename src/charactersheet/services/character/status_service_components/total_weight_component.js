@@ -1,5 +1,6 @@
 import {
     CoreManager,
+    Fixtures,
     Notifications
 } from 'charactersheet/utilities';
 import { AbilityScore } from 'charactersheet/models/character/ability_score';
@@ -31,20 +32,22 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.item.changed.add(self.dataHasChanged);
         Notifications.magicItem.changed.add(self.dataHasChanged);
         Notifications.wealth.changed.add(self.dataHasChanged);
-        self.dataHasChanged();  //Calculate the first one.
+        // Calculate the first one.
+        self.dataHasChanged();
     };
 
     /**
      * This method generates and persists a status that reflects
      * the character's encumbrance.
      */
-    self.dataHasChanged = function() {
-        var key = CoreManager.activeCore().uuid();
-        var scores = PersistenceService.findBy(AbilityScore, 'characterId', key)[0];
-        if (!scores || !scores.str()) {
+    self.dataHasChanged = async () => {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const response = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.strength.name});
+        const score = response.objects[0];
+        if (!score) {
             self._removeStatus();
         } else {
-            self._updateStatus();
+            self._updateStatus(score);
         }
     };
 
@@ -69,17 +72,16 @@ export function TotalWeightStatusServiceComponent() {
 
     /* Private Methods */
 
-    self._updateStatus = function() {
+    self._updateStatus = async (score) => {
         var key = CoreManager.activeCore().uuid();
-        var scores = PersistenceService.findBy(AbilityScores, 'characterId', key)[0];
 
         var weight = 0;
 
-        weight += self._getWeightFor(Armor, 'armorWeight');
-        weight += self._getWeightFor(Weapon, 'totalWeight');
-        weight += self._getWeightFor(Item, 'totalWeight');
-        weight += self._getWeightFor(MagicItem, 'magicItemWeight');
-        weight += self._getWeightFor(Wealth, 'totalWeight');
+        weight += await self.getWeightForArmors();
+        weight += await self.getWeightForWeapons();
+        weight += await self.getWeightForItems();
+        weight += await self.getWeightForMagicItems();
+        weight += await self.getWeightForWealth();
 
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
@@ -91,7 +93,7 @@ export function TotalWeightStatusServiceComponent() {
         }
 
         status.name(self.getDescription(weight));
-        status.type(self.getType(scores.str(), weight));
+        status.type(self.getType(score.value(), weight));
 
         status.save();
         Notifications.status.changed.dispatch();
@@ -108,11 +110,13 @@ export function TotalWeightStatusServiceComponent() {
         }
     };
 
-    self._getWeightFor = function(model, property) {
-        var weight = 0;
+    self.getWeightForArmors = async () => {
         var key = CoreManager.activeCore().uuid();
-        PersistenceService.findBy(model, 'characterId', key).forEach(function(instance, idx, _) {
-            var weightValue = parseFloat(ko.unwrap(instance[property]));
+        const response = await Armor.ps.list({coreUuid: key});
+        const armors = response.objects;
+        var weight = 0;
+        armors.forEach(function(armor) {
+            var weightValue = parseFloat(armor.weight());
             if (weightValue) {
                 weight += weightValue;
             }
@@ -120,4 +124,52 @@ export function TotalWeightStatusServiceComponent() {
         return weight;
     };
 
+    self.getWeightForWeapons = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Weapon.ps.list({coreUuid: key});
+        const weapons = response.objects;
+        var weight = 0;
+        weapons.forEach(function(weapon) {
+            var weightValue = parseFloat(weapon.weight()) * weapon.quantity();
+            if (weightValue) {
+                weight += weightValue;
+            }
+        });
+        return weight;
+    };
+
+    self.getWeightForItems = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Item.ps.list({coreUuid: key});
+        const items = response.objects;
+        var weight = 0;
+        items.forEach(function(item) {
+            var weightValue = parseFloat(item.weight()) * item.quantity();
+            if (weightValue) {
+                weight += weightValue;
+            }
+        });
+        return weight;
+    };
+
+    self.getWeightForMagicItems = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await MagicItem.ps.list({coreUuid: key});
+        const magicItems = response.objects;
+        var weight = 0;
+        magicItems.forEach(function(magicItem) {
+            var weightValue = parseFloat(magicItem.weight());
+            if (weightValue) {
+                weight += weightValue;
+            }
+        });
+        return weight;
+    };
+
+    self.getWeightForWealth = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Wealth.ps.read({uuid: key});
+        const wealth = response.object;
+        return wealth.totalWeight();
+    };
 }

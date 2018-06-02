@@ -179,11 +179,13 @@ export function ArmorViewModel() {
         self.equipArmorHandler(newArmor.object, newArmor.object.uuid);
         self.armors.push(newArmor.object);
         self.blankArmor(new Armor());
+        Notifications.armor.changed.dispatch();
     };
 
     self.removeArmor = async (armor) => {
         await armor.ps.delete();
         self.armors.remove(armor);
+        Notifications.armor.changed.dispatch();
     };
 
     self.editArmor = function(armor) {

@@ -48,6 +48,12 @@ export function TraitsViewModel() {
     self.raceOptions = Fixtures.profile.raceOptions;
 
     self.load = async () => {
+        await self.loadTraits();
+
+        Notifications.tracked.trait.changed.add(self.loadTraits);
+    };
+
+    self.loadTraits = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Trait.ps.list({coreUuid: key});
         self.traits(response.objects);

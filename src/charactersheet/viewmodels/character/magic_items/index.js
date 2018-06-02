@@ -181,13 +181,13 @@ export function MagicItemsViewModel() {
         const newMagicItem = await item.ps.create();
         self.magicItems.push(newMagicItem.object);
         self.blankMagicItem(new MagicItem());
-        // Notifications.magicItem.changed.dispatch();
+        Notifications.magicItem.changed.dispatch();
     };
 
     self.removeItem = async (item) => {
         await item.ps.delete();
         self.magicItems.remove(item);
-        // Notifications.magicItem.changed.dispatch();
+        Notifications.magicItem.changed.dispatch();
     };
 
     self.editItem = function(item) {
