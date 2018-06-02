@@ -13,7 +13,7 @@ export { Note } from './note.js';
 export { Party } from './party.js';
 export { pCard } from './pCard.js';
 export { PlayerCard } from './player_card.js';
-export { PlayerImage } from './player_image.js';
+export { ProfileImage } from './player_image.js';
 export { PlayerInfo } from './player_info.js';
 export { PlayerTypes } from './player_types.js';
 export { Presence } from './presence.js';

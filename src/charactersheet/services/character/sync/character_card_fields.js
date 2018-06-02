@@ -1,9 +1,12 @@
+import 'babel-polyfill';
+import {
+    CoreManager,
+    Fixtures
+} from 'charactersheet/utilities';
 import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { ArmorClassService } from 'charactersheet/services/character/armor_class_service';
-import { CoreManager } from 'charactersheet/utilities';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
-import { HitDiceType } from 'charactersheet/models/character/hit_dice_type';
 import { ImageModel } from 'charactersheet/models/common/image';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities/notifications';
@@ -31,22 +34,25 @@ export var CharacterCardFields = [
     }, {
         name: 'name',
         refreshOn: Notifications.profile.characterName.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
             return profile ? profile.characterName() : '';
         }
     }, {
         name: 'playerName',
         refreshOn: Notifications.profile.playerName.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
             return profile ? profile.playerName() : '';
         }
     }, {
         name: 'playerSummary',
         refreshOn: Notifications.profile.characterName.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
             return profile ? profile.summary() : '';
         }
     }, {
@@ -59,18 +65,16 @@ export var CharacterCardFields = [
     }, {
         name: 'imageUrl',
         refreshOn: Notifications.playerImage.changed,
-        valueAccessor: function() {
+        valueAccessor: async () => {
             var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
-            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CoreManager.activeCore().uuid());
+            const imageResponse = await ProfileImage.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const image = imageResponse.object;
             if (!image) { return defaultImage; }
-            if (image.imageSource() === 'link') {
-                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CoreManager.activeCore().uuid());
-                if (!imageModel) { return defaultImage; }
-                var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
+            if (image.type() === 'link') {
+                var convertedImage = Utility.string.createDirectDropboxLink(image.sourceUrl());
                 return convertedImage !== '' ? convertedImage : defaultImage;
-            } else if (image.imageSource() === 'email') {
-                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CoreManager.activeCore().uuid());
-                return info ? info.gravatarUrl() : defaultImage;
+            } else if (image.type() === 'email') {
+                return image.gravatarUrl() ? image.gravatarUrl() : defaultImage;
             } else {
                 return defaultImage;
             }
@@ -78,113 +82,117 @@ export var CharacterCardFields = [
     }, {
         name: 'race',
         refreshOn: Notifications.profile.race.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
             return profile ? profile.race() : '';
         }
     }, {
         name: 'playerClass',
         refreshOn: Notifications.profile.playerClass.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
-            return profile ? profile.typeClass() : '';
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
+            return profile ? profile.characterClass() : '';
         }
     }, {
         name: 'level',
         refreshOn: Notifications.profile.level.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
             return profile ? profile.level() : '';
         }
     }, {
         name: 'experience',
         refreshOn: Notifications.profile.experience.changed,
-        valueAccessor: function() {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', CoreManager.activeCore().uuid());
-            return profile ? profile.exp() : '';
+        valueAccessor: async () => {
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
+            return profile ? profile.experience() : '';
         }
     }, {
         name: 'armorClass',
         refreshOn: Notifications.armorClass.changed,
-        valueAccessor: function() {
+        valueAccessor: function () {
             var acService = ArmorClassService.sharedService();
             return acService.armorClass() ? acService.armorClass() : 0;
         }
     }, {
         name: 'gold',
         refreshOn: Notifications.wealth.changed,
-        valueAccessor: function() {
-            var wealth = PersistenceService.findFirstBy(Wealth, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const response = await Wealth.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const wealth = response.object;
             return wealth ? wealth.worthInGold() : 0;
         }
     }, {
         name: 'maxHitPoints',
         refreshOn: Notifications.health.maxHitPoints.changed,
-        valueAccessor: function() {
-            var health = PersistenceService.findFirstBy(Health, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const health = healthResponse.object;
             return health ? health.maxHitpoints() : 0;
         }
     }, {
         name: 'damage',
         refreshOn: Notifications.health.damage.changed,
-        valueAccessor: function() {
-            var health = PersistenceService.findFirstBy(Health, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const health = healthResponse.object;
             return health ? health.damage() : 0;
         }
     }, {
         name: 'tempHitPoints',
         refreshOn: Notifications.health.tempHitPoints.changed,
-        valueAccessor: function() {
-            var health = PersistenceService.findFirstBy(Health, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const health = healthResponse.object;
             return health ? health.tempHitpoints() : 0;
         }
     }, {
         name: 'hitDiceType',
         refreshOn: Notifications.hitDiceType.changed,
-        valueAccessor: function() {
-            var hitDiceType = PersistenceService.findFirstBy(HitDiceType, 'characterId', CoreManager.activeCore().uuid());
-            return hitDiceType ? hitDiceType.hitDiceType() : '';
+        valueAccessor: async () => {
+            const hitDiceResponse = await HitDice.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const hitDiceType = hitDiceResponse.object;
+            return hitDiceType ? hitDiceType.type() : '';
         }
     }, {
         name: 'hitDice',
         refreshOn: Notifications.hitDice.changed,
-        valueAccessor: function() {
-            var hitDice = PersistenceService.findBy(HitDice, 'characterId', CoreManager.activeCore().uuid());
-            if (!hitDice) { return; }
-            var totalHitDice = 0;
-            hitDice.forEach(function(die, idx, _) {
-                if (!die.hitDiceUsed()) {
-                    totalHitDice++;
-                }
-            });
-            return totalHitDice + '/' + hitDice.length;
+        valueAccessor: async () => {
+            const hitDiceResponse = await HitDice.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const hitDice = hitDiceResponse.object;
+            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+            const profile = profileResponse.object;
+            if (!hitDice || !profile) { return; }
+            return hitDice.used() + '/' + profile.level();
         }
     }, {
         name: 'passivePerception',
         refreshOn: Notifications.skills.perception.changed,
-        valueAccessor: function() {
-            var predicates = [
-                new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
-                new KeyValuePredicate('name', 'Perception')
-            ];
-            var skill = PersistenceService.findByPredicates(Skill, predicates)[0];
+        valueAccessor: async () => {
+            const skillResponse = await Skill.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: 'Perception'});
+            var skill = skillResponse.objects[0];
 
             return skill ? skill.passiveBonus() : 0;
         }
     }, {
         name: 'passiveIntelligence',
         refreshOn: Notifications.abilityScores.intelligence.changed,
-        valueAccessor: function() {
-            var abilityScores = PersistenceService.findFirstBy(AbilityScores, 'characterId', CoreManager.activeCore().uuid());
-            var modifier = abilityScores.modifierFor('int');
-            modifier = modifier ? modifier : 0;
-            return abilityScores ? 10 + modifier : 0;
+        valueAccessor: async () => {
+            const response = await AbilityScore.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: Fixtures.abilityScores.constants.intelligence.name});
+            const score = response.objects[0];
+            var modifier = score.getModifier();
+            return modifier ? 10 + modifier : 0;
         }
     }, {
         name: 'spellSaveDC',
         refreshOn: Notifications.spellStats.changed,
-        valueAccessor: function() {
-            var spellStats = PersistenceService.findFirstBy(SpellStats, 'characterId', CoreManager.activeCore().uuid());
+        valueAccessor: async () => {
+            var spellStatsResponse = await SpellStats.ps.read({uuid: CoreManager.activeCore().uuid()});
+            var spellStats = spellStatsResponse.object;
             return spellStats ? spellStats.spellSaveDc() : 0;
         }
     }, {

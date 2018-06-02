@@ -2,7 +2,6 @@ import {
     DeathSave,
     Health,
     HitDice,
-    HitDiceType,
     Profile
 } from 'charactersheet/models/character';
 import { ArmorClassService } from 'charactersheet/services';

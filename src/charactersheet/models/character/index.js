@@ -5,7 +5,6 @@ export { DeathSave } from './death_save.js';
 export { Feature } from './feature.js';
 export { Feat } from './feat.js';
 export { Health } from './health.js';
-export { HitDiceType } from './hit_dice_type.js';
 export { HitDice } from './hit_dice.js';
 export { OtherStats } from './other_stats.js';
 export { Proficiency } from './proficiency.js';

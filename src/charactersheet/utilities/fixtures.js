@@ -2,67 +2,67 @@ export var Fixtures = {
     defaultProfilePictures: [
         {
             name: '',
-            image: '/images/sample-headshots/elf-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/elf-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/elf-head-2.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/elf-head-2.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/emo-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/emo-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/sorceress-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/sorceress-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/warrior-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/warrior-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/warlock-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/warlock-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/orc-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/orc-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/druid-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/druid-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/druid-head-2.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/druid-head-2.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/dude-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/dude-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/dwarf-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/dwarf-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/knight-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/knight-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/mechanic-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/mechanic-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/merchant-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/merchant-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/ranger-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/ranger-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/troll-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/troll-head.png'
         }
     ],
     general : {
