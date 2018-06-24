@@ -58,7 +58,14 @@
    <div class="col-md-6 col-padded">
      <div class="input-group">
        <span class="input-group-addon">Inspiration</span>
-       <input type="checkbox" class="form-control" id="otherStatsInspirationInput" aria-describedby="basic-addon2" data-bind="checked: otherStats().inspiration, value: otherStats().inspiration">
+       <div class="form-control hit-dice-list">
+          <!-- ko if: otherStats().inspiration -->
+          <span data-bind="click: toggleInspiration" class="inspiration-full"></span>
+          <!-- /ko -->
+          <!-- ko ifnot: otherStats().inspiration -->
+          <span data-bind="click: toggleInspiration" class="inspiration-empty"></span>
+          <!-- /ko -->
+      </div>
      </div>
    </div>
  </div>

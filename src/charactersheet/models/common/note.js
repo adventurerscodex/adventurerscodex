@@ -14,17 +14,24 @@ export class Note extends KOModel {
     };
 
     coreUuid = ko.observable(null);
-    text = ko.observable('');
+    title = ko.observable('');
+    contents = ko.observable('');
+    headline = ko.observable('');
     isSavedChatNotes = ko.observable(false);
 
-    headline = ko.pureComputed(function() {
-        var text = this.text() || '';
+    updateHeadline() {
+        var text = '';
+        try {
+            text = this.contents();
+        } catch(e) {}
         var firstLine = text.split('\n')[0];
         if (firstLine.length > 35) {
             firstLine = this._getFirstWords(firstLine.substr(0, 35)) + '...';
         }
-        return firstLine ? this._getPlaintext(firstLine) : 'Empty Note';
-    });
+        this.headline(firstLine ? this._getPlaintext(firstLine) : 'Empty Note');
+    };
+
+
 
     /* Private Methods */
 

@@ -36,6 +36,10 @@ export function MarkdownEditPreviewComponentViewModel(params) {
         self.previewTabStatus('');
     };
 
+    self.onBlurEvent = function() {
+        params.inputFunction();
+    };
+
     // Select the default tab,
     // or the preview tab if there's existing content.
     if (ko.unwrap(self.text) || ko.unwrap(params.defaultActiveTab) === 'preview') {
@@ -75,7 +79,8 @@ ko.components.register('markdown-edit-preview', {
         <div class="form-horizontal">\
           <textarea class="form-control dark-area" rows="20"\
             data-bind="textInput: text, markdownEditor: true, \
-              attr: { placeholder: placeholder }"></textarea>\
+              attr: { placeholder: placeholder },\
+              event: { blur: onBlurEvent }"></textarea>\
         </div>\
       </div>\
       <small class="text-muted">Text in this panel can be styled using Markdown. Click \

@@ -295,6 +295,24 @@ div.hr {
   padding: 0 0 0 0px;
 }
 
+.inspiration-full {
+  cursor:pointer;
+  background: url('../images/inspiration-full.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.inspiration-empty {
+  cursor:pointer;
+  background: url('../images/inspiration-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
 .circular-profile {
 	width: 80px;
 	height: 80px;

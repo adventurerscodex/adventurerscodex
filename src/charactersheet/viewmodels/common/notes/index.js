@@ -14,11 +14,19 @@ export function NotesViewModel() {
     self.selectedNote = ko.observable();
 
     self.load = async () => {
+        await self.reloadData();
+
+        Notifications.notes.changed.add(self.reloadData);
+    };
+
+    self.reloadData = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Note.ps.list({coreUuid: key});
         self.notes(response.objects);
-
-        // Notifications.notes.changed.add(self.reloadData);
+        if (self.notes().length > 0) {
+            self.selectNote(self.notes()[0]);
+            self.updateHeadlines();
+        }
     };
 
     /* UI Methods */
@@ -53,9 +61,25 @@ export function NotesViewModel() {
         }
     };
 
+    self.updateHeadlines = () => {
+        self.notes().forEach((note) => {
+            note.updateHeadline();
+        });
+    }
+
     self.selectNote = function(note) {
         self.selectedNote(note);
-        self.selectedNote().text.subscribe(self.selectedNote().save);
+        self.selectedNote().contents.subscribe(self.updateSelectedNote);
+        self.selectedNote().updateHeadline();
+    };
+
+    self.updateSelectedNote = () => {
+        self.selectedNote().updateHeadline();
+    };
+
+    self.saveSelectedNote = async () => {
+        self.selectedNote().updateHeadline();
+        await self.selectedNote().ps.save();
     };
 
     self.isActiveCSS = function(note) {

@@ -111,6 +111,11 @@ export function OtherStatsViewModel() {
         self.armorClass(ArmorClassService.sharedService().armorClass());
     };
 
+    self.toggleInspiration = async () => {
+        self.otherStats().inspiration(!self.otherStats().inspiration());
+        await self.inspirationHasChanged();
+    };
+
     self.inspirationHasChanged = async () => {
         await self.save();
         Notifications.otherStats.inspiration.changed.dispatch();
