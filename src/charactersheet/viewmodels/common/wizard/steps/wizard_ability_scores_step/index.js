@@ -166,14 +166,38 @@ export function WizardAbilityScoresStepViewModel(params) {
      * the fields in the form.
      */
     self.results = ko.pureComputed(function() {
-        self.stepResult( {
-            str: self.str(),
-            dex: self.dex(),
-            con: self.con(),
-            int: self.int(),
-            wis: self.wis(),
-            cha: self.cha()
-        });
+        self.stepResult( [
+            {
+                name: 'Strength',
+                shortName: 'STR',
+                value: self.str()
+            },
+            {
+                name: 'Dexterity',
+                shortName: 'DEX',
+                value: self.dex()
+            },
+            {
+                name: 'Constitution',
+                shortName: 'CON',
+                value: self.con()
+            },
+            {
+                name: 'Intelligence',
+                shortName: 'INT',
+                value: self.int()
+            },
+            {
+                name: 'Wisdom',
+                shortName: 'WIS',
+                value: self.wis()
+            },
+            {
+                name: 'Charisma',
+                shortName: 'CHA',
+                value: self.cha()
+            }
+        ]);
     });
 }
 
