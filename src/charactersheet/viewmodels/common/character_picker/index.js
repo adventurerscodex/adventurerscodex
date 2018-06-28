@@ -23,12 +23,16 @@ export function CorePickerViewModel(params) {
 
     self.load = async () => {
         const response = await Core.ps.list();
-        self.cores(response.objects);
 
         // Build the hash of key -> modal open.
-        self.cores().forEach(({uuid}) => {
+        response.objects.forEach(({uuid}) => {
             self.deleteCollapse[uuid()] = ko.observable(false);
         });
+
+        // We set this value after populating the deleteCollapse because by
+        // setting this value, we cause KO to render, which if the deleteCollapse
+        // was empty, would cause it to crash.
+        self.cores(response.objects);
     };
 
     self.showWizard = () => {
@@ -57,6 +61,7 @@ export function CorePickerViewModel(params) {
     };
 
     self.toggleDeleteWell = ({uuid}) => {
+        console.log('TOGGLING WELL', self.deleteCollapse)
         // Set the others to close.
         self.cores().forEach(({uuid}) => {
             self.deleteCollapse[uuid()](false);
@@ -65,12 +70,6 @@ export function CorePickerViewModel(params) {
         // Open the one we need.
         self.deleteCollapse[uuid()](true);
     };
-
-    self.localStoragePercent = ko.computed(() => {
-        var n = self.cores().lenth; //Force ko to recompute on change.
-        var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
-        return (used / self.totalLocalStorage * 100).toFixed(2);
-    });
 }
 
 ko.components.register('core-picker', {
