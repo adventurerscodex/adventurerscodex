@@ -61,7 +61,6 @@ export function CorePickerViewModel(params) {
     };
 
     self.toggleDeleteWell = ({uuid}) => {
-        console.log('TOGGLING WELL', self.deleteCollapse)
         // Set the others to close.
         self.cores().forEach(({uuid}) => {
             self.deleteCollapse[uuid()](false);
