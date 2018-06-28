@@ -1,13 +1,10 @@
 import './style.css';
-import {
-    Character,
-    PlayerTypes
-} from 'charactersheet/models/common';
+import { PlayerTypes } from 'charactersheet/models/common';
+import { Core } from 'charactersheet/models/common/core';
 import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -15,7 +12,7 @@ export function CharactersViewModel(params) {
     var self = this;
 
     self.totalLocalStorage = 5; //MB
-    self.characters = ko.observableArray([]);
+    self.cores = ko.observableArray([]);
     self.componentStatus = params.modalStatus || ko.observable(false);
     self.modalStatus = ko.observable(false);
     self.selectedCharacter = ko.observable();
@@ -23,97 +20,85 @@ export function CharactersViewModel(params) {
         // Dynamically built map.
     };
 
-    self.load = () => {
-        self.characters(PersistenceService.findAll(Character));
+    self.load = async () => {
+        const response = await Core.ps.list();
+        const cores = response.objects;
         self.modalStatus(self.componentStatus());
 
         Notifications.coreManager.changed.add(self._updatedSelectedCharacter);
         self._updatedSelectedCharacter();
 
-        // Build the hash of key -> modal open.
-        self.characters().forEach(({key}) => {
-            self.deleteCollapse[key()] = ko.observable(false);
+        // Build the hash of uuid -> modal open.
+        cores.forEach(({uuid}) => {
+            self.deleteCollapse[uuid()] = ko.observable(false);
         });
+        self.cores(cores);
     };
 
-    self.changeCharacter = (character) => {
-        // Don't switch to the same character.
+    self.changeCore = (core) => {
+        // Don't switch to the same core.
         var activeCharacterKey = null;
         if (CoreManager.activeCore()) {
             activeCharacterKey = CoreManager.activeCore().uuid();
         }
 
         // Do switch
-        if (character.key() !== activeCharacterKey) {
-            CoreManager.changeCharacter(character.key());
+        if (core.uuid() !== activeCharacterKey) {
+            CoreManager.changeCharacter(core.uuid());
         }
     };
 
-    self.addCharacter = () => {
-        var character = new Character();
-        character.key(uuid.v4());
-        character.playerType(PlayerTypes.characterPlayerType);
+    self.removeCore = async (core) => {
+        const deletedCharacterIndex = self.cores().indexOf(core);
 
-        self.characters.push(character);
-        if (!CoreManager.defaultCharacter()) {
-            character.isDefault(true);
-        }
-        character.save();
-        Notifications.characters.changed.dispatch();
-        window.location = character.url();
-    };
-
-    self.removeCharacter = (character) => {
-        const deletedCharacterIndex = self.characters().indexOf(character);
-
-        //Remove the character.
-        character.delete();
-        self.characters.remove(character);
+        //Remove the core.
+        await core.ps.delete();
+        self.cores.remove(core);
 
         // Close the well.
-        self.deleteCollapse[character.key()](false);
+        self.deleteCollapse[core.uuid()](false);
 
-        if (self.characters().length === 0) {
+        if (self.cores().length === 0) {
             self.modalStatus(false);
-        } else if (character.key() === CoreManager.activeCore().uuid()) {
-            // If we've deleted the current character...
+        } else if (core.uuid() === CoreManager.activeCore().uuid()) {
+            // If we've deleted the current core...
             // switch to the same index position bounded by list length.
             const index = (
-                deletedCharacterIndex < self.characters().length ?
+                deletedCharacterIndex < self.cores().length ?
                 deletedCharacterIndex :
-                self.characters().length - 1
+                self.cores().length - 1
             );
-            CoreManager.changeCharacter(self.characters()[index].key());
+            CoreManager.changeCharacter(self.cores()[index].uuid());
         }
     };
 
-    self.toggleDeleteWell = ({key}) => {
+    self.toggleDeleteWell = ({uuid}) => {
         // Set the others to close.
-        self.characters().forEach(({key}) => {
-            self.deleteCollapse[key()](false);
+        self.cores().forEach(({uuid}) => {
+            self.deleteCollapse[uuid()](false);
         });
 
         // Open the one we need.
-        const value = !self.deleteCollapse[key()]();
-        self.deleteCollapse[key()](value);
+        const value = !self.deleteCollapse[uuid()]();
+        self.deleteCollapse[uuid()](value);
     };
 
     self.modalFinishedClosing = () => {
-        if (self.characters().length === 0) {
+        if (self.cores().length === 0) {
             Notifications.characters.allRemoved.dispatch();
         }
         self.componentStatus(false);
     };
 
-    self.playerSelectedCSS = (character) => {
-        if (character.key() === self.selectedCharacter().key()) {
+    self.playerSelectedCSS = (core) => {
+        if (core.uuid() === self.selectedCharacter().uuid()) {
             return 'light-active';
         }
         return '';
     };
 
     self.localStoragePercent = ko.computed(() => {
-        self.characters(); //Force ko to recompute on change.
+        self.cores(); //Force ko to recompute on change.
         var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
         return (used / self.totalLocalStorage * 100).toFixed(2);
     });
