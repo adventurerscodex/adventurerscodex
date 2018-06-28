@@ -2,9 +2,9 @@
   <div class="row" style="margin-top:50px;">
     <div class="col-sm-12 col-md-6 col-md-offset-2 text-center">
       <div class="h2">
-        Cores and Games
+        Characters and Games
         <br />
-        <small>Which of your cores/campaigns would you like to use?</small>
+        <small>Which of your characters/campaigns would you like to use?</small>
       </div>
       <div class="container-fluid text-left">
         <div class="col-sm-12">
@@ -16,7 +16,8 @@
                   <img data-bind="attr: { src: image }" class="img img-circle" width="60"
                     height="60" style="margin-top: 7px;" />
                 </div>
-                <div class="col-xs-7 col-sm-8" style="padding-top: 5px" data-bind="click: $parent.changeCore">
+                <div class="col-xs-7 col-sm-8" style="padding-top: 5px"
+                  data-bind="click: $parent.changeCore">
                   <span class="lead" data-bind='text: title'></span>
                   <small>
                     by <span data-bind='text: playerName'></span>
@@ -35,7 +36,7 @@
             </a>
             <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[uuid()] }">
               <div class="well no-bottom-margin well-top-shadow text-center">
-                Are you sure you want to delete this Core or Campaign?
+                Are you sure you want to delete this Character or Campaign?
                 <center>
                   <i class="text-danger text-center">This action cannot be undone.</i>
                 </center>

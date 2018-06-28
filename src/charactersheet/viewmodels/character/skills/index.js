@@ -41,7 +41,7 @@ export function SkillsViewModel() {
         self.skills().forEach(function(e, i, _) {
             e.updateBonuses();
             if (e.name() === 'Perception') {
-                e.bonus.subscribe(self.perceptionHasChanged);
+                e.bonusLabel.subscribe(self.perceptionHasChanged);
             }
         });
     };

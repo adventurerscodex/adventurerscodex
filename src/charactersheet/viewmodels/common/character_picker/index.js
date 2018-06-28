@@ -48,9 +48,9 @@ export function CorePickerViewModel(params) {
         }
     };
 
-    self.removeCore = (core) => {
+    self.removeCore = async (core) => {
         //Remove the core.
-        core.delete();
+        await core.ps.delete();
         self.cores.remove(core);
 
         self.deleteCollapse[core.uuid()](false);
@@ -63,8 +63,7 @@ export function CorePickerViewModel(params) {
         });
 
         // Open the one we need.
-        const value = !self.deleteCollapse[uuid()]();
-        self.deleteCollapse[uuid()](value);
+        self.deleteCollapse[uuid()](true);
     };
 
     self.localStoragePercent = ko.computed(() => {

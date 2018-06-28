@@ -22,10 +22,11 @@ export class Core extends KOModel {
         const image = ko.unwrap(this.profileImage);
         if (!image) {
             return null;
-        } else if (image.type() === 'email') {
-            return image.gravatarUrl();
+        // TODO: FIX THIS
+        // } else if (image.type() === 'email') {
+        //     return image.gravatarUrl();
         } else {
-            return image.sourceUrl();
+            return image;
         }
     });
 }

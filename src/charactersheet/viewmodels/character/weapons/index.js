@@ -175,7 +175,7 @@ export function WeaponsViewModel() {
     };
 
     self.removeWeapon = async (weapon) => {
-        weapon.ps.delete();
+        await weapon.ps.delete();
         self.weapons.remove(weapon);
         Notifications.weapon.changed.dispatch();
     };
