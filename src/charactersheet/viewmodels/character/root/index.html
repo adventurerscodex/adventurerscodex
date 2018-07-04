@@ -55,7 +55,7 @@
       <span class="text-center" id="tabProfileSpan"><small>Profile</small></span>
     </a>
   </li>
-  <!--
+
   <li role="presentation"
       id="tabChatLink"
       data-bind="click: activateChatTab, css: chatTabStatus">
@@ -71,7 +71,7 @@
       <img class="tab-icon" data-bind="attr: { src: icons.exhibitTab }" /></br>
       <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
     </a>
-  </li> -->
+  </li>
   <!-- Right tabs -->
   <li role="presentation" class="secondary-nav">
     <button class="btn btn-sm btn-primary" id="actionsActionsButton" data-toggle="collapse"
@@ -250,7 +250,7 @@
 <div role="tabpanel" class="tab-pane" id="inventory" data-bind="css: inventoryTabStatus">
   <div class="row">
     <div class="col-sm-4 col-lg-3 hidden-xs">
-      <!-- <img data-bind="attr: { src: icons.inventorySection }" alt="Inventory tab"/> -->
+      <img data-bind="attr: { src: icons.inventorySection }" alt="Inventory tab"/>
     </div>
     <div class="col-sm-8 col-lg-9 col-padded">
       <div class="h3">
@@ -317,14 +317,14 @@
 </div>
 <!-- End Profile tab -->
 
-<!-- <div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
+<div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
   <chat params="isActive: chatTabStatus"></chat>
-</div> -->
+</div>
 <!-- End Chat Tab -->
 
-<!-- <div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
+<div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
   <exhibit></exhibit>
-</div> -->
+</div>
 <!-- End Exhibit Tab -->
 </div>
 

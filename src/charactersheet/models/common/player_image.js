@@ -1,7 +1,6 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos/lib/models/ko';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
 

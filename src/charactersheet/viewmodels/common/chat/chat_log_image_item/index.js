@@ -43,8 +43,8 @@ export function ChatLogImageItem(params) {
     // UI Methods
 
     self.shouldShowSaveToNotesButton = ko.pureComputed(function() {
-        var key = CoreManager.activeCore().playerType().key;
-        return key == PlayerTypes.characterPlayerType.key;
+        var key = CoreManager.activeCore().type.name();
+        return key == PlayerTypes.character.key;
     });
 
     self.image = ko.pureComputed(function() {
@@ -105,7 +105,7 @@ export function ChatLogImageItem(params) {
         // Get the current card service.
         var jid = occupant.jid;
         var cardService = null;
-        if (character.playerType().key == 'character') {
+        if (character.type.name() == 'character') {
             cardService = CharacterCardPublishingService.sharedService();
         } else {
             cardService = DMCardPublishingService.sharedService();

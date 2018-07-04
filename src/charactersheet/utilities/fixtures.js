@@ -486,7 +486,6 @@ export var Fixtures = {
             'color': 'danger'
         }]
     },
-
     abilityScores: {
         constants: {
             strength: {
@@ -513,6 +512,12 @@ export var Fixtures = {
                 name: 'Charisma',
                 shortName: 'CHA'
             }
+        }
+    },
+    chatRoom: {
+        type: {
+            party: 'party',
+            chat: 'chat'
         }
     }
 };

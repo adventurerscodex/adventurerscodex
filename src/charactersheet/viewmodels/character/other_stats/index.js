@@ -10,6 +10,7 @@ import {
 } from 'charactersheet/services';
 import {
     CoreManager,
+    Fixtures,
     Notifications
 } from 'charactersheet/utilities';
 import { getModifier } from 'charactersheet/models/character/ability_score';
@@ -74,11 +75,9 @@ export function OtherStatsViewModel() {
     // Calculate initiative label and popover
     self.calculateInitiativeLabel = async () => {
         var key = CoreManager.activeCore().uuid();
-        const response = await AbilityScore.ps.list({coreUuid: key});
-        const dexterity = response.objects.filter((score, i, _) => {
-            return score.name() === 'Dexterity';
-        })[0];
-        var dexterityModifier = dexterity.getModifier();
+        const response = await AbilityScore.ps.list({coreUuid: key,
+            name: Fixtures.abilityScores.constants.dexterity.name});
+        var dexterityModifier = response.objects[0].getModifier();
         var initiativeModifier = self.otherStats().initiativeModifier();
         self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
 

@@ -24,7 +24,7 @@ export function DMRootViewModel() {
     var self = this;
 
     self.playerType = () => {
-        return CoreManager.activeCore().playerType();
+        return CoreManager.activeCore().type.name();
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();

@@ -31,7 +31,7 @@ export function Character() {
     self.ps = PersistenceService.register(Character, self);
 
     self.key = ko.observable(null);
-    self.playerType = ko.observable(PlayerTypes.characterPlayerType);
+    self.playerType = ko.observable(PlayerTypes.character);
     self.isDefault = ko.observable(false);
     self.saveApi = '/api/storage/upload/';
 

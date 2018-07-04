@@ -70,7 +70,7 @@ export function ChatDetailViewModel(params) {
     };
 
     self.reloadData = function() {
-        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
+        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatJid', self.id());
         if (!chat) { return; }
         self.members(chat.getRoomMembers());
 
@@ -133,7 +133,7 @@ export function ChatDetailViewModel(params) {
     /* Private Methods */
 
     self._markAllAsRead = function() {
-        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
+        var room = PersistenceService.findBy(ChatRoom, 'chatJid', self.id())[0];
         room.getUnreadMessages().forEach(function(chat, idx, _) {
             chat.read(true);
             chat.save();

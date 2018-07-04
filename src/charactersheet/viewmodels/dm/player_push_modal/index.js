@@ -101,7 +101,7 @@ export function PlayerPushModalViewModel(params) {
 
         // Get the current card service.
         var cardService = null;
-        if (character.playerType().key == 'character') {
+        if (character.type.name() == 'character') {
             cardService = CharacterCardPublishingService.sharedService();
         } else {
             cardService = DMCardPublishingService.sharedService();

@@ -62,7 +62,7 @@ describe('Character Model', function() {
             simple.mock(PersistenceService, 'findFirstBy').returnWith(mockProfile);
 
             var cha = new Character();
-            cha.playerType(PlayerTypes.characterPlayerType);
+            cha.playerType(PlayerTypes.character);
             cha.playerSummary().should.equal(mockProfile.summary());
         });
     });
@@ -74,7 +74,7 @@ describe('Character Model', function() {
             simple.mock(PersistenceService, 'findFirstBy').returnWith(mockProfile);
 
             var cha = new Character();
-            cha.playerType(PlayerTypes.characterPlayerType);
+            cha.playerType(PlayerTypes.character);
             cha.playerAuthor().should.equal(mockProfile.playerName());
         });
     });
@@ -86,7 +86,7 @@ describe('Character Model', function() {
             simple.mock(PersistenceService, 'findFirstBy').returnWith(mockProfile);
 
             var cha = new Character();
-            cha.playerType(PlayerTypes.characterPlayerType);
+            cha.playerType(PlayerTypes.character);
             cha.playerTitle().should.equal(mockProfile.characterName());
         });
     });

@@ -4,7 +4,7 @@ import ko from 'knockout';
 export function ChatCellViewModel(chat) {
     var self = this;
 
-    self.id = chat.chatId;
+    self.id = chat.jid;
     self.characterId = chat.characterId;
     self._name = chat.name;
     self.badge = ko.observable();

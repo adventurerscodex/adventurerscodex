@@ -54,7 +54,7 @@ export function CorePickerViewModel(params) {
 
     self.removeCore = async (core) => {
         //Remove the core.
-        await core.ps.delete();
+        await Core.ps.delete({uuid: core.uuid()});
         self.cores.remove(core);
 
         self.deleteCollapse[core.uuid()](false);

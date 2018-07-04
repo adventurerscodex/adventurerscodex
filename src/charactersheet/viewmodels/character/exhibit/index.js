@@ -41,7 +41,7 @@ export function ExhibitViewModel() {
         // Ignore non-DM cards and player is in a party
         if (!self.isConnectedToParty()) { return; }
         var dmCard = pcards.filter(function(card, idx, _) {
-            return PlayerTypes.dmPlayerType.key == card.get('playerType')[0];
+            return PlayerTypes.dm.key == card.get('playerType')[0];
         })[0];
 
         var image = dmCard ? dmCard.get('exhibitImage')[0] : null;

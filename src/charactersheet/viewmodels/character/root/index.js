@@ -166,7 +166,7 @@ export function CharacterRootViewModel() {
         self._dummy();
         var name = '';
         var key = CoreManager.activeCore().uuid();
-        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+        if (self.playerType().key === PlayerTypes.character.key) {
             try {
                 name = PersistenceService.findBy(Profile, 'characterId', key)[0].characterName();
             } catch(err) { /*Ignore*/ }
@@ -178,7 +178,7 @@ export function CharacterRootViewModel() {
         self._dummy();
         var name = '';
         var key = CoreManager.activeCore().uuid();
-        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
+        if (self.playerType().key === PlayerTypes.character.key) {
             try {
                 name = PersistenceService.findBy(Profile, 'characterId', key)[0].playerName();
             } catch(err) { /*Ignore*/ }
