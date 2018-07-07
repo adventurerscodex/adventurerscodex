@@ -1,10 +1,8 @@
 export { Armor } from './armor.js';
 export { AuthenticationToken } from './authentication_token.js';
-export { CampaignMapOrImage } from './campaign_map_or_image.js';
 export { Character } from './character.js';
 export { CharacterClass } from './character_class.js';
 export { ChatRoom } from './chat_room.js';
-export { ImageModel } from './image.js';
 export { Item } from './item.js';
 export { MagicItem } from './magic_item.js';
 export { MapOrImage } from './map_or_image.js';

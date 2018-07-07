@@ -18,47 +18,37 @@ export function CampaignOverviewViewModel() {
     self.createdDate = ko.observable();
     self.setting = ko.observable();
     self.name = ko.observable();
+    self.campaign = ko.observable();
 
     /* Public Methods */
-    self.load = function() {
+    self.load = async function() {
         var key = CoreManager.activeCore().uuid();
-        var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
-        if (overview) {
-            self.playerName(overview.playerName());
-            self.name(overview.name());
-            self.setting(overview.setting());
-            self.createdDate(new Date(overview.createdDate()));
+        const campaignResponse = await Campaign.ps.read({uuid: key});
+        self.campaign(campaignResponse.object);
+        if (self.campaign()) {
+            self.playerName(CoreManager.activeCore().playerName());
+            self.name(self.campaign().name());
+            self.setting(self.campaign().setting());
+            self.createdDate(new Date(self.campaign().createdAt()));
         }
 
         // Subscriptions
-        self.playerName.subscribe(self.save);
-        self.setting.subscribe(self.save);
-        Notifications.global.save.add(self.save);
+        self.playerName.subscribe(self.saveCore);
+        self.setting.subscribe(self.saveCampaign);
     };
 
-    self.save = function() {
-        var key = CoreManager.activeCore().uuid();
-        var overview = PersistenceService.findFirstBy(Campaign, 'characterId', key);
-        if (!overview) {
-            overview = new Campaign();
-            overview.characterId(key);
-        }
-        overview.playerName(self.playerName());
-        overview.createdDate(self.createdDate());
-        overview.setting(self.setting());
-        overview.name(self.name());
-        overview.save();
+    self.saveCampaign = async () => {
+        self.campaign().setting(self.setting());
+        self.campaign().ps.save();
     };
+
+    self.saveCore = async () => {
+        let core = CoreManager.activeCore();
+        core.playerName(self.playerName());
+        await core.ps.save();
+    }
 
     /* UI Methods */
-
-    self.noteText = ko.pureComputed(function() {
-        return self.notes() ? self.notes() : '';
-    });
-
-    self.placeholderText = ko.pureComputed(function() {
-        return 'A Story of Wonder';
-    });
 
     self.timeSinceLabel = ko.pureComputed(function() {
         if (!self.createdDate()) { return ''; }

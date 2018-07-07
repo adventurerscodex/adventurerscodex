@@ -1,8 +1,4 @@
 import 'bin/knockout-custom-loader';
-import { CampaignMapOrImage,
-    MapOrImage,
-    Message
- } from 'charactersheet/models';
 import {
     CoreManager,
     Notifications,
@@ -14,6 +10,7 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services';
+import { Image } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -21,7 +18,7 @@ export function CampaignMapsAndImagesViewModel() {
     var self = this;
 
     self.mapsOrImages = ko.observableArray();
-    self.blankMapOrImage = ko.observable(new CampaignMapOrImage());
+    self.blankMapOrImage = ko.observable(new Image());
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
@@ -66,31 +63,18 @@ export function CampaignMapsAndImagesViewModel() {
         }
     };
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
+    self.load = async function() {
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
         var key = CoreManager.activeCore().uuid();
-        var map = PersistenceService.findBy(CampaignMapOrImage, 'characterId', key);
-        if (map) {
-            self.mapsOrImages(map);
+        const imagesResponse = await Image.ps.list({coreUuid: key});
+        if (imagesResponse.objects) {
+            self.mapsOrImages(imagesResponse.objects);
         }
 
         self._connectionHasChanged();
-    };
-
-    self.save = function() {
-        self.mapsOrImages().forEach(function(map, idx, _) {
-            map.save();
-        });
-    };
-
-    self.delete = function() {
-        self.mapsOrImages().forEach(function(map, idx, _) {
-            map.delete();
-        });
     };
 
     /* UI Methods */
@@ -116,22 +100,22 @@ export function CampaignMapsAndImagesViewModel() {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addMapOrImage = function() {
+    self.addMapOrImage = async function() {
         var mapOrImage = self.blankMapOrImage();
         mapOrImage.characterId(CoreManager.activeCore().uuid());
-        mapOrImage.save();
-        self.mapsOrImages.push(mapOrImage);
+        const imageResponse = await mapOrImage.ps.create();
+        self.mapsOrImages.push(imageResponse.object);
         self.blankMapOrImage(new CampaignMapOrImage());
     };
 
-    self.removeMapOrImage = function(mapOrImage) {
-        mapOrImage.delete();
+    self.removeMapOrImage = async function(mapOrImage) {
+        await mapOrImage.ps.delete();
         self.mapsOrImages.remove(mapOrImage);
     };
 
     self.editMapOrImage = function(mapOrImage) {
-        self.editItemIndex = mapOrImage.__id;
-        self.currentEditItem(new MapOrImage());
+        self.editItemIndex = mapOrImage.uuid;
+        self.currentEditItem(new Image());
         self.currentEditItem().importValues(mapOrImage.exportValues());
         self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
         self.openModal(true);
@@ -151,12 +135,12 @@ export function CampaignMapsAndImagesViewModel() {
         self.selectPreviewTab();
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         if (self.openModal()) {
-            Utility.array.updateElement(self.mapsOrImages(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.mapsOrImages(), response.object, self.editItemIndex);
         }
 
-        self.save();
         self.openModal(false);
     };
 
@@ -199,11 +183,11 @@ export function CampaignMapsAndImagesViewModel() {
         self._isConnectedToParty(chat.currentPartyNode != null);
     };
 
-    self._dataHasChanged = function() {
+    self._dataHasChanged = async function() {
         var key = CoreManager.activeCore().uuid();
-        var mapOrImage = PersistenceService.findBy(CampaignMapOrImage, 'characterId', key);
-        if (mapOrImage) {
-            self.mapsOrImages(mapOrImage);
+        const imagesResponse = await Image.ps.list({coreUuid: key});
+        if (imagesResponse.objects) {
+            self.mapsOrImages(imagesResponse.objects);
         }
     };
 }

@@ -10,6 +10,7 @@ import { ChatServiceManager,
     PersistenceService
 } from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import chatTabImage from 'images/tab_icons/conversation.svg';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
 import encounterTabImage from 'images/tab_icons/treasure-map.svg';
@@ -24,7 +25,8 @@ export function DMRootViewModel() {
     var self = this;
 
     self.playerType = () => {
-        return CoreManager.activeCore().type.name();
+        const key = CoreManager.activeCore().type.name();
+        return PlayerTypes[key];
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();

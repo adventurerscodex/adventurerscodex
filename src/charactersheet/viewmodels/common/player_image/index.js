@@ -6,9 +6,9 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import {
-    ImageModel,
     ProfileImage,
-    PlayerInfo
+    PlayerInfo,
+    PlayerTypes
 } from 'charactersheet/models/common';
 import {
     PersistenceService,
@@ -80,10 +80,12 @@ export function PlayerImageViewModel() {
     };
 
     self.inspirationHasChanged = async () => {
-        var key = CoreManager.activeCore().uuid();
-        var otherStatsResponse = await OtherStats.ps.read({uuid: key});
-        const otherStats = otherStatsResponse.object;
-        self.hasInspiredGlow(otherStats && otherStats.inspiration());
+        var core = CoreManager.activeCore();
+        if (core.type.name() === PlayerTypes.character.key) {
+            var otherStatsResponse = await OtherStats.ps.read({uuid: core.uuid()});
+            const otherStats = otherStatsResponse.object;
+            self.hasInspiredGlow(otherStats && otherStats.inspiration());
+        }
     };
 
     self.inspiredGlowClass = ko.pureComputed(function() {

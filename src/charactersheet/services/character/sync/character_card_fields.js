@@ -7,7 +7,6 @@ import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { ArmorClassService } from 'charactersheet/services/character/armor_class_service';
 import { Health } from 'charactersheet/models/character/health';
 import { HitDice } from 'charactersheet/models/character/hit_dice';
-import { ImageModel } from 'charactersheet/models/common/image';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';

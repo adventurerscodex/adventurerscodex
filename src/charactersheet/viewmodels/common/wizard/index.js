@@ -193,17 +193,18 @@ export function WizardViewModel() {
      * Progress through all previous and current steps and save their data.
      */
     self.save = async function() {
-        // Use Hypnos.client.action
         // var character = new Character();
         // character.key(uuid.v4());
         // character.save();
         var playerType = self.aggregateResults()['WizardPlayerTypeStep'].playerType;
         // character.playerType(playerType);
         // character.save();
+        let params = {};
+        let actions;
 
         if (playerType.key == 'character') {
-            const actions = ["core", "characters", "create"];
-            let params = {};
+            actions = ["core", "characters", "create"];
+
             // Profile
             var profileData = self.aggregateResults()['WizardProfileStep'];
             params.playerName = profileData.playerName;
@@ -234,9 +235,7 @@ export function WizardViewModel() {
             // Health
             params.health = { maxHitPoints: 10 };
 
-            const characterResponse = await Hypnos.client.action(actions, params);
-
-            self.newCharacterId = characterResponse.data.uuid;
+            // TODO: Wait for API update for this to be refactored
 
             // // Pre populate traits by race
             // var traits = data.traits;
@@ -263,16 +262,19 @@ export function WizardViewModel() {
             // playerInfo.save();
         } else if (playerType.key == 'dm') {
             // Campaign
+            actions = ["core", "dms", "create"];
 
-            var campaign = new Campaign();
-
-            data = self.aggregateResults()['WizardCampaignStep'];
-            campaign.characterId = character.key();
-            campaign.playerName(data.playerName);
-            campaign.name(data.campaignName);
-            campaign.createdDate(new Date());
-            campaign.save();
+            let campaignData = self.aggregateResults()['WizardCampaignStep'];
+            params.profileImage = { type: 'email' };
+            params.playerName = campaignData.playerName;
+            params.campaign = {
+                name: campaignData.campaignName
+            };
         }
+
+        // Save the core data and set the new character
+        const coreResponse = await Hypnos.client.action(actions, params);
+        self.newCharacterId = coreResponse.data.uuid;
     };
 
     self.createProfileFromData = (data) => {

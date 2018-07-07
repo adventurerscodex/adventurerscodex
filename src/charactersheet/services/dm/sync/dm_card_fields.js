@@ -1,7 +1,6 @@
 import { Campaign } from 'charactersheet/models/dm/campaign';
 import { CoreManager } from 'charactersheet/utilities';
 import { Exhibit } from 'charactersheet/models/dm/exhibit';
-import { ImageModel } from 'charactersheet/models/common/image';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -47,19 +46,19 @@ export var DMCardFields = [
         refreshOn: Notifications.playerImage.changed,
         valueAccessor: function() {
             var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
-            var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CoreManager.activeCore().uuid());
-            if (!image) { return defaultImage; }
-            if (image.imageSource() === 'link') {
-                var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CoreManager.activeCore().uuid());
-                if (!imageModel) { return defaultImage; }
-                var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
-                return convertedImage !== '' ? convertedImage : defaultImage;
-            } else if (image.imageSource() === 'email') {
-                var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CoreManager.activeCore().uuid());
-                return info ? info.gravatarUrl() : defaultImage;
-            } else {
+            // var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', CoreManager.activeCore().uuid());
+            // if (!image) { return defaultImage; }
+            // if (image.imageSource() === 'link') {
+            //     var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', CoreManager.activeCore().uuid());
+            //     if (!imageModel) { return defaultImage; }
+            //     var convertedImage = Utility.string.createDirectDropboxLink(imageModel.imageUrl());
+            //     return convertedImage !== '' ? convertedImage : defaultImage;
+            // } else if (image.imageSource() === 'email') {
+            //     var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CoreManager.activeCore().uuid());
+            //     return info ? info.gravatarUrl() : defaultImage;
+            // } else {
                 return defaultImage;
-            }
+            // }
         }
     }, {
         name: 'exhibitImage',

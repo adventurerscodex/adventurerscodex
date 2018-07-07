@@ -2,7 +2,7 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { CampaignMapOrImage } from 'charactersheet/models/common/campaign_map_or_image';
+import { Image } from 'charactersheet/models/dm';
 import { Environment } from 'charactersheet/models/dm/encounter_sections/environment';
 import { Exhibit } from 'charactersheet/models/dm/exhibit';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';

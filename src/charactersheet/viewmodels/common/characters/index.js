@@ -44,7 +44,7 @@ export function CharactersViewModel(params) {
 
         // Do switch
         if (core.uuid() !== activeCharacterKey) {
-            CoreManager.changeCharacter(core.uuid());
+            CoreManager.changeCore(core.uuid());
         }
     };
 
@@ -68,7 +68,7 @@ export function CharactersViewModel(params) {
                 deletedCharacterIndex :
                 self.cores().length - 1
             );
-            CoreManager.changeCharacter(self.cores()[index].uuid());
+            CoreManager.changeCore(self.cores()[index].uuid());
         }
     };
 

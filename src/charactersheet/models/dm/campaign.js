@@ -1,52 +1,25 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 /**
  * A Root Level DM Object containing overview information about a campaign.
  */
-export function Campaign() {
-    var self = this;
-    self.ps = PersistenceService.register(Campaign, self);
-    self.mapping = {
-        include: ['characterId', 'playerName', 'name', 'createdDate', 'setting']
+export class Campaign extends KOModel {
+    static __skeys__ = ['core', 'dms', 'campaign'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable();
-    self.playerName = ko.observable();
-    self.setting = ko.observable();
-    self.name = ko.observable();
-    self.createdDate = ko.observable();
+    coreUuid = ko.observable(null);
+    setting = ko.observable();
+    name = ko.observable();
+    createdAt = ko.observable();
 
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
-
-    self.clear = function() {
-        var values = new Campaign().exportValues();
-        ko.mapping.fromJS(values, self.mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.summary = function() {
-        if (self.name() && self.playerName()) {
-            return self.name() + ': A story by ' + self.playerName();
+    summary = function() {
+        if (this.name() && this.playerName()) {
+            return this.name() + ': A story by ' + this.playerName();
         }
         return 'A long long time ago...';
     };
 }
-Campaign.__name = 'Campaign';
-
-PersistenceService.addToRegistry(Campaign);

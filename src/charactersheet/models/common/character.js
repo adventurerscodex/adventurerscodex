@@ -3,7 +3,6 @@ import 'knockout-mapping';
 import { AuthenticationToken } from './authentication_token';
 import { Campaign } from '../dm/campaign';
 import Dropbox from 'dropbox';
-import { ImageModel } from './image';
 import { Migrations } from 'charactersheet/utilities/migrations';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -95,22 +94,6 @@ export function Character() {
         var property = self.playerType().key == 'character' ? 'characterName' : 'name';
         var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
         return data ? data[property](): '';
-    });
-
-    self.playerImage = ko.pureComputed(function() {
-        var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
-        var image = PersistenceService.findFirstBy(PlayerImage, 'characterId', self.key());
-        if (!image) { return defaultImage; }
-
-        if (image.imageSource() === 'link') {
-            var imageModel = PersistenceService.findFirstBy(ImageModel, 'characterId', self.key());
-            return imageModel && imageModel.imageUrl() ? Utility.string.createDirectDropboxLink(imageModel.imageUrl()) : defaultImage;
-        } else if (image.imageSource() === 'email') {
-            var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', self.key());
-            return info && info.gravatarUrl() ? info.gravatarUrl() : defaultImage;
-        } else {
-            return defaultImage;
-        }
     });
 
     self.exportCharacter = function() {
