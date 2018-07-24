@@ -3,7 +3,6 @@ import 'knockout-mapping';
 import { CHAT_MESSAGE_TYPES } from 'charactersheet/services/common/account/messaging/chat_message_types';
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging/chat_service';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
 import ko from 'knockout';
 

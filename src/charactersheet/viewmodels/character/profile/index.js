@@ -10,7 +10,6 @@ export function ProfileViewModel() {
 
     self.placeholderText = '<i>Character Name</i>';
     self.profile = ko.observable();
-    self.background = ko.observable('');
     self.race = ko.observable('');
     self.alignment = ko.observable('');
     self.deity = ko.observable('');
@@ -43,7 +42,6 @@ export function ProfileViewModel() {
         self.profile(profile);
 
         if (profile) {
-            self.background(profile.background());
             self.race(profile.race());
             self.alignment(profile.alignment());
             self.deity(profile.deity());
@@ -53,7 +51,6 @@ export function ProfileViewModel() {
         }
 
         //Subscriptions
-        self.background.subscribe(self.dataHasChanged);
         self.race.subscribe(self.dataHasChanged);
         self.alignment.subscribe(self.dataHasChanged);
         self.deity.subscribe(self.dataHasChanged);
@@ -87,7 +84,6 @@ export function ProfileViewModel() {
     //Public Methods
 
     self.saveProfile = async function() {
-        self.profile().background(self.background());
         self.profile().race(self.race());
         self.profile().alignment(self.alignment());
         self.profile().deity(self.deity());

@@ -7,7 +7,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import {
-    PersistenceService,
     SortService
 } from 'charactersheet/services/common';
 import { Armor } from 'charactersheet/models/common';

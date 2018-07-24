@@ -4,7 +4,6 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { Campaign } from 'charactersheet/models';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import largeIcon from 'images/encounters/compass.svg';
 import template from './index.html';
@@ -26,6 +25,7 @@ export function CampaignOverviewViewModel() {
         const campaignResponse = await Campaign.ps.read({uuid: key});
         self.campaign(campaignResponse.object);
         if (self.campaign()) {
+            const core = CoreManager.activeCore();
             self.playerName(CoreManager.activeCore().playerName());
             self.name(self.campaign().name());
             self.setting(self.campaign().setting());
@@ -39,12 +39,13 @@ export function CampaignOverviewViewModel() {
 
     self.saveCampaign = async () => {
         self.campaign().setting(self.setting());
-        self.campaign().ps.save();
+        await self.campaign().ps.save();
     };
 
     self.saveCore = async () => {
         let core = CoreManager.activeCore();
         core.playerName(self.playerName());
+        // TODO: WAITING ON AN API CHANGE
         await core.ps.save();
     }
 

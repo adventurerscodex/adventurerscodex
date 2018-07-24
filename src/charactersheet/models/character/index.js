@@ -1,6 +1,5 @@
 export { AbilityScore } from './ability_score.js';
 export { Background } from './background.js';
-export { CharacterAppearance } from './appearance.js';
 export { DeathSave } from './death_save.js';
 export { Feature } from './feature.js';
 export { Feat } from './feat.js';

@@ -5,9 +5,7 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    SortService
-} from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import { Spell } from 'charactersheet/models';
 import ko from 'knockout';
 import template from './index.html';
@@ -66,10 +64,11 @@ export function SpellbookViewModel() {
         var key = CoreManager.activeCore().uuid();
         const response = await Spell.ps.list({coreUuid: key});
         self.spellbook(response.objects);
-        // self.spellbook().forEach(function(spell, idx, _) {
-        //     spell.prepared.subscribe(self.save);
-        // });
+        self.spellbook().forEach(function(spell) {
+            spell.prepared.subscribe(self.save, spell);
+        });
         Notifications.spellStats.changed.add(self.valueHasChanged);
+        self.valueHasChanged();
     };
 
 
@@ -102,11 +101,11 @@ export function SpellbookViewModel() {
     };
 
     self.setComponents = function(label, value) {
-        self.blankSpell().spellComponents(value);
+        self.blankSpell().components(value);
     };
 
     self.setDuration = function(label, value) {
-        self.blankSpell().spellDuration(value);
+        self.blankSpell().duration(value);
     };
 
     // Modal methods
@@ -209,7 +208,7 @@ export function SpellbookViewModel() {
         var spell = self.blankSpell();
         spell.coreUuid(CoreManager.activeCore().uuid());
         const newSpell = await spell.ps.create();
-        // spell.prepared.subscribe(self.save);
+        newSpell.object.prepared.subscribe(self.save, newSpell.object);
         self.spellbook.push(newSpell.object);
         self.blankSpell(new Spell());
     };
@@ -226,14 +225,16 @@ export function SpellbookViewModel() {
         self.modalOpen(true);
     };
 
-    self.clear = function() {
-        self.spellbook([]);
-    };
-
     self.valueHasChanged = function() {
         self.spellbook().forEach(function(e, i, _) {
             e.updateValues();
         });
+    };
+
+    self.save = async function() {
+        if (this.ps) {
+            await this.ps.save();
+        }
     };
 }
 

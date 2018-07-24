@@ -21,8 +21,8 @@ export class SpellStats extends KOModel {
     spellcastingAbilityOptions = ko.observableArray(Fixtures.spellStats.spellcastingAbilityOptions);
 
     toSchemaValues = (values) => {
-        const abilityScoreId = values.castingAbility.uuid;
-        values.castingAbility = abilityScoreId;
+        const castingAbility = values.castingAbility;
+        values.castingAbility = castingAbility  === "" ? null : castingAbility;
         return values;
     }
 }

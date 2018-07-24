@@ -15,14 +15,14 @@ export class Skill extends KOModel {
     _dummy = ko.observable(null);
     coreUuid = ko.observable(null);
     name = ko.observable('');
-    modifier = ko.observable(null);
+    modifier = ko.observable(0);
     abilityScore = ko.observable(null);
     proficiency = ko.observable('');
     bonusLabel = ko.observable('');
     passiveBonus = ko.observable('');
 
     toSchemaValues = (values) => {
-        const abilityScoreId = values.abilityScore.uuid;
+        const abilityScoreId = values.abilityScore.coreUuid;
         values.abilityScore = abilityScoreId;
         return values;
     }

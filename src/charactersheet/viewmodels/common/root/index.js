@@ -4,14 +4,8 @@ import 'charactersheet/viewmodels/common/characters';
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
-    HealthinessStatusServiceComponent,
-    InspirationStatusServiceComponent,
-    MagicalStatusServiceComponent,
     NodeServiceManager,
     NotificationsServiceManager,
-    StatusService,
-    TotalWeightStatusServiceComponent,
-    TrackedStatusServiceComponent,
     UserServiceManager,
     XMPPService
 } from 'charactersheet/services';
@@ -21,7 +15,6 @@ import {
     TabFragmentManager
 } from 'charactersheet/utilities';
 import {
-    HotkeysService,
     PersistenceService
 } from 'charactersheet/services/common';
 import { Character } from 'charactersheet/models/common';
@@ -63,7 +56,8 @@ export function AdventurersCodexViewModel() {
       */
     self.state = ko.observable(APP_STATE.SELECT);
     self.selectedCore = ko.observable();
-    self._dummy = ko.observable();
+    // TODO: I don't think this is used. It's in the load, but doesn't make any sense.
+    // self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
     self.exportModalStatus = ko.observable(false);
@@ -109,8 +103,8 @@ export function AdventurersCodexViewModel() {
         Notifications.coreManager.changed.add(self._handleChangedCharacter);
 
         // Finish the setup once we're sure that we're logged in.
-        Notifications.authentication.loggedIn.add(() => {
-            CoreManager.init();
+        Notifications.authentication.loggedIn.add(async () => {
+            await CoreManager.init();
             var characters = PersistenceService.findAll(Character);
 
             TabFragmentManager.init();
@@ -138,7 +132,7 @@ export function AdventurersCodexViewModel() {
      * Signal all modules to load their data.
      */
     self.load = function() {
-        self._dummy.valueHasMutated();
+        // self._dummy.valueHasMutated();
     };
 
     self.unload = function() {
@@ -175,7 +169,6 @@ export function AdventurersCodexViewModel() {
         self.selectedCore(null);
 
         TabFragmentManager.changeTabFragment(null);
-
     };
 
     self._handleChangedCharacter = function() {

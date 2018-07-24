@@ -10,9 +10,8 @@ export class Profile extends KOModel {
 
     coreUuid = ko.observable(null);
     characterName = ko.observable('');
-    background = ko.observable('');
     alignment = ko.observable('');
-    diety = ko.observable('');
+    deity = ko.observable('');
     gender = ko.observable('');
     age = ko.observable('');
     experience = ko.observable('');

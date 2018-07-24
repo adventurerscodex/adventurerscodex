@@ -12,7 +12,6 @@ import {
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import { ChatServiceManager } from 'charactersheet/services/common';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
@@ -62,7 +61,6 @@ export function CharacterRootViewModel() {
         return PlayerTypes[key];
     };
 
-    self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
@@ -160,40 +158,6 @@ export function CharacterRootViewModel() {
         return self.wellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
     });
 
-    /* UI Methods */
-
-    self.playerTitle = ko.pureComputed(() => {
-        self._dummy();
-        var name = '';
-        var key = CoreManager.activeCore().uuid();
-        if (self.playerType().key === PlayerTypes.character.key) {
-            try {
-                name = PersistenceService.findBy(Profile, 'characterId', key)[0].characterName();
-            } catch(err) { /*Ignore*/ }
-        }
-        return name;
-    });
-
-    self.playerAuthor = ko.pureComputed(() => {
-        self._dummy();
-        var name = '';
-        var key = CoreManager.activeCore().uuid();
-        if (self.playerType().key === PlayerTypes.character.key) {
-            try {
-                name = PersistenceService.findBy(Profile, 'characterId', key)[0].playerName();
-            } catch(err) { /*Ignore*/ }
-        }
-        return name;
-    });
-
-    self.pageTitle = ko.pureComputed(() => {
-        self._dummy();
-        try {
-            return self.playerTitle() + ' by ' + self.playerAuthor()
-                + ' | Adventurer\'s Codex';
-        } catch(err) { /*Ignore*/ }
-    });
-
     /* Public Methods */
 
     self.load = () => {
@@ -209,10 +173,6 @@ export function CharacterRootViewModel() {
         self.characterCardPublishingService.init();
 
         //Subscriptions
-        Notifications.profile.changed.add(() => {
-            self._dummy.valueHasMutated();
-        });
-
         HotkeysService.registerHotkey('1', self.activateStatsTab);
         HotkeysService.registerHotkey('2', self.activateSkillsTab);
         HotkeysService.registerHotkey('3', self.activateSpellsTab);
@@ -222,7 +182,6 @@ export function CharacterRootViewModel() {
         HotkeysService.registerHotkey('7', self.activateProfileTab);
         HotkeysService.registerHotkey('8', self.activateChatTab);
         HotkeysService.registerHotkey('9', self.activateExhibitTab);
-
     };
 
     self.unload = () => {
@@ -238,7 +197,6 @@ export function CharacterRootViewModel() {
     //Private Methods
 
     self._tabIsVisible = (tabName) => {
-
         if (self.playerType().visibleTabs.indexOf(tabName) > -1) {
             return self.activeTab() === tabName ? 'active' : '';
         } else {

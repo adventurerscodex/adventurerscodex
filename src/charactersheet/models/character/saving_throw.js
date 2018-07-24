@@ -35,10 +35,9 @@ export class SavingThrow extends KOModel {
         var score = null;
         try {
             var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid: key});
-            score = response.objects.filter((score, i, _) => {
-                return score.name() === this.abilityScore().name();
-            })[0];
+            const response = await AbilityScore.ps.list({coreUuid: key,
+                name: this.abilityScore().name()});
+            score = response.objects[0];
         } catch(err) { /*Ignore*/ }
 
         if (score === null) {
@@ -49,7 +48,7 @@ export class SavingThrow extends KOModel {
     };
 
     bonus = async () => {
-        var bonus = this.modifier() ? parseInt(this.modifier()) : null;
+        var bonus = this.modifier() != null ? parseInt(this.modifier()) : null;
         const abilityScoreModifier = await this.abilityScoreModifier();
         const proficiency = this.proficiency();
         if (proficiency) {

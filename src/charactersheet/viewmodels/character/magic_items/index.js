@@ -6,7 +6,6 @@ import {
 } from 'charactersheet/utilities';
 import { MagicItem } from 'charactersheet/models/common';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';

@@ -5,13 +5,9 @@ import {
 import {
     Feat,
     Feature,
-    Tracked,
     Trait
 } from 'charactersheet/models/character';
-import {
-    KeyValuePredicate,
-    SharedServiceManager
-} from 'charactersheet/services/common';
+import { KeyValuePredicate } from 'charactersheet/services/common';
 import {
     Status,
     StatusWeightPair

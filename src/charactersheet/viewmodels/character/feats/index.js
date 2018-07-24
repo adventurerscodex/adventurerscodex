@@ -3,20 +3,15 @@ import {
     Feat,
     Tracked
 } from 'charactersheet/models/character';
-import {
-    Fixtures,
-    Notifications
-} from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
 import { CoreManager } from 'charactersheet/utilities';
 import { DataRepository } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
 import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditation from 'images/meditation.svg';
 import template from './index.html';
-import uuid from 'node-uuid';
 
 export function FeatsViewModel() {
     var self = this;

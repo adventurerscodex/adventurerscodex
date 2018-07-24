@@ -152,7 +152,7 @@ export var Fixtures = {
         ]
     },
     spell : {
-        spellTypeOptions : [
+        typeOptions : [
             'Ability Check',
             'Attack Roll',
             'Automatic',
@@ -162,7 +162,7 @@ export var Fixtures = {
             'Savings Throw'],
         spellSaveAttrOptions : [
             'Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha'],
-        spellSchoolOptions : [
+        schoolOptions : [
             'Abjuration',
             'Conjuration',
             'Divination',
@@ -171,7 +171,7 @@ export var Fixtures = {
             'Illusion',
             'Necromancy',
             'Transmutation'],
-        spellCastingTimeOptions : [
+        castingTimeOptions : [
             '1 action',
             '1 action or 8 hours',
             '1 bonus action',
@@ -182,7 +182,7 @@ export var Fixtures = {
             '12 hours',
             '24 hours',
             '8 hours'],
-        spellDurationOptions : [
+        durationOptions : [
             '1 day',
             '1 hour',
             '1 minute',
@@ -209,14 +209,14 @@ export var Fixtures = {
             'Up to 1 hour',
             'Up to 1 minute',
             'Up to 8 hours'],
-        spellComponentsOptions : [
+        componentsOptions : [
             'S',
             'S, M',
             'V',
             'V, M',
             'V, S',
             'V, S, M'],
-        spellRangeOptions : [
+        rangeOptions : [
             '1 mile',
             '10 feet',
             '100 feet',
