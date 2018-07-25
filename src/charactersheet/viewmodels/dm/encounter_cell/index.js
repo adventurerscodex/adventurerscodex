@@ -5,14 +5,15 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { ViewModelUtilities } from 'charactersheet/utilities';
 import ko from 'knockout';
 
+
 export function EncounterCellViewModel(encounter) {
     var self = this;
 
-    self.id = encounter.encounterId;
+    self.id = encounter.uuid;
+    self.encounter = encounter;
     self.characterId = encounter.characterId;
-    self.encounterId = encounter.encounterId;
     self.name = encounter.name;
-    self.encounterLocation = encounter.encounterLocation;
+    self.location = encounter.location;
     self.isOpen = encounter.isOpen;
 
     self._children = ko.observableArray(encounter.getChildren());
@@ -44,10 +45,10 @@ export function EncounterCellViewModel(encounter) {
         // Update the data.
         var key = CoreManager.activeCore().uuid();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('uuid', self.uuid()),
             new KeyValuePredicate('characterId', key)
         ])[0];
-        encounter.children.push(child.encounterId());
+        encounter.children.push(child.uuid());
         encounter.save();
 
         // Update the UI.
@@ -56,7 +57,7 @@ export function EncounterCellViewModel(encounter) {
 
     self.removeChild = function(child) {
         self._children(self._children().filter(function(encounter, idx, _) {
-            return child.encounterId() !== encounter.encounterId();
+            return child.uuid() !== encounter.uuid();
         }));
     };
 
@@ -65,11 +66,11 @@ export function EncounterCellViewModel(encounter) {
     self.save = function() {
         var key = CoreManager.activeCore().uuid();
         var encounter = PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('uuid', self.uuid()),
             new KeyValuePredicate('characterId', key)
         ])[0];
         encounter.name(self.name());
-        encounter.encounterLocation(self.encounterLocation());
+        encounter.location(self.location());
         encounter.isOpen(self.isOpen());
         encounter.save();
     };
@@ -79,12 +80,12 @@ export function EncounterCellViewModel(encounter) {
     self.reloadData = function() {
         var key = CoreManager.activeCore().uuid();
         var encounter =  PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
+            new KeyValuePredicate('uuid', self.uuid()),
             new KeyValuePredicate('characterId', key)
         ])[0];
         if (encounter) {
             self.name(encounter.name());
-            self.encounterLocation(encounter.encounterLocation());
+            self.location(encounter.location());
             self.children().forEach(function(child, idx, _) {
                 child.reloadData();
             });
