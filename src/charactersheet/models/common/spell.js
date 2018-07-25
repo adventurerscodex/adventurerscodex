@@ -1,3 +1,5 @@
+import 'bin/knockout-mapping-autoignore';
+import 'knockout-mapping';
 import {
     CoreManager,
     Fixtures
@@ -11,10 +13,9 @@ export class Spell extends KOModel {
     static __skeys__ = ['core', 'spells'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid', 'prepared']
     };
 
-    _dummy = ko.observable();
     coreUuid = ko.observable(null);
     name = ko.observable('');
     prepared = ko.observable(false);
@@ -41,8 +42,10 @@ export class Spell extends KOModel {
     componentsOptions = ko.observableArray(Fixtures.spell.componentsOptions);
     rangeOptions = ko.observableArray(Fixtures.spell.rangeOptions);
 
-    updateValues = () => {
-        this._dummy.notifySubscribers();
+    spellDamageLabel = ko.observable('');
+
+    updateValues = async () => {
+        await this.calculateSpellDamageLabel();
     };
 
     nameLabel = ko.pureComputed(() => {
@@ -53,20 +56,17 @@ export class Spell extends KOModel {
         }
     });
 
-    spellDamageLabel = ko.pureComputed(() => {
-        this._dummy();
+    calculateSpellDamageLabel = async () => {
         var key = CoreManager.activeCore().uuid();
-        return this.damage();
-        // TODO: NEED SPELL STATS FOR THIS
-        // var spellStats = PersistenceService.findBy(SpellStats, 'characterId', key)[0];
-        // if (type() === 'Attack Roll') {
-        //     var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;
-        //     return (this.damage() + ' [Spell Bonus: +' + spellBonus + ']');
-        // }
-        // else {
-        //     return this.damage();
-        // }
-    });
+        if (this.type() === 'Attack Roll') {
+            const spellStatsResponse = await SpellStats.ps.read({ uuid: key });
+            const spellStats = spellStatsResponse.object;
+            var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;
+            this.spellDamageLabel(this.damage() + ' [Spell Bonus: +' + spellBonus + ']');
+        } else {
+            this.spellDamageLabel(this.damage());
+        }
+    };
 
     levelLabel = ko.pureComputed(() => {
         if (parseInt(this.level()) === 0) {

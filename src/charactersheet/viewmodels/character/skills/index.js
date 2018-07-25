@@ -4,7 +4,10 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { Skill } from 'charactersheet/models/character';
+import {
+    AbilityScore,
+    Skill
+} from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
@@ -29,11 +32,18 @@ export function SkillsViewModel() {
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
+    self.abilityScores = ko.observableArray(null);
 
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
+
+        // Fetch skills
         const response = await Skill.ps.list({coreUuid: key});
         self.skills(response.objects);
+
+        // Fetch Ability Scores
+        const abilitScoresResponse = await AbilityScore.ps.list({coreUuid: key});
+        self.abilityScores(abilitScoresResponse.objects);
 
         //Subscriptions
         Notifications.abilityScores.changed.add(self.updateValues);
@@ -87,6 +97,7 @@ export function SkillsViewModel() {
         if (self.editModalOpen()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.skills(), response.object, self.editItemIndex);
+            self.updateValues();
         }
 
         self.editModalOpen(false);
@@ -108,10 +119,10 @@ export function SkillsViewModel() {
     self.addSkill = async () => {
         var skill = self.blankSkill();
         skill.coreUuid(CoreManager.activeCore().uuid());
-        // TODO: NEED TO FIX THIS
-        skill.abilityScore('8761d2db-c176-44e1-8593-69cce2d95d81');
-        const newSkill = await skill.ps.create();
-        self.skills.push(newSkill.object);
+        const newSkillResponse = await skill.ps.create();
+        const newSkill = newSkillResponse.object;
+        newSkill.updateBonuses();
+        self.skills.push(newSkill);
         self.blankSkill(new Skill());
     };
 
@@ -132,6 +143,14 @@ export function SkillsViewModel() {
             self.currentEditItem().updateBonuses();
         });
         self.editModalOpen(true);
+    };
+
+    self.isCellActive = (shortName) => {
+        if (!self.blankSkill().abilityScore()) {
+            return false;
+        }
+
+        return self.blankSkill().abilityScore().shortName() == shortName;
     };
 
     self.perceptionHasChanged = function() {

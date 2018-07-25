@@ -19,7 +19,6 @@ export function SpellStatsViewModel() {
         var key = CoreManager.activeCore().uuid();
         var stats = await SpellStats.ps.read({uuid: key});
         self.spellStats(stats.object);
-        self.spellStats().spellAttackBonus.subscribe(self.dataHasChanged);
     };
 
     self.clear = function() {
@@ -27,7 +26,7 @@ export function SpellStatsViewModel() {
     };
 
     self.setSpellCastingAbility = function(label, value) {
-        self.editItem().spellcastingAbility(label);
+        self.editItem().castingAbility(label);
     };
 
     // Modal Methods
@@ -36,7 +35,6 @@ export function SpellStatsViewModel() {
         self.modalStatus(true);
         self.editItem(new SpellStats());
         self.editItem().importValues(self.spellStats().exportValues());
-        self.editItem().castingAbility(self.spellStats().castingAbility().shortName());
     };
 
     self.modalFinishedAnimating = function() {
@@ -46,10 +44,13 @@ export function SpellStatsViewModel() {
 
     self.modalFinishedClosing = async () => {
         if (self.modalStatus()) {
-            self.spellStats().importValues(self.editItem().exportValues());
-            // TODO: Make sure the casting ability is updated too
-            var response = await self.editItem().ps.save();
-            self.spellStats(response.object);
+            try {
+                var response = await self.editItem().ps.save();
+                self.spellStats(response.object);
+                self.dataHasChanged();
+            } catch(err) {
+                // Ignore
+            }
         }
 
         self.modalStatus(false);

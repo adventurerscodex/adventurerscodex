@@ -7,7 +7,6 @@ import {
 import {
     ChatServiceManager,
     ImageServiceManager,
-    PersistenceService,
     SortService
 } from 'charactersheet/services';
 import { Image } from 'charactersheet/models/dm';
@@ -102,10 +101,10 @@ export function CampaignMapsAndImagesViewModel() {
 
     self.addMapOrImage = async function() {
         var mapOrImage = self.blankMapOrImage();
-        mapOrImage.characterId(CoreManager.activeCore().uuid());
+        mapOrImage.coreUuid(CoreManager.activeCore().uuid());
         const imageResponse = await mapOrImage.ps.create();
         self.mapsOrImages.push(imageResponse.object);
-        self.blankMapOrImage(new CampaignMapOrImage());
+        self.blankMapOrImage(new Image());
     };
 
     self.removeMapOrImage = async function(mapOrImage) {
@@ -117,7 +116,7 @@ export function CampaignMapsAndImagesViewModel() {
         self.editItemIndex = mapOrImage.uuid;
         self.currentEditItem(new Image());
         self.currentEditItem().importValues(mapOrImage.exportValues());
-        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openModal(true);
     };
 
@@ -145,7 +144,7 @@ export function CampaignMapsAndImagesViewModel() {
     };
 
     self.selectPreviewTab = function() {
-        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };

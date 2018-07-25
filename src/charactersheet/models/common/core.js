@@ -11,6 +11,9 @@ export class Core extends KOModel {
     };
 
     profileImage = ko.observable();
+    playerName = ko.observable();
+    name = ko.observable();
+    createdAt = ko.observable();
 
     title = ko.pureComputed(() => {
         return `${this.name()}`;

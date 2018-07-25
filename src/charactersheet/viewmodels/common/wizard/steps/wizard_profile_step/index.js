@@ -31,7 +31,7 @@ export function WizardProfileStepViewModel(params) {
         self.alignment.subscribe(self.dataHasChanged);
         self.age.subscribe(self.dataHasChanged);
         self.gender.subscribe(self.dataHasChanged);
-        self.diety.subscribe(self.dataHasChanged);
+        self.deity.subscribe(self.dataHasChanged);
         self.level.subscribe(self.dataHasChanged);
         self.exp.subscribe(self.dataHasChanged);
     };
@@ -49,7 +49,7 @@ export function WizardProfileStepViewModel(params) {
     self.alignment = ko.observable();
     self.age = ko.observable();
     self.gender = ko.observable();
-    self.diety = ko.observable();
+    self.deity = ko.observable();
     self.level = ko.observable();
     self.exp = ko.observable();
 
@@ -147,7 +147,7 @@ export function WizardProfileStepViewModel(params) {
             age: self.age(),
             alignment: self.alignment(),
             gender: self.gender(),
-            diety: self.diety(),
+            deity: self.deity(),
             level: self.level() || 1,
             exp: self.exp(),
             traits: self.populateTraits(),

@@ -7,13 +7,9 @@ import {
 } from 'charactersheet/utilities';
 import {
     ProfileImage,
-    PlayerInfo,
     PlayerTypes
 } from 'charactersheet/models/common';
-import {
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
+import { XMPPService } from 'charactersheet/services/common';
 import { OtherStats } from 'charactersheet/models/character';
 import ko from 'knockout';
 import md5 from 'blueimp-md5';
@@ -43,7 +39,6 @@ export function PlayerImageViewModel() {
 
     self.load = async () => {
         //Subscriptions
-        Notifications.playerInfo.changed.add(self.saveAndNotify);
         Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
         Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
         Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);

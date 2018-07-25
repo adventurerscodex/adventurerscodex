@@ -1,6 +1,5 @@
 import 'knockout-mapping';
 import 'bin/knockout-mapping-autoignore';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
 /**

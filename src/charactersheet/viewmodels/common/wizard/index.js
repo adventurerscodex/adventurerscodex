@@ -1,14 +1,5 @@
-import {
-    AbilityScore,
-    Campaign,
-    Character,
-    Item,
-    PlayerInfo,
-    Profile,
-    Trait
-} from 'charactersheet/models';
+import { AbilityScore } from 'charactersheet/models';
 import { CoreManager } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
 import uuid from 'node-uuid';
@@ -222,7 +213,7 @@ export function WizardViewModel() {
 
             // Background
             params.background = {
-                name: '',
+                name: profileData.background,
                 flaw: '',
                 bond: '',
                 ideal: '',
@@ -254,12 +245,6 @@ export function WizardViewModel() {
             //     item.importValues(element);
             //     item.save();
             // });
-
-            // TODO: PROBABLY DELETE THIS
-
-            // var playerInfo = new PlayerInfo();
-            // playerInfo.characterId(character.key());
-            // playerInfo.save();
         } else if (playerType.key == 'dm') {
             // Campaign
             actions = ["core", "dms", "create"];
@@ -286,7 +271,7 @@ export function WizardViewModel() {
         profile.age = data.age;
         profile.alignment = data.alignment;
         profile.gender = data.gender;
-        profile.diety = data.diety;
+        profile.deity = data.deity;
         profile.level = data.level;
         profile.experience = data.exp;
 

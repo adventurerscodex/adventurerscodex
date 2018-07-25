@@ -131,7 +131,7 @@
                            class="form-control"
                            id="spellsAddPreparedCheckbox"
                            data-bind='checked: blankSpell().prepared,
-                                      disable: blankSpell().spellAlwaysPrepared'>
+                                      disable: blankSpell().alwaysPrepared'>
                   </div>
 
                 <label class="col-sm-4 control-label">
@@ -144,7 +144,7 @@
                   <input type="checkbox"
                          class="form-control"
                          id="spellsAddAlwaysPreparedCheckbox"
-                         data-bind='checked: blankSpell().spellAlwaysPrepared,
+                         data-bind='checked: blankSpell().alwaysPrepared,
                                     disable: blankSpell().prepared'>
 
                 </div>
@@ -178,7 +178,7 @@
                   <input class="form-control" id="spellsAddSchoolInput"
                          placeholder="Abjuration"
                          data-bind="textInput: blankSpell().school,
-                          autocomplete: { source: blankSpell().spellSchoolOptions,
+                          autocomplete: { source: blankSpell().schoolOptions,
                                           onselect: setSpellSchool }">
                   </div>
               </div>
@@ -189,7 +189,7 @@
                   <input class="form-control" id="spellsAddTypeInput"
                          placeholder="Automatic"
                          data-bind="textInput: blankSpell().type,
-                          autocomplete: { source: blankSpell().spellTypeOptions,
+                          autocomplete: { source: blankSpell().typeOptions,
                                           onselect: setType }">
                   </div>
               </div>
@@ -238,7 +238,7 @@
                           id="spellsAddCastTimeInput"
                           placeholder="1 action"
                           data-bind="textInput: blankSpell().castingTime,
-                          autocomplete: { source: blankSpell().spellCastingTimeOptions,
+                          autocomplete: { source: blankSpell().castingTimeOptions,
                                           onselect: setCastingTime }">
                   </div>
               </div>
@@ -250,7 +250,7 @@
                          id="spellsAddRangeInput"
                          placeholder="1 mile"
                          data-bind="textInput: blankSpell().range,
-                          autocomplete: { source: blankSpell().spellRangeOptions,
+                          autocomplete: { source: blankSpell().rangeOptions,
                                           onselect: setRange }">
                   </div>
               </div>
@@ -262,7 +262,7 @@
                          id="spellsAddComponentsInput"
                          placeholder="V, S, M"
                          data-bind="textInput: blankSpell().components,
-                          autocomplete: { source: blankSpell().spellComponentsOptions,
+                          autocomplete: { source: blankSpell().componentsOptions,
                                           onselect: setComponents }">
                   </div>
               </div>
@@ -285,7 +285,7 @@
                          id="spellsAddDurationInput"
                          placeholder="1 day"
                          data-bind="textInput: blankSpell().duration,
-                          autocomplete: { source: blankSpell().spellDurationOptions,
+                          autocomplete: { source: blankSpell().durationOptions,
                                           onselect: setDuration }">
                   </div>
               </div>

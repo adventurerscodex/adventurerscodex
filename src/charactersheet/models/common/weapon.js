@@ -7,7 +7,6 @@ import {
 import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { KOModel } from 'hypnos';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
-import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 
 import ko from 'knockout';
 

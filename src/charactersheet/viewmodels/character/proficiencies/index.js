@@ -6,7 +6,6 @@ import {
 import { DataRepository } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Proficiency } from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';

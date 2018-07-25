@@ -5,10 +5,7 @@ import {
     Fixtures,
     Utility
 } from 'charactersheet/utilities';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import { Item } from 'charactersheet/models/common';
 import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';

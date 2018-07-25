@@ -4,7 +4,8 @@ import {
     DataRepository,
     Fixtures,
     Notifications,
-    Utility } from 'charactersheet/utilities';
+    Utility
+} from 'charactersheet/utilities';
 import { SortService } from 'charactersheet/services/common';
 import { Weapon } from 'charactersheet/models/common';
 import ko from 'knockout';
@@ -170,6 +171,7 @@ export function WeaponsViewModel() {
         weapon.coreUuid(CoreManager.activeCore().uuid());
         const newWeapon = await weapon.ps.create();
         self.weapons.push(newWeapon.object);
+        self.updateWeaponCalculations(newWeapon.object.uuid());
         self.blankWeapon(new Weapon());
         Notifications.weapon.changed.dispatch();
     };

@@ -220,10 +220,6 @@ export var Notifications = {
         changed: new Signal()
     },
 
-    playerInfo: {
-        changed: new Signal()
-    },
-
     profile: {
         changed: new Signal(),
         level: {

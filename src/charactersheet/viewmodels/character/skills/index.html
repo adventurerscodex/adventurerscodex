@@ -180,51 +180,25 @@
                 </div>
               </div>
            </div>
+           <!-- ko if: abilityScores -->
             <div class="form-group">
               <label for="abscore"
                    class="col-sm-2 control-label">Ability Score</label>
 
               <div class="col-sm-10">
                 <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default"
-                data-bind="css: { active: blankSkill().abilityScore() == 'Str'}">
-                  <input type="radio" class="hide-block"
-                  name="abilityScore" value="Str" data-bind="checked: blankSkill().abilityScore"/>
-                  Str
-                </label>
-                <label class="btn btn-default "
-                data-bind="css: { active: blankSkill().abilityScore() == 'Dex'}">
-                  <input type="radio" class="hide-block"
-                  name="abilityScore" value="Dex" data-bind="checked: blankSkill().abilityScore"/>
-                  Dex
+                <!-- ko foreach: abilityScores-->
+                  <label class="btn btn-default"
+                    data-bind="css: { active: $parent.isCellActive(shortName()) }">
+                    <input type="radio" class="hide-block" name="abilityScore"
+                      data-bind="checked: $parent.blankSkill().abilityScore, value: $data"/>
+                    <span data-bind="text: shortName"></span>
                   </label>
-                <label class="btn btn-default "
-                data-bind="css: { active: blankSkill().abilityScore() == 'Con'}">
-                  <input type="radio" name="abilityScore" value="Con" class="hide-block"
-                  data-bind="checked: blankSkill().abilityScore"/>
-                  Con
-                  </label>
-                <label class="btn btn-default "
-                data-bind="css: { active: blankSkill().abilityScore() == 'Int'}">
-                  <input type="radio" class="hide-block"
-                  name="abilityScore" value="Int" data-bind="checked: blankSkill().abilityScore"/>
-                  Int
-                  </label>
-                <label class="btn btn-default "
-                data-bind="css: { active: blankSkill().abilityScore() == 'Wis'}">
-                  <input type="radio" class="hide-block"
-                  name="abilityScore" value="Wis" data-bind="checked: blankSkill().abilityScore"/>
-                  Wis
-                  </label>
-                <label class="btn btn-default "
-                data-bind="css: { active: blankSkill().abilityScore() == 'Cha'}">
-                  <input type="radio" class="hide-block"
-                  name="abilityScore" value="Cha" data-bind="checked: blankSkill().abilityScore"/>
-                  Cha
-                </label>
-              </div>
+                <!-- /ko -->
+                </div>
               </div>
             </div>
+            <!-- /ko -->
           </div> <!-- end form-group -->
           <div class="modal-footer">
             <button type="button"

@@ -6,8 +6,6 @@ import Dropbox from 'dropbox';
 import { Migrations } from 'charactersheet/utilities/migrations';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { PlayerImage } from './player_image';
-import { PlayerInfo } from './player_info';
 import { PlayerTypes } from './player_types';
 import { Profile } from '../character/profile';
 import { Settings } from 'charactersheet/settings';

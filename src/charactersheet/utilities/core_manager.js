@@ -1,5 +1,7 @@
 /*eslint no-console:0 */
 
+// Enables Async/Await
+import 'babel-polyfill';
 import { Core } from 'charactersheet/models/common/core';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import URI from 'urijs';
@@ -21,15 +23,14 @@ export var CoreManager = {
      * Note: The Core Manager init must be called for the core manager
      * to detect any core IDs in the URL.
      */
-    init: () => {
+    init: async () => {
         var fragments = (new URI()).fragment(true);
         var key = fragments[CoreManager.CORE_ID_FRAGMENT_KEY];
         if (key) {
-            Core.ps.read({ uuid: key }).then(response => {
-                var core = response.object;
-                CoreManager._setActiveCore(core);
-                Notifications.coreManager.changed.dispatch(core);
-            });
+            const coreResponse = await Core.ps.read({ uuid: key });
+            var core = coreResponse.object;
+            CoreManager._setActiveCore(core);
+            Notifications.coreManager.changed.dispatch(core);
         }
     },
 
