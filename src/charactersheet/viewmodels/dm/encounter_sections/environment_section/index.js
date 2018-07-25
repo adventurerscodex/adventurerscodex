@@ -27,7 +27,7 @@ export function EnvironmentSectionViewModel(params) {
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
         if (!ko.unwrap(self.encounter)) { return; }
-        return self.encounter().encounterId();
+        return self.encounter().uuid();
     });
 
     self.sectionIcon = sectionIcon;

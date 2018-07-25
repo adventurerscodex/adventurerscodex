@@ -1,3 +1,4 @@
+export * from './encounter_section';
 export * from './encounter_sections';
 export * from './campaign.js';
 export * from './encounter.js';
