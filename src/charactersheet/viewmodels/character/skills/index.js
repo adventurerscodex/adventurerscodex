@@ -1,13 +1,13 @@
 import 'bin/knockout-bootstrap-modal';
 import {
+    AbilityScore,
+    Skill
+} from 'charactersheet/models/character';
+import {
     CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import {
-    AbilityScore,
-    Skill
-} from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';

@@ -1,4 +1,3 @@
-import './test_appearance';
 import './test_armor';
 import './test_background';
 import './test_feats';

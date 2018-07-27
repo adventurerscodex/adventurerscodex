@@ -14,10 +14,8 @@ import {
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import {
-    PersistenceService
-} from 'charactersheet/services/common';
 import { Character } from 'charactersheet/models/common';
+import { PersistenceService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import navLogo from 'images/logo-full-circle-icon.png';
 import style from 'style/site.css';

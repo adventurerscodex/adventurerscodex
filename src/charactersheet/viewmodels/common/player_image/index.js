@@ -6,11 +6,11 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import {
-    ProfileImage,
-    PlayerTypes
+    PlayerTypes,
+    ProfileImage
 } from 'charactersheet/models/common';
-import { XMPPService } from 'charactersheet/services/common';
 import { OtherStats } from 'charactersheet/models/character';
+import { XMPPService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import md5 from 'blueimp-md5';
 import template from './index.html';

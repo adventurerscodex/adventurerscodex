@@ -1,9 +1,9 @@
 import { AbilityScore } from 'charactersheet/models';
 import { CoreManager } from 'charactersheet/utilities';
+import { Hypnos } from 'hypnos/lib/hypnos';
 import ko from 'knockout';
 import template from './index.html';
 import uuid from 'node-uuid';
-import { Hypnos } from 'hypnos/lib/hypnos';
 
 /**
  * This view model contains the root implementation of the wizard.
@@ -184,17 +184,12 @@ export function WizardViewModel() {
      * Progress through all previous and current steps and save their data.
      */
     self.save = async function() {
-        // var character = new Character();
-        // character.key(uuid.v4());
-        // character.save();
         var playerType = self.aggregateResults()['WizardPlayerTypeStep'].playerType;
-        // character.playerType(playerType);
-        // character.save();
         let params = {};
         let actions;
 
         if (playerType.key == 'character') {
-            actions = ["core", "characters", "create"];
+            actions = ['core', 'characters', 'create'];
 
             // Profile
             var profileData = self.aggregateResults()['WizardProfileStep'];
@@ -247,7 +242,7 @@ export function WizardViewModel() {
             // });
         } else if (playerType.key == 'dm') {
             // Campaign
-            actions = ["core", "dms", "create"];
+            actions = ['core', 'dms', 'create'];
 
             let campaignData = self.aggregateResults()['WizardCampaignStep'];
             params.profileImage = { type: 'email' };

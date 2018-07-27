@@ -162,15 +162,15 @@ export function TrackerViewModel() {
             const response = await self.editParent().ps.save();
             Utility.array.updateElement(self.trackables(), response.object, response.object.uuid());
             switch(self.editItem().type()) {
-                case 'Feature':
-                    Notifications.tracked.feature.changed.dispatch();
-                    break;
-                case 'Trait':
-                    Notifications.tracked.trait.changed.dispatch();
-                    break;
-                case 'Feat':
-                    Notifications.tracked.feat.changed.dispatch();
-                    break;
+            case 'Feature':
+                Notifications.tracked.feature.changed.dispatch();
+                break;
+            case 'Trait':
+                Notifications.tracked.trait.changed.dispatch();
+                break;
+            case 'Feat':
+                Notifications.tracked.feat.changed.dispatch();
+                break;
             }
         }
 
@@ -190,15 +190,15 @@ export function TrackerViewModel() {
 
     self.editTracked = function(item) {
         switch(item.tracked().type) {
-          case 'Feature':
+        case 'Feature':
             self.editParent(new Feature());
             self.editParent().importValues(item.exportValues());
             break;
-          case 'Trait':
+        case 'Trait':
             self.editParent(new Trait());
             self.editParent().importValues(item.exportValues());
             break;
-          case 'Feat':
+        case 'Feat':
             self.editParent(new Feat());
             self.editParent().importValues(item.exportValues());
             break;

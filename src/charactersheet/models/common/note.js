@@ -22,13 +22,15 @@ export class Note extends KOModel {
         var text = '';
         try {
             text = this.contents();
-        } catch(e) {}
+        } catch(e) {
+            // Ignore
+        }
         var firstLine = text.split('\n')[0];
         if (firstLine.length > 35) {
             firstLine = this._getFirstWords(firstLine.substr(0, 35)) + '...';
         }
         this.headline(firstLine ? this._getPlaintext(firstLine) : 'Empty Note');
-    };
+    }
 
 
 

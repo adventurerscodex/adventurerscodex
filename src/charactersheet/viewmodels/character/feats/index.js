@@ -3,9 +3,9 @@ import {
     Feat,
     Tracked
 } from 'charactersheet/models/character';
-import { Notifications } from 'charactersheet/utilities';
 import { CoreManager } from 'charactersheet/utilities';
 import { DataRepository } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
 import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
 import campingTent from 'images/camping-tent.svg';
@@ -50,7 +50,7 @@ export function FeatsViewModel() {
         var key = CoreManager.activeCore().uuid();
         const response = await Feat.ps.list({coreUuid: key});
         self.feats(response.objects);
-    }
+    };
 
     // Pre-pop methods
     self.featsPrePopFilter = function(request, response) {

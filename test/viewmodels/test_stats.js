@@ -1,5 +1,5 @@
-import { HitDice } from 'charactersheet/models/character';
 import { CharacterManager } from 'charactersheet/utilities';
+import { HitDice } from 'charactersheet/models/character';
 import { MockCharacterManager } from '../mocks';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';

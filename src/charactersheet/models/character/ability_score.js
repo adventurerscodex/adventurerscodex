@@ -36,6 +36,8 @@ export class AbilityScore extends KOModel {
                 modifier = '- ' + Math.abs(modifier);
             }
             return modifier;
-        } catch (e) { }
+        } catch (e) {
+            // Ignore
+        }
     }
 }

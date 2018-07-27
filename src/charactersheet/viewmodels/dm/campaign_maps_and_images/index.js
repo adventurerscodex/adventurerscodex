@@ -1,14 +1,14 @@
 import 'bin/knockout-custom-loader';
 import {
-    CoreManager,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import {
     ChatServiceManager,
     ImageServiceManager,
     SortService
 } from 'charactersheet/services';
+import {
+    CoreManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import { Image } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import template from './index.html';

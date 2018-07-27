@@ -50,7 +50,7 @@ export var DMCardFields = [
             //     var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', CoreManager.activeCore().uuid());
             //     return info ? info.gravatarUrl() : defaultImage;
             // } else {
-                return defaultImage;
+            return defaultImage;
             // }
         }
     }, {

@@ -1,7 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { Utility } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos/lib/models/ko';
+import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -21,6 +21,8 @@ export class Image extends KOModel {
     shortDescription = ko.pureComputed(() => {
         try {
             return Utility.string.truncateStringAtLength(this.description(), 100);
-        } catch(e) {}
+        } catch(e) {
+            // Ignore
+        }
     });
 }

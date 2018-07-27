@@ -1,92 +1,61 @@
-import { MonsterAbilityScore } from './monster_ability_score';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 
-export function Monster() {
-    var self = this;
-    self.ps = PersistenceService.register(Monster, self);
-    self.mapping = {
-        include: ['characterId', 'encounterId', 'monsterId', 'name', 'size', 'type',
+export class Monster extends KOModel {
+    static __skeys__ = ['core', 'encounters'];
+
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type',
         'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
         'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
         'conditionImmunities', 'languages', 'challenge', 'experience', 'description']
     };
 
-    self.characterId = ko.observable();
-    self.encounterId = ko.observable();
-    self.monsterId = ko.observable();
-    self.name = ko.observable();
-    self.size = ko.observable();
-    self.type = ko.observable();
-    self.alignment = ko.observable();
-    self.armorClass = ko.observable();
-    self.hitPoints = ko.observable();
-    self.speed = ko.observable();
-    self.abilityScores = ko.observableArray([]);
-    self.savingThrows = ko.observable();
-    self.skills = ko.observable();
-    self.senses = ko.observable();
-    self.damageVulnerabilities = ko.observable();
-    self.damageImmunities = ko.observable();
-    self.damageResistances = ko.observable();
-    self.conditionImmunities = ko.observable();
-    self.languages = ko.observable();
-    self.challenge = ko.observable();
-    self.experience = ko.observable();
-    self.description = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    uuid = ko.observable();
+    name = ko.observable();
+    size = ko.observable();
+    type = ko.observable();
+    alignment = ko.observable();
+    armorClass = ko.observable();
+    hitPoints = ko.observable();
+    speed = ko.observable();
+    abilityScores = ko.observableArray([]);
+    savingThrows = ko.observable();
+    skills = ko.observable();
+    senses = ko.observable();
+    damageVulnerabilities = ko.observable();
+    damageImmunities = ko.observable();
+    damageResistances = ko.observable();
+    conditionImmunities = ko.observable();
+    languages = ko.observable();
+    challenge = ko.observable();
+    experience = ko.observable();
+    description = ko.observable();
 
     // UI Stuff
-    self.markDownDescription = ko.pureComputed(function() {
-        return self.description() ? self.description() : '';
+    markDownDescription = ko.pureComputed(function() {
+        return this.description() ? this.description() : '';
     });
 
-    self.nameLabel = ko.pureComputed(function() {
-        var label = self.size() ? self.size() : '';
-        label += self.type() ? (self.size() ? ' ' : '') + self.type() : '';
-        label += (self.size() && self.alignment()) || (self.type() && self.alignment()) ? ', ' : '';
-        label += self.alignment() ? self.alignment() : '';
+    nameLabel = ko.pureComputed(function() {
+        var label = this.size() ? this.size() : '';
+        label += this.type() ? (this.size() ? ' ' : '') + this.type() : '';
+        label += (this.size() && this.alignment()) || (this.type() && this.alignment()) ? ', ' : '';
+        label += this.alignment() ? this.alignment() : '';
         return label;
     });
 
     //Public Methods
-    self.findAbilityScoreByName = function(name) {
+    findAbilityScoreByName = function(name) {
         var foundScore;
-        self.abilityScores().forEach(function(score, idx, _) {
+        this.abilityScores().forEach(function(score, idx, _) {
             if (score.name().toLowerCase() == name.toLowerCase()) {
                 foundScore = score;
             }
         });
         return foundScore;
     };
-
-    self.clear = function() {
-        var values = new Monster().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.abilityScores().forEach(function(score, idx, _) {
-            score.save();
-        });
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
 }
-Monster.__name = 'Monster';
-
-PersistenceService.addToRegistry(Monster);

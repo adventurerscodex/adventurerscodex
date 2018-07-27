@@ -1,20 +1,16 @@
 import {
+    ChatServiceManager,
+    ImageServiceManager,
+    PersistenceService,
+    SortService
+} from 'charactersheet/services/common';
+import {
     CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    ChatServiceManager,
-    ImageServiceManager,
-    PersistenceService,
-    SortService,
-    XMPPService
-} from 'charactersheet/services/common';
-import {
-    MapOrImage,
-    Message
-} from 'charactersheet/models/common';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { MapOrImage } from 'charactersheet/models/common';
 import { MapsAndImagesSection } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/globe.svg';

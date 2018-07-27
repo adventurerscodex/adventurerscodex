@@ -6,10 +6,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    SortService
-} from 'charactersheet/services/common';
 import { Armor } from 'charactersheet/models/common';
+import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 

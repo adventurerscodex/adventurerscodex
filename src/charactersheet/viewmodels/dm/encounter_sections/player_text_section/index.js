@@ -1,15 +1,14 @@
 import {
-    CoreManager,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import {
     ChatServiceManager,
     PersistenceService,
     SortService
 } from 'charactersheet/services';
 import {
-    Message,
+    CoreManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import {
     PlayerText,
     PlayerTextSection
 } from 'charactersheet/models';
