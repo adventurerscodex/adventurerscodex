@@ -65,7 +65,7 @@ export function NotesViewModel() {
         self.notes().forEach((note) => {
             note.updateHeadline();
         });
-    }
+    };
 
     self.selectNote = function(note) {
         self.selectedNote(note);

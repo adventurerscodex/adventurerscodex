@@ -1,5 +1,5 @@
+import { Image } from 'charactersheet/models/dm/image';
 import { ImageFixture } from '../fixtures';
-import { ImageModel } from 'charactersheet/models/common/image';
 import simple from 'simple-mock';
 
 describe('Image Model', function() {
@@ -11,7 +11,7 @@ describe('Image Model', function() {
     describe('Instance Methods', function() {
         describe('Clear', function() {
             it('should clear all the image data', function() {
-                var image = new ImageModel();
+                var image = new Image();
                 image.imageUrl(ImageFixture.dataUrl);
                 image.imageUrl().should.equal(ImageFixture.dataUrl);
                 image.clear();
@@ -21,7 +21,7 @@ describe('Image Model', function() {
 
         describe('Has Data', function() {
             it('should return whether or not the model contains data.', function() {
-                var image = new ImageModel();
+                var image = new Image();
                 image.hasData().should.equal(false);
                 image.imageUrl(ImageFixture.dataUrl);
                 image.hasData().should.equal(true);
@@ -30,7 +30,7 @@ describe('Image Model', function() {
 
         describe('Import', function() {
             it('should import an object with all the info supplied.', function() {
-                var image = new ImageModel();
+                var image = new Image();
                 image.importValues(ImageFixture);
                 image.imageUrl().should.equal(ImageFixture.imageUrl);
                 image.characterId().should.equal(ImageFixture.characterId);
@@ -39,7 +39,7 @@ describe('Image Model', function() {
 
         describe('Export', function() {
             it('should yield an object with all the info supplied.', function() {
-                var image = new ImageModel();
+                var image = new Image();
                 image.importValues(ImageFixture);
                 var values = image.exportValues();
 

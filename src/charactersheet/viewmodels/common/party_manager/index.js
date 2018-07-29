@@ -4,16 +4,15 @@ import {
     ChatRoom
 } from 'charactersheet/models/common';
 import {
+    ChatServiceManager,
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
+import {
     CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    ChatServiceManager,
-    KeyValuePredicate,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 

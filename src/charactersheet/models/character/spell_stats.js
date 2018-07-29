@@ -22,7 +22,7 @@ export class SpellStats extends KOModel {
 
     toSchemaValues = (values) => {
         const castingAbility = values.castingAbility;
-        values.castingAbility = castingAbility  === "" ? null : castingAbility;
+        values.castingAbility = castingAbility  === '' ? null : castingAbility;
         return values;
     }
 }

@@ -1,9 +1,10 @@
 import 'bin/knockout-custom-loader';
-import { CoreManager,
+import {
+    CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import { ChatServiceManager,
+import {
     DMCardPublishingService,
     HotkeysService,
     ImageServiceManager,

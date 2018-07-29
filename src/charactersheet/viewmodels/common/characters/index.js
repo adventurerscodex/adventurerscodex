@@ -1,10 +1,9 @@
 import './style.css';
-import { PlayerTypes } from 'charactersheet/models/common';
-import { Core } from 'charactersheet/models/common/core';
 import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
+import { Core } from 'charactersheet/models/common/core';
 import ko from 'knockout';
 import template from './index.html';
 

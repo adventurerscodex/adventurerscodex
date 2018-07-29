@@ -3,24 +3,23 @@ import {
     DMCardPublishingService
 } from 'charactersheet/services/common';
 import {
+    ChatServiceManager,
+    KeyValuePredicate,
+    PersistenceService
+} from 'charactersheet/services/common';
+import {
     CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
 import {
-    ChatServiceManager,
-    KeyValuePredicate,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
-import {
     Note,
     PlayerTypes
 } from 'charactersheet/models/common';
+import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import linkifyStr from 'linkifyjs/string';
 import template from './index.html';
-import { Settings } from 'charactersheet/settings';
 
 /**
  * A View that handles displaying Messages of type CHAT.

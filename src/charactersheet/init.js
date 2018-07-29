@@ -21,11 +21,11 @@ import {
     Migrations,
     Notifications
 } from 'charactersheet/utilities';
+import $ from 'jquery';
 import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
+import Clipboard from 'clipboard';
 import { Hypnos } from 'hypnos';
 import { Settings } from 'charactersheet/settings';
-import $ from 'jquery';
-import Clipboard from 'clipboard';
 import URI from 'urijs';
 import ko from 'knockout';
 

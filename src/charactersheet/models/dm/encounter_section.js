@@ -15,7 +15,7 @@ export class EncounterSection extends KOModel {
         const values = this.exportValues();
         return {
             ...values,
-            visible: values.defaultVisibility,
-        }
+            visible: values.defaultVisibility
+        };
     };
 }

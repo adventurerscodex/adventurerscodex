@@ -7,11 +7,11 @@ import {
     Feature,
     Trait
 } from 'charactersheet/models/character';
-import { KeyValuePredicate } from 'charactersheet/services/common';
 import {
     Status,
     StatusWeightPair
 } from 'charactersheet/models';
+import { KeyValuePredicate } from 'charactersheet/services/common';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { getTrackedTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 

@@ -1,9 +1,6 @@
 import 'bin/knockout-custom-loader';
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
 import { Campaign } from 'charactersheet/models';
+import { CoreManager } from 'charactersheet/utilities';
 import ko from 'knockout';
 import largeIcon from 'images/encounters/compass.svg';
 import template from './index.html';
@@ -47,7 +44,7 @@ export function CampaignOverviewViewModel() {
         core.playerName(self.playerName());
         // TODO: WAITING ON AN API CHANGE
         await core.ps.save();
-    }
+    };
 
     /* UI Methods */
 

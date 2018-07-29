@@ -1,18 +1,17 @@
 import {
-    CHAT_MESSAGE_TYPES,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
+    ChatRoom,
+    Message,
+    Presence
+} from 'charactersheet/models/common';
 import {
     CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
 import {
-    ChatRoom,
-    Message,
-    Presence
-} from 'charactersheet/models/common';
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 

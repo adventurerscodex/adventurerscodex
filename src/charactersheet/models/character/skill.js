@@ -84,7 +84,9 @@ export class Skill extends KOModel {
         try {
             str += ' <i><small>('
                 + this.abilityScore().name() + ')</small></i>';
-        } catch(e) { }
+        } catch(e) {
+            // Nothing
+        }
         this.bonusLabel(str);
         this.passiveBonus(10 + bonus);
     };
@@ -96,7 +98,9 @@ export class Skill extends KOModel {
         // TODO: FIND A FIX FOR THIS HACK
         try {
             str += ' <i><small class="skills-ability-type">(' + this.abilityScore().name() + ')</small></i>';
-        } catch(e) { }
+        } catch(e) {
+            // Nothing
+        }
 
         return str;
     });

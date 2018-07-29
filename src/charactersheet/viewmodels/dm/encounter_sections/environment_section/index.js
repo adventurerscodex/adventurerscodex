@@ -1,21 +1,18 @@
 import {
+    ChatServiceManager,
+    ImageServiceManager,
+    PersistenceService
+} from 'charactersheet/services/common';
+import {
     CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
 import {
-    ChatServiceManager,
-    ImageServiceManager,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
-import {
     Environment,
-    EnvironmentSection,
-    Message
+    EnvironmentSection
 } from 'charactersheet/models/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import Strophe from 'strophe';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/night-sky.svg';
 import template from './index.html';

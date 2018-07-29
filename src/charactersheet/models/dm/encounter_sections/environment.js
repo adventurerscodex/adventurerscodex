@@ -1,67 +1,40 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 
-export function Environment() {
-    var self = this;
-    self.ps = PersistenceService.register(Environment, self);
-    self.mapping = {
-        include: ['characterId', 'encounterId', 'imageUrl', 'weather',
+export class Environment extends KOModel {
+    static __skeys__ = ['core', 'environment'];
+
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'imageUrl', 'weather',
             'terrain', 'description', 'isExhibited']
     };
 
-    self.characterId = ko.observable();
-    self.encounterId = ko.observable();
-
-    self.imageUrl = ko.observable();
-    self.weather = ko.observable();
-    self.terrain = ko.observable();
-    self.description = ko.observable();
-    self.isExhibited = ko.observable(false);
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    uuid = ko.observable();
+    imageUrl = ko.observable();
+    weather = ko.observable();
+    terrain = ko.observable();
+    description = ko.observable();
+    isExhibited = ko.observable(false);
 
     //Public Methods
 
-    self.toJSON = function() {
-        return { name: 'Environment', url: self.imageUrl() };
+    toJSON = function() {
+        return { name: 'Environment', url: this.imageUrl() };
     };
 
-    self.clear = function() {
-        var values = new Environment().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
-
-    self.name = ko.pureComputed(function() {
+    name = ko.pureComputed(function() {
         return 'Weather: {weather}, Terrain: {terrain}'.replace(
-            '{weather}', self.weather() ? self.weather() : 'Unknown'
+            '{weather}', this.weather() ? this.weather() : 'Unknown'
         ).replace(
-            '{terrain}', self.terrain() ? self.terrain() : 'Unknown'
+            '{terrain}', this.terrain() ? this.terrain() : 'Unknown'
 
         );
     });
 
-    self.toHTML = function() {
+    toHTML = function() {
         return 'New environment';
     };
 }
-Environment.__name = 'Environment';
-
-PersistenceService.addToRegistry(Environment);

@@ -5,9 +5,9 @@ import {
     Fixtures,
     Utility
 } from 'charactersheet/utilities';
-import { SortService } from 'charactersheet/services/common';
 import { Item } from 'charactersheet/models/common';
 import { Notifications } from 'charactersheet/utilities';
+import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
