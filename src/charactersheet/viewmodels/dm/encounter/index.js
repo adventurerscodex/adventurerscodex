@@ -1,3 +1,4 @@
+import { find } from 'lodash';
 import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
@@ -27,17 +28,17 @@ export function EncounterViewModel() {
     /* Modal Methods */
 
     self.openAddModal = () => {
-        var key = CoreManager.activeCore().uuid();
+        const key = CoreManager.activeCore().uuid();
         self.modalEncounter(new Encounter());
         self.modalEncounter().coreUuid(key);
         self.openModal(true);
     };
 
     self.openAddModalWithParent = function(parent) {
-        var key = CoreManager.activeCore().uuid();
+        const key = CoreManager.activeCore().uuid();
         self.modalEncounter(new Encounter());
-        self.modalEncounter().parent(parent.encounterId());
-        self.modalEncounter().characterId(key);
+        self.modalEncounter().parent(parent.id());
+        self.modalEncounter().coreUuid(key);
         self.openModal(true);
     };
 
@@ -62,7 +63,7 @@ export function EncounterViewModel() {
     self.addEncounterToList = function(encounter) {
         // Add the cell to the UI.
         if (encounter.parent()) {
-            var parent = self._findCell(self.encounterCells(), 'uuid', encounter.parent());
+            const parent = ko.find(self.encounterCells, { 'encounterId': encounter.parent() });
             parent.isOpen(true);
             parent.addChild(encounter);
         } else {
@@ -70,7 +71,7 @@ export function EncounterViewModel() {
         }
 
         // Select the new encounter.
-        var cellToSelect = self._findCell(self.encounterCells(), 'uuid', encounter.encounterId());
+        const cellToSelect = ko.find(self.encounterCells, { 'id': encounter.uuid() });
         if (cellToSelect) {
             self.selectedCell(cellToSelect);
             self._updateSelectedEncounter();
@@ -85,25 +86,24 @@ export function EncounterViewModel() {
     self.deleteEncounter = async ({ encounter }) => {
         await encounter.ps.delete();
 
-        self.encounterCells(await self._getEncounterCells());
+        const cell = ko.find(self.encounterCells, { 'id': encounter.uuid() });
+        const parentCell = ko.find(self.encounterCells, { 'id': encounter.parent() });
+        if (parentCell) {
+            parentCell.removeChild(cell);
+        }
 
-//         var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
-//         if (parentCell) {
-//             parentCell.removeChild(cell);
-//         }
-//
-//         // Update UI.
-//
-//         if (!parentCell) {
-//             self.encounterCells.remove(cell);
-//         }
-//
-//         if (self.encounterCells() && !self.encounterCells()[0]) {
-//             self.selectedCell(null);
-//         } else {
-//             self.selectedCell(self.encounterCells()[0]);
-//         }
-//         self._updateSelectedEncounter();
+        // Update UI.
+
+        if (!parentCell) {
+            self.encounterCells.remove(cell);
+        }
+
+        if (self.encounterCells() && !self.encounterCells()[0]) {
+            self.selectedCell(null);
+        } else {
+            self.selectedCell(self.encounterCells()[0]);
+        }
+        self._updateSelectedEncounter();
     };
 
     /* Private Methods */
@@ -114,22 +114,6 @@ export function EncounterViewModel() {
         return encounters.map((enc, idx, _) => {
             return new EncounterCellViewModel(enc);
         });
-    };
-
-    self._findCell = function(cells, property, id) {
-        var cell = null;
-        for (var i=0; i<cells.length; i++) {
-            if (id === cells[i][property]()) {
-                cell = cells[i];
-            } else {
-                cell = self._findCell(cells[i].children(), property, id);
-            }
-
-            if (cell !== null) {
-                break;
-            }
-        }
-        return cell;
     };
 
     self._dataHasChanged = function() {

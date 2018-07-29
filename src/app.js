@@ -9,6 +9,7 @@ import 'bin/knockout-jquery-autocomplete'
 import 'bin/knockout-bottomsup'
 import 'bin/xmpp/muc.strophe'
 import 'bin/knockout-bootstrap-modal'
+import 'bin/knockout-find';
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'

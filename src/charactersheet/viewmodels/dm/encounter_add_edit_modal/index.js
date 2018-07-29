@@ -74,11 +74,13 @@ export function EncounterAddEditModalViewModel({ encounter, openModal, onsave })
 
     self._dataHasChanged = () => {
         const encounter = ko.unwrap(self.encounter);
-        if (ko.unwrap(encounter.uuid)) {
+        if (encounter && ko.unwrap(encounter.uuid)) {
             self.name(encounter.name());
             self.location(encounter.location());
             self.sections(encounter.sections());
         } else {
+            self.name('');
+            self.location('');
             self.sections(self.sectionTypes.map(section => (
                 // We need to wrap these as observables to see their values change.
                 ko.mapping.fromJS(section.toSectionValues())
