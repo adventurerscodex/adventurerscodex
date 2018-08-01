@@ -41,19 +41,19 @@ export function EncounterCellViewModel(encounter) {
 
     /* Child Management Methods */
 
-    self.addChild = function(child) {
-        // Update the data.
-        var key = CoreManager.activeCore().uuid();
-        var encounter =  PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('uuid', self.uuid()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        encounter.children.push(child.uuid());
-        encounter.save();
-
-        // Update the UI.
-        self._children.push(child);
-    };
+//     self.addChild = function(child) {
+//         // Update the data.
+//         var key = CoreManager.activeCore().uuid();
+//         var encounter =  PersistenceService.findByPredicates(Encounter, [
+//             new KeyValuePredicate('uuid', self.uuid()),
+//             new KeyValuePredicate('characterId', key)
+//         ])[0];
+//         encounter.children.push(child.uuid());
+//         encounter.save();
+//
+//         // Update the UI.
+//         self._children.push(child);
+//     };
 
     self.removeChild = function(child) {
         self._children(self._children().filter(function(encounter, idx, _) {
@@ -63,17 +63,17 @@ export function EncounterCellViewModel(encounter) {
 
     /* View Model Methods */
 
-    self.save = function() {
-        var key = CoreManager.activeCore().uuid();
-        var encounter = PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('uuid', self.uuid()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        encounter.name(self.name());
-        encounter.location(self.location());
-        encounter.isOpen(self.isOpen());
-        encounter.save();
-    };
+//     self.save = function() {
+//         var key = CoreManager.activeCore().uuid();
+//         var encounter = PersistenceService.findByPredicates(Encounter, [
+//             new KeyValuePredicate('uuid', self.uuid()),
+//             new KeyValuePredicate('characterId', key)
+//         ])[0];
+//         encounter.name(self.name());
+//         encounter.location(self.location());
+//         encounter.isOpen(self.isOpen());
+//         encounter.save();
+//     };
 
     /* Data Refresh Methods */
 
