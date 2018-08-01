@@ -10,9 +10,9 @@ import { find } from 'lodash';
  *
  * Additional Params
  * -----------------
- * @param recursive { Boolean } (Default false) Whether or not to search
+ * @param recursive { Boolean } (Default true) Whether or not to search
  * recursively through objects and return children in the result set.
- * @param shortCircuit { Boolean } (Default false) Return the first result that
+ * @param shortCircuit { Boolean } (Default true) Return the first result that
  * matches. Otherwise return a list of all matches.
  *
  * Usage
