@@ -11,15 +11,25 @@ export function EncounterDetailViewModel({ encounter }) {
     var self = this;
 
     self.encounter = encounter;
+    self.sections = ko.observableArray([]);
     self.openModal = ko.observable(false);
     self.sectionTypes = [];
+
+    /* Public Methods */
+
+    self.load = async () => {
+        self.encounter.subscribe(self._dataHasChanged);
+
+        self.sectionTypes = await EncounterSection.ps.list();
+        self._dataHasChanged();
+    };
 
     /**
      * The modal's done button has been clicked. Save the results and
      * notify the subscribers.
      */
-    self.notifySections = (encounter) => {
-        encounter.ps.save();
+    self.modalDidFinish = async (encounter) => {
+        await encounter.ps.save();
         Notifications.encounters.changed.dispatch();
     };
 
@@ -27,6 +37,14 @@ export function EncounterDetailViewModel({ encounter }) {
 
     self.toggleModal = () => {
         self.openModal(!self.openModal());
+    };
+
+    self._dataHasChanged = () => {
+        if (!ko.unwrap(self.encounter)) {
+            return;
+        }
+        var key = CoreManager.activeCore().uuid();
+        self.sections(self.encounter().sections());
     };
 }
 
