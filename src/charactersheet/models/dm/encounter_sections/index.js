@@ -16,4 +16,5 @@ export { PlayerTextSection } from './player_text_section.js';
 export { PlayerText } from './player_text.js';
 export { PointOfInterestSection } from './point_of_interest_section.js';
 export { PointOfInterest } from './point_of_interest.js';
+export { Treasure } from './treasure.js';
 export { TreasureSection } from './treasure_section.js';

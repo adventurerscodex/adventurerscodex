@@ -1,32 +1,29 @@
 import { Item } from 'charactersheet/models/common';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 
-export function EncounterItem() {
-    var self = new Item();
+export class EncounterItem extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'treasures'];
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+    };
 
-    self.ps = PersistenceService.register(EncounterItem, self);
-    self.mapping.include.push('encounterId');
-    self.mapping.include.push('treasureType');
+    uuid = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    type = ko.observable();
+    item = ko.observable(new Item());
 
-    self.encounterId = ko.observable();
-    self.treasureType = ko.observable();
-
-    self.nameLabel = ko.pureComputed(function() {
-        return self.itemName();
+    nameLabel = ko.pureComputed(() => {
+        return this.item().name();
     });
 
-    self.propertyLabel = ko.pureComputed(function() {
+    propertyLabel = ko.pureComputed(() => {
         return 'N/A';
     });
 
-    self.descriptionLabel = ko.pureComputed(function() {
-        return self.shortDescription();
+    descriptionLabel = ko.pureComputed(() => {
+        return this.item().shortDescription();
     });
-
-    return self;
 }
-EncounterItem.__name = 'EncounterItem';
-
-PersistenceService.addToRegistry(EncounterItem);

@@ -1,32 +1,30 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Treasure } from 'charactersheet/models/common';
+import { KOModel } from 'hypnos/lib/models/ko';
+import { Wealth } from 'charactersheet/models/common';
 import ko from 'knockout';
 
 
-export function EncounterCoins() {
-    var self = new Treasure();
+export class EncounterCoins extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'treasures'];
 
-    self.ps = PersistenceService.register(EncounterCoins, self);
-    self.mapping.include.push('encounterId');
-    self.mapping.include.push('treasureType');
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+    };
 
-    self.encounterId = ko.observable();
-    self.treasureType = ko.observable();
+    uuid = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    type = ko.observable();
+    coins = ko.observable(new Wealth());
 
-    self.nameLabel = ko.pureComputed(function() {
+    nameLabel = ko.pureComputed(() => {
         return 'Coins';
     });
 
-    self.propertyLabel = ko.pureComputed(function() {
+    propertyLabel = ko.pureComputed(() => {
         return 'N/A';
     });
 
-    self.descriptionLabel = ko.pureComputed(function() {
-        return self.worthInGold() ? self.worthInGold() + '(gp)' : '';
+    descriptionLabel = ko.pureComputed(() => {
+        return this.coins().worthInGold() ? this.coins().worthInGold() + '(gp)' : '';
     });
-
-    return self;
 }
-EncounterCoins.__name = 'EncounterCoins';
-
-PersistenceService.addToRegistry(EncounterCoins);

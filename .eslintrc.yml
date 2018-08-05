@@ -10,7 +10,9 @@ rules:
   no-undef:
     - 0
   no-unused-vars:
-    - 0
+    - 1
+  no-unused-expressions:
+    - 1
   indent:
     - error
     - 4

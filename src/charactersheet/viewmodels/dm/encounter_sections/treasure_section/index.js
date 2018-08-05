@@ -10,7 +10,7 @@ import {
     EncounterItem,
     EncounterMagicItem,
     EncounterWeapon,
-    TreasureSection
+    Treasure
 } from 'charactersheet/models';
 import {
     PersistenceService,
@@ -48,8 +48,8 @@ export function TreasureSectionViewModel(params) {
     self.ppCoin = ppCoin;
     self.encounter   = params.encounter;
     self.encounterId = ko.pureComputed(function() {
-        if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        if (!ko.unwrap(self.encounter)) { return; }
+        return self.encounter().uuid();
     });
     self.characterId = ko.observable();
 
@@ -98,15 +98,14 @@ export function TreasureSectionViewModel(params) {
     self.sort = ko.observable(self.sorts['nameLabel asc']);
 
     /* Public Methods */
-    self.load = function() {
+    self.load = async function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
-        self._dataHasChanged();
+        await self._dataHasChanged();
     };
 
     self.save = function() {
@@ -172,7 +171,7 @@ export function TreasureSectionViewModel(params) {
         var treasure = self.blankTreasure();
         treasure.characterId(CoreManager.activeCore().uuid());
         treasure.encounterId(self.encounterId());
-        treasure.treasureType(self.itemType());
+        treasure.type(self.itemType());
         treasure.save();
         self.treasure.push(treasure);
         self.blankTreasure(null);
@@ -223,19 +222,19 @@ export function TreasureSectionViewModel(params) {
 
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
-        self.editItemIndex = treasure.__id;
-        if (treasure.treasureType() == 'armor') {
+        self.editItemIndex = treasure.uuid;
+        if (treasure.type() == 'armor') {
             self.currentEditItem(new EncounterArmor());
-        } else if (treasure.treasureType() == 'item') {
+        } else if (treasure.type() == 'item') {
             self.currentEditItem(new EncounterItem());
-        } else if (treasure.treasureType() == 'magicItem') {
+        } else if (treasure.type() == 'magicItem') {
             self.currentEditItem(new EncounterMagicItem());
-        } else if (treasure.treasureType() == 'weapon') {
+        } else if (treasure.type() == 'weapon') {
             self.currentEditItem(new EncounterWeapon());
-        } else if (treasure.treasureType() == 'coins') {
+        } else if (treasure.type() == 'coins') {
             self.currentEditItem(new EncounterCoins());
         } else {
-            throw Error('Invalid Treasure type identifier ' + treasure.treasureType());
+            throw Error('Invalid Treasure type identifier ' + treasure.type());
         }
 
         self.currentEditItem().importValues(treasure.exportValues());
@@ -341,18 +340,19 @@ export function TreasureSectionViewModel(params) {
 
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         self.selectPreviewTab();
 
         if (self.openModal()) {
+            await self.currentEditItem().ps.save();
             self.treasure().forEach(function(item, idx, _) {
-                if (item.treasureType() === self.currentEditItem().treasureType() && item.__id === self.editItemIndex) {
+                if (item.type() === self.currentEditItem().type() && item.uuid === self.editItemIndex) {
                     item.importValues(self.currentEditItem().exportValues());
                 }
             });
         }
 
-        self.save();
+        // self.save();
         self.openModal(false);
     };
 
@@ -369,30 +369,56 @@ export function TreasureSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CoreManager.activeCore().uuid();
-        var treasure = [];
-        self.treasureTypes.forEach(function(type, idx, _){
-            var result = PersistenceService.findByPredicates(type, [
-                new KeyValuePredicate('encounterId', self.encounterId()),
-                new KeyValuePredicate('characterId', key)
-            ]);
-            treasure = treasure.concat(result);
-        });
-        self.treasure(treasure);
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const treasureResponse = await Treasure.ps.list({coreUuid, encounterUuid: self.encounterId()});
+        // var treasure = [];
+        // self.treasureTypes.forEach(function(type, idx, _){
+        //     var result = PersistenceService.findByPredicates(type, [
+        //         new KeyValuePredicate('encounterId', self.encounterId()),
+        //         new KeyValuePredicate('characterId', key)
+        //     ]);
+        //     treasure = treasure.concat(result);
+        // });
+        self.convertTreasureResponse(treasureResponse.objects);
 
-        var section = PersistenceService.findByPredicates(TreasureSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new TreasureSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        var section = self.encounter().sections()[Fixtures.encounter.sections.treasure.index];
+
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+    };
+
+    self.convertTreasureResponse = (treasures) => {
+        treasures.forEach((treasure) => {
+            let newTreasure = null;
+            if (treasure.type() == 'armor') {
+                newTreasure = new EncounterArmor();
+                newTreasure.armor().importValues(treasure.value);
+            } else if (treasure.type() == 'item') {
+                newTreasure = new EncounterItem();
+                newTreasure.item().importValues(treasure.value);
+            } else if (treasure.type() == 'magic_item') {
+                newTreasure = new EncounterMagicItem();
+                newTreasure.magicItem().importValues(treasure.value);
+            } else if (treasure.type() == 'weapon') {
+                newTreasure = new EncounterWeapon();
+                newTreasure.weapon().importValues(treasure.value);
+            } else if (treasure.type() == 'coins') {
+                newTreasure = new EncounterCoins();
+                newTreasure.coins().importValues(treasure.value);
+            } else {
+                throw Error('Invalid Treasure type identifier ' + treasure.type());
+            }
+
+            if (newTreasure) {
+                newTreasure.type(treasure.type());
+                newTreasure.coreUuid(treasure.coreUuid());
+                newTreasure.uuid(treasure.uuid());
+                newTreasure.encounterUuid(treasure.encounterUuid());
+                self.treasure().push(newTreasure);
+            }
+        });
     };
 }
 

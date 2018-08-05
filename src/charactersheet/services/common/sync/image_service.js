@@ -2,10 +2,10 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
+import { EncounterImage } from 'charactersheet/models/common/image';
 import { Environment } from 'charactersheet/models/dm/encounter_sections/environment';
 import { Exhibit } from 'charactersheet/models/dm/exhibit';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { MapOrImage } from 'charactersheet/models/common/map_or_image';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { SharedServiceManager } from '../shared_service_manager';
 
@@ -75,7 +75,7 @@ function _ImageService(config) {
             new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
             new KeyValuePredicate('isExhibited', true)
         ];
-        var mapOrImages = PersistenceService.findByPredicates(MapOrImage, predicates);
+        var mapOrImages = PersistenceService.findByPredicates(EncounterImage, predicates);
         var campaignMapOrImages = PersistenceService.findByPredicates(CampaignMapOrImage, predicates);
         var environment = PersistenceService.findByPredicates(Environment, predicates)[0];
         if (environment) {

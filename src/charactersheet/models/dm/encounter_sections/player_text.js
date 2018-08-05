@@ -5,15 +5,16 @@ import marked from 'bin/textarea-markdown-editor/marked.min';
 
 
 export class PlayerText extends KOModel {
-    static __skeys__ = ['core', 'readAloudText'];
+    static __skeys__ = ['core', 'encounters', 'readAloudTexts'];
 
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     LONG_DESCRIPTION_MAX_LENGTH = 200;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'description']
+        include: ['coreUuid', 'encounterUuid', 'name', 'description', 'uuid']
     };
 
+    uuid = ko.observable();
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     uuid = ko.observable();
@@ -22,11 +23,11 @@ export class PlayerText extends KOModel {
 
     // UI Methods
 
-    longDescription = ko.pureComputed(function() {
+    longDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.LONG_DESCRIPTION_MAX_LENGTH);
     });
 
-    shortDescription = ko.pureComputed(function() {
+    shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 

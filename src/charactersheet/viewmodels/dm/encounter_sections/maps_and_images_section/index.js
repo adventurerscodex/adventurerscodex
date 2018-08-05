@@ -1,16 +1,16 @@
 import {
     ChatServiceManager,
     ImageServiceManager,
-    PersistenceService,
     SortService
 } from 'charactersheet/services/common';
 import {
     CoreManager,
+    Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
+import { EncounterImage } from 'charactersheet/models/common';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { MapOrImage } from 'charactersheet/models/common';
 import { MapsAndImagesSection } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/globe.svg';
@@ -23,7 +23,7 @@ export function MapsAndImagesSectionViewModel(params) {
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
         if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        return self.encounter().uuid();
     });
     self.characterId = ko.observable();
 
@@ -32,7 +32,7 @@ export function MapsAndImagesSectionViewModel(params) {
     self.tagline = ko.observable();
 
     self.mapsOrImages = ko.observableArray();
-    self.blankMapOrImage = ko.observable(new MapOrImage());
+    self.blankMapOrImage = ko.observable(new EncounterImage());
     self.openModal = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
@@ -78,45 +78,43 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CoreManager.activeCore().uuid();
-        var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new MapsAndImagesSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        // TODO: Maybe remove all of this?
+        // var key = CoreManager.activeCore().uuid();
+        // var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
+        //     new KeyValuePredicate('encounterId', self.encounterId()),
+        //     new KeyValuePredicate('characterId', key)
+        // ])[0];
+        // if (!section) {
+        //     section = new MapsAndImagesSection();
+        //     section.encounterId(self.encounterId());
+        //     section.characterId(key);
+        // }
 
-        section.name(self.name());
-        section.visible(self.visible());
-        section.save();
-
-        self.mapsOrImages().forEach(function(map, idx, _) {
-            map.save();
-        });
+        // section.name(self.name());
+        // section.visible(self.visible());
+        // section.save();
     };
 
     self.delete = function() {
-        var key = CoreManager.activeCore().uuid();
-        var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (section) {
-            section.delete();
-        }
+        // TODO: Maybe remove all of this?
+        // var key = CoreManager.activeCore().uuid();
+        // var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
+        //     new KeyValuePredicate('encounterId', self.encounterId()),
+        //     new KeyValuePredicate('characterId', key)
+        // ])[0];
+        // if (section) {
+        //     section.delete();
+        // }
 
-        self.mapsOrImages().forEach(function(map, idx, _) {
-            map.delete();
-        });
+        // self.mapsOrImages().forEach(function(map, idx, _) {
+        //     map.delete();
+        // });
     };
 
     /* UI Methods */
 
     /**
-     * Filters and sorts the weaponss for presentation in a table.
+     * Filters and sorts the weapons for presentation in a table.
      */
     self.filteredAndSortedMapsAndImages = ko.computed(function() {
         return SortService.sortAndFilter(self.mapsOrImages(), self.sort(), null);
@@ -136,25 +134,25 @@ export function MapsAndImagesSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addMapOrImage = function() {
+    self.addMapOrImage = async function() {
         var mapOrImage = self.blankMapOrImage();
-        mapOrImage.characterId(CoreManager.activeCore().uuid());
-        mapOrImage.encounterId(self.encounterId());
-        mapOrImage.save();
-        self.mapsOrImages.push(mapOrImage);
-        self.blankMapOrImage(new MapOrImage());
+        mapOrImage.coreUuid(CoreManager.activeCore().uuid());
+        mapOrImage.encounterUuid(self.encounterId());
+        const imageResponse = await mapOrImage.ps.create();
+        self.mapsOrImages.push(imageResponse.object);
+        self.blankMapOrImage(new EncounterImage());
     };
 
-    self.removeMapOrImage = function(mapOrImage) {
-        mapOrImage.delete();
+    self.removeMapOrImage = async function(mapOrImage) {
+        await mapOrImage.ps.delete();
         self.mapsOrImages.remove(mapOrImage);
     };
 
     self.editMapOrImage = function(mapOrImage) {
-        self.editItemIndex = mapOrImage.__id;
-        self.currentEditItem(new MapOrImage());
+        self.editItemIndex = mapOrImage.uuid;
+        self.currentEditItem(new EncounterImage());
         self.currentEditItem().importValues(mapOrImage.exportValues());
-        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openModal(true);
     };
 
@@ -183,19 +181,19 @@ export function MapsAndImagesSectionViewModel(params) {
         self.firstElementInModalHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            Utility.array.updateElement(self.mapsOrImages(), self.currentEditItem(), self.editItemIndex);
+            const imageSaveResponse = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.mapsOrImages(), imageSaveResponse.object, self.editItemIndex);
         }
 
-        self.save();
         self.openModal(false);
     };
 
     self.selectPreviewTab = function() {
-        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().imageUrl()));
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
@@ -228,25 +226,12 @@ export function MapsAndImagesSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CoreManager.activeCore().uuid();
-        var map = PersistenceService.findByPredicates(MapOrImage, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ]);
-        if (map) {
-            self.mapsOrImages(map);
-        }
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const imagesResponse = await EncounterImage.ps.list({coreUuid, encounterUuid: self.encounterId()});
+        self.mapsOrImages(imagesResponse.objects);
 
-        var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new MapsAndImagesSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        var section = self.encounter().sections()[Fixtures.encounter.sections.mapsAndImages.index];
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());

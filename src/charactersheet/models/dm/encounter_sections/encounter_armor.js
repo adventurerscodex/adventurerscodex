@@ -1,38 +1,43 @@
 import { Armor } from 'charactersheet/models/common';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
+import { pick } from 'lodash';
 
-export function EncounterArmor() {
-    var self = new Armor();
-    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
+export class EncounterArmor extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'treasures'];
+    SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
-    self.ps = PersistenceService.register(EncounterArmor, self);
-    self.mapping.include.push('encounterId');
-    self.mapping.include.push('treasureType');
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+    };
 
-    self.encounterId = ko.observable();
-    self.treasureType = ko.observable();
+    uuid = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    type = ko.observable();
+    armor = ko.observable(new Armor());
 
-    self.nameLabel = ko.pureComputed(function() {
-        return self.armorName();
+    nameLabel = ko.pureComputed(() => {
+        return this.armor().name();
     });
 
-    self.propertyLabel = ko.pureComputed(function() {
-        return self.armorClass() ? self.acLabel() : '';
+    propertyLabel = ko.pureComputed(() => {
+        return this.armor().armorClass() ? this.armor().acLabel() : '';
     });
 
-    self.descriptionLabel = ko.pureComputed(function() {
-        return self.shortDescription();
+    descriptionLabel = ko.pureComputed(() => {
+        return this.shortDescription();
     });
 
     // UI Methods
-    self.shortDescription = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.armorDescription(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    shortDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.armor().description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    return self;
+    clean = (keys, params) => {
+        let treasure = pick(params, EncounterArmor.mapping.include);
+        treasure.value = params.armor;
+        return treasure;
+    };
 }
-EncounterArmor.__name = 'EncounterArmor';
-
-PersistenceService.addToRegistry(EncounterArmor);

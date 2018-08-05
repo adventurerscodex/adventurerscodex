@@ -18,8 +18,8 @@ export function NotesSectionViewModel(params) {
 
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
-        if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        if (!ko.unwrap(self.encounter)) { return; }
+        return self.encounter().uuid();
     });
 
     self.name = 'Notes';

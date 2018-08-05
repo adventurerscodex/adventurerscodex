@@ -1,32 +1,30 @@
+import { KOModel } from 'hypnos/lib/models/ko';
 import { MagicItem } from 'charactersheet/models/common/magic_item';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
 
-export function EncounterMagicItem() {
-    var self = new MagicItem();
+export class EncounterMagicItem extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'treasures'];
 
-    self.ps = PersistenceService.register(EncounterMagicItem, self);
-    self.mapping.include.push('encounterId');
-    self.mapping.include.push('treasureType');
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+    };
 
-    self.encounterId = ko.observable();
-    self.treasureType = ko.observable();
+    uuid = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    type = ko.observable();
+    magicItem = ko.observable(new MagicItem());
 
-    self.nameLabel = ko.pureComputed(function() {
-        return self.magicItemName();
+    nameLabel = ko.pureComputed(() => {
+        return this.magicItem().name();
     });
 
-    self.propertyLabel = ko.pureComputed(function() {
-        return self.magicItemType() ? self.magicItemType() : '';
+    propertyLabel = ko.pureComputed(() => {
+        return this.magicItem().type() ? this.magicItem().type() : '';
     });
 
-    self.descriptionLabel = ko.pureComputed(function() {
-        return self.shortDescription();
+    descriptionLabel = ko.pureComputed(() => {
+        return this.magicItem().shortDescription();
     });
-
-    return self;
 }
-EncounterMagicItem.__name = 'EncounterMagicItem';
-
-PersistenceService.addToRegistry(EncounterMagicItem);

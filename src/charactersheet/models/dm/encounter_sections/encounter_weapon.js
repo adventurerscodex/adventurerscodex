@@ -1,39 +1,37 @@
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import { Utility } from 'charactersheet/utilities/convenience';
 import { Weapon } from 'charactersheet/models/common';
 import ko from 'knockout';
 
 
-export function EncounterWeapon() {
-    var self = new Weapon();
-    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
+export class EncounterWeapon extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'treasures'];
+    SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
-    self.ps = PersistenceService.register(EncounterWeapon, self);
-    self.mapping.include.push('encounterId');
-    self.mapping.include.push('treasureType');
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+    };
 
-    self.encounterId = ko.observable();
-    self.treasureType = ko.observable();
+    uuid = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    type = ko.observable();
+    weapon = ko.observable(new Weapon());
 
-    self.nameLabel = ko.pureComputed(function() {
-        return self.weaponName();
+    nameLabel = ko.pureComputed(() => {
+        return this.weapon().name();
     });
 
-    self.propertyLabel = ko.pureComputed(function() {
-        return self.weaponDmg() ? self.weaponDmg() : '';
+    propertyLabel = ko.pureComputed(() => {
+        return this.weapon().damage() ? this.weapon().damage() : '';
     });
 
-    self.descriptionLabel = ko.pureComputed(function() {
-        return self.shortDescription();
+    descriptionLabel = ko.pureComputed(() => {
+        return this.shortDescription();
     });
 
     // UI Methods
-    self.shortDescription = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.weaponDescription(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    shortDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.weapon().description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
-
-    return self;
 }
-EncounterWeapon.__name = 'EncounterWeapon';
-
-PersistenceService.addToRegistry(EncounterWeapon);
