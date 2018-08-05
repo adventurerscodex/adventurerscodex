@@ -17,6 +17,7 @@ import ko from 'knockout';
 import meditation from 'images/meditation.svg';
 import template from './index.html';
 import uuid from 'node-uuid';
+import validation from './validation';
 
 export function FeaturesViewModel() {
     var self = this;
@@ -33,7 +34,9 @@ export function FeaturesViewModel() {
     self.features = ko.observableArray([]);
     self.blankFeature = ko.observable(new Feature());
     self.blankTracked = ko.observable(new Tracked());
+    self.addModalOpen = ko.observable(false);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Feature());
     self.currentEditTracked = ko.observable(new Tracked());
@@ -86,6 +89,22 @@ export function FeaturesViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form) => {
+            self.addFeature();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        rules: validation.rules,
+        messages: validation.messages
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -146,6 +165,8 @@ export function FeaturesViewModel() {
         self.features.push(newFeature.object);
         self.blankFeature(new Feature());
         self.blankTracked(new Tracked());
+
+        self.toggleAddModal();
     };
 
     self.clear = function() {

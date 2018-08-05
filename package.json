@@ -67,6 +67,7 @@
     "hypnos": "git+https://github.com/adventurerscodex/hypnos.git",
     "jquery": "^3.2.1",
     "jquery-ui": "^1.12.1",
+    "jquery-validation": "^1.17.0",
     "knockout": "~3.3.0",
     "knockout-mapping": "^2.6.0",
     "less": "^2.7.2",
