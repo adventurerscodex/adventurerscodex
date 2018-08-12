@@ -45,26 +45,31 @@ export class Encounter extends KOModel {
 //         }));
     };
 
-    /**
-     * Returns the list of encounter objects corresponding to the child ids.
-     */
-    getChildren = function() {
-//         var key = CoreManager.activeCore().uuid();
-//         return this.children().map(function(id, idx, _) {
-//             return PersistenceService.findByPredicates(Encounter, [
-//                 new KeyValuePredicate('encounterId', id),
-//                 new KeyValuePredicate('characterId', key)
-//             ])[0];
-//         });
-        return [];
-    };
-
     getParent = function() {
 //         var key = CoreManager.activeCore().uuid();
 //         return PersistenceService.findByPredicates(Encounter, [
 //             new KeyValuePredicate('encounterId', self.parent()),
 //             new KeyValuePredicate('characterId', key)
 //         ])[0];
+    };
+
+
+    /**
+     * Due to the recursive nature of Encounters, they require a custom import.
+     * This import performs the normal duties of mapping, but also calls
+     * importValues on the children, mapping all children recursively.
+     */
+    importValues = (values) => {
+        // Do initial mapping.
+        ko.mapping.fromJS(values, this._mapping, this);
+
+        // Recursively map the child encounters.
+        const children = values.children.map(childValues => {
+            const child = new Encounter();
+            child.importValues(childValues);
+            return child;
+        });
+        this.children(children);
     };
 
     toSchemaValues = function(values) {

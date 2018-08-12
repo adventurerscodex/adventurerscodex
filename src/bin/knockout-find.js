@@ -10,9 +10,9 @@ import { find } from 'lodash';
  *
  * Additional Params
  * -----------------
- * @param recursive { Boolean } (Default false) Whether or not to search
+ * @param recursive { Boolean } (Default true) Whether or not to search
  * recursively through objects and return children in the result set.
- * @param shortCircuit { Boolean } (Default false) Return the first result that
+ * @param shortCircuit { Boolean } (Default true) Return the first result that
  * matches. Otherwise return a list of all matches.
  *
  * Usage
@@ -29,16 +29,37 @@ ko.find = (source, predicate, recursive=true, shortCircuit=true) => {
         let result = null;
         const item = ko.unwrap(value[i]);
 
-        if (Array.isArray(item)) {
-            // If item is a list, recursively crawl it.
-            result = ko.find(item, predicate, recursive, shortCircuit);
-            results.concat(result);
-        } else if (item !== null && typeof item === 'object') {
-            // Check object values.
-            const matches = keys.every(key => (predicate[key] === ko.unwrap(item[key])));
-            if (matches) {
-                result = item;
-                results.push(result);
+        if (item === null || typeof item !== 'object') {
+            // We don't care if it's not an object.
+            continue;
+        }
+
+        const matches = keys.every(key => (predicate[key] === ko.unwrap(item[key])));
+        if (matches) {
+            if (shortCircuit) {
+                return item;
+            }
+
+            results.push(item);
+        }
+
+        if (!recursive) {
+            // We'll just move on if we can't recurse.
+            continue;
+        }
+
+        // Descend into the object's keys.
+        const itemKeys = Object.keys(item);
+        for (let j=0; j<itemKeys.length; j++) {
+            const subitem = ko.unwrap(item[itemKeys[j]]);
+            if (!Array.isArray(subitem)) {
+                continue;
+            }
+            const subresult = ko.find(subitem, predicate, recursive, shortCircuit);
+            results.concat(subresult);
+
+            if (shortCircuit && subresult) {
+                return subresult;
             }
         }
 
