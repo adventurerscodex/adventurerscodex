@@ -2,7 +2,8 @@ import {
     CoreManager,
     DataRepository,
     Fixtures,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import {
     Monster,

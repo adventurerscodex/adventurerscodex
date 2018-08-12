@@ -1,9 +1,10 @@
 import {
     CoreManager,
+    Fixtures,
     Notifications
 } from 'charactersheet/utilities';
+import { EncounterNote } from 'charactersheet/models/dm/encounter_sections';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { NotesSection } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/quill-ink.svg';
@@ -41,32 +42,33 @@ export function NotesSectionViewModel(params) {
     };
 
     self.save = function() {
-        var key = CoreManager.activeCore().uuid();
-        var notes = PersistenceService.findByPredicates(NotesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (notes) {
-            notes.notes(self.notes());
-            notes.visible(self.visible());
+        // var key = CoreManager.activeCore().uuid();
+        // var notes = PersistenceService.findByPredicates(NotesSection, [
+        //     new KeyValuePredicate('encounterId', self.encounterId()),
+        //     new KeyValuePredicate('characterId', key)
+        // ])[0];
+        // if (notes) {
+        //     notes.notes(self.notes());
+        //     notes.visible(self.visible());
 
-            notes.save();
-        }
+        //     notes.save();
+        // }
+    };
+
+    self.saveNote = async () => {
+        await self.notes().ps.save();
     };
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CoreManager.activeCore().uuid();
-        var notesSection = PersistenceService.findByPredicates(NotesSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (notesSection) {
-            self.notes(notesSection.notes());
-            self.visible(notesSection.visible());
-            self.tagline(notesSection.tagline());
-        }
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const noteResponse = await EncounterNote.ps.read({coreUuid, uuid: self.encounterId()});
+
+        var section = self.encounter().sections()[Fixtures.encounter.sections.notes.index];
+        self.notes(noteResponse.object);
+        self.visible(section.visible());
+        self.tagline(section.tagline());
     };
 }
 

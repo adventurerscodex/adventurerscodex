@@ -9,6 +9,7 @@ export { MapsAndImagesSection } from './maps_and_images_section.js';
 export { MonsterAbilityScore } from './monster_ability_score.js';
 export { MonsterSection } from './monster_section.js';
 export { Monster } from './monster.js';
+export { EncounterNote } from './note.js';
 export { NotesSection } from './notes_section.js';
 export { NPCSection } from './npc_section.js';
 export { NPC } from './npc.js';

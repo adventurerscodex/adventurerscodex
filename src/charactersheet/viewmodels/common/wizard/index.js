@@ -208,7 +208,7 @@ export function WizardViewModel() {
 
             // Background
             params.background = {
-                name: profileData.background,
+                name: profileData.background ? profileData.background : '',
                 flaw: '',
                 bond: '',
                 ideal: '',

@@ -104,6 +104,7 @@ export class Weapon extends KOModel {
                     return strBonus ? strBonus:0;
                 }
             } else {
+                strBonus = await this.strAbilityScoreModifier();
                 return strBonus;
             }
         }
@@ -114,7 +115,7 @@ export class Weapon extends KOModel {
         var abilityScoreBonus = await this.abilityScoreBonus();
         var proficiencyBonus = this.proficiencyScore();
         var magicalModifier = parseInt(this.magicalModifier());
-        var toHitModifer = parseInt(this.toHitModifier());
+        var toHitModifier = parseInt(this.toHitModifier());
 
         if (abilityScoreBonus) {
             bonus += abilityScoreBonus;
@@ -125,8 +126,8 @@ export class Weapon extends KOModel {
         if (magicalModifier) {
             bonus += magicalModifier;
         }
-        if (toHitModifer) {
-            bonus += toHitModifer;
+        if (toHitModifier) {
+            bonus += toHitModifier;
         }
         return bonus;
     };

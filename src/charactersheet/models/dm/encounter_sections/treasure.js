@@ -6,9 +6,11 @@ export class Treasure extends KOModel {
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'type']
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
     };
 
+    uuid = ko.observable();
+    coreUuid = ko.observable();
     encounterUuid = ko.observable();
     type = ko.observable();
     value = {};

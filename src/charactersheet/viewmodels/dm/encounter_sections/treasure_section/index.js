@@ -167,13 +167,13 @@ export function TreasureSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addTreasure = function() {
-        var treasure = self.blankTreasure();
-        treasure.characterId(CoreManager.activeCore().uuid());
-        treasure.encounterId(self.encounterId());
+    self.addTreasure = async function() {
+        var treasure = self.convertToTreasureEntity(self.blankTreasure());
+        treasure.coreUuid(CoreManager.activeCore().uuid());
+        treasure.encounterUuid(self.encounterId());
         treasure.type(self.itemType());
-        treasure.save();
-        self.treasure.push(treasure);
+        const treasureResponse = await treasure.ps.create();
+        self.treasure.push(self.mapTreasureToModel(treasureResponse.object));
         self.blankTreasure(null);
         self.clearTreasureTemplates();
         self.itemType('');
@@ -196,7 +196,7 @@ export function TreasureSectionViewModel(params) {
             self.blankTreasure(new EncounterItem());
             self.itemShow(true);
             self.itemFirstElementFocus(true);
-        } else if (self.itemType() == 'magicItem') {
+        } else if (self.itemType() == 'magic_item') {
             self.blankTreasure(new EncounterMagicItem());
             self.magicItemShow(true);
             self.magicItemFirstElementFocus(true);
@@ -215,19 +215,21 @@ export function TreasureSectionViewModel(params) {
         self.weaponShow(false);
     };
 
-    self.removeTreasure = function(treasure) {
-        treasure.delete();
+    self.removeTreasure = async function(treasure) {
+        let treasureEntity = self.convertToTreasureEntity(treasure);
+
+        await treasureEntity.ps.delete();
         self.treasure.remove(treasure);
     };
 
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
-        self.editItemIndex = treasure.uuid;
+        self.editItemIndex = treasure.uuid();
         if (treasure.type() == 'armor') {
             self.currentEditItem(new EncounterArmor());
         } else if (treasure.type() == 'item') {
             self.currentEditItem(new EncounterItem());
-        } else if (treasure.type() == 'magicItem') {
+        } else if (treasure.type() == 'magic_item') {
             self.currentEditItem(new EncounterMagicItem());
         } else if (treasure.type() == 'weapon') {
             self.currentEditItem(new EncounterWeapon());
@@ -237,7 +239,7 @@ export function TreasureSectionViewModel(params) {
             throw Error('Invalid Treasure type identifier ' + treasure.type());
         }
 
-        self.currentEditItem().importValues(treasure.exportValues());
+        self.currentEditItem().customImportValues(treasure.customExportValues());
         self.openModal(true);
     };
 
@@ -250,7 +252,7 @@ export function TreasureSectionViewModel(params) {
             keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
         } else if (self.itemType() == 'item') {
             keys = DataRepository.items ? Object.keys(DataRepository.items) : [];
-        } else if (self.itemType() == 'magicItem') {
+        } else if (self.itemType() == 'magic_item') {
             keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
         } else if (self.itemType() == 'weapon') {
             keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
@@ -267,7 +269,7 @@ export function TreasureSectionViewModel(params) {
             treasure = DataRepository.armors[label];
         } else if (self.itemType() == 'item') {
             treasure = DataRepository.items[label];
-        } else if (self.itemType() == 'magicItem') {
+        } else if (self.itemType() == 'magic_item') {
             treasure = DataRepository.magicItems[label];
         } else if (self.itemType() == 'weapon') {
             treasure = DataRepository.weapons[label];
@@ -344,15 +346,16 @@ export function TreasureSectionViewModel(params) {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            await self.currentEditItem().ps.save();
-            self.treasure().forEach(function(item, idx, _) {
-                if (item.type() === self.currentEditItem().type() && item.uuid === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
+            let treasure = self.convertToTreasureEntity(self.currentEditItem());
+            let treasureResponse = await treasure.ps.save();
+            self.treasure().forEach(function(item) {
+                if (item.uuid() === self.editItemIndex) {
+                    let newTreasure = self.mapTreasureToModel(treasureResponse.object);
+                    item.customImportValues(newTreasure.customExportValues());
                 }
             });
         }
 
-        // self.save();
         self.openModal(false);
     };
 
@@ -391,34 +394,50 @@ export function TreasureSectionViewModel(params) {
 
     self.convertTreasureResponse = (treasures) => {
         treasures.forEach((treasure) => {
-            let newTreasure = null;
-            if (treasure.type() == 'armor') {
-                newTreasure = new EncounterArmor();
-                newTreasure.armor().importValues(treasure.value);
-            } else if (treasure.type() == 'item') {
-                newTreasure = new EncounterItem();
-                newTreasure.item().importValues(treasure.value);
-            } else if (treasure.type() == 'magic_item') {
-                newTreasure = new EncounterMagicItem();
-                newTreasure.magicItem().importValues(treasure.value);
-            } else if (treasure.type() == 'weapon') {
-                newTreasure = new EncounterWeapon();
-                newTreasure.weapon().importValues(treasure.value);
-            } else if (treasure.type() == 'coins') {
-                newTreasure = new EncounterCoins();
-                newTreasure.coins().importValues(treasure.value);
-            } else {
-                throw Error('Invalid Treasure type identifier ' + treasure.type());
-            }
-
-            if (newTreasure) {
-                newTreasure.type(treasure.type());
-                newTreasure.coreUuid(treasure.coreUuid());
-                newTreasure.uuid(treasure.uuid());
-                newTreasure.encounterUuid(treasure.encounterUuid());
-                self.treasure().push(newTreasure);
-            }
+            let newTreasure = self.mapTreasureToModel(treasure);
+            self.treasure().push(newTreasure);
         });
+    };
+
+    self.mapTreasureToModel = (treasure) => {
+        let newTreasure = null;
+        if (treasure.type() == 'armor') {
+            newTreasure = new EncounterArmor();
+        } else if (treasure.type() == 'item') {
+            newTreasure = new EncounterItem();
+        } else if (treasure.type() == 'magic_item') {
+            newTreasure = new EncounterMagicItem();
+        } else if (treasure.type() == 'weapon') {
+            newTreasure = new EncounterWeapon();
+        } else if (treasure.type() == 'coins') {
+            newTreasure = new EncounterCoins();
+        } else {
+            throw Error('Invalid Treasure type identifier ' + treasure.type());
+        }
+
+        newTreasure.buildModelFromValues(treasure.value);
+        newTreasure.type(treasure.type());
+        newTreasure.coreUuid(treasure.coreUuid());
+        newTreasure.uuid(treasure.uuid());
+        newTreasure.encounterUuid(treasure.encounterUuid());
+        return newTreasure;
+    };
+
+    /**
+     * Converts a specific sub-model to a generic treasure model.
+     *
+     * @param treasure specific model
+     * @returns generic treasure model
+     */
+    self.convertToTreasureEntity = (treasure) => {
+        let treasureEntity = new Treasure();
+        treasureEntity.uuid(treasure.uuid());
+        treasureEntity.coreUuid(treasure.coreUuid());
+        treasureEntity.encounterUuid(treasure.encounterUuid());
+        treasureEntity.type(treasure.type());
+        treasureEntity.value = treasure.getValues();
+
+        return treasureEntity;
     };
 }
 

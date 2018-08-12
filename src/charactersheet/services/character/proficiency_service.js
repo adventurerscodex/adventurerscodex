@@ -25,7 +25,7 @@ function _ProficiencyService(configuration) {
         await self.getProficiencyModifier();
         await self.getProficiencyBonusByLevel();
         // Kick it off the first time.
-        self.dataHasChanged();
+        await self.dataHasChanged();
     };
 
     self.dataHasChanged = function() {

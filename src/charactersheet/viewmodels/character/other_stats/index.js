@@ -25,7 +25,6 @@ export function OtherStatsViewModel() {
     self.armorClass = ko.observable();
     self.level = ko.observable('');
     self.experience = ko.observable('');
-    self.proficiencyService = ko.observable();
     self.proficiencyLabel = ko.observable();
     self.initiativeLabel = ko.observable();
     self.initiativePopover = ko.observable();
@@ -33,8 +32,6 @@ export function OtherStatsViewModel() {
     self.armorClassPopover = ko.observable();
 
     self.load = async () => {
-        self.proficiencyService(ProficiencyService.sharedService());
-
         var key = CoreManager.activeCore().uuid();
         var otherStats = await OtherStats.ps.read({uuid: key});
         self.otherStats(otherStats.object);
@@ -56,14 +53,16 @@ export function OtherStatsViewModel() {
         self.profile().experience.subscribe(self.experienceDataHasChanged);
         Notifications.armorClass.changed.add(self.updateArmorClass);
         Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
+        Notifications.proficiencyBonus.changed.add(self.calculatedProficiencyLabel);
     };
 
     // Calculate proficiency label and popover
-    self.calculatedProficiencyLabel = function() {
-        var level = self.proficiencyService().proficiencyBonusByLevel();
+    self.calculatedProficiencyLabel = async function() {
+        const proficiencyService = ProficiencyService.sharedService();
+        var level = await proficiencyService.proficiencyBonusByLevel();
         const proficiency = parseInt(self.otherStats().proficiencyModifier());
         self.updateProficiencyPopoverMessage(level, proficiency);
-        self.proficiencyLabel(self.proficiencyService().proficiency());
+        self.proficiencyLabel(proficiencyService.proficiency());
     };
 
     self.updateProficiencyPopoverMessage = function(level, proficiency) {
@@ -135,12 +134,12 @@ export function OtherStatsViewModel() {
     };
 
     self.levelDataHasChanged = async () => {
-        const profile = await self.profile().ps.save();
+        await self.profile().ps.save();
         Notifications.profile.level.changed.dispatch();
     };
 
     self.experienceDataHasChanged = async () => {
-        const profile = await self.profile().ps.save();
+        await self.profile().ps.save();
         Notifications.profile.experience.changed.dispatch();
     };
 
