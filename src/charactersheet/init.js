@@ -1,5 +1,6 @@
 // Enables Async/Await
 import 'babel-polyfill';
+import 'bin/knockout-validation';
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
