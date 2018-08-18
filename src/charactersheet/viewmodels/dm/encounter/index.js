@@ -22,7 +22,6 @@ export function EncounterViewModel() {
         self.encounterCells(await self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
         self._updateSelectedEncounter();
-        Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
     /* Modal Methods */
