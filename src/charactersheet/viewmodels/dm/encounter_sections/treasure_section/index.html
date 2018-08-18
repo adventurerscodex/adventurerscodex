@@ -82,7 +82,7 @@
             <div class="col-sm-12">
               <div class="btn-group btn-group-justified" role="group">
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'armor'}">
+                       data-bind="css: { active: itemType() == ARMOR}">
                   <img class="action-bar-icon" data-bind="attr: { src: breastplate }">
                   </img>
                   <input type="radio" class="hide-block"
@@ -90,25 +90,25 @@
                     name="armor" value="armor"/>Armor
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'coins'}">
+                       data-bind="css: { active: itemType() == COINS}">
                  <img class="action-bar-icon" data-bind="attr: { src: coins }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="coins" value="coins"/>Coins
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'item'}">
+                       data-bind="css: { active: itemType() == ITEM}">
                   <img class="action-bar-icon" data-bind="attr: { src: potion }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="item" value="item"/>Item
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'magic_item'}">
+                       data-bind="css: { active: itemType() == MAGIC_ITEM}">
                   <img class="action-bar-icon" data-bind="attr: { src: wand }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                        name="magic_item" value="magic_item"/>Magic Item
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'weapon'}">
+                       data-bind="css: { active: itemType() == WEAPON}">
                   <img class="action-bar-icon" data-bind="attr: { src: broadsword }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                         name="weapon" value="weapon"/>Weapon
@@ -197,23 +197,23 @@
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
 
-            <!--ko if: type() == 'armor'-->
+            <!--ko if: type() == $parent.ARMOR-->
              <div data-bind="template: { name: 'armorPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: type() == 'coins'-->
+            <!--ko if: type() == $parent.COINS-->
              <div data-bind="template: { name: 'coinsPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: type() == 'item'-->
+            <!--ko if: type() == $parent.ITEM-->
              <div data-bind="template: { name: 'itemPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: type() == 'magic_item'-->
+            <!--ko if: type() == $parent.MAGIC_ITEM-->
              <div data-bind="template: { name: 'magicItemPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: type() == 'weapon'-->
+            <!--ko if: type() == $parent.WEAPON-->
              <div data-bind="template: { name: 'weaponPreviewTemplate' }"></div>
             <!--/ko-->
 
@@ -226,23 +226,23 @@
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal">
 
-              <!--ko if: type() == 'armor'-->
+              <!--ko if: type() == $parent.ARMOR-->
                <div data-bind="template: { name: 'armorEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: type() == 'coins'-->
+              <!--ko if: type() == $parent.COINS-->
                <div data-bind="template: { name: 'coinsEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: type() == 'item'-->
+              <!--ko if: type() == $parent.ITEM-->
                <div data-bind="template: { name: 'itemEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: type() == 'magic_item'-->
+              <!--ko if: type() == $parent.MAGIC_ITEM-->
                <div data-bind="template: { name: 'magicItemEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: type() == 'weapon'-->
+              <!--ko if: type() == $parent.WEAPON-->
                <div data-bind="template: { name: 'weaponEditTemplate' }"></div>
               <!--/ko-->
 

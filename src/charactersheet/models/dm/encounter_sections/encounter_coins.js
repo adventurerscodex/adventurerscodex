@@ -37,7 +37,7 @@ export class EncounterCoins extends KOModel {
         return this.worthInGold() ? this.worthInGold() + '(gp)' : '';
     });
 
-    worthInGold = ko.computed(() => {
+    worthInGold = ko.pureComputed(() => {
         const parsedPlatinum = parseInt(this.platinum()) || 0;
         const parsedGold = parseInt(this.gold()) || 0;
         const parsedElectrum = parseInt(this.electrum()) || 0;
@@ -100,7 +100,12 @@ export class EncounterCoins extends KOModel {
         return values;
     };
 
-    customExportValues = () => {
+    /**
+      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
+      * import/exportValues because those return a format unsuitable for re-importing
+      * (since it caused data corruption).
+     */
+    toJSON = () => {
         let values = {};
         EncounterCoins.allFields.forEach((field) => {
             values[field] = this[field]();
@@ -109,7 +114,12 @@ export class EncounterCoins extends KOModel {
         return values;
     };
 
-    customImportValues = (values) => {
+    /**
+      * De-serialize the current item into the current model. We use these in-leiu of the normal
+      * import/exportValues because those return a format unsuitable for re-importing
+      * (since it caused data corruption).
+     */
+    fromJSON = (values) => {
         EncounterCoins.allFields.forEach((field) => {
             this[field](values[field]);
         });

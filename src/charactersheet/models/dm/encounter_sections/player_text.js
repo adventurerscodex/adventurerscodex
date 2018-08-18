@@ -5,7 +5,7 @@ import marked from 'bin/textarea-markdown-editor/marked.min';
 
 
 export class PlayerText extends KOModel {
-    static __skeys__ = ['core', 'encounters', 'readAloudTexts'];
+    static __skeys__ = ['core', 'encounters', 'readAloudText'];
 
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     LONG_DESCRIPTION_MAX_LENGTH = 200;

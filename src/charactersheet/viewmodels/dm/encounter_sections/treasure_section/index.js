@@ -46,7 +46,7 @@ export function TreasureSectionViewModel(params) {
     self.spCoin = spCoin;
     self.cpCoin = cpCoin;
     self.ppCoin = ppCoin;
-    self.encounter   = params.encounter;
+    self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
         if (!ko.unwrap(self.encounter)) { return; }
         return self.encounter().uuid();
@@ -58,13 +58,6 @@ export function TreasureSectionViewModel(params) {
     self.tagline = ko.observable();
 
     self.treasure = ko.observableArray();
-
-    /**
-     * A list of types to accept/load into the treasure.
-     */
-    self.treasureTypes = [
-        EncounterItem, EncounterWeapon, EncounterMagicItem, EncounterArmor, EncounterCoins
-    ];
 
     self.blankTreasure = ko.observable(null);
     self.itemType = ko.observable(null);
@@ -88,6 +81,11 @@ export function TreasureSectionViewModel(params) {
     self.weaponShow = ko.observable(false);
     self.weaponFirstElementFocus = ko.observable(false);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.MAGIC_ITEM = 'magic_item';
+    self.ITEM = 'item';
+    self.WEAPON = 'weapon';
+    self.COINS = 'coins';
+    self.ARMOR = 'armor';
 
     self.sorts = {
         'nameLabel asc': { field: 'nameLabel', direction: 'asc' },
@@ -184,23 +182,23 @@ export function TreasureSectionViewModel(params) {
         self.clearTreasureTemplates();
 
         // Based on selection, populate the treasure model
-        if (self.itemType() == 'armor') {
+        if (self.itemType() == self.ARMOR) {
             self.blankTreasure(new EncounterArmor());
             self.armorShow(true);
             self.armorFirstElementFocus(true);
-        } else if (self.itemType() == 'coins') {
+        } else if (self.itemType() == self.COINS) {
             self.blankTreasure(new EncounterCoins());
             self.coinsShow(true);
             self.coinsFirstElementFocus(true);
-        } else if (self.itemType() == 'item') {
+        } else if (self.itemType() == self.ITEM) {
             self.blankTreasure(new EncounterItem());
             self.itemShow(true);
             self.itemFirstElementFocus(true);
-        } else if (self.itemType() == 'magic_item') {
+        } else if (self.itemType() == self.MAGIC_ITEM) {
             self.blankTreasure(new EncounterMagicItem());
             self.magicItemShow(true);
             self.magicItemFirstElementFocus(true);
-        } else if (self.itemType() == 'weapon') {
+        } else if (self.itemType() == self.WEAPON) {
             self.blankTreasure(new EncounterWeapon());
             self.weaponShow(true);
             self.weaponFirstElementFocus(true);
@@ -225,21 +223,21 @@ export function TreasureSectionViewModel(params) {
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
         self.editItemIndex = treasure.uuid();
-        if (treasure.type() == 'armor') {
+        if (treasure.type() == self.ARMOR) {
             self.currentEditItem(new EncounterArmor());
-        } else if (treasure.type() == 'item') {
+        } else if (treasure.type() == self.ITEM) {
             self.currentEditItem(new EncounterItem());
-        } else if (treasure.type() == 'magic_item') {
+        } else if (treasure.type() == self.MAGIC_ITEM) {
             self.currentEditItem(new EncounterMagicItem());
-        } else if (treasure.type() == 'weapon') {
+        } else if (treasure.type() == self.WEAPON) {
             self.currentEditItem(new EncounterWeapon());
-        } else if (treasure.type() == 'coins') {
+        } else if (treasure.type() == self.COINS) {
             self.currentEditItem(new EncounterCoins());
         } else {
             throw Error('Invalid Treasure type identifier ' + treasure.type());
         }
 
-        self.currentEditItem().customImportValues(treasure.customExportValues());
+        self.currentEditItem().fromJSON(treasure.toJSON());
         self.openModal(true);
     };
 
@@ -248,13 +246,13 @@ export function TreasureSectionViewModel(params) {
     self.treasurePrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys;
-        if (self.itemType() == 'armor') {
+        if (self.itemType() == self.ARMOR) {
             keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
-        } else if (self.itemType() == 'item') {
+        } else if (self.itemType() == self.ITEM) {
             keys = DataRepository.items ? Object.keys(DataRepository.items) : [];
-        } else if (self.itemType() == 'magic_item') {
+        } else if (self.itemType() == self.MAGIC_ITEM) {
             keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
-        } else if (self.itemType() == 'weapon') {
+        } else if (self.itemType() == self.WEAPON) {
             keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
         }
         var results = keys.filter(function(name, idx, _) {
@@ -265,13 +263,13 @@ export function TreasureSectionViewModel(params) {
 
     self.populateTreasure = function(label, value) {
         var treasure;
-        if (self.itemType() == 'armor') {
+        if (self.itemType() == self.ARMOR) {
             treasure = DataRepository.armors[label];
-        } else if (self.itemType() == 'item') {
+        } else if (self.itemType() == self.ITEM) {
             treasure = DataRepository.items[label];
-        } else if (self.itemType() == 'magic_item') {
+        } else if (self.itemType() == self.MAGIC_ITEM) {
             treasure = DataRepository.magicItems[label];
-        } else if (self.itemType() == 'weapon') {
+        } else if (self.itemType() == self.WEAPON) {
             treasure = DataRepository.weapons[label];
         }
 
@@ -351,7 +349,7 @@ export function TreasureSectionViewModel(params) {
             self.treasure().forEach(function(item) {
                 if (item.uuid() === self.editItemIndex) {
                     let newTreasure = self.mapTreasureToModel(treasureResponse.object);
-                    item.customImportValues(newTreasure.customExportValues());
+                    item.fromJSON(newTreasure.toJSON());
                 }
             });
         }
@@ -401,15 +399,15 @@ export function TreasureSectionViewModel(params) {
 
     self.mapTreasureToModel = (treasure) => {
         let newTreasure = null;
-        if (treasure.type() == 'armor') {
+        if (treasure.type() == self.ARMOR) {
             newTreasure = new EncounterArmor();
-        } else if (treasure.type() == 'item') {
+        } else if (treasure.type() == self.ITEM) {
             newTreasure = new EncounterItem();
-        } else if (treasure.type() == 'magic_item') {
+        } else if (treasure.type() == self.MAGIC_ITEM) {
             newTreasure = new EncounterMagicItem();
-        } else if (treasure.type() == 'weapon') {
+        } else if (treasure.type() == self.WEAPON) {
             newTreasure = new EncounterWeapon();
-        } else if (treasure.type() == 'coins') {
+        } else if (treasure.type() == self.COINS) {
             newTreasure = new EncounterCoins();
         } else {
             throw Error('Invalid Treasure type identifier ' + treasure.type());

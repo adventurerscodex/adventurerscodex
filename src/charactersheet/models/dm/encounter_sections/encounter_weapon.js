@@ -135,7 +135,12 @@ export class EncounterWeapon extends KOModel {
         return values;
     };
 
-    customExportValues = () => {
+    /**
+      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
+      * import/exportValues because those return a format unsuitable for re-importing
+      * (since it caused data corruption).
+     */
+    toJSON = () => {
         let values = {};
         EncounterWeapon.allFields.forEach((field) => {
             values[field] = this[field]();
@@ -144,7 +149,12 @@ export class EncounterWeapon extends KOModel {
         return values;
     };
 
-    customImportValues = (values) => {
+    /**
+      * De-serialize the current item into the current model. We use these in-leiu of the normal
+      * import/exportValues because those return a format unsuitable for re-importing
+      * (since it caused data corruption).
+     */
+    fromJSON = (values) => {
         EncounterWeapon.allFields.forEach((field) => {
             this[field](values[field]);
         });
