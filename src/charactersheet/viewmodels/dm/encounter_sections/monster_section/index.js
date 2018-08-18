@@ -7,14 +7,11 @@ import {
 } from 'charactersheet/utilities';
 import {
     Monster,
-    MonsterAbilityScore,
-    MonsterSection
+    MonsterAbilityScore
 } from 'charactersheet/models/dm';
 import {
-    PersistenceService,
     SortService
 } from 'charactersheet/services';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/wyvern.svg';
 import template from './index.html';
@@ -67,7 +64,6 @@ export function MonsterSectionViewModel(params) {
 
     /* Public Methods */
     self.load = async function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
 
@@ -75,44 +71,6 @@ export function MonsterSectionViewModel(params) {
             self._dataHasChanged();
         });
         await self._dataHasChanged();
-    };
-
-    self.save = function() {
-        // TODO: Do we still have to save the section?
-        var key = CoreManager.activeCore().uuid();
-        var section = PersistenceService.findByPredicates(MonsterSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new MonsterSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-
-        section.name(self.name());
-        section.visible(self.visible());
-        section.save();
-
-        self.monsters().forEach(function(monster, idx, _) {
-            monster.save();
-        });
-    };
-
-    // TODO: I don't think this is ever used. Also, we wouldn't want to delete a section.
-    self.delete = function() {
-        // var key = CoreManager.activeCore().uuid();
-        // var section = PersistenceService.findByPredicates(MonsterSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (section) {
-        //     section.delete();
-        // }
-
-        // self.monsters().forEach(function(monster, idx, _) {
-        //     monster.delete();
-        // });
     };
 
     /* UI Methods */
@@ -142,13 +100,6 @@ export function MonsterSectionViewModel(params) {
         var monster = self.blankMonster();
         monster.coreUuid(CoreManager.activeCore().uuid());
         monster.encounterUuid(self.encounterId());
-
-        // // Add encounterId to each of the monster's ability score and save
-        // monster.abilityScores().forEach(function(score) {
-        //     score.encounterId(self.encounterId());
-        //     score.monsterId(monster.monsterId());
-        //     score.save();
-        // });
 
         const monsterResponse = await monster.ps.create();
         self.monsters.push(monsterResponse.object);
@@ -181,14 +132,6 @@ export function MonsterSectionViewModel(params) {
             { name: 'Wisdom', shortName: 'WIS', value: 0},
             { name: 'Charisma', shortName: 'CHA', value: 0}
         ];
-        // self.blankMonster().abilityScores(
-        //     abilityScores.map(function(e, i, _) {
-        //         var abilityScore = new MonsterAbilityScore();
-        //         e.characterId = CoreManager.activeCore().uuid();
-        //         abilityScore.importValues(e);
-        //         return abilityScore;
-        //     })
-        // );
         self.blankMonster().abilityScores(abilityScores);
         self.openModal(!self.openModal());
     };
@@ -236,25 +179,8 @@ export function MonsterSectionViewModel(params) {
         if (self.openEditModal()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.monsters(), response.object, self.editItemIndex);
-            // self.monsters().forEach(function(item) {
-            //     if (item.uuid === self.editItemIndex) {
-            //         item.importValues(self.currentEditItem().exportValues());
-                    // item.abilityScores(self.currentEditItem().abilityScores().map(function(e, i, _) {
-                    //     var abilityScore = PersistenceService.findByPredicates(MonsterAbilityScore, [
-                    //         new KeyValuePredicate('characterId', key),
-                    //         new KeyValuePredicate('encounterId', e.encounterId()),
-                    //         new KeyValuePredicate('monsterId', e.monsterId()),
-                    //         new KeyValuePredicate('name', e.name())
-                    //     ])[0];
-                    //     abilityScore.importValues(e);
-                    //     return abilityScore;
-                    // })
-                    // );
-            //     }
-            // });
         }
 
-        // self.save();
         self.openEditModal(false);
     };
 
@@ -275,11 +201,6 @@ export function MonsterSectionViewModel(params) {
         var coreUuid = CoreManager.activeCore().uuid();
         var monsterResponse = await Monster.ps.list({coreUuid, encounterUuid: self.encounterId()});
         self.monsters(monsterResponse.objects);
-            // self.monsters().forEach(function(monster, idx, _) {
-            //     var abilityScores = PersistenceService.findBy(MonsterAbilityScore,
-            //         'monsterId', monster.monsterId());
-            //     monster.abilityScores(abilityScores);
-            // });
         var section = self.encounter().sections()[Fixtures.encounter.sections.monsters.index];
         self.name(section.name());
         self.visible(section.visible());

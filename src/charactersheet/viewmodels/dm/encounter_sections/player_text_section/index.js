@@ -9,11 +9,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    PlayerText,
-    PlayerTextSection
-} from 'charactersheet/models';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { PlayerText } from 'charactersheet/models';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/read.svg';
 import template from './index.html';
@@ -63,7 +60,6 @@ export function PlayerTextSectionViewModel(params) {
 
     /* Public Methods */
     self.load = async function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
@@ -74,28 +70,6 @@ export function PlayerTextSectionViewModel(params) {
         await self._dataHasChanged();
 
         self._connectionHasChanged();
-    };
-
-    self.save = function() {
-        self.playerTexts().forEach(function(playerText, idx, _) {
-            playerText.save();
-        });
-    };
-
-    self.delete = function() {
-        // TODO: REMOVE
-        // var key = CoreManager.activeCore().uuid();
-        // var section = PersistenceService.findByPredicates(PlayerTextSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (section) {
-        //     section.delete();
-        // }
-
-        // self.playerTexts().forEach(function(playerText, idx, _) {
-        //     playerText.delete();
-        // });
     };
 
     /* UI Methods */

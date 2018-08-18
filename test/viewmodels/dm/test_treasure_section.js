@@ -3,7 +3,6 @@ import { EncounterArmor } from 'charactersheet/models/dm/encounter_sections/enco
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
-import { TreasureSection } from 'charactersheet/models/dm/encounter_sections/treasure_section';
 import { TreasureSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/treasure_section';
 import simple from 'simple-mock';
 
@@ -30,7 +29,6 @@ describe('TreasureSectionViewModel', function(){
             var vm = new TreasureSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
             simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
 
             vm.load();
@@ -43,7 +41,6 @@ describe('TreasureSectionViewModel', function(){
     describe('Save', function() {
         it('should save model', function() {
             var vm = new TreasureSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
             vm.blankTreasure(new EncounterArmor());
             vm.addTreasure();
             vm.save();
@@ -59,7 +56,6 @@ describe('TreasureSectionViewModel', function(){
     describe('Delete', function() {
         it('should delete model', function() {
             var vm = new TreasureSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
             vm.blankTreasure(new EncounterArmor());
             vm.addTreasure();
             vm.delete();
@@ -286,7 +282,6 @@ describe('TreasureSectionViewModel', function(){
         });
         it('should load new data', function() {
             var vm = new TreasureSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new TreasureSection());
             simple.mock(PersistenceService, 'findBy').returnWith([new EncounterArmor()]);
 
             vm._dataHasChanged();

@@ -9,11 +9,7 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services/common';
-import {
-    PointOfInterest,
-    PointOfInterestSection
-} from 'charactersheet/models/dm';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { PointOfInterest } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/rune-stone.svg';
 import template from './index.html';
@@ -55,51 +51,12 @@ export function PointOfInterestSectionViewModel(params) {
 
     /* Public Methods */
     self.load = function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         self._dataHasChanged();
-    };
-
-    self.save = function() {
-        // TODO: REMOVE
-        // var key = CoreManager.activeCore().uuid();
-        // var section = PersistenceService.findByPredicates(PointOfInterestSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (!section) {
-        //     section = new PointOfInterestSection();
-        //     section.encounterId(self.encounterId());
-        //     section.characterId(key);
-        // }
-
-        // section.name(self.name());
-        // section.visible(self.visible());
-        // section.save();
-
-        // self.pointsOfInterest().forEach(function(poi, idx, _) {
-        //     poi.save();
-        // });
-    };
-
-    self.delete = function() {
-        // TODO: REMOVE
-        // var key = CoreManager.activeCore().uuid();
-        // var section = PersistenceService.findByPredicates(PointOfInterestSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (section) {
-        //     section.delete();
-        // }
-
-        // self.pointsOfInterest().forEach(function(poi, idx, _) {
-        //     poi.delete();
-        // });
     };
 
     /* UI Methods */
