@@ -5,18 +5,18 @@ import { PersistenceService } from 'charactersheet/services/common/persistence_s
 import { ViewModelUtilities } from 'charactersheet/utilities';
 import ko from 'knockout';
 
-
 export function EncounterCellViewModel(encounter) {
     var self = this;
 
     self.id = encounter.uuid;
     self.encounter = encounter;
-    self.characterId = encounter.characterId;
+    self.parent = encounter.parent;
+    self.coreUuid = encounter.coreUuid;
     self.name = encounter.name;
     self.location = encounter.location;
-    self.isOpen = encounter.isOpen;
+    self.isOpen = encounter.isOpen || ko.observable(false);
 
-    self._children = ko.observableArray(encounter.getChildren());
+    self._children = ko.observableArray(encounter.children());
 
     /* UI Methods */
 
@@ -32,7 +32,7 @@ export function EncounterCellViewModel(encounter) {
 
     self.toggleIsOpen = function() {
         self.isOpen(!self.isOpen());
-        self.save();
+        self._save();
     };
 
     self.shouldShowDelete = ko.pureComputed(function() {
@@ -41,54 +41,24 @@ export function EncounterCellViewModel(encounter) {
 
     /* Child Management Methods */
 
-//     self.addChild = function(child) {
-//         // Update the data.
-//         var key = CoreManager.activeCore().uuid();
-//         var encounter =  PersistenceService.findByPredicates(Encounter, [
-//             new KeyValuePredicate('uuid', self.uuid()),
-//             new KeyValuePredicate('characterId', key)
-//         ])[0];
-//         encounter.children.push(child.uuid());
-//         encounter.save();
-//
-//         // Update the UI.
-//         self._children.push(child);
-//     };
+    self.addChild = function(cell) {
+        self._children.push(cell);
+    };
 
     self.removeChild = function(child) {
         self._children(self._children().filter(function(encounter, idx, _) {
-            return child.uuid() !== encounter.uuid();
+            return child.id() !== encounter.uuid();
         }));
     };
 
-    /* View Model Methods */
+    /* Private Methods */
 
-//     self.save = function() {
-//         var key = CoreManager.activeCore().uuid();
-//         var encounter = PersistenceService.findByPredicates(Encounter, [
-//             new KeyValuePredicate('uuid', self.uuid()),
-//             new KeyValuePredicate('characterId', key)
-//         ])[0];
-//         encounter.name(self.name());
-//         encounter.location(self.location());
-//         encounter.isOpen(self.isOpen());
-//         encounter.save();
-//     };
-
-    /* Data Refresh Methods */
-
-    self.reloadData = function() {
-        var key = CoreManager.activeCore().uuid();
-        var encounter =  PersistenceService.findByPredicates(Encounter, [
-            new KeyValuePredicate('uuid', self.uuid()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (encounter) {
-            self.name(encounter.name());
-            self.location(encounter.location());
-            self.children().forEach(function(child, idx, _) {
-                child.reloadData();
-            });
-        }
+    /**
+     * Since the encounter cell binds the same observables as the encounter
+     * itself rather than copying the values, we can just call save since those
+     * values are already saved to the encounter itself.
+     */
+    self._save = () => {
+        self.encounter.ps.save();
     };
 }

@@ -22,7 +22,6 @@ export function EncounterViewModel() {
         self.encounterCells(await self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
         self._updateSelectedEncounter();
-        Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
     /* Modal Methods */
@@ -63,9 +62,8 @@ export function EncounterViewModel() {
     self.addEncounterToList = function(encounter) {
         // Add the cell to the UI.
         if (encounter.parent()) {
-            const parent = ko.find(self.encounterCells, { 'encounterId': encounter.parent() });
-            parent.isOpen(true);
-            parent.addChild(encounter);
+            const parentCell = ko.find(self.encounterCells, { 'id': encounter.parent() });
+            parentCell.addChild(encounter);
         } else {
             self.encounterCells.push(new EncounterCellViewModel(encounter));
         }
@@ -85,17 +83,13 @@ export function EncounterViewModel() {
      */
     self.deleteEncounter = async ({ encounter }) => {
         await encounter.ps.delete();
-
         const cell = ko.find(self.encounterCells, { 'id': encounter.uuid() });
         const parentCell = ko.find(self.encounterCells, { 'id': encounter.parent() });
-        if (parentCell) {
-            parentCell.removeChild(cell);
-        }
 
         // Update UI.
-
-        if (!parentCell) {
-            self.encounterCells.remove(cell);
+        self.encounterCells.remove(cell);
+        if (parentCell) {
+            parentCell.removeChild(cell);
         }
 
         if (self.encounterCells() && !self.encounterCells()[0]) {
@@ -113,12 +107,6 @@ export function EncounterViewModel() {
         const { objects: encounters } = await Encounter.ps.list({ coreUuid });
         return encounters.map((enc, idx, _) => {
             return new EncounterCellViewModel(enc);
-        });
-    };
-
-    self._dataHasChanged = function() {
-        self.encounterCells().forEach(function(cell, idx, _) {
-            cell.reloadData();
         });
     };
 
