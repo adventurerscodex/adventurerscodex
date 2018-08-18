@@ -519,5 +519,41 @@ export var Fixtures = {
             party: 'party',
             chat: 'chat'
         }
+    },
+    encounter: {
+        sections: {
+            environment: {
+                name: 'Environment',
+                index: 0
+            },
+            mapsAndImages: {
+                name: 'Maps and Images',
+                index: 1
+            },
+            pointsOfInterest: {
+                name: 'Points of Interest',
+                index: 2
+            },
+            npcs: {
+                name: 'Non-Player Characters',
+                index: 3
+            },
+            monsters: {
+                name: 'Monsters',
+                index: 4
+            },
+            readAloudText: {
+                name: 'Read-Aloud Text',
+                index: 5
+            },
+            treasure: {
+                name: 'Treasure',
+                index: 6
+            },
+            notes: {
+                name: 'Notes',
+                index: 7
+            }
+        }
     }
 };

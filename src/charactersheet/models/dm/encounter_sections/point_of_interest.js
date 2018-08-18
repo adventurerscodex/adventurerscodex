@@ -4,13 +4,13 @@ import ko from 'knockout';
 
 
 export class PointOfInterest extends KOModel {
-    static __skeys__ = ['core', 'pointsOfInterest'];
+    static __skeys__ = ['core', 'encounters', 'pointsOfInterest'];
 
     SHORT_DESCRIPTION_MAX_LENGTH = 100;
     LONG_DESCRIPTION_MAX_LENGTH = 200;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'description']
+        include: ['coreUuid', 'encounterUuid', 'name', 'description', 'uuid']
     };
 
     coreUuid = ko.observable();
@@ -21,11 +21,11 @@ export class PointOfInterest extends KOModel {
 
     // UI Methods
 
-    longDescription = ko.pureComputed(function() {
+    longDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.LONG_DESCRIPTION_MAX_LENGTH);
     });
 
-    shortDescription = ko.pureComputed(function() {
+    shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }

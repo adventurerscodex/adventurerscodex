@@ -56,6 +56,7 @@ export function WeaponsViewModel() {
 
         Notifications.abilityScores.changed.add(self.valueHasChanged);
         Notifications.stats.changed.add(self.valueHasChanged);
+        Notifications.proficiencyBonus.changed.add(self.valueHasChanged);
     };
 
     self.totalWeight = ko.pureComputed(() => {

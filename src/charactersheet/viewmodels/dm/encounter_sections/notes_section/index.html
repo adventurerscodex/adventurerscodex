@@ -6,8 +6,10 @@ Notes<br />
 </div>
 <div class="container-fluid">
   <div class="form-group">
-      <markdown-edit-preview params="text: notes, rows: 20,
-        placeholder: 'The party enters a dark...', defaultActiveTab: 'edit'"></markdown-edit-preview>
+      <markdown-edit-preview params="text: notes().contents, rows: 20,
+        placeholder: 'The party enters a dark...',
+        defaultActiveTab: 'edit',
+        inputFunction: saveNote"></markdown-edit-preview>
   </div>
 </div>
 <!-- /ko -->

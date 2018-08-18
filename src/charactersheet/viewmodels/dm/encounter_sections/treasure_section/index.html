@@ -82,7 +82,7 @@
             <div class="col-sm-12">
               <div class="btn-group btn-group-justified" role="group">
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'armor'}">
+                       data-bind="css: { active: itemType() == ARMOR}">
                   <img class="action-bar-icon" data-bind="attr: { src: breastplate }">
                   </img>
                   <input type="radio" class="hide-block"
@@ -90,25 +90,25 @@
                     name="armor" value="armor"/>Armor
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'coins'}">
+                       data-bind="css: { active: itemType() == COINS}">
                  <img class="action-bar-icon" data-bind="attr: { src: coins }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="coins" value="coins"/>Coins
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'item'}">
+                       data-bind="css: { active: itemType() == ITEM}">
                   <img class="action-bar-icon" data-bind="attr: { src: potion }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                          name="item" value="item"/>Item
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'magicItem'}">
+                       data-bind="css: { active: itemType() == MAGIC_ITEM}">
                   <img class="action-bar-icon" data-bind="attr: { src: wand }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
-                       name="magicItem" value="magicItem"/>Magic Item
+                       name="magic_item" value="magic_item"/>Magic Item
                 </label>
                 <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == 'weapon'}">
+                       data-bind="css: { active: itemType() == WEAPON}">
                   <img class="action-bar-icon" data-bind="attr: { src: broadsword }"></img>
                   <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
                         name="weapon" value="weapon"/>Weapon
@@ -197,23 +197,23 @@
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
 
-            <!--ko if: treasureType() == 'armor'-->
+            <!--ko if: type() == $parent.ARMOR-->
              <div data-bind="template: { name: 'armorPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: treasureType() == 'coins'-->
+            <!--ko if: type() == $parent.COINS-->
              <div data-bind="template: { name: 'coinsPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: treasureType() == 'item'-->
+            <!--ko if: type() == $parent.ITEM-->
              <div data-bind="template: { name: 'itemPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: treasureType() == 'magicItem'-->
+            <!--ko if: type() == $parent.MAGIC_ITEM-->
              <div data-bind="template: { name: 'magicItemPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <!--ko if: treasureType() == 'weapon'-->
+            <!--ko if: type() == $parent.WEAPON-->
              <div data-bind="template: { name: 'weaponPreviewTemplate' }"></div>
             <!--/ko-->
 
@@ -226,23 +226,23 @@
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal">
 
-              <!--ko if: treasureType() == 'armor'-->
+              <!--ko if: type() == $parent.ARMOR-->
                <div data-bind="template: { name: 'armorEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: treasureType() == 'coins'-->
+              <!--ko if: type() == $parent.COINS-->
                <div data-bind="template: { name: 'coinsEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: treasureType() == 'item'-->
+              <!--ko if: type() == $parent.ITEM-->
                <div data-bind="template: { name: 'itemEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: treasureType() == 'magicItem'-->
+              <!--ko if: type() == $parent.MAGIC_ITEM-->
                <div data-bind="template: { name: 'magicItemEditTemplate' }"></div>
               <!--/ko-->
 
-              <!--ko if: treasureType() == 'weapon'-->
+              <!--ko if: type() == $parent.WEAPON-->
                <div data-bind="template: { name: 'weaponEditTemplate' }"></div>
               <!--/ko-->
 
@@ -269,7 +269,7 @@
              class="form-control"
              id="armorName"
              placeholder="Chain Mail"
-             data-bind='textInput: blankTreasure().armorName, hasFocus: armorFirstElementFocus,
+             data-bind='textInput: blankTreasure().name, hasFocus: armorFirstElementFocus,
               autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
     </div>
   </div>
@@ -279,7 +279,7 @@
       <div class="col-sm-10">
       <input class="form-control"
               placeholder="Light"
-              data-bind="textInput: blankTreasure().armorType, autocomplete: { source: blankTreasure().armorTypeOptions,
+              data-bind="textInput: blankTreasure().type, autocomplete: { source: blankTreasure().armorTypeOptions,
               onselect: setArmorType }">
       </div>
   </div>
@@ -289,7 +289,7 @@
       <div class="col-sm-10">
       <input type="number" class="form-control"
              id="armorMagicalModifier"
-             data-bind='textInput: blankTreasure().armorMagicalModifier'>
+             data-bind='textInput: blankTreasure().magicalModifier'>
       </div>
   </div>
   <div class="form-group ui-front">
@@ -301,11 +301,11 @@
              class="form-control input-jquery-addon"
              id="armorPrice"
              placeholder="5"
-             data-bind='textInput: blankTreasure().armorPrice'>
+             data-bind='textInput: blankTreasure().price'>
          <span class="input-group-addon input-group-addon-jquery">
           <input class="form-control"
                  placeholder="GP"
-                data-bind="textInput: blankTreasure().armorCurrencyDenomination, autocomplete: {
+                data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
                           source: blankTreasure().armorCurrencyDenominationOptions,
                           onselect: setArmorCurrencyDenomination }">
         </span>
@@ -320,7 +320,7 @@
                class="form-control"
                id="armorWeight"
                placeholder="6"
-               data-bind='textInput: blankTreasure().armorWeight'>
+               data-bind='textInput: blankTreasure().weight'>
       </div>
   </div>
   <div class="form-group">
@@ -340,7 +340,7 @@
       <div class="col-sm-10">
       <input class="form-control"
              placeholder="Advantage"
-             data-bind="textInput: blankTreasure().armorStealth, autocomplete: { source: blankTreasure().armorStealthOptions,
+             data-bind="textInput: blankTreasure().stealth, autocomplete: { source: blankTreasure().armorStealthOptions,
              onselect: setArmorStealth }">
       </div>
   </div>
@@ -353,7 +353,7 @@
                   id="armorDescription"
                   rows="4"
                   placeholder="Armor of damage blocking"
-                  data-bind='textInput: blankTreasure().armorDescription'>
+                  data-bind='textInput: blankTreasure().description'>
         </textarea>
       </div>
   </div>
@@ -418,7 +418,7 @@
          class="form-control"
          id="itemName"
          placeholder="Rations"
-         data-bind='textInput: blankTreasure().itemName, hasFocus: itemFirstElementFocus,
+         data-bind='textInput: blankTreasure().name, hasFocus: itemFirstElementFocus,
             autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
      </div>
    </div>
@@ -432,7 +432,7 @@
                 min="0"
                 max="5000"
            placeholder="Item Weight"
-           data-bind='textInput: blankTreasure().itemWeight'>
+           data-bind='textInput: blankTreasure().weight'>
            <span class="input-group-addon">lbs.</span>
        </div>
      </div>
@@ -447,7 +447,7 @@
          max="5000"
          id="itemQuantity"
          placeholder="Item Quantity"
-         data-bind='textInput: blankTreasure().itemQty'>
+         data-bind='textInput: blankTreasure().quantity'>
      </div>
    </div>
    <div class="form-group ui-front">
@@ -458,11 +458,11 @@
        <input type="number"
          min="0"
          class="form-control input-jquery-addon"
-         data-bind="value: blankTreasure().itemCost" />
+         data-bind="value: blankTreasure().cost" />
        <span class="input-group-addon input-group-addon-jquery">
          <input class="form-control"
                 placeholder="GP"
-                data-bind="textInput: blankTreasure().itemCurrencyDenomination, autocomplete: {
+                data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
                           source: blankTreasure().itemCurrencyDenominationOptions,
                           onselect: setItemCurrencyDenomination }">
         </span>
@@ -478,7 +478,7 @@
          id="itemDescription"
          placeholder="Rations consist of..."
          rows="4"
-         data-bind='textInput: blankTreasure().itemDesc'>
+         data-bind='textInput: blankTreasure().description'>
        </textarea>
      </div>
    </div>
@@ -493,7 +493,7 @@
                class="form-control"
                id="magicItemName"
                placeholder="Dagger of Venom"
-               data-bind='textInput: blankTreasure().magicItemName, hasFocus: magicItemFirstElementFocus,
+               data-bind='textInput: blankTreasure().name, hasFocus: magicItemFirstElementFocus,
                   autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
@@ -514,7 +514,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Legendary"
-               data-bind="textInput: blankTreasure().magicItemRarity,
+               data-bind="textInput: blankTreasure().rarity,
                          autocomplete: { source: blankTreasure().magicItemRarityOptions,
                                          onselect: setMagicItemRarity }">
         </div>
@@ -529,10 +529,10 @@
                  placeholder="1"
                  min="0"
                  max="100"
-                 data-bind='textInput: blankTreasure().magicItemMaxCharges'>
+                 data-bind='textInput: blankTreasure().maxCharges'>
         </div>
     </div>
-    <div data-bind="visible: blankTreasure().magicItemMaxCharges() != 0">
+    <div data-bind="visible: blankTreasure().maxCharges() != 0">
       <div class="form-group">
         <label for="magicItemCharges"
                class="col-sm-2 control-label">Charges</label>
@@ -543,7 +543,7 @@
                    placeholder="1"
                    min="0"
                    max="100"
-                   data-bind='textInput: blankTreasure().magicItemCharges'>
+                   data-bind='textInput: blankTreasure().usedCharges'>
           </div>
       </div>
     </div>
@@ -557,7 +557,7 @@
                  placeholder="1"
                  min="0"
                  max="1000"
-                 data-bind='textInput: blankTreasure().magicItemWeight'>
+                 data-bind='textInput: blankTreasure().weight'>
         </div>
     </div>
     <div class="form-group">
@@ -567,10 +567,10 @@
           <input type="checkbox"
                  class="form-control"
                  id="magicItemRequiresAttunement"
-                 data-bind='checked: blankTreasure().magicItemRequiresAttunement'>
+                 data-bind='checked: blankTreasure().requiresAttunement'>
         </div>
     </div>
-    <div data-bind="visible: blankTreasure().magicItemRequiresAttunement() == true">
+    <div data-bind="visible: blankTreasure().requiresAttunement() == true">
       <div class="form-group">
         <label for="magicItemAttuned"
                class="col-sm-2 control-label">Attuned</label>
@@ -578,7 +578,7 @@
             <input type="checkbox"
                    class="form-control"
                    id="magicItemAttuned"
-                   data-bind='checked: blankTreasure().magicItemAttuned'>
+                   data-bind='checked: blankTreasure().attuned'>
           </div>
       </div>
     </div>
@@ -591,7 +591,7 @@
                     id="magicItemDescription"
                     rows="4"
                     placeholder="Awesome stuff goes here"
-                    data-bind='textInput: blankTreasure().magicItemDescription'>
+                    data-bind='textInput: blankTreasure().description'>
           </textarea>
         </div>
     </div>
@@ -606,7 +606,7 @@
                class="form-control"
                id="weaponName"
                placeholder="Short Sword"
-               data-bind='textInput: blankTreasure().weaponName, hasFocus: weaponFirstElementFocus,
+               data-bind='textInput: blankTreasure().name, hasFocus: weaponFirstElementFocus,
                  autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
@@ -618,7 +618,7 @@
                  class="form-control"
                  id="weaponDmg"
                  placeholder="1D4"
-                 data-bind='textInput: blankTreasure().weaponDmg'>
+                 data-bind='textInput: blankTreasure().damage'>
         </div>
     </div>
     <div class="form-group">
@@ -628,7 +628,7 @@
         <input type="number" class="form-control"
                id="weaponHit"
                placeholder="Place hit bonus here"
-               data-bind='textInput: blankTreasure().weaponHit'>
+               data-bind='textInput: blankTreasure().toHitModifier'>
       </div>
     </div>
     <div class="form-group ui-front">
@@ -648,7 +648,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="One-Handed"
-                data-bind="textInput: blankTreasure().weaponHandedness, autocomplete: {
+                data-bind="textInput: blankTreasure().handedness, autocomplete: {
                           source: blankTreasure().weaponHandednessOptions,
                           onselect: setWeaponHandedness }">
         </div>
@@ -659,7 +659,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Simple"
-                data-bind="textInput: blankTreasure().weaponProficiency, autocomplete: {
+                data-bind="textInput: blankTreasure().proficiency, autocomplete: {
                           source: blankTreasure().weaponProficiencyOptions,
                           onselect: setWeaponProficiency }">
         </div>
@@ -672,12 +672,12 @@
           <input type="number" min="0" class="form-control input-jquery-addon"
                id="weaponPrice"
                placeholder="5"
-               data-bind='textInput: blankTreasure().weaponPrice'>
+               data-bind='textInput: blankTreasure().price'>
                <span data-bind="console.log($parent.id)"></span>
            <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                    placeholder="GP"
-                   data-bind="textInput: blankTreasure().weaponCurrencyDenomination, autocomplete: {
+                   data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
                           source: blankTreasure().weaponCurrencyDenominationOptions,
                           onselect: setWeaponCurrencyDenomination }">
           </span>
@@ -691,7 +691,7 @@
           <input type="number" min="0" class="form-control"
                  id="weaponWeight"
                  placeholder="6"
-                 data-bind='textInput: blankTreasure().weaponWeight'>
+                 data-bind='textInput: blankTreasure().weight'>
         </div>
     </div>
     <div class="form-group">
@@ -702,7 +702,7 @@
                  class="form-control"
                  id="weaponRange"
                  placeholder="25/100"
-                 data-bind='textInput: blankTreasure().weaponRange'>
+                 data-bind='textInput: blankTreasure().range'>
         </div>
     </div>
     <div class="form-group ui-front">
@@ -711,7 +711,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Fire"
-               data-bind="textInput: blankTreasure().weaponDamageType, autocomplete: {
+               data-bind="textInput: blankTreasure().damageType, autocomplete: {
                           source: blankTreasure().weaponDamageTypeOptions,
                           onselect: setWeaponDamageType }">
         </div>
@@ -722,7 +722,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Finesse"
-                data-bind="textInput: blankTreasure().weaponProperty, autocomplete: {
+                data-bind="textInput: blankTreasure().property, autocomplete: {
                           source: blankTreasure().weaponPropertyOptions,
                           onselect: setWeaponProperty }">
         </div>
@@ -734,7 +734,7 @@
           <input type="number" min="0" class="form-control"
                  id="weaponQuantity"
                  placeholder="1"
-                 data-bind='textInput: blankTreasure().weaponQuantity'>
+                 data-bind='textInput: blankTreasure().quantity'>
         </div>
     </div>
 
@@ -747,7 +747,7 @@
                     id="weaponDescription"
                     rows="4"
                     placeholder="A sword...that is short..."
-                    data-bind='textInput: blankTreasure().weaponDescription'>
+                    data-bind='textInput: blankTreasure().description'>
           </textarea>
         </div>
     </div>
@@ -756,13 +756,13 @@
 <!-- Preview Templates -->
 <script type="text/html" id="armorPreviewTemplate">
   <div class="h3">
-    <span data-bind="text: armorName"></span>&nbsp;
+    <span data-bind="text: name"></span>&nbsp;
     <small data-bind="text: armorSummaryLabel"></small>
   </div>
 
   <hr />
   <div class="row">
-    <div class="col-sm-4 col-xs-12"><b>Stealth:</b>&nbsp;<span data-bind="text: armorStealth"></span></div>
+    <div class="col-sm-4 col-xs-12"><b>Stealth:</b>&nbsp;<span data-bind="text: stealth"></span></div>
     <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: armorWeightLabel"></span></div>
     <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: armorType"></span></div>
   </div>
@@ -804,12 +804,12 @@
 
 <script type="text/html" id="itemPreviewTemplate">
   <div class="h3">
-    <span data-bind="text: itemName"></span>&nbsp;
+    <span data-bind="text: name"></span>&nbsp;
   </div>
   <hr />
   <div class="row">
     <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel"></span></div>
-    <div class="col-sm-6 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: itemQty"></span></div>
+    <div class="col-sm-6 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: quantity"></span></div>
   </div>
   <hr />
   <h4>Description</h4>
@@ -825,13 +825,13 @@
 <script type="text/html" id="magicItemPreviewTemplate">
     <div class="h3">
       <span data-bind="text: magicItemNameLabel"></span>&nbsp;
-      <small data-bind="text: magicItemRarity"></small>
+      <small data-bind="text: rarity"></small>
     </div>
     <hr />
     <div class="row">
       <div class="col-sm-4 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: magicItemType"></span></div>
       <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: magicItemWeightLabel"></span></div>
-      <div class="col-sm-4 col-xs-12"><b>Max Charges:</b>&nbsp;<span data-bind="text: magicItemMaxCharges"></span></div>
+      <div class="col-sm-4 col-xs-12"><b>Max Charges:</b>&nbsp;<span data-bind="text: maxCharges"></span></div>
     </div>
     <hr />
     <h4>Description</h4>
@@ -846,19 +846,19 @@
 
 <script type="text/html" id="weaponPreviewTemplate">
     <div class="h3">
-      <span data-bind="text: weaponName"></span>
+      <span data-bind="text: name"></span>
       <small data-bind="text: magicalModifierLabel"></small>
     </div>
     <hr />
     <div class="row">
-      <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: weaponDmg"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: damage"></span></div>
       <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: weaponRangeLabel"></span></div>
       <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: weaponType"></span></div>
       <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: weaponWeightLabel"></span></div>
-      <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: weaponDamageType"></span></div>
-      <div class="col-sm-6 col-xs-12"><b>Proficiency:</b>&nbsp;<span data-bind="text: weaponProficiency"></span></div>
-      <div class="col-sm-6 col-xs-12"><b>Handedness:</b>&nbsp;<span data-bind="text: weaponHandedness"></span></div>
-      <div class="col-sm-6 col-xs-12"><b>Property:</b>&nbsp;<span data-bind="text: weaponProperty"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: damageType"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Proficiency:</b>&nbsp;<span data-bind="text: proficiency"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Handedness:</b>&nbsp;<span data-bind="text: handedness"></span></div>
+      <div class="col-sm-6 col-xs-12"><b>Property:</b>&nbsp;<span data-bind="text: property"></span></div>
     </div>
     <hr />
     <h4>Description</h4>
@@ -881,7 +881,7 @@
                class="form-control"
                id="armorName"
                placeholder="Chain Mail"
-               data-bind='textInput: armorName, hasFocus: $parent.editFirstModalElementHasFocus'>
+               data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -899,7 +899,7 @@
         <div class="col-sm-10">
         <input type="number" class="form-control"
                id="armorMagicalModifier"
-               data-bind='textInput: armorMagicalModifier'>
+               data-bind='textInput: magicalModifier'>
         </div>
     </div>
     <div class="form-group">
@@ -911,11 +911,11 @@
                class="form-control input-jquery-addon"
                id="armorPrice"
                placeholder="5"
-               data-bind='textInput: armorPrice'>
+               data-bind='textInput: price'>
            <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                    placeholder="GP"
-                   data-bind="textInput: armorCurrencyDenomination">
+                   data-bind="textInput: currencyDenomination">
           </span>
         </div>
       </div>
@@ -928,7 +928,7 @@
                  class="form-control"
                  id="armorWeight"
                  placeholder="6"
-                 data-bind='textInput: armorWeight'>
+                 data-bind='textInput: weight'>
         </div>
     </div>
     <div class="form-group">
@@ -948,7 +948,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Advantage"
-               data-bind="textInput: armorStealth">
+               data-bind="textInput: stealth">
         </div>
     </div>
     <div class="form-group">
@@ -960,7 +960,7 @@
                     id="armorDescription"
                     rows="4"
                     placeholder="Armor of damage blocking"
-                    data-bind='textInput: armorDescription'>
+                    data-bind='textInput: description'>
           </textarea>
         </div>
     </div>
@@ -1026,7 +1026,7 @@
                class="form-control"
                id="itemName"
                placeholder="Rations"
-               data-bind='textInput: itemName, hasFocus: $parent.editFirstModalElementHasFocus'>
+               data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -1039,7 +1039,7 @@
                  min="0"
                  max="5000"
                  placeholder="Item Weight"
-                 data-bind='textInput: itemWeight'>
+                 data-bind='textInput: weight'>
           <span class="input-group-addon">lbs.</span>
         </div>
        </div>
@@ -1054,7 +1054,7 @@
                max="5000"
                id="itemQuantity"
                placeholder="Item Quantity"
-               data-bind='textInput: itemQty'>
+               data-bind='textInput: quantity'>
       </div>
     </div>
     <div class="form-group">
@@ -1064,11 +1064,11 @@
             <input type="number"
                    min="0"
                    class="form-control input-jquery-addon"
-                   data-bind="value: itemCost" />
+                   data-bind="value: cost" />
             <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                     placeholder="GP"
-                    data-bind="textInput: itemCurrencyDenomination">
+                    data-bind="textInput: currencyDenomination">
             </span>
           </div>
         </div>
@@ -1082,7 +1082,7 @@
                   id="itemDescription"
                   placeholder="Rations consist of..."
                   rows="4"
-                  data-bind='textInput: itemDesc'>
+                  data-bind='textInput: description'>
         </textarea>
       </div>
     </div>
@@ -1097,7 +1097,7 @@
                class="form-control"
                id="magicItemName"
                placeholder="Dagger of Venom"
-               data-bind='textInput: magicItemName, hasFocus: $parent.editFirstModalElementHasFocus'>
+               data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -1115,7 +1115,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Legendary"
-                data-bind="textInput: magicItemRarity">
+                data-bind="textInput: rarity">
         </div>
     </div>
     <div class="form-group">
@@ -1128,10 +1128,10 @@
                  placeholder="1"
                  min="0"
                  max="100"
-                 data-bind='textInput: magicItemMaxCharges'>
+                 data-bind='textInput: maxCharges'>
         </div>
     </div>
-    <div data-bind="visible: magicItemMaxCharges() != 0">
+    <div data-bind="visible: maxCharges() != 0">
       <div class="form-group">
         <label for="magicItemCharges"
                class="col-sm-2 control-label">Charges</label>
@@ -1142,7 +1142,7 @@
                    placeholder="1"
                    min="0"
                    max="100"
-                   data-bind='textInput: magicItemCharges'>
+                   data-bind='textInput: usedCharges'>
           </div>
       </div>
     </div>
@@ -1156,7 +1156,7 @@
                  placeholder="1"
                  min="0"
                  max="1000"
-                 data-bind='textInput: magicItemWeight'>
+                 data-bind='textInput: weight'>
         </div>
     </div>
     <div class="form-group">
@@ -1166,10 +1166,10 @@
           <input type="checkbox"
                  class="form-control"
                  id="magicItemRequiresAttunement"
-                 data-bind='checked: magicItemRequiresAttunement'>
+                 data-bind='checked: requiresAttunement'>
         </div>
     </div>
-    <div data-bind="visible: magicItemRequiresAttunement() == true">
+    <div data-bind="visible: requiresAttunement() == true">
       <div class="form-group">
         <label for="magicItemAttuned"
                class="col-sm-2 control-label">Attuned</label>
@@ -1177,7 +1177,7 @@
             <input type="checkbox"
                    class="form-control"
                    id="magicItemAttuned"
-                   data-bind='checked: magicItemAttuned'>
+                   data-bind='checked: attuned'>
           </div>
       </div>
     </div>
@@ -1190,7 +1190,7 @@
                     id="magicItemDescription"
                     rows="4"
                     placeholder="Awesome stuff goes here"
-                    data-bind='textInput: magicItemDescription'>
+                    data-bind='textInput: description'>
           </textarea>
         </div>
     </div>
@@ -1205,7 +1205,7 @@
                class="form-control"
                id="weaponName"
                placeholder="Short Sword"
-               data-bind='textInput: weaponName, hasFocus: $parent.editFirstModalElementHasFocus'>
+               data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
     </div>
     <div class="form-group">
@@ -1216,7 +1216,7 @@
                  class="form-control"
                  id="weaponDmg"
                  placeholder="1D4"
-                 data-bind='textInput: weaponDmg'>
+                 data-bind='textInput: damage'>
         </div>
     </div>
     <div class="form-group">
@@ -1226,7 +1226,7 @@
         <input type="number" class="form-control"
                id="weaponHit"
                placeholder="Place hit bonus here"
-               data-bind='textInput: weaponHit'>
+               data-bind='textInput: toHitModifier'>
       </div>
     </div>
     <div class="form-group">
@@ -1244,7 +1244,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="One-Handed"
-              data-bind="textInput: weaponHandedness"></select>
+              data-bind="textInput: handedness"></select>
         </div>
     </div>
     <div class="form-group">
@@ -1253,7 +1253,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Simple"
-                data-bind="textInput: weaponProficiency">
+                data-bind="textInput: proficiency">
         </div>
     </div>
     <div class="form-group">
@@ -1264,11 +1264,11 @@
           <input type="number" min="0" class="form-control input-jquery-addon"
                id="weaponPrice"
                placeholder="5"
-               data-bind='textInput: weaponPrice'>
+               data-bind='textInput: price'>
            <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                    placeholder="GP"
-                   data-bind="textInput: weaponCurrencyDenomination">
+                   data-bind="textInput: currencyDenomination">
           </span>
         </div>
       </div>
@@ -1280,7 +1280,7 @@
           <input type="number" min="0" class="form-control"
                  id="weaponWeight"
                  placeholder="6"
-                 data-bind='textInput: weaponWeight'>
+                 data-bind='textInput: weight'>
         </div>
     </div>
     <div class="form-group">
@@ -1291,7 +1291,7 @@
                  class="form-control"
                  id="weaponRange"
                  placeholder="25/100"
-                 data-bind='textInput: weaponRange'>
+                 data-bind='textInput: range'>
         </div>
     </div>
     <div class="form-group">
@@ -1300,7 +1300,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Fire"
-               data-bind="textInput: weaponDamageType">
+               data-bind="textInput: damageType">
         </div>
         </div>
       <div class="form-group">
@@ -1309,7 +1309,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Finesse"
-                data-bind="textInput: weaponProperty">
+                data-bind="textInput: property">
         </div>
     </div>
 
@@ -1320,7 +1320,7 @@
           <input type="number" min="0" class="form-control"
                  id="weaponQuantity"
                  placeholder="1"
-                 data-bind='textInput: weaponQuantity'>
+                 data-bind='textInput: quantity'>
         </div>
     </div>
 
@@ -1333,7 +1333,7 @@
                     id="weaponDescription"
                     rows="4"
                     placeholder="A sword...that is short..."
-                    data-bind='textInput: weaponDescription'>
+                    data-bind='textInput: description'>
           </textarea>
         </div>
     </div>

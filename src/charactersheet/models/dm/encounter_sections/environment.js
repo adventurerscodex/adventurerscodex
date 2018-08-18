@@ -3,29 +3,28 @@ import ko from 'knockout';
 
 
 export class Environment extends KOModel {
-    static __skeys__ = ['core', 'environment'];
+    static __skeys__ = ['core', 'encounters', 'environment'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'imageUrl', 'weather',
+        include: ['coreUuid', 'encounterUuid', 'sourceUrl', 'weather',
             'terrain', 'description', 'isExhibited']
     };
 
     coreUuid = ko.observable();
-    encounterUuid = ko.observable();
     uuid = ko.observable();
-    imageUrl = ko.observable();
-    weather = ko.observable();
-    terrain = ko.observable();
-    description = ko.observable();
+    sourceUrl = ko.observable('');
+    weather = ko.observable('');
+    terrain = ko.observable('');
+    description = ko.observable('');
     isExhibited = ko.observable(false);
 
     //Public Methods
 
     toJSON = function() {
-        return { name: 'Environment', url: this.imageUrl() };
+        return { name: 'Environment', url: this.sourceUrl() };
     };
 
-    name = ko.pureComputed(function() {
+    name = ko.pureComputed(() => {
         return 'Weather: {weather}, Terrain: {terrain}'.replace(
             '{weather}', this.weather() ? this.weather() : 'Unknown'
         ).replace(

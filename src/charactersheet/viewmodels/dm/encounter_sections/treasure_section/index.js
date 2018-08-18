@@ -10,7 +10,7 @@ import {
     EncounterItem,
     EncounterMagicItem,
     EncounterWeapon,
-    TreasureSection
+    Treasure
 } from 'charactersheet/models';
 import {
     PersistenceService,
@@ -46,10 +46,10 @@ export function TreasureSectionViewModel(params) {
     self.spCoin = spCoin;
     self.cpCoin = cpCoin;
     self.ppCoin = ppCoin;
-    self.encounter   = params.encounter;
+    self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
-        if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        if (!ko.unwrap(self.encounter)) { return; }
+        return self.encounter().uuid();
     });
     self.characterId = ko.observable();
 
@@ -58,13 +58,6 @@ export function TreasureSectionViewModel(params) {
     self.tagline = ko.observable();
 
     self.treasure = ko.observableArray();
-
-    /**
-     * A list of types to accept/load into the treasure.
-     */
-    self.treasureTypes = [
-        EncounterItem, EncounterWeapon, EncounterMagicItem, EncounterArmor, EncounterCoins
-    ];
 
     self.blankTreasure = ko.observable(null);
     self.itemType = ko.observable(null);
@@ -88,6 +81,11 @@ export function TreasureSectionViewModel(params) {
     self.weaponShow = ko.observable(false);
     self.weaponFirstElementFocus = ko.observable(false);
     self.shouldShowDisclaimer = ko.observable(false);
+    self.MAGIC_ITEM = 'magic_item';
+    self.ITEM = 'item';
+    self.WEAPON = 'weapon';
+    self.COINS = 'coins';
+    self.ARMOR = 'armor';
 
     self.sorts = {
         'nameLabel asc': { field: 'nameLabel', direction: 'asc' },
@@ -98,15 +96,14 @@ export function TreasureSectionViewModel(params) {
     self.sort = ko.observable(self.sorts['nameLabel asc']);
 
     /* Public Methods */
-    self.load = function() {
+    self.load = async function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
-        self._dataHasChanged();
+        await self._dataHasChanged();
     };
 
     self.save = function() {
@@ -168,13 +165,13 @@ export function TreasureSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addTreasure = function() {
-        var treasure = self.blankTreasure();
-        treasure.characterId(CoreManager.activeCore().uuid());
-        treasure.encounterId(self.encounterId());
-        treasure.treasureType(self.itemType());
-        treasure.save();
-        self.treasure.push(treasure);
+    self.addTreasure = async function() {
+        var treasure = self.convertToTreasureEntity(self.blankTreasure());
+        treasure.coreUuid(CoreManager.activeCore().uuid());
+        treasure.encounterUuid(self.encounterId());
+        treasure.type(self.itemType());
+        const treasureResponse = await treasure.ps.create();
+        self.treasure.push(self.mapTreasureToModel(treasureResponse.object));
         self.blankTreasure(null);
         self.clearTreasureTemplates();
         self.itemType('');
@@ -185,23 +182,23 @@ export function TreasureSectionViewModel(params) {
         self.clearTreasureTemplates();
 
         // Based on selection, populate the treasure model
-        if (self.itemType() == 'armor') {
+        if (self.itemType() == self.ARMOR) {
             self.blankTreasure(new EncounterArmor());
             self.armorShow(true);
             self.armorFirstElementFocus(true);
-        } else if (self.itemType() == 'coins') {
+        } else if (self.itemType() == self.COINS) {
             self.blankTreasure(new EncounterCoins());
             self.coinsShow(true);
             self.coinsFirstElementFocus(true);
-        } else if (self.itemType() == 'item') {
+        } else if (self.itemType() == self.ITEM) {
             self.blankTreasure(new EncounterItem());
             self.itemShow(true);
             self.itemFirstElementFocus(true);
-        } else if (self.itemType() == 'magicItem') {
+        } else if (self.itemType() == self.MAGIC_ITEM) {
             self.blankTreasure(new EncounterMagicItem());
             self.magicItemShow(true);
             self.magicItemFirstElementFocus(true);
-        } else if (self.itemType() == 'weapon') {
+        } else if (self.itemType() == self.WEAPON) {
             self.blankTreasure(new EncounterWeapon());
             self.weaponShow(true);
             self.weaponFirstElementFocus(true);
@@ -216,29 +213,31 @@ export function TreasureSectionViewModel(params) {
         self.weaponShow(false);
     };
 
-    self.removeTreasure = function(treasure) {
-        treasure.delete();
+    self.removeTreasure = async function(treasure) {
+        let treasureEntity = self.convertToTreasureEntity(treasure);
+
+        await treasureEntity.ps.delete();
         self.treasure.remove(treasure);
     };
 
     self.editTreasure = function(treasure) {
         self.selectPreviewTab();
-        self.editItemIndex = treasure.__id;
-        if (treasure.treasureType() == 'armor') {
+        self.editItemIndex = treasure.uuid();
+        if (treasure.type() == self.ARMOR) {
             self.currentEditItem(new EncounterArmor());
-        } else if (treasure.treasureType() == 'item') {
+        } else if (treasure.type() == self.ITEM) {
             self.currentEditItem(new EncounterItem());
-        } else if (treasure.treasureType() == 'magicItem') {
+        } else if (treasure.type() == self.MAGIC_ITEM) {
             self.currentEditItem(new EncounterMagicItem());
-        } else if (treasure.treasureType() == 'weapon') {
+        } else if (treasure.type() == self.WEAPON) {
             self.currentEditItem(new EncounterWeapon());
-        } else if (treasure.treasureType() == 'coins') {
+        } else if (treasure.type() == self.COINS) {
             self.currentEditItem(new EncounterCoins());
         } else {
-            throw Error('Invalid Treasure type identifier ' + treasure.treasureType());
+            throw Error('Invalid Treasure type identifier ' + treasure.type());
         }
 
-        self.currentEditItem().importValues(treasure.exportValues());
+        self.currentEditItem().fromJSON(treasure.toJSON());
         self.openModal(true);
     };
 
@@ -247,13 +246,13 @@ export function TreasureSectionViewModel(params) {
     self.treasurePrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys;
-        if (self.itemType() == 'armor') {
+        if (self.itemType() == self.ARMOR) {
             keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
-        } else if (self.itemType() == 'item') {
+        } else if (self.itemType() == self.ITEM) {
             keys = DataRepository.items ? Object.keys(DataRepository.items) : [];
-        } else if (self.itemType() == 'magicItem') {
+        } else if (self.itemType() == self.MAGIC_ITEM) {
             keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
-        } else if (self.itemType() == 'weapon') {
+        } else if (self.itemType() == self.WEAPON) {
             keys = DataRepository.weapons ? Object.keys(DataRepository.weapons) : [];
         }
         var results = keys.filter(function(name, idx, _) {
@@ -264,13 +263,13 @@ export function TreasureSectionViewModel(params) {
 
     self.populateTreasure = function(label, value) {
         var treasure;
-        if (self.itemType() == 'armor') {
+        if (self.itemType() == self.ARMOR) {
             treasure = DataRepository.armors[label];
-        } else if (self.itemType() == 'item') {
+        } else if (self.itemType() == self.ITEM) {
             treasure = DataRepository.items[label];
-        } else if (self.itemType() == 'magicItem') {
+        } else if (self.itemType() == self.MAGIC_ITEM) {
             treasure = DataRepository.magicItems[label];
-        } else if (self.itemType() == 'weapon') {
+        } else if (self.itemType() == self.WEAPON) {
             treasure = DataRepository.weapons[label];
         }
 
@@ -341,18 +340,20 @@ export function TreasureSectionViewModel(params) {
 
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            self.treasure().forEach(function(item, idx, _) {
-                if (item.treasureType() === self.currentEditItem().treasureType() && item.__id === self.editItemIndex) {
-                    item.importValues(self.currentEditItem().exportValues());
+            let treasure = self.convertToTreasureEntity(self.currentEditItem());
+            let treasureResponse = await treasure.ps.save();
+            self.treasure().forEach(function(item) {
+                if (item.uuid() === self.editItemIndex) {
+                    let newTreasure = self.mapTreasureToModel(treasureResponse.object);
+                    item.fromJSON(newTreasure.toJSON());
                 }
             });
         }
 
-        self.save();
         self.openModal(false);
     };
 
@@ -369,30 +370,72 @@ export function TreasureSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CoreManager.activeCore().uuid();
-        var treasure = [];
-        self.treasureTypes.forEach(function(type, idx, _){
-            var result = PersistenceService.findByPredicates(type, [
-                new KeyValuePredicate('encounterId', self.encounterId()),
-                new KeyValuePredicate('characterId', key)
-            ]);
-            treasure = treasure.concat(result);
-        });
-        self.treasure(treasure);
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const treasureResponse = await Treasure.ps.list({coreUuid, encounterUuid: self.encounterId()});
+        // var treasure = [];
+        // self.treasureTypes.forEach(function(type, idx, _){
+        //     var result = PersistenceService.findByPredicates(type, [
+        //         new KeyValuePredicate('encounterId', self.encounterId()),
+        //         new KeyValuePredicate('characterId', key)
+        //     ]);
+        //     treasure = treasure.concat(result);
+        // });
+        self.convertTreasureResponse(treasureResponse.objects);
 
-        var section = PersistenceService.findByPredicates(TreasureSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new TreasureSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        var section = self.encounter().sections()[Fixtures.encounter.sections.treasure.index];
+
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+    };
+
+    self.convertTreasureResponse = (treasures) => {
+        treasures.forEach((treasure) => {
+            let newTreasure = self.mapTreasureToModel(treasure);
+            self.treasure().push(newTreasure);
+        });
+    };
+
+    self.mapTreasureToModel = (treasure) => {
+        let newTreasure = null;
+        if (treasure.type() == self.ARMOR) {
+            newTreasure = new EncounterArmor();
+        } else if (treasure.type() == self.ITEM) {
+            newTreasure = new EncounterItem();
+        } else if (treasure.type() == self.MAGIC_ITEM) {
+            newTreasure = new EncounterMagicItem();
+        } else if (treasure.type() == self.WEAPON) {
+            newTreasure = new EncounterWeapon();
+        } else if (treasure.type() == self.COINS) {
+            newTreasure = new EncounterCoins();
+        } else {
+            throw Error('Invalid Treasure type identifier ' + treasure.type());
+        }
+
+        newTreasure.buildModelFromValues(treasure.value);
+        newTreasure.type(treasure.type());
+        newTreasure.coreUuid(treasure.coreUuid());
+        newTreasure.uuid(treasure.uuid());
+        newTreasure.encounterUuid(treasure.encounterUuid());
+        return newTreasure;
+    };
+
+    /**
+     * Converts a specific sub-model to a generic treasure model.
+     *
+     * @param treasure specific model
+     * @returns generic treasure model
+     */
+    self.convertToTreasureEntity = (treasure) => {
+        let treasureEntity = new Treasure();
+        treasureEntity.uuid(treasure.uuid());
+        treasureEntity.coreUuid(treasure.coreUuid());
+        treasureEntity.encounterUuid(treasure.encounterUuid());
+        treasureEntity.type(treasure.type());
+        treasureEntity.value = treasure.getValues();
+
+        return treasureEntity;
     };
 }
 

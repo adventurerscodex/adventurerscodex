@@ -1,9 +1,8 @@
 import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
-
 export class Monster extends KOModel {
-    static __skeys__ = ['core', 'encounters'];
+    static __skeys__ = ['core', 'encounters', 'monsters'];
 
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type',
@@ -36,23 +35,32 @@ export class Monster extends KOModel {
     description = ko.observable();
 
     // UI Stuff
+
+    // todo: maybe remove?
     markDownDescription = ko.pureComputed(function() {
-        return this.description() ? this.description() : '';
+        let desc = '';
+        if (this) {
+            desc = this.description() ? this.description() : '';
+        }
+
+        return desc;
     });
 
     nameLabel = ko.pureComputed(function() {
-        var label = this.size() ? this.size() : '';
-        label += this.type() ? (this.size() ? ' ' : '') + this.type() : '';
-        label += (this.size() && this.alignment()) || (this.type() && this.alignment()) ? ', ' : '';
-        label += this.alignment() ? this.alignment() : '';
-        return label;
+        if (this) {
+            var label = this.size() ? this.size() : '';
+            label += this.type() ? (this.size() ? ' ' : '') + this.type() : '';
+            label += (this.size() && this.alignment()) || (this.type() && this.alignment()) ? ', ' : '';
+            label += this.alignment() ? this.alignment() : '';
+            return label;
+        }
     });
 
     //Public Methods
     findAbilityScoreByName = function(name) {
         var foundScore;
-        this.abilityScores().forEach(function(score, idx, _) {
-            if (score.name().toLowerCase() == name.toLowerCase()) {
+        this.abilityScores().forEach(function(score) {
+            if (ko.unwrap(score.name).toLowerCase() == name.toLowerCase()) {
                 foundScore = score;
             }
         });

@@ -1,32 +1,110 @@
-import { Item } from 'charactersheet/models/common';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import {
+    Fixtures,
+    Utility
+} from 'charactersheet/utilities';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 
-export function EncounterItem() {
-    var self = new Item();
+export class EncounterItem extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'treasures'];
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'type', 'uuid']
+    };
 
-    self.ps = PersistenceService.register(EncounterItem, self);
-    self.mapping.include.push('encounterId');
-    self.mapping.include.push('treasureType');
+    static itemFields = ['name', 'description', 'quantity', 'weight', 'cost', 'currencyDenomination'];
 
-    self.encounterId = ko.observable();
-    self.treasureType = ko.observable();
+    static allFields = ['name', 'description', 'quantity', 'weight', 'cost', 'currencyDenomination', 'uuid', 'coreUuid', 'encounterUuid', 'type'];
 
-    self.nameLabel = ko.pureComputed(function() {
-        return self.itemName();
+    uuid = ko.observable();
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    type = ko.observable();
+
+    // Item Fields
+    name = ko.observable('');
+    description = ko.observable('');
+    quantity = ko.observable(1);
+    weight = ko.observable(0);
+    cost = ko.observable(0);
+    currencyDenomination = ko.observable('');
+
+    SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    DESCRIPTION_MAX_LENGTH = 200;
+    itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+
+    nameLabel = ko.pureComputed(() => {
+        return this.name();
     });
 
-    self.propertyLabel = ko.pureComputed(function() {
+    propertyLabel = ko.pureComputed(() => {
         return 'N/A';
     });
 
-    self.descriptionLabel = ko.pureComputed(function() {
-        return self.shortDescription();
+    descriptionLabel = ko.pureComputed(() => {
+        return this.shortDescription();
     });
 
-    return self;
-}
-EncounterItem.__name = 'EncounterItem';
+    shortDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
+    });
 
-PersistenceService.addToRegistry(EncounterItem);
+    itemDescriptionHTML = ko.pureComputed(() => {
+        if (this.description()) {
+            return this.description().replace(/\n/g, '<br />');
+        } else {
+            return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
+        }
+    });
+
+    itemWeightLabel = ko.pureComputed(() => {
+        return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
+    });
+
+    clean = (keys, params) => {
+        let treasure = pick(params, EncounterItem.mapping.include);
+        treasure.value = pick(params, EncounterItem.itemFields);
+        return treasure;
+    };
+
+    buildModelFromValues = (values) => {
+        let keys = Object.keys(values);
+        keys.forEach((key) => {
+            this[key] = values[key];
+        });
+    };
+
+    getValues = () => {
+        let values = {};
+        EncounterItem.itemFields.forEach((field) => {
+            values[field] = this[field];
+        });
+
+        return values;
+    };
+
+    /**
+      * Serialize the current item to a plain JSON format. We use these in-leiu of the normal
+      * import/exportValues because those return a format unsuitable for re-importing
+      * (since it caused data corruption).
+     */
+    toJSON = () => {
+        let values = {};
+        EncounterItem.allFields.forEach((field) => {
+            values[field] = this[field]();
+        });
+
+        return values;
+    };
+
+    /**
+      * De-serialize the current item into the current model. We use these in-leiu of the normal
+      * import/exportValues because those return a format unsuitable for re-importing
+      * (since it caused data corruption).
+     */
+    fromJSON = (values) => {
+        EncounterItem.allFields.forEach((field) => {
+            this[field](values[field]);
+        });
+    };
+}

@@ -1,10 +1,7 @@
 import 'bin/knockout-bootstrap-modal';
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
 import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { AbilityScoresViewModelDelegate } from 'charactersheet/viewmodels/character/ability_scores/delegate';
+import { CoreManager } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 
