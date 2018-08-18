@@ -2,6 +2,7 @@ import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
 import { MapOrImage } from 'charactersheet/models/common';
+import { find } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -21,23 +22,22 @@ export function EncounterViewModel() {
         self.encounterCells(await self._getEncounterCells());
         self.selectedCell(self.encounterCells()[0]);
         self._updateSelectedEncounter();
-        Notifications.encounters.changed.add(self._dataHasChanged);
     };
 
     /* Modal Methods */
 
     self.openAddModal = () => {
-        var key = CoreManager.activeCore().uuid();
+        const key = CoreManager.activeCore().uuid();
         self.modalEncounter(new Encounter());
         self.modalEncounter().coreUuid(key);
         self.openModal(true);
     };
 
     self.openAddModalWithParent = function(parent) {
-        var key = CoreManager.activeCore().uuid();
+        const key = CoreManager.activeCore().uuid();
         self.modalEncounter(new Encounter());
-        self.modalEncounter().parent(parent.encounterId());
-        self.modalEncounter().characterId(key);
+        self.modalEncounter().parent(parent.id());
+        self.modalEncounter().coreUuid(key);
         self.openModal(true);
     };
 
@@ -62,15 +62,14 @@ export function EncounterViewModel() {
     self.addEncounterToList = function(encounter) {
         // Add the cell to the UI.
         if (encounter.parent()) {
-            var parent = self._findCell(self.encounterCells(), 'uuid', encounter.parent());
-            parent.isOpen(true);
-            parent.addChild(encounter);
+            const parentCell = ko.find(self.encounterCells, { 'id': encounter.parent() });
+            parentCell.addChild(encounter);
         } else {
             self.encounterCells.push(new EncounterCellViewModel(encounter));
         }
 
         // Select the new encounter.
-        var cellToSelect = self._findCell(self.encounterCells(), 'uuid', encounter.encounterId());
+        const cellToSelect = ko.find(self.encounterCells, { 'id': encounter.uuid() });
         if (cellToSelect) {
             self.selectedCell(cellToSelect);
             self._updateSelectedEncounter();
@@ -84,26 +83,21 @@ export function EncounterViewModel() {
      */
     self.deleteEncounter = async ({ encounter }) => {
         await encounter.ps.delete();
+        const cell = ko.find(self.encounterCells, { 'id': encounter.uuid() });
+        const parentCell = ko.find(self.encounterCells, { 'id': encounter.parent() });
 
-        self.encounterCells(await self._getEncounterCells());
+        // Update UI.
+        self.encounterCells.remove(cell);
+        if (parentCell) {
+            parentCell.removeChild(cell);
+        }
 
-//         var parentCell = self._findCell(self.encounterCells(), 'encounterId', encounter.parent());
-//         if (parentCell) {
-//             parentCell.removeChild(cell);
-//         }
-//
-//         // Update UI.
-//
-//         if (!parentCell) {
-//             self.encounterCells.remove(cell);
-//         }
-//
-//         if (self.encounterCells() && !self.encounterCells()[0]) {
-//             self.selectedCell(null);
-//         } else {
-//             self.selectedCell(self.encounterCells()[0]);
-//         }
-//         self._updateSelectedEncounter();
+        if (self.encounterCells() && !self.encounterCells()[0]) {
+            self.selectedCell(null);
+        } else {
+            self.selectedCell(self.encounterCells()[0]);
+        }
+        self._updateSelectedEncounter();
     };
 
     /* Private Methods */
@@ -113,28 +107,6 @@ export function EncounterViewModel() {
         const { objects: encounters } = await Encounter.ps.list({ coreUuid });
         return encounters.map((enc, idx, _) => {
             return new EncounterCellViewModel(enc);
-        });
-    };
-
-    self._findCell = function(cells, property, id) {
-        var cell = null;
-        for (var i=0; i<cells.length; i++) {
-            if (id === cells[i][property]()) {
-                cell = cells[i];
-            } else {
-                cell = self._findCell(cells[i].children(), property, id);
-            }
-
-            if (cell !== null) {
-                break;
-            }
-        }
-        return cell;
-    };
-
-    self._dataHasChanged = function() {
-        self.encounterCells().forEach(function(cell, idx, _) {
-            cell.reloadData();
         });
     };
 
