@@ -11,7 +11,6 @@ import {
 } from 'charactersheet/utilities';
 import { EncounterImage } from 'charactersheet/models/common';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { MapsAndImagesSection } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/globe.svg';
 import template from './index.html';
@@ -63,7 +62,6 @@ export function MapsAndImagesSectionViewModel(params) {
     /* Public Methods */
 
     self.load = function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
@@ -75,40 +73,6 @@ export function MapsAndImagesSectionViewModel(params) {
         self._dataHasChanged();
 
         self._connectionHasChanged();
-    };
-
-    self.save = function() {
-        // TODO: Maybe remove all of this?
-        // var key = CoreManager.activeCore().uuid();
-        // var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (!section) {
-        //     section = new MapsAndImagesSection();
-        //     section.encounterId(self.encounterId());
-        //     section.characterId(key);
-        // }
-
-        // section.name(self.name());
-        // section.visible(self.visible());
-        // section.save();
-    };
-
-    self.delete = function() {
-        // TODO: Maybe remove all of this?
-        // var key = CoreManager.activeCore().uuid();
-        // var section = PersistenceService.findByPredicates(MapsAndImagesSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (section) {
-        //     section.delete();
-        // }
-
-        // self.mapsOrImages().forEach(function(map, idx, _) {
-        //     map.delete();
-        // });
     };
 
     /* UI Methods */

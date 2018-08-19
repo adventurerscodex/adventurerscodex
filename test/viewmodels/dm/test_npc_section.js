@@ -3,7 +3,6 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm/encounter';
-import { NPCSection } from 'charactersheet/models/dm/encounter_sections/npc_section';
 import { NPCSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/npc_section';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
@@ -34,7 +33,6 @@ describe('NPCSectionViewModel', function(){
         it('should save model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new NPCSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new NPCSection());
             vm.addNPC();
             vm.save();
         });
@@ -50,7 +48,6 @@ describe('NPCSectionViewModel', function(){
     describe('Delete', function() {
         it('should delete model', function() {
             var vm = new NPCSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new NPCSection());
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             vm.addNPC();
             vm.delete();

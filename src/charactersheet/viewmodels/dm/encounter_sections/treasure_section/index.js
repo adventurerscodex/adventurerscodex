@@ -12,11 +12,7 @@ import {
     EncounterWeapon,
     Treasure
 } from 'charactersheet/models';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { SortService } from 'charactersheet/services';
 
 import breastplate from 'images/misc_icons/breastplate.svg';
 import broadsword from 'images/misc_icons/broadsword.svg';
@@ -97,49 +93,12 @@ export function TreasureSectionViewModel(params) {
 
     /* Public Methods */
     self.load = async function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         await self._dataHasChanged();
-    };
-
-    self.save = function() {
-        var key = CoreManager.activeCore().uuid();
-        var section = PersistenceService.findByPredicates(TreasureSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new TreasureSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-
-        section.name(self.name());
-        section.visible(self.visible());
-        section.save();
-
-        self.treasure().forEach(function(treasure, idx, _) {
-            treasure.save();
-        });
-    };
-
-    self.delete = function() {
-        var key = CoreManager.activeCore().uuid();
-        var section = PersistenceService.findByPredicates(TreasureSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (section) {
-            section.delete();
-        }
-
-        self.treasure().forEach(function(treasure, idx, _) {
-            treasure.delete();
-        });
     };
 
     /* UI Methods */
@@ -373,14 +332,7 @@ export function TreasureSectionViewModel(params) {
     self._dataHasChanged = async function() {
         var coreUuid = CoreManager.activeCore().uuid();
         const treasureResponse = await Treasure.ps.list({coreUuid, encounterUuid: self.encounterId()});
-        // var treasure = [];
-        // self.treasureTypes.forEach(function(type, idx, _){
-        //     var result = PersistenceService.findByPredicates(type, [
-        //         new KeyValuePredicate('encounterId', self.encounterId()),
-        //         new KeyValuePredicate('characterId', key)
-        //     ]);
-        //     treasure = treasure.concat(result);
-        // });
+
         self.convertTreasureResponse(treasureResponse.objects);
 
         var section = self.encounter().sections()[Fixtures.encounter.sections.treasure.index];
@@ -391,10 +343,12 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.convertTreasureResponse = (treasures) => {
+        self.treasure([]);
         treasures.forEach((treasure) => {
             let newTreasure = self.mapTreasureToModel(treasure);
             self.treasure().push(newTreasure);
         });
+        self.treasure.valueHasMutated();
     };
 
     self.mapTreasureToModel = (treasure) => {

@@ -4,7 +4,6 @@ import {
 } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm/encounter';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { PlayerTextSection } from 'charactersheet/models/dm/encounter_sections/player_text_section';
 import { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section';
 import Should from 'should';
 import simple from 'simple-mock';
@@ -34,7 +33,6 @@ describe('PlayerTextSectionViewModel', function(){
         it('should save model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PlayerTextSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new PlayerTextSection());
             vm.addPlayerText();
             vm.save();
         });
@@ -50,7 +48,6 @@ describe('PlayerTextSectionViewModel', function(){
     describe('Delete', function() {
         it('should delete model', function() {
             var vm = new PlayerTextSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new PlayerTextSection());
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             vm.addPlayerText();
             vm.delete();

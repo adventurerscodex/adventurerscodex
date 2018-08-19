@@ -3,7 +3,6 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm/encounter';
-import { NotesSection } from 'charactersheet/models/dm/encounter_sections/notes_section';
 import { NotesSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/notes_section';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import Should from 'should';
@@ -34,7 +33,6 @@ describe('NotesSectionViewModel', function(){
         it('should save model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new NotesSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new NotesSection());
 
             vm.save();
         });
@@ -50,7 +48,6 @@ describe('NotesSectionViewModel', function(){
     describe('Delete', function() {
         it('should delete model', function() {
             var vm = new NotesSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new NotesSection());
 
             vm.delete();
         });
@@ -67,7 +64,6 @@ describe('NotesSectionViewModel', function(){
         it('should load new data', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new NotesSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new NotesSection());
 
             vm._dataHasChanged();
         });

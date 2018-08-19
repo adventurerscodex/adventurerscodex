@@ -4,8 +4,6 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { EncounterNote } from 'charactersheet/models/dm/encounter_sections';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/quill-ink.svg';
 import template from './index.html';
@@ -27,32 +25,14 @@ export function NotesSectionViewModel(params) {
     self.tagline = ko.observable();
 
     //Public Methods
-    /**
-     * Signal all modules to load their data.
-     */
     self.load = function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        self.notes.subscribe(self.save);
+        self.notes.subscribe(self.saveNote);
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         self._dataHasChanged();
-    };
-
-    self.save = function() {
-        // var key = CoreManager.activeCore().uuid();
-        // var notes = PersistenceService.findByPredicates(NotesSection, [
-        //     new KeyValuePredicate('encounterId', self.encounterId()),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        // if (notes) {
-        //     notes.notes(self.notes());
-        //     notes.visible(self.visible());
-
-        //     notes.save();
-        // }
     };
 
     self.saveNote = async () => {

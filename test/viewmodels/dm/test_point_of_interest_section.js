@@ -4,7 +4,6 @@ import {
 } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm/encounter';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { PointOfInterestSection } from 'charactersheet/models/dm/encounter_sections/point_of_interest_section';
 import { PointOfInterestSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/point_of_interest_section';
 import Should from 'should';
 import simple from 'simple-mock';
@@ -34,7 +33,6 @@ describe('PointOfInterestSectionViewModel', function(){
         it('should save model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new PointOfInterestSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new PointOfInterestSection());
             vm.addPointOfInterest();
             vm.save();
         });
@@ -50,7 +48,6 @@ describe('PointOfInterestSectionViewModel', function(){
     describe('Delete', function() {
         it('should delete model', function() {
             var vm = new PointOfInterestSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new PointOfInterestSection());
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             vm.addPointOfInterest();
             vm.delete();

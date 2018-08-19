@@ -32,6 +32,7 @@ export function EnvironmentSectionViewModel(params) {
     self.visible = ko.observable(false);
     self.environment = ko.observable();
 
+    self.dataIsChanging = false;
     self.imageUrl = ko.observable();
     self.weather = ko.observable();
     self.terrain = ko.observable();
@@ -91,6 +92,9 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self.save = async function() {
+        if (self.dataIsChanging) {
+            return;
+        }
         self.environment().imageUrl(self.imageUrl());
         self.environment().weather(self.weather());
         self.environment().terrain(self.terrain());
@@ -162,6 +166,7 @@ export function EnvironmentSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        self.dataIsChanging = true;
         var coreUuid = CoreManager.activeCore().uuid();
         var section = self.encounter().sections()[Fixtures.encounter.sections.environment.index];
         self.name(section.name());
@@ -184,6 +189,7 @@ export function EnvironmentSectionViewModel(params) {
         } else {
             self.selectPreviewTab();
         }
+        self.dataIsChanging = false;
     };
 
     self._connectionHasChanged = function() {
