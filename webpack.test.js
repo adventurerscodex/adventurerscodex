@@ -5,11 +5,11 @@ const webpack = require('webpack');
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     plugins: [
-        new UglifyJSPlugin({
-            sourceMap: true
-        }),
+//         new UglifyJSPlugin({
+//             sourceMap: true
+//         }),
         new webpack.DefinePlugin({
             /**
              * The string representation of the environment name.
