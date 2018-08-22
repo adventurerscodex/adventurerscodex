@@ -10,14 +10,11 @@ import {
     XMPPService
 } from 'charactersheet/services';
 import {
-    Character,
-    Core
-} from 'charactersheet/models/common';
-import {
     CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
+import { Core } from 'charactersheet/models/common/core';
 import { PersistenceService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import navLogo from 'images/logo-full-circle-icon.png';
@@ -181,10 +178,6 @@ export function AdventurersCodexViewModel() {
         } catch(err) {
             throw err;
         }
-    };
-
-    self._hasAtLeastOneCharacter = function() {
-        return PersistenceService.findAll(Character).length > 0;
     };
 
     /**
