@@ -10,11 +10,14 @@ import {
     XMPPService
 } from 'charactersheet/services';
 import {
+    Character,
+    Core
+} from 'charactersheet/models/common';
+import {
     CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import { Character } from 'charactersheet/models/common';
 import { PersistenceService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import navLogo from 'images/logo-full-circle-icon.png';
@@ -103,7 +106,8 @@ export function AdventurersCodexViewModel() {
         // Finish the setup once we're sure that we're logged in.
         Notifications.authentication.loggedIn.add(async () => {
             await CoreManager.init();
-            var characters = PersistenceService.findAll(Character);
+            const charactersResponse = await Core.ps.list();
+            let characters = charactersResponse.objects;
 
             TabFragmentManager.init();
 
