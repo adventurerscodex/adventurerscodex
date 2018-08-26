@@ -59,10 +59,6 @@ export var init = function(viewModel) {
 
     // Set up API client configuration handlers.
     Notifications.authentication.loggedIn.add(() => {
-        if (!schema) {
-            return;
-        }
-
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         Hypnos.configuration = {
             credentials: {
