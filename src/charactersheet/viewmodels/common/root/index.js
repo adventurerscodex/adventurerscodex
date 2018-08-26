@@ -118,13 +118,6 @@ export function AdventurersCodexViewModel() {
                 self.state(APP_STATE.WIZARD);
             }
         });
-
-        XMPPService.sharedService().init();
-        NodeServiceManager.sharedService().init();
-        ChatServiceManager.sharedService().init();
-        NotificationsServiceManager.sharedService().init();
-        UserServiceManager.sharedService().init();
-        AuthenticationServiceManager.sharedService().init();
     };
 
     /**
