@@ -74,6 +74,7 @@
     "linkifyjs": "^2.1.5",
     "lodash": "^4.17.10",
     "lz-string": "^1.4.4",
+    "node-uuid": "^1.4.8",
     "random-js": "^1.0.8",
     "save-as": "^0.1.8",
     "signals": "^1.0.0",
