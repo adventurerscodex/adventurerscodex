@@ -6,5 +6,5 @@ WORKDIR /app
 # Build the project
 COPY . .
 
-RUN npm install
+RUN npm install --production
 CMD ./docker-entrypoint.sh
