@@ -12,8 +12,11 @@
             <span data-bind="css: sortArrow('characterClass')"></span>
           </th>
           <th class="col-md-1">
-            <a data-toggle="modal"
-              data-target="#addFeature" id="featureAddIcon" href="#">
+            <a
+              id="featureAddIcon"
+              href="#"
+              data-bind="click: toggleAddModal"
+            >
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -34,8 +37,11 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedFeatures().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addFeature" href="#"
-            colspan="12" class="text-center">
+          <td
+            data-bind="click: toggleAddModal"
+            colspan="12"
+            class="text-center"
+          >
             <i class="fa fa-plus fa-color"></i>
             Add a new Feature
           </td>
@@ -51,7 +57,10 @@
      id="addFeature"
      tabindex="-1"
      role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening, onclose: modalFinishedClosing}">
+      open: addModalOpen,
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing
+    }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -70,10 +79,10 @@
             <label for="name" class="col-sm-2 control-label">Name</label>
               <div class="col-sm-10">
                 <input type="text"
+                        name="name"
                         class="form-control"
                         id="featureAddNameInput"
                         placeholder="Rage"
-                        name="name"
                         data-bind='textInput: blankFeature().name,
                         autocomplete: { source: featuresPrePopFilter,
                         onselect: populateFeature }, hasFocus: firstModalElementHasFocus'>
@@ -87,7 +96,7 @@
                         id="featureAddClassInput"
                         placeholder="Barbarian"
                         data-bind='textInput: blankFeature().characterClass,
-                                   autocomplete: { source: classOptions,
+                                   autocomplete: { source: $parent.classOptions,
                                    onselect: populateClass }'>
               </div>
           </div>
@@ -131,7 +140,7 @@
               <label for="bonus" class="col-sm-2 control-label">Max</label>
               <div class="col-sm-9">
                 <input type="number" class="form-control" id="featureAddMaxInput" min="1"
-                      data-bind='textInput: blankTracked().maxUses'>
+                      data-bind='textInput: blankTracked().max'>
               </div>
             </div>
             <div class="form-group">
@@ -164,7 +173,7 @@
                     class="btn btn-primary"
                     id="featureAddAddButton"
                     data-bind='disable: !addFormIsValid()'
-                    >Add</button>
+                  >Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -232,7 +241,7 @@
             <div class="row" >
               <div class="col-sm-6 col-xs-12">
                 <b>Max Uses:</b>&nbsp;
-                <span data-bind="text: $parent.currentEditTracked().maxUses"></span>
+                <span data-bind="text: $parent.currentEditTracked().max"></span>
               </div>
               <div class="col-sm-6 col-xs-12">
                 <b>Resets on:</b>&nbsp;
@@ -318,7 +327,7 @@
                   <label for="bonus" class="col-sm-2 control-label">Max</label>
                   <div class="col-sm-9">
                     <input type="number" class="form-control" id="featureEditMaxInput" min="1"
-                          data-bind='textInput: $parent.currentEditTracked().maxUses'>
+                          data-bind='textInput: $parent.currentEditTracked().max'>
                   </div>
                 </div>
                 <div class="form-group">

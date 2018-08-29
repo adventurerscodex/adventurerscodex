@@ -47,7 +47,6 @@ export function FeaturesViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
-    self.addFormIsValid = ko.observable(false);
     self.meditation = meditation;
     self.campingTent = campingTent;
 
@@ -194,24 +193,9 @@ export function FeaturesViewModel() {
     self.trackedPopoverText = function() {
         return 'Tracked Features are listed in the Tracker.';
     };
-
-    // Validation
-
-    self.validation = {
-        submitHandler: (form) => {
-            self.addFeature();
-        },
-        updateHandler: ($element) => {
-            self.addFormIsValid($element.valid());
-        },
-        rules: validation.rules,
-        messages: validation.messages
-    };
 }
 
 ko.components.register('features', {
     viewModel: FeaturesViewModel,
     template: template
 });
-
-
