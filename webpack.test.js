@@ -6,7 +6,7 @@ const package_ = require('./package.json');
 
 module.exports = merge(common, {
     devtool: 'source-map',
-    optmization: {
+    optimization: {
         minimize: true
     },
     plugins: [
