@@ -21,7 +21,7 @@ export class Spell extends KOModel {
     prepared = ko.observable(false);
     alwaysPrepared = ko.observable(false);
     type = ko.observable('');
-    spellSaveAttr = ko.observable('');
+    spellSaveAttribute = ko.observable('');
     damage = ko.observable('');
     damageType = ko.observable('');
     school = ko.observable('');
@@ -96,7 +96,7 @@ Spell.validationConstraints = {
             required: true,
             maxlength: 128
         },
-        spellSaveAttr: {
+        spellSaveAttribute: {
             maxlength: 3,
             required: true
         },

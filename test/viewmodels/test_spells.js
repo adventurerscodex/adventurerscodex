@@ -181,7 +181,7 @@ describe('SpellsViewModel', function(){
             book.blankSpell().spellLevel(1);
             book.setSpellSaveAttr('label', 'Wis');
 
-            book.blankSpell().spellSaveAttr().should.equal('Wis');
+            book.blankSpell().spellSaveAttribute().should.equal('Wis');
         });
         it('should set the value of spell casting time when an autocomplete is selected', function() {
             var book = new SpellbookViewModel();

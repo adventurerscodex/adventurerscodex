@@ -208,8 +208,8 @@
                     <div class="col-sm-10">
                     <input class="form-control" id="spellsAddSaveAttrInput"
                             placeholder="Str"
-                            name="spellSaveAttr"
-                            data-bind="textInput: blankSpell().spellSaveAttr,
+                            name="spellSaveAttribute"
+                            data-bind="textInput: blankSpell().spellSaveAttribute,
                               autocomplete: { source: blankSpell().spellSaveAttrOptions,
                                               onselect: setSpellSaveAttr }">
                     </div>
@@ -387,13 +387,16 @@
                 </div>
                 <div class="row">
                   <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type" id="spellsPreviewTypeLabel"></span></div>
+                  <!-- ko if: type() == 'Savings Throw' -->
+                  <div class="col-sm-6 col-xs-12"><b>Save Attr:</b>&nbsp;<span data-bind="text: spellSaveAttribute" id="spellsPreviewTypeLabel"></span></div>
+                  <!-- /ko -->
                   <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel" id="spellsPreviewDamageLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: damageType" id="spellsPreviewDamageTypeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: castingTime" id="spellsPreviewCastTimeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: range" id="spellsPreviewRangeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: components" id="spellsPreviewCompenentsLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Material Components:</b>&nbsp;<span data-bind="text: materialComponents" id="spellsPreviewMaterialCompenentsLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Duration:</b>&nbsp;<span data-bind="text: duration" id="spellsPreviewDurationLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Material Components:</b>&nbsp;<span data-bind="text: materialComponents" id="spellsPreviewMaterialCompenentsLabel"></span></div>
                 </div>
                 <hr />
                 <h4>Description</h4>
@@ -493,8 +496,8 @@
                         <input class="form-control"
                                id="spellsEditSaveAttrInput"
                                placeholder="Str"
-                               name="spellSaveAttr"
-                               data-bind="textInput: spellSaveAttr">
+                               name="spellSaveAttribute"
+                               data-bind="textInput: spellSaveAttribute">
                         </div>
                     </div>
                   </div>
