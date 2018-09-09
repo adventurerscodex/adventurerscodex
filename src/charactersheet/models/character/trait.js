@@ -16,3 +16,18 @@ export class Trait extends KOModel {
     isTracked = ko.observable(false);
     tracked = ko.observable(null);
 }
+
+Trait.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        race: {
+            maxlength: 64
+        },
+        max: {
+            required: true
+        }
+    }
+};

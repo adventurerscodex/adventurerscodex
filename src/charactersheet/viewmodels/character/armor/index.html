@@ -24,9 +24,8 @@
             <span data-bind="css: sortArrow('armorClass')"></span>
           </th>
           <th class="col-md-1 col-xs-1">
-            <a data-toggle="modal"
-               id="armorAddIcon"
-               data-target="#addArmor" href="#">
+            <a data-bind="click: toggleAddModal"
+               id="armorAddIcon" href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -60,8 +59,8 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedArmors().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addArmor" href="#"
-            colspan="5" class="text-center">
+          <td href="#" data-bind="click: toggleAddModal"
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new armor
           </td>
@@ -81,7 +80,7 @@
          tabindex="-1"
          role="dialog"
          aria-labelledby="addArmorLabel"
-         data-bind="modal: { onopen: modalFinishedOpening }">
+         data-bind="modal: { onopen: modalFinishedOpening, open: addModalOpen }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -94,7 +93,7 @@
             <h4 class="modal-title" id="addArmorLabel">Add an armor piece to your armory.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
                        class="col-sm-2 control-label">Armor</label>
@@ -102,9 +101,11 @@
                   <input type="text"
                          class="form-control"
                          id="armorAddNameInput"
+                         name="name"
                          placeholder="Chain Mail"
-                         data-bind='textInput: blankArmor().name, autocomplete: { source: armorsPrePopFilter,
-                            onselect: populateArmor }, hasFocus: firstModalElementHasFocus'>
+                         data-bind='textInput: blankArmor().name,
+                          autocomplete: { source: armorsPrePopFilter, onselect: populateArmor },
+                          hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group ui-front">
@@ -114,6 +115,7 @@
                   <input class="form-control"
                          id="armorAddTypeInput"
                          placeholder="Light"
+                         name="type"
                          data-bind="textInput: blankArmor().type, autocomplete: { source: blankArmor().armorTypeOptions,
                          onselect: setArmorType }">
                   </div>
@@ -135,11 +137,13 @@
         						<input type="text"
         							   class="form-control input-jquery-addon"
         							   id="armorAddPriceInput"
-        							   placeholder="5"
+                         placeholder="5"
+                         name="price"
         							   data-bind='textInput: blankArmor().price'>
         					   <span class="input-group-addon input-group-addon-jquery">
         							<input class="form-control"
                              id="armorAddCurrencyDenominationInput"
+                             name="currencyDenomination"
                              placeholder="GP"
         							       data-bind="textInput: blankArmor().currencyDenomination, autocomplete: {
                           source: blankArmor().currencyDenominationOptions }">
@@ -166,6 +170,7 @@
                            class="form-control"
                            id="armorAddArmorClassInput"
                            placeholder="3"
+                           name="armorClass"
                            data-bind='textInput: blankArmor().armorClass'>
                   </div>
               </div>
@@ -176,6 +181,7 @@
                   <input class="form-control"
                          id="armorAddStealthInput"
                          placeholder="Advantage"
+                         name="stealth"
                          data-bind="textInput: blankArmor().stealth, autocomplete: { source: blankArmor().armorStealthOptions,
                          onselect: setArmorStealth }">
                   </div>
@@ -215,13 +221,15 @@
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-default"
-                        id="armorAddCancelButton"
-                        data-dismiss="modal">Cancel</button>
-                <button type="button"
+                        id="armorAddCancelButton">
+                        Cancel
+                </button>
+                <button type="submit"
                         class="btn btn-primary"
                         id="armorAddAddButton"
-                        data-bind='click: addArmor'
-                        data-dismiss="modal">Add</button>
+                        data-bind='disable: !addFormIsValid()'>
+                        Add
+                </button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -307,7 +315,8 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button"
+                  <button type="submit"
+                          data-bind='disable: !$parent.addFormIsValid()'
                           class="btn btn-primary"
                           id="armorPreviewDoneButton"
                           data-dismiss="modal">Done</button>
@@ -316,12 +325,13 @@
 
               <div role="tabpanel" data-bind="css: $parent.editTabStatus"
                 class="tab-pane" id="magicItemsModalEdit">
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
                            class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
+                             name="name"
                              class="form-control"
                              id="armorEditNameInput"
                              placeholder="Chain Mail"
@@ -334,6 +344,7 @@
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
                       <input class="form-control"
+                             name="type"
                              id="armorEditTypeInput"
                              placeholder="Light"
                              data-bind="textInput: type">
@@ -356,12 +367,14 @@
             						<input type="text"
             							   class="form-control input-jquery-addon"
             							   id="armorEditPriceInput"
-            							   placeholder="5"
+                             placeholder="5"
+                             name="price"
             							   data-bind='textInput: price'>
             					   <span class="input-group-addon input-group-addon-jquery">
             							<input class="form-control"
                                  id="armorEditCurrencyDenominationInput"
                                  placeholder="GP"
+                                 name="currencyDenomination"
             							       data-bind="textInput: currencyDenomination">
             						</span>
             					</div>
@@ -386,6 +399,7 @@
                                class="form-control"
                                id="armorEditArmorClassInput"
                                placeholder="3"
+                               name="armorClass"
                                data-bind='textInput: armorClass'>
                       </div>
                   </div>
@@ -396,6 +410,7 @@
                       <input class="form-control"
                              id="armorEditStealthInput"
                              placeholder="Advantage"
+                             name="stealth"
                              data-bind="textInput: stealth">
                       </div>
                   </div>
@@ -433,10 +448,11 @@
                       </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button"
+                    <button type="submit"
                             class="btn btn-primary"
                             id="armorEditDoneButton"
-                            data-dismiss="modal">Done</button>
+                            data-bind='disable: !$parent.addFormIsValid()'>
+                            Done</button>
                   </div>
                 </form>
               </div> <!-- End Edit Tab -->

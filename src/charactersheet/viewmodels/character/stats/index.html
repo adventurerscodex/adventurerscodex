@@ -115,8 +115,11 @@
 <!--End Panel-->
 <!--HP Modal-->
 <!-- ko if: modalOpen -->
-	<div class="modal fade" id="viewHealth" tabindex="-1" role="dialog" aria-labelledby="viewHealthLabel"
-  data-bind="modal: { open: modalOpen, onopen: modalFinishedAnimating, onclose: modalFinishedClosing}">
+	<div class="modal fade" id="viewHealth" tabindex="-1" role="dialog"
+  data-bind="modal: {
+    open: modalOpen,
+    onopen: modalFinishedAnimating,
+    onclose: modalFinishedClosing}">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -126,25 +129,33 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" data-bind="validate: validation">
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Max HP</label>
 						<div class="col-sm-10">
               <input type="number" class="form-control"
+                name="maxHitPoints"
                 data-bind='textInput: editHealthItem().maxHitPoints, hasFocus: modifierHasFocus' min="0">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="bonus" class="col-sm-2 control-label">Damage</label>
 						<div class="col-sm-10">
-							<input type="number" class="form-control" min="0" data-bind='textInput: editHealthItem().damage'>
+              <input type="number"
+                class="form-control"
+                name="damage"
+                min="0"
+                data-bind='textInput: editHealthItem().damage'>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Temporary HP</label>
 						<div class="col-sm-10">
-              <input type="number" class="form-control"
-                data-bind='textInput: editHealthItem().tempHitPoints' min="0">
+              <input type="number"
+                class="form-control"
+                data-bind='textInput: editHealthItem().tempHitPoints'
+                min="0"
+                name="tempHitPoints">
 						</div>
 					</div>
           <div class="form-group ui-front">
@@ -152,14 +163,18 @@
             <div class="col-sm-10">
               <input class="form-control"
                      placeholder="D4"
+                     name="type"
                      data-bind="textInput: hitDice().type, autocomplete: {
                           source: hitDice().hitDiceOptions,
                           onselect: setHitDiceType}">
-
             </div>
           </div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+            <button type="submit"
+              data-bind='disable: !addFormIsValid()'
+              class="btn btn-primary"
+              data-dismiss="modal">
+              Done</button>
 					</div>
 				</form>
 			</div><!-- Modal Body -->

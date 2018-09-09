@@ -25,3 +25,11 @@ export function Tracked() {
         return ko.mapping.toJS(self, mapping);
     };
 }
+
+Tracked.validationConstraints = {
+    rules: {
+        max: {
+            required: true
+        }
+    }
+};

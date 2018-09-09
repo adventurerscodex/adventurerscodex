@@ -11,7 +11,7 @@ export class SpellSlot extends KOModel {
 
     coreUuid = ko.observable(null);
     level = ko.observable(1);
-    max = ko.observable();
+    max = ko.observable(1);
     used = ko.observable(0);
     resetsOn = ko.observable('long');
     color = ko.observable('');
@@ -32,3 +32,18 @@ export class SpellSlot extends KOModel {
         return this.used() ? parseInt(this.used()) : 0;
     }
 }
+
+SpellSlot.validationConstraints = {
+    rules: {
+        level: {
+            required: true,
+            min: 1,
+            number: true
+        },
+        max: {
+            required: true,
+            min: 1,
+            number: true
+        }
+    }
+};

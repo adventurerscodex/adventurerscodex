@@ -14,3 +14,15 @@ export class Feat extends KOModel {
     isTracked = ko.observable(false);
     tracked = ko.observable(null);
 }
+
+Feat.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        max: {
+            required: true
+        }
+    }
+};

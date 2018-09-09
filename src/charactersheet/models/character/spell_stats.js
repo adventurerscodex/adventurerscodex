@@ -26,3 +26,38 @@ export class SpellStats extends KOModel {
         return values;
     }
 }
+
+SpellStats.validationConstraints = {
+    rules: {
+        spellSaveDc: {
+            required: true,
+            min: 0,
+            number: true
+        },
+        spellAttackBonus: {
+            required: true,
+            min: 0,
+            number: true
+        },
+        spellsKnown: {
+            required: true,
+            min: 0,
+            number: true
+        },
+        cantripsKnown: {
+            required: true,
+            min: 0,
+            number: true
+        },
+        invocationsKnown: {
+            required: true,
+            min: 0,
+            number: true
+        },
+        maxPrepared: {
+            required: true,
+            min: 0,
+            number: true
+        }
+    }
+};

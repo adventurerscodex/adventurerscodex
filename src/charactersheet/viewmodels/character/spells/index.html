@@ -32,8 +32,9 @@
             <span data-bind="css: sortArrow('range')"></span>
           </th>
           <th>
-            <a data-toggle="modal"
-               data-target="#addSpell" id="spellsAddIcon" href="#">
+            <a data-bind="click: toggleAddModal"
+              id="spellsAddIcon"
+              href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -70,8 +71,9 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedSpells().length == 0 -->
         <tr class="clickable">
-          <td href="#" data-toggle="modal"
-            data-target="#addSpell" colspan="8" class="text-center">
+          <td data-bind="click: toggleAddModal"
+            colspan="12"
+            class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new spell
           </td>
@@ -81,20 +83,24 @@
     </table>
   </div>
   <div class="container-fluid panel-footer">
-     <span class="pull-left">Total Spells:&nbsp;
+    <span class="pull-left">
+      Total Spells:&nbsp;
       <span data-bind="text: numberOfSpells"></span>
     </span>
-       <span class="pull-right">Spells prepared:&nbsp;
+      <span class="pull-right">
+        Spells prepared:&nbsp;
         <span data-bind="text: numberOfPrepared"></span>
-      </span>
-    </div> <!-- end panel footer -->
+    </span>
+  </div> <!-- end panel footer -->
+</div>
     <!-- Add Modal -->
     <div class="modal fade"
          id="addSpell"
          tabindex="-1"
          role="dialog"
          aria-labelledby="addSpellLabel"
-         data-bind="modal: { onopen: modalFinishedOpening }">
+         data-bind="modal: { onopen: modalFinishedOpening,
+          open: addModalOpen}">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -107,13 +113,14 @@
             <h4 class="modal-title" id="addSpellLabel">Add a Spell to your Spellbook.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          id="spellsAddNameInput"
                          placeholder="Magic Missile"
                          data-bind="textInput: blankSpell().name,
@@ -166,8 +173,7 @@
                            class="form-control"
                            id="spellsAddLevelInput"
                            placeholder="1"
-                           min="0"
-                           max="9"
+                           name="level"
                            data-bind='textInput: blankSpell().level'>
                   </div>
               </div>
@@ -177,6 +183,7 @@
                   <div class="col-sm-10">
                   <input class="form-control" id="spellsAddSchoolInput"
                          placeholder="Abjuration"
+                         name="school"
                          data-bind="textInput: blankSpell().school,
                           autocomplete: { source: blankSpell().schoolOptions,
                                           onselect: setSpellSchool }">
@@ -188,6 +195,7 @@
                   <div class="col-sm-10">
                   <input class="form-control" id="spellsAddTypeInput"
                          placeholder="Automatic"
+                         name="type"
                          data-bind="textInput: blankSpell().type,
                           autocomplete: { source: blankSpell().typeOptions,
                                           onselect: setType }">
@@ -200,9 +208,10 @@
                     <div class="col-sm-10">
                     <input class="form-control" id="spellsAddSaveAttrInput"
                             placeholder="Str"
+                            name="spellSaveAttr"
                             data-bind="textInput: blankSpell().spellSaveAttr,
-                          autocomplete: { source: blankSpell().spellSaveAttrOptions,
-                                          onselect: setSpellSaveAttr }">
+                              autocomplete: { source: blankSpell().spellSaveAttrOptions,
+                                              onselect: setSpellSaveAttr }">
                     </div>
                 </div>
               </div>
@@ -214,6 +223,7 @@
                            class="form-control"
                            id="spellsAddDamageInput"
                            placeholder="1d4 + 1"
+                           name="damage"
                            data-bind="textInput: blankSpell().damage">
                   </div>
               </div>
@@ -226,6 +236,7 @@
                            class="form-control"
                            id="spellsAddDamageTypeInput"
                            placeholder="Thunder"
+                           name="damageType"
                            data-bind="textInput: blankSpell().damageType">
                   </div>
               </div>
@@ -234,12 +245,13 @@
                 <label for="castingTime"
                        class="col-sm-2 control-label">Cast Time</label>
                   <div class="col-sm-10">
-                  <input class="form-control"
-                          id="spellsAddCastTimeInput"
-                          placeholder="1 action"
-                          data-bind="textInput: blankSpell().castingTime,
-                          autocomplete: { source: blankSpell().castingTimeOptions,
-                                          onselect: setCastingTime }">
+                    <input class="form-control"
+                            id="spellsAddCastTimeInput"
+                            placeholder="1 action"
+                            name="castingTime"
+                            data-bind="textInput: blankSpell().castingTime,
+                              autocomplete: { source: blankSpell().castingTimeOptions,
+                                            onselect: setCastingTime }">
                   </div>
               </div>
               <div class="form-group ui-front">
@@ -249,6 +261,7 @@
                   <input class="form-control"
                          id="spellsAddRangeInput"
                          placeholder="1 mile"
+                         name="range"
                          data-bind="textInput: blankSpell().range,
                           autocomplete: { source: blankSpell().rangeOptions,
                                           onselect: setRange }">
@@ -261,6 +274,7 @@
                   <input class="form-control"
                          id="spellsAddComponentsInput"
                          placeholder="V, S, M"
+                         name="components"
                          data-bind="textInput: blankSpell().components,
                           autocomplete: { source: blankSpell().componentsOptions,
                                           onselect: setComponents }">
@@ -274,6 +288,7 @@
                            class="form-control"
                            id="spellsAddMaterialComponentsInput"
                            placeholder="Feather"
+                           name="materialComponents"
                            data-bind="textInput: blankSpell().materialComponents">
                   </div>
               </div>
@@ -284,6 +299,7 @@
                   <input class="form-control"
                          id="spellsAddDurationInput"
                          placeholder="1 day"
+                         name="duration"
                          data-bind="textInput: blankSpell().duration,
                           autocomplete: { source: blankSpell().durationOptions,
                                           onselect: setDuration }">
@@ -307,11 +323,10 @@
                         class="btn btn-default"
                         id="spellsAddCancelButton"
                         data-dismiss="modal">Cancel</button>
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="spellsAddAddButton"
-                        data-bind='click: addSpell'
-                        data-dismiss="modal">Add</button>
+                        data-bind='disable: !addFormIsValid()'>Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -391,13 +406,14 @@
               </div>
               </div>
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
                            class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
+                             name="name"
                              id="spellsEditNameInput"
                              placeholder="Magic Missile"
                              data-bind="textInput: name,
@@ -442,8 +458,7 @@
                         <input type="number"
                                class="form-control"
                                id="spellsEditLevelInput"
-                               min="0"
-                               max="9"
+                               name="level"
                                placeholder="1"
                                data-bind="value: level">
                       </div>
@@ -454,6 +469,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                               id="spellsEditSchoolInput"
+                              name="school"
                               placeholder="Abjuration"
                               data-bind="textInput: school">
                       </div>
@@ -465,6 +481,7 @@
                         <input class="form-control"
                                id="spellsEditTypeInput"
                                placeholder="Automatic"
+                               name="type"
                                data-bind="textInput: type">
                       </div>
                   </div>
@@ -476,6 +493,7 @@
                         <input class="form-control"
                                id="spellsEditSaveAttrInput"
                                placeholder="Str"
+                               name="spellSaveAttr"
                                data-bind="textInput: spellSaveAttr">
                         </div>
                     </div>
@@ -489,6 +507,7 @@
                                class="form-control"
                                id="spellsEditDamageInput"
                                placeholder="1d4 + 1"
+                               name="damage"
                                data-bind="value: damage">
                       </div>
                   </div>
@@ -500,6 +519,7 @@
                         <input type="text"
                                class="form-control"
                                id="spellsEditDamageInput"
+                               name="damageType"
                                placeholder="Thunder"
                                data-bind="textInput: damageType">
                       </div>
@@ -512,6 +532,7 @@
                         <input class="form-control"
                                id="spellsEditCastTimeInput"
                                placeholder="1 action"
+                               name="castingTime"
                                data-bind="textInput: castingTime">
                       </div>
                   </div>
@@ -522,6 +543,7 @@
                       <input class="form-control"
                              id="spellsEditRangeInput"
                              placeholder="1 mile"
+                             name="range"
                              data-bind="textInput: range">
                       </div>
                   </div>
@@ -530,9 +552,10 @@
                            class="col-sm-2 control-label">Components</label>
                       <div class="col-sm-10">
                       <input class="form-control"
-                             id="spellsEditComponentsInput"
-                             placeholder="V, S, M"
-                             data-bind="textInput: components">
+                        name="components"
+                        id="spellsEditComponentsInput"
+                        placeholder="V, S, M"
+                        data-bind="textInput: components">
                       </div>
                   </div>
                   <div class="form-group">
@@ -543,6 +566,7 @@
                                class="form-control"
                                id="spellsEditMaterialComponentsInput"
                                placeholder="Feather"
+                               name="materialComponents"
                                data-bind="textInput: materialComponents">
                       </div>
                   </div>
@@ -553,6 +577,7 @@
                         <input class="form-control"
                                id="spellsEditDurationInput"
                                placeholder="1 day"
+                               name="duration"
                                data-bind="textInput: duration">
                       </div>
                   </div>
@@ -569,17 +594,17 @@
                         </textarea>
                       </div>
                   </div>
+                  <div class="modal-footer">
+                    <button type="submit"
+                            class="btn btn-primary"
+                            id="spellsPreviewDoneButton"
+                            data-bind='disable: !$parent.addFormIsValid()'
+                            data-dismiss="modal">Done</button>
+                  </div>
                 </form>
               </div>
             </div> <!-- End Tab Content -->
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      id="spellsPreviewDoneButton"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- Modal Body -->
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
     </div> <!-- Modal Fade -->
-</div> <!-- Panel -->

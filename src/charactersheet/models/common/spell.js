@@ -89,3 +89,48 @@ export class Spell extends KOModel {
         }
     });
 }
+
+Spell.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        spellSaveAttr: {
+            maxlength: 3,
+            required: true
+        },
+        damage: {
+            maxlength: 32
+        },
+        damageType: {
+            maxlength: 32
+        },
+        school: {
+            maxlength: 32,
+            required: true
+        },
+        level: {
+            min: 1,
+            max: 9,
+            number: true,
+            required: true
+        },
+        castingTime: {
+            maxlength: 32,
+            required: true
+        },
+        range: {
+            maxlength: 32,
+            required: true
+        },
+        duration: {
+            maxlength: 32,
+            required: true
+        },
+        components: {
+            maxlength: 32,
+            required: true
+        }
+    }
+};

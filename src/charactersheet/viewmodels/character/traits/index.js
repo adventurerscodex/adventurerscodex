@@ -4,11 +4,13 @@ import {
     DataRepository,
     Fixtures,
     Notifications,
-    Utility } from 'charactersheet/utilities';
-import { PersistenceService,
-    SortService } from 'charactersheet/services/common';
-import { Tracked,
-    Trait } from 'charactersheet/models';
+    Utility
+} from 'charactersheet/utilities';
+import {
+    Tracked,
+    Trait
+} from 'charactersheet/models';
+import { SortService } from 'charactersheet/services/common';
 import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditation from 'images/meditation.svg';
@@ -30,7 +32,9 @@ export function TraitsViewModel() {
     self.traits = ko.observableArray([]);
     self.blankTrait = ko.observable(new Trait());
     self.blankTracked = ko.observable(new Tracked());
+    self.addModalOpen = ko.observable(false);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Trait());
     self.currentEditTracked = ko.observable(new Tracked());
@@ -85,6 +89,31 @@ export function TraitsViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addTrait();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Trait.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Trait.validationConstraints
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -94,7 +123,7 @@ export function TraitsViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             if (!self.currentEditItem().isTracked()) {
                 self.currentEditTracked(null);
             }
@@ -144,6 +173,11 @@ export function TraitsViewModel() {
         self.traits.push(newTrait.object);
         self.blankTrait(new Trait());
         self.blankTracked(new Tracked());
+        self.toggleAddModal();
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
     };
 
     self.clear = function() {

@@ -14,3 +14,15 @@ export class Proficiency extends KOModel {
     type = ko.observable('');
     description = ko.observable('');
 }
+
+Proficiency.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            maxlength: 64
+        }
+    }
+};

@@ -4,7 +4,6 @@ import {
     HitDice,
     Profile
 } from 'charactersheet/models/character';
-import { ArmorClassService } from 'charactersheet/services';
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
@@ -25,6 +24,7 @@ export function StatsViewModel() {
     self.deathSaveFailureVisible = ko.observable(true);
     self.editHealthItem = ko.observable();
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
 
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
@@ -337,6 +337,35 @@ export function StatsViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        rules: {
+            maxHitPoints: {
+                min: 0,
+                required: true
+            },
+            tempHitPoints: {
+                min: 0,
+                required: true
+            },
+            damage: {
+                min: 0,
+                required: true
+            },
+            type: {
+                required: true,
+                maxlength: 32
+            }
+        }
+    };
+
     self.modifierHasFocus = ko.observable(false);
 
     self.modalFinishedAnimating = function() {
@@ -350,7 +379,7 @@ export function StatsViewModel() {
     };
 
     self.modalFinishedClosing = function() {
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             self.health().importValues(self.editHealthItem().exportValues());
             self.healthDataHasChange();
             self.saveHitDice();

@@ -30,6 +30,7 @@ export function TrackerViewModel() {
     self.editItem = ko.observable();
     self.editParent = ko.observable();
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editModalTitle = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
     self.filter = ko.observable('');
@@ -148,6 +149,18 @@ export function TrackerViewModel() {
 
     // Modal Methods
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Tracked.validationConstraints
+    };
+
     self.modifierHasFocus = ko.observable(false);
     self.editHasFocus = ko.observable(false);
 
@@ -156,7 +169,7 @@ export function TrackerViewModel() {
     };
 
     self.modalFinishedClosing = async () => {
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             self.editParent().tracked().max(self.editItem().max());
             self.editParent().tracked().resetsOn(self.editItem().resetsOn());
             const response = await self.editParent().ps.save();
