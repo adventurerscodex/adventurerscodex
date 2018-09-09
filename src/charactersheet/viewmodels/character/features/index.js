@@ -9,7 +9,6 @@ import {
     Feature,
     Tracked
 } from 'charactersheet/models';
-import { CharacterClass } from 'charactersheet/models/common';
 import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
 import campingTent from 'images/camping-tent.svg';
@@ -17,7 +16,6 @@ import ko from 'knockout';
 import meditation from 'images/meditation.svg';
 import template from './index.html';
 import uuid from 'node-uuid';
-import validation from './validation';
 
 export function FeaturesViewModel() {
     var self = this;
@@ -49,6 +47,7 @@ export function FeaturesViewModel() {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.meditation = meditation;
     self.campingTent = campingTent;
+    self.classOptions = Fixtures.profile.classOptions;
 
     self.load = async () => {
         await self.loadFeatures();
@@ -91,14 +90,27 @@ export function FeaturesViewModel() {
     // Modal methods
 
     self.validation = {
-        submitHandler: (form) => {
+        submitHandler: (form, event) => {
+            event.preventDefault();
             self.addFeature();
         },
         updateHandler: ($element) => {
             self.addFormIsValid($element.valid());
         },
-        rules: validation.rules,
-        messages: validation.messages
+        // Deep copy of properties in object
+        ...Feature.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Feature.validationConstraints
     };
 
     self.toggleAddModal = () => {
@@ -114,7 +126,7 @@ export function FeaturesViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             if (!self.currentEditItem().isTracked()) {
                 self.currentEditTracked(null);
             }

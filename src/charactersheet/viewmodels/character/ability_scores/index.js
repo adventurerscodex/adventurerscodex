@@ -14,6 +14,7 @@ export function AbilityScoresViewModel() {
     self.modalStatus = ko.observable(false);
     self.editItems = ko.observableArray([]);
     self.firstModalElementHasFocus = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
 
     self.load = async () => {
         self.delegate = new AbilityScoresViewModelDelegate();
@@ -23,7 +24,6 @@ export function AbilityScoresViewModel() {
     };
 
     // Modal Methods
-
     self.openModal = function() {
         // Copy existing array to new one
         self.editItems([]);
@@ -46,12 +46,25 @@ export function AbilityScoresViewModel() {
     };
 
     self.modalFinishedClosing = async () => {
-        if (self.modalStatus()) {
+        if (self.modalStatus() && self.addFormIsValid()) {
             const response = await self.delegate.abilityScoresDidChange(
                 self.abilityScores(), self.editItems());
             self.abilityScores(response);
         }
         self.modalStatus(false);
+    };
+
+    // Validation
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...AbilityScore.validationConstraints
     };
 }
 

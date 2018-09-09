@@ -31,9 +31,10 @@ ko.bindingHandlers.validate = {
             if (value.updateHandler) {
                 value.updateHandler($(element), input);
             }
-            if (value.ogonfocusout) {
-                value.ogonfocusout(input, event);
-            }
+            // TODO: Leaving for now. It seems that this is not needed.
+            // if (value.ogonfocusout) {
+            //     value.ogonfocusout(input, event);
+            // }
         };
 
         $(element).validate(ko.unwrap(value));

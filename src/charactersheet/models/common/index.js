@@ -3,6 +3,7 @@ export { AuthenticationToken } from './authentication_token.js';
 export { Character } from './character.js';
 export { CharacterClass } from './character_class.js';
 export { ChatRoom } from './chat_room.js';
+export { Core } from './core.js';
 export { EncounterImage } from './image.js';
 export { Item } from './item.js';
 export { MagicItem } from './magic_item.js';

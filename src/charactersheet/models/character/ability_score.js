@@ -41,3 +41,32 @@ export class AbilityScore extends KOModel {
         }
     }
 }
+
+AbilityScore.validationConstraints = {
+    rules: {
+        Strength: {
+            required: true,
+            min: 0
+        },
+        Dexterity: {
+            required: true,
+            min: 0
+        },
+        Constitution: {
+            required: true,
+            min: 0
+        },
+        Intelligence: {
+            required: true,
+            min: 0
+        },
+        Wisdom: {
+            required: true,
+            min: 0
+        },
+        Charisma: {
+            required: true,
+            min: 0
+        }
+    }
+};

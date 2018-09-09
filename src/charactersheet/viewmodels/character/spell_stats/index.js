@@ -12,6 +12,7 @@ export function SpellStatsViewModel() {
 
     self.spellStats = ko.observable(new SpellStats());
     self.modalStatus = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItem = ko.observable();
     self.firstModalElementHasFocus = ko.observable(false);
 
@@ -31,6 +32,18 @@ export function SpellStatsViewModel() {
 
     // Modal Methods
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...SpellStats.validationConstraints
+    };
+
     self.editSpellStats = function() {
         self.modalStatus(true);
         self.editItem(new SpellStats());
@@ -43,14 +56,10 @@ export function SpellStatsViewModel() {
     };
 
     self.modalFinishedClosing = async () => {
-        if (self.modalStatus()) {
-            try {
-                var response = await self.editItem().ps.save();
-                self.spellStats(response.object);
-                self.dataHasChanged();
-            } catch(err) {
-                // Ignore
-            }
+        if (self.modalStatus() && self.addFormIsValid()) {
+            var response = await self.editItem().ps.save();
+            self.spellStats(response.object);
+            self.dataHasChanged();
         }
 
         self.modalStatus(false);

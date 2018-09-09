@@ -17,13 +17,17 @@ export class Skill extends KOModel {
     name = ko.observable('');
     modifier = ko.observable(0);
     abilityScore = ko.observable(null);
-    proficiency = ko.observable('');
+    proficiency = ko.observable('not');
     bonusLabel = ko.observable('');
     passiveBonus = ko.observable('');
 
     toSchemaValues = (values) => {
-        const abilityScoreId = values.abilityScore.coreUuid;
-        values.abilityScore = abilityScoreId;
+        // TODO: I have to do this because when delete is called, it only includes the IDs in the
+        // TODO: values object.
+        if (values.abilityScore) {
+            const abilityScoreId = values.abilityScore.uuid;
+            values.abilityScore = abilityScoreId;
+        }
         return values;
     }
 
@@ -105,3 +109,20 @@ export class Skill extends KOModel {
         return str;
     });
 }
+
+Skill.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        modifier: {
+            required: true,
+            min: 0,
+            digits: true
+        },
+        abilityScore: {
+            required: true
+        }
+    }
+};

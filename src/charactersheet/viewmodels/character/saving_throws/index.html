@@ -101,11 +101,12 @@
                     aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="addSavingThrowLabel">Edit your Saving Throw.</h4>
+            <h4 class="modal-title" id="addSavingThrowLabel" data-bind="text: name"></h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
-              <div class="form-group">
+            <form class="form-horizontal" data-bind="validate: $parent.validation">
+              <!-- TODO: Commented out until we add the ability for adding/deleting a Saving throw -->
+              <!-- <div class="form-group">
                 <label for="name"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
@@ -115,7 +116,7 @@
                          placeholder="Archery"
                          data-bind="value: name, hasFocus: $parent.modifierHasFocus">
                 </div>
-              </div>
+              </div> -->
               <div class="form-group">
                   <label for="modifier"
                        class="col-sm-2 control-label">Modifier</label>
@@ -123,6 +124,7 @@
                     <div class="input-group">
                       <input type="number"
                              class="form-control"
+                             name="modifier"
                              id="savingThrowEditModifierButton"
                              data-bind="value: modifier" />
                       <span class="input-group-addon">Total:
@@ -141,12 +143,11 @@
                            data-bind="checked: proficiency">
                   </div>
               </div>
-              </div>
               <div class="modal-footer">
-                <button type="button"
+                <button type="submit"
                         id="savingThrowEditDoneButton"
                         class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
+                        data-bind='disable: !$parent.addFormIsValid()'>Done</button>
               </div>
             </form>
           </div> <!-- Modal Body -->

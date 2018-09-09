@@ -3,7 +3,6 @@ import { CoreManager } from 'charactersheet/utilities';
 import { Hypnos } from 'hypnos/lib/hypnos';
 import ko from 'knockout';
 import template from './index.html';
-import uuid from 'node-uuid';
 
 /**
  * This view model contains the root implementation of the wizard.
@@ -40,37 +39,6 @@ export function WizardViewModel() {
     self.aggregateResults = ko.observable({});
     self.stepResult = ko.observable({});
     self.newCharacterId = null;
-
-    // Seed Data
-    self.defaultSavingThrows = [
-        {'name': 'Strength', 'proficiency': false, 'modifier': 0, 'abilityScore': 'STR'},
-        {'name': 'Dexterity', 'proficiency': false, 'modifier': 0, 'abilityScore': 'DEX'},
-        {'name': 'Constitution', 'proficiency': false, 'modifier': 0, 'abilityScore': 'CON'},
-        {'name': 'Intelligence', 'proficiency': false, 'modifier': 0, 'abilityScore': 'INT'},
-        {'name': 'Wisdom', 'proficiency': false, 'modifier': 0, 'abilityScore': 'WIS'},
-        {'name': 'Charisma', 'proficiency': false, 'modifier': 0, 'abilityScore': 'CHA'}
-    ];
-
-    self.defaultSkills = [
-        {'name': 'Acrobatics', 'abilityScore': 'DEX', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Animal Handling', 'abilityScore': 'WIS', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Arcana', 'abilityScore': 'INT', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Athletics', 'abilityScore': 'STR', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Deception', 'abilityScore': 'CHA', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'History', 'abilityScore': 'INT', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Insight', 'abilityScore': 'WIS', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Intimidation', 'abilityScore': 'CHA', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Investigation', 'abilityScore': 'INT', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Medicine', 'abilityScore': 'WIS', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Nature', 'abilityScore': 'INT', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Perception', 'abilityScore': 'WIS', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Performance', 'abilityScore': 'CHA', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Persuasion', 'abilityScore': 'CHA', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Religion', 'abilityScore': 'INT', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Sleight of Hand', 'abilityScore': 'DEX', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Stealth', 'abilityScore': 'DEX', 'modifier': 0, 'proficiency': 'not'},
-        {'name': 'Survival', 'abilityScore': 'WIS', 'modifier': 0, 'proficiency': 'not'}
-    ];
 
     // View Model Methods
 
@@ -163,10 +131,7 @@ export function WizardViewModel() {
      */
     self.terminate = function() {
         // Newest character will be at the back.
-        // var character = PersistenceService.findAll(Character).reverse()[0];
-        // if (character) {
         CoreManager.changeCore(self.newCharacterId);
-        // }
     };
 
     /**
@@ -194,17 +159,11 @@ export function WizardViewModel() {
             // Profile
             var profileData = self.aggregateResults()['WizardProfileStep'];
             params.playerName = profileData.playerName;
-            params.profile = self.createProfileFromData(profileData);
+            params.profile = { ...profileData };
 
             // Ability Scores
             var abilityScoresData = self.aggregateResults()['WizardAbilityScoresStep'];
             params.abilityScores = abilityScoresData;
-
-            // Saving Throws
-            params.savingThrows = self.defaultSavingThrows;
-
-            // Skills
-            params.skills = self.defaultSkills;
 
             // Background
             params.background = {
@@ -221,25 +180,21 @@ export function WizardViewModel() {
             // Health
             params.health = { maxHitPoints: 10 };
 
-            // TODO: Wait for API update for this to be refactored
+            // Pre populate traits by race
+            const traits = profileData.traits;
+            if (traits) {
+                traits.forEach((trait) => {
+                    // This field can't be blank
+                    trait['tracked'] = null;
+                });
+                params.traits = traits;
+            }
 
-            // // Pre populate traits by race
-            // var traits = data.traits;
-            // traits.forEach(function (item, idx, _){
-            //     var trait = new Trait();
-            //     item.characterId = character.key();
-            //     trait.importValues(item);
-            //     trait.save();
-            // });
-
-            // // Pre populate items by backpack
-            // var items = data.items;
-            // items.forEach(function (element, idx, _){
-            //     var item = new Item();
-            //     element.characterId = character.key();
-            //     item.importValues(element);
-            //     item.save();
-            // });
+            // Pre populate items by backpack
+            const items = profileData.items;
+            if (items) {
+                params.items = items;
+            }
         } else if (playerType.key == 'dm') {
             // Campaign
             actions = ['core', 'dms', 'create'];

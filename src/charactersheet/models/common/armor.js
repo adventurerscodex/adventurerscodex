@@ -90,3 +90,29 @@ export class Armor extends KOModel {
         this._dummy.notifySubscribers();
     };
 }
+
+Armor.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            required: true,
+            maxlength: 32
+        },
+        price: {
+            min: 0
+        },
+        currencyDenomination: {
+            maxlength: 16
+        },
+        armorClass: {
+            required: true,
+            min: 0
+        },
+        stealth: {
+            maxlength: 64
+        }
+    }
+};

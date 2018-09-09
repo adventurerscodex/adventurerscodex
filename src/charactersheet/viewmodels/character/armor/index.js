@@ -17,6 +17,7 @@ export function ArmorViewModel() {
     self.blankArmor = ko.observable(new Armor());
     self.armors = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
@@ -24,6 +25,7 @@ export function ArmorViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
@@ -83,8 +85,7 @@ export function ArmorViewModel() {
         }
     };
 
-    // Prepopulate methods
-
+    // Pre-populate methods
     self.setArmorType = function(label, value) {
         self.blankArmor().type(value);
     };
@@ -98,7 +99,6 @@ export function ArmorViewModel() {
     };
 
     /* Modal Methods */
-
     self.armorsPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
@@ -123,7 +123,7 @@ export function ArmorViewModel() {
     self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.armors(), response.object, self.editItemIndex);
             Notifications.armor.changed.dispatch();
@@ -167,7 +167,11 @@ export function ArmorViewModel() {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    //Manipulating armors
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
+    // Manipulating armors
     self.addArmor = async () => {
         var armor = self.blankArmor();
         armor.coreUuid(CoreManager.activeCore().uuid());
@@ -192,14 +196,36 @@ export function ArmorViewModel() {
         self.modalOpen(true);
     };
 
-    self.clear = function() {
-        self.armors([]);
-    };
-
     self.valueHasChanged = function() {
         self.armors().forEach(function(e, i, _) {
             e.updateValues();
         });
+    };
+
+    // Validation
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addArmor();
+            self.addModalOpen(false);
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Armor.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Armor.validationConstraints
     };
 }
 

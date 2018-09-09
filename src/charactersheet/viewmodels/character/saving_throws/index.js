@@ -14,6 +14,7 @@ export function SavingThrowsViewModel() {
 
     self.blankSavingThrow = ko.observable(new SavingThrow());
     self.savingThrows = ko.observableArray([]);
+    self.addFormIsValid = ko.observable(false);
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
@@ -74,6 +75,18 @@ export function SavingThrowsViewModel() {
 
     // Modal Methods
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...SavingThrow.validationConstraints
+    };
+
     self.modifierHasFocus = ko.observable(false);
 
     self.modalFinishedAnimating = function() {
@@ -81,7 +94,7 @@ export function SavingThrowsViewModel() {
     };
 
     self.modalFinishedClosing = async () => {
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.savingThrows(), response.object, self.editItemIndex);
             self.updateValues();

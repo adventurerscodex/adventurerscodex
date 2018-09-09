@@ -33,6 +33,8 @@ export function SpellbookViewModel() {
     self.blankSpell = ko.observable(new Spell());
     self.spellbook = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
@@ -109,6 +111,34 @@ export function SpellbookViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addSpell();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Spell.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Spell.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
 
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
@@ -203,7 +233,7 @@ export function SpellbookViewModel() {
         response(results);
     };
 
-    //Manipulating spells
+    // Manipulating spells
     self.addSpell = async () => {
         var spell = self.blankSpell();
         spell.coreUuid(CoreManager.activeCore().uuid());
@@ -211,6 +241,7 @@ export function SpellbookViewModel() {
         newSpell.object.prepared.subscribe(self.save, newSpell.object);
         self.spellbook.push(newSpell.object);
         self.blankSpell(new Spell());
+        self.toggleAddModal();
     };
 
     self.removeSpell = async (spell) => {

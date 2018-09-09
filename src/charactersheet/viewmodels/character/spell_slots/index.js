@@ -35,6 +35,8 @@ export function SpellSlotsViewModel() {
     self.blankSlot = ko.observable(new SpellSlot());
     self.openModal = ko.observable(false);
     self.editHasFocus = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.modifierHasFocus = ko.observable(false);
@@ -124,6 +126,34 @@ export function SpellSlotsViewModel() {
 
     // Modal Methods
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addSlot();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...SpellSlot.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...SpellSlot.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedAnimating = function() {
         self.modifierHasFocus(true);
     };
@@ -133,7 +163,7 @@ export function SpellSlotsViewModel() {
     };
 
     self.modalFinishedClosing = async () => {
-        if (self.openModal()) {
+        if (self.openModal() && self.addFormIsValid()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.slots(), response.object, self.editItemIndex);
             Notifications.spellSlots.changed.dispatch();
@@ -182,6 +212,7 @@ export function SpellSlotsViewModel() {
 
         self.blankSlot(new SpellSlot());
         self.blankSlot().level(self.slots().length + 1);
+        self.toggleAddModal();
         Notifications.spellSlots.changed.dispatch();
     };
 

@@ -51,25 +51,24 @@
         </h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <!-- ko foreach: editItems -->
           <div class="form-group">
-            <label class="col-xs-7 pull-left" data-bind='text: name'></label>
-            <div class="col-xs-5">
+            <label class="col-xs-5 pull-left" data-bind='text: name'></label>
+            <div class="col-xs-7">
               <input type="number"
-                     class="form-control ability-score-input pull-left"
-                     id="abilityScoresEditStrengthInput"
-                     min="0"
-                     data-bind='value: value'>
+                     class="form-control pull-left"
+                     data-bind='value: value, attr: { name: name }'>
             </div>
           </div>
           <!-- /ko -->
           <div class="modal-footer-ability-scores">
             <div class="form-group">
               <div class="col-xs-offset-7 col-xs-5">
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="abilityScoresEditDoneButton"
+                        data-bind='disable: !addFormIsValid()'
                         data-dismiss="modal">Done</button>
               </div>
              </div>

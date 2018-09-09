@@ -17,7 +17,7 @@ export class SavingThrow extends KOModel {
     coreUuid = ko.observable(null);
     name = ko.observable('');
     abilityScore = ko.observable();
-    modifier = ko.observable(null);
+    modifier = ko.observable(0);
     proficiency = ko.observable(false);
     modifierLabel = ko.observable('');
 
@@ -48,7 +48,7 @@ export class SavingThrow extends KOModel {
     };
 
     bonus = async () => {
-        var bonus = this.modifier() != null ? parseInt(this.modifier()) : null;
+        var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
         const abilityScoreModifier = await this.abilityScoreModifier();
         const proficiency = this.proficiency();
         if (proficiency) {
@@ -77,3 +77,12 @@ export class SavingThrow extends KOModel {
         return '';
     });
 }
+
+SavingThrow.validationConstraints = {
+    rules: {
+        modifier: {
+            required: true,
+            min: 0
+        }
+    }
+};

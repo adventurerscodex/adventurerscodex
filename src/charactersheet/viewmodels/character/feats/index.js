@@ -27,6 +27,8 @@ export function FeatsViewModel() {
     self.blankFeat = ko.observable(new Feat());
     self.blankTracked = ko.observable(new Tracked());
     self.modalOpen = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Feat());
     self.currentEditTracked = ko.observable(new Tracked());
@@ -70,6 +72,31 @@ export function FeatsViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addFeat();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Feat.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Feat.validationConstraints
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -79,7 +106,7 @@ export function FeatsViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             if (!self.currentEditItem().isTracked()) {
                 self.currentEditTracked(null);
             }
@@ -92,6 +119,10 @@ export function FeatsViewModel() {
         self.currentEditTracked(new Tracked());
         self.modalOpen(false);
         Notifications.feat.changed.dispatch();
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
     };
 
     self.selectPreviewTab = function() {
@@ -131,6 +162,8 @@ export function FeatsViewModel() {
         self.feats.push(newFeat.object);
         self.blankFeat(new Feat());
         self.blankTracked(new Tracked());
+
+        self.toggleAddModal();
     };
 
     self.clear = function() {

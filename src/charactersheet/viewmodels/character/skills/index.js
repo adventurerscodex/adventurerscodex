@@ -27,6 +27,7 @@ export function SkillsViewModel() {
     self.blankSkill = ko.observable(new Skill());
     self.newModalOpen = ko.observable(false);
     self.editModalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.skills = ko.observableArray([]);
@@ -94,7 +95,7 @@ export function SkillsViewModel() {
     };
 
     self.editModalFinishedClosing = async () => {
-        if (self.editModalOpen()) {
+        if (self.editModalOpen() && self.addFormIsValid()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.skills(), response.object, self.editItemIndex);
             self.updateValues();
@@ -104,6 +105,35 @@ export function SkillsViewModel() {
     };
 
     // New Modal Methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addSkill();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Skill.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.editModalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Skill.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.newModalOpen(!self.newModalOpen());
+    };
+
     self.newSkillFieldHasFocus = ko.observable(false);
 
     self.newModalFinishedAnimating = function() {
@@ -124,6 +154,7 @@ export function SkillsViewModel() {
         newSkill.updateBonuses();
         self.skills.push(newSkill);
         self.blankSkill(new Skill());
+        self.newModalOpen(false);
     };
 
     self.removeSkill = async (skill) => {

@@ -23,7 +23,9 @@ export function ProficienciesViewModel() {
 
     self.proficiencies = ko.observableArray([]);
     self.blankProficiency = ko.observable(new Proficiency());
+    self.addModalOpen = ko.observable(false);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Proficiency());
     self.sort = ko.observable(self.sorts['name asc']);
@@ -63,6 +65,35 @@ export function ProficienciesViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addProficiency();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Proficiency.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Proficiency.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -72,7 +103,7 @@ export function ProficienciesViewModel() {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.proficiencies(), response.object, self.editItemIndex);
         }
@@ -111,6 +142,7 @@ export function ProficienciesViewModel() {
         const newProficiency = await proficiency.ps.create();
         self.proficiencies.push(newProficiency.object);
         self.blankProficiency(new Proficiency());
+        self.toggleAddModal();
     };
 
     self.clear = function() {
