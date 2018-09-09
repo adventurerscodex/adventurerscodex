@@ -16,12 +16,10 @@ export function MagicItemsViewModel() {
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
-        'maxCharges asc': { field: 'maxCharges', direction: 'asc', numeric: true},
-        'maxCharges desc': { field: 'maxCharges', direction: 'desc', numeric: true},
         'weight asc': { field: 'weight', direction: 'asc', numeric: true},
         'weight desc': { field: 'weight', direction: 'desc', numeric: true},
-        'usedCharges asc': { field: 'usedCharges', direction: 'asc', numeric: true},
-        'usedCharges desc': { field: 'usedCharges', direction: 'desc', numeric: true},
+        'usedCharges asc': { field: 'usedCharges', direction: 'asc'},
+        'usedCharges desc': { field: 'usedCharges', direction: 'desc'},
         'attuned asc': { field: 'attuned', direction: 'asc', booleanType: true},
         'attuned desc': { field: 'attuned', direction: 'desc', booleanType: true}
     };
@@ -164,7 +162,7 @@ export function MagicItemsViewModel() {
     self.magicItemsPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
-        var results = keys.filter(function(name, idx, _) {
+        var results = keys.filter(function(name) {
             return name.toLowerCase().indexOf(term) > -1;
         });
         response(results);

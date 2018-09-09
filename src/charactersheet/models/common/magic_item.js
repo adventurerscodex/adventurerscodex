@@ -13,7 +13,7 @@ export class MagicItem extends KOModel {
     static __skeys__ = ['core', 'magicItems'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid', 'maxCharges', 'usedCharges']
     };
 
     coreUuid = ko.observable(null);
@@ -33,8 +33,7 @@ export class MagicItem extends KOModel {
     chargesDisplay = ko.pureComputed(() => {
         if (this.maxCharges() == 0) {
             return 'N/A';
-        }
-        else {
+        } else {
             return this.usedCharges();
         }
     });
