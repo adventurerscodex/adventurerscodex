@@ -53,6 +53,7 @@ export function AdventurersCodexViewModel() {
      * and the init process has finished.
       */
     self.state = ko.observable();
+    self.isFinishedLoading = ko.observable(false);
     self.selectedCore = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
@@ -104,6 +105,7 @@ export function AdventurersCodexViewModel() {
 
         TabFragmentManager.init();
 
+        self.isFinishedLoading(true);
         if (CoreManager.activeCore()) {
             // There might be an active character in the URL.
             self._handleChangedCharacter();
@@ -144,7 +146,9 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangedCharacter = function() {
-        self.selectedCore(CoreManager.activeCore());
-        self.state(APP_STATE.CHOSEN);
+        if (self.isFinishedLoading()) {
+            self.selectedCore(CoreManager.activeCore());
+            self.state(APP_STATE.CHOSEN);
+        }
     };
 }
