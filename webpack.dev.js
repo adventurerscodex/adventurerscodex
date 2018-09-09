@@ -6,7 +6,11 @@ let CircularDependencyPlugin = require('circular-dependency-plugin');
 
 
 module.exports = merge(common, {
-    devtool: 'inline-source-map',
+    mode: 'development',
+    // As per-recommended on:
+    // https://github.com/webpack/webpack/issues/4363
+    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: './dist',
         port: 3000

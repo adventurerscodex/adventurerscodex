@@ -15,7 +15,7 @@ export function LoginViewModel() {
     var self = this;
 
     self.signupLink = '/accounts/register/';
-    self._logoutLink = '/accounts/logout/?next=/charactersheet/';
+    self._logoutLink = '/accounts/logout/?next=/';
     self._revokeToken = '/api/o/revoke_token/';
 
     self._dummy = ko.observable();

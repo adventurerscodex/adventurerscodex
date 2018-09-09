@@ -52,10 +52,8 @@ export function AdventurersCodexViewModel() {
      * Once the app is ready to be displayed and all data has been loaded,
      * and the init process has finished.
       */
-    self.state = ko.observable(APP_STATE.SELECT);
+    self.state = ko.observable();
     self.selectedCore = ko.observable();
-    // TODO: I don't think this is used. It's in the load, but doesn't make any sense.
-    // self._dummy = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
     self.exportModalStatus = ko.observable(false);
@@ -69,12 +67,7 @@ export function AdventurersCodexViewModel() {
     //UI Methods
 
     self.showWizard = function() {
-        //Unload the prior character.
         self.state(APP_STATE.WIZARD);
-        if (CoreManager.activeCore()) {
-            self.unload();
-        }
-        self.load();
     };
 
     self.shouldShowApp = ko.pureComputed(function() {
@@ -101,41 +94,25 @@ export function AdventurersCodexViewModel() {
         Notifications.coreManager.changed.add(self._handleChangedCharacter);
 
         // Finish the setup once we're sure that we're logged in.
-        Notifications.authentication.loggedIn.add(async () => {
-            await CoreManager.init();
-            const charactersResponse = await Core.ps.list();
-            let characters = charactersResponse.objects;
-
-            TabFragmentManager.init();
-
-            if (CoreManager.activeCore()) {
-                // There might be an active character in the URL.
-                self._handleChangedCharacter();
-            } else if (characters.length > 0) {
-                self.state(APP_STATE.SELECT);
-            } else {
-                //If no current character exists, fire the load process anyway.
-                self.state(APP_STATE.WIZARD);
-            }
-        });
-
-        XMPPService.sharedService().init();
-        NodeServiceManager.sharedService().init();
-        ChatServiceManager.sharedService().init();
-        NotificationsServiceManager.sharedService().init();
-        UserServiceManager.sharedService().init();
-        AuthenticationServiceManager.sharedService().init();
+        Notifications.authentication.loggedIn.add(self.doSetup);
     };
 
-    /**
-     * Signal all modules to load their data.
-     */
-    self.load = function() {
-        // self._dummy.valueHasMutated();
-    };
+    self.doSetup = async () => {
+        await CoreManager.init();
+        const charactersResponse = await Core.ps.list();
+        let characters = charactersResponse.objects;
 
-    self.unload = function() {
-        self._purgeStrayDBEntries();
+        TabFragmentManager.init();
+
+        if (CoreManager.activeCore()) {
+            // There might be an active character in the URL.
+            self._handleChangedCharacter();
+        } else if (characters.length > 0) {
+            self.state(APP_STATE.SELECT);
+        } else {
+            //If no current character exists, fire the load process anyway.
+            self.state(APP_STATE.WIZARD);
+        }
     };
 
     self.togglePartyManagerModal = function() {
@@ -161,10 +138,6 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangingCharacter = function() {
-        //Don't save an empty character.
-        if (CoreManager.activeCore() && self.state() == APP_STATE.CHOSEN) {
-            self.unload();
-        }
         self.selectedCore(null);
 
         TabFragmentManager.changeTabFragment(null);
@@ -173,30 +146,5 @@ export function AdventurersCodexViewModel() {
     self._handleChangedCharacter = function() {
         self.selectedCore(CoreManager.activeCore());
         self.state(APP_STATE.CHOSEN);
-        try {
-            self.load();
-        } catch(err) {
-            throw err;
-        }
-    };
-
-    /**
-     * Clear stray db entries. Entries that are either belonging to a
-     * non-existant or null character are removed.
-     */
-    self._purgeStrayDBEntries = function() {
-        var activeIDs = PersistenceService.findAll(Character).map(function(character, _i, _) {
-            return  character.key();
-        });
-        PersistenceService.listAll().forEach(function(table, idx, _) {
-            if (table === 'Character' || table === 'AuthenticationToken') { return; }
-            PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
-                var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
-                var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;
-                if (expiredID || invalidID) {
-                    PersistenceService._delete(table, e1.id);
-                }
-            });
-        });
     };
 }

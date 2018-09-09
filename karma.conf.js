@@ -1,13 +1,4 @@
-var path = require('path');
-var webpackConfig = require('./webpack.dev');
-var entry = path.resolve(webpackConfig.context, webpackConfig.entry);
-
-webpack = webpackConfig;
-webpack.module.rules.push({
-    test: /\.js$/,
-    loader: "isparta-loader",
-    exclude: /(node_modules)/ // exclude node_modules and test files
-})
+const webpackConfig = require('./webpack.dev');
 
 // Replace the production source map settings with a much faster version.
 delete webpackConfig.entry
@@ -36,17 +27,10 @@ module.exports = function(config) {
                 { type: 'text-summary' }
             ]
         },
-		plugins: [
-            'karma-coverage',
-            'karma-webpack',
-            'karma-mocha',
-            'karma-phantomjs-launcher',
-            'karma-mocha-reporter',
-		],
         singleRun: true,
         webpackMiddleware: {
           stats: 'errors-only'
         },
-        webpack: webpack
+        webpack: webpackConfig
     });
 };

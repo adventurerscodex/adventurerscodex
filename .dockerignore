@@ -1,0 +1,6 @@
+# Ignore the large repos of non-critical data.
+coverage/
+dist/
+node_modules/
+test/
+.git/

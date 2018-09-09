@@ -59,10 +59,6 @@ export var init = function(viewModel) {
 
     // Set up API client configuration handlers.
     Notifications.authentication.loggedIn.add(() => {
-        if (!schema) {
-            return;
-        }
-
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         Hypnos.configuration = {
             credentials: {
@@ -72,6 +68,9 @@ export var init = function(viewModel) {
             schema: schema
         };
     });
+
+    // Initialize the View Model
+    viewModel.init();
 
     // Clipboard initialization.
     var clipboard = new Clipboard('.btn');
@@ -91,18 +90,15 @@ export var init = function(viewModel) {
     ];
 
     // Prime the services.
-    XMPPService.sharedService();
+    XMPPService.sharedService().init();
+    NodeServiceManager.sharedService().init();
+    ChatServiceManager.sharedService().init();
+    NotificationsServiceManager.sharedService().init();
+    UserServiceManager.sharedService().init();
+    AuthenticationServiceManager.sharedService().init();
     StatusService.sharedService();
-    AuthenticationServiceManager.sharedService();
-    UserServiceManager.sharedService();
-    NodeServiceManager.sharedService();
-    ChatServiceManager.sharedService();
-    NotificationsServiceManager.sharedService();
 
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
     window.Hypnos = Hypnos;
-
-    // Initialize the View Model
-    viewModel.init();
 };
