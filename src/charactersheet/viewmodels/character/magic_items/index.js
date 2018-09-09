@@ -91,12 +91,9 @@ export function MagicItemsViewModel() {
 
     self.attunedHasChanged = async function() {
         await this.ps.save();
-        // self.magicItems().forEach(function(e, i, _) {
-        //     e.save();
-        // });
     };
 
-    // Prepopulate methods
+    // Pre-populate methods
 
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];
