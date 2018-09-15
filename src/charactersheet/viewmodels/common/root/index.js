@@ -106,8 +106,10 @@ export function AdventurersCodexViewModel() {
         TabFragmentManager.init();
 
         self.isFinishedLoading(true);
+        keyAndMakeVisible();
         if (CoreManager.activeCore()) {
             // There might be an active character in the URL.
+            showSplashScreen();
             self._handleChangedCharacter();
         } else if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
@@ -140,6 +142,8 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangingCharacter = function() {
+        showSplashScreen();
+
         self.selectedCore(null);
 
         TabFragmentManager.changeTabFragment(null);
@@ -150,5 +154,6 @@ export function AdventurersCodexViewModel() {
             self.selectedCore(CoreManager.activeCore());
             self.state(APP_STATE.CHOSEN);
         }
+        setTimeout(hideSplashScreen, 1000);
     };
 }
