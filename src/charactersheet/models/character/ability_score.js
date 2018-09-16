@@ -6,6 +6,7 @@ import ko from 'knockout';
 
 export class AbilityScore extends KOModel {
     static __skeys__ = ['core', 'abilityScores'];
+    static __dependents__ = ['Skill', 'SavingThrow'];
 
     static mapping = {
         include: ['coreUuid']

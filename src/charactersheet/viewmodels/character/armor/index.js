@@ -65,22 +65,22 @@ export function ArmorViewModel() {
         return weight + ' (lbs)';
     });
 
-    self.equipArmorHandler = (selectedItem, index) => {
+    self.equipArmorHandler = async (selectedItem, index) => {
         if (selectedItem.equipped()) {
             if (selectedItem.type() === 'Shield') {
-                ko.utils.arrayForEach(self.armors(), async function(item2) {
+                for (const item2 of self.armors()) {
                     if (index != item2.uuid && item2.type() == 'Shield') {
                         item2.equipped(false);
                         await item2.ps.save();
                     }
-                });
+                }
             } else {
-                ko.utils.arrayForEach(self.armors(), async function(item2) {
+                for (const item2 of self.armors()) {
                     if (index != item2.uuid && item2.type() != 'Shield') {
                         item2.equipped(false);
                         await item2.ps.save();
                     }
-                });
+                }
             }
         }
     };

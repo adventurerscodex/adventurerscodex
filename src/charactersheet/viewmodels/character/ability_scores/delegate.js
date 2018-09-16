@@ -16,11 +16,13 @@ export class AbilityScoresViewModelDelegate {
      */
     abilityScoresDidChange = async (oldScores, newScores) => {
         const scoresModified = await this.updateAbilityScores(oldScores, newScores);
+        console.log(scoresModified)
 
         if (scoresModified) {
-            Notifications.abilityScores.changed.dispatch();
             var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid: key});
+            const response = await AbilityScore.ps.list({ coreUuid: key });
+
+            Notifications.abilityScores.changed.dispatch();
             return response.objects;
         } else {
             return oldScores;
@@ -35,9 +37,10 @@ export class AbilityScoresViewModelDelegate {
      * @param {AbilityScore[]} newScores updated ability scores
      * @returns {boolean} scoresModified indicates wether any of the ability scores were updated
      */
-    updateAbilityScores = (oldScores, newScores) => {
+    updateAbilityScores = async (oldScores, newScores) => {
         let scoresModified = false;
-        oldScores.forEach(async (old, i, _) => {
+
+        for (const old of oldScores) {
             let newScore = newScores.filter((element) => {
                 return old.shortName() === element.shortName();
             })[0];
@@ -47,7 +50,7 @@ export class AbilityScoresViewModelDelegate {
                 const response = await newScore.ps.save();
                 this.sendNotifications(response.object);
             }
-        });
+        }
         return scoresModified;
     }
 

@@ -48,7 +48,9 @@ export function AbilityScoresViewModel() {
     self.modalFinishedClosing = async () => {
         if (self.modalStatus() && self.addFormIsValid()) {
             const response = await self.delegate.abilityScoresDidChange(
-                self.abilityScores(), self.editItems());
+                self.abilityScores(),
+                self.editItems()
+            );
             self.abilityScores(response);
         }
         self.modalStatus(false);

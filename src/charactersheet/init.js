@@ -52,7 +52,7 @@ export var init = function(viewModel) {
                         return item.displayName;
                     });
                 }
-            })
+            });
         });
     });
 
@@ -69,8 +69,7 @@ export var init = function(viewModel) {
             },
             schema: schema,
             cacheConfig: {
-                stdTTL: 30,
-                checkperiod: 10,
+                stdTTL: 0
             }
         };
     });
