@@ -27,10 +27,6 @@ export function StatsViewModel() {
     self.addFormIsValid = ko.observable(false);
 
     self.load = async () => {
-        Notifications.health.maxHitPoints.changed.add(() => {
-            console.log('HELLOW HEAL MAX POINTS CHANGED')
-        })
-
         var key = CoreManager.activeCore().uuid();
         // Fetch Profile
         const profile = await Profile.ps.read({uuid: key});

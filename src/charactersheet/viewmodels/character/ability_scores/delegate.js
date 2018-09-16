@@ -16,7 +16,6 @@ export class AbilityScoresViewModelDelegate {
      */
     abilityScoresDidChange = async (oldScores, newScores) => {
         const scoresModified = await this.updateAbilityScores(oldScores, newScores);
-        console.log(scoresModified)
 
         if (scoresModified) {
             var key = CoreManager.activeCore().uuid();
