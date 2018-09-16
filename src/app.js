@@ -54,26 +54,6 @@ window.hideSplashScreen = function() {
 
 window.showSplashScreen = function() {
     $('#loading').show();
-
-    // Animated Text
-    $("[data-typer]").attr("data-typer", function(i, txt) {
-        var $typer = $(this),
-            tot = txt.length,
-            pauseMax = 110,
-            pauseMin = 80,
-            wordPause = 200,
-            ch = 0;
-        (function typeIt() {
-            if (ch > tot) return;
-            var next = txt[ch++];
-            $typer.text(txt.substring(0, ch++));
-            if (next === ' ') {
-                setTimeout(typeIt, ~~(Math.random() * 1 + wordPause));
-            } else {
-                setTimeout(typeIt, ~~(Math.random() * (pauseMax - pauseMin + 1) + pauseMin));
-            }
-        }());
-    });
     // Start the spinner.
     window.spinner = new Spinner({ color:'#b4bcc2', lines: 12 }).spin(
         document.getElementsByTagName('body')[0]
