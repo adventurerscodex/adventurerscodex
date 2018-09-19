@@ -22,8 +22,8 @@
           <th class="hidden-sm hidden-xs" class="col-md-5">
             Description</th>
           <th class="col-md-1 col-xs-2 text-right">
-           <a data-toggle="modal"
-            data-target="#addItem" id="inventoryAddIcon" href="#">
+           <a data-bind="click: toggleAddModal"
+            id="inventoryAddIcon" href="#">
               <i class="fa fa-plus fa-color"></i>
            </a>
           </th>
@@ -51,8 +51,8 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedEquipment().length == 0 -->
         <tr class="clickable">
-          <td href="#" data-toggle="modal"
-           data-target="#addItem" colspan="6" class="text-center">
+          <td data-bind="click: toggleAddModal"
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new item
           </td>
@@ -72,7 +72,8 @@
 <!-- Add Modal -->
 <div class="modal fade"
   id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
-  data-bind="modal: { onopen: modalFinishedOpening }">
+  data-bind="modal: { onopen: modalFinishedOpening,
+    open: addModalOpen }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -85,7 +86,7 @@
         <h4 class="modal-title">Add an Item to your Inventory.</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
            <label for="name"
              class="col-sm-2 control-label">Name</label>
@@ -93,6 +94,7 @@
              <input type="text"
                class="form-control"
                id="inventoryAddNameInput"
+               name="name"
                placeholder="Rations"
                data-bind='textInput: blankItem().name,
                  autocomplete: { source: itemsPrePopFilter, onselect: populateItem },
@@ -107,8 +109,7 @@
                <input type="number"
                       class="form-control"
                       id="inventoryAddWeightInput"
-                      min="0"
-                      max="5000"
+                      name="weight"
                  placeholder="Item Weight"
                  data-bind='textInput: blankItem().weight'>
                  <span class="input-group-addon">lbs.</span>
@@ -121,8 +122,7 @@
            <div class="col-sm-10">
              <input type="number"
                class="form-control"
-               min="0"
-               max="5000"
+               name="quantity"
                id="inventoryAddQuantityInput"
                placeholder="Item Quantity"
                data-bind='textInput: blankItem().quantity'>
@@ -134,7 +134,7 @@
            <div class="col-sm-10">
       		   <div class="input-group">
       			 <input type="number"
-      			   min="0"
+               name="cost"
       			   class="form-control input-jquery-addon"
                id="inventoryAddCostInput"
       			   data-bind="value: blankItem().cost" />
@@ -142,6 +142,7 @@
                <input class="form-control"
                       id="inventoryAddCurrencyDenominationInput"
                       placeholder="GP"
+                      name="currencyDenomination"
       						    data-bind="textInput: blankItem().currencyDenomination, autocomplete: {
                           source: blankItem().itemCurrencyDenominationOptions,
                           onselect: setItemCurrencyDenomination }">
@@ -155,6 +156,7 @@
            <div class="col-sm-10">
              <textarea type="password"
                class="form-control"
+               name="description"
                id="inventoryAddDescriptionTextarea"
                placeholder="Rations consist of..."
                rows="4"
@@ -162,30 +164,29 @@
              </textarea>
            </div>
          </div>
+         <div class="modal-footer">
+           <button type="button"
+             class="btn btn-default"
+             id="inventoryAddCancelButton"
+             data-dismiss="modal">
+             Cancel
+           </button>
+           <button type="submit"
+             class="btn btn-primary"
+             id="inventoryAddAddButton"
+             data-bind='disable: !addFormIsValid()'>
+             Add
+           </button>
+           <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+             <sm><i>This data is distributed under the
+               <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                 target='_blank'>
+                 OGL</a><br/>
+                 Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+               </i><sm>
+           </p>
+         </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button"
-          class="btn btn-default"
-          id="inventoryAddCancelButton"
-          data-dismiss="modal">
-          Cancel
-        </button>
-        <button type="button"
-          class="btn btn-primary"
-          id="inventoryAddAddButton"
-          data-dismiss="modal"
-          data-bind="click: addItem">
-          Add
-        </button>
-        <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
-          <sm><i>This data is distributed under the
-            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-              target='_blank'>
-              OGL</a><br/>
-              Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-            </i><sm>
-        </p>
       </div>
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
@@ -257,7 +258,7 @@
             </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="name"
                        class="col-sm-2 control-label">Name
@@ -265,6 +266,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          id="inventoryEditNameInput"
                          placeholder="Rations"
                          data-bind='textInput: name,
@@ -279,8 +281,7 @@
                     <input type="number"
                            class="form-control"
                            id="inventoryEditWeightInput"
-                           min="0"
-                           max="5000"
+                           name="weight"
                            placeholder="Item Weight"
                            data-bind='textInput: weight'>
                     <span class="input-group-addon">lbs.</span>
@@ -293,8 +294,7 @@
                 <div class="col-sm-10">
                   <input type="number"
                          class="form-control"
-                         min="0"
-                         max="5000"
+                         name="quantity"
                          id="inventoryEditQuantityInput"
                          placeholder="Item Quantity"
                          data-bind='textInput: quantity'>
@@ -305,12 +305,13 @@
                   <div class="col-sm-10">
           		      <div class="input-group">
           			      <input type="number"
-          			             min="0"
+                             name="cost"
           			             class="form-control input-jquery-addon"
                              id="inventoryEditCostInput"
           			             data-bind="value: cost" />
           			      <span class="input-group-addon input-group-addon-jquery">
                       <input class="form-control"
+                             name="currencyDenomination"
                              id="inventoryEditCurrencyDenominationInput"
           					         placeholder="GP"
                              data-bind="textInput: currencyDenomination">
@@ -324,6 +325,7 @@
                 <div class="col-sm-10">
                   <textarea type="password"
                             class="form-control"
+                            name="description"
                             id="inventoryEditDescriptionTextarea"
                             placeholder="Rations consist of..."
                             rows="4"
@@ -332,9 +334,10 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <button type="button"
+                <button type="submit"
                   class="btn btn-primary"
                   id="inventoryEditDoneButton"
+                  data-bind='disable: !$parent.addFormIsValid()'
                   data-dismiss="modal">
                   Done
                 </button>

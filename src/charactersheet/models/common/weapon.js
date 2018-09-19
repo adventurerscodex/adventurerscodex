@@ -15,7 +15,7 @@ export class Weapon extends KOModel {
     static __skeys__ = ['core', 'weapons'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid', 'description']
     };
 
     coreUuid = ko.observable(null);
@@ -203,3 +203,55 @@ export class Weapon extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 }
+
+Weapon.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            required: true,
+            maxlength: 32
+        },
+        damage: {
+            required: true,
+            maxlength: 32
+        },
+        damageType: {
+            maxlength: 32
+        },
+        handedness: {
+            maxlength: 32
+        },
+        proficiency: {
+            maxlength: 32
+        },
+        price: {
+            number: true,
+            min: 0
+        },
+        currencyDenomination: {
+            maxlength: 16
+        },
+        magicalModifier: {
+            number: true
+        },
+        toHitModifier: {
+            number: true
+        },
+        weight: {
+            number: true
+        },
+        range: {
+            maxlength: 32
+        },
+        property: {
+            maxlength: 32
+        },
+        quantity: {
+            number: true,
+            min: 0
+        }
+    }
+};

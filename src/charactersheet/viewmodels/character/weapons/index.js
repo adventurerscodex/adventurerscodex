@@ -17,6 +17,8 @@ export function WeaponsViewModel() {
     self.blankWeapon = ko.observable(new Weapon());
     self.weapons = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Weapon());
     self.shouldShowDisclaimer = ko.observable(false);
@@ -93,7 +95,7 @@ export function WeaponsViewModel() {
             columnName, self.sorts));
     };
 
-    // Prepopulate methods
+    // Pre-populate methods
 
     self.populateWeapon = function(label, value) {
         var weapon = DataRepository.weapons[label];
@@ -127,6 +129,34 @@ export function WeaponsViewModel() {
     };
 
     /* Modal Methods */
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addWeapon();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Weapon.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Weapon.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
 
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
@@ -174,6 +204,7 @@ export function WeaponsViewModel() {
         self.weapons.push(newWeapon.object);
         self.updateWeaponCalculations(newWeapon.object.uuid());
         self.blankWeapon(new Weapon());
+        self.toggleAddModal();
         Notifications.weapon.changed.dispatch();
     };
 

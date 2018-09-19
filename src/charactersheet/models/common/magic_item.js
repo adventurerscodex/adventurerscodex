@@ -66,3 +66,30 @@ export class MagicItem extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 }
+
+MagicItem.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            maxlength: 32
+        },
+        rarity: {
+            maxlength: 32
+        },
+        maxCharges: {
+            number: true,
+            min: 0
+        },
+        usedCharges: {
+            number: true,
+            min: 0
+        },
+        weight: {
+            number: true,
+            min: 0
+        }
+    }
+};

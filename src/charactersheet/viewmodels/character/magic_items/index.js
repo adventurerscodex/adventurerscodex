@@ -27,6 +27,8 @@ export function MagicItemsViewModel() {
     self.blankMagicItem = ko.observable(new MagicItem());
     self.magicItems = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
@@ -109,6 +111,35 @@ export function MagicItemsViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addItem();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...MagicItem.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...MagicItem.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -168,13 +199,14 @@ export function MagicItemsViewModel() {
         response(results);
     };
 
-    //Manipulating magic items
+    // Manipulating magic items
     self.addItem = async () => {
         var item = self.blankMagicItem();
         item.coreUuid(CoreManager.activeCore().uuid());
         const newMagicItem = await item.ps.create();
         self.magicItems.push(newMagicItem.object);
         self.blankMagicItem(new MagicItem());
+        self.toggleAddModal();
         Notifications.magicItem.changed.dispatch();
     };
 

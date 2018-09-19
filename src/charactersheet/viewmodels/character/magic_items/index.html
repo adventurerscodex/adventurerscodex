@@ -24,8 +24,7 @@
             Description
           </th>
           <th width="5%">
-            <a data-toggle="modal"
-               data-target="#addMagicItem"
+            <a data-bind="click: toggleAddModal"
                id="magicItemsAddIcon"
                href="#">
               <i class="fa fa-plus fa-color"></i>
@@ -64,8 +63,8 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedMagicItems().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addMagicItem" href="#"
-            colspan="6" class="text-center">
+          <td data-bind="click: toggleAddModal"
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new magic item
           </td>
@@ -85,7 +84,8 @@
          tabindex="-1"
          role="dialog"
          aria-labelledby="addMagicItemLabel"
-         data-bind="modal: { onopen: modalFinishedOpening }">
+         data-bind="modal: { onopen: modalFinishedOpening,
+          open: addModalOpen }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -98,13 +98,14 @@
             <h4 class="modal-title" id="addMagicItemLabel">Add a new Magic Item to your Inventory.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
-                       class="col-sm-2 control-label">Item</label>
+                       class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          id="magicItemsAddItemInput"
                          placeholder="Dagger of Venom"
                          data-bind='textInput: blankMagicItem().name,
@@ -117,6 +118,7 @@
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                   <input class="form-control"
+                         name="type"
                          id="magicItemsAddTypeInput"
                          placeholder="Wand"
                          data-bind="textInput: blankMagicItem().type,
@@ -129,6 +131,7 @@
                        class="col-sm-2 control-label">Rarity</label>
                   <div class="col-sm-10">
                   <input class="form-control"
+                         name="rarity"
                          id="magicItemsAddRarityInput"
                          placeholder="Legendary"
                          data-bind="textInput: blankMagicItem().rarity,
@@ -144,8 +147,7 @@
                            class="form-control"
                            id="magicItemsAddMaxChargesInput"
                            placeholder="1"
-                           min="0"
-                           max="100"
+                           name="maxCharges"
                            data-bind='textInput: blankMagicItem().maxCharges'>
                   </div>
               </div>
@@ -158,8 +160,7 @@
                              class="form-control"
                              id="magicItemsAddChargesInput"
                              placeholder="1"
-                             min="0"
-                             max="100"
+                             name="usedCharges"
                              data-bind='textInput: blankMagicItem().usedCharges'>
                     </div>
                 </div>
@@ -172,8 +173,7 @@
                            class="form-control"
                            id="magicItemsAddWeightInput"
                            placeholder="1"
-                           min="0"
-                           max="1000"
+                           name="weight"
                            data-bind='textInput: blankMagicItem().weight'>
                   </div>
               </div>
@@ -183,6 +183,7 @@
                   <div class="col-sm-10">
                     <input type="checkbox"
                            class="form-control"
+                           name="requiresAttunement"
                            id="magicItemsAddRequiresAttunementCheckbox"
                            data-bind='checked: blankMagicItem().requiresAttunement'>
                   </div>
@@ -194,6 +195,7 @@
                     <div class="col-sm-10">
                       <input type="checkbox"
                              class="form-control"
+                             name="attuned"
                              id="magicItemsAddAttunedCheckbox"
                              data-bind='checked: blankMagicItem().attuned'>
                     </div>
@@ -207,6 +209,7 @@
                               class="form-control"
                               id="magicItemsAddDescriptionTextarea"
                               rows="4"
+                              name="description"
                               placeholder="Awesome stuff goes here"
                               data-bind='textInput: blankMagicItem().description'>
                     </textarea>
@@ -217,11 +220,10 @@
                         class="btn btn-default"
                         id="magicItemsAddCancelButton"
                         data-dismiss="modal">Cancel</button>
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="magicItemsAddAddButton"
-                        data-bind='click: addItem'
-                        data-dismiss="modal">Add</button>
+                        data-bind='disable: !addFormIsValid()'>Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -305,14 +307,15 @@
                 </div>
               </div> <!-- End Preview Tab -->
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
-                           class="col-sm-2 control-label">Item</label>
+                           class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
                              id="magicItemsEditItemInput"
+                             name="name"
                              placeholder="Dagger of Venom"
                              data-bind='textInput: name,
                               hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -324,6 +327,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="magicItemsEditTypeInput"
+                             name="type"
                              placeholder="Wand"
                              data-bind="textInput: type">
                       </div>
@@ -334,6 +338,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="magicItemsEditRarityInput"
+                             name="rarity"
                              placeholder="Legendary"
                              data-bind="textInput: rarity">
                       </div>
@@ -346,8 +351,7 @@
                                class="form-control"
                                id="magicItemsEditMaxChargesInput"
                                placeholder="1"
-                               min="0"
-                               max="100"
+                               name="maxCharges"
                                data-bind='textInput: maxCharges'>
                       </div>
                   </div>
@@ -360,8 +364,7 @@
                                  class="form-control"
                                  id="magicItemsEditChargesInput"
                                  placeholder="1"
-                                 min="0"
-                                 max="100"
+                                 name="usedCharges"
                                  data-bind='textInput: usedCharges'>
                         </div>
                     </div>
@@ -374,8 +377,7 @@
                                class="form-control"
                                id="magicItemsEditWeightInput"
                                placeholder="1"
-                               min="0"
-                               max="1000"
+                               name="weight"
                                data-bind='textInput: weight'>
                       </div>
                   </div>
@@ -385,6 +387,7 @@
                       <div class="col-sm-10">
                         <input type="checkbox"
                                class="form-control"
+                               name="requiresAttunement"
                                id="magicItemsEditRequiresAttunementCheckbox"
                                data-bind='checked: requiresAttunement'>
                       </div>
@@ -396,6 +399,7 @@
                         <div class="col-sm-10">
                           <input type="checkbox"
                                  class="form-control"
+                                 name="attuned"
                                  id="magicItemsEditAttunedCheckbox"
                                  data-bind='checked: attuned'>
                         </div>
@@ -407,6 +411,7 @@
                       <div class="col-sm-10">
                         <textarea type="password"
                                   class="form-control"
+                                  name="description"
                                   id="magicItemsEditDescriptionTextarea"
                                   rows="4"
                                   placeholder="Awesome stuff goes here"
@@ -415,9 +420,10 @@
                       </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button"
+                    <button type="submit"
                             class="btn btn-primary"
                             id="magicItemsEditDoneButton"
+                            data-bind='disable: !$parent.addFormIsValid()'
                             data-dismiss="modal">Done</button>
                   </div>
                 </form>
