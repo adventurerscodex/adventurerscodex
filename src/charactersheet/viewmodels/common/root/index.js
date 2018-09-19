@@ -142,6 +142,7 @@ export function AdventurersCodexViewModel() {
     self._handleChangingCharacter = function() {
         self.selectedCore(null);
 
+        Hypnos.client.cache.flushAll();
         TabFragmentManager.changeTabFragment(null);
     };
 

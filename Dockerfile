@@ -3,8 +3,10 @@ MAINTAINER Brian Schrader
 
 WORKDIR /app
 
+# Copy in the dependencies first so Docker can cache them
+COPY package.json .
+RUN npm install --production
+
 # Build the project
 COPY . .
-
-RUN npm install --production
 CMD ./docker-entrypoint.sh

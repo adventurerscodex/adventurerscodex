@@ -327,7 +327,19 @@ export function StatsViewModel() {
 
     // Reset death and success saves when char drops to 0 hp
     self.resetDeathSaves = () => {
-        if (self.health() != undefined && self.health().hitpoints() >= 1) {
+        // We don't want to change 0 -> 0 since it causes unneeded requests.
+        const shouldUpdate = (
+            // We have loaded.
+            self.health() !== undefined
+            // HP is greater than 0.
+            && self.health().hitpoints() > 0
+            // Fails are not zero
+            && self.deathSaveFailure().used() !== 0
+            // Successes are not zero
+            && self.deathSaveSuccess().used() !== 0
+        );
+
+        if (shouldUpdate) {
             self.deathSaveFailure().used(0);
             self.deathSaveSuccess().used(0);
             self.saveDeathSaveFailure();

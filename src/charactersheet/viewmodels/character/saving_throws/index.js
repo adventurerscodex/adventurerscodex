@@ -43,10 +43,14 @@ export function SavingThrowsViewModel() {
         self.updateValues();
     };
 
-    self.updateValues = () => {
-        self.savingThrows().forEach(function(e, i, _) {
-            e.updateModifierLabel();
-        });
+    self.updateValues = async () => {
+        // By telling each savingThrow to update their labels, we're implicitly
+        // making a networking call. This should not be this way, but because
+        // the fix is too time consuming, at time of writing, I'm just leaving
+        // it and documenting the weirdness.
+        for (const savingThrow of self.savingThrows()) {
+            await savingThrow.updateModifierLabel();
+        }
     };
 
     /* UI Methods */
