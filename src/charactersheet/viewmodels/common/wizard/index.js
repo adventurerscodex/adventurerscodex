@@ -208,7 +208,7 @@ export function WizardViewModel() {
         }
 
         // Save the core data and set the new character
-        const coreResponse = await Hypnos.client.action(actions, params);
+        const coreResponse = await Hypnos.client.action({ keys: actions, params });
         self.newCharacterId = coreResponse.data.uuid;
     };
 
