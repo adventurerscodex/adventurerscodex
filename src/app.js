@@ -26,21 +26,36 @@ import template from 'charactersheet/viewmodels/common/root/index.html'
 
 import { init } from 'charactersheet/init'
 
-var spinner = new Spinner({color:'#b4bcc2', lines: 12}).spin(
-    document.getElementsByTagName('body')[0]
-);
+$(() => {
+    var viewModel = new AdventurersCodexViewModel();
+    init(viewModel);
 
-var viewModel = new AdventurersCodexViewModel();
-init(viewModel);
+    // Setup automatic saving.
+    window.onbeforeunload = viewModel.unload;
 
-// Setup automatic saving.
-window.onbeforeunload = viewModel.unload;
+    ko.components.register('application', {
+      viewModel: { instance: viewModel },
+      template: template
+    });
 
-ko.components.register('application', {
-  viewModel: { instance: viewModel },
-  template: template
+    ko.applyBindings();
 });
 
+window.keyAndMakeVisible = function() {
+    $('#overlay').hide();
+};
 
-ko.applyBindings();
-spinner.stop();
+window.hideSplashScreen = function() {
+    $('#loading').fadeOut(500);
+    if (window.spinner) {
+        window.spinner.stop();
+    }
+}
+
+window.showSplashScreen = function() {
+    $('#loading').show();
+    // Start the spinner.
+    window.spinner = new Spinner({ color:'#b4bcc2', lines: 12 }).spin(
+        document.getElementsByTagName('body')[0]
+    );
+}
