@@ -1,7 +1,6 @@
 import { Background } from 'charactersheet/models/character';
 import { CoreManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -10,28 +9,26 @@ export function BackgroundViewModel() {
 
     self.background = ko.observable(new Background());
     self.backgroundOptions = Fixtures.profile.backgroundOptions;
+    self.validation = {};
 
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Background.ps.read({uuid: key});
         self.background(response.object);
-
-        // Subscriptions
-        self.background().personalityTrait.subscribe(self.dataHasChanged);
-        self.background().ideal.subscribe(self.dataHasChanged);
-        self.background().flaw.subscribe(self.dataHasChanged);
-        self.background().bond.subscribe(self.dataHasChanged);
-        self.background().name.subscribe(self.dataHasChanged);
     };
 
     self.setBackground = function(label, value) {
         self.background().name(value);
     };
 
-    self.dataHasChanged = async () => {
+    self.save = async () => {
         await self.background().ps.save();
     };
 
+    self.validation = {
+        // Deep copy of properties in object
+        ...Background.validationConstraints
+    };
 }
 
 ko.components.register('background', {
