@@ -1,4 +1,5 @@
 import ko from 'knockout';
+
 /**
  * This component provides a generic template for controlling and displaying forms in a preview and
  * edit mode.
@@ -9,30 +10,32 @@ import ko from 'knockout';
  *                   - validation: this javascript object conatains the validation constraints to
  *                     be used in the form validation
  */
-export function PreviewEditViewModel(params) {
-    var self = this;
+export class PreviewEditViewModel {
 
-    self.data = params.data;
-    self.save = params.save;
-    self.validationConstraints = params.validation;
-    self.isEditFormValid = ko.observable(false);
-    self.isEdit = ko.observable(false);
+    isEditFormValid = ko.observable(false);
+    isEdit = ko.observable(false);
 
-    self.toggleEditForm = () => {
-        self.isEdit(!self.isEdit());
+    constructor(params) {
+        this.data = params.data;
+        this.save = params.save;
+        this.validationConstraints = params.validation;
+    }
+
+    toggleEditForm = () => {
+        this.isEdit(!this.isEdit());
     };
 
-    self.saveAndToggleForm = async () => {
-        await self.save();
-        self.toggleEditForm();
+    saveAndToggleForm = async () => {
+        await this.save();
+        this.toggleEditForm();
     };
 
-    self.validation = {
+    validation = {
         updateHandler: ($element) => {
-            self.isEditFormValid($element.valid());
+            this.isEditFormValid($element.valid());
         },
         // Deep copy of properties in object
-        ...self.validationConstraints
+        ...this.validationConstraints
     };
 }
 
