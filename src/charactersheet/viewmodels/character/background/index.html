@@ -15,7 +15,9 @@
                         id="profileBackgroundInput"
                         name="name"
                         aria-describedby="basic-addon2"
-                        data-bind='value: name' />
+                        data-bind='value: name,
+                        autocomplete: { source: $parents[1].backgroundOptions,
+                        onselect: $parents[1].setBackground }' />
               </div>
             </div>
             <div class="row">
