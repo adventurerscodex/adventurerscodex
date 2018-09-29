@@ -18,3 +18,11 @@ export class Background extends KOModel {
     bond = ko.observable('');
     personalityTrait = ko.observable('');
 }
+
+Background.validationConstraints = {
+    rules: {
+        name: {
+            maxlength: 128
+        }
+    }
+};

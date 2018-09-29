@@ -1,46 +1,98 @@
 <div class="panel panel-default">
-  <div class="panel-body" data-bind="with: background">
   <div class="panel-body">
-    <div class="form-horizontal">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-offset-4 col-md-4 col-padded">
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon2">Background</span>
-              <input type="text"
-                      class="form-control"
-                      id="profileBackgroundInput"
-                      aria-describedby="basic-addon2"
-                      data-bind='value: name,
-                      autocomplete: { source: $parent.backgroundOptions,
-                      onselect: $parent.setBackground }' />
+    <preview-edit params="validation: validation,
+                          data: background,
+                          save: save">
+      <!-- ko if: $component.isEdit -->
+      <div class="panel-body">
+        <form class="form-horizontal" data-bind="validate: $component.validation">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-4 col-padded">
+                <label for="profileBackgroundInput">Background:</label>
+                <input type="text"
+                        class="form-control"
+                        id="profileBackgroundInput"
+                        name="name"
+                        aria-describedby="basic-addon2"
+                        data-bind='value: name,
+                        autocomplete: { source: $parents[1].backgroundOptions,
+                        onselect: $parents[1].setBackground }' />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-padded">
+                <label for="backgroundTraitsTextarea">Personality Traits:</label>
+                <textarea id="backgroundTraitsTextarea"
+                          class="form-control dark-area"
+                          rows="4"
+                          data-bind="value: personalityTrait">
+                </textarea>
+              </div>
+              <div class="col-md-6 col-padded">
+                <label for="backgroundIdealsTextarea">Ideals:</label>
+                <textarea id="backgroundIdealsTextarea"
+                          class="form-control dark-area"
+                          rows="4"
+                          data-bind="value: ideal">
+                </textarea>
+              </div>
+              <div class="col-md-6 col-padded">
+                <label for="backgroundBondsTextarea">Bonds:</label>
+                <textarea id="backgroundBondsTextarea"
+                          class="form-control dark-area"
+                          rows="4"
+                          data-bind="value: bond">
+                </textarea>
+              </div>
+              <div class="col-md-6 col-padded">
+                <label for="backgroundFlawsTextarea">Flaws:</label>
+                <textarea id="backgroundFlawsTextarea"
+                          class="form-control dark-area"
+                          rows="4"
+                          data-bind="value: flaw">
+                </textarea>
+              </div>
             </div>
           </div>
+        </form>
+      </div>
+      <!-- /ko -->
+
+      <!-- ko ifnot: $component.isEdit -->
+      <div class="row">
+        <div class="col-sm-11 col-xs-12">
+          <h3 data-bind="text: name"></h3>
         </div>
-        <div class="row">
-          <div class="col-md-6 col-padded">
-          <label for="backgroundArea">Personality Traits:</label>
-            <textarea id="backgroundTraitsTextarea" class="form-control dark-area" rows="4"
-              data-bind="value: personalityTrait"></textarea>
+        <div class="col-sm-1">
+          <span class="fa fa-pencil-square-o fa-color-hover-success fa-lg clickable pull-right"
+          data-bind="click: $component.toggleEditForm">
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <label for="backgroundTraitsTextarea">Personality Traits:</label>
+          <div data-bind="text: personalityTrait">
           </div>
-          <div class="col-md-6 col-padded">
-          <label for="idealsArea">Ideals:</label>
-            <textarea id="backgroundIdealsTextarea" class="form-control dark-area" rows="4"
-              data-bind="value: ideal"></textarea>
+        </div>
+        <div class="col-md-6 col-padded">
+          <label for="backgroundIdealsTextarea">Ideals:</label>
+          <div data-bind="text: ideal">
           </div>
-          <div class="col-md-6 col-padded">
-          <label for="bondsArea">Bonds:</label>
-            <textarea id="backgroundBondsTextarea" class="form-control dark-area" rows="4"
-              data-bind="value: bond"></textarea>
+        </div>
+        <div class="col-md-6 col-padded">
+          <label for="backgroundBondsTextarea">Bonds:</label>
+          <div data-bind="text: bond">
           </div>
-          <div class="col-md-6 col-padded">
-          <label for="flawsArea">Flaws:</label>
-            <textarea id="backgroundFlawsTextarea" class="form-control dark-area" rows="4"
-              data-bind="value: flaw"></textarea>
+        </div>
+        <div class="col-md-6 col-padded">
+          <label for="backgroundFlawsTextarea">Flaws:</label>
+          <div data-bind="text: flaw">
           </div>
         </div>
       </div>
-    </div>
-  </div>
+      <!-- /ko -->
+    </preview-edit>
   </div>
 </div>
