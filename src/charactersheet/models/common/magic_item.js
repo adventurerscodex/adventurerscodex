@@ -13,7 +13,7 @@ export class MagicItem extends KOModel {
     static __skeys__ = ['core', 'magicItems'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid', 'maxCharges', 'usedCharges']
     };
 
     coreUuid = ko.observable(null);
@@ -33,8 +33,7 @@ export class MagicItem extends KOModel {
     chargesDisplay = ko.pureComputed(() => {
         if (this.maxCharges() == 0) {
             return 'N/A';
-        }
-        else {
+        } else {
             return this.usedCharges();
         }
     });
@@ -67,3 +66,30 @@ export class MagicItem extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 }
+
+MagicItem.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            maxlength: 32
+        },
+        rarity: {
+            maxlength: 32
+        },
+        maxCharges: {
+            number: true,
+            min: 0
+        },
+        usedCharges: {
+            number: true,
+            min: 0
+        },
+        weight: {
+            number: true,
+            min: 0
+        }
+    }
+};

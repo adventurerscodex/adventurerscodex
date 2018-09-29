@@ -102,7 +102,6 @@ export function CampaignMapsAndImagesViewModel() {
     self.addMapOrImage = async function() {
         var mapOrImage = self.blankMapOrImage();
         mapOrImage.coreUuid(CoreManager.activeCore().uuid());
-        mapOrImage.encounterUuid(self.encounterId());
         const imageResponse = await mapOrImage.ps.create();
         self.mapsOrImages.push(imageResponse.object);
         self.blankMapOrImage(new Image());

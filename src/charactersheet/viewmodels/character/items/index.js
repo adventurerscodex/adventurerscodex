@@ -28,6 +28,8 @@ export function ItemsViewModel() {
     self.items = ko.observableArray([]);
     self.blankItem = ko.observable(new Item());
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
@@ -66,6 +68,35 @@ export function ItemsViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addItem();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Item.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Item.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -151,6 +182,7 @@ export function ItemsViewModel() {
         const newItem = await self.blankItem().ps.create();
         self.items.push(newItem.object);
         Notifications.item.changed.dispatch();
+        self.toggleAddModal();
         self.blankItem(new Item());
     };
 

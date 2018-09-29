@@ -16,12 +16,10 @@ export function MagicItemsViewModel() {
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
-        'maxCharges asc': { field: 'maxCharges', direction: 'asc', numeric: true},
-        'maxCharges desc': { field: 'maxCharges', direction: 'desc', numeric: true},
         'weight asc': { field: 'weight', direction: 'asc', numeric: true},
         'weight desc': { field: 'weight', direction: 'desc', numeric: true},
-        'usedCharges asc': { field: 'usedCharges', direction: 'asc', numeric: true},
-        'usedCharges desc': { field: 'usedCharges', direction: 'desc', numeric: true},
+        'usedCharges asc': { field: 'usedCharges', direction: 'asc'},
+        'usedCharges desc': { field: 'usedCharges', direction: 'desc'},
         'attuned asc': { field: 'attuned', direction: 'asc', booleanType: true},
         'attuned desc': { field: 'attuned', direction: 'desc', booleanType: true}
     };
@@ -29,6 +27,8 @@ export function MagicItemsViewModel() {
     self.blankMagicItem = ko.observable(new MagicItem());
     self.magicItems = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
@@ -91,12 +91,9 @@ export function MagicItemsViewModel() {
 
     self.attunedHasChanged = async function() {
         await this.ps.save();
-        // self.magicItems().forEach(function(e, i, _) {
-        //     e.save();
-        // });
     };
 
-    // Prepopulate methods
+    // Pre-populate methods
 
     self.populateMagicItems = function(label, value) {
         var magicItems = DataRepository.magicItems[label];
@@ -114,6 +111,35 @@ export function MagicItemsViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addItem();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...MagicItem.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...MagicItem.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -167,19 +193,20 @@ export function MagicItemsViewModel() {
     self.magicItemsPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys = DataRepository.magicItems ? Object.keys(DataRepository.magicItems) : [];
-        var results = keys.filter(function(name, idx, _) {
+        var results = keys.filter(function(name) {
             return name.toLowerCase().indexOf(term) > -1;
         });
         response(results);
     };
 
-    //Manipulating magic items
+    // Manipulating magic items
     self.addItem = async () => {
         var item = self.blankMagicItem();
         item.coreUuid(CoreManager.activeCore().uuid());
         const newMagicItem = await item.ps.create();
         self.magicItems.push(newMagicItem.object);
         self.blankMagicItem(new MagicItem());
+        self.toggleAddModal();
         Notifications.magicItem.changed.dispatch();
     };
 

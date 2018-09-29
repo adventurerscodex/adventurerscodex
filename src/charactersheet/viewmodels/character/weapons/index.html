@@ -36,9 +36,9 @@
             <span data-bind="css: sortArrow('quantity')"></span>
           </th>
           <th>
-            <a data-toggle="modal"
-               data-target="#addWeapon" href="#"
-               id="weaponAddIcon">
+            <a data-bind="click: toggleAddModal"
+               id="weaponAddIcon"
+               href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -80,7 +80,7 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedWeapons().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addWeapon" href="#"
+          <td data-bind="click: toggleAddModal"
             colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new weapon
@@ -95,12 +95,14 @@
         <span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span>
       </span>
     </div> <!-- end panel footer -->
+
     <!-- Add Modal -->
     <div class="modal fade"
          id="addWeapon"
          tabindex="-1"
          role="dialog"
-         data-bind="modal: { onopen: modalFinishedOpening }"
+         data-bind="modal: { onopen: modalFinishedOpening,
+          open: addModalOpen }"
          aria-labelledby="addWeaponLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,7 +116,7 @@
             <h4 class="modal-title" id="addWeaponLabel">Add a weapon to your arsenal.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
                        class="col-sm-2 control-label">Name</label>
@@ -122,6 +124,7 @@
                   <input type="text"
                          class="form-control"
                          id="weaponAddNameInput"
+                         name="name"
                          placeholder="Short Sword"
                          data-bind='textInput: blankWeapon().name, autocomplete: {
                           source: weaponsPrePopFilter, onselect: populateWeapon},
@@ -134,6 +137,7 @@
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
+                           name="damage"
                            id="weaponAddDamageInput"
                            placeholder="1D4"
                            data-bind='textInput: blankWeapon().damage'>
@@ -145,6 +149,7 @@
                 <div class="col-sm-10">
                   <input type="number" class="form-control"
                          id="weaponAddMagicalModifierInput"
+                         name="magicalModifier"
                          placeholder="Place magical modifier here"
                          data-bind='textInput: blankWeapon().magicalModifier'>
                 </div>
@@ -155,6 +160,7 @@
                 <div class="col-sm-10">
                   <input type="number" class="form-control"
                          id="weaponAddToHitModifierInput"
+                         name="toHitModifier"
                          placeholder="Adjust to hit modifier here"
                          data-bind='textInput: blankWeapon().toHitModifier'>
                 </div>
@@ -166,6 +172,7 @@
                   <input class="form-control"
                          id="weaponAddTypeInput"
                          placeholder="Ranged"
+                         name="type"
                          data-bind="textInput: blankWeapon().type, autocomplete: {
                           source: blankWeapon().weaponTypeOptions,
                           onselect: setWeaponType }">
@@ -178,6 +185,7 @@
                   <input class="form-control"
                          id="weaponAddHandednessInput"
                          placeholder="One-Handed"
+                         name="handedness"
                          data-bind="textInput: blankWeapon().handedness, autocomplete: {
                           source: blankWeapon().weaponHandednessOptions,
                           onselect: setWeaponHandedness }">
@@ -190,6 +198,7 @@
                   <input class="form-control"
                          id="weaponAddProficiencyInput"
                          placeholder="Simple"
+                         name="proficiency"
                          data-bind="textInput: blankWeapon().proficiency, autocomplete: {
                           source: blankWeapon().weaponProficiencyOptions,
                           onselect: setWeaponProficiency }">
@@ -203,12 +212,14 @@
                     <input type="number" min="0" class="form-control input-jquery-addon"
                          id="weaponAddPriceInput"
                          placeholder="5"
+                         name="price"
                          data-bind='textInput: blankWeapon().price'>
                          <span data-bind="console.log($parent.id)"></span>
                      <span class="input-group-addon input-group-addon-jquery">
                       <input class="form-control"
                              id="weaponAddCurrencyDenominationInput"
                              placeholder="GP"
+                             name="currencyDenomination"
                              data-bind="textInput: blankWeapon().currencyDenomination, autocomplete: {
                           source: blankWeapon().weaponCurrencyDenominationOptions,
                           onselect: setWeaponCurrencyDenomination }">
@@ -223,6 +234,7 @@
                     <input type="number" min="0" class="form-control"
                            id="weaponAddWeightInput"
                            placeholder="6"
+                           name="weight"
                            data-bind='textInput: blankWeapon().weight'>
                   </div>
               </div>
@@ -232,6 +244,7 @@
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
+                           name="range"
                            id="weaponAddRangeInput"
                            placeholder="25/100"
                            data-bind='textInput: blankWeapon().range'>
@@ -244,6 +257,7 @@
                   <input class="form-control"
                          id="weaponAddDamageTypeInput"
                          placeholder="Fire"
+                         name="damageType"
                          data-bind="textInput: blankWeapon().damageType, autocomplete: {
                           source: blankWeapon().weaponDamageTypeOptions,
                           onselect: setWeaponDamageType }">
@@ -256,6 +270,7 @@
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="weaponAddPropertyInput"
+                         name="property"
                          placeholder="Finesse"
                          data-bind="textInput: blankWeapon().property, autocomplete: {
                           source: blankWeapon().weaponPropertyOptions,
@@ -269,6 +284,7 @@
                     <input type="number" min="0" class="form-control"
                            id="weaponAddQuantityInput"
                            placeholder="1"
+                           name="quantity"
                            data-bind='textInput: blankWeapon().quantity'>
                   </div>
               </div>
@@ -279,6 +295,7 @@
                   <div class="col-sm-10">
                     <textarea type="password"
                               class="form-control"
+                              name="description"
                               id="weaponAddDescriptionTextarea"
                               rows="4"
                               placeholder="A sword...that is short..."
@@ -286,17 +303,15 @@
                     </textarea>
                   </div>
               </div>
-            </form>
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-default"
                         id="weaponAddCancelButton"
                         data-dismiss="modal">Cancel</button>
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="weaponAddAddButton"
-                        data-bind='click: addWeapon'
-                        data-dismiss="modal">Add</button>
+                        data-bind='disable: !addFormIsValid()'>Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -306,6 +321,7 @@
                     </i><sm>
                 </p>
               </div>
+            </form>
           </div> <!-- Modal Body -->
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
@@ -382,7 +398,7 @@
                 </div>
               </div> <!-- End Preview Tab -->
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="weaponsModalEdit">
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
                            class="col-sm-2 control-label">Name</label>
@@ -390,6 +406,7 @@
                       <input type="text"
                              class="form-control"
                              id="weaponEditNameInput"
+                             name="name"
                              placeholder="Short Sword"
                              data-bind='textInput: name,
                              hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -402,6 +419,7 @@
                         <input type="text"
                                class="form-control"
                                id="weaponEditDamageInput"
+                               name="damage"
                                placeholder="1D4"
                                data-bind='textInput: damage'>
                       </div>
@@ -412,6 +430,7 @@
                     <div class="col-sm-10">
                       <input type="number" class="form-control"
                              id="weaponEditMagicalModifierInput"
+                             name="magicalModifier"
                              placeholder="Place magical modifier here"
                              data-bind='textInput: magicalModifier'>
                     </div>
@@ -422,6 +441,7 @@
                     <div class="col-sm-10">
                       <input type="number" class="form-control"
                              id="weaponEditToHitModifierInput"
+                             name="toHitModifier"
                              placeholder="Adjust to hit modifier here"
                              data-bind='textInput: toHitModifier'>
                     </div>
@@ -432,6 +452,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditTypeInput"
+                             name="type"
                              placeholder="Ranged"
                              data-bind="textInput: type">
                       </div>
@@ -442,6 +463,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditHandednessInput"
+                             name="handedness"
                              placeholder="One-Handed"
                              data-bind="textInput: handedness">
                       </div>
@@ -452,6 +474,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditProficiencyInput"
+                             name="proficiency"
                              placeholder="Simple"
                              data-bind="textInput: proficiency">
                       </div>
@@ -464,11 +487,13 @@
                         <input type="number" min="0" class="form-control input-jquery-addon"
                              id="weaponEditPriceInput"
                              placeholder="5"
+                             name="price"
                              data-bind='textInput: price'>
                          <span class="input-group-addon input-group-addon-jquery">
                           <input class="form-control"
                                  id="weaponEditCurrencyDenominationInput"
                                  placeholder="GP"
+                                 name="currencyDenomination"
                                  data-bind="textInput: currencyDenomination">
                         </span>
                       </div>
@@ -481,6 +506,7 @@
                         <input type="number" min="0" class="form-control"
                                id="weaponEditWeightInput"
                                placeholder="6"
+                               name="weight"
                                data-bind='textInput: weight'>
                       </div>
                   </div>
@@ -491,6 +517,7 @@
                         <input type="text"
                                class="form-control"
                                id="weaponEditRangeInput"
+                               name="range"
                                placeholder="25/100"
                                data-bind='textInput: range'>
                       </div>
@@ -501,6 +528,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditDamageTypeInput"
+                             name="damageType"
                              placeholder="Fire"
                              data-bind="textInput: damageType">
                       </div>
@@ -511,6 +539,7 @@
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditPropertyInput"
+                             name="property"
                              placeholder="Finesse"
                              data-bind="textInput: property">
                       </div>
@@ -523,6 +552,7 @@
                         <input type="number" min="0" class="form-control"
                                id="weaponEditQuantityInput"
                                placeholder="1"
+                               name="quantity"
                                data-bind='textInput: quantity'>
                       </div>
                   </div>
@@ -535,15 +565,17 @@
                                   class="form-control"
                                   id="weaponEditDescriptionTextarea"
                                   rows="4"
+                                  name="description"
                                   placeholder="A sword...that is short..."
                                   data-bind='textInput: description'>
                         </textarea>
                       </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button"
+                    <button type="submit"
                             class="btn btn-primary"
                             id="weaponEditDoneButton"
+                            data-bind='disable: !$parent.addFormIsValid()'
                             data-dismiss="modal">Done</button>
                   </div>
                 </form>

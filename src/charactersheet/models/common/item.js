@@ -59,3 +59,27 @@ export class Item extends KOModel {
         return this.cost() ? this.cost() + ' ' + this.currencyDenomination() : '';
     });
 }
+
+Item.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        quantity: {
+            number: true,
+            min: 0
+        },
+        weight: {
+            number: true,
+            min: 0
+        },
+        cost: {
+            number: true,
+            min: 0
+        },
+        currencyDenomination: {
+            maxlength: 16
+        }
+    }
+};

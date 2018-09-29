@@ -91,7 +91,7 @@ export function SpellbookViewModel() {
     };
 
     self.setSpellSaveAttr = function(label, value) {
-        self.blankSpell().spellSaveAttr(value);
+        self.blankSpell().spellSaveAttribute(value);
     };
 
     self.setCastingTime = function(label, value) {
@@ -153,6 +153,7 @@ export function SpellbookViewModel() {
         if (self.modalOpen()) {
             const response = await self.currentEditItem().ps.save();
             Utility.array.updateElement(self.spellbook(), response.object, self.editItemIndex);
+            self.valueHasChanged();
         }
 
         self.modalOpen(false);
@@ -240,6 +241,8 @@ export function SpellbookViewModel() {
         const newSpell = await spell.ps.create();
         newSpell.object.prepared.subscribe(self.save, newSpell.object);
         self.spellbook.push(newSpell.object);
+
+        this.valueHasChanged();
         self.blankSpell(new Spell());
         self.toggleAddModal();
     };
@@ -253,11 +256,12 @@ export function SpellbookViewModel() {
         self.editItemIndex = spell.uuid;
         self.currentEditItem(new Spell());
         self.currentEditItem().importValues(spell.exportValues());
+        self.currentEditItem().updateValues();
         self.modalOpen(true);
     };
 
     self.valueHasChanged = function() {
-        self.spellbook().forEach(function(e, i, _) {
+        self.spellbook().forEach(function(e) {
             e.updateValues();
         });
     };
