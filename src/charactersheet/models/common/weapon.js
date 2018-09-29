@@ -15,7 +15,7 @@ export class Weapon extends KOModel {
     static __skeys__ = ['core', 'weapons'];
 
     static mapping = {
-        include: ['coreUuid', 'description']
+        include: ['coreUuid', 'description', 'magicalModifier']
     };
 
     coreUuid = ko.observable(null);
