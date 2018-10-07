@@ -208,7 +208,6 @@ export function OtherStatsViewModel() {
         }
 
         if (self.hasInitiativeChanged()) {
-            console.log('initiative');
             await self.calculateInitiativeLabel();
         }
 
