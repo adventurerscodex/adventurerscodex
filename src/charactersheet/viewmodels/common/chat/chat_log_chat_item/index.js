@@ -67,22 +67,23 @@ export function ChatLogChatItem(params) {
     });
 
     self.saveToNotes = function() {
-        var key = CoreManager.activeCore().uuid();
-        var note = PersistenceService.findByPredicates(Note, [
-            new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('isSavedChatNotes', true)
-        ])[0];
-        if (!note) {
-            note = new Note();
-            note.characterId(key);
-            note.text('# Saved from Chat');
-            note.isSavedChatNotes(true);
-        }
-        note.text(note.text() + '\n\n' + self.message.toText());
-        note.save();
-
-        Notifications.notes.changed.dispatch();
-        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
+// TODO: Refactor
+//         var key = CoreManager.activeCore().uuid();
+//         var note = PersistenceService.findByPredicates(Note, [
+//             new KeyValuePredicate('characterId', key),
+//             new KeyValuePredicate('isSavedChatNotes', true)
+//         ])[0];
+//         if (!note) {
+//             note = new Note();
+//             note.coreUuid(key);
+//             note.text('# Saved from Chat');
+//             note.isSavedChatNotes(true);
+//         }
+//         note.text(note.text() + '\n\n' + self.message.toText());
+//         note.save();
+//
+//         Notifications.notes.changed.dispatch();
+//         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
     /* Card Methods */
 

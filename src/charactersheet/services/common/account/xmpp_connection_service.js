@@ -21,12 +21,12 @@ var XMPPServiceDefaultConfig = {
     },
 
     credentialsHelper: function() {
-        var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
+        var bareJID = 'sonicrocketman2@adventurerscodex.com' //UserServiceManager.sharedService().user().xmpp.jid;
         var resource = 'Adventurers Codex (Web)';
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         return {
             jid: bareJID + '/' + resource,
-            password: token.accessToken()
+            password: 'zmpmvLtMOjx4t0N3Fd5BTERMUQaTLB' //token.accessToken()
         };
     },
 

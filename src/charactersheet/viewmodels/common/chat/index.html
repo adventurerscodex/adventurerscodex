@@ -1,11 +1,11 @@
-<!--ko ifnot: isConnectedToParty()-->
+<!--ko ifnot: isConnectedToParty -->
 <div class="detail-place-holder well text-center">
   <p class="lead text-muted heading">You are not connected to a Party.</p>
   <p class="text-muted">Create or join a Party with friends to Chat!<br/>
     Create a free account <a href="https://app.adventurerscodex.com/accounts/register/">here</a> or learn more about the Chat <a href="https://adventurerscodex.com/collaboration.html#chat" target="_blank">here</a>.</p>
 </div>
 <!-- /ko -->
-<!--ko if: isConnectedToParty()-->
+<!--ko if: isConnectedToParty -->
 <div class="row">
   <div data-bind="css: listCSS">
     <div class="panel panel-default">
@@ -25,7 +25,9 @@
     </div>
   </div>
   <div data-bind="css: detailViewModelCSS">
-    <chat-detail params="room: selectedObject"></chat-detail>
+    <!-- ko if: selectedObject -->
+    <chat-detail params="chatCell: selectedObject"></chat-detail>
+    <!-- /ko -->
   </div>
 </div>
 <chat-modal params="isOpen: modalIsOpen, onopen: modalFinishedOpening, onclose: modalFinishedClosing"></chat-modal>

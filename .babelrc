@@ -1,14 +1,10 @@
 {
   // Use babel-recommended settings, and don't convert to CommonJS modules
-  "presets": [["env", { "modules": false }]],
+  "presets": ["env", "es2015", "stage-0"],
   "plugins": [
     "transform-object-rest-spread",
     "transform-class-properties"
     ],
   "env": {
-    "test": {
-      // Reset exclude paramter as Istanbul ignores coverage for tests by default
-      "plugins": [["istanbul", {"exclude": ["node_modules"]}]]
-    }
   }
 }

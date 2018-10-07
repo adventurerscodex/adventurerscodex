@@ -8,7 +8,7 @@ export var PersistenceService = {
     enableCompression: false,
     master: '__master__',
     version: '__version__',
-    storage: localStorage,
+    storage: sessionStorage,
     registry: {}
 };
 
