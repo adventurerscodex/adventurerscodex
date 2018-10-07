@@ -56,4 +56,49 @@ export class Wealth extends KOModel {
     totalWeightLabel = ko.pureComputed(() => {
         return this.totalWeight() + ' (lbs)';
     });
+
+    toSchemaValues = (values) => {
+        if (values.platinum === '') {
+            values.platinum = 0;
+        }
+        if (values.gold === '') {
+            values.gold = 0;
+        }
+        if (values.electrum === '') {
+            values.electrum = 0;
+        }
+        if (values.silver === '') {
+            values.silver = 0;
+        }
+        if (values.copper === '') {
+            values.copper = 0;
+        }
+
+        return values;
+    }
 }
+
+Wealth.validationConstraints = {
+    rules: {
+        platinum: {
+            number: true,
+            min: 0
+        },
+        gold: {
+            number: true,
+            min: 0
+        },
+        silver: {
+            number: true,
+            min: 0
+        },
+        copper: {
+            number: true,
+            min: 0
+        },
+        electrum: {
+            number: true,
+            min: 0
+        }
+    }
+};

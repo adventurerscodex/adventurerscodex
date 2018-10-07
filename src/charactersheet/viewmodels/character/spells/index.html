@@ -381,32 +381,37 @@
             <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="spellsModalPreview">
                 <div id="spellSchoolIcon" data-bind="css: $parent.spellSchoolIconCSS">
-                <div class="h3">
-                  <span data-bind="text: nameLabel" id="spellsPreviewNameLabel"></span>&nbsp;
-                  <small data-bind="text: spellSummaryLabel" id="spellsPreviewSpellSummaryLabelLabel"></small>
-                </div>
-                <div class="row">
-                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type" id="spellsPreviewTypeLabel"></span></div>
-                  <!-- ko if: type() == 'Savings Throw' -->
-                  <div class="col-sm-6 col-xs-12"><b>Save Attr:</b>&nbsp;<span data-bind="text: spellSaveAttribute" id="spellsPreviewTypeLabel"></span></div>
-                  <!-- /ko -->
-                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel" id="spellsPreviewDamageLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: damageType" id="spellsPreviewDamageTypeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: castingTime" id="spellsPreviewCastTimeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: range" id="spellsPreviewRangeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: components" id="spellsPreviewCompenentsLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Duration:</b>&nbsp;<span data-bind="text: duration" id="spellsPreviewDurationLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Material Components:</b>&nbsp;<span data-bind="text: materialComponents" id="spellsPreviewMaterialCompenentsLabel"></span></div>
-                </div>
-                <hr />
-                <h4>Description</h4>
-                <div class="row row-padded">
-                  <div class="col-xs-12 col-padded">
-                    <div data-bind="html: descriptionHTML"
-                         class="preview-modal-overflow"></div>
+                  <div class="h3">
+                    <span data-bind="text: nameLabel" id="spellsPreviewNameLabel"></span>&nbsp;
+                    <small data-bind="text: spellSummaryLabel" id="spellsPreviewSpellSummaryLabelLabel"></small>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type" id="spellsPreviewTypeLabel"></span></div>
+                    <!-- ko if: type() == 'Savings Throw' -->
+                    <div class="col-sm-6 col-xs-12"><b>Save Attr:</b>&nbsp;<span data-bind="text: spellSaveAttribute" id="spellsPreviewTypeLabel"></span></div>
+                    <!-- /ko -->
+                    <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: spellDamageLabel" id="spellsPreviewDamageLabel"></span></div>
+                    <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: damageType" id="spellsPreviewDamageTypeLabel"></span></div>
+                    <div class="col-sm-6 col-xs-12"><b>Casting Time:</b>&nbsp;<span data-bind="text: castingTime" id="spellsPreviewCastTimeLabel"></span></div>
+                    <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: range" id="spellsPreviewRangeLabel"></span></div>
+                    <div class="col-sm-6 col-xs-12"><b>Components:</b>&nbsp;<span data-bind="text: components" id="spellsPreviewCompenentsLabel"></span></div>
+                    <div class="col-sm-6 col-xs-12"><b>Duration:</b>&nbsp;<span data-bind="text: duration" id="spellsPreviewDurationLabel"></span></div>
+                    <div class="col-sm-6 col-xs-12"><b>Material Components:</b>&nbsp;<span data-bind="text: materialComponents" id="spellsPreviewMaterialCompenentsLabel"></span></div>
+                  </div>
+                  <hr />
+                  <h4>Description</h4>
+                  <div class="row row-padded">
+                    <div class="col-xs-12 col-padded">
+                      <div data-bind="html: descriptionHTML"
+                          class="preview-modal-overflow"></div>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <div class="modal-footer">
+                  <button type="button"
+                          class="btn btn-primary"
+                          data-dismiss="modal">Done</button>
+                </div>
               </div>
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
                 <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
