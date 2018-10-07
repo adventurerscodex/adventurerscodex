@@ -18,7 +18,20 @@ export class PreviewEditViewModel {
     constructor(params) {
         this.data = params.data;
         this.save = params.save;
-        this.validationConstraints = params.validation;
+        this.reset = params.reset;
+
+        this.validation = {
+            updateHandler: ($element) => {
+                this.isEditFormValid($element.valid());
+            },
+            // Deep copy of properties in object
+            ...params.validation
+        };
+    }
+
+    cancelAndResetForm = async () => {
+        await this.reset();
+        this.toggleEditForm();
     }
 
     toggleEditForm = () => {
@@ -29,25 +42,25 @@ export class PreviewEditViewModel {
         await this.save();
         this.toggleEditForm();
     };
-
-    validation = {
-        updateHandler: ($element) => {
-            this.isEditFormValid($element.valid());
-        },
-        // Deep copy of properties in object
-        ...this.validationConstraints
-    };
 }
 
 ko.components.register('preview-edit', {
     viewModel: PreviewEditViewModel,
     template: '\
         <!-- ko if: isEdit -->\
-        <button type="button"\
-                class="btn btn-sm btn-primary pull-right"\
-                data-bind="click: saveAndToggleForm, disable: !isEditFormValid()">\
-        Save\
-        </button>\
+        <div class="row row-padded-horizontal">\
+            <button type="button"\
+                    class="btn btn-sm btn-primary pull-right"\
+                    data-bind="click: saveAndToggleForm, disable: !isEditFormValid()">\
+            Save\
+            </button>\
+            <button type="button"\
+                    class="btn btn-sm btn-default pull-right"\
+                    style="margin-right: 10px;"\
+                    data-bind="click: cancelAndResetForm">\
+            Cancel\
+            </button>\
+        </div>\
         <!-- /ko -->\
         <!-- ko template: { nodes: $componentTemplateNodes, data: data } -->\
         <!-- /ko -->'

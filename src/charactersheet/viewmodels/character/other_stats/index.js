@@ -30,8 +30,33 @@ export function OtherStatsViewModel() {
     self.initiativePopover = ko.observable();
     self.proficiencyPopover = ko.observable();
     self.armorClassPopover = ko.observable();
+    self.loaded = ko.observable(false);
+
+    self.hasProficiencyChanged = ko.observable(false);
+    self.hasInspirationChanged = ko.observable(false);
+    self.hasInitiativeChanged = ko.observable(false);
+    self.hasAcChanged = ko.observable(false);
+    self.hasLevelChanged = ko.observable(false);
+    self.hasExperienceChanged = ko.observable(false);
+
+    self.data = {};
 
     self.load = async () => {
+        self.loaded(false);
+        await self.reset();
+
+        self.calculateInitiativeLabel();
+        self.updateArmorClass();
+        self.calculatedProficiencyLabel();
+
+        // Subscriptions
+        self.setUpModelSubscriptions();
+        Notifications.armorClass.changed.add(self.updateArmorClass);
+        Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
+        Notifications.proficiencyBonus.changed.add(self.calculatedProficiencyLabel);
+    };
+
+    self.reset = async () => {
         var key = CoreManager.activeCore().uuid();
         var otherStats = await OtherStats.ps.read({uuid: key});
         self.otherStats(otherStats.object);
@@ -39,21 +64,29 @@ export function OtherStatsViewModel() {
         const profile = await Profile.ps.read({uuid: key});
         self.profile(profile.object);
 
-        self.calculateInitiativeLabel();
-        self.updateArmorClass();
-        self.calculatedProficiencyLabel();
+        self.data = {
+            otherStats: self.otherStats,
+            profile: self.profile
+        };
 
-        // Subscriptions
+        self.loaded(true);
+    };
+
+    self.setUpModelSubscriptions = () => {
         self.otherStats().proficiencyModifier.subscribe(self.proficiencyHasChanged);
         self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
         self.otherStats().initiativeModifier.subscribe(self.initiativeHasChanged);
         self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
-        self.otherStats().speed.subscribe(self.dataHasChanged);
         self.profile().level.subscribe(self.levelDataHasChanged);
         self.profile().experience.subscribe(self.experienceDataHasChanged);
-        Notifications.armorClass.changed.add(self.updateArmorClass);
-        Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
-        Notifications.proficiencyBonus.changed.add(self.calculatedProficiencyLabel);
+    };
+
+    self.validation = {
+        rules : {
+            // Deep copy of properties in object
+            ...Profile.validationConstraints.rules,
+            ...OtherStats.validationConstraints.rules
+        }
     };
 
     // Calculate proficiency label and popover
@@ -111,45 +144,74 @@ export function OtherStatsViewModel() {
 
     self.toggleInspiration = async () => {
         self.otherStats().inspiration(!self.otherStats().inspiration());
-        await self.inspirationHasChanged();
     };
 
     self.inspirationHasChanged = async () => {
-        await self.save();
-        Notifications.otherStats.inspiration.changed.dispatch();
-    };
-
-    self.dataHasChanged = function() {
-        self.save();
+        self.hasInspirationChanged(true);
     };
 
     self.initiativeHasChanged = async () => {
-        await self.save();
-        self.calculateInitiativeLabel();
+        self.hasInitiativeChanged(true);
     };
 
     self.armorClassModifierDataHasChanged = async () => {
-        await self.save();
-        Notifications.stats.armorClassModifier.changed.dispatch();
+        self.hasAcChanged(true);
     };
 
     self.levelDataHasChanged = async () => {
-        await self.profile().ps.save();
-        Notifications.profile.level.changed.dispatch();
+        self.hasLevelChanged(true);
     };
 
     self.experienceDataHasChanged = async () => {
-        await self.profile().ps.save();
-        Notifications.profile.experience.changed.dispatch();
+        self.hasExperienceChanged(true);
     };
 
     self.proficiencyHasChanged = async () => {
-        await self.save();
-        Notifications.otherStats.proficiency.changed.dispatch();
+        self.hasProficiencyChanged(true);
+    };
+
+    self.resetSubscriptions = () => {
+        self.setUpModelSubscriptions();
+        self.hasInspirationChanged(false);
+        self.hasAcChanged(false);
+        self.hasLevelChanged(false);
+        self.hasExperienceChanged(false);
+        self.hasProficiencyChanged(false);
+        self.hasInitiativeChanged(false);
     };
 
     self.save = async () => {
-        await self.otherStats().ps.save();
+        const otherStatsResponse = await self.otherStats().ps.save();
+        const profileResponse = await self.profile().ps.save();
+
+        self.otherStats(otherStatsResponse.object);
+        self.profile(profileResponse.object);
+
+        if (self.hasInspirationChanged()) {
+            Notifications.otherStats.inspiration.changed.dispatch();
+        }
+
+        if (self.hasAcChanged()) {
+            Notifications.stats.armorClassModifier.changed.dispatch();
+        }
+
+        if (self.hasLevelChanged()) {
+            Notifications.profile.level.changed.dispatch();
+        }
+
+        if (self.hasExperienceChanged()) {
+            Notifications.profile.experience.changed.dispatch();
+        }
+
+        if (self.hasProficiencyChanged()) {
+            Notifications.otherStats.proficiency.changed.dispatch();
+        }
+
+        if (self.hasInitiativeChanged()) {
+            await self.calculateInitiativeLabel();
+        }
+
+        self.resetSubscriptions();
     };
 }
 

@@ -1,71 +1,159 @@
-<!--AC, Initiative, Speed-->
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">AC&nbsp;
-          <span class="fa fa-info-circle" id="otherStatsAcPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: armorClassPopover }"></span>
-       </span>
-       <span class="input-group-addon" id="otherStatsAcSpan" data-bind="text: armorClass"></span>
-       <input type="number" class="form-control" id="otherStatsAcModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().armorClassModifier">
-     </div>
-   </div>
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">
-        Proficiency Bonus&nbsp;
-         <span class="fa fa-info-circle" id="otherStatsProficiencyPopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: proficiencyPopover }"></span>
-      </span>
-       <span class="input-group-addon" id="otherStatsProficiencySpan" data-bind="text: proficiencyLabel()"></span>
-       <input type="number" class="form-control" id="otherStatsProficiencyBonusModifierInput" aria-describedby="basic-addon2" data-bind="value: otherStats().proficiencyModifier">
-     </div>
-   </div>
- </div>
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Initiative&nbsp;
-          <span class="fa fa-info-circle" id="otherStatsInitiativePopoverIconSpan" style="cursor:pointer;" data-bind="popover: { content: initiativePopover }"></span>
-       </span>
-       <span class="input-group-addon" id="otherStatsInitiativeSpan" data-bind="text: initiativeLabel"></span>
-       <input type="number" class="form-control" id="otherStatsInitiativeModiferInput" aria-describedby="basic-addon2" data-bind="value: otherStats().initiativeModifier">
-     </div>
-   </div>
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Speed</span>
-       <input type="number" class="form-control" id="otherStatsSpeedInput" aria-describedby="basic-addon2" data-bind="value: otherStats().speed" min="0">
-     </div>
-   </div>
- </div>
- <!--  Level and exp -->
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Level</span>
-       <input type="number" class="form-control" id="otherStatsLevelInput" aria-describedby="basic-addon2"
-        data-bind="value: profile().level" min="0">
-     </div>
-   </div>
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon" id="basic-addon2">Experience</span>
-       <input type="number" class="form-control" id="otherStatsExperienceInput" aria-describedby="basic-addon2"
-        data-bind="value: profile().experience" min="0">
-     </div>
-   </div>
- </div>
- <div class="row">
-   <div class="col-md-6 col-padded">
-     <div class="input-group">
-       <span class="input-group-addon">Inspiration</span>
-       <div class="form-control hit-dice-list">
-          <!-- ko if: otherStats().inspiration -->
-          <span data-bind="click: toggleInspiration" class="inspiration-full"></span>
-          <!-- /ko -->
-          <!-- ko ifnot: otherStats().inspiration -->
-          <span data-bind="click: toggleInspiration" class="inspiration-empty"></span>
-          <!-- /ko -->
+<!-- AC, Initiative, Speed, Proficiency -->
+<!-- ko if: loaded -->
+<preview-edit params="validation: validation,
+                      data: data,
+                      save: save,
+                      reset: reset">
+  <!-- ko if: $component.isEdit -->
+  <div class="panel-body">
+    <form class="form-horizontal" data-bind="validate: $component.validation">
+      <div class="form-group">
+        <div class="row" data-bind="with: otherStats">
+          <div class="col-md-6 col-padded">
+            <label>Proficiency Bonus</label>
+            <input type="number"
+                    class="form-control"
+                    name="proficiencyModifier"
+                    id="otherStatsProficiencyBonusModifierInput"
+                    aria-describedby="basic-addon2"
+                    data-bind="value: proficiencyModifier">
+          </div>
+          <div class="col-md-6 col-padded">
+            <label>AC Modifier</label>
+            <input type="number"
+                    class="form-control"
+                    name="armorClassModifier"
+                    id="otherStatsAcModifierInput"
+                    aria-describedby="basic-addon2"
+                    data-bind="value: armorClassModifier">
+          </div>
+        </div>
+        <div class="row" data-bind="with: otherStats">
+          <div class="col-md-6 col-padded">
+            <label>Initiative</label>
+            <input type="number"
+                    class="form-control"
+                    name="initiativeModifier"
+                    id="otherStatsInitiativeModiferInput"
+                    aria-describedby="basic-addon2"
+                    data-bind="value: initiativeModifier">
+          </div>
+          <div class="col-md-6 col-padded">
+            <label>Speed</label>
+            <input type="number"
+                    class="form-control"
+                    name="speed"
+                    id="otherStatsSpeedInput"
+                    aria-describedby="basic-addon2"
+                    data-bind="value: speed">
+          </div>
+        </div>
+        <!-- Level and exp -->
+        <div class="row" data-bind="with: profile">
+          <div class="col-md-6 col-padded">
+            <label>Level</label>
+            <input type="number"
+                  class="form-control"
+                  name="level"
+                  id="otherStatsLevelInput"
+                  aria-describedby="basic-addon2"
+                  data-bind="value: level">
+          </div>
+          <div class="col-md-6 col-padded">
+            <label>Experience</label>
+            <input type="number"
+                  class="form-control"
+                  name="experience"
+                  id="otherStatsExperienceInput"
+                  aria-describedby="basic-addon2"
+                  data-bind="value: experience">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-padded">
+            <label>Inspiration</label>
+            <div class="form-control hit-dice-list">
+                <!-- ko if: otherStats().inspiration -->
+                <span data-bind="click: $parents[1].toggleInspiration"
+                      class="inspiration-full" style="cursor: pointer;"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: otherStats().inspiration -->
+                <span data-bind="click: $parents[1].toggleInspiration"
+                      class="inspiration-empty" style="cursor: pointer"></span>
+                <!-- /ko -->
+            </div>
+          </div>
+        </div>
       </div>
-     </div>
-   </div>
- </div>
+    </form>
+  </div>
+  <!-- /ko -->
+
+  <!-- ko ifnot: $component.isEdit -->
+  <div class="row">
+    <div class="col-sm-1 col-sm-offset-11">
+      <span class="fa fa-pencil-square-o fa-color-hover-success fa-lg clickable pull-right"
+        data-bind="click: $component.toggleEditForm">
+      </span>
+    </div>
+  </div>
+  <div class="row" data-bind="with: otherStats">
+    <div class="col-md-6 col-padded">
+      <span class="fa fa-info-circle"
+            id="otherStatsProficiencyPopoverIconSpan"
+            style="cursor:pointer;"
+            data-bind="popover: { content: $parents[2].proficiencyPopover }">
+      </span>
+      <label>Proficiency</label>
+      <div data-bind="text: $parents[2].proficiencyLabel"></div>
+    </div>
+    <div class="col-md-6 col-padded">
+      <span class="fa fa-info-circle"
+            id="otherStatsAcPopoverIconSpan"
+            style="cursor:pointer;"
+            data-bind="popover: { content: $parents[2].armorClassPopover }"></span>
+      <label>Armor Class</label>
+      <div data-bind="text: $parents[2].armorClass"></div>
+    </div>
+  </div>
+  <div class="row" data-bind="with: otherStats">
+    <div class="col-md-6 col-padded">
+      <span class="fa fa-info-circle"
+            id="otherStatsInitiativePopoverIconSpan"
+            style="cursor:pointer;"
+            data-bind="popover: { content: $parents[2].initiativePopover }">
+      </span>
+      <label>Initiative</label>
+      <div data-bind="text: $parents[2].initiativeLabel"></div>
+    </div>
+    <div class="col-md-6 col-padded">
+      <label>Speed</label>
+      <div data-bind="text: speed"></div>
+    </div>
+  </div>
+  <div class="row" data-bind="with: profile">
+    <div class="col-md-6 col-padded">
+      <label>Level</label>
+      <div data-bind="text: level"></div>
+    </div>
+    <div class="col-md-6 col-padded">
+      <label>Experience</label>
+      <div data-bind="text: experience"></div>
+    </div>
+  </div>
+  <div class="row" data-bind="with: otherStats">
+    <div class="col-md-6 col-padded">
+      <label>Inspiration</label>
+      <div>
+        <!-- ko if: inspiration -->
+        <span class="inspiration-full" title="You have been awarded inspiration."></span>
+        <!-- /ko -->
+        <!-- ko ifnot: inspiration -->
+        <span class="inspiration-empty" title="You are awaiting inspiration."></span>
+        <!-- /ko -->
+    </div>
+    </div>
+  </div>
+  <!-- /ko -->
+</preview-edit>
+<!-- /ko -->

@@ -2,14 +2,15 @@
   <div class="panel-body">
     <preview-edit params="validation: validation,
                           data: background,
-                          save: save">
+                          save: save,
+                          reset: reset">
       <!-- ko if: $component.isEdit -->
       <div class="panel-body">
         <form class="form-horizontal" data-bind="validate: $component.validation">
           <div class="form-group">
             <div class="row">
               <div class="col-md-4 col-padded">
-                <label for="profileBackgroundInput">Background:</label>
+                <label for="profileBackgroundInput">Background</label>
                 <input type="text"
                         class="form-control"
                         id="profileBackgroundInput"
@@ -22,7 +23,7 @@
             </div>
             <div class="row">
               <div class="col-md-6 col-padded">
-                <label for="backgroundTraitsTextarea">Personality Traits:</label>
+                <label for="backgroundTraitsTextarea">Personality Traits</label>
                 <textarea id="backgroundTraitsTextarea"
                           class="form-control dark-area"
                           rows="4"
@@ -30,7 +31,7 @@
                 </textarea>
               </div>
               <div class="col-md-6 col-padded">
-                <label for="backgroundIdealsTextarea">Ideals:</label>
+                <label for="backgroundIdealsTextarea">Ideals</label>
                 <textarea id="backgroundIdealsTextarea"
                           class="form-control dark-area"
                           rows="4"
@@ -38,7 +39,7 @@
                 </textarea>
               </div>
               <div class="col-md-6 col-padded">
-                <label for="backgroundBondsTextarea">Bonds:</label>
+                <label for="backgroundBondsTextarea">Bonds</label>
                 <textarea id="backgroundBondsTextarea"
                           class="form-control dark-area"
                           rows="4"
@@ -46,7 +47,7 @@
                 </textarea>
               </div>
               <div class="col-md-6 col-padded">
-                <label for="backgroundFlawsTextarea">Flaws:</label>
+                <label for="backgroundFlawsTextarea">Flaws</label>
                 <textarea id="backgroundFlawsTextarea"
                           class="form-control dark-area"
                           rows="4"
@@ -62,7 +63,9 @@
       <!-- ko ifnot: $component.isEdit -->
       <div class="row">
         <div class="col-sm-11 col-xs-12">
-          <h3 data-bind="text: name"></h3>
+          <h3 data-bind="text: $parents[1].backgroundLabel,
+                         css: { 'text-muted': !name().trim() }">
+          </h3>
         </div>
         <div class="col-sm-1">
           <span class="fa fa-pencil-square-o fa-color-hover-success fa-lg clickable pull-right"
@@ -72,23 +75,27 @@
       </div>
       <div class="row">
         <div class="col-md-6 col-padded">
-          <label for="backgroundTraitsTextarea">Personality Traits:</label>
-          <div data-bind="text: personalityTrait">
+          <label for="backgroundTraitsTextarea">Personality Traits</label>
+          <div data-bind="text: $parents[1].personalityTraitLabel,
+                          css: { 'text-muted-italics': !personalityTrait().trim() }">
           </div>
         </div>
         <div class="col-md-6 col-padded">
-          <label for="backgroundIdealsTextarea">Ideals:</label>
-          <div data-bind="text: ideal">
+          <label for="backgroundIdealsTextarea">Ideals</label>
+          <div data-bind="text: $parents[1].idealLabel,
+                          css: { 'text-muted-italics': !ideal().trim() }">
           </div>
         </div>
         <div class="col-md-6 col-padded">
-          <label for="backgroundBondsTextarea">Bonds:</label>
-          <div data-bind="text: bond">
+          <label for="backgroundBondsTextarea">Bonds</label>
+          <div data-bind="text: $parents[1].bondLabel,
+                          css: { 'text-muted-italics': !bond().trim() }"data-bind="text: bond">
           </div>
         </div>
         <div class="col-md-6 col-padded">
-          <label for="backgroundFlawsTextarea">Flaws:</label>
-          <div data-bind="text: flaw">
+          <label for="backgroundFlawsTextarea">Flaws</label>
+          <div data-bind="text: $parents[1].flawLabel,
+                          css: { 'text-muted-italics': !flaw().trim() }"data-bind="text: flaw">
           </div>
         </div>
       </div>

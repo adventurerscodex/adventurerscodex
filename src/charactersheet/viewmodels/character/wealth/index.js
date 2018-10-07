@@ -1,6 +1,5 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Wealth } from 'charactersheet/models/common';
 import cpCoins from 'images/cp-coin.svg';
 import epCoins from 'images/ep-coin.svg';
@@ -21,23 +20,24 @@ export function WealthViewModel() {
 
     self.wealth = ko.observable(new Wealth());
 
+    self.validation = {
+        // Deep copy of properties in object
+        ...Wealth.validationConstraints
+    };
+
     self.load = async () => {
+        await self.reset();
+    };
+
+    self.reset = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Wealth.ps.read({uuid: key});
         self.wealth(response.object);
-
-        //Notifications
-        self.wealth().platinum.subscribe(self._dataHasChanged);
-        self.wealth().gold.subscribe(self._dataHasChanged);
-        self.wealth().electrum.subscribe(self._dataHasChanged);
-        self.wealth().silver.subscribe(self._dataHasChanged);
-        self.wealth().copper.subscribe(self._dataHasChanged);
     };
 
-    /* Private Methods */
-
-    self._dataHasChanged = async() => {
-        await self.wealth().ps.save();
+    self.save = async() => {
+        const response = await self.wealth().ps.save();
+        self.wealth(response.object);
         Notifications.wealth.changed.dispatch();
     };
 }
