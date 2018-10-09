@@ -1,100 +1,95 @@
-import 'bin/knockout-mapping-autoignore';
-import 'knockout-mapping';
 import {
     Fixtures,
     Utility
 } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
 
-export function MagicItem() {
-    var self = this;
-    self.SHORT_DESCRIPTION_MAX_LENGTH = 100;
-    self.DESCRIPTION_MAX_LENGTH = 145;
+export class MagicItem extends KOModel {
+    SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    DESCRIPTION_MAX_LENGTH = 145;
 
-    self.ps = PersistenceService.register(MagicItem, self);
-    self.mapping = {
-        include: ['characterId', 'magicItemName', 'magicItemType', 'magicItemRarity',
-            'magicItemRequiresAttunement', 'magicItemAttuned', 'magicItemMaxCharges',
-            'magicItemCharges', 'magicItemWeight', 'magicItemDescription']
+    static __skeys__ = ['core', 'magicItems'];
+
+    static mapping = {
+        include: ['coreUuid', 'maxCharges', 'usedCharges']
     };
 
-    self.characterId = ko.observable(null);
-    self.magicItemName = ko.observable('');
-    self.magicItemType = ko.observable('');
-    self.magicItemRarity = ko.observable('');
-    self.magicItemRequiresAttunement = ko.observable(false);
-    self.magicItemAttuned = ko.observable(false);
-    self.magicItemMaxCharges = ko.observable(0);
-    self.magicItemCharges = ko.observable(0);
-    self.magicItemWeight = ko.observable(0);
-    self.magicItemDescription = ko.observable('');
+    coreUuid = ko.observable(null);
+    name = ko.observable('');
+    type = ko.observable('');
+    rarity = ko.observable('');
+    requiresAttunement = ko.observable(false);
+    attuned = ko.observable(false);
+    maxCharges = ko.observable(0);
+    usedCharges = ko.observable(0);
+    weight = ko.observable(0);
+    description = ko.observable('');
 
-    self.magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
-    self.magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
+    magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
+    magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
 
-    self.chargesDisplay = ko.pureComputed(function() {
-        if (self.magicItemMaxCharges() == 0) {
+    chargesDisplay = ko.pureComputed(() => {
+        if (this.maxCharges() == 0) {
             return 'N/A';
-        }
-        else {
-            return self.magicItemCharges();
+        } else {
+            return this.usedCharges();
         }
     });
 
-    self.magicItemDescriptionHTML = ko.pureComputed(function() {
-        if (self.magicItemDescription()){
-            return self.magicItemDescription().replace(/\n/g, '<br />');
+    magicItemDescriptionHTML = ko.pureComputed(() => {
+        if (this.description()){
+            return this.description().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
     });
 
-    self.shortDescription = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.magicItemDescription(), self.SHORT_DESCRIPTION_MAX_LENGTH);
+    shortDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 
-    self.longDescription = ko.pureComputed(function() {
-        return Utility.string.truncateStringAtLength(self.magicItemDescription(), self.DESCRIPTION_MAX_LENGTH);
+    longDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.description(), this.DESCRIPTION_MAX_LENGTH);
     });
 
-    self.magicItemNameLabel = ko.pureComputed(function() {
-        if (self.magicItemAttuned() === true) {
-            return (self.magicItemName() + ' (Attuned)' );
+    magicItemNameLabel = ko.pureComputed(() => {
+        if (this.attuned() === true) {
+            return (this.name() + ' (Attuned)' );
         } else {
-            return self.magicItemName();
+            return this.name();
         }
     });
 
-    self.magicItemWeightLabel = ko.pureComputed(function() {
-        return self.magicItemWeight() !== '' && self.magicItemWeight() >= 0 ? self.magicItemWeight() + ' lbs.' : '0 lbs.';
+    magicItemWeightLabel = ko.pureComputed(() => {
+        return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
-
-    self.clear = function() {
-        var values = new MagicItem().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
 }
-MagicItem.__name = 'MagicItem';
 
-PersistenceService.addToRegistry(MagicItem);
+MagicItem.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            maxlength: 32
+        },
+        rarity: {
+            maxlength: 32
+        },
+        maxCharges: {
+            number: true,
+            min: 0
+        },
+        usedCharges: {
+            number: true,
+            min: 0
+        },
+        weight: {
+            number: true,
+            min: 0
+        }
+    }
+};

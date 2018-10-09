@@ -1,24 +1,26 @@
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
+import { EncounterSection } from 'charactersheet/models/dm/encounter_section';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
 
 
-export function EncounterDetailViewModel(params) {
+export function EncounterDetailViewModel({ encounter }) {
     var self = this;
 
-    self.encounter = params.encounter;
-    self.sectionModels = params.sectionModels;
+    self.encounter = encounter;
     self.sections = ko.observableArray([]);
     self.openModal = ko.observable(false);
+    self.sectionTypes = [];
 
     /* Public Methods */
 
-    self.load = function() {
+    self.load = async () => {
         self.encounter.subscribe(self._dataHasChanged);
+
+        self.sectionTypes = await EncounterSection.ps.list();
         self._dataHasChanged();
     };
 
@@ -26,46 +28,23 @@ export function EncounterDetailViewModel(params) {
      * The modal's done button has been clicked. Save the results and
      * notify the subscribers.
      */
-    self.notifySections = function(encounter, sections) {
-        encounter().save();
-
-        sections().forEach(function(section, i, _) {
-            section.save();
-        });
-
+    self.modalDidFinish = async (encounter) => {
+        await encounter.ps.save();
         Notifications.encounters.changed.dispatch();
     };
 
     /* UI Methods */
 
-    self.name = ko.pureComputed(function() {
-        return self.encounter().displayName();
-    });
-
-    self.encounterLocation = ko.pureComputed(function() {
-        return self.encounter().encounterLocation();
-    });
-
-    self.toggleModal = function() {
+    self.toggleModal = () => {
         self.openModal(!self.openModal());
     };
 
-    self._dataHasChanged = function() {
-        if (!ko.unwrap(self.encounter)) { return; }
-        var key = CharacterManager.activeCharacter().key();
-        var sections = self.sectionModels.map(function(sectionModel, i, _) {
-            var section = PersistenceService.findByPredicates(sectionModel.section, [
-                new KeyValuePredicate('encounterId', self.encounter().encounterId()),
-                new KeyValuePredicate('characterId', key)
-            ])[0];
-            if (!section) {
-                section = new sectionModel.section();
-                section.encounterId(self.encounter().encounterId());
-                section.characterId(key);
-            }
-            return section;
-        });
-        self.sections(sections);
+    self._dataHasChanged = () => {
+        if (!ko.unwrap(self.encounter)) {
+            return;
+        }
+        var key = CoreManager.activeCore().uuid();
+        self.sections(self.encounter().sections());
     };
 }
 

@@ -1,8 +1,18 @@
-import { CharacterManager, Notifications } from 'charactersheet/utilities';
-import { KeyValuePredicate, SharedServiceManager } from 'charactersheet/services/common';
-import { Status, StatusWeightPair } from 'charactersheet/models';
+import {
+    CoreManager,
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Feat,
+    Feature,
+    Trait
+} from 'charactersheet/models/character';
+import {
+    Status,
+    StatusWeightPair
+} from 'charactersheet/models';
+import { KeyValuePredicate } from 'charactersheet/services/common';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Tracked } from 'charactersheet/models';
 import { getTrackedTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 
 
@@ -28,17 +38,44 @@ export function TrackedStatusServiceComponent() {
     };
 
     /**
-     * This method determines wether to update or remove the Feature status
+     * This method determines wether to update or remove the Tracked status
      * component from the player's status line.
      */
-    self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var trackedAbilities = PersistenceService.findBy(Tracked, 'characterId', key);
+    self.dataHasChanged = async () => {
+        var key = CoreManager.activeCore().uuid();
+        var trackables = [];
 
-        if (!trackedAbilities) { return; }
+        // Fetch trackable objects
+        var features = await Feature.ps.list({coreUuid: key});
+        var feats = await Feat.ps.list({coreUuid: key});
+        var traits = await Trait.ps.list({coreUuid: key});
 
-        if (trackedAbilities.length > 0) {
-            self._updateStatus();
+        if (features.objects) {
+            features.objects.forEach((e) => {
+                if (e.tracked()) {
+                    trackables.push(e.tracked());
+                }
+            });
+        }
+
+        if (feats.objects) {
+            feats.objects.forEach((e) => {
+                if (e.tracked()) {
+                    trackables.push(e.tracked());
+                }
+            });
+        }
+
+        if (traits.objects) {
+            traits.objects.forEach((e) => {
+                if (e.tracked()) {
+                    trackables.push(e.tracked());
+                }
+            });
+        }
+
+        if (!trackables || trackables.length > 0) {
+            self._updateStatus(trackables);
         } else {
             self._removeStatus();
         }
@@ -46,14 +83,14 @@ export function TrackedStatusServiceComponent() {
 
     /* Private Methods */
 
-    self._updateStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var trackedAbilities = PersistenceService.findBy(Tracked, 'characterId', key);
+    self._updateStatus = function(trackables) {
+        var key = CoreManager.activeCore().uuid();
         var valueWeightPairs = [];
 
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+
         if (!status) {
             status = new Status();
             status.characterId(key);
@@ -61,10 +98,10 @@ export function TrackedStatusServiceComponent() {
         }
 
         // Each tracked ability is weighted equally.
-        var featureWeight = 1 / trackedAbilities.length;
-        trackedAbilities.forEach(function(trackedAbility, i, _) {
-            var maxUses = trackedAbility.maxUses() ? trackedAbility.maxUses() : 0;
-            var used = trackedAbility.used() ? trackedAbility.used() : 0;
+        var featureWeight = 1 / trackables.length;
+        trackables.forEach(function(tracked) {
+            var maxUses = tracked.max() ? tracked.max() : 0;
+            var used = tracked.used() ? tracked.used() : 0;
             var trackedValue = maxUses ? (maxUses - used) / maxUses : 0;
             valueWeightPairs.push(new StatusWeightPair(trackedValue, featureWeight));
         });
@@ -82,7 +119,7 @@ export function TrackedStatusServiceComponent() {
     };
 
     self._removeStatus = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];

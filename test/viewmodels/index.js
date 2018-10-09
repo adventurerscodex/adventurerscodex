@@ -1,6 +1,5 @@
-import './test_appearance';
 import './test_armor';
-import './test_feat_traits';
+import './test_background';
 import './test_feats';
 import './test_features';
 import './test_items';
@@ -14,8 +13,8 @@ import './test_spells';
 import './test_stats';
 import './test_tracker';
 import './test_traits';
-import './test_treasure';
 import './test_user_notification';
+import './test_wealth';
 import './test_weapons';
 import './test_wizard';
 import './test_wizard_profile';

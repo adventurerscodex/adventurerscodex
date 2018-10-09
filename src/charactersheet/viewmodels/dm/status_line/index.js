@@ -55,7 +55,7 @@ export function PartyStatusLineViewModel(params) {
         var numberOfTrackedStatuses = 0;
 
         players.forEach(function(player, idx, _) {
-            if (player.playerType() === PlayerTypes.characterPlayerType.key) {
+            if (player.type.name() === PlayerTypes.character.key) {
                 if (player.healthinessStatus()) {
                     totalHealthiness += player.healthinessStatus().value();
                     healthinessModified = true;

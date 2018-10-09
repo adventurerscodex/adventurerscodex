@@ -1,21 +1,16 @@
 import {
-    CharacterManager,
+    ChatServiceManager,
+    ImageServiceManager,
+    PersistenceService
+} from 'charactersheet/services/common';
+import {
+    CoreManager,
+    Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    ChatServiceManager,
-    ImageServiceManager,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
-import {
-    Environment,
-    EnvironmentSection,
-    Message
-} from 'charactersheet/models/dm';
+import { Environment } from 'charactersheet/models/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import Strophe from 'strophe';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/night-sky.svg';
 import template from './index.html';
@@ -27,7 +22,7 @@ export function EnvironmentSectionViewModel(params) {
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
         if (!ko.unwrap(self.encounter)) { return; }
-        return self.encounter().encounterId();
+        return self.encounter().uuid();
     });
 
     self.sectionIcon = sectionIcon;
@@ -37,6 +32,7 @@ export function EnvironmentSectionViewModel(params) {
     self.visible = ko.observable(false);
     self.environment = ko.observable();
 
+    self.dataIsChanging = false;
     self.imageUrl = ko.observable();
     self.weather = ko.observable();
     self.terrain = ko.observable();
@@ -75,40 +71,36 @@ export function EnvironmentSectionViewModel(params) {
         return { name: 'Environment', url: self.imageUrl() };
     };
 
-    self.load = function() {
+    self.load = async function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
         Notifications.exhibit.toggle.add(self._dataHasChanged);
 
-        self.imageUrl.subscribe(self.save);
-        self.weather.subscribe(self.save);
-        self.terrain.subscribe(self.save);
-        self.description.subscribe(self.save);
-
         self._connectionHasChanged();
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
-        self._dataHasChanged();
+        await self._dataHasChanged();
+
+        self.imageUrl.subscribe(self.save);
+        self.weather.subscribe(self.save);
+        self.terrain.subscribe(self.save);
+        self.description.subscribe(self.save);
     };
 
-    self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var environment = PersistenceService.findByPredicates(Environment, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (environment) {
-            environment.imageUrl(self.imageUrl());
-            environment.weather(self.weather());
-            environment.terrain(self.terrain());
-            environment.description(self.description());
-            environment.isExhibited(self.isExhibited());
-            environment.save();
+    self.save = async function() {
+        if (self.dataIsChanging) {
+            return;
         }
+        self.environment().imageUrl(self.imageUrl());
+        self.environment().weather(self.weather());
+        self.environment().terrain(self.terrain());
+        self.environment().description(self.description());
+        self.environment().isExhibited(self.isExhibited());
+        self.environment().ps.save();
     };
 
     /* UI Methods */
@@ -173,37 +165,22 @@ export function EnvironmentSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var environmentSection = PersistenceService.findByPredicates(EnvironmentSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (environmentSection) {
-            self.name(environmentSection.name());
-            self.visible(environmentSection.visible());
-            self.tagline(environmentSection.tagline());
-        }
+    self._dataHasChanged = async function() {
+        self.dataIsChanging = true;
+        var coreUuid = CoreManager.activeCore().uuid();
+        var section = self.encounter().sections()[Fixtures.encounter.sections.environment.index];
+        self.name(section.name());
+        self.visible(section.visible());
+        self.tagline(section.tagline());
 
-        // Search for the current environment and if it doesn't exist, then create.
-        var environment = PersistenceService.findByPredicates(Environment, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (environment) {
-            self.environment(environment);
-            self.imageUrl(environment.imageUrl());
-            self.weather(environment.weather());
-            self.terrain(environment.terrain());
-            self.description(environment.description());
-            self.isExhibited(environment.isExhibited());
-        } else {
-            environment = new Environment();
-            environment.characterId(key);
-            environment.encounterId(self.encounterId());
-            environment.save();
-
-            self.clearFields();
+        const environmentResponse = await Environment.ps.read({coreUuid, uuid: self.encounterId()});
+        self.environment(environmentResponse.object);
+        if (self.environment()) {
+            self.imageUrl(self.environment().imageUrl());
+            self.weather(self.environment().weather());
+            self.terrain(self.environment().terrain());
+            self.description(self.environment().description());
+            self.isExhibited(self.environment().isExhibited());
         }
 
         // If there's no data to show, then prefer the edit tab.
@@ -212,15 +189,7 @@ export function EnvironmentSectionViewModel(params) {
         } else {
             self.selectPreviewTab();
         }
-    };
-
-    self.clearFields = function() {
-        self.environment(null);
-        self.imageUrl('');
-        self.weather('');
-        self.terrain('');
-        self.description('');
-        self.isExhibited('');
+        self.dataIsChanging = false;
     };
 
     self._connectionHasChanged = function() {

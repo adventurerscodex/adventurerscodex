@@ -6,7 +6,7 @@ export function MonsterAbilityScore() {
     var self = this;
     self.ps = PersistenceService.register(MonsterAbilityScore, self);
     self.mapping = {
-        include: ['characterId', 'encounterId', 'monsterId', 'name', 'value']
+        include: ['characterId', 'encounterId', 'monsterId', 'name', 'value', 'shortName']
     };
 
     self.characterId = ko.observable(null);
@@ -14,6 +14,7 @@ export function MonsterAbilityScore() {
     self.monsterId = ko.observable(null);
     self.name = ko.observable();
     self.value = ko.observable();
+    self.shortName = ko.observable();
 
     self.modifier = ko.pureComputed(function() {
         if (self.isNumeric(self.value())) {

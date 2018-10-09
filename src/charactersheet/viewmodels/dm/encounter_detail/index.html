@@ -1,8 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="h2">
-      <span data-bind="text: name"></span>&nbsp;
-      <small data-bind="text: encounterLocation"></small>
+      <span data-bind="text: encounter().name"></span>&nbsp;
+      <small data-bind="text: encounter().location"></small>
       <div class="pull-right">
         <button class="btn btn-sm btn-default" data-bind="click: toggleModal">
           Edit
@@ -26,5 +26,9 @@
 </div>
 
 <encounter-add-edit-modal
-  params="encounter: encounter, sections: sections, openModal: openModal, onsave: notifySections">
-</encounter-add-edit-modal>
+  params="
+    encounter: encounter,
+    openModal: openModal,
+    onsave: modalDidFinish
+  "
+></encounter-add-edit-modal>

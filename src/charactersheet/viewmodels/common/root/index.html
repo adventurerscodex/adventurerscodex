@@ -105,12 +105,12 @@
             <player-name></player-name>
             <div class="row row-padded">
               <div class="col-xs-12">
-                <!-- ko if: selectedCharacter -->
-                  <!-- ko if: selectedCharacter().playerType().key == 'character' -->
-                    <player-status-line params="character: selectedCharacter"></player-status-line>
+                <!-- ko if: selectedCore -->
+                  <!-- ko if: selectedCore().type.name() == 'character' -->
+                    <player-status-line params="character: selectedCore"></player-status-line>
                   <!-- /ko -->
-                  <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
-                    <party-status-line params="character: selectedCharacter"></party-status-line>
+                  <!-- ko if: selectedCore().type.name() == 'dm' -->
+                    <party-status-line params="character: selectedCore"></party-status-line>
                   <!-- /ko -->
                 <!-- /ko -->
               </div>
@@ -124,12 +124,12 @@
       </div>
     </div>
     <div class="spacer"></div>
-      <!-- ko if: selectedCharacter -->
-        <!-- ko if: selectedCharacter().playerType().key == 'character' -->
-        <character-root params="activeCharacter: selectedCharacter"></character-root>
+      <!-- ko if: selectedCore -->
+                  <!-- ko if: selectedCore().type.name() == 'character' -->
+        <character-root params="activeCharacter: selectedCore"></character-root>
         <!-- /ko -->
-        <!-- ko if: selectedCharacter().playerType().key == 'dm' -->
-        <dm-root params="activeCharacter: selectedCharacter"></dm-root>
+                  <!-- ko if: selectedCore().type.name() == 'dm' -->
+        <dm-root params="activeCharacter: selectedCore"></dm-root>
         <!-- /ko -->
       <!-- /ko -->
 	</div>
@@ -152,7 +152,7 @@
 
 <!-- Export Modal -->
 <!-- ko if: exportModalStatus -->
-<export params="selectedCharacter: selectedCharacter, modalStatus: exportModalStatus"></export>
+<export params="selectedCore: selectedCore, modalStatus: exportModalStatus"></export>
 <!-- /ko -->
 <!-- /ko -->
 
@@ -161,7 +161,7 @@
 <!-- /ko -->
 
 <!-- ko if: shouldShowPicker -->
-<character-picker params="state: state"></character-picker>
+<core-picker params="state: state"></core-picker>
 <!-- /ko -->
 </div>
 

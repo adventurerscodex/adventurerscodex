@@ -113,6 +113,11 @@ small {
   padding-bottom: 5px;
 }
 
+.row-padded-horizontal {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 .img-padded {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -289,6 +294,22 @@ div.hr {
 .ds-success-empty {
   cursor:pointer;
   background: url('../images/hospital-cross-empty.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.inspiration-full {
+  background: url('../images/inspiration-full.svg');
+  width:24px;
+  height:24px;
+  display: inline-block;
+  padding: 0 0 0 0px;
+}
+
+.inspiration-empty {
+  background: url('../images/inspiration-empty.svg');
   width:24px;
   height:24px;
   display: inline-block;
@@ -973,4 +994,9 @@ div.toggle-arrow-container {
   position:absolute;
   right:0;
   left:0;
+}
+
+.text-muted-italics {
+  color: #b4bcc2;
+  font-style: italic;
 }

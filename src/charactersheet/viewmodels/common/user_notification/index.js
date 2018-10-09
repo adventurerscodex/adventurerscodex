@@ -1,5 +1,5 @@
 import 'toastr/build/toastr.min.css';
-import { CharacterManager,
+import { CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';

@@ -6,7 +6,11 @@ let CircularDependencyPlugin = require('circular-dependency-plugin');
 
 
 module.exports = merge(common, {
-    devtool: 'inline-source-map',
+    mode: 'development',
+    // As per-recommended on:
+    // https://github.com/webpack/webpack/issues/4363
+    // devtool: 'cheap-module-eval-source-map',
+    devtool: 'cheap-module-eval-source-map',
     devServer: {
         contentBase: './dist',
         port: 3000
@@ -38,6 +42,10 @@ module.exports = merge(common, {
              * The URL of the homepage.
              */
             'HOME_URL': JSON.stringify('/'),
+            /**
+             * The URL to the login page.
+             */
+            'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
             /**
              * The HOST URL of the pubsub services.
              */

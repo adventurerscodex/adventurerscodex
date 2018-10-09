@@ -1,18 +1,13 @@
-import {
-    AbilityScores,
-    getModifier,
-    getStrModifier,
-    isNumeric } from 'charactersheet/models/character/ability_scores';
 import { AbilitiesFixture } from '../fixtures';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { CharacterManager } from 'charactersheet/utilities';
 import Should from 'should';
-import simple from 'simple-mock';
 
 
 describe('Ability Scores Model', function() {
     describe('Clear', function() {
         it('should clear all the values in it', function() {
-            var scores = new AbilityScores();
+            var scores = new AbilityScore();
             scores.str(AbilitiesFixture.str);
             scores.str().should.equal(AbilitiesFixture.str);
             scores.clear();
@@ -47,7 +42,7 @@ describe('Ability Scores Model', function() {
 
     describe('Import', function() {
         it('should import an object with all the info supplied.', function() {
-            var scores = new AbilityScores();
+            var scores = new AbilityScore();
             scores.importValues(AbilitiesFixture);
             scores.str().should.equal(AbilitiesFixture.str);
             scores.dex().should.equal(AbilitiesFixture.dex);
@@ -60,7 +55,7 @@ describe('Ability Scores Model', function() {
 
     describe('Export', function() {
         it('should yield an object with all the info supplied.', function() {
-            var scores = new AbilityScores();
+            var scores = new AbilityScore();
             scores.str(AbilitiesFixture.str);
             scores.dex(AbilitiesFixture.dex);
             scores.con(AbilitiesFixture.con);
@@ -112,7 +107,7 @@ describe('Ability Scores Model', function() {
 
     describe('Modifier For', function() {
         it('given a string score, give the modifier', function() {
-            var abilityScore = new AbilityScores();
+            var abilityScore = new AbilityScore();
             Should.not.exist(abilityScore.str());
             abilityScore.str(18);
             abilityScore.modifierFor('str').should.equal(4);

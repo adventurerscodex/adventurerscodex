@@ -1,16 +1,13 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
-import { Armor} from 'charactersheet/models/common';
+import { Armor } from 'charactersheet/models/common';
+import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -20,6 +17,7 @@ export function ArmorViewModel() {
     self.blankArmor = ko.observable(new Armor());
     self.armors = ko.observableArray([]);
     self.modalOpen = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.shouldShowDisclaimer = ko.observable(false);
@@ -27,95 +25,80 @@ export function ArmorViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
     self.sorts = {
-        'armorEquipped asc': { field: 'armorEquipped', direction: 'asc', booleanType: true},
-        'armorEquipped desc': { field: 'armorEquipped', direction: 'desc', booleanType: true},
-        'armorName asc': { field: 'armorName', direction: 'asc'},
-        'armorName desc': { field: 'armorName', direction: 'desc'},
-        'armorType asc': { field: 'armorType', direction: 'asc'},
-        'armorType desc': { field: 'armorType', direction: 'desc'},
+        'equipped asc': { field: 'equipped', direction: 'asc', booleanType: true},
+        'equipped desc': { field: 'equipped', direction: 'desc', booleanType: true},
+        'name asc': { field: 'name', direction: 'asc'},
+        'name desc': { field: 'name', direction: 'desc'},
+        'type asc': { field: 'type', direction: 'asc'},
+        'type desc': { field: 'type', direction: 'desc'},
         'armorClass asc': { field: 'armorClass', direction: 'asc', numeric: true},
         'armorClass desc': { field: 'armorClass', direction: 'desc', numeric: true}
     };
 
     self.filter = ko.observable('');
-    self.sort = ko.observable(self.sorts['armorName asc']);
+    self.sort = ko.observable(self.sorts['name asc']);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-        self.armors.subscribe(function() {
-            Notifications.armor.changed.dispatch();
-        });
-
-        var key = CharacterManager.activeCharacter().key();
-        self.armors(PersistenceService.findBy(Armor, 'characterId', key));
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Armor.ps.list({coreUuid: key});
+        self.armors(response.objects);
 
         //Subscriptions
         Notifications.abilityScores.changed.add(self.valueHasChanged);
     };
 
-    self.unload = function() {
-        self.save();
-        Notifications.abilityScores.changed.remove(self.valueHasChanged);
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.armors().forEach(function(e, i, _) {
-            e.save();
-        });
-    };
-
     self.armorEquippedLabel = function(armor) {
-        return armor.armorEquipped() ? 'fa fa-check' : '';
+        return armor.equipped() ? 'fa fa-check' : '';
     };
 
     self.totalWeight = ko.pureComputed(function() {
         var weight = 0;
         if(self.armors().length > 0) {
             self.armors().forEach(function(armor, idx, _) {
-                weight += armor.armorWeight() ? parseInt(armor.armorWeight()) : 0;
+                weight += armor.weight() ? parseInt(armor.weight()) : 0;
             });
         }
         return weight + ' (lbs)';
     });
 
-    self.equipArmorHandler = function(selectedItem, index) {
-        if (selectedItem.armorEquipped()) {
-            if (selectedItem.armorType() === 'Shield') {
-                ko.utils.arrayForEach(self.armors(), function(item2) {
-                    if (index != item2.__id && item2.armorType() == 'Shield') {
-                        item2.armorEquipped('');
+    self.equipArmorHandler = async (selectedItem, index) => {
+        if (selectedItem.equipped()) {
+            if (selectedItem.type() === 'Shield') {
+                for (const item2 of self.armors()) {
+                    if (index != item2.uuid && item2.type() == 'Shield') {
+                        item2.equipped(false);
+                        await item2.ps.save();
                     }
-                });
+                }
             } else {
-                ko.utils.arrayForEach(self.armors(), function(item2) {
-                    if (index != item2.__id && item2.armorType() != 'Shield') {
-                        item2.armorEquipped('');
+                for (const item2 of self.armors()) {
+                    if (index != item2.uuid && item2.type() != 'Shield') {
+                        item2.equipped(false);
+                        await item2.ps.save();
                     }
-                });
+                }
             }
         }
     };
 
-    // Prepopulate methods
-
+    // Pre-populate methods
     self.setArmorType = function(label, value) {
-        self.blankArmor().armorType(value);
+        self.blankArmor().type(value);
     };
 
     self.setArmorCurrencyDenomination = function(label, value) {
-        self.blankArmor().armorCurrencyDenomination(value);
+        self.blankArmor().currencyDenomination(value);
     };
 
     self.setArmorStealth = function(label, value) {
-        self.blankArmor().armorStealth(value);
+        self.blankArmor().stealth(value);
     };
 
     /* Modal Methods */
-
     self.armorsPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
@@ -137,18 +120,17 @@ export function ArmorViewModel() {
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.armors(), self.currentEditItem(), self.editItemIndex);
+        if (self.modalOpen() && self.addFormIsValid()) {
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.armors(), response.object, self.editItemIndex);
+            Notifications.armor.changed.dispatch();
         }
 
         self.equipArmorHandler(self.currentEditItem(), self.editItemIndex);
-
-        self.save();
         self.modalOpen(false);
-        Notifications.armor.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -185,38 +167,65 @@ export function ArmorViewModel() {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    //Manipulating armors
-    self.addArmor = function() {
-        var armor = self.blankArmor();
-        armor.characterId(CharacterManager.activeCharacter().key());
-        armor.save();
-
-        self.equipArmorHandler(armor, armor.__id);
-
-        self.armors.push(armor);
-        self.blankArmor(new Armor());
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
     };
 
-    self.removeArmor = function(armor) {
-        armor.delete();
+    // Manipulating armors
+    self.addArmor = async () => {
+        var armor = self.blankArmor();
+        armor.coreUuid(CoreManager.activeCore().uuid());
+        const newArmor = await armor.ps.create();
+
+        self.equipArmorHandler(newArmor.object, newArmor.object.uuid);
+        self.armors.push(newArmor.object);
+        self.blankArmor(new Armor());
+        Notifications.armor.changed.dispatch();
+    };
+
+    self.removeArmor = async (armor) => {
+        await armor.ps.delete();
         self.armors.remove(armor);
+        Notifications.armor.changed.dispatch();
     };
 
     self.editArmor = function(armor) {
-        self.editItemIndex = armor.__id;
+        self.editItemIndex = armor.uuid;
         self.currentEditItem(new Armor());
         self.currentEditItem().importValues(armor.exportValues());
         self.modalOpen(true);
-    };
-
-    self.clear = function() {
-        self.armors([]);
     };
 
     self.valueHasChanged = function() {
         self.armors().forEach(function(e, i, _) {
             e.updateValues();
         });
+    };
+
+    // Validation
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addArmor();
+            self.addModalOpen(false);
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Armor.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Armor.validationConstraints
     };
 }
 

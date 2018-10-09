@@ -17,9 +17,13 @@
                 </div>
               </div>
             </div>
-            <nested-list params="cells: encounterCells,
-              selectedCell: selectedCell, ondelete: deleteEncounter,
-              onadd: openAddModalWithParent, onselect: selectEncounter">
+            <nested-list params="
+              cells: encounterCells,
+              selectedCell: selectedCell,
+              ondelete: deleteEncounter,
+              onadd: openAddModalWithParent,
+              onselect: selectEncounter"
+            >
             </nested-list>
           </div>
         </div>
@@ -27,7 +31,8 @@
       <div class="col-xs-12 col-sm-8 col-md-9">
         <!-- ko if: selectedEncounter -->
         <encounter-detail
-          params="encounter: selectedEncounter, sectionModels: sectionModels">
+          params="encounter: selectedEncounter"
+        >
         </encounter-detail>
         <!-- /ko -->
         <!-- ko ifnot: selectedEncounter -->
@@ -42,5 +47,5 @@
 </div>
 
 <encounter-add-edit-modal
-  params="encounter: modalEncounter, openModal: openModal, sections: modalEncounterSections, onsave: modalSave">
+  params="encounter: modalEncounter, openModal: openModal, onsave: modalSave">
 </encounter-add-edit-modal>

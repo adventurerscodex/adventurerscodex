@@ -1,18 +1,17 @@
 import {
-    CHAT_MESSAGE_TYPES,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
-import {
-    CharacterManager,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import {
     ChatRoom,
     Message,
     Presence
 } from 'charactersheet/models/common';
+import {
+    CoreManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
+import {
+    PersistenceService,
+    XMPPService
+} from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -70,7 +69,7 @@ export function ChatDetailViewModel(params) {
     };
 
     self.reloadData = function() {
-        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', self.id());
+        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatJid', self.id());
         if (!chat) { return; }
         self.members(chat.getRoomMembers());
 
@@ -133,7 +132,7 @@ export function ChatDetailViewModel(params) {
     /* Private Methods */
 
     self._markAllAsRead = function() {
-        var room = PersistenceService.findBy(ChatRoom, 'chatId', self.id())[0];
+        var room = PersistenceService.findBy(ChatRoom, 'chatJid', self.id())[0];
         room.getUnreadMessages().forEach(function(chat, idx, _) {
             chat.read(true);
             chat.save();
@@ -146,7 +145,7 @@ export function ChatDetailViewModel(params) {
         }
 
         var xmpp = XMPPService.sharedService();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
 
         var message = new Message();
         message.importValues({
@@ -204,7 +203,7 @@ export function ChatDetailViewModel(params) {
 
     self._getRecentItems = function() {
         var latestTime = self._getLatestTimeStamp();
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var log = PersistenceService.findFiltered(Message, function(msg, _) {
             return (
                 Strophe.getBareJidFromJid(msg.from) == self.id() &&

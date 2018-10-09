@@ -8,11 +8,12 @@ import {
     StatusService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import { ChatServiceManager } from 'charactersheet/services/common';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
+import { Profile } from 'charactersheet/models/character';
 import armorSection from 'images/checked-shield.svg';
 import battleGear from 'images/tab_icons/battle-gear.svg';
 import chatTab from 'images/tab_icons/conversation.svg';
@@ -56,21 +57,24 @@ export function CharacterRootViewModel() {
     };
 
     self.playerType = () => {
-        return CharacterManager.activeCharacter().playerType();
+        const key = CoreManager.activeCore().type.name();
+        return PlayerTypes[key];
     };
-    self._dummy = ko.observable(false);
+
     self.activeTab = ko.observable();
     self.isConnectedAndInAParty = ko.observable(false);
     self.currentPartyNode = ko.observable(null);
     self.wellState = ko.observable(false);
 
-    // Services
+    /* Services */
+
     self.statusLineService = StatusService.sharedService();
     self.proficiencyService = ProficiencyService.sharedService();
     self.armorClassService = ArmorClassService.sharedService();
     self.characterCardPublishingService = CharacterCardPublishingService.sharedService();
 
-    //Tooltips
+    /* Tooltips */
+
     self.profileTooltip = ko.observable('Profile');
     self.statsTooltip = ko.observable('Stats');
     self.skillsTooltip = ko.observable('Skills');
@@ -82,7 +86,8 @@ export function CharacterRootViewModel() {
     self.chatTooltip = ko.observable('Chat');
     self.exhibitTooltip = ko.observable('Exhibit');
 
-    //Tab Properties
+    /* Tab Properties */
+
     self.profileTabStatus = ko.pureComputed(() => {
         return self._tabIsVisible('profile');
     });
@@ -153,53 +158,7 @@ export function CharacterRootViewModel() {
         return self.wellState() ? 'fa fa-caret-up' : 'fa fa-caret-down';
     });
 
-    //UI Methods
-
-    self.playerSummary = ko.pureComputed(() => {
-        self._dummy();
-        var summary = '';
-        var key = CharacterManager.activeCharacter().key();
-        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-            try {
-                summary = PersistenceService.findBy(Profile, 'characterId', key)[0].characterSummary();
-            } catch(err) { /*Ignore*/ }
-        }
-        return summary;
-    });
-
-    self.playerTitle = ko.pureComputed(() => {
-        self._dummy();
-        var name = '';
-        var key = CharacterManager.activeCharacter().key();
-        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-            try {
-                name = PersistenceService.findBy(Profile, 'characterId', key)[0].characterName();
-            } catch(err) { /*Ignore*/ }
-        }
-        return name;
-    });
-
-    self.playerAuthor = ko.pureComputed(() => {
-        self._dummy();
-        var name = '';
-        var key = CharacterManager.activeCharacter().key();
-        if (self.playerType().key === PlayerTypes.characterPlayerType.key) {
-            try {
-                name = PersistenceService.findBy(Profile, 'characterId', key)[0].playerName();
-            } catch(err) { /*Ignore*/ }
-        }
-        return name;
-    });
-
-    self.pageTitle = ko.pureComputed(() => {
-        self._dummy();
-        try {
-            return self.playerTitle() + ' by ' + self.playerAuthor()
-                + ' | Adventurer\'s Codex';
-        } catch(err) { /*Ignore*/ }
-    });
-
-    //Public Methods
+    /* Public Methods */
 
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
@@ -214,10 +173,6 @@ export function CharacterRootViewModel() {
         self.characterCardPublishingService.init();
 
         //Subscriptions
-        Notifications.profile.changed.add(() => {
-            self._dummy.valueHasMutated();
-        });
-
         HotkeysService.registerHotkey('1', self.activateStatsTab);
         HotkeysService.registerHotkey('2', self.activateSkillsTab);
         HotkeysService.registerHotkey('3', self.activateSpellsTab);
@@ -227,7 +182,6 @@ export function CharacterRootViewModel() {
         HotkeysService.registerHotkey('7', self.activateProfileTab);
         HotkeysService.registerHotkey('8', self.activateChatTab);
         HotkeysService.registerHotkey('9', self.activateExhibitTab);
-
     };
 
     self.unload = () => {

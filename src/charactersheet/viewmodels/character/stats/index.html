@@ -2,6 +2,7 @@
   <div class="panel-body tight-inner">
 	<!--Health items -->
     <div class="row row-padded">
+      <!-- ko if: health() -->
       <div class="col-md-12 col-padded">
         <div class="progress clickable" data-toggle="modal" data-bind="click: editHealth">
           <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
@@ -32,7 +33,7 @@
               </td>
               <td class="col-content-vertical text-center clickable"
                data-toggle="modal" data-bind="click: editHealth">
-                  <span data-bind="text: health().maxHitpoints"></span>
+                  <span data-bind="text: health().maxHitPoints"></span>
               </td>
               <td>
                 <plus-minus params="value: damageHandler,
@@ -47,17 +48,20 @@
             </tr>
           </tbody>
         </table>
+
         <div class="input-group">
           <span class="input-group-addon">Hit Dice:</span>
           <div class="form-control hit-dice-list">
             <!-- ko foreach: hitDiceList -->
-            <span data-bind="attr: { id: $index, name: $index },
-              css: hitDiceIcon, click: toggleHitDice"></span>
+            <!-- ko if: $data -->
+            <span data-bind="attr: { id: $index, name: $index }, click: $parent.useHitDice" class="dice-full"></span>
             <!-- /ko -->
-            <!-- ko if: hitDiceList().length == 0 -->
-            <span class="hit-dice-list-empty-fill">&nbsp;</span>
+            <!-- ko ifnot: $data -->
+            <span data-bind="attr: { id: $index, name: $index }, click: $parent.recoverHitDice" class="dice-empty"></span>
+            <!-- /ko -->
             <!-- /ko -->
           </div>
+
         </div>
         <br />
         <!-- ko if: deathSavesVisible() -->
@@ -66,9 +70,17 @@
             <!-- ko if: deathSaveSuccessVisible() -->
             <div class="input-group">
               <span class="input-group-addon">Death Save Successes</span>
-              <div class="form-control hit-dice-list" data-bind="foreach: deathSaveSuccessList">
-                <span data-bind="attr: { id: $index, name: $index }, click: deathSaveSuccessHandler,
-                      css: deathSaveSuccessIcon"></span>
+              <div class="form-control hit-dice-list">
+              <!-- ko foreach: deathSaveSuccessList -->
+                <!-- ko if: $data -->
+                <span data-bind="attr: { id: $index, name: $index },
+                  click: $parent.useDeathSaveSuccess" class="ds-success-empty"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: $data -->
+                <span data-bind="attr: { id: $index, name: $index },
+                  click: $parent.recoverDeathSaveSuccess" class="ds-success-full"></span>
+                <!-- /ko -->
+              <!-- /ko -->
               </div>
             </div>
             <!-- /ko -->
@@ -77,9 +89,17 @@
             <!-- ko if: deathSaveFailureVisible() -->
             <div class="input-group">
               <span class="input-group-addon">Death Save Failures</span>
-              <div class="form-control hit-dice-list" data-bind="foreach: deathSaveFailureList">
-                <span data-bind="attr: { id: $index, name: $index }, click: deathSaveFailureHandler,
-                    css: deathSaveFailureIcon"></span>
+              <div class="form-control hit-dice-list">
+                <!-- ko foreach: deathSaveFailureList -->
+                  <!-- ko if: $data -->
+                  <span data-bind="attr: { id: $index, name: $index },
+                    click: $parent.useDeathSaveFailure" class="ds-failure-empty"></span>
+                  <!-- /ko -->
+                  <!-- ko ifnot: $data -->
+                  <span data-bind="attr: { id: $index, name: $index },
+                    click: $parent.recoverDeathSaveFailure" class="ds-failure-full"></span>
+                  <!-- /ko -->
+                <!-- /ko -->
               </div>
             </div>
             <!-- /ko -->
@@ -87,6 +107,7 @@
         </div>
         <!-- /ko -->
         </div>
+        <!-- /ko -->
       </div>
     </div>
   </div>
@@ -94,8 +115,11 @@
 <!--End Panel-->
 <!--HP Modal-->
 <!-- ko if: modalOpen -->
-	<div class="modal fade" id="viewHealth" tabindex="-1" role="dialog" aria-labelledby="viewHealthLabel"
-  data-bind="modal: { open: modalOpen, onopen: modalFinishedAnimating, onclose: modalFinishedClosing}">
+	<div class="modal fade" id="viewHealth" tabindex="-1" role="dialog"
+  data-bind="modal: {
+    open: modalOpen,
+    onopen: modalFinishedAnimating,
+    onclose: modalFinishedClosing}">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -105,25 +129,33 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" data-bind="validate: validation">
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Max HP</label>
 						<div class="col-sm-10">
               <input type="number" class="form-control"
-                data-bind='textInput: editHealthItem().maxHitpoints, hasFocus: modifierHasFocus' min="0">
+                name="maxHitPoints"
+                data-bind='textInput: editHealthItem().maxHitPoints, hasFocus: modifierHasFocus' min="0">
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="bonus" class="col-sm-2 control-label">Damage</label>
 						<div class="col-sm-10">
-							<input type="number" class="form-control" min="0" data-bind='textInput: editHealthItem().damage'>
+              <input type="number"
+                class="form-control"
+                name="damage"
+                min="0"
+                data-bind='textInput: editHealthItem().damage'>
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-sm-2 control-label">Temporary HP</label>
 						<div class="col-sm-10">
-              <input type="number" class="form-control"
-                data-bind='textInput: editHealthItem().tempHitpoints' min="0">
+              <input type="number"
+                class="form-control"
+                data-bind='textInput: editHealthItem().tempHitPoints'
+                min="0"
+                name="tempHitPoints">
 						</div>
 					</div>
           <div class="form-group ui-front">
@@ -131,14 +163,18 @@
             <div class="col-sm-10">
               <input class="form-control"
                      placeholder="D4"
-                     data-bind="textInput: editHitDiceItem().hitDiceType, autocomplete: {
-                          source: editHitDiceItem().hitDiceOptions,
+                     name="type"
+                     data-bind="textInput: hitDice().type, autocomplete: {
+                          source: hitDice().hitDiceOptions,
                           onselect: setHitDiceType}">
-
             </div>
           </div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+            <button type="submit"
+              data-bind='disable: !addFormIsValid()'
+              class="btn btn-primary"
+              data-dismiss="modal">
+              Done</button>
 					</div>
 				</form>
 			</div><!-- Modal Body -->

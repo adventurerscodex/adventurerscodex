@@ -1,7 +1,6 @@
 <div class="panel panel-default bio">
   <div class="panel-body">
-    <div class="row" data-bind="click: openModal, with: abilityScores"
-         title="Click to edit Ability Scores.">
+    <div class="row" data-bind="click: openModal" title="Click to edit Ability Scores.">
       <div class="table-responsive">
         <table class="table table-hover table-no-margin" id="abilityScoresTable">
           <thead>
@@ -16,42 +15,14 @@
           </thead>
           <tbody>
             <tr class="clickable">
+            <!-- ko foreach: abilityScores -->
               <td class="text-center">
-                <span data-bind='text: str' id="abilityScoresTableStrengthSpan"></span>
+                <span data-bind='text: value' id="abilityScoresTableStrengthSpan"></span>
                 <sup>
-                  <span class="badge" id="abilityScoresTableStrengthModifierSpan" data-bind="text: strModifier"></span>
+                  <span class="badge" id="abilityScoresTableStrengthModifierSpan" data-bind="text: modifierLabel()"></span>
                 </sup>
               </td>
-              <td class="text-center">
-                <span data-bind='text: dex' id="abilityScoresTableDexteritySpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableDexterityModifierSpan" data-bind="text: dexModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: con' id="abilityScoresTableConstitutionSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableConstitutionModifierSpan" data-bind="text: conModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: int' id="abilityScoresTableIntelligIntelligenceSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableIntelligIntelligenceModifierSpan" data-bind="text: intModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: wis' id="abilityScoresTableWisdomSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableWisdomModifierSpan" data-bind="text: wisModifier"></span>
-                </sup>
-              </td>
-              <td class="text-center">
-                <span data-bind='text: cha' id="abilityScoresTableCharismaSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableCharismaModifierSpan" data-bind="text: chaModifier"></span>
-                </sup>
-              </td>
+            <!-- /ko -->
             </tr>
           </tbody>
         </table>
@@ -66,7 +37,7 @@
       open: modalStatus,
       onopen: modalFinishedAnimating,
       onclose: modalFinishedClosing
-    }, with: editItem">
+    }">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -80,74 +51,24 @@
         </h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
+          <!-- ko foreach: editItems -->
           <div class="form-group">
-            <label class="col-xs-7 pull-left">Strength</label>
-            <div class="col-xs-5">
+            <label class="col-xs-5 pull-left" data-bind='text: name'></label>
+            <div class="col-xs-7">
               <input type="number"
-                     class="form-control ability-score-input pull-left"
-                     id="abilityScoresEditStrengthInput"
-                     min="0"
-                     data-bind='value: str,
-                      hasFocus: $parent.firstModalElementHasFocus'>
+                     class="form-control pull-left"
+                     data-bind='value: value, attr: { name: name }'>
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Dexterity</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditDexterityInput"
-                     min="0"
-                     data-bind='value: dex'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Constitution</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditConstitutionInput"
-                     min="0"
-                     data-bind='value: con'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Intelligence</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditIntelligenceInput"
-                     min="0"
-                     data-bind='value: int'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Wisdom</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditWisdomInput"
-                     min="0"
-                     data-bind='value: wis'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-xs-7 pull-left">Charisma</label>
-            <div class="col-xs-5">
-              <input type="number"
-                     class="form-control ability-score-input"
-                     id="abilityScoresEditCharismaTextarea"
-                     min="0"
-                     data-bind='value: cha'>
-            </div>
-          </div>
+          <!-- /ko -->
           <div class="modal-footer-ability-scores">
             <div class="form-group">
               <div class="col-xs-offset-7 col-xs-5">
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="abilityScoresEditDoneButton"
+                        data-bind='disable: !addFormIsValid()'
                         data-dismiss="modal">Done</button>
               </div>
              </div>

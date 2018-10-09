@@ -1,7 +1,10 @@
 import ko from 'knockout'
 
-import 'bootstrap'
-import 'font-awesome-webpack'
+// Global bootstrap modules
+import 'bootstrap/js/collapse';
+import 'bootstrap/js/modal';
+import 'bootstrap/js/tooltip';
+import 'bootstrap/js/popover';
 import Spinner from 'spin'
 
 // Load Global KO Bindings
@@ -9,6 +12,7 @@ import 'bin/knockout-jquery-autocomplete'
 import 'bin/knockout-bottomsup'
 import 'bin/xmpp/muc.strophe'
 import 'bin/knockout-bootstrap-modal'
+import 'bin/knockout-find';
 
 import 'charactersheet/components'
 import 'charactersheet/migrations'
@@ -21,7 +25,6 @@ import { AdventurersCodexViewModel } from 'charactersheet/viewmodels/common/root
 import template from 'charactersheet/viewmodels/common/root/index.html'
 
 import { init } from 'charactersheet/init'
-
 
 var spinner = new Spinner({color:'#b4bcc2', lines: 12}).spin(
     document.getElementsByTagName('body')[0]

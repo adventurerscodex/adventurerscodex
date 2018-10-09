@@ -2,67 +2,67 @@ export var Fixtures = {
     defaultProfilePictures: [
         {
             name: '',
-            image: '/images/sample-headshots/elf-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/elf-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/elf-head-2.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/elf-head-2.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/emo-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/emo-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/sorceress-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/sorceress-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/warrior-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/warrior-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/warlock-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/warlock-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/orc-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/orc-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/druid-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/druid-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/druid-head-2.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/druid-head-2.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/dude-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/dude-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/dwarf-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/dwarf-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/knight-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/knight-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/mechanic-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/mechanic-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/merchant-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/merchant-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/ranger-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/ranger-head.png'
         },
         {
             name: '',
-            image: '/images/sample-headshots/troll-head.png'
+            image: 'https://app.adventurerscodex.com/images/sample-headshots/troll-head.png'
         }
     ],
     general : {
@@ -89,6 +89,13 @@ export var Fixtures = {
         ]
     },
     armor : {
+        constants: {
+            types: {
+                shield: 'Shield',
+                light: 'Light',
+                medium: 'Medium'
+            }
+        },
         armorTypeOptions : [
             'Light', 'Medium', 'Heavy', 'Shield'],
         armorStealthOptions : [
@@ -145,7 +152,7 @@ export var Fixtures = {
         ]
     },
     spell : {
-        spellTypeOptions : [
+        typeOptions : [
             'Ability Check',
             'Attack Roll',
             'Automatic',
@@ -155,7 +162,7 @@ export var Fixtures = {
             'Savings Throw'],
         spellSaveAttrOptions : [
             'Str', 'Dex', 'Con', 'Int', 'Wis', 'Cha'],
-        spellSchoolOptions : [
+        schoolOptions : [
             'Abjuration',
             'Conjuration',
             'Divination',
@@ -164,7 +171,7 @@ export var Fixtures = {
             'Illusion',
             'Necromancy',
             'Transmutation'],
-        spellCastingTimeOptions : [
+        castingTimeOptions : [
             '1 action',
             '1 action or 8 hours',
             '1 bonus action',
@@ -175,7 +182,7 @@ export var Fixtures = {
             '12 hours',
             '24 hours',
             '8 hours'],
-        spellDurationOptions : [
+        durationOptions : [
             '1 day',
             '1 hour',
             '1 minute',
@@ -202,14 +209,14 @@ export var Fixtures = {
             'Up to 1 hour',
             'Up to 1 minute',
             'Up to 8 hours'],
-        spellComponentsOptions : [
+        componentsOptions : [
             'S',
             'S, M',
             'V',
             'V, M',
             'V, S',
             'V, S, M'],
-        spellRangeOptions : [
+        rangeOptions : [
             '1 mile',
             '10 feet',
             '100 feet',
@@ -478,5 +485,75 @@ export var Fixtures = {
             'status': 'out of abilities',
             'color': 'danger'
         }]
+    },
+    abilityScores: {
+        constants: {
+            strength: {
+                name: 'Strength',
+                shortName: 'STR'
+            },
+            dexterity: {
+                name: 'Dexterity',
+                shortName: 'DEX'
+            },
+            constitution: {
+                name: 'Constitution',
+                shortName: 'CON'
+            },
+            intelligence: {
+                name: 'Intelligence',
+                shortName: 'INT'
+            },
+            wisdom: {
+                name: 'Wisdom',
+                shortName: 'WIS'
+            },
+            charisma: {
+                name: 'Charisma',
+                shortName: 'CHA'
+            }
+        }
+    },
+    chatRoom: {
+        type: {
+            party: 'party',
+            chat: 'chat'
+        }
+    },
+    encounter: {
+        sections: {
+            environment: {
+                name: 'Environment',
+                index: 0
+            },
+            mapsAndImages: {
+                name: 'Maps and Images',
+                index: 1
+            },
+            pointsOfInterest: {
+                name: 'Points of Interest',
+                index: 2
+            },
+            npcs: {
+                name: 'Non-Player Characters',
+                index: 3
+            },
+            monsters: {
+                name: 'Monsters',
+                index: 4
+            },
+            readAloudText: {
+                name: 'Read-Aloud Text',
+                index: 5
+            },
+            treasure: {
+                name: 'Treasure',
+                index: 6
+            },
+            notes: {
+                name: 'Notes',
+                index: 7
+            }
+        }
     }
 };

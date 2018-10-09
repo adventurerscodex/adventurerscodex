@@ -1,6 +1,8 @@
 import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
+
 
 /**
  * This file contains a number of generic utility functions used throughout
@@ -25,7 +27,14 @@ export var Utility = {
  */
 Utility.markdown.asPlaintext = function(markdown) {
     var myString = markdown || '';
-    return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
+    return marked(myString)
+        .replace(/<(?:.|\n)*?>/gm, '')
+    // Get special characters back to their normal self
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, '\'')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
 };
 
 /* String Util */
@@ -71,7 +80,7 @@ Utility.string.createDirectDropboxLink = function(link) {
  */
 Utility.array.updateElement = function(array, updatedElement, elementId) {
     array.forEach(function(element, idx, _) {
-        if (element.__id === elementId) {
+        if (ko.unwrap(element.uuid) === ko.unwrap(elementId)) {
             element.importValues(updatedElement.exportValues());
         }
     });

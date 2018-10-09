@@ -1,109 +1,83 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
 
-export function Health() {
-    var self = this;
-    self.ps = PersistenceService.register(Health, self);
-    self.mapping = {
-        include: ['characterId', 'maxHitpoints', 'tempHitpoints', 'damage']
+export class Health extends KOModel {
+    static __skeys__ = ['core', 'characters', 'health'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.DANGER_THRESHOLD = 0.30;
-    self.WARNING_THRESHOLD = 0.50;
+    DANGER_THRESHOLD = 0.30;
+    WARNING_THRESHOLD = 0.50;
 
-    self.characterId = ko.observable(null);
-    self.maxHitpoints = ko.observable(10);
-    self.tempHitpoints = ko.observable(0);
-    self.damage = ko.observable(0);
+    uuid = ko.observable(null);
+    maxHitPoints = ko.observable(10);
+    tempHitPoints = ko.observable(0);
+    damage = ko.observable(0);
 
-    self.hitpoints = ko.pureComputed(function() {
-        return parseInt(self.regularHitpointsRemaining());
-    }, self);
+    hitpoints = ko.pureComputed(() => {
+        return this.regularHitpointsRemaining();
+    });
 
-    self.totalHitpoints = ko.pureComputed(function() {
-        var maxHP = self.maxHitpoints() ? parseInt(self.maxHitpoints()) : 0;
-        var tempHP = self.tempHitpoints() ? parseInt(self.tempHitpoints()) : 0;
+    totalHitpoints = ko.pureComputed(() => {
+        var maxHP = this.maxHitPoints() ? parseInt(this.maxHitPoints()) : 0;
+        var tempHP = this.tempHitPoints() ? parseInt(this.tempHitPoints()) : 0;
         return maxHP + tempHP;
-    }, self);
+    });
 
-    self.tempHitpointsRemaining = ko.pureComputed(function() {
-        var tempHP = self.tempHitpoints() ? parseInt(self.tempHitpoints()) : 0;
+    tempHitpointsRemaining = ko.pureComputed(() => {
+        var tempHP = this.tempHitPoints() ? parseInt(this.tempHitPoints()) : 0;
         return tempHP;
-    }, self);
+    });
 
-    self.regularHitpointsRemaining = ko.pureComputed(function() {
-        var damage = self.damage() ? parseInt(self.damage()) : 0;
-        var maxHP = self.maxHitpoints() ? parseInt(self.maxHitpoints()) : 0;
-        return maxHP - damage;
-    }, self);
+    regularHitpointsRemaining = ko.pureComputed(() => {
+        return this.maxHitPoints() - this.damage();
+    });
 
     //Progress bar methods.
 
-    self.hitpointsText = ko.pureComputed(function() {
-        var text = 'HP: ' + self.hitpoints().toString();
-        if (self.tempHitpoints() > 0) {
-            return text + ', Temp HP: ' + self.tempHitpoints().toString();
+    hitpointsText = ko.pureComputed(() => {
+        var text = 'HP: ' + this.hitpoints().toString();
+        if (this.tempHitPoints() > 0) {
+            return text + ', Temp HP: ' + this.tempHitPoints().toString();
         }
         return text;
     });
 
-    self.isKnockedOut = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) <= 0 ? true : false;
-    }, self);
+    isKnockedOut = ko.pureComputed(() => {
+        return parseInt(this.hitpoints()) / parseInt(this.totalHitpoints()) <= 0 ? true : false;
+    });
 
-    self.isDangerous = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.DANGER_THRESHOLD ? true : false;
-    }, self);
+    isDangerous = ko.pureComputed(() => {
+        return parseInt(this.hitpoints()) / parseInt(this.totalHitpoints()) < this.DANGER_THRESHOLD ? true : false;
+    });
 
-    self.isWarning = ko.pureComputed(function() {
-        return parseInt(self.hitpoints()) / parseInt(self.totalHitpoints()) < self.WARNING_THRESHOLD ? true : false;
-    }, self);
+    isWarning = ko.pureComputed(() => {
+        return parseInt(this.hitpoints()) / parseInt(this.totalHitpoints()) < this.WARNING_THRESHOLD ? true : false;
+    });
 
-    self.progressType = ko.pureComputed(function() {
+    progressType = ko.pureComputed(() => {
         var type = 'progress-bar-success';
-        if (self.isWarning()) { type = 'progress-bar-warning'; }
-        if (self.isDangerous()) { type = 'progress-bar-danger'; }
+        if (this.isWarning()) { type = 'progress-bar-warning'; }
+        if (this.isDangerous()) { type = 'progress-bar-danger'; }
         return type;
-    }, self);
+    });
 
-    self.regularProgressWidth = ko.pureComputed(function() {
-        if (self.isKnockedOut()) {
+    regularProgressWidth = ko.pureComputed(() => {
+        if (this.isKnockedOut()) {
             return '100%';
         }
-        return (parseInt(self.regularHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
-    }, self);
+        return (parseInt(this.regularHitpointsRemaining()) / parseInt(this.totalHitpoints()) * 100) + '%';
+    });
 
-    self.tempProgressWidth = ko.pureComputed(function() {
-        if (self.tempHitpointsRemaining() < 0) {
+    tempProgressWidth = ko.pureComputed(() => {
+        if (this.tempHitpointsRemaining() < 0) {
             return '0%';
         }
-        return (parseInt(self.tempHitpointsRemaining()) / parseInt(self.totalHitpoints()) * 100) + '%';
-    }, self);
-
-    self.clear = function() {
-        var values = new Health().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
+        return (parseInt(this.tempHitpointsRemaining()) / parseInt(this.totalHitpoints()) * 100) + '%';
+    });
 }
-Health.__name = 'Health';
-
-
-PersistenceService.addToRegistry(Health);

@@ -1,97 +1,70 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
 import { CharacterCardPublishingService } from 'charactersheet/services/common/sync/card_service';
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging/chat_service';
 import { DMCardPublishingService } from 'charactersheet/services/common/sync/card_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Message } from './message';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Presence } from './presence';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
 import ko from 'knockout';
 
 
-export function ChatRoom() {
-    var self = this;
+export class ChatRoom extends KOModel {
+    static __skeys__ = ['core', 'chatRooms'];
 
-    self.ps = PersistenceService.register(ChatRoom, self);
-    self.mapping = {
-        include: ['characterId', 'chatId', 'dateCreated', 'name', 'isGroupChat', 'isParty', 'partyId']
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable();
-    self.chatId = ko.observable();
-    self.dateCreated = ko.observable();
-    self.name = ko.observable();
-    self.isGroupChat = ko.observable(false);
-    self.isParty = ko.observable(false);
-    self.partyId = ko.observable();
+    coreUuid = ko.observable();
+    jid = ko.observable();
+    createdAt = ko.observable();
+    type = ko.observable();
+    partyJid = ko.observable();
 
-    self.chatName = ko.pureComputed(function() {
-        return Strophe.getNodeFromJid(self.chatId());
+    chatName = ko.pureComputed(() => {
+        return Strophe.getNodeFromJid(this.jid());
     });
 
-    self.clear = function() {
-        var values = new ChatRoom().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
-
-    self.purge = function() {
-        self.getAllMessages().forEach(function(msg, idx, _) {
+    purge = function() {
+        this.getAllMessages().forEach(function(msg, idx, _) {
             msg.delete();
         });
     };
 
     /* Convenience Methods */
 
-    self.getUnreadMessages = function() {
+    getUnreadMessages = function() {
         return PersistenceService.findFiltered(Message, function(msg, _) {
-            return Strophe.getBareJidFromJid(msg.from) == self.chatId() && !msg.read;
+            return Strophe.getBareJidFromJid(msg.from) == this.jid() && !msg.read;
         });
     };
 
-    self.getAllMessages = function() {
+    getAllMessages = function() {
         return PersistenceService.findFiltered(Message, function(msg, _) {
-            return  Strophe.getBareJidFromJid(msg.from) == self.chatId();
+            return Strophe.getBareJidFromJid(msg.from) == this.jid();
         }).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
-            return Strophe.getBareJidFromJid(msg.from) == self.chatId();
+            return Strophe.getBareJidFromJid(msg.from) == this.jid();
         }));
     };
 
-    self.getRoomMembers = function() {
-        var jid = self.chatId();
-        var character = CharacterManager.activeCharacter();
+    getRoomMembers = function() {
+        var jid = this.jid();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var occupants = chatService.getOccupantsInRoom(jid);
 
         // Get the current card service.
         var cardService = null;
-        if (character.playerType().key == 'character') {
+        if (character.type.name() == 'character') {
             cardService = CharacterCardPublishingService.sharedService();
         } else {
             cardService = DMCardPublishingService.sharedService();
@@ -104,6 +77,3 @@ export function ChatRoom() {
         return occupantCardsOrNames;
     };
 }
-ChatRoom.__name = 'ChatRoom';
-
-PersistenceService.addToRegistry(ChatRoom);

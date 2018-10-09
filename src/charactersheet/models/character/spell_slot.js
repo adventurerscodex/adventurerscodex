@@ -1,74 +1,49 @@
-import 'bin/knockout-mapping-autoignore';
-import 'knockout-mapping';
-import { Fixtures } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 
-export function Slot() {
-    var self = this;
-    self.ps = PersistenceService.register(Slot, self);
-    self.mapping = {
-        include: ['characterId', 'level', 'maxSpellSlots', 'usedSpellSlots', 'resetsOn']
+export class SpellSlot extends KOModel {
+    static __skeys__ = ['core', 'spellSlots'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.slotColors = Fixtures.general.colorList;
+    coreUuid = ko.observable(null);
+    level = ko.observable(1);
+    max = ko.observable(1);
+    used = ko.observable(0);
+    resetsOn = ko.observable('long');
+    color = ko.observable('');
 
-    self.characterId = ko.observable(null);
-    self.level = ko.observable(1);
-    self.maxSpellSlots = ko.observable();
-    self.usedSpellSlots = ko.observable(0);
-    self.resetsOn = ko.observable('long');
-
-    self.color = ko.pureComputed(function() {
-        return self.slotColors[self.level()-1];
+    spellSlots = ko.pureComputed(() => {
+        return this.getMaxSpellSlots() - this.getUsedSpellSlots();
     });
 
-    self.spellSlots = ko.pureComputed(function() {
-        return self.getMaxSpellSlots() - self.getUsedSpellSlots();
+    progressWidth = ko.pureComputed(() => {
+        return (this.getMaxSpellSlots() - this.getUsedSpellSlots()) / this.getMaxSpellSlots();
     });
 
-    self.progressWidth = ko.pureComputed(function() {
-        return (self.getMaxSpellSlots() - self.getUsedSpellSlots()) / self.getMaxSpellSlots();
-    });
+    getMaxSpellSlots() {
+        return this.max() ? parseInt(this.max()) : 0;
+    }
 
-    self.getMaxSpellSlots = function() {
-        return self.maxSpellSlots() ? parseInt(self.maxSpellSlots()) : 0;
-    };
-
-    self.getUsedSpellSlots = function() {
-        return self.usedSpellSlots() ? parseInt(self.usedSpellSlots()) : 0;
-    };
-
-    self.clear = function() {
-        var values = new Slot().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
+    getUsedSpellSlots() {
+        return this.used() ? parseInt(this.used()) : 0;
+    }
 }
 
-Slot.REST_TYPE = {
-    SHORT_REST: 'short',
-    LONG_REST: 'long'
+SpellSlot.validationConstraints = {
+    rules: {
+        level: {
+            required: true,
+            min: 1,
+            number: true
+        },
+        max: {
+            required: true,
+            min: 1,
+            number: true
+        }
+    }
 };
-Slot.__name = 'Slot';
-
-PersistenceService.addToRegistry(Slot);

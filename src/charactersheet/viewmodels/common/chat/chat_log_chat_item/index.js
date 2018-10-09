@@ -3,23 +3,24 @@ import {
     DMCardPublishingService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    ChatServiceManager,
+    KeyValuePredicate,
+    PersistenceService
+} from 'charactersheet/services/common';
+import {
+    CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
 import {
-    ChatServiceManager,
-    KeyValuePredicate,
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
-import { Note,
+    Note,
     PlayerTypes
 } from 'charactersheet/models/common';
 import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import linkifyStr from 'linkifyjs/string';
 import template from './index.html';
+
 /**
  * A View that handles displaying Messages of type CHAT.
  */
@@ -41,8 +42,8 @@ export function ChatLogChatItem(params) {
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {
-        var key = CharacterManager.activeCharacter().playerType().key;
-        return key == PlayerTypes.characterPlayerType.key;
+        var key = CoreManager.activeCore().type.name();
+        return key == PlayerTypes.character.key;
     });
 
     self.image = ko.pureComputed(function() {
@@ -66,7 +67,7 @@ export function ChatLogChatItem(params) {
     });
 
     self.saveToNotes = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var note = PersistenceService.findByPredicates(Note, [
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isSavedChatNotes', true)
@@ -86,7 +87,7 @@ export function ChatLogChatItem(params) {
     /* Card Methods */
 
     self.getCard = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var chatRoom = chatService.rooms[self.message.fromBare()];
         if (!chatRoom) { return null; }
@@ -98,7 +99,7 @@ export function ChatLogChatItem(params) {
         // Get the current card service.
         var jid = occupant.jid;
         var cardService = null;
-        if (character.playerType().key == 'character') {
+        if (character.type.name() == 'character') {
             cardService = CharacterCardPublishingService.sharedService();
         } else {
             cardService = DMCardPublishingService.sharedService();

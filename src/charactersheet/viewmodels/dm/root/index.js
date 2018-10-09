@@ -1,15 +1,17 @@
 import 'bin/knockout-custom-loader';
-import { CharacterManager,
+import {
+    CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import { ChatServiceManager,
+import {
     DMCardPublishingService,
     HotkeysService,
     ImageServiceManager,
     PersistenceService
 } from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import chatTabImage from 'images/tab_icons/conversation.svg';
 import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
 import encounterTabImage from 'images/tab_icons/treasure-map.svg';
@@ -24,7 +26,8 @@ export function DMRootViewModel() {
     var self = this;
 
     self.playerType = () => {
-        return CharacterManager.activeCharacter().playerType();
+        const key = CoreManager.activeCore().type.name();
+        return PlayerTypes[key];
     };
     self._dummy = ko.observable(false);
     self.activeTab = ko.observable();
@@ -45,19 +48,19 @@ export function DMRootViewModel() {
    //UI Methods
 
     self.playerSummary = ko.pureComputed(() => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.summary() ? campaign.summary() : '';
     });
 
     self.playerTitle = ko.pureComputed(() => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.name() ? campaign.name() : '';
     });
 
     self.playerAuthor = ko.pureComputed(() => {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', key);
         return campaign.playerName() ? campaign.playerName() : '';
     });

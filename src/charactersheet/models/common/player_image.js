@@ -1,41 +1,17 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
 import ko from 'knockout';
 
 
-export function PlayerImage() {
-    var self = this;
-    self.ps = PersistenceService.register(PlayerImage, self);
+export class ProfileImage extends KOModel {
+    static __skeys__ = ['core', 'characters', 'profileImage'];
 
-    self.mapping = {
-        include: ['characterId', 'imageSource']
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable(null);
-    self.imageSource = ko.observable();
-
-    self.clear = function() {
-        var values = new PlayerImage().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
+    sourceUrl = ko.observable();
+    email = ko.observable();
+    type = ko.observable();
 }
-PlayerImage.__name = 'PlayerImage';
-
-
-PersistenceService.addToRegistry(PlayerImage);

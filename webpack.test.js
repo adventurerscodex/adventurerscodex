@@ -1,14 +1,15 @@
-const package_ = require('./package.json');
-const merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const webpack = require('webpack');
+const merge = require('webpack-merge');
+
 const common = require('./webpack.common.js');
+const package_ = require('./package.json');
 
 module.exports = merge(common, {
+    devtool: 'source-map',
+    optimization: {
+        minimize: true
+    },
     plugins: [
-        new UglifyJSPlugin({
-            sourceMap: true
-        }),
         new webpack.DefinePlugin({
             /**
              * The string representation of the environment name.
@@ -31,6 +32,10 @@ module.exports = merge(common, {
              * The URL of the homepage.
              */
             'HOME_URL': JSON.stringify('https://nightly.adventurerscodex.com'),
+            /**
+             * The URL to the login page.
+             */
+            'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
             /**
              * The HOST URL of the pubsub services.
              */

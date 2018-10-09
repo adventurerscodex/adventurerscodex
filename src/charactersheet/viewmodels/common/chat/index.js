@@ -7,7 +7,7 @@ import {
     PersistenceService
 } from 'charactersheet/services/common';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { ChatCellViewModel } from './chat_cell';
@@ -73,7 +73,7 @@ export function ChatViewModel(params) {
      * <user's chosen room name>.<PARTY_ID>@<MUC_SERVICE>
      */
     self.addItem = function(invitees) {
-        var name = uuid.v4().substring(0,6);
+        var name = uuid.v4();
         if (invitees.length === 0) { return; }
 
         var chatService = ChatServiceManager.sharedService();
@@ -83,7 +83,7 @@ export function ChatViewModel(params) {
         self.reloadCells();
 
         var cellToSelect = self.cells().filter(function(cell, idx, _) {
-            return cell.id() === room.chatId();
+            return cell.id() === room.jid();
         })[0];
         self.selectedCell(cellToSelect);
     };
@@ -95,7 +95,7 @@ export function ChatViewModel(params) {
         var chatService = ChatServiceManager.sharedService();
         chatService.leave(cell.id(), 'test', console.log);
 
-        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatId', cell.id());
+        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatJid', cell.id());
         if (chat) {
             chat.purge();
             chat.delete();
@@ -106,7 +106,7 @@ export function ChatViewModel(params) {
     };
 
     self.selectCell = function(cell) {
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', cell.id());
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatJid', cell.id());
         self.updateBadge(room);
     };
 
@@ -134,7 +134,7 @@ export function ChatViewModel(params) {
      */
     self.updateBadge = function(room) {
         var cellToBadge = self.cells().filter(function(cell, idx, _) {
-            return cell.id() === room.chatId();
+            return cell.id() === room.jid();
         })[0];
         if (cellToBadge) {
             cellToBadge.badge(room.getUnreadMessages().length);
@@ -173,14 +173,14 @@ export function ChatViewModel(params) {
     };
 
     self._getChats = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var chatService = ChatServiceManager.sharedService();
         var currentPartyNode = chatService.currentPartyNode;
         var chats = PersistenceService.findByPredicates(ChatRoom, [
             new KeyValuePredicate('characterId', key),
             new OrPredicate([
                 // Get the party chat.
-                new KeyValuePredicate('chatId', currentPartyNode),
+                new KeyValuePredicate('chatJid', currentPartyNode),
                 // Get all related chats.
                 new KeyValuePredicate('partyId', currentPartyNode)
             ])
@@ -198,7 +198,7 @@ export function ChatViewModel(params) {
      */
     self._isSelectedRoom = function(room) {
         if (!room || !self.selectedCell()) { return false; }
-        return self.selectedCell().id() === room.chatId();
+        return self.selectedCell().id() === room.jid();
     };
 
     /**
@@ -237,7 +237,7 @@ export function ChatViewModel(params) {
 
     self._userHasJoinedOrLeft = function(presence) {
         if (self._isMe(presence.fromUsername())) { return; }
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatId', presence.fromBare());
+        var room = PersistenceService.findFirstBy(ChatRoom, 'chatJid', presence.fromBare());
         self._deliverMessageToRoom(room, presence, false, true);
     };
 
@@ -260,7 +260,7 @@ export function ChatViewModel(params) {
 
     self._purgeChats = function() {
         // Chat logs are saved server-side.
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
         chats.forEach(function(chat, idx, _) {
             chat.purge();

@@ -3,42 +3,42 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="weaponTable">
       <thead>
         <tr>
-          <th id="weaponTableWeaponHeader" data-bind="click: function(){sortBy('weaponName');}">
+          <th id="weaponTableWeaponHeader" data-bind="click: function(){sortBy('name');}">
             Weapon
-            <span data-bind="css: sortArrow('weaponName')"></span>
+            <span data-bind="css: sortArrow('name')"></span>
           </th>
           <th id="weaponTableToHitHeader" data-bind="click: function(){sortBy('totalBonus');}">
              To Hit
              <span data-bind="css: sortArrow('totalBonus')"></span>
           </th>
-          <th id="weaponTableDamageHeader" data-bind="click: function(){sortBy('weaponDmg');}">
+          <th id="weaponTableDamageHeader" data-bind="click: function(){sortBy('damage');}">
             Damage
-            <span data-bind="css: sortArrow('weaponDmg')"></span>
+            <span data-bind="css: sortArrow('damage')"></span>
           </th>
           <th id="weaponTableDamageTypeHeader" class="hidden-sm hidden-xs hidden-md"
-            data-bind="click: function(){sortBy('weaponDamageType');}">
+            data-bind="click: function(){sortBy('damageType');}">
             Damage Type
-            <span data-bind="css: sortArrow('weaponDamageType')"></span>
+            <span data-bind="css: sortArrow('damageType')"></span>
           </th>
           <th id="weaponTableRangeHeader" class="hidden-sm hidden-xs"
-            data-bind="click: function(){sortBy('weaponRange');}">
+            data-bind="click: function(){sortBy('range');}">
             Range
-            <span data-bind="css: sortArrow('weaponRange')"></span>
+            <span data-bind="css: sortArrow('range')"></span>
           </th>
           <th id="weaponTablePropertyHeader" class="hidden-sm hidden-xs hidden-md"
-            data-bind="click: function(){sortBy('weaponProperty');}">
+            data-bind="click: function(){sortBy('property');}">
             Property
-            <span data-bind="css: sortArrow('weaponProperty')"></span>
+            <span data-bind="css: sortArrow('property')"></span>
           </th>
           <th id="weaponTableQuantityHeader" class="hidden-sm hidden-xs"
-            data-bind="click: function(){sortBy('weaponQuantity');}">
+            data-bind="click: function(){sortBy('quantity');}">
             Quantity
-            <span data-bind="css: sortArrow('weaponQuantity')"></span>
+            <span data-bind="css: sortArrow('quantity')"></span>
           </th>
           <th>
-            <a data-toggle="modal"
-               data-target="#addWeapon" href="#"
-               id="weaponAddIcon">
+            <a data-bind="click: toggleAddModal"
+               id="weaponAddIcon"
+               href="#">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -49,26 +49,26 @@
         <tr class="clickable">
           <td data-bind="click: $parent.editWeapon"
               href="#">
-              <span data-bind="text: weaponName">
+              <span data-bind="text: name">
               </span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
           <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
               href="#"></td>
-          <td data-bind="text: weaponDmg, click: $parent.editWeapon"
+          <td data-bind="text: damage, click: $parent.editWeapon"
               href="#"></td>
           <td class="hidden-sm hidden-xs hidden-md"
-              data-bind="text: weaponDamageType, click: $parent.editWeapon"
+              data-bind="text: damageType, click: $parent.editWeapon"
               href="#"></td>
           <td class="hidden-sm hidden-xs"
               data-bind="text: weaponRangeLabel, click: $parent.editWeapon"
               href="#"></td>
           <td class="hidden-sm hidden-xs hidden-md"
-              data-bind="text: weaponProperty, click: $parent.editWeapon"
+              data-bind="text: property, click: $parent.editWeapon"
               href="#"></td>
           <td class="hidden-sm hidden-xs"
-              data-bind="text: weaponQuantity, click: $parent.editWeapon"
+              data-bind="text: quantity, click: $parent.editWeapon"
               href="#"></td>
           <td>
             <a data-bind="click: $parent.removeWeapon" href="#">
@@ -80,7 +80,7 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedWeapons().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addWeapon" href="#"
+          <td data-bind="click: toggleAddModal"
             colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new weapon
@@ -95,12 +95,14 @@
         <span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span>
       </span>
     </div> <!-- end panel footer -->
+
     <!-- Add Modal -->
     <div class="modal fade"
          id="addWeapon"
          tabindex="-1"
          role="dialog"
-         data-bind="modal: { onopen: modalFinishedOpening }"
+         data-bind="modal: { onopen: modalFinishedOpening,
+          open: addModalOpen }"
          aria-labelledby="addWeaponLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -114,102 +116,111 @@
             <h4 class="modal-title" id="addWeaponLabel">Add a weapon to your arsenal.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
-                <label for="weaponName"
+                <label for="name"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
                          id="weaponAddNameInput"
+                         name="name"
                          placeholder="Short Sword"
-                         data-bind='textInput: blankWeapon().weaponName, autocomplete: {
+                         data-bind='textInput: blankWeapon().name, autocomplete: {
                           source: weaponsPrePopFilter, onselect: populateWeapon},
                           hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group">
-                <label for="weaponDmg"
+                <label for="damage"
                        class="col-sm-2 control-label">Damage</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
+                           name="damage"
                            id="weaponAddDamageInput"
                            placeholder="1D4"
-                           data-bind='textInput: blankWeapon().weaponDmg'>
+                           data-bind='textInput: blankWeapon().damage'>
                   </div>
               </div>
               <div class="form-group">
-                <label for="weaponHit"
+                <label for="magicalModifier"
                        class="col-sm-2 control-label">Magical Modifier</label>
                 <div class="col-sm-10">
                   <input type="number" class="form-control"
                          id="weaponAddMagicalModifierInput"
+                         name="magicalModifier"
                          placeholder="Place magical modifier here"
-                         data-bind='textInput: blankWeapon().weaponHit'>
+                         data-bind='textInput: blankWeapon().magicalModifier'>
                 </div>
               </div>
               <div class="form-group">
-                <label for="weaponToHitModifier"
+                <label for="toHitModifier"
                        class="col-sm-2 control-label">To Hit Modifier</label>
                 <div class="col-sm-10">
                   <input type="number" class="form-control"
                          id="weaponAddToHitModifierInput"
+                         name="toHitModifier"
                          placeholder="Adjust to hit modifier here"
-                         data-bind='textInput: blankWeapon().weaponToHitModifier'>
+                         data-bind='textInput: blankWeapon().toHitModifier'>
                 </div>
               </div>
               <div class="form-group ui-front">
-                <label for="weaponType"
+                <label for="type"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="weaponAddTypeInput"
                          placeholder="Ranged"
-                         data-bind="textInput: blankWeapon().weaponType, autocomplete: {
+                         name="type"
+                         data-bind="textInput: blankWeapon().type, autocomplete: {
                           source: blankWeapon().weaponTypeOptions,
                           onselect: setWeaponType }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="weaponHandedness"
+                <label for="handedness"
                        class="col-sm-2 control-label">Handedness</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="weaponAddHandednessInput"
                          placeholder="One-Handed"
-                         data-bind="textInput: blankWeapon().weaponHandedness, autocomplete: {
+                         name="handedness"
+                         data-bind="textInput: blankWeapon().handedness, autocomplete: {
                           source: blankWeapon().weaponHandednessOptions,
                           onselect: setWeaponHandedness }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="weaponProficiency"
+                <label for="proficiency"
                        class="col-sm-2 control-label">Proficiency</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="weaponAddProficiencyInput"
                          placeholder="Simple"
-                         data-bind="textInput: blankWeapon().weaponProficiency, autocomplete: {
+                         name="proficiency"
+                         data-bind="textInput: blankWeapon().proficiency, autocomplete: {
                           source: blankWeapon().weaponProficiencyOptions,
                           onselect: setWeaponProficiency }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="weaponPrice"
+                <label for="price"
                        class="col-sm-2 control-label">Price</label>
                 <div class="col-sm-10">
                   <div class="input-group">
                     <input type="number" min="0" class="form-control input-jquery-addon"
                          id="weaponAddPriceInput"
                          placeholder="5"
-                         data-bind='textInput: blankWeapon().weaponPrice'>
+                         name="price"
+                         data-bind='textInput: blankWeapon().price'>
                          <span data-bind="console.log($parent.id)"></span>
                      <span class="input-group-addon input-group-addon-jquery">
                       <input class="form-control"
                              id="weaponAddCurrencyDenominationInput"
                              placeholder="GP"
-                             data-bind="textInput: blankWeapon().weaponCurrencyDenomination, autocomplete: {
+                             name="currencyDenomination"
+                             data-bind="textInput: blankWeapon().currencyDenomination, autocomplete: {
                           source: blankWeapon().weaponCurrencyDenominationOptions,
                           onselect: setWeaponCurrencyDenomination }">
                     </span>
@@ -217,86 +228,90 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="weaponWeight"
+                <label for="weight"
                        class="col-sm-2 control-label">Weight</label>
                   <div class="col-sm-10">
                     <input type="number" min="0" class="form-control"
                            id="weaponAddWeightInput"
                            placeholder="6"
-                           data-bind='textInput: blankWeapon().weaponWeight'>
+                           name="weight"
+                           data-bind='textInput: blankWeapon().weight'>
                   </div>
               </div>
               <div class="form-group">
-                <label for="weaponRange"
+                <label for="range"
                        class="col-sm-2 control-label">Range</label>
                   <div class="col-sm-10">
                     <input type="text"
                            class="form-control"
+                           name="range"
                            id="weaponAddRangeInput"
                            placeholder="25/100"
-                           data-bind='textInput: blankWeapon().weaponRange'>
+                           data-bind='textInput: blankWeapon().range'>
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="weaponDamageType"
+                <label for="damageType"
                        class="col-sm-2 control-label">Damage Type</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="weaponAddDamageTypeInput"
                          placeholder="Fire"
-                         data-bind="textInput: blankWeapon().weaponDamageType, autocomplete: {
+                         name="damageType"
+                         data-bind="textInput: blankWeapon().damageType, autocomplete: {
                           source: blankWeapon().weaponDamageTypeOptions,
                           onselect: setWeaponDamageType }">
                   </div>
 
               </div>
               <div class="form-group ui-front">
-                <label for="weaponProperty"
+                <label for="property"
                        class="col-sm-2 control-label">Property</label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="weaponAddPropertyInput"
+                         name="property"
                          placeholder="Finesse"
-                         data-bind="textInput: blankWeapon().weaponProperty, autocomplete: {
+                         data-bind="textInput: blankWeapon().property, autocomplete: {
                           source: blankWeapon().weaponPropertyOptions,
                           onselect: setWeaponProperty }">
                   </div>
               </div>
               <div class="form-group">
-                <label for="weaponQuantity"
+                <label for="quantity"
                        class="col-sm-2 control-label">Quantity</label>
                   <div class="col-sm-10">
                     <input type="number" min="0" class="form-control"
                            id="weaponAddQuantityInput"
                            placeholder="1"
-                           data-bind='textInput: blankWeapon().weaponQuantity'>
+                           name="quantity"
+                           data-bind='textInput: blankWeapon().quantity'>
                   </div>
               </div>
 
               <div class="form-group">
-                <label for="weaponDescription"
+                <label for="description"
                        class="col-sm-2 control-label">Description</label>
                   <div class="col-sm-10">
                     <textarea type="password"
                               class="form-control"
+                              name="description"
                               id="weaponAddDescriptionTextarea"
                               rows="4"
                               placeholder="A sword...that is short..."
-                              data-bind='textInput: blankWeapon().weaponDescription'>
+                              data-bind='textInput: blankWeapon().description'>
                     </textarea>
                   </div>
               </div>
-            </form>
               <div class="modal-footer">
                 <button type="button"
                         class="btn btn-default"
                         id="weaponAddCancelButton"
                         data-dismiss="modal">Cancel</button>
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="weaponAddAddButton"
-                        data-bind='click: addWeapon'
-                        data-dismiss="modal">Add</button>
+                        data-bind='disable: !addFormIsValid()'>Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -306,6 +321,7 @@
                     </i><sm>
                 </p>
               </div>
+            </form>
           </div> <!-- Modal Body -->
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
@@ -350,20 +366,20 @@
             <div class="tab-content" data-bind="with: currentEditItem">
               <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="weaponsModalPreview">
                 <div class="h3">
-                  <span data-bind="text: weaponName" id="weaponPreviewNameLabel"></span>
+                  <span data-bind="text: name" id="weaponPreviewNameLabel"></span>
                   <small data-bind="text: magicalModifierLabel" id="weaponPreviewMagicalModifierLabel"></small>
                 </div>
                 <hr />
                 <div class="row">
-                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: weaponDmg" id="weaponPreviewDamageLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Damage:</b>&nbsp;<span data-bind="text: damage" id="weaponPreviewDamageLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>To Hit Modifier:</b>&nbsp;<span data-bind="text: toHitModifierLabel" id="weaponPreviewToHitModifierLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Range:</b>&nbsp;<span data-bind="text: weaponRangeLabel" id="weaponPreviewRangeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: weaponType" id="weaponPreviewTypeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Type:</b>&nbsp;<span data-bind="text: type" id="weaponPreviewTypeLabel"></span></div>
                   <div class="col-sm-6 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: weaponWeightLabel" id="weaponPreviewWeightLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: weaponDamageType" id="weaponPreviewDamageTypeLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Proficiency:</b>&nbsp;<span data-bind="text: weaponProficiency" id="weaponPreviewProficiencyLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Handedness:</b>&nbsp;<span data-bind="text: weaponHandedness" id="weaponPreviewHandednessLabel"></span></div>
-                  <div class="col-sm-6 col-xs-12"><b>Property:</b>&nbsp;<span data-bind="text: weaponProperty" id="weaponPreviewPropertyLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Damage Type:</b>&nbsp;<span data-bind="text: damageType" id="weaponPreviewDamageTypeLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Proficiency:</b>&nbsp;<span data-bind="text: proficiency" id="weaponPreviewProficiencyLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Handedness:</b>&nbsp;<span data-bind="text: handedness" id="weaponPreviewHandednessLabel"></span></div>
+                  <div class="col-sm-6 col-xs-12"><b>Property:</b>&nbsp;<span data-bind="text: property" id="weaponPreviewPropertyLabel"></span></div>
                 </div>
                 <hr />
                 <h4>Description</h4>
@@ -382,168 +398,184 @@
                 </div>
               </div> <!-- End Preview Tab -->
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="weaponsModalEdit">
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
-                    <label for="weaponName"
+                    <label for="name"
                            class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
                              id="weaponEditNameInput"
+                             name="name"
                              placeholder="Short Sword"
-                             data-bind='textInput: weaponName,
+                             data-bind='textInput: name,
                              hasFocus: $parent.editFirstModalElementHasFocus'>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponDmg"
+                    <label for="damage"
                            class="col-sm-2 control-label">Damage</label>
                       <div class="col-sm-10">
                         <input type="text"
                                class="form-control"
                                id="weaponEditDamageInput"
+                               name="damage"
                                placeholder="1D4"
-                               data-bind='textInput: weaponDmg'>
+                               data-bind='textInput: damage'>
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponHit"
+                    <label for="magicalModifier"
                            class="col-sm-2 control-label">Magical Modifier</label>
                     <div class="col-sm-10">
                       <input type="number" class="form-control"
                              id="weaponEditMagicalModifierInput"
+                             name="magicalModifier"
                              placeholder="Place magical modifier here"
-                             data-bind='textInput: weaponHit'>
+                             data-bind='textInput: magicalModifier'>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponToHitModifier"
+                    <label for="toHitModifier"
                            class="col-sm-2 control-label">To Hit Modifier</label>
                     <div class="col-sm-10">
                       <input type="number" class="form-control"
                              id="weaponEditToHitModifierInput"
+                             name="toHitModifier"
                              placeholder="Adjust to hit modifier here"
-                             data-bind='textInput: weaponToHitModifier'>
+                             data-bind='textInput: toHitModifier'>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponType"
+                    <label for="type"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditTypeInput"
+                             name="type"
                              placeholder="Ranged"
-                             data-bind="textInput: weaponType">
+                             data-bind="textInput: type">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponHandedness"
+                    <label for="handedness"
                            class="col-sm-2 control-label">Handedness</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditHandednessInput"
+                             name="handedness"
                              placeholder="One-Handed"
-                             data-bind="textInput: weaponHandedness">
+                             data-bind="textInput: handedness">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponProficiency"
+                    <label for="proficiency"
                            class="col-sm-2 control-label">Proficiency</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditProficiencyInput"
+                             name="proficiency"
                              placeholder="Simple"
-                             data-bind="textInput: weaponProficiency">
+                             data-bind="textInput: proficiency">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponPrice"
+                    <label for="price"
                            class="col-sm-2 control-label">Price</label>
                     <div class="col-sm-10">
                       <div class="input-group">
                         <input type="number" min="0" class="form-control input-jquery-addon"
                              id="weaponEditPriceInput"
                              placeholder="5"
-                             data-bind='textInput: weaponPrice'>
+                             name="price"
+                             data-bind='textInput: price'>
                          <span class="input-group-addon input-group-addon-jquery">
                           <input class="form-control"
                                  id="weaponEditCurrencyDenominationInput"
                                  placeholder="GP"
-                                 data-bind="textInput: weaponCurrencyDenomination">
+                                 name="currencyDenomination"
+                                 data-bind="textInput: currencyDenomination">
                         </span>
                       </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponWeight"
+                    <label for="weight"
                            class="col-sm-2 control-label">Weight</label>
                       <div class="col-sm-10">
                         <input type="number" min="0" class="form-control"
                                id="weaponEditWeightInput"
                                placeholder="6"
-                               data-bind='textInput: weaponWeight'>
+                               name="weight"
+                               data-bind='textInput: weight'>
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponRange"
+                    <label for="range"
                            class="col-sm-2 control-label">Range</label>
                       <div class="col-sm-10">
                         <input type="text"
                                class="form-control"
                                id="weaponEditRangeInput"
+                               name="range"
                                placeholder="25/100"
-                               data-bind='textInput: weaponRange'>
+                               data-bind='textInput: range'>
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="weaponDamageType"
+                    <label for="damageType"
                            class="col-sm-2 control-label">Damage Type</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditDamageTypeInput"
+                             name="damageType"
                              placeholder="Fire"
-                             data-bind="textInput: weaponDamageType">
+                             data-bind="textInput: damageType">
                       </div>
                       </div>
                     <div class="form-group">
-                    <label for="weaponProperty"
+                    <label for="property"
                            class="col-sm-2 control-label">Property</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="weaponEditPropertyInput"
+                             name="property"
                              placeholder="Finesse"
-                             data-bind="textInput: weaponProperty">
+                             data-bind="textInput: property">
                       </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="weaponQuantity"
+                    <label for="quantity"
                            class="col-sm-2 control-label">Quantity</label>
                       <div class="col-sm-10">
                         <input type="number" min="0" class="form-control"
                                id="weaponEditQuantityInput"
                                placeholder="1"
-                               data-bind='textInput: weaponQuantity'>
+                               name="quantity"
+                               data-bind='textInput: quantity'>
                       </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="weaponDescription"
+                    <label for="description"
                            class="col-sm-2 control-label">Description</label>
                       <div class="col-sm-10">
                         <textarea type="password"
                                   class="form-control"
                                   id="weaponEditDescriptionTextarea"
                                   rows="4"
+                                  name="description"
                                   placeholder="A sword...that is short..."
-                                  data-bind='textInput: weaponDescription'>
+                                  data-bind='textInput: description'>
                         </textarea>
                       </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button"
+                    <button type="submit"
                             class="btn btn-primary"
                             id="weaponEditDoneButton"
+                            data-bind='disable: !$parent.addFormIsValid()'
                             data-dismiss="modal">Done</button>
                   </div>
                 </form>

@@ -1,44 +1,57 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
-export function OtherStats() {
-    var self = this;
-    self.ps = PersistenceService.register(OtherStats, self);
-    self.mapping = {
-        include: ['characterId', 'armorClassModifier', 'initiative', 'speed',
-        'inspiration', 'proficiency']
+export class OtherStats extends KOModel {
+    static __skeys__ = ['core', 'characters', 'otherStats'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable(null);
-    self.armorClassModifier = ko.observable(0);
-    self.initiative = ko.observable(0);
-    self.speed = ko.observable(0);
-    self.inspiration = ko.observable(0);
-    self.proficiency = ko.observable(0);
+    coreUuid = ko.observable(null);
+    armorClassModifier = ko.observable(0);
+    initiativeModifier = ko.observable(0);
+    speed = ko.observable(0);
+    inspiration = ko.observable(false);
+    proficiencyModifier = ko.observable(0);
 
-    self.clear = function() {
-        var values = new OtherStats().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
+    toSchemaValues = (values) => {
+        if (values.armorClassModifier === '') {
+            values.armorClassModifier = 0;
+        }
 
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
+        if (values.initiativeModifier === '') {
+            values.initiativeModifier = 0;
+        }
 
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
+        if (values.speed === '') {
+            values.speed = 0;
+        }
 
-    self.save = function() {
-        self.ps.save();
-    };
+        if (values.proficiencyModifier === '') {
+            values.proficiencyModifier = 0;
+        }
+
+        return values;
+    }
 }
-OtherStats.__name = 'OtherStats';
 
-
-PersistenceService.addToRegistry(OtherStats);
+OtherStats.validationConstraints = {
+    rules: {
+        armorClassModifier: {
+            number: true
+        },
+        initiativeModifier: {
+            number: true
+        },
+        speed: {
+            number: true,
+            min: 0
+        },
+        proficiencyModifier: {
+            number: true
+        }
+    }
+};

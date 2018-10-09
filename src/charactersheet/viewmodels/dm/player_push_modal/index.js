@@ -4,7 +4,7 @@ import {
     DMCardPublishingService,
     XMPPService
 } from 'charactersheet/services/common';
-import { CharacterManager,
+import { CoreManager,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -96,12 +96,12 @@ export function PlayerPushModalViewModel(params) {
     };
 
     self.getAllPartyMembers = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
 
         // Get the current card service.
         var cardService = null;
-        if (character.playerType().key == 'character') {
+        if (character.type.name() == 'character') {
             cardService = CharacterCardPublishingService.sharedService();
         } else {
             cardService = DMCardPublishingService.sharedService();

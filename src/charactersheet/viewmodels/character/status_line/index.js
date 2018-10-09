@@ -1,5 +1,5 @@
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import {
@@ -17,14 +17,14 @@ export function StatusLineViewModel(params) {
     self.character = params.character;
 
     self.load = function() {
-        Notifications.status.changed.add(self.dataHasChanged);
-        self.character.subscribe(self.dataHasChanged);
+        Notifications.status.changed.add(self.coreHasChanged);
+        self.character.subscribe(self.coreHasChanged);
 
-        self.dataHasChanged();
+        self.coreHasChanged();
     };
 
     self.unload = function() {
-        Notifications.status.changed.remove(self.dataHasChanged);
+        Notifications.status.changed.remove(self.coreHasChanged);
         self.clear();
     };
 
@@ -34,10 +34,11 @@ export function StatusLineViewModel(params) {
 
     // Private Methods
 
-    self.dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var statuses = PersistenceService.findBy(Status, 'characterId', key);
-        var profile = PersistenceService.findBy(Profile, 'characterId', key)[0];
+    self.coreHasChanged = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const statuses = PersistenceService.findBy(Status, 'characterId', key);
+        const profileResponse = await Profile.ps.read({uuid: key});
+        let profile = profileResponse.object;
 
         self.statusLine(self.getStatusLine(profile, statuses));
     };

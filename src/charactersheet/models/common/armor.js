@@ -1,63 +1,59 @@
 import {
-    CharacterManager,
-    Fixtures,
-    Notifications
+    CoreManager,
+    Fixtures
 } from 'charactersheet/utilities';
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
+import { KOModel } from 'hypnos';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 
 import ko from 'knockout';
 
 
-export function Armor() {
-    var self = this;
-    self.ps = PersistenceService.register(Armor, self);
-    self.mapping = {
-        include: ['characterId', 'armorName', 'armorType',
-                  'armorPrice', 'armorMagicalModifier', 'armorCurrencyDenomination',
-                  'armorWeight', 'armorClass', 'armorStealth', 'armorDescription', 'armorEquipped']
+export class Armor extends KOModel {
+    static __skeys__ = ['core', 'armors'];
+
+    static mapping = {
+        include: ['coreUuid', 'equipped', 'magicalModifier']
     };
 
-    self._dummy = ko.observable(null);
-    self.characterId = ko.observable(null);
-    self.armorName = ko.observable('');
-    self.armorType = ko.observable('');
-    self.armorPrice = ko.observable('');
-    self.armorMagicalModifier = ko.observable(0);
-    self.armorCurrencyDenomination = ko.observable('');
-    self.armorWeight = ko.observable('');
-    self.armorClass = ko.observable('');
-    self.armorStealth = ko.observable('');
-    self.armorDescription = ko.observable('');
-    self.armorEquipped = ko.observable('');
+    _dummy = ko.observable(null);
+    coreUuid = ko.observable(null);
+    name = ko.observable('');
+    type = ko.observable('');
+    price = ko.observable('');
+    magicalModifier = ko.observable(0);
+    currencyDenomination = ko.observable('');
+    weight = ko.observable('');
+    armorClass = ko.observable('');
+    stealth = ko.observable('');
+    description = ko.observable('');
+    equipped = ko.observable(false);
 
-    self.armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
-    self.armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
-    self.armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
+    armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
+    armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
-    self.acLabel = ko.pureComputed(function() {
-        if (self.armorClass()) {
-            return 'AC ' + self.armorClass();
+    acLabel = ko.pureComputed(() => {
+        if (this.armorClass()) {
+            return 'AC ' + this.armorClass();
         }
         else {
             return '';
         }
     });
 
-    self.armorDescriptionHTML = ko.pureComputed(function() {
-        if (self.armorDescription()){
-            return self.armorDescription().replace(/\n/g, '<br />');
+    armorDescriptionHTML = ko.pureComputed(() => {
+        if (this.description()){
+            return this.description().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
     });
 
-    self.magicalModifierLabel = ko.pureComputed(function() {
-        self._dummy();
+    magicalModifierLabel = ko.pureComputed(() => {
+        this._dummy();
 
-        var magicalModifier = self.armorMagicalModifier();
+        var magicalModifier = this.magicalModifier();
         if (magicalModifier != 0) {
             return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
             Math.abs(magicalModifier);
@@ -66,106 +62,57 @@ export function Armor() {
         }
     });
 
-    self.armorSummaryLabel = ko.pureComputed(function() {
-        if (self.armorMagicalModifier() != 0) {
-            if (self.acLabel()) {
-                return self.magicalModifierLabel() + ', ' + self.acLabel();
+    armorSummaryLabel = ko.pureComputed(() => {
+        if (this.magicalModifier() != 0) {
+            if (this.acLabel()) {
+                return this.magicalModifierLabel() + ', ' + this.acLabel();
             } else {
-                return self.magicalModifierLabel();
+                return this.magicalModifierLabel();
             }
         } else {
-            return self.acLabel();
+            return this.acLabel();
         }
     });
 
-    self.applyMagicalModifierLabel = ko.pureComputed(function() {
-        if (self.magicalModifierLabel() !== '' ) {
+    applyMagicalModifierLabel = ko.pureComputed(() => {
+        if (this.magicalModifierLabel() !== '' ) {
             return true;
         } else {
             return false;
         }
     });
 
-    self.armorWeightLabel = ko.pureComputed(function() {
-        return self.armorWeight() !== '' && self.armorWeight() >= 0 ? self.armorWeight() + ' lbs.' : '0 lbs.';
+    armorWeightLabel = ko.pureComputed(() => {
+        return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 
-    self.clear = function() {
-        var values = new Armor().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
+    updateValues = () => {
+        this._dummy.notifySubscribers();
     };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
-
-    self.updateValues = function() {
-        self._dummy.notifySubscribers();
-    };
-
-    self.dexAbilityScoreModifier = function() {
-        self._dummy();
-        var score = null;
-        try {
-            score = PersistenceService.findBy(AbilityScores, 'characterId',
-                CharacterManager.activeCharacter().key())[0].modifierFor('Dex');
-        } catch(err) { /*Ignore*/ }
-
-        if (score === null){
-            return null;
-        }
-        else {
-            return parseInt(score);
-        }
-    };
-
-    self.abilityScoreBonus = ko.pureComputed(function() {
-        self._dummy();
-        var dexAbilityScore = self.dexAbilityScoreModifier();
-        if (dexAbilityScore) {
-            if (self.armorType() === 'Light') {
-                return dexAbilityScore;
-            }
-            else if (self.armorType() === 'Medium') {
-                return dexAbilityScore >= 2 ? 2 : dexAbilityScore;
-            }
-        }
-        else{
-            return 0;
-        }
-    });
-
-    self.armorClassLabel = ko.pureComputed(function() {
-        self._dummy();
-        var totalBonus = 0;
-        var abilityScoreBonus = self.abilityScoreBonus();
-        var armorClass = parseInt(self.armorClass());
-
-        if (abilityScoreBonus) {
-            totalBonus += abilityScoreBonus;
-        }
-        if (armorClass) {
-            totalBonus += armorClass;
-        }
-
-        return totalBonus;
-    });
 }
-Armor.__name = 'Armor';
 
-PersistenceService.addToRegistry(Armor);
+Armor.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        type: {
+            required: true,
+            maxlength: 32
+        },
+        price: {
+            min: 0
+        },
+        currencyDenomination: {
+            maxlength: 16
+        },
+        armorClass: {
+            required: true,
+            min: 0
+        },
+        stealth: {
+            maxlength: 64
+        }
+    }
+};

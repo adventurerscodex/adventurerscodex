@@ -1,19 +1,16 @@
 import {
-    CharacterManager,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import {
     ChatServiceManager,
     PersistenceService,
     SortService
 } from 'charactersheet/services';
 import {
-    Message,
-    PlayerText,
-    PlayerTextSection
-} from 'charactersheet/models';
+    CoreManager,
+    Fixtures,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { PlayerText } from 'charactersheet/models';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/read.svg';
 import template from './index.html';
@@ -24,8 +21,8 @@ export function PlayerTextSectionViewModel(params) {
     self.sectionIcon = sectionIcon;
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
-        if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        if (!ko.unwrap(self.encounter)) { return; }
+        return self.encounter().uuid();
     });
 
     self.characterId = ko.observable();
@@ -62,8 +59,7 @@ export function PlayerTextSectionViewModel(params) {
     self.sort = ko.observable(self.sorts['description asc']);
 
     /* Public Methods */
-    self.load = function() {
-        Notifications.global.save.add(self.save);
+    self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
@@ -71,51 +67,15 @@ export function PlayerTextSectionViewModel(params) {
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
-        self._dataHasChanged();
+        await self._dataHasChanged();
 
         self._connectionHasChanged();
-    };
-
-    self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findByPredicates(PlayerTextSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new PlayerTextSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-
-        section.name(self.name());
-        section.visible(self.visible());
-        section.save();
-
-        self.playerTexts().forEach(function(playerText, idx, _) {
-            playerText.save();
-        });
-    };
-
-    self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findByPredicates(PlayerTextSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (section) {
-            section.delete();
-        }
-
-        self.playerTexts().forEach(function(playerText, idx, _) {
-            playerText.delete();
-        });
     };
 
     /* UI Methods */
 
     /**
-     * Filters and sorts the weaponss for presentation in a table.
+     * Filters and sorts the weapons for presentation in a table.
      */
     self.filteredAndSortedPlayerText = ko.computed(function() {
         return SortService.sortAndFilter(self.playerTexts(), self.sort(), null);
@@ -135,22 +95,22 @@ export function PlayerTextSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addPlayerText = function() {
+    self.addPlayerText = async function() {
         var playerText = self.blankPlayerText();
-        playerText.characterId(CharacterManager.activeCharacter().key());
-        playerText.encounterId(self.encounterId());
-        playerText.save();
-        self.playerTexts.push(playerText);
+        playerText.coreUuid(CoreManager.activeCore().uuid());
+        playerText.encounterUuid(self.encounterId());
+        const playerTextResponse = await playerText.ps.create();
+        self.playerTexts.push(playerTextResponse.object);
         self.blankPlayerText(new PlayerText());
     };
 
-    self.removePlayerText = function(playerText) {
-        playerText.delete();
+    self.removePlayerText = async function(playerText) {
+        await playerText.ps.delete();
         self.playerTexts.remove(playerText);
     };
 
     self.editPlayerText = function(playerText) {
-        self.editItemIndex = playerText.__id;
+        self.editItemIndex = playerText.uuid;
         self.currentEditItem(new PlayerText());
         self.currentEditItem().importValues(playerText.exportValues());
         self.openModal(true);
@@ -182,14 +142,14 @@ export function PlayerTextSectionViewModel(params) {
         self.firstElementInModalHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            Utility.array.updateElement(self.playerTexts(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.playerTexts(), response.object, self.editItemIndex);
         }
 
-        self.save();
         self.openModal(false);
     };
 
@@ -206,25 +166,12 @@ export function PlayerTextSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var playerTexts = PersistenceService.findByPredicates(PlayerText, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ]);
-        if (playerTexts) {
-            self.playerTexts(playerTexts);
-        }
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const readAloudResponse = await PlayerText.ps.list({coreUuid, encounterUuid: self.encounterId()});
+        self.playerTexts(readAloudResponse.objects);
 
-        var section = PersistenceService.findByPredicates(PlayerTextSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new PlayerTextSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        var section = self.encounter().sections()[Fixtures.encounter.sections.readAloudText.index];
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());

@@ -1,11 +1,13 @@
 import 'bin/knockout-custom-loader';
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
-import { ChatServiceManager,
+import {
+    ChatServiceManager,
     XMPPService
 } from 'charactersheet/services';
-import { PlayerCard,
-    pCard } from 'charactersheet/models';
+import {
+    PlayerCard,
+    pCard
+} from 'charactersheet/models';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 

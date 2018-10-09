@@ -4,15 +4,15 @@ import {
     ChatRoom
 } from 'charactersheet/models/common';
 import {
-    CharacterManager,
-    Notifications
-} from 'charactersheet/utilities';
-import {
     ChatServiceManager,
-    KeyValuePredicate,
     PersistenceService,
     XMPPService
 } from 'charactersheet/services/common';
+import {
+    CoreManager,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -34,13 +34,13 @@ export function PartyManagerViewModel() {
         return self.roomId() + '@' + MUC_SERVICE;
     };
 
-    self.load = function() {
+    self.load = async function() {
         Notifications.xmpp.connected.add(self.rejoinLastParty);
         Notifications.xmpp.reconnected.add(self._handleReconnection);
         Notifications.xmpp.disconnected.add(self._handleDisconnection);
         Notifications.xmpp.error.add(self._handleConnectionError);
         Notifications.xmpp.conflict.add(self._handleConflict);
-        self.parties(self._getParties());
+        self.parties(await self._getParties());
         self.checkIfInAParty();
 
         Notifications.party.joined.add(self._handleSubscription);
@@ -61,8 +61,8 @@ export function PartyManagerViewModel() {
         return '';
     });
 
-    self.createPartyWasClicked = function() {
-        self.createParty();
+    self.createPartyWasClicked = async function() {
+        await self.createParty();
     };
 
     self.joinPartyWasClicked = function() {
@@ -72,19 +72,19 @@ export function PartyManagerViewModel() {
     };
 
     self.joinPartyWasClickedWithParty = function(party) {
-        self.joinParty(Strophe.getNodeFromJid(party.chatId()));
+        self.joinParty(Strophe.getNodeFromJid(party.jid()));
     };
 
     self.leavePartyWasClicked = function() {
         self.leaveParty(self.roomJid(), true);
     };
 
-    self.deletePartyWasClicked = function(party) {
-        self.deleteParty(party);
+    self.deletePartyWasClicked = async function(party) {
+        await self.deleteParty(party);
     };
 
     self.dateCreatedLabel = function(party) {
-        var date = new Date(party.dateCreated());
+        var date = new Date(party.createdAt());
         return date.toLocaleDateString();
     };
 
@@ -103,25 +103,20 @@ export function PartyManagerViewModel() {
      * Create a new party node with a random id, and once that's
      * complete subscribe to that node.
      */
-    self.createParty = function() {
+    self.createParty = async function() {
         var chatManager = ChatServiceManager.sharedService();
         var node = chatManager.getUniqueNodeId();
-        self.joinParty(node);
+        await self.joinParty(node);
     };
 
     /**
      * Join an existing node or create a new node.
      */
-    self.joinParty = function(node) {
+    self.joinParty = async function(node) {
         var xmpp = XMPPService.sharedService();
         var chatManager = ChatServiceManager.sharedService();
-        chatManager.join(node + '@' + MUC_SERVICE,
+        await chatManager.join(node + '@' + MUC_SERVICE,
             Strophe.getNodeFromJid(xmpp.connection.jid), true);
-    };
-
-    self.joinExistingParty = function(node) {
-        var nodeManager = NodeServiceManager.sharedService();
-        nodeManager.subscribe(node, self._handleSuccessfulSubscription, self._handleFailedSubscription);
     };
 
     /**
@@ -136,8 +131,8 @@ export function PartyManagerViewModel() {
     /**
      * Deletes a given party from the user's previously joined parties list.
      */
-    self.deleteParty = function(party) {
-        party.delete();
+    self.deleteParty = async function(party) {
+        await party.ps.delete();
 
         // Reload parties.
         self.parties(self._getParties());
@@ -155,7 +150,7 @@ export function PartyManagerViewModel() {
         }
 
         if (self.parties().length == 1) {
-            self.joinParty(Strophe.getNodeFromJid(self.parties()[0].chatId()));
+            self.joinParty(Strophe.getNodeFromJid(self.parties()[0].jid()));
         }
     };
 
@@ -167,12 +162,15 @@ export function PartyManagerViewModel() {
 
     /* Private Methods */
 
-    self._getParties = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var foundParties = PersistenceService.findByPredicates(ChatRoom, [
-            new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('isParty', true)
-        ]);
+    self._getParties = async function() {
+        var key = CoreManager.activeCore().uuid();
+        // var foundParties = PersistenceService.findByPredicates(ChatRoom, [
+        //     new KeyValuePredicate('characterId', key),
+        //     new KeyValuePredicate('isParty', true)
+        // ]);
+        let partyResponse = await ChatRoom.ps.list({coreUuid: key,
+            type: Fixtures.chatRoom.type.party});
+        const foundParties = partyResponse.objects;
         if (foundParties.length > 0) {
             self.createOrJoin('join');
         } else {
@@ -194,14 +192,14 @@ export function PartyManagerViewModel() {
         self.inAParty(false);
 
         if (shouldNotify) {
-            Notifications.userNotification.warningNotification.dispatch(
-                'It looks like you\'ve been disconnected. Is your internet ok?',
-                '',
-                {
-                    timeOut: 0,
-                    extendedTimeOut: 0
-                }
-            );
+            // Notifications.userNotification.warningNotification.dispatch(
+            //     'It looks like you\'ve been disconnected. Is your internet ok?',
+            //     '',
+            //     {
+            //         timeOut: 0,
+            //         extendedTimeOut: 0
+            //     }
+            // );
         }
     };
 
@@ -243,41 +241,41 @@ export function PartyManagerViewModel() {
 
     self._handleConnectionError = function(code) {
         self.loggedIn(false);
-        Notifications.userNotification.warningNotification.dispatch(
-            'You will not be able to access party features until this issue is resolved. ' +
-            '<a href="https://adventurerscodex.com/faq.html#connection">Click here for ' +
-            'more info.</a>',
-            'A connection error has occurred.',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        // Notifications.userNotification.warningNotification.dispatch(
+        //     'You will not be able to access party features until this issue is resolved. ' +
+        //     '<a href="https://adventurerscodex.com/faq.html#connection">Click here for ' +
+        //     'more info.</a>',
+        //     'A connection error has occurred.',
+        //     {
+        //         timeOut: 0,
+        //         extendedTimeOut: 0
+        //     }
+        // );
     };
 
     self._handleReconnection = function(code) {
         self.inAParty(true);
-        Notifications.userNotification.successNotification.dispatch(
-            'You\'re back online.',
-            'Connection reestablished',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        // Notifications.userNotification.successNotification.dispatch(
+        //     'You\'re back online.',
+        //     'Connection reestablished',
+        //     {
+        //         timeOut: 0,
+        //         extendedTimeOut: 0
+        //     }
+        // );
     };
 
     self._handleConflict = function() {
-        Notifications.userNotification.dangerNotification.dispatch(
-            'It looks like you\'re trying to use your account in two places at once.\n\
-            To use the party features you\'ll have to log out of the other session \
-            and refresh this page.',
-            'Conflict',
-            {
-                timeOut: 0,
-                extendedTimeOut: 0
-            }
-        );
+        // Notifications.userNotification.dangerNotification.dispatch(
+        //     'It looks like you\'re trying to use your account in two places at once.\n\
+        //     To use the party features you\'ll have to log out of the other session \
+        //     and refresh this page.',
+        //     'Conflict',
+        //     {
+        //         timeOut: 0,
+        //         extendedTimeOut: 0
+        //     }
+        // );
     };
 }
 

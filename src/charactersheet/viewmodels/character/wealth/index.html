@@ -1,0 +1,232 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <preview-edit params="validation: validation,
+                          data: wealth,
+                          save: save,
+                          reset: reset">
+      <!-- ko if: $component.isEdit -->
+      <div class="panel-body">
+        <form class="form-horizontal" data-bind="validate: $component.validation">
+      <!-- Large devices row-->
+      <div class="visible-lg-block">
+        <div class="row row-padded">
+          <div class="col-sm-2 col-md-offset-1 coin-input">
+            <div class="input-group">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].ppCoins }" width="30px" title="Platinum = 10 Gold" alt="Platinum = 10 Gold"/>
+              </span>
+              <input type="number"
+                      class="form-control coin-input"
+                      id="coinsPlatinumInput"
+                      data-bind='value: platinum'/>
+            </div>
+          </div>
+          <div class="col-sm-2 coin-input">
+            <div class="input-group">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].gpCoins }" width="30px" title="Gold = 10 Silver" alt="Gold = 10 Silver"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      id="coinsGoldInput"
+                      data-bind='value: gold'/>
+            </div>
+          </div>
+          <div class="col-sm-2 coin-input">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].epCoins }" width="30px" title="Electrum = 5 Silver" alt="Electrum = 5 Silver"/>
+              </span>
+              <input type="number"
+                      class="form-control coin-input"
+                      id="coinsElectrumInput"
+                      data-bind='value: electrum'>
+            </div>
+          </div>
+          <div class="col-sm-2 coin-input">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].spCoins }" width="30px" title="Silver = 10 Copper" alt="Silver = 10 Copper"/>
+              </span>
+              <input type="number"
+                      class="form-control coin-input"
+                      id="coinsSilverInput"
+                      data-bind='value: silver'>
+            </div>
+          </div>
+          <div class="col-sm-2 coin-input">
+            <div class="input-group">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
+              </span>
+              <input type="number"
+                      class="form-control coin-input"
+                      id="coinsCopperInput"
+                      data-bind='value: copper'>
+            </div>
+          </div>
+        </div>
+      </div><!-- End lg row-->
+      <!-- Small/Medium devices row -->
+      <div class="visible-md-block visible-sm-block">
+        <div class="row row-padded">
+          <div class="col-sm-4">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                  <img data-bind="attr: { src: $parents[1].ppCoins }" width="30px" title="Platinum = 10 Gold" alt="Platinum = 10 Gold"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: platinum'/>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].gpCoins }" width="30px" title="Gold = 10 Silver" alt="Gold = 10 Silver"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: gold'/>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].epCoins }" width="30px" title="Electrum = 5 Silver" alt="Electrum = 5 Silver"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: electrum'>
+            </div>
+          </div>
+        </div>
+        <div class="row row-padded">
+          <div class="col-sm-6">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].spCoins }" width="30px" title="Silver = 10 Copper" alt="Silver = 10 Copper"/>
+              </span>
+            <input type="number"
+                    class="form-control"
+                    data-bind='value: silver'>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="input-group">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: copper'>
+            </div>
+          </div>
+        </div>
+      </div> <!-- end mg/sm row-->
+      <!-- xs device row-->
+      <div class="visible-xs-block">
+        <div class="row row-padded">
+          <div class="col-sm-12 row-padded">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].ppCoins }" width="30px" title="Platinum = 10 Gold" alt="Platinum = 10 Gold"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: platinum'/>
+            </div>
+          </div>
+          <div class="col-sm-12 row-padded">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].gpCoins }" width="30px" title="Gold = 10 Silver" alt="Gold = 10 Silver"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: gold'/>
+            </div>
+          </div>
+          <div class="col-sm-12 row-padded">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].epCoins }" width="30px" title="Electrum = 5 Silver" alt="Electrum = 5 Silver"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: electrum'>
+            </div>
+          </div>
+          <div class="col-sm-12 row-padded">
+            <div class="input-group ">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].spCoins }" width="30px" title="Silver = 10 Copper" alt="Silver = 10 Copper"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: silver'>
+            </div>
+          </div>
+          <div class="col-sm-12 row-padded">
+            <div class="input-group">
+              <span class="input-group-addon no-top-bottom-padding">
+                <img data-bind="attr: { src: $parents[1].cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
+              </span>
+              <input type="number"
+                      class="form-control"
+                      data-bind='value: copper'>
+            </div>
+          </div>
+        </div>
+      </div><!-- End lg row-->
+    </form>
+    </div> <!-- end panel body -->
+    <!-- /ko -->
+
+    <!-- ko ifnot: $component.isEdit -->
+    <div class="row">
+      <div class="col-sm-1 col-sm-offset-11">
+        <span class="fa fa-pencil-square-o fa-color-hover-success fa-lg clickable pull-right"
+          data-bind="click: $component.toggleEditForm">
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <b style="margin-right: 15px">
+          Wealth
+        </b>
+        <img data-bind="attr: { src: $parents[1].ppCoins }" width="30px" title="Platinum = 10 Gold" alt="Platinum = 10 Gold"/>&nbsp;
+        <span data-bind="text: platinum"
+              style="margin-right: 15px">
+        </span>
+        <img data-bind="attr: { src: $parents[1].gpCoins }" width="30px" title="Gold = 10 Silver" alt="Gold = 10 Silver"/>&nbsp;
+        <span data-bind="text: gold"
+              style="margin-right: 15px"></span>
+        <img data-bind="attr: { src: $parents[1].epCoins }" width="30px" title="Electrum = 5 Silver" alt="Electrum = 5 Silver"/>&nbsp;
+        <span data-bind="text: electrum"
+              style="margin-right: 15px"></span>
+        <img data-bind="attr: { src: $parents[1].spCoins }" width="30px" title="Silver = 10 Copper" alt="Silver = 10 Copper"/>&nbsp;
+        <span data-bind="text: silver"
+              style="margin-right: 15px"></span>
+        <img data-bind="attr: { src: $parents[1].cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>&nbsp;
+        <span data-bind="text: copper"
+              style="margin-right: 15px"></span>
+      </div>
+    </div>
+    <!-- /ko -->
+  </preview-edit>
+</div>
+
+  <div class="container-fluid panel-footer" data-bind="with: wealth">
+      <span class="pull-left">
+        Total gold:&nbsp;
+        <span id="coinsWorthInGoldLabel" data-bind='text: worthInGold'>
+        </span>
+        &nbsp;(gp)
+      </span>
+      <span class="pull-right">Total weight:&nbsp;
+        <span id="coinsTotalWeightLabel" data-bind="text: totalWeightLabel"></span>
+      </span>
+  </div> <!-- end panel footer -->
+</div>

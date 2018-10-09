@@ -1,12 +1,14 @@
-import { CharacterCardPublishingService,
+import {
+    CharacterCardPublishingService,
     DMCardPublishingService,
     KeyValuePredicate
 } from 'charactersheet/services/common';
-import { Note,
+import {
+    Note,
     PlayerTypes
 } from 'charactersheet/models/common';
-import { CharacterManager } from 'charactersheet/utilities';
 import { ChatServiceManager } from 'charactersheet/services/common';
+import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Utility } from 'charactersheet/utilities/convenience';
@@ -35,8 +37,8 @@ export function ChatLogReadAloudItem(params) {
     // UI Methods
 
     self.shouldShowSaveToChatButton = ko.pureComputed(function() {
-        var key = CharacterManager.activeCharacter().playerType().key;
-        return key == PlayerTypes.characterPlayerType.key;
+        var key = CoreManager.activeCore().type.name();
+        return key == PlayerTypes.character.key;
     });
 
     self.image = ko.pureComputed(function() {
@@ -60,7 +62,7 @@ export function ChatLogReadAloudItem(params) {
     });
 
     self.saveToNotes = function() {
-        var key = CharacterManager.activeCharacter().key();
+        var key = CoreManager.activeCore().uuid();
         var note = PersistenceService.findByPredicates(Note, [
             new KeyValuePredicate('characterId', key),
             new KeyValuePredicate('isSavedChatNotes', true)
@@ -82,7 +84,7 @@ export function ChatLogReadAloudItem(params) {
     /* Card Methods */
 
     self.getCard = function() {
-        var character = CharacterManager.activeCharacter();
+        var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();
         var chatRoom = chatService.rooms[self.message.fromBare()];
         if (!chatRoom) { return null; }
@@ -94,7 +96,7 @@ export function ChatLogReadAloudItem(params) {
         // Get the current card service.
         var jid = occupant.jid;
         var cardService = null;
-        if (character.playerType().key == 'character') {
+        if (character.type.name() == 'character') {
             cardService = CharacterCardPublishingService.sharedService();
         } else {
             cardService = DMCardPublishingService.sharedService();

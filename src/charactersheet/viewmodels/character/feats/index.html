@@ -9,7 +9,7 @@
           </th>
           <th class="col-md-1">
             <a data-toggle="modal"
-              data-target="#addFeat" id="featAddIcon" href="#">
+              data-bind="click: toggleAddModal" id="featAddIcon">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -29,7 +29,7 @@
         <!-- /ko -->
         <!-- ko if: filteredAndSortedFeats().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addFeat" href="#"
+          <td data-toggle="modal" data-bind="click: toggleAddModal"
             colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new Feat
@@ -46,7 +46,9 @@
      id="addFeat"
      tabindex="-1"
      role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening, onclose: modalFinishedClosing}">
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing,
+      open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -60,13 +62,14 @@
             id="addFeatLabel">Add a new Feat.</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
             <label for="name" class="col-sm-2 control-label">Name</label>
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
                         id="featAddNameInput"
+                        name="name"
                         placeholder="Grappler"
                         data-bind='textInput: blankFeat().name,
                         autocomplete: { source: featsPrePopFilter,
@@ -80,6 +83,7 @@
                           class="form-control"
                           id="featAddDescriptionTextarea"
                           rows="4"
+                          name="description"
                           placeholder="You've developed the skills necessary to hold your own in close-quarters grappling."
                           data-bind='textInput: blankFeat().description'>
                 </textarea>
@@ -102,8 +106,12 @@
               </div>
               <label for="bonus" class="col-sm-2 control-label">Max</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" id="featAddMaxInput" min="1"
-                      data-bind='textInput: blankTracked().maxUses'>
+                <input type="number"
+                  class="form-control"
+                  id="featAddMaxInput"
+                  min="1"
+                  data-bind='textInput: blankTracked().max'
+                  name="max">
               </div>
             </div>
             <div class="form-group">
@@ -131,11 +139,10 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button"
+            <button type="submit"
                     id="featAddAddButton"
                     class="btn btn-primary"
-                    data-bind='click: addFeat'
-                    data-dismiss="modal">Add</button>
+                    data-bind='disable: !addFormIsValid()'>Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -195,7 +202,7 @@
             <div class="row" >
               <div class="col-sm-6 col-xs-12">
                 <b>Max Uses:</b>&nbsp;
-                <span data-bind="text: $parent.currentEditTracked().maxUses"></span>
+                <span data-bind="text: $parent.currentEditTracked().max"></span>
               </div>
               <div class="col-sm-6 col-xs-12">
                 <b>Resets on:</b>&nbsp;
@@ -223,15 +230,15 @@
             </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                         id="featEditNameInput"
                         class="form-control"
-                        id="featName"
                         placeholder="Grappler"
+                        name="name"
                         data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
                 </div>
               </div>
@@ -242,6 +249,7 @@
                     <textarea type="text" rows="6"
                            id="featEditDescriptionTextarea"
                            class="form-control"
+                           name="description"
                            placeholder="You've developed the skills necessary to hold your own in close-quarters grappling."
                            data-bind='value: description, markdownEditor: true'></textarea>
                   </div>
@@ -259,8 +267,12 @@
                   </div>
                   <label for="bonus" class="col-sm-2 control-label">Max</label>
                   <div class="col-sm-9">
-                    <input type="number" class="form-control" id="featEditMaxInput" min="1"
-                          data-bind='textInput: $parent.currentEditTracked().maxUses'>
+                    <input type="number"
+                      class="form-control"
+                      id="featEditMaxInput"
+                      min="1"
+                      name="max"
+                      data-bind='textInput: $parent.currentEditTracked().max'>
                   </div>
                 </div>
                 <div class="form-group">
@@ -288,10 +300,10 @@
                 </div>
                 <!-- /ko -->
               <div class="modal-footer">
-                <button type="button"
+                <button type="submit"
                         id="featEditDoneButton"
                         class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
+                        data-bind='disable: !$parent.addFormIsValid()'>Done</button>
               </div>
             </form>
           </div>

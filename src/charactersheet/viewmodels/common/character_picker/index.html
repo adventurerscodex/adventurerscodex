@@ -9,20 +9,21 @@
       <div class="container-fluid text-left">
         <div class="col-sm-12">
           <div class="list-group">
-            <!-- ko foreach: characters -->
+            <!-- ko foreach: cores -->
             <a href="#" class="list-group-item">
               <div class="row">
-                <div class="col-xs-3 col-sm-2" data-bind="click: $parent.changeCharacter">
-                  <img data-bind="attr: { src: playerImage }" class="img img-circle" width="60"
+                <div class="col-xs-3 col-sm-2" data-bind="click: $parent.changeCore">
+                  <img data-bind="attr: { src: profileImage }" class="img img-circle" width="60"
                     height="60" style="margin-top: 7px;" />
                 </div>
-                <div class="col-xs-7 col-sm-8" style="padding-top: 5px" data-bind="click: $parent.changeCharacter">
-                  <span class="lead" data-bind='text: playerTitle'></span>
+                <div class="col-xs-7 col-sm-8" style="padding-top: 5px"
+                  data-bind="click: $parent.changeCore">
+                  <span class="lead" data-bind='text: title'></span>
                   <small>
-                    by <span data-bind='text: playerAuthor'></span>
+                    by <span data-bind='text: playerName'></span>
                   </small>
                   <div>
-                    <small data-bind='text: playerSummary'></small>
+                    <small data-bind='text: summary'></small>
                   </div>
                 </div>
                 <div class="col-xs-2">
@@ -33,7 +34,7 @@
                 </div>
               </div>
             </a>
-            <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[key()] }">
+            <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[uuid()] }">
               <div class="well no-bottom-margin well-top-shadow text-center">
                 Are you sure you want to delete this Character or Campaign?
                 <center>
@@ -42,7 +43,7 @@
                 <div class="row text-right">
                   <button type="button"
                     class="btn btn-sm btn-danger"
-                    data-bind="click: $parent.removeCharacter">
+                    data-bind="click: $parent.removeCore">
                     Delete
                   </button>
                   <button type="button"
@@ -62,14 +63,6 @@
                 </div>
               </div>
             </a>
-          </div>
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <p class="text-center">
-                You've used <span data-bind='text: localStoragePercent'></span>% of
-                your total local space.
-              </p>
-            </div>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Encounter } from 'charactersheet/models/dm';
+import { Encounter, EncounterSection } from 'charactersheet/models/dm';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -14,26 +14,29 @@ import template from './index.html';
  * Params:
  * - openModal: An observable that triggers the modal opening and closing.
  * - encounter: The encounter object to edit in with data.
- * - sections: (Optional) A list of encounter sections to edit.
- * - sectionModals: (Optional) A list of encounter section modals.
- * - onsave: (Optional) A callback, taking 2 arguments (encounter, sections) for
+ * - onsave: (Optional) A callback, taking 1 argument (encounter) for
  * notifications of when a save event occurs.
  */
-export function EncounterAddEditModalViewModel(params) {
+export function EncounterAddEditModalViewModel({ encounter, openModal, onsave }) {
     var self = this;
 
-    self.encounter = params.encounter;
-    self.openModal = params.openModal;
-    self.sections = params.sections || ko.observableArray();
+    self.encounter = encounter;
+    self.openModal = openModal;
 
-    self.onsave = params.onsave;
+    self.onsave = onsave;
 
     self.nameHasFocus = ko.observable(false);
 
-    self.encounterLocation = ko.observable();
-    self.encounterName = ko.observable();
+    self.name = ko.observable();
+    self.location = ko.observable();
+    self.sections = ko.observableArray();
 
-    self.load = function() {
+    self.sectionTypes = [];
+
+    self.load = async () => {
+        const { objects } = await EncounterSection.ps.list();
+        self.sectionTypes = objects;
+
         self.encounter.subscribe(self._dataHasChanged);
         self._dataHasChanged();
     };
@@ -41,7 +44,7 @@ export function EncounterAddEditModalViewModel(params) {
     /* UI Methods */
 
     self.titleLabel = ko.pureComputed(function() {
-        if (self.encounter) {
+        if (self.encounter()) {
             return 'Edit this Encounter\'s Details';
         } else {
             return 'Add a new Encounter';
@@ -49,11 +52,13 @@ export function EncounterAddEditModalViewModel(params) {
     });
 
     self.doneButtonClicked = function() {
-        self.encounter().name(self.encounterName());
-        self.encounter().encounterLocation(self.encounterLocation());
+        const encounter = ko.unwrap(self.encounter);
+        encounter.name(self.name());
+        encounter.location(self.location());
+        encounter.sections(self.sections());
 
         if (ko.unwrap(self.onsave)) {
-            self.onsave(self.encounter, self.sections);
+            self.onsave(encounter);
         }
     };
 
@@ -67,14 +72,22 @@ export function EncounterAddEditModalViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        if (ko.unwrap(self.encounter)) {
-            self.encounterName(self.encounter().name());
-            self.encounterLocation(self.encounter().encounterLocation());
+    self._dataHasChanged = () => {
+        const encounter = ko.unwrap(self.encounter);
+        if (encounter && ko.unwrap(encounter.uuid)) {
+            self.name(encounter.name());
+            self.location(encounter.location());
+            self.sections(encounter.sections());
+        } else {
+            self.name('');
+            self.location('');
+            self.sections(self.sectionTypes.map(section => (
+                // We need to wrap these as observables to see their values change.
+                ko.mapping.fromJS(section.toSectionValues())
+            )));
         }
     };
 }
-
 
 ko.components.register('encounter-add-edit-modal', {
     viewModel: EncounterAddEditModalViewModel,

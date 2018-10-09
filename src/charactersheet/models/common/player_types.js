@@ -1,15 +1,17 @@
 export var PlayerTypes = {
-    characterPlayerType: {
+    character: {
         key: 'character',
         visibleTabs: [
             'profile', 'stats', 'skills', 'spells', 'equipment',
-            'inventory', 'notes', 'settings', 'party', 'chat', 'exhibit'],
+            'inventory', 'notes', 'settings', 'party', 'chat', 'exhibit'
+        ],
         defaultTab: 'stats'
     },
-    dmPlayerType: {
+    dm: {
         key: 'dm',
-        visibleTabs: ['encounter', 'overview', 'dmscreen', 'party', 'chat', 'notes'],
-        tabViewModels: [],
+        visibleTabs: [
+            'encounter', 'overview', 'dmscreen', 'party', 'chat', 'notes'
+        ],
         defaultTab: 'overview'
     }
 };

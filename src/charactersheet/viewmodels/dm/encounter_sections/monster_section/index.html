@@ -1,7 +1,7 @@
 <!-- ko if: visible -->
 <div class="h3">
   <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
-  Monsters<br />
+  <span data-bind="text: name"></span><br />
   <small data-bind="text: tagline"></small>
 </div>
 <table class="table table-responsive table-ac-bordered table-hover">
@@ -443,8 +443,7 @@
             <hr />
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: markDownDescription"
-                     class="preview-modal-overflow">
+                <div data-bind="markdownPreview: description">
                 </div>
               </div>
             </div>

@@ -1,11 +1,13 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    AbilityScore,
+    Skill
+} from 'charactersheet/models/character';
+import {
+    CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Skill } from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
@@ -22,83 +24,42 @@ export function SkillsViewModel() {
         'proficiency desc': { field: 'proficiency', direction: 'desc', booleanType: true}
     };
 
-    self._defaultSkills = function() {
-        var skills = [
-            { name: 'Acrobatics', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Animal Handling', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Arcana', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not' },
-            { name: 'Athletics', abilityScore: 'Str', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Deception', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'History', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Insight', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Intimidation', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Investigation', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Medicine', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Nature', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Perception', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Performance', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Persuasion', abilityScore: 'Cha', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Religion', abilityScore: 'Int', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Sleight of Hand', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Stealth', abilityScore: 'Dex', proficency: false, modifier: null, proficiencyType: 'not'},
-            { name: 'Survival', abilityScore: 'Wis', proficency: false, modifier: null, proficiencyType: 'not'}
-        ];
-        return skills.map(function(e, i, _) {
-            var skill = new Skill(self);
-            e.characterId = CharacterManager.activeCharacter().key();
-            skill.importValues(e);
-            return skill;
-        });
-    };
-
     self.blankSkill = ko.observable(new Skill());
     self.newModalOpen = ko.observable(false);
     self.editModalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
     self.skills = ko.observableArray([]);
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
+    self.abilityScores = ko.observableArray(null);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
 
-        var skills = PersistenceService.findBy(Skill, 'characterId',
-            CharacterManager.activeCharacter().key());
+        // Fetch skills
+        const response = await Skill.ps.list({coreUuid: key});
+        self.skills(response.objects);
 
-        if (skills.length === 0) {
-            self.skills(self._defaultSkills());
-            self.skills().forEach(function(e, i, _) {
-                e.save();
-            });
-        } else {
-            self.skills(skills);
-        }
+        // Fetch Ability Scores
+        const abilitScoresResponse = await AbilityScore.ps.list({coreUuid: key});
+        self.abilityScores(abilitScoresResponse.objects);
 
         //Subscriptions
-        Notifications.abilityScores.changed.add(self.dataHasChanged);
-        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
-        Notifications.profile.changed.add(self.dataHasChanged);
+        Notifications.abilityScores.changed.add(self.updateValues);
+        Notifications.otherStats.proficiency.changed.add(self.updateValues);
         self.skills().forEach(function(e, i, _) {
-            self.addNotifiers(e);
-            if (e.name() === 'Perception'){
-                e.bonus.subscribe(self.perceptionHasChanged);
+            e.updateBonuses();
+            if (e.name() === 'Perception') {
+                e.bonusLabel.subscribe(self.perceptionHasChanged);
             }
         });
     };
 
-    self.dispose = function() {
-        self.save();
-        self.skills([]);
-        Notifications.abilityScores.changed.remove(self.dataHasChanged);
-        Notifications.otherStats.proficiency.changed.add(self.dataHasChanged);
-        Notifications.profile.changed.remove(self.dataHasChanged);
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
+    self.updateValues = () => {
         self.skills().forEach(function(e, i, _) {
-            e.save();
+            e.updateBonuses();
         });
     };
 
@@ -127,27 +88,51 @@ export function SkillsViewModel() {
     };
 
     // Edit Modal Methods
-
     self.editModifierHasFocus = ko.observable(false);
 
     self.editModalFinishedAnimating = function() {
         self.editModifierHasFocus(true);
     };
 
-    self.editModalFinishedClosing = function() {
-        if (self.editModalOpen()) {
-            Utility.array.updateElement(self.skills(), self.currentEditItem(), self.editItemIndex);
+    self.editModalFinishedClosing = async () => {
+        if (self.editModalOpen() && self.addFormIsValid()) {
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.skills(), response.object, self.editItemIndex);
+            self.updateValues();
         }
-
-        self.save();
-        self.skills().forEach(function(skill, idx, _) {
-            skill.updateValues();
-        });
 
         self.editModalOpen(false);
     };
 
     // New Modal Methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addSkill();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Skill.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.editModalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Skill.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.newModalOpen(!self.newModalOpen());
+    };
 
     self.newSkillFieldHasFocus = ko.observable(false);
 
@@ -161,50 +146,42 @@ export function SkillsViewModel() {
 
     //Manipulating skills
 
-    self.addSkill = function() {
+    self.addSkill = async () => {
         var skill = self.blankSkill();
-        skill.characterId(CharacterManager.activeCharacter().key());
-        skill.save();
-        self.addNotifiers(skill);
-        self.skills.push(skill);
+        skill.coreUuid(CoreManager.activeCore().uuid());
+        const newSkillResponse = await skill.ps.create();
+        const newSkill = newSkillResponse.object;
+        newSkill.updateBonuses();
+        self.skills.push(newSkill);
         self.blankSkill(new Skill());
+        self.newModalOpen(false);
     };
 
-    self.removeSkill = function(skill) {
+    self.removeSkill = async (skill) => {
+        await skill.ps.delete();
         self.skills.remove(skill);
-        skill.delete();
     };
 
     self.editSkill = function(skill) {
-        self.editItemIndex = skill.__id;
+        self.editItemIndex = skill.uuid;
         self.currentEditItem(new Skill());
         self.currentEditItem().importValues(skill.exportValues());
+        self.currentEditItem().bonusLabel(skill.bonusLabel());
+        self.currentEditItem().proficiency.subscribe(() => {
+            self.currentEditItem().updateBonuses();
+        });
+        self.currentEditItem().modifier.subscribe(() => {
+            self.currentEditItem().updateBonuses();
+        });
         self.editModalOpen(true);
     };
 
-    self.clear = function() {
-        self.skills().forEach(function(e, i, _) {
-            self.removeSkill(e);
-        });
-    };
+    self.isCellActive = (shortName) => {
+        if (!self.blankSkill().abilityScore()) {
+            return false;
+        }
 
-    /**
-     * Given a skill, tell it to alert the Notifications of changes to itself.
-     */
-    self.addNotifiers = function(skill) {
-        var savefn = function() {
-            skill.save();
-            Notifications.skills.changed.dispatch();
-        };
-        skill.name.subscribe(savefn);
-        skill.bonus.subscribe(savefn);
-    };
-
-    self.dataHasChanged = function() {
-        self.skills().forEach(function(e, i, _) {
-            e.updateValues();
-        });
-        Notifications.skills.changed.dispatch();
+        return self.blankSkill().abilityScore().shortName() == shortName;
     };
 
     self.perceptionHasChanged = function() {

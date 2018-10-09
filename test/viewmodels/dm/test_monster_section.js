@@ -34,7 +34,6 @@ describe('MonsterSectionViewModel', function(){
             var vm = new MonsterSectionViewModel(new Encounter());
             var spy1 = simple.mock(Notifications.global.save, 'add');
             var spy2 = simple.mock(Notifications.encounters.changed, 'add');
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
             simple.mock(PersistenceService, 'findBy').callFn(function(model, property, value) {
                 if (model.name === 'Monster') {
                     return [new Monster()];
@@ -54,7 +53,6 @@ describe('MonsterSectionViewModel', function(){
         it('should save model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
             vm.addMonster();
 
             vm.save();
@@ -72,7 +70,6 @@ describe('MonsterSectionViewModel', function(){
         it('should delete model', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
             vm.addMonster();
 
             vm.delete();
@@ -175,7 +172,6 @@ describe('MonsterSectionViewModel', function(){
         it('should load new data', function() {
             simple.mock(CharacterManager, 'activeCharacter').callFn(MockCharacterManager.activeCharacter);
             var vm = new MonsterSectionViewModel(new Encounter());
-            simple.mock(PersistenceService, 'findFirstBy').returnWith(new MonsterSection());
             simple.mock(PersistenceService, 'findBy').returnWith([new Monster()]);
 
             vm._dataHasChanged();

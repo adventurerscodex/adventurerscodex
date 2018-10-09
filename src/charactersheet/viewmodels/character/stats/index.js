@@ -2,194 +2,283 @@ import {
     DeathSave,
     Health,
     HitDice,
-    HitDiceType,
     Profile
 } from 'charactersheet/models/character';
-import { ArmorClassService } from 'charactersheet/services';
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
 
 export function StatsViewModel() {
     var self = this;
 
-    self.health = ko.observable(new Health());
-    self.blankHitDice = ko.observable(new HitDice());
-    self.hitDiceList = ko.observableArray([]);
-    self.hitDiceType = ko.observable(new HitDiceType());
+    self.health = ko.observable();
+    self.profile = ko.observable();
+    self.hitDice = ko.observable(new HitDice());
+    self.hitDiceList = ko.observableArray();
+    self.deathSaveSuccess = ko.observable();
+    self.deathSaveFailure = ko.observable();
     self.deathSaveSuccessList = ko.observableArray([]);
     self.deathSaveSuccessVisible = ko.observable(true);
     self.deathSaveFailureList = ko.observableArray([]);
     self.deathSaveFailureVisible = ko.observable(true);
     self.editHealthItem = ko.observable();
-    self.editHitDiceItem = ko.observable();
     self.modalOpen = ko.observable(false);
-    self._dummy = ko.observable();
+    self.addFormIsValid = ko.observable(false);
 
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        // Fetch Profile
+        const profile = await Profile.ps.read({uuid: key});
+        self.profile(profile.object);
 
-    self.damageHandler = ko.computed({
-        read: function() {
-            return self.health().damage();},
-        write: function(value) {
-            if (self.health().tempHitpoints()) {
-                // Find the damage delta, then apply to temp hit points first.
-                var damageChange = value - self.health().damage();
-                if (damageChange > 0) {
-                    var remainingTempHP = self.health().tempHitpoints() - damageChange;
-                    if (remainingTempHP >= 0 ) {
-                        // New damage value did not eliminate temporary hit points
-                        // reduce temporary hit points, and do not apply to damage.
-                        self.health().tempHitpoints(remainingTempHP);
-                        value = self.health().damage();
-                    } else { // remainingTempHP is negative.
-                        self.health().tempHitpoints(0);
-                        value = self.health().damage() + remainingTempHP;
-                    }
-                }
-            }
-            self.health().damage(value);
-        },
-        owner: self
-    });
+        // Fetch Hit Dice
+        const hitDice = await HitDice.ps.read({uuid: key});
+        self.hitDice(hitDice.object);
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
-        var key = CharacterManager.activeCharacter().key();
-        var health = PersistenceService.findBy(Health, 'characterId', key);
-        if (health.length > 0) {
-            self.health(health[0]);
-        } else {
-            self.health(new Health());
-        }
-        self.health().characterId(key);
-
-        var hitDiceList = PersistenceService.findBy(HitDice, 'characterId', key);
-        if (hitDiceList.length > 0) {
-            self.hitDiceList(hitDiceList);
-        }
-        self.hitDiceList().forEach(function(e, i, _) {
-            e.characterId(key);
-        });
-
+        // Create the hit dice display
         self.calculateHitDice();
 
-        var hitDiceType = PersistenceService.findBy(HitDiceType, 'characterId', key);
-        if(hitDiceType.length > 0){
-            self.hitDiceType(hitDiceType[0]);
-        }
-        else {
-            self.hitDiceType(new HitDiceType());
-        }
-        self.hitDiceType().characterId(key);
+        // Fetch death saves
+        const deathSaves = await DeathSave.ps.list({coreUuid: key});
+        self.setDeathSaves(deathSaves.objects);
 
-        var deathSaveList = PersistenceService.findBy(DeathSave, 'characterId', key);
-        self.deathSaveSuccessList([]);
-        self.deathSaveFailureList([]);
+        self.createDeathSaveLists();
 
-        if (deathSaveList.length === 6) {
-            for (var i=0; i<3; i++) {
-                self.deathSaveSuccessList.push(deathSaveList[i]);
-            }
-            for (var j=3; j<6; j++) {
-                self.deathSaveFailureList.push(deathSaveList[j]);
-            }
-        } else {
-            // FIXME: Purge all saves and remake...
-            deathSaveList.forEach(save => {
-                save.delete();
-            });
-
-            for (var k=0; k<3; k++) {
-                self.deathSaveSuccessList.push(new DeathSave());
-                self.deathSaveFailureList.push(new DeathSave());
-            }
-        }
-
-        self.deathSaveSuccessList().forEach(function(e, i, _) {
-            e.characterId(key);
-        });
-        self.deathSaveFailureList().forEach(function(e, i, _) {
-            e.characterId(key);
-        });
+        // Fetch Health
+        const health = await Health.ps.read({uuid: key});
+        self.health(health.object);
 
         //Subscriptions
-        self.health().maxHitpoints.subscribe(self.maxHpDataHasChanged);
+        self.health().maxHitPoints.subscribe(self.maxHpDataHasChanged);
         self.health().damage.subscribe(self.damageDataHasChanged);
-        self.health().tempHitpoints.subscribe(self.tempHpDataHasChanged);
-        self.hitDiceList().forEach(function(hitDice, i, _) {
-            hitDice.hitDiceUsed.subscribe(self.hitDiceDataHasChanged);
-        });
-        self.hitDiceType.subscribe(self.hitDiceTypeDataHasChanged);
-        self.deathSaveFailureList().forEach(function(save, idx, _) {
-            save.deathSaveFailure.subscribe(self._alertPlayerHasDied);
-            save.deathSaveFailure.subscribe(self.deathSaveFailureDataHasChanged);
-        });
-        self.deathSaveSuccessList().forEach(function(save, idx, _) {
-            save.deathSaveSuccess.subscribe(self._alertPlayerIsStable);
-            save.deathSaveSuccess.subscribe(self.deathSaveSuccessDataHasChanged);
-        });
+        self.health().tempHitPoints.subscribe(self.tempHpDataHasChanged);
+        self.health.subscribe(self.resetDeathSaves);
 
         Notifications.events.longRest.add(self.resetOnLongRest);
-        Notifications.profile.level.changed.add(self.calculateHitDice);
+        Notifications.profile.level.changed.add(self.updateProfile);
         self._alertPlayerHasDied();
         self._alertPlayerIsStable();
         self.healthDataHasChange();
     };
 
-    self.save = function() {
-        self.health().save();
-        self.hitDiceList().forEach(function(e, i, _) {
-            e.save();
-        });
-        self.hitDiceType().save();
-        self.deathSaveSuccessList().forEach(function(e, i, _) {
-            e.save();
-        });
-        self.deathSaveFailureList().forEach(function(e, i, _) {
-            e.save();
-        });
+    self.setDeathSaves = (deathSaves) => {
+        const deathSaveFailure = deathSaves.filter((save, i, _) => {
+            return save.type() === 'failure';
+        })[0];
+
+        const deathSaveSuccess = deathSaves.filter((save, i, _) => {
+            return save.type() === 'success';
+        })[0];
+
+        self.deathSaveFailure(deathSaveFailure);
+        self.deathSaveSuccess(deathSaveSuccess);
     };
 
-    self.clear = function() {
-        self.health().clear();
-        self.deathSaveSuccessList().forEach(function(e, i, _) {
-            e.clear();
-        });
-        self.deathSaveFailureList().forEach(function(e, i, _) {
-            e.clear();
-        });
-        self.hitDiceList([]);
+    self.createDeathSaveLists = () => {
+        self.createDeathSaveFailureList();
+        self.createDeathSaveSuccessList();
     };
 
-    self.editHealth = function() {
-        self.editHealthItem(new Health());
-        self.editHitDiceItem(new HitDiceType());
-        self.editHealthItem().importValues(self.health().exportValues());
-        self.editHitDiceItem().importValues(self.hitDiceType().exportValues());
-        self.modalOpen(true);
-    };
-
-    self.calculateHitDice = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
-
-        var difference = parseInt(profile.level()) - self.hitDiceList().length;
-        var pushOrPop = difference > 0 ? 'push' : 'pop';
-        for (var i = 0; i < Math.abs(difference); i++) {
-            var h;
-            if (pushOrPop === 'push') {
-                h = new HitDice();
-                h.characterId(CharacterManager.activeCharacter().key());
-                h.save();
-                self.hitDiceList.push(h);
-            } else {
-                h = self.hitDiceList.pop();
-                h.delete();
-            }
+    self.createDeathSaveFailureList = () => {
+        self.deathSaveFailureList(new Array(3));
+        for (var i = 0; i < 3; i++) {
+            const isVisible = (3 - self.deathSaveFailure().used()) > i;
+            self.deathSaveFailureList()[i] = ko.observable(isVisible);
         }
+
+        self.deathSaveFailureList(self.deathSaveFailureList().reverse());
+        // Tell the view to render the list again.
+        self.deathSaveFailureList.valueHasMutated();
+    };
+
+    self.createDeathSaveSuccessList = () => {
+        self.deathSaveSuccessList(new Array(3));
+        for (var i = 0; i < 3; i++) {
+            const isVisible = (3 - self.deathSaveSuccess().used()) > i;
+            self.deathSaveSuccessList()[i] = ko.observable(isVisible);
+        }
+
+        self.deathSaveSuccessList(self.deathSaveSuccessList().reverse());
+        // Tell the view to render the list again.
+        self.deathSaveSuccessList.valueHasMutated();
+    };
+
+    self.damageHandler = ko.computed({
+        read: function() {
+            return self.health() ? self.health().damage() : 0;
+        },
+        write: function(value) {
+            if (self.health().tempHitPoints()) {
+                // Find the damage delta, then apply to temp hit points first.
+                var damageChange = value - self.health().damage();
+                if (damageChange > 0) {
+                    var remainingTempHP = self.health().tempHitPoints() - damageChange;
+                    if (remainingTempHP >= 0 ) {
+                        // New damage value did not eliminate temporary hit points
+                        // reduce temporary hit points, and do not apply to damage.
+                        self.health().tempHitPoints(remainingTempHP);
+                        self.tempHpDataHasChanged();
+                        return;
+                    } else {
+                        // remainingTempHP is negative.
+                        self.health().tempHitPoints(0);
+                        value = self.health().damage() + remainingTempHP;
+                        self.health().damage(value);
+                        self.damageDataHasChanged();
+                        return;
+                    }
+                }
+            }
+            self.health().damage(value);
+            self.damageDataHasChanged();
+        },
+        owner: self
+    });
+
+    self.calculateHitDice = () => {
+        const level = self.profile().level();
+
+        self.hitDiceList(new Array(level));
+        for (var i = 0; i < level; i++) {
+            const isVisible = (level - self.hitDice().used()) > i;
+            self.hitDiceList()[i] = ko.observable(isVisible);
+        }
+
+        // Tell the view to render the list again.
+        self.hitDiceList.valueHasMutated();
+    };
+
+    self.updateProfile = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const profile = await Profile.ps.read({uuid: key});
+        self.profile(profile.object);
+
+        self.calculateHitDice();
+    };
+
+    self.recoverHitDice = () => {
+        let used = self.hitDice().used();
+        if (used - 1 >= 0) {
+            self.hitDice().used(used - 1);
+        } else {
+            self.hitDice().used(0);
+        }
+
+        // Save HitDice
+        self.saveHitDice();
+
+        // Calculate HitDiceList
+        self.calculateHitDice();
+
+        // Notify
+        Notifications.hitDice.changed.dispatch();
+    };
+
+    self.useHitDice = () => {
+        let used = self.hitDice().used();
+        const level = self.profile().level();
+        if (used + 1 <= level) {
+            self.hitDice().used(used + 1);
+        } else {
+            self.hitDice().used(level);
+        }
+
+        // Save HitDice
+        self.saveHitDice();
+
+        // Calculate HitDiceList
+        self.calculateHitDice();
+
+        // Notify
+        Notifications.hitDice.changed.dispatch();
+    };
+
+    self.saveHitDice = async () => {
+        var response = await self.hitDice().ps.save();
+        self.hitDice(response.object);
+    };
+
+    self.recoverDeathSaveSuccess = () => {
+        let used = self.deathSaveSuccess().used();
+        if (used - 1 >= 0) {
+            self.deathSaveSuccess().used(used - 1);
+        } else {
+            self.deathSaveSuccess().used(0);
+        }
+
+        // Save DeathSave Success
+        self.saveDeathSaveSuccess();
+
+        // Calculate HitDiceList
+        self.createDeathSaveSuccessList();
+
+        // Notify
+        self._alertPlayerIsStable();
+    };
+
+    self.useDeathSaveSuccess = () => {
+        let used = self.deathSaveSuccess().used();
+        if (used + 1 <= 3) {
+            self.deathSaveSuccess().used(used + 1);
+        } else {
+            self.deathSaveSuccess().used(3);
+        }
+
+        // Save HitDice
+        self.saveDeathSaveSuccess();
+
+        // Calculate HitDiceList
+        self.createDeathSaveSuccessList();
+
+        // Notify
+        self._alertPlayerIsStable();
+    };
+
+    self.saveDeathSaveSuccess = async () => {
+        var response = await self.deathSaveSuccess().ps.save();
+        self.deathSaveSuccess(response.object);
+    };
+
+    self.recoverDeathSaveFailure = () => {
+        let used = self.deathSaveFailure().used();
+        if (used - 1 >= 0) {
+            self.deathSaveFailure().used(used - 1);
+        } else {
+            self.deathSaveFailure().used(0);
+        }
+
+        // Save DeathSave Success
+        self.saveDeathSaveFailure();
+
+        // Calculate HitDiceList
+        self.createDeathSaveFailureList();
+
+        // Notify
+        self._alertPlayerHasDied();
+    };
+
+    self.useDeathSaveFailure = () => {
+        let used = self.deathSaveFailure().used();
+        if (used + 1 <= 3) {
+            self.deathSaveFailure().used(used + 1);
+        } else {
+            self.deathSaveFailure().used(3);
+        }
+
+        // Save HitDice
+        self.saveDeathSaveFailure();
+
+        // Calculate HitDiceList
+        self.createDeathSaveFailureList();
+
+        // Notify
+        self._alertPlayerHasDied();
+    };
+
+    self.saveDeathSaveFailure = async () => {
+        var response = await self.deathSaveFailure().ps.save();
+        self.deathSaveFailure(response.object);
     };
 
     /**
@@ -199,14 +288,12 @@ export function StatsViewModel() {
     self.resetOnLongRest = function() {
         self.resetHitDice();
         self.health().damage(0);
-        self.health().tempHitpoints(0);
-        self.health().save();
+        self.health().tempHitPoints(0);
         self.damageDataHasChanged();
     };
 
     self.resetDamage = function() {
         self.health().damage(0);
-        self.health().save();
         self.damageDataHasChanged();
     };
 
@@ -216,122 +303,135 @@ export function StatsViewModel() {
      *
      * This will be used primarily for long rest resets.
      */
-    self.resetHitDice = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
-        var level = profile.level();
+    self.resetHitDice = async () => {
+        var key = CoreManager.activeCore().uuid();
+        var level = self.profile().level();
         var restoredHitDice = Math.floor(level / 2) < 1 ? 1 : Math.floor(level / 2);
 
-        ko.utils.arrayForEach(this.hitDiceList(), function(hitDice) {
-            if (hitDice.hitDiceUsed() === true) {
-                if (restoredHitDice !== 0) {
-                    hitDice.hitDiceUsed(false);
-                    restoredHitDice -= 1;
-                }
-            }
-        });
-        self.hitDiceList().forEach(function(e, i, _) {
-            e.save();
-        });
-        self.hitDiceDataHasChanged();
-    };
-
-    // Reset death and success saves when char drops to 0 hp
-    self.resetDeathSaves = ko.computed(function() {
-        self._dummy();
-        if (self.health().hitpoints() >= 1){
-            self.deathSaveFailureList().forEach(function(save, idx, _) {
-                save.deathSaveFailure(false);
-            });
-            self.deathSaveSuccessList().forEach(function(save, idx, _) {
-                save.deathSaveSuccess(false);
-            });
+        var remainingHitDice = self.hitDice().used() - restoredHitDice;
+        if (remainingHitDice < 0) {
+            self.hitDice().used(0);
+        } else {
+            self.hitDice().used(remainingHitDice);
         }
-    });
+
+        await self.saveHitDice();
+
+        self.calculateHitDice();
+    };
 
     // Determine if death saves should be visible
     self.deathSavesVisible = ko.computed(function() {
-        self._dummy();
-        return self.health().hitpoints() === 0;
+        return self.health() != undefined ? self.health().hitpoints() == 0 : false;
     });
 
+    // Reset death and success saves when char drops to 0 hp
+    self.resetDeathSaves = () => {
+        // We don't want to change 0 -> 0 since it causes unneeded requests.
+        const shouldUpdate = (
+            // We have loaded.
+            self.health() !== undefined
+            // HP is greater than 0.
+            && self.health().hitpoints() > 0
+            // Fails are not zero
+            && self.deathSaveFailure().used() !== 0
+            // Successes are not zero
+            && self.deathSaveSuccess().used() !== 0
+        );
+
+        if (shouldUpdate) {
+            self.deathSaveFailure().used(0);
+            self.deathSaveSuccess().used(0);
+            self.saveDeathSaveFailure();
+            self.saveDeathSaveSuccess();
+            self.createDeathSaveLists();
+        }
+    };
+
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        rules: {
+            maxHitPoints: {
+                min: 0,
+                required: true
+            },
+            tempHitPoints: {
+                min: 0,
+                required: true
+            },
+            damage: {
+                min: 0,
+                required: true
+            },
+            type: {
+                required: true,
+                maxlength: 32
+            }
+        }
+    };
+
     self.modifierHasFocus = ko.observable(false);
 
     self.modalFinishedAnimating = function() {
         self.modifierHasFocus(true);
     };
 
+    self.editHealth = function() {
+        self.editHealthItem(new Health());
+        self.editHealthItem().importValues(self.health().exportValues());
+        self.modalOpen(true);
+    };
+
     self.modalFinishedClosing = function() {
-        if (self.modalOpen()) {
+        if (self.modalOpen() && self.addFormIsValid()) {
             self.health().importValues(self.editHealthItem().exportValues());
-            self.hitDiceType().importValues(self.editHitDiceItem().exportValues());
+            self.healthDataHasChange();
+            self.saveHitDice();
+            Notifications.hitDiceType.changed.dispatch();
         }
         self.modalOpen(false);
-        self.hitDiceTypeDataHasChanged();
-        self.healthDataHasChange();
     };
 
     // Prepopulate methods
     self.setHitDiceType = function(label, value) {
-        self.editHitDiceItem().hitDiceType(value);
-    };
-
-    /* Utility Methods */
-
-
-    self.deathSaveSuccessDataHasChanged = function() {
-        self.deathSaveSuccessList().forEach(function(save, idx, _) {
-            save.save();
-        });
-    };
-
-    self.deathSaveFailureDataHasChanged = function() {
-        self.deathSaveFailureList().forEach(function(save, idx, _) {
-            save.save();
-        });
+        self.hitDice().type(value);
     };
 
     self.healthDataHasChange = function() {
-        self.health().save();
+        self.saveHealth();
         Notifications.health.changed.dispatch();
     };
 
     self.maxHpDataHasChanged = function() {
-        self.health().save();
+        self.saveHealth();
         Notifications.health.maxHitPoints.changed.dispatch();
-        Notifications.health.changed.dispatch();
     };
 
     self.damageDataHasChanged = function() {
-        self.health().save();
+        self.saveHealth();
         Notifications.health.damage.changed.dispatch();
-        Notifications.health.changed.dispatch();
     };
 
     self.tempHpDataHasChanged = function() {
-        self.health().save();
+        self.saveHealth();
         Notifications.health.tempHitPoints.changed.dispatch();
-        Notifications.health.changed.dispatch();
     };
 
-    self.hitDiceDataHasChanged = function() {
-        self.hitDiceList().forEach(function(e, i, _) {
-            e.save();
-        });
-        Notifications.hitDice.changed.dispatch();
-    };
-
-    self.hitDiceTypeDataHasChanged = function() {
-        self.hitDiceType().save();
-        Notifications.hitDiceType.changed.dispatch();
+    self.saveHealth = async () => {
+        var response = await self.health().ps.save();
+        self.health(response.object);
     };
 
     self._alertPlayerHasDied = function() {
-        var allFailed = self.deathSaveFailureList().every(function(save, idx, _) {
-            return save.deathSaveFailure();
-        });
-        if (allFailed) {
+        if (self.deathSavesVisible() && self.deathSaveFailure().used() == 3) {
             Notifications.userNotification.dangerNotification.dispatch(
                 'Failing all 3 death saves will do that...',
                 'You have died.', {
@@ -347,10 +447,7 @@ export function StatsViewModel() {
     };
 
     self._alertPlayerIsStable = function() {
-        var allSaved = self.deathSaveSuccessList().every(function(save, idx, _) {
-            return save.deathSaveSuccess();
-        });
-        if (allSaved) {
+        if (self.deathSavesVisible() && self.deathSaveSuccess().used() == 3) {
             Notifications.userNotification.successNotification.dispatch(
                 'You have been spared...for now.',
                 'You are now stable.', {

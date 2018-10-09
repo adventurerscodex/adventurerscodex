@@ -69,7 +69,7 @@ export var Notifications = {
         dangerNotification: new Signal()
     },
 
-    characterManager: {
+    coreManager: {
         changing: new Signal(),
         changed: new Signal()
     },
@@ -220,10 +220,6 @@ export var Notifications = {
         changed: new Signal()
     },
 
-    playerInfo: {
-        changed: new Signal()
-    },
-
     profile: {
         changed: new Signal(),
         level: {
@@ -318,14 +314,23 @@ export var Notifications = {
     },
 
     tracked: {
-        changed: new Signal()
+        changed: new Signal(),
+        feat: {
+            changed: new Signal()
+        },
+        feature: {
+            changed: new Signal()
+        },
+        trait: {
+            changed: new Signal()
+        }
     },
 
     weapon: {
         changed: new Signal()
     },
 
-    treasure: {
+    wealth: {
         changed: new Signal()
     },
 

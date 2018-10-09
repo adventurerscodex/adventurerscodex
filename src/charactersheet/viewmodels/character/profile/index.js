@@ -1,7 +1,5 @@
-import { CharacterManager } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Profile } from 'charactersheet/models/character';
 import ko from 'knockout';
 import template from './index.html';
@@ -10,152 +8,153 @@ export function ProfileViewModel() {
     var self = this;
 
     self.placeholderText = '<i>Character Name</i>';
-    self.characterName =  ko.observable('');
-    self.background = ko.observable('');
-    self.playerName = ko.observable('');
-    self.race = ko.observable('');
-    self.alignment = ko.observable('');
-    self.diety = ko.observable('');
-    self.typeClass = ko.observable('');
-    self.gender = ko.observable('');
-    self.age = ko.observable('');
-    self.level = ko.observable('');
-    self.experience = ko.observable('');
+    self.profile = ko.observable();
+    self.loaded = ko.observable();
 
-    //Static Data
+    // Static Data
     self.alignmentOptions = Fixtures.profile.alignmentOptions;
-    self.backgroundOptions = Fixtures.profile.backgroundOptions;
     self.classOptions = Fixtures.profile.classOptions;
     self.raceOptions = Fixtures.profile.raceOptions;
 
-    //Prepopulate methods
+    // Pre-populate methods
     self.setAlignment = function(label, value) {
-        self.alignment(value);
-    };
-
-    self.setBackground = function(label, value) {
-        self.background(value);
+        self.profile().alignment(value);
     };
 
     self.setClass = function(label, value) {
-        self.typeClass(value);
+        self.profile().characterClass(value);
     };
 
     self.setRace = function(label, value) {
-        self.race(value);
+        self.profile().race(value);
     };
 
-    self.load = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
-        Notifications.global.save.add(self.dataHasChanged);
+    self.validation = {
+        // Deep copy of properties in object
+        ...Profile.validationConstraints
+    };
 
-        if (profile) {
-            self.level(profile.level());
-            self.playerName(profile.playerName());
-            self.characterName(profile.characterName());
-            self.background(profile.background());
-            self.race(profile.race());
-            self.alignment(profile.alignment());
-            self.diety(profile.diety());
-            self.typeClass(profile.typeClass());
-            self.gender(profile.gender());
-            self.age(profile.age());
-            self.experience(profile.exp());
+    self.load = async function() {
+        self.loaded(false);
+        await this.reset();
+        self.loaded(true);
+    };
+
+    self.reset = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const profileResponse = await Profile.ps.read({uuid: key});
+        self.profile(profileResponse.object);
+    };
+
+    self.save = async function() {
+        const profileResponse = await self.profile().ps.save();
+        self.profile(profileResponse.object);
+    };
+
+    self.isNumeric = (n) => {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    };
+
+    // UI Labels
+    self.alignmentLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().alignment() && self.profile().alignment().trim()) {
+                return self.profile().alignment();
+            } else {
+                return 'No Alignment';
+            }
         }
+    });
 
-        //Subscriptions
-        self.level.subscribe(self.dataHasChanged);
-        self.playerName.subscribe(self.dataHasChanged);
-        self.characterName.subscribe(self.dataHasChanged);
-        self.background.subscribe(self.dataHasChanged);
-        self.race.subscribe(self.dataHasChanged);
-        self.alignment.subscribe(self.dataHasChanged);
-        self.diety.subscribe(self.dataHasChanged);
-        self.typeClass.subscribe(self.dataHasChanged);
-        self.gender.subscribe(self.dataHasChanged);
-        self.age.subscribe(self.dataHasChanged);
-        self.experience.subscribe(self.dataHasChanged);
+    self.deityLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().deity() && self.profile().deity().trim()) {
+                return self.profile().deity();
+            } else {
+                return 'No Deity';
+            }
+        }
+    });
 
-        self.level.subscribe(self.levelDataHasChanged);
-        self.characterName.subscribe(self.characterNameDataHasChanged);
-        self.race.subscribe(self.raceDataHasChanged);
-        self.typeClass.subscribe(self.typeClassDataHasChanged);
-        self.experience.subscribe(self.experienceDataHasChanged);
-        self.playerName.subscribe(self.playerNameHasChanged);
-    };
+    self.raceLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().race() && self.profile().race().trim()) {
+                return self.profile().race();
+            } else {
+                return 'No Race';
+            }
+        }
+    });
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.dataHasChanged);
-    };
+    self.characterClassLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().characterClass() && self.profile().characterClass().trim()) {
+                return self.profile().characterClass();
+            } else {
+                return 'No Class';
+            }
+        }
+    });
 
-    self.levelDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.level.changed.dispatch();
-    };
+    self.genderLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().gender() && self.profile().gender().trim()) {
+                return self.profile().gender();
+            } else {
+                return 'No Gender';
+            }
+        }
+    });
 
-    self.characterNameDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.characterName.changed.dispatch();
-    };
+    self.ageLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.isNumeric(self.profile().age())) {
+                return self.profile().age();
+            } else {
+                return 'No Age';
+            }
+        }
+    });
 
-    self.raceDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.race.changed.dispatch();
-    };
+    self.weightLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.isNumeric(self.profile().weight())) {
+                return self.profile().weight();
+            } else {
+                return 'No Weight';
+            }
+        }
+    });
 
-    self.typeClassDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.playerClass.changed.dispatch();
-    };
+    self.hairColorLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().hairColor() && self.profile().hairColor().trim()) {
+                return self.profile().hairColor();
+            } else {
+                return 'No Hair Color';
+            }
+        }
+    });
 
-    self.playerNameHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.playerName.changed.dispatch();
-    };
+    self.eyeColorLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().eyeColor() && self.profile().eyeColor().trim()) {
+                return self.profile().eyeColor();
+            } else {
+                return 'No Eye Color';
+            }
+        }
+    });
 
-    self.experienceDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.experience.changed.dispatch();
-    };
-
-    self.dataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.changed.dispatch();
-    };
-
-    //Public Methods
-
-    self.clear = function() {
-        self.characterName('');
-        self.background('');
-        self.playerName('');
-        self.race('');
-        self.alignment('');
-        self.diety('');
-        self.typeClass('');
-        self.gender('');
-        self.age('');
-        self.level('');
-        self.experience('');
-    };
-
-    self.saveProfile = function() {
-        var profile = PersistenceService.findBy(Profile, 'characterId',
-            CharacterManager.activeCharacter().key())[0];
-        profile.level(self.level());
-        profile.playerName(self.playerName());
-        profile.characterName(self.characterName());
-        profile.background(self.background());
-        profile.race(self.race());
-        profile.alignment(self.alignment());
-        profile.diety(self.diety());
-        profile.typeClass(self.typeClass());
-        profile.gender(self.gender());
-        profile.age(self.age());
-        profile.exp(self.experience());
-        profile.save();
-    };
+    self.skinColorLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().skinColor() && self.profile().skinColor().trim()) {
+                return self.profile().skinColor();
+            } else {
+                return 'No Skin Color';
+            }
+        }
+    });
 }
 
 ko.components.register('profile', {

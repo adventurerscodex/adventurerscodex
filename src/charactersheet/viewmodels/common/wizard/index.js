@@ -1,17 +1,8 @@
-import {
-    AbilityScores,
-    Campaign,
-    Character,
-    Item,
-    PlayerInfo,
-    Profile,
-    Trait
-} from 'charactersheet/models';
-import { CharacterManager } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { AbilityScore } from 'charactersheet/models';
+import { CoreManager } from 'charactersheet/utilities';
+import { Hypnos } from 'hypnos/lib/hypnos';
 import ko from 'knockout';
 import template from './index.html';
-import uuid from 'node-uuid';
 
 /**
  * This view model contains the root implementation of the wizard.
@@ -47,13 +38,14 @@ export function WizardViewModel() {
     self.stepReady = ko.observable(false);
     self.aggregateResults = ko.observable({});
     self.stepResult = ko.observable({});
+    self.newCharacterId = null;
 
     // View Model Methods
 
     self.init = function() { };
 
     self.load = function() {
-        CharacterManager.setActiveCharacterFragment(null);
+        CoreManager.setActiveCoreFragment(null);
 
         self.getNextStep();
         self.goForward();
@@ -139,10 +131,7 @@ export function WizardViewModel() {
      */
     self.terminate = function() {
         // Newest character will be at the back.
-        var character = PersistenceService.findAll(Character).reverse()[0];
-        if (character) {
-            CharacterManager.changeCharacter(character.key());
-        }
+        CoreManager.changeCore(self.newCharacterId);
     };
 
     /**
@@ -159,62 +148,97 @@ export function WizardViewModel() {
     /**
      * Progress through all previous and current steps and save their data.
      */
-    self.save = function() {
-        var character = new Character();
-        character.key(uuid.v4());
-        character.save();
+    self.save = async function() {
         var playerType = self.aggregateResults()['WizardPlayerTypeStep'].playerType;
-        character.playerType(playerType);
-        character.save();
+        let params = {};
+        let actions;
 
         if (playerType.key == 'character') {
+            actions = ['core', 'characters', 'create'];
+
             // Profile
-            var profile = new Profile();
-            var data = self.aggregateResults()['WizardProfileStep'];
-            data.characterId = character.key();
-            profile.importValues(data);
-            profile.save();
-
-            // Pre populate traits by race
-            var traits = data.traits;
-            traits.forEach(function (item, idx, _){
-                var trait = new Trait();
-                item.characterId = character.key();
-                trait.importValues(item);
-                trait.save();
-            });
-
-            // Pre populate items by backpack
-            var items = data.items;
-            items.forEach(function (element, idx, _){
-                var item = new Item();
-                element.characterId = character.key();
-                item.importValues(element);
-                item.save();
-            });
-
-            var playerInfo = new PlayerInfo();
-            playerInfo.characterId(character.key());
-            playerInfo.save();
+            var profileData = self.aggregateResults()['WizardProfileStep'];
+            params.playerName = profileData.playerName;
+            params.profile = { ...profileData };
 
             // Ability Scores
-            var abilityScores = new AbilityScores();
-            var abData = self.aggregateResults()['WizardAbilityScoresStep'];
-            abData.characterId = character.key();
-            abilityScores.importValues(abData);
-            abilityScores.save();
+            var abilityScoresData = self.aggregateResults()['WizardAbilityScoresStep'];
+            params.abilityScores = abilityScoresData;
+
+            // Background
+            params.background = {
+                name: profileData.background ? profileData.background : '',
+                flaw: '',
+                bond: '',
+                ideal: '',
+                personalityTrait: ''
+            };
+
+            // Profile image
+            params.profileImage = { type: 'email' };
+
+            // Health
+            params.health = { maxHitPoints: 10 };
+
+            // Pre populate traits by race
+            const traits = profileData.traits;
+            if (traits) {
+                traits.forEach((trait) => {
+                    // This field can't be blank
+                    trait['tracked'] = null;
+                });
+                params.traits = traits;
+            }
+
+            // Pre populate items by backpack
+            const items = profileData.items;
+            if (items) {
+                params.items = items;
+            }
         } else if (playerType.key == 'dm') {
             // Campaign
+            actions = ['core', 'dms', 'create'];
 
-            var campaign = new Campaign();
-
-            data = self.aggregateResults()['WizardCampaignStep'];
-            campaign.characterId = character.key();
-            campaign.playerName(data.playerName);
-            campaign.name(data.campaignName);
-            campaign.createdDate(new Date());
-            campaign.save();
+            let campaignData = self.aggregateResults()['WizardCampaignStep'];
+            params.profileImage = { type: 'email' };
+            params.playerName = campaignData.playerName;
+            params.campaign = {
+                name: campaignData.campaignName
+            };
         }
+
+        // Save the core data and set the new character
+        const coreResponse = await Hypnos.client.action({ keys: actions, params });
+        self.newCharacterId = coreResponse.data.uuid;
+    };
+
+    self.createProfileFromData = (data) => {
+        let profile = {};
+        profile.characterName = data.characterName;
+        profile.background = data.background;
+        profile.race = data.race;
+        profile.characterClass = data.typeClass;
+        profile.age = data.age;
+        profile.alignment = data.alignment;
+        profile.gender = data.gender;
+        profile.deity = data.deity;
+        profile.level = data.level;
+        profile.experience = data.exp;
+
+        return profile;
+    };
+
+    self.createAbilityScoresFromData = (data) => {
+        let abilityScores = [];
+        data.forEach(element => {
+            let abilityScore = new AbilityScore();
+            abilityScore.name(element.name);
+            abilityScore.value(element.value);
+            abilityScore.shortName(element.shortName);
+            abilityScores.push(abilityScore);
+        });
+
+        return abilityScores;
     };
 
     // UI Helper Methods
@@ -251,9 +275,9 @@ export function WizardViewModel() {
         self.goBackward();
     };
 
-    self.finishButton = function() {
+    self.finishButton = async function() {
         self.saveStepResult();
-        self.save();
+        await self.save();
         self.terminate();
         self.reset();
     };

@@ -1,10 +1,9 @@
 import 'bin/knockout-custom-loader';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications
 } from 'charactersheet/utilities';
 import { Note } from 'charactersheet/models/common';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -14,42 +13,31 @@ export function NotesViewModel() {
     self.notes = ko.observableArray();
     self.selectedNote = ko.observable();
 
-    self.load = function() {
-        self.reloadData();
+    self.load = async () => {
+        await self.reloadData();
 
-        Notifications.global.save.add(self.save);
         Notifications.notes.changed.add(self.reloadData);
     };
 
-    self.unload = function() {
-        self.save();
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.notes().forEach(function(note, idx, _) {
-            note.save();
-        });
-    };
-
-    self.reloadData = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var notes = PersistenceService.findBy(Note, 'characterId', key);
-        if (notes.length > 0) {
-            self.notes(notes);
+    self.reloadData = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Note.ps.list({coreUuid: key});
+        self.notes(response.objects);
+        if (self.notes().length > 0) {
             self.selectNote(self.notes()[0]);
+            self.updateHeadlines();
         }
     };
 
     /* UI Methods */
 
-    self.addNote = function() {
-        var key = CharacterManager.activeCharacter().key();
+    self.addNote = async function() {
+        var key = CoreManager.activeCore().uuid();
         var note = new Note();
-        note.characterId(key);
-        note.save();
-        self.notes.push(note);
-        self.selectNote(note);
+        note.coreUuid(key);
+        const newNote = await note.ps.create();
+        self.notes.push(newNote.object);
+        self.selectNote(newNote.object);
     };
 
     self.noteToSelect = function(note) {
@@ -61,10 +49,11 @@ export function NotesViewModel() {
         return previousNote;
     };
 
-    self.deleteNote = function(note) {
+    self.deleteNote = async function(note) {
         const selectNote = self.noteToSelect(note);
+        await note.ps.delete();
         self.notes.remove(note);
-        note.delete();
+
         if (self.notes().length > 0) {
             self.selectNote(self.notes()[selectNote]);
         } else {
@@ -72,9 +61,25 @@ export function NotesViewModel() {
         }
     };
 
+    self.updateHeadlines = () => {
+        self.notes().forEach((note) => {
+            note.updateHeadline();
+        });
+    };
+
     self.selectNote = function(note) {
         self.selectedNote(note);
-        self.selectedNote().text.subscribe(self.selectedNote().save);
+        self.selectedNote().contents.subscribe(self.updateSelectedNote);
+        self.selectedNote().updateHeadline();
+    };
+
+    self.updateSelectedNote = () => {
+        self.selectedNote().updateHeadline();
+    };
+
+    self.saveSelectedNote = async () => {
+        self.selectedNote().updateHeadline();
+        await self.selectedNote().ps.save();
     };
 
     self.isActiveCSS = function(note) {

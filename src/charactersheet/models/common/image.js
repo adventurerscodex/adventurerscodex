@@ -1,47 +1,40 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos/lib/models/ko';
+import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
-export function ImageModel() {
-    var self = this;
-    self.ps = PersistenceService.register(ImageModel, self);
+export class EncounterImage extends KOModel {
+    static __skeys__ = ['core', 'encounters', 'images'];
 
-    self.characterId = ko.observable(null);
-    self.imageUrl = ko.observable();
-
-    self.save = function() {
-        self.ps.save();
+    static mapping = {
+        include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'description', 'isExhibited']
     };
 
-    self.clear = function() {
-        self.imageUrl('');
+    coreUuid = ko.observable();
+    encounterUuid = ko.observable();
+    name = ko.observable();
+    description = ko.observable();
+    sourceUrl = ko.observable();
+    isExhibited = ko.observable(false);
+
+    DESCRIPTION_MAX_LENGTH = 100;
+
+    // Public Methods
+
+    toJSON = function() {
+        var name = this.name() ? this.name() : 'Untitled';
+        return { name: name, url: this.sourceUrl() };
     };
 
-    self.importValues = function(values) {
-        self.characterId(values.characterId);
-        self.imageUrl(values.imageUrl);
-    };
-
-    self.exportValues = function() {
-        return {
-            characterId: self.characterId(),
-            imageUrl: self.imageUrl()
-        };
-    };
-
-    /**
-     * Returns whether or not the image is empty.
-     */
-    self.hasData = ko.pureComputed(function() {
-        try {
-            return (self.imageUrl().length > 10);
-        } catch(err) {
-            return false;
-        }
+    shortDescription = ko.pureComputed(() => {
+        return Utility.string.truncateStringAtLength(this.description(), this.DESCRIPTION_MAX_LENGTH);
     });
-}
-ImageModel.__name = 'ImageModel';
 
-PersistenceService.addToRegistry(ImageModel);
+    /* Message Methods */
+
+    toHTML = function() {
+        return 'New image in chat';
+    };
+}

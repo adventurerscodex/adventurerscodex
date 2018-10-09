@@ -4,27 +4,18 @@ import 'charactersheet/viewmodels/common/characters';
 import {
     AuthenticationServiceManager,
     ChatServiceManager,
-    HealthinessStatusServiceComponent,
-    InspirationStatusServiceComponent,
-    MagicalStatusServiceComponent,
     NodeServiceManager,
     NotificationsServiceManager,
-    StatusService,
-    TotalWeightStatusServiceComponent,
-    TrackedStatusServiceComponent,
     UserServiceManager,
     XMPPService
 } from 'charactersheet/services';
 import {
-    CharacterManager,
+    CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
-import {
-    HotkeysService,
-    PersistenceService
-} from 'charactersheet/services/common';
-import { Character } from 'charactersheet/models/common';
+import { Core } from 'charactersheet/models/common/core';
+import { PersistenceService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import navLogo from 'images/logo-full-circle-icon.png';
 import style from 'style/site.css';
@@ -61,9 +52,9 @@ export function AdventurersCodexViewModel() {
      * Once the app is ready to be displayed and all data has been loaded,
      * and the init process has finished.
       */
-    self.state = ko.observable(APP_STATE.SELECT);
-    self.selectedCharacter = ko.observable();
-    self._dummy = ko.observable();
+    self.state = ko.observable();
+    self.isFinishedLoading = ko.observable(false);
+    self.selectedCore = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
     self.exportModalStatus = ko.observable(false);
@@ -77,12 +68,7 @@ export function AdventurersCodexViewModel() {
     //UI Methods
 
     self.showWizard = function() {
-        //Unload the prior character.
         self.state(APP_STATE.WIZARD);
-        if (CharacterManager.activeCharacter()) {
-            self.unload();
-        }
-        self.load();
     };
 
     self.shouldShowApp = ko.pureComputed(function() {
@@ -105,15 +91,22 @@ export function AdventurersCodexViewModel() {
     self.init = function() {
         //Subscriptions
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
-        Notifications.characterManager.changing.add(self._handleChangingCharacter);
-        Notifications.characterManager.changed.add(self._handleChangedCharacter);
+        Notifications.coreManager.changing.add(self._handleChangingCharacter);
+        Notifications.coreManager.changed.add(self._handleChangedCharacter);
 
-        CharacterManager.init();
-        var characters = PersistenceService.findAll(Character);
+        // Finish the setup once we're sure that we're logged in.
+        Notifications.authentication.loggedIn.add(self.doSetup);
+    };
+
+    self.doSetup = async () => {
+        await CoreManager.init();
+        const charactersResponse = await Core.ps.list();
+        let characters = charactersResponse.objects;
 
         TabFragmentManager.init();
 
-        if (CharacterManager.activeCharacter()) {
+        self.isFinishedLoading(true);
+        if (CoreManager.activeCore()) {
             // There might be an active character in the URL.
             self._handleChangedCharacter();
         } else if (characters.length > 0) {
@@ -122,24 +115,6 @@ export function AdventurersCodexViewModel() {
             //If no current character exists, fire the load process anyway.
             self.state(APP_STATE.WIZARD);
         }
-
-        XMPPService.sharedService().init();
-        NodeServiceManager.sharedService().init();
-        ChatServiceManager.sharedService().init();
-        NotificationsServiceManager.sharedService().init();
-        UserServiceManager.sharedService().init();
-        AuthenticationServiceManager.sharedService().init();
-    };
-
-    /**
-     * Signal all modules to load their data.
-     */
-    self.load = function() {
-        self._dummy.valueHasMutated();
-    };
-
-    self.unload = function() {
-        self._purgeStrayDBEntries();
     };
 
     self.togglePartyManagerModal = function() {
@@ -165,47 +140,16 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangingCharacter = function() {
-        //Don't save an empty character.
-        if (CharacterManager.activeCharacter() && self.state() == APP_STATE.CHOSEN) {
-            self.unload();
-        }
-        self.selectedCharacter(null);
+        self.selectedCore(null);
 
+        Hypnos.client.cache.flushAll();
         TabFragmentManager.changeTabFragment(null);
-
     };
 
     self._handleChangedCharacter = function() {
-        self.selectedCharacter(CharacterManager.activeCharacter());
-        self.state(APP_STATE.CHOSEN);
-        try {
-            self.load();
-        } catch(err) {
-            throw err;
+        if (self.isFinishedLoading()) {
+            self.selectedCore(CoreManager.activeCore());
+            self.state(APP_STATE.CHOSEN);
         }
-    };
-
-    self._hasAtLeastOneCharacter = function() {
-        return PersistenceService.findAll(Character).length > 0;
-    };
-
-    /**
-     * Clear stray db entries. Entries that are either belonging to a
-     * non-existant or null character are removed.
-     */
-    self._purgeStrayDBEntries = function() {
-        var activeIDs = PersistenceService.findAll(Character).map(function(character, _i, _) {
-            return  character.key();
-        });
-        PersistenceService.listAll().forEach(function(table, idx, _) {
-            if (table === 'Character' || table === 'AuthenticationToken') { return; }
-            PersistenceService.findAllObjs(table).forEach(function(e1, i1,_1) {
-                var invalidID = e1.data['characterId'] === undefined || e1.data['characterId'] === null;
-                var expiredID = activeIDs.indexOf(e1.data['characterId']) === -1;
-                if (expiredID || invalidID) {
-                    PersistenceService._delete(table, e1.id);
-                }
-            });
-        });
     };
 }

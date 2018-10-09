@@ -52,7 +52,8 @@ function _AuthenticationService(config) {
             accessToken = token.accessToken();
             self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL;
         } else {
-            return;
+            // Redirect to login
+            self._goToLogin();
         }
 
         self._doAuthCheck(accessToken);
@@ -75,11 +76,13 @@ function _AuthenticationService(config) {
             token.mapTokenKeys(fragments);
             token.startTime((new Date()).getTime());
             token.save();
+            self._remove_info_and_set_new_url();
             Notifications.authentication.loggedIn.dispatch();
         } else if (self._tokenOrigin == self.TOKEN_ORIGINS.LOCAL) {
             Notifications.authentication.loggedIn.dispatch();
         } else {
-            return;
+            // Redirect to login
+            self._goToLogin();
         }
     };
 
@@ -96,6 +99,8 @@ function _AuthenticationService(config) {
             if (token) {
                 token.delete();
             }
+            // Redirect to login
+            self._goToLogin();
         }
 
         // Alert the user of the error.
@@ -104,5 +109,17 @@ function _AuthenticationService(config) {
             timeOut: 0,
             extendedTimeOut: 0
         });
+    };
+
+    self._goToLogin = () => {
+        window.location = LOGIN_URL.replace('{CLIENT_ID}', CLIENT_ID);
+    };
+
+    self._remove_info_and_set_new_url = () => {
+        const uri = new URI();
+        // We have to set something otherwise the browser reloads.
+        uri.fragment({ c: '' });
+        window.location = uri.toString();
+
     };
 }

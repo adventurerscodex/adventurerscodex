@@ -1,18 +1,11 @@
 import {
-    CharacterManager,
+    CoreManager,
+    Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    NPC,
-    NPCSection
-} from 'charactersheet/models/dm';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services';
-import { Fixtures } from 'charactersheet/utilities';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { NPC } from 'charactersheet/models/dm';
+import { SortService } from 'charactersheet/services';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/swordman.svg';
 import template from './index.html';
@@ -24,8 +17,8 @@ export function NPCSectionViewModel(params) {
     self.sectionIcon = sectionIcon;
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
-        if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        if (!ko.unwrap(self.encounter)) { return; }
+        return self.encounter().uuid();
     });
 
     self.characterId = ko.observable();
@@ -60,7 +53,7 @@ export function NPCSectionViewModel(params) {
     self.raceOptions = Fixtures.profile.raceOptions;
 
     /* Public Methods */
-    self.load = function() {
+    self.load = async function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
@@ -68,40 +61,16 @@ export function NPCSectionViewModel(params) {
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
-        self._dataHasChanged();
+        await self._dataHasChanged();
     };
 
     self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findByPredicates(NPCSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new NPCSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-
-        section.name(self.name());
-        section.visible(self.visible());
-        section.save();
-
-        self.npcs().forEach(function(npc, idx, _) {
+        self.npcs().forEach(function(npc) {
             npc.save();
         });
     };
 
     self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findByPredicates(NPCSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (section) {
-            section.delete();
-        }
-
         self.npcs().forEach(function(npc, idx, _) {
             npc.delete();
         });
@@ -130,22 +99,22 @@ export function NPCSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addNPC = function() {
+    self.addNPC = async function() {
         var npc = self.blankNPC();
-        npc.characterId(CharacterManager.activeCharacter().key());
-        npc.encounterId(self.encounterId());
-        npc.save();
-        self.npcs.push(npc);
+        npc.coreUuid(CoreManager.activeCore().uuid());
+        npc.encounterUuid(self.encounterId());
+        const npcResponse = await npc.ps.create();
+        self.npcs.push(npcResponse.object);
         self.blankNPC(new NPC());
     };
 
-    self.removeNPC = function(npc) {
-        npc.delete();
+    self.removeNPC = async function(npc) {
+        await npc.ps.delete();
         self.npcs.remove(npc);
     };
 
     self.editNPC = function(npc) {
-        self.editItemIndex = npc.__id;
+        self.editItemIndex = npc.uuid;
         self.currentEditItem(new NPC());
         self.currentEditItem().importValues(npc.exportValues());
         self.openModal(true);
@@ -161,14 +130,14 @@ export function NPCSectionViewModel(params) {
         self.firstElementInModalHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            Utility.array.updateElement(self.npcs(), self.currentEditItem(), self.editItemIndex);
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.npcs(), response.object, self.editItemIndex);
         }
 
-        self.save();
         self.openModal(false);
     };
 
@@ -194,25 +163,12 @@ export function NPCSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var npc = PersistenceService.findByPredicates(NPC, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ]);
-        if (npc) {
-            self.npcs(npc);
-        }
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const npcResponse = await NPC.ps.list({coreUuid, encounterUuid: self.encounterId()});
+        self.npcs(npcResponse.objects);
 
-        var section = PersistenceService.findByPredicates(NPCSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new NPCSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        var section = self.encounter().sections()[Fixtures.encounter.sections.npcs.index];
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());

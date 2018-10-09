@@ -3,9 +3,11 @@ import {
     Campaign,
     Profile
 } from 'charactersheet/models';
-import { CharacterManager,
-    Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import {
+    CoreManager,
+    Notifications
+} from 'charactersheet/utilities';
+import { PlayerTypes } from 'charactersheet/models/common/player_types';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -17,47 +19,55 @@ export function PlayerNameViewModel() {
     self.campaign = ko.observable();
     self.name = ko.observable('');
 
-    self.load = function() {
-        self.dataHasChanged();
-        Notifications.characterManager.changed.add(self.dataHasChanged);
-        self.name.subscribe(self.nameHasChanged);
+    self.load = async function() {
+        Notifications.coreManager.changed.add(self.coreHasChanged);
+        await self.coreHasChanged();
     };
 
     self.placeholderText = ko.pureComputed(function() {
-        if (self.playerType() == 'character') {
+        if (self.playerType() == PlayerTypes.character.key) {
             return '<i>Character Name</i>';
         } else {
             return '<i>A Story of Wonder</i>';
         }
     });
 
-    self.nameHasChanged = function() {
-        if (self.playerType() == 'character') {
-            self.profile().characterName(self.name());
-            self.profile().save();
-            Notifications.profile.characterName.changed.dispatch();
-        } else {
-            self.campaign().name(self.name());
-            self.campaign().save();
-            Notifications.campaign.changed.dispatch();
+    self.name = ko.computed({
+        read: () => {
+            if (self.playerType()) {
+                if (self.playerType() == PlayerTypes.character.key) {
+                    const profile = ko.unwrap(self.profile);
+                    return profile ? profile.characterName() : '';
+                } else if (self.playerType() == PlayerTypes.dm.key) {
+                    const campaign = ko.unwrap(self.campaign);
+                    return campaign ? campaign.name() : '';
+                }
+            }
+            return '';
+        },
+        write: (newValue) => {
+            if (self.playerType() == PlayerTypes.character.key) {
+                const profile = ko.unwrap(self.profile);
+                profile.characterName(newValue);
+                profile.ps.save();
+            } else if (self.playerType() == PlayerTypes.dm.key) {
+                const campaign = ko.unwrap(self.campaign);
+                campaign.name(newValue);
+                campaign.ps.save();
+            }
         }
-    };
+    });
 
-    self.dataHasChanged = function() {
-        var character = CharacterManager.activeCharacter();
-        self.playerType(character.playerType().key);
-        if (self.playerType() == 'character') {
-            var profile = PersistenceService.findFirstBy(Profile, 'characterId', character.key());
-            if (profile) {
-                self.profile(profile);
-                self.name(profile.characterName());
-            }
-        } else {
-            var campaign = PersistenceService.findFirstBy(Campaign, 'characterId', character.key());
-            if (campaign) {
-                self.campaign(campaign);
-                self.name(campaign.name());
-            }
+    self.coreHasChanged = async function() {
+        var core = CoreManager.activeCore();
+        self.playerType(core.type.name());
+
+        if (core.type.name() == PlayerTypes.character.key) {
+            const response = await Profile.ps.read({ uuid: core.uuid() });
+            self.profile(response.object);
+        } else if (core.type.name() == PlayerTypes.dm.key) {
+            const response = await Campaign.ps.read({ uuid: core.uuid() });
+            self.campaign(response.object);
         }
     };
 }

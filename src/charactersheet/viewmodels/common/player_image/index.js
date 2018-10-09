@@ -1,21 +1,18 @@
 import 'bin/knockout-custom-loader';
 import {
-    CharacterManager,
+    CoreManager,
     Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
 import {
-    ImageModel,
-    PlayerImage,
-    PlayerInfo
+    PlayerTypes,
+    ProfileImage
 } from 'charactersheet/models/common';
-import {
-    PersistenceService,
-    XMPPService
-} from 'charactersheet/services/common';
 import { OtherStats } from 'charactersheet/models/character';
+import { XMPPService } from 'charactersheet/services/common';
 import ko from 'knockout';
+import md5 from 'blueimp-md5';
 import template from './index.html';
 
 
@@ -27,8 +24,10 @@ export function PlayerImageViewModel() {
     self.imageSource = ko.observable('picker');
     self.imageUrl = ko.observable('');
     self.email = ko.observable('');
+    self.playerImage = ko.observable();
 
     self.defaultImages = ko.observableArray(Fixtures.defaultProfilePictures);
+    self.GRAVATAR_BASE_URL = 'https://www.gravatar.com/avatar/{}?d=mm';
 
     self.selectedDefaultImages = ko.observableArray();
     self.height = ko.observable(80);
@@ -38,17 +37,15 @@ export function PlayerImageViewModel() {
 
     self.firstFieldHasFocus = ko.observable(false);
 
-    self.load = function() {
+    self.load = async () => {
         //Subscriptions
-        self.selectedDefaultImages.subscribe(self.dataHasChangedUrl);
-        Notifications.playerInfo.changed.add(self.saveAndNotify);
         Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
         Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
         Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
-        Notifications.characterManager.changed.add(self.dataHasChanged);
+        Notifications.coreManager.changed.add(self.dataHasChanged);
 
         // Prime the pump.
-        self.dataHasChanged();
+        await self.dataHasChanged();
         self.inspirationHasChanged();
         self._handleConnectionStatusChanged();
     };
@@ -62,45 +59,28 @@ export function PlayerImageViewModel() {
         Notifications.playerImage.changed.dispatch();
     };
 
-    self.dataHasChanged = () => {
-        var key = CharacterManager.activeCharacter().key();
-        var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
+    self.dataHasChanged = async () => {
+        var key = CoreManager.activeCore().uuid();
+
+        const imageResponse = await ProfileImage.ps.read({uuid: key});
+        const image = imageResponse.object;
         if (image) {
-            self.imageUrl(image.imageUrl());
+            self.imageSource(image.type() != null ? image.type() : 'picker');
+            self.imageUrl(image.sourceUrl());
+            self.email(image.email());
+            self.playerImage(image);
         } else {
-            image = new ImageModel();
-            image.characterId(key);
-            image.save();
-        }
-
-        var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
-        if (info) {
-            self.email(info.email());
-        } else {
-            info = new PlayerInfo();
-            info.characterId(key);
-            info.save();
-        }
-
-        var playerImageSource = PersistenceService.findFirstBy(PlayerImage, 'characterId', key);
-        if (playerImageSource) {
-            self.imageSource(playerImageSource.imageSource());
-        } else {
-            playerImageSource = new PlayerImage();
-            playerImageSource.characterId(key);
-            playerImageSource.save();
+            self.imageSource('picker');
         }
     };
 
-    self.dataHasChangedUrl = function() {
-        var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
-        self.imageUrl(url);
-    };
-
-    self.inspirationHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var otherStats = PersistenceService.findFirstBy(OtherStats, 'characterId', key);
-        self.hasInspiredGlow(otherStats && parseInt(otherStats.inspiration()));
+    self.inspirationHasChanged = async () => {
+        var core = CoreManager.activeCore();
+        if (core.type.name() === PlayerTypes.character.key) {
+            var otherStatsResponse = await OtherStats.ps.read({uuid: core.uuid()});
+            const otherStats = otherStatsResponse.object;
+            self.hasInspiredGlow(otherStats && otherStats.inspiration());
+        }
     };
 
     self.inspiredGlowClass = ko.pureComputed(function() {
@@ -109,34 +89,28 @@ export function PlayerImageViewModel() {
 
     //Public Methods
 
-    self.clear = function() {
-        self.imageUrl('');
-        self.email('');
-        self.selectedDefaultImages([]);
-    };
-
-    self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
-        if (info) {
-            info.email(self.email());
-            info.save();
+    self.save = async () => {
+        var key = CoreManager.activeCore().uuid();
+        if (self.imageSource() == 'picker') {
+            self.playerImage().sourceUrl(self.selectedDefaultImages()[0].image);
+            self.playerImage().type('url');
+            self.playerImage().email(null);
+            self.email('');
+            self.imageUrl('');
+        } else if (self.imageSource() == 'email') {
+            self.playerImage().sourceUrl(null);
+            self.playerImage().type(self.imageSource());
+            self.playerImage().email(self.email());
+            self.imageUrl('');
+            self.selectedDefaultImages([]);
+        } else {
+            self.playerImage().sourceUrl(self.imageUrl());
+            self.playerImage().type(self.imageSource());
+            self.playerImage().email(null);
+            self.email('');
+            self.selectedDefaultImages([]);
         }
-        var image = PersistenceService.findFirstBy(ImageModel, 'characterId', key);
-        if (image) {
-            image.imageUrl(self.imageUrl());
-            image.save();
-        }
-
-        var playerImageSource = PersistenceService.findFirstBy(PlayerImage, 'characterId', key);
-        if (playerImageSource) {
-            if (self.imageSource() == 'picker') {
-                playerImageSource.imageSource('link');
-            } else {
-                playerImageSource.imageSource(self.imageSource());
-            }
-            playerImageSource.save();
-        }
+        await self.playerImage().ps.save();
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
@@ -164,22 +138,29 @@ export function PlayerImageViewModel() {
     //Player Image Handlers
 
     self.playerImageSrc = ko.pureComputed(function() {
-        if (self.imageSource() == 'link') {
+        if (self.imageSource() == 'url') {
             return Utility.string.createDirectDropboxLink(self.imageUrl());
         }
 
-        var url = self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
         if (self.imageSource() == 'picker') {
-            return url;
+            return self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
         }
 
-        url = self._getEmailUrl();
         if (self.imageSource() == 'email' && self.email()) {
-            return url;
+            return self.getGravatarUrl();
         }
 
         return '';
     });
+
+    self.getGravatarUrl = function() {
+        try {
+            var hash = md5(self.email().trim());
+            return self.GRAVATAR_BASE_URL.replace('{}', hash);
+        } catch(err) {
+            return '';
+        }
+    };
 
     /* Modal Methods */
 
@@ -194,16 +175,6 @@ export function PlayerImageViewModel() {
     self.modalFinishedClosing = function() {
         self.openModal(false);
         self.firstFieldHasFocus(false);
-    };
-
-    /* Private Methods */
-
-    self._getEmailUrl = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var info = PersistenceService.findFirstBy(PlayerInfo, 'characterId', key);
-        if (info) {
-            return info.gravatarUrl();
-        }
     };
 }
 

@@ -12,8 +12,10 @@
             <span data-bind="css: sortArrow('type')"></span>
           </th>
           <th class="col-md-1">
-            <a data-toggle="modal"
-              data-target="#addProficiency" id="proficiencyAddIcon" href="#">
+            <a
+              id="proficiencyAddIcon"
+              href="#"
+              data-bind="click: toggleAddModal">
               <i class="fa fa-plus fa-color"></i>
             </a>
           </th>
@@ -36,8 +38,9 @@
         <!-- /ko -->
         <!-- ko if: filteredAndSortedProficiencies().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addProficiency" href="#"
-            colspan="7" class="text-center">
+          <td
+            data-bind="click: toggleAddModal"
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new Proficiency
           </td>
@@ -53,7 +56,9 @@
      id="addProficiency"
      tabindex="-1"
      role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening, onclose: modalFinishedClosing}">
+      onopen: modalFinishedOpening,
+      onclose: modalFinishedClosing,
+      open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -67,12 +72,13 @@
             id="addNpcLabel">Add a new Proficiency.</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
             <label for="name" class="col-sm-2 control-label">Name</label>
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
+                        name="name"
                         id="proficiencyAddNameInput"
                         placeholder="Daggers"
                         data-bind='textInput: blankProficiency().name,
@@ -87,8 +93,9 @@
                         class="form-control"
                         id="proficiencyAddTypeInput"
                         placeholder="Weapon"
+                        name="type"
                         data-bind='textInput: blankProficiency().type,
-                        autocomplete: { source: blankProficiency().proficiencyType,
+                        autocomplete: { source: proficiencyType,
                                         onselect: setType}'>
               </div>
           </div>
@@ -97,6 +104,7 @@
               <div class="col-sm-10">
                 <textarea type="password"
                           class="form-control"
+                          name="description"
                           id="proficiencyAddDescriptionTextarea"
                           rows="4"
                           placeholder="Proficiency gained from class."
@@ -105,11 +113,10 @@
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button"
+            <button type="submit"
                     class="btn btn-primary"
                     id="proficiencyAddAddButton"
-                    data-bind='click: addProficiency'
-                    data-dismiss="modal">Add</button>
+                    data-bind='disable: !addFormIsValid()'>Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -181,12 +188,13 @@
             </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                         class="form-control"
+                        name="name"
                         id="proficiencyEditNameInput"
                         placeholder="Daggers"
                         data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -199,6 +207,7 @@
                         class="form-control"
                         id="proficiencyEditTypeInput"
                         placeholder="Weapon"
+                        name="type"
                         data-bind='textInput: type'>
                   </div>
               </div>
@@ -208,15 +217,16 @@
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
                            class="form-control"
+                           name="description"
                            id="proficiencyEditDescriptionTextarea"
                            data-bind='value: description, markdownEditor: true'></textarea>
                   </div>
               </div>
               <div class="modal-footer">
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="proficiencyEditDoneButton"
-                        data-dismiss="modal">Done</button>
+                        data-bind='disable: !$parent.addFormIsValid()'>Done</button>
               </div>
             </form>
           </div>

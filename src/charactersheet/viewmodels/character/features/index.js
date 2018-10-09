@@ -1,6 +1,6 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     DataRepository,
     Fixtures,
     Notifications
@@ -9,10 +9,7 @@ import {
     Feature,
     Tracked
 } from 'charactersheet/models';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
+import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
 import campingTent from 'images/camping-tent.svg';
 import ko from 'knockout';
@@ -36,7 +33,9 @@ export function FeaturesViewModel() {
     self.features = ko.observableArray([]);
     self.blankFeature = ko.observable(new Feature());
     self.blankTracked = ko.observable(new Tracked());
+    self.addModalOpen = ko.observable(false);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Feature());
     self.currentEditTracked = ko.observable(new Tracked());
@@ -50,25 +49,18 @@ export function FeaturesViewModel() {
     self.addFormIsValid = ko.observable(false);
     self.meditation = meditation;
     self.campingTent = campingTent;
-
-    //Static Data
     self.classOptions = Fixtures.profile.classOptions;
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
+    self.load = async () => {
+        await self.loadFeatures();
 
-        var key = CharacterManager.activeCharacter().key();
-        self.features(PersistenceService.findBy(Feature, 'characterId', key));
+        Notifications.tracked.feature.changed.add(self.loadFeatures);
     };
 
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.features().forEach(function(e, i, _) {
-            e.save();
-        });
+    self.loadFeatures = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Feature.ps.list({coreUuid: key});
+        self.features(response.objects);
     };
 
     // Pre-pop methods
@@ -98,35 +90,53 @@ export function FeaturesViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addFeature();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Feature.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Feature.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
-        if (self.modalOpen()) {
-            if (self.currentEditItem().isTracked()) {
-                if (self.currentEditItem().trackedId()) {
-                    var tracked = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                    tracked.importValues(self.currentEditTracked().exportValues());
-                    tracked.save();
-                } else {
-                    self.currentEditItem().trackedId(uuid.v4());
-                    self.addTracked(self.currentEditItem().trackedId(),
-                        self.currentEditItem().characterId(), self.currentEditTracked());
-                }
-            } else if (self.currentEditItem().trackedId()) {
-                var trackedToDelete = PersistenceService.findFirstBy(Tracked, 'trackedId', self.currentEditItem().trackedId());
-                trackedToDelete.delete();
-                self.currentEditItem().trackedId(null);
+        if (self.modalOpen() && self.addFormIsValid()) {
+            if (!self.currentEditItem().isTracked()) {
+                self.currentEditTracked(null);
             }
-            Utility.array.updateElement(self.features(), self.currentEditItem(), self.editItemIndex);
+            self.currentEditItem().tracked(self.currentEditTracked());
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.features(), response.object, self.editItemIndex);
         }
 
-        self.save();
         self.currentEditItem(new Feature());
         self.currentEditTracked(new Tracked());
         self.modalOpen(false);
@@ -157,53 +167,39 @@ export function FeaturesViewModel() {
             columnName, self.sorts));
     };
 
-    self.addFeature = function() {
+    self.addFeature = async () => {
         var feature = self.blankFeature();
-        feature.characterId(CharacterManager.activeCharacter().key());
+        feature.coreUuid(CoreManager.activeCore().uuid());
         if (feature.isTracked()) {
-            feature.trackedId(uuid.v4());
-            self.addTracked(feature.trackedId(), feature.characterId(), self.blankTracked());
+            // todo: need logic to actually set the color
+            self.blankTracked().color('progress-bar-sky');
+            feature.tracked(self.blankTracked());
         }
-        feature.save();
-        self.features.push(feature);
+        const newFeature = await feature.ps.create();
+        self.features.push(newFeature.object);
         self.blankFeature(new Feature());
         self.blankTracked(new Tracked());
-    };
 
-    self.addTracked = function(uuid, characterId, tracked) {
-        var newTracked = new Tracked();
-        newTracked.characterId(characterId);
-        newTracked.trackedId(uuid);
-        newTracked.maxUses(tracked.maxUses());
-        newTracked.resetsOn(tracked.resetsOn());
-        newTracked.type(Feature);
-        var trackedList = PersistenceService.findBy(Tracked, 'characterId', characterId);
-        newTracked.color(Fixtures.general.colorList[trackedList.length
-          % Fixtures.general.colorList.length]);
-        newTracked.save();
+        self.toggleAddModal();
     };
 
     self.clear = function() {
         self.features([]);
     };
 
-    self.removeFeature = function(feature) {
-        if (feature.isTracked()) {
-            var tracked = PersistenceService.findFirstBy(
-                Tracked, 'trackedId', feature.trackedId());
-            tracked.delete();
-        }
+    self.removeFeature = async (feature) => {
+        await feature.ps.delete();
         self.features.remove(feature);
-        feature.delete();
         Notifications.feature.changed.dispatch();
     };
 
     self.editFeature = function(feature) {
-        self.editItemIndex = feature.__id;
+        self.editItemIndex = feature.uuid;
         self.currentEditItem(new Feature());
         self.currentEditItem().importValues(feature.exportValues());
-        if (feature.isTracked()) {
-            self.currentEditTracked(PersistenceService.findFirstBy(Tracked, 'trackedId', feature.trackedId()));
+        if (feature.tracked()) {
+            self.currentEditItem().isTracked(true);
+            self.currentEditTracked(feature.tracked());
         }
         self.modalOpen(true);
     };

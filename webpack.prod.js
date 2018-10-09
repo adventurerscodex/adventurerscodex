@@ -1,15 +1,38 @@
-const package_ = require('./package.json');
-const merge = require('webpack-merge');
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const merge = require('webpack-merge');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const common = require('./webpack.common.js');
+const package_ = require('./package.json');
 
 module.exports = merge(common, {
+    mode: 'production',
+    devtool: 'hidden-source-map',
+    output: {
+        filename: '[name].[chunkhash].js'
+    },
+    optimization: {
+        minimize: true,
+        splitChunks: {
+            chunks: 'all'
+        }
+    },
+    resolve: {
+        alias: {
+            // Use minified versions of dependencies that don't automatically do this
+            knockout$: 'knockout/build/output/knockout-latest.js', // Will do this in 3.5
+            toastr$: 'toastr/build/toastr.min.js',
+            'jquery-validation$': 'jquery-validation/dist/jquery.validate.min.js'
+        }
+    },
     plugins: [
-        new UglifyJSPlugin({
-            sourceMap: true
-        }),
+        new CleanWebpackPlugin(['dist']),
+        new CompressionWebpackPlugin(),
         new webpack.DefinePlugin({
+            // Some package detect NODE_ENV to determine which build to use
+            'process.env': {
+                NODE_ENV: JSON.stringify('production')
+            },
             /**
              * The string representation of the environment name.
              */
@@ -31,6 +54,10 @@ module.exports = merge(common, {
              * The URL of the homepage.
              */
             'HOME_URL': JSON.stringify('https://app.adventurerscodex.com'),
+            /**
+             * The URL to the login page.
+             */
+            'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
             /**
              * The HOST URL of the pubsub services.
              */

@@ -1,11 +1,10 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { SavingThrows } from 'charactersheet/models/character';
+import { SavingThrow } from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import template from './index.html';
@@ -13,8 +12,9 @@ import template from './index.html';
 export function SavingThrowsViewModel() {
     var self = this;
 
-    self.blankSavingThrow = ko.observable(new SavingThrows());
+    self.blankSavingThrow = ko.observable(new SavingThrow());
     self.savingThrows = ko.observableArray([]);
+    self.addFormIsValid = ko.observable(false);
     self.modalOpen = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
@@ -31,58 +31,26 @@ export function SavingThrowsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self._defaultSavingThrows = function() {
-        var savingThrows = [
-            { name: 'Strength', proficency: false, modifier: null },
-            { name: 'Dexterity', proficency: false, modifier: null },
-            { name: 'Constitution', proficency: false, modifier: null },
-            { name: 'Intelligence', proficency: false, modifier: null },
-            { name: 'Wisdom', proficency: false, modifier: null },
-            { name: 'Charisma', proficency: false, modifier: null }
-        ];
-        return savingThrows.map(function(e,i, _) {
-            var savingThrow = new SavingThrows();
-            e.characterId = CharacterManager.activeCharacter().key();
-            savingThrow.importValues(e);
-            return savingThrow;
-        });
-    };
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await SavingThrow.ps.list({coreUuid: key});
+        self.savingThrows(response.objects);
 
-    self.load = function() {
         Notifications.abilityScores.changed.add(self.updateValues);
-        Notifications.stats.changed.add(self.updateValues);
-        Notifications.global.save.add(self.save);
+        Notifications.otherStats.proficiency.changed.add(self.updateValues);
 
-        var savingThrows = PersistenceService.findBy(SavingThrows, 'characterId',
-            CharacterManager.activeCharacter().key());
-        if (savingThrows.length > 0) {
-            self.savingThrows(savingThrows);
-        } else {
-            self.savingThrows(self._defaultSavingThrows());
-            self.savingThrows().forEach(function(e, i, _) {
-                e.characterId(CharacterManager.activeCharacter().key());
-            });
-            self.save();
+        // Calculate Initial Values
+        self.updateValues();
+    };
+
+    self.updateValues = async () => {
+        // By telling each savingThrow to update their labels, we're implicitly
+        // making a networking call. This should not be this way, but because
+        // the fix is too time consuming, at time of writing, I'm just leaving
+        // it and documenting the weirdness.
+        for (const savingThrow of self.savingThrows()) {
+            await savingThrow.updateModifierLabel();
         }
-    };
-
-    self.unload = function() {
-        self.save();
-        Notifications.abilityScores.changed.remove(self.updateValues);
-        Notifications.stats.changed.remove(self.updateValues);
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.savingThrows().forEach(function(e, i, _) {
-            e.save();
-        });
-    };
-
-    self.updateValues = function() {
-        self.savingThrows().forEach(function(e, i, _) {
-            e.updateValues();
-        });
     };
 
     /* UI Methods */
@@ -111,18 +79,31 @@ export function SavingThrowsViewModel() {
 
     // Modal Methods
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...SavingThrow.validationConstraints
+    };
+
     self.modifierHasFocus = ko.observable(false);
 
     self.modalFinishedAnimating = function() {
         self.modifierHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.savingThrows(), self.currentEditItem(), self.editItemIndex);
+    self.modalFinishedClosing = async () => {
+        if (self.modalOpen() && self.addFormIsValid()) {
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.savingThrows(), response.object, self.editItemIndex);
+            self.updateValues();
         }
 
-        self.save();
         self.modalOpen(false);
     };
 
@@ -130,7 +111,7 @@ export function SavingThrowsViewModel() {
     self.addsavingThrow = function() {
         self.blankSavingThrow().save();
         self.savingThrows.push(self.blankSavingThrow());
-        self.blankSavingThrow(new SavingThrows());
+        self.blankSavingThrow(new SavingThrow());
     };
 
     self.removeSavingThrow = function(savingThrow) {
@@ -139,9 +120,16 @@ export function SavingThrowsViewModel() {
     };
 
     self.editSavingThrow = function(savingThrow) {
-        self.editItemIndex = savingThrow.__id;
-        self.currentEditItem(new SavingThrows());
+        self.editItemIndex = savingThrow.uuid;
+        self.currentEditItem(new SavingThrow());
         self.currentEditItem().importValues(savingThrow.exportValues());
+        self.currentEditItem().modifierLabel(savingThrow.modifierLabel());
+        self.currentEditItem().proficiency.subscribe(() => {
+            self.currentEditItem().updateModifierLabel();
+        });
+        self.currentEditItem().modifier.subscribe(() => {
+            self.currentEditItem().updateModifierLabel();
+        });
         self.modalOpen(true);
     };
 

@@ -1,6 +1,7 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
+    Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -8,11 +9,7 @@ import {
     PersistenceService,
     SortService
 } from 'charactersheet/services/common';
-import {
-    PointOfInterest,
-    PointOfInterestSection
-} from 'charactersheet/models/dm';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
+import { PointOfInterest } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/rune-stone.svg';
 import template from './index.html';
@@ -24,7 +21,7 @@ export function PointOfInterestSectionViewModel(params) {
     self.encounter = params.encounter;
     self.encounterId = ko.pureComputed(function() {
         if (!self.encounter()) { return; }
-        return self.encounter().encounterId();
+        return self.encounter().uuid();
     });
     self.characterId = ko.observable();
 
@@ -54,49 +51,12 @@ export function PointOfInterestSectionViewModel(params) {
 
     /* Public Methods */
     self.load = function() {
-        Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         self._dataHasChanged();
-    };
-
-    self.save = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findByPredicates(PointOfInterestSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new PointOfInterestSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
-
-        section.name(self.name());
-        section.visible(self.visible());
-        section.save();
-
-        self.pointsOfInterest().forEach(function(poi, idx, _) {
-            poi.save();
-        });
-    };
-
-    self.delete = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var section = PersistenceService.findByPredicates(PointOfInterestSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (section) {
-            section.delete();
-        }
-
-        self.pointsOfInterest().forEach(function(poi, idx, _) {
-            poi.delete();
-        });
     };
 
     /* UI Methods */
@@ -122,22 +82,22 @@ export function PointOfInterestSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
-    self.addPointOfInterest = function() {
+    self.addPointOfInterest = async function() {
         var poi = self.blankPointOfInterest();
-        poi.characterId(CharacterManager.activeCharacter().key());
-        poi.encounterId(self.encounterId());
-        poi.save();
-        self.pointsOfInterest.push(poi);
+        poi.coreUuid(CoreManager.activeCore().uuid());
+        poi.encounterUuid(self.encounterId());
+        const pointResponse = await poi.ps.create();
+        self.pointsOfInterest.push(pointResponse.object);
         self.blankPointOfInterest(new PointOfInterest());
     };
 
-    self.removePointOfInterest = function(poi) {
-        poi.delete();
+    self.removePointOfInterest = async function(poi) {
+        await poi.ps.delete();
         self.pointsOfInterest.remove(poi);
     };
 
     self.editPointOfInterest = function(poi) {
-        self.editItemIndex = poi.__id;
+        self.editItemIndex = poi.uuid;
         self.currentEditItem(new PointOfInterest());
         self.currentEditItem().importValues(poi.exportValues());
         self.openModal(true);
@@ -153,14 +113,14 @@ export function PointOfInterestSectionViewModel(params) {
         self.firstElementInModalHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async function() {
         self.selectPreviewTab();
 
         if (self.openModal()) {
-            Utility.array.updateElement(self.pointsOfInterest(), self.currentEditItem(), self.editItemIndex);
+            const pointResponse = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.pointsOfInterest(), pointResponse.object, self.editItemIndex);
         }
 
-        self.save();
         self.openModal(false);
     };
 
@@ -177,25 +137,12 @@ export function PointOfInterestSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = function() {
-        var key = CharacterManager.activeCharacter().key();
-        var poi = PersistenceService.findByPredicates(PointOfInterest, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ]);
-        if (poi) {
-            self.pointsOfInterest(poi);
-        }
+    self._dataHasChanged = async function() {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const pointsResponse = await PointOfInterest.ps.list({coreUuid, encounterUuid: self.encounterId()});
+        self.pointsOfInterest(pointsResponse.objects);
 
-        var section = PersistenceService.findByPredicates(PointOfInterestSection, [
-            new KeyValuePredicate('encounterId', self.encounterId()),
-            new KeyValuePredicate('characterId', key)
-        ])[0];
-        if (!section) {
-            section = new PointOfInterestSection();
-            section.encounterId(self.encounterId());
-            section.characterId(key);
-        }
+        var section = self.encounter().sections()[Fixtures.encounter.sections.pointsOfInterest.index];
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());

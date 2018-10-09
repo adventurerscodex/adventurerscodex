@@ -27,11 +27,11 @@ export function WizardProfileStepViewModel(params) {
         self.race.subscribe(self.dataHasChanged);
         self.background.subscribe(self.dataHasChanged);
         self.backpack.subscribe(self.dataHasChanged);
-        self.typeClass.subscribe(self.dataHasChanged);
+        self.characterClass.subscribe(self.dataHasChanged);
         self.alignment.subscribe(self.dataHasChanged);
         self.age.subscribe(self.dataHasChanged);
         self.gender.subscribe(self.dataHasChanged);
-        self.diety.subscribe(self.dataHasChanged);
+        self.deity.subscribe(self.dataHasChanged);
         self.level.subscribe(self.dataHasChanged);
         self.exp.subscribe(self.dataHasChanged);
     };
@@ -45,11 +45,11 @@ export function WizardProfileStepViewModel(params) {
     self.race = ko.observable();
     self.background = ko.observable();
     self.backpack = ko.observable();
-    self.typeClass = ko.observable();
+    self.characterClass = ko.observable();
     self.alignment = ko.observable();
     self.age = ko.observable();
     self.gender = ko.observable();
-    self.diety = ko.observable();
+    self.deity = ko.observable();
     self.level = ko.observable();
     self.exp = ko.observable();
 
@@ -66,7 +66,7 @@ export function WizardProfileStepViewModel(params) {
     };
 
     self.setClass = function(label, value) {
-        self.typeClass(value);
+        self.characterClass(value);
     };
 
     self.setAlignment = function(label, value) {
@@ -143,11 +143,11 @@ export function WizardProfileStepViewModel(params) {
             characterName: self.characterName(),
             background: self.background(),
             race: self.race(),
-            typeClass: self.typeClass(),
+            characterClass: self.characterClass(),
             age: self.age(),
             alignment: self.alignment(),
             gender: self.gender(),
-            diety: self.diety(),
+            deity: self.deity(),
             level: self.level() || 1,
             exp: self.exp(),
             traits: self.populateTraits(),

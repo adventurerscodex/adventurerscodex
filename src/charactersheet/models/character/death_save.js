@@ -1,80 +1,17 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
 
-export function DeathSave() {
-    var self = this;
-    self.ps = PersistenceService.register(DeathSave, self);
-    self.mapping = {
-        include: [ 'characterId', 'deathSaveSuccess', 'deathSaveFailure' ]
+export class DeathSave extends KOModel {
+    static __skeys__ = ['core', 'deathSaves'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self.characterId = ko.observable(null);
-    self.deathSaveSuccess = ko.observable(false);
-    self.deathSaveFailure = ko.observable(false);
-
-    self.deathSaveSuccessHandler = function() {
-        if(self.deathSaveSuccess() === true) {
-            self.deathSaveSuccess(false);
-        } else if (self.deathSaveSuccess() === false) {
-            self.deathSaveSuccess(true);
-        }
-    };
-
-    self.deathSaveFailureHandler = function() {
-        if(self.deathSaveFailure() === true) {
-            self.deathSaveFailure(false);
-        } else if (self.deathSaveFailure() === false) {
-            self.deathSaveFailure(true);
-        }
-    };
-
-    self.deathSaveSuccessIcon = ko.pureComputed(function() {
-        var css;
-        if (self.deathSaveSuccess() === true) {
-            css = 'ds-success-full';
-        } else if (self.deathSaveSuccess() === false){
-            css = 'ds-success-empty';
-        }
-        return css;
-    });
-
-    self.deathSaveFailureIcon = ko.pureComputed(function() {
-        var css;
-        if (self.deathSaveFailure() === true) {
-            css = 'ds-failure-full';
-        } else if (self.deathSaveFailure() === false){
-            css = 'ds-failure-empty';
-        }
-        return css;
-    });
-
-    self.clear = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        var values = new DeathSave().exportValues();
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
+    coreUuid = ko.observable(null);
+    used = ko.observable();
+    type = ko.observable();
 }
-DeathSave.__name = 'DeathSave';
-
-PersistenceService.addToRegistry(DeathSave);

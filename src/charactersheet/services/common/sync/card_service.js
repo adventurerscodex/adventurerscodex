@@ -51,8 +51,9 @@ function _pCardService(configuration) {
     };
 
     self.dataHasChanged = function() {
-        var card = self._buildCard();
-        self.publishCard(card);
+        // TODO: FIX THISSSSSSS
+        // var card = self._buildCard();
+        // self.publishCard(card);
     };
 
     self.publishCard = function(card) {

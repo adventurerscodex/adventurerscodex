@@ -57,34 +57,34 @@ export var Settings = {
     srdDataRepositoryLocations: [
         {
             key: 'items',
-            url: 'https://adventurerscodex.com/data/SRD/items.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/items.min.json'
         }, {
             key: 'spells',
-            url: 'https://adventurerscodex.com/data/SRD/spells.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/spells.min.json'
         }, {
             key: 'armors',
-            url: 'https://adventurerscodex.com/data/SRD/armor.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/armor.min.json'
         }, {
             key: 'weapons',
-            url: 'https://adventurerscodex.com/data/SRD/weapons.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/weapons.min.json'
         }, {
             key: 'magicItems',
-            url: 'https://adventurerscodex.com/data/SRD/magic_items.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/magic_items.min.json'
         }, {
             key: 'monsters',
-            url: 'https://adventurerscodex.com/data/SRD/monsters.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/monsters.min.json'
         }, {
             key: 'proficiencies',
-            url: 'https://adventurerscodex.com/data/SRD/proficiencies.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/proficiencies.min.json'
         }, {
             key: 'feats',
-            url: 'https://adventurerscodex.com/data/SRD/feats.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/feats.min.json'
         }, {
             key: 'features',
-            url: 'https://adventurerscodex.com/data/SRD/features.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/features.min.json'
         }, {
             key: 'traits',
-            url: 'https://adventurerscodex.com/data/SRD/traits.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/traits.min.json'
         }, {
             key: 'nouns',
             url: 'https://adventurerscodex.com/data/misc/fantasy_nouns.json'
@@ -93,7 +93,7 @@ export var Settings = {
             url: 'https://adventurerscodex.com/data/misc/fantasy_adjectives.json'
         }, {
             key: 'backpacks',
-            url: 'https://adventurerscodex.com/data/SRD/backpacks.min.json'
+            url: 'https://adventurerscodex.com/data/v2/SRD/backpacks.min.json'
         }
     ]
 };

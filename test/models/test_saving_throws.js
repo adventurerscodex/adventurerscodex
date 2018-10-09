@@ -1,7 +1,7 @@
-import { AbilityScores } from 'charactersheet/models/character/ability_scores';
+import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { ProficiencyService } from 'charactersheet/services';
-import { SavingThrows } from 'charactersheet/models/character/saving_throws';
+import { SavingThrow } from 'charactersheet/models/character/saving_throw';
 import Should from 'should';
 import simple from 'simple-mock';
 
@@ -14,18 +14,18 @@ describe('Saving Throws Model', function() {
     describe('Bonus Label', function() {
         it('should yield the modifier value (signed).', function() {
             simple.mock(ProficiencyService.sharedService(), 'proficiency').returnWith(2);
-            var scores = new AbilityScores();
+            var scores = new AbilityScore();
             scores.wis(2);
             scores.int(2);
             simple.mock(PersistenceService, 'findBy').returnWith([scores]);
 
-            var s = new SavingThrows();
+            var s = new SavingThrow();
             s.name('Wisdom');
             s.modifier(4);
             s.proficiency(true);
             s.modifierLabel().should.equal('+ 2');
 
-            s = new SavingThrows();
+            s = new SavingThrow();
             s.name('Intelligence');
             s.modifier(-4);
             s.proficiency(true);
@@ -36,7 +36,7 @@ describe('Saving Throws Model', function() {
 
     describe('Ability Score Name', function() {
         it('should return a 3 letter version of the name', function() {
-            var s = new SavingThrows();
+            var s = new SavingThrow();
             s.name('Wisdom');
             s._abilityScore().should.equal('wis');
         });
@@ -44,14 +44,14 @@ describe('Saving Throws Model', function() {
 
     describe('Proficiency Label', function() {
         it('should yield the proficiency value (or none).', function() {
-            var s = new SavingThrows();
+            var s = new SavingThrow();
             s.name('Wisdom');
             s.modifier(4);
             s.proficiency(true);
 
             s.proficiencyLabel().should.equal('fa fa-check');
 
-            s = new SavingThrows();
+            s = new SavingThrow();
             s.name('Wisdom');
             s.modifier(-4);
             s.proficiency(false);
@@ -61,7 +61,7 @@ describe('Saving Throws Model', function() {
     });
     describe('Clear', function() {
         it('should clear all values', function() {
-            var s = new SavingThrows(parent);
+            var s = new SavingThrow(parent);
             s.name('Wisdom');
             s.modifier(4);
             s.proficiency(true);
@@ -78,7 +78,7 @@ describe('Saving Throws Model', function() {
 
     describe('Export', function() {
         it('should yield an object with all the info supplied.', function() {
-            var s = new SavingThrows();
+            var s = new SavingThrow();
             s.name('Wisdom');
             s.modifier(4);
             s.proficiency(true);
@@ -95,7 +95,7 @@ describe('Saving Throws Model', function() {
 
     describe('Import', function() {
         it('should import an object with all the info supplied.', function() {
-            var s = new SavingThrows();
+            var s = new SavingThrow();
             var e = { name: 'Wisdom', modifier: 3, proficiency: true };
             s.importValues(e);
             e.name.should.equal(s.name());

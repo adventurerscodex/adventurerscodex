@@ -1,11 +1,11 @@
 import 'bin/knockout-bootstrap-modal';
 import {
-    CharacterManager,
+    CoreManager,
     Utility
 } from 'charactersheet/utilities';
 import { DataRepository } from 'charactersheet/utilities';
+import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Proficiency } from 'charactersheet/models/character';
 import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
@@ -23,7 +23,9 @@ export function ProficienciesViewModel() {
 
     self.proficiencies = ko.observableArray([]);
     self.blankProficiency = ko.observable(new Proficiency());
+    self.addModalOpen = ko.observable(false);
     self.modalOpen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
     self.editItemIndex = null;
     self.currentEditItem = ko.observable(new Proficiency());
     self.sort = ko.observable(self.sorts['name asc']);
@@ -33,22 +35,12 @@ export function ProficienciesViewModel() {
     self.editTabStatus = ko.observable('');
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
+    self.proficiencyType = Fixtures.proficiency.proficiencyTypes;
 
-    self.load = function() {
-        Notifications.global.save.add(self.save);
-
-        var key = CharacterManager.activeCharacter().key();
-        self.proficiencies(PersistenceService.findBy(Proficiency, 'characterId', key));
-    };
-
-    self.unload = function() {
-        Notifications.global.save.remove(self.save);
-    };
-
-    self.save = function() {
-        self.proficiencies().forEach(function(e, i, _) {
-            e.save();
-        });
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        const response = await Proficiency.ps.list({coreUuid: key});
+        self.proficiencies(response.objects);
     };
 
     // Pre-pop methods
@@ -73,21 +65,48 @@ export function ProficienciesViewModel() {
     };
 
     // Modal methods
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addProficiency();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Proficiency.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Proficiency.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         self.previewTabStatus('active');
         self.editTabStatus('');
 
-        if (self.modalOpen()) {
-            Utility.array.updateElement(self.proficiencies(), self.currentEditItem(), self.editItemIndex);
+        if (self.modalOpen() && self.addFormIsValid()) {
+            const response = await self.currentEditItem().ps.save();
+            Utility.array.updateElement(self.proficiencies(), response.object, self.editItemIndex);
         }
-
-        // Just in case data was changed.
-        self.save();
 
         self.modalOpen(false);
         Notifications.proficiency.changed.dispatch();
@@ -117,26 +136,27 @@ export function ProficienciesViewModel() {
             columnName, self.sorts));
     };
 
-    self.addProficiency = function() {
+    self.addProficiency = async () => {
         var proficiency = self.blankProficiency();
-        proficiency.characterId(CharacterManager.activeCharacter().key());
-        proficiency.save();
-        self.proficiencies.push(proficiency);
+        proficiency.coreUuid(CoreManager.activeCore().uuid());
+        const newProficiency = await proficiency.ps.create();
+        self.proficiencies.push(newProficiency.object);
         self.blankProficiency(new Proficiency());
+        self.toggleAddModal();
     };
 
     self.clear = function() {
         self.proficiencies([]);
     };
 
-    self.removeProficiency = function(proficiency) {
+    self.removeProficiency = async (proficiency) => {
+        await proficiency.ps.delete();
         self.proficiencies.remove(proficiency);
-        proficiency.delete();
         Notifications.proficiency.changed.dispatch();
     };
 
     self.editProficiency = function(proficiency) {
-        self.editItemIndex = proficiency.__id;
+        self.editItemIndex = proficiency.uuid;
         self.currentEditItem(new Proficiency());
         self.currentEditItem().importValues(proficiency.exportValues());
         self.modalOpen(true);

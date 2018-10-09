@@ -15,7 +15,7 @@
       }">
     <!-- /ko -->
     <!-- ko ifnot: playerImageSrc -->
-    <div class="text-muted player-image-style" id=profilePictureAddToggle">
+    <div class="text-muted player-image-style" id="profilePictureAddToggle">
       <small>Click to add a picture</small>
     </div>
     <!-- /ko -->
@@ -50,22 +50,22 @@
             <div class="col-sm-12">
               <div class="btn-group btn-group-justified" role="group">
                 <label class="btn btn-default"
-                data-bind="css: { active: imageSource() == 'picker'}">
+                  data-bind="css: { active: imageSource() == 'picker'}">
                   <input type="radio" class="hide-block" id="profilePictureDefaultInput"
-                  name="imageSourcePicker" value="picker" data-bind="checked: imageSource"/>
-                  Choose a default
+                    name="imageSourcePicker" value="picker" data-bind="checked: imageSource"/>
+                    Choose a default
                 </label>
                 <label class="btn btn-default"
-                data-bind="css: { active: imageSource() == 'link'}">
+                  data-bind="css: { active: imageSource() == 'url'}">
                   <input type="radio" class="hide-block" id="profilePictureImageLinkInput"
-                  name="imageSourceLink" value="link" data-bind="checked: imageSource"/>
-                  Image Link
+                    name="imageSourceLink" value="url" data-bind="checked: imageSource"/>
+                    Image Link
                 </label>
                 <label class="btn btn-default"
-                data-bind="css: { active: imageSource() == 'email'}">
+                  data-bind="css: { active: imageSource() == 'email'}">
                   <input type="radio" class="hide-block" id="profilePictureGravatarInput"
-                  name="imageSourceEmail" value="email" data-bind="checked: imageSource"/>
-                  Gravatar Email
+                    name="imageSourceEmail" value="email" data-bind="checked: imageSource"/>
+                    Gravatar Email
                 </label>
               </div>
             </div>
@@ -75,11 +75,10 @@
             <image-picker params="cells: defaultImages, selectedCells: selectedDefaultImages, multiselect: false"></image-picker>
           </div>
           <!-- /ko -->
-          <!-- ko if: imageSource() == 'link' -->
+          <!-- ko if: imageSource() == 'url' -->
           <div class="form-group">
             <!-- Image URL -->
-            <label for="spellName"
-                   class="col-sm-4 control-label">Image Link</label>
+            <label class="col-sm-4 control-label">Image Link</label>
             <div class="col-sm-8">
               <input type="text"
                      class="form-control"
@@ -96,8 +95,7 @@
           <!-- ko if: imageSource() == 'email' -->
           <div class="form-group">
             <!-- Gravatar -->
-            <label for="spellName"
-                   class="col-sm-4 control-label">Gravatar Email</label>
+            <label class="col-sm-4 control-label">Gravatar Email</label>
             <div class="col-sm-8">
               <input type="text"
                      class="form-control"

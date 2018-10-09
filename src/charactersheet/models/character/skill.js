@@ -1,125 +1,128 @@
-import 'bin/knockout-mapping-autoignore';
-import 'knockout-mapping';
-import { AbilityScores } from './ability_scores';
-import { CharacterManager } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { AbilityScore } from './ability_score';
+import { CoreManager } from 'charactersheet/utilities';
+import { KOModel } from 'hypnos';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
 
 
-export function Skill() {
-    var self = this;
-    self.ps = PersistenceService.register(Skill, self);
-    self.mapping = {
-        include: ['characterId', 'name', 'modifier', 'abilityScore', 'proficiency']
+export class Skill extends KOModel {
+    static __skeys__ = ['core', 'skills'];
+
+    static mapping = {
+        include: ['coreUuid']
     };
 
-    self._dummy = ko.observable(null);
-    self.characterId = ko.observable(null);
-    self.name = ko.observable('');
-    self.modifier = ko.observable(null);
-    self.abilityScore = ko.observable('');
-    self.proficiency = ko.observable('');
+    _dummy = ko.observable(null);
+    coreUuid = ko.observable(null);
+    name = ko.observable('');
+    modifier = ko.observable(0);
+    abilityScore = ko.observable(null);
+    proficiency = ko.observable('not');
+    bonusLabel = ko.observable('');
+    passiveBonus = ko.observable('');
 
-    self.updateValues = function() {
-        self._dummy.notifySubscribers();
-    };
+    toSchemaValues = (values) => {
+        // TODO: I have to do this because when delete is called, it only includes the IDs in the
+        // TODO: values object.
+        if (values.abilityScore) {
+            const abilityScoreId = values.abilityScore.uuid;
+            values.abilityScore = abilityScoreId;
+        }
+        return values;
+    }
 
-    //UI Methods
-
-    self.proficiencyScore = function() {
-        self._dummy();
-        var key = CharacterManager.activeCharacter().key();
+    proficiencyScore() {
+        this._dummy();
         var profBonus = ProficiencyService.sharedService().proficiency();
 
-        if (self.proficiency() === 'half') {
+        if (this.proficiency() === 'half') {
             return Math.floor(profBonus / 2);
-        } else if (self.proficiency() === 'expertise') {
+        } else if (this.proficiency() === 'expertise') {
             return profBonus * 2;
-        } else if (self.proficiency() === 'proficient') {
+        } else if (this.proficiency() === 'proficient') {
             return profBonus;
         }
 
         // Will get to here if proficiency is null or empty
         return 0;
-    };
+    }
 
-    self.abilityScoreModifier = function() {
-        self._dummy();
+    abilityScoreModifier = async () => {
         var score = null;
         try {
-            score = PersistenceService.findBy(AbilityScores, 'characterId',
-                CharacterManager.activeCharacter().key())[0].modifierFor(self.abilityScore());
+            var key = CoreManager.activeCore().uuid();
+            const response = await AbilityScore.ps.list({coreUuid: key});
+            score = response.objects.filter((score, i, _) => {
+                return score.name() === this.abilityScore().name();
+            })[0];
         } catch(err) { /*Ignore*/ }
 
-        return score ? parseInt(score) : 0;
-    };
+        if (score === null) {
+            return null;
+        } else {
+            return score.getModifier();
+        }
+    }
 
-    self.bonus = ko.pureComputed(function() {
-        self._dummy();
-        var bonus = self.modifier() ? parseInt(self.modifier()) : 0;
-        if (self.proficiency()) {
-            bonus += self.proficiencyScore() + self.abilityScoreModifier();
-        } else if (self.abilityScoreModifier()) {
-            bonus += self.abilityScoreModifier();
+    bonus = async () => {
+        var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
+        const abilityScore = await this.abilityScoreModifier();
+        if (this.proficiency()) {
+            bonus += this.proficiencyScore() + abilityScore;
+        } else if (abilityScore) {
+            bonus += abilityScore;
         }
 
         return bonus;
-    });
+    };
 
-    self.bonusLabel = ko.pureComputed(function() {
-        self._dummy();
+    updateBonuses = async () => {
         var str = '+ 0';
-        if (self.bonus()) {
-            str = self.bonus() >= 0 ? '+ ' + self.bonus() : '- ' +
-            Math.abs(self.bonus());
+        let bonus = await this.bonus();
+        if (bonus) {
+            str = bonus >= 0 ? '+ ' + bonus : '- ' +
+            Math.abs(bonus);
         }
 
-        str += ' <i><small>('
-                + self.abilityScore() + ')</small></i>';
+        // TODO: FIND A FIX FOR THIS HACK
+        try {
+            str += ' <i><small>('
+                + this.abilityScore().name() + ')</small></i>';
+        } catch(e) {
+            // Nothing
+        }
+        this.bonusLabel(str);
+        this.passiveBonus(10 + bonus);
+    };
+
+    nameLabel = ko.pureComputed(() => {
+        this._dummy();
+        var str = this.name();
+
+        // TODO: FIND A FIX FOR THIS HACK
+        try {
+            str += ' <i><small class="skills-ability-type">(' + this.abilityScore().name() + ')</small></i>';
+        } catch(e) {
+            // Nothing
+        }
+
         return str;
     });
-
-    self.nameLabel = ko.pureComputed(function(){
-        self._dummy();
-        var str = self.name();
-
-        str += ' <i><small class="skills-ability-type">(' + self.abilityScore() + ')</small></i>';
-
-        return str;
-    });
-
-    self.passiveBonus = ko.pureComputed(function() {
-        self._dummy();
-        var bonus = 10 + self.bonus();
-
-        return bonus;
-    });
-
-    self.save = function() {
-        self.ps.save();
-    };
-
-    self.delete = function() {
-        self.ps.delete();
-    };
-
-    self.clear = function() {
-        var values = new Skill().exportValues();
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
-
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
 }
-Skill.__name = 'Skill';
 
-PersistenceService.addToRegistry(Skill);
+Skill.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        modifier: {
+            required: true,
+            min: 0,
+            digits: true
+        },
+        abilityScore: {
+            required: true
+        }
+    }
+};

@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-body tight-inner">
     <div class="progress" data-bind="{ foreach: slots, visible: slots().length > 0 }">
-      <div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: $parent.currentSlotWidth(progressWidth(),maxSpellSlots()) }, css: color">
+      <div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: $parent.currentSlotWidth(progressWidth(),max()) }, css: color">
         <span class="sr-only"></span>
       </div>
     </div>
@@ -11,14 +11,20 @@
           <th class="col-sm-1 col-xs-1">Slot</th>
           <th class="col-sm-2 col-xs-2" data-bind="click: function(){sortBy('level');}">Level
             <i data-bind="css: sortArrow('level')"></i></th>
-          <th class="col-sm-2 hidden-xs" data-bind="click: function(){sortBy('maxSpellSlots');}">Max
-            <i data-bind="css: sortArrow('maxSpellSlots')"></i></th>
+          <th class="col-sm-2 hidden-xs" data-bind="click: function(){sortBy('max');}">Max
+            <i data-bind="css: sortArrow('max')"></i></th>
           <th class="col-md-2 hidden-sm hidden-xs" data-bind="click: function(){sortBy('resetsOn');}">Resets on
             <i data-bind="css: sortArrow('resetsOn')"></i></th>
-          <th class="col-md-3 col-sm-4 col-xs-8 text-center" data-bind="click: function(){sortBy('usedSpellSlots');}">Used
-            <i data-bind="css: sortArrow('usedSpellSlots')"></i></th>
+          <th class="col-md-3 col-sm-4 col-xs-8 text-center" data-bind="click: function(){sortBy('used');}">Used
+            <i data-bind="css: sortArrow('used')"></i></th>
           <th class="col-md-1 hidden-sm hidden-xs">Reset</th>
-          <th class="col-xs-1"> <a data-toggle="modal" id="spellSlotsAddIcon" data-target="#addSpellSlot" href="#"><i class="fa fa-plus fa-color"></i></a></th>
+          <th class="col-xs-1">
+            <a id="spellSlotsAddIcon"
+              data-bind="click: toggleAddModal"
+              href="#">
+              <i class="fa fa-plus fa-color"></i>
+            </a>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -34,7 +40,7 @@
               href="#">
           </td>
           <td class="col-sm-2 hidden-xs col-content-vertical"
-              data-bind="click: $parent.editSlot, text: maxSpellSlots"
+              data-bind="click: $parent.editSlot, text: max"
               href="#">
           </td>
           <td class="col-content-vertical col-md-2 hidden-sm hidden-xs"
@@ -46,8 +52,8 @@
             <!-- /ko -->
           </td>
           <td class="col-md-3 col-sm-4 col-xs-8">
-            <plus-minus params="value: usedSpellSlots,
-              max: maxSpellSlots">
+            <plus-minus params="value: used,
+              max: max">
             </plus-minus>
           </td>
           <td class="col-content-vertical col-md-1 hidden-sm hidden-xs text-center"> <!--Refresh -->
@@ -64,8 +70,9 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedSlots().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addSpellSlot" href="#"
-            colspan="12" class="text-center">
+          <td data-bind="click: toggleAddModal"
+            colspan="12"
+            class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new spell slot
           </td>
@@ -78,7 +85,9 @@
 
 <!-- Add Modal -->
 <div class="modal fade" id="addSpellSlot" tabindex="-1" role="dialog"
-  aria-labelledby="addSpellSlotLabel" data-bind="modal: {
+  aria-labelledby="addSpellSlotLabel"
+  data-bind="modal: {
+    open: addModalOpen,
     onopen: modalFinishedAnimating}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -94,15 +103,14 @@
         </h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
                      id="spellSlotsAddModalLevelInput"
-                     min="1"
-                     max="9"
+                     name="level"
                      data-bind='textInput: blankSlot().level'>
             </div>
           </div>
@@ -112,9 +120,8 @@
               <input type="number"
                      class="form-control"
                      id="spellSlotsAddModalMaxInput"
-                     min="1"
-                     max="4"
-                     data-bind='textInput: blankSlot().maxSpellSlots, hasFocus: modifierHasFocus'>
+                     name="max"
+                     data-bind='textInput: blankSlot().max, hasFocus: modifierHasFocus'>
             </div>
           </div>
           <div class="form-group">
@@ -149,11 +156,11 @@
                     id="spellSlotsAddModalCancelButton"
                     data-dismiss="modal">Cancel
             </button>
-            <button type="button"
+            <button type="submit"
                     class="btn btn-primary"
                     id="spellSlotsAddModalAddButton"
-                    data-bind='click: addSlot'
-                    data-dismiss="modal">Add
+                    data-bind='disable: !addFormIsValid()'>
+                    Add
             </button>
           </div>
         </form>
@@ -175,21 +182,21 @@
         <button type="button"
                 class="close"
                 data-dismiss="modal"
-                aria-label="Close"><span aria-hidden="true">&times;</span>
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title" id="addSlotLabel"> Edit your Spell Slot.
         </h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
+                     name="level"
                      id="spellSlotsEditModalLevelInput"
-                     min="1"
-                     max="9"
                      data-bind="value: level">
             </div>
           </div>
@@ -198,10 +205,9 @@
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
+                     name="max"
                      id="spellSlotsEditModalMaxInput"
-                     min="1"
-                     max="4"
-                     data-bind="value: maxSpellSlots, hasFocus: $parent.editHasFocus">
+                     data-bind="value: max, hasFocus: $parent.editHasFocus">
             </div>
           </div>
           <div class="form-group">
@@ -235,12 +241,13 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button"
+          <button type="submit"
                   id="spellSlotsEditModalDoneButton"
                   class="btn btn-primary"
-                  data-dismiss="modal">Done</button>
+                  data-dismiss="modal"
+                  data-bind='disable: !$parent.addFormIsValid()'>Done</button>
         </div>
-        </form>
+      </form>
     </div> <!-- end modal body -->
     </div> <!-- end modal content -->
   </div> <!-- end modal dialog -->

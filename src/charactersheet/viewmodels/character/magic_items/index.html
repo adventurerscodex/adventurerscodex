@@ -3,29 +3,28 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="magicItemsTable">
       <thead>
         <tr>
-          <th id="magicItemsMagicItemHeader" data-bind="click: function(){sortBy('magicItemName');}" width="20%">
+          <th id="magicItemsMagicItemHeader" data-bind="click: function(){sortBy('name');}" width="20%">
             Magic Item
-            <span data-bind="css: sortArrow('magicItemName')"></span>
+            <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th id="magicItemsChargesHeader" data-bind="click: function(){sortBy('magicItemCharges');}" width="9%">
+          <th id="magicItemsChargesHeader" data-bind="click: function(){sortBy('usedCharges');}" width="9%">
             Charges
-            <span data-bind="css: sortArrow('magicItemCharges')"></span>
+            <span data-bind="css: sortArrow('usedCharges')"></span>
           </th>
-          <th id="magicItemsAttunedHeader" data-bind="visible: noneAttuned() === false, click: function(){sortBy('magicItemAttuned');}"
+          <th id="magicItemsAttunedHeader" data-bind="visible: noneAttuned() === false, click: function(){sortBy('attuned');}"
             width="9%">
             Attuned
-            <span data-bind="css: sortArrow('magicItemAttuned')"></span>
+            <span data-bind="css: sortArrow('attuned')"></span>
           </th>
-          <th id="magicItemsWeightHeader" data-bind="click: function(){sortBy('magicItemWeight');}" width="9%">
+          <th id="magicItemsWeightHeader" data-bind="click: function(){sortBy('weight');}" width="9%">
             Weight
-            <span data-bind="css: sortArrow('magicItemWeight')"></span>
+            <span data-bind="css: sortArrow('weight')"></span>
           </th>
           <th width="48%" class="hidden-sm hidden-xs">
             Description
           </th>
           <th width="5%">
-            <a data-toggle="modal"
-               data-target="#addMagicItem"
+            <a data-bind="click: toggleAddModal"
                id="magicItemsAddIcon"
                href="#">
               <i class="fa fa-plus fa-color"></i>
@@ -36,13 +35,13 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedMagicItems -->
         <tr class="clickable">
-          <td data-bind="text: magicItemName, click: $parent.editItem"
+          <td data-bind="text: name, click: $parent.editItem"
             href="#"></td>
           <td data-bind="text: chargesDisplay, click: $parent.editItem"
             href="#"></td>
           <td data-bind="visible: $parent.noneAttuned() === false">
-            <div data-bind="visible: magicItemRequiresAttunement() == true">
-              <input data-bind="checked: magicItemAttuned"
+            <div data-bind="visible: requiresAttunement() == true">
+              <input data-bind="checked: attuned"
                      type="checkbox"
                      href="#">
               </input>
@@ -64,8 +63,8 @@
       <!-- /ko -->
       <!-- ko if: filteredAndSortedMagicItems().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" data-target="#addMagicItem" href="#"
-            colspan="6" class="text-center">
+          <td data-bind="click: toggleAddModal"
+            colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
             Add a new magic item
           </td>
@@ -85,7 +84,8 @@
          tabindex="-1"
          role="dialog"
          aria-labelledby="addMagicItemLabel"
-         data-bind="modal: { onopen: modalFinishedOpening }">
+         data-bind="modal: { onopen: modalFinishedOpening,
+          open: addModalOpen }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -98,117 +98,120 @@
             <h4 class="modal-title" id="addMagicItemLabel">Add a new Magic Item to your Inventory.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
-                <label for="magicItemName"
-                       class="col-sm-2 control-label">Item</label>
+                <label for="name"
+                       class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          id="magicItemsAddItemInput"
                          placeholder="Dagger of Venom"
-                         data-bind='textInput: blankMagicItem().magicItemName,
+                         data-bind='textInput: blankMagicItem().name,
                          autocomplete: { source: magicItemsPrePopFilter,
                          onselect: populateMagicItems }, hasFocus: firstModalElementHasFocus'>
                 </div>
               </div>
               <div class="form-group ui-front">
-                <label for="magicItemType"
+                <label for="type"
                        class="col-sm-2 control-label">Type</label>
                   <div class="col-sm-10">
                   <input class="form-control"
+                         name="type"
                          id="magicItemsAddTypeInput"
                          placeholder="Wand"
-                         data-bind="textInput: blankMagicItem().magicItemType,
+                         data-bind="textInput: blankMagicItem().type,
                          autocomplete: { source: blankMagicItem().magicItemTypeOptions,
                                          onselect: setMagicItemType }">
                   </div>
               </div>
               <div class="form-group ui-front">
-                <label for="magicItemType"
+                <label for="type"
                        class="col-sm-2 control-label">Rarity</label>
                   <div class="col-sm-10">
                   <input class="form-control"
+                         name="rarity"
                          id="magicItemsAddRarityInput"
                          placeholder="Legendary"
-                         data-bind="textInput: blankMagicItem().magicItemRarity,
+                         data-bind="textInput: blankMagicItem().rarity,
                          autocomplete: { source: blankMagicItem().magicItemRarityOptions,
                                          onselect: setMagicItemRarity }">
                   </div>
               </div>
               <div class="form-group">
-                <label for="magicItemMaxCharges"
+                <label for="maxCharges"
                        class="col-sm-2 control-label">Max Charges</label>
                   <div class="col-sm-10">
                     <input type="number"
                            class="form-control"
                            id="magicItemsAddMaxChargesInput"
                            placeholder="1"
-                           min="0"
-                           max="100"
-                           data-bind='textInput: blankMagicItem().magicItemMaxCharges'>
+                           name="maxCharges"
+                           data-bind='textInput: blankMagicItem().maxCharges'>
                   </div>
               </div>
-              <div data-bind="visible: blankMagicItem().magicItemMaxCharges() != 0">
+              <div data-bind="visible: blankMagicItem().maxCharges() != 0">
                 <div class="form-group">
-                  <label for="magicItemCharges"
+                  <label for="usedCharges"
                          class="col-sm-2 control-label">Charges</label>
                     <div class="col-sm-10">
                       <input type="number"
                              class="form-control"
                              id="magicItemsAddChargesInput"
                              placeholder="1"
-                             min="0"
-                             max="100"
-                             data-bind='textInput: blankMagicItem().magicItemCharges'>
+                             name="usedCharges"
+                             data-bind='textInput: blankMagicItem().usedCharges'>
                     </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="magicItemWeight"
+                <label for="weight"
                        class="col-sm-2 control-label">Weight</label>
                   <div class="col-sm-10">
                     <input type="number"
                            class="form-control"
                            id="magicItemsAddWeightInput"
                            placeholder="1"
-                           min="0"
-                           max="1000"
-                           data-bind='textInput: blankMagicItem().magicItemWeight'>
+                           name="weight"
+                           data-bind='textInput: blankMagicItem().weight'>
                   </div>
               </div>
               <div class="form-group">
-                <label for="magicItemRequiresAttunement"
+                <label for="requiresAttunement"
                        class="col-sm-2 control-label">Requires Attunement</label>
                   <div class="col-sm-10">
                     <input type="checkbox"
                            class="form-control"
+                           name="requiresAttunement"
                            id="magicItemsAddRequiresAttunementCheckbox"
-                           data-bind='checked: blankMagicItem().magicItemRequiresAttunement'>
+                           data-bind='checked: blankMagicItem().requiresAttunement'>
                   </div>
               </div>
-              <div data-bind="visible: blankMagicItem().magicItemRequiresAttunement() == true">
+              <div data-bind="visible: blankMagicItem().requiresAttunement() == true">
                 <div class="form-group">
-                  <label for="magicItemAttuned"
+                  <label for="attuned"
                          class="col-sm-2 control-label">Attuned</label>
                     <div class="col-sm-10">
                       <input type="checkbox"
                              class="form-control"
+                             name="attuned"
                              id="magicItemsAddAttunedCheckbox"
-                             data-bind='checked: blankMagicItem().magicItemAttuned'>
+                             data-bind='checked: blankMagicItem().attuned'>
                     </div>
                 </div>
               </div>
               <div class="form-group">
-                <label for="magicItemDescription"
+                <label for="description"
                        class="col-sm-2 control-label">Description</label>
                   <div class="col-sm-10">
                     <textarea type="password"
                               class="form-control"
                               id="magicItemsAddDescriptionTextarea"
                               rows="4"
+                              name="description"
                               placeholder="Awesome stuff goes here"
-                              data-bind='textInput: blankMagicItem().magicItemDescription'>
+                              data-bind='textInput: blankMagicItem().description'>
                     </textarea>
                   </div>
               </div>
@@ -217,11 +220,10 @@
                         class="btn btn-default"
                         id="magicItemsAddCancelButton"
                         data-dismiss="modal">Cancel</button>
-                <button type="button"
+                <button type="submit"
                         class="btn btn-primary"
                         id="magicItemsAddAddButton"
-                        data-bind='click: addItem'
-                        data-dismiss="modal">Add</button>
+                        data-bind='disable: !addFormIsValid()'>Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -278,13 +280,13 @@
               <div id="magicItemIcon" data-bind="css: $parent.magicItemIconCSS">
                 <div class="h3">
                   <span data-bind="text: magicItemNameLabel" id="magicItemsPreviewItemInput"></span>&nbsp;
-                  <small data-bind="text: magicItemRarity" id="magicItemsPreviewRarityInput"></small>
+                  <small data-bind="text: rarity" id="magicItemsPreviewRarityInput"></small>
                 </div>
                 <hr />
                 <div class="row">
-                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewTypeInput"><b>Type:</b>&nbsp;<span data-bind="text: magicItemType"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewTypeInput"><b>Type:</b>&nbsp;<span data-bind="text: type"></span></div>
                   <div class="col-sm-4 col-xs-12" id="magicItemsPreviewWeightInput"><b>Weight:</b>&nbsp;<span data-bind="text: magicItemWeightLabel"></span></div>
-                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewMaxChargesInput"><b>Max Charges:</b>&nbsp;<span data-bind="text: magicItemMaxCharges"></span></div>
+                  <div class="col-sm-4 col-xs-12" id="magicItemsPreviewMaxChargesInput"><b>Max Charges:</b>&nbsp;<span data-bind="text: maxCharges"></span></div>
                 </div>
                 <hr />
                 <h4>Description</h4>
@@ -305,119 +307,123 @@
                 </div>
               </div> <!-- End Preview Tab -->
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
-                <form class="form-horizontal">
+                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
-                    <label for="magicItemName"
-                           class="col-sm-2 control-label">Item</label>
+                    <label for="name"
+                           class="col-sm-2 control-label">Name</label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
                              id="magicItemsEditItemInput"
+                             name="name"
                              placeholder="Dagger of Venom"
-                             data-bind='textInput: magicItemName,
+                             data-bind='textInput: name,
                               hasFocus: $parent.editFirstModalElementHasFocus'>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="magicItemType"
+                    <label for="type"
                            class="col-sm-2 control-label">Type</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="magicItemsEditTypeInput"
+                             name="type"
                              placeholder="Wand"
-                             data-bind="textInput: magicItemType">
+                             data-bind="textInput: type">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="magicItemType"
+                    <label for="type"
                            class="col-sm-2 control-label">Rarity</label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="magicItemsEditRarityInput"
+                             name="rarity"
                              placeholder="Legendary"
-                             data-bind="textInput: magicItemRarity">
+                             data-bind="textInput: rarity">
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="magicItemMaxCharges"
+                    <label for="maxCharges"
                            class="col-sm-2 control-label">Max Charges</label>
                       <div class="col-sm-10">
                         <input type="number"
                                class="form-control"
                                id="magicItemsEditMaxChargesInput"
                                placeholder="1"
-                               min="0"
-                               max="100"
-                               data-bind='textInput: magicItemMaxCharges'>
+                               name="maxCharges"
+                               data-bind='textInput: maxCharges'>
                       </div>
                   </div>
-                  <div data-bind="visible: magicItemMaxCharges() != 0">
+                  <div data-bind="visible: maxCharges() != 0">
                     <div class="form-group">
-                      <label for="magicItemCharges"
+                      <label for="usedCharges"
                              class="col-sm-2 control-label">Charges</label>
                         <div class="col-sm-10">
                           <input type="number"
                                  class="form-control"
                                  id="magicItemsEditChargesInput"
                                  placeholder="1"
-                                 min="0"
-                                 max="100"
-                                 data-bind='textInput: magicItemCharges'>
+                                 name="usedCharges"
+                                 data-bind='textInput: usedCharges'>
                         </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="magicItemWeight"
+                    <label for="weight"
                            class="col-sm-2 control-label">Weight</label>
                       <div class="col-sm-10">
                         <input type="number"
                                class="form-control"
                                id="magicItemsEditWeightInput"
                                placeholder="1"
-                               min="0"
-                               max="1000"
-                               data-bind='textInput: magicItemWeight'>
+                               name="weight"
+                               data-bind='textInput: weight'>
                       </div>
                   </div>
                   <div class="form-group">
-                    <label for="magicItemRequiresAttunement"
+                    <label for="requiresAttunement"
                            class="col-sm-2 control-label">Requires Attunement</label>
                       <div class="col-sm-10">
                         <input type="checkbox"
                                class="form-control"
+                               name="requiresAttunement"
                                id="magicItemsEditRequiresAttunementCheckbox"
-                               data-bind='checked: magicItemRequiresAttunement'>
+                               data-bind='checked: requiresAttunement'>
                       </div>
                   </div>
-                  <div data-bind="visible: magicItemRequiresAttunement() == true">
+                  <div data-bind="visible: requiresAttunement() == true">
                     <div class="form-group">
-                      <label for="magicItemAttuned"
+                      <label for="attuned"
                              class="col-sm-2 control-label">Attuned</label>
                         <div class="col-sm-10">
                           <input type="checkbox"
                                  class="form-control"
+                                 name="attuned"
                                  id="magicItemsEditAttunedCheckbox"
-                                 data-bind='checked: magicItemAttuned'>
+                                 data-bind='checked: attuned'>
                         </div>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="magicItemDescription"
+                    <label for="description"
                            class="col-sm-2 control-label">Description</label>
                       <div class="col-sm-10">
                         <textarea type="password"
                                   class="form-control"
+                                  name="description"
                                   id="magicItemsEditDescriptionTextarea"
                                   rows="4"
                                   placeholder="Awesome stuff goes here"
-                                  data-bind='textInput: magicItemDescription'>
+                                  data-bind='textInput: description'>
                         </textarea>
                       </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="button"
+                    <button type="submit"
                             class="btn btn-primary"
                             id="magicItemsEditDoneButton"
+                            data-bind='disable: !$parent.addFormIsValid()'
                             data-dismiss="modal">Done</button>
                   </div>
                 </form>
@@ -427,5 +433,4 @@
         </div> <!-- Modal Content -->
       </div> <!-- Modal Dialog -->
     </div> <!-- Modal Fade -->
-
 </div> <!-- Panel -->

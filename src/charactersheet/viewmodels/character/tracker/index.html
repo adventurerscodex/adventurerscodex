@@ -2,7 +2,7 @@
 	<div class='panel-body tight-inner'>
     <div class="progress" data-bind="{ foreach: trackables, visible: trackables().length > 0 }">
       <div class="progress-bar" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().maxUses(), tracked().used()) * $parent.maxTrackerWidth() + '%' }, css: tracked().color()">
+        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().max(), tracked().used()) * $parent.maxTrackerWidth() + '%' }, css: tracked().color()">
         <span class="sr-only"></span>
       </div>
     </div>
@@ -33,7 +33,7 @@
 
 					<td class="col-content-vertical feature-row hidden-xs"
             data-bind="click: $parent.editTracked" data-toggle="modal">
-						<span data-bind="text: tracked().maxUses()"></span>
+						<span data-bind="text: tracked().max()"></span>
 					</td>
 
 					<td class="col-content-vertical hidden-sm hidden-xs feature-row"
@@ -45,7 +45,7 @@
 					</td>
 
 					<td>
-            <plus-minus params="value: tracked().used, max: tracked().maxUses"></plus-minus>
+            <plus-minus params="value: tracked().used, max: tracked().max"></plus-minus>
 					</td>
 
 					<td class="col-content-vertical"> <!--Refresh -->
@@ -80,11 +80,17 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal">
+					<form class="form-horizontal" data-bind="validate: $parent.validation">
 					<div class="form-group">
-						<label for="bonus" class="col-sm-2 control-label">Max</label>
+						<label for="max" class="col-sm-2 control-label">Max</label>
 						<div class="col-sm-10">
-							<input type="number" class="form-control" id="max" min="1" data-bind='textInput: maxUses'>
+							<input type="number"
+								class="form-control"
+								id="max"
+								min="1"
+								name="max"
+								data-bind='textInput: max,
+									hasFocus: $parent.editHasFocus'>
 						</div>
 					</div>
 					<div class="form-group">
@@ -109,7 +115,9 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+						<button type="submit"
+							class="btn btn-primary"
+							data-bind='disable: !$parent.addFormIsValid()'>Done</button>
 					</div>
 				</form>
 			</div>
