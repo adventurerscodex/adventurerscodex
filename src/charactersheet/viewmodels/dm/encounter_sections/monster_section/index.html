@@ -121,7 +121,7 @@
                        class="form-control"
                        name="type"
                        placeholder="Dragon"
-                       data-bind='value: blankMonster().type'>
+                       data-bind="value: blankMonster().type">
               </div>
           </div>
           <div class="form-group">
@@ -131,7 +131,7 @@
                        class="form-control"
                        name="alignment"
                        placeholder="Chaotic Evil"
-                       data-bind='value: blankMonster().alignment'>
+                       data-bind="value: blankMonster().alignment">
               </div>
           </div>
           <div class="form-group">
@@ -141,7 +141,7 @@
                        class="form-control"
                        name="armorClass"
                        placeholder="22 (natural armor)"
-                       data-bind='value: blankMonster().armorClass'>
+                       data-bind="value: blankMonster().armorClass">
               </div>
           </div>
           <div class="form-group">
@@ -151,7 +151,7 @@
                        class="form-control"
                        name="hitPoints"
                        placeholder="367 (21d20 + 147)"
-                       data-bind='value: blankMonster().hitPoints'>
+                       data-bind="value: blankMonster().hitPoints">
               </div>
           </div>
           <div class="form-group">
@@ -161,7 +161,7 @@
                        class="form-control"
                        name="speed"
                        placeholder="40 ft., fly 80 ft., swim 40 ft."
-                       data-bind='value: blankMonster().speed'>
+                       data-bind="value: blankMonster().speed">
               </div>
           </div>
           <hr/>
@@ -227,7 +227,7 @@
                        class="form-control"
                        name="savingThrows"
                        placeholder="Dex +7, Con +10, Wis +6, Cha +8"
-                       data-bind='value: blankMonster().savingThrows'>
+                       data-bind="value: blankMonster().savingThrows">
               </div>
           </div>
           <div class="form-group">
@@ -237,7 +237,7 @@
                        class="form-control"
                        name="skills"
                        placeholder="Perception +11, Stealth +7"
-                       data-bind='value: blankMonster().skills'>
+                       data-bind="value: blankMonster().skills">
               </div>
           </div>
           <div class="form-group">
@@ -247,7 +247,7 @@
                        class="form-control"
                        name="damageImmunities"
                        placeholder="Acid"
-                       data-bind='value: blankMonster().damageImmunities'>
+                       data-bind="value: blankMonster().damageImmunities">
               </div>
           </div>
           <div class="form-group">
@@ -257,7 +257,7 @@
                        class="form-control"
                        name="damageVulnerabilities"
                        placeholder="None"
-                       data-bind='value: blankMonster().damageVulnerabilities'>
+                       data-bind="value: blankMonster().damageVulnerabilities">
               </div>
           </div>
           <div class="form-group">
@@ -267,7 +267,7 @@
                        class="form-control"
                        name="damageResistances"
                        placeholder="None"
-                       data-bind='value: blankMonster().damageResistances'>
+                       data-bind="value: blankMonster().damageResistances">
               </div>
           </div>
           <div class="form-group">
@@ -277,7 +277,7 @@
                        class="form-control"
                        name="conditionImmunities"
                        placeholder="None"
-                       data-bind='value: blankMonster().conditionImmunities'>
+                       data-bind="value: blankMonster().conditionImmunities">
               </div>
           </div>
           <div class="form-group">
@@ -287,7 +287,7 @@
                        class="form-control"
                        name="senses"
                        placeholder="Blindsight 60 ft., darkvision 120 ft., passive Perception 21"
-                       data-bind='value: blankMonster().senses'>
+                       data-bind="value: blankMonster().senses">
               </div>
           </div>
           <div class="form-group">
@@ -297,7 +297,7 @@
                        class="form-control"
                        name="languages"
                        placeholder="Common, Draconic"
-                       data-bind='value: blankMonster().languages'>
+                       data-bind="value: blankMonster().languages">
               </div>
           </div>
           <div class="form-group">
@@ -307,7 +307,7 @@
                        class="form-control"
                        name="challenge"
                        placeholder="22"
-                       data-bind='value: blankMonster().challenge'>
+                       data-bind="value: blankMonster().challenge">
               </div>
           </div>
           <div class="form-group">
@@ -317,7 +317,7 @@
                        class="form-control"
                        name="experience"
                        placeholder="11500"
-                       data-bind='value: blankMonster().experience'>
+                       data-bind="value: blankMonster().experience">
               </div>
           </div>
           <div class="form-group">
@@ -327,7 +327,7 @@
                        class="form-control" rows="4"
                        name="description"
                        placeholder="Multiattack. The dragon can use its Frightful Presence. It then makes three attacks..."
-                       data-bind='value: blankMonster().description'></textarea>
+                       data-bind="value: blankMonster().description"></textarea>
               </div>
           </div>
           <div class="modal-footer">
@@ -337,13 +337,14 @@
             <button type="submit"
                     class="btn btn-primary"
                     >Add</button>
-              <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+              <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
                 <sm><i>This data is distributed under the
-                  <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-                    target='_blank'>
+                  <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
+                    target="_blank">
                     OGL</a><br/>
                     Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                  </i><sm>
+                  </i>
+                </sm>
               </p>
           </div>
         </form>
@@ -510,7 +511,7 @@
                            class="form-control"
                            name="type"
                            placeholder="Dragon"
-                           data-bind='textInput: type'>
+                           data-bind="textInput: type">
                   </div>
               </div>
               <div class="form-group">
@@ -520,7 +521,7 @@
                            class="form-control"
                            name="alignment"
                            placeholder="Chaotic Evil"
-                           data-bind='textInput: alignment'>
+                           data-bind="textInput: alignment">
                   </div>
               </div>
               <div class="form-group">
@@ -530,7 +531,7 @@
                            class="form-control"
                            name="armorClass"
                            placeholder="22 (natural armor)"
-                           data-bind='textInput: armorClass'>
+                           data-bind="textInput: armorClass">
                   </div>
               </div>
               <div class="form-group">
@@ -540,7 +541,7 @@
                            class="form-control"
                            name="hitPoints"
                            placeholder="367 (21d20 + 147)"
-                           data-bind='value: hitPoints'>
+                           data-bind="value: hitPoints">
                   </div>
               </div>
               <div class="form-group">
@@ -550,7 +551,7 @@
                            class="form-control"
                            name="speed"
                            placeholder="40 ft., fly 80 ft., swim 40 ft."
-                           data-bind='textInput: speed'>
+                           data-bind="textInput: speed">
                   </div>
               </div>
               <hr/>
@@ -614,7 +615,7 @@
                            class="form-control"
                            name="savingThrows"
                            placeholder="Dex +7, Con +10, Wis +6, Cha +8"
-                           data-bind='textInput: savingThrows'>
+                           data-bind="textInput: savingThrows">
                   </div>
               </div>
               <div class="form-group">
@@ -624,7 +625,7 @@
                            class="form-control"
                            name="skills"
                            placeholder="Perception +11, Stealth +7"
-                           data-bind='textInput: skills'>
+                           data-bind="textInput: skills">
                   </div>
               </div>
               <div class="form-group">
@@ -634,7 +635,7 @@
                            class="form-control"
                            name="damageImmunities"
                            placeholder="Acid"
-                           data-bind='textInput: damageImmunities'>
+                           data-bind="textInput: damageImmunities">
                   </div>
               </div>
               <div class="form-group">
@@ -644,7 +645,7 @@
                            class="form-control"
                            name="damageVulnerabilities"
                            placeholder="None"
-                           data-bind='textInput: damageVulnerabilities'>
+                           data-bind="textInput: damageVulnerabilities">
                   </div>
               </div>
               <div class="form-group">
@@ -654,7 +655,7 @@
                            class="form-control"
                            name="damageResistances"
                            placeholder="None"
-                           data-bind='textInput: damageResistances'>
+                           data-bind="textInput: damageResistances">
                   </div>
               </div>
               <div class="form-group">
@@ -664,7 +665,7 @@
                            class="form-control"
                            name="conditionImmunities"
                            placeholder="None"
-                           data-bind='textInput: conditionImmunities'>
+                           data-bind="textInput: conditionImmunities">
                   </div>
               </div>
               <div class="form-group">
@@ -674,7 +675,7 @@
                            class="form-control"
                            name="senses"
                            placeholder="Blindsight 60 ft., darkvision 120 ft., passive Perception 21"
-                           data-bind='textInput: senses'>
+                           data-bind="textInput: senses">
                   </div>
               </div>
               <div class="form-group">
@@ -684,7 +685,7 @@
                            class="form-control"
                            name="languages"
                            placeholder="Common, Draconic"
-                           data-bind='textInput: languages'>
+                           data-bind="textInput: languages">
                   </div>
               </div>
               <div class="form-group">
@@ -694,7 +695,7 @@
                            class="form-control"
                            name="challenge"
                            placeholder="14"
-                           data-bind='value: challenge'>
+                           data-bind="value: challenge">
                   </div>
               </div>
               <div class="form-group">
@@ -704,7 +705,7 @@
                            class="form-control"
                            name="experience"
                            placeholder="11500"
-                           data-bind='value: experience'>
+                           data-bind="value: experience">
                   </div>
               </div>
               <div class="form-group">
@@ -714,7 +715,7 @@
                            class="form-control" rows="4"
                            name="description"
                            placeholder="Multiattack. The dragon can use its Frightful Presence. It then makes three attacks..."
-                           data-bind='value: description'></textarea>
+                           data-bind="value: description"></textarea>
                   </div>
               </div>
               <div class="modal-footer">

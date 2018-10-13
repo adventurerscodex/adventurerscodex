@@ -80,6 +80,8 @@
             <!-- /ko -->
           </tbody>
         </table>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -135,7 +137,7 @@
                 <textarea type="text"
                        class="form-control" rows="4"
                        name="description"
-                       data-bind='value: blankMapOrImage().description'></textarea>
+                       data-bind="value: blankMapOrImage().description"></textarea>
               </div>
           </div>
           <div class="modal-footer">
@@ -236,7 +238,7 @@
                     <textarea type="text" rows="6"
                            class="form-control"
                            name="description"
-                           data-bind='value: description, markdownEditor: true'></textarea>
+                           data-bind="value: description, markdownEditor: true"></textarea>
                   </div>
               </div>
               <div class="modal-footer">
@@ -252,4 +254,8 @@
 </div> <!-- Modal Fade -->
 
 
-<player-push-modal params="isOpen: openPushModal, type: pushType, payload: selectedMapOrImageToPush, onclose: pushModalFinishedClosing"></player-push-modal>
+<player-push-modal params="isOpen: openPushModal,
+                          type: pushType,
+                          payload: selectedMapOrImageToPush,
+                          onclose: pushModalFinishedClosing">
+</player-push-modal>

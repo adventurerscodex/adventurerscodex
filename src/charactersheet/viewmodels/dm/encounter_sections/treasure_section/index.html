@@ -30,7 +30,7 @@
       <td data-bind="text: nameLabel, click: $parent.editTreasure"
           href="#" class="col-xs-3"></td>
       <td data-bind="text: propertyLabel, click: $parent.editTreasure"
-          href="#" class="hidden-xs" class="col-sm-3 hidden-xs"></td>
+          href="#" class="col-sm-3 hidden-xs"></td>
       <td data-bind="text: descriptionLabel, click: $parent.editTreasure"
           href="#" class="col-sm-5 col-xs-8"></td>
       <td class="col-xs-1 text-right">
@@ -139,17 +139,18 @@
             <!-- ko if: showAddButton -->
             <button type="button"
                     class="btn btn-primary"
-                    data-bind='click: addTreasure'>
+                    data-bind="click: addTreasure">
                     Add
             </button>
             <!-- /ko -->
-            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+            <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
               <sm><i>This data is distributed under the
-                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-                  target='_blank'>
+                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
+                  target="_blank">
                   OGL</a><br/>
                   Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
-                </i><sm>
+                </i>
+              </sm>
             </p>
           </div>
         </form>
