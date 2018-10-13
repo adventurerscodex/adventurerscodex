@@ -27,7 +27,14 @@ export var Utility = {
  */
 Utility.markdown.asPlaintext = function(markdown) {
     var myString = markdown || '';
-    return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
+    return marked(myString)
+        .replace(/<(?:.|\n)*?>/gm, '')
+    // Get special characters back to their normal self
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, '\'')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&');
 };
 
 /* String Util */
