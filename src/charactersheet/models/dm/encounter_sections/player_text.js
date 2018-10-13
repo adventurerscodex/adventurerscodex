@@ -18,8 +18,8 @@ export class PlayerText extends KOModel {
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     uuid = ko.observable();
-    name = ko.observable();
-    description = ko.observable();
+    name = ko.observable('');
+    description = ko.observable('');
 
     // UI Methods
 
@@ -49,3 +49,12 @@ export class PlayerText extends KOModel {
         };
     };
 }
+
+PlayerText.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        }
+    }
+};

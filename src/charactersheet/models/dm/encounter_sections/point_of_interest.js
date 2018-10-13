@@ -16,8 +16,8 @@ export class PointOfInterest extends KOModel {
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     uuid = ko.observable();
-    name = ko.observable();
-    description = ko.observable();
+    name = ko.observable('');
+    description = ko.observable('');
 
     // UI Methods
 
@@ -29,3 +29,12 @@ export class PointOfInterest extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
+
+PointOfInterest.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        }
+    }
+};

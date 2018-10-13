@@ -5,11 +5,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
 import { PointOfInterest } from 'charactersheet/models/dm';
+import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/rune-stone.svg';
 import template from './index.html';
@@ -38,6 +35,8 @@ export function PointOfInterestSectionViewModel(params) {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -62,7 +61,7 @@ export function PointOfInterestSectionViewModel(params) {
     /* UI Methods */
 
     /**
-     * Filters and sorts the weaponss for presentation in a table.
+     * Filters and sorts the POIs for presentation in a table.
      */
     self.filteredAndSortedPointsOfInterest = ko.computed(function() {
         return SortService.sortAndFilter(self.pointsOfInterest(), self.sort(), null);
@@ -88,6 +87,7 @@ export function PointOfInterestSectionViewModel(params) {
         poi.encounterUuid(self.encounterId());
         const pointResponse = await poi.ps.create();
         self.pointsOfInterest.push(pointResponse.object);
+        self.toggleAddModal();
         self.blankPointOfInterest(new PointOfInterest());
     };
 
@@ -105,6 +105,39 @@ export function PointOfInterestSectionViewModel(params) {
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+    };
+
+    self.closeModal = () => {
+        self.openModal(false);
+        self.selectPreviewTab();
+    };
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addPointOfInterest();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...PointOfInterest.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...PointOfInterest.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
     };
 
     /* Modal Methods */

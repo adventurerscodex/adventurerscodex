@@ -3,15 +3,28 @@ import ko from 'knockout';
 
 /**
  * markdown-edit-preview component
+ *
  * A component that displays 2 tabs: edit and preview, that allow the
  * user to edit the text contained in an observable as Markdown,
  * then preview the HTML version.
+ *
  * @param text {observable} an observable in which to save the value
  * @param rows {int: Optional} The number of default rows in the edit text area.
  * The default is 20.
+ * @param defaultActiveTab {string} ['preview', 'edit'] used to determined which tab to show on
+ * start. By default, edit is shown if there is no content. Else, preview.
  * @param placeholder {observable|text} Text that should display as the placeholder.
+ * @param save {function} The method that will be invoked when the user desires to save their note
+ * @param cancel {function} The method that will be invoked when
+ * the user wishes to cancel their changes
+ *
  * Usage:
- * <markdown-edit-preview params="text: myValue, rows: 15"></markdown-edit-preview>
+ * <markdown-edit-preview params="text: notes().contents,
+      rows: 20,
+      placeholder: 'The party enters a dark...',
+      defaultActiveTab: 'edit',
+      save: saveNote,
+      cancel: reset"></markdown-edit-preview>
  */
 export function MarkdownEditPreviewComponentViewModel(params) {
     var self = this;
@@ -19,12 +32,20 @@ export function MarkdownEditPreviewComponentViewModel(params) {
     self.text = params.text;
     self.rows = params.rows || ko.observable(20);
     self.placeholder = params.placeholder || ko.observable();
-    self.previewHeight = params.previewHeight || ko.observable(0);
 
     self.previewTabStatus = ko.observable('');
     self.editTabStatus = ko.observable('');
 
     /* UI Methods */
+
+    self.resetAndSelectPreviewTab = function() {
+        if (self.editTabStatusIsActive()) {
+            params.cancel();
+        }
+
+        self.previewTabStatus('active');
+        self.editTabStatus('');
+    };
 
     self.selectPreviewTab = function() {
         self.previewTabStatus('active');
@@ -36,9 +57,17 @@ export function MarkdownEditPreviewComponentViewModel(params) {
         self.previewTabStatus('');
     };
 
-    self.onBlurEvent = function() {
-        params.inputFunction();
+    self.saveButton = function() {
+        params.save();
+        self.selectPreviewTab();
     };
+
+    self.editTabStatusIsActive = ko.pureComputed(function() {
+        if (self.editTabStatus() === 'active') {
+            return true;
+        }
+        return false;
+    });
 
     // Select the default tab,
     // or the preview tab if there's existing content.
@@ -54,7 +83,7 @@ ko.components.register('markdown-edit-preview', {
     template: '\
     <!-- Begin Tabs -->\
     <ul class="nav nav-tabs tabs">\
-      <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">\
+      <li role="presentation" data-bind="click: resetAndSelectPreviewTab, css: previewTabStatus">\
         <a href="#" role="tab" data-toggle="tab">\
             <b>Preview</b>\
         </a>\
@@ -64,6 +93,21 @@ ko.components.register('markdown-edit-preview', {
             <b>Edit</b>\
         </a>\
       </li>\
+      <!-- ko if: editTabStatusIsActive -->\
+      <li role="presentation" class="secondary-nav">\
+        <button class="btn btn-sm btn-primary"\
+                id="environmentSaveButton"\
+                data-bind="click: saveButton">\
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;\
+          Save\
+        </button>\
+        <button class="btn btn-sm btn-default"\
+                id="environmentSaveButton"\
+                data-bind="click: resetAndSelectPreviewTab">\
+          Cancel\
+        </button>\
+      </li>\
+      <!-- /ko -->\
     </ul>\
     <div class="tab-content">\
       <div role="tabpanel" data-bind="css: previewTabStatus" \
@@ -79,8 +123,8 @@ ko.components.register('markdown-edit-preview', {
         <div class="form-horizontal">\
           <textarea class="form-control dark-area" rows="20"\
             data-bind="textInput: text, markdownEditor: true, \
-              attr: { placeholder: placeholder },\
-              event: { blur: onBlurEvent }"></textarea>\
+              attr: { placeholder: placeholder }">\
+          </textarea>\
         </div>\
       </div>\
       <small class="text-muted">Text in this panel can be styled using Markdown. Click \

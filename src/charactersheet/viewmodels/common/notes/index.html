@@ -30,9 +30,11 @@
         <div class="panel-body" data-bind="with: selectedNote">
           <div class="row">
             <div class="col-xs-12">
-              <markdown-edit-preview params="text: contents, rows: 15, previewHeight: 200,
+              <markdown-edit-preview params="text: contents,
+                rows: 15,
                 placeholder: 'Captain\'s Log...',
-                inputFunction: $parent.saveSelectedNote"></markdown-edit-preview>
+                save: $parent.saveSelectedNote,
+                cancel: $parent.reloadData"></markdown-edit-preview>
             </div>
           </div>
         </div>
