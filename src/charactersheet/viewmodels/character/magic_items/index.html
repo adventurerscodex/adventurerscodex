@@ -101,7 +101,9 @@
             <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
-                       class="col-sm-2 control-label">Name</label>
+                       class="col-sm-2 control-label">
+                        Name <i class="required"></i>
+                      </label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
@@ -222,8 +224,7 @@
                         data-dismiss="modal">Cancel</button>
                 <button type="submit"
                         class="btn btn-primary"
-                        id="magicItemsAddAddButton"
-                        data-bind='disable: !addFormIsValid()'>Add</button>
+                        id="magicItemsAddAddButton">Add</button>
                 <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
                   <sm><i>This data is distributed under the
                     <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
@@ -298,19 +299,15 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button"
-                          class="btn btn-primary"
-                          id="magicItemsPreviewDoneButton"
-                          data-dismiss="modal">Done</button>
-                </div>
                 </div>
               </div> <!-- End Preview Tab -->
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
                 <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
-                           class="col-sm-2 control-label">Name</label>
+                           class="col-sm-2 control-label">
+                            Name <i class="required"></i>
+                          </label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
@@ -422,9 +419,7 @@
                   <div class="modal-footer">
                     <button type="submit"
                             class="btn btn-primary"
-                            id="magicItemsEditDoneButton"
-                            data-bind='disable: !$parent.addFormIsValid()'
-                            data-dismiss="modal">Done</button>
+                            id="magicItemsEditDoneButton">Done</button>
                   </div>
                 </form>
               </div> <!-- End Edit Tab -->

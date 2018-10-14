@@ -116,7 +116,9 @@
             <form class="form-horizontal" data-bind="validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
-                       class="col-sm-2 control-label">Name</label>
+                       class="col-sm-2 control-label">
+                        Name <i class="required"></i>
+                      </label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
@@ -179,7 +181,9 @@
               </div>
               <div class="form-group ui-front">
                 <label for="school"
-                       class="col-sm-2 control-label">School</label>
+                       class="col-sm-2 control-label">
+                        School <i class="required"></i>
+                      </label>
                   <div class="col-sm-10">
                   <input class="form-control" id="spellsAddSchoolInput"
                          placeholder="Abjuration"
@@ -204,14 +208,16 @@
               <div data-bind="visible: blankSpell().type() == 'Savings Throw'">
                 <div class="form-group ui-front">
                   <label for="type"
-                         class="col-sm-2 control-label">Save Attr</label>
+                         class="col-sm-2 control-label">
+                          Save Attribute <i class="required"></i>
+                        </label>
                     <div class="col-sm-10">
-                    <input class="form-control" id="spellsAddSaveAttrInput"
-                            placeholder="Str"
-                            name="spellSaveAttribute"
-                            data-bind="textInput: blankSpell().spellSaveAttribute,
-                              autocomplete: { source: blankSpell().spellSaveAttrOptions,
-                                              onselect: setSpellSaveAttr }">
+                      <input class="form-control" id="spellsAddSaveAttrInput"
+                              placeholder="Str"
+                              name="spellSaveAttribute"
+                              data-bind="textInput: blankSpell().spellSaveAttribute,
+                                autocomplete: { source: blankSpell().spellSaveAttrOptions,
+                                                onselect: setSpellSaveAttr }">
                     </div>
                 </div>
               </div>
@@ -243,7 +249,9 @@
 
               <div class="form-group ui-front">
                 <label for="castingTime"
-                       class="col-sm-2 control-label">Cast Time</label>
+                       class="col-sm-2 control-label">
+                        Cast Time <i class="required"></i>
+                      </label>
                   <div class="col-sm-10">
                     <input class="form-control"
                             id="spellsAddCastTimeInput"
@@ -256,7 +264,9 @@
               </div>
               <div class="form-group ui-front">
                 <label for="range"
-                       class="col-sm-2 control-label">Range</label>
+                       class="col-sm-2 control-label">
+                        Range <i class="required"></i>
+                      </label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="spellsAddRangeInput"
@@ -269,7 +279,9 @@
               </div>
               <div class="form-group ui-front">
                 <label for="components"
-                       class="col-sm-2 control-label">Components</label>
+                       class="col-sm-2 control-label">
+                        Components <i class="required"></i>
+                      </label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="spellsAddComponentsInput"
@@ -294,7 +306,9 @@
               </div>
               <div class="form-group ui-front">
                 <label for="duration"
-                       class="col-sm-2 control-label">Duration</label>
+                       class="col-sm-2 control-label">
+                        Duration <i class="required"></i>
+                      </label>
                   <div class="col-sm-10">
                   <input class="form-control"
                          id="spellsAddDurationInput"
@@ -407,17 +421,14 @@
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button"
-                          class="btn btn-primary"
-                          data-dismiss="modal">Done</button>
-                </div>
               </div>
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
                 <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
-                           class="col-sm-2 control-label">Name</label>
+                           class="col-sm-2 control-label">
+                            Name <i class="required"></i>
+                          </label>
                     <div class="col-sm-10">
                       <input type="text"
                              class="form-control"
@@ -450,7 +461,9 @@
                                           disable: prepared'>
                       </div>
                     <label for="spellIsRitual"
-                           class="col-sm-2 control-label">Ritual</label>
+                           class="col-sm-2 control-label">
+                            Ritual <i class="required"></i>
+                          </label>
                       <div class="col-sm-1">
                         <input type="checkbox"
                                class="form-control"
@@ -473,7 +486,9 @@
                   </div>
                   <div class="form-group">
                     <label for="school"
-                           class="col-sm-2 control-label">School</label>
+                           class="col-sm-2 control-label">
+                            School <i class="required"></i>
+                          </label>
                       <div class="col-sm-10">
                       <input class="form-control"
                               id="spellsEditSchoolInput"
@@ -496,7 +511,9 @@
                   <div data-bind="visible: type() == 'Savings Throw'">
                     <div class="form-group">
                       <label for="type"
-                             class="col-sm-2 control-label">Save Attr</label>
+                             class="col-sm-2 control-label">
+                              Save Attribute <i class="required"></i>
+                            </label>
                         <div class="col-sm-10">
                         <input class="form-control"
                                id="spellsEditSaveAttrInput"
@@ -535,7 +552,9 @@
 
                   <div class="form-group">
                     <label for="castingTime"
-                           class="col-sm-2 control-label">Cast Time</label>
+                           class="col-sm-2 control-label">
+                            Cast Time <i class="required"></i>
+                          </label>
                       <div class="col-sm-10">
                         <input class="form-control"
                                id="spellsEditCastTimeInput"
@@ -546,7 +565,9 @@
                   </div>
                   <div class="form-group">
                     <label for="range"
-                           class="col-sm-2 control-label">Range</label>
+                           class="col-sm-2 control-label">
+                            Range <i class="required"></i>
+                          </label>
                       <div class="col-sm-10">
                       <input class="form-control"
                              id="spellsEditRangeInput"
@@ -557,7 +578,9 @@
                   </div>
                   <div class="form-group">
                     <label for="components"
-                           class="col-sm-2 control-label">Components</label>
+                           class="col-sm-2 control-label">
+                            Components <i class="required"></i>
+                          </label>
                       <div class="col-sm-10">
                       <input class="form-control"
                         name="components"
@@ -605,9 +628,7 @@
                   <div class="modal-footer">
                     <button type="submit"
                             class="btn btn-primary"
-                            id="spellsPreviewDoneButton"
-                            data-bind='disable: !$parent.addFormIsValid()'
-                            data-dismiss="modal">Done</button>
+                            id="spellsPreviewDoneButton">Done</button>
                   </div>
                 </form>
               </div>

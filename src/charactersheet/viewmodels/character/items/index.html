@@ -89,7 +89,9 @@
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
            <label for="name"
-             class="col-sm-2 control-label">Name</label>
+             class="col-sm-2 control-label">
+              Name <i class="required"></i>
+            </label>
            <div class="col-sm-10">
              <input type="text"
                class="form-control"
@@ -173,8 +175,7 @@
            </button>
            <button type="submit"
              class="btn btn-primary"
-             id="inventoryAddAddButton"
-             data-bind='disable: !addFormIsValid()'>
+             id="inventoryAddAddButton">
              Add
            </button>
            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
@@ -250,18 +251,13 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      id="inventoryDoneButton"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="name"
-                       class="col-sm-2 control-label">Name
+                       class="col-sm-2 control-label">
+                        Name <i class="required"></i>
                 </label>
                 <div class="col-sm-10">
                   <input type="text"
@@ -336,9 +332,7 @@
               <div class="modal-footer">
                 <button type="submit"
                   class="btn btn-primary"
-                  id="inventoryEditDoneButton"
-                  data-bind='disable: !$parent.addFormIsValid()'
-                  data-dismiss="modal">
+                  id="inventoryEditDoneButton">
                   Done
                 </button>
               </div>
