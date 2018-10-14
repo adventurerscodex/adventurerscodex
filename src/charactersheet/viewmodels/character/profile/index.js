@@ -1,6 +1,5 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities';
 import { Profile } from 'charactersheet/models/character';
 import ko from 'knockout';
 import template from './index.html';
@@ -10,88 +9,152 @@ export function ProfileViewModel() {
 
     self.placeholderText = '<i>Character Name</i>';
     self.profile = ko.observable();
-    self.race = ko.observable('');
-    self.alignment = ko.observable('');
-    self.deity = ko.observable('');
-    self.characterClass = ko.observable('');
-    self.gender = ko.observable('');
-    self.age = ko.observable('');
+    self.loaded = ko.observable();
 
-    //Static Data
+    // Static Data
     self.alignmentOptions = Fixtures.profile.alignmentOptions;
     self.classOptions = Fixtures.profile.classOptions;
     self.raceOptions = Fixtures.profile.raceOptions;
 
-    //Prepopulate methods
+    // Pre-populate methods
     self.setAlignment = function(label, value) {
-        self.alignment(value);
+        self.profile().alignment(value);
     };
 
     self.setClass = function(label, value) {
-        self.characterClass(value);
+        self.profile().characterClass(value);
     };
 
     self.setRace = function(label, value) {
-        self.race(value);
+        self.profile().race(value);
+    };
+
+    self.validation = {
+        // Deep copy of properties in object
+        ...Profile.validationConstraints
     };
 
     self.load = async function() {
+        self.loaded(false);
+        await this.reset();
+        self.loaded(true);
+    };
+
+    self.reset = async () => {
         var key = CoreManager.activeCore().uuid();
         const profileResponse = await Profile.ps.read({uuid: key});
-        const profile = profileResponse.object;
-        self.profile(profile);
+        self.profile(profileResponse.object);
+    };
 
-        if (profile) {
-            self.race(profile.race());
-            self.alignment(profile.alignment());
-            self.deity(profile.deity());
-            self.characterClass(profile.characterClass());
-            self.gender(profile.gender());
-            self.age(profile.age());
+    self.save = async function() {
+        const profileResponse = await self.profile().ps.save();
+        self.profile(profileResponse.object);
+    };
+
+    self.isNumeric = (n) => {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    };
+
+    // UI Labels
+    self.alignmentLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().alignment() && self.profile().alignment().trim()) {
+                return self.profile().alignment();
+            } else {
+                return 'No Alignment';
+            }
         }
+    });
 
-        //Subscriptions
-        self.race.subscribe(self.dataHasChanged);
-        self.alignment.subscribe(self.dataHasChanged);
-        self.deity.subscribe(self.dataHasChanged);
-        self.characterClass.subscribe(self.dataHasChanged);
-        self.gender.subscribe(self.dataHasChanged);
-        self.age.subscribe(self.dataHasChanged);
-        self.profile().height.subscribe(self.dataHasChanged);
-        self.profile().weight.subscribe(self.dataHasChanged);
-        self.profile().hairColor.subscribe(self.dataHasChanged);
-        self.profile().eyeColor.subscribe(self.dataHasChanged);
-        self.profile().skinColor.subscribe(self.dataHasChanged);
-        self.race.subscribe(self.raceDataHasChanged);
-        self.characterClass.subscribe(self.typeClassDataHasChanged);
-    };
+    self.deityLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().deity() && self.profile().deity().trim()) {
+                return self.profile().deity();
+            } else {
+                return 'No Deity';
+            }
+        }
+    });
 
-    self.raceDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.race.changed.dispatch();
-    };
+    self.raceLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().race() && self.profile().race().trim()) {
+                return self.profile().race();
+            } else {
+                return 'No Race';
+            }
+        }
+    });
 
-    self.typeClassDataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.playerClass.changed.dispatch();
-    };
+    self.characterClassLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().characterClass() && self.profile().characterClass().trim()) {
+                return self.profile().characterClass();
+            } else {
+                return 'No Class';
+            }
+        }
+    });
 
-    self.dataHasChanged = function() {
-        self.saveProfile();
-        Notifications.profile.changed.dispatch();
-    };
+    self.genderLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().gender() && self.profile().gender().trim()) {
+                return self.profile().gender();
+            } else {
+                return 'No Gender';
+            }
+        }
+    });
 
-    //Public Methods
+    self.ageLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.isNumeric(self.profile().age())) {
+                return self.profile().age();
+            } else {
+                return 'No Age';
+            }
+        }
+    });
 
-    self.saveProfile = async function() {
-        self.profile().race(self.race());
-        self.profile().alignment(self.alignment());
-        self.profile().deity(self.deity());
-        self.profile().characterClass(self.characterClass());
-        self.profile().gender(self.gender());
-        self.profile().age(self.age());
-        await self.profile().ps.save();
-    };
+    self.weightLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.isNumeric(self.profile().weight())) {
+                return self.profile().weight();
+            } else {
+                return 'No Weight';
+            }
+        }
+    });
+
+    self.hairColorLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().hairColor() && self.profile().hairColor().trim()) {
+                return self.profile().hairColor();
+            } else {
+                return 'No Hair Color';
+            }
+        }
+    });
+
+    self.eyeColorLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().eyeColor() && self.profile().eyeColor().trim()) {
+                return self.profile().eyeColor();
+            } else {
+                return 'No Eye Color';
+            }
+        }
+    });
+
+    self.skinColorLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().skinColor() && self.profile().skinColor().trim()) {
+                return self.profile().skinColor();
+            } else {
+                return 'No Skin Color';
+            }
+        }
+    });
 }
 
 ko.components.register('profile', {
