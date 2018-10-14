@@ -45,6 +45,7 @@ export function MonsterSectionViewModel(params) {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
     self.shouldShowDisclaimer = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -103,6 +104,7 @@ export function MonsterSectionViewModel(params) {
 
         const monsterResponse = await monster.ps.create();
         self.monsters.push(monsterResponse.object);
+        self.openModal(!self.openModal());
         self.blankMonster(new Monster());
     };
 
@@ -123,6 +125,30 @@ export function MonsterSectionViewModel(params) {
         self.openEditModal(true);
     };
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addMonster();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Monster.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Monster.validationConstraints
+    };
+
     self.toggleModal = function() {
         var abilityScores = [
             { name: 'Strength', shortName: 'STR', value: 0},
@@ -134,6 +160,11 @@ export function MonsterSectionViewModel(params) {
         ];
         self.blankMonster().abilityScores(abilityScores);
         self.openModal(!self.openModal());
+    };
+
+    self.closeModal = () => {
+        self.openEditModal(false);
+        self.selectPreviewTab();
     };
 
     self.renderAbilityScoresInAddModal = function() {

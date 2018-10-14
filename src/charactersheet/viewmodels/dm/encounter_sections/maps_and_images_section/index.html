@@ -7,23 +7,18 @@
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead>
     <tr>
-      <th data-bind="click: function(){sortBy('name');}" class="col-md-4 col-sm-11">
+      <th data-bind="click: function(){sortBy('name');}" class="col-md-3 col-sm-9">
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('description');}" class="col-md-7 hidden-xs hidden-sm">
+      <th data-bind="click: function(){sortBy('description');}" class="col-md-6 hidden-xs hidden-sm">
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <th>
-        Send
-      </th>
-      <th>
-        Exhibit
-      </th>
-      <th class="col-md-1">
-        <a data-toggle="modal"
-           data-target="#addMapOrImage" href="#">
+      <th class="text-right col-md-1">Send</th>
+      <th class="text-right col-md-1">Exhibit</th>
+      <th class="text-right col-md-1">
+        <a data-bind="click: toggleAddModal" href="#">
           <i class="fa fa-plus fa-color"></i>
         </a>
       </th>
@@ -33,19 +28,19 @@
   <!-- ko foreach: filteredAndSortedMapsAndImages -->
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editMapOrImage"
-          class="col-md-4 col-xs-12"
+          class="col-md-3 col-xs-9"
           href="#"></td>
       <td data-bind="html: shortDescription, click: $parent.editMapOrImage"
-          class="col-md-7 hidden-sm hidden-xs"
+          class="col-md-6 hidden-sm hidden-xs"
           href="#"></td>
       <!-- ko if: $parent.shouldShowPushButton -->
-      <td class="text-center">
+      <td class="text-right col-md-1">
         <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
           <i class="fa fa-paper-plane-o fa-color-hover">
           </i>
         </a>
       </td>
-      <td class="text-center">
+      <td class="text-right col-md-1">
         <a data-bind="click: $parent.toggleMapOrImageExhibit" href="#" title="Send Player's Exhibit">
           <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
           </i>
@@ -53,18 +48,18 @@
       </td>
       <!-- /ko -->
       <!-- ko ifnot: $parent.shouldShowPushButton -->
-      <td class="text-center">
+      <td class="text-right col-md-1">
         <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
           data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
         </span>
       </td>
-      <td class="text-center">
+      <td class="text-right col-md-1">
         <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
           data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
         </span>
       </td>
       <!-- /ko -->
-      <td>
+      <td class="text-right col-md-1">
         <a data-bind="click: $parent.removeMapOrImage" href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>
@@ -74,8 +69,8 @@
     <!-- /ko -->
     <!-- ko if: filteredAndSortedMapsAndImages().length == 0 -->
     <tr class="clickable">
-      <td data-toggle="modal" data-target="#addMapOrImage" href="#"
-        colspan="7" class="text-center">
+      <td data-toggle="modal" data-bind="click: toggleAddModal"
+        colspan="12" class="text-center">
         <i class="fa fa-plus fa-color"></i>
         Add a new Map or Image.
       </td>
@@ -93,7 +88,8 @@
      id="addMapOrImage"
      tabindex="-1"
      role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening }">
+      onopen: modalFinishedOpening,
+      open: addModalOpen }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -107,12 +103,13 @@
             id="addMapOrImageLabel">Add a new Map or Image.</h4>
     </div>
       <div class="modal-body">
-        <form class="form-horizontal" onsubmit="return false;">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
             <label class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
+                     name="name"
                      placeholder="A really cool place or image"
                      data-bind="textInput: blankMapOrImage().name,
                         hasFocus: firstElementInModalHasFocus">
@@ -123,7 +120,8 @@
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
-                     placeholder=""
+                     name="sourceUrl"
+                     placeholder="http://myurl.com/image.jpg"
                      data-bind="textInput: blankMapOrImage().sourceUrl">
             </div>
           </div>
@@ -132,14 +130,14 @@
               <div class="col-sm-10 col-padded">
                 <textarea type="text"
                        class="form-control" rows="4"
-                       data-bind='value: blankMapOrImage().description'></textarea>
+                       name="description"
+                       data-bind="value: blankMapOrImage().description"></textarea>
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button"
-                    class="btn btn-primary"
-                    data-bind='click: addMapOrImage'
-                    data-dismiss="modal">Add</button>
+            <button type="submit"
+                    class="btn btn-primary">
+                    Add</button>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -156,7 +154,7 @@
      data-bind="modal: {
       open: openModal,
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
+      onclose: closeModal
     }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -208,13 +206,14 @@
             </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal">
+              <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="mapOrImageName"
                        class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
               </div>
@@ -222,6 +221,7 @@
                 <label class="col-sm-2 control-label">Link</label>
                 <div class="col-sm-10">
                   <input type="text"
+                         name="sourceUrl"
                          class="form-control"
                          data-bind="textInput: sourceUrl">
                 </div>
@@ -232,16 +232,16 @@
                   <div class="col-sm-10 col-padded">
                     <textarea type="text" rows="6"
                            class="form-control"
-                           data-bind='value: description, markdownEditor: true'></textarea>
+                           name="description"
+                           data-bind="value: description, markdownEditor: true"></textarea>
                   </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit"
+                        class="btn btn-primary">Done</button>
               </div>
             </form>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button"
-                  class="btn btn-primary"
-                  data-dismiss="modal">Done</button>
         </div>
       </div> <!-- Modal Body -->
     </div> <!-- Modal Content -->

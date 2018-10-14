@@ -1,7 +1,6 @@
 import {
     ChatServiceManager,
-    ImageServiceManager,
-    PersistenceService
+    ImageServiceManager
 } from 'charactersheet/services/common';
 import {
     CoreManager,
@@ -10,7 +9,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { Environment } from 'charactersheet/models/dm';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/night-sky.svg';
 import template from './index.html';
@@ -33,24 +31,32 @@ export function EnvironmentSectionViewModel(params) {
     self.environment = ko.observable();
 
     self.dataIsChanging = false;
-    self.imageUrl = ko.observable();
-    self.weather = ko.observable();
-    self.terrain = ko.observable();
-    self.description = ko.observable('');
-    self.isExhibited = ko.observable(false);
     self.fullScreen = ko.observable(false);
+    self.formIsValid = ko.observable(false);
+    self.loaded = ko.observable(false);
 
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
-
-    // Push to Player
 
     self.openPushModal = ko.observable(false);
     self.pushType = ko.observable('image');
 
     self._isConnectedToParty = ko.observable(false);
 
-    // Public Methods
+    self.load = async function() {
+        self.loaded(false);
+        Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
+        Notifications.exhibit.toggle.add(self._dataHasChanged);
+
+        self._connectionHasChanged();
+
+        await self._dataHasChanged();
+        self.loaded(true);
+    };
+
+    // Push to Player
 
     self.toggleExhibit = function() {
         var imageService = ImageServiceManager.sharedService();
@@ -68,56 +74,41 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self.toJSON = function() {
-        return { name: 'Environment', url: self.imageUrl() };
-    };
-
-    self.load = async function() {
-        Notifications.global.save.add(self.save);
-        Notifications.encounters.changed.add(self._dataHasChanged);
-        Notifications.party.joined.add(self._connectionHasChanged);
-        Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.toggle.add(self._dataHasChanged);
-
-        self._connectionHasChanged();
-
-        self.encounter.subscribe(function() {
-            self._dataHasChanged();
-        });
-        await self._dataHasChanged();
-
-        self.imageUrl.subscribe(self.save);
-        self.weather.subscribe(self.save);
-        self.terrain.subscribe(self.save);
-        self.description.subscribe(self.save);
+        return { name: 'Environment', url: self.environment().imageUrl() };
     };
 
     self.save = async function() {
         if (self.dataIsChanging) {
             return;
         }
-        self.environment().imageUrl(self.imageUrl());
-        self.environment().weather(self.weather());
-        self.environment().terrain(self.terrain());
-        self.environment().description(self.description());
-        self.environment().isExhibited(self.isExhibited());
-        self.environment().ps.save();
+        const environmentResponse = await self.environment().ps.save();
+        self.environment(environmentResponse.object);
     };
 
     /* UI Methods */
 
-    self.weatherLabel = ko.pureComputed(function() {
-        return self.weather() ? self.weather() : 'Unknown';
+    self.weatherLabel = ko.pureComputed(() => {
+        if (self.environment()) {
+            return self.environment().weather() ? self.environment().weather() : 'Unknown';
+        }
     });
 
-    self.terrainLabel = ko.pureComputed(function() {
-        return self.terrain() ? self.terrain() : 'Unknown';
+    self.terrainLabel = ko.pureComputed(() => {
+        if (self.environment()) {
+            return self.environment().terrain() ? self.environment().terrain() : 'Unknown';
+        }
     });
 
-    self.shouldShowDividingMarker = ko.pureComputed(function() {
-        return self.imageUrl() || self.description();
+    self.shouldShowDividingMarker = ko.pureComputed(() => {
+        if (self.environment()) {
+            return self.environment().imageUrl() || self.environment().description();
+        }
     });
 
-    self.selectPreviewTab = function() {
+    self.selectPreviewTab = async function() {
+        if (self.editTabStatusIsActive()) {
+            await self.getEnvironment();
+        }
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
@@ -128,25 +119,45 @@ export function EnvironmentSectionViewModel(params) {
     };
 
     self.imageWidth = ko.pureComputed(function() {
-        if (self.imageUrl() && self.description()) {
+        if (self.environment()
+            && self.environment().imageUrl()
+            && self.environment().description()) {
             return '50%';
         }
         return '';
     });
 
     self.imageClass = ko.pureComputed(function() {
-        if (self.imageUrl() && self.description()) {
+        if (self.environment()
+            && self.environment().imageUrl()
+            && self.environment().description()) {
             return 'embedded-image pull-right';
         }
         return 'embedded-image';
     });
 
+    self.editTabStatusIsActive = ko.pureComputed(function() {
+        if (self.editTabStatus() === 'active') {
+            return true;
+        }
+        return false;
+    });
+
     self.convertedImageLink = ko.pureComputed(function() {
-        return Utility.string.createDirectDropboxLink(self.imageUrl());
+        if (self.environment()) {
+            return Utility.string.createDirectDropboxLink(self.environment().imageUrl());
+        }
     });
 
     self.toggleFullScreen = function() {
         self.fullScreen(!self.fullScreen());
+    };
+
+    self.saveButton = async () => {
+        if (self.formIsValid()) {
+            await self.save();
+            self.selectPreviewTab();
+        }
     };
 
     /* Push to Player Methods */
@@ -163,33 +174,45 @@ export function EnvironmentSectionViewModel(params) {
         self.openPushModal(true);
     };
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.save();
+        },
+        updateHandler: ($element) => {
+            self.formIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Environment.validationConstraints
+    };
+
     /* Private Methods */
 
     self._dataHasChanged = async function() {
         self.dataIsChanging = true;
-        var coreUuid = CoreManager.activeCore().uuid();
         var section = self.encounter().sections()[Fixtures.encounter.sections.environment.index];
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
 
-        const environmentResponse = await Environment.ps.read({coreUuid, uuid: self.encounterId()});
-        self.environment(environmentResponse.object);
-        if (self.environment()) {
-            self.imageUrl(self.environment().imageUrl());
-            self.weather(self.environment().weather());
-            self.terrain(self.environment().terrain());
-            self.description(self.environment().description());
-            self.isExhibited(self.environment().isExhibited());
-        }
+        await self.getEnvironment();
 
         // If there's no data to show, then prefer the edit tab.
-        if (!self.imageUrl() && !self.weather() && !self.terrain() && !self.description()) {
+        if (!self.environment().imageUrl()
+            && !self.environment().weather()
+            && !self.environment().terrain()
+            && !self.environment().description()) {
             self.selectEditTab();
         } else {
             self.selectPreviewTab();
         }
         self.dataIsChanging = false;
+    };
+
+    self.getEnvironment = async () => {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const environmentResponse = await Environment.ps.read({coreUuid, uuid: self.encounterId()});
+        self.environment(environmentResponse.object);
     };
 
     self._connectionHasChanged = function() {

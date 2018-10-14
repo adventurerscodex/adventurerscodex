@@ -27,6 +27,8 @@ export function CampaignMapsAndImagesViewModel() {
     self.editTabStatus = ko.observable('');
     self.convertedDisplayUrl = ko.observable();
     self.fullScreen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -76,10 +78,43 @@ export function CampaignMapsAndImagesViewModel() {
         self._connectionHasChanged();
     };
 
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
+    self.closeModal = () => {
+        self.openModal(false);
+        self.selectPreviewTab();
+    };
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addMapOrImage();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Image.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Image.validationConstraints
+    };
+
     /* UI Methods */
 
     /**
-     * Filters and sorts the weaponss for presentation in a table.
+     * Filters and sorts the weapons for presentation in a table.
      */
     self.filteredAndSortedMapsAndImages = ko.computed(function() {
         return SortService.sortAndFilter(self.mapsOrImages(), self.sort(), null);
@@ -104,6 +139,7 @@ export function CampaignMapsAndImagesViewModel() {
         mapOrImage.coreUuid(CoreManager.activeCore().uuid());
         const imageResponse = await mapOrImage.ps.create();
         self.mapsOrImages.push(imageResponse.object);
+        self.toggleAddModal();
         self.blankMapOrImage(new Image());
     };
 

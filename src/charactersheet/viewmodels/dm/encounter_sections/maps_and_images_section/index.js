@@ -40,6 +40,8 @@ export function MapsAndImagesSectionViewModel(params) {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
     self.fullScreen = ko.observable(false);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -75,6 +77,34 @@ export function MapsAndImagesSectionViewModel(params) {
         self._connectionHasChanged();
     };
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addMapOrImage();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...EncounterImage.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...EncounterImage.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     /* UI Methods */
 
     /**
@@ -104,6 +134,7 @@ export function MapsAndImagesSectionViewModel(params) {
         mapOrImage.encounterUuid(self.encounterId());
         const imageResponse = await mapOrImage.ps.create();
         self.mapsOrImages.push(imageResponse.object);
+        self.toggleAddModal();
         self.blankMapOrImage(new EncounterImage());
     };
 
@@ -170,6 +201,11 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.toggleFullScreen = function() {
         self.fullScreen(!self.fullScreen());
+    };
+
+    self.closeModal = () => {
+        self.openModal(false);
+        self.selectPreviewTab();
     };
 
     /* Push to Player Methods */
