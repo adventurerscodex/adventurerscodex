@@ -26,3 +26,17 @@ export class Image extends KOModel {
         }
     });
 }
+
+Image.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        sourceUrl: {
+            required: true,
+            url: true,
+            maxlength: 512
+        }
+    }
+};

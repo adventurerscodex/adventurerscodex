@@ -36,6 +36,8 @@ export function NPCSectionViewModel(params) {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -76,6 +78,34 @@ export function NPCSectionViewModel(params) {
         });
     };
 
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addNPC();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...NPC.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...NPC.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
     /* UI Methods */
 
     /**
@@ -105,6 +135,7 @@ export function NPCSectionViewModel(params) {
         npc.encounterUuid(self.encounterId());
         const npcResponse = await npc.ps.create();
         self.npcs.push(npcResponse.object);
+        self.toggleAddModal();
         self.blankNPC(new NPC());
     };
 
@@ -150,6 +181,11 @@ export function NPCSectionViewModel(params) {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    self.closeModal = () => {
+        self.openModal(false);
+        self.selectPreviewTab();
     };
 
     //Prepopulate methods

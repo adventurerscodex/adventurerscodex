@@ -23,3 +23,15 @@ export class Campaign extends KOModel {
         return 'A long long time ago...';
     };
 }
+
+Campaign.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        setting: {
+            maxlength: 64
+        }
+    }
+};

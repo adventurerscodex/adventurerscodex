@@ -38,3 +38,17 @@ export class EncounterImage extends KOModel {
         return 'New image in chat';
     };
 }
+
+EncounterImage.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        sourceUrl: {
+            required: true,
+            url: true,
+            maxlength: 512
+        }
+    }
+};

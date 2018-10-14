@@ -28,7 +28,6 @@ export function NotesSectionViewModel(params) {
     self.load = function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-        self.notes.subscribe(self.saveNote);
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
@@ -36,17 +35,22 @@ export function NotesSectionViewModel(params) {
     };
 
     self.saveNote = async () => {
-        await self.notes().ps.save();
+        const noteResponse = await self.notes().ps.save();
+        self.notes(noteResponse.object);
+    };
+
+    self.reset = async () => {
+        var coreUuid = CoreManager.activeCore().uuid();
+        const noteResponse = await EncounterNote.ps.read({coreUuid, uuid: self.encounterId()});
+        self.notes(noteResponse.object);
     };
 
     /* Private Methods */
 
     self._dataHasChanged = async function() {
-        var coreUuid = CoreManager.activeCore().uuid();
-        const noteResponse = await EncounterNote.ps.read({coreUuid, uuid: self.encounterId()});
+        await self.reset();
 
         var section = self.encounter().sections()[Fixtures.encounter.sections.notes.index];
-        self.notes(noteResponse.object);
         self.visible(section.visible());
         self.tagline(section.tagline());
     };

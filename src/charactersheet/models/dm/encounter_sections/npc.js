@@ -17,9 +17,9 @@ export class NPC extends KOModel {
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     uuid = ko.observable();
-    name = ko.observable();
-    race = ko.observable();
-    description = ko.observable();
+    name = ko.observable('');
+    race = ko.observable('');
+    description = ko.observable('');
 
     // UI Methods
 
@@ -31,3 +31,15 @@ export class NPC extends KOModel {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
 }
+
+NPC.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        race: {
+            maxlength: 64
+        }
+    }
+};

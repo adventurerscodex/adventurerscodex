@@ -17,9 +17,8 @@
       <th class="col-sm-5 col-xs-8">
         Description
       </th>
-      <th class="col-xs-1">
-        <a data-toggle="modal"
-           data-target="#addTreasure" href="#">
+      <th class="col-xs-1 text-right">
+        <a data-bind="click: toggleAddModal" href="#">
           <i class="fa fa-plus fa-color"></i>
         </a>
       </th>
@@ -31,10 +30,10 @@
       <td data-bind="text: nameLabel, click: $parent.editTreasure"
           href="#" class="col-xs-3"></td>
       <td data-bind="text: propertyLabel, click: $parent.editTreasure"
-          href="#" class="hidden-xs" class="col-sm-3 hidden-xs"></td>
+          href="#" class="col-sm-3 hidden-xs"></td>
       <td data-bind="text: descriptionLabel, click: $parent.editTreasure"
           href="#" class="col-sm-5 col-xs-8"></td>
-      <td class="col-xs-1">
+      <td class="col-xs-1 text-right">
         <a data-bind="click: $parent.removeTreasure" href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>
@@ -44,7 +43,7 @@
     <!-- /ko -->
     <!-- ko if: filteredAndSortedTreasure().length == 0 -->
     <tr class="clickable">
-      <td data-toggle="modal" data-target="#addTreasure" href="#"
+      <td data-bind="click: toggleAddModal"
         colspan="12" class="text-center">
         <i class="fa fa-plus fa-color"></i>
         Add a new treasure.
@@ -61,6 +60,7 @@
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
+      open: addModalOpen,
       onclose: addModalFinishedClosing
     }">
   <div class="modal-dialog" role="document">
@@ -72,85 +72,85 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title"
-            id="addNpcLabel">Add more loot to the treasure horde.</h4>
-    </div>
+        <h4 class="modal-title">Add more loot to the treasure horde.</h4>
+      </div>
       <div class="modal-body">
         <form class="form-horizontal">
-
-          <div class="form-group">
-            <div class="col-sm-12">
-              <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == ARMOR}">
-                  <img class="action-bar-icon" data-bind="attr: { src: breastplate }">
-                  </img>
-                  <input type="radio" class="hide-block"
-                    data-bind="checked: itemType, click: setTreasure"
-                    name="armor" value="armor"/>Armor
-                </label>
-                <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == COINS}">
-                 <img class="action-bar-icon" data-bind="attr: { src: coins }"></img>
-                  <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
-                         name="coins" value="coins"/>Coins
-                </label>
-                <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == ITEM}">
-                  <img class="action-bar-icon" data-bind="attr: { src: potion }"></img>
-                  <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
-                         name="item" value="item"/>Item
-                </label>
-                <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == MAGIC_ITEM}">
-                  <img class="action-bar-icon" data-bind="attr: { src: wand }"></img>
-                  <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
-                       name="magic_item" value="magic_item"/>Magic Item
-                </label>
-                <label class="btn btn-default btn-group-padding"
-                       data-bind="css: { active: itemType() == WEAPON}">
-                  <img class="action-bar-icon" data-bind="attr: { src: broadsword }"></img>
-                  <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
-                        name="weapon" value="weapon"/>Weapon
-                </label>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <div class="btn-group btn-group-justified" role="group">
+                  <label class="btn btn-default btn-group-padding"
+                        data-bind="css: { active: itemType() == ARMOR}">
+                    <img class="action-bar-icon" data-bind="attr: { src: breastplate }">
+                    <input type="radio" class="hide-block"
+                      data-bind="checked: itemType, click: setTreasure"
+                      name="armor" value="armor"/>Armor
+                  </label>
+                  <label class="btn btn-default btn-group-padding"
+                        data-bind="css: { active: itemType() == COINS}">
+                  <img class="action-bar-icon" data-bind="attr: { src: coins }">
+                    <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
+                          name="coins" value="coins"/>Coins
+                  </label>
+                  <label class="btn btn-default btn-group-padding"
+                        data-bind="css: { active: itemType() == ITEM}">
+                    <img class="action-bar-icon" data-bind="attr: { src: potion }">
+                    <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
+                          name="item" value="item"/>Item
+                  </label>
+                  <label class="btn btn-default btn-group-padding"
+                        data-bind="css: { active: itemType() == MAGIC_ITEM}">
+                    <img class="action-bar-icon" data-bind="attr: { src: wand }">
+                    <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
+                        name="magic_item" value="magic_item"/>Magic Item
+                  </label>
+                  <label class="btn btn-default btn-group-padding"
+                        data-bind="css: { active: itemType() == WEAPON}">
+                    <img class="action-bar-icon" data-bind="attr: { src: broadsword }">
+                    <input type="radio" class="hide-block" data-bind="checked: itemType, click: setTreasure"
+                          name="weapon" value="weapon"/>Weapon
+                  </label>
+                </div>
               </div>
-            </div>
-         </div>
-         <!-- ko if: blankTreasure() -->
-         <!--ko if: armorShow()-->
-          <div data-bind="template: { name: 'armorTemplate' }"></div>
-         <!--/ko-->
+          </div>
+          <!-- ko if: blankTreasure() -->
+          <!--ko if: armorShow()-->
+            <div data-bind="template: { name: 'armorTemplate' }"></div>
+          <!--/ko-->
 
-         <!--ko if: coinsShow()-->
-          <div data-bind="template: { name: 'coinsTemplate' }"></div>
-         <!--/ko-->
+          <!--ko if: coinsShow()-->
+            <div data-bind="template: { name: 'coinsTemplate' }"></div>
+          <!--/ko-->
 
-         <!--ko if: itemShow()-->
-          <div data-bind="template: { name: 'itemTemplate' }"></div>
-         <!--/ko-->
+          <!--ko if: itemShow()-->
+            <div data-bind="template: { name: 'itemTemplate' }"></div>
+          <!--/ko-->
 
-         <!--ko if: magicItemShow()-->
-          <div data-bind="template: { name: 'magicItemTemplate' }"></div>
-         <!--/ko-->
+          <!--ko if: magicItemShow()-->
+            <div data-bind="template: { name: 'magicItemTemplate' }"></div>
+          <!--/ko-->
 
-         <!--ko if: weaponShow()-->
-          <div data-bind="template: { name: 'weaponTemplate' }"></div>
-         <!--/ko-->
-         <!--/ko-->
-          </div><!-- Modal Body -->
+          <!--ko if: weaponShow()-->
+            <div data-bind="template: { name: 'weaponTemplate' }"></div>
+          <!--/ko-->
+          <!--/ko-->
 
           <div class="modal-footer">
+            <!-- ko if: showAddButton -->
             <button type="button"
                     class="btn btn-primary"
-                    data-bind='click: addTreasure'
-                    data-dismiss="modal">Add</button>
-            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+                    data-bind="click: addTreasure">
+                    Add
+            </button>
+            <!-- /ko -->
+            <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
               <sm><i>This data is distributed under the
-                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-                  target='_blank'>
+                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
+                  target="_blank">
                   OGL</a><br/>
                   Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
-                </i><sm>
+                </i>
+              </sm>
             </p>
           </div>
         </form>
@@ -167,7 +167,7 @@
      data-bind="modal: {
       open: openModal,
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
+      onclose: closeModal
     }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -217,14 +217,9 @@
              <div data-bind="template: { name: 'weaponPreviewTemplate' }"></div>
             <!--/ko-->
 
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
 
               <!--ko if: type() == $parent.ARMOR-->
                <div data-bind="template: { name: 'armorEditTemplate' }"></div>
@@ -247,9 +242,10 @@
               <!--/ko-->
 
               <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
+                <button type="submit"
+                        class="btn btn-primary">
+                        Done
+                </button>
               </div>
             </form>
           </div>
@@ -261,161 +257,185 @@
 
 <!-- Add templates -->
 <script type="text/html" id="armorTemplate">
-  <div class="form-group ui-front">
-    <label for="armorName"
-           class="col-sm-2 control-label">Armor</label>
-    <div class="col-sm-10">
-      <input type="text"
-             class="form-control"
-             id="armorName"
-             placeholder="Chain Mail"
-             data-bind='textInput: blankTreasure().name, hasFocus: armorFirstElementFocus,
-              autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
-    </div>
-  </div>
-  <div class="form-group ui-front">
-    <label for="armorType"
-           class="col-sm-2 control-label">Type</label>
+  <form class="form-horizontal" data-bind="validate: armorValidation">
+    <div class="form-group ui-front">
+      <label for="armorName"
+            class="col-sm-2 control-label">Armor</label>
       <div class="col-sm-10">
-      <input class="form-control"
-              placeholder="Light"
-              data-bind="textInput: blankTreasure().type, autocomplete: { source: blankTreasure().armorTypeOptions,
-              onselect: setArmorType }">
-      </div>
-  </div>
-  <div class="form-group">
-    <label for="armorMagicalModifier"
-           class="col-sm-2 control-label">Magical Modifier</label>
-      <div class="col-sm-10">
-      <input type="number" class="form-control"
-             id="armorMagicalModifier"
-             data-bind='textInput: blankTreasure().magicalModifier'>
-      </div>
-  </div>
-  <div class="form-group ui-front">
-    <label for="armorPrice"
-           class="col-sm-2 control-label">Price</label>
-    <div class="col-sm-10">
-      <div class="input-group override-tight-inner">
         <input type="text"
-             class="form-control input-jquery-addon"
-             id="armorPrice"
-             placeholder="5"
-             data-bind='textInput: blankTreasure().price'>
-         <span class="input-group-addon input-group-addon-jquery">
-          <input class="form-control"
-                 placeholder="GP"
-                data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
-                          source: blankTreasure().armorCurrencyDenominationOptions,
-                          onselect: setArmorCurrencyDenomination }">
-        </span>
+              class="form-control"
+              name="name"
+              id="armorName"
+              placeholder="Chain Mail"
+              data-bind='textInput: blankTreasure().name, hasFocus: armorFirstElementFocus,
+                autocomplete: { source: treasurePrePopFilter, onselect: populateTreasure }'>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="armorWeight"
-           class="col-sm-2 control-label">Weight</label>
+    <div class="form-group ui-front">
+      <label for="armorType"
+            class="col-sm-2 control-label">Type</label>
+        <div class="col-sm-10">
+        <input class="form-control"
+                placeholder="Light"
+                name="type"
+                data-bind="textInput: blankTreasure().type, autocomplete: { source: blankTreasure().armorTypeOptions,
+                onselect: setArmorType }">
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="armorMagicalModifier"
+            class="col-sm-2 control-label">Magical Modifier</label>
+        <div class="col-sm-10">
+        <input type="number"
+              class="form-control"
+              name="magicalModifier"
+              id="armorMagicalModifier"
+              data-bind='textInput: blankTreasure().magicalModifier'>
+        </div>
+    </div>
+    <div class="form-group ui-front">
+      <label for="armorPrice"
+            class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
-        <input type="text"
-               class="form-control"
-               id="armorWeight"
-               placeholder="6"
-               data-bind='textInput: blankTreasure().weight'>
+        <div class="input-group override-tight-inner">
+          <input type="text"
+              class="form-control input-jquery-addon"
+              name="price"
+              id="armorPrice"
+              placeholder="5"
+              data-bind='textInput: blankTreasure().price'>
+          <span class="input-group-addon input-group-addon-jquery">
+            <input class="form-control"
+                  placeholder="GP"
+                  name="currencyDenomination"
+                  data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
+                            source: blankTreasure().armorCurrencyDenominationOptions,
+                            onselect: setArmorCurrencyDenomination }">
+          </span>
+        </div>
       </div>
-  </div>
-  <div class="form-group">
-    <label for="armorClass"
-           class="col-sm-2 control-label">Armor Class</label>
-      <div class="col-sm-10">
-        <input type="text"
-               class="form-control"
-               id="armorClass"
-               placeholder="3"
-               data-bind='textInput: blankTreasure().armorClass'>
-      </div>
-  </div>
-  <div class="form-group ui-front">
-    <label for="armorSize"
-           class="col-sm-2 control-label">Stealth</label>
-      <div class="col-sm-10">
-      <input class="form-control"
-             placeholder="Advantage"
-             data-bind="textInput: blankTreasure().stealth, autocomplete: { source: blankTreasure().armorStealthOptions,
-             onselect: setArmorStealth }">
-      </div>
-  </div>
-  <div class="form-group">
-    <label for="armorDescription"
-           class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-10">
-        <textarea type="password"
-                  class="form-control"
-                  id="armorDescription"
-                  rows="4"
-                  placeholder="Armor of damage blocking"
-                  data-bind='textInput: blankTreasure().description'>
-        </textarea>
-      </div>
-  </div>
+    </div>
+    <div class="form-group">
+      <label for="armorWeight"
+            class="col-sm-2 control-label">Weight</label>
+        <div class="col-sm-10">
+          <input type="number"
+                class="form-control"
+                name="weight"
+                id="armorWeight"
+                placeholder="6"
+                data-bind='textInput: blankTreasure().weight'>
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="armorClass"
+            class="col-sm-2 control-label">Armor Class</label>
+        <div class="col-sm-10">
+          <input type="number"
+                class="form-control"
+                name="armorClass"
+                id="armorClass"
+                placeholder="3"
+                data-bind='textInput: blankTreasure().armorClass'>
+        </div>
+    </div>
+    <div class="form-group ui-front">
+      <label for="armorSize"
+            class="col-sm-2 control-label">Stealth</label>
+        <div class="col-sm-10">
+        <input class="form-control"
+              placeholder="Advantage"
+              name="stealth"
+              data-bind="textInput: blankTreasure().stealth, autocomplete: { source: blankTreasure().armorStealthOptions,
+              onselect: setArmorStealth }">
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="armorDescription"
+            class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-10">
+          <textarea type="password"
+                    class="form-control"
+                    name="description"
+                    id="armorDescription"
+                    rows="4"
+                    placeholder="Armor of damage blocking"
+                    data-bind='textInput: blankTreasure().description'>
+          </textarea>
+        </div>
+    </div>
+  </form>
 </script>
 
 <script type="text/html" id="coinsTemplate">
-  <div class="row row-padded">
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: blankTreasure().platinum, hasFocus: coinsFirstElementFocus'/>
+  <form class="form-horizontal" data-bind="validate: wealthValidation">
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="platinum"
+                data-bind='value: blankTreasure().platinum, hasFocus: coinsFirstElementFocus'/>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: blankTreasure().gold'/>
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="gold"
+                data-bind='value: blankTreasure().gold'/>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: blankTreasure().electrum'>
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="electrum"
+                data-bind='value: blankTreasure().electrum'>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: blankTreasure().silver'>
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="silver"
+                data-bind='value: blankTreasure().silver'>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group">
-        <span class="input-group-addon no-top-bottom-padding">
+    <div class="form-group">
+      <label class="control-label col-sm-2">
           <img data-bind="attr: { src: cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: blankTreasure().copper'>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="copper"
+                data-bind='value: blankTreasure().copper'>
       </div>
     </div>
-  </div>
+  </form>
 </script>
 
 <script type="text/html" id="itemTemplate">
+  <form class="form-horizontal" data-bind="validate: itemValidation">
     <div class="form-group ui-front">
      <label for="itemName"
        class="col-sm-2 control-label">Name</label>
      <div class="col-sm-10">
        <input type="text"
          class="form-control"
+         name="name"
          id="itemName"
          placeholder="Rations"
          data-bind='textInput: blankTreasure().name, hasFocus: itemFirstElementFocus,
@@ -429,10 +449,9 @@
        <div class="input-group override-tight-inner">
          <input type="number"
                 class="form-control"
-                min="0"
-                max="5000"
-           placeholder="Item Weight"
-           data-bind='textInput: blankTreasure().weight'>
+                name="weight"
+                placeholder="12"
+                data-bind='textInput: blankTreasure().weight'>
            <span class="input-group-addon">lbs.</span>
        </div>
      </div>
@@ -443,10 +462,9 @@
      <div class="col-sm-10">
        <input type="number"
          class="form-control"
-         min="0"
-         max="5000"
+         name="quantity"
          id="itemQuantity"
-         placeholder="Item Quantity"
+         placeholder="1"
          data-bind='textInput: blankTreasure().quantity'>
      </div>
    </div>
@@ -456,11 +474,12 @@
      <div class="col-sm-10">
        <div class="input-group override-tight-inner">
        <input type="number"
-         min="0"
+         name="cost"
          class="form-control input-jquery-addon"
          data-bind="value: blankTreasure().cost" />
        <span class="input-group-addon input-group-addon-jquery">
          <input class="form-control"
+                name="currencyDenomination"
                 placeholder="GP"
                 data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
                           source: blankTreasure().itemCurrencyDenominationOptions,
@@ -475,6 +494,7 @@
      <div class="col-sm-10">
        <textarea type="password"
          class="form-control"
+         name="description"
          id="itemDescription"
          placeholder="Rations consist of..."
          rows="4"
@@ -482,15 +502,18 @@
        </textarea>
      </div>
    </div>
+  </form>
 </script>
 
 <script type="text/html" id="magicItemTemplate">
+  <form class="form-horizontal" data-bind="validate: magicItemValidation">
     <div class="form-group ui-front">
       <label for="magicItemName"
              class="col-sm-2 control-label">Item</label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
+               name="name"
                id="magicItemName"
                placeholder="Dagger of Venom"
                data-bind='textInput: blankTreasure().name, hasFocus: magicItemFirstElementFocus,
@@ -502,6 +525,7 @@
              class="col-sm-2 control-label">Type</label>
         <div class="col-sm-10">
         <input class="form-control"
+               name="type"
                placeholder="Wand"
                data-bind="textInput: blankTreasure().magicItemType,
                          autocomplete: { source: blankTreasure().magicItemTypeOptions,
@@ -514,6 +538,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Legendary"
+               name="rarity"
                data-bind="textInput: blankTreasure().rarity,
                          autocomplete: { source: blankTreasure().magicItemRarityOptions,
                                          onselect: setMagicItemRarity }">
@@ -525,10 +550,9 @@
         <div class="col-sm-10">
           <input type="number"
                  class="form-control"
+                 name="maxCharges"
                  id="magicItemMaxCharges"
                  placeholder="1"
-                 min="0"
-                 max="100"
                  data-bind='textInput: blankTreasure().maxCharges'>
         </div>
     </div>
@@ -539,10 +563,9 @@
           <div class="col-sm-10">
             <input type="number"
                    class="form-control"
+                   name="usedCharges"
                    id="magicItemCharges"
                    placeholder="1"
-                   min="0"
-                   max="100"
                    data-bind='textInput: blankTreasure().usedCharges'>
           </div>
       </div>
@@ -553,10 +576,9 @@
         <div class="col-sm-10">
           <input type="number"
                  class="form-control"
+                 name="weight"
                  id="magicItemWeight"
                  placeholder="1"
-                 min="0"
-                 max="1000"
                  data-bind='textInput: blankTreasure().weight'>
         </div>
     </div>
@@ -588,6 +610,7 @@
         <div class="col-sm-10">
           <textarea type="password"
                     class="form-control"
+                    name="description"
                     id="magicItemDescription"
                     rows="4"
                     placeholder="Awesome stuff goes here"
@@ -595,15 +618,18 @@
           </textarea>
         </div>
     </div>
+  </form>
 </script>
 
 <script type="text/html" id="weaponTemplate">
+  <form class="form-horizontal" data-bind="validate: weaponValidation">
     <div class="form-group ui-front">
       <label for="weaponName"
              class="col-sm-2 control-label">Name</label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
+               name="name"
                id="weaponName"
                placeholder="Short Sword"
                data-bind='textInput: blankTreasure().name, hasFocus: weaponFirstElementFocus,
@@ -616,6 +642,7 @@
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
+                 name="damage"
                  id="weaponDmg"
                  placeholder="1D4"
                  data-bind='textInput: blankTreasure().damage'>
@@ -627,6 +654,7 @@
       <div class="col-sm-10">
         <input type="number" class="form-control"
                id="weaponHit"
+               name="toHitModifier"
                placeholder="Place hit bonus here"
                data-bind='textInput: blankTreasure().toHitModifier'>
       </div>
@@ -637,6 +665,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Ranged"
+               name="type"
                data-bind="textInput: blankTreasure().weaponType, autocomplete: {
                           source: blankTreasure().weaponTypeOptions,
                           onselect: setWeaponType }">
@@ -648,6 +677,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="One-Handed"
+                name="handedness"
                 data-bind="textInput: blankTreasure().handedness, autocomplete: {
                           source: blankTreasure().weaponHandednessOptions,
                           onselect: setWeaponHandedness }">
@@ -659,6 +689,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Simple"
+                name="proficiency"
                 data-bind="textInput: blankTreasure().proficiency, autocomplete: {
                           source: blankTreasure().weaponProficiencyOptions,
                           onselect: setWeaponProficiency }">
@@ -669,14 +700,16 @@
              class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
         <div class="input-group override-tight-inner">
-          <input type="number" min="0" class="form-control input-jquery-addon"
+          <input type="number" class="form-control input-jquery-addon"
                id="weaponPrice"
+               name="price"
                placeholder="5"
                data-bind='textInput: blankTreasure().price'>
                <span data-bind="console.log($parent.id)"></span>
            <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                    placeholder="GP"
+                   name="currencyDenomination"
                    data-bind="textInput: blankTreasure().currencyDenomination, autocomplete: {
                           source: blankTreasure().weaponCurrencyDenominationOptions,
                           onselect: setWeaponCurrencyDenomination }">
@@ -688,8 +721,9 @@
       <label for="weaponWeight"
              class="col-sm-2 control-label">Weight</label>
         <div class="col-sm-10">
-          <input type="number" min="0" class="form-control"
+          <input type="number" class="form-control"
                  id="weaponWeight"
+                 name="weight"
                  placeholder="6"
                  data-bind='textInput: blankTreasure().weight'>
         </div>
@@ -700,6 +734,7 @@
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
+                 name="range"
                  id="weaponRange"
                  placeholder="25/100"
                  data-bind='textInput: blankTreasure().range'>
@@ -711,6 +746,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Fire"
+               name="damageType"
                data-bind="textInput: blankTreasure().damageType, autocomplete: {
                           source: blankTreasure().weaponDamageTypeOptions,
                           onselect: setWeaponDamageType }">
@@ -722,6 +758,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Finesse"
+                name="property"
                 data-bind="textInput: blankTreasure().property, autocomplete: {
                           source: blankTreasure().weaponPropertyOptions,
                           onselect: setWeaponProperty }">
@@ -731,8 +768,9 @@
       <label for="weaponQuantity"
              class="col-sm-2 control-label">Quantity</label>
         <div class="col-sm-10">
-          <input type="number" min="0" class="form-control"
+          <input type="number" class="form-control"
                  id="weaponQuantity"
+                 name="quantity"
                  placeholder="1"
                  data-bind='textInput: blankTreasure().quantity'>
         </div>
@@ -744,6 +782,7 @@
         <div class="col-sm-10">
           <textarea type="password"
                     class="form-control"
+                    name="description"
                     id="weaponDescription"
                     rows="4"
                     placeholder="A sword...that is short..."
@@ -751,6 +790,7 @@
           </textarea>
         </div>
     </div>
+  </form>
 </script>
 
 <!-- Preview Templates -->
@@ -873,6 +913,7 @@
 
 <!-- Edit Templates -->
 <script type="text/html" id="armorEditTemplate">
+  <form class="form-horizontal" data-bind="validate: $parent.armorUpdateValidation">
     <div class="form-group">
       <label for="armorName"
              class="col-sm-2 control-label">Name</label>
@@ -880,6 +921,7 @@
         <input type="text"
                class="form-control"
                id="armorName"
+               name="name"
                placeholder="Chain Mail"
                data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
       </div>
@@ -890,6 +932,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Light"
+               name="type"
                data-bind="textInput: armorType">
         </div>
     </div>
@@ -899,6 +942,7 @@
         <div class="col-sm-10">
         <input type="number" class="form-control"
                id="armorMagicalModifier"
+               name="magicalModifier"
                data-bind='textInput: magicalModifier'>
         </div>
     </div>
@@ -910,11 +954,13 @@
           <input type="text"
                class="form-control input-jquery-addon"
                id="armorPrice"
+               name="price"
                placeholder="5"
                data-bind='textInput: price'>
            <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                    placeholder="GP"
+                   name="currencyDenomination"
                    data-bind="textInput: currencyDenomination">
           </span>
         </div>
@@ -927,6 +973,7 @@
           <input type="text"
                  class="form-control"
                  id="armorWeight"
+                 name="weight"
                  placeholder="6"
                  data-bind='textInput: weight'>
         </div>
@@ -937,6 +984,7 @@
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
+                 name="armorClass"
                  id="armorClass"
                  placeholder="3"
                  data-bind='textInput: armorClass'>
@@ -947,6 +995,7 @@
              class="col-sm-2 control-label">Stealth</label>
         <div class="col-sm-10">
         <input class="form-control"
+               name="stealth"
                placeholder="Advantage"
                data-bind="textInput: stealth">
         </div>
@@ -957,6 +1006,7 @@
         <div class="col-sm-10">
           <textarea type="password"
                     class="form-control"
+                    name="description"
                     id="armorDescription"
                     rows="4"
                     placeholder="Armor of damage blocking"
@@ -964,59 +1014,71 @@
           </textarea>
         </div>
     </div>
+  </form>
 </script>
 
 <script type="text/html" id="coinsEditTemplate">
-  <div class="row row-padded">
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: $parent.ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: platinum, hasFocus: $parent.editFirstModalElementHasFocus'/>
+  <form class="form-horizontal" data-bind="validate: $parent.wealthUpdateValidation">
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: $parent.ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="platinum"
+                data-bind='value: platinum, hasFocus: $parent.editFirstModalElementHasFocus'/>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: $parent.gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: gold'/>
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: $parent.gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="gold"
+                data-bind='value: gold'/>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: $parent.epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: electrum'>
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: $parent.epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="electrum"
+                data-bind='value: electrum'>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group ">
-        <span class="input-group-addon no-top-bottom-padding">
-          <img data-bind="attr: { src: $parent.spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: silver'>
+    <div class="form-group">
+      <label class="control-label col-sm-2">
+        <img data-bind="attr: { src: $parent.spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="silver"
+                data-bind='value: silver'>
       </div>
     </div>
-    <div class="col-sm-12 row-padded">
-      <div class="input-group">
-        <span class="input-group-addon no-top-bottom-padding">
+    <div class="form-group">
+      <label class="control-label col-sm-2">
           <img data-bind="attr: { src: $parent.cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/>
-        </span>
-        <input type="number" class="form-control" min="1"
-          data-bind='value: copper'>
+      </label>
+      <div class="col-sm-10">
+        <input type="number"
+                class="form-control"
+                name="copper"
+                data-bind='value: copper'>
       </div>
     </div>
-  </div>
+  </form>
 </script>
 
 <script type="text/html" id="itemEditTemplate">
+  <form class="form-horizontal" data-bind="validate: $parent.itemUpdateValidation">
     <div class="form-group">
       <label for="itemName"
              class="col-sm-2 control-label">Name
@@ -1024,6 +1086,7 @@
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
+               name="name"
                id="itemName"
                placeholder="Rations"
                data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -1036,8 +1099,7 @@
         <div class="input-group override-tight-inner">
           <input type="number"
                  class="form-control"
-                 min="0"
-                 max="5000"
+                 name="weight"
                  placeholder="Item Weight"
                  data-bind='textInput: weight'>
           <span class="input-group-addon">lbs.</span>
@@ -1050,8 +1112,7 @@
       <div class="col-sm-10">
         <input type="number"
                class="form-control"
-               min="0"
-               max="5000"
+               name="quantity"
                id="itemQuantity"
                placeholder="Item Quantity"
                data-bind='textInput: quantity'>
@@ -1062,12 +1123,13 @@
         <div class="col-sm-10">
           <div class="input-group override-tight-inner">
             <input type="number"
-                   min="0"
+                   name="cost"
                    class="form-control input-jquery-addon"
                    data-bind="value: cost" />
             <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                     placeholder="GP"
+                    name="currencyDenomination"
                     data-bind="textInput: currencyDenomination">
             </span>
           </div>
@@ -1079,6 +1141,7 @@
       <div class="col-sm-10">
         <textarea type="password"
                   class="form-control"
+                  name="description"
                   id="itemDescription"
                   placeholder="Rations consist of..."
                   rows="4"
@@ -1086,15 +1149,18 @@
         </textarea>
       </div>
     </div>
+  </form>
 </script>
 
 <script type="text/html" id="magicItemEditTemplate">
+  <form class="form-horizontal" data-bind="validate: $parent.magicItemUpdateValidation">
     <div class="form-group">
       <label for="magicItemName"
-             class="col-sm-2 control-label">Item</label>
+             class="col-sm-2 control-label">Name</label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
+               name="name"
                id="magicItemName"
                placeholder="Dagger of Venom"
                data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -1106,6 +1172,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Wand"
+                name="type"
                 data-bind="textInput: magicItemType">
         </div>
     </div>
@@ -1115,6 +1182,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Legendary"
+                name="rarity"
                 data-bind="textInput: rarity">
         </div>
     </div>
@@ -1126,8 +1194,7 @@
                  class="form-control"
                  id="magicItemMaxCharges"
                  placeholder="1"
-                 min="0"
-                 max="100"
+                 name="maxCharges"
                  data-bind='textInput: maxCharges'>
         </div>
     </div>
@@ -1140,8 +1207,7 @@
                    class="form-control"
                    id="magicItemCharges"
                    placeholder="1"
-                   min="0"
-                   max="100"
+                   name="usedCharges"
                    data-bind='textInput: usedCharges'>
           </div>
       </div>
@@ -1154,8 +1220,7 @@
                  class="form-control"
                  id="magicItemWeight"
                  placeholder="1"
-                 min="0"
-                 max="1000"
+                 name="weight"
                  data-bind='textInput: weight'>
         </div>
     </div>
@@ -1165,6 +1230,7 @@
         <div class="col-sm-10">
           <input type="checkbox"
                  class="form-control"
+                 name="requiresAttunement"
                  id="magicItemRequiresAttunement"
                  data-bind='checked: requiresAttunement'>
         </div>
@@ -1176,6 +1242,7 @@
           <div class="col-sm-10">
             <input type="checkbox"
                    class="form-control"
+                   name="attuned"
                    id="magicItemAttuned"
                    data-bind='checked: attuned'>
           </div>
@@ -1187,6 +1254,7 @@
         <div class="col-sm-10">
           <textarea type="password"
                     class="form-control"
+                    name="description"
                     id="magicItemDescription"
                     rows="4"
                     placeholder="Awesome stuff goes here"
@@ -1194,15 +1262,18 @@
           </textarea>
         </div>
     </div>
+  </form>
 </script>
 
 <script type="text/html" id="weaponEditTemplate">
+  <form class="form-horizontal" data-bind="validate: $parent.weaponUpdateValidation">
     <div class="form-group">
       <label for="weaponName"
              class="col-sm-2 control-label">Name</label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
+               name="name"
                id="weaponName"
                placeholder="Short Sword"
                data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
@@ -1214,6 +1285,7 @@
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
+                 name="damage"
                  id="weaponDmg"
                  placeholder="1D4"
                  data-bind='textInput: damage'>
@@ -1225,6 +1297,7 @@
       <div class="col-sm-10">
         <input type="number" class="form-control"
                id="weaponHit"
+               name="toHitModifier"
                placeholder="Place hit bonus here"
                data-bind='textInput: toHitModifier'>
       </div>
@@ -1235,6 +1308,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Ranged"
+                name="type"
                 data-bind="textInput: weaponType">
         </div>
     </div>
@@ -1244,6 +1318,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="One-Handed"
+               name="handedness"
               data-bind="textInput: handedness"></select>
         </div>
     </div>
@@ -1253,6 +1328,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Simple"
+                name="proficiency"
                 data-bind="textInput: proficiency">
         </div>
     </div>
@@ -1261,13 +1337,15 @@
              class="col-sm-2 control-label">Price</label>
       <div class="col-sm-10">
         <div class="input-group override-tight-inner">
-          <input type="number" min="0" class="form-control input-jquery-addon"
+          <input type="number" class="form-control input-jquery-addon"
                id="weaponPrice"
                placeholder="5"
+               name="price"
                data-bind='textInput: price'>
            <span class="input-group-addon input-group-addon-jquery">
             <input class="form-control"
                    placeholder="GP"
+                   name="currencyDenomination"
                    data-bind="textInput: currencyDenomination">
           </span>
         </div>
@@ -1277,8 +1355,9 @@
       <label for="weaponWeight"
              class="col-sm-2 control-label">Weight</label>
         <div class="col-sm-10">
-          <input type="number" min="0" class="form-control"
+          <input type="number" class="form-control"
                  id="weaponWeight"
+                 name="weight"
                  placeholder="6"
                  data-bind='textInput: weight'>
         </div>
@@ -1290,6 +1369,7 @@
           <input type="text"
                  class="form-control"
                  id="weaponRange"
+                 name="range"
                  placeholder="25/100"
                  data-bind='textInput: range'>
         </div>
@@ -1300,6 +1380,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Fire"
+               name="damageType"
                data-bind="textInput: damageType">
         </div>
         </div>
@@ -1309,6 +1390,7 @@
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Finesse"
+                name="property"
                 data-bind="textInput: property">
         </div>
     </div>
@@ -1317,9 +1399,10 @@
       <label for="weaponQuantity"
              class="col-sm-2 control-label">Quantity</label>
         <div class="col-sm-10">
-          <input type="number" min="0" class="form-control"
+          <input type="number" class="form-control"
                  id="weaponQuantity"
                  placeholder="1"
+                 name="quantity"
                  data-bind='textInput: quantity'>
         </div>
     </div>
@@ -1331,10 +1414,12 @@
           <textarea type="password"
                     class="form-control"
                     id="weaponDescription"
+                    name="description"
                     rows="4"
                     placeholder="A sword...that is short..."
                     data-bind='textInput: description'>
           </textarea>
         </div>
     </div>
+  </form>
 </script>
