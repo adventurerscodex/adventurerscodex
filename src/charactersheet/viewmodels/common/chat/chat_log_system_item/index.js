@@ -16,7 +16,7 @@ export function ChatLogSystemItem(params) {
     self.listItemClass = ko.observable('');
 
     self.load = function() {
-        params.onrender();
+        params.onrender(self.message);
     };
 
     // UI Methods
@@ -24,6 +24,11 @@ export function ChatLogSystemItem(params) {
     self.html = ko.pureComputed(function() {
         return self.message.html();
     });
+
+    self.dateLabel = ko.pureComputed(() => {
+        const date = new Date(self.timestamp());
+        return date.toLocaleString();
+    })
 }
 
 ko.components.register('chat-log-system-item', {

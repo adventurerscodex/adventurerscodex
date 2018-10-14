@@ -33,7 +33,7 @@ export class ChatCellViewModel {
 
     name = ko.pureComputed(function() {
         if (this.isParty) {
-            return 'The Party';
+            return 'Your Party';
         }
 
         return this.members().map((member, idx, _) => {

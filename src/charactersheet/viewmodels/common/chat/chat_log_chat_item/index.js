@@ -36,7 +36,7 @@ export function ChatLogChatItem(params) {
     self.listItemClass = ko.observable('');
 
     self.load = function() {
-        params.onrender();
+        params.onrender(self.message);
     };
 
     // UI Methods
@@ -61,6 +61,11 @@ export function ChatLogChatItem(params) {
         }
         return card.get('name') + ' (' + self.message.fromUsername() + ')';
     });
+
+    self.dateLabel = ko.pureComputed(() => {
+        const date = new Date(self.timestamp());
+        return date.toLocaleString();
+    })
 
     self.html = ko.pureComputed(function() {
         return linkifyStr(self.message.html(), Settings.linkifyOptions);

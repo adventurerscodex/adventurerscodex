@@ -33,7 +33,7 @@ export function ChatDetailViewModel({ chatCell }) {
     self._xmppIsConnected = ko.observable(false);
 
     self.id = ko.pureComputed(function() {
-        return self.chatRoom().jid();
+        return self._chatCell().chatRoom.jid();
     });
 
     self.isGroupChat = () => (
@@ -87,7 +87,7 @@ export function ChatDetailViewModel({ chatCell }) {
         ko.utils.arrayPushAll(self.log, log);
     };
 
-    self.onitemrender = function() {
+    self.onitemrender = function(message) {
         // Hack to scroll the element after it's been loaded and rendered.
         // The old plugin relied on DOM events which fire at the wrong time now.
         // Note: Copies code from ko bottomsUp plugin.
@@ -100,7 +100,6 @@ export function ChatDetailViewModel({ chatCell }) {
     };
 
     /* UI Methods */
-
 
     self.name = ko.pureComputed(function() {
         return self.members().map(function(member, idx, _) {
@@ -213,21 +212,18 @@ export function ChatDetailViewModel({ chatCell }) {
     self._getRecentItems = function() {
         const latestTime = self._getLatestTimeStamp();
         const key = CoreManager.activeCore().uuid();
-        const log = PersistenceService.findFiltered(Message, function(msg, _) {
-            return (
-                Strophe.getBareJidFromJid(msg.from) == self.id() &&
-                msg.dateReceived > latestTime &&
-                !msg.subject && !msg.invite
-            );
-        }).concat(PersistenceService.findFiltered(Presence, function(pres, _) {
-            return (
-                Strophe.getBareJidFromJid(pres.from) == self.id() &&
-                pres.dateReceived > latestTime
-            );
-        })).sort(function(a, b) {
-            return a.dateReceived() - b.dateReceived();
+        const log = PersistenceService.findFiltered(Message, (msg, _) => (
+            Strophe.getBareJidFromJid(msg.from) === self.id() &&
+            msg.dateReceived > latestTime &&
+            !msg.subject && !msg.invite
+        )).concat(PersistenceService.findFiltered(Presence, (pres, _) => (
+            Strophe.getBareJidFromJid(pres.from) === self.id() &&
+            pres.dateReceived > latestTime
+        )));
+
+        return log.sort((a, b) => {
+            return a.dateReceived() - b.dateReceived()
         });
-        return log;
     };
 
     self._handleMessageReceived = function (room, msg, delay, hideTitle) {

@@ -31,7 +31,7 @@ export function ChatLogReadAloudItem(params) {
     self.listItemClass = ko.observable('info-chat-highlight');
 
     self.load = function() {
-        params.onrender();
+        params.onrender(self.message);
     };
 
     // UI Methods

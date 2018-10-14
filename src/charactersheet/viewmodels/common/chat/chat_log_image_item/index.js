@@ -37,7 +37,7 @@ export function ChatLogImageItem(params) {
     };
 
     self.load = function() {
-        params.onrender();
+        params.onrender(self.message);
     };
 
     // UI Methods
