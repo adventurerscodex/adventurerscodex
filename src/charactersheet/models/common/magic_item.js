@@ -78,6 +78,7 @@ MagicItem.validationConstraints = {
             maxlength: 32
         },
         rarity: {
+            required: true,
             maxlength: 32
         },
         maxCharges: {

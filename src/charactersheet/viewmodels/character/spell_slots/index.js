@@ -4,11 +4,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import {
-    PersistenceService,
-    SortService
-} from 'charactersheet/services/common';
 import { Fixtures } from 'charactersheet/utilities';
+import { SortService } from 'charactersheet/services/common';
 import { SpellSlot } from 'charactersheet/models/character';
 import campingTent from 'images/camping-tent-blue.svg';
 import campingTentWhite from 'images/camping-tent.svg';
@@ -154,6 +151,10 @@ export function SpellSlotsViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
     self.modalFinishedAnimating = function() {
         self.modifierHasFocus(true);
     };
@@ -169,6 +170,10 @@ export function SpellSlotsViewModel() {
             Notifications.spellSlots.changed.dispatch();
         }
 
+        self.openModal(false);
+    };
+
+    self.closeEditModal = () => {
         self.openModal(false);
     };
 

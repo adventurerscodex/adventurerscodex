@@ -68,6 +68,10 @@ export function AbilityScoresViewModel() {
         // Deep copy of properties in object
         ...AbilityScore.validationConstraints
     };
+
+    self.closeModal = () => {
+        self.modalStatus(false);
+    };
 }
 
 ko.components.register('ability-scores', {

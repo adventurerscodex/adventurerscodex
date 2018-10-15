@@ -74,7 +74,7 @@
      tabindex="-1"
      role="dialog" data-bind="modal: {
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing,
+      onclose: closeAddModal,
       open: addModalOpen }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -91,7 +91,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
-            <label class="col-sm-2 col-padded control-label">Name</label>
+            <label class="col-sm-2 col-padded control-label">
+              Name<i class="required"></i>
+            </label>
             <div class="col-sm-10 col-padded">
               <input type="text"
                      class="form-control"
@@ -121,7 +123,7 @@
 
 <!-- ViewEdit Modal -->
 <div class="modal fade"
-     id="viewWeapon"
+     id="viewPlayerTextEdit"
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
@@ -173,7 +175,9 @@
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
-                <label class="col-sm-2 col-padded control-label">Name</label>
+                <label class="col-sm-2 col-padded control-label">
+                  Name<i class="required"></i>
+                </label>
                 <div class="col-sm-10 col-padded">
                   <input type="text"
                          class="form-control"

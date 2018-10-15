@@ -94,6 +94,15 @@ export function ProficienciesViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);

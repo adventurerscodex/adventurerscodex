@@ -65,6 +65,10 @@ export function SpellStatsViewModel() {
         self.modalStatus(false);
     };
 
+    self.closeEditModal = () => {
+        self.modalStatus(false);
+    };
+
     self.dataHasChanged = function() {
         Notifications.spellStats.changed.dispatch();
     };

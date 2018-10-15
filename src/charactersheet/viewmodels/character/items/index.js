@@ -62,7 +62,7 @@ export function ItemsViewModel() {
         self.items(response.objects);
     };
 
-    // Prepopulate methods
+    // Pre-populate methods
     self.setItemCurrencyDenomination = function(label, value) {
         self.blankItem().currencyDenomination(value);
     };
@@ -97,6 +97,10 @@ export function ItemsViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.toggleCloseModal = () => {
+        self.addModalOpen(false);
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -115,6 +119,12 @@ export function ItemsViewModel() {
         }
 
         self.modalOpen(false);
+        self.addModalOpen(false);
+    };
+
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
     };
 
     self.selectPreviewTab = function() {

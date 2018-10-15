@@ -3,11 +3,11 @@
     <table class="table table-responsive table-ac-bordered table-hover" id="proficiencyTable">
       <thead>
         <tr>
-          <th data-bind="click: function(){sortBy('name');}" class="col-md-3">
+          <th data-bind="click: function(){sortBy('name');}" class="col-md-6">
             Proficiency
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th data-bind="click: function(){sortBy('type');}" class="col-md-3">
+          <th data-bind="click: function(){sortBy('type');}" class="col-md-5">
             Type
             <span data-bind="css: sortArrow('type')"></span>
           </th>
@@ -57,7 +57,7 @@
      tabindex="-1"
      role="dialog" data-bind="modal: {
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing,
+      onclose: closeAddModal,
       open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -74,7 +74,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="name" class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
@@ -115,15 +117,14 @@
           <div class="modal-footer">
             <button type="submit"
                     class="btn btn-primary"
-                    id="proficiencyAddAddButton"
-                    data-bind='disable: !addFormIsValid()'>Add</button>
+                    id="proficiencyAddAddButton">Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
                   target='_blank'>
                   OGL</a><br/>
                   Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                </i><sm>
+                </i></sm>
             </p>
           </div>
         </form>
@@ -140,7 +141,7 @@
      data-bind="modal: {
       open: modalOpen,
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
+      onclose: closeEditModal
     }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -156,7 +157,8 @@
       <div class="modal-body">
         <!-- Begin Tabs -->
         <ul class="nav nav-tabs tabs">
-          <li role="presentation" id="proficiencyModalPreview" proficiencyModalPreview data-bind="click: selectPreviewTab, css: previewTabStatus">
+          <li role="presentation" id="proficiencyModalPreview"
+              data-bind="click: selectPreviewTab, css: previewTabStatus">
             <a href="#" aria-controls="proficiencyModalPreview" role="tab" data-toggle="tab">
                 <b>Preview</b>
             </a>
@@ -181,16 +183,13 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Name</label>
+                <label for="name" class="col-sm-2 control-label">
+                  Name<i class="required"></i>
+                </label>
                 <div class="col-sm-10">
                   <input type="text"
                         class="form-control"
@@ -225,8 +224,7 @@
               <div class="modal-footer">
                 <button type="submit"
                         class="btn btn-primary"
-                        id="proficiencyEditDoneButton"
-                        data-bind='disable: !$parent.addFormIsValid()'>Done</button>
+                        id="proficiencyEditDoneButton">Done</button>
               </div>
             </form>
           </div>

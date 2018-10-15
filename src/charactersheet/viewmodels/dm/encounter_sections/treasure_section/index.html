@@ -260,7 +260,9 @@
   <form class="form-horizontal" data-bind="validate: armorValidation">
     <div class="form-group ui-front">
       <label for="armorName"
-            class="col-sm-2 control-label">Armor</label>
+            class="col-sm-2 control-label">
+            Armor<i class="required"></i>
+          </label>
       <div class="col-sm-10">
         <input type="text"
               class="form-control"
@@ -273,12 +275,14 @@
     </div>
     <div class="form-group ui-front">
       <label for="armorType"
-            class="col-sm-2 control-label">Type</label>
+            class="col-sm-2 control-label">
+            Type<i class="required"></i>
+          </label>
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Light"
                 name="type"
-                data-bind="textInput: blankTreasure().type, autocomplete: { source: blankTreasure().armorTypeOptions,
+                data-bind="textInput: blankTreasure().armorType, autocomplete: { source: blankTreasure().armorTypeOptions,
                 onselect: setArmorType }">
         </div>
     </div>
@@ -329,7 +333,9 @@
     </div>
     <div class="form-group">
       <label for="armorClass"
-            class="col-sm-2 control-label">Armor Class</label>
+            class="col-sm-2 control-label">
+            Armor Class<i class="required"></i>
+          </label>
         <div class="col-sm-10">
           <input type="number"
                 class="form-control"
@@ -371,7 +377,7 @@
   <form class="form-horizontal" data-bind="validate: wealthValidation">
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+        <img data-bind="attr: { src: ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -383,6 +389,7 @@
     <div class="form-group">
       <label class="control-label col-sm-2">
         <img data-bind="attr: { src: gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
+        <i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -393,7 +400,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+        <img data-bind="attr: { src: epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -404,7 +411,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
+        <img data-bind="attr: { src: spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -415,7 +422,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-          <img data-bind="attr: { src: cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/>
+          <img data-bind="attr: { src: cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -431,7 +438,9 @@
   <form class="form-horizontal" data-bind="validate: itemValidation">
     <div class="form-group ui-front">
      <label for="itemName"
-       class="col-sm-2 control-label">Name</label>
+       class="col-sm-2 control-label">
+       Name<i class="required"></i>
+      </label>
      <div class="col-sm-10">
        <input type="text"
          class="form-control"
@@ -509,7 +518,9 @@
   <form class="form-horizontal" data-bind="validate: magicItemValidation">
     <div class="form-group ui-front">
       <label for="magicItemName"
-             class="col-sm-2 control-label">Item</label>
+             class="col-sm-2 control-label">
+             Name<i class="required"></i>
+            </label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
@@ -522,7 +533,9 @@
     </div>
     <div class="form-group ui-front">
       <label for="magicItemType"
-             class="col-sm-2 control-label">Type</label>
+             class="col-sm-2 control-label">
+             Type<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                name="type"
@@ -534,7 +547,9 @@
     </div>
     <div class="form-group ui-front">
       <label for="magicItemType"
-             class="col-sm-2 control-label">Rarity</label>
+             class="col-sm-2 control-label">
+             Rarity<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Legendary"
@@ -625,7 +640,9 @@
   <form class="form-horizontal" data-bind="validate: weaponValidation">
     <div class="form-group ui-front">
       <label for="weaponName"
-             class="col-sm-2 control-label">Name</label>
+             class="col-sm-2 control-label">
+             Name<i class="required"></i>
+            </label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
@@ -638,7 +655,9 @@
     </div>
     <div class="form-group">
       <label for="weaponDmg"
-             class="col-sm-2 control-label">Damage</label>
+             class="col-sm-2 control-label">
+             Damage<i class="required"></i>
+            </label>
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
@@ -661,7 +680,9 @@
     </div>
     <div class="form-group ui-front">
       <label for="weaponType"
-             class="col-sm-2 control-label">Type</label>
+             class="col-sm-2 control-label">
+             Type<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Ranged"
@@ -916,7 +937,9 @@
   <form class="form-horizontal" data-bind="validate: $parent.armorUpdateValidation">
     <div class="form-group">
       <label for="armorName"
-             class="col-sm-2 control-label">Name</label>
+             class="col-sm-2 control-label">
+             Name<i class="required"></i>
+            </label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
@@ -928,7 +951,9 @@
     </div>
     <div class="form-group">
       <label for="armorType"
-             class="col-sm-2 control-label">Type</label>
+             class="col-sm-2 control-label">
+             Type<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                placeholder="Light"
@@ -980,7 +1005,9 @@
     </div>
     <div class="form-group">
       <label for="armorClass"
-             class="col-sm-2 control-label">Armor Class</label>
+             class="col-sm-2 control-label">
+             Armor Class<i class="required"></i>
+            </label>
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
@@ -1021,7 +1048,7 @@
   <form class="form-horizontal" data-bind="validate: $parent.wealthUpdateValidation">
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: $parent.ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+        <img data-bind="attr: { src: $parent.ppCoin }" width="30px" title="Platinum Coins" alt="Platinum Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -1032,7 +1059,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: $parent.gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/>
+        <img data-bind="attr: { src: $parent.gpCoin }" width="30px" title="Gold Coins" alt="Gold Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -1043,7 +1070,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: $parent.epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+        <img data-bind="attr: { src: $parent.epCoin }" width="30px" title="Electrum Coins" alt="Electrum Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -1054,7 +1081,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-        <img data-bind="attr: { src: $parent.spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/>
+        <img data-bind="attr: { src: $parent.spCoin }" width="30px" title="Silver Coins" alt="Silver Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -1065,7 +1092,7 @@
     </div>
     <div class="form-group">
       <label class="control-label col-sm-2">
-          <img data-bind="attr: { src: $parent.cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/>
+          <img data-bind="attr: { src: $parent.cpCoin }" width="30px" title="Copper Coins" alt="Copper Coins"/><i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="number"
@@ -1081,7 +1108,8 @@
   <form class="form-horizontal" data-bind="validate: $parent.itemUpdateValidation">
     <div class="form-group">
       <label for="itemName"
-             class="col-sm-2 control-label">Name
+             class="col-sm-2 control-label">
+             Name<i class="required"></i>
       </label>
       <div class="col-sm-10">
         <input type="text"
@@ -1156,7 +1184,9 @@
   <form class="form-horizontal" data-bind="validate: $parent.magicItemUpdateValidation">
     <div class="form-group">
       <label for="magicItemName"
-             class="col-sm-2 control-label">Name</label>
+             class="col-sm-2 control-label">
+             Name<i class="required"></i>
+            </label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
@@ -1168,7 +1198,9 @@
     </div>
     <div class="form-group">
       <label for="magicItemType"
-             class="col-sm-2 control-label">Type</label>
+             class="col-sm-2 control-label">
+             Type<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Wand"
@@ -1178,7 +1210,9 @@
     </div>
     <div class="form-group">
       <label for="magicItemType"
-             class="col-sm-2 control-label">Rarity</label>
+             class="col-sm-2 control-label">
+             Rarity<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Legendary"
@@ -1269,7 +1303,9 @@
   <form class="form-horizontal" data-bind="validate: $parent.weaponUpdateValidation">
     <div class="form-group">
       <label for="weaponName"
-             class="col-sm-2 control-label">Name</label>
+             class="col-sm-2 control-label">
+             Name<i class="required"></i>
+            </label>
       <div class="col-sm-10">
         <input type="text"
                class="form-control"
@@ -1281,7 +1317,9 @@
     </div>
     <div class="form-group">
       <label for="weaponDmg"
-             class="col-sm-2 control-label">Damage</label>
+             class="col-sm-2 control-label">
+             Damage<i class="required"></i>
+            </label>
         <div class="col-sm-10">
           <input type="text"
                  class="form-control"
@@ -1304,7 +1342,9 @@
     </div>
     <div class="form-group">
       <label for="weaponType"
-             class="col-sm-2 control-label">Type</label>
+             class="col-sm-2 control-label">
+             Type<i class="required"></i>
+            </label>
         <div class="col-sm-10">
         <input class="form-control"
                 placeholder="Ranged"

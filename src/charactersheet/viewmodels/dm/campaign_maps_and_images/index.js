@@ -82,6 +82,10 @@ export function CampaignMapsAndImagesViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
     self.closeModal = () => {
         self.openModal(false);
         self.selectPreviewTab();

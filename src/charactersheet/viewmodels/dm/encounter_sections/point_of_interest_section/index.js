@@ -140,6 +140,10 @@ export function PointOfInterestSectionViewModel(params) {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {

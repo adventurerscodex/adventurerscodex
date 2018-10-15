@@ -118,11 +118,16 @@ export function FeatsViewModel() {
         self.currentEditItem(new Feat());
         self.currentEditTracked(new Tracked());
         self.modalOpen(false);
+        self.addModalOpen(false);
         Notifications.feat.changed.dispatch();
     };
 
     self.toggleAddModal = () => {
         self.addModalOpen(!self.addModalOpen());
+    };
+
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
     };
 
     self.selectPreviewTab = function() {
@@ -185,6 +190,11 @@ export function FeatsViewModel() {
             self.currentEditTracked(feat.tracked());
         }
         self.modalOpen(true);
+    };
+
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
     };
 
     self.trackedPopoverText = function() {

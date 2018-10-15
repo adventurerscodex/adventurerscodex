@@ -361,15 +361,18 @@ export function StatsViewModel() {
         rules: {
             maxHitPoints: {
                 min: 0,
-                required: true
+                required: true,
+                number: true
             },
             tempHitPoints: {
                 min: 0,
-                required: true
+                required: true,
+                number: true
             },
             damage: {
                 min: 0,
-                required: true
+                required: true,
+                number: true
             },
             type: {
                 required: true,

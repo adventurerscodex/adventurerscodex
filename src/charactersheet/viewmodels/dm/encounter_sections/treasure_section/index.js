@@ -385,6 +385,17 @@ export function TreasureSectionViewModel(params) {
 
         self.blankTreasure().importValues(treasure);
         self.shouldShowDisclaimer(true);
+
+        // This helps set the "item" type for the specific treasure.
+        // This happens because each treasure has a `type` to determine what kind of treasure it is.
+        // This conflicts with those treasures that themselves have a `type`.
+        if (self.itemType() == self.ARMOR) {
+            self.blankTreasure().armorType(self.blankTreasure().type());
+        } else if (self.itemType() == self.WEAPON) {
+            self.blankTreasure().weaponType(self.blankTreasure().type());
+        } else if (self.itemType() == self.MAGIC_ITEM) {
+            self.blankTreasure().magicItemType(self.blankTreasure().type());
+        }
     };
 
     self.setArmorType = function(label, value) {
