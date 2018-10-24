@@ -19,7 +19,7 @@
             data-bind="click: function(){sortBy('cost');}">
             Cost
             <span data-bind="css: sortArrow('cost')"></span></th>
-          <th class="hidden-sm hidden-xs" class="col-md-5">
+          <th class="hidden-sm hidden-xs col-md-5">
             Description</th>
           <th class="col-md-1 col-xs-2 text-right">
            <a data-bind="click: toggleAddModal"
@@ -73,7 +73,8 @@
 <div class="modal fade"
   id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
   data-bind="modal: { onopen: modalFinishedOpening,
-    open: addModalOpen }">
+    open: addModalOpen,
+    onclose: toggleCloseModal }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -184,7 +185,7 @@
                  target='_blank'>
                  OGL</a><br/>
                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-               </i><sm>
+               </i></sm>
            </p>
          </div>
         </form>
@@ -199,7 +200,7 @@
      data-bind="modal: {
        open: modalOpen,
        onopen: modalFinishedOpening,
-       onclose: modalFinishedClosing
+       onclose: closeEditModal
       }"
      id="viewItem"
      tabindex="-1"

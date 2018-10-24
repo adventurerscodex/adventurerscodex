@@ -47,29 +47,22 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedWeapons -->
         <tr class="clickable">
-          <td data-bind="click: $parent.editWeapon"
-              href="#">
+          <td data-bind="click: $parent.editWeapon">
               <span data-bind="text: name">
               </span>&nbsp;
               <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }">
               </span>
           </td>
-          <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"
-              href="#"></td>
-          <td data-bind="text: damage, click: $parent.editWeapon"
-              href="#"></td>
+          <td data-bind="text: hitBonusLabel, click: $parent.editWeapon"></td>
+          <td data-bind="text: damage, click: $parent.editWeapon"></td>
           <td class="hidden-sm hidden-xs hidden-md"
-              data-bind="text: damageType, click: $parent.editWeapon"
-              href="#"></td>
+              data-bind="text: damageType, click: $parent.editWeapon"></td>
           <td class="hidden-sm hidden-xs"
-              data-bind="text: weaponRangeLabel, click: $parent.editWeapon"
-              href="#"></td>
+              data-bind="text: weaponRangeLabel, click: $parent.editWeapon"></td>
           <td class="hidden-sm hidden-xs hidden-md"
-              data-bind="text: property, click: $parent.editWeapon"
-              href="#"></td>
+              data-bind="text: property, click: $parent.editWeapon"></td>
           <td class="hidden-sm hidden-xs"
-              data-bind="text: quantity, click: $parent.editWeapon"
-              href="#"></td>
+              data-bind="text: quantity, click: $parent.editWeapon"></td>
           <td>
             <a data-bind="click: $parent.removeWeapon" href="#">
               <i class="fa fa-trash-o fa-color-hover">
@@ -102,7 +95,8 @@
          tabindex="-1"
          role="dialog"
          data-bind="modal: { onopen: modalFinishedOpening,
-          open: addModalOpen }"
+          open: addModalOpen,
+          onclose: closeAddModal }"
          aria-labelledby="addWeaponLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -323,7 +317,7 @@
                       target='_blank'>
                       OGL</a><br/>
                       Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
-                    </i><sm>
+                    </i></sm>
                 </p>
               </div>
             </form>
@@ -341,7 +335,7 @@
          data-bind="modal: {
            open: modalOpen,
            onopen: modalFinishedOpening,
-           onclose: modalFinishedClosing
+           onclose: closeEditModal
         }">
       <div class="modal-dialog" role="document">
         <div class="modal-content">

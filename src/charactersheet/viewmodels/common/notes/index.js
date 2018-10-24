@@ -12,6 +12,7 @@ export function NotesViewModel() {
 
     self.notes = ko.observableArray();
     self.selectedNote = ko.observable();
+    self.selectedNoteId = ko.observable();
 
     self.load = async () => {
         await self.reloadData();
@@ -69,7 +70,7 @@ export function NotesViewModel() {
 
     self.selectNote = function(note) {
         self.selectedNote(note);
-        self.selectedNote().contents.subscribe(self.updateSelectedNote);
+        self.selectedNoteId(note.uuid());
         self.selectedNote().updateHeadline();
     };
 
@@ -83,7 +84,7 @@ export function NotesViewModel() {
     };
 
     self.isActiveCSS = function(note) {
-        return self.selectedNote() === note ? 'active' : '';
+        return self.selectedNoteId() === note.uuid() ? 'active' : '';
     };
 }
 

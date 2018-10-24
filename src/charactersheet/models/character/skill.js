@@ -117,9 +117,8 @@ Skill.validationConstraints = {
             maxlength: 128
         },
         modifier: {
-            required: true,
             min: 0,
-            digits: true
+            number: true
         },
         abilityScore: {
             required: true

@@ -1,6 +1,5 @@
 import {
     ChatServiceManager,
-    PersistenceService,
     SortService
 } from 'charactersheet/services';
 import {
@@ -40,6 +39,8 @@ export function PlayerTextSectionViewModel(params) {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
 
     // Push to Player
     self.selectedItemToPush = ko.observable();
@@ -101,6 +102,7 @@ export function PlayerTextSectionViewModel(params) {
         playerText.encounterUuid(self.encounterId());
         const playerTextResponse = await playerText.ps.create();
         self.playerTexts.push(playerTextResponse.object);
+        self.toggleAddModal();
         self.blankPlayerText(new PlayerText());
     };
 
@@ -118,6 +120,38 @@ export function PlayerTextSectionViewModel(params) {
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+    };
+
+    self.closeAddModal = function() {
+        self.addModalOpen(false);
+    };
+
+    self.validation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addPlayerText();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...PlayerText.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...PlayerText.validationConstraints
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
     };
 
     /* Push to Player Methods */
@@ -162,6 +196,11 @@ export function PlayerTextSectionViewModel(params) {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    self.closeModal = () => {
+        self.openModal(false);
+        self.selectPreviewTab();
     };
 
     /* Private Methods */

@@ -133,6 +133,10 @@ export function SavingThrowsViewModel() {
         self.modalOpen(true);
     };
 
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+    };
+
     self.clear = function() {
         self.savingThrows([]);
     };

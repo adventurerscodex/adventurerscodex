@@ -74,7 +74,7 @@ export function WeaponsViewModel() {
     /* UI Methods */
 
     /**
-     * Filters and sorts the weaponss for presentation in a table.
+     * Filters and sorts the weapons for presentation in a table.
      */
     self.filteredAndSortedWeapons = ko.computed(function() {
         return SortService.sortAndFilter(self.weapons(), self.sort(), null);
@@ -158,6 +158,11 @@ export function WeaponsViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -204,8 +209,12 @@ export function WeaponsViewModel() {
         self.weapons.push(newWeapon.object);
         self.updateWeaponCalculations(newWeapon.object.uuid());
         self.blankWeapon(new Weapon());
-        self.toggleAddModal();
+        self.addModalOpen(false);
         Notifications.weapon.changed.dispatch();
+    };
+
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
     };
 
     self.removeWeapon = async (weapon) => {

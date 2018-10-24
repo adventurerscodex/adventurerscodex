@@ -1,17 +1,22 @@
 import {
-    CoreManager,
-    DataRepository,
-    Fixtures,
-    Notifications
-} from 'charactersheet/utilities';
-import {
+    Armor,
     EncounterArmor,
     EncounterCoins,
     EncounterItem,
     EncounterMagicItem,
     EncounterWeapon,
-    Treasure
+    Item,
+    MagicItem,
+    Treasure,
+    Wealth,
+    Weapon
 } from 'charactersheet/models';
+import {
+    CoreManager,
+    DataRepository,
+    Fixtures,
+    Notifications
+} from 'charactersheet/utilities';
 import { SortService } from 'charactersheet/services';
 
 import breastplate from 'images/misc_icons/breastplate.svg';
@@ -65,6 +70,9 @@ export function TreasureSectionViewModel(params) {
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
+    self.addFormIsValid = ko.observable(false);
+    self.addModalOpen = ko.observable(false);
+    self.validationConstraints = {};
 
     self.armorShow = ko.observable(false);
     self.armorFirstElementFocus = ko.observable(false);
@@ -77,6 +85,7 @@ export function TreasureSectionViewModel(params) {
     self.weaponShow = ko.observable(false);
     self.weaponFirstElementFocus = ko.observable(false);
     self.shouldShowDisclaimer = ko.observable(false);
+
     self.MAGIC_ITEM = 'magic_item';
     self.ITEM = 'item';
     self.WEAPON = 'weapon';
@@ -124,16 +133,154 @@ export function TreasureSectionViewModel(params) {
         self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
     };
 
+    self.armorValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addTreasure();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Armor.validationConstraints
+    };
+
+    self.armorUpdateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Armor.validationConstraints
+    };
+
+    self.wealthValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addTreasure();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Wealth.validationConstraints
+    };
+
+    self.wealthUpdateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Wealth.validationConstraints
+    };
+
+    self.itemValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addTreasure();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Item.validationConstraints
+    };
+
+    self.itemUpdateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Item.validationConstraints
+    };
+
+    self.magicItemValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addTreasure();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...MagicItem.validationConstraints
+    };
+
+    self.magicItemUpdateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...MagicItem.validationConstraints
+    };
+
+    self.weaponValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.addTreasure();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Weapon.validationConstraints
+    };
+
+    self.weaponUpdateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            self.addFormIsValid($element.valid());
+        },
+        // Deep copy of properties in object
+        ...Weapon.validationConstraints
+    };
+
+    self.updateValidation = {
+        submitHandler: (form, event) => {
+            event.preventDefault();
+            self.modalFinishedClosing();
+        }
+    };
+
+    self.toggleAddModal = () => {
+        self.addModalOpen(!self.addModalOpen());
+    };
+
+    self.showAddButton = ko.pureComputed(() => {
+        return self.itemType() == null ? false : true;
+    });
+
     self.addTreasure = async function() {
-        var treasure = self.convertToTreasureEntity(self.blankTreasure());
-        treasure.coreUuid(CoreManager.activeCore().uuid());
-        treasure.encounterUuid(self.encounterId());
-        treasure.type(self.itemType());
-        const treasureResponse = await treasure.ps.create();
-        self.treasure.push(self.mapTreasureToModel(treasureResponse.object));
-        self.blankTreasure(null);
-        self.clearTreasureTemplates();
-        self.itemType('');
+        if (self.addFormIsValid()) {
+            var treasure = self.convertToTreasureEntity(self.blankTreasure());
+            treasure.coreUuid(CoreManager.activeCore().uuid());
+            treasure.encounterUuid(self.encounterId());
+            treasure.type(self.itemType());
+            const treasureResponse = await treasure.ps.create();
+            self.treasure.push(self.mapTreasureToModel(treasureResponse.object));
+            self.toggleAddModal();
+            self.blankTreasure(null);
+            self.clearTreasureTemplates();
+            self.itemType(null);
+        }
     };
 
     self.setTreasure = function() {
@@ -149,18 +296,22 @@ export function TreasureSectionViewModel(params) {
             self.blankTreasure(new EncounterCoins());
             self.coinsShow(true);
             self.coinsFirstElementFocus(true);
+            self.validationConstraints = { ...Wealth.validationConstraints };
         } else if (self.itemType() == self.ITEM) {
             self.blankTreasure(new EncounterItem());
             self.itemShow(true);
             self.itemFirstElementFocus(true);
+            self.validationConstraints = { ...Item.validationConstraints };
         } else if (self.itemType() == self.MAGIC_ITEM) {
             self.blankTreasure(new EncounterMagicItem());
             self.magicItemShow(true);
             self.magicItemFirstElementFocus(true);
+            self.validationConstraints = { ...MagicItem.validationConstraints };
         } else if (self.itemType() == self.WEAPON) {
             self.blankTreasure(new EncounterWeapon());
             self.weaponShow(true);
             self.weaponFirstElementFocus(true);
+            self.validationConstraints = { ...Weapon.validationConstraints };
         }
     };
 
@@ -234,6 +385,17 @@ export function TreasureSectionViewModel(params) {
 
         self.blankTreasure().importValues(treasure);
         self.shouldShowDisclaimer(true);
+
+        // This helps set the "item" type for the specific treasure.
+        // This happens because each treasure has a `type` to determine what kind of treasure it is.
+        // This conflicts with those treasures that themselves have a `type`.
+        if (self.itemType() == self.ARMOR) {
+            self.blankTreasure().armorType(self.blankTreasure().type());
+        } else if (self.itemType() == self.WEAPON) {
+            self.blankTreasure().weaponType(self.blankTreasure().type());
+        } else if (self.itemType() == self.MAGIC_ITEM) {
+            self.blankTreasure().magicItemType(self.blankTreasure().type());
+        }
     };
 
     self.setArmorType = function(label, value) {
@@ -241,15 +403,15 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.setArmorCurrencyDenomination = function(label, value) {
-        self.blankTreasure().armorCurrencyDenomination(value);
+        self.blankTreasure().currencyDenomination(value);
     };
 
     self.setArmorStealth = function(label, value) {
-        self.blankTreasure().armorStealth(value);
+        self.blankTreasure().stealth(value);
     };
 
     self.setItemCurrencyDenomination = function(label, value) {
-        self.blankTreasure().itemCurrencyDenomination(value);
+        self.blankTreasure().currencyDenomination(value);
     };
 
     self.setMagicItemType = function(label, value) {
@@ -257,7 +419,7 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.setMagicItemRarity = function(label, value) {
-        self.blankTreasure().magicItemRarity(value);
+        self.blankTreasure().rarity(value);
     };
 
     self.setWeaponType = function(label, value) {
@@ -265,23 +427,23 @@ export function TreasureSectionViewModel(params) {
     };
 
     self.setWeaponHandedness = function(label, value) {
-        self.blankTreasure().weaponHandedness(value);
+        self.blankTreasure().handedness(value);
     };
 
     self.setWeaponProficiency = function(label, value) {
-        self.blankTreasure().weaponProficiency(value);
+        self.blankTreasure().proficiency(value);
     };
 
     self.setWeaponCurrencyDenomination = function(label, value) {
-        self.blankTreasure().weaponCurrencyDenomination(value);
+        self.blankTreasure().currencyDenomination(value);
     };
 
     self.setWeaponDamageType = function(label, value) {
-        self.blankTreasure().weaponDamageType(value);
+        self.blankTreasure().damageType(value);
     };
 
     self.setWeaponProperty = function(label, value) {
-        self.blankTreasure().weaponProperty(value);
+        self.blankTreasure().property(value);
     };
 
     /* Modal Methods */
@@ -290,9 +452,14 @@ export function TreasureSectionViewModel(params) {
         self.openModal(!self.openModal());
     };
 
+    self.closeModal = () => {
+        self.openModal(false);
+    };
+
     self.addModalFinishedClosing = function() {
         self.blankTreasure(null);
         self.shouldShowDisclaimer(false);
+        self.addModalOpen(false);
     };
 
     self.modalFinishedOpening = function() {

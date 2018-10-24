@@ -48,7 +48,7 @@
    data-bind="modal: {
       open: modalStatus,
       onopen: modalFinishedAnimating,
-      onclose: modalFinishedClosing
+      onclose: closeEditModal
     }, with: editItem">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -141,8 +141,7 @@
               <div class="col-xs-offset-7 col-xs-5">
                 <button type="submit"
                         class="btn btn-primary"
-                        id="SpellStatsEditDoneButton"
-                        data-dismiss="modal">Done</button>
+                        id="SpellStatsEditDoneButton">Done</button>
               </div>
             </div>
           </div>

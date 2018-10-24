@@ -23,3 +23,12 @@ export class Core extends KOModel {
         return `${this.playerName()}: a ${this.type.description()}.`;
     });
 }
+
+Core.validationConstraints = {
+    rules: {
+        playerName: {
+            required: true,
+            maxlength: 256
+        }
+    }
+};

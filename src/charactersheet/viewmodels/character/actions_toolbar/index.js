@@ -28,11 +28,13 @@ export function ActionsToolbarViewModel(params) {
     self.shortRestButton = function() {
         Notifications.events.shortRest.dispatch();
         Notifications.userNotification.infoNotification.dispatch(Fixtures.resting.shortRestMessage, 'Short Rest');
+        self.toggleWellOpen();
     };
 
     self.longRestButton = function() {
         Notifications.events.longRest.dispatch();
         Notifications.userNotification.infoNotification.dispatch(Fixtures.resting.longRestMessage, 'Long Rest');
+        self.toggleWellOpen();
     };
 
     self.arrowIconClass = ko.pureComputed(function() {

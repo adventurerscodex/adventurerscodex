@@ -140,6 +140,15 @@ export function MagicItemsViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.toggleCloseModal = () => {
+        self.addModalOpen(false);
+    };
+
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
