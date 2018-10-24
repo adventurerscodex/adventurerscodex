@@ -90,7 +90,7 @@ export function TrackerViewModel() {
         }
 
         self.trackables(trackables);
-        self.trackables().forEach(function(tracked, idx, _) {
+        self.trackables().forEach(function(tracked) {
             tracked.tracked().max.subscribe(self.dataHasChanged, tracked);
             tracked.tracked().used.subscribe(self.dataHasChanged, tracked);
         });

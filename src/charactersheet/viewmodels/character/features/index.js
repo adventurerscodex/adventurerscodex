@@ -117,6 +117,11 @@ export function FeaturesViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -138,6 +143,7 @@ export function FeaturesViewModel() {
         self.currentEditItem(new Feature());
         self.currentEditTracked(new Tracked());
         self.modalOpen(false);
+        self.addModalOpen(false);
         Notifications.feature.changed.dispatch();
     };
 

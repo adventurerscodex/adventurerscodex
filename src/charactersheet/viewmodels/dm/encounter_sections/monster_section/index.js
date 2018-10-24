@@ -162,6 +162,10 @@ export function MonsterSectionViewModel(params) {
         self.openModal(!self.openModal());
     };
 
+    self.closeAddModal = () => {
+        self.openModal(false);
+    };
+
     self.closeModal = () => {
         self.openEditModal(false);
         self.selectPreviewTab();

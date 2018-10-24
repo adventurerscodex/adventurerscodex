@@ -67,7 +67,7 @@
      tabindex="-1"
      role="dialog" data-bind="modal: {
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing,
+      onclose: closeAddModal,
       open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -84,7 +84,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Name</label>
+            <label class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
@@ -181,7 +183,9 @@
               <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="npcName"
-                       class="col-sm-2 control-label">Name</label>
+                       class="col-sm-2 control-label">
+                       Name<i class="required"></i>
+                      </label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"

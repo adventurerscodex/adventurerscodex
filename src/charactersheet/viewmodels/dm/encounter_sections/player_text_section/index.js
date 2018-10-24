@@ -1,6 +1,5 @@
 import {
     ChatServiceManager,
-    PersistenceService,
     SortService
 } from 'charactersheet/services';
 import {
@@ -121,6 +120,10 @@ export function PlayerTextSectionViewModel(params) {
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+    };
+
+    self.closeAddModal = function() {
+        self.addModalOpen(false);
     };
 
     self.validation = {

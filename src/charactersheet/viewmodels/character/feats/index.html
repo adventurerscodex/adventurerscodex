@@ -10,7 +10,7 @@
           <th class="col-md-1">
             <a data-toggle="modal"
               data-bind="click: toggleAddModal" id="featAddIcon">
-              <i class="fa fa-plus fa-color"></i>
+              <i class="fa fa-plus fa-color clickable"></i>
             </a>
           </th>
         </tr>
@@ -47,7 +47,7 @@
      tabindex="-1"
      role="dialog" data-bind="modal: {
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing,
+      onclose: closeAddModal,
       open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -64,7 +64,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="name" class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
@@ -124,14 +126,14 @@
                         data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
                     <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                             data-bind="checked: blankTracked().resetsOn"/>
-                      <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
+                      <img class="action-bar-icon" data-bind="attr: { src: meditation }">
                       &nbsp;&nbsp;&nbsp;Short Rest
                   </label>
                   <label class="btn btn-default" id="featAddLongRestInput"
                   data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
                     <input type="radio" class="hide-block" name="blankresetsOnLong"
                             value="long" data-bind="checked: blankTracked().resetsOn"/>
-                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
+                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }">
                       &nbsp;&nbsp;&nbsp;Long Rest
                   </label>
                 </div>
@@ -141,15 +143,15 @@
           <div class="modal-footer">
             <button type="submit"
                     id="featAddAddButton"
-                    class="btn btn-primary"
-                    data-bind='disable: !addFormIsValid()'>Add</button>
+                    class="btn btn-primary">
+                    Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
                   target='_blank'>
                   OGL</a><br/>
                   Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
-                </i><sm>
+                </i></sm>
             </p>
           </div>
         </form>
@@ -160,13 +162,13 @@
 
 <!-- ViewEdit Modal -->
 <div class="modal fade"
-     id="viewWeapon"
+     id="viewFeats"
      tabindex="-1"
      role="dialog"
      data-bind="modal: {
       open: modalOpen,
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
+      onclose: closeEditModal
     }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -223,16 +225,13 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Name</label>
+                <label for="name" class="col-sm-2 control-label">
+                  Name<i class="required"></i>
+                </label>
                 <div class="col-sm-10">
                   <input type="text"
                         id="featEditNameInput"
@@ -270,7 +269,6 @@
                     <input type="number"
                       class="form-control"
                       id="featEditMaxInput"
-                      min="1"
                       name="max"
                       data-bind='textInput: $parent.currentEditTracked().max'>
                   </div>
@@ -285,14 +283,14 @@
                             data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                                 data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                          <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }"></img>
+                          <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }">
                           &nbsp;&nbsp;&nbsp;Short Rest
                       </label>
                       <label class="btn btn-default" id="featEditLongRestInput"
                       data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnLong"
                                 value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                        <img class="action-bar-icon" data-bind="attr: { src: $parent.campingTent }"></img>
+                        <img class="action-bar-icon" data-bind="attr: { src: $parent.campingTent }">
                           &nbsp;&nbsp;&nbsp;Long Rest
                       </label>
                     </div>
@@ -302,8 +300,7 @@
               <div class="modal-footer">
                 <button type="submit"
                         id="featEditDoneButton"
-                        class="btn btn-primary"
-                        data-bind='disable: !$parent.addFormIsValid()'>Done</button>
+                        class="btn btn-primary">Done</button>
               </div>
             </form>
           </div>

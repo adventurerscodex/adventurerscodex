@@ -105,6 +105,10 @@ export function MapsAndImagesSectionViewModel(params) {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
     /* UI Methods */
 
     /**
