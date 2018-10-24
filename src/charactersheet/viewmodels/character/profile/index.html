@@ -105,6 +105,16 @@
                         data-bind='textInput: skinColor'>
               </div>
             </div>
+            <div class="row">
+              <div class="col-md-6 col-padded">
+                <label>Height</label>
+                <input type="text"
+                        id="appearanceHeightInput"
+                        class="form-control"
+                        name="height"
+                        data-bind='textInput: height'>
+              </div>
+            </div>
           </div>
         </form>
       </div>
@@ -185,6 +195,14 @@
           <label>Skin Color</label>
           <div data-bind="text: $parents[1].skinColorLabel,
           css: { 'text-muted-italics': skinColor() == undefined || !skinColor().trim() }">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-padded">
+          <label>Height</label>
+          <div data-bind="text: $parents[1].heightLabel,
+          css: { 'text-muted-italics': height() == undefined || !height().trim() }">
           </div>
         </div>
       </div>
