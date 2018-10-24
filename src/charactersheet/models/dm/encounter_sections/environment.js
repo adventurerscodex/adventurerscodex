@@ -12,7 +12,7 @@ export class Environment extends KOModel {
 
     coreUuid = ko.observable();
     uuid = ko.observable();
-    sourceUrl = ko.observable('');
+    imageUrl = ko.observable('');
     weather = ko.observable('');
     terrain = ko.observable('');
     description = ko.observable('');
@@ -37,3 +37,18 @@ export class Environment extends KOModel {
         return 'New environment';
     };
 }
+
+Environment.validationConstraints = {
+    rules: {
+        weather: {
+            maxlength: 64
+        },
+        terrain: {
+            maxlength: 64
+        },
+        imageUrl: {
+            maxlength: 256,
+            url: true
+        }
+    }
+};

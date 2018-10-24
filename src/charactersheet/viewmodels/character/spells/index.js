@@ -140,6 +140,10 @@ export function SpellbookViewModel() {
         self.addModalOpen(!self.addModalOpen());
     };
 
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
     self.modalFinishedOpening = function() {
         self.shouldShowDisclaimer(false);
         self.firstModalElementHasFocus(true);
@@ -168,6 +172,11 @@ export function SpellbookViewModel() {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
     };
 
     self.determineSpellSchoolIcon = ko.computed(function() {

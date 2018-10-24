@@ -15,10 +15,10 @@
             <i data-bind="css: sortArrow('max')"></i></th>
           <th class="col-md-2 hidden-sm hidden-xs" data-bind="click: function(){sortBy('resetsOn');}">Resets on
             <i data-bind="css: sortArrow('resetsOn')"></i></th>
-          <th class="col-md-3 col-sm-4 col-xs-8 text-center" data-bind="click: function(){sortBy('used');}">Used
+          <th class="col-md-3 col-sm-4 col-xs-7 text-center" data-bind="click: function(){sortBy('used');}">Used
             <i data-bind="css: sortArrow('used')"></i></th>
-          <th class="col-md-1 hidden-sm hidden-xs">Reset</th>
-          <th class="col-xs-1">
+          <th class="col-xs-1 text-right">Reset</th>
+          <th class="col-xs-1 text-right">
             <a id="spellSlotsAddIcon"
               data-bind="click: toggleAddModal"
               href="#">
@@ -48,20 +48,19 @@
               href="#">
             <!-- ko if: $parent.needsResetsOnImg($data) -->
             <img class="action-bar-icon" data-bind="attr: { src: $parent.resetsOnImgSource($data) }">
-            </img>
             <!-- /ko -->
           </td>
-          <td class="col-md-3 col-sm-4 col-xs-8">
+          <td class="col-md-3 col-sm-4 col-xs-7">
             <plus-minus params="value: used,
               max: max">
             </plus-minus>
           </td>
-          <td class="col-content-vertical col-md-1 hidden-sm hidden-xs text-center"> <!--Refresh -->
+          <td class="col-content-vertical col-xs-1 text-right"> <!--Refresh -->
             <a data-bind="click: $parent.resetSlot" href="#">
               <i class="fa fa-refresh fa-color"></i>
             </a>
           </td>
-          <td class="col-content-vertical col-xs-1">
+          <td class="col-content-vertical col-xs-1 text-right">
             <a data-bind="click: $parent.removeSlot" href="#">
               <i class="fa fa-trash-o fa-color-hover"></i>
             </a>
@@ -88,7 +87,8 @@
   aria-labelledby="addSpellSlotLabel"
   data-bind="modal: {
     open: addModalOpen,
-    onopen: modalFinishedAnimating}">
+    onopen: modalFinishedAnimating,
+    onclose: closeAddModal}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -105,7 +105,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Level</label>
+            <label for="name" class="col-sm-2 control-label">
+              Level<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
@@ -115,7 +117,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="bonus" class="col-sm-2 control-label">Max</label>
+            <label for="bonus" class="col-sm-2 control-label">
+              Max<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
@@ -134,7 +138,7 @@
                           class="hide-block"
                           name="blankresetsOnShort" value="short"
                           data-bind="checked: blankSlot().resetsOn"/>
-                    <img class="action-bar-icon" data-bind="attr: { src: meditationWhite }"></img>
+                    <img class="action-bar-icon" data-bind="attr: { src: meditationWhite }">
                     &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
                 <label class="btn btn-default" id="spellSlotsAddModalLongRestButton"
@@ -144,7 +148,7 @@
                           name="blankresetsOnLong"
                           value="long"
                           data-bind="checked: blankSlot().resetsOn"/>
-                   <img class="action-bar-icon" data-bind="attr: { src: campingTentWhite }"></img>
+                   <img class="action-bar-icon" data-bind="attr: { src: campingTentWhite }">
                     &nbsp;&nbsp;&nbsp;Long Rest
                 </label>
               </div>
@@ -158,8 +162,7 @@
             </button>
             <button type="submit"
                     class="btn btn-primary"
-                    id="spellSlotsAddModalAddButton"
-                    data-bind='disable: !addFormIsValid()'>
+                    id="spellSlotsAddModalAddButton">
                     Add
             </button>
           </div>
@@ -168,6 +171,7 @@
     </div> <!-- end modal content -->
   </div> <!-- end modal dialog -->
 </div> <!-- end modal -->
+
 <!-- ViewEdit Modal -->
 <div class="modal fade"
      id="viewSlot"
@@ -175,7 +179,7 @@
      role="dialog"
      aria-labelledby="viewSlotLabel"
      data-bind="modal: { open: openModal, onopen: editModalOpen,
-       onclose: modalFinishedClosing}, with: currentEditItem">
+       onclose: closeEditModal}, with: currentEditItem">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -191,7 +195,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
           <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Level</label>
+            <label for="name" class="col-sm-2 control-label">
+              Level<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
@@ -201,7 +207,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="bonus" class="col-sm-2 control-label">Max</label>
+            <label for="bonus" class="col-sm-2 control-label">
+              Max<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="number"
                      class="form-control"
@@ -222,7 +230,7 @@
                          value="short"
                          data-bind="checked: resetsOn"/>
                   <img class="action-bar-icon"
-                    data-bind="attr: { src: $parent.meditationWhite }"></img>
+                    data-bind="attr: { src: $parent.meditationWhite }">
                        &nbsp;&nbsp;&nbsp;Short Rest
                 </label>
                 <label class="btn btn-default" id="spellSlotsEditModalLongRestButton"
@@ -233,19 +241,16 @@
                        value="long"
                        data-bind="checked: resetsOn"/>
                 <img class="action-bar-icon"
-                  data-bind="attr: { src: $parent.campingTentWhite }"></img>
+                  data-bind="attr: { src: $parent.campingTentWhite }">
                      &nbsp;&nbsp;&nbsp;Long Rest
                 </label>
               </div>
             </div>
           </div>
-        </div>
         <div class="modal-footer">
           <button type="submit"
                   id="spellSlotsEditModalDoneButton"
-                  class="btn btn-primary"
-                  data-dismiss="modal"
-                  data-bind='disable: !$parent.addFormIsValid()'>Done</button>
+                  class="btn btn-primary">Done</button>
         </div>
       </form>
     </div> <!-- end modal body -->

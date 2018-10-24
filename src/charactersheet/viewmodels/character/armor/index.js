@@ -196,6 +196,15 @@ export function ArmorViewModel() {
         self.modalOpen(true);
     };
 
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+        self.selectPreviewTab();
+    };
+
+    self.closeAddModal = () => {
+        self.addModalOpen(false);
+    };
+
     self.valueHasChanged = function() {
         self.armors().forEach(function(e, i, _) {
             e.updateValues();

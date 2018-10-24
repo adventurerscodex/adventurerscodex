@@ -11,7 +11,7 @@ export class Feature extends KOModel {
 
     coreUuid = ko.observable(null);
     name = ko.observable('');
-    level = ko.observable('');
+    level = ko.observable(1);
     characterClass = ko.observable('');
     description = ko.observable('');
     isTracked = ko.observable(false);
@@ -25,13 +25,17 @@ Feature.validationConstraints = {
             maxlength: 128
         },
         level: {
+            number: true,
+            min: 1,
             required: true
         },
         characterClass: {
             maxlength: 64
         },
         max: {
-            required: true
+            required: true,
+            number: true,
+            min: 0
         }
     }
 };

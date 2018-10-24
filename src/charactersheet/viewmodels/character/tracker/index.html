@@ -6,7 +6,7 @@
         <span class="sr-only"></span>
       </div>
     </div>
-		<table id='trackablesTable' class="table table-responsive table-ac-bordered table-hover">
+		<table id="trackablesTable" class="table table-responsive table-ac-bordered table-hover">
 			<thead>
 				<tr>
 					<th class="col-sm-4 col-xs-3" data-bind="click: function(){sortBy('name');}">Name
@@ -39,9 +39,9 @@
 					<td class="col-content-vertical hidden-sm hidden-xs feature-row"
             data-bind="click: $parent.editTracked" data-toggle="modal">
 						<img class="action-bar-icon"
-							data-bind="visible: tracked().resetsOn() === 'short', attr: { src: $parent.meditation }"></img>
+							data-bind="visible: tracked().resetsOn() === 'short', attr: { src: $parent.meditation }">
 						<img class="action-bar-icon"
-							data-bind="visible: tracked().resetsOn() === 'long', attr: { src: $parent.campingTent }"></img>
+							data-bind="visible: tracked().resetsOn() === 'long', attr: { src: $parent.campingTent }">
 					</td>
 
 					<td>
@@ -70,7 +70,9 @@
 <!-- ViewEdit Modal -->
 	<div class="modal fade" id="viewTracked" tabindex="-1" role="dialog"
 		aria-labelledby="viewTrackedLabel" data-bind="modal: {
-		open: modalOpen, onopen: editModalOpen, onclose: modalFinishedClosing}, with: editItem">
+		open: modalOpen,
+		onopen: editModalOpen,
+		onclose: modalFinishedClosing}, with: editItem">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -82,12 +84,13 @@
 				<div class="modal-body">
 					<form class="form-horizontal" data-bind="validate: $parent.validation">
 					<div class="form-group">
-						<label for="max" class="col-sm-2 control-label">Max</label>
+						<label for="max" class="col-sm-2 control-label">
+							Max<i class="required"></i>
+						</label>
 						<div class="col-sm-10">
 							<input type="number"
 								class="form-control"
 								id="max"
-								min="1"
 								name="max"
 								data-bind='textInput: max,
 									hasFocus: $parent.editHasFocus'>
@@ -101,14 +104,14 @@
 								data-bind="css: { active: resetsOn() == 'short'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" data-bind="attr: { src: $parent.meditationWhite }"></img>
+									<img class="action-bar-icon" data-bind="attr: { src: $parent.meditationWhite }">
 									&nbsp;&nbsp;&nbsp;Short Rest
 								</label>
 								<label class="btn btn-default"
 								data-bind="css: { active: resetsOn() == 'long'}">
 									<input type="radio" class="hide-block"
 									name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" data-bind="attr: { src: $parent.campingTentWhite }"></img>
+									<img class="action-bar-icon" data-bind="attr: { src: $parent.campingTentWhite }">
 									&nbsp;&nbsp;&nbsp;Long Rest
 								</label>
 							</div>
@@ -116,15 +119,10 @@
 					</div>
 					<div class="modal-footer">
 						<button type="submit"
-							class="btn btn-primary"
-							data-bind='disable: !$parent.addFormIsValid()'>Done</button>
+							class="btn btn-primary">Done</button>
 					</div>
 				</form>
-			</div>
-<!-- Modal Body -->
-		</div>
-<!-- Modal Content -->
-	</div>
-<!-- Modal Dialog -->
-</div>
-<!-- Modal Fade -->
+			</div><!-- Modal Body -->
+		</div><!-- Modal Content -->
+	</div><!-- Modal Dialog -->
+</div><!-- Modal Fade -->

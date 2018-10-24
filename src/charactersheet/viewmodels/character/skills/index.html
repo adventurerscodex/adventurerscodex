@@ -50,7 +50,7 @@
    data-bind="modal: {
       open: editModalOpen,
       onopen: editModalFinishedAnimating,
-      onclose: editModalFinishedClosing
+      onclose: closeEditModal
     }, with: currentEditItem">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -59,7 +59,7 @@
                 aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="addSkillLabel"
+        <h4 class="modal-title" id="editSkillLabel"
           data-bind="text: name"></h4>
       </div>
       <div class="modal-body">
@@ -114,8 +114,7 @@
 
           <div class="modal-footer">
             <button type="submit"
-                    class="btn btn-primary"
-                    data-bind='disable: !$parent.addFormIsValid()'>Done</button>
+                    class="btn btn-primary">Done</button>
           </div> <!-- Modal Footer -->
         </form>
       </div> <!-- Modal Content -->
@@ -146,13 +145,25 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="name" class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
-                     id="name"
                      name="name"
                      data-bind='textInput: blankSkill().name, hasFocus: newSkillFieldHasFocus'>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="modifier" class="col-sm-2 control-label">
+              Modifier
+            </label>
+            <div class="col-sm-10">
+              <input type="text"
+                      class="form-control"
+                      name="modifier"
+                      data-bind='textInput: blankSkill().modifier'>
             </div>
           </div>
           <div class="form-group">
@@ -187,8 +198,9 @@
            </div>
            <!-- ko if: abilityScores -->
             <div class="form-group">
-              <label for="abscore"
-                   class="col-sm-2 control-label">Ability Score</label>
+              <label class="col-sm-2 control-label">
+                Ability Score<i class="required"></i>
+              </label>
 
               <div class="col-sm-10">
                 <div class="btn-group btn-group-justified" role="group">
@@ -208,7 +220,6 @@
             <button type="submit"
                     id="addSkillModalButton"
                     class="btn btn-primary"
-                    data-bind='disable: !addFormIsValid()'
                     >Add
             </button>
           </div>

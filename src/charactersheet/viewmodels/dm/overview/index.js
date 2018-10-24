@@ -1,5 +1,6 @@
 import 'bin/knockout-custom-loader';
 import { Campaign } from 'charactersheet/models';
+import { Core } from 'charactersheet/models/common/core';
 import { CoreManager } from 'charactersheet/utilities';
 import ko from 'knockout';
 import largeIcon from 'images/encounters/compass.svg';
@@ -10,40 +11,77 @@ export function CampaignOverviewViewModel() {
 
     self.largeIcon = largeIcon;
 
-    self.playerName = ko.observable();
     self.createdDate = ko.observable();
-    self.setting = ko.observable();
-    self.name = ko.observable();
     self.campaign = ko.observable();
+    self.core = ko.observable();
+    self.loaded = ko.observable(false);
+
+    self.coreHasChanged = ko.observable(false);
+    self.campaignHasChanged = ko.observable(false);
+
+    self.data = {};
 
     /* Public Methods */
     self.load = async function() {
+        self.loaded(false);
+        await self.reset();
+
+        self.resetSubscriptions();
+    };
+
+    self.reset = async () => {
         var key = CoreManager.activeCore().uuid();
         const campaignResponse = await Campaign.ps.read({uuid: key});
         self.campaign(campaignResponse.object);
-        if (self.campaign()) {
-            const core = CoreManager.activeCore();
-            self.playerName(CoreManager.activeCore().playerName());
-            self.name(self.campaign().name());
-            self.setting(self.campaign().setting());
-            self.createdDate(new Date(self.campaign().createdAt()));
-        }
+        self.createdDate(new Date(self.campaign().createdAt()));
 
-        // Subscriptions
-        self.playerName.subscribe(self.saveCore);
-        self.setting.subscribe(self.saveCampaign);
+        self.core(CoreManager.activeCore());
+
+        self.data = {
+            campaign: self.campaign,
+            core: self.core
+        };
+
+        self.resetSubscriptions();
+        self.loaded(true);
+    };
+
+    self.resetSubscriptions = () => {
+        self.core().playerName.subscribe(self.saveCore);
+        self.campaign().setting.subscribe(self.saveCampaign);
+
+        self.campaignHasChanged(false);
+        self.coreHasChanged(false);
+    };
+
+    self.validation = {
+        rules : {
+            // Deep copy of properties in object
+            ...Core.validationConstraints.rules,
+            ...Campaign.validationConstraints.rules
+        }
     };
 
     self.saveCampaign = async () => {
-        self.campaign().setting(self.setting());
-        await self.campaign().ps.save();
+        self.campaignHasChanged(true);
     };
 
     self.saveCore = async () => {
-        let core = CoreManager.activeCore();
-        core.playerName(self.playerName());
-        // TODO: WAITING ON AN API CHANGE
-        await core.ps.save();
+        self.coreHasChanged(true);
+    };
+
+    self.save = async () => {
+        if (self.coreHasChanged()) {
+            const coreResponse = await self.core().ps.save();
+            self.core(coreResponse.object);
+        }
+
+        if (self.campaignHasChanged()) {
+            const campaignResponse = await self.campaign().ps.save();
+            self.campaign(campaignResponse.object);
+        }
+
+        self.resetSubscriptions();
     };
 
     /* UI Methods */

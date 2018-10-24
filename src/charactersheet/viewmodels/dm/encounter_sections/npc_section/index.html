@@ -19,9 +19,9 @@
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
-      <th class="col-md-1">
-        <a data-toggle="modal"
-           data-target="#addNPC" href="#">
+      <th class="col-md-1 text-right">
+        <a data-bind="click: toggleAddModal"
+            href="#">
           <i class="fa fa-plus fa-color"></i>
         </a>
       </th>
@@ -31,14 +31,16 @@
   <!-- ko foreach: filteredAndSortedNpcs -->
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editNPC"
-          href="#"></td>
+          href="#"
+          class="col-md-3"></td>
       <td data-bind="text: race, click: $parent.editNPC"
-          href="#"></td>
+          href="#"
+          class="col-md-3"></td>
       <td data-bind="text: shortDescription, click: $parent.editNPC"
-          href="#" class="hidden-md hidden-lg"></td>
+          href="#" class="hidden-md hidden-lg col-md-5"></td>
       <td data-bind="text: longDescription, click: $parent.editNPC"
-          href="#" class="hidden-sm hidden-xs"></td>
-      <td>
+          href="#" class="hidden-sm hidden-xs col-md-5"></td>
+      <td class="text-right col-md-1">
         <a data-bind="click: $parent.removeNPC" href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>
@@ -48,8 +50,8 @@
     <!-- /ko -->
     <!-- ko if: filteredAndSortedNpcs().length == 0 -->
     <tr class="clickable">
-      <td data-toggle="modal" data-target="#addNPC" href="#"
-        colspan="7" class="text-center">
+      <td data-bind="click: toggleAddModal"
+        colspan="12" class="text-center">
         <i class="fa fa-plus fa-color"></i>
         Add a new NPC
       </td>
@@ -64,7 +66,9 @@
      id="addNPC"
      tabindex="-1"
      role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening, onclose: modalFinishedClosing}">
+      onopen: modalFinishedOpening,
+      onclose: closeAddModal,
+      open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -78,12 +82,15 @@
             id="addNpcLabel">Add a new NPC</h4>
     </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Name</label>
+            <label class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
+                     name="name"
                      placeholder="King Arthur"
                      data-bind="textInput: blankNPC().name,
                         hasFocus: firstElementInModalHasFocus">
@@ -94,6 +101,7 @@
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
+                     name="race"
                      placeholder="Human"
                      data-bind="textInput: blankNPC().race,
                                 autocomplete: { source: raceOptions,
@@ -104,16 +112,16 @@
             <label class="col-sm-2 control-label">Description</label>
               <div class="col-sm-10">
                 <textarea type="text"
-                       class="form-control" rows="4"
+                       class="form-control"
+                       rows="4"
+                       name="description"
                        placeholder="King Arthur is a benevolent..."
-                       data-bind='value: blankNPC().description'></textarea>
+                       data-bind="value: blankNPC().description"></textarea>
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button"
-                    class="btn btn-primary"
-                    data-bind='click: addNPC'
-                    data-dismiss="modal">Add</button>
+            <button type="submit"
+                    class="btn btn-primary">Add</button>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -129,7 +137,7 @@
      data-bind="modal: {
       open: openModal,
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
+      onclose: closeModal
     }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -170,20 +178,18 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal">
+              <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="npcName"
-                       class="col-sm-2 control-label">Name</label>
+                       class="col-sm-2 control-label">
+                       Name<i class="required"></i>
+                      </label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
               </div>
@@ -192,6 +198,7 @@
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="race"
                          placeholder="Human"
                          data-bind="textInput: race,
                                     autocomplete: { source: $parent.raceOptions,
@@ -204,13 +211,13 @@
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
                            class="form-control"
-                           data-bind='value: description, markdownEditor: true'></textarea>
+                           name="description"
+                           data-bind="value: description, markdownEditor: true"></textarea>
                   </div>
               </div>
               <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
+                <button type="submit"
+                        class="btn btn-primary">Done</button>
               </div>
             </form>
           </div>

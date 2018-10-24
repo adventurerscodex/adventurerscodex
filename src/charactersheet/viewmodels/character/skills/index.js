@@ -134,6 +134,10 @@ export function SkillsViewModel() {
         self.newModalOpen(!self.newModalOpen());
     };
 
+    self.closeEditModal = () => {
+        self.editModalOpen(false);
+    };
+
     self.newSkillFieldHasFocus = ko.observable(false);
 
     self.newModalFinishedAnimating = function() {

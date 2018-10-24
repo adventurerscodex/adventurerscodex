@@ -19,7 +19,7 @@
             data-bind="click: function(){sortBy('cost');}">
             Cost
             <span data-bind="css: sortArrow('cost')"></span></th>
-          <th class="hidden-sm hidden-xs" class="col-md-5">
+          <th class="hidden-sm hidden-xs col-md-5">
             Description</th>
           <th class="col-md-1 col-xs-2 text-right">
            <a data-bind="click: toggleAddModal"
@@ -73,7 +73,8 @@
 <div class="modal fade"
   id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
   data-bind="modal: { onopen: modalFinishedOpening,
-    open: addModalOpen }">
+    open: addModalOpen,
+    onclose: toggleCloseModal }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -89,7 +90,9 @@
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
            <label for="name"
-             class="col-sm-2 control-label">Name</label>
+             class="col-sm-2 control-label">
+              Name <i class="required"></i>
+            </label>
            <div class="col-sm-10">
              <input type="text"
                class="form-control"
@@ -173,8 +176,7 @@
            </button>
            <button type="submit"
              class="btn btn-primary"
-             id="inventoryAddAddButton"
-             data-bind='disable: !addFormIsValid()'>
+             id="inventoryAddAddButton">
              Add
            </button>
            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
@@ -183,7 +185,7 @@
                  target='_blank'>
                  OGL</a><br/>
                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-               </i><sm>
+               </i></sm>
            </p>
          </div>
         </form>
@@ -198,7 +200,7 @@
      data-bind="modal: {
        open: modalOpen,
        onopen: modalFinishedOpening,
-       onclose: modalFinishedClosing
+       onclose: closeEditModal
       }"
      id="viewItem"
      tabindex="-1"
@@ -250,18 +252,13 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      id="inventoryDoneButton"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="name"
-                       class="col-sm-2 control-label">Name
+                       class="col-sm-2 control-label">
+                        Name <i class="required"></i>
                 </label>
                 <div class="col-sm-10">
                   <input type="text"
@@ -336,9 +333,7 @@
               <div class="modal-footer">
                 <button type="submit"
                   class="btn btn-primary"
-                  id="inventoryEditDoneButton"
-                  data-bind='disable: !$parent.addFormIsValid()'
-                  data-dismiss="modal">
+                  id="inventoryEditDoneButton">
                   Done
                 </button>
               </div>

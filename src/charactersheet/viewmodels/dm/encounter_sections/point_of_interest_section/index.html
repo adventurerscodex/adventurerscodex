@@ -16,8 +16,7 @@
         <span data-bind="css: sortArrow('description')"></span>
       </th>
       <th class="col-md-1">
-        <a data-toggle="modal"
-           data-target="#addPointOfInterest" href="#">
+        <a data-bind="click: toggleAddModal" href="#">
           <i class="fa fa-plus fa-color"></i>
         </a>
       </th>
@@ -44,8 +43,8 @@
     <!-- /ko -->
     <!-- ko if: filteredAndSortedPointsOfInterest().length == 0 -->
     <tr class="clickable">
-      <td data-toggle="modal" data-target="#addPointOfInterest" href="#"
-        colspan="7" class="text-center">
+      <td data-bind="click: toggleAddModal"
+        colspan="12" class="text-center">
         <i class="fa fa-plus fa-color"></i>
         Add a new Point of Interest
       </td>
@@ -61,7 +60,8 @@
      tabindex="-1"
      role="dialog" data-bind="modal: {
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing}">
+      onclose: closeAddModal,
+      open: addModalOpen }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -75,12 +75,15 @@
             id="addWeaponLabel">Add a new Point of Interest</h4>
     </div>
       <div class="modal-body">
-        <form class="form-horizontal">
+        <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group">
-            <label class="col-sm-2 control-label">Name</label>
+            <label class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
             <div class="col-sm-10">
               <input type="text"
                      class="form-control"
+                     name="name"
                      placeholder="A Statue of a King"
                      data-bind="textInput: blankPointOfInterest().name,
                         hasFocus: firstElementInModalHasFocus">
@@ -91,15 +94,14 @@
               <div class="col-sm-10">
                 <textarea type="text"
                        class="form-control" rows="4"
+                       name="description"
                        placeholder="It rises up from it's stone pillar..."
-                       data-bind='value: blankPointOfInterest().description'></textarea>
+                       data-bind="value: blankPointOfInterest().description"></textarea>
               </div>
           </div>
           <div class="modal-footer">
-            <button type="button"
-                    class="btn btn-primary"
-                    data-bind='click: addPointOfInterest'
-                    data-dismiss="modal">Add</button>
+            <button type="submit"
+                    class="btn btn-primary">Add</button>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -114,8 +116,7 @@
      role="dialog"
      data-bind="modal: {
       open: openModal,
-      onclose: modalFinishedClosing
-    }">
+      onclose: closeModal }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -154,20 +155,18 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal">
+            <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="pointOfInterestName"
-                       class="col-sm-2 control-label">Name</label>
+                       class="col-sm-2 control-label">
+                       Name<i class="required"></i>
+                      </label>
                 <div class="col-sm-10">
                   <input type="text"
                          class="form-control"
+                         name="name"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
               </div>
@@ -177,13 +176,13 @@
                   <div class="col-sm-10">
                     <textarea type="text" rows="6"
                            class="form-control"
-                           data-bind='value: description, markdownEditor: true'></textarea>
+                           name="name"
+                           data-bind="value: description, markdownEditor: true"></textarea>
                   </div>
               </div>
               <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-primary"
-                        data-dismiss="modal">Done</button>
+                <button type="submit"
+                        class="btn btn-primary">Done</button>
               </div>
             </form>
           </div>

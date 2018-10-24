@@ -23,10 +23,10 @@
       <tbody>
       <!-- ko foreach: filteredAndSortedTraits -->
         <tr class="clickable">
-          <td data-bind="text: name, click: $parent.editTrait" href="#"></td>
-          <td data-bind="text: race, click: $parent.editTrait" href="#"></td>
+          <td data-bind="text: name, click: $parent.editTrait"></td>
+          <td data-bind="text: race, click: $parent.editTrait"></td>
           <td class="col-content-vertical">
-            <a data-bind="click: $parent.removeTrait" href="#">
+            <a data-bind="click: $parent.removeTrait">
               <i class="fa fa-trash-o fa-color-hover">
               </i>
             </a>
@@ -35,7 +35,7 @@
         <!-- /ko -->
         <!-- ko if: filteredAndSortedTraits().length == 0 -->
         <tr class="clickable">
-          <td data-toggle="modal" href="#"
+          <td data-toggle="modal"
             data-bind="click: toggleAddModal"
             colspan="12" class="text-center">
             <i class="fa fa-plus fa-color"></i>
@@ -54,7 +54,7 @@
      tabindex="-1"
      role="dialog" data-bind="modal: {
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing,
+      onclose: closeAddModal,
       open: addModalOpen}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -71,7 +71,9 @@
       <div class="modal-body">
         <form class="form-horizontal" data-bind="validate: validation">
           <div class="form-group ui-front">
-            <label for="name" class="col-sm-2 control-label">Name</label>
+            <label for="name" class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
               <div class="col-sm-10">
                 <input type="text"
                         class="form-control"
@@ -129,7 +131,6 @@
                 <input type="number"
                   class="form-control"
                   id="traitAddMaxInput"
-                  min="1"
                   name="max"
                   data-bind='textInput: blankTracked().max'>
               </div>
@@ -144,14 +145,14 @@
                         data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
                     <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                             data-bind="checked: blankTracked().resetsOn"/>
-                      <img class="action-bar-icon" data-bind="attr: { src: meditation }"></img>
+                      <img class="action-bar-icon" data-bind="attr: { src: meditation }">
                       &nbsp;&nbsp;&nbsp;Short Rest
                   </label>
                   <label class="btn btn-default" id="traitAddLongRestInput"
                   data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
                     <input type="radio" class="hide-block" name="blankresetsOnLong"
                             value="long" data-bind="checked: blankTracked().resetsOn"/>
-                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }"></img>
+                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }">
                       &nbsp;&nbsp;&nbsp;Long Rest
                   </label>
                 </div>
@@ -161,15 +162,14 @@
           <div class="modal-footer">
             <button type="submit"
                     id="traitAddAddButton"
-                    class="btn btn-primary"
-                    data-bind='disable: !addFormIsValid()'>Add</button>
+                    class="btn btn-primary">Add</button>
             <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
               <sm><i>This data is distributed under the
                 <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
                   target='_blank'>
                   OGL</a><br/>
                   Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
-                </i><sm>
+                </i></sm>
             </p>
           </div>
         </form>
@@ -186,7 +186,7 @@
      data-bind="modal: {
       open: modalOpen,
       onopen: modalFinishedOpening,
-      onclose: modalFinishedClosing
+      onclose: closeEditModal
     }">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -244,16 +244,13 @@
                 </div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                      class="btn btn-primary"
-                      data-dismiss="modal">Done</button>
-            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
               <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">Name</label>
+                <label for="name" class="col-sm-2 control-label">
+                  Name<i class="required"></i>
+                </label>
                 <div class="col-sm-10">
                   <input type="text"
                         class="form-control"
@@ -304,7 +301,6 @@
                     <input type="number"
                       class="form-control"
                       id="traitEditMaxInput"
-                      min="1"
                       name="max"
                       data-bind='textInput: $parent.currentEditTracked().max'>
                   </div>
@@ -319,14 +315,14 @@
                             data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
                                 data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                          <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }"></img>
+                          <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }">
                           &nbsp;&nbsp;&nbsp;Short Rest
                       </label>
                       <label class="btn btn-default" id="traitEditLongRestInput"
                       data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
                         <input type="radio" class="hide-block" name="blankresetsOnLong"
                                 value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                        <img class="action-bar-icon" data-bind="attr: { src: $parent.campingTent }"></img>
+                        <img class="action-bar-icon" data-bind="attr: { src: $parent.campingTent }">
                           &nbsp;&nbsp;&nbsp;Long Rest
                       </label>
                     </div>
@@ -336,8 +332,7 @@
               <div class="modal-footer">
                 <button type="submit"
                         id="traitEditDoneButton"
-                        class="btn btn-primary"
-                        data-bind='disable: !$parent.addFormIsValid()'>Done</button>
+                        class="btn btn-primary">Done</button>
               </div>
             </form>
           </div>

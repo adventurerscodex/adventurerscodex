@@ -67,3 +67,88 @@ export class Monster extends KOModel {
         return foundScore;
     };
 }
+
+Monster.validationConstraints = {
+    rules: {
+        name: {
+            required: true,
+            maxlength: 128
+        },
+        size: {
+            maxlength: 32
+        },
+        type: {
+            maxlength: 32
+        },
+        alignment: {
+            maxlength: 32
+        },
+        armorClass: {
+            required: true,
+            number: true,
+            min: 0
+        },
+        hitPoints: {
+            required: true,
+            maxlength: 32
+        },
+        speed: {
+            maxlength: 64
+        },
+        senses: {
+            maxlength: 256
+        },
+        savingThrows: {
+            maxlength: 128
+        },
+        skills: {
+            maxlength: 256
+        },
+        damageVulnerabilities: {
+            maxlength: 256
+        },
+        damageImmunities: {
+            maxlength: 256
+        },
+        damageResistances: {
+            maxlength: 256
+        },
+        conditionImmunities: {
+            maxlength: 256
+        },
+        languages: {
+            maxlength: 256
+        },
+        challenge: {
+            maxlength: 16
+        },
+        experience: {
+            number: true,
+            min: 0
+        },
+        strength: {
+            required: true,
+            min: 0
+        },
+        dexterity: {
+            required: true,
+            min: 0
+        },
+        constitution: {
+            required: true,
+            min: 0
+        },
+        intelligence: {
+            required: true,
+            min: 0
+        },
+        wisdom: {
+            required: true,
+            min: 0
+        },
+        charisma: {
+            required: true,
+            min: 0
+        }
+    }
+};
