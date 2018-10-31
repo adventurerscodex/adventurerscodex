@@ -50,10 +50,9 @@ function _pCardService(configuration) {
 
     };
 
-    self.dataHasChanged = function() {
-        // TODO: FIX THISSSSSSS
-        // var card = self._buildCard();
-        // self.publishCard(card);
+    self.dataHasChanged = async () => {
+        var card = await self._buildCard();
+        self.publishCard(card);
     };
 
     self.publishCard = function(card) {
@@ -101,12 +100,13 @@ function _pCardService(configuration) {
         });
     };
 
-    self._buildCard = function() {
+    self._buildCard = async () => {
         var card = new pCard();
 
-        self.configuration.fields.forEach(function(field, idx, _) {
-            card.set(uuid.v4(), field.name, null, field.valueAccessor());
-        });
+        for (const field of self.configuration.fields) {
+            const value = await field.valueAccessor()
+            card.set(uuid.v4(), field.name, null, value);
+        };
 
         return card;
     };

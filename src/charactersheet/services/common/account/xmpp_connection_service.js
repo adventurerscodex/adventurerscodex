@@ -21,12 +21,12 @@ var XMPPServiceDefaultConfig = {
     },
 
     credentialsHelper: function() {
-        var bareJID = 'sonicrocketman2@adventurerscodex.com' //UserServiceManager.sharedService().user().xmpp.jid;
+        var bareJID = UserServiceManager.sharedService().user().xmpp.jid;
         var resource = 'Adventurers Codex (Web)';
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         return {
             jid: bareJID + '/' + resource,
-            password: 'zmpmvLtMOjx4t0N3Fd5BTERMUQaTLB' //token.accessToken()
+            password: token.accessToken()
         };
     },
 
@@ -66,6 +66,17 @@ function _XMPPService(config) {
     self.MAX_RETRIES = 3;
     self.PING_INTERVAL = 240000;
 
+    self.NAMESPACES = [
+        ['HTML',   'http://jabber.org/protocol/xhtml-im'],
+        ['BODY',   'http://www.w3.org/1999/xhtml'],
+        ['PUBSUB', 'http://jabber.org/protocol/pubsub'],
+        ['JSON',   'urn:xmpp:json:0'],
+        ['ACTIVE', 'http://jabber.org/protocol/chatstates'],
+        ['ATOM',   'http://www.w3.org/2005/Atom'],
+        ['DELAY',  'urn:xmpp:delay'],
+        ['RSM',    'http://jabber.org/protocol/rsm'],
+    ];
+
     /**
      * A lazily instantiated connection to the XMPP backend server.
      * The first attempt to fetch this connection will instantiate
@@ -78,16 +89,9 @@ function _XMPPService(config) {
      */
     self.init = function() {
         // Namespace config
-        Strophe.addNamespace('HTML', 'http://jabber.org/protocol/xhtml-im');
-        Strophe.addNamespace('BODY', 'http://www.w3.org/1999/xhtml');
-
-        Strophe.addNamespace('PUBSUB', 'http://jabber.org/protocol/pubsub');
-        Strophe.addNamespace('JSON', 'urn:xmpp:json:0');
-        Strophe.addNamespace('ACTIVE', 'http://jabber.org/protocol/chatstates');
-
-        Strophe.addNamespace('ATOM', 'http://www.w3.org/2005/Atom');
-        Strophe.addNamespace('DELAY', 'urn:xmpp:delay');
-        Strophe.addNamespace('RSM', 'http://jabber.org/protocol/rsm');
+        for (const [name, link] of self.NAMESPACES) {
+            Strophe.addNamespace(name, link);
+        }
 
         self._initializeConnection();
 
@@ -110,11 +114,11 @@ function _XMPPService(config) {
     };
 
     self._shouldLog = function() {
-        return self.configuration.fallbackAction == 'log';
+        return self.configuration.fallbackAction === 'log';
     };
 
     self._shouldThrow = function() {
-        return self.configuration.fallbackAction == 'throw';
+        return self.configuration.fallbackAction === 'throw';
     };
 
     self._handleConnect = function() {
