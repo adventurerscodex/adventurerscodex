@@ -155,6 +155,16 @@ export function ProfileViewModel() {
             }
         }
     });
+
+    self.heightLabel = ko.computed(() => {
+        if (self.profile()) {
+            if (self.profile().height() && self.profile().height().trim()) {
+                return self.profile().height();
+            } else {
+                return 'No Height';
+            }
+        }
+    });
 }
 
 ko.components.register('profile', {
