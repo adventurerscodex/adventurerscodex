@@ -53,7 +53,7 @@ window.hideSplashScreen = function() {
 }
 
 window.showSplashScreen = function() {
-    $('#loading').show();
+    $('#loading').fadeIn(100);
     // Start the spinner.
     window.spinner = new Spinner({ color:'#b4bcc2', lines: 12 }).spin(
         document.getElementsByTagName('body')[0]
