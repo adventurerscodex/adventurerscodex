@@ -74,6 +74,21 @@ export var init = function(viewModel) {
         };
     });
 
+    // Cloud Syncing import
+    const importTable = localStorage.__importComplete__;
+    let redirect = false;
+    if (importTable) {
+        redirect = false;
+    } else {
+        redirect = true;
+    }
+
+    // Based on the presence of the import flag, load the app or redirect to the import process
+    if (redirect) {
+        window.location.href = '/api/pre-cloud-syncing-debrief/';
+        return;
+    }
+
     // Initialize the View Model
     viewModel.init();
 
