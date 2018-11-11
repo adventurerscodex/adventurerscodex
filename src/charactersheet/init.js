@@ -76,8 +76,12 @@ export var init = function(viewModel) {
 
     // Cloud Syncing import
     const importTable = localStorage.__importComplete__;
+    const characterTable = localStorage.Character;
+
+    // Only redirect if the user has NOT performed the import
+    // OR if the database is empty (new user)
     let redirect = false;
-    if (importTable) {
+    if (importTable || !characterTable) {
         redirect = false;
     } else {
         redirect = true;
