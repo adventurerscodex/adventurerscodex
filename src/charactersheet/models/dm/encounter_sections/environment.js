@@ -41,13 +41,13 @@ export class Environment extends KOModel {
 Environment.validationConstraints = {
     rules: {
         weather: {
-            maxlength: 64
+            maxlength: 128
         },
         terrain: {
-            maxlength: 64
+            maxlength: 128
         },
         imageUrl: {
-            maxlength: 256,
+            maxlength: 512,
             url: true
         }
     }

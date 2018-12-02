@@ -1,7 +1,6 @@
-import { CoreManager, Notifications } from 'charactersheet/utilities';
+import { CoreManager } from 'charactersheet/utilities';
 import { Encounter } from 'charactersheet/models/dm';
 import { EncounterCellViewModel } from 'charactersheet/viewmodels/dm';
-import { MapOrImage } from 'charactersheet/models/common';
 import { find } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';

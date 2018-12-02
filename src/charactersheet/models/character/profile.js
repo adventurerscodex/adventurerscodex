@@ -58,16 +58,16 @@ export class Profile extends KOModel {
 Profile.validationConstraints = {
     rules: {
         characterName: {
-            maxlength: 128
+            maxlength: 256
         },
         alignment: {
-            maxlength: 32
+            maxlength: 64
         },
         deity: {
-            maxlength: 32
+            maxlength: 64
         },
         gender: {
-            maxlength: 32
+            maxlength: 64
         },
         age: {
             number: true,
@@ -86,19 +86,19 @@ Profile.validationConstraints = {
             min: 0
         },
         height: {
-            maxlength: 32
+            maxlength: 64
         },
         hairColor: {
-            maxlength: 32
+            maxlength: 64
         },
         eyeColor: {
-            maxlength: 32
+            maxlength: 64
         },
         skinColor: {
-            maxlength: 32
+            maxlength: 64
         },
         characterClass: {
-            maxlength: 32
+            maxlength: 64
         }
     }
 };

@@ -95,17 +95,17 @@ Armor.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         type: {
             required: true,
-            maxlength: 32
+            maxlength: 64
         },
         price: {
             min: 0
         },
         currencyDenomination: {
-            maxlength: 16
+            maxlength: 64
         },
         armorClass: {
             required: true,

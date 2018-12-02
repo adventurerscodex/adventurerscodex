@@ -114,7 +114,7 @@ Skill.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         modifier: {
             min: 0,

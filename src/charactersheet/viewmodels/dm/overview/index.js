@@ -97,6 +97,17 @@ export function CampaignOverviewViewModel() {
         return msg;
     });
 
+    // UI Labels
+    self.settingLabel = ko.computed(() => {
+        if (self.loaded()) {
+            if (self.campaign().setting() && self.campaign().setting().trim()) {
+                return self.campaign().setting();
+            } else {
+                return 'No Setting';
+            }
+        }
+    });
+
     /* Private Methods */
 
     self._daysSince = function(day) {

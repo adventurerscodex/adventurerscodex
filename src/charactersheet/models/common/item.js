@@ -64,7 +64,7 @@ Item.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         quantity: {
             number: true,
@@ -79,7 +79,7 @@ Item.validationConstraints = {
             min: 0
         },
         currencyDenomination: {
-            maxlength: 16
+            maxlength: 64
         }
     }
 };

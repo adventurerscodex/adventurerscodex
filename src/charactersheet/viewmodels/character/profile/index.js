@@ -1,3 +1,4 @@
+import { Core } from 'charactersheet/models/common/core';
 import { CoreManager } from 'charactersheet/utilities';
 import { Fixtures } from 'charactersheet/utilities';
 import { Profile } from 'charactersheet/models/character';
@@ -7,9 +8,14 @@ import template from './index.html';
 export function ProfileViewModel() {
     var self = this;
 
-    self.placeholderText = '<i>Character Name</i>';
     self.profile = ko.observable();
+    self.core = ko.observable();
     self.loaded = ko.observable();
+
+    self.data = {};
+
+    self.coreHasChanged = ko.observable(false);
+    self.profileHasChanged = ko.observable(false);
 
     // Static Data
     self.alignmentOptions = Fixtures.profile.alignmentOptions;
@@ -30,8 +36,11 @@ export function ProfileViewModel() {
     };
 
     self.validation = {
-        // Deep copy of properties in object
-        ...Profile.validationConstraints
+        rules : {
+            // Deep copy of properties in object
+            ...Profile.validationConstraints.rules,
+            ...Core.validationConstraints.rules
+        }
     };
 
     self.load = async function() {
@@ -44,11 +53,55 @@ export function ProfileViewModel() {
         var key = CoreManager.activeCore().uuid();
         const profileResponse = await Profile.ps.read({uuid: key});
         self.profile(profileResponse.object);
+        self.core(CoreManager.activeCore());
+
+        self.data = {
+            profile: self.profile,
+            core: self.core
+        };
+
+        self.resetSubscriptions();
     };
 
-    self.save = async function() {
-        const profileResponse = await self.profile().ps.save();
-        self.profile(profileResponse.object);
+    self.resetSubscriptions = () => {
+        self.core().playerName.subscribe(self.saveCore);
+        self.profile().alignment.subscribe(self.saveProfile);
+        self.profile().deity.subscribe(self.saveProfile);
+        self.profile().gender.subscribe(self.saveProfile);
+        self.profile().age.subscribe(self.saveProfile);
+        self.profile().experience.subscribe(self.saveProfile);
+        self.profile().weight.subscribe(self.saveProfile);
+        self.profile().height.subscribe(self.saveProfile);
+        self.profile().hairColor.subscribe(self.saveProfile);
+        self.profile().eyeColor.subscribe(self.saveProfile);
+        self.profile().skinColor.subscribe(self.saveProfile);
+        self.profile().characterClass.subscribe(self.saveProfile);
+        self.profile().race.subscribe(self.saveProfile);
+
+        self.profileHasChanged(false);
+        self.coreHasChanged(false);
+    };
+
+    self.saveProfile = () => {
+        self.profileHasChanged(true);
+    };
+
+    self.saveCore = () => {
+        self.coreHasChanged(true);
+    };
+
+    self.save = async () => {
+        if (self.coreHasChanged()) {
+            const coreResponse = await self.core().ps.save();
+            self.core(coreResponse.object);
+        }
+
+        if (self.profileHasChanged()) {
+            const profileResponse = await self.profile().ps.save();
+            self.profile(profileResponse.object);
+        }
+
+        self.resetSubscriptions();
     };
 
     self.isNumeric = (n) => {
