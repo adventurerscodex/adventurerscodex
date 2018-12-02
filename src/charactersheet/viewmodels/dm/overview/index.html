@@ -58,7 +58,8 @@
             </div>
             <div class="col-md-6 col-padded">
               <label>Setting</label>
-              <div data-bind="text: campaign().setting"></div>
+              <div data-bind="text: $parents[1].settingLabel,
+              css: { 'text-muted-italics': campaign().setting() == undefined || !campaign().setting().trim() }"></div>
             </div>
           </div>
           <!-- /ko -->

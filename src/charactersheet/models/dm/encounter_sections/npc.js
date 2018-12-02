@@ -36,7 +36,7 @@ NPC.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         race: {
             maxlength: 64

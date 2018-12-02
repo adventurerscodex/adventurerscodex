@@ -12,8 +12,8 @@ export function Tracked() {
     self.max = ko.observable(0);
     self.used = ko.observable(0);
     self.resetsOn = ko.observable('long');
-    self.color = ko.observable('');
     self.type = ko.observable(null);
+    self.color = ko.observable();
 
     self.importValues = function(values) {
         var mapping = ko.mapping.autoignore(self, self.mapping);

@@ -2,7 +2,7 @@
 	<div class='panel-body tight-inner'>
     <div class="progress" data-bind="{ foreach: trackables, visible: trackables().length > 0 }">
       <div class="progress-bar" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().max(), tracked().used()) * $parent.maxTrackerWidth() + '%' }, css: tracked().color()">
+        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().max(), tracked().used()) * $parent.maxTrackerWidth() + '%' }, css: tracked().color">
         <span class="sr-only"></span>
       </div>
     </div>
@@ -26,7 +26,7 @@
 					<td data-bind="click: $parent.editTracked"
 					class="feature-row table-data-overflow"
           data-toggle="modal">
-            <span data-bind="css: tracked().color()" class="form-control pull-left color-picker-item"></span>
+            <span data-bind="css: tracked().color" class="form-control pull-left color-picker-item"></span>
   					<span data-bind="html: $parent.shortName(name)" class="hidden-lg hidden-md"></span>
 						<span data-bind="text: name" class="hidden-sm hidden-xs"></span>
 					</td>

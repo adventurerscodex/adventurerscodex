@@ -38,6 +38,7 @@ export function TrackerViewModel() {
     self.campingTent = campingTent;
     self.meditationWhite = meditationWhite;
     self.campingTentWhite = campingTentWhite;
+    self.slotColors = Fixtures.general.colorList;
 
     self.load = function() {
         self.loadTrackedItems();
@@ -53,6 +54,7 @@ export function TrackerViewModel() {
     self.loadTrackedItems = async () => {
         var key = CoreManager.activeCore().uuid();
         var trackables = [];
+        let trackedIndex = 0;
 
         // Fetch trackable objects
         var features = await Feature.ps.list({coreUuid: key});
@@ -63,6 +65,8 @@ export function TrackerViewModel() {
             features = features.objects.filter((e, i, _) => {
                 if (e.tracked()) {
                     e.tracked().type = 'Feature';
+                    e.tracked().color = self.slotColors[trackedIndex % 17];
+                    trackedIndex++;
                     return true;
                 }
             });
@@ -73,6 +77,8 @@ export function TrackerViewModel() {
             feats = feats.objects.filter((e, i, _) => {
                 if (e.tracked()) {
                     e.tracked().type = 'Feat';
+                    e.tracked().color = self.slotColors[trackedIndex % 17];
+                    trackedIndex++;
                     return true;
                 }
             });
@@ -83,6 +89,8 @@ export function TrackerViewModel() {
             traits = traits.objects.filter((e, i, _) => {
                 if (e.tracked()) {
                     e.tracked().type = 'Trait';
+                    e.tracked().color = self.slotColors[trackedIndex % 17];
+                    trackedIndex++;
                     return true;
                 }
             });

@@ -50,6 +50,7 @@ export function SpellSlotsViewModel() {
         const response = await SpellSlot.ps.list({coreUuid: key});
         self.slots(response.objects);
         self.blankSlot().level(self.slots().length + 1);
+        self.assignSlotColors();
 
         //Notifications
         Notifications.events.longRest.add(self.resetOnLongRest);
@@ -119,6 +120,14 @@ export function SpellSlotsViewModel() {
                 slot.used(0);
             }
         });
+    };
+
+    self.assignSlotColors = () => {
+        if (self.slots()) {
+            self.slots().forEach((e) => {
+                e.color(self.slotColors[e.level() - 1]);
+            });
+        }
     };
 
     // Modal Methods
@@ -207,12 +216,12 @@ export function SpellSlotsViewModel() {
 
     self.addSlot = async () => {
         var slot = self.blankSlot();
-        slot.color(self.slotColors[slot.level()-1]);
         slot.coreUuid(CoreManager.activeCore().uuid());
         const newSlotResponse = await slot.ps.create();
         var newSlot = newSlotResponse.object;
         newSlot.max.subscribe(self.dataHasChanged, newSlot);
         newSlot.used.subscribe(self.dataHasChanged, newSlot);
+        newSlot.color(self.slotColors[slot.level()-1]);
         self.slots.push(newSlot);
 
         self.blankSlot(new SpellSlot());

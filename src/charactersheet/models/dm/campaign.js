@@ -28,10 +28,10 @@ Campaign.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         setting: {
-            maxlength: 64
+            maxlength: 128
         }
     }
 };

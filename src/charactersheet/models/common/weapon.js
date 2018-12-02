@@ -208,31 +208,31 @@ Weapon.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         type: {
             required: true,
-            maxlength: 32
+            maxlength: 64
         },
         damage: {
             required: true,
-            maxlength: 32
+            maxlength: 64
         },
         damageType: {
-            maxlength: 32
+            maxlength: 64
         },
         handedness: {
-            maxlength: 32
+            maxlength: 64
         },
         proficiency: {
-            maxlength: 32
+            maxlength: 64
         },
         price: {
             number: true,
             min: 0
         },
         currencyDenomination: {
-            maxlength: 16
+            maxlength: 64
         },
         magicalModifier: {
             number: true
@@ -244,10 +244,10 @@ Weapon.validationConstraints = {
             number: true
         },
         range: {
-            maxlength: 32
+            maxlength: 64
         },
         property: {
-            maxlength: 32
+            maxlength: 64
         },
         quantity: {
             number: true,

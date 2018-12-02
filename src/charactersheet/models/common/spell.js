@@ -94,20 +94,20 @@ Spell.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         spellSaveAttribute: {
             maxlength: 3,
             required: true
         },
         damage: {
-            maxlength: 32
+            maxlength: 64
         },
         damageType: {
-            maxlength: 32
+            maxlength: 64
         },
         school: {
-            maxlength: 32,
+            maxlength: 64,
             required: true
         },
         level: {
@@ -117,19 +117,19 @@ Spell.validationConstraints = {
             required: true
         },
         castingTime: {
-            maxlength: 32,
+            maxlength: 64,
             required: true
         },
         range: {
-            maxlength: 32,
+            maxlength: 64,
             required: true
         },
         duration: {
-            maxlength: 32,
+            maxlength: 64,
             required: true
         },
         components: {
-            maxlength: 32,
+            maxlength: 64,
             required: true
         }
     }

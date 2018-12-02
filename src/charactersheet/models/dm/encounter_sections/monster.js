@@ -46,7 +46,7 @@ export class Monster extends KOModel {
         return desc;
     });
 
-    nameLabel = ko.pureComputed(function() {
+    nameLabel = ko.pureComputed(() => {
         if (this) {
             var label = this.size() ? this.size() : '';
             label += this.type() ? (this.size() ? ' ' : '') + this.type() : '';
@@ -75,13 +75,13 @@ Monster.validationConstraints = {
             maxlength: 128
         },
         size: {
-            maxlength: 32
+            maxlength: 64
         },
         type: {
-            maxlength: 32
+            maxlength: 64
         },
         alignment: {
-            maxlength: 32
+            maxlength: 64
         },
         armorClass: {
             required: true,
@@ -90,7 +90,7 @@ Monster.validationConstraints = {
         },
         hitPoints: {
             required: true,
-            maxlength: 32
+            maxlength: 64
         },
         speed: {
             maxlength: 64
@@ -120,7 +120,7 @@ Monster.validationConstraints = {
             maxlength: 256
         },
         challenge: {
-            maxlength: 16
+            maxlength: 32
         },
         experience: {
             number: true,

@@ -22,7 +22,7 @@ export class Background extends KOModel {
 Background.validationConstraints = {
     rules: {
         name: {
-            maxlength: 128
+            maxlength: 256
         }
     }
 };

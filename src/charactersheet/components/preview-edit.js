@@ -7,7 +7,7 @@ import ko from 'knockout';
  * @param {*} params contains observables and other data from the parent viewmodel
  *                   - data: this observable holds the data used to render both the forms
  *                   - save: this is a javascript function used to save the edited data
- *                   - validation: this javascript object conatains the validation constraints to
+ *                   - validation: this javascript object contains the validation constraints to
  *                     be used in the form validation
  */
 export class PreviewEditViewModel {
@@ -39,6 +39,9 @@ export class PreviewEditViewModel {
     };
 
     saveAndToggleForm = async () => {
+        if (!this.isEditFormValid()) {
+            return;
+        }
         await this.save();
         this.toggleEditForm();
     };
@@ -51,7 +54,7 @@ ko.components.register('preview-edit', {
         <div class="row row-padded-horizontal">\
             <button type="button"\
                     class="btn btn-sm btn-primary pull-right"\
-                    data-bind="click: saveAndToggleForm, disable: !isEditFormValid()">\
+                    data-bind="click: saveAndToggleForm">\
             Save\
             </button>\
             <button type="button"\

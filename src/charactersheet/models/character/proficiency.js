@@ -19,7 +19,7 @@ Proficiency.validationConstraints = {
     rules: {
         name: {
             required: true,
-            maxlength: 128
+            maxlength: 256
         },
         type: {
             maxlength: 64
