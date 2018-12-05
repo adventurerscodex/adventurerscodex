@@ -1,9 +1,8 @@
 import $ from 'jquery';
 import { Notifications } from 'charactersheet/utilities';
-import { _ChatService } from 'charactersheet/services/common/account/messaging/chat_service';
-import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
-
 import Strophe from 'strophe';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
+import { _ChatService } from 'charactersheet/services/common/account/messaging/chat_service';
 import joinedPresence from 'joinedPresence';
 
 describe('The Chat Service', () => {
