@@ -96,6 +96,12 @@ export function AdventurersCodexViewModel() {
 
         // Finish the setup once we're sure that we're logged in.
         Notifications.authentication.loggedIn.add(self.doSetup);
+
+        // Don't make the app visible until XMPP has finished loading
+        // which is usually the end of the loading process.
+        Notifications.xmpp.connected.add(() => {
+            setTimeout(hideSplashScreen, 100);
+        });
     };
 
     self.doSetup = async () => {
@@ -106,8 +112,10 @@ export function AdventurersCodexViewModel() {
         TabFragmentManager.init();
 
         self.isFinishedLoading(true);
+        keyAndMakeVisible();
         if (CoreManager.activeCore()) {
             // There might be an active character in the URL.
+            showSplashScreen();
             self._handleChangedCharacter();
         } else if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
@@ -140,6 +148,8 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangingCharacter = function() {
+        showSplashScreen();
+
         self.selectedCore(null);
 
         Hypnos.client.cache.flushAll();
