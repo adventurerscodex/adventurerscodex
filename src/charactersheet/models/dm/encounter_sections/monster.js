@@ -86,7 +86,8 @@ Monster.validationConstraints = {
         armorClass: {
             required: true,
             number: true,
-            min: 0
+            min: 0,
+            max: 10000
         },
         hitPoints: {
             required: true,
@@ -124,31 +125,38 @@ Monster.validationConstraints = {
         },
         experience: {
             number: true,
-            min: 0
+            min: -10000,
+            max: 100000000
         },
         strength: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         dexterity: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         constitution: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         intelligence: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         wisdom: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         charisma: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         }
     }
 };

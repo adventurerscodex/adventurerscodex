@@ -41,17 +41,24 @@ export class OtherStats extends KOModel {
 OtherStats.validationConstraints = {
     rules: {
         armorClassModifier: {
-            number: true
+            number: true,
+            min: -10000,
+            max: 10000
         },
         initiativeModifier: {
-            number: true
+            number: true,
+            min: -10000,
+            max: 10000
         },
         speed: {
             number: true,
-            min: 0
+            min: -10000,
+            max: 10000
         },
         proficiencyModifier: {
-            number: true
+            number: true,
+            min: -10000,
+            max: 10000
         }
     }
 };

@@ -83,15 +83,18 @@ MagicItem.validationConstraints = {
         },
         maxCharges: {
             number: true,
-            min: 0
+            min: 0,
+            max: 10000
         },
         usedCharges: {
             number: true,
-            min: 0
+            min: 0,
+            max: 10000
         },
         weight: {
             number: true,
-            min: 0
+            min: 0,
+            max: 1000000
         }
     }
 };

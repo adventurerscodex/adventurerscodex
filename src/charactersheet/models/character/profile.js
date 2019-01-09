@@ -71,19 +71,23 @@ Profile.validationConstraints = {
         },
         age: {
             number: true,
-            min: 0
+            min: 0,
+            max: 1000000
         },
         level: {
             number: true,
-            min: 0
+            min: 0,
+            max: 10000
         },
         experience: {
             number: true,
-            min: 0
+            min: -1000000,
+            max: 100000000
         },
         weight: {
             number: true,
-            min: 0
+            min: 0,
+            max: 10000
         },
         height: {
             maxlength: 64

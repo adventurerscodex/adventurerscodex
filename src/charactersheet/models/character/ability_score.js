@@ -47,27 +47,33 @@ AbilityScore.validationConstraints = {
     rules: {
         Strength: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         Dexterity: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         Constitution: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         Intelligence: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         Wisdom: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         },
         Charisma: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 1000000
         }
     }
 };

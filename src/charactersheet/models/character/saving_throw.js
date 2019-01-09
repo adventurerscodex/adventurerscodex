@@ -82,7 +82,8 @@ SavingThrow.validationConstraints = {
     rules: {
         modifier: {
             required: true,
-            min: 0
+            min: -10000,
+            max: 10000
         }
     }
 };

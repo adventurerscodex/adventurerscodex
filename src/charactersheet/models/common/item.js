@@ -68,15 +68,18 @@ Item.validationConstraints = {
         },
         quantity: {
             number: true,
-            min: 0
+            min: 0,
+            max: 1000000
         },
         weight: {
             number: true,
-            min: 0
+            min: 0,
+            max: 1000000
         },
         cost: {
             number: true,
-            min: 0
+            min: 0,
+            max: 100000000
         },
         currencyDenomination: {
             maxlength: 64
