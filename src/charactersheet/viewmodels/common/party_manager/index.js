@@ -163,20 +163,17 @@ export function PartyManagerViewModel() {
     /* Private Methods */
 
     self._getParties = async function() {
-        var key = CoreManager.activeCore().uuid();
-        // var foundParties = PersistenceService.findByPredicates(ChatRoom, [
-        //     new KeyValuePredicate('characterId', key),
-        //     new KeyValuePredicate('isParty', true)
-        // ]);
-        let partyResponse = await ChatRoom.ps.list({coreUuid: key,
-            type: Fixtures.chatRoom.type.party});
-        const foundParties = partyResponse.objects;
-        if (foundParties.length > 0) {
+        const coreUuid = CoreManager.activeCore().uuid();
+        const { objects: allParties } = await ChatRoom.ps.list({
+            type: Fixtures.chatRoom.type.party,
+            coreUuid
+        });
+        if (allParties.length > 0) {
             self.createOrJoin('join');
         } else {
             self.createOrJoin('create');
         }
-        return foundParties;
+        return allParties;
     };
 
     self._leaveOnSwitch = function() {

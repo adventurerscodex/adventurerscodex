@@ -24,6 +24,10 @@ export class ChatRoom extends KOModel {
         include: ['coreUuid']
     };
 
+    static CHAT_TYPES = {
+        PARTY: 'party'
+    };
+
     coreUuid = ko.observable();
     jid = ko.observable();
     createdAt = ko.observable();
@@ -34,6 +38,12 @@ export class ChatRoom extends KOModel {
         return Strophe.getNodeFromJid(this.jid());
     });
 
+    isParty = () => (
+        this.type === ChatRoom.CHAT_TYPES.PARTY
+    )
+
+    isGroupChat = () => ( true );
+
     purge = function() {
         this.getAllMessages().forEach(function(msg, idx, _) {
             msg.delete();
@@ -42,21 +52,22 @@ export class ChatRoom extends KOModel {
 
     /* Convenience Methods */
 
-    getUnreadMessages = function() {
-        return PersistenceService.findFiltered(Message, function(msg, _) {
-            return Strophe.getBareJidFromJid(msg.from) == this.jid() && !msg.read;
-        });
+    getUnreadMessages = () => {
+        const jid = this.jid();
+        return PersistenceService.findFiltered(Message, (msg, _) => (
+            Strophe.getBareJidFromJid(msg.from) === jid && !msg.read
+        ));
     };
 
-    getAllMessages = function() {
-        return PersistenceService.findFiltered(Message, function(msg, _) {
+    getAllMessages = () => {
+        return PersistenceService.findFiltered(Message, (msg, _) => {
             return Strophe.getBareJidFromJid(msg.from) == this.jid();
-        }).concat(PersistenceService.findFiltered(Presence, function(msg, _) {
+        }).concat(PersistenceService.findFiltered(Presence, (msg, _) => {
             return Strophe.getBareJidFromJid(msg.from) == this.jid();
         }));
     };
 
-    getRoomMembers = function() {
+    getRoomMembers = () => {
         var jid = this.jid();
         var character = CoreManager.activeCore();
         var chatService = ChatServiceManager.sharedService();

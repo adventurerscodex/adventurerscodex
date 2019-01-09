@@ -15,14 +15,17 @@ import {
 import ko from 'knockout';
 import template from './index.html';
 
-export function ChatDetailViewModel(params) {
+// For some reason, we thought it would be a good idea to start with the cell,
+// not the room... REFACTOR
+export function ChatDetailViewModel({ chatCell }) {
     var self = this;
 
-    self.room = params.room;
-    self.members = params.room().members;
-    self.isGroupChat = params.room().isGroupChat;
-    self._getRoomMembers = params.room()._getRoomMembers;
+    self._chatCell = chatCell;
+    self.chatRoom = ko.pureComputed(() => (
+        self._chatCell().chatRoom
+    ));
     self.wasAtBottom = ko.observable(true);
+    self.members = ko.observableArray([]);
 
     self.log = ko.observableArray();
     self.message = ko.observable('');
@@ -30,18 +33,26 @@ export function ChatDetailViewModel(params) {
     self._xmppIsConnected = ko.observable(false);
 
     self.id = ko.pureComputed(function() {
-        return self.room().id();
+        return self._chatCell().chatRoom.jid();
     });
+
+    self.isGroupChat = () => (
+        self.chatRoom().isGroupChat()
+    );
+
+    self._getRoomMembers = () => (
+        self.chatRoom()._getRoomMembers()
+    );
 
     /* Public Methods */
 
     self.load = function() {
-
-        self.room.subscribe(self.cleanReload);
+        self._chatCell.subscribe(self.cleanReload);
         self.cleanReload();
 
         Notifications.xmpp.connected.add(self._updateStatus);
         Notifications.xmpp.disconnected.add(self._updateStatus);
+        Notifications.chat.message.add(self._handleMessageReceived);
         Notifications.chat.room.add(self.reloadData);
         Notifications.chat.member.joined.add(self.reloadData);
         Notifications.chat.member.left.add(self.reloadData);
@@ -54,6 +65,7 @@ export function ChatDetailViewModel(params) {
         Notifications.xmpp.connected.remove(self._updateStatus);
         Notifications.xmpp.disconnected.remove(self._updateStatus);
         Notifications.chat.room.remove(self.reloadData);
+        Notifications.chat.message.remove(self._handleMessageReceived);
         Notifications.chat.member.joined.remove(self.reloadData);
         Notifications.chat.member.left.remove(self.reloadData);
         Notifications.party.left.remove(self.reloadData);
@@ -69,15 +81,13 @@ export function ChatDetailViewModel(params) {
     };
 
     self.reloadData = function() {
-        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatJid', self.id());
-        if (!chat) { return; }
-        self.members(chat.getRoomMembers());
+        self.members(self.chatRoom().getRoomMembers());
 
-        var log = self._getRecentItems();
+        const log = self._getRecentItems();
         ko.utils.arrayPushAll(self.log, log);
     };
 
-    self.onitemrender = function() {
+    self.onitemrender = function(message) {
         // Hack to scroll the element after it's been loaded and rendered.
         // The old plugin relied on DOM events which fire at the wrong time now.
         // Note: Copies code from ko bottomsUp plugin.
@@ -90,7 +100,6 @@ export function ChatDetailViewModel(params) {
     };
 
     /* UI Methods */
-
 
     self.name = ko.pureComputed(function() {
         return self.members().map(function(member, idx, _) {
@@ -132,10 +141,9 @@ export function ChatDetailViewModel(params) {
     /* Private Methods */
 
     self._markAllAsRead = function() {
-        var room = PersistenceService.findBy(ChatRoom, 'chatJid', self.id())[0];
-        room.getUnreadMessages().forEach(function(chat, idx, _) {
-            chat.read(true);
-            chat.save();
+        self.chatRoom().getUnreadMessages().forEach((message, idx, _) => {
+            message.read(true);
+            message.save();
         });
     };
 
@@ -194,7 +202,7 @@ export function ChatDetailViewModel(params) {
     };
 
     self._getLatestTimeStamp = function() {
-        var last = self.log().length - 1;
+        const last = self.log().length - 1;
         if (last < 0) {
             return 0;
         }
@@ -202,23 +210,29 @@ export function ChatDetailViewModel(params) {
     };
 
     self._getRecentItems = function() {
-        var latestTime = self._getLatestTimeStamp();
-        var key = CoreManager.activeCore().uuid();
-        var log = PersistenceService.findFiltered(Message, function(msg, _) {
-            return (
-                Strophe.getBareJidFromJid(msg.from) == self.id() &&
-                msg.dateReceived > latestTime &&
-                !msg.subject && !msg.invite
-            );
-        }).concat(PersistenceService.findFiltered(Presence, function(pres, _) {
-            return (
-                Strophe.getBareJidFromJid(pres.from) == self.id() &&
-                pres.dateReceived > latestTime
-            );
-        })).sort(function(a, b) {
+        const latestTime = self._getLatestTimeStamp();
+        const key = CoreManager.activeCore().uuid();
+        const log = PersistenceService.findFiltered(Message, (msg, _) => (
+            Strophe.getBareJidFromJid(msg.from) === self.id() &&
+            msg.dateReceived > latestTime &&
+            !msg.subject && !msg.invite
+        )).concat(PersistenceService.findFiltered(Presence, (pres, _) => (
+            Strophe.getBareJidFromJid(pres.from) === self.id() &&
+            pres.dateReceived > latestTime
+        )));
+
+        return log.sort((a, b) => {
             return a.dateReceived() - b.dateReceived();
         });
-        return log;
+    };
+
+    self._handleMessageReceived = function (room, msg, delay, hideTitle) {
+        if (room.jid() !== self.chatRoom().jid()) {
+            // This message is for a different room, we don't care.
+            return;
+        }
+
+        self.reloadData();
     };
 }
 

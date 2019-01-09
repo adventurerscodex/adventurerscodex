@@ -2,41 +2,25 @@ import {
     CoreManager,
     DataRepository,
     Fixtures,
-    Notifications,
-    Utility
+    Notifications
 } from 'charactersheet/utilities';
-import {
-    KeyValuePredicate,
-    OrPredicate
- } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { ChatRoom } from 'charactersheet/models/common/chat_room';
 import { Message } from 'charactersheet/models/common/message';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Presence } from 'charactersheet/models/common/presence';
 import { SharedServiceManager } from '../../shared_service_manager';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
-import ko from 'knockout';
 import uuid from 'node-uuid';
-
-/**
- * The default configuration object for the Chat service.
- */
-var ChatServiceConfiguration = {
-    defaultChatOptions: {
-
-    }
-};
 
 /**
  * The shared instance manager for the Chat Service.
  */
-export var ChatServiceManager = new SharedServiceManager(_ChatService, ChatServiceConfiguration);
+export var ChatServiceManager = new SharedServiceManager(_ChatService, {});
 
 /**
  * An internal service implementation that holds onto data regarding the
  * creation, joining, and leaving chat rooms.
  */
-function _ChatService(config) {
+export function _ChatService(config) {
     var self = this;
 
     self.configuration = config;
@@ -48,7 +32,6 @@ function _ChatService(config) {
 
     self._connectionIsSetup = false;
     self._isListeningForXMPPEvents = false;
-    self._toJoinParty = null;
 
     self.currentPartyNode = null;
 
@@ -85,7 +68,7 @@ function _ChatService(config) {
             room = await self._getOrCreateRoom(jid, true);
         }
 
-        var xmpp = XMPPService.sharedService();
+        const xmpp = XMPPService.sharedService();
         // TODO: MUC Plugin has issues with connection interuptions....
         // Need to investigate more
         xmpp.connection.muc.join(
@@ -99,7 +82,7 @@ function _ChatService(config) {
     };
 
     self.leave = function(jid, nick, callback) {
-        var xmpp = XMPPService.sharedService();
+        const xmpp = XMPPService.sharedService();
         xmpp.connection.muc.leave(jid, nick, callback, null);
         delete self.rooms[jid];
     };
@@ -118,10 +101,9 @@ function _ChatService(config) {
     };
 
     self.createRoomAndInvite = async function(jid, invitees) {
-        var xmpp = XMPPService.sharedService();
-        var room = await self._getOrCreateRoom(jid, true);
+        const xmpp = XMPPService.sharedService();
 
-        self.join(room.jid(), Strophe.getNodeFromJid(xmpp.connection.jid));
+        const room = await self.join(jid, Strophe.getNodeFromJid(xmpp.connection.jid));
         self._inviteAll(jid, invitees);
 
         return room;
@@ -172,34 +154,18 @@ function _ChatService(config) {
                 return true;
             }
 
-            var room = await self._getOrCreateRoom(from, true);
-            var chatMessage = Message.fromTree(msg);
+            let room = null;
+            if (from == self.currentPartyNode) {
+                room = await self._getOrCreateParty(from);
+            } else {
+                room = await self._getOrCreateRoom(from, true);
+            }
+
+            const chatMessage = Message.fromTree(msg);
             chatMessage.save();
 
             var delay = $(msg).find('delay').length > 0;
             Notifications.chat.message.dispatch(room, chatMessage, delay);
-        } catch(err) {
-            console.log(err);
-        }
-        return true;
-    };
-
-    self._handleNewOneToOneMessage = function(msg) {
-        /*eslint no-console:0*/
-
-        // Note: 1-to-1 rooms are not enabled for now. They cause issues with
-        // the private messages from DMs to the party chat. They've worked before
-        // due to a bug in this method, but with it fixed the issue arose.
-        try {
-            // Messages in 1-to-1 Chats are ID'd by the from JID.
-//             var from = $(msg).attr('from');
-
-//             var room = self._getOrCreateRoom(Strophe.getNodeFromJid(from), false);
-//             var chatMessage = Message.fromTree(msg);
-//             chatMessage.save();
-//
-//             var delay = $(msg).find('delay').length > 0;
-//             Notifications.chat.message.dispatch(room, chatMessage, delay);
         } catch(err) {
             console.log(err);
         }
@@ -273,16 +239,7 @@ function _ChatService(config) {
 
     // Connection Handlers
 
-    self._handleConnect = function() {
-        if (!self._toJoinParty) { return; }
-        var xmpp = XMPPService.sharedService();
-        var jid = self._toJoinParty + '@' + MUC_SERVICE;
-        var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
-
-        var party = self._getOrCreateParty(jid);
-
-        self.join(jid, nick, true);
-    };
+    self._handleConnect = function() {};
 
     self._setupConnection = function() {
         if (self._isListeningForXMPPEvents) {
@@ -346,32 +303,21 @@ function _ChatService(config) {
     // Party Management
 
     self._getOrCreateParty = async function(jid) {
-        var key = CoreManager.activeCore().uuid();
-        // var party = PersistenceService.findByPredicates(ChatRoom, [
-        //     new KeyValuePredicate('isParty', true),
-        //     new KeyValuePredicate('chatId', jid),
-        //     new KeyValuePredicate('characterId', key)
-        // ])[0];
-        let partyResponse = await ChatRoom.ps.list({coreUuid: key,
-            type: Fixtures.chatRoom.type.party, jid: jid});
+        const coreUuid = CoreManager.activeCore().uuid();
+        const partyResponse = await ChatRoom.ps.list({
+            type: Fixtures.chatRoom.type.party,
+            coreUuid,
+            jid
+        });
         let party = partyResponse.objects[0];
 
         // Create the room if it doesn't exist...
         if (!party) {
-            party = new ChatRoom();
-            party.jid(jid);
-            party.type(Fixtures.chatRoom.type.party);
-            party.coreUuid(key);
-            // party.importValues({
-            //     jid: jid,
-            //     dateCreated: (new Date()).getTime(),
-            //     name: jid, // DEBUG
-            //     isGroupChat: true,
-            //     isParty: true,
-            //     partyId: null,
-            //     characterId: CoreManager.activeCore().uuid()
-            // });
-            const createResponse = await party.ps.create();
+            const createResponse = await ChatRoom.ps.create({
+                jid: jid,
+                type: Fixtures.chatRoom.type.party,
+                coreUuid: CoreManager.activeCore().uuid()
+            });
             party = createResponse.object;
         }
 
@@ -387,64 +333,50 @@ function _ChatService(config) {
      */
     self._getOrCreateRoom = async function(jid, isGroupChat) {
         if (!self.currentPartyNode) { return; }
-        var key = CoreManager.activeCore().uuid();
-        let chatRoomResponse = await ChatRoom.ps.list({coreUuid: key, jid: jid});
-        let room = chatRoomResponse.objects.filter((room) =>{
-            if (room.partyJid() == self.currentPartyNode
-                || room.type() == Fixtures.chatRoom.type.party) {
-                return true;
-            }
-        })[0];
-        // var room = PersistenceService.findByPredicates(ChatRoom, [
-        //     // Has the current jid.
-        //     new KeyValuePredicate('chatJid', jid),
-        //     new OrPredicate([
-        //         // Either is a party or belongs to the party.
-        //         new KeyValuePredicate('partyJid', self.currentPartyNode),
-        //         new KeyValuePredicate('isParty', true)
-        //     ])
-        // ])[0];
+        const coreUuid = CoreManager.activeCore().uuid();
+        const { objects: rooms } = await ChatRoom.ps.list({
+            coreUuid,
+            jid,
+            partyJid: self.currentPartyNode,
+            type: Fixtures.chatRoom.type.chat
+        });
 
+        let room = rooms[0];
         // Create the room if it doesn't exist...
         if (!room) {
-            room = new ChatRoom();
-            room.importValues({
-                jid: jid,
-                type: isGroupChat ? Fixtures.chatRoom.type.chat : Fixtures.chatRoom.type.party,
-                partyJid: self.currentPartyNode,
-                coreUuid: CoreManager.activeCore().uuid()
+            const response = await ChatRoom.ps.create({
+                jid,
+                coreUuid,
+                type: Fixtures.chatRoom.type.chat,
+                partyJid: self.currentPartyNode
+
             });
-            const createResponse = await room.ps.create();
-            room = createResponse.object;
+            room = response.object;
         }
 
         return room;
     };
 
     self._inviteAll = function(jid, invitees) {
-        var xmpp = XMPPService.sharedService();
-        invitees.forEach(function(invitee, idx, _) {
+        const xmpp = XMPPService.sharedService();
+        for (const invitee of invitees) {
             xmpp.connection.muc.invite(jid, invitee.jid, null);
-        });
+        }
         xmpp.connection.flush();
     };
 
     self._rejoinRoomsForCurrentParty = async function() {
-        var xmpp = XMPPService.sharedService();
-        var node = self.currentPartyNode;
-        var key = CoreManager.activeCore().uuid();
-        var nick = Strophe.getNodeFromJid(xmpp.connection.jid);
-        // var rooms = PersistenceService.findByPredicates(ChatRoom, [
-        //     new KeyValuePredicate('partyId', node),
-        //     new KeyValuePredicate('isGroupChat', true)
-        // ]);
-        let partyResponse = await ChatRoom.ps.list({coreUuid: key,
-            type: Fixtures.chatRoom.type.chat, partyJid: node});
-        const rooms = partyResponse.objects;
-
-        rooms.forEach(function(room, idx, _) {
-            self.join(room.jid(), nick);
+        const xmpp = XMPPService.sharedService();
+        const { objects: rooms } = await ChatRoom.ps.list({
+            coreUuid: CoreManager.activeCore().uuid(),
+            type: Fixtures.chatRoom.type.chat,
+            partyJid: self.currentPartyNode
         });
+
+        const nick = Strophe.getNodeFromJid(xmpp.connection.jid);
+        for (const room of rooms) {
+            self.join(room.jid(), nick);
+        }
     };
 
     self._leaveAll = function() {

@@ -27,12 +27,12 @@ export function Message() {
 
     self.ps = PersistenceService.register(Message, self);
     self.mapping = {
-        include: ['characterId', 'to', 'from', 'type', 'id', 'body', 'html',
+        include: ['coreUuid', 'to', 'from', 'type', 'id', 'body', 'html',
             'invite', 'item', 'subject', 'dateReceived', 'read']
     };
 
     // Generic Chat Message values
-    self.characterId = ko.observable();
+    self.coreUuid = ko.observable();
     self.type = ko.observable();
     self.to = ko.observable();
     self.from = ko.observable();

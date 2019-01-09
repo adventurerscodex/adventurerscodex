@@ -1,3 +1,4 @@
+import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
@@ -43,16 +44,18 @@ export class Profile extends KOModel {
 
         return values;
     }
-//     self.summary = ko.pureComputed(function() {
-//         var desc = ((self.race() && self.race() !== '') &&
-//                         (self.typeClass() && self.typeClass() !== '') &&
-//                         (self.level() && self.level() !== '')) ?
-//                     'A level ' + self.level() + ' ' + self.race() + ' ' + self.typeClass() + ' by '
-//                         + self.playerName() : false;
-//         desc = desc || 'A unique character, handcrafted from the finest bits the '
-//             + 'internet can provide.';
-//         return desc;
-//     });
+
+    summary = ko.pureComputed(() => {
+        const core = CoreManager.activeCore();
+        let desc = ((this.race() && this.race() !== '') &&
+                        (this.characterClass() && this.characterClass() !== '') &&
+                        (this.level() && this.level() !== '')) ?
+                    'A level ' + this.level() + ' ' + this.race() + ' ' + this.characterClass() + ' by '
+                        + core.playerName() : false;
+        desc = desc || 'A unique character, handcrafted from the finest bits the '
+            + 'internet can provide.';
+        return desc;
+    });
 }
 
 Profile.validationConstraints = {

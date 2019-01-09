@@ -148,21 +148,29 @@ function _NodeService(config) {
     };
 
     self._handleEvent = function(event) {
+        /**eslint no-console:0 */
+        console.log('INCOMING EVENT', event);
         try {
             var items = $(event).find('items').children().toArray();
             var route = $(event).find('items').attr('node');
-            if (!route) { return true; }
+            if (!route) {
+                return true;
+            }
             route = route.split('#')[1];
-            if (!route) { return true; }
+            if (!route) {
+                return true;
+            }
 
-            items.forEach(function(item, idx, _) {
-                var json = $(item).find('json');
-                var dispatchRouteExists = Notifications.xmpp.routes[route] || false;
+            for (const item of items) {
+                const json = $(item).find('json');
+                const dispatchRouteExists = Notifications.xmpp.routes[route] || false;
                 if (route && dispatchRouteExists) {
-                    var content = JSONPayload.getContents(json);
-                    Notifications.xmpp.routes[route].dispatch(content);
+                    // Dispatch a notification to the proper XMMP Route (i.e. pcard)
+                    Notifications.xmpp.routes[route].dispatch(
+                        JSONPayload.getContents(json)
+                    );
                 }
-            });
+            }
         } catch(e) {
             console.log(e);
         }
@@ -170,7 +178,8 @@ function _NodeService(config) {
     };
 
     self._handlePresenceRequest = function(presenceRequest) {
-        /**eslint no-console:0 */
+        /*eslint no-console:0 */
+        console.log('HANDLING PRESENSE REQUEST', presenceRequest);
         try {
             var xmpp = XMPPService.sharedService();
             var from = $(presenceRequest).attr('from');
@@ -192,9 +201,11 @@ function _NodeService(config) {
     };
 
     self._handlePresence = function(receivedPresence) {
+        console.log('INCOMING PRTESENCE', receivedPresence);
         /**eslint no-console:0 */
         try {
             var jid = $(receivedPresence).find('x item').attr('jid');
+            console.log(jid);
             if (!jid) {
                 return true;
             }
@@ -207,6 +218,7 @@ function _NodeService(config) {
                 type: 'subscribe'
             });
             xmpp.connection.send(presence.tree());
+            console.log('SENT SUBSCRIPTION');
         } catch(err) {
             console.log(err);
         }
@@ -214,6 +226,8 @@ function _NodeService(config) {
     };
 
     self._handleSuccessfulPresenceSubscription = function(response) {
+        console.log('SUBSCRIPTION SUCCESS');
+        /**eslint no-console:0 */
         try {
             var from = $(response).attr('from');
             self._subscribeToNode(Strophe.getBareJidFromJid(from), Strophe.NS.JSON + '#pcard', self._getCards, null);
@@ -226,12 +240,14 @@ function _NodeService(config) {
     self._getCards = function() {
         var chat = ChatServiceManager.sharedService();
         var partyId = chat.currentPartyNode;
-        if (partyId == null || !chat.rooms[partyId]) { return; }
+        if (partyId == null || !chat.rooms[partyId]) {
+            return;
+        }
+
         var roster = Object.keys(chat.rooms[partyId].roster);
-        if (roster.length < 1) { return; }
-        roster.forEach(function(member, idx, _) {
+        for (const member of roster) {
             self._getItemsFromNode(member + '@adventurerscodex.com', 'pcard', self._handleEvent, null);
-        });
+        }
     };
 
     /**
@@ -243,6 +259,7 @@ function _NodeService(config) {
      * @param onerror  method to be invoked if the request returns an error
      */
     self._subscribeToNode = function(toJid, node, onsuccess, onerror) {
+        console.log('Requesting a subscription to node', toJid);
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,
@@ -267,6 +284,7 @@ function _NodeService(config) {
      * @param onerror  method to be invoked if the request returns an error
      */
     self._getItemsFromNode = function(toJid, nodeRoute, onsuccess, onerror) {
+        console.log('REQYESTUBG ITEMS FROM NODE');
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,

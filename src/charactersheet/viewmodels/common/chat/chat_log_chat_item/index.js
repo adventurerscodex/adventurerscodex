@@ -36,7 +36,7 @@ export function ChatLogChatItem(params) {
     self.listItemClass = ko.observable('');
 
     self.load = function() {
-        params.onrender();
+        params.onrender(self.message);
     };
 
     // UI Methods
@@ -62,27 +62,33 @@ export function ChatLogChatItem(params) {
         return card.get('name') + ' (' + self.message.fromUsername() + ')';
     });
 
+    self.dateLabel = ko.pureComputed(() => {
+        const date = new Date(self.timestamp());
+        return date.toLocaleString();
+    });
+
     self.html = ko.pureComputed(function() {
         return linkifyStr(self.message.html(), Settings.linkifyOptions);
     });
 
     self.saveToNotes = function() {
-        var key = CoreManager.activeCore().uuid();
-        var note = PersistenceService.findByPredicates(Note, [
-            new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('isSavedChatNotes', true)
-        ])[0];
-        if (!note) {
-            note = new Note();
-            note.characterId(key);
-            note.text('# Saved from Chat');
-            note.isSavedChatNotes(true);
-        }
-        note.text(note.text() + '\n\n' + self.message.toText());
-        note.save();
-
-        Notifications.notes.changed.dispatch();
-        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
+// TODO: Refactor
+//         var key = CoreManager.activeCore().uuid();
+//         var note = PersistenceService.findByPredicates(Note, [
+//             new KeyValuePredicate('characterId', key),
+//             new KeyValuePredicate('isSavedChatNotes', true)
+//         ])[0];
+//         if (!note) {
+//             note = new Note();
+//             note.coreUuid(key);
+//             note.text('# Saved from Chat');
+//             note.isSavedChatNotes(true);
+//         }
+//         note.text(note.text() + '\n\n' + self.message.toText());
+//         note.save();
+//
+//         Notifications.notes.changed.dispatch();
+//         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
     /* Card Methods */
 

@@ -1,0 +1,45 @@
+{
+  "verbose": true,
+  "clearMocks": true,
+  "transform": {
+    ".*": "babel-jest"
+  },
+  "moduleFileExtensions": [
+    "js"
+  ],
+  "moduleDirectories": [
+    "src",
+    "node_modules"
+  ],
+  "modulePaths": [
+    "src"
+  ],
+  "collectCoverageFrom": [
+    "src/**/*.{js,jsx}",
+    "test/**/*.{js,jsx}",
+    "!**/node_modules/**"
+  ],
+  "coverageDirectory": "./coverage",
+  "notify": false,
+  "roots": [
+    "src/",
+    "test/"
+  ],
+  "setupFiles": [
+    "<rootDir>/test/setup.js"
+  ],
+   "globals": {
+        "ENVIRONMENT": "dev",
+        "VERSION": "dsfdfdffdfsdfsd",
+        "CLIENT_ID": "5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD",
+        "HOST_URL": "https://app.adventurerscodex.com/charactersheet/",
+        "HOME_URL": "/",
+        "LOGIN_URL": "/api/o/authorize?client_id={CLIENT_ID}&response_type=token",
+        "PUBSUB_HOST_JID": "pubsub.adventurerscodex.com",
+        "MUC_SERVICE": "chat.adventurerscodex.com",
+        "XMPP_WS_URL": "wss://adventurerscodex.com/chat/",
+        "BUILD_DATE": "sfsdfsd",
+        "CURRENT_YEAR": "fdsfsdfss"
+
+   }
+}

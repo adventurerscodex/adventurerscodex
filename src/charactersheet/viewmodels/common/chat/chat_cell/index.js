@@ -1,56 +1,71 @@
 import { Utility } from 'charactersheet/utilities/convenience';
 import ko from 'knockout';
 
-export function ChatCellViewModel(chat) {
-    var self = this;
+export class ChatCellViewModel {
 
-    self.id = chat.jid;
-    self.characterId = chat.characterId;
-    self._name = chat.name;
-    self.badge = ko.observable();
-    self.isGroupChat = chat.isGroupChat;
-    self._getRoomMembers = chat.getRoomMembers;
-    self.isParty = chat.isParty;
-    self.members = ko.observableArray([]);
+    static memberTemplate = (
+        '<img src="{card.imageUrl}" width="40px" height="40px" class="img img-circle" />&nbsp;'
+    );
 
-    self.placeholder = 'https://www.gravatar.com/avatar/{}?d=mm';
+    placeholder = 'https://www.gravatar.com/avatar/{}?d=mm';
 
-    self.name = ko.pureComputed(function() {
-        return self.members().map(function(member, idx, _) {
-            return self._getMemberTemplate(member);
+    constructor(chatRoom) {
+        this.chatRoom = chatRoom;
+        this.badge = ko.observable();
+        this.members = ko.observableArray([]);
+    }
+
+    get id() {
+        return this.chatRoom.jid;
+    }
+
+    get isGroupChat() {
+        return true;
+    }
+
+    get isParty() {
+        return this.chatRoom.partyJid() === null;
+    }
+
+    _getRoomMembers() {
+        return this.chatRoom.getRoomMembers();
+    }
+
+    name = ko.pureComputed(function() {
+        if (this.isParty) {
+            return 'Your Party';
+        }
+
+        return this.members().map((member, idx, _) => {
+            return this._getMemberTemplate(member);
         }).join('');
 
-    });
+    }, this);
 
-    self.shouldShowDelete = ko.pureComputed(function() {
-        return !self.isParty();
-    });
+    shouldShowDelete = ko.pureComputed(function() {
+        return !this.isParty;
+    }, this);
 
-    self.reload = function() {
-        self.members(self._getRoomMembers());
+    reload = () => {
+        this.members(this._getRoomMembers());
     };
 
     /* View Model Methods */
 
-    self.save = function() {};
+    save = () => {};
 
     /* Template Rendering Methods */
 
-    self._getMemberTemplate = function(card) {
+    _getMemberTemplate = (card) => {
         var url = (typeof card !== 'string') ?
-            Utility.string.createDirectDropboxLink(card.get('imageUrl')[0]) : self.placeholder;
-        return ChatCellViewModelMemberTemplate.replace(
+            Utility.string.createDirectDropboxLink(card.get('imageUrl')[0]) : this.placeholder;
+        return this.constructor.memberTemplate.replace(
             '{card.imageUrl}', url
         );
     };
 }
 
-
-var ChatCellViewModelMemberTemplate = '\
-    <img src="{card.imageUrl}" width="40px" height="40px" class="img img-circle" />&nbsp;\
-';
-
 ko.components.register('chat-cell', {
     viewModel: ChatCellViewModel,
-    template: ChatCellViewModelMemberTemplate
+    template: ChatCellViewModel.memberTemplate
 });

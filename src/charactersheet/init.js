@@ -125,4 +125,5 @@ export var init = function(viewModel) {
     window.hotkeyHandler = HotkeysService.hotkeyHandler;
     window.PersistenceService = PersistenceService;
     window.Hypnos = Hypnos;
+    window.XMPPService = XMPPService;
 };

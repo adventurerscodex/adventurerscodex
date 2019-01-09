@@ -18,50 +18,55 @@ import ko from 'knockout';
 import template from './index.html';
 import uuid from 'node-uuid';
 
-export function ChatViewModel(params) {
-    var self = new MasterDetailViewModel();
+export class ChatViewModel extends MasterDetailViewModel {
 
-    self.chats = ko.observableArray();
-    self.isActive = params.isActive;
-    self.isConnectedToParty = ko.observable(false);
+    chats = ko.observableArray([]);
+    isConnectedToParty = ko.observable(false);
 
-    self.title = 'Chats';
-    self.shouldDisplayModelOnNewItem = true;
+    title = 'Chats';
+    shouldDisplayModelOnNewItem = true;
+
+    constructor({ isActive }) {
+        super();
+
+        this.isActive = isActive;
+    }
 
     /* View Model Methods */
 
-    self.didLoad = function() {
-        self._purgeChats();
+    didLoad = async () => {
+        this._purgeChats();
 
-        self.reloadCells();
-        self.selectedCell(self.cells()[0]);
-        self.checkForParty();
+        await this.reloadData();
 
-        // Message Notifications
-        Notifications.chat.message.add(self._deliverMessageToRoom);
-        Notifications.chat.room.add(self.reloadCells);
-        Notifications.chat.member.joined.add(self._userHasJoinedOrLeft);
-        Notifications.chat.member.left.add(self._userHasJoinedOrLeft);
-        Notifications.party.joined.add(self._didJoinParty);
-        Notifications.party.left.add(self._hasLeftParty);
-        Notifications.party.players.changed.add(self.reloadCells);
-    };
-
-    self.didUnload = function() {
+        this.selectedCell(this.cells()[0]);
+        this.checkForParty();
 
         // Message Notifications
-        Notifications.chat.message.remove(self._deliverMessageToRoom);
-        Notifications.chat.room.remove(self.reloadCells);
-        Notifications.chat.member.joined.remove(self._userHasJoinedOrLeft);
-        Notifications.chat.member.left.remove(self._userHasJoinedOrLeft);
-        Notifications.party.joined.remove(self._didJoinParty);
-        Notifications.party.left.remove(self._hasLeftParty);
-        Notifications.party.players.changed.remove(self.reloadCells);
+        Notifications.chat.message.add(this._handleMessageReceived);
+        Notifications.chat.room.add(this.reloadData);
+        Notifications.chat.member.joined.add(this._userHasJoinedOrLeft);
+        Notifications.chat.member.left.add(this._userHasJoinedOrLeft);
+        Notifications.party.joined.add(this._didJoinParty);
+        Notifications.party.left.add(this._hasLeftParty);
+        Notifications.party.players.changed.add(this.reloadData);
     };
 
-    self.checkForParty = function() {
-        var chat = ChatServiceManager.sharedService();
-        self.isConnectedToParty(chat.currentPartyNode == null ? false : true);
+    didUnload = () => {
+
+        // Message Notifications
+        Notifications.chat.message.remove(this._handleMessageReceived);
+        Notifications.chat.room.remove(this.reloadData);
+        Notifications.chat.member.joined.remove(this._userHasJoinedOrLeft);
+        Notifications.chat.member.left.remove(this._userHasJoinedOrLeft);
+        Notifications.party.joined.remove(this._didJoinParty);
+        Notifications.party.left.remove(this._hasLeftParty);
+        Notifications.party.players.changed.remove(this.reloadData);
+    };
+
+    checkForParty = () => {
+        const chatService = ChatServiceManager.sharedService();
+        this.isConnectedToParty(chatService.currentPartyNode !== null);
     };
 
     /* List Management Methods */
@@ -72,68 +77,66 @@ export function ChatViewModel(params) {
      * Note: New rooms are created with the following JID format:
      * <user's chosen room name>.<PARTY_ID>@<MUC_SERVICE>
      */
-    self.addItem = function(invitees) {
-        var name = uuid.v4();
-        if (invitees.length === 0) { return; }
+    addItem = async (invitees) => {
+        const name = uuid.v4();
+        if (invitees.length === 0) {
+            return;
+        }
 
-        var chatService = ChatServiceManager.sharedService();
-        var jid = name + '@' + MUC_SERVICE;
-        var room = chatService.createRoomAndInvite(jid, invitees);
+        const chatService = ChatServiceManager.sharedService();
+        const jid = name + '@' + MUC_SERVICE;
+        const room = await chatService.createRoomAndInvite(jid, invitees);
 
-        self.reloadCells();
+        await this.reloadData();
 
-        var cellToSelect = self.cells().filter(function(cell, idx, _) {
+        const cellToSelect = this.cells().filter(function(cell, idx, _) {
             return cell.id() === room.jid();
         })[0];
-        self.selectedCell(cellToSelect);
+        this.selectedCell(cellToSelect);
     };
 
     /**
      * Clear the detail view model and reload the list of chats.
      */
-    self.deleteCell = function(cell) {
-        var chatService = ChatServiceManager.sharedService();
+    deleteCell = async (cell) => {
+        const chatService = ChatServiceManager.sharedService();
         chatService.leave(cell.id(), 'test', console.log);
 
-        var chat = PersistenceService.findFirstBy(ChatRoom, 'chatJid', cell.id());
-        if (chat) {
-            chat.purge();
-            chat.delete();
-        }
+        cell.chatRoom.purge();
+        await cell.chatRoom.ps.delete();
 
-        self.reloadCells();
-        self.selectedCell(self.cells()[0]);
+        this.reloadData();
+        this.selectedCell(this.cells()[0]);
     };
 
-    self.selectCell = function(cell) {
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatJid', cell.id());
-        self.updateBadge(room);
+    selectCell = (cell) => {
+        this.updateBadge(cell.chatRoom);
     };
 
     /* Event Methods */
 
-    self.getDetailObject = function(cell) {
+    getDetailObject = function(cell) {
         return cell;
     };
 
-    self.modalFinishedOpening = function() {};
+    modalFinishedOpening = function() {};
 
     /**
      * Once a modal is closed, if it was closed by clicking done, then create
      * a new room and add the selected users to it.
      */
-    self.modalFinishedClosing = function(partyMembersToAdd) {
-        self.modalIsOpen(false);
+    modalFinishedClosing = (partyMembersToAdd) => {
+        this.modalIsOpen(false);
         if (partyMembersToAdd.length > 0) {
-            self.addItem(partyMembersToAdd);
+            this.addItem(partyMembersToAdd);
         }
     };
 
     /**
      * Update the value of the badge for a given room.
      */
-    self.updateBadge = function(room) {
-        var cellToBadge = self.cells().filter(function(cell, idx, _) {
+    updateBadge = (room) => {
+        var cellToBadge = this.cells().filter(function(cell, idx, _) {
             return cell.id() === room.jid();
         })[0];
         if (cellToBadge) {
@@ -144,130 +147,134 @@ export function ChatViewModel(params) {
     // Cell Methods
 
     /**
-     * Fetch all of the cells for the given character/campaign and
+     * Fetch all of the chats for the given character/campaign and
      * convert them into cells.
      */
-    self.reloadCells = function() {
-        self.chats(self._getChats());
-        self.cells(self._getChatCells());
+    reloadData = async () => {
+        this.chats(await this._getChats());
+        this.cells(this._getChatCells());
     };
 
     /**
      * Tell each of the existing cells to reload their data.
      * This does NOT reload the list of cells from disk.
      */
-    self.refreshCells = function() {
-        return self.cells().forEach(function(cell, idx, _) {
+    refreshCells = () => {
+        return this.cells().forEach(function(cell, idx, _) {
             cell.reload();
         });
     };
 
     /* Private Methods */
 
-    self._getChatCells = function() {
-        return self.chats().map(function(chat, idx, _) {
+    _getChatCells = () => {
+        return this.chats().map(function(chat, idx, _) {
             var cell = new ChatCellViewModel(chat);
             cell.reload();
             return cell;
         });
     };
 
-    self._getChats = function() {
-        var key = CoreManager.activeCore().uuid();
-        var chatService = ChatServiceManager.sharedService();
-        var currentPartyNode = chatService.currentPartyNode;
-        var chats = PersistenceService.findByPredicates(ChatRoom, [
-            new KeyValuePredicate('characterId', key),
-            new OrPredicate([
-                // Get the party chat.
-                new KeyValuePredicate('chatJid', currentPartyNode),
-                // Get all related chats.
-                new KeyValuePredicate('partyId', currentPartyNode)
-            ])
-        ]);
-        return chats.sort(function(a,b) {
-            var aVal = a.isParty() ? 1 : -1;
-            var bVal = b.isParty() ? 1 : -1;
+    _getChats = async () => {
+        const coreUuid = CoreManager.activeCore().uuid();
+        const chatService = ChatServiceManager.sharedService();
+        const currentPartyNode = chatService.currentPartyNode;
 
-            return bVal - aVal;
+        if (!currentPartyNode) {
+            return [];
+        }
+
+        const { objects: rooms } = await ChatRoom.ps.list({
+            coreUuid,
+            partyJid: currentPartyNode
         });
+
+        const { objects: parties } = await ChatRoom.ps.list({
+            coreUuid,
+            jid: currentPartyNode
+        });
+
+        const chats = [ ...parties, ...rooms ];
+        return chats.sort((a, b) => (
+            a.createdAt() - b.createdAt()
+        ));
     };
 
     /**
      * Return if the current active room is the same as the provided.
      */
-    self._isSelectedRoom = function(room) {
-        if (!room || !self.selectedCell()) { return false; }
-        return self.selectedCell().id() === room.jid();
+    _isSelectedRoom = (room) => {
+        if (!room || !this.selectedCell()) { return false; }
+        return this.selectedCell().id() === room.jid();
     };
 
     /**
-     * Tell the child view model that it should update its chat messages.
+     * Given a chat message, if it pertains to a backgrounded room,
+     * then badge the icon
+     * Regardless, alert the user if needed.
      */
-    self._childViewModelShouldUpdate = function() {
-        self.selectedObject.valueHasMutated();
-    };
+    _handleMessageReceived = async (room, msg, delay, hideTitle) => {
+        await this.reloadData();
+        var roomIsSelected = this._isSelectedRoom(room);
 
-    /**
-     * Given a chat message, deliver it to the correct room if the room is
-     * active, else badge the icon or create the room if needed and alert
-     * the user.
-     */
-    self._deliverMessageToRoom = function(room, msg, delay, hideTitle) {
-        self.reloadCells();
-        var roomIsSelected = self._isSelectedRoom(room);
-        if (roomIsSelected) {
-            // The room for this chat is the active room.
-            self._childViewModelShouldUpdate();
-        } else if (!delay) {
-            // The room is in the background. Badge the icon.
-            self.updateBadge(room);
+        // The chat detail model will handle foreground messages. We only need
+        // to worry about messages that are for background chats.
+        // If the room is in the background and the item isn't delayed:
+        // Then badge the icon.
+        if (!roomIsSelected && !delay) {
+            this.updateBadge(room);
         }
 
-        var chatTabIsForground = self.isActive() == 'active';
+        // If the chat tab isn't the foreground tab, then send a notification.
+        const chatTabIsForground = this.isActive() == 'active';
+        const notification = Notifications.userNotification.infoNotification;
         if (!chatTabIsForground && !delay && msg.messageType() != CHAT_MESSAGE_TYPES.META) {
             if (!hideTitle) {
-                Notifications.userNotification.infoNotification.dispatch(msg.shortHtml(), msg.fromUsername());
+                notification.dispatch(msg.shortHtml(), msg.fromUsername());
             } else {
-                Notifications.userNotification.infoNotification.dispatch(msg.shortHtml());
+                notification.dispatch(msg.shortHtml());
             }
 
         }
     };
 
-    self._userHasJoinedOrLeft = function(presence) {
-        if (self._isMe(presence.fromUsername())) { return; }
-        var room = PersistenceService.findFirstBy(ChatRoom, 'chatJid', presence.fromBare());
-        self._deliverMessageToRoom(room, presence, false, true);
+    _userHasJoinedOrLeft = async (presence) => {
+        if (this._isMe(presence.fromUsername())) { return; }
+
+        const coreUuid = CoreManager.activeCore().uuid(),
+            jid = presence.fromBare();
+
+        const { objects } = await ChatRoom.ps.list({ coreUuid, jid });
+
+        if (objects[0]) {
+            const room = objects[0];
+            this._handleMessageReceived(room, presence, false, true);
+        }
     };
 
-    self._didJoinParty = function() {
-        self.reloadCells();
-        self.selectedCell(self.cells()[0]);
-        self.checkForParty();
+    _didJoinParty = async () => {
+        await this.reloadData();
+        this.selectedCell(this.cells()[0]);
+        this.checkForParty();
     };
 
-    self._hasLeftParty = function() {
-        self.reloadCells();
-        self._purgeChats();
-        self.checkForParty();
+    _hasLeftParty = async () => {
+        await this.reloadData();
+        this._purgeChats();
+        this.checkForParty();
     };
 
-    self._isMe = function(nick) {
+    _isMe = (nick) => {
         var xmpp = XMPPService.sharedService();
         return Strophe.getNodeFromJid(xmpp.connection.jid) === nick;
     };
 
-    self._purgeChats = function() {
+    _purgeChats = () => {
         // Chat logs are saved server-side.
-        var key = CoreManager.activeCore().uuid();
-        var chats = PersistenceService.findBy(ChatRoom, 'characterId', key);
-        chats.forEach(function(chat, idx, _) {
+        this.chats().forEach(function(chat, idx, _) {
             chat.purge();
         });
     };
-
-    return self;
 }
 
 ko.components.register('chat', {

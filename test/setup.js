@@ -1,7 +1,5 @@
-/**
- * Set up the global window objects.
- *
- * The tests will require a schema in order to use Hypnos.
- */
-window.coreapi = {};
-window.schema = {};
+import $ from 'jquery';
+import Strophe from 'strophe';
+
+global.Strophe = Strophe;
+global.$ = $;

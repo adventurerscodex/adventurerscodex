@@ -54,8 +54,8 @@ export function PartyStatusLineViewModel(params) {
         var numberOfMagicStatuses = 0;
         var numberOfTrackedStatuses = 0;
 
-        players.forEach(function(player, idx, _) {
-            if (player.type.name() === PlayerTypes.character.key) {
+        for (const player of players) {
+            if (player.playerType() === PlayerTypes.character.key) {
                 if (player.healthinessStatus()) {
                     totalHealthiness += player.healthinessStatus().value();
                     healthinessModified = true;
@@ -72,7 +72,7 @@ export function PartyStatusLineViewModel(params) {
                     numberOfTrackedStatuses++;
                 }
             }
-        });
+        }
 
         if (healthinessModified) {
             statuses.push(StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), totalHealthiness / numberOfHealthinessStatuses));

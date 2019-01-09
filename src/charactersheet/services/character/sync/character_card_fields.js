@@ -11,6 +11,7 @@ import { KeyValuePredicate } from 'charactersheet/services/common/persistence_se
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Profile } from 'charactersheet/models/character/profile';
+import { ProfileImage } from 'charactersheet/models/common/player_image';
 import { Skill } from 'charactersheet/models/character/skill';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
 import { Status } from 'charactersheet/models/common/status';
@@ -22,7 +23,7 @@ export var CharacterCardFields = [
     {
         name: 'publisherJid',
         refreshOn: Notifications.item.changed,
-        valueAccessor: function() {
+        valueAccessor: async () => {
             var xmpp = XMPPService.sharedService();
             return xmpp.connection.jid;
         }
@@ -38,9 +39,8 @@ export var CharacterCardFields = [
         name: 'playerName',
         refreshOn: Notifications.profile.playerName.changed,
         valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
-            return profile ? profile.playerName() : '';
+            const core = CoreManager.activeCore();
+            return core ? core.playerName() : '';
         }
     }, {
         name: 'playerSummary',
@@ -53,7 +53,7 @@ export var CharacterCardFields = [
     }, {
         name: 'playerType',
         refreshOn: Notifications.characters.changed,
-        valueAccessor: function() {
+        valueAccessor: async () => {
             var character = CoreManager.activeCore();
             return character ? character.type.name() : 'character';
         }
@@ -64,8 +64,10 @@ export var CharacterCardFields = [
             var defaultImage = 'https://www.gravatar.com/avatar/{}?d=mm';
             const imageResponse = await ProfileImage.ps.read({uuid: CoreManager.activeCore().uuid()});
             const image = imageResponse.object;
-            if (!image) { return defaultImage; }
-            if (image.type() === 'link') {
+
+            if (!image) {
+                return defaultImage;
+            } else if (image.type() === 'url') {
                 var convertedImage = Utility.string.createDirectDropboxLink(image.sourceUrl());
                 return convertedImage !== '' ? convertedImage : defaultImage;
             } else if (image.type() === 'email') {
@@ -109,7 +111,7 @@ export var CharacterCardFields = [
     }, {
         name: 'armorClass',
         refreshOn: Notifications.armorClass.changed,
-        valueAccessor: function () {
+        valueAccessor: async () => {
             var acService = ArmorClassService.sharedService();
             return acService.armorClass() ? acService.armorClass() : 0;
         }
@@ -127,7 +129,7 @@ export var CharacterCardFields = [
         valueAccessor: async () => {
             const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
             const health = healthResponse.object;
-            return health ? health.maxHitpoints() : 0;
+            return health ? health.maxHitPoints() : 0;
         }
     }, {
         name: 'damage',
@@ -143,7 +145,7 @@ export var CharacterCardFields = [
         valueAccessor: async () => {
             const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
             const health = healthResponse.object;
-            return health ? health.tempHitpoints() : 0;
+            return health ? health.tempHitPoints() : 0;
         }
     }, {
         name: 'hitDiceType',
@@ -193,7 +195,7 @@ export var CharacterCardFields = [
     }, {
         name: 'healthinessStatus',
         refreshOn: Notifications.status.healthiness.changed,
-        valueAccessor: function() {
+        valueAccessor: async () => {
             var predicates = [
                 new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('identifier', 'Status.Healthiness')
@@ -204,7 +206,7 @@ export var CharacterCardFields = [
     }, {
         name: 'magicStatus',
         refreshOn: Notifications.status.magic.changed,
-        valueAccessor: function() {
+        valueAccessor: async () => {
             var predicates = [
                 new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('identifier', 'Status.Magical')
@@ -215,7 +217,7 @@ export var CharacterCardFields = [
     }, {
         name: 'trackedStatus',
         refreshOn: Notifications.status.tracked.changed,
-        valueAccessor: function() {
+        valueAccessor: async () => {
             var predicates = [
                 new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
                 new KeyValuePredicate('identifier', 'Status.Tracked')
