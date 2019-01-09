@@ -10,7 +10,6 @@ import template from './index.html';
 export function CharactersViewModel(params) {
     var self = this;
 
-    self.totalLocalStorage = 5; //MB
     self.cores = ko.observableArray([]);
     self.componentStatus = params.modalStatus || ko.observable(false);
     self.modalStatus = ko.observable(false);
@@ -95,12 +94,6 @@ export function CharactersViewModel(params) {
         }
         return '';
     };
-
-    self.localStoragePercent = ko.computed(() => {
-        self.cores(); //Force ko to recompute on change.
-        var used = JSON.stringify(localStorage).length / (0.5 * 1024 * 1024);
-        return (used / self.totalLocalStorage * 100).toFixed(2);
-    });
 
     // Private Methods
 
