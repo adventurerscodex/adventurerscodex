@@ -10,7 +10,6 @@ import template from './index.html';
 export function CharactersViewModel(params) {
     var self = this;
 
-    self.totalLocalStorage = 5; //MB
     self.cores = ko.observableArray([]);
     self.componentStatus = params.modalStatus || ko.observable(false);
     self.modalStatus = ko.observable(false);
