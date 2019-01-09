@@ -115,7 +115,7 @@ export function AdventurersCodexViewModel() {
         keyAndMakeVisible();
         if (CoreManager.activeCore()) {
             // There might be an active character in the URL.
-            showSplashScreen();
+            // showSplashScreen();
             self._handleChangedCharacter();
         } else if (characters.length > 0) {
             self.state(APP_STATE.SELECT);
@@ -148,7 +148,7 @@ export function AdventurersCodexViewModel() {
     };
 
     self._handleChangingCharacter = function() {
-        showSplashScreen();
+        // showSplashScreen();
 
         self.selectedCore(null);
 
