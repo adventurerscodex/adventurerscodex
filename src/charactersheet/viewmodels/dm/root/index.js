@@ -12,13 +12,13 @@ import {
 } from 'charactersheet/services';
 import { Campaign } from 'charactersheet/models/dm';
 import { PlayerTypes } from 'charactersheet/models/common/player_types';
-import chatTabImage from 'images/tab_icons/conversation';
-import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge';
-import encounterTabImage from 'images/tab_icons/treasure-map';
+import chatTabImage from 'images/tab_icons/conversation.svg';
+import dmScreenTabImage from 'images/tab_icons/gift-of-knowledge.svg';
+import encounterTabImage from 'images/tab_icons/treasure-map.svg';
 import ko from 'knockout';
-import notesTabImage from 'images/tab_icons/quill-ink';
-import overviewTabImage from 'images/tab_icons/bookmarklet';
-import partyTabImage from 'images/tab_icons/backup';
+import notesTabImage from 'images/tab_icons/quill-ink.svg';
+import overviewTabImage from 'images/tab_icons/bookmarklet.svg';
+import partyTabImage from 'images/tab_icons/backup.svg';
 import template from './index.html';
 
 
