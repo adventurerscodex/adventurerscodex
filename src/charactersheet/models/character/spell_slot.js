@@ -37,12 +37,20 @@ SpellSlot.validationConstraints = {
     rules: {
         level: {
             required: true,
-            min: 1,
+            min: 0,
+            max: 10000,
             number: true
         },
         max: {
             required: true,
-            min: 1,
+            min: 0,
+            max: 10000,
+            number: true
+        },
+        used: {
+            required: true,
+            min: 0,
+            max: 10000,
             number: true
         }
     }

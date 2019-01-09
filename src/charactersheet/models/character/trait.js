@@ -27,7 +27,10 @@ Trait.validationConstraints = {
             maxlength: 64
         },
         max: {
-            required: true
+            required: true,
+            number: true,
+            min: 0,
+            max: 10000
         }
     }
 };

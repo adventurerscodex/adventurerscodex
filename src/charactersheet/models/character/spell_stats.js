@@ -31,32 +31,38 @@ SpellStats.validationConstraints = {
     rules: {
         spellSaveDc: {
             required: true,
-            min: 0,
+            min: -10000,
+            max: 10000,
             number: true
         },
         spellAttackBonus: {
             required: true,
-            min: 0,
+            min: -10000,
+            max: 10000,
             number: true
         },
         spellsKnown: {
             required: true,
             min: 0,
+            max: 10000,
             number: true
         },
         cantripsKnown: {
             required: true,
             min: 0,
+            max: 10000,
             number: true
         },
         invocationsKnown: {
             required: true,
             min: 0,
+            max: 10000,
             number: true
         },
         maxPrepared: {
             required: true,
             min: 0,
+            max: 10000,
             number: true
         }
     }

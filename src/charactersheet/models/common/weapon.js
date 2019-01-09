@@ -229,19 +229,26 @@ Weapon.validationConstraints = {
         },
         price: {
             number: true,
-            min: 0
+            min: 0,
+            max: 100000000
         },
         currencyDenomination: {
             maxlength: 64
         },
         magicalModifier: {
-            number: true
+            number: true,
+            min: -10000,
+            max: 10000
         },
         toHitModifier: {
-            number: true
+            number: true,
+            min: -10000,
+            max: 10000
         },
         weight: {
-            number: true
+            number: true,
+            min: 0,
+            max: 100000000
         },
         range: {
             maxlength: 64
@@ -251,7 +258,8 @@ Weapon.validationConstraints = {
         },
         quantity: {
             number: true,
-            min: 0
+            min: 0,
+            max: 100000
         }
     }
 };

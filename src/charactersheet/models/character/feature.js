@@ -26,7 +26,8 @@ Feature.validationConstraints = {
         },
         level: {
             number: true,
-            min: 1,
+            min: 0,
+            max: 10000,
             required: true
         },
         characterClass: {
@@ -35,7 +36,8 @@ Feature.validationConstraints = {
         max: {
             required: true,
             number: true,
-            min: 0
+            min: 0,
+            max: 100000
         }
     }
 };

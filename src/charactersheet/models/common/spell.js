@@ -112,7 +112,7 @@ Spell.validationConstraints = {
         },
         level: {
             min: 0,
-            max: 9,
+            max: 10000,
             number: true,
             required: true
         },

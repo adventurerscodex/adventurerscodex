@@ -29,7 +29,10 @@ export function Tracked() {
 Tracked.validationConstraints = {
     rules: {
         max: {
-            required: true
+            required: true,
+            number: true,
+            min: 0,
+            max: 10000
         }
     }
 };

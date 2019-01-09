@@ -102,14 +102,20 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         price: {
-            min: 0
+            min: 0,
+            max: 10000000
+        },
+        magicalModifier: {
+            min: -10000,
+            max: 10000
         },
         currencyDenomination: {
             maxlength: 64
         },
         armorClass: {
             required: true,
-            min: 0
+            min: 0,
+            max: 1000000
         },
         stealth: {
             maxlength: 64
