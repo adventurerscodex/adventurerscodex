@@ -222,7 +222,7 @@ export function ChatDetailViewModel({ chatCell }) {
         )));
 
         return log.sort((a, b) => {
-            return a.dateReceived() - b.dateReceived()
+            return a.dateReceived() - b.dateReceived();
         });
     };
 

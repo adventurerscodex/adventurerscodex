@@ -33,10 +33,11 @@ export class Presence {
             $(element).find('status').map((i, e) => {
                 const codeValue = $(e).attr('code');
                 return parseInt(codeValue);
-        }));
+            })
+        );
 
         return presence;
-    };
+    }
 
     ps = PersistenceService.register(Presence, this);
     mapping = {

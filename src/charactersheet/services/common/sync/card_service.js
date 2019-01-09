@@ -104,9 +104,9 @@ function _pCardService(configuration) {
         var card = new pCard();
 
         for (const field of self.configuration.fields) {
-            const value = await field.valueAccessor()
+            const value = await field.valueAccessor();
             card.set(uuid.v4(), field.name, null, value);
-        };
+        }
 
         return card;
     };

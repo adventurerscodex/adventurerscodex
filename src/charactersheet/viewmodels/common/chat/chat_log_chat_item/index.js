@@ -65,7 +65,7 @@ export function ChatLogChatItem(params) {
     self.dateLabel = ko.pureComputed(() => {
         const date = new Date(self.timestamp());
         return date.toLocaleString();
-    })
+    });
 
     self.html = ko.pureComputed(function() {
         return linkifyStr(self.message.html(), Settings.linkifyOptions);

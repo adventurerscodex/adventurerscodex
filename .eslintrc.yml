@@ -14,8 +14,6 @@ rules:
   indent:
     - error
     - 4
-  import/extensions: [2, js: never]
-
   linebreak-style:
     - 0
   quotes:

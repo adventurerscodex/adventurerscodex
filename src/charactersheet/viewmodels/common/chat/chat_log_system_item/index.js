@@ -28,7 +28,7 @@ export function ChatLogSystemItem(params) {
     self.dateLabel = ko.pureComputed(() => {
         const date = new Date(self.timestamp());
         return date.toLocaleString();
-    })
+    });
 }
 
 ko.components.register('chat-log-system-item', {

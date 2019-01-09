@@ -2,10 +2,10 @@ import { Campaign } from 'charactersheet/models/dm/campaign';
 import { CoreManager } from 'charactersheet/utilities';
 import { Exhibit } from 'charactersheet/models/dm/exhibit';
 import { Notifications } from 'charactersheet/utilities/notifications';
-import { ProfileImage } from 'charactersheet/models/common/player_image';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
+import { ProfileImage } from 'charactersheet/models/common/player_image';
 import { Utility } from 'charactersheet/utilities';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 export var DMCardFields = [
     {

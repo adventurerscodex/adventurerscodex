@@ -203,6 +203,6 @@ export const STATUS_CODES = {
      * (for example when an s2s link fails between the MUC and the removed
      * users server).
      */
-    MISC_ERROR: 333,
+    MISC_ERROR: 333
 };
 

@@ -149,7 +149,7 @@ function _NodeService(config) {
 
     self._handleEvent = function(event) {
         /**eslint no-console:0 */
-        console.log('INCOMING EVENT', event)
+        console.log('INCOMING EVENT', event);
         try {
             var items = $(event).find('items').children().toArray();
             var route = $(event).find('items').attr('node');
@@ -179,7 +179,7 @@ function _NodeService(config) {
 
     self._handlePresenceRequest = function(presenceRequest) {
         /*eslint no-console:0 */
-        console.log('HANDLING PRESENSE REQUEST', presenceRequest)
+        console.log('HANDLING PRESENSE REQUEST', presenceRequest);
         try {
             var xmpp = XMPPService.sharedService();
             var from = $(presenceRequest).attr('from');
@@ -201,11 +201,11 @@ function _NodeService(config) {
     };
 
     self._handlePresence = function(receivedPresence) {
-        console.log('INCOMING PRTESENCE', receivedPresence)
+        console.log('INCOMING PRTESENCE', receivedPresence);
         /**eslint no-console:0 */
         try {
             var jid = $(receivedPresence).find('x item').attr('jid');
-            console.log(jid)
+            console.log(jid);
             if (!jid) {
                 return true;
             }
@@ -218,7 +218,7 @@ function _NodeService(config) {
                 type: 'subscribe'
             });
             xmpp.connection.send(presence.tree());
-            console.log('SENT SUBSCRIPTION')
+            console.log('SENT SUBSCRIPTION');
         } catch(err) {
             console.log(err);
         }
@@ -226,7 +226,7 @@ function _NodeService(config) {
     };
 
     self._handleSuccessfulPresenceSubscription = function(response) {
-        console.log('SUBSCRIPTION SUCCESS')
+        console.log('SUBSCRIPTION SUCCESS');
         /**eslint no-console:0 */
         try {
             var from = $(response).attr('from');
@@ -259,7 +259,7 @@ function _NodeService(config) {
      * @param onerror  method to be invoked if the request returns an error
      */
     self._subscribeToNode = function(toJid, node, onsuccess, onerror) {
-        console.log('Requesting a subscription to node', toJid)
+        console.log('Requesting a subscription to node', toJid);
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,
@@ -284,7 +284,7 @@ function _NodeService(config) {
      * @param onerror  method to be invoked if the request returns an error
      */
     self._getItemsFromNode = function(toJid, nodeRoute, onsuccess, onerror) {
-        console.log('REQYESTUBG ITEMS FROM NODE')
+        console.log('REQYESTUBG ITEMS FROM NODE');
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,

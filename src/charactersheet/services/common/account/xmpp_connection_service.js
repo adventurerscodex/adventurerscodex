@@ -74,7 +74,7 @@ function _XMPPService(config) {
         ['ACTIVE', 'http://jabber.org/protocol/chatstates'],
         ['ATOM',   'http://www.w3.org/2005/Atom'],
         ['DELAY',  'urn:xmpp:delay'],
-        ['RSM',    'http://jabber.org/protocol/rsm'],
+        ['RSM',    'http://jabber.org/protocol/rsm']
     ];
 
     /**

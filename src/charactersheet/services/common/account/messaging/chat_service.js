@@ -2,7 +2,7 @@ import {
     CoreManager,
     DataRepository,
     Fixtures,
-    Notifications,
+    Notifications
 } from 'charactersheet/utilities';
 import { ChatRoom } from 'charactersheet/models/common/chat_room';
 import { Message } from 'charactersheet/models/common/message';
@@ -202,7 +202,7 @@ export function _ChatService(config) {
                     // Someone else has left.
                     Notifications.chat.member.left.dispatch(presence);
                 }
-             }
+            }
         } catch(err) {
             console.log(err);
         }

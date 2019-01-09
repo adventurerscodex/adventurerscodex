@@ -186,12 +186,12 @@ export class ChatViewModel extends MasterDetailViewModel {
 
         const { objects: rooms } = await ChatRoom.ps.list({
             coreUuid,
-            partyJid: currentPartyNode,
+            partyJid: currentPartyNode
         });
 
         const { objects: parties } = await ChatRoom.ps.list({
             coreUuid,
-            jid: currentPartyNode,
+            jid: currentPartyNode
         });
 
         const chats = [ ...parties, ...rooms ];
