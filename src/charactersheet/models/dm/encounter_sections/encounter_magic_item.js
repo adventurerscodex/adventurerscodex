@@ -50,7 +50,7 @@ export class EncounterMagicItem extends KOModel {
 
     magicItemDescriptionHTML = ko.pureComputed(() => {
         if (this.description()) {
-            return this.description();
+            return this.description().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }

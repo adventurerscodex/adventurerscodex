@@ -82,6 +82,8 @@ export function PlayerImageViewModel() {
             var otherStatsResponse = await OtherStats.ps.read({uuid: core.uuid()});
             const otherStats = otherStatsResponse.object;
             self.hasInspiredGlow(otherStats && otherStats.inspiration());
+        } else {
+            self.hasInspiredGlow(false);
         }
     };
 
