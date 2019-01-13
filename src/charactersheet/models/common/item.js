@@ -45,7 +45,7 @@ export class Item extends KOModel {
 
     itemDescriptionHTML = ko.pureComputed(() => {
         if (this.description()) {
-            return this.description().replace(/\n/g, '<br />');
+            return this.description();
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }

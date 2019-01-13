@@ -46,7 +46,6 @@ export function PlayerImageViewModel() {
 
         // Prime the pump.
         await self.dataHasChanged();
-        self.inspirationHasChanged();
         self._handleConnectionStatusChanged();
     };
 
@@ -72,6 +71,9 @@ export function PlayerImageViewModel() {
         } else {
             self.imageSource('picker');
         }
+
+        // update inspiration glow
+        self.inspirationHasChanged();
     };
 
     self.inspirationHasChanged = async () => {

@@ -43,8 +43,8 @@ export class Armor extends KOModel {
     });
 
     armorDescriptionHTML = ko.pureComputed(() => {
-        if (this.description()){
-            return this.description().replace(/\n/g, '<br />');
+        if (this.description()) {
+            return this.description();
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }

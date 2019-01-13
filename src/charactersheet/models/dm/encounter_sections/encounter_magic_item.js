@@ -30,6 +30,8 @@ export class EncounterMagicItem extends KOModel {
     usedCharges = ko.observable(0);
     weight = ko.observable(0);
     description = ko.observable('');
+    SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    DESCRIPTION_MAX_LENGTH = 200;
 
     magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
     magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
@@ -47,8 +49,8 @@ export class EncounterMagicItem extends KOModel {
     });
 
     magicItemDescriptionHTML = ko.pureComputed(() => {
-        if (this.description()){
-            return this.description().replace(/\n/g, '<br />');
+        if (this.description()) {
+            return this.description();
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }

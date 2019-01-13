@@ -155,6 +155,8 @@ export function CampaignMapsAndImagesViewModel() {
     self.editMapOrImage = function(mapOrImage) {
         self.editItemIndex = mapOrImage.uuid;
         self.currentEditItem(new Image());
+        // clear out preview image before rendering the new item
+        self.convertedDisplayUrl(null);
         self.currentEditItem().importValues(mapOrImage.exportValues());
         self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openModal(true);

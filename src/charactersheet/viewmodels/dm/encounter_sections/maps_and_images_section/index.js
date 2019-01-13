@@ -150,6 +150,8 @@ export function MapsAndImagesSectionViewModel(params) {
     self.editMapOrImage = function(mapOrImage) {
         self.editItemIndex = mapOrImage.uuid;
         self.currentEditItem(new EncounterImage());
+        // clear out preview image before rendering the new item
+        self.convertedDisplayUrl(null);
         self.currentEditItem().importValues(mapOrImage.exportValues());
         self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openModal(true);
@@ -209,7 +211,8 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.closeModal = () => {
         self.openModal(false);
-        self.selectPreviewTab();
+        self.previewTabStatus('active');
+        self.editTabStatus('');
     };
 
     /* Push to Player Methods */

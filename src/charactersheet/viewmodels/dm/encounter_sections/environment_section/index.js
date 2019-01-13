@@ -52,6 +52,10 @@ export function EnvironmentSectionViewModel(params) {
 
         self._connectionHasChanged();
 
+        self.encounter.subscribe(function() {
+            self._dataHasChanged();
+        });
+
         await self._dataHasChanged();
         self.loaded(true);
     };
@@ -204,7 +208,8 @@ export function EnvironmentSectionViewModel(params) {
             && !self.environment().description()) {
             self.selectEditTab();
         } else {
-            self.selectPreviewTab();
+            self.previewTabStatus('active');
+            self.editTabStatus('');
         }
         self.dataIsChanging = false;
     };

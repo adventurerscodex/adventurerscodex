@@ -47,7 +47,7 @@ export function SpellbookViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.numberOfPrepared = ko.computed(function(){
+    self.numberOfPrepared = ko.computed(function() {
         var prepared = 0;
         self.spellbook().forEach(function(spell) {
             if (spell.prepared() === true) {

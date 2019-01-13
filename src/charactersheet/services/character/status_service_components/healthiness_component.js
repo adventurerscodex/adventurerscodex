@@ -39,7 +39,7 @@ export function HealthinessStatusServiceComponent() {
     self.dataHasChanged = async function() {
         var key = CoreManager.activeCore().uuid();
 
-        // // Fetch death saves
+        // Fetch death saves
         const deathSavesResponse = await DeathSave.ps.list({coreUuid: key});
         let deathSaves = deathSavesResponse.objects;
 
@@ -131,17 +131,17 @@ export function HealthinessStatusServiceComponent() {
         }
 
         // Character is dead
-        if (health.regularHitpointsRemaining() === 0 && deathSavesDidFail) {
+        if (health.regularHitpointsRemaining() <= 0 && deathSavesDidFail) {
             return -2;
         }
 
         // Character is unconscious and stable
-        if (health.regularHitpointsRemaining() === 0 && deathSavesDidSucceed) {
+        if (health.regularHitpointsRemaining() <= 0 && deathSavesDidSucceed) {
             return -1;
         }
 
         // Character is unconscious
-        if (health.regularHitpointsRemaining() === 0) {
+        if (health.regularHitpointsRemaining() <= 0) {
             return 0.0;
         }
 

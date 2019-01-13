@@ -322,7 +322,7 @@ export function StatsViewModel() {
 
     // Determine if death saves should be visible
     self.deathSavesVisible = ko.computed(function() {
-        return self.health() != undefined ? self.health().hitpoints() == 0 : false;
+        return self.health() != undefined ? self.health().hitpoints() <= 0 : false;
     });
 
     // Reset death and success saves when char drops to 0 hp

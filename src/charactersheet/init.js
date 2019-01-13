@@ -48,7 +48,7 @@ export var init = function(viewModel) {
             $.getJSON(location.url, function(data) {
                 DataRepository[location.key] = data.values;
                 if (location.key === 'features') {
-                    DataRepository[location.key + 'DisplayNames'] = data.values.map(function(item, idx, _){
+                    DataRepository[location.key + 'DisplayNames'] = data.values.map(function(item, idx, _) {
                         return item.displayName;
                     });
                 }

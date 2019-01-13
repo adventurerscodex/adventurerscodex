@@ -26,7 +26,7 @@ export function MonsterAbilityScore() {
 
     self.modifierLabel = ko.pureComputed(function() {
         if (self.modifier() === null) { return; }
-        if (self.modifier() >= 0){
+        if (self.modifier() >= 0) {
             return '+ ' + self.modifier();
         } else {
             return '- ' + Math.abs(self.modifier());
