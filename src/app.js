@@ -2,6 +2,7 @@ import ko from 'knockout'
 
 // Global bootstrap modules
 import 'bootstrap/js/collapse';
+import 'bootstrap/js/dropdown';
 import 'bootstrap/js/modal';
 import 'bootstrap/js/tooltip';
 import 'bootstrap/js/popover';
