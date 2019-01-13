@@ -46,7 +46,6 @@ export function PlayerImageViewModel() {
 
         // Prime the pump.
         await self.dataHasChanged();
-        self.inspirationHasChanged();
         self._handleConnectionStatusChanged();
     };
 
@@ -72,6 +71,9 @@ export function PlayerImageViewModel() {
         } else {
             self.imageSource('picker');
         }
+
+        // update inspiration glow
+        self.inspirationHasChanged();
     };
 
     self.inspirationHasChanged = async () => {
@@ -80,6 +82,8 @@ export function PlayerImageViewModel() {
             var otherStatsResponse = await OtherStats.ps.read({uuid: core.uuid()});
             const otherStats = otherStatsResponse.object;
             self.hasInspiredGlow(otherStats && otherStats.inspiration());
+        } else {
+            self.hasInspiredGlow(false);
         }
     };
 

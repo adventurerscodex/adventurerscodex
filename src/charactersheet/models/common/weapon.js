@@ -184,7 +184,7 @@ export class Weapon extends KOModel {
     });
 
     applyMagicalModifierLabel = ko.pureComputed(() => {
-        if (this.magicalModifierLabel() !== '' ){
+        if (this.magicalModifierLabel() !== '' ) {
             return true;
         } else {
             return false;
@@ -192,7 +192,7 @@ export class Weapon extends KOModel {
     });
 
     weaponDescriptionHTML = ko.pureComputed(() => {
-        if (this.description()){
+        if (this.description()) {
             return this.description().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';

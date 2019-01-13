@@ -12,7 +12,7 @@ import ko from 'knockout';
  */
 export class PreviewEditViewModel {
 
-    isEditFormValid = ko.observable(false);
+    isEditFormValid = ko.observable(true);
     isEdit = ko.observable(false);
 
     constructor(params) {

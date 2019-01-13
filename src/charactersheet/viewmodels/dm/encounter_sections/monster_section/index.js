@@ -67,7 +67,6 @@ export function MonsterSectionViewModel(params) {
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
 
-
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });

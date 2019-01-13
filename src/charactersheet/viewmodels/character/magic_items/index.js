@@ -41,15 +41,15 @@ export function MagicItemsViewModel() {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
-    self.numberOfAttuned = ko.computed(function(){
+    self.numberOfAttuned = ko.computed(function() {
         var attuned = ko.utils.arrayFilter(self.magicItems(), function(item) {
             return item.attuned() === true;
         });
         return attuned.length;
     });
 
-    self.noneAttuned = ko.computed(function(){
-        var numberAttuned = ko.utils.arrayFilter(self.magicItems(), function(item){
+    self.noneAttuned = ko.computed(function() {
+        var numberAttuned = ko.utils.arrayFilter(self.magicItems(), function(item) {
             return item.requiresAttunement() === true;
         });
         return numberAttuned.length === 0;
