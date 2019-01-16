@@ -34,21 +34,32 @@ export function ChatModalViewModel(params) {
 
     self.isRoomDuplicate = function() {
         var chatService = ChatServiceManager.sharedService();
-        var isDuplicateChat = false;
-        Object.keys(chatService.rooms).forEach(function(room, idx, _) {
+
+        const isDuplicateChat = Object.keys(chatService.rooms).some((room, idx, _) => {
             // Skip check if it's the main Party chat
-            if (room !== chatService.currentPartyNode) {
-                var existingRoom = chatService.rooms[room];
-                var existingRoomOccupants = Object.keys(existingRoom.roster);
-                // First check if the number of occupants in the room is the same as the invitees
-                // If they're not equal, it can't be a duplicate room
-                if (existingRoomOccupants.length == (self.partyMembersToAdd().length + 1)) {
-                    isDuplicateChat = self.partyMembersToAdd().every(function(invitee, idx, _) {
-                        return existingRoomOccupants.indexOf(Strophe.getNodeFromJid(invitee.jid)) > -1;
-                    });
-                }
+            if (room === chatService.currentPartyNode) {
+                return false;
             }
+
+            const existingRoom = chatService.rooms[room];
+            const existingRoomOccupants = Object.keys(existingRoom.roster);
+
+            // First check if the number of occupants in the room is the same as the invitees
+            // If they're not equal, it can't be a duplicate room
+            if (existingRoomOccupants.length !== (self.partyMembersToAdd().length + 1)) {
+                return false;
+            }
+
+            // An empty party cannot be duplicate.
+            if (self.partyMembersToAdd().length === 0) {
+                return false;
+            }
+
+            return self.partyMembersToAdd().every((invitee, idx, _) => {
+                return existingRoomOccupants.indexOf(Strophe.getNodeFromJid(invitee.jid)) > -1;
+            });
         });
+
         if (isDuplicateChat) {
             self.isSubmitButtonDisabled(true);
             self.isErrorMessageVisible(true);
