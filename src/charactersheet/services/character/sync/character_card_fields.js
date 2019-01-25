@@ -172,7 +172,7 @@ export var CharacterCardFields = [
         valueAccessor: async () => {
             const skillResponse = await Skill.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: 'Perception'});
             var skill = skillResponse.objects[0];
-
+            await skill.updateBonuses();
             return skill ? skill.passiveBonus() : 0;
         }
     }, {

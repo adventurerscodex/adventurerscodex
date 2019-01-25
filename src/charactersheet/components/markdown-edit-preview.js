@@ -35,39 +35,36 @@ export function MarkdownEditPreviewComponentViewModel(params) {
 
     self.previewTabStatus = ko.observable('');
     self.editTabStatus = ko.observable('');
+    self.editMode = ko.observable(false);
 
     /* UI Methods */
 
-    self.resetAndSelectPreviewTab = function() {
-        if (self.editTabStatusIsActive()) {
-            params.cancel();
-        }
+    self.cancelAndResetNote = function () {
+        params.cancel();
+        self.selectPreviewTab();
+        self.editMode(false);
+    };
 
+    self.selectPreviewTab = function () {
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
 
-    self.selectPreviewTab = function() {
-        self.previewTabStatus('active');
-        self.editTabStatus('');
-    };
-
-    self.selectEditTab = function() {
+    self.selectEditTab = function () {
         self.editTabStatus('active');
         self.previewTabStatus('');
     };
 
-    self.saveButton = function() {
+    self.saveButton = function () {
         params.save();
         self.selectPreviewTab();
+        self.editMode(false);
     };
 
-    self.editTabStatusIsActive = ko.pureComputed(function() {
-        if (self.editTabStatus() === 'active') {
-            return true;
-        }
-        return false;
-    });
+    self.toggleEditMode = function () {
+        self.selectEditTab();
+        self.editMode(true);
+    };
 
     // Select the default tab,
     // or the preview tab if there's existing content.
@@ -75,6 +72,7 @@ export function MarkdownEditPreviewComponentViewModel(params) {
         self.selectPreviewTab();
     } else {
         self.selectEditTab();
+        self.editMode(true);
     }
 }
 
@@ -83,31 +81,39 @@ ko.components.register('markdown-edit-preview', {
     template: '\
     <!-- Begin Tabs -->\
     <ul class="nav nav-tabs tabs">\
-      <li role="presentation" data-bind="click: resetAndSelectPreviewTab, css: previewTabStatus">\
-        <a href="#" role="tab" data-toggle="tab">\
-            <b>Preview</b>\
-        </a>\
-      </li>\
-      <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">\
-        <a href="#" role="tab" data-toggle="tab">\
-            <b>Edit</b>\
-        </a>\
-      </li>\
-      <!-- ko if: editTabStatusIsActive -->\
-      <li role="presentation" class="secondary-nav">\
-        <button class="btn btn-sm btn-primary"\
-                id="environmentSaveButton"\
-                data-bind="click: saveButton">\
-          <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;\
-          Save\
-        </button>\
-        <button class="btn btn-sm btn-default"\
-                id="environmentSaveButton"\
-                data-bind="click: resetAndSelectPreviewTab">\
-          Cancel\
-        </button>\
-      </li>\
-      <!-- /ko -->\
+        <!-- ko if: editMode -->\
+            <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">\
+                <a href="#" role="tab" data-toggle="tab">\
+                    <b>Preview</b>\
+                </a>\
+            </li>\
+            <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">\
+                <a href="#" role="tab" data-toggle="tab">\
+                    <b>Edit</b>\
+                </a>\
+            </li>\
+        <!-- /ko -->\
+        <!-- Right side of nav bar -->\
+        <li role="presentation" class="secondary-nav">\
+            <!-- ko if: editMode -->\
+                <button class="btn btn-sm btn-primary"\
+                        id="environmentSaveButton"\
+                        data-bind="click: saveButton">\
+                <i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp;\
+                Save\
+                </button>\
+                <button class="btn btn-sm btn-default"\
+                        id="environmentSaveButton"\
+                        data-bind="click: cancelAndResetNote">\
+                Cancel\
+                </button>\
+            <!-- /ko -->\
+            <!-- ko ifnot: editMode -->\
+                <button class="btn btn-sm btn-primary" data-bind="click: toggleEditMode">\
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;Edit\
+                </button>\
+            <!-- /ko -->\
+        </li>\
     </ul>\
     <div class="tab-content">\
       <div role="tabpanel" data-bind="css: previewTabStatus" \

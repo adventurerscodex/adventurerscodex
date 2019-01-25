@@ -128,6 +128,7 @@ export function FeatsViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+        Notifications.feat.changed.dispatch();
     };
 
     self.selectPreviewTab = function() {
@@ -159,8 +160,6 @@ export function FeatsViewModel() {
         var feat = self.blankFeat();
         feat.coreUuid(CoreManager.activeCore().uuid());
         if (feat.isTracked()) {
-            // todo: need logic to actually set the color
-            self.blankTracked().color('progress-bar-sky');
             feat.tracked(self.blankTracked());
         }
         const newFeat = await feat.ps.create();

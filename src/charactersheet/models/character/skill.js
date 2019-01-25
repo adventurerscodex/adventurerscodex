@@ -84,13 +84,8 @@ export class Skill extends KOModel {
             Math.abs(bonus);
         }
 
-        // TODO: FIND A FIX FOR THIS HACK
-        try {
-            str += ' <i><small>('
-                + this.abilityScore().name() + ')</small></i>';
-        } catch(e) {
-            // Nothing
-        }
+        str += ' <i><small>('
+                + this.abilityScore().shortName() + ')</small></i>';
         this.bonusLabel(str);
         this.passiveBonus(10 + bonus);
     };
@@ -99,12 +94,7 @@ export class Skill extends KOModel {
         this._dummy();
         var str = this.name();
 
-        // TODO: FIND A FIX FOR THIS HACK
-        try {
-            str += ' <i><small class="skills-ability-type">(' + this.abilityScore().name() + ')</small></i>';
-        } catch(e) {
-            // Nothing
-        }
+        str += ' <i><small class="skills-ability-type">(' + this.abilityScore().shortName() + ')</small></i>';
 
         return str;
     });

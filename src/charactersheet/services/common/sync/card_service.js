@@ -47,7 +47,6 @@ function _pCardService(configuration) {
         Notifications.party.left.remove(self.clearPCards);
 
         self._teardownNotifications();
-
     };
 
     self.dataHasChanged = async () => {
