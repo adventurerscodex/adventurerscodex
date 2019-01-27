@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-xs-12">
+      <div class="container">
+        <div class="central-block">
+          <div class="row">
+            <div class="col-xs-12">
+              <h1 class="text-center">
+                <i class="fa fa-lg fa-times-circle text-danger"></i>
+                Oops!<br />
+                <small>
+                  It looks like something went wrong during the import.
+                </small>
+              </h1>
+              <p class="lead text-center">
+                Don't worry, there's a couple of things you can do.
+              </p>
+
+              <h2>
+                1. Try importing your data again.
+              </h2>
+              <p>
+                During the import process, an error might occur that could terminate the process. This might be a network error or a server error. Click the <strong>Back</strong> button below to attempt the data upload again.
+              </p>
+              <hr />
+
+              <h2>
+                2. Contact Us
+              </h2>
+              <p>
+                If Retrying the upload didn't solve the issue, email us with the ticket number included below. We will work with you to convert your data as best we can.
+              </p>
+              <p>
+                As always, if you have any questions, feel free to contact us
+                <a
+                  title="Contact Support for Import Help"
+                  data-bind="attr: { href: 'mailto:support@adventurerscodex.com?subject=Import%20Error: ' + ticketNumber }"
+                >
+                  support@adventurerscodex.com
+                </a>
+              </p>
+
+              <div class="well">
+                <p>
+                  Be sure to include this ticket number in your email.
+                </p>
+                Ticket Number: <code data-bind="text: ticketNumber"></code>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

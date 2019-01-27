@@ -4,6 +4,9 @@
       <!-- ko if: currentStep() === 'WizardIntroStep' -->
 			<wizard-intro-step params="stepReady: stepReady, results: stepResult"></wizard-intro-step>
       <!-- /ko -->
+      <!-- ko if: currentStep() === 'WizardFileImportErrorStep' -->
+			<wizard-file-import-error-step params="ticketNumber: ticketNumber"></wizard-file-import-error-step>
+      <!-- /ko -->
       <!-- ko if: currentStep() === 'WizardPlayerTypeStep' -->
 			<wizard-player-type-step params="stepReady:stepReady, results: stepResult"></wizard-player-type-step>
       <!-- /ko -->
