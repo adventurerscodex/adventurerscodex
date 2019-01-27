@@ -5,8 +5,8 @@ import {
 import { ChatServiceManager } from './chat_service';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
-import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 import { UserServiceManager } from 'charactersheet/services/common/account/user_service';
+import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 
 /*eslint no-console:0*/
@@ -314,6 +314,3 @@ function _NodeService(config) {
         }
     };
 }
-
-
-window.NodeService = NodeServiceManager.sharedService()

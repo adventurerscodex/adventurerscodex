@@ -42,7 +42,7 @@ export function ImagePickerComponentViewModel(params) {
     // Clear the selected cells when the cells list changes.
     self.cells.subscribe(() => {
         self.selectedCells([]);
-    })
+    });
 }
 
 ko.components.register('image-picker', {
