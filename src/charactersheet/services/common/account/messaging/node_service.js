@@ -5,6 +5,7 @@ import {
 import { ChatServiceManager } from './chat_service';
 import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 import Strophe from 'strophe';
+import { UserServiceManager } from 'charactersheet/services/common/account/user_service';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 
 
@@ -102,6 +103,7 @@ function _NodeService(config) {
         self._addXMPPHandlers();
 
         Notifications.party.roster.changed.add(self._getCards);
+        Notifications.party.roster.changed.add(self._subscribeToAll);
         Notifications.xmpp.initialized.add(self._addXMPPHandlers);
         Notifications.xmpp.disconnected.add(self._handleXMPPDisconnect);
     };
@@ -126,6 +128,7 @@ function _NodeService(config) {
         }).c('publish', {
             node: Strophe.NS.JSON + '#' + route
         }).c('item').cnode(JSONPayload.getElement(item, attrs).node);
+
         xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
     };
 
@@ -149,7 +152,6 @@ function _NodeService(config) {
 
     self._handleEvent = function(event) {
         /**eslint no-console:0 */
-        console.log('INCOMING EVENT', event);
         try {
             var items = $(event).find('items').children().toArray();
             var route = $(event).find('items').attr('node');
@@ -179,7 +181,6 @@ function _NodeService(config) {
 
     self._handlePresenceRequest = function(presenceRequest) {
         /*eslint no-console:0 */
-        console.log('HANDLING PRESENSE REQUEST', presenceRequest);
         try {
             var xmpp = XMPPService.sharedService();
             var from = $(presenceRequest).attr('from');
@@ -201,13 +202,17 @@ function _NodeService(config) {
     };
 
     self._handlePresence = function(receivedPresence) {
-        console.log('INCOMING PRTESENCE', receivedPresence);
         /**eslint no-console:0 */
         try {
             var jid = $(receivedPresence).find('x item').attr('jid');
-            console.log(jid);
             if (!jid) {
                 return true;
+            }
+
+            // Ignore messages from yourself.
+            const me = UserServiceManager.sharedService().user().xmpp.jid;
+            if (Strophe.getBareJidFromJid(jid) === me) {
+                return;
             }
 
             // Send the presence subscription request.
@@ -218,7 +223,6 @@ function _NodeService(config) {
                 type: 'subscribe'
             });
             xmpp.connection.send(presence.tree());
-            console.log('SENT SUBSCRIPTION');
         } catch(err) {
             console.log(err);
         }
@@ -226,7 +230,6 @@ function _NodeService(config) {
     };
 
     self._handleSuccessfulPresenceSubscription = function(response) {
-        console.log('SUBSCRIPTION SUCCESS');
         /**eslint no-console:0 */
         try {
             var from = $(response).attr('from');
@@ -259,7 +262,6 @@ function _NodeService(config) {
      * @param onerror  method to be invoked if the request returns an error
      */
     self._subscribeToNode = function(toJid, node, onsuccess, onerror) {
-        console.log('Requesting a subscription to node', toJid);
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,
@@ -284,7 +286,6 @@ function _NodeService(config) {
      * @param onerror  method to be invoked if the request returns an error
      */
     self._getItemsFromNode = function(toJid, nodeRoute, onsuccess, onerror) {
-        console.log('REQYESTUBG ITEMS FROM NODE');
         var xmpp = XMPPService.sharedService();
         var iq = $iq({
             from: xmpp.connection.jid,
@@ -297,5 +298,19 @@ function _NodeService(config) {
             node: Strophe.NS.JSON + '#' + nodeRoute
         });
         xmpp.connection.sendIQ(iq.tree(), onsuccess, onerror);
+    };
+
+    self._subscribeToAll = (partyJid) => {
+        const chatService = ChatServiceManager.sharedService();
+
+        const occupants = chatService.getOccupantsInRoom(partyJid);
+        for (const occupant of occupants) {
+            self._subscribeToNode(
+                Strophe.getBareJidFromJid(occupant),
+                Strophe.NS.JSON + '#pcard',
+                self._getCards,
+                console.log
+            );
+        }
     };
 }
