@@ -83,27 +83,32 @@ Wealth.validationConstraints = {
         platinum: {
             number: true,
             min: 0,
-            max: 100000000
+            max: 100000000,
+            required: true
         },
         gold: {
             number: true,
             min: 0,
-            max: 100000000
+            max: 100000000,
+            required: true
         },
         silver: {
             number: true,
             min: 0,
-            max: 100000000
+            max: 100000000,
+            required: true
         },
         copper: {
             number: true,
             min: 0,
-            max: 100000000
+            max: 100000000,
+            required: true
         },
         electrum: {
             number: true,
             min: 0,
-            max: 100000000
+            max: 100000000,
+            required: true
         }
     }
 };
