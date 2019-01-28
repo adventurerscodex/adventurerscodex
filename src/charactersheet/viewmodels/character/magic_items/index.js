@@ -213,6 +213,7 @@ export function MagicItemsViewModel() {
         var item = self.blankMagicItem();
         item.coreUuid(CoreManager.activeCore().uuid());
         const newMagicItem = await item.ps.create();
+        newMagicItem.object.attuned.subscribe(self.attunedHasChanged, newMagicItem.object);
         self.magicItems.push(newMagicItem.object);
         self.blankMagicItem(new MagicItem());
         self.toggleAddModal();

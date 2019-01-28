@@ -165,8 +165,6 @@ export function TraitsViewModel() {
         var trait = self.blankTrait();
         trait.coreUuid(CoreManager.activeCore().uuid());
         if (trait.isTracked()) {
-            // todo: need logic to actually set the color
-            self.blankTracked().color('progress-bar-sky');
             trait.tracked(self.blankTracked());
         }
         const newTrait = await trait.ps.create();
@@ -182,6 +180,7 @@ export function TraitsViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+        Notifications.trait.changed.dispatch();
     };
 
     self.closeEditModal = () => {

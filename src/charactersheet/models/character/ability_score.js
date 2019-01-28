@@ -16,6 +16,7 @@ export class AbilityScore extends KOModel {
     name = ko.observable('');
     value = ko.observable(1);
     shortName = ko.observable('');
+    abbreviation = ko.observable('');
 
     getModifier() {
         if (this.value()) {

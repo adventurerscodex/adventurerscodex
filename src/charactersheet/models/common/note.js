@@ -22,7 +22,7 @@ export class Note extends KOModel {
         var text = '';
         try {
             text = this.contents();
-        } catch(e) {
+        } catch (e) {
             // Ignore
         }
         var firstLine = text.split('\n')[0];
@@ -32,15 +32,13 @@ export class Note extends KOModel {
         this.headline(firstLine ? this._getPlaintext(firstLine) : 'Empty Note');
     }
 
-
-
     /* Private Methods */
 
-    _getPlaintext = function(myString) {
+    _getPlaintext = function (myString) {
         return marked(myString).replace(/<(?:.|\n)*?>/gm, '');
     };
 
-    _getFirstWords = function(myString, nWords) {
+    _getFirstWords = function (myString, nWords) {
         var words = myString.split(/\s+/);
         return words.slice(0, words.length - 2).join(' ');
     };

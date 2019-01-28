@@ -101,13 +101,13 @@ Spell.validationConstraints = {
             required: true
         },
         damage: {
-            maxlength: 64
+            maxlength: 128
         },
         damageType: {
-            maxlength: 64
+            maxlength: 128
         },
         school: {
-            maxlength: 64,
+            maxlength: 128,
             required: true
         },
         level: {
@@ -117,19 +117,19 @@ Spell.validationConstraints = {
             required: true
         },
         castingTime: {
-            maxlength: 64,
+            maxlength: 128,
             required: true
         },
         range: {
-            maxlength: 64,
+            maxlength: 128,
             required: true
         },
         duration: {
-            maxlength: 64,
+            maxlength: 128,
             required: true
         },
         components: {
-            maxlength: 64,
+            maxlength: 256,
             required: true
         }
     }

@@ -175,8 +175,6 @@ export function FeaturesViewModel() {
         var feature = self.blankFeature();
         feature.coreUuid(CoreManager.activeCore().uuid());
         if (feature.isTracked()) {
-            // todo: need logic to actually set the color
-            self.blankTracked().color('progress-bar-sky');
             feature.tracked(self.blankTracked());
         }
         const newFeature = await feature.ps.create();
