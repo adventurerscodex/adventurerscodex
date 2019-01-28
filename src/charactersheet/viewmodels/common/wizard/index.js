@@ -39,19 +39,20 @@ export function WizardViewModel() {
     self.aggregateResults = ko.observable({});
     self.stepResult = ko.observable({});
     self.newCharacterId = null;
+    self.ticketNumber = null;
 
     // View Model Methods
 
-    self.init = function() { };
+    self.init = function () { };
 
-    self.load = function() {
+    self.load = function () {
         CoreManager.setActiveCoreFragment(null);
 
         self.getNextStep();
         self.goForward();
     };
 
-    self.unload = function() {
+    self.unload = function () {
         self.reset();
     };
 
@@ -61,7 +62,7 @@ export function WizardViewModel() {
      * If possible, progresses to the next step. The method also pushes the
      * previous step onto the list of previous steps.
      */
-    self.goForward = function() {
+    self.goForward = function () {
         var nextStepDescriptor = self.nextStep();
         // Don't push empty steps.
         if (self.currentStep()) {
@@ -78,7 +79,7 @@ export function WizardViewModel() {
      * **Warning** This method wil destroy any information saved
      * on the current step.
      */
-    self.goBackward = function() {
+    self.goBackward = function () {
         // In case it's the final step, clear the flag.
         if (self._isComplete()) { self._isComplete(false); }
         if (self.previousSteps().length === 0) { return; }
@@ -102,7 +103,7 @@ export function WizardViewModel() {
      * Side effect: If a step should cause the wizard to terminate, then
      * the it is immediately done.
     */
-    self.getNextStep = function() {
+    self.getNextStep = function () {
         // Do not progress if the step isn't ready.
         if (self.currentStep() && !self.stepReady()) {
             // Steps can be made "unready".
@@ -111,6 +112,13 @@ export function WizardViewModel() {
         }
 
         var nextStepDescriptor = self._determineStepAfterStep(self.currentStep());
+
+        // if there was an import error, immediately force redirect to the error step
+        if (nextStepDescriptor.viewModel === 'WizardFileImportErrorStep') {
+            self.nextStep(nextStepDescriptor);
+            self.goForward();
+            return;
+        }
         if (!nextStepDescriptor.viewModel) {
             self._isComplete(true);
         }
@@ -121,7 +129,7 @@ export function WizardViewModel() {
         self.nextStep(nextStepDescriptor);
     };
 
-    self.saveStepResult = function() {
+    self.saveStepResult = function () {
         self.aggregateResults()[self.currentStep()] = self.stepResult();
     };
 
@@ -129,7 +137,7 @@ export function WizardViewModel() {
      * When called, immediately terminate the wizard and notify the
      * system of successful completion.
      */
-    self.terminate = function() {
+    self.terminate = function () {
         // Newest character will be at the back.
         CoreManager.changeCore(self.newCharacterId);
     };
@@ -137,7 +145,7 @@ export function WizardViewModel() {
     /**
      * Resets the wizard back to the first step.
      */
-    self.reset = function() {
+    self.reset = function () {
         self.previousSteps([]);
         self.currentStep(null);
         self.nextStep(null);
@@ -148,7 +156,7 @@ export function WizardViewModel() {
     /**
      * Progress through all previous and current steps and save their data.
      */
-    self.save = async function() {
+    self.save = async function () {
         var playerType = self.aggregateResults()['WizardPlayerTypeStep'].playerType;
         let params = {};
         let actions;
@@ -243,39 +251,41 @@ export function WizardViewModel() {
 
     // UI Helper Methods
 
-    self.shouldShowStartButton = ko.pureComputed(function() {
-        return self.previousSteps().length === 0;
+    self.shouldShowStartButton = ko.pureComputed(function () {
+        return self.previousSteps().length === 0 && !self._isComplete();
     });
 
-    self.shouldShowNextButton = ko.pureComputed(function() {
+    self.shouldShowNextButton = ko.pureComputed(function () {
         return self.currentStep()
             && self.stepReady()
             && !self.shouldShowFinishButton()
-            && !self.shouldShowStartButton();
+            && !self.shouldShowStartButton()
+            && !self.ticketNumber;
     });
 
-    self.shouldShowBackButton = ko.pureComputed(function() {
+    self.shouldShowBackButton = ko.pureComputed(function () {
         return self.previousSteps().length != 0;
     });
 
-    self.shouldShowFinishButton = ko.pureComputed(function() {
+    self.shouldShowFinishButton = ko.pureComputed(function () {
         return self._isComplete();
     });
 
     // Button Methods
 
-    self.nextButton = function() {
+    self.nextButton = function () {
         self.saveStepResult();
         self.goForward();
         self.stepReady(false);
     };
 
-    self.backButton = function() {
+    self.backButton = function () {
         self.stepReady(false);
+        self.ticketNumber = null;
         self.goBackward();
     };
 
-    self.finishButton = async function() {
+    self.finishButton = async function () {
         self.saveStepResult();
         await self.save();
         self.terminate();
@@ -284,16 +294,16 @@ export function WizardViewModel() {
 
     // Private Methods
 
-    self._initializeStep = function(step) {
+    self._initializeStep = function (step) {
         //Set the determination to occur when the current step is deemed ready.
         self._currentStepReadySubscription = self.stepReady.subscribe(self.getNextStep);
     };
 
-    self._deinitializeStep = function(step) {
+    self._deinitializeStep = function (step) {
         self._currentStepReadySubscription.dispose();
     };
 
-    self.allSteps = function() {
+    self.allSteps = function () {
         return self.previousSteps().concat([self.currentStep()]);
     };
 
@@ -303,7 +313,7 @@ export function WizardViewModel() {
      * @params currentStep {viewModel} The current view model object.
      * @returns {NextStepDescriptor} Returns a descriptor of what to do next.
      */
-    self._determineStepAfterStep = function(currentStep) {
+    self._determineStepAfterStep = function (currentStep) {
         var nextStep = null;
         if (!currentStep) {
             return new NextStepDescriptor('WizardIntroStep', false);
@@ -312,7 +322,11 @@ export function WizardViewModel() {
         var results = self.stepResult();
         if (currentStep === 'WizardIntroStep') {
             if (results['import']) {
+                self.newCharacterId = results['import'];
                 return new NextStepDescriptor(null, true);
+            } else if (results['importError']) {
+                self.ticketNumber = results['importError'];
+                return new NextStepDescriptor('WizardFileImportErrorStep', false);
             } else if (results['PlayerType'] === 'player') {
                 return new NextStepDescriptor('WizardPlayerTypeStep', false);
             } else {

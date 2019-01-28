@@ -32,19 +32,19 @@ export function Character() {
     self.isDefault = ko.observable(false);
     self.saveApi = '/api/storage/upload/';
 
-    self.importValues = function(values) {
+    self.importValues = function (values) {
         self.key(values.key);
         self.isDefault(values.isDefault);
 
         var keys = Object.keys(PlayerTypes);
-        for (var i=0;i<keys.length;i++) {
+        for (var i = 0; i < keys.length; i++) {
             if (PlayerTypes[keys[i]].key === values.playerType.key) {
                 self.playerType(PlayerTypes[keys[i]]);
             }
         }
     };
 
-    self.exportValues = function() {
+    self.exportValues = function () {
         return {
             key: self.key(),
             isDefault: self.isDefault(),
@@ -52,11 +52,11 @@ export function Character() {
         };
     };
 
-    self.save = function() {
+    self.save = function () {
         self.ps.save();
     };
 
-    self.delete = function() {
+    self.delete = function () {
         self.ps.delete();
     };
 
@@ -65,7 +65,7 @@ export function Character() {
      * for the data.
      * @returns summary {string} describes the character.
      */
-    self.playerSummary = ko.pureComputed(function() {
+    self.playerSummary = ko.pureComputed(function () {
         var model = self.playerType().key == 'character' ? Profile : Campaign;
         var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
         return data ? data.summary() : '';
@@ -76,7 +76,7 @@ export function Character() {
      * for the data.
      * @returns summary {string} an author for the character.
      */
-    self.playerAuthor = ko.pureComputed(function() {
+    self.playerAuthor = ko.pureComputed(function () {
         var model = self.playerType().key == 'character' ? Profile : Campaign;
         var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
         return data ? data.playerName() : '';
@@ -87,58 +87,57 @@ export function Character() {
      * for the data.
      * @returns summary {string} a title for the character.
      */
-    self.playerTitle = ko.pureComputed(function() {
+    self.playerTitle = ko.pureComputed(function () {
         var model = self.playerType().key == 'character' ? Profile : Campaign;
         var property = self.playerType().key == 'character' ? 'characterName' : 'name';
         var data = PersistenceService.findFirstBy(model, 'characterId', self.key());
-        return data ? data[property](): '';
+        return data ? data[property]() : '';
     });
 
-    self.exportCharacter = function() {
+    self.exportCharacter = function () {
         //Notify all apps to save their data.
         Notifications.global.save.dispatch();
         //Export the character to a string.
         return encodeURIComponent(JSON.stringify(Character.exportCharacter(self.key())));
     };
 
-    self.saveToFile = function() {
+    self.saveToFile = function () {
         var filename = self.playerTitle();
-        var blob = new Blob([self.exportCharacter()], {type: 'application/json'});
+        var blob = new Blob([self.exportCharacter()], { type: 'application/json' });
         saveAs(blob, filename);
     };
 
-    self.saveToDropbox = function() {
+    self.saveToDropbox = function () {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        var data = {data: self.exportCharacter()};
-        var url = Utility.oauth.postData(self.saveApi, data, function(url) {
+        var data = { data: self.exportCharacter() };
+        var url = Utility.oauth.postData(self.saveApi, data, function (url) {
             Dropbox.save(JSON.parse(url).url, self.playerTitle() + '.json', Settings.dropboxSaveOptions);
         }, null, token.accessToken());
     };
 }
 
-Character.exportCharacter = function(characterId) {
+Character.exportCharacter = function (characterId) {
     var data = {};
-    PersistenceService.listAll().forEach(function(e1, i1, _1) {
+    PersistenceService.listAll().forEach(function (e1, i1, _1) {
         if (PersistenceService.registry[e1] === undefined) { return; } //Checks for deleted models.
-        var items = PersistenceService.findAllByName(e1).filter(function(e2, i2, _2) {
+        var items = PersistenceService.findAllByName(e1).filter(function (e2, i2, _2) {
             var res = false;
             try {
                 res = e2.characterId() === characterId;
-            } catch(err) {
+            } catch (err) {
                 try {
                     res = e2.key() === characterId;
-                } catch(err) { /*Ignore*/ }
+                } catch (err) { /*Ignore*/ }
             }
             return res;
         });
-        data[e1] = items.map(function(e, i, _) {
+        data[e1] = items.map(function (e, i, _) {
             return e.exportValues();
         });
     });
     data.__version__ = VERSION;
     return data;
 };
-
 
 /**
  * Perform a full import of a character's data to the database.
@@ -152,35 +151,57 @@ Character.exportCharacter = function(characterId) {
  * finished, the current database pointer will not be pointing to the
  * app's data store
  */
-Character.importCharacter = function(data) {
-    var migratedData = null;
+Character.importCharacter = function (data) {
     //Get the version from the data and clean up the data file.
     var version = data.__version__ ? data.__version__.substr(0) : undefined;
     delete data.__version__;
+    var token = PersistenceService.findAll(AuthenticationToken)[0];
+    let importedData;
 
     // Import to a temp store and migrate, then export.
-    PersistenceService.withTemporaryDataStore({}, function() {
+    PersistenceService.withTemporaryDataStore({}, function () {
+        // insert data to local store
         PersistenceService._setVersion(version);
-        var character = Character._injectCharacter(data);
+        Character._injectCharacter(data);
+
+        // migrate data to latest models
         PersistenceService.migrate(Migrations.scripts, VERSION);
-        migratedData = Character.exportCharacter(character.key);
+
+        importedData = PersistenceService.storage;
     });
 
-    // Import the new data to the actual store.
-    if (!migratedData) {
-        throw 'Migration of imported character failed.';
+    // massage data to request format
+    var tables = JSON.parse(importedData.__master__);
+    let parsedData = {};
+    for (var i = 0; i < tables.length; i++) {
+        var tableName = tables[i];
+        if (importedData[tableName]) {
+            parsedData[tableName] = JSON.parse(importedData[tableName]);
+        }
     }
-    delete migratedData.__version__;
-    return Character._importCharacter(migratedData);
+
+    // call back end to upload character data
+    // returns new character id
+    return $.ajax({
+        type: 'POST',
+        async: false,
+        url: '/api/import-core-db/',
+        data: JSON.stringify(parsedData),
+        dataType: 'json',
+        contentType: 'application/json; charset=UTF-8',
+        beforeSend: function (xhr) {
+            Utility.oauth.setXHRBearerHeader(xhr, token.accessToken());
+        }
+    });
 };
 
-Character._importCharacter = function(data) {
+Character._importCharacter = function (data) {
     var character = null;
     var tableNames = Object.keys(data);
     var characterId = uuid.v4();
-    tableNames.forEach(function(e, i, _) {
+    tableNames.forEach(function (e, i, _) {
         var model = PersistenceService.registry[e];
-        data[e].forEach(function(e1, i1, _1) {
+        data[e].forEach(function (e1, i1, _1) {
             var inst = new model();
             e1 = Character._changeIdForData(characterId, e1);
             inst.importValues(e1);
@@ -204,12 +225,11 @@ Character._importCharacter = function(data) {
  * objects, and no mapping is performed, the indicies from the exported
  * character data is used.
  */
-Character._injectCharacter = function(data) {
+Character._injectCharacter = function (data) {
     var character = null;
     var tableNames = Object.keys(data);
-    var characterId = uuid.v4();
-    tableNames.forEach(function(table, i, _) {
-        data[table].forEach(function(obj, idx, _1) {
+    tableNames.forEach(function (table, i, _) {
+        data[table].forEach(function (obj, idx, _1) {
             PersistenceService.saveObj(table, idx, obj);
             if (table.toLowerCase() === 'character') {
                 character = obj;
@@ -225,7 +245,7 @@ Character._injectCharacter = function(data) {
  * @param data {object} The data containing an id to change.
  * @returns the same data with a new id.
  */
-Character._changeIdForData = function(characterId, data) {
+Character._changeIdForData = function (characterId, data) {
     if (Object.keys(data).indexOf('characterId') > -1) {
         data['characterId'] = characterId;
     } else if (Object.keys(data).indexOf('key') > -1) {
