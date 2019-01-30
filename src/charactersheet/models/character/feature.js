@@ -31,7 +31,8 @@ Feature.validationConstraints = {
             required: true
         },
         characterClass: {
-            maxlength: 64
+            maxlength: 64,
+            required: true
         },
         max: {
             required: true,

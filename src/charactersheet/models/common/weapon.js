@@ -202,6 +202,22 @@ export class Weapon extends KOModel {
     weaponWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
+
+    toSchemaValues = (values) => {
+        if (values.price === '') {
+            values.price = 0;
+        }
+
+        if (values.quantity === '') {
+            values.quantity = 0;
+        }
+
+        if (values.weight === '') {
+            values.weight = 0;
+        }
+
+        return values;
+    }
 }
 
 Weapon.validationConstraints = {

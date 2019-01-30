@@ -209,6 +209,10 @@ export function TrackerViewModel() {
         self.editHasFocus(true);
     };
 
+    self.closeEditModal = () => {
+        self.modalOpen(false);
+    };
+
     self.editTracked = function(item) {
         switch(item.tracked().type) {
         case 'Feature':

@@ -65,6 +65,18 @@ export class MagicItem extends KOModel {
     magicItemWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
+
+    toSchemaValues = (values) => {
+        if (values.maxCharges === '') {
+            values.maxCharges = 0;
+        }
+
+        if (values.weight === '') {
+            values.weight = 0;
+        }
+
+        return values;
+    }
 }
 
 MagicItem.validationConstraints = {
