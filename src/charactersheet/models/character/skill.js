@@ -28,6 +28,10 @@ export class Skill extends KOModel {
             const abilityScoreId = values.abilityScore.uuid;
             values.abilityScore = abilityScoreId;
         }
+
+        if (values.modifier === '') {
+            values.modifier = 0;
+        }
         return values;
     }
 

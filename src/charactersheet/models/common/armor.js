@@ -1,10 +1,5 @@
-import {
-    CoreManager,
-    Fixtures
-} from 'charactersheet/utilities';
-import { AbilityScore } from 'charactersheet/models/character/ability_score';
+import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
-import { SharedServiceManager } from 'charactersheet/services/common/shared_service_manager';
 
 import ko from 'knockout';
 
@@ -25,7 +20,7 @@ export class Armor extends KOModel {
     currencyDenomination = ko.observable('');
     weight = ko.observable('');
     armorClass = ko.observable('');
-    stealth = ko.observable('');
+    stealth = ko.observable('Normal');
     description = ko.observable('');
     equipped = ko.observable(false);
 
@@ -89,6 +84,18 @@ export class Armor extends KOModel {
     updateValues = () => {
         this._dummy.notifySubscribers();
     };
+
+    toSchemaValues = (values) => {
+        if (values.price === '') {
+            values.price = 0;
+        }
+
+        if (values.weight === '') {
+            values.weight = 0;
+        }
+
+        return values;
+    }
 }
 
 Armor.validationConstraints = {
@@ -118,7 +125,8 @@ Armor.validationConstraints = {
             max: 1000000
         },
         stealth: {
-            maxlength: 64
+            maxlength: 64,
+            required: true
         }
     }
 };

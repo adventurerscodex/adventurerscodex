@@ -56,8 +56,24 @@ export class Item extends KOModel {
     });
 
     costLabel = ko.pureComputed(() => {
-        return this.cost() ? this.cost() + ' ' + this.currencyDenomination() : '';
+        return this.cost() !== '' ? this.cost() + ' ' + this.currencyDenomination() : '';
     });
+
+    toSchemaValues = (values) => {
+        if (values.cost === '') {
+            values.cost = 0;
+        }
+
+        if (values.quantity === '') {
+            values.quantity = 0;
+        }
+
+        if (values.weight === '') {
+            values.weight = 0;
+        }
+
+        return values;
+    }
 }
 
 Item.validationConstraints = {
