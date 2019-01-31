@@ -57,7 +57,6 @@ export function CampaignMapsAndImagesViewModel() {
             imageService.clearImage();
         } else {
             imageService.publishImage(image.toJSON());
-            imageService.clearExhibitFlag();
             image.isExhibited(true);
             image.save();
             self._dataHasChanged();
@@ -67,7 +66,7 @@ export function CampaignMapsAndImagesViewModel() {
     self.load = async function() {
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.toggle.add(self._dataHasChanged);
+        Notifications.exhibit.changed.add(self._dataHasChanged);
 
         var key = CoreManager.activeCore().uuid();
         const imagesResponse = await Image.ps.list({coreUuid: key});

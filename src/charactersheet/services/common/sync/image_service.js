@@ -43,13 +43,13 @@ function _ImageService(config) {
     };
 
     self.publishImage = function(image) {
-        self.purgeExistingExibits();
+        self.purgeExistingExhibits();
         self.createExhibitModel(image);
         Notifications.exhibit.changed.dispatch();
     };
 
-    self.clearImage = function() {
-        self.purgeExistingExibits();
+    self.clearImage = async () => {
+        await self.purgeExistingExhibits();
         Notifications.exhibit.changed.dispatch();
     };
 
@@ -61,35 +61,16 @@ function _ImageService(config) {
         exhibit.save();
     };
 
-    self.purgeExistingExibits = function() {
-        var exhibits = PersistenceService.findBy(Exhibit, 'characterId', CoreManager.activeCore().uuid());
+    self.purgeExistingExhibits = async () => {
+        const exhibits = PersistenceService.findBy(
+            Exhibit,
+            'characterId',
+            CoreManager.activeCore().uuid()
+        );
         if (exhibits.length > 0) {
             exhibits.forEach(function(exhibit, idx, _) {
                 exhibit.delete();
             });
         }
-    };
-
-    self.clearExhibitFlag = function() {
-        var predicates = [
-            new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
-            new KeyValuePredicate('isExhibited', true)
-        ];
-        var mapOrImages = PersistenceService.findByPredicates(EncounterImage, predicates);
-        var campaignMapOrImages = PersistenceService.findByPredicates(CampaignMapOrImage, predicates);
-        var environment = PersistenceService.findByPredicates(Environment, predicates)[0];
-        if (environment) {
-            environment.isExhibited(false);
-            environment.save();
-        }
-        mapOrImages.forEach(function(element, idx, _) {
-            element.isExhibited(false);
-            element.save();
-        });
-        campaignMapOrImages.forEach(function(element, idx, _) {
-            element.isExhibited(false);
-            element.save();
-        });
-        Notifications.exhibit.toggle.dispatch();
     };
 }

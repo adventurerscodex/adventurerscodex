@@ -60,8 +60,12 @@ export var DMCardFields = [
         name: 'exhibitImage',
         refreshOn: Notifications.exhibit.changed,
         valueAccessor: async () => {
-//             var exhibit = PersistenceService.findFirstBy(Exhibit, 'characterId', CoreManager.activeCore().uuid());
-//             return exhibit ? exhibit.toJSON() : null;
+            const exhibit = PersistenceService.findFirstBy(
+                Exhibit,
+                'characterId',
+                CoreManager.activeCore().uuid()
+            );
+            return exhibit ? exhibit.toJSON() : null;
         }
     }
 ];
