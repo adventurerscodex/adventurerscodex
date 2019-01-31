@@ -21,9 +21,6 @@ export function ChatDetailViewModel({ chatCell }) {
     var self = this;
 
     self._chatCell = chatCell;
-    self.chatRoom = ko.pureComputed(() => (
-        self._chatCell().chatRoom
-    ));
     self.wasAtBottom = ko.observable(true);
     self.members = ko.observableArray([]);
 
@@ -37,11 +34,11 @@ export function ChatDetailViewModel({ chatCell }) {
     });
 
     self.isGroupChat = () => (
-        self.chatRoom().isGroupChat()
+        self._chatCell().chatRoom.isGroupChat()
     );
 
     self._getRoomMembers = () => (
-        self.chatRoom()._getRoomMembers()
+        self._chatCell().chatRoom._getRoomMembers()
     );
 
     /* Public Methods */
@@ -81,7 +78,7 @@ export function ChatDetailViewModel({ chatCell }) {
     };
 
     self.reloadData = function() {
-        self.members(self.chatRoom().getRoomMembers());
+        self.members(self._chatCell().chatRoom.getRoomMembers());
 
         const log = self._getRecentItems();
         ko.utils.arrayPushAll(self.log, log);
@@ -105,7 +102,6 @@ export function ChatDetailViewModel({ chatCell }) {
         return self.members().map(function(member, idx, _) {
             return self._getMemberTemplate(member);
         }).join('');
-
     });
 
     self.messageFieldShouldHaveFocus = ko.observable(true);
@@ -141,7 +137,7 @@ export function ChatDetailViewModel({ chatCell }) {
     /* Private Methods */
 
     self._markAllAsRead = function() {
-        self.chatRoom().getUnreadMessages().forEach((message, idx, _) => {
+        self._chatCell().chatRoom.getUnreadMessages().forEach((message, idx, _) => {
             message.read(true);
             message.save();
         });
@@ -227,7 +223,7 @@ export function ChatDetailViewModel({ chatCell }) {
     };
 
     self._handleMessageReceived = function (room, msg, delay, hideTitle) {
-        if (room.jid() !== self.chatRoom().jid()) {
+        if (room.jid() !== self._chatCell().chatRoom.jid()) {
             // This message is for a different room, we don't care.
             return;
         }
