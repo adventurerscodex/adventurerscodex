@@ -50,8 +50,11 @@ function _pCardService(configuration) {
     };
 
     self.dataHasChanged = async () => {
-        var card = await self._buildCard();
-        self.publishCard(card);
+        // we only want to generate cards if we're in a party
+        if (self.currentPartyNode) {
+            var card = await self._buildCard();
+            self.publishCard(card);
+        }
     };
 
     self.publishCard = function(card) {
