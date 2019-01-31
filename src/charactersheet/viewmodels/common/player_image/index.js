@@ -49,12 +49,12 @@ export function PlayerImageViewModel() {
         self._handleConnectionStatusChanged();
     };
 
-    self.doneButtonClicked = () => {
-        self.saveAndNotify();
+    self.doneButtonClicked = async () => {
+        await self.saveAndNotify();
     };
 
-    self.saveAndNotify = () => {
-        self.save();
+    self.saveAndNotify = async () => {
+        await self.save();
         Notifications.playerImage.changed.dispatch();
     };
 
@@ -94,7 +94,6 @@ export function PlayerImageViewModel() {
     //Public Methods
 
     self.save = async () => {
-        var key = CoreManager.activeCore().uuid();
         if (self.imageSource() == 'picker') {
             self.playerImage().sourceUrl(self.selectedDefaultImages()[0].image);
             self.playerImage().type('url');
