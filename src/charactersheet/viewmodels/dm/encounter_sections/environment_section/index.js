@@ -48,7 +48,7 @@ export function EnvironmentSectionViewModel(params) {
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.toggle.add(self._dataHasChanged);
+        Notifications.exhibit.changed.add(self.getEnvironment);
 
         self._connectionHasChanged();
 
@@ -62,18 +62,17 @@ export function EnvironmentSectionViewModel(params) {
 
     // Push to Player
 
-    self.toggleExhibit = function() {
+    self.toggleExhibit = async () => {
         var imageService = ImageServiceManager.sharedService();
-        if (self.isExhibited()) {
-            self.isExhibited(false);
-            self.save();
+        if (self.environment().isExhibited()) {
+            self.environment().isExhibited(false);
+            await self.save();
             imageService.clearImage();
         } else {
+            self.environment().isExhibited(true);
+            await self.save();
             imageService.publishImage(self.toJSON());
-            imageService.clearExhibitFlag();
-            self.isExhibited(true);
-            self.save();
-            self._dataHasChanged();
+            await self._dataHasChanged();
         }
     };
 
@@ -81,7 +80,7 @@ export function EnvironmentSectionViewModel(params) {
         return { name: 'Environment', url: self.environment().imageUrl() };
     };
 
-    self.save = async function() {
+    self.save = async () => {
         if (self.dataIsChanging) {
             return;
         }

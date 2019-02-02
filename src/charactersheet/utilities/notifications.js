@@ -138,8 +138,7 @@ export var Notifications = {
     },
 
     exhibit: {
-        changed: new Signal(),
-        toggle: new Signal()
+        changed: new Signal()
     },
 
     feat: {

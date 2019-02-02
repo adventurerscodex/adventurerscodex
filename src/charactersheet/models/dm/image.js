@@ -7,6 +7,7 @@ import ko from 'knockout';
 
 export class Image extends KOModel {
     static __skeys__ = ['core', 'images'];
+    static __dependents__ = ['Environment', 'EncounterImage'];
 
     static mapping = {
         include: ['coreUuid', 'description']
@@ -17,6 +18,11 @@ export class Image extends KOModel {
     description = ko.observable();
     sourceUrl = ko.observable();
     isExhibited = ko.observable();
+
+    toJSON = function() {
+        var name = this.name() ? this.name() : 'Untitled';
+        return { name: name, url: this.sourceUrl() };
+    };
 
     shortDescription = ko.pureComputed(() => {
         try {

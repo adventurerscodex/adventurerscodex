@@ -42,54 +42,35 @@ function _ImageService(config) {
     self.init = function() {
     };
 
-    self.publishImage = function(image) {
-        self.purgeExistingExibits();
-        self.createExhibitModel(image);
+    self.publishImage = async (image) => {
+        self.purgeExistingExhibits();
+        await self.createExhibitModel(image);
         Notifications.exhibit.changed.dispatch();
     };
 
-    self.clearImage = function() {
-        self.purgeExistingExibits();
+    self.clearImage = async () => {
+        await self.purgeExistingExhibits();
         Notifications.exhibit.changed.dispatch();
     };
 
-    self.createExhibitModel = function(image) {
+    self.createExhibitModel = async (image) => {
         var exhibit = new Exhibit();
         exhibit.characterId(CoreManager.activeCore().uuid());
         exhibit.name(image.name);
         exhibit.url(image.url);
-        exhibit.save();
+        await exhibit.save();
     };
 
-    self.purgeExistingExibits = function() {
-        var exhibits = PersistenceService.findBy(Exhibit, 'characterId', CoreManager.activeCore().uuid());
+    self.purgeExistingExhibits = async () => {
+        const exhibits = PersistenceService.findBy(
+            Exhibit,
+            'characterId',
+            CoreManager.activeCore().uuid()
+        );
         if (exhibits.length > 0) {
             exhibits.forEach(function(exhibit, idx, _) {
                 exhibit.delete();
             });
         }
-    };
-
-    self.clearExhibitFlag = function() {
-        var predicates = [
-            new KeyValuePredicate('characterId', CoreManager.activeCore().uuid()),
-            new KeyValuePredicate('isExhibited', true)
-        ];
-        var mapOrImages = PersistenceService.findByPredicates(EncounterImage, predicates);
-        var campaignMapOrImages = PersistenceService.findByPredicates(CampaignMapOrImage, predicates);
-        var environment = PersistenceService.findByPredicates(Environment, predicates)[0];
-        if (environment) {
-            environment.isExhibited(false);
-            environment.save();
-        }
-        mapOrImages.forEach(function(element, idx, _) {
-            element.isExhibited(false);
-            element.save();
-        });
-        campaignMapOrImages.forEach(function(element, idx, _) {
-            element.isExhibited(false);
-            element.save();
-        });
-        Notifications.exhibit.toggle.dispatch();
     };
 }

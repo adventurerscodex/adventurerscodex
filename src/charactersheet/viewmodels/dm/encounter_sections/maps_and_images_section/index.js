@@ -10,7 +10,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { EncounterImage } from 'charactersheet/models/common';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/globe.svg';
 import template from './index.html';
@@ -67,7 +66,7 @@ export function MapsAndImagesSectionViewModel(params) {
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
         Notifications.party.left.add(self._connectionHasChanged);
-        Notifications.exhibit.toggle.add(self._dataHasChanged);
+        Notifications.exhibit.changed.add(self._dataHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
@@ -157,18 +156,17 @@ export function MapsAndImagesSectionViewModel(params) {
         self.openModal(true);
     };
 
-    self.toggleMapOrImageExhibit = function(image) {
-        var imageService = ImageServiceManager.sharedService();
+    self.toggleMapOrImageExhibit = async (image) => {
+        const imageService = ImageServiceManager.sharedService();
         if (image.isExhibited()) {
             image.isExhibited(false);
-            image.save();
+            await image.ps.save();
             imageService.clearImage();
         } else {
-            imageService.publishImage(image.toJSON());
-            imageService.clearExhibitFlag();
             image.isExhibited(true);
-            image.save();
-            self._dataHasChanged();
+            await image.ps.save();
+            await self._dataHasChanged();
+            imageService.publishImage(image.toJSON());
         }
     };
 
@@ -233,12 +231,15 @@ export function MapsAndImagesSectionViewModel(params) {
 
     /* Private Methods */
 
-    self._dataHasChanged = async function() {
-        var coreUuid = CoreManager.activeCore().uuid();
-        const imagesResponse = await EncounterImage.ps.list({coreUuid, encounterUuid: self.encounterId()});
-        self.mapsOrImages(imagesResponse.objects);
+    self._dataHasChanged = async () => {
+        const coreUuid = CoreManager.activeCore().uuid();
+        const { objects } = await EncounterImage.ps.list({
+            coreUuid,
+            encounterUuid: self.encounterId()
+        });
+        self.mapsOrImages(objects);
 
-        var section = self.encounter().sections()[Fixtures.encounter.sections.mapsAndImages.index];
+        const section = self.encounter().sections()[Fixtures.encounter.sections.mapsAndImages.index];
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
