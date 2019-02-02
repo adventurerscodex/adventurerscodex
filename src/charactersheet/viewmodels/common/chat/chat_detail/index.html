@@ -1,4 +1,4 @@
-<!-- ko if: chatRoom -->
+<!-- ko if: _chatCell().chatRoom -->
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="container-fluid">
@@ -42,7 +42,7 @@
   </div>
 </div>
 <!-- /ko -->
-<!-- ko ifnot: chatRoom -->
+<!-- ko ifnot: _chatCell().chatRoom -->
 <div class="detail-place-holder well text-center"
   style="cursor:pointer;" data-bind="click: addButtonWasClicked">
   <p class="lead text-muted heading" data-bind="html: addNewItemText"></p>
