@@ -42,9 +42,9 @@ function _ImageService(config) {
     self.init = function() {
     };
 
-    self.publishImage = function(image) {
+    self.publishImage = async (image) => {
         self.purgeExistingExhibits();
-        self.createExhibitModel(image);
+        await self.createExhibitModel(image);
         Notifications.exhibit.changed.dispatch();
     };
 
@@ -53,12 +53,12 @@ function _ImageService(config) {
         Notifications.exhibit.changed.dispatch();
     };
 
-    self.createExhibitModel = function(image) {
+    self.createExhibitModel = async (image) => {
         var exhibit = new Exhibit();
         exhibit.characterId(CoreManager.activeCore().uuid());
         exhibit.name(image.name);
         exhibit.url(image.url);
-        exhibit.save();
+        await exhibit.save();
     };
 
     self.purgeExistingExhibits = async () => {

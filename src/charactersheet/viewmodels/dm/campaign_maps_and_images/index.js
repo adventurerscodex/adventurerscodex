@@ -49,16 +49,16 @@ export function CampaignMapsAndImagesViewModel() {
 
     /* Public Methods */
 
-    self.toggleExhibit = function(image) {
+    self.toggleExhibit = async(image) => {
         var imageService = ImageServiceManager.sharedService();
         if (image.isExhibited()) {
             image.isExhibited(false);
-            image.save();
+            await image.ps.save();
             imageService.clearImage();
         } else {
-            imageService.publishImage(image.toJSON());
             image.isExhibited(true);
-            image.save();
+            await image.ps.save();
+            imageService.publishImage(image.toJSON());
             self._dataHasChanged();
         }
     };

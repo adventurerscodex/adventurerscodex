@@ -10,7 +10,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { EncounterImage } from 'charactersheet/models/common';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/globe.svg';
 import template from './index.html';
@@ -158,7 +157,6 @@ export function MapsAndImagesSectionViewModel(params) {
     };
 
     self.toggleMapOrImageExhibit = async (image) => {
-        console.log('toggleMapOrImageExhibit', image.exportValues())
         const imageService = ImageServiceManager.sharedService();
         if (image.isExhibited()) {
             image.isExhibited(false);

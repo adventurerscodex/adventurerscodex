@@ -69,9 +69,9 @@ export function EnvironmentSectionViewModel(params) {
             await self.save();
             imageService.clearImage();
         } else {
-            imageService.publishImage(self.toJSON());
             self.environment().isExhibited(true);
             await self.save();
+            imageService.publishImage(self.toJSON());
             await self._dataHasChanged();
         }
     };
