@@ -31,6 +31,10 @@ export class Image extends KOModel {
             // Ignore
         }
     });
+
+    toHTML = function() {
+        return 'New image in chat';
+    };
 }
 
 Image.validationConstraints = {
