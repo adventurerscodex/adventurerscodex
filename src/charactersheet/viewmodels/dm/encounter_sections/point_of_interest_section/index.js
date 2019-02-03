@@ -175,6 +175,10 @@ export function PointOfInterestSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounterId()) {
+            return;
+        }
+
         var coreUuid = CoreManager.activeCore().uuid();
         const pointsResponse = await PointOfInterest.ps.list({coreUuid, encounterUuid: self.encounterId()});
         self.pointsOfInterest(pointsResponse.objects);

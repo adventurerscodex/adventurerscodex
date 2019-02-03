@@ -48,6 +48,10 @@ export function NotesSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounterId()) {
+            return;
+        }
+
         await self.reset();
 
         var section = self.encounter().sections()[Fixtures.encounter.sections.notes.index];

@@ -232,6 +232,10 @@ export function MonsterSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounterId()) {
+            return;
+        }
+
         var coreUuid = CoreManager.activeCore().uuid();
         var monsterResponse = await Monster.ps.list({coreUuid, encounterUuid: self.encounterId()});
         self.monsters(monsterResponse.objects);

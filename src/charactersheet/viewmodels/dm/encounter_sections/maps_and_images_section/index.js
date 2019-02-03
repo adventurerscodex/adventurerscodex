@@ -232,6 +232,10 @@ export function MapsAndImagesSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async () => {
+        if (!self.encounterId()) {
+            return;
+        }
+
         const coreUuid = CoreManager.activeCore().uuid();
         const { objects } = await EncounterImage.ps.list({
             coreUuid,

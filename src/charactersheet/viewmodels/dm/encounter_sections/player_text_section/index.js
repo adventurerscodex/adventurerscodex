@@ -206,6 +206,10 @@ export function PlayerTextSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounterId()) {
+            return;
+        }
+
         var coreUuid = CoreManager.activeCore().uuid();
         const readAloudResponse = await PlayerText.ps.list({coreUuid, encounterUuid: self.encounterId()});
         self.playerTexts(readAloudResponse.objects);
