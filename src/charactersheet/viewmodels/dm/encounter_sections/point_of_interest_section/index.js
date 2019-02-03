@@ -48,6 +48,9 @@ export function PointOfInterestSectionViewModel(params) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     /* Public Methods */
     self.load = function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
@@ -110,6 +113,9 @@ export function PointOfInterestSectionViewModel(params) {
     self.closeModal = () => {
         self.openModal(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.validation = {
@@ -142,6 +148,9 @@ export function PointOfInterestSectionViewModel(params) {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     /* Modal Methods */

@@ -59,7 +59,11 @@ export function PlayerTextSectionViewModel(params) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['description asc']);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     /* Public Methods */
+
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
         Notifications.party.joined.add(self._connectionHasChanged);
@@ -124,6 +128,9 @@ export function PlayerTextSectionViewModel(params) {
 
     self.closeAddModal = function() {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.validation = {
@@ -201,6 +208,9 @@ export function PlayerTextSectionViewModel(params) {
     self.closeModal = () => {
         self.openModal(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     /* Private Methods */

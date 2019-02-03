@@ -104,7 +104,7 @@
             id="addMapOrImageLabel">Add a new Map or Image.</h4>
     </div>
       <div class="modal-body">
-        <form class="form-horizontal" data-bind="validate: validation">
+        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
           <div class="form-group">
             <label class="col-sm-2 control-label">
               Name<i class="required"></i>
@@ -211,7 +211,7 @@
             </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-              <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
+              <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
               <div class="form-group">
                 <label for="mapOrImageName"
                        class="col-sm-2 control-label">

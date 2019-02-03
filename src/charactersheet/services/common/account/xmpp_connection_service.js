@@ -26,13 +26,7 @@ var XMPPServiceDefaultConfig = {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         return {
             jid: bareJID + '/' + resource,
-            password: (
-                bareJID.indexOf('sonicrocketman@') ?
-                'TESTING_TOKEN_1' :
-                bareJID.indexOf('tester@') ?
-                'TESTING_TOKEN_2' :
-                'TESTING_TOKEN_3'
-            ) //token.accessToken()
+            password: token.accessToken()
         };
     },
 

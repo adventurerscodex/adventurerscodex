@@ -46,6 +46,8 @@ export function CampaignMapsAndImagesViewModel() {
     self.pushType = ko.observable('image');
 
     self._isConnectedToParty = ko.observable(false);
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
 
     /* Public Methods */
 
@@ -83,11 +85,17 @@ export function CampaignMapsAndImagesViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.closeModal = () => {
         self.openModal(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.validation = {

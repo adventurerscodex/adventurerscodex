@@ -63,6 +63,9 @@ export function MonsterSectionViewModel(params) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     /* Public Methods */
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
@@ -163,11 +166,17 @@ export function MonsterSectionViewModel(params) {
 
     self.closeAddModal = () => {
         self.openModal(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.closeModal = () => {
         self.openEditModal(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.renderAbilityScoresInAddModal = function() {
