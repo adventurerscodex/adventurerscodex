@@ -204,6 +204,10 @@ export function NPCSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounterId()) {
+            return;
+        }
+
         var coreUuid = CoreManager.activeCore().uuid();
         const npcResponse = await NPC.ps.list({coreUuid, encounterUuid: self.encounterId()});
         self.npcs(npcResponse.objects);

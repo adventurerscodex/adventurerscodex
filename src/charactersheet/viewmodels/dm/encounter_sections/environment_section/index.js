@@ -192,6 +192,10 @@ export function EnvironmentSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounter() || !self.encounter().sections()) {
+            return;
+        }
+
         self.dataIsChanging = true;
         var section = self.encounter().sections()[Fixtures.encounter.sections.environment.index];
         self.name(section.name());

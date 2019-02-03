@@ -497,6 +497,10 @@ export function TreasureSectionViewModel(params) {
     /* Private Methods */
 
     self._dataHasChanged = async function() {
+        if (!self.encounterId()) {
+            return;
+        }
+
         var coreUuid = CoreManager.activeCore().uuid();
         const treasureResponse = await Treasure.ps.list({coreUuid, encounterUuid: self.encounterId()});
 
