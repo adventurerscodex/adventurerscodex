@@ -48,6 +48,9 @@ export function TraitsViewModel() {
     self.meditation = meditation;
     self.campingTent = campingTent;
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     // Static Data
     self.raceOptions = Fixtures.profile.raceOptions;
 
@@ -181,11 +184,17 @@ export function TraitsViewModel() {
     self.closeAddModal = () => {
         self.addModalOpen(false);
         Notifications.trait.changed.dispatch();
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.closeEditModal = () => {
         self.modalOpen(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.clear = function() {

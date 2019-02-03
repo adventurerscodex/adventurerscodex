@@ -28,6 +28,9 @@ export function ArmorViewModel() {
     self.addFormIsValid = ko.observable(false);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.sorts = {
         'equipped asc': { field: 'equipped', direction: 'asc', booleanType: true},
         'equipped desc': { field: 'equipped', direction: 'desc', booleanType: true},
@@ -199,10 +202,16 @@ export function ArmorViewModel() {
     self.closeEditModal = () => {
         self.modalOpen(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.valueHasChanged = function() {

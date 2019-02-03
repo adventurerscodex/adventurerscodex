@@ -37,6 +37,9 @@ export function ProficienciesViewModel() {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.proficiencyType = Fixtures.proficiency.proficiencyTypes;
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await Proficiency.ps.list({coreUuid: key});
@@ -96,11 +99,17 @@ export function ProficienciesViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.closeEditModal = () => {
         self.modalOpen(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.modalFinishedOpening = function() {

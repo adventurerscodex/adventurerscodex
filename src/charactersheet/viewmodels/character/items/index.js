@@ -41,6 +41,9 @@ export function ItemsViewModel() {
     self.firstModalElementHasFocus = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.totalItemWeight = ko.pureComputed(function() {
         var weightTotal = 0;
         var eqpLen = self.items().length;
@@ -99,6 +102,9 @@ export function ItemsViewModel() {
 
     self.toggleCloseModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.modalFinishedOpening = function() {
@@ -120,6 +126,9 @@ export function ItemsViewModel() {
 
         self.modalOpen(false);
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.closeEditModal = () => {

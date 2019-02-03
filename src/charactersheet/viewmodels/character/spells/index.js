@@ -44,6 +44,9 @@ export function SpellbookViewModel() {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.spellSchoolIconCSS = ko.observable('');
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
@@ -142,6 +145,9 @@ export function SpellbookViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.modalFinishedOpening = function() {
@@ -177,6 +183,9 @@ export function SpellbookViewModel() {
     self.closeEditModal = () => {
         self.modalOpen(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.determineSpellSchoolIcon = ko.computed(function() {

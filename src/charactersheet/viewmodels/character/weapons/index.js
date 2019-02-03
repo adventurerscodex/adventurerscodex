@@ -28,6 +28,9 @@ export function WeaponsViewModel() {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.currencyDenominationList = ko.observableArray(Fixtures.general.currencyDenominationList);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc'},
         'name desc': { field: 'name', direction: 'desc'},
@@ -179,6 +182,9 @@ export function WeaponsViewModel() {
 
         self.modalOpen(false);
         Notifications.weapon.changed.dispatch();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.selectPreviewTab = function() {
@@ -215,6 +221,9 @@ export function WeaponsViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.removeWeapon = async (weapon) => {

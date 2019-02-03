@@ -35,6 +35,9 @@ export function SkillsViewModel() {
     self.sort = ko.observable(self.sorts['name asc']);
     self.abilityScores = ko.observableArray(null);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
 
@@ -136,6 +139,9 @@ export function SkillsViewModel() {
 
     self.closeEditModal = () => {
         self.editModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.newSkillFieldHasFocus = ko.observable(false);
@@ -146,6 +152,9 @@ export function SkillsViewModel() {
 
     self.newModalFinishedClosing = function() {
         self.newModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     //Manipulating skills

@@ -49,6 +49,9 @@ export function FeaturesViewModel() {
     self.campingTent = campingTent;
     self.classOptions = Fixtures.profile.classOptions;
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.load = async () => {
         await self.loadFeatures();
 
@@ -145,6 +148,10 @@ export function FeaturesViewModel() {
         self.modalOpen(false);
         self.addModalOpen(false);
         Notifications.feature.changed.dispatch();
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
+        $(self._editForm()).validate().resetForm();
     };
 
     self.selectPreviewTab = function() {

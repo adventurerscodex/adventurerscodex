@@ -45,6 +45,9 @@ export function SpellSlotsViewModel() {
     self.meditationWhite = meditationWhite;
     self.campingTentWhite = campingTentWhite;
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.load = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await SpellSlot.ps.list({coreUuid: key});
@@ -162,6 +165,9 @@ export function SpellSlotsViewModel() {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.modalFinishedAnimating = function() {
@@ -184,6 +190,9 @@ export function SpellSlotsViewModel() {
 
     self.closeEditModal = () => {
         self.openModal(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     //Manipulating spell slots
