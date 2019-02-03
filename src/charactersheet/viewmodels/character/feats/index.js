@@ -42,6 +42,9 @@ export function FeatsViewModel() {
     self.meditation = meditation;
     self.campingTent = campingTent;
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     self.load = async () => {
         await self.loadFeats();
 
@@ -129,6 +132,9 @@ export function FeatsViewModel() {
     self.closeAddModal = () => {
         self.addModalOpen(false);
         Notifications.feat.changed.dispatch();
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.selectPreviewTab = function() {
@@ -194,6 +200,9 @@ export function FeatsViewModel() {
     self.closeEditModal = () => {
         self.modalOpen(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.trackedPopoverText = function() {

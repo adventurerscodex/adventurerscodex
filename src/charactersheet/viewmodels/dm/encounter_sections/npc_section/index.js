@@ -51,6 +51,9 @@ export function NPCSectionViewModel(params) {
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
+
     //Static Data
     self.raceOptions = Fixtures.profile.raceOptions;
 
@@ -108,6 +111,9 @@ export function NPCSectionViewModel(params) {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     /* UI Methods */
@@ -190,6 +196,9 @@ export function NPCSectionViewModel(params) {
     self.closeModal = () => {
         self.openModal(false);
         self.selectPreviewTab();
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     //Prepopulate methods

@@ -38,6 +38,9 @@ export function MagicItemsViewModel() {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.magicItemIconCSS = ko.observable('');
 
+    self._editForm = ko.observable();
+    self._addForm = ko.observable();
+
     self.filter = ko.observable('');
     self.sort = ko.observable(self.sorts['name asc']);
 
@@ -79,9 +82,9 @@ export function MagicItemsViewModel() {
         }
     });
 
-    self.load = async() => {
-        var key = CoreManager.activeCore().uuid();
-        const response = await MagicItem.ps.list({coreUuid: key});
+    self.load = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const response = await MagicItem.ps.list({ coreUuid: key });
         self.magicItems(response.objects);
 
         self.magicItems().forEach(function(e) {
@@ -142,6 +145,9 @@ export function MagicItemsViewModel() {
 
     self.toggleCloseModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     self.closeEditModal = () => {
@@ -167,6 +173,8 @@ export function MagicItemsViewModel() {
         }
 
         self.modalOpen(false);
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     self.selectPreviewTab = function() {

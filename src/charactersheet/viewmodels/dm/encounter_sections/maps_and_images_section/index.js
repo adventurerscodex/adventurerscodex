@@ -59,6 +59,8 @@ export function MapsAndImagesSectionViewModel(params) {
     self.convertedDisplayUrl = ko.observable();
 
     self._isConnectedToParty = ko.observable(false);
+    self._addForm = ko.observable();
+    self._editForm = ko.observable();
 
     /* Public Methods */
 
@@ -106,6 +108,9 @@ export function MapsAndImagesSectionViewModel(params) {
 
     self.closeAddModal = () => {
         self.addModalOpen(false);
+
+        // Let the validator reset the validation in the form.
+        $(self._addForm()).validate().resetForm();
     };
 
     /* UI Methods */
@@ -211,6 +216,9 @@ export function MapsAndImagesSectionViewModel(params) {
         self.openModal(false);
         self.previewTabStatus('active');
         self.editTabStatus('');
+
+        // Let the validator reset the validation in the form.
+        $(self._editForm()).validate().resetForm();
     };
 
     /* Push to Player Methods */

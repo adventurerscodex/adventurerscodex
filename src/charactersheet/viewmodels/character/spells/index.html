@@ -114,7 +114,7 @@
             <h4 class="modal-title" id="addSpellLabel">Add a Spell to your Spellbook.</h4>
         </div>
           <div class="modal-body">
-            <form class="form-horizontal" data-bind="validate: validation">
+            <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
               <div class="form-group ui-front">
                 <label for="name"
                        class="col-sm-3 control-label">
@@ -425,7 +425,7 @@
                 </div>
               </div>
               <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="spellsModalEdit">
-                <form class="form-horizontal" data-bind="validate: $parent.updateValidation">
+                <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
                   <div class="form-group">
                     <label for="name"
                            class="col-sm-3 control-label">

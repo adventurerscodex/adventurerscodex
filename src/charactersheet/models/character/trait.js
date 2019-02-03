@@ -24,6 +24,7 @@ Trait.validationConstraints = {
             maxlength: 256
         },
         race: {
+            required: true,
             maxlength: 64
         },
         max: {
