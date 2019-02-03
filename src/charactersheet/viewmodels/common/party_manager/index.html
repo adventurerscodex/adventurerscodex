@@ -67,9 +67,9 @@
                   Click or tap a party to join it.
                 </p>
                 <div class="list-group" data-bind="foreach: parties" style="max-height: 250px; overflow-y:scroll;">
-                    <button type="button" class="list-group-item text-left col-xs-12"
-                      data-bind="click: $parent.joinPartyWasClickedWithParty">
-                      <div class="col-xs-11">
+                    <button type="button" class="list-group-item text-left col-xs-12">
+                      <div class="col-xs-11"
+                        data-bind="click: $parent.joinPartyWasClickedWithParty">
                         <span data-bind="text: chatName"></span><br/>
                         <small class="text-muted">Created:
                           <span data-bind="text: $parent.dateCreatedLabel($data)"></span>

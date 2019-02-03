@@ -7,7 +7,7 @@ export class Environment extends KOModel {
     static __dependents__ = ['Image', 'EncounterImage'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'sourceUrl', 'weather',
+        include: ['coreUuid', 'encounterUuid', 'imageUrl', 'weather',
             'terrain', 'description', 'isExhibited']
     };
 
@@ -22,7 +22,7 @@ export class Environment extends KOModel {
     //Public Methods
 
     toJSON = function() {
-        return { name: 'Environment', url: this.sourceUrl() };
+        return { name: 'Environment', url: this.imageUrl() };
     };
 
     name = ko.pureComputed(() => {

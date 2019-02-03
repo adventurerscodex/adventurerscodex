@@ -135,7 +135,7 @@ export function PartyManagerViewModel() {
         await party.ps.delete();
 
         // Reload parties.
-        self.parties(self._getParties());
+        self.parties(await self._getParties());
     };
 
     /**
@@ -200,7 +200,7 @@ export function PartyManagerViewModel() {
         }
     };
 
-    self._handleSubscription = function(node, success) {
+    self._handleSubscription = async (node, success) => {
         if (success) {
             // Ignore if we're already in a party.
             if (self.inAParty()) { return; }
@@ -209,7 +209,7 @@ export function PartyManagerViewModel() {
             self.inAParty(true);
 
             // Reload parties.
-            self.parties(self._getParties());
+            self.parties(await self._getParties());
 
             Notifications.userNotification.successNotification.dispatch(
                 'You have successfully joined ' + self.roomId()
