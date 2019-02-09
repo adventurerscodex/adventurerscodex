@@ -11,14 +11,11 @@ export function EncounterDetailViewModel({ encounter }) {
     self.encounter = encounter;
     self.sections = ko.observableArray([]);
     self.openModal = ko.observable(false);
-    self.sectionTypes = [];
 
     /* Public Methods */
 
     self.load = async () => {
         self.encounter.subscribe(self._dataHasChanged);
-
-        self.sectionTypes = await EncounterSection.ps.list();
         self._dataHasChanged();
     };
 

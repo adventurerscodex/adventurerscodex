@@ -99,10 +99,10 @@ function _ArmorClassService(configuration) {
         }
 
         if (self.equippedArmor()) {
-            if (self.equippedArmor().armorType === Fixtures.armor.constants.types.medium) {
+            if (self.equippedArmor().type === Fixtures.armor.constants.types.medium) {
                 // Medium armor gets dex bonus up to 2
                 score = rawDexBonus >= 2 ? 2 : rawDexBonus;
-            } else if (self.equippedArmor().armorType === Fixtures.armor.constants.types.light) {
+            } else if (self.equippedArmor().type === Fixtures.armor.constants.types.light) {
                 // Light armor gets all the dex bonus
                 score = rawDexBonus;
             } else {
