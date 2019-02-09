@@ -88,6 +88,7 @@ export function StatsViewModel() {
         }
 
         self.deathSaveFailureList(self.deathSaveFailureList().reverse());
+
         // Tell the view to render the list again.
         self.deathSaveFailureList.valueHasMutated();
     };
@@ -108,7 +109,7 @@ export function StatsViewModel() {
         read: function() {
             return self.health() ? self.health().damage() : 0;
         },
-        write: function(value) {
+        write: async function(value) {
             if (self.health().tempHitPoints()) {
                 // Find the damage delta, then apply to temp hit points first.
                 var damageChange = value - self.health().damage();
@@ -118,20 +119,22 @@ export function StatsViewModel() {
                         // New damage value did not eliminate temporary hit points
                         // reduce temporary hit points, and do not apply to damage.
                         self.health().tempHitPoints(remainingTempHP);
-                        self.tempHpDataHasChanged();
+                        await self.tempHpDataHasChanged();
                         return;
                     } else {
                         // remainingTempHP is negative.
                         self.health().tempHitPoints(0);
                         value = self.health().damage() + remainingTempHP;
                         self.health().damage(value);
-                        self.damageDataHasChanged();
+                        await self.damageDataHasChanged();
                         return;
                     }
                 }
             }
+
+            // just update damage if there was no temp hp
             self.health().damage(value);
-            self.damageDataHasChanged();
+            await self.damageDataHasChanged();
         },
         owner: self
     });
@@ -157,7 +160,7 @@ export function StatsViewModel() {
         self.calculateHitDice();
     };
 
-    self.recoverHitDice = () => {
+    self.recoverHitDice = async () => {
         let used = self.hitDice().used();
         if (used - 1 >= 0) {
             self.hitDice().used(used - 1);
@@ -166,7 +169,7 @@ export function StatsViewModel() {
         }
 
         // Save HitDice
-        self.saveHitDice();
+        await self.saveHitDice();
 
         // Calculate HitDiceList
         self.calculateHitDice();
@@ -175,7 +178,7 @@ export function StatsViewModel() {
         Notifications.hitDice.changed.dispatch();
     };
 
-    self.useHitDice = () => {
+    self.useHitDice = async () => {
         let used = self.hitDice().used();
         const level = self.profile().level();
         if (used + 1 <= level) {
@@ -185,7 +188,7 @@ export function StatsViewModel() {
         }
 
         // Save HitDice
-        self.saveHitDice();
+        await self.saveHitDice();
 
         // Calculate HitDiceList
         self.calculateHitDice();
@@ -217,7 +220,7 @@ export function StatsViewModel() {
         self._alertPlayerIsStable();
     };
 
-    self.useDeathSaveSuccess = () => {
+    self.useDeathSaveSuccess = async () => {
         let used = self.deathSaveSuccess().used();
         if (used + 1 <= 3) {
             self.deathSaveSuccess().used(used + 1);
@@ -226,7 +229,7 @@ export function StatsViewModel() {
         }
 
         // Save HitDice
-        self.saveDeathSaveSuccess();
+        await self.saveDeathSaveSuccess();
 
         // Calculate HitDiceList
         self.createDeathSaveSuccessList();
@@ -240,7 +243,7 @@ export function StatsViewModel() {
         self.deathSaveSuccess(response.object);
     };
 
-    self.recoverDeathSaveFailure = () => {
+    self.recoverDeathSaveFailure = async () => {
         let used = self.deathSaveFailure().used();
         if (used - 1 >= 0) {
             self.deathSaveFailure().used(used - 1);
@@ -249,7 +252,7 @@ export function StatsViewModel() {
         }
 
         // Save DeathSave Success
-        self.saveDeathSaveFailure();
+        await self.saveDeathSaveFailure();
 
         // Calculate HitDiceList
         self.createDeathSaveFailureList();
@@ -258,7 +261,7 @@ export function StatsViewModel() {
         self._alertPlayerHasDied();
     };
 
-    self.useDeathSaveFailure = () => {
+    self.useDeathSaveFailure = async () => {
         let used = self.deathSaveFailure().used();
         if (used + 1 <= 3) {
             self.deathSaveFailure().used(used + 1);
@@ -267,7 +270,7 @@ export function StatsViewModel() {
         }
 
         // Save HitDice
-        self.saveDeathSaveFailure();
+        await self.saveDeathSaveFailure();
 
         // Calculate HitDiceList
         self.createDeathSaveFailureList();
@@ -285,16 +288,16 @@ export function StatsViewModel() {
      * Fired when a long rest notification is recieved.
      * Resets health and hit dice.
      */
-    self.resetOnLongRest = function() {
+    self.resetOnLongRest = async () => {
         self.resetHitDice();
         self.health().damage(0);
         self.health().tempHitPoints(0);
-        self.damageDataHasChanged();
+        await self.damageDataHasChanged();
     };
 
-    self.resetDamage = function() {
+    self.resetDamage = async () => {
         self.health().damage(0);
-        self.damageDataHasChanged();
+        await self.damageDataHasChanged();
     };
 
     /**
@@ -304,7 +307,6 @@ export function StatsViewModel() {
      * This will be used primarily for long rest resets.
      */
     self.resetHitDice = async () => {
-        var key = CoreManager.activeCore().uuid();
         var level = self.profile().level();
         var restoredHitDice = Math.floor(level / 2) < 1 ? 1 : Math.floor(level / 2);
 
@@ -326,7 +328,7 @@ export function StatsViewModel() {
     });
 
     // Reset death and success saves when char drops to 0 hp
-    self.resetDeathSaves = () => {
+    self.resetDeathSaves = async () => {
         // We don't want to change 0 -> 0 since it causes unneeded requests.
         const shouldUpdate = (
             // We have loaded.
@@ -342,8 +344,8 @@ export function StatsViewModel() {
         if (shouldUpdate) {
             self.deathSaveFailure().used(0);
             self.deathSaveSuccess().used(0);
-            self.saveDeathSaveFailure();
-            self.saveDeathSaveSuccess();
+            await self.saveDeathSaveFailure();
+            await self.saveDeathSaveSuccess();
             self.createDeathSaveLists();
         }
     };
@@ -396,38 +398,38 @@ export function StatsViewModel() {
         self.modalOpen(true);
     };
 
-    self.modalFinishedClosing = function() {
+    self.modalFinishedClosing = async () => {
         if (self.modalOpen() && self.addFormIsValid()) {
             self.health().importValues(self.editHealthItem().exportValues());
-            self.healthDataHasChange();
-            self.saveHitDice();
+            await self.healthDataHasChange();
+            await self.saveHitDice();
             Notifications.hitDiceType.changed.dispatch();
         }
         self.modalOpen(false);
     };
 
-    // Prepopulate methods
+    // Pre-populate methods
     self.setHitDiceType = function(label, value) {
         self.hitDice().type(value);
     };
 
-    self.healthDataHasChange = function() {
-        self.saveHealth();
+    self.healthDataHasChange = async () => {
+        await self.saveHealth();
         Notifications.health.changed.dispatch();
     };
 
-    self.maxHpDataHasChanged = function() {
-        self.saveHealth();
+    self.maxHpDataHasChanged = async () => {
+        await self.saveHealth();
         Notifications.health.maxHitPoints.changed.dispatch();
     };
 
-    self.damageDataHasChanged = function() {
-        self.saveHealth();
+    self.damageDataHasChanged = async () => {
+        await self.saveHealth();
         Notifications.health.damage.changed.dispatch();
     };
 
-    self.tempHpDataHasChanged = function() {
-        self.saveHealth();
+    self.tempHpDataHasChanged = async () => {
+        await self.saveHealth();
         Notifications.health.tempHitPoints.changed.dispatch();
     };
 
@@ -449,7 +451,6 @@ export function StatsViewModel() {
             Notifications.stats.deathSaves.notFail.changed.dispatch();
             self.deathSaveSuccessVisible(true);
         }
-
     };
 
     self._alertPlayerIsStable = function() {
@@ -465,7 +466,6 @@ export function StatsViewModel() {
             Notifications.stats.deathSaves.notSuccess.changed.dispatch();
             self.deathSaveFailureVisible(true);
         }
-
     };
 }
 
