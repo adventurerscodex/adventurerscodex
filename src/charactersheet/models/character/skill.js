@@ -55,14 +55,14 @@ export class Skill extends KOModel {
         var score = null;
         try {
             var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid: key});
-            score = response.objects.filter((score, i, _) => {
-                return score.name() === this.abilityScore().name();
-            })[0];
+            const response = await AbilityScore.ps.list(
+                {coreUuid: key, name: this.abilityScore().name()}
+            );
+            score = response.objects[0];
         } catch(err) { /*Ignore*/ }
 
-        if (score === null) {
-            return null;
+        if (!score) {
+            return 0;
         } else {
             return score.getModifier();
         }
@@ -71,11 +71,12 @@ export class Skill extends KOModel {
     bonus = async () => {
         var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
         const abilityScore = await this.abilityScoreModifier();
+
         if (this.proficiency()) {
-            bonus += this.proficiencyScore() + abilityScore;
-        } else if (abilityScore) {
-            bonus += abilityScore;
+            bonus += this.proficiencyScore();
         }
+
+        bonus += abilityScore;
 
         return bonus;
     };
