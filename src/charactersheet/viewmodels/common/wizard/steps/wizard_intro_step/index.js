@@ -1,7 +1,6 @@
 import 'bin/knockout-file-bind';
 import $ from 'jquery';
 import { Character } from 'charactersheet/models';
-import { Settings } from 'charactersheet/settings';
 import ko from 'knockout';
 import logo from 'images/logo-all-icons.png';
 import template from './index.html';
@@ -53,6 +52,7 @@ export function WizardIntroStepViewModel(params) {
     self.fromRemoteFile = ko.observable();
     self.dropboxCharacterData = null;
     self.ticketNumber = ko.observable(null);
+    self.isDataImporting = ko.observable(false);
 
     // View Model Methods
 
@@ -87,6 +87,7 @@ export function WizardIntroStepViewModel(params) {
     });
 
     self.importFromFile = function () {
+        self.isDataImporting(true);
         let fileData;
         // parse the file data from either remote or local source
         if (!self.fromRemoteFile()) {
@@ -113,6 +114,7 @@ export function WizardIntroStepViewModel(params) {
             const key = characterResponse.responseJSON.results[0];
             self._setImportReady(key);
         }
+        self.isDataImporting(false);
     };
 
     self.checkResponseForErrors = (response) => {
@@ -124,7 +126,9 @@ export function WizardIntroStepViewModel(params) {
     };
 
     self.disableImportButton = ko.pureComputed(function () {
-        if (self.fileContents() || self.fromRemoteFile()) {
+        if (self.isDataImporting()) {
+            return true;
+        } else if (self.fileContents() || self.fromRemoteFile()) {
             return false;
         }
         return true;
