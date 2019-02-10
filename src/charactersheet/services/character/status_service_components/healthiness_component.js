@@ -18,8 +18,8 @@ export function HealthinessStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Healthiness';
-    self.HEALTH_WEIGHT = 0.70;
-    self.HIT_DICE_WEIGHT = 0.30;
+    self.HEALTH_WEIGHT = 0.85;
+    self.HIT_DICE_WEIGHT = 0.15;
 
     self.init = function() {
         Notifications.health.changed.add(self.dataHasChanged);
@@ -177,7 +177,7 @@ export function HealthinessStatusServiceComponent() {
      * @return StatusWeightPair
      */
     self.prepareHitDiceValueWeightPairs = function(hitDice, profile) {
-        var value = hitDice.used() / profile.level();
+        var value = (profile.level() - hitDice.used()) / profile.level();
 
         return new StatusWeightPair(value, self.HIT_DICE_WEIGHT);
     };
