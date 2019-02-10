@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { AuthenticationToken } from './authentication_token';
 import { Campaign } from '../dm/campaign';
 import Dropbox from 'dropbox';
+import { Fixtures } from '../../utilities/fixtures';
 import { Migrations } from 'charactersheet/utilities/migrations';
 import { Notifications } from 'charactersheet/utilities/notifications';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -171,7 +172,12 @@ Character.importCharacter = function (data) {
     });
 
     // massage data to request format
-    var tables = JSON.parse(importedData.__master__);
+    let tables;
+    if (importedData.__master__) {
+        tables = JSON.parse(importedData.__master__);
+    } else {
+        tables = Fixtures.import.masterTable;
+    }
     let parsedData = {};
     for (var i = 0; i < tables.length; i++) {
         var tableName = tables[i];
