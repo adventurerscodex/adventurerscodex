@@ -45,24 +45,26 @@ export function SkillsViewModel() {
         const response = await Skill.ps.list({coreUuid: key});
         self.skills(response.objects);
 
-        // Fetch Ability Scores
-        const abilitScoresResponse = await AbilityScore.ps.list({coreUuid: key});
-        self.abilityScores(abilitScoresResponse.objects);
-
-        //Subscriptions
+        // Subscriptions
         Notifications.abilityScores.changed.add(self.updateValues);
-        Notifications.otherStats.proficiency.changed.add(self.updateValues);
-        self.skills().forEach(function(e, i, _) {
-            e.updateBonuses();
-            if (e.name() === 'Perception') {
-                e.bonusLabel.subscribe(self.perceptionHasChanged);
+        Notifications.proficiencyBonus.changed.add(self.updateValues);
+
+        // initial skills setup
+        self.skills().forEach(function(skill) {
+            // calculate skill mod and passives
+            skill.updateBonuses();
+
+            // send signal when perception has changed (for party dashboard)
+            if (skill.name() === 'Perception') {
+                skill.bonusLabel.subscribe(self.perceptionHasChanged);
             }
         });
     };
 
+    // loops through all the skills to calculate bonuses
     self.updateValues = () => {
-        self.skills().forEach(function(e, i, _) {
-            e.updateBonuses();
+        self.skills().forEach(function(skill) {
+            skill.updateBonuses();
         });
     };
 
