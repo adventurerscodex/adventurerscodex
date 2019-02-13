@@ -31,11 +31,11 @@ export class Core extends KOModel {
             }
 
             if (this.profileImage().type() == 'email') {
-                return Utility.string.getGravatarUrl(this.profileImage().url());
+                return this.profileImage().url();
             }
         }
 
-        return 'https://www.gravatar.com/avatar/{}?d=mm';
+        return Utility.GRAVATAR_BASE_URL;
     });
 }
 

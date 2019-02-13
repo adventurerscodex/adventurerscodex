@@ -70,15 +70,15 @@ Utility.string.createDirectDropboxLink = function(link) {
     if (link) {
         return link ? link.replace('www.dropbox.com', 'dl.dropboxusercontent.com') : '';
     }
-    return this.GRAVATAR_BASE_URL;
+    return Utility.GRAVATAR_BASE_URL;
 };
 
 Utility.string.getGravatarUrl = (email) => {
     try {
         var hash = md5(email.trim());
-        return this.GRAVATAR_BASE_URL.replace('{}', hash);
+        return Utility.GRAVATAR_BASE_URL.replace('{}', hash);
     } catch(err) {
-        return this.GRAVATAR_BASE_URL;
+        return Utility.GRAVATAR_BASE_URL;
     }
 };
 
