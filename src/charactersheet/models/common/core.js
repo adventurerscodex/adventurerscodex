@@ -1,4 +1,5 @@
 import { KOModel } from 'hypnos';
+import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -21,6 +22,20 @@ export class Core extends KOModel {
 
     summary = ko.pureComputed(() => {
         return `${this.playerName()}: a ${this.type.description()}.`;
+    });
+
+    displayImage = ko.pureComputed(() => {
+        if (this.profileImage().url()) {
+            if (this.profileImage().type() == 'url') {
+                return Utility.string.createDirectDropboxLink(this.profileImage().url());
+            }
+
+            if (this.profileImage().type() == 'email') {
+                return Utility.string.getGravatarUrl(this.profileImage().url());
+            }
+        }
+
+        return 'https://www.gravatar.com/avatar/{}?d=mm';
     });
 }
 

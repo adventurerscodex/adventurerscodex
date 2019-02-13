@@ -17,7 +17,8 @@ export var Utility = {
     string: {},
     array: {},
     oauth: {},
-    jid: {}
+    jid: {},
+    GRAVATAR_BASE_URL: 'https://www.gravatar.com/avatar/{}?d=mm'
 };
 
 /* Markdown */
@@ -66,7 +67,19 @@ Utility.string.truncateStringAtLength = function(value, truncateAt) {
  * @return direct link to dropbox image
  */
 Utility.string.createDirectDropboxLink = function(link) {
-    return link ? link.replace('www.dropbox.com', 'dl.dropboxusercontent.com') : '';
+    if (link) {
+        return link ? link.replace('www.dropbox.com', 'dl.dropboxusercontent.com') : '';
+    }
+    return this.GRAVATAR_BASE_URL;
+};
+
+Utility.string.getGravatarUrl = (email) => {
+    try {
+        var hash = md5(email.trim());
+        return this.GRAVATAR_BASE_URL.replace('{}', hash);
+    } catch(err) {
+        return this.GRAVATAR_BASE_URL;
+    }
 };
 
 /**

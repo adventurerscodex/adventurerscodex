@@ -25,6 +25,7 @@ export function PlayerImageViewModel() {
     self.imageUrl = ko.observable('');
     self.email = ko.observable('');
     self.playerImage = ko.observable();
+    self.dataIsChanging = ko.observable(false);
 
     self.defaultImages = ko.observableArray(Fixtures.defaultProfilePictures);
     self.GRAVATAR_BASE_URL = 'https://www.gravatar.com/avatar/{}?d=mm';
@@ -63,6 +64,7 @@ export function PlayerImageViewModel() {
 
         const imageResponse = await ProfileImage.ps.read({uuid: key});
         const image = imageResponse.object;
+        self.dataIsChanging(true);
         if (image) {
             self.imageSource(image.type() != null ? image.type() : 'picker');
             self.imageUrl(image.sourceUrl());
@@ -71,6 +73,7 @@ export function PlayerImageViewModel() {
         } else {
             self.imageSource('picker');
         }
+        self.dataIsChanging(false);
 
         // update inspiration glow
         self.inspirationHasChanged();
@@ -117,9 +120,13 @@ export function PlayerImageViewModel() {
     };
 
     self.imageBorderClass = ko.pureComputed(function() {
-        var border = self.playerImageSrc().length ? 'no-border' : 'dashed-border';
-        var inspired = self.inspiredGlowClass();
-        return border + ' ' + inspired;
+        if (!self.dataIsChanging()) {
+            var border = self.playerImageSrc().length ? 'no-border' : 'dashed-border';
+            var inspired = self.inspiredGlowClass();
+            return border + ' ' + inspired;
+        } else {
+            return 'dashed-border';
+        }
     });
 
     // Status Indicator Methods
@@ -141,16 +148,18 @@ export function PlayerImageViewModel() {
     //Player Image Handlers
 
     self.playerImageSrc = ko.pureComputed(function() {
-        if (self.imageSource() == 'url') {
-            return Utility.string.createDirectDropboxLink(self.imageUrl());
-        }
+        if (!self.dataIsChanging()) {
+            if (self.imageSource() == 'url') {
+                return Utility.string.createDirectDropboxLink(self.imageUrl());
+            }
 
-        if (self.imageSource() == 'picker') {
-            return self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
-        }
+            if (self.imageSource() == 'picker') {
+                return self.selectedDefaultImages()[0] ? self.selectedDefaultImages()[0].image : '';
+            }
 
-        if (self.imageSource() == 'email' && self.email()) {
-            return self.getGravatarUrl();
+            if (self.imageSource() == 'email' && self.email()) {
+                return self.getGravatarUrl();
+            }
         }
 
         return '';

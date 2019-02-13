@@ -19,7 +19,7 @@
             <a href="#" class="list-group-item" data-bind="css: $parent.playerSelectedCSS($data)">
               <div class="row">
                 <div class="col-xs-3 col-sm-2" data-bind="click: $parent.changeCore">
-                  <img data-bind="attr: { src: profileImage }" class="img img-circle" width="60"
+                  <img data-bind="attr: { src: displayImage }" class="img img-circle" width="60"
                     height="60" style="margin-top: 7px;" />
                 </div>
                 <div class="col-xs-7 col-sm-8" style="padding-top: 5px" data-bind="click: $parent.changeCore">
@@ -42,9 +42,9 @@
             <div class="collapse" data-bind="well: { open: $parent.deleteCollapse[uuid()] }">
               <div class="well no-bottom-margin well-top-shadow text-center">
                 Are you sure you want to delete this Character or Campaign?
-                <center>
+                <div style="text-align: center">
                   <i class="text-danger text-center">This action cannot be undone.</i>
-                </center>
+                </div>
                 <div class="row text-right">
                   <button type="button"
                     class="btn btn-sm btn-danger"
