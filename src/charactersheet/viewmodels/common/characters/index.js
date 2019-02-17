@@ -81,6 +81,11 @@ export function CharactersViewModel(params) {
         self.deleteCollapse[uuid()](value);
     };
 
+    self.closeDeleteWell = ({uuid}) => {
+        // Close the one we need.
+        self.deleteCollapse[uuid()](false);
+    };
+
     self.modalFinishedClosing = () => {
         if (self.cores().length === 0) {
             Notifications.characters.allRemoved.dispatch();
