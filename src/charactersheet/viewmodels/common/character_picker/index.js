@@ -11,7 +11,6 @@ import template from './index.html';
 export function CorePickerViewModel(params) {
     var self = this;
 
-    self.totalLocalStorage = 5; //MB
     self.logo = logo;
     self.isLoggedIn = ko.observable(false);
     self.cores = ko.observableArray([]);
@@ -68,6 +67,11 @@ export function CorePickerViewModel(params) {
 
         // Open the one we need.
         self.deleteCollapse[uuid()](true);
+    };
+
+    self.closeDeleteWell = ({uuid}) => {
+        // Close the one we need.
+        self.deleteCollapse[uuid()](false);
     };
 }
 
