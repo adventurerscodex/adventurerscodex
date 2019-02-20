@@ -164,7 +164,7 @@ export var CharacterCardFields = [
             const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
             const profile = profileResponse.object;
             if (!hitDice || !profile) { return; }
-            return hitDice.used() + '/' + profile.level();
+            return (profile.level() - hitDice.used()) + '/' + profile.level();
         }
     }, {
         name: 'passivePerception',

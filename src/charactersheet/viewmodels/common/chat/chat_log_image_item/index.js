@@ -1,8 +1,6 @@
 import {
     CharacterCardPublishingService,
-    DMCardPublishingService,
-    KeyValuePredicate,
-    XMPPService
+    DMCardPublishingService
 } from 'charactersheet/services/common';
 import {
     CoreManager,
