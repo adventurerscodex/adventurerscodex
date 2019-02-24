@@ -34,42 +34,10 @@ module.exports = merge(common, {
                 NODE_ENV: JSON.stringify('production')
             },
             /**
-             * The string representation of the environment name.
-             */
-            'ENVIRONMENT': JSON.stringify('prod'),
-            /**
              * Application's version number.
              * Used to determine which migration scripts to run.
              */
             'VERSION': JSON.stringify(package_.version),
-            /**
-             * The App's Client ID for the API.
-             */
-            'CLIENT_ID': JSON.stringify('5vkLTV59I383qojsDTAlgYWuM0uuCfHTf9G0HAeD'),
-            /**
-             * The URL of the host application.
-             */
-            'HOST_URL': JSON.stringify('https://app.adventurerscodex.com/charactersheet/'),
-            /**
-             * The URL of the homepage.
-             */
-            'HOME_URL': JSON.stringify('https://app.adventurerscodex.com'),
-            /**
-             * The URL to the login page.
-             */
-            'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
-            /**
-             * The HOST URL of the pubsub services.
-             */
-            'PUBSUB_HOST_JID': JSON.stringify('pubsub.adventurerscodex.com'),
-            /**
-             * The MUC Service URL.
-             */
-            'MUC_SERVICE': JSON.stringify('chat.adventurerscodex.com'),
-            /**
-             * The connection URL for the XMPP service.
-             */
-            'XMPP_WS_URL': JSON.stringify('wss://adventurerscodex.com/chat/'),
             /**
              * Date and time the build was created
              */
@@ -77,7 +45,42 @@ module.exports = merge(common, {
             /**
              * Current year in yyyy format.
              */
-            'CURRENT_YEAR': JSON.stringify(new Date().getFullYear())
+            'CURRENT_YEAR': JSON.stringify((new Date()).getFullYear()),
+
+            // Read from Environment
+
+            /**
+             * The string representation of the environment name.
+             */
+            'ENVIRONMENT': process.env.ENVIRONMENT,
+            /**
+             * The App's Client ID for the API.
+             */
+            'CLIENT_ID': process.env.CLIENT_ID,
+            /**
+             * The URL of the host application.
+             */
+            'HOST_URL': process.env.HOST_URL,
+            /**
+             * The URL of the homepage.
+             */
+            'HOME_URL': process.env.HOME_URL,
+            /**
+             * The URL to the login page.
+             */
+            'LOGIN_URL': process.env.LOGIN_URL,
+            /**
+             * The HOST URL of the pubsub services.
+             */
+            'PUBSUB_HOST_JID': process.env.PUBSUB_HOST_JID,
+            /**
+             * The MUC Service URL.
+             */
+            'MUC_SERVICE': process.env.MUC_SERVICE,
+            /**
+             * The connection URL for the XMPP service.
+             */
+            'XMPP_WS_URL': process.env.XMPP_WS_URL
         })
     ]
 });
