@@ -26,7 +26,6 @@
     "test": "cross-env NODE_ENV=test jest --config=jest.json --coverage",
     "lint": "eslint src/charactersheet/ test/",
     "build": "cross-env BABEL_ENV=production webpack --config webpack.prod.js",
-    "build:test": "webpack --config webpack.test.js",
     "start": "webpack-dev-server --no-inline --config webpack.dev.js"
   },
   "dependencies": {
