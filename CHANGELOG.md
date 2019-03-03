@@ -1,3 +1,11 @@
+version 2.0.0 (03/2/2019)
+* Adds support for cloud syncing
+  * Characters and campaigns are now synced between devices for a user's account
+  * Adds validation to all fields
+* Various fixes and enhancements
+* Various UI changes in modules with no modals + chat UI changes.
+* Stability enhancements
+
 version 1.6.2 (02/27/2018)
 * Adds selenium testing compatibility.
 * Fixes dropbox profile pictures not rendering in chat section.
