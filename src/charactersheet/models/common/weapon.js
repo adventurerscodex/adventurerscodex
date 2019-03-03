@@ -216,6 +216,14 @@ export class Weapon extends KOModel {
             values.weight = 0;
         }
 
+        if (values.magicalModifier === '') {
+            values.magicalModifier = 0;
+        }
+
+        if (values.toHitModifier === '') {
+            values.toHitModifier = 0;
+        }
+
         return values;
     }
 }
