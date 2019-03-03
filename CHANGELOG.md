@@ -1,3 +1,8 @@
+version 2.0.1 (03/3/2019)
+* Updates skills to support addition of new skills
+* Fixes typo in DM screen
+* Adds required marker to Armor stealth field
+
 version 2.0.0 (03/2/2019)
 * Adds support for cloud syncing
   * Characters and campaigns are now synced between devices for a user's account
