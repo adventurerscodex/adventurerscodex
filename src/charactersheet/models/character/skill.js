@@ -29,9 +29,15 @@ export class Skill extends KOModel {
             values.abilityScore = abilityScoreId;
         }
 
+        // assign default values if they are somehow not provided by service code
         if (values.modifier === '') {
             values.modifier = 0;
         }
+
+        if (values.proficiency === '') {
+            values.proficiency = 'not';
+        }
+
         return values;
     }
 

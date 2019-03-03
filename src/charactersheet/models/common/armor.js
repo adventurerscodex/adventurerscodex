@@ -94,6 +94,10 @@ export class Armor extends KOModel {
             values.weight = 0;
         }
 
+        if (values.magicalModifier === '') {
+            values.magicalModifier = 0;
+        }
+
         return values;
     }
 }
