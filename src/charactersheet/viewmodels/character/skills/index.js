@@ -45,6 +45,10 @@ export function SkillsViewModel() {
         const response = await Skill.ps.list({coreUuid: key});
         self.skills(response.objects);
 
+        // Fetch the ability scores
+        const abilityScoreResponse = await AbilityScore.ps.list({coreUuid: key});
+        self.abilityScores(abilityScoreResponse.objects);
+
         // Subscriptions
         Notifications.abilityScores.changed.add(self.updateValues);
         Notifications.proficiencyBonus.changed.add(self.updateValues);
