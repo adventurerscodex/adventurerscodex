@@ -104,8 +104,7 @@ Spell.validationConstraints = {
             maxlength: 128
         },
         damageType: {
-            maxlength: 128,
-            required: true
+            maxlength: 128
         },
         school: {
             maxlength: 128,
