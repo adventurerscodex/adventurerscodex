@@ -62,8 +62,12 @@ function _AuthenticationService(config) {
     // Private Methods
 
     self._doAuthCheck = function(accessToken) {
-        Utility.oauth.getJSON(self.validationUrl, self._handleValidationSuccess,
-            self._handleValidationFailure, accessToken);
+        Utility.oauth.getJSON(
+            self.validationUrl,
+            self._handleValidationSuccess,
+            self._handleValidationFailure,
+            accessToken
+        );
     };
 
     self._handleValidationSuccess = function(data, status) {
@@ -88,31 +92,33 @@ function _AuthenticationService(config) {
 
     self._handleValidationFailure = function(request, status) {
         var token = PersistenceService.findAll(AuthenticationToken)[0];
-        if (self._tokenOrigin == self.TOKEN_ORIGINS.FRAGMENT) {
-            // Retry with local token.
-            self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL;
-            if (token) {
-                self._doAuthCheck(token.accessToken());
-            }
-        } else {
+        if (!self._tokenOrigin === self.TOKEN_ORIGINS.FRAGMENT) {
             // All tokens are invalid and should be removed.
             if (token) {
                 token.delete();
             }
             // Redirect to login
             self._goToLogin();
+            return;
         }
 
-        // Alert the user of the error.
-        var message = request.responseJSON.detail || 'An error has occurred.';
-        Notifications.userNotification.warningNotification.dispatch(message, null, {
-            timeOut: 0,
-            extendedTimeOut: 0
-        });
+        // Retry with local token.
+        self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL;
+        if (token) {
+            self._doAuthCheck(token.accessToken());
+            return;
+        }
+
+        // The user might not have registered or otherwise cannot access the app.
+        self._goToAccount();
     };
 
     self._goToLogin = () => {
         window.location = LOGIN_URL.replace('{CLIENT_ID}', CLIENT_ID);
+    };
+
+    self._goToAccount = () => {
+        window.location = ACCOUNT_URL;
     };
 
     self._remove_info_and_set_new_url = () => {
