@@ -91,7 +91,7 @@ function _AuthenticationService(config) {
     };
 
     self._handleValidationFailure = function(request, status) {
-         if (request.status === 401) {
+        if (request.status === 401) {
             // We got a 401 so the token is probably invalid.
             self._goToLogin();
         } else if (request.status === 403) {

@@ -1,4 +1,3 @@
-
 export { CharacterCardPublishingService } from './sync/card_service.js';
 export { DMCardPublishingService } from './sync/card_service.js';
 export { HotkeysService } from './hotkeys_service.js';
