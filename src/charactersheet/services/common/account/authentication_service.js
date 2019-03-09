@@ -91,14 +91,12 @@ function _AuthenticationService(config) {
     };
 
     self._handleValidationFailure = function(request, status) {
-        if (request.status === 401) {
-            // We got a 401 so the token is probably invalid.
-            self._goToLogin();
-        } else if (request.status === 403) {
+        if (request.status === 403) {
             // The user hasn't registered their account.
             self._goToAccount();
         } else {
-            throw Error("Unknown authentication failure");
+            // We probably got a 401 so the token is probably invalid.
+            self._goToLogin();
         }
     };
 
