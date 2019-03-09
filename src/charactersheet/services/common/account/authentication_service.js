@@ -91,26 +91,15 @@ function _AuthenticationService(config) {
     };
 
     self._handleValidationFailure = function(request, status) {
-        var token = PersistenceService.findAll(AuthenticationToken)[0];
-        if (!self._tokenOrigin === self.TOKEN_ORIGINS.FRAGMENT) {
-            // All tokens are invalid and should be removed.
-            if (token) {
-                token.delete();
-            }
-            // Redirect to login
+         if (request.status === 401) {
+            // We got a 401 so the token is probably invalid.
             self._goToLogin();
-            return;
+        } else if (request.status === 403) {
+            // The user hasn't registered their account.
+            self._goToAccount();
+        } else {
+            throw Error("Unknown authentication failure");
         }
-
-        // Retry with local token.
-        self._tokenOrigin = self.TOKEN_ORIGINS.LOCAL;
-        if (token) {
-            self._doAuthCheck(token.accessToken());
-            return;
-        }
-
-        // The user might not have registered or otherwise cannot access the app.
-        self._goToAccount();
     };
 
     self._goToLogin = () => {
