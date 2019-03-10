@@ -66,6 +66,10 @@ module.exports = merge(common, {
              */
             'HOME_URL': process.env.HOME_URL,
             /**
+             * The URL of the user's account profile.
+             */
+            'ACCOUNT_URL': process.env.ACCOUNT_URL,
+            /**
              * The URL to the login page.
              */
             'LOGIN_URL': process.env.LOGIN_URL,

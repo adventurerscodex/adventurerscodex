@@ -43,6 +43,10 @@ module.exports = merge(common, {
              */
             'HOME_URL': JSON.stringify('/'),
             /**
+             * The URL of the user's account profile.
+             */
+            'ACCOUNT_URL': JSON.stringify('/accounts/profile/'),
+            /**
              * The URL to the login page.
              */
             'LOGIN_URL': JSON.stringify('/api/o/authorize?client_id={CLIENT_ID}&response_type=token'),
