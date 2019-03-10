@@ -1,3 +1,7 @@
+version 2.0.2 (03/9/2019)
+* Updates spells to not require damage type
+* Adds banner to account page to help remind users to register their account
+
 version 2.0.1 (03/3/2019)
 * Updates skills to support addition of new skills
 * Fixes typo in DM screen
