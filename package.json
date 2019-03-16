@@ -48,8 +48,6 @@
     "css-loader": "^0.28.11",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^2.0.0",
-    "font-awesome": "^4.7.0",
-    "font-awesome-webpack": "0.0.5-beta.2",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "hypnos": "git+https://github.com/adventurerscodex/hypnos.git#v0.1.1",
