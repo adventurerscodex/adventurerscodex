@@ -6,6 +6,7 @@ import ko from 'knockout';
  */
 export class Campaign extends KOModel {
     static __skeys__ = ['core', 'dms', 'campaign'];
+    static __dependents__ = ['Core'];
 
     static mapping = {
         include: ['coreUuid']

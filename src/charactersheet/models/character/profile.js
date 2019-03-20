@@ -4,6 +4,7 @@ import ko from 'knockout';
 
 export class Profile extends KOModel {
     static __skeys__ = ['core', 'characters', 'profile'];
+    static __dependents__ = ['Core'];
 
     static mapping = {
         ignore: ['url']

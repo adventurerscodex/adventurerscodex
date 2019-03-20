@@ -1,20 +1,22 @@
 <div class="row">
-    <!-- ko if: playerType() == 'character' -->
-    <div class="col-md-12 text-center-xs text-left-sm">
+  <!-- ko if: playerType() == 'character' -->
+  <div class="col-md-12 text-center-xs text-left-sm">
     <div class="h3" id="characterNameLabel" autocomplete="off" autocorrect="off"
         spellcheck="false" data-bind="contenteditable: {
         text: name,
         placeholder: placeholderText
-    }"></div>
+    }">
     </div>
-    <!-- /ko -->
-    <!-- ko if: playerType() == 'dm' -->
-    <div class="col-md-12 text-center-xs text-left-sm">
+  </div>
+  <!-- /ko -->
+  <!-- ko if: playerType() == 'dm' -->
+  <div class="col-md-12 text-center-xs text-left-sm">
     <div class="h3" id="dmName" autocomplete="off" autocorrect="off"
         spellcheck="false" data-bind="contenteditable: {
         text: name,
         placeholder: placeholderText
-    }"></div>
+    }">
     </div>
-    <!-- /ko -->
+  </div>
+  <!-- /ko -->
 </div>
