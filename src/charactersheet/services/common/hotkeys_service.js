@@ -7,7 +7,7 @@ export var HotkeysService = {
     hotkeyHandler : function(data, event) {
         var keypressIsInBody = event.target.tagName.toLowerCase() !== 'input' &&
             event.target.tagName.toLowerCase() !== 'textarea' &&
-            event.target.id !== 'characterName' && event.target.id !== 'dmName';
+            event.target.id !== 'characterNameLabel' && event.target.id !== 'dmName';
         if (keypressIsInBody) {
             var metaKey = HotkeysService._determineMetakey(event);
 
