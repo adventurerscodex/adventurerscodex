@@ -4,7 +4,6 @@ import ko from 'knockout';
 
 
 export class Core extends KOModel {
-
     static __skeys__ = ['core'];
 
     static mapping = {
