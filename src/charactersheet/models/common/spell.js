@@ -96,6 +96,10 @@ Spell.validationConstraints = {
             required: true,
             maxlength: 256
         },
+        type: {
+            required: true,
+            maxlength: 128
+        },
         spellSaveAttribute: {
             maxlength: 3,
             required: true
