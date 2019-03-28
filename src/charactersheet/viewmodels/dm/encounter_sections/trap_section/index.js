@@ -5,8 +5,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { Trap } from 'charactersheet/models/dm';
 import { SortService } from 'charactersheet/services/common';
+import { Trap } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/tripwire.svg';
 import template from './index.html';

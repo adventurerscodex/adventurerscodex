@@ -25,7 +25,7 @@ export class Trap extends KOModel {
             'activeElements',
             'dynamicElements',
             'constantElements',
-            'isActive',
+            'isActive'
         ]
     };
 
@@ -108,7 +108,7 @@ export class Trap extends KOModel {
                 || this.activeElements()
                 || this.dynamicElements()
                 || this.constantElements()) {
-                    return 'collapse in';
+                return 'collapse in';
             } else {
                 return 'collapse';
             }
