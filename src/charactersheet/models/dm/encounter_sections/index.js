@@ -10,4 +10,5 @@ export { EncounterNote } from './note';
 export { NPC } from './npc';
 export { PlayerText } from './player_text';
 export { PointOfInterest } from './point_of_interest';
+export { Trap } from './trap';
 export { Treasure } from './treasure';

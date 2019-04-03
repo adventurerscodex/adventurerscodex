@@ -5,8 +5,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { Trap } from 'charactersheet/models/dm';
 import { SortService } from 'charactersheet/services/common';
+import { Trap } from 'charactersheet/models/dm';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/tripwire.svg';
 import template from './index.html';
@@ -40,10 +40,14 @@ export function TrapSectionViewModel(params) {
     self.firstElementInModalHasFocus = ko.observable(false);
 
     self.sorts = {
+        'isActive asc': { field: 'isActive', direction: 'asc' },
+        'isActive desc': { field: 'isActive', direction: 'desc' },
         'name asc': { field: 'name', direction: 'asc' },
         'name desc': { field: 'name', direction: 'desc' },
-        'description asc': { field: 'description', direction: 'asc' },
-        'description desc': { field: 'description', direction: 'desc' }
+        'trigger asc': { field: 'trigger', direction: 'asc' },
+        'trigger desc': { field: 'trigger', direction: 'desc' },
+        'effect asc': { field: 'effect', direction: 'asc' },
+        'effect desc': { field: 'effect', direction: 'desc' }
     };
 
     self.filter = ko.observable('');
@@ -66,8 +70,8 @@ export function TrapSectionViewModel(params) {
     /**
      * Filters and sorts the POIs for presentation in a table.
      */
-    self.filteredAndSortedTrap = ko.computed(() => {
-        return SortService.sortAndFilter(self.trapntsOfInterest(), self.sort(), null);
+    self.filteredAndSortedTraps = ko.computed(() => {
+        return SortService.sortAndFilter(self.traps(), self.sort(), null);
     });
 
     /**
@@ -112,11 +116,11 @@ export function TrapSectionViewModel(params) {
     /* Add Modal Methods */
 
     self.toggleAddModal = () => {
-        self.addModalOpen(!self.addModalOpen());
+        self.addModalIsOpen(!self.addModalIsOpen());
     };
 
     self.addModalFinishedClosing = () => {
-        self.addModalOpen(false);
+        self.addModalIsOpen(false);
 
         // Let the validator reset the validation in the form.
         $(self._addForm()).validate().resetForm();
@@ -183,11 +187,7 @@ export function TrapSectionViewModel(params) {
 
         if (self.viewEditModalIsOpen()) {
             const { object: trap } = await self.currentEditItem().ps.save();
-            Utility.array.updateElement(
-                self.trapntsOfInterest(),
-                trap,
-                self.editItemIndex
-            );
+            Utility.array.updateElement(self.traps(), trap, self.editItemIndex);
         }
 
         self.viewEditModalIsOpen(false);
@@ -200,8 +200,8 @@ export function TrapSectionViewModel(params) {
             return;
         }
 
-        const { uuid } = CoreManager.activeCore();
-        const { objects: traps } = await Trap.ps.list({ uuid, encounterUuid: self.encounterId() });
+        var coreUuid = CoreManager.activeCore().uuid();
+        const { objects: traps } = await Trap.ps.list({ coreUuid, encounterUuid: self.encounterId() });
         self.traps(traps);
 
         const {
