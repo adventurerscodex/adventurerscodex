@@ -95,6 +95,7 @@ export function TrapSectionViewModel(params) {
         trap.encounterUuid(self.encounterId());
 
         const { object } = await trap.ps.create();
+        object.isActive.subscribe(self.save, object);
         self.traps.push(object);
 
         self.toggleAddModal();
@@ -204,6 +205,10 @@ export function TrapSectionViewModel(params) {
         const { objects: traps } = await Trap.ps.list({ coreUuid, encounterUuid: self.encounterId() });
         self.traps(traps);
 
+        self.traps().forEach((trap) => {
+            trap.isActive.subscribe(self.save, trap);
+        });
+
         const {
             name,
             visible,
@@ -213,6 +218,12 @@ export function TrapSectionViewModel(params) {
         self.name(name());
         self.visible(visible());
         self.tagline(tagline());
+    };
+
+    self.save = async function() {
+        if (this.ps) {
+            await this.ps.save();
+        }
     };
 }
 
