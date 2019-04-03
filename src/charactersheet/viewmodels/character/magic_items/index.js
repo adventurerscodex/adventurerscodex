@@ -59,19 +59,16 @@ export function MagicItemsViewModel() {
     });
 
     self.totalMagicItemWeight = ko.pureComputed(function() {
-        var weightTotal = 0;
-        var itemLength = self.magicItems().length;
-        if (itemLength > 0) {
-            for (var i = 0; i < itemLength; i++) {
-                weightTotal += self.magicItems()[i].weight() ?
-                    parseFloat(self.magicItems()[i].weight()) :
-                    0;
-            }
-            return weightTotal + ' (lbs)';
-        }
-        else {
+        if (self.magicItems().length === 0) {
             return '0 (lbs)';
         }
+
+        const weightTotal = self.magicItems().map(
+            item => item.weight()
+        ).reduce(
+            (a, b) => a + b
+        );
+        return `~${Math.round(weightTotal)} (lbs)`;
     });
 
     self.determineMagicItemIcon = ko.computed(function() {

@@ -65,13 +65,16 @@ export function WeaponsViewModel() {
     };
 
     self.totalWeight = ko.pureComputed(() => {
-        var weight = 0;
-        if (self.weapons().length > 0) {
-            self.weapons().forEach(function(e, i, _) {
-                weight += e.weight() ? parseInt(e.weight()) : 0;
-            });
+        if (self.weapons().length === 0) {
+            return '0 (lbs)';
         }
-        return weight + ' (lbs)';
+
+        const weightTotal = self.weapons().map(
+            weapon => weapon.weight()
+        ).reduce(
+            (a, b) => a + b
+        );
+        return `~${Math.round(weightTotal)} (lbs)`;
     });
 
     /* UI Methods */

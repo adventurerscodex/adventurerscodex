@@ -59,13 +59,16 @@ export function ArmorViewModel() {
     };
 
     self.totalWeight = ko.pureComputed(function() {
-        var weight = 0;
-        if(self.armors().length > 0) {
-            self.armors().forEach(function(armor, idx, _) {
-                weight += armor.weight() ? parseInt(armor.weight()) : 0;
-            });
+        if (self.armors().length === 0) {
+            return '0 (lbs)';
         }
-        return weight + ' (lbs)';
+
+        const weightTotal = self.armors().map(
+            armor => armor.weight()
+        ).reduce(
+            (a, b) => a + b
+        );
+        return `~${Math.round(weightTotal)} (lbs)`;
     });
 
     self.equipArmorHandler = async (selectedItem, index) => {
@@ -89,6 +92,7 @@ export function ArmorViewModel() {
     };
 
     // Pre-populate methods
+
     self.setArmorType = function(label, value) {
         self.blankArmor().type(value);
     };
@@ -102,6 +106,7 @@ export function ArmorViewModel() {
     };
 
     /* Modal Methods */
+
     self.armorsPrePopFilter = function(request, response) {
         var term = request.term.toLowerCase();
         var keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
