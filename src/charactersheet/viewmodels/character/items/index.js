@@ -44,18 +44,17 @@ export function ItemsViewModel() {
     self._addForm = ko.observable();
     self._editForm = ko.observable();
 
-    self.totalItemWeight = ko.pureComputed(function() {
-        var weightTotal = 0;
-        var eqpLen = self.items().length;
-        if (eqpLen > 0) {
-            for (var i = 0; i < eqpLen; i++) {
-                weightTotal += self.items()[i].totalWeight();
-            }
-            return weightTotal + ' (lbs)';
-        }
-        else {
+    self.totalItemWeight = ko.pureComputed(() => {
+        if (self.items().length === 0) {
             return '0 (lbs)';
         }
+
+        const weightTotal = self.items().map(
+            item => item.totalWeight()
+        ).reduce(
+            (a, b) => a + b
+        );
+        return `~${Math.round(weightTotal)} (lbs)`;
     });
 
     //Responders
