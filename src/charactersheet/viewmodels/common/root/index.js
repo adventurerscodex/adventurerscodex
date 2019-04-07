@@ -58,6 +58,7 @@ export function AdventurersCodexViewModel() {
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
     self.exportModalStatus = ko.observable(false);
+    self.sessionExpiryModalStatus = ko.observable(false);
     self.navLogo = navLogo;
     self.version = VERSION;
     self.buildDate = BUILD_DATE;
@@ -93,6 +94,7 @@ export function AdventurersCodexViewModel() {
         Notifications.characters.allRemoved.add(self._handleAllCharactersRemoved);
         Notifications.coreManager.changing.add(self._handleChangingCharacter);
         Notifications.coreManager.changed.add(self._handleChangedCharacter);
+        Notifications.sessionExpired.changed.add(self.handleSessionExpiring);
 
         // Finish the setup once we're sure that we're logged in.
         Notifications.authentication.loggedIn.add(self.doSetup);
@@ -161,5 +163,14 @@ export function AdventurersCodexViewModel() {
             self.selectedCore(CoreManager.activeCore());
             self.state(APP_STATE.CHOSEN);
         }
+    };
+
+    self.handleSessionExpiring = () => {
+        self.sessionExpiryModalStatus(true);
+    };
+
+    self.refreshPage = () => {
+        window.location.href = HOME_URL;
+        return;
     };
 }

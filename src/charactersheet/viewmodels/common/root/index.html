@@ -65,6 +65,28 @@
 </div>
 </nav>
 
+<!-- Session expiry modal -->
+<div class="modal fade" tabindex="-1" role="dialog"
+   data-bind="modal: {
+      open: sessionExpiryModalStatus,
+      onclose: refreshPage
+    }">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title text-center">
+          Are you still there?
+        </h3>
+      </div>
+      <div class="modal-body text-center">
+        <a data-bind="attr: { href: homeURL }" class="btn btn-primary">
+          Refresh & Continue Playing
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- New Modal -->
 <div class="modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="newModal">
   <div class="modal-dialog" role="document">

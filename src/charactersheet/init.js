@@ -62,6 +62,10 @@ export var init = function(viewModel) {
 
     // Set up API client configuration handlers.
     Notifications.authentication.loggedIn.add(() => {
+        // After 9.5hrs, show a pop up that forces a refresh to get a new session.
+        setTimeout(() => {
+            Notifications.sessionExpired.changed.dispatch();
+        }, 34200000);
         var token = PersistenceService.findAll(AuthenticationToken)[0];
         Hypnos.configuration = {
             credentials: {
