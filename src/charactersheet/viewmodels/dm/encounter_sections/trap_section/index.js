@@ -32,11 +32,13 @@ export function TrapSectionViewModel(params) {
     self.editTabStatus = ko.observable('');
     self.editItemIndex = null;
     self.currentEditItem = ko.observable();
+    self.editWellOpen = ko.observable(false);
     self.editFirstModalElementHasFocus = ko.observable(false);
 
     self.blankTrap = ko.observable(new Trap());
     self.addFormIsValid = ko.observable(false);
     self.addModalIsOpen = ko.observable(false);
+    self.addWellOpen = ko.observable(false);
     self.firstElementInModalHasFocus = ko.observable(false);
 
     self.sorts = {
@@ -119,6 +121,10 @@ export function TrapSectionViewModel(params) {
     self.toggleAddModal = () => {
         self.addModalIsOpen(!self.addModalIsOpen());
     };
+
+    self.toggleAddModalMoreFields = () => {
+        self.addWellOpen(!self.addWellOpen());
+    }
 
     self.addModalFinishedClosing = () => {
         self.addModalIsOpen(false);

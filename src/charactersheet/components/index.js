@@ -5,3 +5,5 @@ import { NestedListComponentViewModel } from './nested-list';
 import { PlusMinusComponentViewModel } from './plus-minus';
 import { PreviewEditViewModel } from './preview-edit';
 import { ProficiencyTypeComponentViewModel } from './proficiency-marker';
+
+import './named-fields-well';

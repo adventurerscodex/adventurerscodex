@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="col-xs-3">
+  <span class="btn btn-text-no-hover"
+    style="margin-bottom: 10px;"
+    data-bind="click: onclick"
+    data-toggle="collapse">
+    <span data-bind="text: title"></span>&nbsp;<i class="fa fa-caret-down" data-bind="css: {
+      'fa-caret-up': wellOpen,
+      'fa-caret-down': !wellOpen()
+    }"></i>
+  </span>
+  </div>
+  <div class="col-xs-9">
+    <hr />
+  </div>
+</div>
+<div class="collapse" data-bind="well: { open: wellOpen }">
+  <!-- ko template: { nodes: $componentTemplateNodes, data: observable } --><!-- /ko -->
+</div>
