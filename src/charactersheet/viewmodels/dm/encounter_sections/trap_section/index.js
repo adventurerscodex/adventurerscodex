@@ -124,7 +124,7 @@ export function TrapSectionViewModel(params) {
 
     self.toggleAddModalMoreFields = () => {
         self.addWellOpen(!self.addWellOpen());
-    }
+    };
 
     self.addModalFinishedClosing = () => {
         self.addModalIsOpen(false);

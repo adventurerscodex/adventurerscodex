@@ -20,7 +20,7 @@ class NamedFieldsWell {
 
     onclick() {
         this.wellOpen(!this.wellOpen());
-    };
+    }
 
     observableDidChange() {
         if (this.shouldDiscloseFields) {
