@@ -255,6 +255,10 @@ export var Notifications = {
         changed: new Signal()
     },
 
+    sessionExpired: {
+        changed: new Signal()
+    },
+
     settings: {
         changed: new Signal()
     },
