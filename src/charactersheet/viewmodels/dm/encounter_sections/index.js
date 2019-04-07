@@ -5,4 +5,5 @@ export { NotesSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_se
 export { NPCSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/npc_section';
 export { PlayerTextSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/player_text_section';
 export { PointOfInterestSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/point_of_interest_section';
+export { TrapSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/trap_section';
 export { TreasureSectionViewModel } from 'charactersheet/viewmodels/dm/encounter_sections/treasure_section';

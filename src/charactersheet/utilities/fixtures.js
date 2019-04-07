@@ -526,33 +526,37 @@ export var Fixtures = {
                 name: 'Environment',
                 index: 0
             },
+            traps: {
+                name: 'Traps',
+                index: 1
+            },
             mapsAndImages: {
                 name: 'Maps and Images',
-                index: 1
+                index: 2
             },
             pointsOfInterest: {
                 name: 'Points of Interest',
-                index: 2
+                index: 3
             },
             npcs: {
                 name: 'Non-Player Characters',
-                index: 3
+                index: 4
             },
             monsters: {
                 name: 'Monsters',
-                index: 4
+                index: 5
             },
             readAloudText: {
                 name: 'Read-Aloud Text',
-                index: 5
+                index: 6
             },
             treasure: {
                 name: 'Treasure',
-                index: 6
+                index: 7
             },
             notes: {
                 name: 'Notes',
-                index: 7
+                index: 8
             }
         }
     },
