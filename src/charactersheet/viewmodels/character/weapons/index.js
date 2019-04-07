@@ -70,7 +70,7 @@ export function WeaponsViewModel() {
         }
 
         const weightTotal = self.weapons().map(
-            weapon => weapon.weight()
+            weapon => weapon.totalWeight()
         ).reduce(
             (a, b) => a + b
         );
