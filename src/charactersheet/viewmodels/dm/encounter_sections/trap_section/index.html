@@ -190,16 +190,11 @@
           </div>
 
           <!-- Complex Trap Fields -->
-          <button class="btn btn-primary"
-            data-toggle="collapse"
-            data-target="#addTrapModalComplexTrapFieldsCollapse"
-            type="button"
-            aria-expanded="false"
-            aria-controls="addTrapModalComplexTrapFieldsCollapse"
-            style="margin-bottom: 10px;">
-            More Fields
-        </button>
-          <div id="addTrapModalComplexTrapFieldsCollapse" class="collapse">
+          <named-fields-well params="
+            observable: blankTrap,
+            shouldDiscloseFields: addWellOpen,
+            title: 'More Fields'
+          ">
             <div class="form-group">
               <label class="col-sm-3 control-label">
                 Initiative
@@ -209,7 +204,7 @@
                        class="form-control"
                        name="initiative"
                        placeholder="A complex trap takes its turn as a creature would."
-                       data-bind="textInput: blankTrap().initiative">
+                       data-bind="textInput: initiative">
               </div>
             </div>
             <div class="form-group">
@@ -221,7 +216,7 @@
                          class="form-control" rows="4"
                          name="active-elements"
                          placeholder="On a trap's turn, it produces the specific effect listed here."
-                         data-bind="value: blankTrap().activeElements"></textarea>
+                         data-bind="value: activeElements"></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -233,7 +228,7 @@
                          class="form-control" rows="4"
                          name="dynamic-elements"
                          placeholder="A dynamic element is a threat that arises or evolves while the trap functions."
-                         data-bind="value: blankTrap().dynamicElements"></textarea>
+                         data-bind="value: dynamicElements"></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -245,10 +240,10 @@
                          class="form-control" rows="4"
                          name="constant-elements"
                          placeholder="A complex trap poses a threat even when its not taking its turn."
-                         data-bind="value: blankTrap().constantElements"></textarea>
+                         data-bind="value: constantElements"></textarea>
                 </div>
             </div>
-          </div>
+          </named-fields-well>
           <div class="modal-footer">
             <button
               type="submit"
@@ -311,10 +306,12 @@
                 <b>Level:</b>&nbsp;
                 <span data-bind="text: level"></span>
               </div>
+              <!-- ko if: shouldShowMoreFields -->
               <div class="col-sm-6 col-xs-12">
                 <b>Initiative:</b>&nbsp;
                 <span data-bind="text: initiative"></span>
               </div>
+              <!-- /ko -->
             </div>
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
@@ -340,6 +337,7 @@
                 </div>
               </div>
             </div>
+            <!-- ko if: shouldShowMoreFields -->
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
                 <b>Active Elements:</b>
@@ -364,6 +362,7 @@
                 </div>
               </div>
             </div>
+            <!-- /ko -->
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
                 <b>Description:</b>
@@ -470,16 +469,11 @@
               </div>
 
               <!-- Complex Trap Fields -->
-              <a class="btn btn-primary"
-                data-toggle="collapse"
-                href="#editTrapModalComplexTrapFieldsCollapse"
-                role="button"
-                aria-expanded="false"
-                aria-controls="editComplexTrap">
-                More Fields
-              </a>
-              <div id="editTrapModalComplexTrapFieldsCollapse"
-                data-bind="attr: { class: shouldShowMoreFields }">
+              <named-fields-well params="
+                observable: $parent.currentEditItem,
+                shouldDiscloseFields: $parent.editWellOpen() || shouldShowMoreFields(),
+                title: 'More Fields'
+              ">
                 <div class="form-group">
                   <label class="col-sm-3 control-label">
                     Initiative
@@ -522,7 +516,7 @@
                              data-bind="value: constantElements"></textarea>
                     </div>
                 </div>
-              </div>
+              </named-fields-well>
               <div class="modal-footer">
                 <button type="submit"
                         class="btn btn-primary">Done</button>

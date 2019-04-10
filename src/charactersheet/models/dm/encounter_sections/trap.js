@@ -103,18 +103,12 @@ export class Trap extends KOModel {
     // determines if the "More Fields" div is collapsed or expanded in the edit form
     // based on the presence of the "complex" trap fields
     shouldShowMoreFields = ko.pureComputed(() => {
-        if (this) {
-            if (this.initiative()
-                || this.activeElements()
-                || this.dynamicElements()
-                || this.constantElements()) {
-                return 'collapse in';
-            } else {
-                return 'collapse';
-            }
-        }
-        // default
-        return 'collapse';
+        return this /* Ensure we have a context */ && (
+            this.initiative()
+            || this.activeElements()
+            || this.dynamicElements()
+            || this.constantElements()
+        );
     });
 }
 
