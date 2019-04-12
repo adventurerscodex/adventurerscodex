@@ -10,13 +10,14 @@ export class Image extends KOModel {
     static __dependents__ = ['Environment', 'EncounterImage'];
 
     static mapping = {
-        include: ['coreUuid', 'description']
+        include: ['coreUuid', 'description', 'name', 'sourceUrl', 'isExhibited', 'playerText']
     };
 
     coreUuid = ko.observable(null);
     name = ko.observable();
     description = ko.observable();
     sourceUrl = ko.observable();
+    playerText = ko.observable();
     isExhibited = ko.observable();
 
     toJSON = function() {
@@ -46,7 +47,7 @@ Image.validationConstraints = {
         sourceUrl: {
             required: true,
             url: true,
-            maxlength: 512
+            maxlength: 1024
         }
     }
 };

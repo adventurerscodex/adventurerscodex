@@ -10,7 +10,7 @@ export class NPC extends KOModel {
     LONG_DESCRIPTION_MAX_LENGTH = 200;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'race', 'description', 'uuid']
+        include: ['coreUuid', 'encounterUuid', 'name', 'race', 'sourceUrl', 'playerText', 'description', 'uuid']
     };
 
     uuid = ko.observable();
@@ -19,6 +19,8 @@ export class NPC extends KOModel {
     uuid = ko.observable();
     name = ko.observable('');
     race = ko.observable('');
+    sourceUrl = ko.observable();
+    playerText = ko.observable();
     description = ko.observable('');
 
     // UI Methods
@@ -30,6 +32,18 @@ export class NPC extends KOModel {
     shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
+
+    toJSON = function() {
+        return {
+            name: this.name(),
+            url: this.sourceUrl(),
+            description: this.playerText()
+        };
+    };
+
+    toHTML = function() {
+        return 'New NPC in chat';
+    };
 }
 
 NPC.validationConstraints = {
@@ -40,6 +54,10 @@ NPC.validationConstraints = {
         },
         race: {
             maxlength: 64
+        },
+        sourceUrl: {
+            url: true,
+            maxlength: 1024
         }
     }
 };

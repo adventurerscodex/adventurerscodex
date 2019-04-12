@@ -10,12 +10,13 @@ export class EncounterImage extends KOModel {
     static __dependents__ = ['Environment', 'Image'];
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'description', 'isExhibited']
+        include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'description', 'isExhibited', 'playerText']
     };
 
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     name = ko.observable();
+    playerText = ko.observable();
     description = ko.observable();
     sourceUrl = ko.observable();
     isExhibited = ko.observable(false);
@@ -25,8 +26,11 @@ export class EncounterImage extends KOModel {
     // Public Methods
 
     toJSON = function() {
-        var name = this.name() ? this.name() : 'Untitled';
-        return { name: name, url: this.sourceUrl() };
+        return {
+            name: this.name(),
+            url: this.sourceUrl(),
+            description: this.playerText()
+        };
     };
 
     shortDescription = ko.pureComputed(() => {
@@ -49,7 +53,7 @@ EncounterImage.validationConstraints = {
         sourceUrl: {
             required: true,
             url: true,
-            maxlength: 512
+            maxlength: 1024
         }
     }
 };

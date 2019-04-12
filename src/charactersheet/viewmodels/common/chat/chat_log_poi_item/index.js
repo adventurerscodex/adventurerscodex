@@ -1,33 +1,39 @@
 import {
     CharacterCardPublishingService,
-    DMCardPublishingService,
-    KeyValuePredicate
+    DMCardPublishingService
 } from 'charactersheet/services/common';
+import {
+    CoreManager,
+    Notifications,
+    Utility
+} from 'charactersheet/utilities';
 import {
     Note,
     PlayerTypes
 } from 'charactersheet/models/common';
-import { ChatServiceManager } from 'charactersheet/services/common';
-import { CoreManager } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { Utility } from 'charactersheet/utilities/convenience';
+import { ChatServiceManager } from 'charactersheet/services/common/account/messaging';
 import ko from 'knockout';
 import template from './index.html';
 
 /**
  * A View that handles displaying Messages of type CHAT.
  */
-export function ChatLogReadAloudItem(params) {
+export function ChatLogPoiItem(params) {
     var self = this;
 
     self.message = params.message;
+    self.fullScreen = ko.observable(false);
 
     // Chat Item Methods
+
     self.timestamp = ko.pureComputed(function() {
         return self.message.dateReceived();
     });
-    self.listItemClass = ko.observable('info-chat-highlight');
+    self.listItemClass = ko.observable('image-chat-highlight');
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
+    };
 
     self.load = function() {
         params.onrender(self.message);
@@ -35,7 +41,7 @@ export function ChatLogReadAloudItem(params) {
 
     // UI Methods
 
-    self.shouldShowSaveToChatButton = ko.pureComputed(function() {
+    self.shouldShowSaveToNotesButton = ko.pureComputed(function() {
         var key = CoreManager.activeCore().type.name();
         return key == PlayerTypes.character.key;
     });
@@ -56,24 +62,54 @@ export function ChatLogReadAloudItem(params) {
         return card.get('name') + ' (' + self.message.fromUsername() + ')<br />Private';
     });
 
-    self.html = ko.pureComputed(function() {
-        return self.message.item().json.html;
+    self.messageImage = ko.pureComputed(function() {
+        return Utility.string.createDirectDropboxLink(self.message.item().json.url);
     });
+
+    self.messageDescription = ko.pureComputed(() => {
+        return self.message.item().json.description;
+    });
+
+    self.html = ko.pureComputed(function() {
+        return '<h3>{name}</h3>'.replace(
+            '{name}', self.message.item().json.name
+        );
+    });
+
+    self.imageHtml = function() {
+        return '<img src="{url}" width="100%" />'
+            .replace('{url}', self.messageImage());
+    };
+
+    self.descriptionHtml = () => {
+        return '<span>{description}</span>'.replace(
+            '{description}', self.message.item().json.description
+        );
+    };
+
+    self.constructPoiHtml = function() {
+        var date = (new Date()).toDateString();
+        const description = self.message.item().json.description;
+        const url = self.message.item().json.url;
+        let content = self.html + '\n\n' + date;
+
+        if (description) {
+            content = content + '\n\n' + self.descriptionHtml();
+        }
+        if (url) {
+            content = content + '\n\n' + self.imageHtml();
+        }
+
+        return content;
+    };
 
     self.saveToNotes = function() {
         var key = CoreManager.activeCore().uuid();
-        var note = PersistenceService.findByPredicates(Note, [
-            new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('isSavedChatNotes', true)
-        ])[0];
         var date = (new Date()).toDateString();
-        if (!note) {
-            note = new Note();
-            note.characterId(key);
-            note.text('# Saved from Chat');
-            note.isSavedChatNotes(true);
-        }
-        note.text(note.text() + '\n\n' + '**' + date + '**' + '\n\n' + self.html());
+
+        var note = new Note();
+        note.characterId(key);
+        note.text(self.constructPoiHtml());
         note.save();
 
         Notifications.notes.changed.dispatch();
@@ -105,7 +141,7 @@ export function ChatLogReadAloudItem(params) {
     };
 }
 
-ko.components.register('chat-log-read-aloud-item', {
-    viewModel: ChatLogReadAloudItem,
+ko.components.register('chat-log-poi-item', {
+    viewModel: ChatLogPoiItem,
     template: template
 });

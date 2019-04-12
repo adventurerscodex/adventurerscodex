@@ -23,10 +23,8 @@
         Speed
         <span data-bind="css: sortArrow('speed')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('experience');}" class="col-md-2 hidden-sm hidden-xs">
-        Experience
-        <span data-bind="css: sortArrow('experience')"></span>
-      </th>
+      <th class="text-right col-md-1">Send</th>
+      <th class="text-right col-md-1">Exhibit</th>
       <th class="col-md-1 text-right">
         <a data-bind="click: toggleModal" href="#">
           <i class="fa fa-plus fa-color"></i>
@@ -49,8 +47,32 @@
       <td data-bind="text: speed, click: $parent.editMonster"
           data-toggle="modal"
           class="col-md-2"></td>
-      <td data-bind="text: experience, click: $parent.editMonster"
-          data-toggle="modal" class="hidden-sm hidden-xs col-md-2"></td>
+      <!-- ko if: $parent.shouldShowPushButton -->
+      <td class="text-right col-md-1">
+        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#" title="Send image to Player's Chat">
+          <i class="fa fa-paper-plane-o fa-color-hover">
+          </i>
+        </a>
+      </td>
+      <td class="text-right col-md-1">
+        <a data-bind="click: $parent.toggleMonsterExhibit" href="#" title="Send Player's Exhibit">
+          <i data-bind="css: { exhibitActiveIcon: isExhibited }" class="fa fa-desktop fa-color-hover">
+          </i>
+        </a>
+      </td>
+      <!-- /ko -->
+      <!-- ko ifnot: $parent.shouldShowPushButton -->
+      <td class="text-right col-md-1">
+        <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
+          data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+        </span>
+      </td>
+      <td class="text-right col-md-1">
+        <span class="fa fa-desktop fa-disabled" style="cursor:pointer;"
+          data-bind="popover: { content: 'Join a Party send Player\'s Exhibit' }">
+        </span>
+      </td>
+      <!-- /ko -->
       <td class="col-md-1 text-right">
         <a data-bind="click: $parent.removeMonster" href="#">
           <i class="fa fa-trash-o fa-color-hover">
@@ -98,7 +120,7 @@
             <label class="col-sm-3 control-label">
               Name<i class="required"></i>
             </label>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
               <input type="text"
                      class="form-control"
                      name="name"
@@ -107,10 +129,32 @@
                         hasFocus: firstElementInModalHasFocus,
                         autocomplete: { source: monstersPrePopFilter, onselect: populateMonster }">
             </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">
+              Image Link
+            </label>
+            <div class="col-sm-8">
+              <input type="text"
+                      name="sourceUrl"
+                      class="form-control"
+                      placeholder="http://myurl.com/image.jpg"
+                      data-bind="textInput: blankMonster().sourceUrl">
+            </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Size</label>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
               <input type="text"
                      class="form-control"
                      name="size"
@@ -120,7 +164,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Type</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="type"
@@ -130,7 +174,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Alignment</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="alignment"
@@ -142,7 +186,7 @@
             <label class="col-sm-3 control-label">
               Armor Class<i class="required"></i>
             </label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="armorClass"
@@ -154,7 +198,7 @@
             <label class="col-sm-3 control-label">
               Hit Points<i class="required"></i>
             </label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="hitPoints"
@@ -164,7 +208,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Speed</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="speed"
@@ -230,7 +274,7 @@
           <hr/>
           <div class="form-group">
             <label class="col-sm-3 control-label">Saving Throws</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="savingThrows"
@@ -240,7 +284,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Skills</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="skills"
@@ -250,7 +294,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Damage Immunities</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="damageImmunities"
@@ -260,7 +304,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Damage Vulnerabilities</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="damageVulnerabilities"
@@ -270,7 +314,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Damage Resistances</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="damageResistances"
@@ -280,7 +324,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Condition Immunities</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="conditionImmunities"
@@ -290,7 +334,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Senses</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="senses"
@@ -300,7 +344,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Languages</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="languages"
@@ -310,7 +354,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Challenge</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="text"
                        class="form-control"
                        name="challenge"
@@ -320,7 +364,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Experience</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <input type="number"
                        class="form-control"
                        name="experience"
@@ -330,7 +374,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">Description</label>
-              <div class="col-sm-9">
+              <div class="col-sm-8">
                 <textarea type="text"
                        class="form-control" rows="4"
                        name="description"
@@ -338,7 +382,27 @@
                        data-bind="value: blankMonster().description"></textarea>
               </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">
+              Player Text
+            </label>
+            <div class="col-sm-8">
+              <textarea type="text" rows="4"
+                      class="form-control"
+                      name="playerText"
+                      placeholder="This is the description that your players will see when sent via the chat."
+                      data-bind="value: blankMonster().playerText, markdownEditor: true"></textarea>
+            </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
+            </div>
+          </div>
           <div class="modal-footer">
+            <p class="text-muted text-center">
+              Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+            </p>
             <button type="button"
                     class="btn btn-default"
                     data-dismiss="modal">Cancel</button>
@@ -399,9 +463,16 @@
         </ul>
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="h3">
-              <span data-bind="text: name"></span>&nbsp;
-              <small data-bind="text: nameLabel"></small>
+            <div class="row">
+              <div class="col-md-3">
+                <img data-bind="attr: { src: $parent.convertedDisplayUrl },
+                                click: $parent.toggleFullScreen"
+                      width="80" height="80" class="img img-circle img-padded clickable" />
+              </div>
+              <div class="h3">
+                <span data-bind="text: name"></span>&nbsp;
+                <small data-bind="text: nameLabel"></small>
+              </div>
             </div>
             <div class="row">
               <div class="col-sm-6 col-xs-12"><b>Armor Class:</b>&nbsp;<span data-bind="text: armorClass"></span></div>
@@ -483,9 +554,23 @@
               <div class="col-md-12"><b>Senses:</b>&nbsp;<span data-bind="text: senses"></span></div>
             </div>
             <hr />
+            <span class="h4">
+              Description
+            </span>
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: description">
+                <div data-bind="markdownPreview: description"
+                      class="preview-modal-overflow">
+                </div>
+              </div>
+            </div>
+            <span class="h4">
+              Player Text
+            </span>
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: playerText"
+                      class="preview-modal-overflow light-blue-left-highlight">
                 </div>
               </div>
             </div>
@@ -496,17 +581,39 @@
                 <label class="col-sm-3 control-label">
                   Name<i class="required"></i>
                 </label>
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                   <input type="text"
                          class="form-control"
                          name="name"
                          placeholder="Ancient Black Dragon"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
+                <div class="col-sm-1 control-label">
+                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                    title="This field will be sent to the players via the chat.">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">
+                  Image Link
+                </label>
+                <div class="col-sm-8">
+                  <input type="text"
+                          name="sourceUrl"
+                          class="form-control"
+                          placeholder="http://myurl.com/image.jpg"
+                          data-bind="textInput: sourceUrl">
+                </div>
+                <div class="col-sm-1 control-label">
+                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                    title="This field will be sent to the players via the chat.">
+                  </span>
+                </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Size</label>
-                <div class="col-sm-9">
+                <div class="col-sm-8">
                   <input type="text"
                          class="form-control"
                          name="size"
@@ -516,7 +623,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Type</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="type"
@@ -526,7 +633,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Alignment</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="alignment"
@@ -538,7 +645,7 @@
                 <label class="col-sm-3 control-label">
                   Armor Class<i class="required"></i>
                 </label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="armorClass"
@@ -550,7 +657,7 @@
                 <label class="col-sm-3 control-label">
                   Hit Points<i class="required"></i>
                 </label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="hitPoints"
@@ -560,7 +667,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Speed</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="speed"
@@ -624,7 +731,7 @@
               <hr/>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Saving Throws</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="savingThrows"
@@ -634,7 +741,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Skills</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="skills"
@@ -644,7 +751,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Damage Immunities</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="damageImmunities"
@@ -654,7 +761,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Damage Vulnerabilities</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="damageVulnerabilities"
@@ -664,7 +771,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Damage Resistances</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="damageResistances"
@@ -674,7 +781,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Condition Immunities</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="conditionImmunities"
@@ -684,7 +791,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Senses</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="senses"
@@ -694,7 +801,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Languages</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="languages"
@@ -704,7 +811,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Challenge</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="text"
                            class="form-control"
                            name="challenge"
@@ -714,7 +821,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Experience</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <input type="number"
                            class="form-control"
                            name="experience"
@@ -724,7 +831,7 @@
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Description</label>
-                  <div class="col-sm-9">
+                  <div class="col-sm-8">
                     <textarea type="text"
                            class="form-control" rows="4"
                            name="description"
@@ -732,7 +839,27 @@
                            data-bind="value: description"></textarea>
                   </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-3 control-label">
+                  Player Text
+                </label>
+                <div class="col-sm-8">
+                  <textarea type="text" rows="4"
+                          class="form-control"
+                          name="playerText"
+                          placeholder="This is the description that your players will see when sent via the chat."
+                          data-bind="value: playerText, markdownEditor: true"></textarea>
+                </div>
+                <div class="col-sm-1 control-label">
+                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                    title="This field will be sent to the players via the chat.">
+                  </span>
+                </div>
+              </div>
               <div class="modal-footer">
+                <p class="text-muted text-center">
+                  Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                </p>
                 <button type="submit"
                         class="btn btn-primary">Done</button>
               </div>
@@ -744,3 +871,9 @@
     <!-- /ko -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
+
+<!-- The visibility is managed internally -->
+<full-screen-image params="imageSource: convertedDisplayUrl, fullScreenStatus: fullScreen">
+</full-screen-image>
+
+<player-push-modal params="isOpen: openPushModal, type: pushType, payload: selectedMonsterToPush, onclose: pushModalFinishedClosing"></player-push-modal>

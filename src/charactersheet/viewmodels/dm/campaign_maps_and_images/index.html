@@ -145,6 +145,19 @@
                        data-bind="value: blankMapOrImage().description"></textarea>
               </div>
           </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Player Text
+            </label>
+            <div class="col-sm-10">
+              <textarea type="text"
+                      rows="6"
+                      class="form-control"
+                      name="playerText"
+                      placeholder="This is the description that your players will see when sent via the chat."
+                      data-bind="value: blankMapOrImage().playerText, markdownEditor: true"></textarea>
+            </div>
+          </div>
           <div class="modal-footer">
             <button type="submit"
                     class="btn btn-primary">
@@ -207,10 +220,23 @@
               </div>
             </div>
             <hr />
-            <div class="row">
-              <div class="col-xs-12">
+            <span class="h4">
+              Description
+            </span>
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
                 <div data-bind="markdownPreview: description"
-                     class="preview-modal-overflow">
+                      class="preview-modal-overflow">
+                </div>
+              </div>
+            </div>
+            <span class="h4">
+              Player Text
+            </span>
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: playerText"
+                      class="preview-modal-overflow light-blue-left-highlight">
                 </div>
               </div>
             </div>
@@ -249,6 +275,19 @@
                            name="description"
                            data-bind="value: description, markdownEditor: true"></textarea>
                   </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  Player Text
+                </label>
+                <div class="col-sm-10">
+                  <textarea type="text"
+                          rows="6"
+                          class="form-control"
+                          name="playerText"
+                          placeholder="This is the description that your players will see when sent via the chat."
+                          data-bind="value: playerText, markdownEditor: true"></textarea>
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="submit"

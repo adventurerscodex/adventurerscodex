@@ -11,10 +11,11 @@
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('description');}" class="col-md-8">
+      <th data-bind="click: function(){sortBy('description');}" class="col-md-7">
         Description
         <span data-bind="css: sortArrow('description')"></span>
       </th>
+      <th class="col-md-1 text-right">Send</th>
       <th class="text-right col-md-1">
         <a data-bind="click: toggleAddModal" href="#">
           <i class="fa fa-plus fa-color"></i>
@@ -26,22 +27,35 @@
   <!-- ko foreach: filteredAndSortedPointsOfInterest -->
     <tr class="clickable">
       <td data-bind="text: name, click: $parent.editPointOfInterest"
-          href="#"></td>
+          href="#" class="col-xs-3"></td>
       <td data-bind="html: shortDescription, click: $parent.editPointOfInterest"
-          class="col-xs-12 hidden-md hidden-lg"
+          class="col-xs-7 hidden-md hidden-lg"
           href="#"></td>
       <td data-bind="html: longDescription, click: $parent.editPointOfInterest"
-          class="col-md-12 hidden-sm hidden-xs"
+          class="col-md-7 hidden-sm hidden-xs"
           href="#"></td>
-      <td>
+      <!-- ko if: $parent.shouldShowPushButton -->
+      <td class="text-right col-xs-1">
+        <a data-bind="click: $parent.pushModalToPlayerButtonWasPressed" href="#">
+          <i class="fa fa-paper-plane-o fa-color-hover"></i>
+        </a>
+      </td>
+      <!-- /ko -->
+      <!-- ko ifnot: $parent.shouldShowPushButton -->
+      <td class="text-right col-xs-1">
+        <span class="fa fa-paper-plane-o fa-disabled" style="cursor:pointer;"
+          data-bind="popover: { content: 'Join a Party to send image to Player\'s Chat' }">
+        </span>
+      </td>
+      <!-- /ko -->
+      <td class="col-xs-1 text-right">
         <a data-bind="click: $parent.removePointOfInterest" href="#">
-          <i class="fa fa-trash-o fa-color-hover">
-          </i>
+          <i class="fa fa-trash-o fa-color-hover"></i>
         </a>
       </td>
     </tr>
-    <!-- /ko -->
-    <!-- ko if: filteredAndSortedPointsOfInterest().length == 0 -->
+  <!-- /ko -->
+  <!-- ko if: filteredAndSortedPointsOfInterest().length == 0 -->
     <tr class="clickable">
       <td data-bind="click: toggleAddModal"
         colspan="12" class="text-center">
@@ -49,7 +63,7 @@
         Add a new Point of Interest
       </td>
     </tr>
-    <!-- /ko -->
+  <!-- /ko -->
   </tbody>
 </table>
 <!-- /ko -->
@@ -80,7 +94,7 @@
             <label class="col-sm-2 control-label">
               Name<i class="required"></i>
             </label>
-            <div class="col-sm-10">
+            <div class="col-sm-9">
               <input type="text"
                      class="form-control"
                      name="name"
@@ -88,18 +102,60 @@
                      data-bind="textInput: blankPointOfInterest().name,
                         hasFocus: firstElementInModalHasFocus">
             </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Image Link
+            </label>
+            <div class="col-sm-9">
+              <input type="text"
+                      class="form-control"
+                      name="sourceUrl"
+                      placeholder="http://myurl.com/image.jpg"
+                      data-bind="textInput: blankPointOfInterest().sourceUrl">
+            </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">Description</label>
-              <div class="col-sm-10">
-                <textarea type="text"
-                       class="form-control" rows="4"
-                       name="description"
-                       placeholder="It rises up from it's stone pillar..."
-                       data-bind="value: blankPointOfInterest().description"></textarea>
-              </div>
+            <div class="col-sm-9">
+              <textarea type="text"
+                      class="form-control" rows="4"
+                      name="description"
+                      placeholder="It rises up from it's stone pillar..."
+                      data-bind="value: blankPointOfInterest().description"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">
+              Player Text
+            </label>
+            <div class="col-sm-9">
+              <textarea type="text"
+                      class="form-control" rows="4"
+                      name="playerText"
+                      placeholder="This is the description that your players will see when sent via the chat."
+                      data-bind="value: blankPointOfInterest().playerText"></textarea>
+            </div>
+            <div class="col-sm-1 control-label">
+              <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                title="This field will be sent to the players via the chat.">
+              </span>
+            </div>
           </div>
           <div class="modal-footer">
+            <p class="text-muted text-center">
+              Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+            </p>
             <button type="submit"
                     class="btn btn-primary">Add</button>
           </div>
@@ -147,7 +203,21 @@
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;
             </div>
+            <!-- ko if: sourceUrl -->
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded text-center">
+                <img data-bind="attr: { src: $parent.convertedDisplayUrl },
+                  click: $parent.toggleFullScreen" width="100%" class="clickable" />
+                <small>
+                  <em class="text-muted">Click on the image to view it in Full Screen.</em>
+                </small>
+              </div>
+            </div>
+            <!-- /ko -->
             <hr />
+            <span class="h4">
+              Description
+            </span>
             <div class="row row-padded">
               <div class="col-xs-12 col-padded">
                 <div data-bind="markdownPreview: description"
@@ -155,32 +225,83 @@
                 </div>
               </div>
             </div>
+            <span class="h4">
+              Player Text
+            </span>
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: playerText"
+                     class="preview-modal-overflow light-blue-left-highlight">
+                </div>
+              </div>
+            </div>
           </div> <!-- End Preview Tab -->
           <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
             <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
               <div class="form-group">
-                <label for="pointOfInterestName"
-                       class="col-sm-2 control-label">
-                       Name<i class="required"></i>
-                      </label>
-                <div class="col-sm-10">
+                <label class="col-sm-2 control-label">
+                  Name<i class="required"></i>
+                </label>
+                <div class="col-sm-9">
                   <input type="text"
                          class="form-control"
                          name="name"
                          data-bind="textInput: name, hasFocus: $parent.editFirstModalElementHasFocus">
                 </div>
+                <div class="col-sm-1 control-label">
+                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                    title="This field will be sent to the players via the chat.">
+                  </span>
+                </div>
               </div>
               <div class="form-group">
-                <label for="pointInterestDescription"
-                       class="col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea type="text" rows="6"
-                           class="form-control"
-                           name="name"
-                           data-bind="value: description, markdownEditor: true"></textarea>
-                  </div>
+                <label class="col-sm-2 control-label">
+                  Image Link
+                </label>
+                <div class="col-sm-9">
+                  <input type="text"
+                          name="sourceUrl"
+                          class="form-control"
+                          data-bind="textInput: sourceUrl">
+                </div>
+                <div class="col-sm-1 control-label">
+                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                    title="This field will be sent to the players via the chat.">
+                  </span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  Description
+                </label>
+                <div class="col-sm-9">
+                  <textarea type="text" rows="6"
+                          class="form-control"
+                          name="name"
+                          data-bind="value: description, markdownEditor: true"></textarea>
+                </div>
+                <div class="col-sm-1"></div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  Player Text
+                </label>
+                <div class="col-sm-9">
+                  <textarea type="text" rows="6"
+                          class="form-control"
+                          name="playerText"
+                          data-bind="value: playerText, markdownEditor: true"></textarea>
+                </div>
+                <div class="col-sm-1 control-label">
+                  <span class="fa fa-paper-plane-o" style="cursor:pointer;"
+                    title="This field will be sent to the players via the chat.">
+                  </span>
+                </div>
               </div>
               <div class="modal-footer">
+                <p class="text-muted text-center">
+                  Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                </p>
                 <button type="submit"
                         class="btn btn-primary">Done</button>
               </div>
@@ -191,4 +312,10 @@
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
-<!-- /ko -->
+
+<!-- Push Modal -->
+<player-push-modal params="isOpen: openPushModal, type: pushType, payload: selectedPoiToPush, onclose: pushModalFinishedClosing"></player-push-modal>
+
+<!-- The visibility is managed internally -->
+<full-screen-image params="imageSource: convertedDisplayUrl, fullScreenStatus: fullScreen">
+</full-screen-image>

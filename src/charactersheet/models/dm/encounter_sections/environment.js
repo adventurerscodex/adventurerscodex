@@ -48,7 +48,7 @@ Environment.validationConstraints = {
             maxlength: 128
         },
         imageUrl: {
-            maxlength: 512,
+            maxlength: 1024,
             url: true
         }
     }

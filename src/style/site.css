@@ -859,6 +859,11 @@ li.info-chat-highlight {
   padding-left: 1em;
 }
 
+.light-blue-left-highlight {
+  border-left: 2px solid #3498db;
+  padding-left: 1em;
+}
+
 .image-border-inspired {
    -webkit-box-shadow: 0px 0px 20px 0px #3498db;
    -moz-box-shadow: 0px 0px 20px 0px #3498db;
