@@ -226,12 +226,11 @@
               <span data-bind="text: name"></span>&nbsp;
               <small data-bind="text: race"></small>
             </div>
-            <hr />
             <!-- ko if: sourceUrl -->
             <div class="row row-padded">
               <div class="col-xs-12 col-padded text-center">
                 <img data-bind="attr: { src: $parent.convertedDisplayUrl },
-                  click: $parent.toggleFullScreen" width="100%" class="clickable" />
+                  click: $parent.toggleFullScreen" width="100%" class="clickable embedded-image" />
                 <small>
                   <em class="text-muted">Click on the image to view it in Full Screen.</em>
                 </small>
