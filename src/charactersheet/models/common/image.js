@@ -7,7 +7,7 @@ import ko from 'knockout';
 
 export class EncounterImage extends KOModel {
     static __skeys__ = ['core', 'encounters', 'images'];
-    static __dependents__ = ['Environment', 'Image'];
+    static __dependents__ = ['Environment', 'Image', 'Monster'];
 
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'description', 'isExhibited', 'playerText']

@@ -3,6 +3,7 @@ import ko from 'knockout';
 
 export class Monster extends KOModel {
     static __skeys__ = ['core', 'encounters', 'monsters'];
+    static __dependents__ = ['Image', 'EncounterImage', 'Environment'];
 
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type',
