@@ -3,12 +3,14 @@ import ko from 'knockout';
 
 export class Monster extends KOModel {
     static __skeys__ = ['core', 'encounters', 'monsters'];
+    static __dependents__ = ['Image', 'EncounterImage', 'Environment'];
 
     static mapping = {
         include: ['coreUuid', 'encounterUuid', 'uuid', 'name', 'size', 'type',
         'alignment', 'armorClass', 'hitPoints', 'speed', 'savingThrows',
         'skills', 'senses', 'damageVulnerabilities', 'damageImmunities', 'damageResistances',
-        'conditionImmunities', 'languages', 'challenge', 'experience', 'description']
+        'conditionImmunities', 'languages', 'challenge', 'experience', 'description',
+        'sourceUrl', 'playerText', 'isExhibited']
     };
 
     coreUuid = ko.observable();
@@ -32,19 +34,12 @@ export class Monster extends KOModel {
     languages = ko.observable();
     challenge = ko.observable();
     experience = ko.observable();
+    sourceUrl = ko.observable();
+    playerText = ko.observable();
+    isExhibited = ko.observable(false);
     description = ko.observable();
 
     // UI Stuff
-
-    // todo: maybe remove?
-    markDownDescription = ko.pureComputed(function() {
-        let desc = '';
-        if (this) {
-            desc = this.description() ? this.description() : '';
-        }
-
-        return desc;
-    });
 
     nameLabel = ko.pureComputed(() => {
         if (this) {
@@ -65,6 +60,18 @@ export class Monster extends KOModel {
             }
         });
         return foundScore;
+    };
+
+    toJSON = function() {
+        return {
+            name: this.name(),
+            url: this.sourceUrl(),
+            description: this.playerText()
+        };
+    };
+
+    toHTML = function() {
+        return 'New monster in chat';
     };
 }
 
@@ -157,6 +164,10 @@ Monster.validationConstraints = {
             required: true,
             min: -10000,
             max: 1000000
+        },
+        sourceUrl: {
+            url: true,
+            maxlength: 1024
         }
     }
 };

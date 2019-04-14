@@ -8,7 +8,6 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PlayerText } from 'charactersheet/models';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/read.svg';

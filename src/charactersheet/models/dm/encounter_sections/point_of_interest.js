@@ -10,13 +10,15 @@ export class PointOfInterest extends KOModel {
     LONG_DESCRIPTION_MAX_LENGTH = 200;
 
     static mapping = {
-        include: ['coreUuid', 'encounterUuid', 'name', 'description', 'uuid']
+        include: ['coreUuid', 'encounterUuid', 'name', 'sourceUrl', 'playerText', 'description', 'uuid']
     };
 
     coreUuid = ko.observable();
     encounterUuid = ko.observable();
     uuid = ko.observable();
     name = ko.observable('');
+    playerText = ko.observable();
+    sourceUrl = ko.observable();
     description = ko.observable('');
 
     // UI Methods
@@ -28,6 +30,20 @@ export class PointOfInterest extends KOModel {
     shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
     });
+
+    // Message Serialization Methods
+
+    toHTML = function() {
+        return 'New Point of Interest';
+    };
+
+    toJSON = function() {
+        return {
+            name: this.name(),
+            url: this.sourceUrl(),
+            description: this.description()
+        };
+    };
 }
 
 PointOfInterest.validationConstraints = {
@@ -35,6 +51,10 @@ PointOfInterest.validationConstraints = {
         name: {
             required: true,
             maxlength: 256
+        },
+        sourceUrl: {
+            url: true,
+            maxlength: 1024
         }
     }
 };

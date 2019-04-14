@@ -1,11 +1,14 @@
 import {
+    ChatServiceManager,
+    SortService
+} from 'charactersheet/services';
+import {
     CoreManager,
     Fixtures,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
 import { NPC } from 'charactersheet/models/dm';
-import { SortService } from 'charactersheet/services';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/swordman.svg';
 import template from './index.html';
@@ -38,6 +41,15 @@ export function NPCSectionViewModel(params) {
     self.editTabStatus = ko.observable('');
     self.addFormIsValid = ko.observable(false);
     self.addModalOpen = ko.observable(false);
+    self.fullScreen = ko.observable(false);
+
+    // Push to Player
+    self.selectedNpcToPush = ko.observable();
+    self.openPushModal = ko.observable(false);
+    self.pushType = ko.observable('point-of-interest');
+    self.convertedDisplayUrl = ko.observable();
+
+    self._isConnectedToParty = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -61,12 +73,16 @@ export function NPCSectionViewModel(params) {
     self.load = async function() {
         Notifications.global.save.add(self.save);
         Notifications.encounters.changed.add(self._dataHasChanged);
-
+        Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
+
         await self._dataHasChanged();
+
+        self._connectionHasChanged();
     };
 
     self.save = function() {
@@ -157,12 +173,18 @@ export function NPCSectionViewModel(params) {
     self.editNPC = function(npc) {
         self.editItemIndex = npc.uuid;
         self.currentEditItem(new NPC());
+        self.convertedDisplayUrl(null);
         self.currentEditItem().importValues(npc.exportValues());
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openModal(true);
     };
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+    };
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
     };
 
     /* Modal Methods */
@@ -183,6 +205,7 @@ export function NPCSectionViewModel(params) {
     };
 
     self.selectPreviewTab = function() {
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
@@ -201,7 +224,23 @@ export function NPCSectionViewModel(params) {
         $(self._editForm()).validate().resetForm();
     };
 
-    //Prepopulate methods
+    /* Push to Player Methods */
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
+
+    self.pushModalFinishedClosing = function() {
+        self.selectedNpcToPush(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalToPlayerButtonWasPressed = function(npc) {
+        self.selectedNpcToPush(npc);
+        self.openPushModal(true);
+    };
+
+    // Pre-populate methods
     self.populateRace = function(label, value) {
         self.blankNPC().race(value);
     };
@@ -225,6 +264,11 @@ export function NPCSectionViewModel(params) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
 

@@ -1,4 +1,7 @@
-import 'bin/knockout-bootstrap-modal';
+import {
+    ChatServiceManager,
+    SortService
+} from 'charactersheet/services';
 import {
     CoreManager,
     Fixtures,
@@ -6,7 +9,6 @@ import {
     Utility
 } from 'charactersheet/utilities';
 import { PointOfInterest } from 'charactersheet/models/dm';
-import { SortService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/rune-stone.svg';
 import template from './index.html';
@@ -37,6 +39,15 @@ export function PointOfInterestSectionViewModel(params) {
     self.editTabStatus = ko.observable('');
     self.addFormIsValid = ko.observable(false);
     self.addModalOpen = ko.observable(false);
+    self.fullScreen = ko.observable(false);
+
+    // Push to Player
+    self.selectedPoiToPush = ko.observable();
+    self.openPushModal = ko.observable(false);
+    self.pushType = ko.observable('point-of-interest');
+    self.convertedDisplayUrl = ko.observable();
+
+    self._isConnectedToParty = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -52,13 +63,17 @@ export function PointOfInterestSectionViewModel(params) {
     self._editForm = ko.observable();
 
     /* Public Methods */
-    self.load = function() {
+    self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
-        self._dataHasChanged();
+        await self._dataHasChanged();
+
+        self._connectionHasChanged();
     };
 
     /* UI Methods */
@@ -102,12 +117,18 @@ export function PointOfInterestSectionViewModel(params) {
     self.editPointOfInterest = function(poi) {
         self.editItemIndex = poi.uuid;
         self.currentEditItem(new PointOfInterest());
+        self.convertedDisplayUrl(null);
         self.currentEditItem().importValues(poi.exportValues());
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openModal(true);
     };
 
     self.toggleModal = function() {
         self.openModal(!self.openModal());
+    };
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
     };
 
     self.closeModal = () => {
@@ -171,6 +192,7 @@ export function PointOfInterestSectionViewModel(params) {
     };
 
     self.selectPreviewTab = function() {
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
@@ -179,6 +201,22 @@ export function PointOfInterestSectionViewModel(params) {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    /* Push to Player Methods */
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
+
+    self.pushModalFinishedClosing = function() {
+        self.selectedPoiToPush(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalToPlayerButtonWasPressed = function(pointOfInterest) {
+        self.selectedPoiToPush(pointOfInterest);
+        self.openPushModal(true);
     };
 
     /* Private Methods */
@@ -196,6 +234,11 @@ export function PointOfInterestSectionViewModel(params) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
 

@@ -1,4 +1,9 @@
 import {
+    ChatServiceManager,
+    ImageServiceManager,
+    SortService
+} from 'charactersheet/services';
+import {
     CoreManager,
     DataRepository,
     Fixtures,
@@ -9,13 +14,9 @@ import {
     Monster,
     MonsterAbilityScore
 } from 'charactersheet/models/dm';
-import {
-    SortService
-} from 'charactersheet/services';
 import ko from 'knockout';
 import sectionIcon from 'images/encounters/wyvern.svg';
 import template from './index.html';
-import uuid from 'node-uuid';
 
 
 export function MonsterSectionViewModel(params) {
@@ -46,6 +47,15 @@ export function MonsterSectionViewModel(params) {
     self.editTabStatus = ko.observable('');
     self.shouldShowDisclaimer = ko.observable(false);
     self.addFormIsValid = ko.observable(false);
+    self.fullScreen = ko.observable(false);
+
+    // Push to Player
+    self.selectedMonsterToPush = ko.observable();
+    self.openPushModal = ko.observable(false);
+    self.pushType = ko.observable('point-of-interest');
+    self.convertedDisplayUrl = ko.observable();
+
+    self._isConnectedToParty = ko.observable(false);
 
     self.sorts = {
         'name asc': { field: 'name', direction: 'asc' },
@@ -55,9 +65,7 @@ export function MonsterSectionViewModel(params) {
         'hitPoints asc': { field: 'hitPoints', direction: 'asc' },
         'hitPoints desc': { field: 'hitPoints', direction: 'desc' },
         'speed asc': { field: 'speed', direction: 'asc' },
-        'speed desc': { field: 'speed', direction: 'desc' },
-        'experience asc': { field: 'experience', direction: 'asc' },
-        'experience desc': { field: 'experience', direction: 'desc' }
+        'speed desc': { field: 'speed', direction: 'desc' }
     };
 
     self.filter = ko.observable('');
@@ -69,11 +77,16 @@ export function MonsterSectionViewModel(params) {
     /* Public Methods */
     self.load = async function() {
         Notifications.encounters.changed.add(self._dataHasChanged);
+        Notifications.party.joined.add(self._connectionHasChanged);
+        Notifications.party.left.add(self._connectionHasChanged);
+        Notifications.exhibit.changed.add(self._dataHasChanged);
 
         self.encounter.subscribe(function() {
             self._dataHasChanged();
         });
         await self._dataHasChanged();
+
+        self._connectionHasChanged();
     };
 
     /* UI Methods */
@@ -118,13 +131,31 @@ export function MonsterSectionViewModel(params) {
     self.editMonster = function(monster) {
         self.editItemIndex = monster.uuid;
         self.currentEditItem(new Monster());
+        self.convertedDisplayUrl(null);
         self.currentEditItem().importValues(monster.exportValues());
         self.currentEditItem().abilityScores(monster.abilityScores().map(function(e, i, _) {
             var abilityScore = new MonsterAbilityScore();
             abilityScore.importValues(e);
             return abilityScore;
         }));
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.openEditModal(true);
+    };
+
+    // todo: talk to Brian on how to toggle exhibit in the api without having to save _everything_
+    // todo: in the monster and related objects
+    self.toggleMonsterExhibit = async (monster) => {
+        const imageService = ImageServiceManager.sharedService();
+        if (monster.isExhibited()) {
+            monster.isExhibited(false);
+            await monster.ps.save();
+            imageService.clearImage();
+        } else {
+            monster.isExhibited(true);
+            await monster.ps.save();
+            await self._dataHasChanged();
+            imageService.publishImage(monster.toJSON());
+        }
     };
 
     self.validation = {
@@ -162,6 +193,10 @@ export function MonsterSectionViewModel(params) {
         ];
         self.blankMonster().abilityScores(abilityScores);
         self.openModal(!self.openModal());
+    };
+
+    self.toggleFullScreen = function() {
+        self.fullScreen(!self.fullScreen());
     };
 
     self.closeAddModal = () => {
@@ -228,6 +263,7 @@ export function MonsterSectionViewModel(params) {
     };
 
     self.selectPreviewTab = function() {
+        self.convertedDisplayUrl(Utility.string.createDirectDropboxLink(self.currentEditItem().sourceUrl()));
         self.previewTabStatus('active');
         self.editTabStatus('');
     };
@@ -236,6 +272,20 @@ export function MonsterSectionViewModel(params) {
         self.editTabStatus('active');
         self.previewTabStatus('');
         self.editFirstModalElementHasFocus(true);
+    };
+
+    self.shouldShowPushButton = ko.pureComputed(function() {
+        return self._isConnectedToParty();
+    });
+
+    self.pushModalFinishedClosing = function() {
+        self.selectedMonsterToPush(null);
+        self.openPushModal(false);
+    };
+
+    self.pushModalToPlayerButtonWasPressed = function(monster) {
+        self.selectedMonsterToPush(monster);
+        self.openPushModal(true);
     };
 
     /* Private Methods */
@@ -252,6 +302,11 @@ export function MonsterSectionViewModel(params) {
         self.name(section.name());
         self.visible(section.visible());
         self.tagline(section.tagline());
+    };
+
+    self._connectionHasChanged = function() {
+        var chat = ChatServiceManager.sharedService();
+        self._isConnectedToParty(chat.currentPartyNode != null);
     };
 }
 
