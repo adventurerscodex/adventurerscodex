@@ -5,7 +5,7 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin');
 const common = require('./webpack.common.js');
 const package_ = require('./package.json');
 
-module.exports = merge(common, {
+let config = merge(common, {
     mode: 'production',
     devtool: 'hidden-source-map',
     output: {
@@ -88,3 +88,11 @@ module.exports = merge(common, {
         })
     ]
 });
+
+if (process.env.ENVIRONMENT == 'test') {
+    config = merge(config, {
+        devtool: 'cheap-module-eval-source-map'
+    });
+}
+
+module.exports = config;
