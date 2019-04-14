@@ -173,9 +173,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <p class="text-muted text-center">
-              Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
-            </p>
+            <small class="text-center">
+              <p>
+                Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+              </p>
+            </small>
             <button type="submit"
                     class="btn btn-primary">Add</button>
           </div>
@@ -222,21 +224,14 @@
         </ul>
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="h3">
+            <img data-bind="attr: { src: $parent.convertedDisplayUrl },
+              click: $parent.toggleFullScreen"
+              width="80" height="80" class="img img-circle img-padded clickable"
+              style="display: inline"/>
+            <div class="h3" style="display: inline">
               <span data-bind="text: name"></span>&nbsp;
               <small data-bind="text: race"></small>
-            </div>
-            <!-- ko if: sourceUrl -->
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded text-center">
-                <img data-bind="attr: { src: $parent.convertedDisplayUrl },
-                  click: $parent.toggleFullScreen" width="100%" class="clickable embedded-image" />
-                <small>
-                  <em class="text-muted">Click on the image to view it in Full Screen.</em>
-                </small>
-              </div>
-            </div>
-            <!-- /ko -->
+            </div><br/>
             <span class="h4">
               Description
             </span>
@@ -339,9 +334,11 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <p class="text-muted text-center">
-                  Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
-                </p>
+                <small class="text-center">
+                  <p>
+                    Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                  </p>
+                </small>
                 <button type="submit"
                         class="btn btn-primary">Done</button>
               </div>

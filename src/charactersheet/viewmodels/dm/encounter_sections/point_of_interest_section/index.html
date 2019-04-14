@@ -153,9 +153,11 @@
             </div>
           </div>
           <div class="modal-footer">
-            <p class="text-muted text-center">
-              Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
-            </p>
+            <small class="text-center">
+              <p>
+                Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+              </p>
+            </small>
             <button type="submit"
                     class="btn btn-primary">Add</button>
           </div>
@@ -207,7 +209,7 @@
             <div class="row row-padded">
               <div class="col-xs-12 col-padded text-center">
                 <img data-bind="attr: { src: $parent.convertedDisplayUrl },
-                  click: $parent.toggleFullScreen" width="100%" class="clickable embedded-image" />
+                  click: $parent.toggleFullScreen" class="clickable preview-modal-image" />
                 <small>
                   <em class="text-muted">Click on the image to view it in Full Screen.</em>
                 </small>
@@ -299,9 +301,11 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <p class="text-muted text-center">
-                  Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
-                </p>
+                <small class="text-center">
+                  <p>
+                    Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                  </p>
+                </small>
                 <button type="submit"
                         class="btn btn-primary">Done</button>
               </div>

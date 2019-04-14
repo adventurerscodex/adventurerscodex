@@ -400,24 +400,27 @@
             </div>
           </div>
           <div class="modal-footer">
-            <p class="text-muted text-center">
-              Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
-            </p>
+            <small class="text-center">
+              <p>
+                Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+              </p>
+            </small>
             <button type="button"
                     class="btn btn-default"
-                    data-dismiss="modal">Cancel</button>
+                    data-dismiss="modal">
+                    Cancel</button>
             <button type="submit"
-                    class="btn btn-primary"
-                    >Add</button>
-              <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
-                <sm><i>This data is distributed under the
-                  <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
-                    target="_blank">
-                    OGL</a><br/>
-                    Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                  </i>
-                </sm>
-              </p>
+                    class="btn btn-primary">
+                    Add</button>
+            <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
+              <sm><i>This data is distributed under the
+                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
+                  target="_blank">
+                  OGL</a><br/>
+                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                </i>
+              </sm>
+            </p>
           </div>
         </form>
       </div> <!-- Modal Body -->
@@ -463,16 +466,13 @@
         </ul>
         <div class="tab-content" data-bind="with: currentEditItem">
           <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="row">
-              <div class="col-md-3">
-                <img data-bind="attr: { src: $parent.convertedDisplayUrl },
-                                click: $parent.toggleFullScreen"
-                      width="80" height="80" class="img img-circle img-padded clickable" />
-              </div>
-              <div class="h3">
-                <span data-bind="text: name"></span>&nbsp;
-                <small data-bind="text: nameLabel"></small>
-              </div>
+            <img data-bind="attr: { src: $parent.convertedDisplayUrl },
+                            click: $parent.toggleFullScreen"
+                  width="80" height="80" class="img img-circle img-padded clickable"
+                  style="display: inline"/>
+            <div class="h3" style="display: inline">
+              <span data-bind="text: name"></span>&nbsp;
+              <small data-bind="text: nameLabel"></small>
             </div>
             <div class="row">
               <div class="col-sm-6 col-xs-12"><b>Armor Class:</b>&nbsp;<span data-bind="text: armorClass"></span></div>
@@ -857,9 +857,11 @@
                 </div>
               </div>
               <div class="modal-footer">
-                <p class="text-muted text-center">
-                  Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
-                </p>
+                <small class="text-center">
+                  <p>
+                    Fields marked with <i class="fa fa-paper-plane-o"></i> will be sent to the players via the chat.
+                  </p>
+                </small>
                 <button type="submit"
                         class="btn btn-primary">Done</button>
               </div>

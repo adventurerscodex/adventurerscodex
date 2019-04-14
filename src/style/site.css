@@ -634,6 +634,14 @@ ul.footer-icons li {
   max-height: 225px;
 }
 
+.preview-modal-image {
+  display: block;
+  max-height: 400px;
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .btn-group-padding {
   padding: 10px 0px;
 }
