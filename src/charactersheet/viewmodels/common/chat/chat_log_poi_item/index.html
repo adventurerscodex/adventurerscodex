@@ -12,7 +12,7 @@
        <div class="row">
          <!-- ko if: shouldShowSaveToNotesButton -->
          <div class="col-xs-11">
-           <span data-bind="text: name"></span>
+           <span data-bind="html: nameHtml"></span>
            <!-- ko if: message.item().json.url -->
            <img data-bind="attr: { src: messageImage }, click: toggleFullScreen"
             width="100%" class="clickable" />
@@ -20,7 +20,7 @@
               <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
             </small>
             <!-- /ko -->
-            <span data-bind="html: messageDescription"></span>
+            <span data-bind="html: descriptionHtml"></span>
          </div>
          <div class="col-xs-1">
            <div class="input-group">
@@ -30,7 +30,7 @@
          <!-- /ko -->
          <!-- ko ifnot: shouldShowSaveToNotesButton -->
          <div class="col-xs-12">
-           <h3 data-bind="text: name"></h3>
+           <h3 data-bind="text: nameHtml"></h3>
            <!-- ko if: message.item().json.url -->
            <img data-bind="attr: { src: messageImage }, click: toggleFullScreen"
             width="100%" class="clickable" />
@@ -38,7 +38,7 @@
              <em class="text-muted text-center col-xs-12">Click on the image to view it in Full Screen.</em>
            </small>
            <!-- /ko -->
-           <span data-bind="html: messageDescription"></span>
+           <span data-bind="html: descriptionHtml"></span>
          </div>
          <!-- /ko -->
        </div>

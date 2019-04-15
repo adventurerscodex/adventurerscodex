@@ -41,7 +41,7 @@ export class PointOfInterest extends KOModel {
         return {
             name: this.name(),
             url: this.sourceUrl(),
-            description: this.description()
+            description: this.playerText()
         };
     };
 }

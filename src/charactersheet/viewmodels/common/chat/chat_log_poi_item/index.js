@@ -70,7 +70,7 @@ export function ChatLogPoiItem(params) {
         return self.message.item().json.description;
     });
 
-    self.html = ko.pureComputed(function() {
+    self.nameHtml = ko.pureComputed(function() {
         return '<h3>{name}</h3>'.replace(
             '{name}', self.message.item().json.name
         );
@@ -105,7 +105,6 @@ export function ChatLogPoiItem(params) {
 
     self.saveToNotes = function() {
         var key = CoreManager.activeCore().uuid();
-        var date = (new Date()).toDateString();
 
         var note = new Note();
         note.characterId(key);
