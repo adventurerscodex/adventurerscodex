@@ -637,7 +637,7 @@ ul.footer-icons li {
 .preview-modal-image {
   display: block;
   max-height: 400px;
-  width: auto;
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
