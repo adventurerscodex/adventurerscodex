@@ -61,7 +61,9 @@ export var CHAT_MESSAGE_TYPES = {
      *
      * NOTE: These actions are not yet designed.
      */
-    FORM: 'form'
+    FORM: 'form',
+
+    POINT_OF_INTEREST: 'point-of-interest'
 };
 
 
