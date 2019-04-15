@@ -81,11 +81,11 @@ export function ChatLogPoiItem(params) {
             .replace('{url}', self.messageImage());
     };
 
-    self.descriptionHtml = () => {
+    self.descriptionHtml = ko.pureComputed(function() {
         return '<span>{description}</span>'.replace(
             '{description}', self.message.item().json.description
         );
-    };
+    });
 
     self.constructPoiHtml = function() {
         var date = (new Date()).toDateString();
