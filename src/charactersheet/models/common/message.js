@@ -52,8 +52,7 @@ export function Message() {
     self.messageType = function() {
         if (self.subject() || self.invite()) {
             return CHAT_MESSAGE_TYPES.META;
-        }
-        else if (!self.item() && (self.html() || self.body())) {
+        } else if (!self.item() && (self.html() || self.body())) {
             return CHAT_MESSAGE_TYPES.CHAT;
         } else if (self.route() == CHAT_MESSAGE_TYPES.READ_ALOUD) {
             return CHAT_MESSAGE_TYPES.READ_ALOUD;
@@ -61,6 +60,8 @@ export function Message() {
             return CHAT_MESSAGE_TYPES.IMAGE;
         } else if (self.route() == CHAT_MESSAGE_TYPES.FORM) {
             return CHAT_MESSAGE_TYPES.FORM;
+        } else if (self.route() == CHAT_MESSAGE_TYPES.POINT_OF_INTEREST) {
+            return CHAT_MESSAGE_TYPES.POINT_OF_INTEREST;
         }
 
         // Should never happen.

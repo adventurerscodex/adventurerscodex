@@ -23,6 +23,9 @@
             <!-- ko if: message.messageType() == 'image' -->
               <chat-log-image-item params="message: message, onrender: $parent.onitemrender"></chat-log-image-item>
             <!-- /ko -->
+            <!-- ko if: message.messageType() == 'point-of-interest' -->
+              <chat-log-poi-item params="message: message, onrender: $parent.onitemrender"></chat-log-poi-item>
+            <!-- /ko -->
 				  </ul>
 			  </div>
 			  <div class="row">
