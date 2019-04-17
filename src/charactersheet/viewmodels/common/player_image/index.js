@@ -46,8 +46,8 @@ export function PlayerImageViewModel() {
         Notifications.coreManager.changed.add(self.dataHasChanged);
 
         // Prime the pump.
-        await self.dataHasChanged();
         self._handleConnectionStatusChanged();
+        await self.dataHasChanged();
     };
 
     self.doneButtonClicked = async () => {
@@ -142,7 +142,12 @@ export function PlayerImageViewModel() {
 
     self._handleConnectionStatusChanged = function() {
         var xmpp = XMPPService.sharedService();
-        self._isConnectedToXMPP(xmpp.connection ? xmpp.connection.connected : null);
+        self._isConnectedToXMPP(
+            xmpp.connection ?
+            // Ensure we're both connected and authenticated.
+            (xmpp.connection.connected && xmpp.connection.authenticated) :
+            false
+        );
     };
 
     //Player Image Handlers
