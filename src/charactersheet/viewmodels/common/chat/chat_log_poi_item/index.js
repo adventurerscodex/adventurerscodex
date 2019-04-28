@@ -82,6 +82,10 @@ export function ChatLogPoiItem(params) {
     };
 
     self.descriptionHtml = ko.pureComputed(function() {
+        if (self.message.item().json.description) {
+            return;
+        }
+
         return '<span>{description}</span>'.replace(
             '{description}', self.message.item().json.description
         );

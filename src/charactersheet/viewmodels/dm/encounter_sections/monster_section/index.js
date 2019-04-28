@@ -142,8 +142,6 @@ export function MonsterSectionViewModel(params) {
         self.openEditModal(true);
     };
 
-    // todo: talk to Brian on how to toggle exhibit in the api without having to save _everything_
-    // todo: in the monster and related objects
     self.toggleMonsterExhibit = async (monster) => {
         const imageService = ImageServiceManager.sharedService();
         if (monster.isExhibited()) {

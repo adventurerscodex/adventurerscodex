@@ -42,10 +42,10 @@ export var JSONPayload = {
      * Given an XML node, return the given message's JSON parsed contents.
      */
     getContents: function(node) {
-        var isCompressed = node.attr('compressed').toLowerCase();
+        var isCompressed = node.attr('compressed');
 
         var contents = null;
-        if (isCompressed == 'true') {
+        if (isCompressed && isCompressed.toLowerCase() == 'true') {
             var compression = node.attr('compression').toLowerCase();
             contents = JSONPayload.configuration.compression[compression].decompress(node.text());
         } else {
