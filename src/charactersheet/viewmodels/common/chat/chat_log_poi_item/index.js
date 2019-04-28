@@ -82,7 +82,7 @@ export function ChatLogPoiItem(params) {
     };
 
     self.descriptionHtml = ko.pureComputed(function() {
-        if (self.message.item().json.description) {
+        if (!self.message.item().json.description) {
             return;
         }
 
