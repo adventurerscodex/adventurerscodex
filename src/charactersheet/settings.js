@@ -94,6 +94,9 @@ export var Settings = {
         }, {
             key: 'backpacks',
             url: 'https://adventurerscodex.com/data/v2/SRD/backpacks.min.json'
+        }, {
+            key: 'traps',
+            url: 'https://adventurerscodex.com/data/v2/SRD/traps.min.json'
         }
     ]
 };
