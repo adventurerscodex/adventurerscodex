@@ -1,6 +1,7 @@
 import 'bin/knockout-bootstrap-modal';
 import {
     CoreManager,
+    DataRepository,
     Fixtures,
     Notifications,
     Utility
@@ -39,6 +40,7 @@ export function TrapSectionViewModel(params) {
     self.addFormIsValid = ko.observable(false);
     self.addModalIsOpen = ko.observable(false);
     self.addWellOpen = ko.observable(false);
+    self.shouldShowDisclaimer = ko.observable(false);
     self.firstElementInModalHasFocus = ko.observable(false);
 
     self.sorts = {
@@ -198,6 +200,23 @@ export function TrapSectionViewModel(params) {
         }
 
         self.viewEditModalIsOpen(false);
+    };
+
+    /* Pre-Population Methods */
+
+    self.trapsPrePopFilter = function(request, response) {
+        const term = request.term.toLowerCase();
+        const keys = DataRepository.traps ? Object.keys(DataRepository.traps) : [];
+        const results = keys.filter(function(name, idx, _) {
+            return name.toLowerCase().indexOf(term) > -1;
+        });
+        response(results);
+    };
+
+    self.populateTrap = function(label, value) {
+        const trap = DataRepository.traps[label];
+        self.blankTrap().importValues(trap);
+        self.shouldShowDisclaimer(true);
     };
 
     /* Private Methods */

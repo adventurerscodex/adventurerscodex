@@ -99,7 +99,8 @@
                      name="name"
                      placeholder="Pit Trap"
                      data-bind="textInput: blankTrap().name,
-                        hasFocus: firstElementInModalHasFocus">
+                        hasFocus: firstElementInModalHasFocus,
+                        autocomplete: { source: trapsPrePopFilter, onselect: populateTrap }">
             </div>
           </div>
           <div class="form-group">
@@ -250,6 +251,15 @@
               class="btn btn-primary">
               Add
             </button>
+            <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
+              <sm><i>This data is distributed under the
+                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
+                  target="_blank">
+                  OGL</a><br/>
+                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                </i>
+              </sm>
+            </p>
           </div>
         </form>
       </div> <!-- Modal Body -->
