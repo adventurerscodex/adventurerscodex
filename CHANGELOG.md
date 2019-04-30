@@ -1,3 +1,14 @@
+version 2.1.0 (04/29/2019)
+* Updates some more validation constraints
+* Fixes a bug with switching tabs
+* Fixes calculations related to weight
+* Adds Trap Encounter Section
+* Adds inactivity timer
+* Encounter sections that can be sent via the chat now have a symbol next to the field to indicate that they will be sent to the player
+* Adds image links to various Encounter Sections
+* Adds the ability to send more encounter sections through the chat
+* Fix bug with connection status dot
+
 version 2.0.3 (03/16/2019)
 * Removes an unused version of font awesome
 
