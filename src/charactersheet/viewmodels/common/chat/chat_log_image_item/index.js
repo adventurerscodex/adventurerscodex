@@ -78,9 +78,9 @@ export function ChatLogImageItem(params) {
     self.saveToNotes = async function() {
         const date = (new Date()).toDateString();
 
-        let note = Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
         note.appendTextToNote(self.html() + '\n\n' + date + '\n\n' + self.imageHtml());
-        await note.save();
+        await note.ps.save();
 
         Notifications.notes.changed.dispatch();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');

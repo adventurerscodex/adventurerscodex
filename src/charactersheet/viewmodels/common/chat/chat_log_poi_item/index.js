@@ -108,9 +108,9 @@ export function ChatLogPoiItem(params) {
     };
 
     self.saveToNotes = async function() {
-        let note = Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
         note.appendTextToNote(self.constructPoiHtml());
-        await note.save();
+        await note.ps.save();
 
         Notifications.notes.changed.dispatch();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');

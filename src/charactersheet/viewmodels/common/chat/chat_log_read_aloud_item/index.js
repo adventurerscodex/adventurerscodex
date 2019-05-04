@@ -61,7 +61,7 @@ export function ChatLogReadAloudItem(params) {
     });
 
     self.saveToNotes = async function() {
-        let note = Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
         note.appendTextToNote(note.text() + '\n\n' + '**' + date + '**' + '\n\n' + self.html());
         await note.ps.save();
 
