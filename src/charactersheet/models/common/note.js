@@ -1,5 +1,6 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
+import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { KOModel } from 'hypnos';
 import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
@@ -16,7 +17,7 @@ export class Note extends KOModel {
     title = ko.observable('');
     contents = ko.observable('');
     headline = ko.observable('');
-    isSavedChatNotes = ko.observable(false);
+    type = ko.observable('');
 
     updateHeadline() {
         var text = '';
@@ -42,4 +43,27 @@ export class Note extends KOModel {
         var words = myString.split(/\s+/);
         return words.slice(0, words.length - 2).join(' ');
     };
+
+    /**
+     * Convenience method to append new content to the existing note.
+     */
+    appendTextToNote = (content) => {
+        this.text(this.text() + '\n\n' + content);
+    }
+
+    static getSavedFromChatNote = async (coreUuid) => {
+        const { objects: foundNotes } =
+            await this.ps.list({coreUuid, type: Fixtures.notes.type.chat});
+        let chatNote = foundNotes[0];
+
+        // if no chat note was found, create a new note and set its type to 'chat'
+        // else, return the found chat note
+        if (chatNote == undefined) {
+            chatNote = new this();
+            chatNote.text('# Saved from Chat');
+            chatNote.type(Fixtures.notes.type.chat);
+        }
+
+        return chatNote;
+    }
 }
