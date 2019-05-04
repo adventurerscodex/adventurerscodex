@@ -51,6 +51,9 @@ export class Note extends KOModel {
         this.contents(this.contents() + '\n\n' + content);
     };
 
+    /**
+     * Returns the note record that is has type=chat.
+     */
     static getSavedFromChatNote = async (coreUuid) => {
         const { objects: foundNotes } = await Note.ps.list({
             coreUuid,
@@ -66,7 +69,6 @@ export class Note extends KOModel {
             chatNote.contents('# Saved from Chat');
             chatNote.type(Fixtures.notes.type.chat);
             const { object } = await chatNote.ps.create();
-            console.log(object)
             chatNote = object;
         }
 
