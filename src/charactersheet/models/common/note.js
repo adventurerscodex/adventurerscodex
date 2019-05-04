@@ -49,21 +49,21 @@ export class Note extends KOModel {
      */
     appendTextToNote = (content) => {
         this.text(this.text() + '\n\n' + content);
-    }
+    };
 
     static getSavedFromChatNote = async (coreUuid) => {
         const { objects: foundNotes } =
-            await this.ps.list({coreUuid, type: Fixtures.notes.type.chat});
+            await Note.ps.list({coreUuid, type: Fixtures.notes.type.chat});
         let chatNote = foundNotes[0];
 
         // if no chat note was found, create a new note and set its type to 'chat'
         // else, return the found chat note
         if (chatNote == undefined) {
-            chatNote = new this();
+            chatNote = new Note();
             chatNote.text('# Saved from Chat');
             chatNote.type(Fixtures.notes.type.chat);
         }
 
         return chatNote;
-    }
+    };
 }
