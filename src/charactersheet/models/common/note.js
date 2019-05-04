@@ -48,20 +48,28 @@ export class Note extends KOModel {
      * Convenience method to append new content to the existing note.
      */
     appendTextToNote = (content) => {
-        this.text(this.text() + '\n\n' + content);
+        this.contents(this.contents() + '\n\n' + content);
     };
 
+    /**
+     * Returns the note record that is has type=chat.
+     */
     static getSavedFromChatNote = async (coreUuid) => {
-        const { objects: foundNotes } =
-            await Note.ps.list({coreUuid, type: Fixtures.notes.type.chat});
+        const { objects: foundNotes } = await Note.ps.list({
+            coreUuid,
+            type: Fixtures.notes.type.chat
+        });
         let chatNote = foundNotes[0];
 
         // if no chat note was found, create a new note and set its type to 'chat'
         // else, return the found chat note
         if (chatNote == undefined) {
             chatNote = new Note();
-            chatNote.text('# Saved from Chat');
+            chatNote.coreUuid(coreUuid);
+            chatNote.contents('# Saved from Chat');
             chatNote.type(Fixtures.notes.type.chat);
+            const { object } = await chatNote.ps.create();
+            chatNote = object;
         }
 
         return chatNote;
