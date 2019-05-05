@@ -156,7 +156,7 @@ export class OtherStatsViewModel extends ACViewModel {
         this.hasInspirationChanged(false);
     }
 
-    save = async ({ notify, data }) => {
+    save = async ({ data: { notify, data }}) => {
         const { otherStats, profile } = data;
         const otherStatsResponse = await otherStats().ps.save();
         const profileResponse = await profile().ps.save();
@@ -166,7 +166,7 @@ export class OtherStatsViewModel extends ACViewModel {
         notify();
     }
 
-    reset = async ({ refresh }) => {
+    reset = async ({ data: { refresh }}) => {
         refresh();
     }
 

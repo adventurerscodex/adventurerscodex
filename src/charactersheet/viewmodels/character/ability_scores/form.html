@@ -1,0 +1,83 @@
+<div style="margin-top:15px;" class="btn-group btn-group-justified"
+     role="group"
+     aria-label="Toggle Ability Score/Saving Throws">
+  <div class="btn-group"
+       role="group">
+    <button type="button"
+            class="btn btn-info btn-sm"
+            data-bind="click: $component.toggleSaves(false), css: {active: !$component.showSaves()}">Scores</button>
+  </div>
+
+  <div class="btn-group"
+       role="group">
+    <button type="button"
+            class="btn btn-info btn-sm"
+            data-bind="click: $component.toggleSaves(true), css: {active: $component.showSaves()}">Saves</button>
+  </div>
+</div>
+<form class="form-horizontal" data-bind="{submit: $component.submit}">
+    <div data-bind="visible: !$component.showSaves()">
+          <table class="table table-responsive table-ac-bordered table-hover score-save-table"
+                 id="abilityScoreTable">
+            <thead class="ac-table-header">
+              <tr>
+                <th >
+                  Score
+                </th>
+                <th>
+                  Ability
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- ko foreach: $component.order -->
+              <tr data-bind="with: $component.data.findScoreByName($data)">
+                <td  class="ac-table-data-cell">
+                  <input type="number"
+                         class="form-control ac-number-input"
+                         min="0"
+                         data-bind="value: value">
+                </td>
+                <td data-bind="text: name"></td>
+              </tr>
+              <!-- /ko -->
+            </tbody>
+          </table>
+    </div>
+    <div data-bind="visible: $component.showSaves()">
+      <table class="table table-responsive table-ac-bordered table-hover score-save-table">
+        <thead class="ac-table-header">
+          <tr>
+            <th>
+              Prof
+            </th>
+            <th>
+              Ability
+            </th>
+            <th>
+              Modify
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- ko foreach: $component.order -->
+          <tr data-bind="with: $component.data.findSaveByName($data)">
+            <td>
+              <input type='checkbox'
+                     class='ac-checkbox sr-only'
+                     data-bind="checked: proficiency, attr: {id: 'savingThrow_'+name()}"></input>
+              <label data-bind="attr: {for: 'savingThrow_'+name()}">
+            </td>
+            <td data-bind="text: name"></td>
+            <td>
+              <input type="number" class="form-control ac-number-input" data-bind="value: modifier" />
+            </td>
+          </tr>
+          <!-- /ko -->
+        </tbody>
+      </table>
+             </div>
+             <button type="submit"
+                     style="visibility:hidden"
+                     value="submit"></button>
+         </form>
