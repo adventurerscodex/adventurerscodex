@@ -1,330 +1,480 @@
-<ul class="nav nav-tabs tabs">
-  <li role="presentation"
-      id="tabStatsLink"
-      data-bind="click: activateStatsTab, css: statsTabStatus">
-    <a href="#stats" aria-controls="stats" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.statsTab }" /></br>
-      <span class="text-center" id="tabStatsSpan"><small>Stats</small></span>
-    </a>
-  </li>
-  <li role="presentation"
-      id="tabSkillsLink"
-      data-bind="click: activateSkillsTab, css: skillsTabStatus">
-    <a href="#skills" aria-controls="skills" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.skillsTab }" /></br>
-      <span class="text-center" id="tabSkillsSpan"><small>Skills</small></span>
-    </a>
-  </li>
-  <li role="presentation"
-      id="tabSpellsLink"
-      data-bind="click: activateSpellsTab, css: spellsTabStatus">
-    <a href="#spells" aria-controls="spells" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.spellsTab }" /></br>
-      <span class="text-center" id="tabSpellsSpan"><small>Spells</small></span>
-    </a>
-  </li>
-  <li role="presentation"
-      id="tabEquipmentLink"
-      data-bind="click: activateEquipmentTab, css: equipmentTabStatus">
-      <a href="#items" aria-controls="items" role="tab" data-toggle="tab" class="tab-subtext">
-        <img class="tab-icon" data-bind="attr: { src: icons.battleGear }" /></br>
-        <span class="text-center" id="tabEquipmentSpan"><small>Equipment</small></span>
-      </a>
-  </li>
-  <li role="presentation"
-      id="tabInventoryLink"
-      data-bind="click: activateInventoryTab, css: inventoryTabStatus">
-    <a href="#inventory" aria-controls="inventory" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.inventoryTab }" /></br>
-      <span class="text-center" id="tabInventorySpan"><small>Inventory</small></span>
-    </a>
-  </li>
-  <li role="presentation"
-      id="tabNotesLink"
-      data-bind="click: activateNotesTab, css: notesTabStatus">
-    <a href="#notes" aria-controls="notes" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.notesTab }" /></br>
-      <span class="text-center" id="tabNotesSpan"><small>Notes</small></span>
-    </a>
-  </li>
-  <li role="presentation"
-      id="tabProfileLink"
-      data-bind="click: activateProfileTab, css: profileTabStatus">
-    <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.profileTab }" /></br>
-      <span class="text-center" id="tabProfileSpan"><small>Profile</small></span>
-    </a>
-  </li>
+<div role="presentation"
+     class="secondary-nav visible-xs"
+     style="text-align:right">
+  <button class="btn btn-sm btn-primary"
+          id="actionsActionsButton"
+          data-toggle="collapse"
+          data-bind="click: toggleWellOpen"
+          data-target="#actionsCollapse"
+          aria-expanded="false"
+          aria-controls="actionsCollapse">
+      Actions
+      <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
+  </button>
+</div>
 
-  <li role="presentation"
-      id="tabChatLink"
-      data-bind="click: activateChatTab, css: chatTabStatus">
-    <a href="#chat-header" aria-controls="chat-tab" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.chatTab }" /></br>
-      <span class="text-center" id="tabChatSpan"><small>Chat</small></span>
-    </a>
-  </li>
-  <li role="presentation"
-      id="tabExhibitLink"
-      data-bind="click: activateExhibitTab, css: exhibitTabStatus">
-    <a href="#exhibit-header" aria-controls="exhibit-tab" role="tab" data-toggle="tab" class="tab-subtext">
-      <img class="tab-icon" data-bind="attr: { src: icons.exhibitTab }" /></br>
-      <span class="text-center" id="tabExhibitSpan"><small>Exhibit</small></span>
-    </a>
-  </li>
-  <!-- Right tabs -->
-  <li role="presentation" class="secondary-nav">
-    <button class="btn btn-sm btn-primary" id="actionsActionsButton" data-toggle="collapse"
-      data-bind="click: toggleWellOpen"
-      data-target="#actionsCollapse" aria-expanded="false"
-      aria-controls="actionsCollapse">
+<div class="navbar-header"><button type="button"
+          style="background-color:#2c3e50; float: initial"
+          class="btn btn-block navbar-toggle collapsed"
+          data-toggle="collapse"
+          data-target="#descriptionTab"
+          aria-expanded="false"
+          aria-controls="navbar">
+  <span class="sr-only">Toggle navigation</span>
+  <span style="background-color:white; margin: 5px; width: 70%; margin-top: 0px; margin-right: 15%; margin-left: 15%;" class="icon-bar"></span>
+  <span style="background-color:white; margin: 5px;width: 70%; margin-right: 15%; margin-left: 15%" class="icon-bar"></span>
+  <span style="background-color:white; margin: 5px;width: 70%;margin-bottom: 0px; margin-right: 15%; margin-left: 15%" class="icon-bar"></span>
+</button>
+</div>
+<div class="navbar-collapse collapse"
+     id="descriptionTab">
+  <ul class="nav nav-tabs tabs">
+    <li role="presentation"
+        id="tabStatsLink">
+      <a href="#stats"
+         aria-controls="stats"
+         role="tab"
+         data-toggle="tab"
+         id="statsTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateStatsTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.statsTab }" />
+          <span class="text-center"
+                id="tabStatsSpan"><small>Stats</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.statsTab }" />
+          <br />
+          <span class="text-center"
+                id="tabStatsSpan"><small>Stats</small></span>
+        </div>
+
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabSkillsLink">
+      <a href="#skills"
+         aria-controls="skills"
+         role="tab"
+         data-toggle="tab"
+         id="skillsTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateSkillsTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.skillsTab }" />
+          <span class="text-center"
+                id="tabSkillsSpan"><small>Skills</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.skillsTab }" />
+          <br />
+          <span class="text-center"
+                id="tabSkillsSpan"><small>Skills</small></span>
+        </div>
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabSpellsLink"
+        >
+      <a href="#spells"
+         aria-controls="spells"
+         role="tab"
+         data-toggle="tab"
+         id="spellsTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateSpellsTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.spellsTab }" />
+          <span class="text-center"
+                id="tabSpellsSpan"><small>Spells</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.spellsTab }" />
+          <br />
+          <span class="text-center"
+                id="tabSpellsSpan"><small>Spells</small></span>
+        </div>
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabEquipmentLink"
+      >
+      <a href="#items"
+         aria-controls="items"
+         role="tab"
+         data-toggle="tab"
+         id="itemsTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateSpellsTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.battleGear }" />
+          <span class="text-center"
+                id="tabEquipmentSpan"><small>Equipment</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.battleGear }" />
+          <br />
+          <span class="text-center"
+                id="tabEquipmentSpan"><small>Equipment</small></span>
+        </div>
+
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabInventoryLink"
+        >
+      <a href="#inventory"
+         aria-controls="inventory"
+         role="tab"
+         data-toggle="tab"
+         id="inventoryTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateInventoryTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.inventoryTab }" />
+          <span class="text-center"
+                id="tabInventorySpan"><small>Inventory</small></span>
+        </div>
+        <div class="hidden-xs">
+
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.inventoryTab }" />
+          <br />
+          <span class="text-center"
+                id="tabInventorySpan"><small>Inventory</small></span>
+        </div>
+
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabNotesLink"
+        >
+      <a href="#notes"
+         aria-controls="notes"
+         role="tab"
+         data-toggle="tab"
+         id="notesTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateNotesTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.notesTab }" />
+          <span class="text-center"
+                id="tabNotesSpan"><small>Notes</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.notesTab }" />
+          <br />
+          <span class="text-center"
+                id="tabNotesSpan"><small>Notes</small></span>
+        </div>
+
+      </a>
+
+    </li>
+    <li role="presentation"
+        id="tabProfileLink"
+        >
+      <a href="#profile"
+         aria-controls="profile"
+         role="tab"
+         data-toggle="tab"
+         id="profileTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateProfileTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.profileTab }" />
+          <span class="text-center"
+                id="tabProfileSpan"><small>Profile</small></span>
+        </div>
+        <div class="hidden-xs">
+
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.profileTab }" />
+          <br />
+          <span class="text-center"
+                id="tabProfileSpan"><small>Profile</small></span>
+        </div>
+
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabChatLink"
+        >
+      <a href="#chat-header"
+         aria-controls="chat-tab"
+         role="tab"
+         data-toggle="tab"
+         id="chatTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateChatTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.chatTab }" />
+          <span class="text-center"
+                id="tabChatSpan"><small>Chat</small></span>
+        </div>
+        <div class="hidden-xs">
+
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.chatTab }" />
+          <br />
+          <span class="text-center"
+                id="tabChatSpan"><small>Chat</small></span>
+        </div>
+      </a>
+    </li>
+    <li role="presentation"
+        id="tabExhibitLink"
+        >
+      <a href="#exhibit-header"
+         aria-controls="exhibit-tab"
+         role="tab"
+         data-toggle="tab"
+         id="exhibitTabTrigger"
+         class="tab-subtext"
+         data-bind="click: activateExhibitTab">
+        <div class="visible-xs"
+             data-toggle="collapse"
+             data-target="#descriptionTab">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.exhibitTab }" />
+          <span class="text-center"
+                id="tabExhibitSpan"><small>Exhibit</small></span>
+        </div>
+        <div class="hidden-xs">
+          <img class="tab-icon"
+               data-bind="attr: { src: icons.exhibitTab }" />
+          <br />
+          <span class="text-center"
+                id="tabExhibitSpan"><small>Exhibit</small></span>
+        </div>
+      </a>
+    </li>
+    <!-- Right tabs -->
+    <li role="presentation"
+        class="secondary-nav hidden-xs">
+      <button class="btn btn-sm btn-primary"
+              id="actionsActionsButton"
+              data-toggle="collapse"
+              data-bind="click: toggleWellOpen"
+              data-target="#actionsCollapse"
+              aria-expanded="false"
+              aria-controls="actionsCollapse">
         Actions
         <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
     </button>
-  </li>
-</ul>
+    </li>
+  </ul>
+</div>
 <div class="tab-content">
   <actions-toolbar params="wellState: wellState"></actions-toolbar>
-  <div role="tabpanel" class="tab-pane" id="stats" data-bind="css: statsTabStatus">
+  <div role="tabpanel"
+       class="tab-pane"
+       id="stats"
+       data-bind="css: statsTabStatus">
     <div class="row">
-      <div class="col-sm-4 col-lg-3 hidden-xs">
-        <img alt="A heart icon" data-bind="attr: { src: icons.healthSection }"/>
+      <div class="col-sm-12 col-md-4 col-md-push-4 col-lg-6 col-lg-push-3"
+           style="position:relative; z-index: 6">
+        <stats params="{tabId: 'stats'}"></stats>
       </div>
-      <div class="col-sm-8 col-lg-9 col-padded">
-        <div class="h3">
-          Hit Points and Hit Dice<br />
-          <small>Click on your max Hit Points to increase them when you level
-            up. Click on a die icon to track expended hit dice.</small>
-        </div>
-        <stats></stats>
+      <div class="col-sm-6 col-md-4 col-md-pull-4 col-lg-3 col-lg-pull-6"
+           style="position:relative; z-index: 5">
+        <other-stats params="{tabId: 'stats'}"></other-stats>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg-3"
+           style="position:relative; z-index: 4">
+        <ability-scores params="{tabId: 'stats'}"></ability-scores>
       </div>
     </div>
+  </div>
+  <!-- End Stats Tab -->
+
+  <div role="tabpanel"
+       class="tab-pane"
+       id="skills"
+       data-bind="css: skillsTabStatus">
     <div class="row">
-      <div class="col-sm-12 col-padded">
-        <div class="h3">
-          Ability Scores, Savings Throw, and Other Stats<br />
-          <small>Click on your Ability Scores to add or edit them. Savings
-            Throw modifiers automatically include your Ability Score modifier
-            and Proficiency Bonus.
-          </small>
-        </div>
+      <div class="col-xs-12 col-lg-8"
+           style="position:relative; z-index: 9">
+        <tracker params="{tabId: 'skills'}"></tracker>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-padded">
-        <ability-scores></ability-scores>
+      <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4"
+           style="position:relative; z-index: 7; float:right">
+        <skills params="{tabId: 'skills'}"></skills>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-sm-6 col-padded">
-        <savings-throws></savings-throws>
-      </div>
-      <div class="col-md-8 col-sm-6 col-padded">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <div class="row">
-              <div class="col-sm-12 col-padded">
-                <other-stats></other-stats>
-              </div>
+      <!-- <div class="clearfix visible-xs"></div> -->
+      <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6">
+             <div class="row">
+                 <div class="col-xs-12"
+                      style="position:relative; z-index: 8">
+                      <features params="{tabId: 'skills'}"></features>
+                 </div>
+                 <div class="col-xs-12"
+                      style="position:relative; z-index: 7">
+                      <traits params="{tabId: 'skills'}"></traits>
+                 </div>
+               </div>
+          </div>
+          <div class="col-sm-12 col-lg-6">
+             <div class="row">
+                 <div class="col-xs-12"
+                       style="position:relative; z-index: 6">
+                       <feats params="{tabId: 'skills'}"></feats>
+                 </div>
+                 <div class="col-xs-12"
+                      style="position:relative; z-index: 6">
+                      <proficiencies params="{tabId: 'skills'}"></proficiencies>
+                 </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-<!-- End Stats Tab -->
+  <!-- End Skills Tab -->
 
-<div role="tabpanel" class="tab-pane" id="skills" data-bind="css: skillsTabStatus">
-  <div class="row">
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A sword in stone" data-bind="attr: { src: icons.skillSection }" />
-    </div>
-    <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
-      <div class="h3">
-        Tracked Features, Feats, and Traits<br />
-        <small>Configure to reset on a short or long rest.</small>
-      </div>
-      <tracker></tracker>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="h3">
-        Skills, Feats, Features, Traits, and Proficiencies<br />
-        <small>Your Skills take into account your Ability Score modifiers
-        and Proficiency Bonus.</small>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-4 col-md-5 col-sm-6 col-padded">
-      <skills></skills>
-    </div>
-    <div class="col-lg-8 col-md-7 col-sm-6 col-padded">
-      <div class="row">
-        <div class="col-lg-6 col-xs-12 col-padded">
-          <features></features>
-        </div>
-        <div class="col-lg-6 col-xs-12 col-padded">
-          <feats></feats>
-          <traits></traits>
-          <proficiencies></proficiencies>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Skills Tab -->
-
-<div role="tabpanel" class="tab-pane" id="spells" data-bind="css: spellsTabStatus">
-  <div class="row">
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img data-bind="attr: { src: icons.spellSection }" alt="Spells image"/>
-    </div>
-    <div class="col-sm-8 col-lg-9 col-padded">
-      <div class="h3">
-        Spell Slots<br/>
-        <small>These slots are configurable to reset on a short or long rest. Click
-        on a slot to edit it.</small>
-      </div>
-      <spell-slots></spell-slots>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-12 col-padded">
-      <div class="h3">
-        Spell Stats<br/>
-        <small>Click to edit. In the future, these values will auto-calculate and auto-populate.</small>
-      </div>
-      <spell-stats></spell-stats>
-    </div>
-    <div class="col-sm-12 col-padded">
-      <div class="h3">
-        Spells<br/>
-        <small>You can sort your spells by clicking on the headers. View the
-          bottom of the list for a count of your prepared spells.</small>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 col-sm-12 col-padded">
-      <spells></spells>
-    </div>
-  </div>
-</div>
-<!-- End Spells Tab -->
-
-<div role="tabpanel" class="tab-pane" id="items" data-bind="css: equipmentTabStatus">
-  <div class="row">
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="A sword in stone" data-bind="attr: { src: icons.weaponSection }"/>
-    </div>
-    <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
-      <div class="h3">
-        Weapons<br />
-        <small>A weapon's To Hit bonus is automatically calculated based on
-           your Strength or Dexterity, proficiency bonus, magical modifier,
-           and property. Use the To Hit Modifier to adjust for features, feats,
-           or special cases.</small>
-      </div>
-      <weapons></weapons>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-8 col-lg-9 col-xs-12 col-padded">
-      <div class="h3">
-        Armor<br />
-        <small>Armor Class calculations are based on your equipped Armor, Shield, Magical Modifiers, and Dexterity.
-               Be sure to Don your armor and/or shield so your AC will be calculated.
-        </small>
-      </div>
-      <armor></armor>
-    </div>
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img alt="Shield" data-bind="attr: { src: icons.armorSection }"/>
-    </div>
-  </div>
-</div>
-<!-- End Equipment Tab -->
-
-<div role="tabpanel" class="tab-pane" id="inventory" data-bind="css: inventoryTabStatus">
-  <div class="row">
-    <div class="col-sm-4 col-lg-3 hidden-xs">
-      <img data-bind="attr: { src: icons.inventorySection }" alt="Inventory tab"/>
-    </div>
-    <div class="col-sm-8 col-lg-9 col-padded">
-      <div class="h3">
-        Treasure &amp; Magic Items<br/>
-        <small>“This should be in a museum!” -Indiana Jones</small>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-padded">
-          <wealth></wealth>
-        </div>
-        <div class="col-sm-12 col-padded">
-          <magic-items></magic-items>
-        </div>
-      </div>
-    </div>
-    </div>
+  <div role="tabpanel"
+       class="tab-pane"
+       id="spells"
+       data-bind="css: spellsTabStatus">
     <div class="row">
+      <div class="col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-3 col-lg-push-9">
+        <spell-stats params="{tabId: 'spells'}"></spell-stats>
+      </div>
+      <div class="col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-9 col-lg-pull-3">
+        <spell-slots params="{tabId: 'spells'}"></spell-slots>
+      </div>
+
+      <div class="col-sm-12">
+        <spells params="{tabId: 'spells'}"></spells>
+      </div>
+    </div>
+  </div>
+  <!-- End Spells Tab -->
+
+  <div role="tabpanel"
+       class="tab-pane"
+       id="items"
+       data-bind="css: equipmentTabStatus">
+    <div class="row">
+      <div class="col-xs-12">
+        <weapons params="{tabId: 'items'}"></weapons>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <magic-items params="{tabId: 'items'}"></magic-items>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <armor params="{tabId: 'items'}"></armor>
+      </div>
+    </div>
+  </div>
+  <!-- End Equipment Tab -->
+
+  <div role="tabpanel"
+       class="tab-pane"
+       id="inventory"
+       >
+    <div class="row">
+      <div class="col-sm-4 col-lg-3 col-padded">
+        <treasure params="{tabId: 'inventory'}"></treasure>
+      </div>
       <div class="col-sm-8 col-lg-9 col-padded">
+
+        <items params="{tabId: 'inventory'}"></items>
+      </div>
+    </div>
+  </div>
+  <!-- End Inventory Tab -->
+
+  <div role="tabpanel"
+       class="tab-pane"
+       id="notes">
+    <div class="row">
+      <div class="col-sm-12 col-padded">
         <div class="h3">
-          Inventory<br/>
-          <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
+          Notes<br />
+          <small>“Consult the Book of Armaments!” -King Arthur</small>
         </div>
+        <notes></notes>
+      </div>
+    </div>
+  </div>
+  <!-- End Notes Tab -->
+
+  <div role="tabpanel"
+       class="tab-pane"
+       id="profile"
+       data-bind="css: profileTabStatus">
+    <div class="row">
+      <div class="col-sm-4 hidden-xs">
+        <img data-bind="attr: { src: icons.profileSection }"
+             alt="Profile tab"
+             style="width:100%;" />
+      </div>
+      <div class="col-sm-8 col-padded">
+        <div class="h3">
+          Profile<br />
+          <small>This stuff doesn't change very often!</small>
+        </div>
+        <profile></profile>
+        <appearance></appearance>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-12 col-padded">
-        <items></items>
+        <feat-traits></feat-traits>
       </div>
     </div>
-</div>
-<!-- End Inventory Tab -->
-
-<div role="tabpanel" class="tab-pane" id="notes" data-bind="css: notesTabStatus">
-  <div class="row">
-    <div class="col-sm-12 col-padded">
-      <div class="h3">
-        Notes<br />
-        <small>“Consult the Book of Armaments!” -King Arthur</small>
-      </div>
-      <notes></notes>
-    </div>
   </div>
-</div>
-<!-- End Notes Tab -->
+  <!-- End Profile tab -->
 
-<div role="tabpanel" class="tab-pane" id="profile" data-bind="css: profileTabStatus">
-  <div class="row">
-    <div class="col-sm-4 hidden-xs">
-      <img data-bind="attr: { src: icons.profileSection }" alt="Profile tab" style="width:100%;"/>
-    </div>
-    <div class="col-sm-8 col-padded">
-      <div class="h3">
-        Profile<br />
-        <small>This stuff doesn't change very often!</small>
-      </div>
-      <profile></profile>
-    </div>
+  <div role="tabpanel"
+       class="tab-pane"
+       id="chat-tab"
+       data-bind="css: chatTabStatus">
+    <chat params="isActive: chatTabStatus"></chat>
   </div>
-  <div class="row">
-    <div class="col-sm-12 col-padded">
-      <background></background>
-    </div>
+  <!-- End Chat Tab -->
+
+  <div role="tabpanel"
+       class="tab-pane"
+       id="exhibit-tab"
+       data-bind="css: exhibitTabStatus">
+    <exhibit></exhibit>
   </div>
+  <!-- End Exhibit Tab -->
 </div>
-<!-- End Profile tab -->
-
-<div role="tabpanel" class="tab-pane" id="chat-tab" data-bind="css: chatTabStatus">
-  <chat params="isActive: chatTabStatus"></chat>
-</div>
-<!-- End Chat Tab -->
-
-<div role="tabpanel" class="tab-pane" id="exhibit-tab" data-bind="css: exhibitTabStatus">
-  <exhibit></exhibit>
-</div>
-<!-- End Exhibit Tab -->
-</div>
-

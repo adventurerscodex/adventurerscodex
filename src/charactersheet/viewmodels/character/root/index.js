@@ -163,6 +163,12 @@ export function CharacterRootViewModel() {
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
 
+        $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
+
+        self.activeTab.subscribe(()=>{
+            $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
+        });
+
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
         Notifications.xmpp.disconnected.add(self._removeCurrentNode);

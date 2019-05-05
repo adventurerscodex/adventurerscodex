@@ -17,9 +17,10 @@ import { getModifier } from 'charactersheet/models/character/ability_score';
 import ko from 'knockout';
 import template from './index.html';
 
-export function OtherStatsViewModel() {
+export function OtherStatsViewModel(params) {
     var self = this;
 
+    self.tabId = params.tabId;
     self.otherStats = ko.observable(new OtherStats());
     self.profile = ko.observable(new Profile());
     self.armorClass = ko.observable();
@@ -142,8 +143,13 @@ export function OtherStatsViewModel() {
         self.armorClass(ArmorClassService.sharedService().armorClass());
     };
 
-    self.toggleInspiration = async () => {
+    self.toggleInspiration = async (editMode=false) => {
         self.otherStats().inspiration(!self.otherStats().inspiration());
+        if (!editMode && self.hasInspirationChanged()) {
+            const otherStatsResponse = await self.otherStats().ps.save();
+            Notifications.otherStats.inspiration.changed.dispatch();
+            self.hasInspirationChanged(false);
+        }
     };
 
     self.inspirationHasChanged = async () => {
@@ -178,6 +184,21 @@ export function OtherStatsViewModel() {
         self.hasExperienceChanged(false);
         self.hasProficiencyChanged(false);
         self.hasInitiativeChanged(false);
+    };
+
+    self.submit = async (toggleCallback) => {
+        await self.save();
+        if (toggleCallback) {
+            toggleCallback();
+        }
+    };
+
+    self.saveInspiration = async () => {
+        if (self.hasInspirationChanged()) {
+            const otherStatsResponse = await self.otherStats().ps.save();
+            Notifications.otherStats.inspiration.changed.dispatch();
+            self.hasInspirationChanged(false);
+        }
     };
 
     self.save = async () => {

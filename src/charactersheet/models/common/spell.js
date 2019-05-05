@@ -6,6 +6,7 @@ import {
 } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
+import { includes } from 'lodash';
 import ko from 'knockout';
 
 
@@ -44,6 +45,10 @@ export class Spell extends KOModel {
 
     spellDamageLabel = ko.observable('');
 
+    isConcentration = ko.pureComputed(function() {
+        return includes(this.duration().toLowerCase(), 'concentration');
+    });
+
     updateValues = async () => {
         await this.calculateSpellDamageLabel();
     };
@@ -73,6 +78,22 @@ export class Spell extends KOModel {
             return 'Cantrip';
         } else {
             return this.level();
+        }
+    });
+
+    isCastable = ko.pureComputed(function() {
+        if (this.prepared() === true || this.alwaysPrepared() === true || self.level() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    typeLabel = ko.pureComputed(function() {
+        if (this.type() === 'Savings Throw') {
+            return ('Savings Throw' + ': ' + self.spellSaveAttribute());
+        } else {
+            return self.type();
         }
     });
 

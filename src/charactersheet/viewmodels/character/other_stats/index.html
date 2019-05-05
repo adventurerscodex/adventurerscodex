@@ -1,159 +1,236 @@
 <!-- AC, Initiative, Speed, Proficiency -->
 <!-- ko if: loaded -->
-<preview-edit params="validation: validation,
-                      data: data,
-                      save: save,
-                      reset: reset">
-  <!-- ko if: $component.isEdit -->
-  <div class="panel-body">
-    <form class="form-horizontal" data-bind="validate: $component.validation">
-      <div class="form-group">
-        <div class="row" data-bind="with: otherStats">
-          <div class="col-md-6 col-padded">
-            <label>Proficiency Bonus</label>
+<div id="other-stats-pane">
+  <flip-card params="{
+        dataId: '1',
+        collapsable: false,
+        elementId: 'other_stats',
+        defaultHeight: 400,
+        tabId: tabId,
+        saveAction: save,
+        cancelAction: reset,
+        context: {
+          data: $data,
+        }
+      }">
+    <div class="front">
+      <div class="h4 card-title">
+        Stats <br />
+        <small>Hover over the (i) icon to learn about these stats.</small>
+      </div>
+      <table class="table table-responsive table-ac-bordered table-hover"
+             data-bind="with: context.data"
+             id="statTable">
+        <tbody>
+          <tr>
+          <th>
+              <span class="h4">Armor Class</span>&nbsp;<span
+                        class="fa fa-info-circle statsPopover"
+                        id="otherStatsAcPopoverIconSpan"
+                        data-bind="popover: { content: armorClassPopover }">
+              </span>
+          </th>
+          <td class="ac-table-data-cell">
+            <div id="ArmorClassShield" class="defenseShield">
+              <span data-bind="text: armorClass"></span>
+            </div>
+          </td>
+          </tr>
+            <tr>
+              <th>
+                Proficiency Bonus&nbsp;<span
+                  class="fa fa-info-circle statsPopover"
+                  id="otherStatsProficiencyPopoverIconSpan"
+                  data-bind="popover: { content: proficiencyPopover }">
+                </span>
+              </th>
+              <td class="ac-table-data-cell">
+                +<span
+                  data-bind="text: proficiencyLabel"></span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Initiative&nbsp;<span
+                  class="fa fa-info-circle statsPopover"
+                  id="otherStatsInitiativePopoverIconSpan"
+                  data-bind="popover: { content: initiativePopover }">
+                </span>
+              </th>
+                <td class="ac-table-data-cell">
+                  <span
+                    data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span>
+                  <span data-bind="text: initiativeLabel"></span>
+                  </td>
+            </tr>
+            <tr data-bind="with: otherStats">
+              <th>
+              Movement
+              </th>
+                <td class="ac-table-data-cell">
+                  <span
+                    data-bind="text: speed"></span>
+                  </td>
+            </tr>
+            <tr data-bind="with: profile">
+              <th>
+                Level
+              </th>
+              <td class="ac-table-data-cell">
+                <span
+                  data-bind="text: level" ></span>
+              </td>
+            </tr>
+            <tr data-bind="with: profile">
+              <th>
+              Experience
+              </th>
+              <td class="ac-table-data-cell">
+                <span
+                  data-bind="text: experience"></span>
+              </td>
+            </tr>
+            <tr>
+              <th>
+                Inspiration
+              </th>
+              <td class="ac-table-data-cell">
+                <!-- ko if: otherStats().inspiration -->
+                <!-- TODO: Hackalert. editMode should come from the card, not depend on the face of the card -->
+                <span data-bind="click: () => {toggleInspiration()}"
+                      class="inspiration-full" style="cursor: pointer;"></span>
+                <!-- /ko -->
+                <!-- ko ifnot: otherStats().inspiration -->
+                <span data-bind="click: () => {toggleInspiration()}"
+                      class="inspiration-empty" style="cursor: pointer"></span>
+                <!-- /ko -->
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="back">
+  <div class="h4 card-title">
+    Stats <br />
+    <small>Hover over the (i) icon to learn about these stats.</small>
+  </div>
+  <form class="other-stats-form" data-bind="{submit: () => {context.data.submit(toggleCallback)}}">
+    <table data-bind="with: context.data"
+           class="table table-responsive table-ac-bordered table-hover">
+      <thead>
+        <tr>
+          <th style="width:65%">
+          </th>
+          <th class="ac-table-data-cell">Modify</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-bind="with: otherStats">
+          <th>
+            Armor Class
+          </th>
+          <td class="ac-table-data-cell">
+
             <input type="number"
-                    class="form-control"
-                    name="proficiencyModifier"
-                    id="otherStatsProficiencyBonusModifierInput"
-                    aria-describedby="basic-addon2"
-                    data-bind="value: proficiencyModifier">
-          </div>
-          <div class="col-md-6 col-padded">
-            <label>AC Modifier</label>
-            <input type="number"
-                    class="form-control"
+                    class="form-control ac-number-input"
                     name="armorClassModifier"
                     id="otherStatsAcModifierInput"
                     aria-describedby="basic-addon2"
                     data-bind="value: armorClassModifier">
-          </div>
-        </div>
-        <div class="row" data-bind="with: otherStats">
-          <div class="col-md-6 col-padded">
-            <label>Initiative</label>
+          </td>
+        </tr>
+        <tr data-bind="with: otherStats">
+          <th>
+            Proficiency Bonus
+          </th>
+          <td class="ac-table-data-cell">
             <input type="number"
-                    class="form-control"
+                    class="form-control ac-number-input"
+                    name="proficiencyModifier"
+                    id="otherStatsProficiencyBonusModifierInput"
+                    aria-describedby="basic-addon2"
+                    data-bind="value: proficiencyModifier">
+          </td>
+        </tr>
+        <tr data-bind="with: otherStats">
+          <th>
+            Initiative
+          </th>
+          <td class="ac-table-data-cell">
+            <input type="number"
+                    class="form-control  ac-number-input"
                     name="initiativeModifier"
                     id="otherStatsInitiativeModiferInput"
                     aria-describedby="basic-addon2"
                     data-bind="value: initiativeModifier">
-          </div>
-          <div class="col-md-6 col-padded">
-            <label>Speed</label>
+          </td>
+        </tr>
+        <tr data-bind="with: otherStats">
+          <th>
+            Movement
+          </th>
+          <td class="ac-table-data-cell">
             <input type="number"
-                    class="form-control"
+                    class="form-control ac-number-input"
                     name="speed"
                     id="otherStatsSpeedInput"
                     aria-describedby="basic-addon2"
-                    data-bind="value: speed">
-          </div>
-        </div>
-        <!-- Level and exp -->
-        <div class="row" data-bind="with: profile">
-          <div class="col-md-6 col-padded">
-            <label>Level</label>
+                    data-bind="value: speed"
+                    min="0">
+          </td>
+        </tr>
+        <tr data-bind="with: profile">
+          <th>
+            Level
+          </th>
+          <td  class="ac-table-data-cell">
             <input type="number"
-                  class="form-control"
+                  class="form-control ac-number-input"
                   name="level"
                   id="otherStatsLevelInput"
                   aria-describedby="basic-addon2"
-                  data-bind="value: level">
-          </div>
-          <div class="col-md-6 col-padded">
-            <label>Experience</label>
+                  data-bind="value: level"
+                  min="0">
+          </td>
+        </tr>
+        <tr data-bind="with: profile">
+          <th>
+            Experience
+          </th>
+          <td class="ac-table-data-cell">
             <input type="number"
-                  class="form-control"
+                  class="form-control ac-number-input"
                   name="experience"
                   id="otherStatsExperienceInput"
                   aria-describedby="basic-addon2"
-                  data-bind="value: experience">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 col-padded">
-            <label>Inspiration</label>
-            <div class="form-control hit-dice-list">
-                <!-- ko if: otherStats().inspiration -->
-                <span data-bind="click: $parents[1].toggleInspiration"
-                      class="inspiration-full" style="cursor: pointer;"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: otherStats().inspiration -->
-                <span data-bind="click: $parents[1].toggleInspiration"
-                      class="inspiration-empty" style="cursor: pointer"></span>
-                <!-- /ko -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-  <!-- /ko -->
+                  data-bind="value: experience"
+                  min="0">
+          </td>
+        </tr>
+        <tr>
+          <th>
+            Inspiration
+          </th>
+          <td class="ac-table-data-cell">
+            <!-- ko if: otherStats().inspiration -->
+            <!-- TODO: Hackalert. editMode should come from the card, not depend on the face of the card -->
+            <span data-bind="click: ()=>{toggleInspiration(true)}"
+                  class="inspiration-full" style="cursor: pointer;"></span>
+            <!-- /ko -->
+            <!-- ko ifnot: otherStats().inspiration -->
+            <span data-bind="click:  ()=>{toggleInspiration(true)}"
+                  class="inspiration-empty" style="cursor: pointer"></span>
+            <!-- /ko -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button type="submit"
+            style="visibility: hidden"
+            value="submit"></button>
+  </form>
+</div>
 
-  <!-- ko ifnot: $component.isEdit -->
-  <div class="row">
-    <div class="col-sm-1 col-sm-offset-11">
-      <span class="fa fa-pencil-square-o fa-color-hover-success fa-lg clickable pull-right"
-        data-bind="click: $component.toggleEditForm">
-      </span>
-    </div>
-  </div>
-  <div class="row" data-bind="with: otherStats">
-    <div class="col-md-6 col-padded">
-      <span class="fa fa-info-circle"
-            id="otherStatsProficiencyPopoverIconSpan"
-            style="cursor:pointer;"
-            data-bind="popover: { content: $parents[2].proficiencyPopover }">
-      </span>
-      <label>Proficiency</label>
-      <div data-bind="text: $parents[2].proficiencyLabel"></div>
-    </div>
-    <div class="col-md-6 col-padded">
-      <span class="fa fa-info-circle"
-            id="otherStatsAcPopoverIconSpan"
-            style="cursor:pointer;"
-            data-bind="popover: { content: $parents[2].armorClassPopover }"></span>
-      <label>Armor Class</label>
-      <div data-bind="text: $parents[2].armorClass"></div>
-    </div>
-  </div>
-  <div class="row" data-bind="with: otherStats">
-    <div class="col-md-6 col-padded">
-      <span class="fa fa-info-circle"
-            id="otherStatsInitiativePopoverIconSpan"
-            style="cursor:pointer;"
-            data-bind="popover: { content: $parents[2].initiativePopover }">
-      </span>
-      <label>Initiative</label>
-      <div data-bind="text: $parents[2].initiativeLabel"></div>
-    </div>
-    <div class="col-md-6 col-padded">
-      <label>Speed</label>
-      <div data-bind="text: speed"></div>
-    </div>
-  </div>
-  <div class="row" data-bind="with: profile">
-    <div class="col-md-6 col-padded">
-      <label>Level</label>
-      <div data-bind="text: level"></div>
-    </div>
-    <div class="col-md-6 col-padded">
-      <label>Experience</label>
-      <div data-bind="text: experience"></div>
-    </div>
-  </div>
-  <div class="row" data-bind="with: otherStats">
-    <div class="col-md-6 col-padded">
-      <label>Inspiration</label>
-      <div>
-        <!-- ko if: inspiration -->
-        <span class="inspiration-full" title="You have been awarded inspiration."></span>
-        <!-- /ko -->
-        <!-- ko ifnot: inspiration -->
-        <span class="inspiration-empty" title="You are awaiting inspiration."></span>
-        <!-- /ko -->
-    </div>
-    </div>
-  </div>
-  <!-- /ko -->
-</preview-edit>
+</flip-card>
+</div>
 <!-- /ko -->

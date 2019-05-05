@@ -1,10 +1,3 @@
-i.required {
-  color: red;
-}
-i.required:after {
-  content:"*";
-}
-
 /*
 Responsive Styles
 */
@@ -76,7 +69,10 @@ a.navbar-brand.navbar-divider:after {
 
 .main {
   padding-bottom:150px;
-  overflow:auto;
+  /* since the contents of the site are within their own padded containers
+  remove this padding to keep the size reasonable */
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
@@ -118,11 +114,6 @@ small {
 .row-padded {
   padding-top: 5px;
   padding-bottom: 5px;
-}
-
-.row-padded-horizontal {
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .img-padded {
@@ -278,6 +269,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-failure-empty {
@@ -287,6 +279,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-success-full {
@@ -296,6 +289,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-success-empty {
@@ -305,6 +299,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .inspiration-full {
@@ -477,7 +472,7 @@ textarea.dark-area {
 
 .hit-dice-list {
   height:100%;
-  padding:15px;
+  padding:5px;
   line-height:0.7em;
 }
 
@@ -590,6 +585,8 @@ div.h3 small {
 
 .ability-score-input {
   width: 65px;
+  height: 30px;
+  margin: auto;
 }
 
 .modal-footer-ability-scores {
@@ -632,14 +629,6 @@ ul.footer-icons li {
   margin-left: auto;
   margin-right: auto;
   max-height: 225px;
-}
-
-.preview-modal-image {
-  display: block;
-  max-height: 400px;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .btn-group-padding {
@@ -867,11 +856,6 @@ li.info-chat-highlight {
   padding-left: 1em;
 }
 
-.light-blue-left-highlight {
-  border-left: 2px solid #3498db;
-  padding-left: 1em;
-}
-
 .image-border-inspired {
    -webkit-box-shadow: 0px 0px 20px 0px #3498db;
    -moz-box-shadow: 0px 0px 20px 0px #3498db;
@@ -993,8 +977,8 @@ div.toggle-arrow-container {
  */
 .input-group-addon-jquery {
   min-width: 125px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .ui-autocomplete {
@@ -1016,11 +1000,685 @@ div.toggle-arrow-container {
   left:0;
 }
 
-.text-muted-italics {
-  color: #b4bcc2;
-  font-style: italic;
+.hpChart {
+  font-size: 1.3em;
 }
 
-.btn-text-no-hover:hover {
-  color:unset;
+.death-save-panel {
+    min-height: 40px;
+    padding: 15px;
+}
+
+#healthContainer {
+  width: 175px;
+  display: block;
+  position: relative;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.bio .panel-body {
+  border: 0px;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+}
+
+
+.list-side-by-side  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 40%;
+    font-weight: bold;
+  }
+
+.list-side-by-side  dd {
+    margin-left: 50%;
+    margin-bottom: .5em;
+  }
+
+.list-side-by-side  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }
+
+.list-side-by-side  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+@-moz-document url-prefix() {
+    .form-control {
+      padding: 0px 15px;
+    }
+}
+
+input[type='checkbox'].pseudo-checkbox + label:before,
+input[type='checkbox'].pseudo-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].pseudo-checkbox + label:before{/*unchecked icon*/
+    content: "\e157";
+}
+
+input[type='checkbox']:disabled.pseudo-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+}
+
+input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+    /* content:"\e138"; */
+}
+
+
+
+input[type='checkbox'].ac-checkbox + label:before,
+input[type='checkbox'].ac-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].ac-checkbox + label:before{/*unchecked icon*/
+    content: "\e157";
+}
+
+input[type='checkbox']:disabled.ac-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+}
+
+input[type='checkbox']:checked.ac-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+}
+
+
+input[type='checkbox'].filter-checkbox + label:before,
+input[type='checkbox'].filter-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].filter-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+  content:"\e138";
+}
+input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
+  color: #2c3e50;
+  content:"\e138";
+}
+
+.notCastable {
+  color: #999;
+}
+.spellRow[aria-expanded="true"],
+.spellRow[aria-expanded="true"]:hover {
+  background-color:  #2c3e50;
+  color: #fff!important;
+}
+
+.spellRow.notCastable[aria-expanded="true"],
+.spellRow.notCastable[aria-expanded="true"]:hover {
+  background-color: #95a5a6;
+  color: #fff!important;
+}
+
+
+tr.expandRow[aria-expanded="true"],
+tr.expandRow[aria-expanded="true"]:hover {
+  background-color:  #2c3e50;
+  color: #fff!important;
+}
+
+.spellRow.notCastable[aria-expanded="true"],
+.spellRow.notCastable[aria-expanded="true"]:hover {
+  background-color: #95a5a6;
+  color: #fff!important;
+}
+
+.collapseAddButton[aria-expanded="true"]
+ {
+   display: none;
+}
+
+.collapseFormButton
+ {
+   display: none;
+}
+
+.collapseFormButton[aria-expanded="true"]
+ {
+   display: inline-block;
+}
+
+.spellDetail th {
+  white-space: nowrap;
+}
+
+/* Animations */
+
+.collapsing {
+position: relative;
+overflow: hidden;
+opacity: 0;
+-webkit-transition: height .35s ease opacity 0.3s linear;
+-moz-transition: height .35s ease opacity 0.3s linear;
+-o-transition: height .35s ease opacity 0.3s linear;
+transition : height 0.35s ease opacity 0.3s linear;
+}
+
+/* .collapsing {
+visibility: visible;
+
+transition: opacity 0.3s linear;
+-webkit-transition: opacity 0.3s linear;
+-moz-transition: opacity 0.3s linear;
+-o-transition: opacity 0.3s linear;
+} */
+
+
+.rotate {
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+
+.rotate[aria-expanded="true"]{
+    -ms-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+/* end Animations */
+
+/* Flip Card */
+
+/* entire container, keeps perspective */
+.card-flip-container {
+  position: relative;
+  -webkit-perspective-origin: 0;
+  perspective: 0px;
+  padding-top: 0px;
+  -webkit-transition: all 0.6s ease height 0.35s ease;
+  -moz-transition: all 0.6s ease height 0.35s ease;
+  -o-transition: all 0.6s ease height 0.35s ease;
+  transition: all 0.6s ease height 0.35s ease;
+  width: 100%;
+}
+
+.card-flip-container.flipped > .card-flipper {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.card-flip-container > .card-flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+	position: relative;
+}
+
+ .front,
+ .back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  visibility: visible;
+	position: absolute;
+	top: 0;
+	left: 0;
+  width: 100%;
+}
+
+.card-flip-container,
+ .front, .back,
+.inner-flip-container, .inner-front, .inner-back,
+.flip-container {
+  width: 100%;
+}
+
+.inner-back,
+.back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+
+/* front pane, placed above back */
+.card-flip-container > .card-flipper > .front {
+  z-index: 2;
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.card-flip-container.flipped > .card-flipper > .front {
+  z-index: 1;
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+/* front pane, placed above back */
+.card-flip-container > .card-flipper > .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.card-flip-container.flipped > .card-flipper > .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+  z-index: 2;
+}
+
+.card-flip-container.flipped > .card-flipper > .back .card-flip-container.flipped > .card-flipper > .back {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+
+/* .inner-flip-container, .flip-container {
+	perspective: 0px;
+  -webkit-perspective-origin: 0;
+  padding-top: 0px;
+  transition: all 0.6s ease;
+} */
+
+
+/* flip the pane when hovered */
+
+/* .inner-flip-container.innerFlipped .inner-flipper,
+.flip-container.flipped .flipper {
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+} */
+
+.inner-back {
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+}
+
+
+/* flip speed goes here */
+/* .card-flipper, .inner-flipper, .flipper {
+	transition: 0.6s;
+	transform-style: preserve-3d;
+  -webkit-transition: 0.6s;
+  -webkit-transform-style: preserve-3d;
+	position: relative;
+} */
+
+/* hide back of pane during swap */
+
+/* .inner-front, .inner-back,
+.front, .back  {
+	backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  visibility: visible;
+	position: absolute;
+	top: 0;
+	left: 0;
+} */
+
+/* front pane, placed above back */
+
+/* .inner-front, .front {
+	z-index: 2;
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+} */
+
+/* .innerFlipped .inner-back,
+.flipped .back {
+  z-index: 3;
+} */
+/* back, initially hidden pane */
+
+/* .flipped .back .innerFlipped .inner-back {
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+} */
+
+.edit-btn {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 6;
+}
+/* end Flip Card */
+
+
+.table .table.spellDetail {
+  background-color: transparent;
+}
+
+.table-hover>tbody>tr.collapse:hover {
+  background-color: inherit;
+}
+.table-hover>tbody>tr .well {
+  margin-bottom: 0px;
+}
+
+.table-ac-bordered {
+  vertical-align: middle;
+  border-style: none;
+}
+.table.table-ac-bordered>thead>tr>th,
+.table.table-ac-bordered>tbody>tr>th,
+.table.table-ac-bordered>tfoot>tr>th,
+.table.table-ac-bordered>thead>tr>td,
+.table.table-ac-bordered>tbody>tr>td,
+.table,table-ac-bordered>tfoot>tr>td {
+  vertical-align: middle;
+}
+
+.table-ac-bordered > tbody > tr:last-of-type {
+  border-bottom: none;
+}
+
+.table-ac-bordered > tfoot > tr:last-of-type {
+  border-bottom: none;
+}
+
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+/* #ArmorClassShield {
+  background:url('../images/shield.svg') no-repeat;
+   background-size: 100% 100%;
+   text-align: center;
+   vertical-align: middle;
+   height: 6ex;
+   color: white;
+   padding: 5px;
+   padding-top: 3px;
+  } */
+
+  .defenseShield {
+    background:url('../images/shield.svg') no-repeat;
+     background-size: 100% 100%;
+     text-align: center;
+     vertical-align: middle;
+     height: 6ex;
+     color: white;
+     padding: 10px;
+     white-space: nowrap;
+     padding-top: 3px;
+    }
+
+  #ArmorClassShield > * {
+    font-size: 1.4em;
+  }
+
+.form-control {
+  height: 35px;
+}
+
+.form-control.hit-dice-list {
+  height: 100%;
+  text-align: center;
+}
+
+fieldset.fieldset-bordered {
+      border: 1px solid #ddd;
+      padding: 0 1.4em 1.4em 1.4em;
+      margin: 0 0 1.5em 0;
+  }
+
+
+.fieldset-bordered>legend {
+    font-size: 1.1em;
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}
+
+.collapsing .back {
+  display: none;
+}
+
+.front .collapsing, .back .collapsing  {
+  visibility: hidden;
+}
+
+#health-buttons {
+  text-align: center;
+}
+
+#health-buttons .glyphicon-menu-down:before {
+  font-size: 2em;
+  content: "\e143";
+  color: #e74c3c;
+  margin: 5%;
+}
+
+#health-buttons .glyphicon-menu-up:before {
+  font-size: 2em;
+  content: "\e005";
+  margin: 5%;
+}
+
+.card-title {
+background: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(255, 255, 255, 0.0));
+border-radius: 4px;
+  text-align: center;
+  padding: 10px;
+margin: -5px;
+}
+
+.card-title small {
+  color: #2c3e50;
+}
+
+@media screen and (max-width: 767px){
+    .nav-tabs > li{
+    display:block;
+    width:100%;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #2c3e50;
+    background-color: #ecf0f1;
+    border: 0px;
+  }
+}
+
+#health-pane {
+    text-align: center;
+}
+
+#health-chart {
+  width: 200px;
+  height: 200px;
+  position:
+  relative;
+  margin: auto;
+}
+
+#health-chart .hp-circle.tempHp {
+  padding: 0px;
+}
+#health-chart .hp-circle {
+   padding: 10px;
+   position: absolute;
+   top:0px;
+}
+
+#stabilize {
+  margin-top: 20px;
+}
+
+.statsPopover {
+  cursor:pointer;
+  display: inline;
+}
+
+.ac-table-data-cell {
+  text-align: center;
+}
+.ac-table-data-cell input {
+  text-align: center;
+}
+.ac-number-input {
+  height: 30px;
+}
+
+.score-save-table .ac-number-input {
+  width: 65px;
+  margin: auto;
+}
+
+.table-ac-bordered tr.ac-table-header,
+tr.ac-table-header,
+thead.ac-table-header tr  {
+  border-bottom: 1px solid #2c3e50;
+}
+
+.score-save-table {
+  margin-top: 15px;
+}
+
+.score-save-table > thead > tr > th,
+.score-save-table > tbody > tr > td,
+.score-save-table > tbody > tr > td input
+ {
+  text-align: center;
+}
+
+.table-hover>tbody>tr.collapseRow:hover,
+.table-hover>thead>tr.collapseRow:hover {
+  background-color: transparent;
+}
+
+.table>thead>tr.collapseRow>th,
+.table>tbody>tr.collapseRow>th,
+.table>tfoot>tr.collapseRow>th,
+.table>thead>tr.collapseRow>td,
+.table>tbody>tr.collapseRow>td,
+.table>tfoot>tr.collapseRow>td {
+  padding: 0px;
+  height: 100%;
+  background-color: transparent;
+}
+
+.card-description {
+  text-align: justify;
+}
+
+.safari-card-fix {
+  opacity: 0.99;
+}
+
+.add-card {
+  padding: 10px
+}
+
+.skill-modifier-input input {
+  font-size: 15px;
+  padding: 10px 0 10px 10px;
+  width:45px
+}
+
+.skill-modifier-input .input-group-addon {
+  padding: 0px 10px;
+  width: auto;
+}
+
+.ac-pane {
+  background-color: white;
+  margin-bottom: 10px;
+}
+
+.ogl-disclaimer {
+  display: block;
+  clear: both
+}
+
+.toggle-collapse-col {
+  width: 40px
+}
+
+.table-foot-content {
+  display:block;
+  line-height: 1.5;
+  padding: 6px 9px;
+}
+
+.front>.row,
+.back>.row  {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.add-form {
+  padding: 10px;
+}
+
+
+#coins-pane .input-group {
+  padding-top:5px;
+   padding-bottom:5px
+}
+
+
+.select-proficiency .select2-dropdown {
+  width: 150px !important;
+}
+
+
+.healthBtn {
+  width: 35px;
+  height: 28px;
+  padding: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
 }

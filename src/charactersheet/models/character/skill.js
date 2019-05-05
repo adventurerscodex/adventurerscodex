@@ -95,7 +95,7 @@ export class Skill extends KOModel {
             Math.abs(bonus);
         }
 
-        str += ' <i><small>('
+        str += ' <i><small class="skills-ability-type">('
                 + this.abilityScore().abbreviation() + ')</small></i>';
         this.bonusLabel(str);
         this.passiveBonus(10 + bonus);
