@@ -13,227 +13,225 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
+import { OtherStatsFormViewModel } from './form';
+
 import { getModifier } from 'charactersheet/models/character/ability_score';
 import ko from 'knockout';
 import template from './index.html';
 
-export function OtherStatsViewModel(params) {
-    var self = this;
+class ACViewModel {
+    constructor(params) {
+        this.tabId = params.tabId;
+        this.loaded = ko.observable(false);
+        this.data = {};
+    }
+    async load() {
+        this.loaded(false);
+        await this.refresh();
+    }
 
-    self.tabId = params.tabId;
-    self.otherStats = ko.observable(new OtherStats());
-    self.profile = ko.observable(new Profile());
-    self.armorClass = ko.observable();
-    self.level = ko.observable('');
-    self.experience = ko.observable('');
-    self.proficiencyLabel = ko.observable();
-    self.initiativeLabel = ko.observable();
-    self.initiativePopover = ko.observable();
-    self.proficiencyPopover = ko.observable();
-    self.armorClassPopover = ko.observable();
-    self.loaded = ko.observable(false);
+    async reset() {
+        await this.refresh();
+    }
+}
 
-    self.hasProficiencyChanged = ko.observable(false);
-    self.hasInspirationChanged = ko.observable(false);
-    self.hasInitiativeChanged = ko.observable(false);
-    self.hasAcChanged = ko.observable(false);
-    self.hasLevelChanged = ko.observable(false);
-    self.hasExperienceChanged = ko.observable(false);
-
-    self.data = {};
-
-    self.load = async () => {
-        self.loaded(false);
-        await self.reset();
-
-        self.calculateInitiativeLabel();
-        self.updateArmorClass();
-        self.calculatedProficiencyLabel();
-
-        // Subscriptions
-        self.setUpModelSubscriptions();
-        Notifications.armorClass.changed.add(self.updateArmorClass);
-        Notifications.abilityScores.dexterity.changed.add(self.calculateInitiativeLabel);
-        Notifications.proficiencyBonus.changed.add(self.calculatedProficiencyLabel);
-    };
-
-    self.reset = async () => {
-        var key = CoreManager.activeCore().uuid();
-        var otherStats = await OtherStats.ps.read({uuid: key});
-        self.otherStats(otherStats.object);
-
-        const profile = await Profile.ps.read({uuid: key});
-        self.profile(profile.object);
-
-        self.data = {
-            otherStats: self.otherStats,
-            profile: self.profile
+export class OtherStatsViewModel extends ACViewModel {
+    constructor(params) {
+        super(params);
+        this.data = {
+            otherStats: ko.observable(new OtherStats()),
+            profile: ko.observable(new Profile())
         };
+        // Calculated Field
+        this.armorClass = ko.observable();
 
-        self.loaded(true);
-    };
+        this.proficiencyLabel = ko.observable();
+        this.initiativeLabel = ko.observable();
 
-    self.setUpModelSubscriptions = () => {
-        self.otherStats().proficiencyModifier.subscribe(self.proficiencyHasChanged);
-        self.otherStats().inspiration.subscribe(self.inspirationHasChanged);
-        self.otherStats().initiativeModifier.subscribe(self.initiativeHasChanged);
-        self.otherStats().armorClassModifier.subscribe(self.armorClassModifierDataHasChanged);
-        self.profile().level.subscribe(self.levelDataHasChanged);
-        self.profile().experience.subscribe(self.experienceDataHasChanged);
-    };
+        this.initiativePopover = ko.observable();
+        this.proficiencyPopover = ko.observable();
+        this.armorClassPopover = ko.observable();
 
-    self.validation = {
-        rules : {
-            // Deep copy of properties in object
-            ...Profile.validationConstraints.rules,
-            ...OtherStats.validationConstraints.rules
-        }
-    };
+        // Monitoring fields
+        this.hasProficiencyChanged = ko.observable(false);
+        this.hasInspirationChanged = ko.observable(false);
+        this.hasInitiativeChanged = ko.observable(false);
+        this.hasAcChanged = ko.observable(false);
+        this.hasLevelChanged = ko.observable(false);
+        this.hasExperienceChanged = ko.observable(false);
+    }
+
+    async load() {
+        await super.load();
+
+        this.calculateInitiativeLabel();
+        this.updateArmorClass();
+        this.calculatedProficiencyLabel();
+        // Subscriptions
+        this.setUpModelSubscriptions();
+        this.monitorSubscriptions();
+    }
+
+    monitorSubscriptions = () => {
+        Notifications.armorClass.changed.add(this.updateArmorClass);
+        Notifications.abilityScores.dexterity.changed.add(this.calculateInitiativeLabel);
+        Notifications.proficiencyBonus.changed.add(this.calculatedProficiencyLabel);
+    }
+
+    refresh = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const otherStats = await OtherStats.ps.read({uuid: key});
+        const profile = await Profile.ps.read({uuid: key});
+        this.data.otherStats(otherStats.object);
+        this.data.profile(profile.object);
+        this.loaded(true);
+    }
+
+    setUpModelSubscriptions = () => {
+        this.data.otherStats().proficiencyModifier.subscribe(this.proficiencyHasChanged);
+        this.data.otherStats().inspiration.subscribe(this.inspirationHasChanged);
+        this.data.otherStats().initiativeModifier.subscribe(this.initiativeHasChanged);
+        this.data.otherStats().armorClassModifier.subscribe(this.armorClassModifierDataHasChanged);
+        this.data.profile().level.subscribe(this.levelDataHasChanged);
+        this.data.profile().experience.subscribe(this.experienceDataHasChanged);
+    }
+
 
     // Calculate proficiency label and popover
-    self.calculatedProficiencyLabel = async function() {
+    calculatedProficiencyLabel = async () => {
         const proficiencyService = ProficiencyService.sharedService();
         var level = await proficiencyService.proficiencyBonusByLevel();
-        const proficiency = parseInt(self.otherStats().proficiencyModifier());
-        self.updateProficiencyPopoverMessage(level, proficiency);
-        self.proficiencyLabel(proficiencyService.proficiency());
-    };
+        const proficiency = parseInt(this.data.otherStats().proficiencyModifier());
+        this.updateProficiencyPopoverMessage(level, proficiency);
+        this.proficiencyLabel(proficiencyService.proficiency());
+    }
 
-    self.updateProficiencyPopoverMessage = function(level, proficiency) {
-        self.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
+    updateProficiencyPopoverMessage = (level, proficiency) => {
+        this.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
             + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />Proficiency = '
             + level + ' + 1 + ' + proficiency);
-    };
+    }
 
     // Calculate initiative label and popover
-    self.calculateInitiativeLabel = async () => {
+    calculateInitiativeLabel = async () => {
         var key = CoreManager.activeCore().uuid();
         const response = await AbilityScore.ps.list({coreUuid: key,
             name: Fixtures.abilityScores.constants.dexterity.name});
         var dexterityModifier = response.objects[0].getModifier();
-        var initiativeModifier = self.otherStats().initiativeModifier();
-        self.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
+        var initiativeModifier = this.data.otherStats().initiativeModifier();
+        this.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
+        this.initiativeLabel(parseInt(dexterityModifier) + parseInt(initiativeModifier));
+    }
 
-        self.initiativeLabel(parseInt(dexterityModifier) + parseInt(initiativeModifier));
-    };
-
-    self.updateInitiativePopoverMessage = function(dexterityModifier, initiativeModifier) {
-        self.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
+    updateInitiativePopoverMessage = (dexterityModifier, initiativeModifier) => {
+        this.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
         'Dexterity Modifier + Modifier</span><br />'
             + 'Initiative = ' + dexterityModifier + ' + ' + initiativeModifier );
-    };
+    }
 
-    self.updateArmorClassPopoverMessage = async function() {
-        var acService = ArmorClassService.sharedService();
-        var baseAC = acService.baseArmorClass(),
-            dexMod = await acService.dexBonusFromArmor(),
-            magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier(),
-            shield = acService.getEquippedShieldBonus();
+    updateArmorClassPopoverMessage = async () => {
+        const acService = ArmorClassService.sharedService();
+        const baseAC = acService.baseArmorClass();
+        const dexMod = await acService.dexBonusFromArmor();
+        const magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier();
+        const shield = acService.getEquippedShieldBonus();
 
-        let modifier = self.otherStats().armorClassModifier() ? self.otherStats().armorClassModifier() : 0;
+        const modifier = this.data.otherStats().armorClassModifier() ? this.data.otherStats().armorClassModifier() : 0;
 
-        self.armorClassPopover('<span><strong>Armor Class</strong> = ' +
+        this.armorClassPopover('<span><strong>Armor Class</strong> = ' +
         'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />' +
         '<strong>Armor Class</strong> = ' + baseAC + ' + ' + dexMod + ' + ' + magicModifiers +
         ' + ' + shield + ' + ' + modifier);
-    };
+    }
 
-    self.updateArmorClass = function() {
-        self.updateArmorClassPopoverMessage();
-        self.armorClass(ArmorClassService.sharedService().armorClass());
-    };
+    updateArmorClass = async () => {
+        await this.updateArmorClassPopoverMessage();
+        this.armorClass(ArmorClassService.sharedService().armorClass());
+    }
 
-    self.toggleInspiration = async (editMode=false) => {
-        self.otherStats().inspiration(!self.otherStats().inspiration());
-        if (!editMode && self.hasInspirationChanged()) {
-            const otherStatsResponse = await self.otherStats().ps.save();
-            Notifications.otherStats.inspiration.changed.dispatch();
-            self.hasInspirationChanged(false);
-        }
-    };
+    toggleInspiration = async () => {
+        this.data.otherStats().inspiration(!this.data.otherStats().inspiration());
+        await this.data.otherStats().ps.save();
+        Notifications.otherStats.inspiration.changed.dispatch();
+        this.hasInspirationChanged(false);
+    }
 
-    self.inspirationHasChanged = async () => {
-        self.hasInspirationChanged(true);
-    };
+    save = async ({ notify, data }) => {
+        const { otherStats, profile } = data;
+        const otherStatsResponse = await otherStats().ps.save();
+        const profileResponse = await profile().ps.save();
 
-    self.initiativeHasChanged = async () => {
-        self.hasInitiativeChanged(true);
-    };
+        otherStats(otherStatsResponse.object);
+        profile(profileResponse.object);
+        notify();
+    }
 
-    self.armorClassModifierDataHasChanged = async () => {
-        self.hasAcChanged(true);
-    };
+    reset = async ({ refresh }) => {
+        refresh();
+    }
 
-    self.levelDataHasChanged = async () => {
-        self.hasLevelChanged(true);
-    };
+    inspirationHasChanged = () => {
+        this.hasInspirationChanged(true);
+    }
 
-    self.experienceDataHasChanged = async () => {
-        self.hasExperienceChanged(true);
-    };
+    initiativeHasChanged = () => {
+        this.hasInitiativeChanged(true);
+    }
 
-    self.proficiencyHasChanged = async () => {
-        self.hasProficiencyChanged(true);
-    };
+    armorClassModifierDataHasChanged = () => {
+        this.hasAcChanged(true);
+    }
 
-    self.resetSubscriptions = () => {
-        self.setUpModelSubscriptions();
-        self.hasInspirationChanged(false);
-        self.hasAcChanged(false);
-        self.hasLevelChanged(false);
-        self.hasExperienceChanged(false);
-        self.hasProficiencyChanged(false);
-        self.hasInitiativeChanged(false);
-    };
+    levelDataHasChanged = () => {
+        this.hasLevelChanged(true);
+    }
 
-    self.submit = async (toggleCallback) => {
-        await self.save();
-        if (toggleCallback) {
-            toggleCallback();
-        }
-    };
+    experienceDataHasChanged = () => {
+        this.hasExperienceChanged(true);
+    }
 
-    self.saveInspiration = async () => {
-        if (self.hasInspirationChanged()) {
-            const otherStatsResponse = await self.otherStats().ps.save();
-            Notifications.otherStats.inspiration.changed.dispatch();
-            self.hasInspirationChanged(false);
-        }
-    };
+    proficiencyHasChanged = () => {
+        this.hasProficiencyChanged(true);
+    }
 
-    self.save = async () => {
-        const otherStatsResponse = await self.otherStats().ps.save();
-        const profileResponse = await self.profile().ps.save();
-
-        self.otherStats(otherStatsResponse.object);
-        self.profile(profileResponse.object);
-
-        if (self.hasInspirationChanged()) {
+    notify = async () => {
+        if (this.hasInspirationChanged()) {
             Notifications.otherStats.inspiration.changed.dispatch();
         }
 
-        if (self.hasAcChanged()) {
+        if (this.hasAcChanged()) {
             Notifications.stats.armorClassModifier.changed.dispatch();
         }
 
-        if (self.hasLevelChanged()) {
+        if (this.hasLevelChanged()) {
             Notifications.profile.level.changed.dispatch();
         }
 
-        if (self.hasExperienceChanged()) {
+        if (this.hasExperienceChanged()) {
             Notifications.profile.experience.changed.dispatch();
         }
 
-        if (self.hasProficiencyChanged()) {
+        if (this.hasProficiencyChanged()) {
             Notifications.otherStats.proficiency.changed.dispatch();
         }
 
-        if (self.hasInitiativeChanged()) {
-            await self.calculateInitiativeLabel();
+        if (this.hasInitiativeChanged()) {
+            await this.calculateInitiativeLabel();
         }
 
-        self.resetSubscriptions();
-    };
+        this.resetSubscriptions();
+    }
+
+    resetSubscriptions = () => {
+        this.setUpModelSubscriptions();
+        this.hasInspirationChanged(false);
+        this.hasAcChanged(false);
+        this.hasLevelChanged(false);
+        this.hasExperienceChanged(false);
+        this.hasProficiencyChanged(false);
+        this.hasInitiativeChanged(false);
+    }
+
 }
 
 ko.components.register('other-stats', {

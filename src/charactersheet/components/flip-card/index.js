@@ -113,15 +113,15 @@ export class FlipCardComponentViewModel {
             toggleTo = false;
         }
         this.editMode(toggleTo);
-        // if (this.toggleCallback) {
-        //     this.toggleCallback(this.editMode());
-        // }
+        if (this.toggleCallback) {
+            this.toggleCallback(this.editMode());
+        }
         this.setNewHeight();
     }
 
     cancelAction = (data, event) => {
         if (this.hasCancelAction()) {
-            this.cancelActionParam().then(this.toggleMode(data, event));
+            this.cancelActionParam(this.context.data).then(this.toggleMode(data, event));
         } else {
             this.toggleMode(data, event);
         }
@@ -129,7 +129,7 @@ export class FlipCardComponentViewModel {
 
     saveAction = (data, event) => {
         if (this.hasSaveAction()) {
-            this.saveActionParam().then(this.toggleMode(data, event));
+            this.saveActionParam(this.context.data).then(this.toggleMode(data, event));
         } else {
             this.toggleMode(data, event);
         }
@@ -137,7 +137,7 @@ export class FlipCardComponentViewModel {
 
     editAction = (data, event) => {
         if (this.hasEditAction()) {
-            this.editActionParam().then(this.toggleMode(data, event));
+            this.editActionParam(context.data.data).then(this.toggleMode(data, event));
         } else {
             this.toggleMode(data, event);
         }

@@ -52,7 +52,7 @@ OtherStats.validationConstraints = {
         },
         speed: {
             number: true,
-            min: -10000,
+            min: 0,
             max: 10000
         },
         proficiencyModifier: {

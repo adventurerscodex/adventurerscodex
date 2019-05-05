@@ -63,7 +63,7 @@
                   <span data-bind="text: initiativeLabel"></span>
                   </td>
             </tr>
-            <tr data-bind="with: otherStats">
+            <tr data-bind="with: data.otherStats">
               <th>
               Movement
               </th>
@@ -72,7 +72,7 @@
                     data-bind="text: speed"></span>
                   </td>
             </tr>
-            <tr data-bind="with: profile">
+            <tr data-bind="with: data.profile">
               <th>
                 Level
               </th>
@@ -81,7 +81,7 @@
                   data-bind="text: level" ></span>
               </td>
             </tr>
-            <tr data-bind="with: profile">
+            <tr data-bind="with: data.profile">
               <th>
               Experience
               </th>
@@ -95,15 +95,8 @@
                 Inspiration
               </th>
               <td class="ac-table-data-cell">
-                <!-- ko if: otherStats().inspiration -->
-                <!-- TODO: Hackalert. editMode should come from the card, not depend on the face of the card -->
-                <span data-bind="click: () => {toggleInspiration()}"
-                      class="inspiration-full" style="cursor: pointer;"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: otherStats().inspiration -->
-                <span data-bind="click: () => {toggleInspiration()}"
-                      class="inspiration-empty" style="cursor: pointer"></span>
-                <!-- /ko -->
+                <span data-bind="{click: toggleInspiration, css: data.otherStats().inspiration() ? 'inspiration-full':'inspiration-empty'}"
+                      class="" style="cursor: pointer;"></span>
               </td>
             </tr>
         </tbody>
@@ -114,123 +107,16 @@
     Stats <br />
     <small>Hover over the (i) icon to learn about these stats.</small>
   </div>
-  <form class="other-stats-form" data-bind="{submit: () => {context.data.submit(toggleCallback)}}">
-    <table data-bind="with: context.data"
-           class="table table-responsive table-ac-bordered table-hover">
-      <thead>
-        <tr>
-          <th style="width:65%">
-          </th>
-          <th class="ac-table-data-cell">Modify</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-bind="with: otherStats">
-          <th>
-            Armor Class
-          </th>
-          <td class="ac-table-data-cell">
-
-            <input type="number"
-                    class="form-control ac-number-input"
-                    name="armorClassModifier"
-                    id="otherStatsAcModifierInput"
-                    aria-describedby="basic-addon2"
-                    data-bind="value: armorClassModifier">
-          </td>
-        </tr>
-        <tr data-bind="with: otherStats">
-          <th>
-            Proficiency Bonus
-          </th>
-          <td class="ac-table-data-cell">
-            <input type="number"
-                    class="form-control ac-number-input"
-                    name="proficiencyModifier"
-                    id="otherStatsProficiencyBonusModifierInput"
-                    aria-describedby="basic-addon2"
-                    data-bind="value: proficiencyModifier">
-          </td>
-        </tr>
-        <tr data-bind="with: otherStats">
-          <th>
-            Initiative
-          </th>
-          <td class="ac-table-data-cell">
-            <input type="number"
-                    class="form-control  ac-number-input"
-                    name="initiativeModifier"
-                    id="otherStatsInitiativeModiferInput"
-                    aria-describedby="basic-addon2"
-                    data-bind="value: initiativeModifier">
-          </td>
-        </tr>
-        <tr data-bind="with: otherStats">
-          <th>
-            Movement
-          </th>
-          <td class="ac-table-data-cell">
-            <input type="number"
-                    class="form-control ac-number-input"
-                    name="speed"
-                    id="otherStatsSpeedInput"
-                    aria-describedby="basic-addon2"
-                    data-bind="value: speed"
-                    min="0">
-          </td>
-        </tr>
-        <tr data-bind="with: profile">
-          <th>
-            Level
-          </th>
-          <td  class="ac-table-data-cell">
-            <input type="number"
-                  class="form-control ac-number-input"
-                  name="level"
-                  id="otherStatsLevelInput"
-                  aria-describedby="basic-addon2"
-                  data-bind="value: level"
-                  min="0">
-          </td>
-        </tr>
-        <tr data-bind="with: profile">
-          <th>
-            Experience
-          </th>
-          <td class="ac-table-data-cell">
-            <input type="number"
-                  class="form-control ac-number-input"
-                  name="experience"
-                  id="otherStatsExperienceInput"
-                  aria-describedby="basic-addon2"
-                  data-bind="value: experience"
-                  min="0">
-          </td>
-        </tr>
-        <tr>
-          <th>
-            Inspiration
-          </th>
-          <td class="ac-table-data-cell">
-            <!-- ko if: otherStats().inspiration -->
-            <!-- TODO: Hackalert. editMode should come from the card, not depend on the face of the card -->
-            <span data-bind="click: ()=>{toggleInspiration(true)}"
-                  class="inspiration-full" style="cursor: pointer;"></span>
-            <!-- /ko -->
-            <!-- ko ifnot: otherStats().inspiration -->
-            <span data-bind="click:  ()=>{toggleInspiration(true)}"
-                  class="inspiration-empty" style="cursor: pointer"></span>
-            <!-- /ko -->
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <button type="submit"
-            style="visibility: hidden"
-            value="submit"></button>
-  </form>
+    <other-stats-form params="{
+      data: ko.observable(context.data.data),
+      containerId: elementId,
+      showForm: editMode,
+      resize: resize,
+      saveAction: saveAction,
+      cancelAction: cancelAction,
+      flip: flip()">
+   </other-stats-form>
 </div>
-
 </flip-card>
 </div>
 <!-- /ko -->

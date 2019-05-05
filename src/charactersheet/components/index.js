@@ -1,5 +1,4 @@
 import './named-fields-well';
-import { EditButtonComponentViewModel } from './edit-button';
 import { FlipCardComponentViewModel } from './flip-card';
 import { FullScreenImageComponentViewModel } from './full-screen-image';
 import { ImagePickerComponentViewModel } from './image-picker';

@@ -7,12 +7,12 @@
     <!-- ko if: showEditModeButton() -->
     <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
       <!-- ko if: editMode() -->
-        <button class="btn btn-link" data-bind="click: cancelAction">
+        <button class="btn btn-link btn-danger" data-bind="click: cancelAction">
             <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
             </span>
         </button>
         <!-- ko if: hasSaveAction() -->
-        <button class="btn btn-link" data-bind="click: saveAction">
+        <button class="btn btn-link btn-success" data-bind="click: saveAction">
             <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
             </span>
         </button>
@@ -35,8 +35,11 @@
           editMode: editMode,
           context: context,
           elementId: elementId,
-          toggleCallback: toggleMode,
-          resizeCallback: setNewHeight } } -->
+          flip: toggleMode,
+          resize: setNewHeight,
+          saveAction: saveAction,
+           cancelAction: cancelAction }
+         } -->
         <div class="front">
         </div>
         <div class="back">
