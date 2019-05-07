@@ -95,7 +95,7 @@ export function ChatLogPoiItem(params) {
         var date = (new Date()).toDateString();
         const description = self.message.item().json.description;
         const url = self.message.item().json.url;
-        let content = self.html + '\n\n' + date;
+        let content = self.nameHtml() + '\n\n' + date;
 
         if (description) {
             content = content + '\n\n' + self.descriptionHtml();
