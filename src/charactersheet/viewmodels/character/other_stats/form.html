@@ -1,6 +1,15 @@
 <form class="other-stats-form" data-bind="{submit: $component.submit}">
-  <table data-bind="with: $component.data"
-         class="table table-responsive table-ac-bordered table-hover">
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+      <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+      </span>
+  </button>
+  <button class="btn btn-link btn-success" type="submit" value="submit">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+      </span>
+  </button>
+</div>
+  <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr>
         <th style="width:65%">
@@ -19,7 +28,7 @@
                   name="armorClassModifier"
                   id="otherStatsAcModifierInput"
                   aria-describedby="basic-addon2"
-                  data-bind="value: armorClassModifier">
+                  data-bind="textInput: armorClassModifier, hasFocus: $component.formElementHasFocus">
         </td>
       </tr>
       <tr data-bind="with: otherStats">
@@ -101,7 +110,4 @@
       </tr>
     </tbody>
   </table>
-  <button type="submit"
-          style="visibility: hidden"
-          value="submit"></button>
 </form>

@@ -1,5 +1,4 @@
 <!-- AC, Initiative, Speed, Proficiency -->
-<!-- ko if: loaded -->
 <div id="other-stats-pane">
   <flip-card params="{
         dataId: '1',
@@ -7,100 +6,18 @@
         elementId: 'other_stats',
         defaultHeight: 400,
         tabId: tabId,
-        saveAction: save,
-        cancelAction: reset,
-        context: {
-          data: $data,
-        }
       }">
     <div class="front">
       <div class="h4 card-title">
         Stats <br />
         <small>Hover over the (i) icon to learn about these stats.</small>
       </div>
-      <table class="table table-responsive table-ac-bordered table-hover"
-             data-bind="with: context.data"
-             id="statTable">
-        <tbody>
-          <tr>
-          <th>
-              <span class="h4">Armor Class</span>&nbsp;<span
-                        class="fa fa-info-circle statsPopover"
-                        id="otherStatsAcPopoverIconSpan"
-                        data-bind="popover: { content: armorClassPopover }">
-              </span>
-          </th>
-          <td class="ac-table-data-cell">
-            <div id="ArmorClassShield" class="defenseShield">
-              <span data-bind="text: armorClass"></span>
-            </div>
-          </td>
-          </tr>
-            <tr>
-              <th>
-                Proficiency Bonus&nbsp;<span
-                  class="fa fa-info-circle statsPopover"
-                  id="otherStatsProficiencyPopoverIconSpan"
-                  data-bind="popover: { content: proficiencyPopover }">
-                </span>
-              </th>
-              <td class="ac-table-data-cell">
-                +<span
-                  data-bind="text: proficiencyLabel"></span>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                Initiative&nbsp;<span
-                  class="fa fa-info-circle statsPopover"
-                  id="otherStatsInitiativePopoverIconSpan"
-                  data-bind="popover: { content: initiativePopover }">
-                </span>
-              </th>
-                <td class="ac-table-data-cell">
-                  <span
-                    data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span>
-                  <span data-bind="text: initiativeLabel"></span>
-                  </td>
-            </tr>
-            <tr data-bind="with: data.otherStats">
-              <th>
-              Movement
-              </th>
-                <td class="ac-table-data-cell">
-                  <span
-                    data-bind="text: speed"></span>
-                  </td>
-            </tr>
-            <tr data-bind="with: data.profile">
-              <th>
-                Level
-              </th>
-              <td class="ac-table-data-cell">
-                <span
-                  data-bind="text: level" ></span>
-              </td>
-            </tr>
-            <tr data-bind="with: data.profile">
-              <th>
-              Experience
-              </th>
-              <td class="ac-table-data-cell">
-                <span
-                  data-bind="text: experience"></span>
-              </td>
-            </tr>
-            <tr>
-              <th>
-                Inspiration
-              </th>
-              <td class="ac-table-data-cell">
-                <span data-bind="{click: toggleInspiration, css: data.otherStats().inspiration() ? 'inspiration-full':'inspiration-empty'}"
-                      class="" style="cursor: pointer;"></span>
-              </td>
-            </tr>
-        </tbody>
-      </table>
+       <other-stats-view params="{
+        containerId: elementId,
+        showForm: editMode,
+        resize: resize,
+        flip: flip}">
+      </other-stats-view>
     </div>
     <div class="back">
   <div class="h4 card-title">
@@ -108,15 +25,11 @@
     <small>Hover over the (i) icon to learn about these stats.</small>
   </div>
     <other-stats-form params="{
-      data: ko.observable(context.data.data),
       containerId: elementId,
       showForm: editMode,
       resize: resize,
-      saveAction: saveAction,
-      cancelAction: cancelAction,
-      flip: flip()">
+      flip: flip}">
    </other-stats-form>
 </div>
 </flip-card>
 </div>
-<!-- /ko -->
