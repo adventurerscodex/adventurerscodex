@@ -2,7 +2,6 @@ const package_ = require('./package.json');
 const merge = require('webpack-merge');
 const webpack = require('webpack');
 const common = require('./webpack.common.js');
-let CircularDependencyPlugin = require('circular-dependency-plugin');
 
 
 module.exports = merge(common, {
@@ -16,10 +15,6 @@ module.exports = merge(common, {
         port: 3000
     },
     plugins: [
-        new CircularDependencyPlugin({
-            exclude: /node_modules/,
-            failOnError: false
-        }),
         new webpack.DefinePlugin({
             /**
              * The string representation of the environment name.
