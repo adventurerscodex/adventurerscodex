@@ -1,36 +1,16 @@
-import 'bin/knockout-bootstrap-modal';
-import { CoreManager, Notifications } from 'charactersheet/utilities';
-import { filter, find, includes } from 'lodash';
-import { AbilityScore } from 'charactersheet/models/character/ability_score';
-import { AbilityScoresViewModelDelegate } from 'charactersheet/viewmodels/character/ability_scores/delegate';
-import { SavingThrow } from 'charactersheet/models/character';
 import { ScoreSaveFormViewModel } from './form';
+import { ScoreSaveViewModel } from './view';
+
 import ko from 'knockout';
 import template from './index.html';
 
-class ACViewModel {
+class ACCardModel {
     constructor(params) {
         this.tabId = params.tabId;
-        this.loaded = ko.observable(false);
-        this.data = {};
-    }
-    async load() {
-        this.loaded(false);
-        await this.refresh();
-    }
-
-    async reset() {
-        await this.refresh();
-    }
-}
-
-class AbilityScoresViewModel extends ACViewModel {
-    constructor(params) {
-        super(params);
-        this.delegate;
-        this.abilityScores = ko.observableArray([]);
-        this.savingThrows = ko.observableArray([]);
-
+        this.containerId = params.containerId;
+        this.showForm = params.showForm;
+        this.resize = params.resize;
+        this.flip = params.flip;
     }
 
     order = [
@@ -41,58 +21,65 @@ class AbilityScoresViewModel extends ACViewModel {
         'Wisdom',
         'Charisma'
     ];
+}
+// class AbilityScoresViewModel extends ACCardModel {
+//     constructor(params) {
+//         super(params);
+//     }
+//
 
-    load = async () => {
-        await super.load();
-        Notifications.abilityScores.changed.add(this.updateSavingThrowValues);
-        Notifications.otherStats.proficiency.changed.add(this.updateSavingThrowValues);
-    };
 
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const scores = await AbilityScore.ps.list({coreUuid: key});
-        const saves = await SavingThrow.ps.list({coreUuid: key});
-        this.abilityScores(scores.objects.map(score => ko.observable(score)));
-        this.savingThrows(saves.objects.map(savingThrow => ko.observable(savingThrow)));
+    // load = async () => {
+    //     await super.load();
+    //     Notifications.abilityScores.changed.add(this.updateSavingThrowValues);
+    //     Notifications.otherStats.proficiency.changed.add(this.updateSavingThrowValues);
+    // };
 
-        // Calculate Initial Values
-        this.updateSavingThrowValues();
-    };
+    // refresh = async () => {
+    //     const key = CoreManager.activeCore().uuid();
+    //     const scores = await AbilityScore.ps.list({coreUuid: key});
+    //     const saves = await SavingThrow.ps.list({coreUuid: key});
+    //     this.abilityScores(scores.objects.map(score => ko.observable(score)));
+    //     this.savingThrows(saves.objects.map(savingThrow => ko.observable(savingThrow)));
+    //
+    //     // Calculate Initial Values
+    //     this.updateSavingThrowValues();
+    // };
 
-    updateSavingThrowValues = async () => {
-        // By telling each savingThrow to update their labels, we're implicitly
-        // making a networking call. This should not be this way, but because
-        // the fix is too time consuming, at time of writing, I'm just leaving
-        // it and documenting the weirdness.
-        for (const savingThrow of this.savingThrows()) {
-            await savingThrow().updateModifierLabel();
-        }
-        this.loaded(true);
-    };
+    // updateSavingThrowValues = async () => {
+    //     // By telling each savingThrow to update their labels, we're implicitly
+    //     // making a networking call. This should not be this way, but because
+    //     // the fix is too time consuming, at time of writing, I'm just leaving
+    //     // it and documenting the weirdness.
+    //     for (const savingThrow of this.savingThrows()) {
+    //         await savingThrow().updateModifierLabel();
+    //     }
+    //     this.loaded(true);
+    // };
 
-    findSaveByName = (name) => find(this.savingThrows(), (savingthrow) => savingthrow().name() === name);
-
-    findScoreByName = (name) => find(this.abilityScores(), (score) => score().name() === name);
-
-    save = async ({ notify, savingThrows, abilityScores }) => {
-        savingThrows().map(async (savingThrow) => {
-            // save each save in place.
-            await savingThrow().ps.save();
-        });
-        abilityScores().map(async (abilityScore) => {
-            // save each save in place.
-            await abilityScore().ps.save();
-        });
-
-        notify();
-    }
-    reset = async ({ refresh }) => {
-        refresh();
-    }
-    notify = () => {
-        console.log('the changes!');
-        Notifications.abilityScores.changed.dispatch();
-    }
+    // findSaveByName = (name) => find(this.savingThrows(), (savingthrow) => savingthrow().name() === name);
+    //
+    // findScoreByName = (name) => find(this.abilityScores(), (score) => score().name() === name);
+    //
+    // save = async ({ notify, savingThrows, abilityScores }) => {
+    //     savingThrows().map(async (savingThrow) => {
+    //         // save each save in place.
+    //         await savingThrow().ps.save();
+    //     });
+    //     abilityScores().map(async (abilityScore) => {
+    //         // save each save in place.
+    //         await abilityScore().ps.save();
+    //     });
+    //
+    //     notify();
+    // }
+    // reset = async ({ refresh }) => {
+    //     refresh();
+    // }
+    // notify = () => {
+    //     console.log('the changes!');
+    //     Notifications.abilityScores.changed.dispatch();
+    // }
     // Modal Methods
     // self.openModal = function() {
     //     // Copy existing array to new one
@@ -142,9 +129,9 @@ class AbilityScoresViewModel extends ACViewModel {
     // self.closeModal = () => {
     //     self.modalStatus(false);
     // };
-}
+// }
 
 ko.components.register('ability-scores', {
-    viewModel: AbilityScoresViewModel,
+    viewModel: ACCardModel,
     template: template
 });

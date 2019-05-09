@@ -5,16 +5,8 @@
               elementId: 'ability_and_saves',
               tabId: tabId,
               defaultHeight: 400,
-              saveAction: save,
-              cancelAction: reset,
               context: {
                 order: order,
-                abilityScores: abilityScores,
-                savingThrows: savingThrows,
-                findScoreByName: findScoreByName,
-                findSaveByName: findSaveByName,
-                refresh: refresh,
-                notify: notify
               }
             }">
     <div class="front" >
@@ -22,54 +14,30 @@
         Abilities &amp;<br /> Saving Throws
         <small></small>
       </div>
-          <table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table"
-                 id="abilityScoresTable">
-            <thead class="ac-table-header">
-              <tr>
-                <th style="width:15%">
-                  Score
-                </th>
-                <th style="width: 40%">
-                  Ability
-                </th>
-                <th style="width: 20%">
-                  Bonus
-                </th>
-                <th style="width: 15%">
-                  Save
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- ko foreach: context.order -->
-              <tr>
-                <!-- ko with: $parent.context.findScoreByName($data) -->
-                <td ><span data-bind='text: value'></span></td>
-                <td><span data-bind="text: abbreviation"></span></td>
-                <td><strong data-bind="text: modifierLabel()"> </strong></td>
-                <!-- /ko -->
-                <!-- ko with: $parent.context.findSaveByName($data) -->
-                <td><span class="defenseShield" data-bind="text: modifierLabel()"> </span></td>
-                <!-- /ko -->
-              </tr>
-              <!-- /ko -->
-            </tbody>
-          </table>
-        </div>
-        <div class="back" >
-            <div class="h4 card-title">
-              Abilities &amp;<br /> Saving Throws
-              <small></small>
-            </div>
-            <score-save-form params="{
-              data: context,
-              containerId: elementId,
-              showForm: editMode,
-              resize: resize,
-              saveAction: saveAction,
-              cancelAction: cancelAction,
-              flip: flip()">
-           </score-save-form>
+      <ability-scores-saving-throws-view
+          params="{
+           containerId: elementId,
+           showForm: editMode,
+           resize: resize,
+           flip: flip,
+           order: context.order
+         }">
+      </ability-scores-saving-throws-view>
+    </div>
+    <div class="back" >
+      <div class="h4 card-title">
+        Abilities &amp;<br /> Saving Throws
+        <small></small>
+      </div>
+      <score-save-form
+        params="{
+          containerId: elementId,
+          showForm: editMode,
+          resize: resize,
+          flip: flip,
+          order: context.order
+        }">
+      </score-save-form>
     </div>
   </flip-card>
 </div>

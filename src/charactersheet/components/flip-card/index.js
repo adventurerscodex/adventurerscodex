@@ -1,7 +1,7 @@
-import ko from 'knockout';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { debounce } from 'lodash';
 
+import ko from 'knockout';
 import template from './index.html';
 
 ko.bindingHandlers.collapseCard = {
@@ -64,23 +64,6 @@ export class FlipCardComponentViewModel {
             this.toggleCallback = params.toggleCallback;
         }
 
-        this.hasSaveAction = ko.observable(false);
-        if (params.saveAction) {
-            this.hasSaveAction(true);
-            this.saveActionParam = params.saveAction;
-        }
-        this.hasCancelAction = ko.observable(false);
-        if (params.cancelAction) {
-            this.hasCancelAction(true);
-            this.cancelActionParam = params.cancelAction;
-        }
-
-        this.hasEditAction = ko.observable(false);
-        if (params.editAction) {
-            this.hasEditAction(true);
-            this.editActionParam = params.editAction;
-        }
-
         this.editMode = ko.observable(false);
         this.showEditModeButton = ko.observable(true);
 
@@ -121,7 +104,7 @@ export class FlipCardComponentViewModel {
 
     cancelAction = (data, event) => {
         if (this.hasCancelAction()) {
-            this.cancelActionParam(this.context.data).then(this.toggleMode(data, event));
+            this.cancelActionParam(this.context).then(this.toggleMode(data, event));
         } else {
             this.toggleMode(data, event);
         }
@@ -129,7 +112,7 @@ export class FlipCardComponentViewModel {
 
     saveAction = (data, event) => {
         if (this.hasSaveAction()) {
-            this.saveActionParam(this.context.data).then(this.toggleMode(data, event));
+            this.saveActionParam(this.context).then(this.toggleMode(data, event));
         } else {
             this.toggleMode(data, event);
         }
@@ -137,7 +120,7 @@ export class FlipCardComponentViewModel {
 
     editAction = (data, event) => {
         if (this.hasEditAction()) {
-            this.editActionParam(context.data.data).then(this.toggleMode(data, event));
+            this.editActionParam(context).then(this.toggleMode(data, event));
         } else {
             this.toggleMode(data, event);
         }
@@ -160,8 +143,6 @@ export class FlipCardComponentViewModel {
           // this.editMode.subscribe(this.setNewHeight);
         }
     }
-
-
 
     shownCallback = () => {
         if(this.collapsable()){

@@ -4,28 +4,7 @@
   css: collapsable() ? 'panel panel-default collapse':''">
   <div class="panel-body"
        style="position: relative; height: 100%;">
-    <!-- ko if: showEditModeButton() -->
-    <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-      <!-- ko if: editMode() -->
-        <button class="btn btn-link btn-danger" data-bind="click: cancelAction">
-            <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-            </span>
-        </button>
-        <!-- ko if: hasSaveAction() -->
-        <button class="btn btn-link btn-success" data-bind="click: saveAction">
-            <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-            </span>
-        </button>
-        <!-- /ko -->
-      <!-- /ko -->
-      <!-- ko if: !editMode() -->
-        <button class="btn btn-link" data-bind="click: editAction">
-            <span class="glyphicon glyphicon-edit" aria-hidden="true">
-            </span>
-        </button>
-      <!-- /ko -->
-      </div>
-    <!-- /ko -->
+  
     <div class="card-flip-container"
          data-bind="css: {'flipped':  editMode}, style: { height: elementHeight}">
       <div style="opacity: 1" class="card-flipper" data-bind="attr:{id: `${elementId}_card`}">

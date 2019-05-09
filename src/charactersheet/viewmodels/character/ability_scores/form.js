@@ -1,78 +1,163 @@
 import 'bin/popover_bind';
 import {
     AbilityScore,
-    OtherStats,
-    Profile
+    SavingThrow
 } from 'charactersheet/models/character';
-import {
-    ArmorClassService,
-    ProficiencyService
-} from 'charactersheet/services';
+
 import {
     CoreManager,
-    Fixtures,
     Notifications
 } from 'charactersheet/utilities';
 
-import { FormComponentViewModel } from 'charactersheet/components';
-import { getModifier } from 'charactersheet/models/character/ability_score';
+import { find } from 'lodash';
+
 import ko from 'knockout';
 import template from './form.html';
 
-
-//extends FormComponentViewModel
-export class ScoreSaveFormViewModel  {
+class ACFormViewModel {
     constructor(params) {
-        this.data = ko.utils.unwrapObservable(params.data);
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        // Actions
-        this.save = params.saveAction;
-        this.reset = params.cancelAction;
-
         // Card Properties
+        this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.showForm = params.showForm;
         this.flip = params.flip;
         this.resize = params.resize;
 
-        // List Properties
-        this.add = params.add;
-        this.remove = params.remove;
-        this.addForm = ko.observable(false);
-
-
-        this.currentEditItem = ko.observable();
-
+        this.loaded = ko.observable(false);
         this.formElementHasFocus = ko.observable(false);
-
-        this.showSaves = ko.observable(false);
-
-      // this.bypassUpdate = ko.observable(false);
-      // this.shouldShowDisclaimer = ko.observable(false);
     }
 
-    order = [
-        'Strength',
-        'Dexterity',
-        'Constitution',
-        'Intelligence',
-        'Wisdom',
-        'Charisma'
-    ];
+    async load() {
+        this.loaded(false);
+        await this.refresh();
+        this.setUpSubscriptions();
+        this.loaded(true);
+    }
 
+    async reset() {
+        await this.refresh();
+        this.setUpSubscriptions();
+        this.flip();
+    }
+
+    async refresh() {
+        throw('refresh must be defined by subclasses of ACFormViewModel');
+    }
+
+    async save() {
+        throw('Save must be defined by subclasses of ACFormViewModel');
+    }
+
+    async notify() {
+        throw('Notify must be defined by subclasses of ACFormViewModel');
+    }
+
+    async submit() {
+        await this.save();
+        this.notify();
+        this.setUpSubscriptions();
+        this.flip();
+    }
+
+    setUpSubscriptions() {
+        this.showForm.subscribe(this.subscribeToShowForm);
+    }
+
+    subscribeToShowForm = () => {
+        if (this.showForm()) {
+            this.refresh();
+            this.formElementHasFocus(true);
+        } else {
+            this.formElementHasFocus(false);
+        }
+    }
+}
+
+export class ScoreSaveFormViewModel extends ACFormViewModel {
+    constructor(params) {
+        super(params);
+        this.order = params.order;
+        this.showSaves = ko.observable(false);
+        this.abilityScores = ko.observableArray([]);
+        this.savingThrows = ko.observableArray([]);
+        this.abilityScoresChanged = ko.observable(false);
+        this.savingThrowsChanged = ko.observable(false);
+    }
+
+    watchSavingThrows = () => {
+        this.savingThrowsChanged(true);
+    }
+
+    watchAbilityScores = () => {
+        this.abilityScoresChanged(true);
+    }
+
+    saveFormHasFocus = ko.computed(()=>(this.formElementHasFocus() && this.showSaves()), this);
+    scoreFormHasFocus = ko.computed(()=>(this.formElementHasFocus() && !this.showSaves()), this);
+
+    abilityScoresChanged = ko.computed(()=> {})
     toggleSaves = (newValue) => {
         this.showSaves(!this.showSaves());
     };
 
+    findSaveByName = (name) => find(this.savingThrows(), (savingthrow) => savingthrow().name() === name);
+
+    findScoreByName = (name) => find(this.abilityScores(), (score) => score().name() === name);
+
+    refresh = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const scores = await AbilityScore.ps.list({coreUuid: key});
+        const saves = await SavingThrow.ps.list({coreUuid: key});
+        this.abilityScores(scores.objects.map(score => ko.observable(score)));
+        this.savingThrows(saves.objects.map(savingThrow => ko.observable(savingThrow)));
+        this.resetSubscriptions();
+    };
+
+    // setUpSubscriptions() {
+    //     super.setUpSubscriptions();
+    // }
+
+    save = async () => {
+        if (this.savingThrowsChanged()) {
+            const saves = this.savingThrows().map(async (savingThrow) => {
+                // save each save in place.
+                await savingThrow().ps.save();
+            });
+            await Promise.all(saves);
+        }
+        if (this.abilityScoresChanged()) {
+            const scores = this.abilityScores().map(async (abilityScore) => {
+                // save each save in place.
+                await abilityScore().ps.save();
+            });
+            await Promise.all(scores);
+        }
+    }
+
     notify = () => {
-        throw('you must provide a notification system');
+        if (this.abilityScoresChanged()) {
+            Notifications.abilityScores.dexterity.changed.dispatch();
+            Notifications.abilityScores.intelligence.changed.dispatch();
+            Notifications.abilityScores.changed.dispatch();
+        }
+        this.resetSubscriptions();
     }
 
 
-    submit = async () => {
-        await this.save();
-        if (this.flip) {
-            this.flip();
-        }
+    resetSubscriptions = () => {
+        this.abilityScoresChanged(false);
+        this.savingThrowsChanged(false);
+    }
+    
+    validation = {
+    //     submitHandler: (form, event) => {
+    //         event.preventDefault();
+    //         self.modalFinishedClosing();
+    //     },
+    //     updateHandler: ($element) => {
+    //         self.addFormIsValid($element.valid());
+    //     },
+        ...AbilityScore.validationConstraints,
+        ...SavingThrow.validationConstraints
     }
 }
 

@@ -1,0 +1,41 @@
+<!-- ko if: loaded -->
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link" data-bind="click: flip">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true">
+      </span>
+  </button>
+</div>
+<table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table"
+       id="abilityScoresTable">
+  <thead class="ac-table-header">
+    <tr>
+      <th style="width:15%">
+        Score
+      </th>
+      <th style="width: 40%">
+        Ability
+      </th>
+      <th style="width: 20%">
+        Bonus
+      </th>
+      <th style="width: 15%">
+        Save
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- ko foreach: order -->
+    <tr>
+      <!-- ko with: $component.findScoreByName($data) -->
+      <td ><span data-bind='text: value'></span></td>
+      <td><span data-bind="text: abbreviation"></span></td>
+      <td><strong data-bind="text: modifierLabel()"> </strong></td>
+      <!-- /ko -->
+      <!-- ko with: $component.findSaveByName($data) -->
+      <td><span class="defenseShield" data-bind="text: modifierLabel()"> </span></td>
+      <!-- /ko -->
+    </tr>
+    <!-- /ko -->
+  </tbody>
+</table>
+<!-- /ko -->

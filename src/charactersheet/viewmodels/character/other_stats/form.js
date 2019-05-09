@@ -27,11 +27,13 @@ class ACFormViewModel {
     async load() {
         this.loaded(false);
         await this.refresh();
+        this.setUpSubscriptions();
         this.loaded(true);
     }
 
     async reset() {
         await this.refresh();
+        this.setUpSubscriptions();
         this.flip();
     }
 
@@ -50,6 +52,7 @@ class ACFormViewModel {
     async submit() {
         await this.save();
         this.notify();
+        this.setUpSubscriptions();
         this.flip();
     }
 
@@ -164,7 +167,6 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
     }
 
     resetSubscriptions = () => {
-        this.setUpSubscriptions();
         this.hasInspirationChanged(false);
         this.hasAcChanged(false);
         this.hasLevelChanged(false);
