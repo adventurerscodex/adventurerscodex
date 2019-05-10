@@ -33,7 +33,6 @@ class ACFormViewModel {
 
     async reset() {
         await this.refresh();
-        this.setUpSubscriptions();
         this.flip();
     }
 
@@ -102,8 +101,8 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
         const key = CoreManager.activeCore().uuid();
         const otherStats = await OtherStats.ps.read({uuid: key});
         const profile = await Profile.ps.read({uuid: key});
-        this.otherStats(otherStats.object);
-        this.profile(profile.object);
+        this.otherStats().importValues(otherStats.object.exportValues());
+        this.profile().importValues(profile.object.exportValues());
         this.resetSubscriptions();
     }
 
@@ -111,8 +110,9 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
         // Do not call directly unless you know what you're doing. Call submit.
         const otherStatsResponse = await this.otherStats().ps.save();
         const profileResponse = await this.profile().ps.save();
-        this.otherStats(otherStatsResponse.object);
-        this.profile(profileResponse.object);
+        // Import values to trigger notifications
+        this.otherStats().importValues(otherStatsResponse.object.exportValues());
+        this.profile().importValues(profileResponse.object.exportValues());
     }
 
     notify = async () => {

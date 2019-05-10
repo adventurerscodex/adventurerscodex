@@ -1,0 +1,62 @@
+<form class="form-horizontal health-form" data-bind="{submit: $component.submit}">
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+      <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+      </span>
+  </button>
+  <button class="btn btn-link btn-success" type="submit" value="submit">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+      </span>
+  </button>
+</div>
+  <div data-bind="with: health">
+    <div class="form-group">
+      <label for="name"
+             class="col-sm-4 col-md-6 control-label">Max HP</label>
+      <div class="col-sm-8 col-md-6">
+        <input type="number"
+               class="form-control"
+               name="maxHitpoints"
+               data-bind='textInput: maxHitPoints, hasFocus: $component.formElementHasFocus'
+               min="0">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bonus"
+             class="col-sm-4 col-md-6 control-label">Damage</label>
+      <div class="col-sm-8 col-md-6">
+        <input type="number"
+               class="form-control"
+               min="0"
+               name="damage"
+               data-bind='textInput: damage'>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="name"
+             class="col-sm-4 col-md-6 control-label">Temporary HP</label>
+      <div class="col-sm-8 col-md-6">
+        <input type="number"
+               class="form-control"
+               name="tempHitpoints"
+               data-bind='textInput: tempHitPoints'
+               min="0">
+      </div>
+    </div>
+  </div>
+  <div data-bind="with: hitDice"
+       <div
+       class="form-group ui-front">
+    <label for="name"
+           class="col-sm-4 col-md-6 control-label">Hit Dice Type</label>
+    <div class="col-sm-8 col-md-6">
+      <input class="form-control"
+             placeholder="D4"
+             name="hitDiceType"
+             data-bind="textInput: type, autocomplete: {
+                source: hitDiceOptions,
+                onselect: $component.setHitDiceType}">
+    </div>
+  </div>
+  </div>
+</form>

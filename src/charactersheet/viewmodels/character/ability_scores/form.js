@@ -112,10 +112,6 @@ export class ScoreSaveFormViewModel extends ACFormViewModel {
         this.resetSubscriptions();
     };
 
-    // setUpSubscriptions() {
-    //     super.setUpSubscriptions();
-    // }
-
     save = async () => {
         if (this.savingThrowsChanged()) {
             const saves = this.savingThrows().map(async (savingThrow) => {
@@ -147,7 +143,7 @@ export class ScoreSaveFormViewModel extends ACFormViewModel {
         this.abilityScoresChanged(false);
         this.savingThrowsChanged(false);
     }
-    
+
     validation = {
     //     submitHandler: (form, event) => {
     //         event.preventDefault();

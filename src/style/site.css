@@ -64,7 +64,7 @@ a.navbar-brand.navbar-divider:after {
 #content {
   max-width: 100%;
   font-family: "Lato", sans-serif;
-  min-height: 100%;
+  /* min-height: 100%; */
 }
 
 .main {
@@ -1389,9 +1389,13 @@ transition: opacity 0.3s linear;
 
 .edit-btn {
   position: absolute;
-  top: 0px;
-  right: 0px;
+  top: -10px;
+  right: -10px;
   z-index: 6;
+}
+
+.edit-btn.btn-group .btn+.btn {
+  margin-left: -10px;
 }
 /* end Flip Card */
 

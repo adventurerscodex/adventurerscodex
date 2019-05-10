@@ -1,0 +1,101 @@
+<!-- ko if: loaded() -->
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link" data-bind="click: flip">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true">
+      </span>
+  </button>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-md-12 col-lg-6">
+    <h4>Hit Points</h4>
+    <div id="health-chart">
+      <div class="hp-circle"
+           data-bind="circleProgress: hpChart()"> </div>
+      <!-- ko if: health().tempHitPointsRemaining() -->
+      <div class="hp-circle tempHp"
+           data-bind="circleProgress: tempHpChart()"> </div>
+      <!-- /ko -->
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-12 col-lg-6">
+    <div id="health-buttons">
+      <h4>Damage &amp; Healing</h4>
+      <div class="row">
+        <div class="col col-xs-6 col-md-12 col-lg-6">
+          <form data-bind="submit:  handleDmg">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       data-bind="value: dmgInput"
+                       min="0"
+                       >
+                <div style="height: 30px; padding: 0px"
+                     class="input-group-addon">
+                  <button class="healthBtn btn btn-xs btn-danger"
+                          type="submit"
+                          value="submit"><i class="fa fa-gavel"></i></button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col col-xs-6 col-md-12 col-lg-6">
+          <form data-bind="submit: handleHeal">
+             <div class="form-group">
+              <div class="input-group">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       data-bind="value: healInput"
+                       min="0"
+                       >
+                <div style="height: 30px; padding: 0px"
+                     class="input-group-addon">
+                  <button class="healthBtn btn btn-xs btn-success"
+                          type="submit"
+                          value="submit"><i class="fa fa-heart"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col col-xs-6 col-xs-offset-6 col-md-12 col-md-offset-0 col-lg-6 col-lg-offset-6">
+          <form data-bind="submit: handleTemp">
+            <div class="form-group">
+              <div class="input-group">
+                <input type="number"
+                       class="form-control ac-number-input"
+                       data-bind="value: tempInput"
+                       min="0"
+                       >
+                <div style="height: 30px; padding: 0px"
+                     class="input-group-addon">
+                  <button style="
+                            background-color: rgb(113, 212, 232);
+                            border-color: rgb(113, 212, 232)"
+                          class="healthBtn btn btn-xs btn-info"
+                          type="submit"
+                          value="submit"><i class="fa fa-shield"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <h4>Hit Die</h4>
+    <div class="form-control hit-dice-list">
+      <!-- ko foreach: hitDiceList -->
+      <span data-bind="attr: { id: $index, name: $index },
+          css: $data ? 'dice-full': 'dice-empty', click: () => {$component.toggleHitDie($data)}"></span>
+      <!-- /ko -->
+      <!-- ko if: hitDiceList().length == 0 -->
+      <span class="hit-dice-list-empty-fill">&nbsp;</span>
+      <!-- /ko -->
+    </div>
+    <h4><center><small> Click on a die icon to track expended hit dice. </small></center></h4>
+  </div>
+</div>
+<!-- /ko -->
