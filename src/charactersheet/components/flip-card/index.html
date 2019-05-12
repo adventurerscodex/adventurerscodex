@@ -4,20 +4,19 @@
   css: collapsable() ? 'panel panel-default collapse':''">
   <div class="panel-body"
        style="position: relative; height: 100%;">
-  
+
     <div class="card-flip-container"
-         data-bind="css: {'flipped':  editMode}, style: { height: elementHeight}">
+         data-bind="css: {'flipped':  showBack}, style: { height: elementHeight}">
       <div style="opacity: 1" class="card-flipper" data-bind="attr:{id: `${elementId}_card`}">
         <!-- ko template: {
         nodes: $componentTemplateNodes,
         data: {
-          editMode: editMode,
+          showBack: showBack,
           context: context,
           elementId: elementId,
           flip: toggleMode,
-          resize: setNewHeight,
-          saveAction: saveAction,
-           cancelAction: cancelAction }
+          forceCardResize: setNewHeight
+            }
          } -->
         <div class="front">
         </div>

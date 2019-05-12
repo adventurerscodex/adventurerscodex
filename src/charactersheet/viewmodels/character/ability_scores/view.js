@@ -11,9 +11,8 @@ class ACViewModel {
     constructor(params) {
         // Card Properties
         this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showForm = params.showForm;
+        this.showBack = params.showBack;
         this.flip = params.flip;
-        this.resize = params.resize;
 
         this.loaded = ko.observable(false);
     }
@@ -30,11 +29,11 @@ class ACViewModel {
     }
 
     setUpSubscriptions() {
-        this.showForm.subscribe(this.subscribeToShowForm);
+        this.showBack.subscribe(this.subscribeToShowForm);
     }
 
     subscribeToShowForm = () => {
-        if (!this.showForm()) {
+        if (!this.showBack()) {
             this.refresh();
         }
     }

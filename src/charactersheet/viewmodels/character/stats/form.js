@@ -23,7 +23,7 @@ class ACFormViewModel {
     constructor(params) {
         // Card Properties
         this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showForm = params.showForm;
+        this.showBack = params.showBack;
         this.flip = params.flip;
         this.resize = params.resize;
 
@@ -63,11 +63,11 @@ class ACFormViewModel {
     }
 
     setUpSubscriptions() {
-        this.showForm.subscribe(this.subscribeToShowForm);
+        this.showBack.subscribe(this.subscribeToShowForm);
     }
 
     subscribeToShowForm = () => {
-        if (this.showForm()) {
+        if (this.showBack()) {
             this.refresh();
             this.formElementHasFocus(true);
         } else {
@@ -80,9 +80,12 @@ export class StatsHealthFormViewModel extends ACFormViewModel {
 
     constructor(params) {
         super(params);
+        this.flip = params.outerFlip;
+        this.showBack = params.outerShowBack;
         this.defaultHeight = params.defaultHeight;
         this.hitDice = ko.observable(new HitDice());
         this.health = ko.observable(new Health());
+        this.hitDiceList = ko.observableArray([]);
 
     }
 
@@ -106,6 +109,8 @@ export class StatsHealthFormViewModel extends ACFormViewModel {
     notify = () => {
         Notifications.hitDiceType.changed.dispatch();
         Notifications.health.changed.dispatch();
+        Notifications.health.damage.changed.dispatch();
+        Notifications.health.maxHitPoints.changed.dispatch();
     }
 
     setHitDiceType = (hitDiceType) => {

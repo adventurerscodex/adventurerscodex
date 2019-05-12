@@ -2,27 +2,19 @@
   <flip-card params="{
         collapsable: false,
         elementId: 'health-panel-card',
-        defaultHeight: 550
+        defaultHeight: 550,
         ">
     <div class="front">
       <div class="h4 card-title">
         Health <br />
         <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
       </div>
-      <stats-health-view params="{
+      <stats-card-view params="{
        containerId: elementId,
-       showForm: editMode,
-       resize: resize,
-       flip: flip,
-       defaultHeight: 550}">
-       </stats-health-view>
-     <!-- <stats-card-view params="{
-       containerId: elementId,
-       showForm: false,
-       resize: resize,
-       flip: flip
-       }">
-     </stats-card-view> -->
+       outerShowBack: showBack,
+       forceCardResize: forceCardResize,
+       outerFlip: flip}">
+       </stats-card-view>
     </div>
     <div class="back">
       <div id="health-panel-form">
@@ -32,24 +24,11 @@
         </div>
         <stats-health-form params="{
          containerId: elementId,
-         showForm: editMode,
-         resize: resize,
-         flip: flip,
-         defaultHeight: 550}">
+         outerShowBack: showBack,
+         outerFlip: flip}">
          </stats-health-form>
-        
-        <!-- <stats-health-form params="{
-          data: context.data.health,
-          hitDieData: context.data.hitDiceType,
-          containerId: 'health-panel-form',
-          showForm: editMode,
-          toggle: toggleCallback,
-          remove: ()=>{} }">
-        </health-form> -->
       </div>
     </div>
   </flip-card>
 </div>
-<!-- </div>
-</div> -->
 <!--End Panel-->

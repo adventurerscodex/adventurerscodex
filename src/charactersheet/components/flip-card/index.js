@@ -46,7 +46,7 @@ ko.bindingHandlers.collapseCard = {
 export class FlipCardComponentViewModel {
     constructor(params) {
         // Unique id for the card's data
-        this.dataId = ko.utils.unwrapObservable(params.dataId);
+        this.dataId = ko.utils.unwrapObservable(params.dataId) || '1';
         // element id for collapsable behavior
         this.paramElementId = ko.utils.unwrapObservable(params.elementId);
         // unique identifier for this card
@@ -58,21 +58,23 @@ export class FlipCardComponentViewModel {
 
         // contextual data to be passed to children objects
         this.context = params.context;
+
         // Whether or not this 'back' is displayed.
+        this.showBack = ko.observable(false);
 
-        if (params.toggleCallback) {
-            this.toggleCallback = params.toggleCallback;
+        // use a custom parameter
+        if (params.showBack !== undefined) {
+            this.showBack = params.showBack;
         }
 
-        this.editMode = ko.observable(false);
-        this.showEditModeButton = ko.observable(true);
-
-        if (params.editMode !== undefined) {
-            this.editMode = params.editMode;
-            this.showEditModeButton(false);
+        if (params.onFlip) {
+            // callback to trigger on flip
+            this.onFlip = params.onFlip;
         }
-        if (params.bubbleHeight) {
-            this.bubbleHeight = params.bubbleHeight;
+
+        if (params.onResize) {
+            // callback on
+            this.onResize = params.onResize;
         }
         // calculated element height
         this.elementMeasure = ko.observable(0);
@@ -88,42 +90,18 @@ export class FlipCardComponentViewModel {
     }
 
     toggleMode = (data, event) => {
-        let toggleTo = (!this.editMode());
+        let toggleTo = (!this.showBack());
         if (data === true) { //override default behavior from function call
             toggleTo = true;
 
         } else if (data === false) { //override default behavior from function call
             toggleTo = false;
         }
-        this.editMode(toggleTo);
-        if (this.toggleCallback) {
-            this.toggleCallback(this.editMode());
+        this.showBack(toggleTo);
+        if (this.onFlip) {
+            this.onFlip(this.showBack());
         }
         this.setNewHeight();
-    }
-
-    cancelAction = (data, event) => {
-        if (this.hasCancelAction()) {
-            this.cancelActionParam(this.context).then(this.toggleMode(data, event));
-        } else {
-            this.toggleMode(data, event);
-        }
-    }
-
-    saveAction = (data, event) => {
-        if (this.hasSaveAction()) {
-            this.saveActionParam(this.context).then(this.toggleMode(data, event));
-        } else {
-            this.toggleMode(data, event);
-        }
-    }
-
-    editAction = (data, event) => {
-        if (this.hasEditAction()) {
-            this.editActionParam(context).then(this.toggleMode(data, event));
-        } else {
-            this.toggleMode(data, event);
-        }
     }
 
     load = () => {
@@ -137,23 +115,18 @@ export class FlipCardComponentViewModel {
         if (this.tabId) {
             $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
         }
-
-        if (this.showEditModeButton() === false) {
-          // trigger the new height on edit mode directly;
-          // this.editMode.subscribe(this.setNewHeight);
-        }
     }
 
     shownCallback = () => {
         if(this.collapsable()){
-            this.editMode(false);
+            this.showBack(false);
             this.setNewHeight();
         }
     }
 
     hiddenCallback = () => {
         if(this.collapsable()){
-            this.editMode(false);
+            this.showBack(false);
             this.elementMeasure(0);
         }
     }
@@ -161,7 +134,7 @@ export class FlipCardComponentViewModel {
     setNewHeight = (initialSetHeight) => {
         const HEIGHT_MOD = 25;
         let setHeight = 0;
-        if (this.editMode()) {
+        if (this.showBack()) {
             setHeight = $(`#${this.elementId}_card > .back`).outerHeight();
         } else {
             setHeight = $(`#${this.elementId}_card > .front`).outerHeight();
@@ -171,8 +144,8 @@ export class FlipCardComponentViewModel {
            // Add 25 to adjust for where in the dom the height has to be set to work with
            // collapse
             this.elementMeasure(setHeight+HEIGHT_MOD);
-            if (this.bubbleHeight) {
-                setTimeout(this.bubbleHeight, 350);
+            if (this.onResize) {
+                setTimeout(this.onResize, 350);
             }
         }
 

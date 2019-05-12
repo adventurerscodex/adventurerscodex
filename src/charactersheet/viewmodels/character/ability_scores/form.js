@@ -18,9 +18,8 @@ class ACFormViewModel {
     constructor(params) {
         // Card Properties
         this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showForm = params.showForm;
+        this.showBack = params.showBack;
         this.flip = params.flip;
-        this.resize = params.resize;
 
         this.loaded = ko.observable(false);
         this.formElementHasFocus = ko.observable(false);
@@ -59,11 +58,11 @@ class ACFormViewModel {
     }
 
     setUpSubscriptions() {
-        this.showForm.subscribe(this.subscribeToShowForm);
+        this.showBack.subscribe(this.subscribeToShowForm);
     }
 
     subscribeToShowForm = () => {
-        if (this.showForm()) {
+        if (this.showBack()) {
             this.refresh();
             this.formElementHasFocus(true);
         } else {
@@ -76,6 +75,7 @@ export class ScoreSaveFormViewModel extends ACFormViewModel {
     constructor(params) {
         super(params);
         this.order = params.order;
+        this.forceCardResize = params.forceCardResize;
         this.showSaves = ko.observable(false);
         this.abilityScores = ko.observableArray([]);
         this.savingThrows = ko.observableArray([]);
@@ -97,6 +97,7 @@ export class ScoreSaveFormViewModel extends ACFormViewModel {
     abilityScoresChanged = ko.computed(()=> {})
     toggleSaves = (newValue) => {
         this.showSaves(!this.showSaves());
+        this.forceCardResize();
     };
 
     findSaveByName = (name) => find(this.savingThrows(), (savingthrow) => savingthrow().name() === name);

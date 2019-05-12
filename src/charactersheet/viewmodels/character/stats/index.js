@@ -13,7 +13,6 @@ import { Notifications } from 'charactersheet/utilities';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { StatsCardViewModel } from './view';
 import { StatsHealthFormViewModel } from './form';
-import { StatsHealthViewModel } from './health';
 import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './index.html';
@@ -23,7 +22,7 @@ class ACCardModel {
         this.tabId = params.tabId;
         this.cardTabId = params.tabId;
         this.containerId = params.containerId;
-        this.showForm = params.showForm;
+        this.showBack = params.showBack;
         this.resize = params.resize;
         this.flip = params.flip;
     }

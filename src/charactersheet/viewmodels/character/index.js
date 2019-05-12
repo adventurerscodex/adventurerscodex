@@ -11,7 +11,6 @@ export { MagicItemsViewModel } from './magic_items';
 export { ProficienciesViewModel } from './proficiencies';
 export { ProfileViewModel } from './profile';
 export { CharacterRootViewModel } from './root';
-export { SavingThrowsViewModel } from './saving_throws';
 export { SkillsViewModel } from './skills';
 export { SpellSlotsViewModel } from './spell_slots';
 export { SpellStatsViewModel } from './spell_stats';

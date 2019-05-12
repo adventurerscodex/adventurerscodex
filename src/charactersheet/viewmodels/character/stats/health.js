@@ -9,6 +9,7 @@ import {
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 
+import {find} from 'lodash';
 // import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './health.html';
@@ -17,9 +18,8 @@ class ACViewModel {
     constructor(params) {
         // Card Properties
         this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showForm = params.showForm;
+        this.showBack = params.showBack;
         this.flip = params.flip;
-        this.resize = params.resize;
 
         this.loaded = ko.observable(false);
     }
@@ -36,11 +36,11 @@ class ACViewModel {
     }
 
     setUpSubscriptions() {
-        this.showForm.subscribe(this.subscribeToShowForm);
+        this.showBack.subscribe(this.subscribeToShowForm);
     }
 
     subscribeToShowForm = () => {
-        if (!this.showForm()) {
+        if (!this.showBack()) {
             this.refresh();
         }
     }
@@ -49,7 +49,9 @@ class ACViewModel {
 class StatsHealthViewModel extends ACViewModel {
     constructor(params) {
         super(params);
-        this.defaultHeight = params.defaultHeight;
+        this.forceCardResize = params.forceCardResize;
+        this.massiveDamageTaken = params.massiveDamageTaken;
+
         this.profile = ko.observable(new Profile());
         this.hitDice = ko.observable(new HitDice());
         this.health = ko.observable(new Health());
@@ -59,7 +61,10 @@ class StatsHealthViewModel extends ACViewModel {
         this.healInput = ko.observable(null);
         this.tempInput = ko.observable(null);
         this.dmgInput = ko.observable(null);
+    }
 
+    load = async () => {
+        await super.load();
     }
 
     refresh = async () => {
@@ -73,8 +78,9 @@ class StatsHealthViewModel extends ACViewModel {
 
         const health = await Health.ps.read({uuid: key});
         this.health(health.object);
-
         this.calculateHitDice();
+        // TODO: should this happen here?
+        this.forceCardResize();
     };
 
     setUpSubscriptions = () => {
@@ -191,6 +197,7 @@ class StatsHealthViewModel extends ACViewModel {
             const maxHitPoints = parseInt(this.health().maxHitPoints());
             let newDamage;
             if (value < 0) {
+                // healing
                 newDamage = currentDamage + currentValue;
                 if (newDamage < 0) {
                     newDamage = 0;
@@ -203,26 +210,20 @@ class StatsHealthViewModel extends ACViewModel {
                     // reduce temporary hit Points, and do not apply to damage.
                     this.health().tempHitPoints(remainingTempHP);
                     newDamage = currentDamage;
-                } else { // remainingTempHP is negative.
+                } else { // remainingTempHP is negative. Damage continues on
+                        // to hit points
                     this.health().tempHitPoints(0);
                     newDamage = currentDamage - remainingTempHP;
                 }
-            } else if (this.health().hitPoints() == 0) {
-                // Hit Points were already at 0, so death saves are necessary
-                newDamage = maxHitPoints;
-                console.log('death saves, man');
-                // self.deathSaveSuccessList().forEach(function(save, idx, _) {
-                //     save.deathSaveSuccess(false);
-                // });
-                // self.deathSavesVisible();
             } else {
                 newDamage = currentDamage + currentValue;
             }
             if (newDamage > maxHitPoints) {
+                if (newDamage >= maxHitPoints * 2) {
+                    // Trigger Massive Damage.
+                    this.massiveDamageTaken(true);
+                }
                 newDamage = maxHitPoints;
-            }
-            if (newDamage === maxHitPoints) {
-                console.log('death saves, man');
             }
             this.health().damage(newDamage);
         },
@@ -298,6 +299,41 @@ class StatsHealthViewModel extends ACViewModel {
         await this.resetHitDice();
         // reset hit dice does the notification we need
     };
+
+    validation = {
+        submitHandler: (form, event) => {
+            // event.preventDefault();
+            // this.modalFinishedClosing();
+        },
+        updateHandler: ($element) => {
+            this.addFormIsValid($element.valid());
+        },
+        rules: {
+            maxHitPoints: {
+                min: 0,
+                max: 1000000,
+                required: true,
+                number: true
+            },
+            tempHitPoints: {
+                min: 0,
+                max: 1000000,
+                required: true,
+                number: true
+            },
+            damage: {
+                min: 0,
+                max: 1000000,
+                required: true,
+                number: true
+            },
+            type: {
+                required: true,
+                maxlength: 32
+            }
+        }
+    };
+
 }
 
 ko.components.register('stats-health-view', {

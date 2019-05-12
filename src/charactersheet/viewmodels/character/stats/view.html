@@ -1,0 +1,35 @@
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link" data-bind="click: outerFlip">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true">
+      </span>
+  </button>
+</div>
+<div>
+<flip-card params="{
+          collapsable: false,
+          elementId: 'healthContainer',
+          showBack: $component.deathSavesVisible,
+          onResize: forceOuterCardResize,
+          context: $data
+        }">
+  <div class="front">
+    <stats-health-view params="{
+     containerId: elementId,
+     showBack: showBack,
+     flip: context.toggleDeathSavesVisible,
+     forceCardResize: forceCardResize,
+     massiveDamageTaken: context.massiveDamageTaken
+   }">
+     </stats-health-view>
+  </div>
+  <div class="back">
+    <stats-deathsave-view params="{
+     containerId: elementId,
+     showBack: showBack,
+     flip: context.toggleDeathSavesVisible,
+     forceCardResize: forceCardResize
+   }">
+   </stats-deathsave-view>
+  </div>
+ </flip-card>
+</div>
