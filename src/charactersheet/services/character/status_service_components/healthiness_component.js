@@ -131,17 +131,17 @@ export function HealthinessStatusServiceComponent() {
         }
 
         // Character is dead
-        if (health.regularHitpointsRemaining() <= 0 && deathSavesDidFail) {
+        if (health.regularHitPointsRemaining() <= 0 && deathSavesDidFail) {
             return -2;
         }
 
         // Character is unconscious and stable
-        if (health.regularHitpointsRemaining() <= 0 && deathSavesDidSucceed) {
+        if (health.regularHitPointsRemaining() <= 0 && deathSavesDidSucceed) {
             return -1;
         }
 
         // Character is unconscious
-        if (health.regularHitpointsRemaining() <= 0) {
+        if (health.regularHitPointsRemaining() <= 0) {
             return 0.0;
         }
 
@@ -165,7 +165,7 @@ export function HealthinessStatusServiceComponent() {
      * @return StatusWeightPair
      */
     self.prepareHealthValueWeightPairs = function(health) {
-        var value = health.hitpoints() / health.totalHitpoints();
+        var value = health.hitPoints() / health.totalHitPoints();
 
         return new StatusWeightPair(value, self.HEALTH_WEIGHT);
     };
