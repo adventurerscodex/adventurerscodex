@@ -164,7 +164,13 @@
                       class="form-control" rows="4"
                       name="playerText"
                       placeholder="This is the description that your players will see when sent via the chat."
-                      data-bind="value: blankNPC().playerText"></textarea>
+                      data-bind="value: blankNPC().playerText">
+              </textarea>
+              <small class="text-muted">
+                Text in this panel can be styled using Markdown. Click
+                <a target="_blank"
+                  href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
+              </small>
             </div>
             <div class="col-sm-1 control-label">
               <span class="fa fa-paper-plane-o" style="cursor:pointer;"
@@ -325,7 +331,13 @@
                           class="form-control"
                           name="playerText"
                           placeholder="This is the description that your players will see when sent via the chat."
-                          data-bind="value: playerText, markdownEditor: true"></textarea>
+                          data-bind="value: playerText, markdownEditor: true">
+                  </textarea>
+                  <small class="text-muted">
+                    Text in this panel can be styled using Markdown. Click
+                    <a target="_blank"
+                      href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
+                  </small>
                 </div>
                 <div class="col-sm-1 control-label">
                   <span class="fa fa-paper-plane-o" style="cursor:pointer;"
