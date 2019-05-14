@@ -12,14 +12,16 @@ export class Skill extends KOModel {
         include: ['coreUuid']
     };
 
-    _dummy = ko.observable(null);
+    // _dummy = ko.observable(null);
     coreUuid = ko.observable(null);
     name = ko.observable('');
     modifier = ko.observable(0);
     abilityScore = ko.observable(null);
     proficiency = ko.observable('not');
     bonusLabel = ko.observable('');
+    bonusNumber = ko.observable('');
     passiveBonus = ko.observable('');
+    markedForSave = ko.observable(false);
 
     toSchemaValues = (values) => {
         // TODO: I have to do this because when delete is called, it only includes the IDs in the
@@ -42,7 +44,7 @@ export class Skill extends KOModel {
     }
 
     proficiencyScore() {
-        this._dummy();
+        // this._dummy();
         var profBonus = ProficiencyService.sharedService().proficiency();
 
         if (this.proficiency() === 'half') {
@@ -94,15 +96,15 @@ export class Skill extends KOModel {
             str = bonus >= 0 ? '+ ' + bonus : '- ' +
             Math.abs(bonus);
         }
-
+        this.bonusNumber(bonus);
         str += ' <i><small class="skills-ability-type">('
-                + this.abilityScore().abbreviation() + ')</small></i>';
+                  + this.abilityScore().abbreviation() + ')</small></i>';
         this.bonusLabel(str);
         this.passiveBonus(10 + bonus);
     };
 
     nameLabel = ko.pureComputed(() => {
-        this._dummy();
+        // this._dummy();
         var str = this.name();
 
         str += ' <i><small class="skills-ability-type">(' + this.abilityScore().abbreviation() + ')</small></i>';

@@ -1,0 +1,52 @@
+<form data-bind="submit: $component.submit">
+  <div class="h4" style="padding-top: 5px;">
+    New Skill
+  </div>
+  <div data-bind="with: skill">
+    <div class="form-group">
+      <label class=" control-label">Skill Name</label>
+      <input type="text"
+             class="form-control"
+             id="name"
+             placeholder="Name"
+             required
+             data-bind='textInput: name, hasFocus: $component.formElementHasFocus'>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Proficient</label>
+       <select class="form-control"
+              style="width: 100%"
+              data-bind="value: proficiency,
+              options: $component.proficiencyOptions,
+              select2: {
+                placeholder: '',
+                minimumResultsForSearch: Infinity,
+                templateSelection: $component.formatProficiencyOptions,
+                templateResult: $component.formatProficiencyOptions,
+                dropdownAutoWidth: true
+               }"></select>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label">Ability Score</label>
+       <select class="form-control"
+              style="width: 100%"
+              data-bind="value: $component.abilityScoreChoice,
+                options: $component.abilityScoreOptions(),
+                select2: {
+                  minimumResultsForSearch: Infinity,
+                  dropdownAutoWidth: true,
+                  required: true
+                 }"></select>
+    </div>
+  </div>
+  <div class="pull-right">
+    <button type="button"
+            class="btn btn-default btn-sm"
+            id="skillAddCancelButton"
+            data-bind="click: $component.cancel">Cancel</button>
+    <button type="submit"
+            class="btn btn-primary btn-sm"
+            id="skillAddAddButton">Add Skill</button>
+  </div>
+</form>
