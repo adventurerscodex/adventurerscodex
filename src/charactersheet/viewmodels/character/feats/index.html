@@ -19,7 +19,9 @@
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
       <tr data-toggle="collapse" class="clickable expandRow" data-bind="attr:{'data-target': `#feat_list_${uuid()}`, id: `#feat_row_${uuid()}`}">
-        <td><span data-bind="text: name"></span></td>
+        <td><span data-bind="text: $component.shortName(name)"></span>
+          <span data-bind="visible: $component.showTracked($data)" style="opacity: .9" class="glyphicon glyphicon-time" aria-hidden="true"></span>
+        </td>
         <td>
           <span data-toggle="collapse" data-bind="attr:{'data-target': `#feat_list_${uuid()}`}" class="rotate fa fa-chevron-left"></span>
         </td>
@@ -40,7 +42,7 @@
               }">
             <div class="front" data-bind="with: context.data">
               <div class="h4">
-                <small><span data-bind="text: name"></span></small>
+                <span data-bind="text: name"></span>
               </div>
               <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
                 <button class="btn btn-link" data-bind="click: $parent.flip">

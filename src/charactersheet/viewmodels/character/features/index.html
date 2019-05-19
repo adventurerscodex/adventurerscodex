@@ -24,7 +24,7 @@
       <!-- ko foreach: filteredAndSortedEntities -->
       <tr data-toggle="collapse" class="clickable expandRow"
       data-bind="attr:{'data-target': `#feature_list_${uuid()}`, id: `#feature_row_${uuid()}`}">
-        <td><span data-bind="text: name"></span>
+        <td><span data-bind="text: $component.shortName(name)"></span>
             <span data-bind="visible: $component.showTracked($data)" style="opacity: .9" class="glyphicon glyphicon-time" aria-hidden="true"></span>
         </td>
         <td>
@@ -54,6 +54,7 @@
             <div class="front">
               <div data-bind="with: context.data">
               <div class="h4">
+                <div data-bind="text:name"></div>
                 <small><span data-bind="text: characterClass"></span> (lvl <span data-bind="text: level"></span>)</small>
               </div>
               <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
