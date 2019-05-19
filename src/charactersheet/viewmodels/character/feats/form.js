@@ -8,25 +8,25 @@ import {
   Fixtures
 } from 'charactersheet/utilities';
 
-import { Feature } from 'charactersheet/models';
+import { Feat } from 'charactersheet/models';
 import { TrackedFormController } from 'charactersheet/components/form-controller-tracked-component';
 
 import ko from 'knockout';
 import template from './form.html';
 
-export class FeatureFormViewModel  extends TrackedFormController {
+export class FeatFormViewModel  extends TrackedFormController {
     generateBlank() {
-        return new Feature();
+        return new Feat();
     }
     classOptions = Fixtures.profile.classOptions;
 
     // Pre-pop methods
-    featuresPrePopFilter = (request, response) => {
+    featsPrePopFilter = (request, response) => {
         const term = request.term.toLowerCase();
         let results = [];
         if (term && term.length > 2) {
-            const keys = DataRepository.features
-                ? DataRepository.featuresDisplayNames
+            const keys = DataRepository.feats
+                ?  Object.keys(DataRepository.feats)
                 : [];
             results = keys.filter(function(name, idx, _) {
                 return name.toLowerCase().indexOf(term) > -1;
@@ -35,20 +35,20 @@ export class FeatureFormViewModel  extends TrackedFormController {
         response(results);
     };
 
-    populateFeature = (label, value) => {
-        const feature = DataRepository.filterBy('features', 'displayName', label)[0];
-        if (feature) {
-            this.entity().importValues(feature);
+    populateFeat = (label, value) => {
+        const feat = DataRepository.feats[label];
+        if (feat) {
+            this.entity().importValues(feat);
             this.shouldShowDisclaimer(true);
             this.forceCardResize();
         }
     };
 
-    populateClass = (label, value) => {
-        this.entity().characterClass(value);
-    };
+    popoverText = () => ('Tracked Feats are listed in the Tracker.');
 
-    notify() { Notifications.feature.changed.dispatch(); }
+    // Pre-pop methods
+
+    notify() { Notifications.feat.changed.dispatch(); }
 
     validation = {
         // submitHandler: (form, event) => {
@@ -59,14 +59,11 @@ export class FeatureFormViewModel  extends TrackedFormController {
         //     self.addFormIsValid($element.valid());
         // },
         // Deep copy of properties in object
-        ...Feature.validationConstraints
+        ...Feat.validationConstraints
     };
-
-
-    popoverText = () => ('Tracked Features are listed in the Tracker.');
 }
 
-ko.components.register('feature-form', {
-    viewModel: FeatureFormViewModel,
+ko.components.register('feat-form', {
+    viewModel: FeatFormViewModel,
     template: template
 });

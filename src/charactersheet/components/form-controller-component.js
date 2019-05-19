@@ -46,7 +46,8 @@ export class FormController {
     }
 
     disposeOfSubscriptions () {
-        this.subscriptions.map((subscription) => subscription.dispose());
+        this.subscriptions.forEach((subscription) => subscription.dispose());
+        this.subscriptions = [];
     }
 
     generateBlank () {
@@ -57,12 +58,14 @@ export class FormController {
         // Reset the textarea size when refreshing
         this.textAreaStyle('');
         this.shouldShowDisclaimer(false);
+        this.disposeOfSubscriptions();
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());
         } else {
             this.entity(this.generateBlank());
             this.entity().coreUuid(CoreManager.activeCore().uuid());
         }
+        this.setUpSubscriptions();
     }
 
     async save() {
@@ -91,9 +94,7 @@ export class FormController {
         this.notify();
     }
 
-    notify() {
-        throw('Notify must be implemented by subclasses of FormViewModel');
-    }
+    notify() {}
 
     reset = () => {
         // By the power of subscriptions, flip calls refresh;

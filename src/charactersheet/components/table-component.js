@@ -17,12 +17,16 @@ export class ACTableComponent {
         this.entities = ko.observableArray([]);
         this.sort = ko.observable(this.sorts()['name asc']);
         this.filter = ko.observable('');
+        this.subscriptions = [];
     }
 
     async refresh() {
         const key = CoreManager.activeCore().uuid();
+        this.disposeOfSubscriptions();
         const response = await this.modelClass.ps.list({coreUuid: key});
         this.entities(response.objects);
+        this.setUpSubscriptions();
+        // this.notify();
     }
 
     sorts() {
@@ -79,7 +83,14 @@ export class ACTableComponent {
         }
     }
 
+    setUpSubscriptions () {}
+
+    disposeOfSubscriptions () {
+        this.subscriptions.map((subscription) => subscription.dispose());
+        this.subscriptions = [];
+    }
+
     dispose () {
-        console.log('disposed of');
+        this.disposeOfSubscriptions();
     }
 }

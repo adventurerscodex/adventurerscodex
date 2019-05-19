@@ -101,10 +101,22 @@ export var Notifications = {
 
     abilityScores: {
         changed: new Signal(),
-        intelligence: {
+        strength: {
             changed: new Signal()
         },
         dexterity: {
+            changed: new Signal()
+        },
+        constitution: {
+            changed: new Signal()
+        },
+        intelligence: {
+            changed: new Signal()
+        },
+        wisdom: {
+            changed: new Signal()
+        },
+        charisma: {
             changed: new Signal()
         }
     },
