@@ -30,6 +30,14 @@ class ACFormViewModel {
         this.loaded(true);
     }
 
+    koDescendantsComplete() {
+
+    }
+
+    dispose() {
+        console.error('Dispose must be implemented by AC classes');
+    }
+
     async reset() {
         await this.refresh();
         this.flip();

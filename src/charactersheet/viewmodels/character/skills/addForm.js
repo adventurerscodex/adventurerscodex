@@ -24,7 +24,7 @@ export class SkillsAddFormViewModel {
         this.showAddForm = params.showAddForm;
         this.toggleShowAddForm = params.toggleShowAddForm;
         this.abilityScores = [];
-        this.abilityScoreChoice = ko.observable(null);
+        this.abilityScoreChoice = ko.observable('Strength');
         this.skill = ko.observable(new Skill());
         this.formElementHasFocus = ko.observable(false);
     }
@@ -51,6 +51,7 @@ export class SkillsAddFormViewModel {
         const key = CoreManager.activeCore().uuid();
         this.skill(new Skill());
         this.skill().coreUuid(key);
+        this.abilityScoreChoice = ko.observable('Strength');
     }
 
     proficiencyOptions = [

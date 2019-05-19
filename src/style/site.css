@@ -1200,10 +1200,10 @@ tr.expandRow[aria-expanded="true"]:hover {
 position: relative;
 overflow: hidden;
 opacity: 0;
--webkit-transition: height .35s ease opacity 0.3s linear;
--moz-transition: height .35s ease opacity 0.3s linear;
--o-transition: height .35s ease opacity 0.3s linear;
-transition : height 0.35s ease opacity 0.3s linear;
+-webkit-transition: height .25s ease opacity 0.2s linear;
+-moz-transition: height .25s ease opacity 0.2s linear;
+-o-transition: height .25s ease opacity 0.2s linear;
+transition : height 0.25s ease opacity 0.2s linear;
 }
 
 /* .collapsing {
@@ -1239,10 +1239,10 @@ transition: opacity 0.3s linear;
   -webkit-perspective-origin: 0;
   perspective: 0px;
   padding-top: 0px;
-  -webkit-transition: all 0.6s ease height 0.35s ease;
-  -moz-transition: all 0.6s ease height 0.35s ease;
-  -o-transition: all 0.6s ease height 0.35s ease;
-  transition: all 0.6s ease height 0.35s ease;
+  -webkit-transition: all 0.4s ease height 0.35s ease;
+  -moz-transition: all 0.4s ease height 0.35s ease;
+  -o-transition: all 0.4s ease height 0.35s ease;
+  transition: all 0.4s ease height 0.35s ease;
   width: 100%;
 }
 
@@ -1254,9 +1254,9 @@ transition: opacity 0.3s linear;
 }
 
 .card-flip-container > .card-flipper {
-	transition: 0.6s;
+	transition: 0.4s;
 	transform-style: preserve-3d;
-  -webkit-transition: 0.6s;
+  -webkit-transition: 0.4s;
   -webkit-transform-style: preserve-3d;
 	position: relative;
 }
@@ -1333,7 +1333,7 @@ transition: opacity 0.3s linear;
 	perspective: 0px;
   -webkit-perspective-origin: 0;
   padding-top: 0px;
-  transition: all 0.6s ease;
+  transition: all 0.4s ease;
 } */
 
 
@@ -1351,9 +1351,9 @@ transition: opacity 0.3s linear;
 
 /* flip speed goes here */
 /* .card-flipper, .inner-flipper, .flipper {
-	transition: 0.6s;
+	transition: 0.4s;
 	transform-style: preserve-3d;
-  -webkit-transition: 0.6s;
+  -webkit-transition: 0.4s;
   -webkit-transform-style: preserve-3d;
 	position: relative;
 } */

@@ -36,7 +36,7 @@ export class SavingThrow extends KOModel {
         try {
             var key = CoreManager.activeCore().uuid();
             const response = await AbilityScore.ps.list({coreUuid: key,
-                name: this.abilityScore().name()});
+                uuid: this.abilityScore().uuid()});
             score = response.objects[0];
         } catch(err) { /*Ignore*/ }
 

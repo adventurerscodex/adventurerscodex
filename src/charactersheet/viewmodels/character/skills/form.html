@@ -1,4 +1,4 @@
-<!-- ko if: loaded -->
+<!-- ko if: loaded(), completeOn: 'render' -->
 <form class="form-horizontal" data-bind="{submit: $component.submit}">
   <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
     <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
@@ -62,22 +62,30 @@
   </tbody>
 </table>
 </form>
-  <div id="add-skill" class="collapse panel-body">
-    <skills-add-form-view params="{
-      containerId: 'add-skill',
-      addSkillToView: addSkillToView,
-      showAddForm: $component.showAddForm,
-      toggleShowAddForm: $component.toggleShowAddForm
-      }">
-    </skills-add-form-view>
-    <hr />
-  </div>
-<!-- ko ifnot: $component.showAddForm -->
-<button type="button"
-        class="btn btn-link btn-sm btn-block"
-        id="skillAddButton"
-        data-toggle="collapse"
-        data-target="#add-skill"
-        data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Skill</button>
-<!-- /ko -->
+<!-- extra table? its because of the form wrap on the one above -->
+<table class="table table-responsive table-ac-bordered table-hover">
+  <tfoot>
+    <tr>
+      <td>
+        <div id="add-skill" class="collapse panel-body">
+          <skills-add-form-view params="{
+            containerId: 'add-skill',
+            addSkillToView: addSkillToView,
+            showAddForm: $component.showAddForm,
+            toggleShowAddForm: $component.toggleShowAddForm
+            }">
+          </skills-add-form-view>
+        </div>
+      <!-- ko ifnot: $component.showAddForm -->
+      <button type="button"
+              class="btn btn-link btn-sm btn-block"
+              id="skillAddButton"
+              data-toggle="collapse"
+              data-target="#add-skill"
+              data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Skill</button>
+      <!-- /ko -->
+    </td>
+  </tr>
+</tfoot>
+</table>
 <!--/ko -->

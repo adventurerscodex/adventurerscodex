@@ -31,6 +31,10 @@ class ACViewModel {
         this.loaded(true);
     }
 
+    dispose() {
+        console.error('Dispose must be implemented by AC classes');
+    }
+
     async refresh() {
         throw('refresh must be defined by subclasses of ACViewModel');
     }
@@ -80,7 +84,7 @@ class StatsHealthViewModel extends ACViewModel {
         this.health(health.object);
         this.calculateHitDice();
         // TODO: should this happen here?
-        this.forceCardResize();
+        // this.forceCardResize();
     };
 
     setUpSubscriptions = () => {

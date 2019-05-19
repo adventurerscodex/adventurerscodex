@@ -12,7 +12,6 @@ export class Skill extends KOModel {
         include: ['coreUuid']
     };
 
-    // _dummy = ko.observable(null);
     coreUuid = ko.observable(null);
     name = ko.observable('');
     modifier = ko.observable(0);
@@ -64,7 +63,7 @@ export class Skill extends KOModel {
         try {
             var key = CoreManager.activeCore().uuid();
             const response = await AbilityScore.ps.list(
-                {coreUuid: key, name: this.abilityScore().name()}
+                {coreUuid: key, uuid: this.abilityScore().uuid()}
             );
             score = response.objects[0];
         } catch(err) { /*Ignore*/ }

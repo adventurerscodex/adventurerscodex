@@ -1,0 +1,140 @@
+<form data-bind="submit: $component.submit">
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+        </span>
+    </button>
+    <button class="btn btn-link btn-success" type="submit" value="submit">
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+        </span>
+    </button>
+  </div>
+  <!-- ko ifnot: $component.data -->
+  <div class="h4" style="padding-top: 5px;">
+    New Feature
+  </div>
+  <!-- /ko -->
+  <div data-bind="with: entity">
+    <div class="form-group">
+      <label for="name"
+             class="control-label">Name</label>
+      <input type="text"
+             class="form-control featureEditNameInput"
+             placeholder="Rage"
+             data-bind='textInput: name,
+             hasFocus: $component.formElementHasFocus,
+             autocomplete: {
+               source: $component.featuresPrePopFilter,
+               onselect: $component.populateFeature,
+             delay: 350 }'>
+    </div>
+    <div class="form-group">
+      <label for="class"
+             class="control-label">Class</label>
+      <input type="text"
+             class="form-control featureEditClassInput"
+             placeholder="Barbarian"
+             data-bind="textInput: characterClass,
+             autocomplete: { source: $component.classOptions,
+             onselect: $parent.populateClass }">
+    </div>
+    <div class="form-group">
+      <label for="level"
+             class="control-label">Level</label>
+      <input type="number"
+             class="form-control featureEditLevelInput"
+             placeholder="1"
+             data-bind='textInput: level'>
+    </div>
+
+    <div class="form-group">
+      <label for="npcDescription"
+             class="control-label">Description</label>
+      <textarea type="text"
+                rows="6"
+                class="form-control"
+                id="featureEditDescriptionTextarea"
+                data-bind='attr: {style: $component.textAreaStyle}, value: description, markdownEditor: true'></textarea>
+    </div>
+    <div class="form-group">
+      <input type='checkbox'
+             style=""
+             class='ac-checkbox sr-only'
+             data-bind="checked: $component.isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
+      <label data-bind="attr: {for: `${$component.containerId}_tracked`}">
+        Tracked?
+    </label>&nbsp;<span class="fa fa-info-circle"
+            style="cursor:pointer;"
+            data-bind="popover: { content: $component.popoverText }"></span>
+    </div>
+  </div>
+  <!-- ko if: $component.isTracked() -->
+  <fieldset class="fieldset-bordered">
+   <legend>Tracked</legend>
+   <div data-bind="with: $component.tracked">
+       <div class="form-group">
+         <label for="bonus"
+                class="control-label">Max</label>
+         <input type="number"
+                class="form-control"
+                id="max"
+                min="1"
+                data-bind='textInput: max'>
+       </div>
+       <div class="form-group">
+         <label class="control-label">Resets on...</label>
+         <div class="btn-group btn-group-justified btn-group-sm"
+              role="group">
+           <label class="btn btn-default btn-sm"
+                  data-bind="css: { active: resetsOn() === 'short'}">
+           <input type="radio" class="hide-block"
+           name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
+           <img class="action-bar-icon" data-bind="attr: { src: $component.meditationWhite }"></img>
+           &nbsp;&nbsp;&nbsp;Short Rest
+         </label>
+           <label class="btn btn-default  btn-sm"
+                  data-bind="css: { active: resetsOn() === 'long'}">
+           <input type="radio" class="hide-block"
+           name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
+           <img class="action-bar-icon" data-bind="attr: { src: $component.campingTentWhite }"></img>
+           &nbsp;&nbsp;&nbsp;Long Rest
+         </label>
+         </div>
+     </div>
+  </fieldset>
+
+    <!-- /ko -->
+    <!-- ko ifnot: addForm -->
+    <div>
+      <button class="btn btn-sm btn-danger"
+              type="button"
+              data-bind="click: $component.delete">Delete</button>
+      <div class="pull-right">
+        <button class="btn btn-sm btn-default"
+                type="reset"
+                data-bind="click: $component.reset">Cancel</button>
+        <button class="btn btn-sm btn-primary"
+                type="submit">Save</button>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: addForm -->
+      <div class="pull-right">
+          <button type="button"
+                  class="btn btn-default btn-sm"
+                  data-bind="click: $component.reset">Cancel</button>
+          <button type="submit"
+                  class="btn btn-primary btn-sm">Add Feature</button>
+      </div>
+    <!-- /ko -->
+    <p class="text-muted text-left ogl-disclaimer"
+       data-bind='visible: shouldShowDisclaimer'>
+      <sm><i>This data is distributed under the
+            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+              target='_blank'>
+              OGL</a><br/>
+              Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+         </i>
+      <sm>
+    </p>
+</form>

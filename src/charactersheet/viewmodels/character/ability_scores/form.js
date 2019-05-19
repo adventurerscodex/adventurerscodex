@@ -38,6 +38,10 @@ class ACFormViewModel {
         this.flip();
     }
 
+    dispose() {
+        console.error('Dispose must be implemented');
+    }
+
     async refresh() {
         throw('refresh must be defined by subclasses of ACFormViewModel');
     }

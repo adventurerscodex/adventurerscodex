@@ -5,7 +5,12 @@ import ko from 'knockout';
 import template from './index.html';
 
 ko.bindingHandlers.collapseCard = {
-    init: function(element, valueAccessor, allBindingsAccessor) {
+    init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+
+        // apply bindings to trigger resize
+        var innerBindingContext = ko.bindingEvent.startPossiblyAsyncContentBinding(element, bindingContext);
+        ko.applyBindingsToDescendants(innerBindingContext, element);
+
         var value = valueAccessor();
         var hiddenCallback = ko.utils.unwrapObservable(value.hiddenCallback);
         var shownCallback = ko.utils.unwrapObservable(value.shownCallback);
@@ -19,8 +24,9 @@ ko.bindingHandlers.collapseCard = {
              // Register callbacks.
             $(element).on('hidden.bs.collapse', hiddenCallback);
         }
+        return { controlsDescendantBindings: true };
     },
-    update:  function(element, valueAccessor, allBindingsAccessor) {
+    update: function(element, valueAccessor, allBindingsAccessor) {
     }
 };
 
@@ -53,6 +59,7 @@ export class FlipCardComponentViewModel {
         this.elementId = `${this.paramElementId}_${this.dataId}`;
 
         this.tabId = ko.utils.unwrapObservable(params.tabId);
+
         // Whether or not to trigger animations on collapse
         this.collapsable = ko.observable(ko.utils.unwrapObservable(params.collapsable) || false);
 
@@ -77,16 +84,16 @@ export class FlipCardComponentViewModel {
             this.onResize = params.onResize;
         }
         // calculated element height
-        this.elementMeasure = ko.observable(0);
+        this.elementMeasure = ko.observable(0).extend({ deferred: true });
         if (params.defaultHeight) {
             const paramHeight = parseInt(ko.utils.unwrapObservable(params.defaultHeight));
             if (!Number.isNaN(paramHeight)) {
                 this.elementMeasure(paramHeight);
             }
         }
-        this.elementHeight = ko.computed(()=> {
+        this.elementHeight = ko.pureComputed(()=> {
             return `${this.elementMeasure()}px`;
-        });
+        }).extend({ deferred: true });
     }
 
     toggleMode = (data, event) => {
@@ -105,13 +112,12 @@ export class FlipCardComponentViewModel {
     }
 
     load = () => {
-        const debounceHeight = debounce(this.setNewHeight, 50);
-        $(window).on('load', this.setNewHeight);
-        $(window).on('ready', this.setNewHeight);
-        $(document).on('ready', this.setNewHeight);
+      // $(window).on('load', this.setNewHeight);
+      // $(document).on('load', this.setNewHeight);
+      // $(window).on('ready', this.setNewHeight);
         $(window).on('resize', this.setNewHeight);
-      // Listen to tab changes as the window may have resized when the component
-      // was off screen
+        // Listen to tab changes as the window may have resized when the component
+        // was off screen
         if (this.tabId) {
             $(`.nav-tabs a[href="#${this.tabId}"]`).on('shown.bs.tab', this.setNewHeight);
         }
@@ -139,7 +145,6 @@ export class FlipCardComponentViewModel {
         } else {
             setHeight = $(`#${this.elementId}_card > .front`).outerHeight();
         }
-
         if (setHeight && setHeight > 1 && setHeight !== this.elementMeasure()-HEIGHT_MOD ) {
            // Add 25 to adjust for where in the dom the height has to be set to work with
            // collapse
@@ -149,6 +154,11 @@ export class FlipCardComponentViewModel {
             }
         }
 
+    }
+    koDescendantsComplete = (node) => {
+        // set the height when the decendents have loaded properly.
+        // Give it a bit so that the measure doesn't happen too quickly
+        this.setNewHeight();//, 50);
     }
 }
 

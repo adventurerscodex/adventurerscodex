@@ -1,4 +1,4 @@
-<!-- ko if: loaded -->
+<!-- ko if: loaded(), completeOn: 'render' -->
 <form class="form-horizontal" data-bind="{submit: $component.submit}">
 <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
   <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">

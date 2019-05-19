@@ -5,26 +5,13 @@ import {
 } from 'charactersheet/models/character';
 
 import { CoreManager } from 'charactersheet/utilities';
-
 import { Notifications } from 'charactersheet/utilities';
-
 import { StatsDeathSaveViewModel } from './deathsave';
 import { StatsHealthViewModel } from './health';
 
-import {find} from 'lodash';
-
+import { find } from 'lodash';
 import ko from 'knockout';
 import template from './view.html';
-
-// class ACCardModel {
-//     constructor(params) {
-//         this.tabId = params.tabId;
-//         this.containerId = params.containerId;
-//         this.showBack = params.showBack;
-//         this.resize = params.resize;
-//         this.flip = params.flip;
-//     }
-// }
 
 
 // Manage the interactions between health and death saves
@@ -35,15 +22,10 @@ export class StatsCardViewModel {
         this.outerShowBack = params.outerShowBack;
         this.outerFlip = params.outerFlip;
         this.forceOuterCardResize = params.forceCardResize;
-
         this.health = ko.observable(new Health());
-
         this.deathSaveSuccess = ko.observable(new DeathSave());
-
         this.deathSaveFailure = ko.observable(new DeathSave());
-
         this.deathSavesVisible = ko.observable(false);
-
         this.massiveDamageTaken = ko.observable(false);
     }
 
@@ -65,7 +47,6 @@ export class StatsCardViewModel {
 
         this.deathSaveSuccess(find(deathSaves.objects, (save) => save.type() === 'success'));
         this.deathSaveFailure(find(deathSaves.objects, (save) => save.type() === 'failure'));
-
     }
 
     setUpSubscriptions = () => {
@@ -154,7 +135,6 @@ export class StatsCardViewModel {
             this.deathSavesVisible(false);
         }
     }
-
 
     toggleDeathSavesVisible = () => {
         this.deathSavesVisible(!this.deathSavesVisible());

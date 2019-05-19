@@ -24,9 +24,14 @@ class ACViewModel {
         this.loaded(true);
     }
 
+    dispose() {
+        console.error('Dispose must be implemented');  
+    }
+
     async refresh() {
         throw('refresh must be defined by subclasses of ACViewModel');
     }
+
 
     setUpSubscriptions() {
         this.showBack.subscribe(this.subscribeToShowForm);
@@ -54,7 +59,7 @@ class ScoreSaveViewModel extends ACViewModel {
         this.abilityScores(scores.objects.map(score => ko.observable(score)));
         this.savingThrows(saves.objects.map(savingThrow => ko.observable(savingThrow)));
         // Calculate Initial Values
-        this.updateSavingThrowValues();
+        await this.updateSavingThrowValues();
     };
 
     updateSavingThrowValues = async () => {

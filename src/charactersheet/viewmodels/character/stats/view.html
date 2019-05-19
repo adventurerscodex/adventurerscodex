@@ -6,7 +6,7 @@
 </div>
 <div>
 <flip-card params="{
-          collapsable: false,
+          tabId: 'stats',
           elementId: 'healthContainer',
           showBack: $component.deathSavesVisible,
           onResize: forceOuterCardResize,
@@ -14,12 +14,12 @@
         }">
   <div class="front">
     <stats-health-view params="{
-     containerId: elementId,
-     showBack: showBack,
-     flip: context.toggleDeathSavesVisible,
-     forceCardResize: forceCardResize,
-     massiveDamageTaken: context.massiveDamageTaken
-   }">
+       containerId: elementId,
+       showBack: showBack,
+       flip: context.toggleDeathSavesVisible,
+       forceCardResize: forceCardResize,
+       massiveDamageTaken: context.massiveDamageTaken
+     }">
      </stats-health-view>
   </div>
   <div class="back">
