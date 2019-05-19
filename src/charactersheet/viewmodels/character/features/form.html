@@ -17,7 +17,7 @@
   <div data-bind="with: entity">
     <div class="form-group">
       <label for="name"
-             class="control-label">Name</label>
+             class="control-label">Name <span data-bind="text: $component.formElementHasFocus()"></span></label>
       <input type="text"
              class="form-control featureEditNameInput"
              placeholder="Rage"

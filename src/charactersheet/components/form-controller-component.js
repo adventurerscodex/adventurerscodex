@@ -25,6 +25,7 @@ export class FormController {
         // Flip Card Properties
         this.flip = params.flip ? params.flip : noOp;
         this.forceCardResize = params.forceCardResize ? params.forceCardResize : noOp;
+        this.formElementHasFocus = ko.observable(false);
 
         // Add/Remove callbacks. Used for lists.
         this.addToParent = params.addToParent ? params.addToParent : noOp;
@@ -41,8 +42,10 @@ export class FormController {
     }
 
     setUpSubscriptions () {
-        const onShow = this.show.subscribe(this.refresh);
+        const onShow = this.show.subscribe(()=>{ this.refresh();});
         this.subscriptions.push(onShow);
+        const setFocus = this.show.subscribe(()=>{this.focusOnFlip();});
+        this.subscriptions.push(setFocus);
     }
 
     disposeOfSubscriptions () {
@@ -54,18 +57,24 @@ export class FormController {
         throw('Generate Blank must be implemented by subclasses of FormViewModel');
     }
 
+    focusOnFlip () {
+        this.formElementHasFocus(this.show());
+    }
+
+    load () {
+        this.setUpSubscriptions();
+    }
+
     refresh() {
         // Reset the textarea size when refreshing
         this.textAreaStyle('');
         this.shouldShowDisclaimer(false);
-        this.disposeOfSubscriptions();
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());
         } else {
             this.entity(this.generateBlank());
             this.entity().coreUuid(CoreManager.activeCore().uuid());
         }
-        this.setUpSubscriptions();
     }
 
     async save() {

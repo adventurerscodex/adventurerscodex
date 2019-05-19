@@ -25,9 +25,13 @@ export class TrackedFormController extends FormController {
         }
     }
 
-    setUpSubscriptions() {
+    load () {
+        this.setUpSubscriptions();
+    }
+
+    setUpSubscriptions () {
         super.setUpSubscriptions();
-        const onTrackFormDisplay = this.isTracked.subscribe(this.forceResizeForTrackedForm);
+        const onTrackFormDisplay = this.isTracked.subscribe(()=>{this.forceResizeForTrackedForm();});
         this.subscriptions.push(onTrackFormDisplay);
     }
 

@@ -28,6 +28,9 @@ export class ACTableComponent {
         this.setUpSubscriptions();
         // this.notify();
     }
+    shortName = (string) => {
+        return Utility.string.truncateStringAtLength(string(), 25);
+    };
 
     sorts() {
         return {
