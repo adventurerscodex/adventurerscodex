@@ -1,0 +1,80 @@
+<form data-bind="submit: $component.submit">
+  <!-- ko ifnot: $component.data -->
+  <div class="h4" style="padding-top: 5px;">
+    New Proficiency
+  </div>
+  <!-- /ko -->
+  <div data-bind="with: entity">
+    <div class="form-group">
+      <label for="name"
+             class="control-label">Name</label>
+      <input type="text"
+             class="form-control proficiencyEditNameInput"
+             placeholder="Daggers"
+             data-bind="textInput: name,
+             hasFocus: $component.formElementHasFocus,
+             autocomplete: {
+               source: $component.proficienciesPrePopFilter,
+               onselect: $component.populateProficiency
+             }">
+
+    </div>
+    <div class="form-group">
+      <label for="type"
+             class="control-label">Type</label>
+      <input type="text"
+             class="form-control proficiencyEditTypeInput"
+             placeholder="Weapon"
+             data-bind="textInput: type,
+             autocomplete: {
+               source: $component.proficiencyType,
+              onselect: $component.setType}">
+    </div>
+    <div class="form-group">
+      <label for="description"
+             class="control-label">Description</label>
+      <textarea type="text"
+                rows="3"
+                class="form-control proficiencyEditDescriptionTextarea"
+                data-bind='value: description, markdownEditor: true'></textarea>
+    </div>
+  </div>
+  <!-- ko ifnot: addForm -->
+  <div>
+    <button class="btn btn-sm btn-danger"
+            type="button"
+            data-bind="click: $component.delete">Delete</button>
+    <div class="pull-right">
+      <button class="btn btn-sm btn-default"
+              type="reset"
+              data-bind="click: $component.reset">Cancel</button>
+      <button class="btn btn-sm btn-primary"
+              type="submit">Save</button>
+    </div>
+  </div>
+  <!-- /ko -->
+  <!-- ko if: addForm -->
+  <div>
+      <div class="pull-right">
+      <button type="reset"
+              class="btn btn-default btn-sm"
+              id="proficiencyAddCancelButton"
+              data-bind="click: $component.reset">Cancel</button>
+      <button type="submit"
+              class="btn btn-primary btn-sm"
+              id="proficiencyAddAddButton"
+            >Add Proficiency</button>
+      </div>
+  </div>
+  <!-- /ko -->
+  <p class="text-muted text-left ogl-disclaimer"
+     data-bind='visible: shouldShowDisclaimer'>
+    <sm><i>This data is distributed under the
+            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+              target='_blank'>
+              OGL</a><br/>
+              Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+            </i>
+      <sm>
+  </p>
+</form>

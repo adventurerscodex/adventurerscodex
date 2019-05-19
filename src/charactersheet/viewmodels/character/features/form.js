@@ -1,7 +1,3 @@
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
 
 import {
   DataRepository,
@@ -9,6 +5,7 @@ import {
 } from 'charactersheet/utilities';
 
 import { Feature } from 'charactersheet/models';
+import { Notifications } from 'charactersheet/utilities';
 import { TrackedFormController } from 'charactersheet/components/form-controller-tracked-component';
 
 import ko from 'knockout';

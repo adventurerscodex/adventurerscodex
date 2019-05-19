@@ -1,0 +1,235 @@
+<div class="panel panel-default bio">
+  <div class="panel-body tight-inner">
+    <table class="table table-responsive table-ac-bordered table-hover" id="proficiencyTable">
+      <thead>
+        <tr>
+          <th data-bind="click: function(){sortBy('name');}" class="col-md-6">
+            Proficiency
+            <span data-bind="css: sortArrow('name')"></span>
+          </th>
+          <th data-bind="click: function(){sortBy('type');}" class="col-md-5">
+            Type
+            <span data-bind="css: sortArrow('type')"></span>
+          </th>
+          <th class="col-md-1">
+            <a
+              id="proficiencyAddIcon"
+              href="#"
+              data-bind="click: toggleAddModal">
+              <i class="fa fa-plus fa-color"></i>
+            </a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- ko foreach: filteredAndSortedProficiencies -->
+        <tr class="clickable">
+          <td data-bind="text: name, click: $parent.editProficiency"
+              href="#"></td>
+          <td data-bind="text: type, click: $parent.editProficiency"
+              href="#"></td>
+          <td>
+            <a data-bind="click: $parent.removeProficiency" href="#">
+              <i class="fa fa-trash-o fa-color-hover">
+              </i>
+            </a>
+          </td>
+        </tr>
+        <!-- /ko -->
+        <!-- ko if: filteredAndSortedProficiencies().length == 0 -->
+        <tr class="clickable">
+          <td
+            data-bind="click: toggleAddModal"
+            colspan="12" class="text-center">
+            <i class="fa fa-plus fa-color"></i>
+            Add a new Proficiency
+          </td>
+        </tr>
+        <!-- /ko -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade"
+     id="addProficiency"
+     tabindex="-1"
+     role="dialog" data-bind="modal: {
+      onopen: modalFinishedOpening,
+      onclose: closeAddModal,
+      open: addModalOpen}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"
+            id="addNpcLabel">Add a new Proficiency.</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
+          <div class="form-group ui-front">
+            <label for="name" class="col-sm-2 control-label">
+              Name<i class="required"></i>
+            </label>
+              <div class="col-sm-10">
+                <input type="text"
+                        class="form-control"
+                        name="name"
+                        id="proficiencyAddNameInput"
+                        placeholder="Daggers"
+                        data-bind='textInput: blankProficiency().name,
+                        autocomplete: { source: proficienciesPrePopFilter,
+                        onselect: populateProficiency }, hasFocus: firstModalElementHasFocus'>
+              </div>
+          </div>
+          <div class="form-group ui-front">
+            <label for="type" class="col-sm-2 control-label">Type</label>
+              <div class="col-sm-10">
+                <input type="text"
+                        class="form-control"
+                        id="proficiencyAddTypeInput"
+                        placeholder="Weapon"
+                        name="type"
+                        data-bind='textInput: blankProficiency().type,
+                        autocomplete: { source: proficiencyType,
+                                        onselect: setType}'>
+              </div>
+          </div>
+          <div class="form-group">
+            <label for="proficiencyDescription" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-10">
+                <textarea type="password"
+                          class="form-control"
+                          name="description"
+                          id="proficiencyAddDescriptionTextarea"
+                          rows="4"
+                          placeholder="Proficiency gained from class."
+                          data-bind='textInput: blankProficiency().description'>
+                </textarea>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit"
+                    class="btn btn-primary"
+                    id="proficiencyAddAddButton">Add</button>
+            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
+              <sm><i>This data is distributed under the
+                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+                  target='_blank'>
+                  OGL</a><br/>
+                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                </i></sm>
+            </p>
+          </div>
+        </form>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
+
+<!-- ViewEdit Modal -->
+<div class="modal fade"
+     id="viewProficiency"
+     tabindex="-1"
+     role="dialog"
+     data-bind="modal: {
+      open: modalOpen,
+      onopen: modalFinishedOpening,
+      onclose: closeEditModal
+    }">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">Edit an Proficiency.</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Begin Tabs -->
+        <ul class="nav nav-tabs tabs">
+          <li role="presentation" id="proficiencyModalPreview"
+              data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#" aria-controls="proficiencyModalPreview" role="tab" data-toggle="tab">
+                <b>Preview</b>
+            </a>
+          </li>
+          <li role="presentation" id="proficiencyModalEdit" data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#" aria-controls="proficiencyModalEdit" role="tab" data-toggle="tab">
+                <b>Edit</b>
+            </a>
+          </li>
+        </ul>
+        <div class="tab-content" data-bind="with: currentEditItem">
+          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
+            <div class="h3">
+              <span data-bind="text: name"></span>&nbsp;
+              <small data-bind="text: type"></small>
+            </div>
+            <hr />
+            <div class="row row-padded">
+              <div class="col-xs-12 col-padded">
+                <div data-bind="markdownPreview: description"
+                     class="preview-modal-overflow-sm">
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Preview Tab -->
+          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
+            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
+              <div class="form-group">
+                <label for="name" class="col-sm-2 control-label">
+                  Name<i class="required"></i>
+                </label>
+                <div class="col-sm-10">
+                  <input type="text"
+                        class="form-control"
+                        name="name"
+                        id="proficiencyEditNameInput"
+                        placeholder="Daggers"
+                        data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="type" class="col-sm-2 control-label">Type</label>
+                  <div class="col-sm-10">
+                  <input type="text"
+                        class="form-control"
+                        id="proficiencyEditTypeInput"
+                        placeholder="Weapon"
+                        name="type"
+                        data-bind='textInput: type'>
+                  </div>
+              </div>
+              <div class="form-group">
+                <label for="npcDescription"
+                       class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                    <textarea type="text" rows="6"
+                           class="form-control"
+                           name="description"
+                           id="proficiencyEditDescriptionTextarea"
+                           data-bind='value: description, markdownEditor: true'></textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit"
+                        class="btn btn-primary"
+                        id="proficiencyEditDoneButton">Done</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div> <!-- Modal Body -->
+    </div> <!-- Modal Content -->
+  </div> <!-- Modal Dialog -->
+</div> <!-- Modal Fade -->
