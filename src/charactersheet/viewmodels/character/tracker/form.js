@@ -15,10 +15,12 @@ import template from './form.html';
 
 export class TrackedDetailForm extends TrackedFormController {
 
+
     trackedTypes = [  Feature, Trait, Feat ];
 
     generateBlank () {
-        const typeName = this.existingData.constructor.name;
+
+        const typeName = this.modelName; 
         if (typeName === Feature.name) {
             return new Feature();
         }
@@ -31,8 +33,9 @@ export class TrackedDetailForm extends TrackedFormController {
         return null;
     }
 
+
     notify = () => {
-        const type = this.existingData.constructor.name.toLowerCase();
+        const type = this.modelName.toLowerCase();
         Notifications.tracked[type].changed.dispatch();
     }
 

@@ -1,0 +1,69 @@
+<!-- ko if: loaded(), completeOn: 'render' -->
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link" data-bind="click: flip">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true">
+      </span>
+  </button>
+</div>
+<table data-bind="{with: entity}" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
+  <tbody>
+      <tr>
+        <th>
+          <span class="h4" style="display: inline-block">Spell Attack Bonus</span>
+        </th>
+        <td class="ac-table-data-cell">
+            <strong>+<span data-bind="text: spellAttackBonus"></span></strong>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <span class="h4" style="display: inline-block">Spell Save DC</span>
+        </th>
+        <td class="ac-table-data-cell">
+            <strong data-bind="text: spellSaveDc"></strong>
+        </td>
+      </tr>
+      <tr>
+        <th>Spell Casting Ability
+        </th>
+        <td class="ac-table-data-cell">
+            <span data-bind="text: castingAbility"></span>
+        </td>
+      </tr>
+      <tr>
+        <th>Cantrips Known
+        </th>
+        <td class="ac-table-data-cell">
+            <span data-bind="text: cantripsKnown"></span>
+        </td>
+      </tr>
+      <!-- ko if: spellsKnown -->
+      <tr>
+        <th>Spells Known
+        </th>
+        <td class="ac-table-data-cell">
+            <span data-bind="text: spellsKnown"></span>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <!-- ko if: maxPrepared  -->
+      <tr>
+        <th>Max Prepared
+        </th>
+        <td class="ac-table-data-cell">
+            <span data-bind="text: maxPrepared"></span>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <!-- ko if: invocationsKnown  -->
+      <tr>
+        <th>Invocations Known
+        </th>
+        <td class="ac-table-data-cell">
+            <span data-bind="text: invocationsKnown"></span>
+        </td>
+      </tr>
+      <!-- /ko -->
+  </tbody>
+</table>
+<!-- /ko -->

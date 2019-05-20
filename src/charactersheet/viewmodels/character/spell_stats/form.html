@@ -1,0 +1,109 @@
+<form data-bind="{submit: submit}">
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+        </span>
+    </button>
+    <button class="btn btn-link btn-success" type="submit" value="submit">
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+        </span>
+    </button>
+  </div>
+  <table data-bind="with: entity"
+         class="table table-responsive table-ac-bordered table-hover score-save-table">
+    <tbody>
+      <tr>
+        <th>
+          Spell Attack Bonus
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 id="spellStatsEditSpellAttackBonusInput"
+                 name="spellAttackBonus"
+                 data-bind='textInput: spellAttackBonus,
+                    hasFocus: $component.formElementHasFocus'>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Spell Save DC
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 name="spellSaveDc"
+                 class="form-control ac-number-input"
+                 id="spellStatsEditSpellSaveDcInput"
+                 data-bind='textInput: spellSaveDc'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Spell Casting Ability
+        </th>
+        <td class="ac-table-data-cell">
+           <input type="text"
+                 class="form-control ac-number-input"
+                 name="castingAbility"
+                 id="spellStatsEditSpellCastingAbilityInput"
+                 data-bind='value: castingAbility,
+                      autocomplete: { source: spellcastingAbilityOptions,
+                      onselect: $component.setSpellCastingAbility }'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Cantrips Known
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 name="cantripsKnown"
+                 id="spellStatsEditCantripKnownInput"
+                 data-bind='textInput: cantripsKnown'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Spells Known
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 name="spellsKnown"
+                 id="spellStatsEditSpellKnownInput"
+                 data-bind='textInput: spellsKnown'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Max Prepared
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 name="axPrepared"
+                 id="spellStatsEditMaxPrepareInput"
+                 data-bind='textInput: maxPrepared'>
+        </td>
+      </tr>
+
+      <tr>
+        <th>
+          Invocations Known
+        </th>
+        <td class="ac-table-data-cell">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 name="invocationsKnown"
+                 id="spellStatsEditInvocationsKnownInput"
+                 data-bind='textInput: invocationsKnown'>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
