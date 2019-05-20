@@ -9,9 +9,9 @@ export class FormController {
     constructor(params) {
         // the container for this form. Used for collapse rows
         this.containerId = params.containerId;
-        this.entity = ko.observable(this.generateBlank());
         // Data to be managed by this form
         this.existingData = params.data;
+        this.entity = ko.observable(this.generateBlank());
         this.addForm = ko.observable(false);
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());
@@ -44,6 +44,7 @@ export class FormController {
     setUpSubscriptions () {
         const onShow = this.show.subscribe(()=>{ this.refresh();});
         this.subscriptions.push(onShow);
+
         const setFocus = this.show.subscribe(()=>{this.focusOnFlip();});
         this.subscriptions.push(setFocus);
     }

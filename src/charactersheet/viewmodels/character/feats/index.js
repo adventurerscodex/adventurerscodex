@@ -11,7 +11,10 @@ export class FeatsViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-feat';
         this.collapseAllId = '#feat-pane';
-        this.modelClass = Feat;
+    }
+
+    modelClass = () => {
+        return Feat;
     }
 
     setUpSubscriptions = () => {

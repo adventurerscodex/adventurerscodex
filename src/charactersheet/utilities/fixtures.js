@@ -86,7 +86,21 @@ export var Fixtures = {
             'progress-bar-teal',
             'progress-bar-blue',
             'progress-bar-indigo'
-        ]
+        ],
+        colorHexList: [
+            '#2F972F',
+            '#71D4E8',
+            '#f0ad4e',
+            '#d9534f',
+            '#800080',
+            '#01DFD7',
+            '#8000FF',
+            '#906713',
+            '#D7DF01',
+            '#C82D78',
+            '#5cb85c',
+            '#337ab7'
+        ]    
     },
     armor : {
         constants: {

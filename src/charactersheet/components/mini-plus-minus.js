@@ -20,15 +20,19 @@ export function MiniPlusMinusComponentViewModel(params) {
     self.max = params.max || ko.observable(1000000);
     self.min = params.min || ko.observable(0);
 
+    self.onChange = params.onChange ? params.onChange : () => {};
+
     self.increase = function() {
         if (parseInt(self.value()) < parseInt(self.max())) {
             self.value(parseInt(self.value()) + 1);
+            self.onChange();
         }
     };
 
     self.decrease = function() {
         if (parseInt(self.value()) > parseInt(self.min())) {
             self.value(parseInt(self.value()) - 1);
+            self.onChange();
         }
     };
 }

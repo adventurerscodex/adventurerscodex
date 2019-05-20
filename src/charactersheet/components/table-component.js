@@ -18,16 +18,19 @@ export class ACTableComponent {
         this.sort = ko.observable(this.sorts()['name asc']);
         this.filter = ko.observable('');
         this.subscriptions = [];
+        this.refresh = this.refresh.bind(this);
     }
 
-    async refresh() {
-        const key = CoreManager.activeCore().uuid();
-        this.disposeOfSubscriptions();
-        const response = await this.modelClass.ps.list({coreUuid: key});
-        this.entities(response.objects);
-        this.setUpSubscriptions();
-        // this.notify();
+    modelClass = () => {
+        throw('Model Class must be defined');
     }
+
+    async refresh () {
+        const key = CoreManager.activeCore().uuid();
+        const response = await this.modelClass().ps.list({coreUuid: key});
+        this.entities(response.objects);
+    }
+
     shortName = (string) => {
         return Utility.string.truncateStringAtLength(string(), 25);
     };
@@ -55,6 +58,7 @@ export class ACTableComponent {
 
     async load() {
         await this.refresh();
+        this.setUpSubscriptions();
         this.loaded(true);
     }
 
@@ -89,7 +93,14 @@ export class ACTableComponent {
     setUpSubscriptions () {}
 
     disposeOfSubscriptions () {
-        this.subscriptions.map((subscription) => subscription.dispose());
+        const disposeOfDisposable = (disposable) => {
+            if (disposable.dispose) {
+                disposable.dispose();
+            } else if (disposable.remove) {
+                disposable.remove();
+            }
+        };
+        this.subscriptions.map(disposeOfDisposable);
         this.subscriptions = [];
     }
 

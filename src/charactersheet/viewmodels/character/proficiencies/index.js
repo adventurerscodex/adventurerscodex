@@ -10,7 +10,11 @@ export class ProficienciesViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-proficiency';
         this.collapseAllId = '#proficiency-pane';
-        this.modelClass = Proficiency;
+
+    }
+
+    modelClass = () => {
+        return Proficiency;
     }
 
     sorts() {

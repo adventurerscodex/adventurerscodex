@@ -11,7 +11,10 @@ export class TraitsViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-trait';
         this.collapseAllId = '#trait-pane';
-        this.modelClass = Trait;
+    }
+
+    modelClass = () => {
+        return Trait;
     }
 
     sorts() {

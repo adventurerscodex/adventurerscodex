@@ -1,128 +1,109 @@
-<div class="panel panel-default">
-	<div class='panel-body tight-inner'>
-    <div class="progress" data-bind="{ foreach: trackables, visible: trackables().length > 0 }">
-      <div class="progress-bar" role="progressbar" aria-valuemin="0"
-        data-bind="style: { width: $parent.trackedElementProgressWidth(tracked().max(), tracked().used()) * $parent.maxTrackerWidth() + '%' }, css: tracked().color">
-        <span class="sr-only"></span>
-      </div>
+<div id="tracker-pane" class=" ac-pane panel-body">
+    <div class="h4 card-title">
+        Tracked Features, Feats, and Traits<br />
+        <small>Configure to reset on a short or long rest.</small>
     </div>
-		<table id="trackablesTable" class="table table-responsive table-ac-bordered table-hover">
-			<thead>
-				<tr>
-					<th class="col-sm-4 col-xs-3" data-bind="click: function(){sortBy('name');}">Name
-            <i data-bind="css: sortArrow('name')"></i>
-          </th>
-					<th class="col-sm-1 hidden-xs">Max
-          </th> <!-- Max -->
-					<th class="col-sm-2 hidden-sm hidden-xs">Resets on
-          </th> <!-- Resets on -->
-					<th class="col-sm-4 col-xs-8 text-center">Used</th> <!-- Stepper -->
-					<th class="col-xs-1">Reset</th>
-				</tr>
-			</thead>
-			<tbody>
-			<!-- ko foreach: filteredAndSortedTrackables -->
-				<tr class="clickable">
-					<td data-bind="click: $parent.editTracked"
-					class="feature-row table-data-overflow"
-          data-toggle="modal">
-            <span data-bind="css: tracked().color" class="form-control pull-left color-picker-item"></span>
-  					<span data-bind="html: $parent.shortName(name)" class="hidden-lg hidden-md"></span>
-						<span data-bind="text: name" class="hidden-sm hidden-xs"></span>
-					</td>
+    <!-- ko if: loaded(), completeOn: 'render' -->
 
-					<td class="col-content-vertical feature-row hidden-xs"
-            data-bind="click: $parent.editTracked" data-toggle="modal">
-						<span data-bind="text: tracked().max()"></span>
-					</td>
+    <table class="table table-responsive table-ac-bordered">
+        <thead>
+            <tr>
+          <th data-bind="click: ()=> {sortBy('name');}">Name
+                    <i data-bind="css: sortArrow('name')"></i>
+                  </th>
+                <th colspan="3">Resets&nbsp;on
+                </th>
+                <th></th>
+                <th class="hidden-xs">Used</th>
+                <th>
+                    <a href="#" class="" data-bind="{click: collapseAll}">
+              <span class="fa fa-minus"></span></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- ko foreach: filteredAndSortedEntities, as: trackable -->
+            <tr data-bind="with: $data.tracked()">
+                <td><span data-bind="text: $component.shortName($parent.name)"></span>
+                </td>
+                <td style="padding: 4px;">
+                    <img class="action-bar-icon" data-bind="attr: { src: $component.resetsOnImgSource($data) }">
+                    </img>
+                </td>
+                <td style="padding: 4px;">
+                    <mini-plus-minus params="value: used,
+                    max: max, hideUp: true, onChange: ()=>{$component.onUsedChange($parent)}">
+                    </mini-plus-minus>
+                </td>
+                <td style="padding: 4px;">
+                    <mini-plus-minus params="value: used,
+                    max: max, hideDown: true, onChange: ()=>{$component.onUsedChange($parent)}">
+                    </mini-plus-minus>
+                </td>
+                <td style="padding: 4px;">
+                    <div style="padding: 10px" data-bind="barProgress: $component.mapToChart($data)"> </div>
+                </td>
 
-					<td class="col-content-vertical hidden-sm hidden-xs feature-row"
-            data-bind="click: $parent.editTracked" data-toggle="modal">
-						<img class="action-bar-icon"
-							data-bind="visible: tracked().resetsOn() === 'short', attr: { src: $parent.meditation }">
-						<img class="action-bar-icon"
-							data-bind="visible: tracked().resetsOn() === 'long', attr: { src: $parent.campingTent }">
-					</td>
-
-					<td>
-            <plus-minus params="value: tracked().used, max: tracked().max"></plus-minus>
-					</td>
-
-					<td class="col-content-vertical"> <!--Refresh -->
-						<a data-bind="click: $parent.refreshTracked">
-							<i class="fa fa-refresh fa-color"> </i>
-						</a>
-          </td>
-				</tr>
-      <!-- /ko -->
-      <!-- ko if: filteredAndSortedTrackables().length == 0 -->
-        <tr class="clickable">
-          <td colspan="12" class="text-center">
-            No Tracked Features, Feats, or Traits to display.
-          </td>
-        </tr>
-      <!-- /ko -->
-			</tbody>
-		</table>
-	</div>
+                <td style="padding: 4px;"  class="hidden-xs">
+                    <span data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span data-bind=" text: max"></span>
+                </td>
+                <td style="padding: 4px;">
+                    <span data-toggle="collapse" data-bind="attr:{'data-target': `#tracked_${$parent.uuid()}`}" class="rotate fa fa-chevron-left"></span>
+                </td>
+            </tr>
+             <tr class="collapseRow">
+                <td colspan="8">
+                     <flip-card params="{
+                        dataId: $data.uuid(),
+                        tabId: 'skills',
+                        collapsable: true,
+                        elementId: 'tracked',
+                          context: {
+                              data: $data,
+                              nameMeta: $component.nameMeta,
+                              replaceInList: $component.replaceInList
+                          }
+                        }">
+                    <div class="front">
+                        <div class="h4">
+                            <span data-bind="text: context.data.name"></span>
+                            <small data-bind="text: context.nameMeta(context.data)"></small>
+                        </div>
+                        <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+                         <button class="btn btn-link" data-bind="click: flip">
+                           <span class="glyphicon glyphicon-edit" aria-hidden="true">
+                           </span>
+                         </button>
+                        </div>
+                        <p class="card-description" data-bind="markdownPreview: context.data.description"></p>
+                    </div>
+                     <div class="back">
+                            <div class="h4">
+                                <span data-bind="text: context.data.name"></span>
+                                <small data-bind="text: context.nameMeta(context.data)"></small>
+                            </div>
+                            <tracked-form params="{
+                                containerId: elementId,
+                                data: context.data,
+                                show: showBack,
+                                flip: flip,
+                                forceCardResize: forceCardResize,
+                                replaceInParent: context.replaceInList,
+                                 }">
+                            </tracked-form>
+                     </div>
+                 </flip-card>
+            </td>
+            </tr>
+            <!-- /ko -->
+            <!-- ko if: filteredAndSortedEntities().length == 0 -->
+            <tr>
+                <td colspan="12" class="text-center well">
+                    No Tracked Features, Feats, or Traits to display.
+                </td>
+            </tr>
+            <!-- /ko -->
+        </tbody>
+    </table>
+    <!-- /ko -->
 </div>
-
-<!-- ViewEdit Modal -->
-	<div class="modal fade" id="viewTracked" tabindex="-1" role="dialog"
-		aria-labelledby="viewTrackedLabel" data-bind="modal: {
-		open: modalOpen,
-		onopen: editModalOpen,
-		onclose: closeEditModal}, with: editItem">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-					<h4 class="modal-title" id="addSlotLabel">
-						<span data-bind="text: $parent.editModalTitle"></span>
-					</h4>
-				</div>
-				<div class="modal-body">
-					<form class="form-horizontal" data-bind="validate: $parent.validation">
-					<div class="form-group">
-						<label for="max" class="col-sm-2 control-label">
-							Max<i class="required"></i>
-						</label>
-						<div class="col-sm-10">
-							<input type="number"
-								class="form-control"
-								id="max"
-								name="max"
-								data-bind='textInput: max,
-									hasFocus: $parent.editHasFocus'>
-						</div>
-					</div>
-					<div class="form-group">
-					<label class="col-sm-2 control-label">Resets on...</label>
-						<div class="col-sm-10">
-							<div class="btn-group btn-group-justified" role="group">
-								<label class="btn btn-default"
-								data-bind="css: { active: resetsOn() == 'short'}">
-									<input type="radio" class="hide-block"
-									name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" data-bind="attr: { src: $parent.meditationWhite }">
-									&nbsp;&nbsp;&nbsp;Short Rest
-								</label>
-								<label class="btn btn-default"
-								data-bind="css: { active: resetsOn() == 'long'}">
-									<input type="radio" class="hide-block"
-									name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
-									<img class="action-bar-icon" data-bind="attr: { src: $parent.campingTentWhite }">
-									&nbsp;&nbsp;&nbsp;Long Rest
-								</label>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="submit"
-							class="btn btn-primary">Done</button>
-					</div>
-				</form>
-			</div><!-- Modal Body -->
-		</div><!-- Modal Content -->
-	</div><!-- Modal Dialog -->
-</div><!-- Modal Fade -->

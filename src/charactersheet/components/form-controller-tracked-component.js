@@ -21,7 +21,7 @@ export class TrackedFormController extends FormController {
 
         if (this.existingData && this.existingData.tracked()) {
             this.isTracked(true);
-            this.tracked(this.entity().tracked());
+            this.tracked().importValues(this.entity().tracked());
         }
     }
 
@@ -45,15 +45,17 @@ export class TrackedFormController extends FormController {
         this.tracked(new Tracked());
         if (this.existingData && this.existingData.tracked()) {
             this.isTracked(true);
-            this.tracked(this.existingData.tracked());
+            this.tracked().importValues(this.existingData.tracked());
         }
     }
 
     async save () {
         if (!this.isTracked()) {
             this.tracked(null);
+            this.entity().tracked(null);
+        } else {
+            this.entity().tracked(this.tracked().exportValues());
         }
-        this.entity().tracked(this.tracked());
         await super.save();
     }
 }

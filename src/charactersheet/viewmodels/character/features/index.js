@@ -11,7 +11,10 @@ export class FeaturesViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-feature';
         this.collapseAllId = '#feature-pane';
-        this.modelClass = Feature;
+    }
+
+    modelClass = () => {
+        return Feature;
     }
 
     sorts() {
