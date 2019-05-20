@@ -15,10 +15,14 @@ export class ACTableComponent {
         this.loaded = ko.observable(false);
         this.showAddForm = ko.observable(false);
         this.entities = ko.observableArray([]);
-        this.sort = ko.observable(this.sorts()['name asc']);
+        this.sort = ko.observable(this.getDefaultSort());
         this.filter = ko.observable('');
         this.subscriptions = [];
         this.refresh = this.refresh.bind(this);
+    }
+
+    getDefaultSort () {
+        return this.sorts()['name asc'];
     }
 
     modelClass = () => {
@@ -37,7 +41,6 @@ export class ACTableComponent {
 
     sorts() {
         return {
-            'default': null,
             'name asc': { field: 'name', direction: 'asc'},
             'name desc': { field: 'name', direction: 'desc'}
         };

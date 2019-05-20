@@ -1,259 +1,91 @@
-<div class="panel panel-default">
-  <div class="panel-body tight-inner">
-    <div class="progress" data-bind="{ foreach: slots, visible: slots().length > 0 }">
-      <div class="progress-bar" role="progressbar" aria-valuemin="0" data-bind="style: { width: $parent.currentSlotWidth(progressWidth(),max()) }, css: color">
-        <span class="sr-only"></span>
-      </div>
-    </div>
-    <table id="spellSlotsTable" class="table table-responsive table-ac-bordered table-hover">
-      <thead>
-        <tr class="row">
-          <th class="col-sm-1 col-xs-1">Slot</th>
-          <th class="col-sm-2 col-xs-2" data-bind="click: function(){sortBy('level');}">Level
-            <i data-bind="css: sortArrow('level')"></i></th>
-          <th class="col-sm-2 hidden-xs" data-bind="click: function(){sortBy('max');}">Max
-            <i data-bind="css: sortArrow('max')"></i></th>
-          <th class="col-md-2 hidden-sm hidden-xs" data-bind="click: function(){sortBy('resetsOn');}">Resets on
-            <i data-bind="css: sortArrow('resetsOn')"></i></th>
-          <th class="col-md-3 col-sm-4 col-xs-7 text-center" data-bind="click: function(){sortBy('used');}">Used
-            <i data-bind="css: sortArrow('used')"></i></th>
-          <th class="col-xs-1 text-right">Reset</th>
-          <th class="col-xs-1 text-right">
-            <a id="spellSlotsAddIcon"
-              data-bind="click: toggleAddModal"
-              href="#">
-              <i class="fa fa-plus fa-color"></i>
-            </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      <!-- ko foreach: filteredAndSortedSlots -->
-        <tr class="row clickable">
-          <td class="col-sm-1 col-xs-1 col-content-vertical" data-bind="click: $parent.editSlot"
-              href="#">
-            <span data-bind="css: color" class="form-control color-picker-item" >
-            </span>
-          </td>
-          <td class="col-sm-2 col-xs-2 col-content-vertical"
-              data-bind="click: $parent.editSlot, text: level"
-              href="#">
-          </td>
-          <td class="col-sm-2 hidden-xs col-content-vertical"
-              data-bind="click: $parent.editSlot, text: max"
-              href="#">
-          </td>
-          <td class="col-content-vertical col-md-2 hidden-sm hidden-xs"
-              data-bind="click: $parent.editSlot"
-              href="#">
-            <!-- ko if: $parent.needsResetsOnImg($data) -->
-            <img class="action-bar-icon" data-bind="attr: { src: $parent.resetsOnImgSource($data) }">
-            <!-- /ko -->
-          </td>
-          <td class="col-md-3 col-sm-4 col-xs-7">
-            <plus-minus params="value: used,
-              max: max">
-            </plus-minus>
-          </td>
-          <td class="col-content-vertical col-xs-1 text-right"> <!--Refresh -->
-            <a data-bind="click: $parent.resetSlot" href="#">
-              <i class="fa fa-refresh fa-color"></i>
-            </a>
-          </td>
-          <td class="col-content-vertical col-xs-1 text-right">
-            <a data-bind="click: $parent.removeSlot" href="#">
-              <i class="fa fa-trash-o fa-color-hover"></i>
-            </a>
-          </td>
-        </tr>
-      <!-- /ko -->
-      <!-- ko if: filteredAndSortedSlots().length == 0 -->
-        <tr class="clickable">
-          <td data-bind="click: toggleAddModal"
-            colspan="12"
-            class="text-center">
-            <i class="fa fa-plus fa-color"></i>
-            Add a new spell slot
-          </td>
-        </tr>
-      <!-- /ko -->
-      </tbody>
-    </table>
-  </div> <!-- end panel-body -->
-</div> <!-- end panel -->
+<div id="slot-pane"
+     class="ac-pane panel-body">
+  <div class="h4 card-title">
+    Spell Slots<br/>
+    <small>These slots are configurable to reset on a short or long rest. Click
+      on a slot to edit it.</small>
+  </div>
+  <!-- ko if: loaded(), completeOn: 'render' -->
+  <table class="table table-responsive table-ac-bordered">
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+       <tr class="clickable expandRow"
+          data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}">
+        <td style="width: 10%">Lvl&nbsp;<span data-bind="text: level"></span>
+        </td>
+       <td style="width: 10%">
+          <img class="action-bar-icon"
+               data-bind="attr: { src: $component.resetsOnImgSource($data) }">
+          </img>
+        </td>
+       <td style="width: 5%">
+          <mini-plus-minus params="value: used,
+                    max: max, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
+          </mini-plus-minus>
+        </td>
+        <td style="width: 5%">
+          <mini-plus-minus params="value: used,
+                    max: max, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
+          </mini-plus-minus>
+        </td>
 
-<!-- Add Modal -->
-<div class="modal fade" id="addSpellSlot" tabindex="-1" role="dialog"
-  aria-labelledby="addSpellSlotLabel"
-  data-bind="modal: {
-    open: addModalOpen,
-    onopen: modalFinishedAnimating,
-    onclose: closeAddModal}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="addSkillLabel">
-          Add a spell slot.
-        </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-          <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">
-              Level<i class="required"></i>
-            </label>
-            <div class="col-sm-10">
-              <input type="number"
-                     class="form-control"
-                     id="spellSlotsAddModalLevelInput"
-                     name="level"
-                     data-bind='textInput: blankSlot().level'>
-            </div>
+        <td style=" width: auto">
+          <div style="padding: 10px"
+               data-bind="barProgress: $component.mapToChart({max, used, level})"> </div>
+        </td>
+        <td style="width: 10%"
+            class="hidden-xs">
+          <span
+          data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span
+          data-bind=" text: max"></span>
+        </td>
+        <td style="width: 5%">
+          <span data-toggle="collapse"
+                data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}"
+                class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="8">
+          <div class="collapse"
+               data-bind="attr: {id:`spell_slot_${uuid()}`}">
+            <spell-slot-form params="{
+                data: $data,
+                containerId: `spell_slot_${uuid()}`,
+                flip: () => {$component.hideRow(`#spell_slot_${uuid()}`)},
+                replaceInParent: $component.replaceInList,
+                removeFromParent: $component.removeFromList,
+                nextSlotLevel: null
+             }">
+            </spell-slot-form>
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+    <tfoot>
+      <tr class="collapseRow">
+        <td colspan="7">
+          <div id="add-spell-slot"
+               class="collapse">
+               <spell-slot-form params="{
+                  containerId: 'add-spell-slot',
+                   flip: $component.toggleShowAddForm,
+                   addToParent: $component.addToList,
+                   nextSlotLevel: $component.nextSlotLevel
+                }">
+               </spell-slot-form>
           </div>
-          <div class="form-group">
-            <label for="bonus" class="col-sm-2 control-label">
-              Max<i class="required"></i>
-            </label>
-            <div class="col-sm-10">
-              <input type="number"
-                     class="form-control"
-                     id="spellSlotsAddModalMaxInput"
-                     name="max"
-                     data-bind='textInput: blankSlot().max, hasFocus: modifierHasFocus'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-sm-2 control-label">Resets on...</label>
-            <div class="col-sm-10">
-              <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default" id="spellSlotsAddModalShortRestButton"
-                       data-bind="css: { active: blankSlot().resetsOn() == 'short'}">
-                   <input type="radio"
-                          class="hide-block"
-                          name="blankresetsOnShort" value="short"
-                          data-bind="checked: blankSlot().resetsOn"/>
-                    <img class="action-bar-icon" data-bind="attr: { src: meditationWhite }">
-                    &nbsp;&nbsp;&nbsp;Short Rest
-                </label>
-                <label class="btn btn-default" id="spellSlotsAddModalLongRestButton"
-                 data-bind="css: { active: blankSlot().resetsOn() != 'short'}">
-                   <input type="radio"
-                          class="hide-block"
-                          name="blankresetsOnLong"
-                          value="long"
-                          data-bind="checked: blankSlot().resetsOn"/>
-                   <img class="action-bar-icon" data-bind="attr: { src: campingTentWhite }">
-                    &nbsp;&nbsp;&nbsp;Long Rest
-                </label>
-              </div>
-            </div>
-          </div> <!-- end form-group -->
-          <div class="modal-footer">
+          <!-- ko ifnot: $component.showAddForm -->
             <button type="button"
-                    class="btn btn-default"
-                    id="spellSlotsAddModalCancelButton"
-                    data-dismiss="modal">Cancel
-            </button>
-            <button type="submit"
-                    class="btn btn-primary"
-                    id="spellSlotsAddModalAddButton">
-                    Add
-            </button>
-          </div>
-        </form>
-      </div> <!-- end modal-body -->
-    </div> <!-- end modal content -->
-  </div> <!-- end modal dialog -->
-</div> <!-- end modal -->
-
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     id="viewSlot"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="viewSlotLabel"
-     data-bind="modal: { open: openModal, onopen: editModalOpen,
-       onclose: closeEditModal}, with: currentEditItem">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title" id="addSlotLabel"> Edit your Spell Slot.
-        </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-          <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">
-              Level<i class="required"></i>
-            </label>
-            <div class="col-sm-10">
-              <input type="number"
-                     class="form-control"
-                     name="level"
-                     id="spellSlotsEditModalLevelInput"
-                     data-bind="value: level">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bonus" class="col-sm-2 control-label">
-              Max<i class="required"></i>
-            </label>
-            <div class="col-sm-10">
-              <input type="number"
-                     class="form-control"
-                     name="max"
-                     id="spellSlotsEditModalMaxInput"
-                     data-bind="value: max, hasFocus: $parent.editHasFocus">
-            </div>
-          </div>
-          <div class="form-group">
-          <label class="col-sm-2 control-label">Resets on...</label>
-            <div class="col-sm-10">
-              <div class="btn-group btn-group-justified" role="group">
-                <label class="btn btn-default" id="spellSlotsEditModalShortRestButton"
-                       data-bind="css: { active: resetsOn() == 'short'}">
-                  <input type="radio"
-                         class="hide-block"
-                         name="resetsOnShort"
-                         value="short"
-                         data-bind="checked: resetsOn"/>
-                  <img class="action-bar-icon"
-                    data-bind="attr: { src: $parent.meditationWhite }">
-                       &nbsp;&nbsp;&nbsp;Short Rest
-                </label>
-                <label class="btn btn-default" id="spellSlotsEditModalLongRestButton"
-                       data-bind="css: { active: resetsOn() != 'short'}">
-                <input type="radio"
-                       class="hide-block"
-                       name="resetsOnLong"
-                       value="long"
-                       data-bind="checked: resetsOn"/>
-                <img class="action-bar-icon"
-                  data-bind="attr: { src: $parent.campingTentWhite }">
-                     &nbsp;&nbsp;&nbsp;Long Rest
-                </label>
-              </div>
-            </div>
-          </div>
-        <div class="modal-footer">
-          <button type="submit"
-                  id="spellSlotsEditModalDoneButton"
-                  class="btn btn-primary">Done</button>
-        </div>
-      </form>
-    </div> <!-- end modal body -->
-    </div> <!-- end modal content -->
-  </div> <!-- end modal dialog -->
-</div> <!-- end with statement -->
+                    class="btn btn-link btn-sm btn-block"
+                    id="proficiencyAddButton"
+                    data-toggle="collapse"
+                    data-target="#add-spell-slot"
+                    data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell Slot</button>
+          <!-- /ko -->
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+  <!-- /ko -->
+  </div>

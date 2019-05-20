@@ -25,11 +25,6 @@ import template from './index.html';
 class TrackerViewModel extends ACTableComponent {
     constructor(params) {
         super(params);
-        this.showAddForm = ko.observable(false);
-        this.entities = ko.observableArray([]);
-        this.sort = ko.observable(this.sorts()['name asc']);
-        this.filter = ko.observable('');
-        this.subscriptions = [];
         this.collapseAllId = '#tracker-pane';
     }
 
