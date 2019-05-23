@@ -24,11 +24,10 @@ export class FormController extends FormBaseController {
         this.addToParent = params.addToParent ? params.addToParent : noOp;
         this.replaceInParent = params.replaceInParent ? params.replaceInParent : noOp;
         this.removeFromParent = params.removeFromParent ? params.removeFromParent : noOp;
+
     }
 
     refresh() {
-        // Reset the textarea size when refreshing
-        this.textAreaStyle('');
         this.shouldShowDisclaimer(false);
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());

@@ -50,11 +50,14 @@
     <div class="form-group">
       <label for="npcDescription"
              class="control-label">Description</label>
+      <!-- ko if: $component.show -->
+
       <textarea type="text"
                 rows="6"
                 class="form-control"
                 id="featureEditDescriptionTextarea"
-                data-bind='attr: {style: $component.textAreaStyle}, value: description, markdownEditor: true'></textarea>
+                data-bind='value: description, markdownEditor: true'></textarea>
+      <!-- /ko -->
     </div>
     <div class="form-group">
       <input type='checkbox'

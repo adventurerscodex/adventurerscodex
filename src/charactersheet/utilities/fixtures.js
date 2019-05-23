@@ -100,7 +100,7 @@ export var Fixtures = {
             '#C82D78',
             '#5cb85c',
             '#337ab7'
-        ]    
+        ]
     },
     armor : {
         constants: {
@@ -259,7 +259,22 @@ export var Fixtures = {
             'Sight',
             'Special',
             'Touch',
-            'Unlimited']
+            'Unlimited'],
+        damageTypeOptions: [
+            'acid',
+            'bludgeoning',
+            'cold',
+            'fire',
+            'force',
+            'lightning',
+            'necrotic',
+            'piercing',
+            'poison',
+            'psychic',
+            'radiant',
+            'slashing',
+            'thunder'
+        ]
     },
     spellStats : {
         spellcastingAbilityOptions: [

@@ -13,6 +13,9 @@ export class ACViewModel {
         this.entity = ko.observable(this.generateBlank());
         this.loaded = ko.observable(false);
         this.subscriptions = [];
+        if (params.data) {
+            this.existingData = params.data;
+        }
     }
 
     async load() {

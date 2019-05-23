@@ -1,4 +1,14 @@
 <form data-bind="submit: $component.submit">
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+        </span>
+    </button>
+    <button class="btn btn-link btn-success" type="submit" value="submit">
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+        </span>
+    </button>
+  </div>
   <!-- ko ifnot: $component.data -->
   <div class="h4" style="padding-top: 5px;">
     New Proficiency
@@ -33,10 +43,13 @@
     <div class="form-group">
       <label for="description"
              class="control-label">Description</label>
-      <textarea type="text"
-                rows="3"
-                class="form-control proficiencyEditDescriptionTextarea"
-                data-bind='value: description, markdownEditor: true'></textarea>
+         <!-- ko if: $component.show -->
+         <textarea type="text"
+                   rows="3"
+                   class="form-control proficiencyEditDescriptionTextarea"
+                   data-bind="attr: {style: $component.textAreaStyle}, value: description, markdownEditor: true">
+         </textarea>
+         <!-- /ko -->
     </div>
   </div>
   <!-- ko ifnot: addForm -->

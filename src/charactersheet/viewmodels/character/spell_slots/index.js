@@ -1,21 +1,15 @@
 import 'bin/knockout-bar-progress';
 
 import {
-  CoreManager,
     Fixtures,
     Notifications,
     Utility } from 'charactersheet/utilities';
-import {
-    Feat,
-    Feature,
-    SpellSlot,
-    Tracked,
-    Trait
-} from 'charactersheet/models/character';
 
 import { flatMap, maxBy } from 'lodash';
 
 import { ACTableComponent } from 'charactersheet/components/table-component';
+import { SpellSlot } from 'charactersheet/models/character';
+
 import { SpellSlotFormComponentViewModel } from './form';
 
 import campingTent from 'images/camping-tent-blue.svg';
@@ -38,7 +32,7 @@ class SpellSlotsViewModel extends ACTableComponent {
         const currentMax = maxBy(this.entities(), (slot) => (slot.level()));
         return parseInt(currentMax.level())+1;
     });
-    
+
     modelClass = () => {
         return SpellSlot;
     }

@@ -1686,3 +1686,123 @@ thead.ac-table-header tr  {
   border-bottom-left-radius: 0px;
   border-top-left-radius: 0px;
 }
+
+.damage-icon {
+  width: 1.25em;
+  height: 2.5ex;
+  display: inline-block;
+  padding: 0px 0 0 0px;
+  margin: 0px 2px 0px 2px;
+  opacity: 0.5;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  vertical-align: text-bottom;
+}
+
+.spellRow[aria-expanded="true"] .damage-icon {
+  opacity: 0.75;
+}
+
+.damage-fire {
+  background: url('../images/damage_types/flame.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-fire {
+  background: url('../images/damage_types/flame-white.svg');
+}
+
+.damage-poison {
+  background: url('../images/damage_types/biohazard.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-poison {
+  background: url('../images/damage_types/biohazard-white.svg');
+}
+
+.damage-slashing {
+  background: url('../images/damage_types/blade-drag.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-slashing {
+  background: url('../images/damage_types/blade-drag-white.svg');
+}
+
+.damage-force {
+    background: url('../images/damage_types/ringed-beam.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-force {
+    background: url('../images/damage_types/ringed-beam-white.svg');
+}
+
+.damage-necrotic {
+  background: url('../images/damage_types/death-zone.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-necrotic {
+  background: url('../images/damage_types/death-zone-white.svg');
+}
+
+.damage-bludgeoning {
+  background: url('../images/damage_types/flanged-mace.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-bludgeoning {
+  background: url('../images/damage_types/flanged-mace-white.svg');
+}
+
+.damage-acid {
+  background: url('../images/damage_types/foam.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-acid {
+  background: url('../images/damage_types/foam-white.svg');
+}
+
+.damage-cold {
+  background: url('../images/damage_types/snowflake.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-cold {
+  background: url('../images/damage_types/snowflake-white.svg');
+}
+
+.damage-lightning {
+  background: url('../images/damage_types/power-lightning.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-lightning {
+  background: url('../images/damage_types/power-lightning-white.svg');
+}
+
+.damage-piercing {
+  background: url('../images/damage_types/pierced-body.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-piercing {
+  background: url('../images/damage_types/pierced-body-white.svg');
+}
+
+.damage-psychic {
+  background: url('../images/damage_types/psychic-waves.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-psychic {
+  background: url('../images/damage_types/psychic-waves-white.svg');
+}
+
+.damage-radiant {
+  background: url('../images/damage_types/sunbeams.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-radiant {
+  background: url('../images/damage_types/sunbeams-white.svg');
+}
+
+.damage-thunder {
+  background: url('../images/damage_types/echo-ripples.svg');
+}
+
+.spellRow[aria-expanded="true"] .damage-thunder {
+  background: url('../images/damage_types/echo-ripples-white.svg');
+}

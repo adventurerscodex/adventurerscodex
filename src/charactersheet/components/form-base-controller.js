@@ -18,11 +18,7 @@ export class FormBaseController {
         this.flip = params.flip ? params.flip : noOp;
         this.forceCardResize = params.forceCardResize ? params.forceCardResize : noOp;
         this.formElementHasFocus = ko.observable(false);
-        // Text Area style for size reset;
-        this.textAreaStyle = ko.observable('');
-
         this.shouldShowDisclaimer = ko.observable(false);
-
         // Collects subscriptions to dispose of
         this.subscriptions = [];
     }

@@ -1,0 +1,63 @@
+<div data-bind="with: entity, css: entity().school().toLowerCase()">
+  <div class="h4">
+    <span data-bind="text: nameLabel"></span>&nbsp;
+    <small data-bind="text: spellSummaryLabel"></small>
+  </div>
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link" data-bind="click: $parent.flip">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true">
+        </span>
+    </button>
+  </div>
+  <div class="row">
+    <div class="col-sm-5 col-md-4 col-lg-3">
+      <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+        <tbody>
+          <tr>
+            <th>Casting Time:</th>
+            <td><span data-bind="text: castingTime"></span></td>
+          </tr>
+          <tr>
+            <th>Range:</th>
+            <td><span data-bind="text: range"></span></td>
+          </tr>
+          <tr>
+            <th>Type:</th>
+            <td><span data-bind="text: type"></span></td>
+          </tr>
+          <!-- ko if: type() === 'Savings Throw' && spellSaveAttribute -->
+          <tr>
+            <th>Save Attr:</th>
+            <td><span data-bind="text: spellSaveAttribute"></span></td>
+          </tr>
+          <!-- /ko -->
+          <!-- ko if: damage -->
+          <tr>
+            <th>Damage:</th>
+            <td>
+              <span data-bind="css: spellDamageIcon"></span>
+              <span data-bind="text: damage"></span>
+            </td>
+          </tr>
+          <!-- /ko -->
+          <tr>
+            <th>Duration:</th>
+            <td><span data-bind="text: duration"></span></td>
+          </tr>
+          <tr>
+            <th>Components:</th>
+            <td><span data-bind="text: components"></span></td>
+          </tr>
+          <!-- ko if: materialComponents -->
+          <tr>
+            <td colspan="2"><i data-bind="text: materialComponents"></i></td>
+          </tr>
+          <!-- /ko -->
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-7 col-md-8 col-lg-9">
+        <div class="card-description" data-bind="markdownPreview: descriptionHTML"></div>
+    </div>
+  </div>
+</div>

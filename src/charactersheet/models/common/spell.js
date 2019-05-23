@@ -35,19 +35,11 @@ export class Spell extends KOModel {
     materialComponents = ko.observable('');
     isRitual = ko.observable(false);
 
-    typeOptions = ko.observableArray(Fixtures.spell.typeOptions);
-    spellSaveAttrOptions = ko.observableArray(Fixtures.spell.spellSaveAttrOptions);
-    schoolOptions = ko.observableArray(Fixtures.spell.schoolOptions);
-    castingTimeOptions = ko.observableArray(Fixtures.spell.castingTimeOptions);
-    durationOptions = ko.observableArray(Fixtures.spell.durationOptions);
-    componentsOptions = ko.observableArray(Fixtures.spell.componentsOptions);
-    rangeOptions = ko.observableArray(Fixtures.spell.rangeOptions);
-
     spellDamageLabel = ko.observable('');
 
     isConcentration = ko.pureComputed(function() {
         return includes(this.duration().toLowerCase(), 'concentration');
-    });
+    }, this);
 
     updateValues = async () => {
         await this.calculateSpellDamageLabel();
@@ -59,7 +51,7 @@ export class Spell extends KOModel {
         } else {
             return this.name();
         }
-    });
+    }, this);
 
     calculateSpellDamageLabel = async () => {
         var key = CoreManager.activeCore().uuid();
@@ -79,28 +71,28 @@ export class Spell extends KOModel {
         } else {
             return this.level();
         }
-    });
+    }, this);
 
     isCastable = ko.pureComputed(function() {
-        if (this.prepared() === true || this.alwaysPrepared() === true || self.level() == 0) {
+        if (this.prepared() === true || this.alwaysPrepared() === true || this.level() == 0) {
             return true;
         } else {
             return false;
         }
-    });
+    }, this);
 
     typeLabel = ko.pureComputed(function() {
         if (this.type() === 'Savings Throw') {
-            return ('Savings Throw' + ': ' + self.spellSaveAttribute());
+            return ('Savings Throw' + ': ' + this.spellSaveAttribute());
         } else {
-            return self.type();
+            return this.type();
         }
-    });
+    }, this);
 
     spellSummaryLabel = ko.pureComputed(() => {
         var header = parseInt(this.level()) !== 0 ? 'Level ' : '';
         return this.school() + ', ' + header + this.levelLabel();
-    });
+    }, this);
 
     descriptionHTML = ko.pureComputed(() => {
         if (this.description()) {
@@ -108,7 +100,44 @@ export class Spell extends KOModel {
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
-    });
+    }, this);
+
+    spellDamageIcon = ko.pureComputed(() => {
+        switch(this.damageType().toLowerCase()) {
+        case 'fire': {
+            return 'damage-icon damage-fire';
+        }
+        case 'cold': {
+            return 'damage-icon damage-cold';
+        }
+        case 'lightning': {
+            return 'damage-icon damage-lightning';
+        }
+        case 'thunder': {
+            return 'damage-icon damage-thunder';
+        }
+        case 'poison': {
+            return 'damage-icon damage-poison';
+        }
+        case 'acid': {
+            return 'damage-icon damage-acid';
+        }
+        case 'psychic': {
+            return 'damage-icon damage-psychic';
+        }
+        case 'necrotic': {
+            return 'damage-icon damage-necrotic';
+        }
+        case 'radiant': {
+            return 'damage-icon damage-radiant';
+        }
+        case 'force': {
+            return 'damage-icon damage-force';
+        }
+        default:
+            return '';
+        }
+    }, this);
 }
 
 Spell.validationConstraints = {
