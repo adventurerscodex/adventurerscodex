@@ -1,477 +1,149 @@
-<div class="panel panel-default">
-  <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover" id="armorTable">
-      <thead>
-        <tr>
-          <th id="armorTableEquippedHeader" data-bind="click: function(){sortBy('equipped');}"
-            class="col-md-1 col-xs-2">
-            <span class="glyphicon glyphicon-check"></span>
-            <span data-bind="css: sortArrow('equipped')"></span>
-          </th>
-          <th id="armorTableArmorHeader" data-bind="click: function(){sortBy('name');}"
-            class="col-md-4 col-xs-5">
-            Armor
-            <span data-bind="css: sortArrow('name')"></span>
-          </th>
-          <th id="armorTableTypeHeader" class="hidden-sm hidden-xs col-md-2"
+<div id="armor-pane"
+     class="ac-pane panel-body">
+  <div class="h4 card-title">
+    Armor<br />
+    <small>Armor Class calculations are based on your equipped Armor, Shield, Magical Modifiers, and Dexterity.
+      Be sure to Don your armor and/or shield so your AC will be calculated.
+    </small>
+  </div>
+  <table class="table table-responsive table-ac-bordered table-hover"
+         id="armorTable">
+    <thead>
+      <tr class="ac-table-header">
+        <th id="armorTableEquippedHeader"
+            data-bind="click: function(){sortBy('equipped');}"
+            class="">
+          Equipped
+        </th>
+        <th id="armorTableArmorHeader"
+            data-bind="click: function(){sortBy('name');}"
+            class="">
+          Armor
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th id="armorTableTypeHeader"
+            class="hidden-xs"
             data-bind="click: function(){sortBy('type');}">
-            Type
-            <span data-bind="css: sortArrow('type')"></span>
-          </th>
-          <th id="armorTableAcHeader" data-bind="click: function(){sortBy('armorClass');}"
-            class="col-md-3 col-xs-4">
-            Armor Class
-            <span data-bind="css: sortArrow('armorClass')"></span>
-          </th>
-          <th class="col-md-1 col-xs-1">
-            <a data-bind="click: toggleAddModal"
-               id="armorAddIcon" href="#">
-              <i class="fa fa-plus fa-color"></i>
-            </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      <!-- ko foreach: filteredAndSortedArmors -->
-        <tr class="clickable">
-          <td data-bind="click: $parent.editArmor"
-              href="#">
-            <span data-bind="css: $parent.armorEquippedLabel($data)"></span>
-          </td>
-          <td data-bind="click: $parent.editArmor"
-              href="#">
-              <span data-bind="text: name"></span>&nbsp;
-              <span data-bind="text: magicalModifierLabel,
-                css: { badge: applyMagicalModifierLabel }">
-              </span></td>
-          <td class="hidden-sm hidden-xs"
-              data-bind="text: type, click: $parent.editArmor"
-              href="#"></td>
-          <td data-bind="text: armorClass, click: $parent.editArmor"
-              href="#"></td>
-          <td>
-            <a data-bind="click: $parent.removeArmor" href="#">
-              <i class="fa fa-trash-o fa-color-hover">
-              </i>
-            </a>
-          </td>
-        </tr>
+          Type
+          <span data-bind="css: sortArrow('type')"></span>
+        </th>
+        <th id="armorTableAcHeader"
+            data-bind="click: function(){sortBy('armorClass');}"
+            class="ac-table-data-cell">
+          Armor Class
+          <span data-bind="css: sortArrow('armorClass')"></span>
+        </th>
+        <th>
+          <a href="#"
+             data-bind="{click: collapseAll}"><span class="fa fa-minus"></span></a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr class="clickable expandRow"
+          data-toggle="collapse"
+          data-bind="css: {notCastable: !equipped() }, attr:{'data-target': `#armor_list_${uuid()}`}">
+        <td class="memorize-spell"
+            data-bind="click: $component.equipArmor">
+          <div>
+            <input type='checkbox'
+                   style=""
+                   class='ac-checkbox sr-only'
+                   data-bind="checked: equipped, attr: {id: `equpped_${uuid()}`}"></input>
+            <label data-bind="attr: {for: `equipped_${uuid()}`}"></label>
+          </div>
+        </td>
+        <td><span data-bind="text: name"></span>&nbsp;
+          <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span>
+        </td>
+        <td class="hidden-xs"><span data-bind="text: type"></span></td>
+        <td class="ac-table-data-cell"><span data-bind="text: armorClass"></span></td>
+        <td>
+          <span data-toggle="collapse"
+                data-bind="attr:{'data-target': `#armor_list_${uuid()}`}"
+                class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="5">
+          <flip-card params="{
+                  dataId: $data.uuid,
+                  tabId: 'equipment',
+                  collapsable: true,
+                  elementId: 'armor_list',
+                  context: {
+                    data: $data,
+                    replaceInList: $component.replaceInList,
+                    addToList: $component.addToList,
+                    removeFromList: $component.removeFromList
+                  }
+                }">
+            <div class="front">
+              <armor-detail-view params="{
+                     data: context.data,
+                     containerId: elementId,
+                     showBack: showBack,
+                     flip: flip
+                   }"></armor-detail-view>
+            </div>
+            <div class="back">
+              <armor-form params="{
+                  data: context.data,
+                  containerId: elementId,
+                  show: showBack,
+                  flip: flip,
+                  forceCardResize: forceCardResize,
+                  replaceInParent: context.replaceInList,
+                  removeFromParent: context.removeFromList
+                 }"
+              ></armor-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
       <!-- /ko -->
-      <!-- ko if: filteredAndSortedArmors().length == 0 -->
-        <tr class="clickable">
-          <td href="#" data-bind="click: toggleAddModal"
-            colspan="12" class="text-center">
-            <i class="fa fa-plus fa-color"></i>
-            Add a new armor
-          </td>
-        </tr>
-      <!-- /ko -->
-      </tbody>
-    </table>
-    </div> <!-- end panel body -->
-    <div class="container-fluid panel-footer">
-      <span class="pull-right">Total weight:&nbsp;
-        <span id="armorTableTotalWeightSpan" data-bind="text: totalWeight"></span>
-      </span>
-    </div> <!-- end panel footer -->
-    <!-- Add Modal -->
-    <div class="modal fade"
-         id="addArmor"
-         tabindex="-1"
-         role="dialog"
-         aria-labelledby="addArmorLabel"
-         data-bind="modal: { onopen: modalFinishedOpening,
-          open: addModalOpen,
-          onclose: closeAddModal }">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="addArmorLabel">Add an armor piece to your armory.</h4>
-        </div>
-          <div class="modal-body">
-            <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-              <div class="form-group ui-front">
-                <label for="name"
-                       class="col-sm-2 control-label">
-                        Name <i class="required"></i>
-                      </label>
-                <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         id="armorAddNameInput"
-                         name="name"
-                         placeholder="Chain Mail"
-                         data-bind="textInput: blankArmor().name,
-                          autocomplete: { source: armorsPrePopFilter, onselect: populateArmor },
-                          hasFocus: firstModalElementHasFocus">
-                </div>
-              </div>
-              <div class="form-group ui-front">
-                <label for="type"
-                       class="col-sm-2 control-label">
-                        Type <i class="required"></i>
-                      </label>
-                  <div class="col-sm-10">
-                  <input class="form-control"
-                         id="armorAddTypeInput"
-                         placeholder="Light"
-                         name="type"
-                         data-bind="textInput: blankArmor().type, autocomplete: { source: blankArmor().armorTypeOptions,
-                         onselect: setArmorType }">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="magicalModifier"
-                       class="col-sm-2 control-label">Magical Modifier</label>
-                  <div class="col-sm-10">
-                  <input type="number" class="form-control"
-                         id="armorAddMagicalModifierInput"
-                         data-bind="textInput: blankArmor().magicalModifier">
-                  </div>
-              </div>
-              <div class="form-group ui-front">
-                <label for="price"
-                       class="col-sm-2 control-label">Price</label>
-                <div class="col-sm-10">
-        					<div class="input-group">
-        						<input type="text"
-        							   class="form-control input-jquery-addon"
-        							   id="armorAddPriceInput"
-                         placeholder="5"
-                         name="price"
-        							   data-bind="textInput: blankArmor().price">
-        					   <span class="input-group-addon input-group-addon-jquery">
-        							<input class="form-control"
-                             id="armorAddCurrencyDenominationInput"
-                             name="currencyDenomination"
-                             placeholder="GP"
-        							       data-bind="textInput: blankArmor().currencyDenomination, autocomplete: {
-                          source: blankArmor().currencyDenominationOptions }">
-        						</span>
-        					</div>
-				        </div>
-              </div>
-              <div class="form-group">
-                <label for="weight"
-                       class="col-sm-2 control-label">Weight</label>
-                  <div class="col-sm-10">
-                    <input type="number"
-                           class="form-control"
-                           id="armorAddWeightInput"
-                           placeholder="6"
-                           data-bind="textInput: blankArmor().weight">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="armorClass"
-                       class="col-sm-2 control-label">
-                        Armor Class <i class="required"></i>
-                      </label>
-                  <div class="col-sm-10">
-                    <input type="text"
-                           class="form-control"
-                           id="armorAddArmorClassInput"
-                           placeholder="3"
-                           name="armorClass"
-                           data-bind="textInput: blankArmor().armorClass">
-                  </div>
-              </div>
-              <div class="form-group ui-front">
-                <label for="armorSize"
-                       class="col-sm-2 control-label">
-                       Stealth <i class="required"></i>
-                </label>
-                  <div class="col-sm-10">
-                  <input class="form-control"
-                         id="armorAddStealthInput"
-                         placeholder="Advantage"
-                         name="stealth"
-                         data-bind="textInput: blankArmor().stealth, autocomplete: { source: blankArmor().armorStealthOptions,
-                         onselect: setArmorStealth }">
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Equipped</label>
-                <div class="col-sm-10">
-                  <div class="btn-group btn-group-justified" role="group">
-                    <label class="btn btn-default" id="armorAddDoffButton"
-                      data-bind="css: { active: blankArmor().equipped() == false}">
-                      <input type="radio" class="hide-block" name="equipGroup" value="false"
-                        data-bind="checked: blankArmor().equipped, checkedValue: false"/>
-                        Doff
-                    </label>
-                    <label class="btn btn-default" id="armorAddDonButton"
-                      data-bind="css: { active: blankArmor().equipped() == true}">
-                      <input type="radio" class="hide-block" name="equipGroup" value="true"
-                        data-bind="checked: blankArmor().equipped, checkedValue: true"/>
-                        Don
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="description"
-                       class="col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea type="password"
-                              class="form-control"
-                              id="armorAddDescriptionTextarea"
-                              rows="4"
-                              placeholder="Armor of damage blocking"
-                              data-bind="textInput: blankArmor().description">
-                    </textarea>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button"
-                        data-dismiss="modal"
-                        aria-label="Close"
-                        class="btn btn-default"
-                        id="armorAddCancelButton">
-                        Cancel
-                </button>
-                <button type="submit"
-                        class="btn btn-primary"
-                        id="armorAddAddButton">
-                        Add
-                </button>
-                <p class="text-muted text-left" data-bind="visible: shouldShowDisclaimer">
-                  <sm>
-                    <i>This data is distributed under the
-                    <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
-                      target="_blank">
-                      OGL</a><br/>
-                      Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                    </i>
-                  </sm>
-                </p>
-              </div>
-            </form>
-          </div> <!-- Modal Body -->
-        </div> <!-- Modal Content -->
-      </div> <!-- Modal Dialog -->
-    </div> <!-- Modal Fade -->
-
-    <!-- ViewEdit Modal -->
-    <div class="modal fade"
-         id="viewArmor"
-         tabindex="-1"
-         role="dialog"
-         aria-labelledby="viewArmorLabel"
-         data-bind="modal: {
-           open: modalOpen,
-           onopen: modalFinishedOpening,
-           onclose: closeEditModal
-        }">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button"
-                    class="close"
-                    data-dismiss="modal"
-                    aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title" id="viewArmorLabel">View an armor piece from your armory.</h4>
-        </div>
-          <div class="modal-body">
-
-            <!-- Begin Tabs -->
-            <ul class="nav nav-tabs tabs">
-              <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus" id="armorModalPreviewTab">
-                <a href="#armorItemsModalPreview" aria-controls="armorModalPreview" role="tab" data-toggle="tab">
-                    <b>Preview</b>
-                </a>
-              </li>
-              <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus" id="armorModalEditTab">
-                <a href="#armorModalEdit" aria-controls="armorModalEdit" role="tab" data-toggle="tab">
-                    <b>Edit</b>
-                </a>
-              </li>
-            </ul>
-
-            <div class="tab-content" data-bind="with: currentEditItem">
-              <div role="tabpanel" data-bind="css: $parent.previewTabStatus"
-                class="tab-pane" id="armorModalPreview">
-                <div class="h3">
-                  <span data-bind="text: name" id="armorPreviewNameLabel"></span>&nbsp;
-                  <small data-bind="text: armorSummaryLabel" id="armorPreviewSummaryLabel"></small>
-                </div>
-
-                <hr />
-                <div class="row">
-                  <div class="col-sm-4 col-xs-12" id="armorPreviewStealthLabel">
-                    <b>Stealth:</b>&nbsp;<span data-bind="text: stealth"></span>
-                  </div>
-                  <div class="col-sm-4 col-xs-12" id="armorPreviewWeightLabel">
-                    <b>Weight:</b>&nbsp;<span data-bind="text: armorWeightLabel"></span>
-                  </div>
-                  <div class="col-sm-4 col-xs-12">
-                    <b>Type:</b>&nbsp;<span data-bind="text: type"></span>
-                  </div>
-                </div>
-
-                <hr />
-                <h4>Description</h4>
-                <div class="row row-padded">
-                  <div class="col-xs-12 col-padded">
-                    <div data-bind="markdownPreview: armorDescriptionHTML"
-                         class="preview-modal-overflow"
-                         id="ArmorPreviewDescriptionTextarea">
-                    </div>
-                  </div>
-                </div>
-              </div> <!-- End Preview Tab -->
-
-              <div role="tabpanel" data-bind="css: $parent.editTabStatus"
-                class="tab-pane" id="magicItemsModalEdit">
-                <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-                  <div class="form-group">
-                    <label for="name"
-                           class="col-sm-2 control-label">
-                            Name <i class="required"></i>
-                          </label>
-                    <div class="col-sm-10">
-                      <input type="text"
-                             name="name"
-                             class="form-control"
-                             id="armorEditNameInput"
-                             placeholder="Chain Mail"
-                             data-bind='textInput: name,
-                              hasFocus: $parent.editFirstModalElementHasFocus'>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="type"
-                           class="col-sm-2 control-label">
-                            Type <i class="required"></i>
-                          </label>
-                      <div class="col-sm-10">
-                      <input class="form-control"
-                             name="type"
-                             id="armorEditTypeInput"
-                             placeholder="Light"
-                             data-bind="textInput: type">
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="magicalModifier"
-                           class="col-sm-2 control-label">Magical Modifier</label>
-                      <div class="col-sm-10">
-                      <input type="number" class="form-control"
-                             id="armorEditMagicalModifierInput"
-                             data-bind='textInput: magicalModifier'>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="price"
-                           class="col-sm-2 control-label">Price</label>
-                    <div class="col-sm-10">
-            					<div class="input-group">
-            						<input type="text"
-            							   class="form-control input-jquery-addon"
-            							   id="armorEditPriceInput"
-                             placeholder="5"
-                             name="price"
-            							   data-bind='textInput: price'>
-            					   <span class="input-group-addon input-group-addon-jquery">
-            							<input class="form-control"
-                                 id="armorEditCurrencyDenominationInput"
-                                 placeholder="GP"
-                                 name="currencyDenomination"
-            							       data-bind="textInput: currencyDenomination">
-            						</span>
-            					</div>
-    				        </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="weight"
-                           class="col-sm-2 control-label">Weight</label>
-                      <div class="col-sm-10">
-                        <input type="number"
-                               class="form-control"
-                               id="armorEditWeightInput"
-                               placeholder="6"
-                               data-bind='textInput: weight'>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="armorClass"
-                           class="col-sm-2 control-label">
-                            Armor Class <i class="required"></i>
-                          </label>
-                      <div class="col-sm-10">
-                        <input type="text"
-                               class="form-control"
-                               id="armorEditArmorClassInput"
-                               placeholder="3"
-                               name="armorClass"
-                               data-bind='textInput: armorClass'>
-                      </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="armorSize"
-                           class="col-sm-2 control-label">
-                           Stealth<i class="required"></i>
-                          </label>
-                      <div class="col-sm-10">
-                      <input class="form-control"
-                             id="armorEditStealthInput"
-                             placeholder="Advantage"
-                             name="stealth"
-                             data-bind="textInput: stealth">
-                      </div>
-                  </div>
-                  <div class="form-group">
-                  <label
-                         class="col-sm-2 control-label">Equipped</label>
-                    <div class="col-sm-10">
-                      <div class="btn-group btn-group-justified" role="group">
-                      <label class="btn btn-default" id="armorEditDoffButton"
-                        data-bind="css: { active: equipped() == false}">
-                        <input type="radio" class="hide-block" name="equipGroup"
-                          value="false" data-bind="checked: equipped, checkedValue: false"/>
-                          Doff
-                      </label>
-                      <label class="btn btn-default"
-                      data-bind="css: { active: equipped() == true}" id="armorEditDonButton">
-                        <input type="radio" class="hide-block" name="equipGroup" value="true"
-                          data-bind="checked: equipped, checkedValue: true"/>
-                          Don
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="description"
-                           class="col-sm-2 control-label">Description</label>
-                      <div class="col-sm-10">
-                        <textarea type="password"
-                                  class="form-control"
-                                  id="armorEditDescriptionTextarea"
-                                  rows="4"
-                                  placeholder="Armor of damage blocking"
-                                  data-bind='textInput: description'>
-                        </textarea>
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="submit"
-                            class="btn btn-primary"
-                            id="armorEditDoneButton">
-                            Done</button>
-                  </div>
-                </form>
-              </div> <!-- End Edit Tab -->
-            </div> <!-- End With Selection -->
-          </div> <!-- Modal Body -->
-        </div> <!-- Modal Content -->
-      </div> <!-- Modal Dialog -->
-    </div> <!-- Modal Fade -->
-</div> <!-- Panel -->
+      <tr class="collapseRow">
+        <td colspan="5">
+          <div id="add-armor" class="add-form collapse">
+               <armor-form params="{
+                   containerId: 'add-armor',
+                   show: $component.addForm,
+                   flip: $component.toggleShowAddForm,
+                   addToParent: $component.addToList
+                  }"
+               ></armor-form>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5">
+          <div class="row">
+            <div class="col-xs-4 text-muted">
+              <small class="table-foot-content visible-xs"><span id="armorTableTotalWeightSpan"
+                      data-bind="text: totalWeight"></span></small>
+              <span class="table-foot-content hidden-xs">Weight: <span id="armorTableTotalWeightSpan"
+                      data-bind="text: totalWeight"></span></span>
+            </div>
+            <div class="col-xs-4">
+              <!-- ko ifnot: $component.showAddForm -->
+              <button type="button"
+                      class="btn btn-link btn-sm btn-block"
+                      id="magicitemAddButton"
+                      data-toggle="collapse"
+                      data-target="#add-armor"
+                      data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Armor</button>
+              <!-- /ko -->
+            </div>
+            <div class="col-xs-4 text-muted">
+              <!-- this space for value -->
+            </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /ko -->
+  </table>
+</div>

@@ -106,7 +106,7 @@ export class OtherStatsViewModel extends ACViewModel {
     updateProficiencyPopoverMessage = (level, proficiency) => {
         this.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
             + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />'
-            + 'Proficiency = ${level} + 1 + ${proficiency}');
+            + `Proficiency = ${level} + 1 + ${proficiency}`);
     }
 
     // Calculate initiative label and popover
@@ -126,7 +126,7 @@ export class OtherStatsViewModel extends ACViewModel {
     updateInitiativePopoverMessage = (dexterityModifier, initiativeModifier) => {
         this.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
         'Dexterity Modifier + Modifier</span><br />' +
-        'Initiative = ${dexterityModifier} + ${initiativeModifier}');
+        `Initiative = ${dexterityModifier} + ${initiativeModifier}`);
     }
 
     updateArmorClassPopoverMessage = async () => {
@@ -140,7 +140,7 @@ export class OtherStatsViewModel extends ACViewModel {
 
         this.armorClassPopover('<span><strong>Armor Class</strong> = '
          + 'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />'
-         + '<strong>Armor Class</strong> = ${baseAC} + ${dexMod} + ${magicModifiers} + ${shield} + ${modifier}');
+         + `<strong>Armor Class</strong> = ${baseAC} + ${dexMod} + ${magicModifiers} + ${shield} + ${modifier}`);
     }
 
     updateArmorClass = async () => {

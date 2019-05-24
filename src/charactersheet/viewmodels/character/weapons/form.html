@@ -165,6 +165,7 @@
       <div class="form-group col-xs-12">
         <label for="description"
                class="control-label">Description</label>
+        <!-- ko if: $component.show -->
         <textarea type="password"
                   class="form-control"
                   id="weaponEditDescriptionTextarea"
@@ -172,6 +173,7 @@
                   placeholder="A sword...that is short..."
                   data-bind='textInput: description'>
                     </textarea>
+          <!-- /ko -->
       </div>
     <div class="col-xs-12"  data-bind='visible: $component.shouldShowDisclaimer'>
       <p class="text-muted ogl-disclaimer">

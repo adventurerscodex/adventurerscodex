@@ -24,9 +24,9 @@ export class Armor extends KOModel {
     description = ko.observable('');
     equipped = ko.observable(false);
 
-    armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
-    armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
-    armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    isShield = ko.pureComputed(() => {
+        return this.type() && this.type().toLowerCase().includes('shield');
+    })
 
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {

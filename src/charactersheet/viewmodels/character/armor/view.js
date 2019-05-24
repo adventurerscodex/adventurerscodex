@@ -1,22 +1,22 @@
 import { ACViewModel } from 'charactersheet/components/view-component';
-import { Weapon } from 'charactersheet/models';
+import { Armor } from 'charactersheet/models';
 
 import ko from 'knockout';
 import template from './view.html';
 
-class WeaponDetailViewModel extends ACViewModel {
+
+class ArmorDetailViewModel extends ACViewModel {
 
     generateBlank () {
-        return new Weapon();
+        return new Armor();
     }
 
     async refresh() {
         this.entity().importValues(this.existingData.exportValues());
-        this.entity().updateHitBonusLabel();
     }
 }
 
-ko.components.register('weapon-detail-view', {
-    viewModel: WeaponDetailViewModel,
+ko.components.register('armor-detail-view', {
+    viewModel: ArmorDetailViewModel,
     template: template
 });
