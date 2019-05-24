@@ -4,8 +4,8 @@ import {
     Notifications,
     Utility
 } from 'charactersheet/utilities';
-import { Spell, SpellStats } from 'charactersheet/models';
-import { debounce, filter } from 'lodash';
+import { Spell, SpellSlot, SpellStats } from 'charactersheet/models';
+import { filter, maxBy } from 'lodash';
 
 import { ACTableComponent } from 'charactersheet/components/table-component';
 import { SortService } from 'charactersheet/services/common';
@@ -20,8 +20,8 @@ class SpellbookViewModel extends ACTableComponent {
     constructor(params) {
         super(params);
         this.filteredByCastable = ko.observable(false);
-        this.highestLevelSpellSlot = ko.observable(9);
         this.spellStats = ko.observable(new SpellStats());
+        this.spellSlots = ko.observableArray([]);
         this.addFormId = '#add-spell';
         this.collapseAllId = '#spell-pane';
     }
@@ -31,6 +31,8 @@ class SpellbookViewModel extends ACTableComponent {
         const key = CoreManager.activeCore().uuid();
         const stats = await SpellStats.ps.read({uuid: key});
         this.spellStats().importValues(stats.object.exportValues());
+        const spellSlots = await SpellSlot.ps.list({coreUuid: key});
+        this.spellSlots(spellSlots.objects);
     }
 
     modelClass = () => {
@@ -55,20 +57,42 @@ class SpellbookViewModel extends ACTableComponent {
         };
     }
 
+    highestLevelSpellSlot = ko.pureComputed(() => {
+        const availableSlots = filter(this.spellSlots(), (spellSlot)=> (spellSlot.used() < spellSlot.max()));
+        const highestSlot = maxBy(availableSlots, (spellSlot) => (spellSlot.level()));
+        if (highestSlot) {
+            return highestSlot.level();
+        }
+        return 0;
+    })
+
     filteredAndSortedEntities = ko.pureComputed(() =>  {
         let spellbook = this.entities();
         if (this.filteredByCastable()) {
             spellbook = this.entities().filter(this.spellIsCastable, this);
         }
         return SortService.sortAndFilter(spellbook, this.sort(), null);
-    });
+    }, this);
 
     getDefaultSort () {
         return this.sorts()['level asc'];
     }
 
+    setUpSubscriptions () {
+        super.setUpSubscriptions();
+        Notifications.spellSlots.changed.add(this.updateSpellSlots);
+    }
+
+    updateSpellSlots = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const response = await SpellSlot.ps.list({coreUuid: key});
+        this.spellSlots(response.objects);
+    }
+
     spellIsCastable = (spell) => {
-        if (spell.level() > this.highestLevelSpellSlot()) {
+        if (spell.level() === 0) {
+            return true;
+        } else if (spell.level() > this.highestLevelSpellSlot()) {
             return false;
         } else if (spell.level() === 0) {
             return true;

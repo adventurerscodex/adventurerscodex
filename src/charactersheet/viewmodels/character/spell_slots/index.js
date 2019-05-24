@@ -130,6 +130,7 @@ class SpellSlotsViewModel extends ACTableComponent {
             }
         });
         await Promise.all(updates);
+        this.notify();
     };
 
     resetLongRestFeatures = async () => {
@@ -140,12 +141,17 @@ class SpellSlotsViewModel extends ACTableComponent {
 
         });
         await Promise.all(updates);
+        this.notify();
     };
 
+    notify = () => {
+        Notifications.spellSlots.changed.dispatch();
+    }
     onUsedChange = async (spellslot) => {
         const response = await spellslot.ps.save();
         // TODO: debounce
         this.replaceInList(response.object);
+        Notifications.spellSlots.changed.dispatch();
     }
 }
 

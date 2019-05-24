@@ -134,6 +134,15 @@ export class Spell extends KOModel {
         case 'force': {
             return 'damage-icon damage-force';
         }
+        case 'bludgeoning': {
+            return 'damage-icon damage-bludgeoning';
+        }
+        case 'piercing': {
+            return 'damage-icon damage-piercing';
+        }
+        case 'slashing': {
+            return 'damage-icon damage-slashing';
+        }
         default:
             return '';
         }

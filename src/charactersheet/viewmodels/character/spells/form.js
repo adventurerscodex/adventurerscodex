@@ -37,8 +37,6 @@ export class SpellFormViewModel  extends FormController {
         response(results);
     };
 
-    delayedSpellsPrePopFilter = debounce(this.spellsPrePopFilter, 350);
-
     populateSpell = (label, value) => {
         var spell = DataRepository.spells[label];
         this.entity().importValues(spell);
@@ -94,36 +92,6 @@ export class SpellFormViewModel  extends FormController {
     componentsOptions = Fixtures.spell.componentsOptions;
 
     rangeOptions = Fixtures.spell.rangeOptions;
-
-
-    // setSpellCastingAbility = (label, value) => {
-    //     this.entity().castingAbility(label);
-    // };
-
-    // // Pre-pop methods
-    // proficienciesPrePopFilter = (request, response) => {
-    //     const term = request.term.toLowerCase();
-    //     let results = [];
-    //     if (term && term.length > 2) {
-    //         const keys = DataRepository.proficiencies
-    //             ? Object.keys(DataRepository.proficiencies)
-    //             : [];
-    //         results = keys.filter(function(name, idx, _) {
-    //             return name.toLowerCase().indexOf(term) > -1;
-    //         });
-    //     }
-    //     response(results);
-    // };
-    //
-    // populateProficiency = (label, value) => {
-    //     const proficiency = DataRepository.proficiencies[label];
-    //     this.entity().importValues(proficiency);
-    //     this.shouldShowDisclaimer(true);
-    // };
-    //
-    // setType = (label, value) => {
-    //     this.entity().type(value);
-    // };
 
     validation = {
         // submitHandler: (form, event) => {
