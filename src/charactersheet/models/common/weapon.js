@@ -36,21 +36,63 @@ export class Weapon extends KOModel {
     quantity = ko.observable(1);
     hitBonusLabel = ko.observable();
 
-    weaponProficiencyOptions = ko.observableArray(Fixtures.weapon.weaponProficiencyOptions);
-    weaponHandednessOptions = ko.observableArray(Fixtures.weapon.weaponHandednessOptions);
-    weaponTypeOptions = ko.observableArray(Fixtures.weapon.weaponTypeOptions);
-    weaponPropertyOptions = ko.observableArray(Fixtures.weapon.weaponPropertyOptions);
-    weaponDamageTypeOptions = ko.observableArray(Fixtures.weapon.weaponDamageTypeOptions);
-    weaponCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+
+    weaponDamageIcon = ko.pureComputed(() => {
+        switch(this.damageType().toLowerCase()) {
+        case 'fire': {
+            return 'damage-icon damage-fire';
+        }
+        case 'cold': {
+            return 'damage-icon damage-cold';
+        }
+        case 'lightning': {
+            return 'damage-icon damage-lightning';
+        }
+        case 'thunder': {
+            return 'damage-icon damage-thunder';
+        }
+        case 'poison': {
+            return 'damage-icon damage-poison';
+        }
+        case 'acid': {
+            return 'damage-icon damage-acid';
+        }
+        case 'psychic': {
+            return 'damage-icon damage-psychic';
+        }
+        case 'necrotic': {
+            return 'damage-icon damage-necrotic';
+        }
+        case 'radiant': {
+            return 'damage-icon damage-radiant';
+        }
+        case 'force': {
+            return 'damage-icon damage-force';
+        }
+        case 'bludgeoning': {
+            return 'damage-icon damage-bludgeoning';
+        }
+        case 'piercing': {
+            return 'damage-icon damage-piercing';
+        }
+        case 'slashing': {
+            return 'damage-icon damage-slashing';
+        }
+        default:
+            return '';
+        }
+    });
+
+
     FINESSE = 'finesse';
     RANGED = 'ranged';
 
-    totalWeight = ko.computed(() => {
+    totalWeight = ko.pureComputed(() => {
         var qty = parseInt(this.quantity()) || 1;
         var perWeight = parseInt(this.weight()) || 0;
 
         return qty * perWeight;
-    });
+    }, this);
 
     proficiencyScore() {
         return ProficiencyService.sharedService().proficiency();
@@ -199,7 +241,7 @@ export class Weapon extends KOModel {
 
     weaponWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
-    });
+    }, this);
 
     toSchemaValues = (values) => {
         if (values.price === '') {

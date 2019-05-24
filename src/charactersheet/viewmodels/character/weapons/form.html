@@ -1,0 +1,217 @@
+<form data-bind="submit: $component.submit">
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+        </span>
+    </button>
+    <button class="btn btn-link btn-success" type="submit" value="submit">
+        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+        </span>
+    </button>
+  </div>
+
+  <div class="row" data-bind="with: entity">
+      <!-- ko ifnot: $component.existingData -->
+      <div class="col-xs-12">
+        <div class="h4">
+          New Weapon
+        </div>
+      </div>
+      <!-- /ko -->
+      <div class="form-group col-sm-6 col-md-4 col-lg-3">
+        <label for="name"
+               class="control-label">Name</label>
+        <input type="text"
+               class="form-control"
+               id="weaponEditNameInput"
+               placeholder="Short Sword"
+               data-bind='textInput: name,
+                         autocomplete: {
+                          source: $component.weaponsPrePopFilter,
+                          onselect: $component.populateWeapon }'>
+      </div>
+      <div class="form-group col-sm-6 col-md-4 col-lg-3">
+        <label for="damage"
+               class="control-label">Damage</label>
+        <input type="text"
+               class="form-control"
+               id="weaponEditDamageInput"
+               placeholder="1d4"
+               data-bind='textInput: damage, hasFocus: $component.formElementHasFocus'>
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="magicalModifier"
+               class="control-label">Magical Modifier</label>
+        <input type="number"
+               class="form-control"
+               id="weaponEditMagicalModifierInput"
+               placeholder="Place magical modifier here"
+               data-bind='textInput: magicalModifier'>
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="toHitModifier"
+               class="control-label">To Hit Modifier</label>
+        <input type="number"
+               class="form-control"
+               id="weaponEditToHitModifierInput"
+               placeholder="Adjust to hit modifier here"
+               data-bind='textInput: toHitModifier'>
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="type"
+               class="control-label">Type</label>
+        <input class="form-control"
+               id="weaponEditTypeInput"
+               placeholder="Melee"
+               data-bind="textInput: type,
+             autocomplete: {
+              source: $component.typeOptions,
+              onselect: $component.setWeaponType }">
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="handedness"
+               class="control-label">Handedness</label>
+        <input class="form-control"
+               id="weaponEditHandednessInput"
+               placeholder="One-Handed"
+               data-bind="textInput: handedness,
+             autocomplete: {
+              source: $component.handednessOptions,
+              onselect: $parent.setWeaponHandedness }">
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="proficiency"
+               class="control-label">Proficiency</label>
+        <input class="form-control"
+               id="weaponEditProficiencyInput"
+               placeholder="Simple"
+               data-bind="textInput: proficiency,
+             autocomplete: {
+              source: $component.proficiencyOptions,
+              onselect: $component.setWeaponProficiency }">
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="weaponWeight"
+               class="control-label">Weight</label>
+        <input type="number"
+               min="0"
+               class="form-control"
+               id="weaponEditWeightInput"
+               placeholder="6"
+               data-bind='textInput: weight'>
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="range"
+               class="control-label">Range</label>
+        <input type="text"
+               class="form-control"
+               id="weaponEditRangeInput"
+               placeholder="25/100"
+               data-bind='textInput: range'>
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="damageType"
+               class="control-label">Damage Type</label>
+        <input class="form-control"
+               id="weaponEditDamageTypeInput"
+               placeholder="Fire"
+               data-bind="textInput: damageType,
+             autocomplete: {
+              source: $component.damageTypeOptions,
+              onselect: $component.setWeaponDamageType }">
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="weaponProperty"
+               class="control-label">Property</label>
+        <input class="form-control"
+               id="weaponEditPropertyInput"
+               placeholder="Finesse"
+               data-bind="textInput: property,
+             autocomplete: {
+              source: $component.propertyOptions,
+              onselect: $component.setWeaponProperty }">
+      </div>
+      <div class="form-group  col-sm-6 col-md-4 col-lg-3">
+        <label for="quantity"
+               class="control-label">Quantity</label>
+        <input type="number"
+               min="0"
+               class="form-control"
+               id="weaponEditQuantityInput"
+               placeholder="1"
+               data-bind='textInput: quantity'>
+      </div>
+      <div class="form-group col-sm-6 col-md-6 col-lg-6">
+        <label for="price"
+               class="control-label">Price</label>
+        <div class="input-group">
+          <input type="number"
+                 min="0"
+                 class="form-control input-jquery-addon"
+                 id="weaponEditPriceInput"
+                 placeholder="5"
+                 data-bind='textInput: price'>
+          <span class="input-group-addon input-group-addon-jquery">
+            <input class="form-control"
+                   id="weaponEditCurrencyDenominationInput"
+                   placeholder="GP"
+                   data-bind="textInput: currencyDenomination,
+                   autocomplete: {
+                source: $component.currencyDenominationOptions,
+                onselect: $component.setWeaponCurrencyDenomination }">
+          </span>
+        </div>
+      </div>
+      <div class="form-group col-xs-12">
+        <label for="description"
+               class="control-label">Description</label>
+        <textarea type="password"
+                  class="form-control"
+                  id="weaponEditDescriptionTextarea"
+                  rows="4"
+                  placeholder="A sword...that is short..."
+                  data-bind='textInput: description'>
+                    </textarea>
+      </div>
+    <div class="col-xs-12"  data-bind='visible: $component.shouldShowDisclaimer'>
+      <p class="text-muted ogl-disclaimer">
+        <sm><i>This data is distributed under the
+          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+            target='_blank'>
+            OGL</a><br/>
+            Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+          </i>
+          <sm>
+      </p>
+    </div>
+    </div>
+    <!-- ko ifnot: $component.addForm -->
+    <div class="col-xs-12">
+      <div class="pull-left">
+        <button class="btn btn-sm btn-danger"
+                type="button"
+                data-bind="click: $component.delete">Delete</button>
+      </div>
+      <div class="pull-right">
+        <button class="btn btn-sm btn-default"
+                type="reset"
+                data-bind="click: $component.reset">Cancel</button>
+        <button class="btn btn-sm btn-primary"
+                type="submit">Save</button>
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko if: $component.addForm -->
+    <div class="col-xs-12">
+        <div class="pull-right">
+          <button type="reset"
+                  class="btn btn-default btn-sm"
+                  id="weaponAddCancelButton"
+                  data-bind="click: $component.reset">Cancel</button>
+          <button type="submit"
+                  class="btn btn-primary btn-sm"
+                  id="weaponAddAddButton">Add Weapon</button>
+        </div>
+    </div>
+    <!-- /ko -->
+  </form>

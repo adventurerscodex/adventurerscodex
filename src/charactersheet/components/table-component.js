@@ -19,6 +19,9 @@ export class ACTableComponent {
         this.filter = ko.observable('');
         this.subscriptions = [];
         this.refresh = this.refresh.bind(this);
+        this.addToList = this.addToList.bind(this);
+        this.replaceInList = this.replaceInList.bind(this);
+        this.removeFromList = this.removeFromList.bind(this);
     }
 
     getDefaultSort () {
@@ -65,15 +68,15 @@ export class ACTableComponent {
         this.loaded(true);
     }
 
-    addToList = (item) => {
+    addToList(item) {
         this.entities.push(item);
     }
 
-    replaceInList = (item) => {
+    replaceInList (item) {
         Utility.array.updateElement(this.entities(), item, item.uuid);
     }
 
-    removeFromList = (item) => {
+    removeFromList (item) {
         this.entities.remove(item);
     }
 

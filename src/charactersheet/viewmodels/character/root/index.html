@@ -112,13 +112,13 @@
     <li role="presentation"
         id="tabEquipmentLink"
       >
-      <a href="#items"
-         aria-controls="items"
+      <a href="#equipment"
+         aria-controls="equipment"
          role="tab"
          data-toggle="tab"
          id="itemsTabTrigger"
          class="tab-subtext"
-         data-bind="click: activateSpellsTab">
+         data-bind="click: activateEquipmentTab">
         <div class="visible-xs"
              data-toggle="collapse"
              data-target="#descriptionTab">
@@ -388,17 +388,17 @@
 
   <div role="tabpanel"
        class="tab-pane"
-       id="items"
+       id="equipment"
        data-bind="css: equipmentTabStatus">
     <div class="row">
       <div class="col-xs-12">
-        <weapons params="{tabId: 'items'}"></weapons>
+        <weapons params="{tabId: 'equipment'}"></weapons>
       </div>
       <div class="col-xs-12 col-md-6">
-        <magic-items params="{tabId: 'items'}"></magic-items>
+        <magic-items params="{tabId: 'equipment'}"></magic-items>
       </div>
       <div class="col-xs-12 col-md-6">
-        <armor params="{tabId: 'items'}"></armor>
+        <armor params="{tabId: 'equipment'}"></armor>
       </div>
     </div>
   </div>

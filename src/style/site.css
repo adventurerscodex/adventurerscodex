@@ -1699,6 +1699,7 @@ thead.ac-table-header tr  {
   vertical-align: text-bottom;
 }
 
+.weaponRow[aria-expanded="true"] .damage-icon,
 .spellRow[aria-expanded="true"] .damage-icon {
   opacity: 0.75;
 }
@@ -1707,6 +1708,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/flame.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-fire,
 .spellRow[aria-expanded="true"] .damage-fire {
   background: url('../images/damage_types/flame-white.svg');
 }
@@ -1715,6 +1717,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/biohazard.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-poison,
 .spellRow[aria-expanded="true"] .damage-poison {
   background: url('../images/damage_types/biohazard-white.svg');
 }
@@ -1723,6 +1726,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/blade-drag.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-slashing,
 .spellRow[aria-expanded="true"] .damage-slashing {
   background: url('../images/damage_types/blade-drag-white.svg');
 }
@@ -1731,6 +1735,7 @@ thead.ac-table-header tr  {
     background: url('../images/damage_types/ringed-beam.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-force,
 .spellRow[aria-expanded="true"] .damage-force {
     background: url('../images/damage_types/ringed-beam-white.svg');
 }
@@ -1739,6 +1744,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/death-zone.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-necrotic,
 .spellRow[aria-expanded="true"] .damage-necrotic {
   background: url('../images/damage_types/death-zone-white.svg');
 }
@@ -1747,22 +1753,25 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/flanged-mace.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-bludgeoning,
 .spellRow[aria-expanded="true"] .damage-bludgeoning {
   background: url('../images/damage_types/flanged-mace-white.svg');
 }
 
 .damage-acid {
-  background: url('../images/damage_types/foam.svg');
+  background: url('../images/damage_types/dripping-tube.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-acid,
 .spellRow[aria-expanded="true"] .damage-acid {
-  background: url('../images/damage_types/foam-white.svg');
+  background: url('../images/damage_types/dripping-tube-white.svg');
 }
 
 .damage-cold {
   background: url('../images/damage_types/snowflake.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-cold ,
 .spellRow[aria-expanded="true"] .damage-cold {
   background: url('../images/damage_types/snowflake-white.svg');
 }
@@ -1771,6 +1780,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/power-lightning.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-lightning,
 .spellRow[aria-expanded="true"] .damage-lightning {
   background: url('../images/damage_types/power-lightning-white.svg');
 }
@@ -1779,6 +1789,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/pierced-body.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-piercing,
 .spellRow[aria-expanded="true"] .damage-piercing {
   background: url('../images/damage_types/pierced-body-white.svg');
 }
@@ -1787,6 +1798,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/psychic-waves.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-psychic,
 .spellRow[aria-expanded="true"] .damage-psychic {
   background: url('../images/damage_types/psychic-waves-white.svg');
 }
@@ -1795,6 +1807,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/sunbeams.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-radiant,
 .spellRow[aria-expanded="true"] .damage-radiant {
   background: url('../images/damage_types/sunbeams-white.svg');
 }
@@ -1803,6 +1816,7 @@ thead.ac-table-header tr  {
   background: url('../images/damage_types/echo-ripples.svg');
 }
 
+.weaponRow[aria-expanded="true"] .damage-thunder,
 .spellRow[aria-expanded="true"] .damage-thunder {
   background: url('../images/damage_types/echo-ripples-white.svg');
 }
