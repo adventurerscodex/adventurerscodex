@@ -1693,7 +1693,7 @@ thead.ac-table-header tr  {
   display: inline-block;
   padding: 0px 0 0 0px;
   margin: 0px 2px 0px 2px;
-  opacity: 0.5;
+  opacity: 0.6;
   background-repeat: no-repeat;
   background-position: bottom;
   vertical-align: text-bottom;
@@ -1701,7 +1701,7 @@ thead.ac-table-header tr  {
 
 .weaponRow[aria-expanded="true"] .damage-icon,
 .spellRow[aria-expanded="true"] .damage-icon {
-  opacity: 0.75;
+  opacity: 0.8;
 }
 
 .damage-fire {

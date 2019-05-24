@@ -1,0 +1,45 @@
+<div  data-bind="with: entity">
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link" data-bind="click: $parent.flip">
+      <span class="glyphicon glyphicon-edit" aria-hidden="true">
+      </span>
+  </button>
+</div>
+<div class="row" data-bind="css: cardBackground">
+  <div class="col-xs-12">
+    <div class="h4 pull-left">
+      <span data-bind="text: name"
+            id="magicItemsPreviewItemInput"></span>&nbsp;
+      <!-- ko if: attuned -->
+            (Attuned)
+      <!-- /ko -->
+      <small data-bind="text: rarity"
+             id="magicItemsPreviewRarityInput"></small>
+    </div>
+  </div>
+  <div class="col-sm-5 col-md-12 col-lg-5">
+    <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+      <tbody>
+        <tr>
+          <th>Type:</th>
+          <td><span data-bind="text: type"></span></td>
+        </tr>
+        <!-- ko if: maxCharges() > 0 -->
+        <tr>
+          <th>Charges:</th>
+          <td><span data-bind="text: usedCharges"></span> of <span data-bind="text: maxCharges"></span></td>
+        </tr>
+        <!-- /ko -->
+        <tr>
+          <th>Weight:</th>
+          <td><span data-bind="text: magicItemWeightLabel"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-7 col-md-12 col-lg-7">
+    <p style="text-align: justify"
+       data-bind="html: magicItemDescriptionHTML"></p>
+  </div>
+</div>
+</div>

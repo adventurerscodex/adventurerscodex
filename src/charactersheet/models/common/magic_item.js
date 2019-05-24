@@ -27,12 +27,9 @@ export class MagicItem extends KOModel {
     weight = ko.observable(0);
     description = ko.observable('');
 
-    magicItemTypeOptions = ko.observableArray(Fixtures.magicItem.magicItemTypeOptions);
-    magicItemRarityOptions = ko.observableArray(Fixtures.magicItem.magicItemRarityOptions);
-
     chargesDisplay = ko.pureComputed(() => {
         if (this.maxCharges() == 0) {
-            return 'N/A';
+            return '-';
         } else {
             return this.usedCharges();
         }
@@ -66,6 +63,13 @@ export class MagicItem extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     });
 
+    cardBackground = ko.pureComputed(()=> {
+        if (this.type()) {
+            return this.type().split(' ')[0].toLowerCase() + '-magic-item-card';
+        }
+        return '';
+    })
+
     toSchemaValues = (values) => {
         if (values.maxCharges === '') {
             values.maxCharges = 0;
@@ -74,7 +78,6 @@ export class MagicItem extends KOModel {
         if (values.weight === '') {
             values.weight = 0;
         }
-
         return values;
     }
 }

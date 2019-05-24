@@ -1,0 +1,151 @@
+<form data-bind="submit: $component.submit">
+<div class="row">
+  <!-- ko ifnot: $component.existingData -->
+  <div class="h4">
+    New Magic Item
+  </div>
+  <!-- /ko -->
+  <div  data-bind="with: entity">
+  <div class="form-group col-sm-8 col-md-12 col-lg-8">
+    <label for="name"
+           class="control-label">Item</label>
+      <input type="text"
+             class="form-control"
+             id="magicItemsEditItemInput"
+             placeholder="Dagger of Venom"
+             data-bind="textInput: name,
+                        autocomplete: { source: $component.magicItemsPrePopFilter,
+                        onselect: $component.populateMagicItem }">
+  </div>
+  <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <label for="magicItemType"
+           class="control-label">Type</label>
+      <input class="form-control"
+             id="magicItemsEditTypeInput"
+             placeholder="Wand"
+             data-bind="textInput: type,
+             autocomplete: { source: $component.typeOptions,
+                             onselect: $component.setMagicItemType }">
+  </div>
+  <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <label for="magicItemType"
+           class="control-label">Rarity</label>
+      <input class="form-control"
+             id="magicItemsEditRarityInput"
+             placeholder="Legendary"
+             data-bind="textInput: rarity,
+             autocomplete: { source: $component.rarityOptions,
+                             onselect: $component.setMagicItemRarity }">
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label for="magicItemMaxCharges"
+           class="control-label">Max Charges</label>
+      <input type="number"
+             class="form-control"
+             id="magicItemsEditMaxChargesInput"
+             placeholder="1"
+             min="0"
+             max="100"
+             data-bind='textInput: maxCharges'>
+    </div>
+  <div data-bind="visible: maxCharges() != 0">
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
+      <label for="magicItemCharges"
+             class="control-label">Charges</label>
+        <input type="number"
+               class="form-control"
+               id="magicItemsEditChargesInput"
+               placeholder="1"
+               min="0"
+               max="100"
+               data-bind='textInput: usedCharges'>
+    </div>
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label for="magicItemWeight"
+           class="control-label">Weight</label>
+      <input type="number"
+             class="form-control"
+             id="magicItemsEditWeightInput"
+             placeholder="1"
+             min="0"
+             max="1000"
+             data-bind='textInput: weight'>
+    </div>
+  <div class="form-group col-sm-6 col-md-12 col-lg-8">
+    <div class="row" style="padding-top: 3ex">
+      <div class="col-sm-7">
+      <input type='checkbox'
+             class='pseudo-checkbox sr-only'
+             data-bind="checked: requiresAttunement, attr: {id: `${$component.containerId}_requiresAttunement`}"></input>
+      <label data-bind="attr: {for: `${$component.containerId}_requiresAttunement`}"
+             class='fancy-checkbox-label'> Requires Attunement
+      </label>
+      </div>
+      <div class="col-sm-5">
+      <div data-bind="visible: requiresAttunement() === true">
+        <input type='checkbox'
+               class='pseudo-checkbox sr-only'
+               data-bind="checked: attuned, attr: {id: `${$component.containerId}_attuned`}"></input>
+        <label data-bind="attr: {for: `${$component.containerId}_attuned`}"
+               class='fancy-checkbox-label'> Attuned
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="magicItemDescription"
+           class="control-label">Description</label>
+      <!-- ko if: $component.show -->
+      <textarea class="form-control"
+                id="magicItemsEditDescriptionTextarea"
+                rows="4"
+                placeholder="Awesome stuff goes here"
+                data-bind='textInput: description'>
+        </textarea>
+      <!-- /ko -->
+    </div>
+</div>
+<div class="col-xs-12"  data-bind='visible: shouldShowDisclaimer'>
+  <p class="text-muted ogl-disclaimer">
+    <sm><i>This data is distributed under the
+      <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
+        target='_blank'>
+        OGL</a><br/>
+        Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+      </i>
+      <sm>
+  </p>
+</div>
+<!-- ko ifnot: addForm -->
+<div class="col-xs-12">
+  <div class="pull-left">
+  <button class="btn btn-sm btn-danger"
+          type="button"
+          data-bind="click: $component.delete">Delete</button>
+  </div>
+  <div class="pull-right">
+    <button class="btn btn-sm btn-default"
+            type="reset"
+            data-bind="click: $component.reset">Cancel</button>
+    <button class="btn btn-sm btn-primary"
+            type="submit">Save</button>
+  </div>
+</div>
+<!-- /ko -->
+<!-- ko if: addForm -->
+<div class="col-xs-12">
+    <div class="pull-right">
+    <button type="reset"
+            class="btn btn-default btn-sm"
+            id="magicItemAddCancelButton"
+            data-bind="click: $component.reset">Cancel</button>
+    <button type="submit"
+            class="btn btn-primary btn-sm"
+            id="magicItemAddAddButton"
+          >Add Magic Item</button>
+          </div>
+</div>
+<!-- /ko -->
+</form>
