@@ -1,8 +1,10 @@
 import {
     Fixtures,
+    Notifications,
     Utility
 } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 
 /**
@@ -10,11 +12,17 @@ import ko from 'knockout';
  * have equipped.
  */
 export class Item extends KOModel {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     static __skeys__ = ['core', 'items'];
 
     static mapping = {
         include: ['coreUuid']
     };
+    static SHORT_DESCRIPTION_MAX_LENGTH = 100;
+    static DESCRIPTION_MAX_LENGTH = 200;
 
     coreUuid = ko.observable(null);
     name = ko.observable('');
@@ -24,40 +32,36 @@ export class Item extends KOModel {
     cost = ko.observable(0);
     currencyDenomination = ko.observable('');
 
-    SHORT_DESCRIPTION_MAX_LENGTH = 100;
-    DESCRIPTION_MAX_LENGTH = 200;
-    itemCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
-
     totalWeight = ko.pureComputed(() => {
         if (this.quantity() && this.weight()) {
             return parseInt(this.quantity()) * parseFloat(this.weight());
         }
         return 0;
-    });
+    }, this);
 
     shortDescription = ko.pureComputed(() => {
-        return Utility.string.truncateStringAtLength(this.description(), this.SHORT_DESCRIPTION_MAX_LENGTH);
-    });
+        return Utility.string.truncateStringAtLength(this.description(), Item.SHORT_DESCRIPTION_MAX_LENGTH);
+    }, this);
 
     longDescription = ko.pureComputed(() => {
-        return Utility.string.truncateStringAtLength(this.description(), this.DESCRIPTION_MAX_LENGTH);
-    });
+        return Utility.string.truncateStringAtLength(this.description(), Item.DESCRIPTION_MAX_LENGTH);
+    }, this);
 
-    itemDescriptionHTML = ko.pureComputed(() => {
+    descriptionHTML = ko.pureComputed(() => {
         if (this.description()) {
             return this.description().replace(/\n/g, '<br />');
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
-    });
+    }, this);
 
-    itemWeightLabel = ko.pureComputed(() => {
+    weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
-    });
+    }, this);
 
     costLabel = ko.pureComputed(() => {
         return this.cost() !== '' ? this.cost() + ' ' + this.currencyDenomination() : '';
-    });
+    }, this);
 
     toSchemaValues = (values) => {
         if (values.cost === '') {
@@ -73,6 +77,10 @@ export class Item extends KOModel {
         }
 
         return values;
+    }
+
+    notify () {
+        Notifications.item.changed.dispatch(this.uuid());
     }
 }
 

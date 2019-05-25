@@ -1,27 +1,34 @@
 import {
-  CoreManager,
-  DataRepository,
-  Fixtures,
-  Notifications
+    DataRepository,
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
+import { CardActionButton } from 'charactersheet/components/card-action-buttons';
 
-import { FormController } from 'charactersheet/components/form-controller-component';
+import {
+    FormController
+} from 'charactersheet/components/form-controller-component';
+import {
+    Item
+} from 'charactersheet/models';
 
-import { Item } from 'charactersheet/models';
-
-import { debounce } from 'lodash';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
+export class ItemFormViewModel extends FormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
 
-export class ItemFormViewModel  extends FormController {
     generateBlank() {
         return new Item();
     }
 
     currencyDenominationOptions = Fixtures.general.currencyDenominationList;
 
-    setItemCurrencyDenomination = function(label, value) {
+    setItemCurrencyDenomination = (label, value) => {
         this.entity().currencyDenomination(value);
     };
 
@@ -29,9 +36,9 @@ export class ItemFormViewModel  extends FormController {
         const term = request.term.toLowerCase();
         let results = [];
         if (term && term.length > 2) {
-            const keys = DataRepository.items
-                  ? Object.keys(DataRepository.items)
-                  : [];
+            const keys = DataRepository.items ?
+                Object.keys(DataRepository.items) :
+                [];
             results = keys.filter((name) => {
                 return name.toLowerCase().indexOf(term) > -1;
             });
@@ -39,7 +46,6 @@ export class ItemFormViewModel  extends FormController {
         response(results);
     };
 
-    //Manipulating items
     populateItem = (label, value) => {
         const item = DataRepository.items[label];
         this.entity().importValues(item);
@@ -48,7 +54,7 @@ export class ItemFormViewModel  extends FormController {
     };
 
     notify = () => {
-        Notifications.item.changed.dispatch();
+        this.entity().notify();
     }
 
     validation = {

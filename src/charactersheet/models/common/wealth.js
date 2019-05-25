@@ -1,7 +1,6 @@
 import { KOModel } from 'hypnos';
 import ko from 'knockout';
 
-
 export class Wealth extends KOModel {
     static __skeys__ = ['core', 'characters', 'wealth'];
 
@@ -37,10 +36,10 @@ export class Wealth extends KOModel {
         const total = platinumToGold + adjGold;
 
         return total;
-    });
+    }, this);
 
     totalWeight = ko.pureComputed(() => {
-        var weight = 0;
+        let weight = 0;
 
         weight += this.platinum() ? parseInt(this.platinum()) : 0;
         weight += this.gold() ? parseInt(this.gold()) : 0;
@@ -51,11 +50,11 @@ export class Wealth extends KOModel {
         weight = Math.floor(weight / 50);
 
         return weight;
-    });
+    }, this);
 
     totalWeightLabel = ko.pureComputed(() => {
         return this.totalWeight() + ' (lbs)';
-    });
+    }, this);
 
     toSchemaValues = (values) => {
         if (values.platinum === '') {

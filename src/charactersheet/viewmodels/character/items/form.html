@@ -1,137 +1,82 @@
 <form data-bind="submit: $component.submit">
-  <div class="btn-group edit-btn"
-       role="group"
-       aria-label="actionButtons">
-    <button class="btn btn-link btn-danger"
-            data-bind="click: $component.reset"
-            type="reset">
-      <span class="glyphicon glyphicon-ban-circle"
-            aria-hidden="true">
-      </span>
-    </button>
-    <button class="btn btn-link btn-success"
-            type="submit"
-            value="submit">
-      <span class="glyphicon glyphicon-floppy-disk"
-            aria-hidden="true">
-      </span>
-    </button>
-  </div>
-  <div class="row" data-bind="with: entity">
-      <!-- ko ifnot: $component.data -->
-      <div class="col-xs-12">
-        <div class="h4"
-             style="padding-top: 5px;">
-          New Item
-        </div>
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <div class="row"
+       data-bind="with: entity">
+    <!-- ko ifnot: $component.existingData -->
+    <div class="col-xs-12">
+      <div class="h4">
+        New Item
       </div>
-      <!-- /ko -->
-      <div class="form-group col-sm-12">
-        <label for="name"
-               class=" control-label">Name</label>
-        <input type="text"
-               class="form-control"
-               id="inventoryAddNameInput"
-               placeholder="Rations"
-               data-bind='textInput: name,
+    </div>
+    <!-- /ko -->
+    <div class="form-group col-sm-12">
+      <label for="name"
+             class=" control-label">Name</label>
+      <input type="text"
+             class="form-control"
+             placeholder="Rations"
+             data-bind='textInput: name,
                autocomplete: {
                  source: $component.itemsPrePopFilter,
                  onselect: $component.populateItem }'>
-      </div>
-      <div class="form-group col-sm-6 col-lg-3">
-        <label for="weight"
-               class="control-label">Weight</label>
-        <div class="input-group">
-          <input type="number"
-                 class="form-control"
-                 id="inventoryAddWeightInput"
-                 min="0"
-                 max="5000"
-                 placeholder="Item Weight"
-                 data-bind='textInput: weight'>
-          <span class="input-group-addon  no-top-bottom-padding">lbs.</span>
-        </div>
-      </div>
-      <div class="form-group col-sm-6 col-lg-3">
-        <label for="quantity"
-               class="control-label">Quantity</label>
+    </div>
+    <div class="form-group col-sm-6 col-lg-3">
+      <label for="weight"
+             class="control-label">Weight</label>
+      <div class="input-group">
         <input type="number"
                class="form-control"
                min="0"
                max="5000"
-               id="inventoryAddQuantityInput"
-               placeholder="Item Quantity"
-               data-bind='textInput: quantity'>
+               placeholder="Item Weight"
+               data-bind='textInput: weight'>
+        <span class="input-group-addon no-top-bottom-padding">lbs.</span>
       </div>
-      <div class="form-group col-sm-12 col-lg-6">
-        <label class="control-label">Cost</label>
-        <div class="input-group">
-          <input type="number"
-                 min="0"
-                 class="form-control input-jquery-addon"
-                 id="inventoryAddCostInput"
-                 data-bind="value: cost" />
-          <span class="input-group-addon input-group-addon-jquery">
-            <input class="form-control"
-                   id="inventoryAddCurrencyDenominationInput"
-                   placeholder="GP"
-                   data-bind="textInput: currencyDenomination,
+    </div>
+    <div class="form-group col-sm-6 col-lg-3">
+      <label for="quantity"
+             class="control-label">Quantity</label>
+      <input type="number"
+             class="form-control"
+             min="0"
+             max="5000"
+             placeholder="Item Quantity"
+             data-bind='textInput: quantity'>
+    </div>
+    <div class="form-group col-sm-12 col-lg-6">
+      <label class="control-label">Cost</label>
+      <div class="input-group">
+        <input type="number"
+               min="0"
+               class="form-control input-jquery-addon"
+               data-bind="value: cost" />
+        <span class="input-group-addon input-group-addon-jquery">
+          <input class="form-control"
+                 placeholder="GP"
+                 data-bind="textInput: currencyDenomination,
               autocomplete: {
                   source: $component.currencyDenominationOptions,
                   onselect: $component.setItemCurrencyDenomination
                 }">
-          </span>
-        </div>
+        </span>
       </div>
-      <div class="form-group col-xs-12">
-        <label for="itemDescription"
-               class="control-label">Description</label>
-               <!-- ko if: $component.show() -->
-        <textarea class="form-control"
-                  id="inventoryAddDescriptionTextarea"
-                  placeholder="Rations consist of..."
-                  rows="4"
-                  data-bind='textInput: description'>
+    </div>
+    <div class="form-group col-xs-12">
+      <label for="description"
+             class="control-label">Description</label>
+      <!-- ko if: $component.show() -->
+      <textarea class="form-control"
+                placeholder="Rations consist of..."
+                rows="4"
+                data-bind='textInput: description'>
      </textarea>
-     <!-- /ko -->
-      </div>
-    </div>
-    <p class="text-muted text-left"
-       style="padding: 10px;"
-       data-bind='visible: $component.shouldShowDisclaimer'>
-      <sm><i>This data is distributed under the
-          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-             target='_blank'>
-            OGL</a><br />
-          Open Game License v 1.0a Copyright 2000, Wizards of the Coast, LLC.
-        </i>
-        <sm>
-    </p>
-    <div class="col-xs-12">
-      <!-- ko ifnot: $component.showAddForm -->
-      <div class="pull-left">
-        <button class="btn btn-sm btn-danger"
-                type="button"
-                data-bind="click: $component.delete">Delete</button>
-      </div>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-default"
-                type="reset"
-                data-bind="click: $component.reset">Cancel</button>
-        <button class="btn btn-sm btn-primary"
-                type="submit">Save</button>
-      </div>
-      <!-- /ko -->
-      <!-- ko if: $component.showAddForm  -->
-      <div class="pull-right">
-        <button type="reset"
-                class="btn btn-default btn-sm"
-                id="proficiencyAddCancelButton"
-                data-bind="click: $component.reset">Cancel</button>
-        <button type="submit"
-                class="btn btn-primary btn-sm"
-                id="proficiencyAddAddButton">Add Item</button>
-      </div>
       <!-- /ko -->
     </div>
+  </div>
+  <form-card-footer params="{
+    reset: $component.reset,
+    delete: $component.delete,
+    addForm: $component.showAddForm,
+    showDisclaimer: $component.shouldShowDisclaimer
+  }"></form-card-footer>
 </form>

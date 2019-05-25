@@ -1,56 +1,55 @@
-<div id="item-pane" class="ac-pane panel-body">
-<div class="h4 card-title">
-  Inventory<br/>
-  <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
-</div>
-    <table id="inventoryTable"
-           class="table table-responsive table-ac-bordered table-hover">
-      <thead>
-        <tr class="ac-table-header">
-          <th id="inventoryTableItemHeader" class=""
-            data-bind="click: function(){sortBy('name');}">
-            Item
-            <span data-bind="css: sortArrow('name')"></span></th>
-          <th id="inventoryTableQuantityHeader" class="ac-table-data-cell"
-            data-bind="click: function(){sortBy('quantity');}">
-            Quantity
-            <span data-bind="css: sortArrow('quantity')"></span></th>
-          <th id="inventoryTableWeightHeader" class="hidden-xs"
+<div id="item-pane"
+     class="ac-pane panel-body">
+  <div class="h4 card-title">
+    Inventory<br />
+    <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
+  </div>
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr class="ac-table-header">
+        <th data-bind="click: function(){sortBy('name');}">
+          Item
+          <span data-bind="css: sortArrow('name')"></span></th>
+        <th data-bind="click: function(){sortBy('quantity');}">
+          Quantity
+          <span data-bind="css: sortArrow('quantity')"></span></th>
+        <th class="hidden-xs"
             data-bind="click: function(){sortBy('weight');}">
-            Weight
-            <span data-bind="css: sortArrow('weight')"></span></th>
-          <th id="inventoryTableCostHeader" class="hidden-xs"
+          Weight
+          <span data-bind="css: sortArrow('weight')"></span></th>
+        <th class="hidden-xs"
             data-bind="click: function(){sortBy('cost');}">
-            Cost
-            <span data-bind="css: sortArrow('cost')"></span></th>
-          <th class=" text-right">
-            <a href="#"
-               data-bind="{click: collapseAll}">
-                    <span class="fa fa-minus"></span>
-                  </a>
-          </th>
-        </tr>
-      </thead>
-      <!-- ko if: loaded(), completeOn: 'render' -->
-      <tbody>
+          Cost
+          <span data-bind="css: sortArrow('cost')"></span></th>
+        <th class=" text-right">
+          <a href="#"
+             data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
-        <tr class="clickable expandRow" data-toggle="collapse"
-              data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
-          <td><span data-bind="text: name"></span></td>
-          <td class="ac-table-data-cell"><span data-bind="text: quantity"></span></td>
-          <td class="hidden-xs"><span data-bind="text: itemWeightLabel"></span></td>
-          <td class="hidden-xs"><span data-bind="text: costLabel"></span></td>
-          <td class="text-right">
-            <span data-toggle="collapse"
-                  data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"
-                  class="rotate fa fa-chevron-left"></span>
-          </td>
-        </tr>
-        <tr class="collapseRow">
-          <td colspan="6">
-            <flip-card params="{
+      <tr class="clickable expandRow"
+          data-toggle="collapse"
+          data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
+        <td><span data-bind="text: name"></span></td>
+        <td><span data-bind="text: quantity"></span></td>
+        <td class="hidden-xs"><span data-bind="text: weightLabel"></span></td>
+        <td class="hidden-xs"><span data-bind="text: costLabel"></span></td>
+        <td class="text-right">
+          <span data-toggle="collapse"
+                data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"
+                class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="6">
+          <flip-card params="{
                     dataId: $data.uuid,
-                    tabId: 'inventory',
+                    tabId: $parent.tabId,
                     collapsable: true,
                     elementId: 'item_list',
                     context: {
@@ -60,16 +59,16 @@
                       removeFromList: $component.removeFromList
                     }
                   }">
-              <div class="front">
-                <item-detail-view params="{
+            <div class="front">
+              <item-detail-view params="{
                        data: context.data,
                        containerId: elementId,
                        showBack: showBack,
                        flip: flip
                      }"></item-detail-view>
-              </div>
-              <div class="back">
-                <item-form params="{
+            </div>
+            <div class="back">
+              <item-form params="{
                     data: context.data,
                     containerId: elementId,
                     show: showBack,
@@ -77,48 +76,52 @@
                     forceCardResize: forceCardResize,
                     replaceInParent: context.replaceInList,
                     removeFromParent: context.removeFromList
-                   }"
-                ></item-form>
-              </div>
-            </flip-card>
-          </td>
-        </tr>
+                   }"></item-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
       <!-- /ko -->
       <tr class="collapseRow add-form">
         <td colspan="8">
-          <div id="add-item" class="collapse">
+          <div id="add-item"
+               class="collapse">
             <item-form params="{
                 containerId: 'add-item',
                 show: $component.showAddForm,
                 flip: $component.toggleShowAddForm,
                 addToParent: $component.addToParent,
-               }"
-            ></item-form>
-        </div>
+               }"></item-form>
+          </div>
         </td>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="8">
-            <div class="row">
-              <div class="col-xs-4 text-muted">
-                <small class="table-foot-content visible-xs"><span id="inventoryTableTotalWeightSpan" data-bind="text: totalWeight"></span></small>
-                <span class="table-foot-content hidden-xs">Weight: <span id="inventoryTableTotalWeightSpan" data-bind="text: totalWeight"></span></span>
-              </div>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8">
+          <div class="row">
+            <div class="col-xs-4 text-muted">
+              <small class="table-foot-content visible-xs"
+                     data-bind="text: totalWeight">
+              </small>
+              <span class="table-foot-content hidden-xs">Weight:
+                <span data-bind="text: totalWeight"></span>
+              </span>
+            </div>
             <div class="col-xs-4">
               <!-- ko ifnot: $component.showAddForm -->
               <button type="button"
                       class="btn btn-link btn-sm btn-block"
-                      id="weaponAddButton"
                       data-toggle="collapse"
                       data-target="#add-item"
-                      data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Item</button>
+                      data-bind="click: toggleShowAddForm">
+                <i class="fa fa-plus"></i> Add Item
+              </button>
               <!-- /ko -->
             </div>
           </div>
-          </td>
-        </tr>
-      </tfoot>
-      <!-- /ko -->
-    </table>
-  </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /ko -->
+  </table>
+</div>
