@@ -1,5 +1,3 @@
-
-import 'bin/knockout-bootstrap-modal';
 import {
     DataRepository,
     Fixtures,

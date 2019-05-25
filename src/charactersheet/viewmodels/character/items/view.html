@@ -1,0 +1,35 @@
+<div class="row" data-bind="with: entity">
+  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+    <button class="btn btn-link" data-bind="click: $parent.flip">
+        <span class="glyphicon glyphicon-edit" aria-hidden="true">
+        </span>
+    </button>
+  </div>
+  <div class="col-xs-12">
+    <div class="h4">
+      <span data-bind="text: name" class="inventoryPreviewNameLabel"></span>&nbsp;
+    </div>
+  </div>
+  <div class="col-sm-5 col-md-4 col-lg-3">
+    <table class="table table-hover table-condensed table-ac-bordered">
+      <tbody>
+        <tr>
+          <th>Quantity:</th>
+          <td><span data-bind="text: quantity"></span></td>
+        </tr>
+        <tr>
+          <th>Weight:</th>
+          <td><span data-bind="text: itemWeightLabel"></span></td>
+        </tr>
+        <tr>
+          <th>Cost:</th>
+          <td><span data-bind="text: costLabel"></span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-sm-7 col-md-8 col-lg-9">
+      <p style="text-align:justify"
+           data-bind="markdownPreview: itemDescriptionHTML"></p>
+  </div>
+</div>
