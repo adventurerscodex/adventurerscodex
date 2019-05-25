@@ -1,42 +1,37 @@
-<div  data-bind="with: entity">
-<div class="h4">
+<div data-bind="with: entity">
+  <card-flip-button params="{ flip: $component.flip }"></card-flip-button>
   <div class="h4">
-    <span data-bind="text: name" class="armorPreviewNameLabel"></span>&nbsp;
-     <!-- ko if: equipped() -->
+    <span data-bind="text: name"
+          class="armorPreviewNameLabel"></span>&nbsp;
+    <!-- ko if: equipped() -->
     <small>Equipped</small>
     <!-- /ko -->
   </div>
-</div>
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link" data-bind="click: $parent.flip">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true">
-      </span>
-  </button>
-</div>
- <div class="row">
-  <div class="col-sm-5 col-md-12 col-lg-5">
-    <table class="spellDetail table table-hover table-condensed table-ac-bordered">
-      <tbody>
-        <tr>
-          <th>Armor Class:</th>
-          <td><span data-bind="text: armorClass"></span></td>
-        </tr>
-        <tr>
-          <th>Type:</th>
-          <td><span data-bind="text: type"></span></td>
-        </tr>
-        <tr>
-          <th>Stealth:</th>
-          <td><span data-bind="text: stealth"></span></td>
-        </tr>
-        <tr>
-          <th>Weight:</th>
-          <td><span data-bind="text: armorWeightLabel"></span></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-sm-5 col-md-12 col-lg-5">
+      <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+        <tbody>
+          <tr>
+            <th>Armor Class:</th>
+            <td><span data-bind="text: armorClass"></span></td>
+          </tr>
+          <tr>
+            <th>Type:</th>
+            <td><span data-bind="text: type"></span></td>
+          </tr>
+          <tr>
+            <th>Stealth:</th>
+            <td><span data-bind="text: stealth"></span></td>
+          </tr>
+          <tr>
+            <th>Weight:</th>
+            <td><span data-bind="text: armorWeightLabel"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-7 col-md-12 col-lg-7">
+      <p style="text-align:justify"
+         data-bind="markdownPreview: armorDescriptionHTML"></p>
+    </div>
   </div>
-  <div class="col-sm-7 col-md-12 col-lg-7">
-      <p style="text-align:justify" data-bind="html: armorDescriptionHTML"></p>
-  </div>
-</div>

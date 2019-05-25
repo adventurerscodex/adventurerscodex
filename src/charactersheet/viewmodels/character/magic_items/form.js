@@ -1,28 +1,30 @@
 import {
-  CoreManager,
   DataRepository,
   Fixtures,
   Notifications
 } from 'charactersheet/utilities';
 
-
+import { CardActionButton } from 'charactersheet/components/card-action-buttons';
 import { FormController } from 'charactersheet/components/form-controller-component';
-
 import { MagicItem } from 'charactersheet/models';
 
-import { debounce } from 'lodash';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 
 export class MagicItemFormViewModel  extends FormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
+
     generateBlank() {
         return new MagicItem();
     }
 
     typeOptions = Fixtures.magicItem.magicItemTypeOptions;
     rarityOptions = Fixtures.magicItem.magicItemRarityOptions;
-
 
     // Pre-populate methods
     setMagicItemType = (label, value) => {
@@ -32,7 +34,6 @@ export class MagicItemFormViewModel  extends FormController {
     setMagicItemRarity = (label, value) => {
         this.entity().rarity(value);
     }
-
 
     spellsPrePopFilter = (request, response) => {
         var term = request.term.toLowerCase();
@@ -73,8 +74,6 @@ export class MagicItemFormViewModel  extends FormController {
     }
 
     validation = {
-
-
         ...MagicItem.validationConstraints
     };
 }

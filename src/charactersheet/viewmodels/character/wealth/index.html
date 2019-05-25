@@ -5,6 +5,7 @@
       }">
       <div class="front">
         <wealth-view params="{
+          tabId: $parent.tabId,
          containerId: elementId,
          show: showFront,
          flip: flip}">
@@ -12,6 +13,7 @@
        </div>
        <div class="back">
          <wealth-form params="{
+           tabId: $parent.tabId,
           containerId: elementId,
           show: showBack,
           flip: flip}">

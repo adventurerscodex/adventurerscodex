@@ -6,29 +6,22 @@
       Be sure to Don your armor and/or shield so your AC will be calculated.
     </small>
   </div>
-  <table class="table table-responsive table-ac-bordered table-hover"
-         id="armorTable">
+  <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th id="armorTableEquippedHeader"
-            data-bind="click: function(){sortBy('equipped');}"
-            class="">
+        <th data-bind="click: function(){sortBy('equipped');}">
           Equipped
         </th>
-        <th id="armorTableArmorHeader"
-            data-bind="click: function(){sortBy('name');}"
-            class="">
+        <th data-bind="click: function(){sortBy('name');}">
           Armor
           <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th id="armorTableTypeHeader"
-            class="hidden-xs"
+        <th class="hidden-xs"
             data-bind="click: function(){sortBy('type');}">
           Type
           <span data-bind="css: sortArrow('type')"></span>
         </th>
-        <th id="armorTableAcHeader"
-            data-bind="click: function(){sortBy('armorClass');}"
+        <th data-bind="click: function(){sortBy('armorClass');}"
             class="ac-table-data-cell">
           Armor Class
           <span data-bind="css: sortArrow('armorClass')"></span>
@@ -49,7 +42,6 @@
             data-bind="click: $component.equipArmor">
           <div>
             <input type='checkbox'
-                   style=""
                    class='ac-checkbox sr-only'
                    data-bind="checked: equipped, attr: {id: `equpped_${uuid()}`}"></input>
             <label data-bind="attr: {for: `equipped_${uuid()}`}"></label>
@@ -70,7 +62,7 @@
         <td colspan="5">
           <flip-card params="{
                   dataId: $data.uuid,
-                  tabId: 'equipment',
+                  tabId: $parent.tabId,
                   collapsable: true,
                   elementId: 'armor_list',
                   context: {
@@ -84,7 +76,7 @@
               <armor-detail-view params="{
                      data: context.data,
                      containerId: elementId,
-                     showBack: showBack,
+                     show: showFront,
                      flip: flip
                    }"></armor-detail-view>
             </div>
@@ -97,8 +89,7 @@
                   forceCardResize: forceCardResize,
                   replaceInParent: context.replaceInList,
                   removeFromParent: context.removeFromList
-                 }"
-              ></armor-form>
+                 }"></armor-form>
             </div>
           </flip-card>
         </td>
@@ -106,14 +97,14 @@
       <!-- /ko -->
       <tr class="collapseRow">
         <td colspan="5">
-          <div id="add-armor" class="add-form collapse">
-               <armor-form params="{
+          <div id="add-armor"
+               class="add-form collapse">
+            <armor-form params="{
                    containerId: 'add-armor',
                    show: $component.addForm,
                    flip: $component.toggleShowAddForm,
                    addToParent: $component.addToList
-                  }"
-               ></armor-form>
+                  }"></armor-form>
           </div>
         </td>
       </tr>
@@ -123,23 +114,24 @@
         <td colspan="5">
           <div class="row">
             <div class="col-xs-4 text-muted">
-              <small class="table-foot-content visible-xs"><span id="armorTableTotalWeightSpan"
-                      data-bind="text: totalWeight"></span></small>
-              <span class="table-foot-content hidden-xs">Weight: <span id="armorTableTotalWeightSpan"
-                      data-bind="text: totalWeight"></span></span>
+              <small class="table-foot-content visible-xs"><span data-bind="text: totalWeight"></span></small>
+              <span class="table-foot-content hidden-xs">Weight:&nbsp;<span data-bind="text: totalWeight"></span></span>
             </div>
             <div class="col-xs-4">
               <!-- ko ifnot: $component.showAddForm -->
               <button type="button"
                       class="btn btn-link btn-sm btn-block"
-                      id="magicitemAddButton"
                       data-toggle="collapse"
                       data-target="#add-armor"
                       data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Armor</button>
               <!-- /ko -->
             </div>
-            <div class="col-xs-4 text-muted">
-              <!-- this space for value -->
+            <div class="pull-right col-xs-4 text-muted"
+                 style="text-align: right">
+              <small class="table-foot-content"
+                     data-bind="text: totalCost">
+              </small>
+
             </div>
         </td>
       </tr>

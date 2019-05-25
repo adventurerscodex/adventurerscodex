@@ -1,4 +1,5 @@
 <form data-bind="submit: $component.submit">
+<card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
 <div class="row">
   <!-- ko ifnot: $component.existingData -->
   <div class="h4">
@@ -11,7 +12,6 @@
            class="control-label">Item</label>
       <input type="text"
              class="form-control"
-             id="magicItemsEditItemInput"
              placeholder="Dagger of Venom"
              data-bind="textInput: name,
                         autocomplete: { source: $component.magicItemsPrePopFilter,
@@ -21,7 +21,6 @@
     <label for="magicItemType"
            class="control-label">Type</label>
       <input class="form-control"
-             id="magicItemsEditTypeInput"
              placeholder="Wand"
              data-bind="textInput: type,
              autocomplete: { source: $component.typeOptions,
@@ -31,7 +30,6 @@
     <label for="magicItemType"
            class="control-label">Rarity</label>
       <input class="form-control"
-             id="magicItemsEditRarityInput"
              placeholder="Legendary"
              data-bind="textInput: rarity,
              autocomplete: { source: $component.rarityOptions,
@@ -42,7 +40,6 @@
            class="control-label">Max Charges</label>
       <input type="number"
              class="form-control"
-             id="magicItemsEditMaxChargesInput"
              placeholder="1"
              min="0"
              max="100"
@@ -50,11 +47,10 @@
     </div>
   <div data-bind="visible: maxCharges() != 0">
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
-      <label for="magicItemCharges"
+      <label for="usedCharges"
              class="control-label">Charges</label>
         <input type="number"
                class="form-control"
-               id="magicItemsEditChargesInput"
                placeholder="1"
                min="0"
                max="100"
@@ -62,11 +58,10 @@
     </div>
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="magicItemWeight"
+    <label for="weight"
            class="control-label">Weight</label>
       <input type="number"
              class="form-control"
-             id="magicItemsEditWeightInput"
              placeholder="1"
              min="0"
              max="1000"
@@ -99,7 +94,6 @@
            class="control-label">Description</label>
       <!-- ko if: $component.show -->
       <textarea class="form-control"
-                id="magicItemsEditDescriptionTextarea"
                 rows="4"
                 placeholder="Awesome stuff goes here"
                 data-bind='textInput: description'>
@@ -107,45 +101,10 @@
       <!-- /ko -->
     </div>
 </div>
-<div class="col-xs-12"  data-bind='visible: shouldShowDisclaimer'>
-  <p class="text-muted ogl-disclaimer">
-    <sm><i>This data is distributed under the
-      <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-        target='_blank'>
-        OGL</a><br/>
-        Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-      </i>
-      <sm>
-  </p>
-</div>
-<!-- ko ifnot: addForm -->
-<div class="col-xs-12">
-  <div class="pull-left">
-  <button class="btn btn-sm btn-danger"
-          type="button"
-          data-bind="click: $component.delete">Delete</button>
-  </div>
-  <div class="pull-right">
-    <button class="btn btn-sm btn-default"
-            type="reset"
-            data-bind="click: $component.reset">Cancel</button>
-    <button class="btn btn-sm btn-primary"
-            type="submit">Save</button>
-  </div>
-</div>
-<!-- /ko -->
-<!-- ko if: addForm -->
-<div class="col-xs-12">
-    <div class="pull-right">
-    <button type="reset"
-            class="btn btn-default btn-sm"
-            id="magicItemAddCancelButton"
-            data-bind="click: $component.reset">Cancel</button>
-    <button type="submit"
-            class="btn btn-primary btn-sm"
-            id="magicItemAddAddButton"
-          >Add Magic Item</button>
-          </div>
-</div>
-<!-- /ko -->
+<form-card-footer params="{
+  reset: $component.reset,
+  delete: $component.delete,
+  addForm: $component.showAddForm,
+  showDisclaimer: $component.shouldShowDisclaimer
+}"></form-card-footer>
 </form>

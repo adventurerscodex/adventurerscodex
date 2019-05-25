@@ -1,20 +1,23 @@
 import {
-  CoreManager,
   DataRepository,
   Fixtures,
   Notifications
 } from 'charactersheet/utilities';
 
 import { Armor } from 'charactersheet/models';
-
+import { CardActionButton } from 'charactersheet/components/card-action-buttons';
 import { FormController } from 'charactersheet/components/form-controller-component';
 
-import { debounce } from 'lodash';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 
 export class ArmorFormViewModel  extends FormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     generateBlank() {
         return new Armor();
     }
@@ -57,8 +60,6 @@ export class ArmorFormViewModel  extends FormController {
     }
 
     validation = {
-
-
         ...Armor.validationConstraints
     };
 }

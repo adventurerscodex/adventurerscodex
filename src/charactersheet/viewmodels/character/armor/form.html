@@ -1,181 +1,132 @@
 <form data-bind="submit: $component.submit">
-  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-        </span>
-    </button>
-    <button class="btn btn-link btn-success" type="submit" value="submit">
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-        </span>
-    </button>
-  </div>
-  <div class="row" data-bind="with: entity">
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <div class="row"
+       data-bind="with: entity">
     <div class="col-xs-12">
       <!-- ko if: $component.existingData -->
       <div class="h4 pull-left">
-        <span data-bind="text: name"
-              id="magicItemsPreviewItemInput"></span>&nbsp;
-          <!-- ko if: equipped -->
-          <small>Equipped</small>
-          <!-- /ko -->
+        <span data-bind="text: name"></span>&nbsp;
+        <!-- ko if: equipped -->
+        <small>Equipped</small>
+        <!-- /ko -->
       </div>
       <!-- /ko -->
       <!-- ko ifnot: $component.existingData -->
-      <div class="h4" style="padding-top: 5px;">
+      <div class="h4">
         New Armor
       </div>
       <!-- /ko -->
     </div>
-      <div class="form-group col-sm-4 col-md-6 col-lg-4">
-        <label for="name"
-               class="control-label">Name</label>
-        <input type="text"
-               class="form-control"
-               id="armorEditNameInput"
-               placeholder="Chain Mail"
-               data-bind='textInput: name,
+    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+      <label for="name"
+             class="control-label">Name</label>
+      <input type="text"
+             class="form-control"
+             placeholder="Chain Mail"
+             data-bind='textInput: name,
               autocomplete: { source: $component.armorsPrePopFilter,
                  onselect: $component.populateArmor }'>
-      </div>
-      <div class="form-group col-sm-4 col-md-6 col-lg-4">
-        <label for="armorType"
-               class="control-label">Type</label>
-        <input class="form-control"
-               id="armorEditTypeInput"
-               placeholder="Light"
-               data-bind="textInput: type,
+    </div>
+    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+      <label for="armorType"
+             class="control-label">Type</label>
+      <input class="form-control"
+             placeholder="Light"
+             data-bind="textInput: type,
              autocomplete: { source: $component.typeOptions,
              onselect: $component.setArmorType }">
-      </div>
-      <div class="form-group col-sm-4 col-md-6 col-lg-4">
-        <label for="armorEditMagicalModifierInput"
-               class="control-label">Magical Modifier</label>
-        <input type="number"
-               class="form-control"
-               id="armorEditMagicalModifierInput"
-               data-bind='textInput: magicalModifier'>
-      </div>
-      <div class="form-group col-sm-4 col-md-6 col-lg-4">
-        <label for="weight"
-               class="control-label">Weight</label>
-        <input type="number"
-               class="form-control"
-               id="armorEditWeightInput"
-               placeholder="6"
-               data-bind='textInput: weight'>
-      </div>
-      <div class="form-group col-sm-4 col-md-6 col-lg-4">
-        <label for="armorClass"
-               class="control-label">Armor Class</label>
-        <input type="number"
-               class="form-control"
-               id="armorEditArmorClassInput"
-               placeholder="3"
-               data-bind='textInput: armorClass,
+    </div>
+    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+      <label for="armorEditMagicalModifierInput"
+             class="control-label">Magical Modifier</label>
+      <input type="number"
+             class="form-control"
+             data-bind='textInput: magicalModifier'>
+    </div>
+    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+      <label for="weight"
+             class="control-label">Weight</label>
+      <input type="number"
+             class="form-control"
+             placeholder="6"
+             data-bind='textInput: weight'>
+    </div>
+    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+      <label for="armorClass"
+             class="control-label">Armor Class</label>
+      <input type="number"
+             class="form-control"
+             placeholder="3"
+             data-bind='textInput: armorClass,
                hasFocus: $component.formElementHasFocus'>
-      </div>
-      <div class="form-group col-sm-4 col-md-6 col-lg-4">
-        <label for="stealth"
-               class="control-label">Stealth</label>
-        <input class="form-control"
-               id="armorEditStealthInput"
-               placeholder="Disadvantage"
-               data-bind="textInput: stealth,
+    </div>
+    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+      <label for="stealth"
+             class="control-label">Stealth</label>
+      <input class="form-control"
+             placeholder="Disadvantage"
+             data-bind="textInput: stealth,
              autocomplete: { source: $component.stealthOptions,
              onselect: $component.setArmorStealth }">
-      </div>
-      <div class="form-group col-sm-6 col-md-12 col-lg-6">
-        <label for="price"
-               class="control-label">Price</label>
-        <div class="input-group">
-          <input type="number"
-                 class="form-control input-jquery-addon"
-                 id="armorEditPriceInput"
-                 placeholder="5"
-                 data-bind='textInput: price'>
-          <span class="input-group-addon input-group-addon-jquery">
+    </div>
+    <div class="form-group col-sm-6 col-md-12 col-lg-6">
+      <label for="price"
+             class="control-label">Price</label>
+      <div class="input-group">
+        <input type="number"
+               class="form-control input-jquery-addon"
+               placeholder="5"
+               data-bind='textInput: price'>
+        <span class="input-group-addon input-group-addon-jquery">
           <input class="form-control"
-                 id="armorEditCurrencyDenominationInput"
                  placeholder="GP"
                  data-bind="textInput: currencyDenomination,
                  autocomplete: {
                    source: $component.currencyDenominationOptions,
                    onselect: $component.setCurrencyDenomination }">
         </span>
-        </div>
       </div>
-      <div class="form-group col-sm-6 col-md-12 col-lg-6">
-        <label class="control-label">Equipped</label>
-        <div class="btn-group btn-group-justified"
-             role="group">
-          <label class="btn btn-default"
-                 id="armorEditDoffButton"
-                 data-bind="css: { active: !equipped()}">
-          <input type="radio" class="hide-block" name="notEquipped"
-                 value="false" data-bind="checked: equipped, checkedValue: false"/>
+    </div>
+    <div class="form-group col-sm-6 col-md-12 col-lg-6">
+      <label class="control-label">Equipped</label>
+      <div class="btn-group btn-group-justified"
+           role="group">
+        <label class="btn btn-default"
+               data-bind="css: { active: !equipped()}">
+          <input type="radio"
+                 class="hide-block"
+                 name="notEquipped"
+                 value="false"
+                 data-bind="checked: equipped, checkedValue: false" />
           Doff
         </label>
-          <label class="btn btn-default"
-                 data-bind="css: { active: equipped() }"
-                 id="armorEditDonButton">
-          <input type="radio" class="hide-block" name="equipped"
-                 value="true" data-bind="checked: equipped, checkedValue: true"/>
+        <label class="btn btn-default"
+               data-bind="css: { active: equipped()}">
+          <input type="radio"
+                 class="hide-block"
+                 name="equipped"
+                 value="true"
+                 data-bind="checked: equipped, checkedValue: true" />
           Don
-          </label>
-        </div>
+        </label>
       </div>
-      <div class="form-group col-xs-12">
-        <label for="armorDescription"
-               class="control-label">Description</label>
-           <!-- ko if: $component.show -->
-              <textarea class="form-control"
-                        id="armorEditDescriptionTextarea"
-                        rows="4"
-                        placeholder="Armor of damage blocking"
-                        data-bind='textInput: description'>
+    </div>
+    <div class="form-group col-xs-12">
+      <label for="armorDescription"
+             class="control-label">Description</label>
+      <!-- ko if: $component.show -->
+      <textarea class="form-control"
+                rows="4"
+                placeholder="Armor of damage blocking"
+                data-bind='textInput: description'>
               </textarea>
-            <!-- /ko -->
-      </div>
+      <!-- /ko -->
     </div>
-    <p class="text-muted text-left"
-       style="padding: 10px;"
-       data-bind='visible: $component.shouldShowDisclaimer'>
-      <sm><i>This data is distributed under the
-          <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-            target='_blank'>
-            OGL</a><br/>
-            Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-          </i>
-        <sm>
-    </p>
-
-    <!-- ko ifnot: addForm -->
-    <div class="col-xs-12">
-      <div class="pull-left">
-        <button class="btn btn-sm btn-danger"
-                type="button"
-                data-bind="click: $component.delete">Delete</button>
-      </div>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-default"
-                type="reset"
-                data-bind="click: $component.reset">Cancel</button>
-        <button class="btn btn-sm btn-primary" type="submit">Save</button>
-      </div>
-    </div>
-    <!-- /ko -->
-
-    <!-- ko if: addForm -->
-    <div class="col-xs-12">
-      <div class="pull-right">
-        <button type="reset"
-                class="btn btn-default btn-sm"
-                id="proficiencyAddCancelButton"
-                data-bind="click: $component.reset">Cancel</button>
-        <button type="submit"
-                class="btn btn-primary btn-sm"
-                id="proficiencyAddAddButton">Add Armor</button>
-      </div>
-    </div>
-    <!-- /ko -->
+  </div>
+  <form-card-footer params="{
+    reset: $component.reset,
+    delete: $component.delete,
+    addForm: $component.showAddForm,
+    showDisclaimer: $component.shouldShowDisclaimer
+  }"></form-card-footer>
 </form>

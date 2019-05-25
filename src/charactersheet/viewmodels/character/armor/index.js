@@ -1,15 +1,10 @@
-import {
-    DataRepository,
-    Fixtures,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-
 import { ACTableComponent } from 'charactersheet/components/table-component';
 import { Armor } from 'charactersheet/models/common';
 import { ArmorDetailViewModel } from './view';
 import { ArmorFormViewModel } from './form';
+import { Notifications } from 'charactersheet/utilities';
 
+import autoBind from 'auto-bind';
 import { filter } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
@@ -19,7 +14,7 @@ export class ArmorViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-armor';
         this.collapseAllId = '#armor-pane';
-
+        autoBind(this);
     }
 
     modelClass = () => {
@@ -70,16 +65,41 @@ export class ArmorViewModel extends ACTableComponent {
         }
     };
 
+    totalCost = ko.pureComputed(() => {
+        if (this.entities().length === 0) {
+            return '0 (gp)';
+        }
+        const calculateCost = (cost, coin) => {
+            if (coin.toLowerCase() === 'cp') {
+                return parseInt(cost)/100;
+            } else if (coin.toLowerCase() === 'sp') {
+                return parseInt(cost)/10;
+            } else if (coin.toLowerCase() === 'ep') {
+                return parseInt(cost)/2;
+            } else if (coin.toLowerCase() === 'pp') {
+                return parseInt(cost) * 10;
+            }
+            return cost;
+        };
+
+        const total = this.entities().map(
+            entity => calculateCost(entity.price(), entity.currencyDenomination())
+        ).reduce(
+            (a, b) => a + b
+        );
+        return `~${Math.round(total)}(gp)`;
+    });
+
     totalWeight = ko.pureComputed(() => {
         if (this.entities().length === 0) {
             return '0 (lbs)';
         }
-        const weightTotal = this.entities().map(
-            armor => armor.weight()
+        const total = this.entities().map(
+            entity => entity.weight()
         ).reduce(
             (a, b) => a + b
         );
-        return `~${Math.round(weightTotal)} (lbs)`;
+        return `~${Math.round(total)}(lbs)`;
     });
 }
 

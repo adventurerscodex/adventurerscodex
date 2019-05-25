@@ -11,7 +11,6 @@ export class Armor extends KOModel {
         include: ['coreUuid', 'equipped', 'magicalModifier']
     };
 
-    _dummy = ko.observable(null);
     coreUuid = ko.observable(null);
     name = ko.observable('');
     type = ko.observable('');
@@ -26,7 +25,7 @@ export class Armor extends KOModel {
 
     isShield = ko.pureComputed(() => {
         return this.type() && this.type().toLowerCase().includes('shield');
-    })
+    }, this);
 
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
@@ -35,7 +34,7 @@ export class Armor extends KOModel {
         else {
             return '';
         }
-    });
+    }, this);
 
     armorDescriptionHTML = ko.pureComputed(() => {
         if (this.description()) {
@@ -43,19 +42,17 @@ export class Armor extends KOModel {
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
-    });
+    }, this);
 
     magicalModifierLabel = ko.pureComputed(() => {
-        this._dummy();
-
-        var magicalModifier = this.magicalModifier();
+        const magicalModifier = this.magicalModifier();
         if (magicalModifier != 0) {
             return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
             Math.abs(magicalModifier);
         } else {
             return '';
         }
-    });
+    }, this);
 
     armorSummaryLabel = ko.pureComputed(() => {
         if (this.magicalModifier() != 0) {
@@ -67,7 +64,7 @@ export class Armor extends KOModel {
         } else {
             return this.acLabel();
         }
-    });
+    }, this);
 
     applyMagicalModifierLabel = ko.pureComputed(() => {
         if (this.magicalModifierLabel() !== '' ) {
@@ -75,15 +72,11 @@ export class Armor extends KOModel {
         } else {
             return false;
         }
-    });
+    }, this);
 
     armorWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
-    });
-
-    updateValues = () => {
-        this._dummy.notifySubscribers();
-    };
+    }, this);
 
     toSchemaValues = (values) => {
         if (values.price === '') {

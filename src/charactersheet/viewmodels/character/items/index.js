@@ -53,7 +53,7 @@ export class ItemsViewModel extends ACTableComponent {
         ).reduce(
             (a, b) => a + b
         );
-        return `~${Math.round(total)} (gp)`;
+        return `~${Math.round(total)}(gp)`;
     });
 
     totalWeight = ko.pureComputed(() => {
