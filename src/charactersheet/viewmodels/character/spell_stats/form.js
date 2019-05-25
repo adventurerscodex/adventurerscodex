@@ -1,17 +1,20 @@
 import {
   CoreManager,
-  DataRepository,
-  Fixtures,
   Notifications
 } from 'charactersheet/utilities';
 
 import { FormBaseController } from 'charactersheet/components/form-base-controller';
 import { SpellStats } from 'charactersheet/models';
 
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 export class SpellStatsFormViewModel  extends FormBaseController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     generateBlank() {
         return new SpellStats();
     }
@@ -25,42 +28,10 @@ export class SpellStatsFormViewModel  extends FormBaseController {
     setSpellCastingAbility = (label, value) => {
         this.entity().castingAbility(label);
     };
-    
-    // // Pre-pop methods
-    // proficienciesPrePopFilter = (request, response) => {
-    //     const term = request.term.toLowerCase();
-    //     let results = [];
-    //     if (term && term.length > 2) {
-    //         const keys = DataRepository.proficiencies
-    //             ? Object.keys(DataRepository.proficiencies)
-    //             : [];
-    //         results = keys.filter(function(name, idx, _) {
-    //             return name.toLowerCase().indexOf(term) > -1;
-    //         });
-    //     }
-    //     response(results);
-    // };
-    //
-    // populateProficiency = (label, value) => {
-    //     const proficiency = DataRepository.proficiencies[label];
-    //     this.entity().importValues(proficiency);
-    //     this.showDisclaimer(true);
-    // };
-    //
-    // setType = (label, value) => {
-    //     this.entity().type(value);
-    // };
 
     notify() { Notifications.spellStats.changed.dispatch(); }
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addFeature();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
         // Deep copy of properties in object
         ...SpellStats.validationConstraints
     };

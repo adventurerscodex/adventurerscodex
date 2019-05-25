@@ -59,7 +59,7 @@ export class FormBaseController {
     async save() {
         const response = await this.entity().ps.save();
         if (this.entity() != null) {
-            this.entity().importValues(response.object);
+            this.entity().importValues(response.object.exportValues());
         } else {
             this.entity(response.object);
         }

@@ -10,7 +10,6 @@ export class ACViewModel {
         this.containerId = ko.utils.unwrapObservable(params.containerId);
         if (params.show) {
             this.show = params.show;
-
         } else {
             this.show = params.showBack;
         }

@@ -1,8 +1,3 @@
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
-
 import { SpellStatsFormViewModel } from './form';
 import { SpellStatsViewModel } from './view';
 

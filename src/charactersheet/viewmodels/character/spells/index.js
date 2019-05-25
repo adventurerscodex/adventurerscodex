@@ -82,6 +82,13 @@ class SpellbookViewModel extends ACTableComponent {
     setUpSubscriptions () {
         super.setUpSubscriptions();
         Notifications.spellSlots.changed.add(this.updateSpellSlots);
+        Notifications.spellStats.changed.add(this.updateSpellStats);
+    }
+
+    updateSpellStats = async () => {
+        const key = CoreManager.activeCore().uuid();
+        const stats = await SpellStats.ps.read({uuid: key});
+        this.spellStats().importValues(stats.object.exportValues());
     }
 
     updateSpellSlots = async () => {

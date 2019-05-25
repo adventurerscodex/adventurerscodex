@@ -110,7 +110,7 @@
           <td colspan="8">
             <flip-card params="{
                   dataId: $data.uuid(),
-                  tabId: 'spells',
+                  tabId: $parent.tabId,
                   collapsable: true,
                   elementId: 'spell_list',
                   context: {
@@ -124,7 +124,7 @@
                  <spell-detail-view params="{
                       data: context.data,
                       containerId: elementId,
-                      showBack: showBack,
+                      show: showFront,
                       flip: flip
                     }"></spell-detail-view>
 

@@ -1,11 +1,9 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link" data-bind="click: flip">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true">
-      </span>
-  </button>
-</div>
-<table data-bind="{with: entity}" class="table table-responsive table-ac-bordered table-hover" id="spellStatsTable">
+<card-flip-button params="{ flip: $component.flip }"></card-flip-button>
+<table data-bind="{with: entity}" class="table table-responsive table-ac-bordered table-hover">
+  <thead>
+    <tr class="ac-table-header"><th colspan="2" /></tr>
+  </thead>
+  <!-- ko if: $component.loaded(), completeOn: 'render' -->
   <tbody>
       <tr>
         <th>
@@ -65,5 +63,5 @@
       </tr>
       <!-- /ko -->
   </tbody>
+  <!-- /ko -->
 </table>
-<!-- /ko -->

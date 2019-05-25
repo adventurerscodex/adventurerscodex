@@ -1,35 +1,31 @@
-<div id="spell-stats-pane" class="ac-pane">
+<div id="spell-stats-pane"
+     class="ac-pane">
   <flip-card params="{
         tabId: 'spells',
         collapsable: false,
         elementId: 'spell-stats'
       }">
-      <div class="front">
-        <div class="h4 card-title">
-          Spell Stats<br />
-          <small>These stats help you cast spells</small>
-        </div>
-        <spell-stats-view params="{
-          showBack: showBack,
+    <div class="front">
+      <div class="h4 card-title">
+        Spell Stats<br />
+        <small>These stats help you cast spells</small>
+      </div>
+      <spell-stats-view params="{
+          show: showFront,
           flip: flip
         }"></spell-stats-view>
-
-
-
+    </div>
+    <div class="back">
+      <div class="h4 card-title">
+        Spell Stats<br />
+        <small>These stats help you cast spells</small>
       </div>
-      <div class="back">
-        <div class="h4 card-title">
-          Spell Stats<br />
-          <small>These stats help you cast spells</small>
-        </div>
-          <spell-stats-form
-            params="{
+      <spell-stats-form params="{
               containerId: elementId,
               show: showBack,
               flip: flip,
               forceCardResize: forceCardResize,
-            }"
-            ></spell-stats-form>
-      </div>
+            }"></spell-stats-form>
+    </div>
   </flip-card>
 </div>

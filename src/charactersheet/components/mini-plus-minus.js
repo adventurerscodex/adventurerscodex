@@ -22,14 +22,16 @@ export function MiniPlusMinusComponentViewModel(params) {
 
     self.onChange = params.onChange ? params.onChange : () => {};
 
-    self.increase = function() {
+    self.increase = function(data, event) {
+        event.stopPropagation();
         if (parseInt(self.value()) < parseInt(self.max())) {
             self.value(parseInt(self.value()) + 1);
             self.onChange();
         }
     };
 
-    self.decrease = function() {
+    self.decrease = function(data, event) {
+        event.stopPropagation();
         if (parseInt(self.value()) > parseInt(self.min())) {
             self.value(parseInt(self.value()) - 1);
             self.onChange();
