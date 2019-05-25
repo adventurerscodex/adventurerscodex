@@ -54,7 +54,7 @@ export class ItemFormViewModel extends FormController {
     };
 
     notify = () => {
-        this.entity().notify();
+        Notifications.item.changed.dispatch();
     }
 
     validation = {

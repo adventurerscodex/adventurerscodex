@@ -96,6 +96,8 @@ export class FlipCardComponentViewModel {
         }).extend({ deferred: true });
     }
 
+    showFront = ko.pureComputed(() => !this.showBack());
+    
     toggleMode = (data, event) => {
         let toggleTo = (!this.showBack());
         if (data === true) { //override default behavior from function call

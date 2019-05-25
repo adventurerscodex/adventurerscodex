@@ -1,15 +1,6 @@
 <div class="row"
      data-bind="with: entity">
-  <div class="btn-group edit-btn"
-       role="group"
-       aria-label="actionButtons">
-    <button class="btn btn-link"
-            data-bind="click: $parent.flip">
-      <span class="glyphicon glyphicon-edit"
-            aria-hidden="true">
-      </span>
-    </button>
-  </div>
+  <card-flip-button params="{ flip: $component.flip }"></card-flip-button>
   <div class="col-xs-12">
     <div class="h4">
       <span data-bind="text: name"

@@ -1,4 +1,5 @@
 import { ACViewModel } from 'charactersheet/components/view-component';
+import { CardFlipButton } from 'charactersheet/components/card-flip-button';
 import { CoreManager } from 'charactersheet/utilities';
 import { Wealth } from 'charactersheet/models/common';
 
@@ -24,7 +25,7 @@ class WealthViewModel extends ACViewModel {
     refresh = async () => {
         const key = CoreManager.activeCore().uuid();
         const wealth = await Wealth.ps.read({uuid: key});
-        this.entity(wealth.object);
+        this.entity().importValues(wealth.object.exportValues());
     }
 }
 

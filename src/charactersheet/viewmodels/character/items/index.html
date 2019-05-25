@@ -63,7 +63,7 @@
               <item-detail-view params="{
                        data: context.data,
                        containerId: elementId,
-                       showBack: showBack,
+                       show: showFront,
                        flip: flip
                      }"></item-detail-view>
             </div>
@@ -99,7 +99,7 @@
       <tr>
         <td colspan="8">
           <div class="row">
-            <div class="col-xs-4 text-muted">
+            <div class="pull-left col-xs-4 text-muted">
               <small class="table-foot-content visible-xs"
                      data-bind="text: totalWeight">
               </small>
@@ -117,6 +117,14 @@
                 <i class="fa fa-plus"></i> Add Item
               </button>
               <!-- /ko -->
+            </div>
+            <div class="pull-right col-xs-4 text-muted" style="text-align: right">
+              <small class="table-foot-content visible-xs"
+                     data-bind="text: totalCost">
+              </small>
+              <span class="table-foot-content hidden-xs">Value:
+                <span data-bind="text: totalCost"></span>
+              </span>
             </div>
           </div>
         </td>

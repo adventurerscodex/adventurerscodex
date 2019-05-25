@@ -78,10 +78,6 @@ export class Item extends KOModel {
 
         return values;
     }
-
-    notify () {
-        Notifications.item.changed.dispatch(this.uuid());
-    }
 }
 
 Item.validationConstraints = {
