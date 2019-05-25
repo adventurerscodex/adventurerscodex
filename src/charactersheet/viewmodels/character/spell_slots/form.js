@@ -1,29 +1,36 @@
-import {DataRepository, Notifications} from 'charactersheet/utilities';
-import { FormController } from 'charactersheet/components/form-controller-component';
-import { SpellSlot } from 'charactersheet/models/character';
+import {
+    FormController
+} from 'charactersheet/components/form-controller-component';
+import {
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    SpellSlot
+} from 'charactersheet/models/character';
+
+import autoBind from 'auto-bind';
 import campingTentWhite from 'images/camping-tent.svg';
-import { debounce } from 'lodash';
 import ko from 'knockout';
 import meditationWhite from 'images/meditation.svg';
 import template from './form.html';
 
-
-
 export class SpellSlotFormComponentViewModel extends FormController {
 
-    constructor (params) {
+    constructor(params) {
         super(params);
         this.nextSlotLevel = ko.observable(1);
         if (params.nextSlotLevel) {
             this.nextSlotLevel = params.nextSlotLevel;
         }
-        this.show = ko.observable(true);
+        autoBind(this);
     }
 
     meditationWhite = meditationWhite;
     campingTentWhite = campingTentWhite;
 
-    generateBlank () { return new SpellSlot();}
+    generateBlank() {
+        return new SpellSlot();
+    }
 
     notify = () => {
         Notifications.spellSlots.changed.dispatch();
@@ -47,14 +54,6 @@ export class SpellSlotFormComponentViewModel extends FormController {
     }
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.modalFinishedClosing();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
-        // Deep copy of properties in object
         ...SpellSlot.validationConstraints
     };
 }

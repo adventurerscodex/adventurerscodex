@@ -12,6 +12,7 @@ import { SpellSlot } from 'charactersheet/models/character';
 
 import { SpellSlotFormComponentViewModel } from './form';
 
+import autoBind from 'auto-bind';
 import campingTent from 'images/camping-tent-blue.svg';
 import ko from 'knockout';
 import meditation from 'images/meditation-blue.svg';
@@ -22,7 +23,7 @@ class SpellSlotsViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-spell-slot';
         this.collapseAllId = '#spell-slot-pane';
-
+        autoBind(this);
     }
 
     nextSlotLevel = ko.pureComputed(() => {
@@ -59,12 +60,6 @@ class SpellSlotsViewModel extends ACTableComponent {
             throw 'Unexpected feature resets on string.';
         }
     };
-
-    async load() {
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
 
     setUpSubscriptions () {
         super.setUpSubscriptions();

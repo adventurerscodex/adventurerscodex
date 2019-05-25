@@ -1,96 +1,66 @@
-
-<div class="panel panel-default" style="margin-bottom: 0px;">
+<div class="panel panel-default"
+     style="margin-bottom: 0px;">
   <div class="panel-body">
-<form class="form-horizontal" data-bind="{submit: $component.submit}">
-  <div data-bind="with: entity">
-            <div class="form-group">
-               <label for="name"
-                    class="col-sm-2 control-label">Level</label>
-                    <div class="col-sm-10">
-                       <input type="number"
-                              class="form-control"
-                              id="spellSlotsEditModalLevelInput"
-                              min="1"
-                              max="9"
-                              data-bind="value: level">
-                     </div>
-             </div>
-            <div class="form-group">
-             <label for="bonus"
-                    class="col-sm-2 control-label">Max</label>
-             <div class="col-sm-10">
-               <input type="number"
-                      class="form-control"
-                      id="spellSlotsEditModalMaxInput"
-                      min="1"
-                      max="4"
-                      data-bind="value: max, hasFocus: $parent.formElementHasFocus">
-              </div>
-           </div>
-            <div class="form-group">
-           <label class="col-sm-2 control-label">Resets on...</label>
-           <div class="col-sm-10">
-             <div class="btn-group btn-group-justified"
-                  role="group">
-               <label class="btn btn-default btn-sm"
-                      id="spellSlotsEditModalShortRestButton"
-                      data-bind="css: { active: resetsOn() == 'short'}">
-                   <input type="radio"
-                          class="hide-block"
-                          name="resetsOnShort"
-                          value="short"
-                          data-bind="checked: resetsOn" />
-                   <img class="action-bar-icon"
-                     data-bind="attr: { src: $parent.meditationWhite }"></img>
-                        &nbsp;&nbsp;&nbsp;Short Rest
-               </label>
-               <label class="btn btn-default  btn-sm"
-                      id="spellSlotsEditModalLongRestButton"
-                      data-bind="css: { active: resetsOn() != 'short'}">
-                   <input type="radio"
-                          class="hide-block"
-                          name="resetsOnLong"
-                          value="long"
-                          data-bind="checked: resetsOn"/>
-                   <img class="action-bar-icon"
-                     data-bind="attr: { src: $parent.campingTentWhite }"></img>
-                        &nbsp;&nbsp;&nbsp;Long Rest
-               </label>
-             </div>
-           </div>
-         </div>
-            <div style="height: 30px;"></div>
+    <form class="form-horizontal"
+          data-bind="{submit: $component.submit}">
+      <div data-bind="with: entity">
+        <div class="form-group">
+          <label for="name"
+                 class="col-sm-2 control-label">Level</label>
+          <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   max="9"
+                   data-bind="value: level">
           </div>
-          <!-- ko ifnot: addForm -->
-          <div>
-            <button class="btn btn-sm btn-danger"
-                    type="button"
-                    data-bind="click: $component.delete">Delete</button>
-            <div style="float: right">
-              <button class="btn btn-sm btn-default"
-                      type="reset"
-                      data-bind="click: $component.reset">Cancel</button>
-              <button class="btn btn-sm btn-primary"
-                      type="submit">Save</button>
+        </div>
+        <div class="form-group">
+          <label for="bonus"
+                 class="col-sm-2 control-label">Max</label>
+          <div class="col-sm-10">
+            <input type="number"
+                   class="form-control"
+                   min="1"
+                   max="4"
+                   data-bind="value: max, hasFocus: $parent.formElementHasFocus">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Resets on...</label>
+          <div class="col-sm-10">
+            <div class="btn-group btn-group-justified"
+                 role="group">
+              <label class="btn btn-default btn-sm"
+                     data-bind="css: { active: resetsOn() == 'short'}">
+                <input type="radio"
+                       class="hide-block"
+                       name="resetsOnShort"
+                       value="short"
+                       data-bind="checked: resetsOn" />
+                <img class="action-bar-icon"
+                     data-bind="attr: { src: $parent.meditationWhite }"></img>
+                &nbsp;&nbsp;&nbsp;Short Rest
+              </label>
+              <label class="btn btn-default  btn-sm"
+                     data-bind="css: { active: resetsOn() != 'short'}">
+                <input type="radio"
+                       class="hide-block"
+                       name="resetsOnLong"
+                       value="long"
+                       data-bind="checked: resetsOn" />
+                <img class="action-bar-icon"
+                     data-bind="attr: { src: $parent.campingTentWhite }"></img>
+                &nbsp;&nbsp;&nbsp;Long Rest
+              </label>
             </div>
           </div>
-          <!-- /ko -->
-          <!-- ko if: addForm -->
-          <div>
-            <center>
-              <div style="float: right">
-              <button type="reset"
-                      class="btn btn-default btn-sm"
-                      id="proficiencyAddCancelButton"
-                      data-bind="click: $component.reset">Cancel</button>
-              <button type="submit"
-                      class="btn btn-primary btn-sm"
-                      id="proficiencyAddAddButton"
-                    >Add Spell Slot</button>
-                    </div>
-            </center>
-          </div>
-          <!-- /ko -->
-         </form>
-       </div>
-     </div>
+          <form-card-footer params="{
+            reset: $component.reset,
+            delete: $component.delete,
+            addForm: $component.addForm,
+            showDisclaimer: $component.showDisclaimer
+          }"></form-card-footer>
+    </form>
+  </div>
+</div>
