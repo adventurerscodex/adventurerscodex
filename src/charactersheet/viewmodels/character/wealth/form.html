@@ -1,0 +1,76 @@
+<form data-bind="submit: $component.submit">
+<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
+  <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
+      <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
+      </span>
+  </button>
+  <button class="btn btn-link btn-success" type="submit" value="submit">
+      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
+      </span>
+  </button>
+</div>
+  <div class="h4 card-title">
+    Coins<br />
+    <small>watch for pickpockets</small>
+  </div>
+  <div class="input-group" >
+    <span class="input-group-addon no-top-bottom-padding">
+      <img data-bind="attr: { src: cpCoins }" width="30px" title="Copper Coins" alt="Copper Coins"/>
+    </span>
+    <input type="number" class="form-control coin-input" id="coinsCopperInput" min="0"
+      data-bind='value: entity().copper, hasFocus: $component.firstFormElementHasFocus'>
+      <span class="input-group-addon no-top-bottom-padding">
+        CP
+      </span>
+  </div>
+  <div class="input-group">
+    <span class="input-group-addon no-top-bottom-padding">
+      <img data-bind="attr: { src: spCoins }" width="30px" title="Silver Coins" alt="Silver Coins"/>
+    </span>
+    <input type="number" class="form-control coin-input" id="coinsSilverInput" min="0"
+      data-bind='value: entity().silver'>
+    <span class="input-group-addon no-top-bottom-padding">
+      SP
+    </span>
+  </div>
+  <div class="input-group" >
+    <span class="input-group-addon no-top-bottom-padding">
+      <img data-bind="attr: { src: epCoins }" width="30px" title="Electrum Coins" alt="Electrum Coins"/>
+    </span>
+    <input type="number" class="form-control coin-input" id="coinsElectrumInput" min="0"
+      data-bind='value: entity().electrum'>
+    <span class="input-group-addon no-top-bottom-padding">
+      EP
+    </span>
+  </div>
+
+  <div class="input-group" >
+    <span class="input-group-addon no-top-bottom-padding">
+      <img data-bind="attr: { src: gpCoins }" width="30px" title="Gold Coins" alt="Gold Coins"/>
+    </span>
+    <input type="number" class="form-control" id="coinsGoldInput" min="0"
+      data-bind='value: entity().gold'/>
+    <span class="input-group-addon no-top-bottom-padding">
+      GP
+    </span>
+  </div>
+
+  <div class="input-group">
+    <span class="input-group-addon no-top-bottom-padding">
+      <img data-bind="attr: { src: ppCoins }" width="30px" title="Platinum Coins" alt="Platinum Coins"/>
+    </span>
+    <input type="number" class="form-control coin-input" id="coinsPlatinumInput" min="0"
+      data-bind='value: entity().platinum'/>
+    <span class="input-group-addon no-top-bottom-padding">
+      PP
+    </span>
+  </div>
+  <div class="table-foot-content">
+    <div class="pull-right text-muted">
+      <small>Total:&nbsp;<span id="coinsWorthInGoldLabel" data-bind='text: entity().worthInGold'></span>&nbsp;(gp)</small>
+    </div>
+    <div class="pull-left text-muted">
+      <small>Weight:&nbsp;<span id="coinsTotalWeightLabel" data-bind="text: entity().totalWeightLabel"></span></small>
+    </div>
+  </div>
+</form>
