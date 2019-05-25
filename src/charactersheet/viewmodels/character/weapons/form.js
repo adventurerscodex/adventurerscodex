@@ -1,20 +1,30 @@
 import {
-  CoreManager,
-  DataRepository,
-  Fixtures,
-  Notifications
+    DataRepository,
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
 
-import { FormController } from 'charactersheet/components/form-controller-component';
+import {
+    CardActionButton
+} from 'charactersheet/components/card-action-buttons';
+import {
+    FormController
+} from 'charactersheet/components/form-controller-component';
 
-import { Weapon } from 'charactersheet/models';
+import {
+    Weapon
+} from 'charactersheet/models';
 
-import { debounce } from 'lodash';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 
-export class WeaponFormViewModel  extends FormController {
+export class WeaponFormViewModel extends FormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     generateBlank() {
         return new Weapon();
     }
@@ -66,16 +76,10 @@ export class WeaponFormViewModel  extends FormController {
     };
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addFeature();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
-        // Deep copy of properties in object
         ...Weapon.validationConstraints
     };
+
+    notify = () => {Notifications.weapon.changed.dispatch();};
 }
 
 ko.components.register('weapon-form', {

@@ -6,7 +6,6 @@
        and property. Use the To Hit Modifier to adjust for features, feats,
        or special cases.</small>
   </div>
-  <!-- ko if: loaded(), completeOn: 'render' -->
   <table class="table table-responsive table-ac-bordered table-hover" id="weaponTable">
     <thead >
       <tr class="ac-table-header">
@@ -50,6 +49,7 @@
         </th>
       </tr>
     </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
       <tr data-toggle="collapse"
@@ -99,7 +99,7 @@
               <weapon-detail-view params="{
                    data: context.data,
                    containerId: elementId,
-                   showBack: showBack,
+                   show: showFront,
                    flip: flip
                  }"></weapon-detail-view>
             </div>
@@ -151,12 +151,17 @@
                     data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Weapon</button>
             <!-- /ko -->
           </div>
-            <div class="col-xs-4 text-muted">
-          <!-- this space for value -->
+          <div class="pull-right col-xs-4 text-muted" style="text-align: right">
+            <small class="table-foot-content visible-xs"
+                   data-bind="text: totalCost">
+            </small>
+            <span class="table-foot-content hidden-xs">Value:
+              <span data-bind="text: totalCost"></span>
+            </span>
           </div>
         </td>
       </tr>
     </tfoot>
+    <!-- /ko -->
   </table>
-  <!-- /ko -->
 </div>

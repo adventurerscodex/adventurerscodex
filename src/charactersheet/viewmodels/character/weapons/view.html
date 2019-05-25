@@ -1,13 +1,8 @@
 <div  data-bind="with: entity">
+  <card-flip-button params="{ flip: $component.flip }"></card-flip-button>
 <div class="h4">
   <span data-bind="text: name" class="weaponPreviewNameLabel"></span>
   <strong data-bind="text: magicalModifierLabel"></strong>
-</div>
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link" data-bind="click: $parent.flip">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true">
-      </span>
-  </button>
 </div>
 <div class="row">
   <div class="col-sm-6 col-md-4 col-lg-3">
@@ -71,7 +66,6 @@
   </div>
   <div class="col-xs-12 col-md-4 col-md-pull-4 col-lg-6 col-lg-pull-3">
     <div data-bind="markdownPreview: weaponDescriptionHTML"
-         id="weaponPreviewDescriptionTextarea"
          class="card-description" style="text-align: center">
     </div>
   </div>

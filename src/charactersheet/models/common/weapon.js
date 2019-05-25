@@ -18,6 +18,11 @@ export class Weapon extends KOModel {
         include: ['coreUuid', 'description', 'magicalModifier']
     };
 
+    static FINESSE = 'finesse';
+    static MELEE = 'melee';
+    static RANGED = 'ranged';
+    static REACH = 'reach';
+
     coreUuid = ko.observable(null);
     name = ko.observable('');
     type = ko.observable('');
@@ -81,18 +86,8 @@ export class Weapon extends KOModel {
         default:
             return '';
         }
-    });
-
-
-    FINESSE = 'finesse';
-    RANGED = 'ranged';
-
-    totalWeight = ko.pureComputed(() => {
-        var qty = parseInt(this.quantity()) || 1;
-        var perWeight = parseInt(this.weight()) || 0;
-
-        return qty * perWeight;
     }, this);
+
 
     proficiencyScore() {
         return ProficiencyService.sharedService().proficiency();
@@ -172,6 +167,13 @@ export class Weapon extends KOModel {
         return bonus;
     };
 
+    totalWeight = ko.pureComputed(() => {
+        var qty = parseInt(this.quantity()) || 1;
+        var perWeight = parseInt(this.weight()) || 0;
+
+        return qty * perWeight;
+    }, this);
+
     updateHitBonusLabel = async () => {
         var totalBonus = await this.totalBonus();
         if (totalBonus) {
@@ -183,24 +185,16 @@ export class Weapon extends KOModel {
     };
 
     weaponRangeLabel = ko.pureComputed(() => {
-        if (this.type().toLowerCase() === 'ranged') {
-            if (this.range()) {
-                return this.range() + ' ft.';
-            } else {
-                return '';
+        if (this.range()) {
+            return this.range() + ' ft.';
+        } else if (this.type().toLowerCase() === Weapon.MELEE) {
+            if (this.property().toLowerCase().indexOf(Weapon.REACH) !== -1) {
+                return '10 ft.';
             }
-        } else if (this.type().toLowerCase() === 'melee') {
-            var weaponRange = parseInt(this.range());
-            if (!weaponRange) {
-                weaponRange = 5;
-            }
-            if (this.property()) {
-                if (this.property().toLowerCase().indexOf('reach') !== -1) {
-                    weaponRange += 5;
-                }
-            }
-            return weaponRange + ' ft.';
+            return '5 ft.';
+
         }
+        return '';
     });
 
     magicalModifierLabel = ko.pureComputed(() => {
@@ -211,17 +205,17 @@ export class Weapon extends KOModel {
         } else {
             return '';
         }
-    });
+    }, this);
 
     toHitModifierLabel = ko.pureComputed(() => {
-        var toHitModifier = this.toHitModifier();
+        const toHitModifier = this.toHitModifier();
         if (toHitModifier) {
             return toHitModifier >= 0 ? ('+ ' + toHitModifier) : '- ' +
             Math.abs(toHitModifier);
         } else {
             return 0;
         }
-    });
+    }, this);
 
     applyMagicalModifierLabel = ko.pureComputed(() => {
         if (this.magicalModifierLabel() !== '' ) {
@@ -229,7 +223,7 @@ export class Weapon extends KOModel {
         } else {
             return false;
         }
-    });
+    }, this);
 
     weaponDescriptionHTML = ko.pureComputed(() => {
         if (this.description()) {
@@ -237,7 +231,7 @@ export class Weapon extends KOModel {
         } else {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
-    });
+    }, this);
 
     weaponWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
