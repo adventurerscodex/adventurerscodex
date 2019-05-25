@@ -95,20 +95,20 @@
             <feature-form params="{
               addForm: true,
               containerId:'add-feature',
-              show: $component.showAddForm,
-              flip: $component.toggleShowAddForm,
+              show: $component.addForm,
+              flip: $component.toggleaddForm,
               addToParent: $component.addToList,
              }"
             ></feature-form>
         </div>
-        <!-- ko ifnot: $component.showAddForm -->
+        <!-- ko ifnot: $component.addForm -->
           <button type="button"
                   class="btn btn-sm btn-link btn-block"
                   id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-feature"
 
-                  data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Feature</button>
+                  data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Feature</button>
           <!-- /ko -->
         </td>
       </tr>

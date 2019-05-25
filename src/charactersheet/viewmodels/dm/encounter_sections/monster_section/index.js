@@ -45,7 +45,7 @@ export function MonsterSectionViewModel(params) {
     self.editFirstModalElementHasFocus = ko.observable(false);
     self.previewTabStatus = ko.observable('active');
     self.editTabStatus = ko.observable('');
-    self.shouldShowDisclaimer = ko.observable(false);
+    self.showDisclaimer = ko.observable(false);
     self.addFormIsValid = ko.observable(false);
     self.fullScreen = ko.observable(false);
 
@@ -238,13 +238,13 @@ export function MonsterSectionViewModel(params) {
             score.value(monster.abilityScores[idx].value);
             score.shortName = ko.observable(score.name().substring(0,3).toUpperCase());
         });
-        self.shouldShowDisclaimer(true);
+        self.showDisclaimer(true);
     };
 
     /* Modal Methods */
 
     self.modalFinishedOpening = function() {
-        self.shouldShowDisclaimer(false);
+        self.showDisclaimer(false);
         self.firstElementInModalHasFocus(true);
     };
 

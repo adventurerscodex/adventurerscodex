@@ -101,7 +101,7 @@
       <textarea class="form-control"
                 rows="4"
                 placeholder="Awesome stuff goes here"
-                data-bind='textInput: description'>
+                data-bind='textInput: description, markdownEditor: true'>
         </textarea>
       <!-- /ko -->
     </div>
@@ -109,7 +109,7 @@
 <form-card-footer params="{
   reset: $component.reset,
   delete: $component.delete,
-  addForm: $component.showAddForm,
-  showDisclaimer: $component.shouldShowDisclaimer
+  addForm: $component.addForm,
+  showDisclaimer: $component.showDisclaimer
 }"></form-card-footer>
 </form>

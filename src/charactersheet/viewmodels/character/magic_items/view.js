@@ -15,10 +15,6 @@ class MagicItemDetailViewModel extends ACViewModel {
     generateBlank () {
         return new MagicItem();
     }
-
-    async refresh() {
-        this.entity().importValues(this.existingData.exportValues());
-    }
 }
 
 ko.components.register('magic-item-detail-view', {

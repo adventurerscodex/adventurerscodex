@@ -4,8 +4,8 @@ export class FormCardFooter {
     constructor(params) {
         this.reset = params.reset;
         this.delete = params.delete;
-        this.addForm = params.showAddForm;
-        this.showDisclaimer = params.shouldShowDisclaimer;
+        this.addForm = params.addForm;
+        this.showDisclaimer = params.showDisclaimer;
     }
     clickReset = () => {
         this.reset();
@@ -13,7 +13,6 @@ export class FormCardFooter {
     clickDelete = () => {
         this.delete();
     }
-
 }
 
 ko.components.register('form-card-footer', {

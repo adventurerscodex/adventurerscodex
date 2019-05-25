@@ -124,8 +124,8 @@
           <div id="add-weapon" class="collapse add-card">
             <weapon-form params="{
               containerId:'add-weapon',
-                show: $component.showAddForm,
-                flip: $component.toggleShowAddForm,
+                show: $component.addForm,
+                flip: $component.toggleaddForm,
                 addToParent: $component.addToList
                }"
             ></weapon-form>
@@ -142,13 +142,13 @@
             <span class="table-foot-content hidden-xs">Weight: <span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span></span>
           </div>
           <div class="col-xs-4">
-            <!-- ko ifnot: $component.showAddForm -->
+            <!-- ko ifnot: $component.addForm -->
             <button type="button"
                     class="btn btn-link btn-sm btn-block"
                     id="weaponAddButton"
                     data-toggle="collapse"
                     data-target="#add-weapon"
-                    data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Weapon</button>
+                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Weapon</button>
             <!-- /ko -->
           </div>
           <div class="pull-right col-xs-4 text-muted" style="text-align: right">

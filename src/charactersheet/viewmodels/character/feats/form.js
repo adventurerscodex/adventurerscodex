@@ -39,7 +39,7 @@ export class FeatFormViewModel  extends TrackedFormController {
         const feat = DataRepository.feats[label];
         if (feat) {
             this.entity().importValues(feat);
-            this.shouldShowDisclaimer(true);
+            this.showDisclaimer(true);
             this.forceCardResize();
         }
     };

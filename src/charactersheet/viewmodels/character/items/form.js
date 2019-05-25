@@ -49,7 +49,7 @@ export class ItemFormViewModel extends FormController {
     populateItem = (label, value) => {
         const item = DataRepository.items[label];
         this.entity().importValues(item);
-        this.shouldShowDisclaimer(true);
+        this.showDisclaimer(true);
         this.forceCardResize();
     };
 

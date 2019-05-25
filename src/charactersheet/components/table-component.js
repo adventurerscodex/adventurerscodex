@@ -13,7 +13,7 @@ export class ACTableComponent {
     constructor(params) {
         this.tabId = params.tabId;
         this.loaded = ko.observable(false);
-        this.showAddForm = ko.observable(false);
+        this.addForm = ko.observable(false);
         this.entities = ko.observableArray([]);
         this.sort = ko.observable(this.getDefaultSort());
         this.filter = ko.observable('');
@@ -86,12 +86,12 @@ export class ACTableComponent {
 
     showTracked (entity) {return entity.tracked != undefined && entity.tracked() != null;}
 
-    toggleShowAddForm =  () => {
-        if (this.showAddForm()) {
-            this.showAddForm(false);
+    toggleaddForm =  () => {
+        if (this.addForm()) {
+            this.addForm(false);
             $(this.addFormId).collapse('hide');
         } else {
-            this.showAddForm(true);
+            this.addForm(true);
             $(this.addFormId).collapse('show');
         }
     }

@@ -48,7 +48,7 @@ export class WeaponFormViewModel extends FormController {
     populateWeapon = (label, value) => {
         const weapon = DataRepository.weapons[label];
         this.entity().importValues(weapon);
-        this.shouldShowDisclaimer(true);
+        this.showDisclaimer(true);
     };
 
     setWeaponType = (label, value) => {

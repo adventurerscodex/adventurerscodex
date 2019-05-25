@@ -66,7 +66,7 @@ export class MagicItemFormViewModel  extends FormController {
     populateMagicItem = (label, value) => {
         const magicItem = DataRepository.magicItems[label];
         this.entity().importValues(magicItem);
-        this.shouldShowDisclaimer(true);
+        this.showDisclaimer(true);
     };
 
     notify = () => {

@@ -36,7 +36,7 @@ export class FeatureFormViewModel  extends TrackedFormController {
         const feature = DataRepository.filterBy('features', 'displayName', label)[0];
         if (feature) {
             this.entity().importValues(feature);
-            this.shouldShowDisclaimer(true);
+            this.showDisclaimer(true);
             this.forceCardResize();
         }
     };

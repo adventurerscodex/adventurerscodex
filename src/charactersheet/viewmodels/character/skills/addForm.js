@@ -21,8 +21,8 @@ import template from './addForm.html';
 export class SkillsAddFormViewModel {
     constructor(params) {
         this.addSkillToView = params.addSkillToView;
-        this.showAddForm = params.showAddForm;
-        this.toggleShowAddForm = params.toggleShowAddForm;
+        this.addForm = params.addForm;
+        this.toggleaddForm = params.toggleaddForm;
         this.abilityScores = [];
         this.abilityScoreChoice = ko.observable('Strength');
         this.skill = ko.observable(new Skill());
@@ -30,7 +30,7 @@ export class SkillsAddFormViewModel {
     }
 
     setUpSubscriptions = () => {
-        this.showAddForm.subscribe(this.reset);
+        this.addForm.subscribe(this.reset);
     }
 
     async load() {
@@ -43,7 +43,7 @@ export class SkillsAddFormViewModel {
     }
 
     reset = () => {
-        if (this.showAddForm()) {
+        if (this.addForm()) {
             this.formElementHasFocus(true);
         } else {
             this.formElementHasFocus(false);
@@ -108,12 +108,12 @@ export class SkillsAddFormViewModel {
         await newSkill.updateBonuses();
 
         this.addSkillToView(newSkill);
-        this.toggleShowAddForm();
+        this.toggleaddForm();
     }
 
     cancel = () => {
         this.reset();
-        this.toggleShowAddForm();
+        this.toggleaddForm();
     }
 
     validation = {

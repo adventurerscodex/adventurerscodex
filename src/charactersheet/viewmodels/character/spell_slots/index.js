@@ -147,11 +147,12 @@ class SpellSlotsViewModel extends ACTableComponent {
     notify = () => {
         Notifications.spellSlots.changed.dispatch();
     }
+
     onUsedChange = async (spellslot) => {
         const response = await spellslot.ps.save();
         // TODO: debounce
         this.replaceInList(response.object);
-        Notifications.spellSlots.changed.dispatch();
+        this.notify();
     }
 }
 

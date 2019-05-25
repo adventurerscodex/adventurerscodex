@@ -46,7 +46,7 @@ export class TraitFormViewModel  extends TrackedFormController {
         var trait = DataRepository.traits[label];
         if (trait) {
             this.entity().importValues(trait);
-            this.shouldShowDisclaimer(true);
+            this.showDisclaimer(true);
             this.forceCardResize();
         }
     };

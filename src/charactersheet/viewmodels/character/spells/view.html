@@ -1,13 +1,9 @@
 <div data-bind="with: entity, css: entity().school().toLowerCase()">
+
+  <card-flip-button params="{ flip: $component.flip }"></card-flip-button>
   <div class="h4">
     <span data-bind="text: nameLabel"></span>&nbsp;
     <small data-bind="text: spellSummaryLabel"></small>
-  </div>
-  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-    <button class="btn btn-link" data-bind="click: $parent.flip">
-        <span class="glyphicon glyphicon-edit" aria-hidden="true">
-        </span>
-    </button>
   </div>
   <div class="row">
     <div class="col-sm-5 col-md-4 col-lg-3">

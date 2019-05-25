@@ -40,7 +40,7 @@ export function TrapSectionViewModel(params) {
     self.addFormIsValid = ko.observable(false);
     self.addModalIsOpen = ko.observable(false);
     self.addWellOpen = ko.observable(false);
-    self.shouldShowDisclaimer = ko.observable(false);
+    self.showDisclaimer = ko.observable(false);
     self.firstElementInModalHasFocus = ko.observable(false);
 
     self.sorts = {
@@ -216,7 +216,7 @@ export function TrapSectionViewModel(params) {
     self.populateTrap = function(label, value) {
         const trap = DataRepository.traps[label];
         self.blankTrap().importValues(trap);
-        self.shouldShowDisclaimer(true);
+        self.showDisclaimer(true);
     };
 
     /* Private Methods */

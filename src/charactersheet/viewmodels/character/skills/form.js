@@ -80,7 +80,7 @@ class ACFormViewModel {
 export class SkillsFormViewModel extends ACFormViewModel {
     constructor(params) {
         super(params);
-        this.showAddForm = ko.observable(false);
+        this.addForm = ko.observable(false);
         this.skills = ko.observableArray([]);
         this.sort = ko.observable(SkillsFormViewModel.sorts['name asc']);
     }
@@ -114,14 +114,14 @@ export class SkillsFormViewModel extends ACFormViewModel {
         //     perception.bonusLabel.subscribe(self.perceptionHasChanged);
     }
 
-    toggleShowAddForm = () => {
-        if (this.showAddForm()) {
-            this.showAddForm(false);
+    toggleaddForm = () => {
+        if (this.addForm()) {
+            this.addForm(false);
             $('#add-skill').collapse('hide');
             setTimeout(this.forceCardResize, 350);
         } else {
             $('#add-skill').collapse('show');
-            this.showAddForm(true);
+            this.addForm(true);
             setTimeout(this.forceCardResize, 350);
         }
     };

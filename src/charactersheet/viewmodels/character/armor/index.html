@@ -102,7 +102,7 @@
             <armor-form params="{
                    containerId: 'add-armor',
                    show: $component.addForm,
-                   flip: $component.toggleShowAddForm,
+                   flip: $component.toggleaddForm,
                    addToParent: $component.addToList
                   }"></armor-form>
           </div>
@@ -118,12 +118,12 @@
               <span class="table-foot-content hidden-xs">Weight:&nbsp;<span data-bind="text: totalWeight"></span></span>
             </div>
             <div class="col-xs-4">
-              <!-- ko ifnot: $component.showAddForm -->
+              <!-- ko ifnot: $component.addForm -->
               <button type="button"
                       class="btn btn-link btn-sm btn-block"
                       data-toggle="collapse"
                       data-target="#add-armor"
-                      data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Armor</button>
+                      data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Armor</button>
               <!-- /ko -->
             </div>
             <div class="pull-right col-xs-4 text-muted"

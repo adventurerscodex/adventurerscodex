@@ -13,7 +13,7 @@ export class FormBaseController {
         this.entity = ko.observable(this.generateBlank());
         this.addForm = ko.observable(false);
         this.formElementHasFocus = ko.observable(false);
-        this.shouldShowDisclaimer = ko.observable(false);
+        this.showDisclaimer = ko.observable(false);
         // Collects subscriptions to dispose of
         this.subscriptions = [];
         this.listeners = [];
@@ -53,7 +53,7 @@ export class FormBaseController {
     }
 
     async refresh () {
-        this.shouldShowDisclaimer(false);
+        this.showDisclaimer(false);
     }
 
     async save() {

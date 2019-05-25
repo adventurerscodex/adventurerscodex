@@ -52,7 +52,7 @@ export class ArmorFormViewModel  extends FormController {
     populateArmor = (label, value) => {
         const armor = DataRepository.armors[label];
         this.entity().importValues(armor);
-        this.shouldShowDisclaimer(true);
+        this.showDisclaimer(true);
     };
 
     notify = () => {

@@ -16,7 +16,7 @@ class WeaponDetailViewModel extends ACViewModel {
     }
 
     async refresh() {
-        this.entity().importValues(this.existingData.exportValues());
+        await super.refresh();
         this.entity().updateHitBonusLabel();
     }
 }

@@ -1,16 +1,15 @@
 <form data-bind="submit: $component.submit">
-  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-        </span>
-    </button>
-    <button class="btn btn-link btn-success" type="submit" value="submit">
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-        </span>
-    </button>
-  </div>
-  <div class="row" data-bind="with: entity">
-    <!-- ko ifnot: $component.data -->
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <div class="row"
+       data-bind="with: entity">
+    <!-- ko if: $component.existingD -->
+    <div class="col-xs-12">
+      <div class="h4"
+           data-bind="text: name">
+      </div>
+    </div>
+    <!-- /ko -->
+    <!-- ko ifnot: $component.existingData -->
     <div class="col-xs-12">
       <div class="h4">
         New Spell
@@ -33,7 +32,6 @@
       <label for="school"
              class="control-label">School</label>
       <input class="form-control"
-             id="spellsEditSchoolInput"
              placeholder="Abjuration"
              data-bind="textInput: school,
     autocomplete: { source: $component.schoolOptions,
@@ -54,7 +52,6 @@
       <label for="castingTime"
              class="control-label">Cast Time</label>
       <input class="form-control"
-             id="spellsEditCastTimeInput"
              placeholder="1 action"
              data-bind="textInput: castingTime,
     autocomplete: { source: $component.castingTimeOptions,
@@ -104,7 +101,6 @@
       <label for="range"
              class="control-label">Range</label>
       <input class="form-control"
-             id="spellsEditRangeInput"
              placeholder="1 mile"
              data-bind="textInput: range,
         autocomplete: { source: $component.rangeOptions,
@@ -114,7 +110,6 @@
       <label for="duration"
              class="control-label">Duration</label>
       <input class="form-control"
-             id="spellsEditDurationInput"
              placeholder="1 day"
              data-bind="textInput: duration,
              autocomplete: { source: $component.durationOptions,
@@ -124,7 +119,6 @@
       <label for="components"
              class="control-label">Components</label>
       <input class="form-control"
-             id="spellsEditComponentsInput"
              placeholder="V, S, M"
              data-bind="textInput: components,
                 autocomplete: { source: $component.componentsOptions,
@@ -148,10 +142,10 @@
                  class='ac-checkbox sr-only'
                  data-bind="checked: prepared, disable: alwaysPrepared, attr: {id: `${$component.containerId}_prepared`}"></input>
           <label for="prepared"
-                  data-bind="attr: {for: `${$component.containerId}_prepared`}"
+                 data-bind="attr: {for: `${$component.containerId}_prepared`}"
                  class='control-label'>
-                 Prepared
-    </label>
+            Prepared
+          </label>
         </div>
 
         <div class="col-sm-4">
@@ -160,9 +154,10 @@
                  data-bind="checked: alwaysPrepared, disable: prepared, attr: {id: `${$component.containerId}_alwaysPrepared`}"></input>
           <label data-bind="attr: {for: `${$component.containerId}_alwaysPrepared`}"
                  class='control-label'>
-                 Always Prepared&nbsp;<span class="fa fa-info-circle hidden-xs" style="cursor:pointer;"
-                 data-bind="popover: { content: $component.alwaysPreparedPopoverText }">
-        </label>
+            Always Prepared&nbsp;<span class="fa fa-info-circle hidden-xs"
+                  style="cursor:pointer;"
+                  data-bind="popover: { content: $component.alwaysPreparedPopoverText }">
+          </label>
         </div>
 
         <div class="col-sm-4">
@@ -172,8 +167,8 @@
                  data-bind="checked: isRitual, attr: {id: `${$component.containerId}_ritual`}"></input>
           <label data-bind="attr: {for: `${$component.containerId}_ritual`}"
                  class='control-label'>
-        Ritual
-    </label>
+            Ritual
+          </label>
         </div>
       </div>
       <hr />
@@ -182,7 +177,7 @@
     <div class="form-group col-xs-12">
       <label for="description"
              class="control-label">Description</label>
-       <!-- ko if: $component.show -->
+      <!-- ko if: $component.show -->
       <textarea type="text"
                 rows="6"
                 class="form-control spellsEditDescriptionTextarea"
@@ -191,45 +186,10 @@
       <!-- /ko -->
     </div>
   </div>
-
-  <div class="row">
-    <!-- ko ifnot: $component.addForm -->
-    <div class="col-xs-12">
-      <div class="pull-left">
-      <button class="btn btn-sm btn-danger"
-              type="button"
-              data-bind="click: $component.delete">Delete</button>
-      </div>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-default"
-                type="reset"
-                data-bind="click: $component.reset">Cancel</button>
-        <button class="btn btn-sm btn-primary"
-                type="submit">Save</button>
-      </div>
-    </div>
-    <!-- /ko -->
-    <!-- ko if: $component.addForm -->
-    <div class="col-xs-12">
-        <div class="pull-right">
-          <button type="reset"
-                  class="btn btn-default btn-sm"
-                  data-bind="click: $component.reset">Cancel</button>
-          <button type="submit"
-                  class="btn btn-primary btn-sm">Add Spell</button>
-        </div>
-    </div>
-    <!-- /ko -->
-    <div class="col-xs-12">
-      <p class="text-muted ogl-disclaimer" data-bind='visible: $component.shouldShowDisclaimer'>
-        <sm><i>This data is distributed under the
-                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-                  target='_blank'>
-                  OGL</a><br/>
-                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-                </i>
-          <sm>
-      </p>
-    </div>
-  </div>
+  <form-card-footer params="{
+    reset: $component.reset,
+    delete: $component.delete,
+    addForm: $component.addForm,
+    showDisclaimer: $component.showDisclaimer
+  }"></form-card-footer>
 </form>

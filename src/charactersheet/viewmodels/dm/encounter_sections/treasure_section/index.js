@@ -84,7 +84,7 @@ export function TreasureSectionViewModel(params) {
     self.magicItemFirstElementFocus = ko.observable(false);
     self.weaponShow = ko.observable(false);
     self.weaponFirstElementFocus = ko.observable(false);
-    self.shouldShowDisclaimer = ko.observable(false);
+    self.showDisclaimer = ko.observable(false);
 
     self.MAGIC_ITEM = 'magic_item';
     self.ITEM = 'item';
@@ -384,7 +384,7 @@ export function TreasureSectionViewModel(params) {
         }
 
         self.blankTreasure().importValues(treasure);
-        self.shouldShowDisclaimer(true);
+        self.showDisclaimer(true);
 
         // This helps set the "item" type for the specific treasure.
         // This happens because each treasure has a `type` to determine what kind of treasure it is.
@@ -458,7 +458,7 @@ export function TreasureSectionViewModel(params) {
 
     self.addModalFinishedClosing = function() {
         self.blankTreasure(null);
-        self.shouldShowDisclaimer(false);
+        self.showDisclaimer(false);
         self.addModalOpen(false);
     };
 

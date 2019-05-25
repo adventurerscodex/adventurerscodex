@@ -1,6 +1,5 @@
 import {
     CoreManager,
-    DataRepository,
     Notifications,
     Utility
 } from 'charactersheet/utilities';
@@ -12,6 +11,7 @@ import { SortService } from 'charactersheet/services/common';
 import { SpellDetailViewModel } from './view';
 import { SpellFormViewModel } from './form';
 
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -23,7 +23,8 @@ class SpellbookViewModel extends ACTableComponent {
         this.spellStats = ko.observable(new SpellStats());
         this.spellSlots = ko.observableArray([]);
         this.addFormId = '#add-spell';
-        this.collapseAllId = '#spell-pane';
+        this.collapseAllId = '#spells-pane';
+        autoBind(this);
     }
 
     async load () {
@@ -153,10 +154,6 @@ class SpellbookViewModel extends ACTableComponent {
     numberOfSpells = ko.computed(() => {
         return this.entities() ? this.entities().length : 0;
     }, this);
-
-    collapseAll = () => {
-        $('#spells-pane .collapse.in').collapse('hide');
-    }
 }
 
 ko.components.register('spells', {

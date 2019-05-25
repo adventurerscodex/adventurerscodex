@@ -68,7 +68,7 @@ ko.components.register('feats', {
 //     self.currentEditTracked = ko.observable(new Tracked());
 //     self.sort = ko.observable(self.sorts['name asc']);
 //     self.filter = ko.observable('');
-//     self.shouldShowDisclaimer = ko.observable(false);
+//     self.showDisclaimer = ko.observable(false);
 //     self.previewTabStatus = ko.observable('active');
 //     self.editTabStatus = ko.observable('');
 //     self.firstModalElementHasFocus = ko.observable(false);
@@ -105,7 +105,7 @@ ko.components.register('feats', {
 //         var feat = DataRepository.feats[label];
 //
 //         self.blankFeat().importValues(feat);
-//         self.shouldShowDisclaimer(true);
+//         self.showDisclaimer(true);
 //     };
 //
 //     // Modal methods
@@ -135,7 +135,7 @@ ko.components.register('feats', {
 //     };
 //
 //     self.modalFinishedOpening = function() {
-//         self.shouldShowDisclaimer(false);
+//         self.showDisclaimer(false);
 //         self.firstModalElementHasFocus(true);
 //     };
 //

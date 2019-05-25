@@ -4,11 +4,10 @@
       <small>You can sort your spells by clicking on the headers. View the
     bottom of the list for a count of your prepared spells.</small>
     </div>
-    <table class="listing table table-responsive table-ac-bordered table-hover"
-           id="spellsTable">
+    <table class="listing table table-responsive table-ac-bordered table-hover">
       <thead>
-        <tr>
-          <th id="spellsTablePreparedHeader">
+        <tr class="ac-table-header">
+          <th>
             <input id="filterByCastable"
                    type='checkbox'
                    class='filter-checkbox sr-only'
@@ -16,32 +15,31 @@
             <label for="filterByCastable">
            </label>
           </th>
-          <th id="spellsTableSpellHeader"
-              data-bind="click: ()=> {sortBy('name');}">
+          <th data-bind="click: ()=> {sortBy('name');}">
             Spell
             <span data-bind="css: sortArrow('name')"></span>
           </th>
-          <th id="spellsTableLevelHeader" class="ac-table-data-cell"
+          <th class="ac-table-data-cell"
               data-bind="click: () => {sortBy('level');}">
             Level
             <span data-bind="css: sortArrow('level')"></span>
           </th>
-          <th id="spellsTableTypeHeader" class="hidden-xs"
+          <th class="hidden-xs"
               data-bind="click: () => {sortBy('typeLabel');}">
             Type
             <span data-bind="css: sortArrow('typeLabel')"></span>
           </th>
-          <th id="spellsTableDamageHeader" class="hidden-xs hidden-sm"
+          <th class="hidden-xs hidden-sm"
               data-bind="click: () => {sortBy('damageType');}">
             Damage
             <span data-bind="css: sortArrow('damageType')"></span>
           </th>
-          <th id="spellsTableCastingHeader"  class="hidden-xs"
+          <th class="hidden-xs"
               data-bind="click: () => {sortBy('castingTime');}">
             Casting Time
             <span data-bind="css: sortArrow('castingTime')"></span>
           </th>
-          <th id="spellsTableRangeHeader"  class="hidden-xs hidden-sm"
+          <th class="hidden-xs hidden-sm"
               data-bind="click: () => {sortBy('range');}">
             Range
             <span data-bind="css: sortArrow('range')"></span>
@@ -162,8 +160,8 @@
           <td colspan="8">
             <spell-form params="{
               containerId:'add-spell',
-              show: $component.showAddForm,
-              flip: $component.toggleShowAddForm,
+              show: $component.addForm,
+              flip: $component.toggleaddForm,
               addToParent: $component.addToList
              }"
             ></spell-form>
@@ -181,13 +179,13 @@
               <!-- /ko -->
             </div>
             <div class="col-xs-4">
-              <!-- ko ifnot: $component.showAddForm -->
+              <!-- ko ifnot: $component.addForm -->
             <button type="button"
                     class="btn btn-link btn-block btn-sm"
                     id="spellAddButton"
                     data-toggle="collapse"
                     data-target="#add-spell"
-                    data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell</button>
+                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Spell</button>
               <!-- /ko -->
             </div>
               <div class="col-xs-4 text-muted">

@@ -89,8 +89,8 @@
                class="collapse">
             <item-form params="{
                 containerId: 'add-item',
-                show: $component.showAddForm,
-                flip: $component.toggleShowAddForm,
+                show: $component.addForm,
+                flip: $component.toggleaddForm,
                 addToParent: $component.addToParent,
                }"></item-form>
           </div>
@@ -109,12 +109,12 @@
               </span>
             </div>
             <div class="col-xs-4">
-              <!-- ko ifnot: $component.showAddForm -->
+              <!-- ko ifnot: $component.addForm -->
               <button type="button"
                       class="btn btn-link btn-sm btn-block"
                       data-toggle="collapse"
                       data-target="#add-item"
-                      data-bind="click: toggleShowAddForm">
+                      data-bind="click: toggleaddForm">
                 <i class="fa fa-plus"></i> Add Item
               </button>
               <!-- /ko -->

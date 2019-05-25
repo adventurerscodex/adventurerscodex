@@ -1,19 +1,23 @@
 import {
-  CoreManager,
   DataRepository,
-  Fixtures,
-  Notifications
+  Fixtures
 } from 'charactersheet/utilities';
 
+import { CardActionButton } from 'charactersheet/components/card-action-buttons';
 import { FormController } from 'charactersheet/components/form-controller-component';
 import { Spell } from 'charactersheet/models';
 
-import { debounce } from 'lodash';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 
 export class SpellFormViewModel  extends FormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
+
     generateBlank() {
         return new Spell();
     }
@@ -21,7 +25,6 @@ export class SpellFormViewModel  extends FormController {
     preparedRowVisibleEdit = () => {
         return parseInt(this.entity().level()) !== 0;
     };
-
 
     spellsPrePopFilter = (request, response) => {
         var term = request.term.toLowerCase();
@@ -40,7 +43,7 @@ export class SpellFormViewModel  extends FormController {
     populateSpell = (label, value) => {
         var spell = DataRepository.spells[label];
         this.entity().importValues(spell);
-        this.shouldShowDisclaimer(true);
+        this.showDisclaimer(true);
     };
 
     setSpellSchool = (label, value) => {
@@ -78,30 +81,15 @@ export class SpellFormViewModel  extends FormController {
     alwaysPreparedPopoverText = () => ('Always prepared spells will not count against total prepared spells.');
 
     typeOptions = Fixtures.spell.typeOptions;
-
     damageTypeOptions = Fixtures.spell.damageTypeOptions;
-
     spellSaveAttrOptions = Fixtures.spell.spellSaveAttrOptions;
-
     schoolOptions = Fixtures.spell.schoolOptions;
-
     castingTimeOptions = Fixtures.spell.castingTimeOptions;
-
     durationOptions = Fixtures.spell.durationOptions;
-
     componentsOptions = Fixtures.spell.componentsOptions;
-
     rangeOptions = Fixtures.spell.rangeOptions;
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addFeature();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
-        // Deep copy of properties in object
         ...Spell.validationConstraints
     };
 }

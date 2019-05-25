@@ -90,19 +90,19 @@
             <proficiency-form params="{
               addForm: true,
               containerId:'add-proficiency',
-              show: $component.showAddForm,
-              flip: $component.toggleShowAddForm,
+              show: $component.addForm,
+              flip: $component.toggleaddForm,
               addToParent: $component.addToList,
              }"
             ></proficiency-form>
         </div>
-        <!-- ko ifnot: $component.showAddForm -->
+        <!-- ko ifnot: $component.addForm -->
           <button type="button"
                   class="btn btn-link btn-sm btn-block"
                   id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-proficiency"
-                  data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Proficiency</button>
+                  data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Proficiency</button>
           <!-- /ko -->
         </td>
       </tr>

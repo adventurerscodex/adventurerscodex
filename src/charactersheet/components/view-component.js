@@ -8,7 +8,12 @@ import ko from 'knockout';
 export class ACViewModel {
     constructor(params) {
         this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showBack = params.showBack;
+        if (params.show) {
+            this.show = params.show;
+
+        } else {
+            this.show = params.showBack;
+        }
         this.flip = params.flip;
         this.entity = ko.observable(this.generateBlank());
         this.loaded = ko.observable(false);
@@ -25,7 +30,12 @@ export class ACViewModel {
     }
 
     async refresh() {
-        throw('refresh must be defined by subclasses of ACViewModel');
+        if (this.existingData) {
+            this.entity().importValues(this.existingData.exportValues());
+        } else {
+            this.entity(this.generateBlank());
+            this.entity().coreUuid(CoreManager.activeCore().uuid());
+        }
     }
 
     disposeOfSubscriptions () {
@@ -38,12 +48,12 @@ export class ACViewModel {
     }
 
     setUpSubscriptions() {
-        const showSubscription = this.showBack.subscribe(this.subscribeToShowForm);
+        const showSubscription = this.show.subscribe(this.subscribeToShowForm);
         this.subscriptions.push(showSubscription);
     }
 
     subscribeToShowForm = () => {
-        if (!this.showBack()) {
+        if (this.show()) {
             this.refresh();
         }
     }

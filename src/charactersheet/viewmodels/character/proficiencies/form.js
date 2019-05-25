@@ -34,7 +34,7 @@ export class ProficiencyFormViewModel  extends FormController {
     populateProficiency = (label, value) => {
         const proficiency = DataRepository.proficiencies[label];
         this.entity().importValues(proficiency);
-        this.shouldShowDisclaimer(true);
+        this.showDisclaimer(true);
     };
 
     setType = (label, value) => {
