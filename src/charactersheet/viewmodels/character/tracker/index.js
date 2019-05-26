@@ -3,8 +3,8 @@ import 'bin/knockout-bar-progress';
 import {
   CoreManager,
     Fixtures,
-    Notifications,
-    Utility } from 'charactersheet/utilities';
+    Notifications
+   } from 'charactersheet/utilities';
 import {
     Feat,
     Feature,
@@ -16,6 +16,7 @@ import { ACTableComponent } from 'charactersheet/components/table-component';
 
 import { TrackedDetailForm } from './form';
 
+import autoBind from 'auto-bind';
 import campingTent from 'images/camping-tent-blue.svg';
 import {flatMap } from 'lodash';
 import ko from 'knockout';
@@ -26,6 +27,7 @@ class TrackerViewModel extends ACTableComponent {
     constructor(params) {
         super(params);
         this.collapseAllId = '#tracker-pane';
+        autoBind(this);
     }
 
     trackedTypes = [  Feature, Trait, Feat ];
@@ -128,7 +130,6 @@ class TrackerViewModel extends ACTableComponent {
 
     onUsedChange = async (trackedItem) => {
         const response = await trackedItem.ps.save();
-        // TODO: debounce
         this.replaceInList(response.object);
     }
 }

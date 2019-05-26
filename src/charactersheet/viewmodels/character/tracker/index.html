@@ -1,61 +1,71 @@
-<div id="tracker-pane" class=" ac-pane panel-body">
-    <div class="h4 card-title">
-        Tracked Features, Feats, and Traits<br />
-        <small>Configure to reset on a short or long rest.</small>
-    </div>
+<div id="tracker-pane"
+     class=" ac-pane panel-body">
+  <div class="h4 card-title">
+    Tracked Features, Feats, and Traits<br />
+    <small>Configure to reset on a short or long rest.</small>
+  </div>
+  <table class="table table-responsive table-ac-bordered">
+    <thead class="ac-table-header">
+      <tr>
+        <th data-bind="click: ()=> {sortBy('name');}">Name
+          <i data-bind="css: sortArrow('name')"></i>
+        </th>
+        <th colspan="3">Resets&nbsp;on
+        </th>
+        <th></th>
+        <th class="hidden-xs">Used</th>
+        <th>
+          <a href="#"
+             class=""
+             data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span></a>
+        </th>
+      </tr>
+    </thead>
     <!-- ko if: loaded(), completeOn: 'render' -->
-
-    <table class="table table-responsive table-ac-bordered">
-        <thead>
-            <tr>
-          <th data-bind="click: ()=> {sortBy('name');}">Name
-                    <i data-bind="css: sortArrow('name')"></i>
-                  </th>
-                <th colspan="3">Resets&nbsp;on
-                </th>
-                <th></th>
-                <th class="hidden-xs">Used</th>
-                <th>
-                    <a href="#" class="" data-bind="{click: collapseAll}">
-              <span class="fa fa-minus"></span></a>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- ko foreach: filteredAndSortedEntities, as: trackable -->
-            <tr data-bind="with: $data.tracked()">
-                <td><span data-bind="text: $component.shortName($parent.name)"></span>
-                </td>
-                <td style="padding: 4px;">
-                    <img class="action-bar-icon" data-bind="attr: { src: $component.resetsOnImgSource($data) }">
-                    </img>
-                </td>
-                <td style="padding: 4px;">
-                    <mini-plus-minus params="value: used,
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities, as: trackable -->
+      <tr
+      class="clickable expandRow"
+        data-toggle="collapse"
+         data-bind="attr:{'data-target': `#tracked_${uuid()}`}, with: $data.tracked()" >
+        <td><span data-bind="text: $component.shortName($parent.name)"></span>
+        </td>
+        <td style="padding: 4px;">
+          <img class="action-bar-icon"
+               data-bind="attr: { src: $component.resetsOnImgSource($data) }">
+          </img>
+        </td>
+        <td style="padding: 4px;">
+          <mini-plus-minus params="value: used,
                     max: max, hideUp: true, onChange: ()=>{$component.onUsedChange($parent)}">
-                    </mini-plus-minus>
-                </td>
-                <td style="padding: 4px;">
-                    <mini-plus-minus params="value: used,
+          </mini-plus-minus>
+        </td>
+        <td style="padding: 4px;">
+          <mini-plus-minus params="value: used,
                     max: max, hideDown: true, onChange: ()=>{$component.onUsedChange($parent)}">
-                    </mini-plus-minus>
-                </td>
-                <td style="padding: 4px;">
-                    <div style="padding: 10px" data-bind="barProgress: $component.mapToChart($data)"> </div>
-                </td>
+          </mini-plus-minus>
+        </td>
+        <td style="padding: 4px;">
+          <div style="padding: 10px"
+               data-bind="barProgress: $component.mapToChart($data)"> </div>
+        </td>
 
-                <td style="padding: 4px;"  class="hidden-xs">
-                    <span data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span data-bind=" text: max"></span>
-                </td>
-                <td style="padding: 4px;">
-                    <span data-toggle="collapse" data-bind="attr:{'data-target': `#tracked_${$parent.uuid()}`}" class="rotate fa fa-chevron-left"></span>
-                </td>
-            </tr>
-             <tr class="collapseRow">
-                <td colspan="8">
-                     <flip-card params="{
+        <td style="padding: 4px;"
+            class="hidden-xs">
+          <span data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span data-bind=" text: max"></span>
+        </td>
+        <td style="padding: 4px;">
+          <span data-toggle="collapse"
+                data-bind="attr:{'data-target': `#tracked_${$parent.uuid()}`}"
+                class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="8">
+          <flip-card params="{
                         dataId: $data.uuid(),
-                        tabId: 'skills',
+                        tabId: $parent.tabId,
                         collapsable: true,
                         elementId: 'tracked',
                           context: {
@@ -64,25 +74,21 @@
                               replaceInList: $component.replaceInList
                           }
                         }">
-                    <div class="front">
-                        <div class="h4">
-                            <span data-bind="text: context.data.name"></span>
-                            <small data-bind="text: context.nameMeta(context.data)"></small>
-                        </div>
-                        <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-                         <button class="btn btn-link" data-bind="click: flip">
-                           <span class="glyphicon glyphicon-edit" aria-hidden="true">
-                           </span>
-                         </button>
-                        </div>
-                        <p class="card-description" data-bind="markdownPreview: context.data.description"></p>
-                    </div>
-                     <div class="back">
-                            <div class="h4">
-                                <span data-bind="text: context.data.name"></span>
-                                <small data-bind="text: context.nameMeta(context.data)"></small>
-                            </div>
-                            <tracked-form params="{
+            <div class="front">
+              <card-flip-button params="{ flip: flip }"></card-flip-button>
+              <div class="h4">
+                <span data-bind="text: context.data.name"></span>
+                <small data-bind="text: context.nameMeta(context.data)"></small>
+              </div>
+              <p class="card-description"
+                 data-bind="markdownPreview: context.data.description"></p>
+            </div>
+            <div class="back">
+              <div class="h4">
+                <span data-bind="text: context.data.name"></span>
+                <small data-bind="text: context.nameMeta(context.data)"></small>
+              </div>
+              <tracked-form params="{
                                 containerId: elementId,
                                 data: context.data,
                                 modelName: context.data.constructor.name,
@@ -91,20 +97,21 @@
                                 forceCardResize: forceCardResize,
                                 replaceInParent: context.replaceInList,
                                  }">
-                            </tracked-form>
-                     </div>
-                 </flip-card>
-            </td>
-            </tr>
-            <!-- /ko -->
-            <!-- ko if: filteredAndSortedEntities().length == 0 -->
-            <tr>
-                <td colspan="12" class="text-center well">
-                    No Tracked Features, Feats, or Traits to display.
-                </td>
-            </tr>
-            <!-- /ko -->
-        </tbody>
-    </table>
+              </tracked-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <!-- ko if: filteredAndSortedEntities().length == 0 -->
+      <tr>
+        <td colspan="12"
+            class="text-center well">
+          No Tracked Features, Feats, or Traits to display.
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
     <!-- /ko -->
+  </table>
 </div>

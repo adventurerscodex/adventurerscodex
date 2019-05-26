@@ -1,47 +1,45 @@
 <form data-bind="submit: $component.submit">
-  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-        </span>
-    </button>
-    <button class="btn btn-link btn-success" type="submit" value="submit">
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-        </span>
-    </button>
-  </div>
-<fieldset class="fieldset-bordered">
- <legend>Tracked</legend>
- <div data-bind="with: $component.tracked">
-     <div class="form-group">
-       <label for="bonus"
-              class="control-label">Max</label>
-       <input type="number"
-              class="form-control"
-              id="max"
-              min="1"
-              data-bind='textInput: max, hasFocus: $component.formElementHasFocus'>
-     </div>
-     <div class="form-group">
-       <label class="control-label">Resets on...</label>
-       <div class="btn-group btn-group-justified btn-group-sm"
-            role="group">
-         <label class="btn btn-default btn-sm"
-                data-bind="css: { active: resetsOn() === 'short'}">
-         <input type="radio" class="hide-block"
-         name="featureResetsOnShort" value="short" data-bind="checked: resetsOn"/>
-         <img class="action-bar-icon" data-bind="attr: { src: $component.meditationWhite }"></img>
-         &nbsp;&nbsp;&nbsp;Short Rest
-       </label>
-         <label class="btn btn-default  btn-sm"
-                data-bind="css: { active: resetsOn() === 'long'}">
-         <input type="radio" class="hide-block"
-         name="featureResetsOnLong" value="long" data-bind="checked: resetsOn"/>
-         <img class="action-bar-icon" data-bind="attr: { src: $component.campingTentWhite }"></img>
-         &nbsp;&nbsp;&nbsp;Long Rest
-       </label>
-       </div>
-   </div>
-</fieldset>
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <fieldset class="fieldset-bordered">
+    <legend>Tracked</legend>
+    <div data-bind="with: $component.tracked">
+      <div class="form-group">
+        <label for="bonus"
+               class="control-label">Max</label>
+        <input type="number"
+               class="form-control"
+               min="1"
+               data-bind='textInput: max, hasFocus: $component.formElementHasFocus'>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Resets on...</label>
+        <div class="btn-group btn-group-justified btn-group-sm"
+             role="group">
+          <label class="btn btn-default btn-sm"
+                 data-bind="css: { active: resetsOn() === 'short'}">
+            <input type="radio"
+                   class="hide-block"
+                   name="featureResetsOnShort"
+                   value="short"
+                   data-bind="checked: resetsOn" />
+            <img class="action-bar-icon"
+                 data-bind="attr: { src: $component.meditationWhite }"></img>
+            &nbsp;&nbsp;&nbsp;Short Rest
+          </label>
+          <label class="btn btn-default  btn-sm"
+                 data-bind="css: { active: resetsOn() === 'long'}">
+            <input type="radio"
+                   class="hide-block"
+                   name="featureResetsOnLong"
+                   value="long"
+                   data-bind="checked: resetsOn" />
+            <img class="action-bar-icon"
+                 data-bind="attr: { src: $component.campingTentWhite }"></img>
+            &nbsp;&nbsp;&nbsp;Long Rest
+          </label>
+        </div>
+      </div>
+  </fieldset>
   <div class="pull-right">
     <button class="btn btn-sm btn-default"
             type="reset"
