@@ -1,4 +1,3 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
 <div id="proficiency-pane" class="ac-pane panel-body">
   <div class="h4 card-title">
     Proficiencies
@@ -20,6 +19,7 @@
         </th>
       </tr>
     </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
       <tr data-toggle="collapse"
@@ -37,7 +37,7 @@
         <td colspan="3">
           <flip-card params="{
             dataId: $data.uuid,
-            tabId: 'skills',
+            tabId: $parent.tabId,
             collapsable: true,
             elementId: 'proficiency_list',
             context: {
@@ -49,14 +49,9 @@
           }">
             <div class="front"
                  data-bind="with: context.data">
+                 <card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
                  <div class="h4">
                    <div data-bind="text:name"></div>
-                 </div>
-                 <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-                   <button class="btn btn-link" data-bind="click: $parent.flip">
-                       <span class="glyphicon glyphicon-edit" aria-hidden="true">
-                       </span>
-                   </button>
                  </div>
               <!-- ko if: description -->
               <p class="card-description"
@@ -107,6 +102,6 @@
         </td>
       </tr>
     </tfoot>
+    <!-- /ko -->
   </table>
   </div>
-<!-- /ko -->

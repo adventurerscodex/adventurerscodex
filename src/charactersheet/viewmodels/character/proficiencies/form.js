@@ -7,10 +7,15 @@ import {
 import { FormController } from 'charactersheet/components/form-controller-component';
 import { Proficiency } from 'charactersheet/models';
 
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 export class ProficiencyFormViewModel  extends FormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     generateBlank() {
         return new Proficiency();
     }
@@ -44,13 +49,6 @@ export class ProficiencyFormViewModel  extends FormController {
     notify() { Notifications.proficiency.changed.dispatch(); }
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addFeature();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
         // Deep copy of properties in object
         ...Proficiency.validationConstraints
     };
