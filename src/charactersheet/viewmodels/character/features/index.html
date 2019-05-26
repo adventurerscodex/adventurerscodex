@@ -1,10 +1,10 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div id="feature-pane" class="ac-pane panel-body">
+<div id="feature-pane"
+     class="ac-pane panel-body">
   <div class="h4 card-title">
     Class Features
   </div>
   <table class="table table-responsive table-ac-bordered table-hover">
-    <thead  class="ac-table-header">
+    <thead class="ac-table-header">
       <tr>
         <th data-bind="click: function(){sortBy('name');}">
           Feature
@@ -15,21 +15,29 @@
           <span data-bind="css: sortArrow('characterClass')"></span>
         </th>
         <th>
-          <a href="#" class="" data-bind="{click: collapseAll}">
-              <span class="fa fa-minus"></span></a>
+          <a href="#"
+             class=""
+             data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span></a>
         </th>
       </tr>
     </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
-      <tr data-toggle="collapse" class="clickable expandRow"
-      data-bind="attr:{'data-target': `#feature_list_${uuid()}`, id: `#feature_row_${uuid()}`}">
+      <tr data-toggle="collapse"
+          class="clickable expandRow"
+          data-bind="attr:{'data-target': `#feature_list_${uuid()}`, id: `#feature_row_${uuid()}`}">
         <td><span data-bind="text: $component.shortName(name)"></span>
-            <span data-bind="visible: $component.showTracked($data)" style="opacity: .9" class="glyphicon glyphicon-time" aria-hidden="true"></span>
+          <span data-bind="visible: $component.showTracked($data)"
+                style="opacity: .9"
+                class="glyphicon glyphicon-time"
+                aria-hidden="true"></span>
         </td>
         <td>
-            <span data-bind="text: characterClass"></span>
-            <span class="text-muted" data-bind="text:`(${level()})`"></span>
+          <span data-bind="text: characterClass"></span>
+          <span class="text-muted"
+                data-bind="text:`(${level()})`"></span>
         </td>
         <td>
           <span data-toggle="collapse"
@@ -41,7 +49,7 @@
         <td colspan="3">
           <flip-card params="{
                 dataId: $data.uuid,
-                tabId: 'skills',
+                tabId: $parent.tabId,
                 collapsable: true,
                 elementId: 'feature_list',
                 context: {
@@ -53,25 +61,21 @@
               }">
             <div class="front">
               <div data-bind="with: context.data">
-              <div class="h4">
-                <div data-bind="text:name"></div>
-                <small><span data-bind="text: characterClass"></span> (lvl <span data-bind="text: level"></span>)</small>
-              </div>
-              <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-                <button class="btn btn-link" data-bind="click: $parent.flip">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true">
-                    </span>
-                </button>
-              </div>
-              <!-- ko if: description -->
-                <p class="card-description" data-bind="markdownPreview: description "></p>
-              <!-- /ko -->
-              <!-- ko ifnot: description -->
+                <card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+                <div class="h4">
+                  <div data-bind="text:name"></div>
+                  <small><span data-bind="text: characterClass"></span> (lvl <span data-bind="text: level"></span>)</small>
+                </div>
+                <!-- ko if: description -->
+                <p class="card-description"
+                   data-bind="markdownPreview: description"></p>
+                <!-- /ko -->
+                <!-- ko ifnot: description -->
                 <p>No Description</p>
-              <!-- /ko -->
+                <!-- /ko -->
               </div>
             </div>
-            <div class="back" >
+            <div class="back">
               <feature-form params="{
                 data: context.data,
                 containerId: elementId,
@@ -80,8 +84,7 @@
                 forceCardResize: forceCardResize,
                 replaceInParent: context.replaceInList,
                 removeFromParent: context.removeFromList
-               }"
-              ></feature-form>
+               }"></feature-form>
             </div>
           </flip-card>
         </td>
@@ -91,28 +94,26 @@
     <tfoot>
       <tr class="collapseRow">
         <td colspan="4">
-          <div id="add-feature" class="collapse add-card">
+          <div id="add-feature"
+               class="collapse add-card">
             <feature-form params="{
               addForm: true,
               containerId:'add-feature',
               show: $component.addForm,
               flip: $component.toggleaddForm,
               addToParent: $component.addToList,
-             }"
-            ></feature-form>
-        </div>
-        <!-- ko ifnot: $component.addForm -->
+             }"></feature-form>
+          </div>
+          <!-- ko ifnot: $component.addForm -->
           <button type="button"
                   class="btn btn-sm btn-link btn-block"
-                  id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-feature"
-
                   data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Feature</button>
           <!-- /ko -->
         </td>
       </tr>
     </tfoot>
+    <!-- /ko -->
   </table>
 </div>
-<!-- /ko -->

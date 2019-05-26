@@ -1,23 +1,25 @@
-
 import {
   DataRepository,
-  Fixtures
+  Fixtures,
+  Notifications
 } from 'charactersheet/utilities';
-
 import { Feature } from 'charactersheet/models';
-import { Notifications } from 'charactersheet/utilities';
 import { TrackedFormController } from 'charactersheet/components/form-controller-tracked-component';
 
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 export class FeatureFormViewModel  extends TrackedFormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     generateBlank() {
         return new Feature();
     }
     classOptions = Fixtures.profile.classOptions;
 
-    // Pre-pop methods
     featuresPrePopFilter = (request, response) => {
         const term = request.term.toLowerCase();
         let results = [];
@@ -48,14 +50,6 @@ export class FeatureFormViewModel  extends TrackedFormController {
     notify() { Notifications.feature.changed.dispatch(); }
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addFeature();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
-        // Deep copy of properties in object
         ...Feature.validationConstraints
     };
 

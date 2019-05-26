@@ -2,15 +2,17 @@ import { ACTableComponent } from 'charactersheet/components/table-component';
 import { Feature } from 'charactersheet/models';
 import { FeatureFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
+
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
-
 
 export class FeaturesViewModel extends ACTableComponent {
     constructor(params) {
         super(params);
         this.addFormId = '#add-feature';
         this.collapseAllId = '#feature-pane';
+        autoBind(this);
     }
 
     modelClass = () => {

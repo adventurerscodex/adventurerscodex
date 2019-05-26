@@ -1,20 +1,14 @@
 <form data-bind="submit: $component.submit">
-  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-        </span>
-    </button>
-    <button class="btn btn-link btn-success" type="submit" value="submit">
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-        </span>
-    </button>
-  </div>
-  <!-- ko ifnot: $component.data -->
-  <div class="h4" style="padding-top: 5px;">
-    New Feature
-  </div>
-  <!-- /ko -->
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
   <div data-bind="with: entity">
+    <!-- ko if: $component.existingData -->
+    <div class="h4" style="padding-top: 5px;" data-bind="text: name"></div>
+    <!-- /ko -->
+    <!-- ko ifnot: $component.existingData -->
+    <div class="h4" style="padding-top: 5px;">
+      New Feature
+    </div>
+    <!-- /ko -->
     <div class="form-group">
       <label for="name"
              class="control-label">Name <span data-bind="text: $component.formElementHasFocus()"></span></label>
@@ -51,17 +45,14 @@
       <label for="npcDescription"
              class="control-label">Description</label>
       <!-- ko if: $component.show -->
-
       <textarea type="text"
                 rows="6"
                 class="form-control"
-                id="featureEditDescriptionTextarea"
                 data-bind='value: description, markdownEditor: true'></textarea>
       <!-- /ko -->
     </div>
     <div class="form-group">
       <input type='checkbox'
-             style=""
              class='ac-checkbox sr-only'
              data-bind="checked: $component.isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
       <label data-bind="attr: {for: `${$component.containerId}_tracked`}">
@@ -70,7 +61,6 @@
             style="cursor:pointer;"
             data-bind="popover: { content: $component.popoverText }"></span>
     </div>
-  </div>
   <!-- ko if: $component.isTracked() -->
   <fieldset class="fieldset-bordered">
    <legend>Tracked</legend>
@@ -80,7 +70,6 @@
                 class="control-label">Max</label>
          <input type="number"
                 class="form-control"
-                id="max"
                 min="1"
                 data-bind='textInput: max'>
        </div>
@@ -105,39 +94,12 @@
          </div>
      </div>
   </fieldset>
-
-    <!-- /ko -->
-    <!-- ko ifnot: addForm -->
-    <div>
-      <button class="btn btn-sm btn-danger"
-              type="button"
-              data-bind="click: $component.delete">Delete</button>
-      <div class="pull-right">
-        <button class="btn btn-sm btn-default"
-                type="reset"
-                data-bind="click: $component.reset">Cancel</button>
-        <button class="btn btn-sm btn-primary"
-                type="submit">Save</button>
-      </div>
-    </div>
-    <!-- /ko -->
-    <!-- ko if: addForm -->
-      <div class="pull-right">
-          <button type="button"
-                  class="btn btn-default btn-sm"
-                  data-bind="click: $component.reset">Cancel</button>
-          <button type="submit"
-                  class="btn btn-primary btn-sm">Add Feature</button>
-      </div>
-    <!-- /ko -->
-    <p class="text-muted text-left ogl-disclaimer"
-       data-bind='visible: showDisclaimer'>
-      <sm><i>This data is distributed under the
-            <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-              target='_blank'>
-              OGL</a><br/>
-              Open Game License v 1.0a Copyright 2000, Wizards of the Coast, LLC.
-         </i>
-      <sm>
-    </p>
+  <!-- /ko -->
+  </div>
+    <form-card-footer params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-card-footer>
 </form>

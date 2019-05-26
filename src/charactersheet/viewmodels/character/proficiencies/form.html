@@ -1,6 +1,6 @@
 <form data-bind="submit: $component.submit">
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
   <div data-bind="with: entity">
-    <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
     <!-- ko if: $component.existingData -->
     <div class="h4" style="padding-top: 5px;">
       <span data-bind="text: name"></span>
