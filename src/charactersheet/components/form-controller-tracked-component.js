@@ -1,8 +1,3 @@
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
-
 import { FormController } from './form-controller-component';
 import { Tracked } from 'charactersheet/models';
 
@@ -25,10 +20,6 @@ export class TrackedFormController extends FormController {
         }
     }
 
-    load () {
-        this.setUpSubscriptions();
-    }
-
     setUpSubscriptions () {
         super.setUpSubscriptions();
         const onTrackFormDisplay = this.isTracked.subscribe(()=>{this.forceResizeForTrackedForm();});
@@ -39,10 +30,9 @@ export class TrackedFormController extends FormController {
         setTimeout(this.forceCardResize, 50);
     }
 
-    refresh() {
-        super.refresh();
+    async refresh() {
+        await super.refresh();
         this.isTracked(false);
-        this.tracked(new Tracked());
         if (this.existingData && this.existingData.tracked()) {
             this.isTracked(true);
             this.tracked().importValues(this.existingData.tracked());

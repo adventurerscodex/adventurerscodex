@@ -1,7 +1,17 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
-import { Notifications } from 'charactersheet/utilities';
-import { Trait } from 'charactersheet/models';
-import { TraitFormViewModel } from './form';
+import {
+    ACTableComponent
+} from 'charactersheet/components/table-component';
+import {
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    Trait
+} from 'charactersheet/models';
+import {
+    TraitFormViewModel
+} from './form';
+
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -11,6 +21,7 @@ export class TraitsViewModel extends ACTableComponent {
         super(params);
         this.addFormId = '#add-trait';
         this.collapseAllId = '#trait-pane';
+        autoBind(this);
     }
 
     modelClass = () => {
@@ -20,8 +31,14 @@ export class TraitsViewModel extends ACTableComponent {
     sorts() {
         return {
             ...super.sorts(),
-            'race asc': { field: 'race', direction: 'asc'},
-            'race desc': { field: 'race', direction: 'desc'}
+            'race asc': {
+                field: 'race',
+                direction: 'asc'
+            },
+            'race desc': {
+                field: 'race',
+                direction: 'desc'
+            }
         };
     }
 

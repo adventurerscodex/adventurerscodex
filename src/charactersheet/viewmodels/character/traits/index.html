@@ -1,5 +1,5 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div id="trait-pane" class="ac-pane panel-body">
+<div id="trait-pane"
+     class="ac-pane panel-body">
   <div class="h4 card-title">
     Traits
   </div>
@@ -18,17 +18,21 @@
           <a href="#"
              class=""
              data-bind="{click: collapseAll}">
-              <span class="fa fa-minus"></span></a>
+            <span class="fa fa-minus"></span></a>
         </th>
       </tr>
     </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
       <tr data-toggle="collapse"
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#trait_list_${uuid()}`, id: `#trait_row_${uuid()}`}">
         <td><span data-bind="text: $component.shortName(name)"></span>
-          <span data-bind="visible: $component.showTracked($data)" style="opacity: .9" class="glyphicon glyphicon-time" aria-hidden="true"></span>
+          <span data-bind="visible: $component.showTracked($data)"
+                style="opacity: .9"
+                class="glyphicon glyphicon-time"
+                aria-hidden="true"></span>
         </td>
         <td><span data-bind="text: race"></span>
 
@@ -43,7 +47,7 @@
         <td colspan="3">
           <flip-card params="{
             dataId: $data.uuid,
-            tabId: 'skills',
+            tabId: $parent.tabId,
             collapsable: true,
             elementId: 'trait_list',
             context: {
@@ -55,19 +59,14 @@
             }">
             <div class="front"
                  data-bind="with: context.data">
+              <card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
               <div class="h4">
                 <div data-bind="text:name"></div>
                 <small><span data-bind="text: race"></span></small>
               </div>
-              <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-                <button class="btn btn-link" data-bind="click: $parent.flip">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true">
-                    </span>
-                </button>
-              </div>
               <!-- ko if: description -->
               <p class="card-description"
-                 data-bind="markdownPreview: description "></p>
+                 data-bind="markdownPreview: description"></p>
               <!-- /ko -->
               <!-- ko ifnot: description -->
               <p>No Description</p>
@@ -82,8 +81,7 @@
                 forceCardResize: forceCardResize,
                 replaceInParent: context.replaceInList,
                 removeFromParent: context.removeFromList
-               }"
-              ></trait-form>
+               }"></trait-form>
             </div>
           </flip-card>
         </td>
@@ -93,15 +91,15 @@
     <tfoot>
       <tr>
         <td colspan="4">
-          <div id="add-trait" class="collapse add-card">
+          <div id="add-trait"
+               class="collapse add-card">
             <trait-form params="{
               addForm: true,
               containerId:'add-trait',
               show: $component.addForm,
               flip: $component.toggleaddForm,
               addToParent: $component.addToList,
-             }"
-            ></trait-form>
+             }"></trait-form>
           </div>
           <!-- ko ifnot: $component.addForm -->
           <center>
@@ -116,6 +114,6 @@
         </td>
       </tr>
     </tfoot>
+    <!-- /ko -->
   </table>
 </div>
-<!-- /ko -->
