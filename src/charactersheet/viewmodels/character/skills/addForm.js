@@ -1,58 +1,68 @@
-import 'bin/popover_bind';
 import 'select2/dist/css/select2.min.css';
 import 'bin/knockout-select2';
 
 import {
-  AbilityScore,
-  Skill
+    AbilityScore,
+    Skill
 } from 'charactersheet/models/character';
-
 import {
-    CoreManager,
-    Notifications
+    CoreManager
 } from 'charactersheet/utilities';
+import {
+    FormController
+} from 'charactersheet/components/form-controller-component';
+import {
+    ProficiencyTypeComponentViewModel
+} from 'charactersheet/components/proficiency-marker';
 
-import { ProficiencyTypeComponentViewModel } from 'charactersheet/components/proficiency-marker';
-
-import {find } from 'lodash';
+import autoBind from 'auto-bind';
+import {
+    find
+} from 'lodash';
 import ko from 'knockout';
 import template from './addForm.html';
 
-export class SkillsAddFormViewModel {
+export class SkillsAddFormViewModel extends FormController {
     constructor(params) {
-        this.addSkillToView = params.addSkillToView;
-        this.addForm = params.addForm;
-        this.toggleaddForm = params.toggleaddForm;
-        this.abilityScores = [];
+        super(params);
+        this.flipOnSave = params.flipOnSave;
+        this.abilityScores = ko.observableArray([]);
         this.abilityScoreChoice = ko.observable('Strength');
-        this.skill = ko.observable(new Skill());
-        this.formElementHasFocus = ko.observable(false);
+        autoBind(this);
     }
 
-    setUpSubscriptions = () => {
-        this.addForm.subscribe(this.reset);
+    generateBlank() {
+        return new Skill();
     }
 
-    async load() {
+    async refresh() {
+        await super.refresh();
         const key = CoreManager.activeCore().uuid();
-        this.skill(new Skill());
-        this.skill().coreUuid(key);
-        const abilityScores = await AbilityScore.ps.list({coreUuid: key});
-        this.abilityScores = abilityScores.objects;
-        this.setUpSubscriptions();
+        const abilityScores = await AbilityScore.ps.list({
+            coreUuid: key
+        });
+        this.abilityScores(abilityScores.objects);
     }
 
-    reset = () => {
-        if (this.addForm()) {
-            this.formElementHasFocus(true);
-        } else {
-            this.formElementHasFocus(false);
-        }
-        const key = CoreManager.activeCore().uuid();
-        this.skill(new Skill());
-        this.skill().coreUuid(key);
-        this.abilityScoreChoice = ko.observable('Strength');
+    async submit() {
+        await super.submit();
+        this.flipOnSave();
     }
+
+    // refreshOnShow = async () => {
+    //     if (this.show()) {
+    //         await this.refresh();
+    //     }
+    // }
+    // async submit() {
+    //     await super.submit();
+    //     await this.refresh();
+    // }
+
+    // reset = () => {
+    //     this.abilityScoreChoice('Strength');
+    //     super.reset();
+    // }
 
     proficiencyOptions = [
         'not',
@@ -66,17 +76,13 @@ export class SkillsAddFormViewModel {
             return '';
         } else if (choice.id == 'not') {
             return $('<span style="padding: 10px">No Proficiency</span>');
-        }
-        else if (choice.id == 'expertise') {
-            return $('<span style="padding: 10px"> '+ ProficiencyTypeComponentViewModel.EXPERT_TEMPLATE + ' Expertise</span>');
-        }
-        else if (choice.id == 'proficient') {
-            return $('<span style="padding: 10px"> '+ ProficiencyTypeComponentViewModel.NORMAL_TEMPLATE + ' Proficient</span>');
-        }
-        else if (choice.id == 'half') {
-            return $('<span style="padding: 10px"> '+ ProficiencyTypeComponentViewModel.HALF_TEMPLATE + ' Half</span>');
-        }
-      else return '';
+        } else if (choice.id == 'expertise') {
+            return $('<span style="padding: 10px"> ' + ProficiencyTypeComponentViewModel.EXPERT_TEMPLATE + ' Expertise</span>');
+        } else if (choice.id == 'proficient') {
+            return $('<span style="padding: 10px"> ' + ProficiencyTypeComponentViewModel.NORMAL_TEMPLATE + ' Proficient</span>');
+        } else if (choice.id == 'half') {
+            return $('<span style="padding: 10px"> ' + ProficiencyTypeComponentViewModel.HALF_TEMPLATE + ' Half</span>');
+        } else return '';
     };
 
     formatProficiency = (choice) => {
@@ -85,45 +91,24 @@ export class SkillsAddFormViewModel {
         }
         if (choice.id == 'expertise') {
             return $(ProficiencyTypeComponentViewModel.EXPERT_TEMPLATE);
-        }
-        else if (choice.id == 'proficient') {
+        } else if (choice.id == 'proficient') {
             return $(ProficiencyTypeComponentViewModel.NORMAL_TEMPLATE);
-        }
-        else if (choice.id == 'half') {
+        } else if (choice.id == 'half') {
             return $(ProficiencyTypeComponentViewModel.HALF_TEMPLATE);
-        }
-      else return '';
+        } else return '';
     };
 
-    abilityScoreOptions = () => this.abilityScores.map((score)=>(score.name()));
+    abilityScoreOptions = () => this.abilityScores().map((score) => (score.name()));
 
-    submit = async () => {
+    save = async () => {
         // HACKALERT: cannot figure out how to set objects in select2, so just
         // use a component value and update the value (to get around two way binding)
-        const abilityScore = find(this.abilityScores, (score)=>(score.name() === this.abilityScoreChoice()));
-        this.skill().abilityScore(abilityScore);
-
-        const newSkillResponse = await this.skill().ps.create();
-        const newSkill = newSkillResponse.object;
-        await newSkill.updateBonuses();
-
-        this.addSkillToView(newSkill);
-        this.toggleaddForm();
-    }
-
-    cancel = () => {
-        this.reset();
-        this.toggleaddForm();
+        const abilityScore = find(this.abilityScores(), (score) => (score.name() === this.abilityScoreChoice()));
+        this.entity().abilityScore(abilityScore);
+        await super.save();
     }
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addSkill();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
         // Deep copy of properties in object
         ...Skill.validationConstraints
     };

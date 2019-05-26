@@ -111,7 +111,7 @@
                <magic-item-form params="{
                    containerId: 'add-magic-item',
                    show: addForm,
-                   flip: $component.toggleaddForm,
+                   flip: $component.toggleShowAddForm,
                    addToParent: $component.addToList,
                   }"
                ></magic-item-form>
@@ -134,7 +134,7 @@
                     id="magicitemAddButton"
                     data-toggle="collapse"
                     data-target="#add-magic-item"
-                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Magic Item</button>
+                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Magic Item</button>
             <!-- /ko -->
           </div>
           <div class=" col-xs-4 text-muted" style="text-align: right">

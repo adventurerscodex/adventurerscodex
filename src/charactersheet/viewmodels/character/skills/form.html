@@ -1,37 +1,33 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<form class="form-horizontal" data-bind="{submit: $component.submit}">
-  <div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-    <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-        </span>
-    </button>
-    <button class="btn btn-link btn-success" type="submit" value="submit">
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-        </span>
-    </button>
-  </div>
-<table class="table table-responsive table-ac-bordered table-hover">
-  <thead>
-    <tr>
-      <th data-bind="click: ()=>{sortBy('proficiency');}">
-        <span class="glyphicon glyphicon-ok"></span>
-        <span data-bind="css: sortArrow('proficiency')"></span>
-      </th>
-      <th data-bind="click: ()=>{sortBy('name');}">
-        Skill
-        <span data-bind="css: sortArrow('name')"></span>
-      </th>
-      <th colspan="2">
-        Modifier (Bonus)
-      </th>
-    </tr>
-  </thead>
-   <tbody data-bind='foreach: filteredAndSortedSkills'>
-    <tr>
+<form class="form-horizontal"
+      data-bind="{submit: $component.submit}">
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead class="ac-table-header">
+      <tr>
+        <th data-bind="click: ()=>{sortBy('proficiency');}">
+          <span class="glyphicon glyphicon-ok"></span>
+          <span data-bind="css: sortArrow('proficiency')"></span>
+        </th>
+        <th data-bind="click: ()=>{sortBy('name');}">
+          Skill
+          <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th colspan="2">
+          Modifier (Bonus)
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr>
         <td class="selectDropdown">
-         <div data-bind="attr: {id: `skill_proficiency_select_${$data.__id}`}" class="selectit select-proficiency" style="position:relative">
-          <select class="form-control" style="width: 50px; position:relative"
-          data-bind="value: proficiency,
+          <div data-bind="attr: {id: `skill_proficiency_select_${$data.__id}`}"
+               class="selectit select-proficiency"
+               style="position:relative">
+            <select class="form-control"
+                    style="width: 50px; position:relative"
+                    data-bind="value: proficiency,
           options: $component.proficiencyOptions,
           event: { change: $component.updateSkill  },
           select2: {
@@ -41,12 +37,13 @@
             templateResult: $component.formatProficiencyOptions,
             dropdownParent: $(`#skill_proficiency_select_${$data.__id}`)
            }"></select>
-         </div>
+          </div>
         </td>
         <td><span data-bind="html: nameLabel"></span></td>
         <td style="width: 100px;">
           <div class="input-group skill-modifier-input">
-            <input type="number" class="form-control"
+            <input type="number"
+                   class="form-control"
                    data-bind="textInput: modifier, event: { change: $component.updateSkill }"></input>
             <span class="input-group-addon">
               <span data-bind="text: bonusNumber"></span>
@@ -54,38 +51,42 @@
           </div>
         </td>
         <td>
-          <a data-bind="click: $component.removeSkill" href="#">
+          <a data-bind="click: $component.delete"
+             href="#">
             <i class="fa fa-trash-o fa-color-hover"></i>
           </a>
         </td>
-    </tr>
-  </tbody>
-</table>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+    <!-- /ko -->
+  </table>
 </form>
-<!-- extra table? its because of the form wrap on the one above -->
+<!-- extra table? its because of the form wrapping the one above -->
 <table class="table table-responsive table-ac-bordered table-hover">
   <tfoot>
     <tr>
       <td>
-        <div id="add-skill" class="collapse panel-body">
+        <div id="add-skill"
+             class="collapse panel-body">
           <skills-add-form-view params="{
             containerId: 'add-skill',
-            addSkillToView: addSkillToView,
-            addForm: $component.addForm,
-            toggleaddForm: $component.toggleaddForm
+            show: $component.addForm,
+            flipOnSave: flip,
+            flip: $component.toggleShowAddForm,
+            addToParent: $component.addToList,
             }">
           </skills-add-form-view>
         </div>
-      <!-- ko ifnot: $component.addForm -->
-      <button type="button"
-              class="btn btn-link btn-sm btn-block"
-              id="skillAddButton"
-              data-toggle="collapse"
-              data-target="#add-skill"
-              data-bind="click: $component.toggleaddForm"><i class="fa fa-plus"></i> Add Skill</button>
-      <!-- /ko -->
-    </td>
-  </tr>
-</tfoot>
+        <!-- ko ifnot: $component.addForm -->
+        <button type="button"
+                class="btn btn-link btn-sm btn-block"
+                id="skillAddButton"
+                data-toggle="collapse"
+                data-target="#add-skill"
+                data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Skill</button>
+        <!-- /ko -->
+      </td>
+    </tr>
+  </tfoot>
 </table>
-<!--/ko -->

@@ -161,7 +161,7 @@
             <spell-form params="{
               containerId:'add-spell',
               show: $component.addForm,
-              flip: $component.toggleaddForm,
+              flip: $component.toggleShowAddForm,
               addToParent: $component.addToList
              }"
             ></spell-form>
@@ -185,7 +185,7 @@
                     id="spellAddButton"
                     data-toggle="collapse"
                     data-target="#add-spell"
-                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Spell</button>
+                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell</button>
               <!-- /ko -->
             </div>
               <div class="col-xs-4 text-muted">

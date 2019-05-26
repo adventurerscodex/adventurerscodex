@@ -86,7 +86,7 @@
               addForm: true,
               containerId:'add-proficiency',
               show: $component.addForm,
-              flip: $component.toggleaddForm,
+              flip: $component.toggleShowAddForm,
               addToParent: $component.addToList,
              }"
             ></proficiency-form>
@@ -97,7 +97,7 @@
                   id="proficiencyAddButton"
                   data-toggle="collapse"
                   data-target="#add-proficiency"
-                  data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Proficiency</button>
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Proficiency</button>
           <!-- /ko -->
         </td>
       </tr>

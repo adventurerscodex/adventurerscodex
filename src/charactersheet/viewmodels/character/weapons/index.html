@@ -125,7 +125,7 @@
             <weapon-form params="{
               containerId:'add-weapon',
                 show: $component.addForm,
-                flip: $component.toggleaddForm,
+                flip: $component.toggleShowAddForm,
                 addToParent: $component.addToList
                }"
             ></weapon-form>
@@ -148,7 +148,7 @@
                     id="weaponAddButton"
                     data-toggle="collapse"
                     data-target="#add-weapon"
-                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Weapon</button>
+                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Weapon</button>
             <!-- /ko -->
           </div>
           <div class="pull-right col-xs-4 text-muted" style="text-align: right">

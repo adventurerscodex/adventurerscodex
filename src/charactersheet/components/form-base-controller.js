@@ -24,11 +24,17 @@ export class FormBaseController {
     }
 
     setUpSubscriptions() {
-        const onShow = this.show.subscribe(this.refresh);
+        const onShow = this.show.subscribe(this.refreshOnShow);
         this.subscriptions.push(onShow);
 
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
+    }
+
+    refreshOnShow = async () => {
+        if (this.show()) {
+            await this.refresh();
+        }
     }
 
     disposeOfSubscriptions() {

@@ -1,6 +1,7 @@
 <div id="skill-pane" class="ac-pane">
   <flip-card params="{
         collapsable: false,
+        tabId: $parent.tabId,
         elementId: 'skills-list'
       }">
     <div class="front">
@@ -11,7 +12,7 @@
       </div>
      <skills-view params="{
         containerId: elementId,
-        showBack: showBack,
+        show: showFront,
         flip: flip}">
       </skills-view>
     </div>
@@ -23,7 +24,7 @@
       </div>
       <skills-form-view params="{
          containerId: elementId,
-         showBack: showBack,
+         show: showBack,
          flip: flip,
          forceCardResize: forceCardResize}">
        </skills-form-view>

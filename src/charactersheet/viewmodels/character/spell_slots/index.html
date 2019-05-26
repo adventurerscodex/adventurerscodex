@@ -73,7 +73,7 @@
                class="collapse">
                <spell-slot-form params="{
                   containerId: 'add-spell-slot',
-                   flip: $component.toggleaddForm,
+                   flip: $component.toggleShowAddForm,
                    addToParent: $component.addToList,
                    nextSlotLevel: $component.nextSlotLevel
                 }">
@@ -85,7 +85,7 @@
                     id="proficiencyAddButton"
                     data-toggle="collapse"
                     data-target="#add-spell-slot"
-                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Spell Slot</button>
+                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell Slot</button>
           <!-- /ko -->
         </td>
       </tr>

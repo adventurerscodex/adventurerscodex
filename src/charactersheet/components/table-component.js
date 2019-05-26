@@ -18,6 +18,7 @@ export class ACTableComponent {
         this.sort = ko.observable(this.getDefaultSort());
         this.filter = ko.observable('');
         this.subscriptions = [];
+        this.listeners = [];
         this.refresh = this.refresh.bind(this);
         this.addToList = this.addToList.bind(this);
         this.replaceInList = this.replaceInList.bind(this);
@@ -86,7 +87,7 @@ export class ACTableComponent {
 
     showTracked (entity) {return entity.tracked != undefined && entity.tracked() != null;}
 
-    toggleaddForm =  () => {
+    toggleShowAddForm =  () => {
         if (this.addForm()) {
             this.addForm(false);
             $(this.addFormId).collapse('hide');

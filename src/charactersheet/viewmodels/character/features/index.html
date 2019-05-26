@@ -100,7 +100,7 @@
               addForm: true,
               containerId:'add-feature',
               show: $component.addForm,
-              flip: $component.toggleaddForm,
+              flip: $component.toggleShowAddForm,
               addToParent: $component.addToList,
              }"></feature-form>
           </div>
@@ -109,7 +109,7 @@
                   class="btn btn-sm btn-link btn-block"
                   data-toggle="collapse"
                   data-target="#add-feature"
-                  data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Feature</button>
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Feature</button>
           <!-- /ko -->
         </td>
       </tr>

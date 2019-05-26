@@ -97,7 +97,7 @@
               addForm: true,
               containerId:'add-trait',
               show: $component.addForm,
-              flip: $component.toggleaddForm,
+              flip: $component.toggleShowAddForm,
               addToParent: $component.addToList,
              }"></trait-form>
           </div>
@@ -108,7 +108,7 @@
                     id="proficiencyAddButton"
                     data-toggle="collapse"
                     data-target="#add-trait"
-                    data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Trait</button>
+                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Trait</button>
           </center>
           <!-- /ko -->
         </td>

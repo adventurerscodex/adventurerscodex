@@ -20,7 +20,6 @@ export class Skill extends KOModel {
     bonusLabel = ko.observable('');
     bonusNumber = ko.observable('');
     passiveBonus = ko.observable('');
-    markedForSave = ko.observable(false);
 
     toSchemaValues = (values) => {
         // TODO: I have to do this because when delete is called, it only includes the IDs in the
@@ -62,12 +61,11 @@ export class Skill extends KOModel {
         var score = null;
         try {
             var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list(
+            const response = await AbilityScore.ps.read(
                 {coreUuid: key, uuid: this.abilityScore().uuid()}
             );
-            score = response.objects[0];
-        } catch(err) { /*Ignore*/ }
-
+            score = response.object;
+        } catch(err) {/*Ignore*/ }
         if (!score) {
             return 0;
         } else {
@@ -78,7 +76,6 @@ export class Skill extends KOModel {
     bonus = async () => {
         var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
         const abilityScore = await this.abilityScoreModifier();
-
         if (this.proficiency()) {
             bonus += this.proficiencyScore();
         }

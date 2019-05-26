@@ -102,7 +102,7 @@
             <armor-form params="{
                    containerId: 'add-armor',
                    show: $component.addForm,
-                   flip: $component.toggleaddForm,
+                   flip: $component.toggleShowAddForm,
                    addToParent: $component.addToList
                   }"></armor-form>
           </div>
@@ -123,7 +123,7 @@
                       class="btn btn-link btn-sm btn-block"
                       data-toggle="collapse"
                       data-target="#add-armor"
-                      data-bind="click: toggleaddForm"><i class="fa fa-plus"></i> Add Armor</button>
+                      data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Armor</button>
               <!-- /ko -->
             </div>
             <div class="pull-right col-xs-4 text-muted"

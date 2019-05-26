@@ -1,10 +1,4 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link" data-bind="click: flip">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true">
-      </span>
-  </button>
-</div>
+<card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead class="ac-table-header">
     <tr>
@@ -25,7 +19,9 @@
       </th>
     </tr>
   </thead>
-  <tbody data-bind='foreach: $component.filteredAndSortedSkills'>
+  <!-- ko if: loaded(), completeOn: 'render' -->
+  <tbody>
+    <!-- ko foreach: $component.filteredAndSortedEntities -->
     <tr>
       <td>
         <prof-marker params="proficiency: proficiency"></prof-marker>
@@ -34,6 +30,7 @@
       <td class="ac-table-data-cell"><strong><span data-bind="html: bonusLabel"></span></strong></td>
       <td class="ac-table-data-cell"><span style="color: #666" data-bind="text: passiveBonus"></span></td>
     </tr>
+    <!-- /ko -->
   </tbody>
+  <!-- /ko -->
 </table>
-<!-- /ko -->

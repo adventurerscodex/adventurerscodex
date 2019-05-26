@@ -90,7 +90,7 @@
             <item-form params="{
                 containerId: 'add-item',
                 show: $component.addForm,
-                flip: $component.toggleaddForm,
+                flip: $component.toggleShowAddForm,
                 addToParent: $component.addToParent,
                }"></item-form>
           </div>
@@ -114,7 +114,7 @@
                       class="btn btn-link btn-sm btn-block"
                       data-toggle="collapse"
                       data-target="#add-item"
-                      data-bind="click: toggleaddForm">
+                      data-bind="click: $component.toggleShowAddForm">
                 <i class="fa fa-plus"></i> Add Item
               </button>
               <!-- /ko -->
