@@ -2,10 +2,10 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
+import Clipboard from 'clipboard';
 import { ShareKey } from 'charactersheet/models/common';
 import ko from 'knockout';
 import template from './index.html';
-import Clipboard from 'clipboard';
 
 export function ShareViewModel(params) {
     var self = this;
@@ -41,7 +41,7 @@ export function ShareViewModel(params) {
         var key = CoreManager.activeCore().uuid();
         const response = await ShareKey.ps.list({coreUuid: key});
         return response.objects;
-    }
+    };
 
     self.deleteLink = async function(link) {
         await link.ps.delete();
