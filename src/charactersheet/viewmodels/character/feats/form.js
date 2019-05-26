@@ -4,17 +4,26 @@ import {
 } from 'charactersheet/utilities';
 
 import {
-  DataRepository,
-  Fixtures
+    DataRepository,
+    Fixtures
 } from 'charactersheet/utilities';
 
-import { Feat } from 'charactersheet/models';
-import { TrackedFormController } from 'charactersheet/components/form-controller-tracked-component';
+import {
+    Feat
+} from 'charactersheet/models';
+import {
+    TrackedFormController
+} from 'charactersheet/components/form-controller-tracked-component';
 
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class FeatFormViewModel  extends TrackedFormController {
+export class FeatFormViewModel extends TrackedFormController {
+    constructor(params) {
+        super(params);
+        autoBind(this);
+    }
     generateBlank() {
         return new Feat();
     }
@@ -25,9 +34,9 @@ export class FeatFormViewModel  extends TrackedFormController {
         const term = request.term.toLowerCase();
         let results = [];
         if (term && term.length > 2) {
-            const keys = DataRepository.feats
-                ?  Object.keys(DataRepository.feats)
-                : [];
+            const keys = DataRepository.feats ?
+                Object.keys(DataRepository.feats) :
+                [];
             results = keys.filter(function(name, idx, _) {
                 return name.toLowerCase().indexOf(term) > -1;
             });
@@ -46,19 +55,11 @@ export class FeatFormViewModel  extends TrackedFormController {
 
     popoverText = () => ('Tracked Feats are listed in the Tracker.');
 
-    // Pre-pop methods
-
-    notify() { Notifications.feat.changed.dispatch(); }
+    notify() {
+        Notifications.feat.changed.dispatch();
+    }
 
     validation = {
-        // submitHandler: (form, event) => {
-        //     event.preventDefault();
-        //     self.addFeature();
-        // },
-        // updateHandler: ($element) => {
-        //     self.addFormIsValid($element.valid());
-        // },
-        // Deep copy of properties in object
         ...Feat.validationConstraints
     };
 }
