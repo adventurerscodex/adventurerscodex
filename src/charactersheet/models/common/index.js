@@ -1,7 +1,6 @@
 export { Armor } from './armor';
 export { AuthenticationToken } from './authentication_token';
 export { Character } from './character';
-export { CharacterClass } from './character_class';
 export { ChatRoom } from './chat_room';
 export { Core } from './core';
 export { EncounterImage } from './image';
@@ -14,6 +13,7 @@ export { PlayerCard } from './player_card';
 export { ProfileImage } from './player_image';
 export { PlayerTypes } from './player_types';
 export { Presence } from './presence';
+export { ShareKey } from './share_key';
 export { Spell } from './spell';
 export { StatusWeightPair } from './status_weight_pair';
 export { Status } from './status';

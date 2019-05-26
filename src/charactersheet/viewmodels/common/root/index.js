@@ -2,20 +2,11 @@ import 'bin/knockout-bootstrap-modal';
 import 'charactersheet/viewmodels/common/character_picker';
 import 'charactersheet/viewmodels/common/characters';
 import {
-    AuthenticationServiceManager,
-    ChatServiceManager,
-    NodeServiceManager,
-    NotificationsServiceManager,
-    UserServiceManager,
-    XMPPService
-} from 'charactersheet/services';
-import {
     CoreManager,
     Notifications,
     TabFragmentManager
 } from 'charactersheet/utilities';
 import { Core } from 'charactersheet/models/common/core';
-import { PersistenceService } from 'charactersheet/services/common';
 import ko from 'knockout';
 import navLogo from 'images/logo-full-circle-icon.png';
 import style from 'style/site.css';
@@ -57,7 +48,7 @@ export function AdventurersCodexViewModel() {
     self.selectedCore = ko.observable();
     self.partyManagerModalStatus = ko.observable(false);
     self.characterAndGamesModalStatus = ko.observable(false);
-    self.exportModalStatus = ko.observable(false);
+    self.shareModalStatus = ko.observable(false);
     self.sessionExpiryModalStatus = ko.observable(false);
     self.navLogo = navLogo;
     self.version = VERSION;
@@ -135,8 +126,8 @@ export function AdventurersCodexViewModel() {
         self.characterAndGamesModalStatus(true);
     };
 
-    self.toggleExportModal = function() {
-        self.exportModalStatus(true);
+    self.toggleShareModal = function() {
+        self.shareModalStatus(true);
     };
 
     self.partyModalFinishedClosing = function() {
