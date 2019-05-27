@@ -1,90 +1,63 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link" data-bind="click: flip">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true">
-      </span>
-  </button>
-</div>
-<table class="table table-responsive table-ac-bordered table-hover"
-       id="statTable">
+<card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+<table class="table table-responsive table-ac-bordered table-hover">
+  <thead class="ac-table-header">
+    <tr>
+      <th colspan=2"></th>
+    </tr>
+  </thead>
+  <!-- ko if: loaded(), completeOn: 'render' -->
   <tbody>
     <tr>
-    <th>
-        <span class="h4">Armor Class</span>&nbsp;<span
-                  class="fa fa-info-circle statsPopover"
-                  id="otherStatsAcPopoverIconSpan"
-                  data-bind="popover: { content: armorClassPopover }">
+      <th>
+        <span class="h4">Armor Class</span>&nbsp;<span class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: armorClassPopover }">
         </span>
-    </th>
-    <td class="ac-table-data-cell">
-      <div id="ArmorClassShield" class="defenseShield">
-        <span data-bind="text: armorClass"></span>
-      </div>
-    </td>
+      </th>
+      <td class="ac-table-data-cell">
+        <div id="ArmorClassShield"
+             class="defenseShield">
+          <span data-bind="text: armorClass"></span>
+        </div>
+      </td>
     </tr>
-      <tr>
-        <th>
-          Proficiency Bonus&nbsp;<span
-            class="fa fa-info-circle statsPopover"
-            id="otherStatsProficiencyPopoverIconSpan"
-            data-bind="popover: { content: proficiencyPopover }">
-          </span>
-        </th>
-        <td class="ac-table-data-cell">
-          +<span
-            data-bind="text: proficiencyLabel"></span>
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Initiative&nbsp;<span
-            class="fa fa-info-circle statsPopover"
-            id="otherStatsInitiativePopoverIconSpan"
-            data-bind="popover: { content: initiativePopover }">
-          </span>
-        </th>
-          <td class="ac-table-data-cell">
-            <span
-              data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span>
-            <span data-bind="text: initiativeLabel"></span>
-            </td>
-      </tr>
-      <tr data-bind="with: otherStats">
-        <th>
+    <tr>
+      <th>
+        Proficiency Bonus&nbsp;<span class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: proficiencyPopover }">
+        </span>
+      </th>
+      <td class="ac-table-data-cell">
+        +<span data-bind="text: proficiencyLabel"></span>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        Initiative&nbsp;<span class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: initiativePopover }">
+        </span>
+      </th>
+      <td class="ac-table-data-cell">
+        <span data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span>
+        <span data-bind="text: initiativeLabel"></span>
+      </td>
+    </tr>
+    <tr data-bind="with: entity">
+      <th>
         Movement
-        </th>
-          <td class="ac-table-data-cell">
-            <span
-              data-bind="text: speed"></span>
-            </td>
-      </tr>
-      <tr data-bind="with: profile">
-        <th>
-          Level
-        </th>
-        <td class="ac-table-data-cell">
-          <span
-            data-bind="text: level" ></span>
-        </td>
-      </tr>
-      <tr data-bind="with: profile">
-        <th>
-        Experience
-        </th>
-        <td class="ac-table-data-cell">
-          <span
-            data-bind="text: experience"></span>
-        </td>
-      </tr>
-      <tr>
-        <th>
-          Inspiration
-        </th>
-        <td class="ac-table-data-cell">
-          <span data-bind="{click: toggleInspiration, css: otherStats().inspiration() ? 'inspiration-full':'inspiration-empty'}"
-                class="" style="cursor: pointer;"></span>
-        </td>
-      </tr>
+      </th>
+      <td class="ac-table-data-cell">
+        <span data-bind="text: speed"></span>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        Inspiration
+      </th>
+      <td class="ac-table-data-cell">
+        <span data-bind="{click: toggleInspiration, css: entity().inspiration() ? 'inspiration-full':'inspiration-empty'}"
+              style="cursor: pointer;"></span>
+      </td>
+    </tr>
   </tbody>
+  <!-- /ko -->
 </table>
-<!-- /ko -->

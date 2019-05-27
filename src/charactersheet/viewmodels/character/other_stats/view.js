@@ -1,8 +1,7 @@
 import 'bin/popover_bind';
 import {
     AbilityScore,
-    OtherStats,
-    Profile
+    OtherStats
 } from 'charactersheet/models/character';
 
 import {
@@ -16,59 +15,31 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 
+import { ACViewModel } from 'charactersheet/components/view-component';
+
+import autoBind from 'auto-bind';
 import { getModifier } from 'charactersheet/models/character/ability_score';
+
 
 import ko from 'knockout';
 import template from './view.html';
 
-class ACViewModel {
-    constructor(params) {
-        // Card Properties
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showBack = params.showBack;
-        this.flip = params.flip;
-
-        this.loaded = ko.observable(false);
-    }
-
-    async load() {
-        this.loaded(false);
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
-
-    async refresh() {
-        throw('refresh must be defined by subclasses of ACViewModel');
-    }
-
-    setUpSubscriptions() {
-        this.showBack.subscribe(this.subscribeToShowForm);
-    }
-
-    subscribeToShowForm = () => {
-        if (!this.showBack()) {
-            this.refresh();
-        }
-    }
-}
-
 export class OtherStatsViewModel extends ACViewModel {
     constructor(params) {
         super(params);
-
-        this.otherStats = ko.observable(new OtherStats());
-        this.profile = ko.observable(new Profile());
-
         // Calculated Field
         this.armorClass = ko.observable();
-
         this.proficiencyLabel = ko.observable();
         this.initiativeLabel = ko.observable();
 
         this.initiativePopover = ko.observable();
         this.proficiencyPopover = ko.observable();
         this.armorClassPopover = ko.observable();
+        autoBind(this);
+    }
+
+    generateBlank () {
+        return new OtherStats();
     }
 
     async load() {
@@ -76,19 +47,18 @@ export class OtherStatsViewModel extends ACViewModel {
         this.calculateInitiativeLabel();
         this.updateArmorClass();
         this.calculatedProficiencyLabel();
-        // Subscriptions
-        this.monitorSubscriptions();
+
     }
 
-    refresh = async () => {
+    async refresh () {
+        await super.refresh();
         const key = CoreManager.activeCore().uuid();
-        const otherStats = await OtherStats.ps.read({uuid: key});
-        const profile = await Profile.ps.read({uuid: key});
-        this.otherStats(otherStats.object);
-        this.profile(profile.object);
+        const response = await OtherStats.ps.read({uuid: key});
+        this.entity().importValues(response.object.exportValues());
     }
 
-    monitorSubscriptions = () => {
+    setUpSubscriptions = () => {
+        super.setUpSubscriptions();
         Notifications.armorClass.changed.add(this.updateArmorClass);
         Notifications.abilityScores.dexterity.changed.add(this.calculateInitiativeLabel);
         Notifications.proficiencyBonus.changed.add(this.calculatedProficiencyLabel);
@@ -98,7 +68,7 @@ export class OtherStatsViewModel extends ACViewModel {
     calculatedProficiencyLabel = async () => {
         const proficiencyService = ProficiencyService.sharedService();
         var level = await proficiencyService.proficiencyBonusByLevel();
-        const proficiency = parseInt(this.otherStats().proficiencyModifier());
+        const proficiency = parseInt(this.entity().proficiencyModifier());
         this.updateProficiencyPopoverMessage(level, proficiency);
         this.proficiencyLabel(proficiencyService.proficiency());
     }
@@ -117,8 +87,7 @@ export class OtherStatsViewModel extends ACViewModel {
             name: Fixtures.abilityScores.constants.dexterity.name
         });
         const dexterityModifier = response.objects[0].getModifier();
-        const initiativeModifier = this.otherStats().initiativeModifier();
-
+        const initiativeModifier = this.entity().initiativeModifier();
         this.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
         this.initiativeLabel(parseInt(dexterityModifier) + parseInt(initiativeModifier));
     }
@@ -135,9 +104,7 @@ export class OtherStatsViewModel extends ACViewModel {
         const dexMod = await acService.dexBonusFromArmor();
         const magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier();
         const shield = acService.getEquippedShieldBonus();
-
-        const modifier = this.otherStats().armorClassModifier() ? this.otherStats().armorClassModifier() : 0;
-
+        const modifier = this.entity().armorClassModifier() ? this.entity().armorClassModifier() : 0;
         this.armorClassPopover('<span><strong>Armor Class</strong> = '
          + 'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />'
          + `<strong>Armor Class</strong> = ${baseAC} + ${dexMod} + ${magicModifiers} + ${shield} + ${modifier}`);
@@ -149,8 +116,8 @@ export class OtherStatsViewModel extends ACViewModel {
     }
 
     toggleInspiration = async () => {
-        this.otherStats().inspiration(!this.otherStats().inspiration());
-        await this.otherStats().ps.save();
+        this.entity().inspiration(!this.entity().inspiration());
+        await this.entity().ps.save();
         Notifications.otherStats.inspiration.changed.dispatch();
     }
 }

@@ -1,103 +1,62 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<form class="other-stats-form" data-bind="{submit: $component.submit}">
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-      <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-      </span>
-  </button>
-  <button class="btn btn-link btn-success" type="submit" value="submit">
-      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-      </span>
-  </button>
-</div>
+<form class="other-stats-form"
+      data-bind="{submit: $component.submit}">
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
   <table class="table table-responsive table-ac-bordered table-hover">
-    <thead>
+    <thead class="ac-table-header">
       <tr>
         <th style="width:65%">
         </th>
         <th class="ac-table-data-cell">Modify</th>
       </tr>
     </thead>
-    <tbody>
-      <tr data-bind="with: otherStats">
+    <tbody data-bind="with: $component.entity">
+      <tr>
         <th>
           Armor Class
         </th>
         <td class="ac-table-data-cell">
           <input type="number"
-                  class="form-control ac-number-input"
-                  name="armorClassModifier"
-                  id="otherStatsAcModifierInput"
-                  aria-describedby="basic-addon2"
-                  data-bind="textInput: armorClassModifier, hasFocus: $component.formElementHasFocus">
+                 class="form-control ac-number-input"
+                 name="armorClassModifier"
+                 aria-describedby="basic-addon2"
+                 data-bind="textInput: armorClassModifier, hasFocus: $component.formElementHasFocus">
         </td>
       </tr>
-      <tr data-bind="with: otherStats">
+      <tr>
         <th>
           Proficiency Bonus
         </th>
         <td class="ac-table-data-cell">
           <input type="number"
-                  class="form-control ac-number-input"
-                  name="proficiencyModifier"
-                  id="otherStatsProficiencyBonusModifierInput"
-                  aria-describedby="basic-addon2"
-                  data-bind="value: proficiencyModifier">
+                 class="form-control ac-number-input"
+                 name="proficiencyModifier"
+                 aria-describedby="basic-addon2"
+                 data-bind="value: proficiencyModifier">
         </td>
       </tr>
-      <tr data-bind="with: otherStats">
+      <tr>
         <th>
           Initiative
         </th>
         <td class="ac-table-data-cell">
           <input type="number"
-                  class="form-control  ac-number-input"
-                  name="initiativeModifier"
-                  id="otherStatsInitiativeModiferInput"
-                  aria-describedby="basic-addon2"
-                  data-bind="value: initiativeModifier">
+                 class="form-control  ac-number-input"
+                 name="initiativeModifier"
+                 aria-describedby="basic-addon2"
+                 data-bind="value: initiativeModifier">
         </td>
       </tr>
-      <tr data-bind="with: otherStats">
+      <tr>
         <th>
           Movement
         </th>
         <td class="ac-table-data-cell">
           <input type="number"
-                  class="form-control ac-number-input"
-                  name="speed"
-                  id="otherStatsSpeedInput"
-                  aria-describedby="basic-addon2"
-                  data-bind="value: speed"
-                  min="0">
-        </td>
-      </tr>
-      <tr data-bind="with: profile">
-        <th>
-          Level
-        </th>
-        <td  class="ac-table-data-cell">
-          <input type="number"
-                class="form-control ac-number-input"
-                name="level"
-                id="otherStatsLevelInput"
-                aria-describedby="basic-addon2"
-                data-bind="value: level"
-                min="0">
-        </td>
-      </tr>
-      <tr data-bind="with: profile">
-        <th>
-          Experience
-        </th>
-        <td class="ac-table-data-cell">
-          <input type="number"
-                class="form-control ac-number-input"
-                name="experience"
-                id="otherStatsExperienceInput"
-                aria-describedby="basic-addon2"
-                data-bind="value: experience"
-                min="0">
+                 class="form-control ac-number-input"
+                 name="speed"
+                 aria-describedby="basic-addon2"
+                 data-bind="value: speed"
+                 min="0">
         </td>
       </tr>
       <tr>
@@ -105,11 +64,10 @@
           Inspiration
         </th>
         <td class="ac-table-data-cell">
-          <span data-bind="{click: $component.toggleInspiration, css: otherStats().inspiration() ? 'inspiration-full':'inspiration-empty'}"
-                class="" style="cursor: pointer;"></span>
+          <span data-bind="{click: $component.toggleInspiration, css: $component.entity().inspiration() ? 'inspiration-full':'inspiration-empty'}"
+                style="cursor: pointer;"></span>
         </td>
       </tr>
     </tbody>
   </table>
 </form>
-<!-- /ko -->

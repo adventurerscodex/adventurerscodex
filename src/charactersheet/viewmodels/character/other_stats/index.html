@@ -1,28 +1,26 @@
 <!-- AC, Initiative, Speed, Proficiency -->
 <div id="other-stats-pane">
   <flip-card params="{
-        tabId: 'stats',
+        tabId: $parent.tabId,
         elementId: 'other_stats'
       }">
     <div class="front">
       <div class="h4 card-title">
-        Stats <br />
-        <small>Hover over the (i) icon to learn about these stats.</small>
+        Stats
       </div>
        <other-stats-view params="{
         containerId: elementId,
-        showBack: showBack,
+        show: showFront,
         flip: flip}">
       </other-stats-view>
     </div>
     <div class="back">
   <div class="h4 card-title">
-    Stats <br />
-    <small>Hover over the (i) icon to learn about these stats.</small>
+    Stats
   </div>
     <other-stats-form params="{
       containerId: elementId,
-      showBack: showBack,
+      show: showBack,
       flip: flip}">
    </other-stats-form>
 </div>

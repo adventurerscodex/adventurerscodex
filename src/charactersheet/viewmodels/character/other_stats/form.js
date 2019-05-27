@@ -1,125 +1,46 @@
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
+import { CoreManager, Notifications } from 'charactersheet/utilities';
+import { CardActionButton } from 'charactersheet/components/card-action-buttons';
+import { FormBaseController } from 'charactersheet/components/form-base-controller';
+import { OtherStats } from 'charactersheet/models/character';
 
-import {
-    OtherStats,
-    Profile
-} from 'charactersheet/models/character';
-
+import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-
-class ACFormViewModel {
-    constructor(params) {
-        // Card Properties
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showBack = params.showBack;
-        this.flip = params.flip;
-
-        this.loaded = ko.observable(false);
-        this.formElementHasFocus = ko.observable(false);
-    }
-
-    async load() {
-        this.loaded(false);
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
-
-    koDescendantsComplete() {
-
-    }
-
-    dispose() {
-        console.error('Dispose must be implemented by AC classes');
-    }
-
-    async reset() {
-        await this.refresh();
-        this.flip();
-    }
-
-    async refresh() {
-        throw('refresh must be defined by subclasses of ACFormViewModel');
-    }
-
-    async save() {
-        throw('Save must be defined by subclasses of ACFormViewModel');
-    }
-
-    async notify() {
-        throw('Notify must be defined by subclasses of ACFormViewModel');
-    }
-
-    async submit() {
-        await this.save();
-        this.notify();
-        this.setUpSubscriptions();
-        this.flip();
-    }
-
-    setUpSubscriptions() {
-        this.showBack.subscribe(this.subscribeToShowForm);
-    }
-
-    subscribeToShowForm = () => {
-        if (this.showBack()) {
-            this.refresh();
-            this.formElementHasFocus(true);
-        } else {
-            this.formElementHasFocus(false);
-        }
-    }
-}
-
-export class OtherStatsFormViewModel extends ACFormViewModel {
+export class OtherStatsFormViewModel extends FormBaseController {
     constructor(params) {
         super(params);
-        this.otherStats = ko.observable(new OtherStats());
-        this.profile = ko.observable(new Profile());
-
         // Notification Properties
         this.hasProficiencyChanged = ko.observable(false);
         this.hasInspirationChanged = ko.observable(false);
         this.hasInitiativeChanged = ko.observable(false);
         this.hasAcChanged = ko.observable(false);
-        this.hasLevelChanged = ko.observable(false);
-        this.hasExperienceChanged = ko.observable(false);
+        autoBind(this);
+    }
 
+    generateBlank() {
+        return new OtherStats();
+    }
+
+    async load() {
+        super.load();
+        await this.refresh();
+    }
+
+    async refresh () {
+        await super.refresh();
+        const key = CoreManager.activeCore().uuid();
+        const response = await OtherStats.ps.read({uuid: key});
+        this.entity().importValues(response.object.exportValues());
     }
 
     validation = {
-        rules : {
-            // Deep copy of properties in object
-            ...Profile.validationConstraints.rules,
-            ...OtherStats.validationConstraints.rules
-        }
+        ...OtherStats.validationConstraints.rules
+
     }
 
     toggleInspiration = async () => {
-        this.otherStats().inspiration(!this.otherStats().inspiration());
-    }
-
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const otherStats = await OtherStats.ps.read({uuid: key});
-        const profile = await Profile.ps.read({uuid: key});
-        this.otherStats().importValues(otherStats.object.exportValues());
-        this.profile().importValues(profile.object.exportValues());
-        this.resetSubscriptions();
-    }
-
-    save = async () => {
-        // Do not call directly unless you know what you're doing. Call submit.
-        const otherStatsResponse = await this.otherStats().ps.save();
-        const profileResponse = await this.profile().ps.save();
-        // Import values to trigger notifications
-        this.otherStats().importValues(otherStatsResponse.object.exportValues());
-        this.profile().importValues(profileResponse.object.exportValues());
+        this.entity().inspiration(!this.entity().inspiration());
     }
 
     notify = async () => {
@@ -128,12 +49,6 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
         }
         if (this.hasAcChanged()) {
             Notifications.stats.armorClassModifier.changed.dispatch();
-        }
-        if (this.hasLevelChanged()) {
-            Notifications.profile.level.changed.dispatch();
-        }
-        if (this.hasExperienceChanged()) {
-            Notifications.profile.experience.changed.dispatch();
         }
         if (this.hasProficiencyChanged()) {
             Notifications.otherStats.proficiency.changed.dispatch();
@@ -145,12 +60,9 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
         super.setUpSubscriptions();
         // Subscribe to the fields changing so that the correct notifications
         // are fired when saving.
-        this.otherStats().proficiencyModifier.subscribe(this.proficiencyHasChanged);
-        this.otherStats().inspiration.subscribe(this.inspirationHasChanged);
-        this.otherStats().initiativeModifier.subscribe(this.initiativeHasChanged);
-        this.otherStats().armorClassModifier.subscribe(this.armorClassModifierDataHasChanged);
-        this.profile().level.subscribe(this.levelDataHasChanged);
-        this.profile().experience.subscribe(this.experienceDataHasChanged);
+        this.entity().proficiencyModifier.subscribe(this.proficiencyHasChanged);
+        this.entity().inspiration.subscribe(this.inspirationHasChanged);
+        this.entity().armorClassModifier.subscribe(this.armorClassModifierDataHasChanged);
     }
 
     // Functions to record that fields have changed. These values are reset on save (or reset)
@@ -160,15 +72,11 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
     initiativeHasChanged = () => {
         this.hasInitiativeChanged(true);
     }
+
     armorClassModifierDataHasChanged = () => {
         this.hasAcChanged(true);
     }
-    levelDataHasChanged = () => {
-        this.hasLevelChanged(true);
-    }
-    experienceDataHasChanged = () => {
-        this.hasExperienceChanged(true);
-    }
+
     proficiencyHasChanged = () => {
         this.hasProficiencyChanged(true);
     }
@@ -176,8 +84,6 @@ export class OtherStatsFormViewModel extends ACFormViewModel {
     resetSubscriptions = () => {
         this.hasInspirationChanged(false);
         this.hasAcChanged(false);
-        this.hasLevelChanged(false);
-        this.hasExperienceChanged(false);
         this.hasProficiencyChanged(false);
         this.hasInitiativeChanged(false);
     }
