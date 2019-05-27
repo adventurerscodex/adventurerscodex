@@ -1,15 +1,7 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<form class="form-horizontal health-form" data-bind="{submit: $component.submit}">
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link btn-danger" data-bind="click: $component.reset" type="reset">
-      <span class="glyphicon glyphicon-ban-circle" aria-hidden="true">
-      </span>
-  </button>
-  <button class="btn btn-link btn-success" type="submit" value="submit">
-      <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true">
-      </span>
-  </button>
-</div>
+<form class="form-horizontal health-form"
+      data-bind="{submit: $component.submit}">
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <!-- ko if: loaded(), completeOn: 'render' -->
   <div data-bind="with: health">
     <div class="form-group">
       <label for="name"
@@ -60,5 +52,5 @@
     </div>
   </div>
   </div>
+  <!-- /ko -->
 </form>
-<!-- /ko -->

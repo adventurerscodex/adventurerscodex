@@ -9,6 +9,7 @@ import { Notifications } from 'charactersheet/utilities';
 import { StatsDeathSaveViewModel } from './deathsave';
 import { StatsHealthViewModel } from './health';
 
+import autoBind from 'auto-bind';
 import { find } from 'lodash';
 import ko from 'knockout';
 import template from './view.html';
@@ -27,6 +28,7 @@ export class StatsCardViewModel {
         this.deathSaveFailure = ko.observable(new DeathSave());
         this.deathSavesVisible = ko.observable(false);
         this.massiveDamageTaken = ko.observable(false);
+        autoBind(this);
     }
 
     load = async () => {
@@ -53,6 +55,11 @@ export class StatsCardViewModel {
         Notifications.health.damage.changed.add(this.healthinessDidUpdate);
         Notifications.health.maxHitPoints.changed.add(this.healthinessDidUpdate);
         Notifications.stats.deathSaves.success.changed.add(this.deathSavesDidUpdate);
+        const showSubscription = this.deathSavesVisible.subscribe(this.subscribeToShowForm);
+    }
+
+    subscribeToShowForm = () => {
+        this.forceOuterCardResize();
     }
 
     healthinessDidUpdate = async () => {

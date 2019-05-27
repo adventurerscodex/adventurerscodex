@@ -1,18 +1,6 @@
-import 'bin/knockout-circular-progress';
-import {
-    DeathSave,
-    Health,
-    HitDice,
-    HitDiceType,
-    Profile
-} from 'charactersheet/models/character';
-
-import { CharacterManager } from 'charactersheet/utilities';
-import { CoreManager } from 'charactersheet/utilities';
-import { Notifications } from 'charactersheet/utilities';
-import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { StatsCardViewModel } from './view';
 import { StatsHealthFormViewModel } from './form';
+
 import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './index.html';

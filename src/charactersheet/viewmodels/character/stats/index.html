@@ -1,6 +1,6 @@
 <div id="health-pane">
   <flip-card params="{
-        tabId: 'stats',
+        tabId: $parent.tabId,
         elementId: 'health-panel-card',
         ">
     <div class="front">
@@ -8,6 +8,7 @@
         Health <br />
         <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
       </div>
+      <hr class="ac-table-header" />
       <stats-card-view params="{
        containerId: elementId,
        outerShowBack: showBack,
@@ -21,13 +22,14 @@
           Health <br />
           <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
         </div>
+        <hr class="ac-table-header" />
         <stats-health-form params="{
          containerId: elementId,
          outerShowBack: showBack,
-         outerFlip: flip}">
+         outerFlip: flip,
+         forceCardResize: forceCardResize}">
          </stats-health-form>
       </div>
     </div>
   </flip-card>
 </div>
-<!--End Panel-->

@@ -1,14 +1,15 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
 <div class="row">
   <div class="col-xs-12">
-    <h4><center>
-          <!-- ko if: rip()-->
-          <span class="text-danger">You are dead <span class="deathSaveFailureIcon"/></span>
-          <!-- /ko -->
-          <!-- ko if: !rip() -->
-          You are unconscious!
-          <!-- /ko -->
-        </center></h4>
+    <h4>
+      <center>
+        <!-- ko if: rip()-->
+        <span class="text-danger">You are dead <span class="deathSaveFailureIcon" /></span>
+        <!-- /ko -->
+        <!-- ko if: !rip() -->
+        You are unconscious!
+        <!-- /ko -->
+      </center>
+    </h4>
   </div>
   <div class="col-sm-6 col-md-12 col-lg-6">
     <h4>Death Save Successes</h4>
@@ -20,24 +21,22 @@
   </div>
   <div class="col-sm-6 col-md-12 col-lg-6">
     <h4>Death Save Failures</h4>
-     <div class="death-save-panel form-control hit-dice-list warning"
+    <div class="death-save-panel form-control hit-dice-list warning"
          data-bind="foreach: $component.deathSaveFailureList">
       <span data-bind="{attr: { id: $index, name: $index }, click: $component.failOnDeathSave,
         css: $data ? 'ds-failure-full' : 'ds-failure-empty'}"></span>
     </div>
   </div>
-  <div class="col-xs-12"
-       id="stabilize">
+  <div class="col-xs-12">
     <button type="button"
             class="btn btn-block"
             data-bind="{click: stabilize, css: rip() ? 'btn-danger' : 'btn-info'}">
-          <!-- ko if: rip() -->
-          Revive
-          <!-- /ko -->
-          <!-- ko if: !rip() -->
-          Stabilize
-          <!-- /ko -->
-          </button>
+      <!-- ko if: rip() -->
+      Revive
+      <!-- /ko -->
+      <!-- ko if: !rip() -->
+      Stabilize
+      <!-- /ko -->
+    </button>
   </div>
 </div>
-<!-- /ko -->

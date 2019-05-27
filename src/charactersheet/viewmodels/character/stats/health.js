@@ -6,6 +6,8 @@ import {
     Profile
 } from 'charactersheet/models/character';
 
+import { ACViewModel } from 'charactersheet/components/view-component';
+
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -13,42 +15,42 @@ import {find} from 'lodash';
 // import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './health.html';
-
-class ACViewModel {
-    constructor(params) {
-        // Card Properties
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showBack = params.showBack;
-        this.flip = params.flip;
-
-        this.loaded = ko.observable(false);
-    }
-
-    async load() {
-        this.loaded(false);
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
-
-    dispose() {
-        console.error('Dispose must be implemented by AC classes');
-    }
-
-    async refresh() {
-        throw('refresh must be defined by subclasses of ACViewModel');
-    }
-
-    setUpSubscriptions() {
-        this.showBack.subscribe(this.subscribeToShowForm);
-    }
-
-    subscribeToShowForm = () => {
-        if (!this.showBack()) {
-            this.refresh();
-        }
-    }
-}
+//
+// class ACViewModel {
+//     constructor(params) {
+//         // Card Properties
+//         this.containerId = ko.utils.unwrapObservable(params.containerId);
+//         this.showBack = params.showBack;
+//         this.flip = params.flip;
+//
+//         this.loaded = ko.observable(false);
+//     }
+//
+//     async load() {
+//         this.loaded(false);
+//         await this.refresh();
+//         this.setUpSubscriptions();
+//         this.loaded(true);
+//     }
+//
+//     dispose() {
+//         console.error('Dispose must be implemented by AC classes');
+//     }
+//
+//     async refresh() {
+//         throw('refresh must be defined by subclasses of ACViewModel');
+//     }
+//
+//     setUpSubscriptions() {
+//         this.showBack.subscribe(this.subscribeToShowForm);
+//     }
+//
+//     subscribeToShowForm = () => {
+//         if (!this.showBack()) {
+//             this.refresh();
+//         }
+//     }
+// }
 
 class StatsHealthViewModel extends ACViewModel {
     constructor(params) {
@@ -67,8 +69,14 @@ class StatsHealthViewModel extends ACViewModel {
         this.dmgInput = ko.observable(null);
     }
 
-    load = async () => {
-        await super.load();
+    generateBlank() {
+        return new Health();
+    }
+
+    async load() {
+        await this.refresh();
+        this.setUpSubscriptions();
+        this.loaded(true);
     }
 
     refresh = async () => {
@@ -83,8 +91,7 @@ class StatsHealthViewModel extends ACViewModel {
         const health = await Health.ps.read({uuid: key});
         this.health(health.object);
         this.calculateHitDice();
-        // TODO: should this happen here?
-        // this.forceCardResize();
+        this.forceCardResize();
     };
 
     setUpSubscriptions = () => {
