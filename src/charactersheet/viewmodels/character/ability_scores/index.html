@@ -1,8 +1,7 @@
 <div id="score-pane">
   <flip-card params="{
-              tabId: 'stats',
+              tabId: $parent.tabId,
               elementId: 'ability_and_saves',
-              defaultHeight: 400,
               context: {
                 order: order,
               }
@@ -15,7 +14,7 @@
       <ability-scores-saving-throws-view
           params="{
            containerId: elementId,
-           showBack: showBack,
+           show: showFront,
            flip: flip,
            order: context.order
          }">

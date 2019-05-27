@@ -16,7 +16,6 @@ class ACScoreModel {
     ];
 }
 
-
 ko.components.register('ability-scores', {
     viewModel: ACScoreModel,
     template: template

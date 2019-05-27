@@ -17,9 +17,9 @@ export class SavingThrow extends KOModel {
     coreUuid = ko.observable(null);
     name = ko.observable('');
     abilityScore = ko.observable();
+    abilityScoreObject = ko.observable(new AbilityScore());
     modifier = ko.observable(0);
     proficiency = ko.observable(false);
-    modifierLabel = ko.observable('');
 
     toSchemaValues = (values) => {
         const abilityScoreId = values.abilityScore.uuid;
@@ -31,25 +31,18 @@ export class SavingThrow extends KOModel {
         return ProficiencyService.sharedService().proficiency();
     };
 
-    abilityScoreModifier = async () => {
-        var score = null;
+    async updateAbilityScore() {
         try {
             var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid: key,
+            const response = await AbilityScore.ps.read({coreUuid: key,
                 uuid: this.abilityScore().uuid()});
-            score = response.objects[0];
-        } catch(err) { /*Ignore*/ }
+            this.abilityScoreObject(response.object);
+        } catch(err) {/*Ignore*/ }
+    }
 
-        if (score === null) {
-            return null;
-        } else {
-            return score.getModifier();
-        }
-    };
-
-    bonus = async () => {
-        var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
-        const abilityScoreModifier = await this.abilityScoreModifier();
+    modifierLabel = ko.pureComputed(() => {
+        let bonus = this.modifier() ? parseInt(this.modifier()) : 0;
+        const abilityScoreModifier = this.abilityScoreObject().getModifier();
         const proficiency = this.proficiency();
         if (proficiency) {
             bonus += this.proficiencyScore() + abilityScoreModifier;
@@ -58,17 +51,11 @@ export class SavingThrow extends KOModel {
         } else {
             bonus = bonus != null ? bonus : null;
         }
-        return bonus;
-    };
-
-    updateModifierLabel = async () => {
-        const bonus = await this.bonus();
         if (bonus === null) {
             return '+ 0';
         }
-        var str = bonus >= 0 ? '+ ' + bonus : '- ' + Math.abs(bonus);
-        this.modifierLabel(str);
-    };
+        return bonus >= 0 ? '+ ' + bonus : '- ' + Math.abs(bonus);
+    })
 
     proficiencyLabel = ko.pureComputed(() => {
         if (this.proficiency() === true) {

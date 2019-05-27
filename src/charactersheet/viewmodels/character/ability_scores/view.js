@@ -1,64 +1,28 @@
-import 'bin/knockout-bootstrap-modal';
-import { CoreManager, Notifications } from 'charactersheet/utilities';
-import { filter, find, includes } from 'lodash';
-import { AbilityScore } from 'charactersheet/models/character/ability_score';
+import { ACTableViewModel } from 'charactersheet/components/table-view-component';
+import {  Notifications } from 'charactersheet/utilities';
 import { SavingThrow } from 'charactersheet/models/character';
 
+import autoBind from 'auto-bind';
+import { find } from 'lodash';
 import ko from 'knockout';
 import template from './view.html';
 
-class ACViewModel {
-    constructor(params) {
-        // Card Properties
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showBack = params.showBack;
-        this.flip = params.flip;
-
-        this.loaded = ko.observable(false);
-    }
-
-    async load() {
-        this.loaded(false);
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
-
-    dispose() {
-        console.error('Dispose must be implemented');  
-    }
-
-    async refresh() {
-        throw('refresh must be defined by subclasses of ACViewModel');
-    }
-
-
-    setUpSubscriptions() {
-        this.showBack.subscribe(this.subscribeToShowForm);
-    }
-
-    subscribeToShowForm = () => {
-        if (!this.showBack()) {
-            this.refresh();
-        }
-    }
-}
-
-class ScoreSaveViewModel extends ACViewModel {
+class ScoreSaveViewModel extends ACTableViewModel {
     constructor(params) {
         super(params);
         this.order = params.order;
-        this.abilityScores = ko.observableArray([]);
-        this.savingThrows = ko.observableArray([]);
+        autoBind(this);
+    }
+
+    modelClass = () => {
+        // You may be wondering where Ability Scores are. Since they are part
+        // of the Saving Throw, it is expedient to get it from there, and simplifies
+        // the view and form designs to do so.
+        return SavingThrow;
     }
 
     refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const scores = await AbilityScore.ps.list({coreUuid: key});
-        const saves = await SavingThrow.ps.list({coreUuid: key});
-        this.abilityScores(scores.objects.map(score => ko.observable(score)));
-        this.savingThrows(saves.objects.map(savingThrow => ko.observable(savingThrow)));
-        // Calculate Initial Values
+        await super.refresh();
         await this.updateSavingThrowValues();
     };
 
@@ -67,9 +31,10 @@ class ScoreSaveViewModel extends ACViewModel {
         // making a networking call. This should not be this way, but because
         // the fix is too time consuming, at time of writing, I'm just leaving
         // it and documenting the weirdness.
-        for (const savingThrow of this.savingThrows()) {
-            await savingThrow().updateModifierLabel();
-        }
+        const saveUpdates = this.entities().map(async (savingThrow) => {
+            await savingThrow.updateAbilityScore();
+        });
+        await Promise.all(saveUpdates);
     };
 
     setUpSubscriptions() {
@@ -77,10 +42,11 @@ class ScoreSaveViewModel extends ACViewModel {
         // abilityScore changes not needed, as the card flip should be enough
         // Notifications.abilityScores.changed.add(this.updateSavingThrowValues);
         Notifications.proficiencyBonus.changed.add(this.updateSavingThrowValues);
+        Notifications.abilityScores.changed.add(this.updateSavingThrowValues);
+
     }
 
-    findSaveByName = (name) => find(this.savingThrows(), (savingthrow) => savingthrow().name() === name);
-    findScoreByName = (name) => find(this.abilityScores(), (score) => score().name() === name);
+    findSaveByName = (name) => find(this.entities(), (savingthrow) => savingthrow.name() === name);
 }
 
 ko.components.register('ability-scores-saving-throws-view', {

@@ -5,158 +5,90 @@ import {
 } from 'charactersheet/models/character';
 
 import {
-    CoreManager,
+    ACTableFormModel
+} from 'charactersheet/components/table-form-component';
+
+import {
     Notifications
 } from 'charactersheet/utilities';
 
+import autoBind from 'auto-bind';
 import { find } from 'lodash';
 
 import ko from 'knockout';
 import template from './form.html';
 
-class ACFormViewModel {
-    constructor(params) {
-        // Card Properties
-        this.containerId = ko.utils.unwrapObservable(params.containerId);
-        this.showBack = params.showBack;
-        this.flip = params.flip;
-
-        this.loaded = ko.observable(false);
-        this.formElementHasFocus = ko.observable(false);
-    }
-
-    async load() {
-        this.loaded(false);
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
-
-    async reset() {
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.flip();
-    }
-
-    dispose() {
-        console.error('Dispose must be implemented');
-    }
-
-    async refresh() {
-        throw('refresh must be defined by subclasses of ACFormViewModel');
-    }
-
-    async save() {
-        throw('Save must be defined by subclasses of ACFormViewModel');
-    }
-
-    async notify() {
-        throw('Notify must be defined by subclasses of ACFormViewModel');
-    }
-
-    async submit() {
-        await this.save();
-        this.notify();
-        this.setUpSubscriptions();
-        this.flip();
-    }
-
-    setUpSubscriptions() {
-        this.showBack.subscribe(this.subscribeToShowForm);
-    }
-
-    subscribeToShowForm = () => {
-        if (this.showBack()) {
-            this.refresh();
-            this.formElementHasFocus(true);
-        } else {
-            this.formElementHasFocus(false);
-        }
-    }
-}
-
-export class ScoreSaveFormViewModel extends ACFormViewModel {
+export class ScoreSaveFormViewModel extends ACTableFormModel {
     constructor(params) {
         super(params);
         this.order = params.order;
-        this.forceCardResize = params.forceCardResize;
         this.showSaves = ko.observable(false);
-        this.abilityScores = ko.observableArray([]);
-        this.savingThrows = ko.observableArray([]);
-        this.abilityScoresChanged = ko.observable(false);
-        this.savingThrowsChanged = ko.observable(false);
+        this.abilityScoresChanged = ko.observableArray([]);
+        autoBind(this);
     }
 
-    watchSavingThrows = () => {
-        this.savingThrowsChanged(true);
+    modelClass = () => {
+        return SavingThrow;
     }
 
-    watchAbilityScores = () => {
-        this.abilityScoresChanged(true);
-    }
+    refresh = async () => {
+        await super.refresh();
+        await this.updateSavingThrowValues();
+    };
+
+    updateSavingThrowValues = async () => {
+        // By telling each savingThrow to update their labels, we're implicitly
+        // making a networking call. This should not be this way, but because
+        // the fix is too time consuming, at time of writing, I'm just leaving
+        // it and documenting the weirdness.
+        const saveUpdates = this.entities().map(async (savingThrow) => {
+            await savingThrow.updateAbilityScore();
+        });
+        await Promise.all(saveUpdates);
+    };
 
     saveFormHasFocus = ko.computed(()=>(this.formElementHasFocus() && this.showSaves()), this);
     scoreFormHasFocus = ko.computed(()=>(this.formElementHasFocus() && !this.showSaves()), this);
 
-    abilityScoresChanged = ko.computed(()=> {})
     toggleSaves = (newValue) => {
         this.showSaves(!this.showSaves());
         this.forceCardResize();
     };
 
-    findSaveByName = (name) => find(this.savingThrows(), (savingthrow) => savingthrow().name() === name);
+    findSaveByName = (name) => find(this.entities(), (savingthrow) => savingthrow.name() === name);
 
-    findScoreByName = (name) => find(this.abilityScores(), (score) => score().name() === name);
+    updateEntity = async (entity) => {
+        entity.markedForSave = true;
+    }
 
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const scores = await AbilityScore.ps.list({coreUuid: key});
-        const saves = await SavingThrow.ps.list({coreUuid: key});
-        this.abilityScores(scores.objects.map(score => ko.observable(score)));
-        this.savingThrows(saves.objects.map(savingThrow => ko.observable(savingThrow)));
-        this.resetSubscriptions();
-    };
-
-    save = async () => {
-        if (this.savingThrowsChanged()) {
-            const saves = this.savingThrows().map(async (savingThrow) => {
-                // save each save in place.
-                await savingThrow().ps.save();
-            });
-            await Promise.all(saves);
-        }
-        if (this.abilityScoresChanged()) {
-            const scores = this.abilityScores().map(async (abilityScore) => {
-                // save each save in place.
-                await abilityScore().ps.save();
-            });
-            await Promise.all(scores);
-        }
+    async save () {
+        const updates = this.entities().map(async (entity) => {
+            if (entity.abilityScoreObject().markedForSave) {
+                delete entity.abilityScoreObject().markedForSave;
+                await entity.abilityScoreObject().ps.save();
+                this.abilityScoresChanged().push(entity.abilityScoreObject().name());
+            }
+            if (entity.markedForSave) {
+                delete entity.markedForSave;
+                await entity.ps.save();
+                this.savingThrowsChanged(true);
+            }
+        });
+        await Promise.all(updates);
     }
 
     notify = () => {
-        if (this.abilityScoresChanged()) {
-            Notifications.abilityScores.dexterity.changed.dispatch();
-            Notifications.abilityScores.intelligence.changed.dispatch();
+        if (this.abilityScoresChanged().length > 0) {
+            this.abilityScoresChanged().map((name) => {
+                Notifications.abilityScores[name.toLowerCase()].changed.dispatch();
+            });
             Notifications.abilityScores.changed.dispatch();
+            this.abilityScoresChanged([]);
         }
-        this.resetSubscriptions();
     }
 
-
-    resetSubscriptions = () => {
-        this.abilityScoresChanged(false);
-        this.savingThrowsChanged(false);
-    }
 
     validation = {
-    //     submitHandler: (form, event) => {
-    //         event.preventDefault();
-    //         self.modalFinishedClosing();
-    //     },
-    //     updateHandler: ($element) => {
-    //         self.addFormIsValid($element.valid());
-    //     },
         ...AbilityScore.validationConstraints,
         ...SavingThrow.validationConstraints
     }

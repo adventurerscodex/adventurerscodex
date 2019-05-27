@@ -29,7 +29,7 @@
                     style="width: 50px; position:relative"
                     data-bind="value: proficiency,
           options: $component.proficiencyOptions,
-          event: { change: $component.updateSkill  },
+          event: { change: $component.updateEntity  },
           select2: {
             placeholder: '',
             minimumResultsForSearch: Infinity,
@@ -44,7 +44,7 @@
           <div class="input-group skill-modifier-input">
             <input type="number"
                    class="form-control"
-                   data-bind="textInput: modifier, event: { change: $component.updateSkill }"></input>
+                   data-bind="textInput: modifier, event: { change: $component.updateEntity }"></input>
             <span class="input-group-addon">
               <span data-bind="text: bonusNumber"></span>
             </span>

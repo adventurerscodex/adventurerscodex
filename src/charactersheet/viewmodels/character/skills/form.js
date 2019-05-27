@@ -65,12 +65,16 @@ export class SkillsFormViewModel extends ACTableFormModel {
         await this.updateValues();
     }
 
+    updateEntity = async (entity) => {
+        await entity.updateBonuses();
+        entity.markedForSave = true;
+    }
+
     setUpSubscriptions = () => {
         super.setUpSubscriptions();
         Notifications.abilityScores.changed.add(this.updateValues);
         Notifications.proficiencyBonus.changed.add(this.updateValues);
     }
-
 
     // loops through all the skills to calculate bonuses
     updateValues = async () => {

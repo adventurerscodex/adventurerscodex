@@ -1,12 +1,5 @@
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div class="btn-group edit-btn" role="group" aria-label="actionButtons">
-  <button class="btn btn-link" data-bind="click: flip">
-      <span class="glyphicon glyphicon-edit" aria-hidden="true">
-      </span>
-  </button>
-</div>
-<table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table"
-       id="abilityScoresTable">
+<card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+<table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table">
   <thead class="ac-table-header">
     <tr>
       <th style="width:15%">
@@ -23,19 +16,16 @@
       </th>
     </tr>
   </thead>
+  <!-- ko if: loaded(), completeOn: 'render' -->
   <tbody>
     <!-- ko foreach: order -->
-    <tr>
-      <!-- ko with: $component.findScoreByName($data) -->
-      <td ><span data-bind='text: value'></span></td>
-      <td><span data-bind="text: abbreviation"></span></td>
-      <td><strong data-bind="text: modifierLabel()"> </strong></td>
-      <!-- /ko -->
-      <!-- ko with: $component.findSaveByName($data) -->
+    <tr data-bind="with: $component.findSaveByName($data)">
+      <td ><span data-bind='text: abilityScoreObject().value'></span></td>
+      <td><span data-bind="text: abilityScoreObject().abbreviation"></span></td>
+      <td><strong data-bind="text: abilityScoreObject().modifierLabel()"> </strong></td>
       <td><span class="defenseShield" data-bind="text: modifierLabel()"> </span></td>
-      <!-- /ko -->
     </tr>
     <!-- /ko -->
   </tbody>
+  <!-- /ko -->
 </table>
-<!-- /ko -->

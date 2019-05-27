@@ -49,7 +49,7 @@ export class ACTableFormModel extends ACTableComponent {
         const updates = this.entities().map(async (entity) => {
             if (entity.markedForSave) {
                 delete entity.markedForSave;
-                await skill.ps.save();
+                await entity.ps.save();
             }
         });
         await Promise.all(updates);

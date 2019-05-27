@@ -1,5 +1,4 @@
 export { AbilityScoresViewModel } from './ability_scores';
-export { AbilityScoresViewModelDelegate } from './ability_scores/delegate.js';
 export { ActionsToolbarViewModel } from './actions_toolbar';
 export { ArmorViewModel } from './armor';
 export { ExhibitViewModel } from './exhibit';
