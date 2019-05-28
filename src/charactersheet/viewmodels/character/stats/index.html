@@ -1,6 +1,6 @@
 <div id="health-pane">
   <flip-card params="{
-        tabId: $parent.tabId,
+        tabId: 'stats',
         elementId: 'health-panel-card',
         ">
     <div class="front">
@@ -10,6 +10,7 @@
       </div>
       <hr class="ac-table-header" />
       <stats-card-view params="{
+        tabId: $parent.tabId,
        containerId: elementId,
        outerShowBack: showBack,
        forceCardResize: forceCardResize,

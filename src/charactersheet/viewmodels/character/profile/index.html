@@ -1,226 +1,24 @@
-<div class="panel panel-default">
-  <div class="panel-body">
-    <!-- ko if: loaded -->
-    <preview-edit params="validation: validation,
-                          data: data,
-                          save: save,
-                          reset: reset">
-      <!-- ko if: $component.isEdit -->
-      <div class="panel-body">
-        <form class="form-horizontal" data-bind="validate: $component.validation">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-md-6 col-padded">
-                <label for="profilePlayerNameInput">Player Name</label>
-                <input type="text"
-                      class="form-control"
-                      name="playerName"
-                      id="profilePlayerNameInput"
-                      data-bind='value: core().playerName'>
-              </div>
-              <div class="col-md-6 col-padded">
-                <label for="profileAlignmentInput">Alignment</label>
-                <input type="text"
-                      class="form-control"
-                      name="alignment"
-                      id="profileAlignmentInput"
-                      data-bind='value: profile().alignment,
-                      autocomplete: { source: $parents[1].alignmentOptions,
-                      onselect: $parents[1].setAlignment }'>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-padded">
-                <label>Deity</label>
-                <input type="text"
-                      class="form-control"
-                      name="deity"
-                      id="profileDeityInput"
-                      data-bind='value: profile().deity'>
-              </div>
-              <div class="col-md-6 col-padded">
-                <label>Class</label>
-                <input type="text"
-                      class="form-control"
-                      name="characterClass"
-                      id="profileClassInput"
-                      data-bind='value: profile().characterClass,
-                      autocomplete: { source: $parents[1].classOptions,
-                        onselect: $parents[1].setClass }'>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-padded">
-                <label>Gender</label>
-                <input type="text"
-                      class="form-control"
-                      name="gender"
-                      id="profileGenderInput"
-                      data-bind='value: profile().gender'>
-              </div>
-              <div class="col-md-6 col-padded">
-                <label>Age</label>
-                <input type="number"
-                      class="form-control"
-                      name="age"
-                      id="profileAgeInput"
-                      data-bind='value: profile().age'>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-padded">
-                <label>Race</label>
-                <input type="text"
-                      class="form-control"
-                      name="race"
-                      id="profileRaceInput"
-                      data-bind='value: profile().race,
-                      autocomplete: { source: $parents[1].raceOptions,
-                      onselect: $parents[1].setRace }'>
-              </div>
-              <div class="col-md-6 col-padded">
-                <label>Weight</label>
-                <input type="number"
-                      id="appearanceWeightInput"
-                      class="form-control"
-                      name="weight"
-                      data-bind='textInput: profile().weight'>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-padded">
-                <label>Hair Color</label>
-                <input type="text"
-                        id="appearanceHairColorInput"
-                        name="hairColor"
-                        class="form-control"
-                        data-bind='textInput: profile().hairColor'>
-              </div>
-              <div class="col-md-6 col-padded">
-                <label>Eye Color</label>
-                <input type="text"
-                        id="appearanceEyeColorInput"
-                        class="form-control"
-                        name="eyeColor"
-                        data-bind='textInput: profile().eyeColor'>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6 col-padded">
-                <label>Skin Color</label>
-                <input type="text"
-                        id="appearanceSkinColorInput"
-                        class="form-control"
-                        name="skinColor"
-                        data-bind='textInput: profile().skinColor'>
-              </div>
-              <div class="col-md-6 col-padded">
-                <label>Height</label>
-                <input type="text"
-                        id="appearanceHeightInput"
-                        class="form-control"
-                        name="height"
-                        data-bind='textInput: profile().height'>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!-- /ko -->
+<!-- AC, Initiative, Speed, Proficiency -->
+<div id="profile-pane">
+  <flip-card params="{
+        tabId: $parent.tabId,
+        elementId: 'profile'
+      }">
+    <div class="front">
+    
+       <profile-view params="{
+        containerId: elementId,
+        show: showFront,
+        flip: flip}">
+      </profile-view>
+    </div>
+    <div class="back">
 
-      <!-- ko ifnot: $component.isEdit -->
-      <div class="row">
-        <div class="col-sm-1 col-sm-offset-11">
-          <span class="fa fa-pencil-square-o fa-color-hover-success fa-lg clickable pull-right"
-            data-bind="click: $component.toggleEditForm">
-          </span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-padded">
-          <label>Player Name</label>
-          <div data-bind="text: core().playerName">
-          </div>
-        </div>
-        <div class="col-md-6 col-padded">
-          <label>Alignment</label>
-          <div data-bind="text: $parents[1].alignmentLabel,
-          css: { 'text-muted-italics': profile().alignment() == undefined || !profile().alignment().trim() }">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-padded">
-          <label>Deity</label>
-          <div data-bind="text: $parents[1].deityLabel,
-          css: { 'text-muted-italics': profile().deity() == undefined || !profile().deity().trim() }">
-          </div>
-        </div>
-        <div class="col-md-6 col-padded">
-          <label>Class</label>
-          <div data-bind="text: $parents[1].characterClassLabel,
-          css: { 'text-muted-italics': profile().characterClass() == undefined || !profile().characterClass().trim() }">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-padded">
-          <label>Gender</label>
-          <div data-bind="text: $parents[1].genderLabel,
-          css: { 'text-muted-italics': profile().gender() == undefined || !profile().gender().trim() }">
-          </div>
-        </div>
-        <div class="col-md-6 col-padded">
-          <label>Age</label>
-          <div data-bind="text: $parents[1].ageLabel,
-          css: { 'text-muted-italics': profile().age() == null || profile().age() == undefined || profile().age() === ''}">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-padded">
-          <label>Race</label>
-          <div data-bind="text: $parents[1].raceLabel,
-          css: { 'text-muted-italics': profile().race() == undefined || !profile().race().trim() }">
-          </div>
-        </div>
-        <div class="col-md-6 col-padded">
-          <label>Weight (in lbs)</label>
-          <div data-bind="text: $parents[1].weightLabel,
-          css: { 'text-muted-italics': profile().weight() == null || profile().weight() == undefined || profile().weight() === ''}">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-padded">
-          <label>Hair Color</label>
-          <div data-bind="text: $parents[1].hairColorLabel,
-          css: { 'text-muted-italics': profile().hairColor() == undefined || !profile().hairColor().trim() }">
-          </div>
-        </div>
-        <div class="col-md-6 col-padded">
-          <label>Eye Color</label>
-          <div data-bind="text: $parents[1].eyeColorLabel,
-          css: { 'text-muted-italics': profile().eyeColor() == undefined || !profile().eyeColor().trim() }">
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6 col-padded">
-          <label>Skin Color</label>
-          <div data-bind="text: $parents[1].skinColorLabel,
-          css: { 'text-muted-italics': profile().skinColor() == undefined || !profile().skinColor().trim() }">
-          </div>
-        </div>
-        <div class="col-md-6 col-padded">
-          <label>Height</label>
-          <div data-bind="text: $parents[1].heightLabel,
-          css: { 'text-muted-italics': profile().height() == undefined || !profile().height().trim() }">
-          </div>
-        </div>
-      </div>
-      <!-- /ko -->
-    </preview-edit>
-    <!-- /ko -->
-  </div>
+    <profile-form params="{
+      containerId: elementId,
+      show: showBack,
+      flip: flip}">
+   </profile-form>
+</div>
+</flip-card>
 </div>

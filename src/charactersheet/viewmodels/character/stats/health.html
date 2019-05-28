@@ -1,6 +1,6 @@
 <!-- ko if: loaded(), completeOn: 'render' -->
 <div class="row">
-  <div class="col-sm-6 col-md-12 col-lg-6">
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <h4>Hit Points</h4>
     <div id="health-chart">
       <div class="hp-circle"
@@ -11,11 +11,11 @@
       <!-- /ko -->
     </div>
   </div>
-  <div class="col-sm-6 col-md-12 col-lg-6">
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <div id="health-buttons">
       <h4>Damage &amp; Healing</h4>
       <div class="row">
-        <div class="col col-xs-6 col-md-12 col-lg-6">
+        <div class="col col-xs-6 col-md-6 col-lg-6">
           <form data-bind="submit:  handleDmg">
             <div class="form-group">
               <div class="input-group">
@@ -33,7 +33,7 @@
             </div>
           </form>
         </div>
-        <div class="col col-xs-6 col-md-12 col-lg-6">
+        <div class="col col-xs-6 col-md-6 col-lg-6">
           <form data-bind="submit: handleHeal">
             <div class="form-group">
               <div class="input-group">
@@ -52,7 +52,7 @@
             </div>
           </form>
         </div>
-        <div class="col col-xs-6 col-xs-offset-6 col-md-12 col-md-offset-0 col-lg-6 col-lg-offset-6">
+        <div class="col col-xs-6 col-xs-offset-6 col-md-6 col-md-offset-6 col-lg-6 col-lg-offset-6">
           <form data-bind="submit: handleTemp">
             <div class="form-group">
               <div class="input-group">

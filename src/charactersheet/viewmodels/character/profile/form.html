@@ -1,0 +1,116 @@
+<form data-bind="{submit: $component.submit}">
+  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <div class="h4 card-title">
+    Profile
+  </div>
+  <div class="row" data-bind="with: entity" >
+    <div class="form-group col-sm-2 col-md-2 col-lg-1">
+        <label class="control-label">Level </label>
+        <input type="number"
+               class="form-control"
+               name="level"
+               aria-describedby="basic-addon2"
+               data-bind="value: level, hasFocus: $component.formElementHasFocus">
+    </div>
+    <div class="form-group col-sm-6 col-md-6 col-lg-4">
+        <label class="control-label">Class </label>
+        <input class="form-control"
+               placeholder="Barbarian"
+               name="class"
+               data-bind="value: characterClass,
+        autocomplete: { source: $component.classOptions,
+                      onselect:  $component.setClass }">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-3">
+        <label class="control-label">Race </label>
+        <input class="form-control"
+               placeholder="Human"
+               data-bind="value: race,
+        autocomplete: { source: $component.raceOptions,
+                      onselect:  $component.setRace }">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-2">
+        <label class="control-label">Alignment </label>
+        <input class="form-control"
+               placeholder="Lawful Good"
+               name="alignment"
+               data-bind="value: alignment,
+      autocomplete: { source: $component.alignmentOptions,
+                      onselect:  $component.setAlignment }">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-2">
+        <label>Gender </label>
+        <input type="text"
+               class="form-control"
+               name="gender"
+               aria-describedby="basic-addon2"
+               data-bind="value: gender">
+    </div>
+    <div class="form-group col-sm-4 col-md-4 col-lg-2">
+      <label class="control-label">Experience </label>
+      <input type="text"
+             class="form-control"
+             name="experience"
+             aria-describedby="basic-addon2"
+             data-bind="value: experience">
+  </div>
+
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label class="control-label">Diety </label>
+        <input type="text"
+               class="form-control"
+               name="deity"
+               aria-describedby="basic-addon2"
+               data-bind="value: deity">
+    </div>
+    <div class="form-group col-sm-2 col-md-2 col-lg-2">
+        <label >Age </label>
+        <input type="number"
+               class="form-control"
+               name="age"
+               aria-describedby="basic-addon2"
+               data-bind="value: age">
+    </div>
+    <div class="form-group col-sm-3 col-md-3 col-lg-2">
+        <label >Height </label>
+        <input type="text"
+               class="form-control"
+               name="height"
+               aria-describedby="basic-addon2"
+               data-bind="value: height">
+    </div>
+    <div class="form-group col-sm-3 col-md-3 col-lg-2">
+        <label >Weight </label>
+        <input type="number"
+               class="form-control"
+               name="weight"
+               aria-describedby="basic-addon2"
+               data-bind="value: weight">
+    </div>
+    <div class="form-group col-sm-3 col-md-3 col-lg-2">
+        <label >Eyes </label>
+        <input type="text"
+               class="form-control"
+               name="eyeColor"
+               aria-describedby="basic-addon2"
+               data-bind="value: eyeColor">
+    </div>
+
+    <div class="form-group col-sm-4 col-md-4 col-lg-5">
+        <label >Skin </label>
+        <input type="text"
+               class="form-control"
+               name="skinColor"
+               aria-describedby="basic-addon2"
+               data-bind="value: skinColor">
+    </div>
+    <div class="form-group col-sm-5 col-md-5 col-lg-5">
+        <label >Hair </label>
+        <input type="text"
+               class="form-control"
+               name="hairColor"
+               aria-describedby="basic-addon2"
+               data-bind="value: hairColor">
+    </div>
+  </div>
+</form>

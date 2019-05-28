@@ -19,6 +19,7 @@ import template from './view.html';
 export class StatsCardViewModel {
     constructor(params) {
         // super(params);
+        this.tabId = params.tabId;
         this.containerId = params.containerId;
         this.outerShowBack = params.outerShowBack;
         this.outerFlip = params.outerFlip;

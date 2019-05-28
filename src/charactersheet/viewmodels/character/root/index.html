@@ -305,17 +305,22 @@
        id="stats"
        data-bind="css: statsTabStatus">
     <div class="row">
-      <div class="col-sm-12 col-md-4 col-md-push-4 col-lg-6 col-lg-push-3"
+      <div class="col-sm-12 col-md-8 col-lg-6 col-lg-push-3"
            style="position:relative; z-index: 6">
         <stats params="{tabId: 'stats'}"></stats>
       </div>
-      <div class="col-sm-6 col-md-4 col-md-pull-4 col-lg-3 col-lg-pull-6"
+      <div class="col-sm-6 col-md-4 col-lg-3 col-lg-push-3"
+           style="position:relative; z-index: 4">
+        <ability-scores params="{tabId: 'stats'}"></ability-scores>
+      </div>
+      <div class="clearfix visible-md-block"></div>
+      <div class="col-sm-6 col-md-4 col-md-push-8 col-lg-3 col-lg-push-0 col-lg-pull-9"
            style="position:relative; z-index: 5">
         <other-stats params="{tabId: 'stats'}"></other-stats>
       </div>
-      <div class="col-sm-6 col-md-4 col-lg-3"
-           style="position:relative; z-index: 4">
-        <ability-scores params="{tabId: 'stats'}"></ability-scores>
+      <div class="col-sm-12 col-md-8 col-md-pull-4 col-lg-12 col-lg-pull-0"
+           style="position:relative; z-index: 7">
+        <profile params="{tabId: 'stats'}"></profile>
       </div>
     </div>
   </div>
@@ -334,7 +339,6 @@
            style="position:relative; z-index: 7; float:right">
         <skills params="{tabId: 'skills'}"></skills>
       </div>
-      <!-- <div class="clearfix visible-xs"></div> -->
       <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
         <div class="row">
           <div class="col-sm-12 col-lg-6">
@@ -450,7 +454,6 @@
           Profile<br />
           <small>This stuff doesn't change very often!</small>
         </div>
-        <profile></profile>
         <appearance></appearance>
       </div>
     </div>

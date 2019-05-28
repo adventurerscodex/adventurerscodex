@@ -77,8 +77,7 @@ class TrackerViewModel extends ACTableComponent {
 
     async refresh () {
         const key = CoreManager.activeCore().uuid();
-        // this.disposeOfSubscriptions();
-        var trackables = [];
+        const trackables = [];
         let trackedIndex = 0;
         const fetchTrackedEntities = this.trackedTypes.map((type) => type.ps.list({coreUuid: key}));
         const potentialTracked = await Promise.all(fetchTrackedEntities);
