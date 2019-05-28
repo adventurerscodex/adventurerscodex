@@ -380,27 +380,27 @@
   <div role="tabpanel"
        class="tab-pane"
        id="inventory"
+       data-bind="css: inventoryTabStatus"
        >
     <div class="row">
-      <div class="col-sm-4 col-lg-3 col-padded">
+      <div class="col-sm-4 col-lg-3">
         <wealth params="{tabId: 'inventory'}"></wealth>
       </div>
-      <div class="col-sm-8 col-lg-9 col-padded">
-
+      <div class="col-sm-8 col-lg-9">
         <items params="{tabId: 'inventory'}"></items>
       </div>
     </div>
   </div>
   <!-- End Inventory Tab -->
-
   <div role="tabpanel"
        class="tab-pane"
-       id="notes">
+       id="notes"
+       data-bind="css: notesTabStatus">
     <div class="row">
       <div class="col-md-5 col-lg-4">
         <background params="{tabId: 'notes'}"></background>
-        </div>
-        <div class="col-md-7 col-lg-8">
+      </div>
+      <div class="col-md-7 col-lg-8">
         <notes-list params="{tabId: 'notes'}"></notes-list>
       </div>
     </div>
