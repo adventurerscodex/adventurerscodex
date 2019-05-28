@@ -14,7 +14,7 @@ ko.components.register('card-flip-button', {
     template: '\
     <div class="btn-group edit-btn" role="group" aria-label="actionButtons">\
       <button class="btn btn-link" data-bind="click: $component.clickFlip">\
-        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>\
+        <span class="glyphicon glyphicon-edit" style="color: #204d74" aria-hidden="true"></span>\
       </button>\
     </div>\
     '

@@ -13,11 +13,11 @@ ko.components.register('card-action-buttons', {
     viewModel: CardActionButton,
     template: '\
     <div class="btn-group edit-btn" role="group" aria-label="actionButtons">\
-      <button class="btn btn-link btn-danger" data-bind="click: clickReset" type="reset">\
-        <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>\
+      <button class="btn btn-link" data-bind="click: clickReset" type="reset">\
+        <span class="glyphicon glyphicon-remove-sign" style="color: #d62c1a" aria-hidden="true"></span>\
       </button>\
-      <button class="btn btn-link btn-success" type="submit" value="submit">\
-        <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>\
+      <button class="btn btn-link" type="submit" value="submit">\
+        <span class="glyphicon glyphicon-floppy-save" style="color: #4cae4c" aria-hidden="true"></span>\
       </button>\
     </div>\
     '
