@@ -185,9 +185,8 @@ export function CharacterRootViewModel() {
         HotkeysService.registerHotkey('4', self.activateEquipmentTab);
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
-        HotkeysService.registerHotkey('7', self.activateProfileTab);
-        HotkeysService.registerHotkey('8', self.activateChatTab);
-        HotkeysService.registerHotkey('9', self.activateExhibitTab);
+        HotkeysService.registerHotkey('7', self.activateChatTab);
+        HotkeysService.registerHotkey('8', self.activateExhibitTab);
     };
 
     self.unload = () => {
