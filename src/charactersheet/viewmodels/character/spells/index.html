@@ -156,7 +156,7 @@
           </td>
         </tr>
         <!-- /ko -->
-        <tr id="add-spell" class="collapse">
+        <tr id="add-spell" class="collapse add-card">
           <td colspan="8">
             <spell-form params="{
               containerId:'add-spell',
@@ -178,7 +178,7 @@
               <span class="table-foot-content hidden-xs">Prepared: <span data-bind="text: $component.numberOfPrepared"></span> of <span data-bind="text: $component.spellStats().maxPrepared"></span></span>
               <!-- /ko -->
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-4 ">
               <!-- ko ifnot: $component.addForm -->
             <button type="button"
                     class="btn btn-link btn-block btn-sm"

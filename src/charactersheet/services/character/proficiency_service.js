@@ -13,6 +13,8 @@ function _ProficiencyService(configuration) {
     var self = this;
 
     self.proficiency = ko.observable();
+    self.halfProficiency = ko.observable();
+    self.expertise = ko.observable();
     self.characterId = ko.observable();
     self.proficiencyModifier = ko.observable();
     self.proficiencyBonusByLevel = ko.observable();
@@ -37,6 +39,8 @@ function _ProficiencyService(configuration) {
 
         // Set the value and let everyone know.
         self.proficiency(proficiency);
+        self.halfProficiency(Math.floor(proficiency/2));
+        self.expertise(proficiency*2);
         Notifications.proficiencyBonus.changed.dispatch();
     };
 

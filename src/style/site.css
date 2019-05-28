@@ -1394,6 +1394,14 @@ transition: opacity 0.3s linear;
   z-index: 6;
 }
 
+.add-card .edit-btn {
+  position: relative;
+  top: -15px;
+  right: -10px;
+  z-index: 6;
+  float: right;
+}
+
 .edit-btn.btn-group .btn+.btn {
   margin-left: -10px;
 }
