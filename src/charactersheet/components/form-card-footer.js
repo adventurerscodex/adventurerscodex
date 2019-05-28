@@ -13,6 +13,9 @@ export class FormCardFooter {
     clickDelete = () => {
         this.delete();
     }
+    showDelete = () => {
+        return !this.addForm() && !!this.delete;
+    }
 }
 
 ko.components.register('form-card-footer', {
@@ -26,7 +29,7 @@ ko.components.register('form-card-footer', {
         <sm>\
       </p>\
       <div class="col-xs-12">\
-        <div data-bind="ifnot: $component.addForm" class="pull-left">\
+        <div data-bind="if: $component.showDelete()" class="pull-left">\
           <button class="btn btn-sm btn-danger"\
                   type="button"\
                   data-bind="click: $component.clickDelete">Delete</button>\

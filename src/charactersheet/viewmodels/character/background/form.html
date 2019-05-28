@@ -1,0 +1,62 @@
+<form data-bind="submit: $component.submit">
+<card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+<div class="row"
+     data-bind="with: entity">
+  <div class="form-group col-xs-12">
+    <label for="name"
+           class="control-label">Background</label>
+    <input type="text"
+           class="form-control"
+           placeholder="Folk Hero"
+           name="name"
+           data-bind="value: name,
+            autocomplete: { source: $component.backgroundOptions,
+                            onselect:  $component.setBackground }">
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="backgroundTraitsTextarea">Personality Traits</label>
+    <!-- ko if: $component.show -->
+    <textarea type="text"
+              rows="6"
+              class="form-control"
+              data-bind="value: personalityTrait, markdownEditor: true">
+    </textarea>
+    <!-- /ko -->
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="backgroundIdealsTextarea">Ideals</label>
+    <!-- ko if: $component.show -->
+    <textarea type="text"
+              rows="6"
+              class="form-control"
+              data-bind="value: ideal, markdownEditor: true">
+    </textarea>
+    <!-- /ko -->
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="backgroundBondsTextarea">Bonds</label>
+    <!-- ko if: $component.show -->
+    <textarea type="text"
+              rows="6"
+              class="form-control"
+              data-bind="value: bond, markdownEditor: true">
+    </textarea>
+    <!-- /ko -->
+  </div>
+  <div class="form-group col-xs-12">
+    <label for="backgroundFlawsTextarea">Flaws</label>
+    <!-- ko if: $component.show -->
+    <textarea type="text"
+              rows="6"
+              class="form-control"
+              data-bind="value: flaw, markdownEditor: true">
+    </textarea>
+    <!-- /ko -->
+  </div>
+</div>
+<form-card-footer params="{
+  reset: $component.reset,
+  addForm: $component.addForm,
+  showDisclaimer: $component.showDisclaimer
+}"></form-card-footer>
+</form>

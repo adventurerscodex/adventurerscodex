@@ -1,0 +1,28 @@
+<card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+<!-- ko if: loaded(), completeOn: 'render' -->
+<h3 data-bind="text: entity().name">
+</h3>
+<div class="row background-card" data-bind="with: entity">
+  <div class="col-sm-6 col-md-12">
+    <label for="personalityTrait">Personality Traits</label>
+    <p class="card-description"
+       data-bind="markdownPreview: personalityTrait"></p>
+  </div>
+  <div class="col-sm-6 col-md-12">
+    <label for="ideal">Ideals</label>
+    <p class="card-description"
+       data-bind="markdownPreview: ideal"></p>
+  </div>
+  <div class="clearfix visible-sm-block"></div>
+  <div class="col-sm-6 col-md-12">
+    <label for="bond">Bonds</label>
+    <p class="card-description"
+       data-bind="markdownPreview: bond"></p>
+  </div>
+  <div class="col-sm-6 col-md-12">
+    <label for="flaw">Flaws</label>
+    <p class="card-description"
+       data-bind="markdownPreview: flaw"></p>
+  </div>
+</div>
+<!-- /ko -->

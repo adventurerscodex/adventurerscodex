@@ -18,6 +18,23 @@ export class Note extends KOModel {
     headline = ko.observable('');
     isSavedChatNotes = ko.observable(false);
 
+    updateTitleFromHeadline () {
+        if (!this.title() || this.title() === '') {
+            let text = '';
+            try {
+                text = this.contents();
+            } catch (e) {
+              // Ignore
+            }
+            let firstLine = text.split('\n')[0];
+            if (firstLine.length > 35) {
+                firstLine = this._getFirstWords(firstLine.substr(0, 35)) + '...';
+            }
+            const title = firstLine ? this._getPlaintext(firstLine).replace(/(\r\n|\n|\r)/gm, '') : 'Empty Note';
+            this.title(firstLine ? this._getPlaintext(firstLine).replace(/(\r\n|\n|\r)/gm, '') : 'Empty Note');
+        }
+    }
+
     updateHeadline() {
         var text = '';
         try {

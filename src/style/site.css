@@ -1587,6 +1587,10 @@ thead.ac-table-header tr  {
   border-bottom: 1px solid #2c3e50;
 }
 
+hr {
+  border-bottom: 1px solid #2c3e50;
+}
+
 .score-save-table {
   margin-top: 15px;
 }
@@ -1819,4 +1823,35 @@ thead.ac-table-header tr  {
 .weaponRow[aria-expanded="true"] .damage-thunder,
 .spellRow[aria-expanded="true"] .damage-thunder {
   background: url('../images/damage_types/echo-ripples-white.svg');
+}
+
+.profile-view {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.profile-view .form-group {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.profile-view label {
+  vertical-align: middle;
+  border-top: 1px solid #2c3e50;
+  padding-left: 15px;
+  border-bottom: thin solid #ecf0f1;
+  width: 100%;
+  line-height: 4.0ex;
+  height: 4.0ex;
+}
+
+.profile-view .profile-data {
+  vertical-align: middle;
+  padding-left: 15px;
+}
+
+.background-card label {
+  display: block;
+  width: 100%;
+  border-bottom: thin solid #ecf0f1;
 }

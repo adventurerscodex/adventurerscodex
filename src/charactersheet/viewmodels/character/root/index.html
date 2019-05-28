@@ -192,38 +192,6 @@
           <span class="text-center"
                 id="tabNotesSpan"><small>Notes</small></span>
         </div>
-
-      </a>
-
-    </li>
-    <li role="presentation"
-        id="tabProfileLink"
-        >
-      <a href="#profile"
-         aria-controls="profile"
-         role="tab"
-         data-toggle="tab"
-         id="profileTabTrigger"
-         class="tab-subtext"
-         data-bind="click: activateProfileTab">
-        <div class="visible-xs"
-             data-toggle="collapse"
-             data-target="#descriptionTab">
-
-          <img class="tab-icon"
-               data-bind="attr: { src: icons.profileTab }" />
-          <span class="text-center"
-                id="tabProfileSpan"><small>Profile</small></span>
-        </div>
-        <div class="hidden-xs">
-
-          <img class="tab-icon"
-               data-bind="attr: { src: icons.profileTab }" />
-          <br />
-          <span class="text-center"
-                id="tabProfileSpan"><small>Profile</small></span>
-        </div>
-
       </a>
     </li>
     <li role="presentation"
@@ -428,42 +396,15 @@
        class="tab-pane"
        id="notes">
     <div class="row">
-      <div class="col-sm-12 col-padded">
-        <div class="h3">
-          Notes<br />
-          <small>“Consult the Book of Armaments!” -King Arthur</small>
+      <div class="col-md-5 col-lg-4">
+        <background params="{tabId: 'notes'}"></background>
         </div>
-        <notes></notes>
+        <div class="col-md-7 col-lg-8">
+        <notes-list params="{tabId: 'notes'}"></notes-list>
       </div>
     </div>
   </div>
   <!-- End Notes Tab -->
-
-  <div role="tabpanel"
-       class="tab-pane"
-       id="profile"
-       data-bind="css: profileTabStatus">
-    <div class="row">
-      <div class="col-sm-4 hidden-xs">
-        <img data-bind="attr: { src: icons.profileSection }"
-             alt="Profile tab"
-             style="width:100%;" />
-      </div>
-      <div class="col-sm-8 col-padded">
-        <div class="h3">
-          Profile<br />
-          <small>This stuff doesn't change very often!</small>
-        </div>
-        <appearance></appearance>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-sm-12 col-padded">
-        <feat-traits></feat-traits>
-      </div>
-    </div>
-  </div>
-  <!-- End Profile tab -->
 
   <div role="tabpanel"
        class="tab-pane"

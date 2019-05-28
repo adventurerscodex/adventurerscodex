@@ -1,0 +1,108 @@
+<div id="notes-pane"
+     class="panel-body">
+  <div class="h4 card-title">
+    Notes<br />
+    <small>“Consult the Book of Armaments!” -King Arthur</small>
+  </div>
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead class="ac-table-header">
+      <tr>
+        <th data-bind="click: function(){sortBy('title');}">
+          note
+          <span data-bind="css: sortArrow('title')"></span>
+        </th>
+        <th class="col-xs-1">
+          <a href="#"
+             data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span></a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr data-toggle="collapse"
+          class="clickable expandRow"
+          data-bind="attr:{'data-target': `#note_list_${uuid()}`, id: `#note_row_${uuid()}`}">
+        <td>
+          <span data-bind="text: title"></span>
+        </td>
+        <td>
+          <span data-toggle="collapse"
+                data-bind="attr:{'data-target': `#note_list_${uuid()}`}"
+                class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="3">
+          <flip-card params="{
+                dataId: $data.uuid,
+                tabId: $parent.tabId,
+                collapsable: true,
+                elementId: 'note_list',
+                context: {
+                  data: $data,
+                  replaceInList: $component.replaceInList,
+                  addToList: $component.addToList,
+                  removeFromList: $component.removeFromList
+                }
+              }">
+            <div class="front"
+                 data-bind="with: context.data">
+              <card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+              <div class="h4">
+                <span data-bind="text: title"></span>
+              </div>
+
+              <!-- ko if: contents -->
+              <p class="card-description"
+                 data-bind="markdownPreview: contents"></p>
+              <!-- /ko -->
+              <!-- ko ifnot: contents -->
+              <p>No Description</p>
+              <!-- /ko -->
+            </div>
+            <div class="back">
+              <notes-form params="{
+                data: context.data,
+                containerId: elementId,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize,
+                replaceInParent: context.replaceInList,
+                removeFromParent: context.removeFromList
+               }"></notes-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+    <tfoot>
+      <tr class="collapseRow">
+        <td colspan="4">
+          <div id="add-note"
+               class="collapse">
+               <notes-form params="{
+                 containerId:'add-note',
+                 show: $component.addForm,
+                 flip: $component.toggleShowAddForm,
+                 addToParent: $component.addToList,
+                }"></notes-form>
+          </div>
+          <!-- ko ifnot: $component.addForm -->
+          <center>
+            <button type="button"
+                    class="btn btn-link btn-sm btn-block"
+                    id="proficiencyAddButton"
+                    data-toggle="collapse"
+                    data-target="#add-note"
+                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add note</button>
+          </center>
+          <!-- /ko -->
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /ko -->
+  </table>
+</div>
