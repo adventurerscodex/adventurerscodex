@@ -35,7 +35,7 @@ export class SkillsViewModel extends ACTableViewModel {
 
     setUpSubscriptions = () => {
         super.setUpSubscriptions();
-        Notifications.abilityScores.changed.add(this.updateValues);
+        Notifications.abilityScores.changed.add(this.refresh);
         Notifications.proficiencyBonus.changed.add(this.updateValues);
     }
 
