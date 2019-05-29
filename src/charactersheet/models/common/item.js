@@ -39,6 +39,47 @@ export class Item extends KOModel {
         return 0;
     }, this);
 
+    calculatedCost = ko.pureComputed(() => {
+        if (this.cost() &&
+            this.cost() > 0 &&
+            this.currencyDenomination() &&
+            this.currencyDenomination() != '') {
+            if (this.currencyDenomination().toLowerCase() === 'cp') {
+                return parseInt(this.cost())/100;
+            } else if (this.currencyDenomination().toLowerCase() === 'sp') {
+                return parseInt(this.cost())/10;
+            } else if (this.currencyDenomination().toLowerCase() === 'ep') {
+                return parseInt(this.cost())/2;
+            } else if (this.currencyDenomination().toLowerCase() === 'pp') {
+                return parseInt(this.cost()) * 10;
+            }
+            return this.cost();
+        }
+        return 0;
+    })
+
+    totalCost = ko.pureComputed(() => {
+        if (this.quantity() &&
+            this.quantity() > 0 &&
+            this.cost() &&
+            this.cost() > 0) {
+            return parseInt(this.quantity()) * parseInt(this.cost());
+        }
+        return 0;
+    }, this);
+
+    totalCalculatedCost = ko.pureComputed(() => {
+        if (this.quantity() &&
+            this.quantity() > 0 &&
+            this.cost() &&
+            this.cost() > 0 &&
+            this.currencyDenomination() &&
+            this.currencyDenomination() != '') {
+            return parseInt(this.quantity()) * parseFloat(this.calculatedCost());
+        }
+        return 0;
+    }, this);
+
     shortDescription = ko.pureComputed(() => {
         return Utility.string.truncateStringAtLength(this.description(), Item.SHORT_DESCRIPTION_MAX_LENGTH);
     }, this);
@@ -59,8 +100,20 @@ export class Item extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     }, this);
 
+    totalWeightLabel = ko.pureComputed(() => {
+        return  this.totalWeight() >= 0 ? this.totalWeight() + ' lbs.' : '0 lbs.';
+    }, this);
+
     costLabel = ko.pureComputed(() => {
         return this.cost() !== '' ? this.cost() + ' ' + this.currencyDenomination() : '';
+    }, this);
+
+    totalCostLabel = ko.pureComputed(() => {
+        return this.totalCost() !== '' ? this.totalCost() + ' ' + this.currencyDenomination() : '';
+    }, this);
+
+    totalCalculatedCostLabel = ko.pureComputed(() => {
+        return this.totalCost() !== '' ? this.totalCalculatedCost() + ' GP': '';
     }, this);
 
     toSchemaValues = (values) => {

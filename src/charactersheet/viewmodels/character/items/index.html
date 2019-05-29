@@ -14,13 +14,13 @@
           Quantity
           <span data-bind="css: sortArrow('quantity')"></span></th>
         <th class="hidden-xs"
-            data-bind="click: function(){sortBy('weight');}">
+            data-bind="click: function(){sortBy('totalWeight');}">
           Weight
-          <span data-bind="css: sortArrow('weight')"></span></th>
+          <span data-bind="css: sortArrow('totalWeight')"></span></th>
         <th class="hidden-xs"
-            data-bind="click: function(){sortBy('cost');}">
+            data-bind="click: function(){sortBy('totalCalculatedCost');}">
           Cost
-          <span data-bind="css: sortArrow('cost')"></span></th>
+          <span data-bind="css: sortArrow('totalCalculatedCost')"></span></th>
         <th class=" text-right">
           <a href="#"
              data-bind="{click: collapseAll}">
@@ -37,8 +37,8 @@
           data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
         <td><span data-bind="text: name"></span></td>
         <td><span data-bind="text: quantity"></span></td>
-        <td class="hidden-xs"><span data-bind="text: weightLabel"></span></td>
-        <td class="hidden-xs"><span data-bind="text: costLabel"></span></td>
+        <td class="hidden-xs"><span data-bind="text: totalWeightLabel"></span></td>
+        <td class="hidden-xs"><span data-bind="text: totalCostLabel"></span></td>
         <td class="text-right">
           <span data-toggle="collapse"
                 data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"

@@ -26,8 +26,12 @@ export class ItemsViewModel extends ACTableComponent {
             'quantity desc': { field: 'quantity', direction: 'desc', numeric: true},
             'weight asc': { field: 'weight', direction: 'asc', numeric: true},
             'weight desc': { field: 'weight', direction: 'desc', numeric: true},
+            'totalWeight asc': { field: 'totalWeight', direction: 'asc', numeric: true},
+            'totalWeight desc': { field: 'totalWeight', direction: 'desc', numeric: true},
             'cost asc': { field: 'cost', direction: 'asc', numeric: true},
-            'cost desc': { field: 'cost', direction: 'desc', numeric: true}
+            'cost desc': { field: 'cost', direction: 'desc', numeric: true},
+            'totalCalculatedCost asc': { field: 'totalCalculatedCost', direction: 'asc', numeric: true},
+            'totalCalculatedCost desc': { field: 'totalCalculatedCost', direction: 'desc', numeric: true}
         };
     }
 
@@ -35,21 +39,7 @@ export class ItemsViewModel extends ACTableComponent {
         if (this.entities().length === 0) {
             return '0 (gp)';
         }
-        const calculateCost = (cost, coin) => {
-            if (coin.toLowerCase() === 'cp') {
-                return parseInt(cost)/100;
-            } else if (coin.toLowerCase() === 'sp') {
-                return parseInt(cost)/10;
-            } else if (coin.toLowerCase() === 'ep') {
-                return parseInt(cost)/2;
-            } else if (coin.toLowerCase() === 'pp') {
-                return parseInt(cost) * 10;
-            }
-            return cost;
-        };
-
-        const total = this.entities().map(
-            entity => calculateCost(entity.cost(), entity.currencyDenomination()) * parseInt(entity.quantity())
+        const total = this.entities().map(entity => entity.totalCalculatedCost()
         ).reduce(
             (a, b) => a + b
         );
@@ -61,7 +51,7 @@ export class ItemsViewModel extends ACTableComponent {
             return '0 (lbs)';
         }
         const total = this.entities().map(
-            entity => parseInt(entity.weight()) * parseInt(entity.quantity())
+            entity => entity.totalWeight()
         ).reduce(
             (a, b) => a + b
         );
