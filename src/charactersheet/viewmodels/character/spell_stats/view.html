@@ -4,10 +4,10 @@
     <tr class="ac-table-header"><th colspan="2" /></tr>
   </thead>
   <!-- ko if: $component.loaded(), completeOn: 'render' -->
-  <tbody>
+  <tbody class="spell-stat-table">
       <tr>
         <th>
-          <span class="h4" style="display: inline-block">Spell Attack Bonus</span>
+          <span class="h4">Spell Attack Bonus</span>
         </th>
         <td class="ac-table-data-cell">
             <strong>+<span data-bind="text: spellAttackBonus"></span></strong>
@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <th>
-          <span class="h4" style="display: inline-block">Spell Save DC</span>
+          <span class="h4">Spell Save DC</span>
         </th>
         <td class="ac-table-data-cell">
             <strong data-bind="text: spellSaveDc"></strong>
