@@ -22,6 +22,7 @@
       <input type="text"
              class="form-control spellsEditNameInput"
              placeholder="Magic Missile"
+             required="true"
              data-bind="textInput: name,
              hasFocus: $component.firstFormElementHasFocus,
              autocomplete: {
@@ -33,6 +34,7 @@
              class="control-label">School</label>
       <input class="form-control"
              placeholder="Abjuration"
+             required="true"
              data-bind="textInput: school,
     autocomplete: { source: $component.schoolOptions,
                     onselect:  $component.setSchool }">
@@ -45,6 +47,7 @@
              min="0"
              max="9"
              placeholder="1"
+             required="true"
              data-bind="value: level">
     </div>
 
@@ -53,6 +56,7 @@
              class="control-label">Cast Time</label>
       <input class="form-control"
              placeholder="1 action"
+             required="true"
              data-bind="textInput: castingTime,
     autocomplete: { source: $component.castingTimeOptions,
                     onselect: $component.setCastingTime }">
@@ -62,6 +66,7 @@
              class="ontrol-label">Type</label>
       <input class="form-control spellsEditTypeInput"
              placeholder="Automatic"
+             required="true"
              data-bind="textInput: type,
     autocomplete: { source: $component.typeOptions,
                     onselect: $component.setType }">
@@ -102,6 +107,7 @@
              class="control-label">Range</label>
       <input class="form-control"
              placeholder="1 mile"
+             required="true"
              data-bind="textInput: range,
         autocomplete: { source: $component.rangeOptions,
                         onselect: $component.setRange }">
@@ -111,6 +117,7 @@
              class="control-label">Duration</label>
       <input class="form-control"
              placeholder="1 day"
+             required="true"
              data-bind="textInput: duration,
              autocomplete: { source: $component.durationOptions,
                              onselect: $component.setDuration }">
@@ -120,6 +127,7 @@
              class="control-label">Components</label>
       <input class="form-control"
              placeholder="V, S, M"
+             required="true"
              data-bind="textInput: components,
                 autocomplete: { source: $component.componentsOptions,
                                 onselect: $component.setComponents }">

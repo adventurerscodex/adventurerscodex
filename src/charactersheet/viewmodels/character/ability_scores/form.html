@@ -43,12 +43,14 @@
             <input type="number"
                    class="form-control ac-number-input"
                    min="0"
+                   required="true"
                    data-bind="value: value, event: {change: $component.updateEntity}, hasFocus: $component.scoreFormHasFocus">
             <!-- /ko -->
             <!-- ko if: $index() != 0 -->
             <input type="number"
                    class="form-control ac-number-input"
                    min="0"
+                   required="true"
                    data-bind="textInput: value, event: {change: $component.updateEntity}">
             <!-- /ko -->
           </td>
@@ -88,11 +90,13 @@
             <!-- ko if: $index() == 0 -->
             <input type="number"
                    class="form-control ac-number-input"
+                   required="true"
                    data-bind="value: modifier, event: {change: $component.updateEntity}, hasFocus: $component.saveFormHasFocus" />
             <!-- /ko -->
             <!-- ko if: $index() != 0 -->
             <input type="number"
                    class="form-control ac-number-input"
+                   required="true"
                    data-bind="value: modifier, event: {change: $component.updateEntity}" />
             <!-- /ko -->
           </td>

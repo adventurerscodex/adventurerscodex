@@ -18,6 +18,7 @@
       <input type="text"
              class="form-control"
              placeholder="Dagger of Venom"
+             required="true"
              data-bind="textInput: name,
                         autocomplete: { source: $component.magicItemsPrePopFilter,
                         onselect: $component.populateMagicItem }">
@@ -27,6 +28,7 @@
            class="control-label">Type</label>
       <input class="form-control"
              placeholder="Wand"
+             required="true"
              data-bind="textInput: type,
              autocomplete: { source: $component.typeOptions,
                              onselect: $component.setMagicItemType }">
@@ -36,6 +38,7 @@
            class="control-label">Rarity</label>
       <input class="form-control"
              placeholder="Legendary"
+             required="true"
              data-bind="textInput: rarity,
              autocomplete: { source: $component.rarityOptions,
                              onselect: $component.setMagicItemRarity }">

@@ -15,6 +15,7 @@
       <input type="text"
              class="form-control"
              placeholder="Rations"
+             required="true"
              data-bind='textInput: name,
                autocomplete: {
                  source: $component.itemsPrePopFilter,
@@ -28,6 +29,7 @@
                class="form-control"
                min="0"
                max="5000"
+               required="true"
                placeholder="Item Weight"
                data-bind='textInput: weight'>
         <span class="input-group-addon no-top-bottom-padding">lbs.</span>
@@ -40,6 +42,7 @@
              class="form-control"
              min="0"
              max="5000"
+             required="true"
              placeholder="Item Quantity"
              data-bind='textInput: quantity'>
     </div>
@@ -48,11 +51,13 @@
       <div class="input-group">
         <input type="number"
                min="0"
+               required="true"
                class="form-control input-jquery-addon"
                data-bind="value: cost" />
         <span class="input-group-addon input-group-addon-jquery">
           <input class="form-control"
                  placeholder="GP"
+                 required="true"
                  data-bind="textInput: currencyDenomination,
               autocomplete: {
                   source: $component.currencyDenominationOptions,

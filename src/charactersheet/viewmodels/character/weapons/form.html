@@ -22,6 +22,7 @@
       <input type="text"
              class="form-control"
              placeholder="Short Sword"
+             required="true"
              data-bind='textInput: name,
                          autocomplete: {
                           source: $component.weaponsPrePopFilter,
@@ -32,6 +33,7 @@
              class="control-label">Damage</label>
       <input type="text"
              class="form-control"
+             required="true"
              placeholder="1d4"
              data-bind='textInput: damage, hasFocus: $component.formElementHasFocus'>
     </div>
@@ -56,6 +58,7 @@
              class="control-label">Type</label>
       <input class="form-control"
              placeholder="Melee"
+             required="true"
              data-bind="textInput: type,
              autocomplete: {
               source: $component.typeOptions,

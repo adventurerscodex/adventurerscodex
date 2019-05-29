@@ -23,6 +23,7 @@
       <input type="text"
              class="form-control"
              placeholder="Chain Mail"
+             required="true"
              data-bind='textInput: name,
               autocomplete: { source: $component.armorsPrePopFilter,
                  onselect: $component.populateArmor }'>
@@ -32,6 +33,7 @@
              class="control-label">Type</label>
       <input class="form-control"
              placeholder="Light"
+             required="true"
              data-bind="textInput: type,
              autocomplete: { source: $component.typeOptions,
              onselect: $component.setArmorType }">
@@ -57,6 +59,7 @@
       <input type="number"
              class="form-control"
              placeholder="3"
+             required="true"
              data-bind='textInput: armorClass,
                hasFocus: $component.formElementHasFocus'>
     </div>
