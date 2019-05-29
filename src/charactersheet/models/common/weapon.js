@@ -226,11 +226,10 @@ export class Weapon extends KOModel {
     }, this);
 
     weaponDescriptionHTML = ko.pureComputed(() => {
-        if (this.description()) {
-            return this.description().replace(/\n/g, '<br />');
-        } else {
+        if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
+        return this.description();
     }, this);
 
     weaponWeightLabel = ko.pureComputed(() => {

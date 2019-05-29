@@ -60,21 +60,11 @@ export function ChatLogReadAloudItem(params) {
         return self.message.item().json.html;
     });
 
-    self.saveToNotes = function() {
-        var key = CoreManager.activeCore().uuid();
-        var note = PersistenceService.findByPredicates(Note, [
-            new KeyValuePredicate('characterId', key),
-            new KeyValuePredicate('isSavedChatNotes', true)
-        ])[0];
+    self.saveToNotes = async function() {
         var date = (new Date()).toDateString();
-        if (!note) {
-            note = new Note();
-            note.characterId(key);
-            note.text('# Saved from Chat');
-            note.isSavedChatNotes(true);
-        }
-        note.text(note.text() + '\n\n' + '**' + date + '**' + '\n\n' + self.html());
-        note.save();
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        note.appendTextToNote('**' + date + '**' + '\n\n' + self.html());
+        await note.ps.save();
 
         Notifications.notes.changed.dispatch();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');

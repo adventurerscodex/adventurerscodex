@@ -75,14 +75,12 @@ export function ChatLogImageItem(params) {
         return '<img src="{url}" width="100%" />'.replace('{url}', self.messageImage());
     };
 
-    self.saveToNotes = function() {
-        var key = CoreManager.activeCore().uuid();
-        var date = (new Date()).toDateString();
+    self.saveToNotes = async function() {
+        const date = (new Date()).toDateString();
 
-        var note = new Note();
-        note.characterId(key);
-        note.text(self.html() + '\n\n' + date + '\n\n' + self.imageHtml());
-        note.save();
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        note.appendTextToNote(self.html() + '\n\n' + date + '\n\n' + self.imageHtml());
+        await note.ps.save();
 
         Notifications.notes.changed.dispatch();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');

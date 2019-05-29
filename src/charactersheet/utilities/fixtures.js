@@ -593,5 +593,11 @@ export var Fixtures = {
         masterTable: [
             'Character','Profile','PlayerInfo','Skill','CharacterAppearance','FeaturesTraits','ImageModel','Health','OtherStats','DeathSave','HitDiceType','AbilityScores','SavingThrows','SpellStats','FeatsProf','Treasure','Note','HitDice','Slot','Item','Spell','Armor','Weapon','MagicItem','Status','PlayerImage','Campaign','DailyFeature','Encounter','EnvironmentSection','PointOfInterestSection','NPCSection','MonsterSection','PlayerTextSection','TreasureSection','NotesSection','Environment','Proficiency','Feat','Feature','Tracked','Trait','AuthenticationToken','ChatRoom','ChatMessage','PlayerText','PointOfInterest','MonsterAbilityScore','Monster','NPC','EncounterItem','Presence','Message','MapsAndImagesSection','MapOrImage','CampaignMapOrImage','Exhibit','EncounterMagicItem'
         ]
+    },
+    notes: {
+        type: {
+            chat: 'chat',
+            default: 'default'
+        }
     }
 };

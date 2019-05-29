@@ -95,7 +95,7 @@ export function ChatLogPoiItem(params) {
         var date = (new Date()).toDateString();
         const description = self.message.item().json.description;
         const url = self.message.item().json.url;
-        let content = self.html + '\n\n' + date;
+        let content = self.nameHtml() + '\n\n' + date;
 
         if (description) {
             content = content + '\n\n' + self.descriptionHtml();
@@ -107,13 +107,10 @@ export function ChatLogPoiItem(params) {
         return content;
     };
 
-    self.saveToNotes = function() {
-        var key = CoreManager.activeCore().uuid();
-
-        var note = new Note();
-        note.characterId(key);
-        note.text(self.constructPoiHtml());
-        note.save();
+    self.saveToNotes = async function() {
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        note.appendTextToNote(self.constructPoiHtml());
+        await note.ps.save();
 
         Notifications.notes.changed.dispatch();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');

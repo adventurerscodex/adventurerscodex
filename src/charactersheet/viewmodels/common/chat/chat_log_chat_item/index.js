@@ -71,24 +71,13 @@ export function ChatLogChatItem(params) {
         return linkifyStr(self.message.html(), Settings.linkifyOptions);
     });
 
-    self.saveToNotes = function() {
-// TODO: Refactor
-//         var key = CoreManager.activeCore().uuid();
-//         var note = PersistenceService.findByPredicates(Note, [
-//             new KeyValuePredicate('characterId', key),
-//             new KeyValuePredicate('isSavedChatNotes', true)
-//         ])[0];
-//         if (!note) {
-//             note = new Note();
-//             note.coreUuid(key);
-//             note.text('# Saved from Chat');
-//             note.isSavedChatNotes(true);
-//         }
-//         note.text(note.text() + '\n\n' + self.message.toText());
-//         note.save();
-//
-//         Notifications.notes.changed.dispatch();
-//         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
+    self.saveToNotes = async function() {
+        let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
+        note.appendTextToNote(self.message.toText());
+        await note.ps.save();
+
+        Notifications.notes.changed.dispatch();
+        Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
     /* Card Methods */
 
