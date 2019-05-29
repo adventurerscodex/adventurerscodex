@@ -3,6 +3,7 @@
   Profile
 </div>
 <hr />
+<!-- ko if: loaded(), completeOn: 'render' -->
 <div class="row profile-view" data-bind="with: entity">
   <div class="col-sm-6 col-lg-3">
     <h4><span class="row-title">Level:</span> <strong class="row-data" data-bind="text: level"></strong></h4>
@@ -56,3 +57,4 @@
     <div class="profile-data-row"><span class="row-title">Hair:</span> <span class="row-data" data-bind="text: hairColor() ? hairColor : '-'"></span></div>
   </div>
 </div>
+<!-- /ko -->
