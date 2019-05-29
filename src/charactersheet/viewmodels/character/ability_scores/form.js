@@ -71,7 +71,6 @@ export class ScoreSaveFormViewModel extends ACTableFormModel {
             if (entity.markedForSave) {
                 delete entity.markedForSave;
                 await entity.ps.save();
-                this.savingThrowsChanged(true);
             }
         });
         await Promise.all(updates);
@@ -83,7 +82,6 @@ export class ScoreSaveFormViewModel extends ACTableFormModel {
                 Notifications.abilityScores[name.toLowerCase()].changed.dispatch();
             });
             Notifications.abilityScores.changed.dispatch();
-            this.abilityScoresChanged([]);
         }
     }
 

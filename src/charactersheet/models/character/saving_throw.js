@@ -32,12 +32,7 @@ export class SavingThrow extends KOModel {
     };
 
     async updateAbilityScore() {
-        try {
-            var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.read({coreUuid: key,
-                uuid: this.abilityScore().uuid()});
-            this.abilityScoreObject(response.object);
-        } catch(err) {/*Ignore*/ }
+        this.abilityScoreObject().importValues(this.abilityScore());
     }
 
     modifierLabel = ko.pureComputed(() => {
