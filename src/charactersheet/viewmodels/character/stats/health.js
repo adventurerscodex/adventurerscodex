@@ -12,52 +12,15 @@ import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 
 import {find} from 'lodash';
-// import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './health.html';
-//
-// class ACViewModel {
-//     constructor(params) {
-//         // Card Properties
-//         this.containerId = ko.utils.unwrapObservable(params.containerId);
-//         this.showBack = params.showBack;
-//         this.flip = params.flip;
-//
-//         this.loaded = ko.observable(false);
-//     }
-//
-//     async load() {
-//         this.loaded(false);
-//         await this.refresh();
-//         this.setUpSubscriptions();
-//         this.loaded(true);
-//     }
-//
-//     dispose() {
-//         console.error('Dispose must be implemented by AC classes');
-//     }
-//
-//     async refresh() {
-//         throw('refresh must be defined by subclasses of ACViewModel');
-//     }
-//
-//     setUpSubscriptions() {
-//         this.showBack.subscribe(this.subscribeToShowForm);
-//     }
-//
-//     subscribeToShowForm = () => {
-//         if (!this.showBack()) {
-//             this.refresh();
-//         }
-//     }
-// }
 
 class StatsHealthViewModel extends ACViewModel {
     constructor(params) {
         super(params);
         this.forceCardResize = params.forceCardResize;
         this.massiveDamageTaken = params.massiveDamageTaken;
-
+        this.outerShow = params.outerShow;
         this.profile = ko.observable(new Profile());
         this.hitDice = ko.observable(new HitDice());
         this.health = ko.observable(new Health());
@@ -74,28 +37,24 @@ class StatsHealthViewModel extends ACViewModel {
     }
 
     async load() {
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
+        await this.profileDidUpdate();
+        await super.load();
     }
 
     refresh = async () => {
         var key = CoreManager.activeCore().uuid();
 
-        const profile = await Profile.ps.read({uuid: key});
-        this.profile(profile.object);
-
         const hitDice = await HitDice.ps.read({uuid: key});
-        this.hitDice(hitDice.object);
+        this.hitDice().importValues(hitDice.object.exportValues());
 
         const health = await Health.ps.read({uuid: key});
-        this.health(health.object);
-        this.calculateHitDice();
+        this.health().importValues(health.object.exportValues());
         this.forceCardResize();
     };
 
     setUpSubscriptions = () => {
         super.setUpSubscriptions();
+        const subscribeToOuterShow = this.outerShow.subscribe(this.subscribeToShowForm);
         Notifications.events.longRest.add(this.resetOnLongRest);
         Notifications.profile.level.changed.add(this.profileDidUpdate);
     }
@@ -164,7 +123,7 @@ class StatsHealthViewModel extends ACViewModel {
         // damageHandler updated this.health()
         this.damageHandler(healValue);
         const response = await this.health().ps.save();
-        this.health(response.object);
+        this.health().importValues(response.object.exportValues());
         Notifications.health.damage.changed.dispatch();
         this.healInput(null);
     };
@@ -176,7 +135,7 @@ class StatsHealthViewModel extends ACViewModel {
         }
         this.health().tempHitPoints(tempValue);
         const response = await this.health().ps.save();
-        this.health(response.object);
+        this.health().importValues(response.object.exportValues());
         Notifications.health.tempHitPoints.changed.dispatch();
         this.tempInput(null);
     };
@@ -192,7 +151,7 @@ class StatsHealthViewModel extends ACViewModel {
         // damageHandler updated this.health()
         this.damageHandler(damageValue);
         const response = await this.health().ps.save();
-        this.health(response.object);
+        this.health().importValues(response.object.exportValues());
         Notifications.health.damage.changed.dispatch();
         this.dmgInput(null);
     };
@@ -245,7 +204,7 @@ class StatsHealthViewModel extends ACViewModel {
     profileDidUpdate = async () => {
         const key = CoreManager.activeCore().uuid();
         const profile = await Profile.ps.read({uuid: key});
-        this.profile(profile.object);
+        this.profile().importValues(profile.object.exportValues());
         this.calculateHitDice();
     };
 
@@ -273,7 +232,7 @@ class StatsHealthViewModel extends ACViewModel {
 
     saveHitDice = async () => {
         const response = await this.hitDice().ps.save();
-        this.hitDice(response.object);
+        this.hitDice().importValues(response.object.exportValues());
         this.calculateHitDice();
         Notifications.hitDice.changed.dispatch();
     }
@@ -304,7 +263,7 @@ class StatsHealthViewModel extends ACViewModel {
         this.health().damage(0);
         this.health().tempHitPoints(0);
         const response = await this.health().ps.save();
-        this.health(response.object);
+        this.health().importValues(response.object.exportValues());
         Notifications.health.damage.changed.dispatch();
         Notifications.health.tempHitPoints.changed.dispatch();
         await this.resetHitDice();

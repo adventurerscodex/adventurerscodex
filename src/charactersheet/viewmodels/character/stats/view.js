@@ -21,8 +21,8 @@ export class StatsCardViewModel {
         // super(params);
         this.tabId = params.tabId;
         this.containerId = params.containerId;
-        this.outerShowBack = params.outerShowBack;
-        this.outerFlip = params.outerFlip;
+        this.show = params.show;
+        this.flip = params.flip;
         this.forceOuterCardResize = params.forceCardResize;
         this.health = ko.observable(new Health());
         this.deathSaveSuccess = ko.observable(new DeathSave());
@@ -43,9 +43,7 @@ export class StatsCardViewModel {
     refresh = async () => {
         const key = CoreManager.activeCore().uuid();
         const health = await Health.ps.read({uuid: key});
-
-        this.health(health.object);
-
+        this.health().importValues(health.object.exportValues());
         const deathSaves = await DeathSave.ps.list({coreUuid: key});
 
         this.deathSaveSuccess(find(deathSaves.objects, (save) => save.type() === 'success'));

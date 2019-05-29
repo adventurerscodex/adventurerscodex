@@ -20,8 +20,6 @@ export class StatsHealthFormViewModel extends FormBaseController {
 
     constructor(params) {
         super(params);
-        this.flip = params.outerFlip;
-        this.show = params.outerShowBack;
         this.defaultHeight = params.defaultHeight;
         this.loaded = ko.observable(false);
         this.hitDice = ko.observable(new HitDice());
@@ -40,14 +38,18 @@ export class StatsHealthFormViewModel extends FormBaseController {
         this.loaded(true);
     }
 
+    setUpSubscriptions () {
+        super.setUpSubscriptions();
+    }
+
     refresh = async () => {
         var key = CoreManager.activeCore().uuid();
 
         const hitDice = await HitDice.ps.read({uuid: key});
-        this.hitDice(hitDice.object);
+        this.hitDice().importValues(hitDice.object.exportValues());
 
         const health = await Health.ps.read({uuid: key});
-        this.health(health.object);
+        this.health().importValues(health.object.exportValues());
     };
 
     save = async () => {

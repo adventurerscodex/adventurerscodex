@@ -1,4 +1,4 @@
-<card-flip-button params="{ flip: $component.outerFlip }"></card-flip-button>
+<card-flip-button params="{ flip: $component.flip }"></card-flip-button>
 <flip-card params="{
           tabId: 'stats',
           elementId: 'healthContainer',
@@ -11,6 +11,7 @@
     <stats-health-view params="{
        containerId: elementId,
        show: showFront,
+       outerShow: context.show,
        flip: context.toggleDeathSavesVisible,
        forceCardResize: forceCardResize,
        massiveDamageTaken: context.massiveDamageTaken

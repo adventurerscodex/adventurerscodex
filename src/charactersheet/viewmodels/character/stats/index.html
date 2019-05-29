@@ -11,11 +11,10 @@
       </div>
       <hr class="ac-table-header" />
       <stats-card-view params="{
-        tabId: $parent.tabId,
        containerId: elementId,
-       outerShowBack: showBack,
+       show: showFront,
        forceCardResize: forceCardResize,
-       outerFlip: flip}">
+       flip: flip}">
        </stats-card-view>
     </div>
     <div class="back">
@@ -27,8 +26,8 @@
         <hr class="ac-table-header" />
         <stats-health-form params="{
          containerId: elementId,
-         outerShowBack: showBack,
-         outerFlip: flip,
+         show: showBack,
+         flip: flip,
          forceCardResize: forceCardResize}">
          </stats-health-form>
       </div>

@@ -8,11 +8,7 @@ import ko from 'knockout';
 export class ACViewModel {
     constructor(params) {
         this.containerId = ko.utils.unwrapObservable(params.containerId);
-        if (params.show) {
-            this.show = params.show;
-        } else {
-            this.show = params.showBack;
-        }
+        this.show = params.show;
         this.flip = params.flip;
         this.entity = ko.observable(this.generateBlank());
         this.loaded = ko.observable(false);

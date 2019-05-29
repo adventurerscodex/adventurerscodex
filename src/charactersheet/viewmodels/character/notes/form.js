@@ -27,7 +27,7 @@ export class NotesFormViewModel  extends FormController {
         await super.save();
     }
     notify() {
-        Notifications.notes.changed.add(self.reloadData);
+        // Notifications.notes.changed.add(self.reloadData);
     }
 
     validation = {
