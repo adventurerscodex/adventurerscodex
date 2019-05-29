@@ -120,7 +120,7 @@ export class SkillsFormViewModel extends ACTableFormModel {
 
     notify = () => {
         Notifications.skills.changed.dispatch();
-        console.log('you forgot to notify when perception changes.');
+        // TODO: Notify when perception changes
     }
 
     flipAndCollapse = () => {
