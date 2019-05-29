@@ -2,61 +2,57 @@
 <div class="h4 card-title">
   Profile
 </div>
-<div  style="margin-top: 10px; margin-bottom: 0px; border-collapse: collapse" />
-<!-- ko if: loaded(), completeOn: 'render' -->
-<div class="row profile-view" data-bind="with: entity" >
-  <div class="form-group col-sm-4 col-md-4 col-lg-1">
-      <label>Level </label>
-      <div class="profile-data" data-bind="text: level"></div>
+<hr />
+<div class="row profile-view" data-bind="with: entity">
+  <div class="col-sm-6 col-lg-3">
+    <h4><span class="row-title">Level:</span> <strong class="row-data" data-bind="text: level"></strong></h4>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-3">
-      <label>Class </label>
-      <div class="profile-data" data-bind="text: characterClass() ? characterClass : 'No Class'"></div>
+  <hr class="visible-xs-block" />
+  <div class="col-sm-6 col-lg-3">
+    <h4><span class="row-title">Race:</span> <span class="row-data" data-bind="text: race() ? race : '-'"></span></h4>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-2">
-      <label>Race </label>
-      <div class="profile-data" data-bind="text: race() ? race : 'No Race'"></div>
+  <hr class="visible-xs-block visible-sm-block visible-md-block" />
+  <div class="col-sm-6 col-lg-3">
+    <h4><span class="row-title">Class:</span> <span class="row-data" data-bind="text: characterClass() ? characterClass : '-'"></span></h4>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label>Alignment </label>
-      <div class="profile-data" data-bind="text: alignment() ? alignment : 'No Alignment'"></div>
+  <hr class="visible-xs-block" />
+  <div class="col-sm-6 col-lg-3">
+    <h4><span class="row-title">Alignment:</span> <span class="row-data" data-bind="text: alignment() ? alignment : '-'"></span></h4>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label>Diety </label>
-      <div class="profile-data" data-bind="text: deity() ? deity : 'No Deity'"></div>
+  <hr class="visible-xs-block visible-sm-block visible-md-block visible-lg-block" />
+  <div class="col-sm-6 col-lg-3">
+    <div class="profile-data-row"><span class="row-title">Age:</span> <span class="row-data" data-bind="text: age() ? age : 'No Age'"></span></div>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label >Experience </label>
-      <div class="profile-data" data-bind="text: experience() ? experience : 'Milestones'"></div>
+  <hr class="visible-xs-block" />
+  <div class="col-sm-6 col-lg-3">
+    <div class="profile-data-row"><span class="row-title">Gender:</span> <span class="row-data" data-bind="text: gender() ? gender : '-'"></span></div>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-1">
-      <label>Gender </label>
-      <div class="profile-data" data-bind="text: gender() ? gender : 'No Gender'"></div>
+  <hr class="visible-xs-block visible-sm-block visible-md-block" />
+  <div class="col-sm-6 col-lg-3">
+    <div class="profile-data-row"><span class="row-title">Height:</span> <span class="row-data" data-bind="text: height() ? height : '-'"></span></div>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-1">
-      <label >Age </label>
-      <div class="profile-data" data-bind="text: age() ? age: 'No Age'"></div>
+  <hr class="visible-xs-block" />
+  <div class="col-sm-6 col-lg-3">
+    <div class="profile-data-row"><span class="row-title">Weight:</span> <span class="row-data" data-bind="text: weight() ? $component.weightLabel : '-'"></span></div>
   </div>
-
-  <div class="form-group col-sm-3 col-md-3 col-lg-1">
-      <label >Height </label>
-      <div class="profile-data" data-bind="text: height() ? height : 'No Height'"></div>
+  <hr class="visible-xs-block visible-sm-block visible-md-block visible-lg-block" />
+  <div class="col-sm-6 col-lg-3">
+    <div class="profile-data-row"><span class="row-title">Experience:</span> <span class="row-data" data-bind="text: experience() ? experience : '-'"></span></div>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-1">
-      <label >Weight </label>
-      <div class="profile-data" data-bind="text: weight () ? $component.weightLabel : 'No Weight'"></div>
+  <hr class="visible-xs-block" />
+  <div class="col-sm-6 col-lg-3">
+    <div class="profile-data-row"><span class="row-title">Deity:</span> <span class="row-data" data-bind="text: deity() ? deity : '-'"></span></div>
   </div>
-  <div class="form-group col-sm-3 col-md-3 col-lg-2">
-      <label >Eyes </label>
-      <div class="profile-data" data-bind="text: eyeColor() ? eyeColor : 'No Eye Color'"></div>
+  <hr class="visible-xs-block visible-sm-block visible-md-block" />
+  <div class="col-sm-6 col-lg-6">
+    <div class="profile-data-row"><span class="row-title">Eyes:</span> <span class="row-data" data-bind="text: eyeColor() ? eyeColor : '-'"></span></div>
   </div>
-  <div class="form-group col-sm-4 col-md-6 col-lg-3">
-      <label >Skin </label>
-      <div class="profile-data" data-bind="text: skinColor() ? skinColor : 'No Skin Color'"></div>
+  <hr class="visible-xs-block visible-lg-block" />
+  <div class="col-sm-6 col-lg-6">
+    <div class="profile-data-row"><span class="row-title">Skin:</span> <span class="row-data" data-bind="text: skinColor() ? skinColor : '-'"></span></div>
   </div>
-  <div class="form-group col-sm-4 col-md-6 col-lg-3">
-      <label >Hair </label>
-      <div class="profile-data" data-bind="text: hairColor() ? hairColor : 'No Hair Color'"></div>
+  <hr class="visible-xs-block visible-sm-block visible-md-block" />
+  <div class="col-sm-12 col-lg-6">
+    <div class="profile-data-row"><span class="row-title">Hair:</span> <span class="row-data" data-bind="text: hairColor() ? hairColor : '-'"></span></div>
   </div>
 </div>
-<!-- /ko -->

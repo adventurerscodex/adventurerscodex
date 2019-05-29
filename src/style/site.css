@@ -1386,7 +1386,6 @@ transition: opacity 0.3s linear;
 /* .flipped .back .innerFlipped .inner-back {
   transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
 } */
-
 .edit-btn {
   position: absolute;
   top: -10px;
@@ -1833,33 +1832,39 @@ hr {
   background: url('../images/damage_types/echo-ripples-white.svg');
 }
 
-.profile-view {
-  padding-left: 15px;
-  padding-right: 15px;
+.profile-view h4 {
+  font-size: 17px;
+  padding-left: 5px;
+  margin-top: 0px;
+  margin-bottom: 5px
 }
 
-.profile-view .form-group {
-  padding-left: 0px;
-  padding-right: 0px;
+.profile-view .row-title {
+  width: 90px;
+  display: inline-block;
 }
 
-.profile-view label {
-  vertical-align: middle;
-  border-top: 1px solid #2c3e50;
-  padding-left: 15px;
-  border-bottom: thin solid #ecf0f1;
-  width: 100%;
-  line-height: 4.0ex;
-  height: 4.0ex;
+.profile-view .row-data {
+  display: inline-block;
 }
 
-.profile-view .profile-data {
-  vertical-align: middle;
-  padding-left: 15px;
+.profile-view .profile-data-row {
+  padding-left: 5px;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
 
 .background-card label {
   display: block;
   width: 100%;
   border-bottom: thin solid #ecf0f1;
+}
+
+.profile-view hr {
+  clear: both;
+  border: thin solid #ecf0f1;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px
 }
