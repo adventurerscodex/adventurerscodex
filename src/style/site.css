@@ -1598,8 +1598,9 @@ hr {
   border-bottom: 1px solid #2c3e50;
 }
 
-.score-save-table {
-  margin-top: 15px;
+hr.ac-table-header {
+   margin-top: 5px;
+   margin-bottom: 5px;
 }
 
 .score-save-table > thead > tr > th,
