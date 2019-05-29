@@ -20,6 +20,7 @@
              placeholder="Dagger of Venom"
              required="true"
              data-bind="textInput: name,
+                        hasFocus: $component.formElementHasFocus,
                         autocomplete: { source: $component.magicItemsPrePopFilter,
                         onselect: $component.populateMagicItem }">
   </div>

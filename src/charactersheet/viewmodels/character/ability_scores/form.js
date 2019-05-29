@@ -47,8 +47,8 @@ export class ScoreSaveFormViewModel extends ACTableFormModel {
         await Promise.all(saveUpdates);
     };
 
-    saveFormHasFocus = ko.computed(()=>(this.formElementHasFocus() && this.showSaves()), this);
-    scoreFormHasFocus = ko.computed(()=>(this.formElementHasFocus() && !this.showSaves()), this);
+    saveFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && this.showSaves()));
+    scoreFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && !this.showSaves()));
 
     toggleSaves = (newValue) => {
         this.showSaves(!this.showSaves());

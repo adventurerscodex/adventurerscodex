@@ -25,6 +25,7 @@
              placeholder="Chain Mail"
              required="true"
              data-bind='textInput: name,
+              hasFocus: $component.formElementHasFocus,
               autocomplete: { source: $component.armorsPrePopFilter,
                  onselect: $component.populateArmor }'>
     </div>
@@ -60,8 +61,7 @@
              class="form-control"
              placeholder="3"
              required="true"
-             data-bind='textInput: armorClass,
-               hasFocus: $component.formElementHasFocus'>
+             data-bind='textInput: armorClass'>
     </div>
     <div class="form-group col-sm-4 col-md-6 col-lg-4">
       <label for="stealth"

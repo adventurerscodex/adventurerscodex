@@ -19,7 +19,6 @@ export class ACTableFormModel extends ACTableComponent {
     setUpSubscriptions() {
         const onShow = this.show.subscribe(this.refreshOnShow);
         this.subscriptions.push(onShow);
-
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
     }
@@ -30,8 +29,11 @@ export class ACTableFormModel extends ACTableComponent {
         }
     }
 
-    focusOnFlip() {
-        this.formElementHasFocus(this.show());
+    focusOnFlip = () => {
+        const setFocus = () => {
+            this.formElementHasFocus(this.show());
+        };
+        setTimeout(setFocus, 450);
     }
 
     async submit() {

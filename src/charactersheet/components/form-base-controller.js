@@ -44,8 +44,11 @@ export class FormBaseController {
         this.listeners = [];
     }
 
-    focusOnFlip() {
-        this.formElementHasFocus(this.show());
+    focusOnFlip = () => {
+        const setFocus = () => {
+            this.formElementHasFocus(this.show());
+        };
+        setTimeout(setFocus, 450);
     }
 
     load() {

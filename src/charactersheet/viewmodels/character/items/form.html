@@ -2,6 +2,12 @@
   <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
   <div class="row"
        data-bind="with: entity">
+     <!-- ko if: $component.existingData -->
+     <div class="col-xs-12">
+       <div class="h4" data-bind="text: name">
+       </div>
+     </div>
+     <!-- /ko -->
     <!-- ko ifnot: $component.existingData -->
     <div class="col-xs-12">
       <div class="h4">
@@ -17,6 +23,7 @@
              placeholder="Rations"
              required="true"
              data-bind='textInput: name,
+               hasFocus: $component.formElementHasFocus,
                autocomplete: {
                  source: $component.itemsPrePopFilter,
                  onselect: $component.populateItem }'>

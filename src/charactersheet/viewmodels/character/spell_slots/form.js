@@ -18,15 +18,16 @@ export class SpellSlotFormComponentViewModel extends FormController {
 
     constructor(params) {
         super(params);
-        this.nextSlotLevel = ko.observable(1);
-        if (params.nextSlotLevel) {
-            this.nextSlotLevel = params.nextSlotLevel;
-        }
+        this.nextSlotLevel = params.nextSlotLevel;
         autoBind(this);
     }
 
     meditationWhite = meditationWhite;
     campingTentWhite = campingTentWhite;
+
+    getNextSlotLevel = () => {
+        return this.nextSlotLevel();
+    }
 
     generateBlank() {
         return new SpellSlot();
@@ -36,8 +37,8 @@ export class SpellSlotFormComponentViewModel extends FormController {
         Notifications.spellSlots.changed.dispatch();
     }
 
-    refresh() {
-        super.refresh();
+    async refresh() {
+        await super.refresh();
         // Reset the textarea size when refreshing
         if (this.addForm() && this.nextSlotLevel()) {
             this.entity().level(this.nextSlotLevel());

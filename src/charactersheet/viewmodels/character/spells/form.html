@@ -24,7 +24,7 @@
              placeholder="Magic Missile"
              required="true"
              data-bind="textInput: name,
-             hasFocus: $component.firstFormElementHasFocus,
+             hasFocus: $component.formElementHasFocus,
              autocomplete: {
                source: $component.spellsPrePopFilter,
              onselect: $component.populateSpell }">
