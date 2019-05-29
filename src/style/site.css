@@ -1629,6 +1629,10 @@ hr {
   text-align: justify;
 }
 
+.card-description .table {
+  background-color: transparent;
+}
+
 .safari-card-fix {
   opacity: 0.99;
 }
