@@ -53,7 +53,7 @@ export class Item extends KOModel {
         }
 
         return this.description();
-    }, thi);
+    }, this);
 
     weightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
