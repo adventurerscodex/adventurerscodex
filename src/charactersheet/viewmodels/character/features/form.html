@@ -12,16 +12,26 @@
     <div class="form-group">
       <label for="name"
              class="control-label">Name</label>
+      <!-- ko if: $component.existingData -->
       <input type="text"
              class="form-control featureEditNameInput"
              placeholder="Rage"
              required="true"
-             data-bind='textInput: name,
-             hasFocus: $component.formElementHasFocus,
-             autocomplete: {
-               source: $component.featuresPrePopFilter,
-               onselect: $component.populateFeature,
-             delay: 350 }'>
+             data-bind='value: name,
+             hasFocus: $component.formElementHasFocus'>
+       <!-- /ko -->
+       <!-- ko ifnot: $component.existingData -->
+       <input type="text"
+              class="form-control featureEditNameInput"
+              placeholder="Rage"
+              required="true"
+              data-bind='value: name,
+              hasFocus: $component.formElementHasFocus,
+              autocomplete: {
+                source: $component.featuresPrePopFilter,
+                onselect: $component.populateFeature,
+              delay: 350 }'>
+        <!-- /ko -->
     </div>
     <div class="form-group">
       <label for="class"

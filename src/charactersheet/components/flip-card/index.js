@@ -97,7 +97,7 @@ export class FlipCardComponentViewModel {
     }
 
     showFront = ko.pureComputed(() => !this.showBack());
-    
+
     toggleMode = (data, event) => {
         let toggleTo = (!this.showBack());
         if (data === true) { //override default behavior from function call
@@ -110,7 +110,7 @@ export class FlipCardComponentViewModel {
         if (this.onFlip) {
             this.onFlip(this.showBack());
         }
-        this.setNewHeight();
+        setTimeout(this.setNewHeight, 50);
     }
 
     load = () => {

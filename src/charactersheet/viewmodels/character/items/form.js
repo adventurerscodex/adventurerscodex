@@ -35,7 +35,7 @@ export class ItemFormViewModel extends FormController {
     itemsPrePopFilter = (request, response) => {
         const term = request.term.toLowerCase();
         let results = [];
-        if (term && term.length > 2) {
+        if (term && term.length > 1) {
             const keys = DataRepository.items ?
                 Object.keys(DataRepository.items) :
                 [];

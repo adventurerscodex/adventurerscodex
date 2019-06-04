@@ -2,7 +2,7 @@
 <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
 <div class="row" data-bind="with: entity">
   <!-- ko if: $component.existingData -->
-  <div class="h4 pull-left">
+  <div class="h4 col-xs-12">
     <span data-bind="text: name"></span>&nbsp;
     <small data-bind="text: rarity"></small>
   </div>
@@ -15,14 +15,25 @@
   <div class="form-group col-sm-8 col-md-12 col-lg-8">
     <label for="name"
            class="control-label">Item</label>
+      <!-- ko if: $component.existingData -->
       <input type="text"
              class="form-control"
              placeholder="Dagger of Venom"
              required="true"
-             data-bind="textInput: name,
+             data-bind="value: name,
+                        hasFocus: $component.formElementHasFocus">
+      <!-- /ko -->
+      <!-- ko ifnot: $component.existingData -->
+      <input type="text"
+             class="form-control"
+             placeholder="Dagger of Venom"
+             required="true"
+             data-bind="value: name,
                         hasFocus: $component.formElementHasFocus,
                         autocomplete: { source: $component.magicItemsPrePopFilter,
                         onselect: $component.populateMagicItem }">
+      <!-- /ko -->
+
   </div>
   <div class="form-group col-sm-4 col-md-6 col-lg-4">
     <label for="magicItemType"

@@ -29,8 +29,14 @@ export class FormBaseController {
 
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
+
+        const showDisclaimerResize = this.showDisclaimer.subscribe(this.delayThenResize);
+        this.subscriptions.push(showDisclaimerResize);
     }
 
+    delayThenResize = () => {
+        setTimeout(this.forceCardResize, 150);
+    }
     refreshOnShow = async () => {
         if (this.show()) {
             await this.refresh();

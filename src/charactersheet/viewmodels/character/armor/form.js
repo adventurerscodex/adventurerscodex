@@ -42,10 +42,13 @@ export class ArmorFormViewModel  extends FormController {
     /* Modal Methods */
     armorsPrePopFilter = (request, response) => {
         const term = request.term.toLowerCase();
-        const keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
-        const results = keys.filter((name, idx, _) => {
-            return name.toLowerCase().indexOf(term) > -1;
-        });
+        let results = [];
+        if (term) {
+            const keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
+            const results = keys.filter((name, idx, _) => {
+                return name.toLowerCase().indexOf(term) > -1;
+            });
+        }
         response(results);
     };
 

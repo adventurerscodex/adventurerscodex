@@ -664,8 +664,13 @@ body {
  */
 
 
+/*
+* translate3d fixes a z-index issue on safari
+*/
 .ui-autocomplete {
   z-index: 1051;
+  -webkit-transform: translate3d(0,0,1px);
+  transform: translate3d(0,0,1px);
 }
 
 ul.ui-autocomplete {
