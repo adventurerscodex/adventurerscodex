@@ -37,7 +37,7 @@ export function SavingThrowsViewModel() {
         self.savingThrows(response.objects);
 
         Notifications.abilityScores.changed.add(self.updateValues);
-        Notifications.otherStats.proficiency.changed.add(self.updateValues);
+        Notifications.proficiencyBonus.changed.add(self.updateValues);
 
         // Calculate Initial Values
         self.updateValues();
