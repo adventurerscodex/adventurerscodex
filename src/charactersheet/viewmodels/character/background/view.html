@@ -2,8 +2,9 @@
 <!-- ko if: loaded(), completeOn: 'render' -->
 <h3 data-bind="text: entity().name">
 </h3>
-<div class="row background-card" data-bind="with: entity">
-  <div class="col-sm-6 col-md-12">
+<div class="background-card" data-bind="with: entity">
+  <div class="row">
+  <div class="col-sm-6">
     <label for="personalityTrait">Personality Traits</label>
     <!-- ko if: personalityTrait() -->
     <p class="card-description"
@@ -13,7 +14,7 @@
        <p>No Personality Traits</p>
        <!-- /ko -->
   </div>
-  <div class="col-sm-6 col-md-12">
+  <div class="col-sm-6">
     <label for="ideal">Ideals</label>
     <!-- ko if: ideal() -->
     <p class="card-description"
@@ -23,8 +24,9 @@
        <p>No Ideals</p>
        <!-- /ko -->
   </div>
-  <div class="clearfix visible-sm-block"></div>
-  <div class="col-sm-6 col-md-12">
+  </div>
+  <div class="row">
+  <div class="col-sm-6">
     <label for="bond">Bonds</label>
     <!-- ko if: bond() -->
     <p class="card-description"
@@ -34,7 +36,7 @@
        <p>No Bonds</p>
        <!-- /ko -->
   </div>
-  <div class="col-sm-6 col-md-12">
+  <div class="col-sm-6">
     <label for="flaw">Flaws</label>
     <!-- ko if: flaw() -->
     <p class="card-description"
@@ -43,6 +45,7 @@
        <!-- ko ifnot: flaw() -->
        <p>No Flaws</p>
        <!-- /ko -->
+  </div>
   </div>
 </div>
 <!-- /ko -->

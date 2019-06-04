@@ -129,7 +129,6 @@ export class StatsCardViewModel {
         } else {
             this.deathSavesVisible(false);
         }
-
     }
 
     deathSavesDidUpdate = async () => {
