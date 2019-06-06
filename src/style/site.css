@@ -1666,6 +1666,36 @@ hr.ac-table-header {
   vertical-align: text-bottom;
 }
 
+
+.rest-icon {
+  width: 25px;
+  height: 25px;
+  background-size: 25px 25px;
+  display: inline-block;
+  padding: 0px 0 0 0px;
+  margin: 0px 2px 0px 2px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  vertical-align: text-bottom;
+}
+
+.trackedRow .short-rest-icon {
+  background: url('../images/meditation-blue.svg');
+}
+
+.trackedRow[aria-expanded="true"] .short-rest-icon {
+  background: url('../images/meditation.svg');
+}
+
+
+.trackedRow .long-rest-icon {
+  background: url('../images/camping-tent-blue.svg');
+}
+
+.trackedRow[aria-expanded="true"] .long-rest-icon {
+  background: url('../images/camping-tent.svg');
+}
+
 .weaponRow[aria-expanded="true"] .damage-icon,
 .spellRow[aria-expanded="true"] .damage-icon {
   opacity: 0.8;

@@ -51,11 +51,11 @@ class SpellSlotsViewModel extends ACTableComponent {
         return this.sorts()['level asc'];
     }
 
-    resetsOnImgSource = (trackable) => {
+    resetsOnImg = (trackable) => {
         if(trackable.resetsOn() === 'long') {
-            return campingTent;
+            return 'rest-icon long-rest-icon';
         } else if (trackable.resetsOn() === 'short') {
-            return meditation;
+            return 'rest-icon short-rest-icon';
         } else {
             throw 'Unexpected feature resets on string.';
         }

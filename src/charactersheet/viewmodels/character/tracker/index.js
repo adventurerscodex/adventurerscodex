@@ -17,10 +17,8 @@ import { ACTableComponent } from 'charactersheet/components/table-component';
 import { TrackedDetailForm } from './form';
 
 import autoBind from 'auto-bind';
-import campingTent from 'images/camping-tent-blue.svg';
 import {flatMap } from 'lodash';
 import ko from 'knockout';
-import meditation from 'images/meditation-blue.svg';
 import template from './index.html';
 
 class TrackerViewModel extends ACTableComponent {
@@ -65,11 +63,11 @@ class TrackerViewModel extends ACTableComponent {
             }
         };};
 
-    resetsOnImgSource = (trackable) => {
+    resetsOnImg = (trackable) => {
         if(trackable.resetsOn() === 'long') {
-            return campingTent;
+            return 'rest-icon long-rest-icon';
         } else if (trackable.resetsOn() === 'short') {
-            return meditation;
+            return 'rest-icon short-rest-icon';
         } else {
             throw 'Unexpected feature resets on string.';
         }
