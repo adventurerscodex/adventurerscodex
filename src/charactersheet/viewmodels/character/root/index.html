@@ -197,8 +197,8 @@
     <li role="presentation"
         id="tabChatLink"
         >
-      <a href="#chat-header"
-         aria-controls="chat-tab"
+      <a href="#chat"
+         aria-controls="chat"
          role="tab"
          data-toggle="tab"
          id="chatTabTrigger"
@@ -226,8 +226,8 @@
     <li role="presentation"
         id="tabExhibitLink"
         >
-      <a href="#exhibit-header"
-         aria-controls="exhibit-tab"
+      <a href="#exhibit"
+         aria-controls="exhibit"
          role="tab"
          data-toggle="tab"
          id="exhibitTabTrigger"
@@ -410,7 +410,7 @@
 
   <div role="tabpanel"
        class="tab-pane"
-       id="chat-tab"
+       id="chat"
        data-bind="css: chatTabStatus">
     <chat params="isActive: chatTabStatus"></chat>
   </div>
@@ -418,7 +418,7 @@
 
   <div role="tabpanel"
        class="tab-pane"
-       id="exhibit-tab"
+       id="exhibit"
        data-bind="css: exhibitTabStatus">
     <exhibit></exhibit>
   </div>
