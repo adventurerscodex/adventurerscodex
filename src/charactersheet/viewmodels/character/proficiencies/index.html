@@ -26,7 +26,7 @@
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#proficiency_list_${uuid()}`, id: `#proficiency_row_${uuid()}`}">
         <td><span data-bind="text: $component.shortName(name)"></span></td>
-        <td><span data-bind="text: type"></span></td>
+        <td><span data-bind="text: $component.shortName(type)"></span></td>
         <td>
           <span data-toggle="collapse"
                 data-bind="attr:{'data-target': `#proficiency_list_${uuid()}`}"

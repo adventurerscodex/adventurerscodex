@@ -56,7 +56,7 @@
           class="clickable expandRow weaponRow"
           data-bind="attr:{'data-target': `#weapon_list_${uuid()}`, id: `#weapon_row_${uuid()}`}">
         <td>
-          <span data-bind="text: name"></span>&nbsp;
+          <span data-bind="text: $component.shortName(name)"></span>&nbsp;
           <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span>
         </td>
         <td>
@@ -70,7 +70,7 @@
           <span data-bind="text: weaponRangeLabel"></span>
         </td>
         <td class="hidden-xs  hidden-sm">
-          <span data-bind="text: property"></span>
+          <span data-bind="text: $component.shortName(property)"></span>
         </td>
         <td class="hidden-xs">
           <span data-bind="text: quantity"></span>

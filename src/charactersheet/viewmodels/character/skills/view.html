@@ -26,7 +26,7 @@
       <td>
         <prof-marker params="proficiency: proficiency"></prof-marker>
       </td>
-      <td><span data-bind="text: name"></span></td>
+      <td><span data-bind="text: $component.shortName(name)"></span></td>
       <td class="ac-table-data-cell"><strong><span data-bind="html: bonusLabel"></span></strong></td>
       <td class="ac-table-data-cell"><span style="color: #666" data-bind="text: passiveBonus"></span></td>
     </tr>

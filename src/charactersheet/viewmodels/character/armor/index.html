@@ -47,10 +47,10 @@
             <label data-bind="attr: {for: `equipped_${uuid()}`}"></label>
           </div>
         </td>
-        <td><span data-bind="text: name"></span>&nbsp;
+        <td><span data-bind="text: $component.shortName(name)"></span>&nbsp;
           <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span>
         </td>
-        <td class="hidden-xs"><span data-bind="text: type"></span></td>
+        <td class="hidden-xs"><span data-bind="text: $component.shortName(type)"></span></td>
         <td class="ac-table-data-cell"><span data-bind="text: armorClass"></span></td>
         <td>
           <span data-toggle="collapse"

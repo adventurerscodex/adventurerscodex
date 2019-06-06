@@ -52,10 +52,10 @@
           </div>
         </td>
         <td>
-          <span data-bind="text: name"></span>
+          <span data-bind="text: $component.shortName(name)"></span>
         </td>
         <td class="hidden-xs">
-          <span data-bind="text: type"></span>
+          <span data-bind="text: $component.shortName(type)"></span>
         </td>
         <td class="hidden-xs">
           <span data-bind="text: chargesDisplay"></span>

@@ -74,7 +74,7 @@
             <!-- /ko -->
           </td>
           <td>
-            <span data-bind="text: name"></span>
+            <span data-bind="text: $component.shortName(name)"></span>
             <!-- ko if: isConcentration -->
             <span style="color: #18bc9c"
                   class="glyphicon glyphicon-copyright-mark"></span>

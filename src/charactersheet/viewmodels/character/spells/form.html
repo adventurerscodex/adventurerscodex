@@ -24,7 +24,7 @@
              class="form-control spellsEditNameInput"
              placeholder="Magic Missile"
              required="true"
-             data-bind="textInput: name,
+             data-bind="value: name,
              hasFocus: $component.formElementHasFocus">
        <!-- /ko -->
        <!-- ko ifnot: $component.existingData -->
@@ -32,7 +32,7 @@
               class="form-control spellsEditNameInput"
               placeholder="Magic Missile"
               required="true"
-              data-bind="textInput: name,
+              data-bind="balue: name,
               hasFocus: $component.formElementHasFocus,
               autocomplete: {
                 source: $component.spellsPrePopFilter,
