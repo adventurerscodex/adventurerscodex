@@ -124,7 +124,8 @@
     </div>
     <div class="form-group col-sm-4 col-md-6 col-lg-3">
       <label for="duration"
-             class="control-label">Duration</label>
+             class="control-label">Duration&nbsp;<span style="color: #18bc9c" data-bind="visible: isConcentration"
+                               class="glyphicon glyphicon-copyright-mark"></span></label>
       <input class="form-control"
              placeholder="1 day"
              required="true"
@@ -172,12 +173,11 @@
                  data-bind="checked: alwaysPrepared, disable: prepared, attr: {id: `${$component.containerId}_alwaysPrepared`}"></input>
           <label data-bind="attr: {for: `${$component.containerId}_alwaysPrepared`}"
                  class='control-label'>
-            Always Prepared&nbsp;<span class="fa fa-info-circle hidden-xs"
+            Always Prepared&nbsp;<span class="glyphicon glyphicon-ok-sign hidden-xs"
                   style="cursor:pointer;"
                   data-bind="popover: { content: $component.alwaysPreparedPopoverText }">
           </label>
         </div>
-
         <div class="col-sm-4">
           <input id="isRitual"
                  type='checkbox'
@@ -185,7 +185,7 @@
                  data-bind="checked: isRitual, attr: {id: `${$component.containerId}_ritual`}"></input>
           <label data-bind="attr: {for: `${$component.containerId}_ritual`}"
                  class='control-label'>
-            Ritual
+            Ritual&nbsp;<span style="color: #18bc9c" class="glyphicon glyphicon-registration-mark"></span>
           </label>
         </div>
       </div>
