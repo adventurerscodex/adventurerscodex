@@ -44,7 +44,7 @@ Tracked.validationConstraints = {
     rules: {
         max: {
             required: true,
-            number: true,
+            type: 'number',
             min: 0,
             max: 10000
         }

@@ -465,11 +465,11 @@ export var Fixtures = {
             'color': 'danger'
         },{
             'value': 0.0,
-            'status': 'unconcious',
+            'status': 'unconscious',
             'color': 'danger'
         },{
             'value': -1,
-            'status': 'unconcious and stable',
+            'status': 'unconscious and stable',
             'color': 'danger'
         },{
             'value': -2,

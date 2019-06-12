@@ -26,7 +26,7 @@ export class Health extends KOModel {
     totalHitPoints = ko.pureComputed(() => {
       // temp Hit Points do not allow you to become consious
       // and gaining temp hit points should not make you seem 'more damaged'
-      // therefore only use maxHitPoints. 
+      // therefore only use maxHitPoints.
         return this.maxHitPoints() ? parseInt(this.maxHitPoints()) : 0;
         // var maxHP = this.maxHitPoints() ? parseInt(this.maxHitPoints()) : 0;
         // var tempHP = this.tempHitPoints() ? parseInt(this.tempHitPoints()) : 0;
@@ -85,3 +85,26 @@ export class Health extends KOModel {
         return (parseInt(this.tempHitPointsRemaining()) / parseInt(this.totalHitPoints()) * 100) + '%';
     });
 }
+
+Health.validationConstraints = {
+    rules: {
+        maxHitPoints: {
+            min: 0,
+            max: 1000000,
+            required: true,
+            type: 'number'
+        },
+        tempHitPoints: {
+            min: 0,
+            max: 1000000,
+            required: true,
+            type: 'number'
+        },
+        damage: {
+            min: 0,
+            max: 1000000,
+            required: true,
+            type: 'number'
+        }
+    }
+};

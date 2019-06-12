@@ -49,7 +49,8 @@ export class BackgroundFormViewModel extends FormBaseController {
     }
 
     notify = async () => {
-        Notifications.background.changed.dispatch();
+        // background notification doesn't exist
+        // Notifications.background.changed.dispatch();
     }
 
     setBackground = (label, value) => {

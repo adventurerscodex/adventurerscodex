@@ -18,6 +18,23 @@ export class Feature extends KOModel {
     tracked = ko.observable(null);
 }
 
+Feature.formProps = {
+    name: {
+        required: true,
+        maxlength: 256
+    },
+    level: {
+        type: 'number',
+        min: 0,
+        max: 10000,
+        required: true
+    },
+    characterClass: {
+        maxlength: 64,
+        required: true
+    }
+};
+
 Feature.validationConstraints = {
     rules: {
         name: {
@@ -25,7 +42,7 @@ Feature.validationConstraints = {
             maxlength: 256
         },
         level: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 10000,
             required: true
@@ -33,12 +50,6 @@ Feature.validationConstraints = {
         characterClass: {
             maxlength: 64,
             required: true
-        },
-        max: {
-            required: true,
-            number: true,
-            min: 0,
-            max: 100000
         }
     }
 };

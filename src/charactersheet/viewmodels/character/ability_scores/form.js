@@ -85,10 +85,13 @@ export class ScoreSaveFormViewModel extends ACTableFormModel {
         }
     }
 
-
     validation = {
-        ...AbilityScore.validationConstraints,
-        ...SavingThrow.validationConstraints
+        'AbilityScore': {
+            ...AbilityScore.validationConstraints.rules
+        },
+        'SavingThrow': {
+            ...SavingThrow.validationConstraints.rules
+        }
     }
 }
 

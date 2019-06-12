@@ -7,7 +7,6 @@ export class ACTableFormModel extends ACTableComponent {
     constructor(params) {
         super(params);
       // Data to be managed by this form
-      // modelName is used for dynamic type generation
         const noOp = (entity) => { /* no op */ };
         this.show = params.show ? params.show : ko.observable(true);
         this.flip = params.flip ? params.flip : noOp;

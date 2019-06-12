@@ -15,7 +15,6 @@ export class TrackedDetailForm extends TrackedFormController {
     trackedTypes = [  Feature, Trait, Feat ];
 
     generateBlank () {
-
         const typeName = this.modelName;
         if (typeName === Feature.name) {
             return new Feature();

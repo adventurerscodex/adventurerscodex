@@ -26,12 +26,6 @@ Trait.validationConstraints = {
         race: {
             required: true,
             maxlength: 64
-        },
-        max: {
-            required: true,
-            number: true,
-            min: 0,
-            max: 10000
         }
     }
 };

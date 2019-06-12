@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 // Global bootstrap modules
 import 'bootstrap/js/collapse';
@@ -6,7 +6,7 @@ import 'bootstrap/js/dropdown';
 import 'bootstrap/js/modal';
 import 'bootstrap/js/tooltip';
 import 'bootstrap/js/popover';
-import Spinner from 'spin'
+import Spinner from 'spin';
 
 // Load Global KO Bindings
 import 'bin/knockout-jquery-autocomplete';
@@ -36,8 +36,8 @@ $(() => {
     window.onbeforeunload = viewModel.unload;
 
     ko.components.register('application', {
-      viewModel: { instance: viewModel },
-      template: template
+        viewModel: { instance: viewModel },
+        template: template
     });
 
     ko.applyBindings();
@@ -52,7 +52,7 @@ window.hideSplashScreen = function() {
     if (window.spinner) {
         window.spinner.stop();
     }
-}
+};
 
 window.showSplashScreen = function() {
     $('#loading').fadeIn(100);
@@ -60,4 +60,4 @@ window.showSplashScreen = function() {
     window.spinner = new Spinner({ color:'#b4bcc2', lines: 12 }).spin(
         document.getElementsByTagName('body')[0]
     );
-}
+};

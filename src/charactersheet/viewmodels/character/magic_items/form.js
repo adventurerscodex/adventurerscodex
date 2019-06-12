@@ -84,7 +84,7 @@ export class MagicItemFormViewModel  extends FormController {
     }
 
     validation = {
-        ...MagicItem.validationConstraints
+        ...MagicItem.validationConstraints.rules
     };
 }
 

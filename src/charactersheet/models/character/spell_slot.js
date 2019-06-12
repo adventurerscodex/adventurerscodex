@@ -39,19 +39,19 @@ SpellSlot.validationConstraints = {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            type: 'number'
         },
         max: {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            type: 'number'
         },
         used: {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            type: 'number'
         }
     }
 };

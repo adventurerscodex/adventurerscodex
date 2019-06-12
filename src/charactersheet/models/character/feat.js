@@ -20,9 +20,6 @@ Feat.validationConstraints = {
         name: {
             required: true,
             maxlength: 256
-        },
-        max: {
-            required: true
         }
     }
 };
