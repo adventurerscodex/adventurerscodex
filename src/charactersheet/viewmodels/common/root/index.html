@@ -47,12 +47,11 @@
             <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party
           </a>
         </li>
-        <!-- TODO: Disabling exports. To be re-enabled at a later time. -->
-        <!-- <li>
-          <a data-bind="click: toggleExportModal" href="#">
-            <i class="fa fa-upload"></i>&nbsp;&nbsp;Export
+        <li>
+          <a data-bind="click: toggleShareModal" href="#">
+            <i class="fa fa-share-square-o"></i>&nbsp;&nbsp;Share
           </a>
-        </li> -->
+        </li>
       </ul>
       <login></login>
     </div>
@@ -173,9 +172,9 @@
   <party-manager></party-manager>
 </div>
 
-<!-- Export Modal -->
-<!-- ko if: exportModalStatus -->
-<export params="selectedCore: selectedCore, modalStatus: exportModalStatus"></export>
+<!-- Share Modal -->
+<!-- ko if: shareModalStatus -->
+<share params="modalStatus: shareModalStatus"></share>
 <!-- /ko -->
 <!-- /ko -->
 
