@@ -1,6 +1,6 @@
+import { DeathSave, Health } from 'charactersheet/models/character';
 import { ACViewModel } from 'charactersheet/components/view-component';
 import { CoreManager } from 'charactersheet/utilities';
-import { DeathSave } from 'charactersheet/models/character';
 import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
@@ -15,6 +15,8 @@ class StatsDeathSaveViewModel extends ACViewModel {
         this.forceCardResize = params.forceCardResize;
         this.deathSaveFailure = ko.observable(new DeathSave());
         this.deathSaveSuccess = ko.observable(new DeathSave());
+        this.health = ko.observable(new Health());
+        this.healInput = ko.observable(null);
         this.deathSaveSuccessList = ko.observableArray([]);
         this.deathSaveFailureList = ko.observableArray([]);
         autoBind(this);
@@ -36,6 +38,9 @@ class StatsDeathSaveViewModel extends ACViewModel {
         const deathSaves = await DeathSave.ps.list({coreUuid: key});
         this.deathSaveSuccess(find(deathSaves.objects, (save) => save.type() === 'success'));
         this.deathSaveFailure(find(deathSaves.objects, (save) => save.type() === 'failure'));
+
+        const health = await Health.ps.read({uuid: key});
+        this.health().importValues(health.object.exportValues());
 
         this.calculateDeathSaveSuccessList();
         this.calculateDeathSaveFailureList();
@@ -80,6 +85,24 @@ class StatsDeathSaveViewModel extends ACViewModel {
             Notifications.stats.deathSaves.notSuccess.changed.dispatch();
         }
     }
+
+    handleHeal = async () => {
+        let healValue = -1;
+        if (this.healInput()) {
+            healValue = 0 - parseInt(this.healInput());
+        }
+        const currentDamage = parseInt(this.health().damage());
+        let newDamage = currentDamage + healValue;
+        if (newDamage < 0) {
+            newDamage = 0;
+        }
+        this.health().damage(newDamage);
+        const response = await this.health().ps.save();
+        this.health().importValues(response.object.exportValues());
+        await this.stabilize();
+        Notifications.health.damage.changed.dispatch();
+        this.healInput(null);
+    };
 
     stabilize = async () => {
         this.deathSaveSuccess().used(3);

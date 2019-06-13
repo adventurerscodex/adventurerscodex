@@ -73,4 +73,17 @@ export class ACTableFormModel extends ACTableComponent {
     dispose() {
         this.disposeOfSubscriptions();
     }
+
+    reviewInput = (data, event) => {
+        if (event.target.checkValidity()) {
+            event.target.classList.remove('error');
+        } else {
+            event.target.classList.add('error');
+        }
+    }
+
+    invalidate = (data, event) => {
+        event.target.classList.add('error');
+        return true; // Continue validating
+    }
 }

@@ -34,7 +34,7 @@ export class TrackedDetailForm extends TrackedFormController {
     }
 
     validation = {
-        ...Tracked.validationConstraints
+        ...Tracked.validationConstraints.rules
     };
 }
 

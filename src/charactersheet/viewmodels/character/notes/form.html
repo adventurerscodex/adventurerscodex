@@ -14,20 +14,23 @@
     <div class="form-group">
       <label for="title"
              class="control-label">Title</label>
-      <input type="text"
-             class="form-control"
+      <input class="form-control"
              placeholder="Captain's Log"
-             data-bind="textInput: title,
+             data-bind="value: title,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.title },
              hasFocus: $component.formElementHasFocus">
     </div>
     <div class="form-group">
       <label for="contents"
              class="control-label">Contents</label>
          <!-- ko if: $component.show -->
-         <textarea type="text"
-                   rows="18"
+         <textarea rows="18"
                    class="form-control"
-                   data-bind="value: contents, markdownEditor: true">
+                   data-bind="value: contents, 
+                   event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                   attr: { ...$component.validation.contents },
+                   markdownEditor: true">
          </textarea>
          <small class="text-muted">
            Text in this panel can be styled using Markdown. Click

@@ -175,7 +175,7 @@ Spell.validationConstraints = {
         level: {
             min: 0,
             max: 10000,
-            number: true,
+            type: 'number',
             required: true
         },
         castingTime: {

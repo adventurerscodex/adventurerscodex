@@ -80,31 +80,31 @@ export class Wealth extends KOModel {
 Wealth.validationConstraints = {
     rules: {
         platinum: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000,
             required: true
         },
         gold: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000,
             required: true
         },
         silver: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000,
             required: true
         },
         copper: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000,
             required: true
         },
         electrum: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000,
             required: true

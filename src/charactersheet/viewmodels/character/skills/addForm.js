@@ -102,7 +102,7 @@ export class SkillsAddFormViewModel extends FormController {
 
     validation = {
         // Deep copy of properties in object
-        ...Skill.validationConstraints
+        ...Skill.validationConstraints.rules
     };
 }
 

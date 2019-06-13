@@ -90,7 +90,7 @@ export class SpellFormViewModel  extends FormController {
     rangeOptions = Fixtures.spell.rangeOptions;
 
     validation = {
-        ...Spell.validationConstraints
+        ...Spell.validationConstraints.rules
     };
 }
 

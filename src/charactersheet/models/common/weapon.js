@@ -285,7 +285,7 @@ Weapon.validationConstraints = {
             maxlength: 128
         },
         price: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000
         },
@@ -293,17 +293,17 @@ Weapon.validationConstraints = {
             maxlength: 128
         },
         magicalModifier: {
-            number: true,
+            type: 'number',
             min: -10000,
             max: 10000
         },
         toHitModifier: {
-            number: true,
+            type: 'number',
             min: -10000,
             max: 10000
         },
         weight: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000000
         },
@@ -314,7 +314,7 @@ Weapon.validationConstraints = {
             maxlength: 128
         },
         quantity: {
-            number: true,
+            type: 'number',
             min: 0,
             max: 100000
         }

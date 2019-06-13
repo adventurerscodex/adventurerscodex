@@ -33,7 +33,7 @@ export class SpellStatsFormViewModel  extends FormBaseController {
 
     validation = {
         // Deep copy of properties in object
-        ...SpellStats.validationConstraints
+        ...SpellStats.validationConstraints.rules
     };
 }
 

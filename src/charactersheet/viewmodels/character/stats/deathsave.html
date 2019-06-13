@@ -11,7 +11,29 @@
       </center>
     </h4>
   </div>
-  <div class="col-sm-6 col-md-12 col-lg-6">
+  <div class="clearfix"></div>
+  <div class="col-sm-6 col-sm-offset-3">
+    <form data-bind="submit: handleHeal">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="number"
+                 class="form-control ac-number-input"
+                 placeholder="Magical Healing"
+                 data-bind="value: healInput"
+                 min="0">
+          <div style="height: 30px; padding: 0px"
+               class="input-group-addon">
+            <button class="healthBtn btn btn-xs btn-success"
+                    type="submit"
+                    value="submit"><i class="fa fa-heart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="clearfix"></div>
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <h4>Death Save Successes</h4>
     <div class="death-save-panel form-control hit-dice-list success"
          data-bind="foreach: $component.deathSaveSuccessList">
@@ -19,7 +41,7 @@
         css: $data ? 'ds-success-full' : 'ds-success-empty'"></span>
     </div>
   </div>
-  <div class="col-sm-6 col-md-12 col-lg-6">
+  <div class="col-sm-6 col-md-6 col-lg-6">
     <h4>Death Save Failures</h4>
     <div class="death-save-panel form-control hit-dice-list warning"
          data-bind="foreach: $component.deathSaveFailureList">
@@ -27,7 +49,8 @@
         css: $data ? 'ds-failure-full' : 'ds-failure-empty'}"></span>
     </div>
   </div>
-  <div class="col-xs-12" style="padding: 15px">
+  <div class="col-xs-12"
+       style="padding: 15px">
     <button type="button"
             class="btn btn-block"
             data-bind="{click: stabilize, css: rip() ? 'btn-danger' : 'btn-info'}">

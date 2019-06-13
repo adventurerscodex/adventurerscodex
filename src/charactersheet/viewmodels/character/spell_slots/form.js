@@ -55,7 +55,7 @@ export class SpellSlotFormComponentViewModel extends FormController {
     }
 
     validation = {
-        ...SpellSlot.validationConstraints
+        ...SpellSlot.validationConstraints.rules
     };
 }
 

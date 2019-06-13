@@ -50,7 +50,7 @@ export class ProficiencyFormViewModel  extends FormController {
 
     validation = {
         // Deep copy of properties in object
-        ...Proficiency.validationConstraints
+        ...Proficiency.validationConstraints.rules
     };
 }
 

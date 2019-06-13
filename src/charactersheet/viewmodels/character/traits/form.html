@@ -17,20 +17,20 @@
       <label for="name"
              class="control-label">Name</label>
       <!-- ko if: $component.existingData -->
-      <input type="text"
-             class="form-control traitNameInput"
+      <input class="form-control traitNameInput"
              placeholder="Trance"
-             required="true"
              data-bind="value: name,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
              hasFocus: $component.formElementHasFocus">
        <!-- /ko -->
        <!-- ko ifnot: $component.existingData -->
-       <input type="text"
-              class="form-control traitNameInput"
+       <input class="form-control traitNameInput"
               placeholder="Trance"
-              required="true"
               data-bind="value: name,
               hasFocus: $component.formElementHasFocus,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.name },
               autocomplete: {
                 source: $component.traitsPrePopFilter,
                 onselect: $component.populateTrait }">
@@ -39,11 +39,11 @@
     <div class="form-group">
       <label for="race"
              class="control-label">Race</label>
-      <input type="text"
-             class="form-control traitRaceInput"
+      <input class="form-control traitRaceInput"
              placeholder="Elf"
-             required="true"
-             data-bind="textInput: race,
+             data-bind="value: race,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
              autocomplete: {
                source: $component.raceOptions,
                onselect: $component.populateRace }">
@@ -52,10 +52,12 @@
       <label for="npcDescription"
              class="control-label">Description</label>
       <!-- ko if: $component.show -->
-      <textarea type="text"
-                rows="6"
+      <textarea rows="6"
                 class="form-control"
-                data-bind='value: description, markdownEditor: true'>
+                data-bind="value: description,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.name },
+                markdownEditor: true">
               </textarea>
               <small class="text-muted">
                 Text in this panel can be styled using Markdown. Click
