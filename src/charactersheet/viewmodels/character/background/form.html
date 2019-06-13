@@ -10,8 +10,10 @@
            placeholder="Folk Hero"
            name="name"
            data-bind="value: name,
-            autocomplete: { source: $component.backgroundOptions,
-                            onselect:  $component.setBackground }">
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
+             autocomplete: { source: $component.backgroundOptions,
+                             onselect:  $component.setBackground }">
   </div>
   <div class="form-group col-xs-12">
     <label for="backgroundTraitsTextarea">Personality Traits</label>
@@ -19,7 +21,10 @@
     <textarea type="text"
               rows="6"
               class="form-control"
-              data-bind="value: personalityTrait, markdownEditor: true">
+              data-bind="value: personalityTrait,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.personalityTrait },
+              markdownEditor: true">
     </textarea>
     <small class="text-muted">
       Text in this panel can be styled using Markdown. Click
@@ -34,7 +39,10 @@
     <textarea type="text"
               rows="6"
               class="form-control"
-              data-bind="value: ideal, markdownEditor: true">
+              data-bind="value: ideal,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.ideal },
+              markdownEditor: true">
     </textarea>
     <small class="text-muted">
       Text in this panel can be styled using Markdown. Click
@@ -49,7 +57,10 @@
     <textarea type="text"
               rows="6"
               class="form-control"
-              data-bind="value: bond, markdownEditor: true">
+              data-bind="value: bond,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.bond },
+              markdownEditor: true">
     </textarea>
     <small class="text-muted">
       Text in this panel can be styled using Markdown. Click
@@ -64,7 +75,10 @@
     <textarea type="text"
               rows="6"
               class="form-control"
-              data-bind="value: flaw, markdownEditor: true">
+              data-bind="value: flaw,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.flaw },
+              markdownEditor: true">
     </textarea>
     <small class="text-muted">
       Text in this panel can be styled using Markdown. Click

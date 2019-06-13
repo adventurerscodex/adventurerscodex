@@ -20,19 +20,21 @@
       <label for="name"
              class="control-label">Name</label>
       <!-- ko if: $component.existingData -->
-      <input type="text"
-             class="form-control spellsEditNameInput"
+      <input class="form-control spellsEditNameInput"
              placeholder="Magic Missile"
-             required="true"
+             name="name"
              data-bind="value: name,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
              hasFocus: $component.formElementHasFocus">
        <!-- /ko -->
        <!-- ko ifnot: $component.existingData -->
-       <input type="text"
-              class="form-control spellsEditNameInput"
+       <input class="form-control spellsEditNameInput"
               placeholder="Magic Missile"
-              required="true"
-              data-bind="balue: name,
+              name="name"
+              data-bind="value: name,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.name },
               hasFocus: $component.formElementHasFocus,
               autocomplete: {
                 source: $component.spellsPrePopFilter,
@@ -43,43 +45,48 @@
       <label for="school"
              class="control-label">School</label>
       <input class="form-control"
+             name="school"
              placeholder="Abjuration"
-             required="true"
-             data-bind="textInput: school,
+             data-bind="value: school,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.school },
     autocomplete: { source: $component.schoolOptions,
                     onselect:  $component.setSchool }">
     </div>
     <div class="form-group col-sm-4 col-md-3 col-lg-3">
       <label for="level"
              class="control-label">Level</label>
-      <input type="number"
-             class="form-control spellsEditLevelInput"
-             min="0"
-             max="9"
+      <input class="form-control spellsEditLevelInput"
+             name="level"
              placeholder="1"
-             required="true"
-             data-bind="value: level">
+             data-bind="value: level,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.level }">
     </div>
 
     <div class="form-group col-sm-4 col-md-3 col-lg-3">
       <label for="castingTime"
              class="control-label">Cast Time</label>
       <input class="form-control"
+             name="castingTime"
              placeholder="1 action"
-             required="true"
-             data-bind="textInput: castingTime,
-    autocomplete: { source: $component.castingTimeOptions,
-                    onselect: $component.setCastingTime }">
+             data-bind="value: castingTime,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.castingTime },
+              autocomplete: { source: $component.castingTimeOptions,
+                              onselect: $component.setCastingTime }">
     </div>
     <div class="form-group col-sm-4 col-md-3 col-lg-3">
       <label for="type"
              class="ontrol-label">Type</label>
       <input class="form-control spellsEditTypeInput"
+             name="type"
              placeholder="Automatic"
-             required="true"
-             data-bind="textInput: type,
-    autocomplete: { source: $component.typeOptions,
-                    onselect: $component.setType }">
+             data-bind="value: type,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.type },
+              autocomplete: { source: $component.typeOptions,
+                              onselect: $component.setType }">
     </div>
     <div data-bind="visible: type() == 'Savings Throw'">
       <div class="form-group col-sm-4 col-md-3 col-lg-3">
@@ -87,40 +94,47 @@
                class="control-label">Save Attr</label>
         <input class="form-control spellsEditSaveAttrInput"
                placeholder="Str"
-               data-bind="textInput: spellSaveAttribute,
-                      autocomplete: { source: $component.spellSaveAttrOptions,
-                      onselect: $component.setSaveAttribute }">
+               name="spellSaveAttribute"
+               data-bind="value: spellSaveAttribute,
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.spellSaveAttribute },
+                autocomplete: { source: $component.spellSaveAttrOptions,
+                onselect: $component.setSaveAttribute }">
       </div>
     </div>
     <div class="form-group col-sm-4 col-md-3 col-lg-3">
       <label for="damage"
              class="control-label">Damage</label>
-      <input type="text"
-             class="form-control spellsEditDamageInput"
+      <input class="form-control spellsEditDamageInput"
              placeholder="1d4 + 1"
-             data-bind="value: damage">
+             data-bind="value: damage,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.damage }">
     </div>
 
     <div class="form-group col-sm-4 col-md-3 col-lg-3">
       <label for="damage"
              class="control-label">Damage Type</label>
-      <input type="text"
-             class="form-control spellsEditDamageTypeInput"
+      <input class="form-control spellsEditDamageTypeInput"
              placeholder="Fire"
-             data-bind="textInput: damageType,
+             name="damageType"
+             data-bind="value: damageType,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.damageType },
                     autocomplete: { source: $component.damageTypeOptions,
-                    onselect: $component.setDamageType }"
-             data-bind="value: damageType">
+                    onselect: $component.setDamageType }">
     </div>
     <div class="form-group col-sm-4 col-md-6 col-lg-3">
       <label for="range"
              class="control-label">Range</label>
       <input class="form-control"
              placeholder="1 mile"
-             required="true"
-             data-bind="textInput: range,
-        autocomplete: { source: $component.rangeOptions,
-                        onselect: $component.setRange }">
+             name="range"
+             data-bind="value: range,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.range },
+              autocomplete: { source: $component.rangeOptions,
+                              onselect: $component.setRange }">
     </div>
     <div class="form-group col-sm-4 col-md-6 col-lg-3">
       <label for="duration"
@@ -128,8 +142,10 @@
                                class="glyphicon glyphicon-copyright-mark"></span></label>
       <input class="form-control"
              placeholder="1 day"
-             required="true"
-             data-bind="textInput: duration,
+             name="duration"
+             data-bind="value: duration,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.duration },
              autocomplete: { source: $component.durationOptions,
                              onselect: $component.setDuration }">
     </div>
@@ -138,8 +154,10 @@
              class="control-label">Components</label>
       <input class="form-control"
              placeholder="V, S, M"
-             required="true"
-             data-bind="textInput: components,
+             name="components"
+             data-bind="value: components,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.components },
                 autocomplete: { source: $component.componentsOptions,
                                 onselect: $component.setComponents }">
     </div>
@@ -147,10 +165,12 @@
     <div class="form-group col-sm-12 col-md-8 col-lg-3">
       <label for="materialComponents"
              class="control-label">Material Components</label>
-      <input type="text"
-             class="form-control spellsEditMaterialComponentsInput"
+      <input class="form-control spellsEditMaterialComponentsInput"
+             name="materialComponents"
              placeholder="Feather"
-             data-bind="textInput: materialComponents">
+             data-bind="value: materialComponents,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.materialComponents }">
     </div>
     <!--  ko if: $component.preparedRowVisibleEdit() -->
     <div class="col-xs-12">
@@ -196,10 +216,12 @@
       <label for="description"
              class="control-label">Description</label>
       <!-- ko if: $component.show -->
-      <textarea type="text"
-                rows="6"
+      <textarea rows="6"
                 class="form-control spellsEditDescriptionTextarea"
-                data-bind="value: description, markdownEditor: true">
+                data-bind="value: description,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.description },
+                 markdownEditor: true">
       </textarea>
       <small class="text-muted">
         Text in this panel can be styled using Markdown. Click

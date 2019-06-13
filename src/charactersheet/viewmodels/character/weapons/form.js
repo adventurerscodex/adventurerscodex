@@ -76,7 +76,7 @@ export class WeaponFormViewModel extends FormController {
     };
 
     validation = {
-        ...Weapon.validationConstraints
+        ...Weapon.validationConstraints.rules
     };
 
     notify = () => {Notifications.weapon.changed.dispatch();};

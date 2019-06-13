@@ -31,8 +31,10 @@ export class NotesFormViewModel  extends FormController {
     }
 
     validation = {
+        title: {},
+        contents: {}
         // Deep copy of properties in object
-        ...Note.validationConstraints
+        //...Note.validationConstraints.rules
     };
 }
 

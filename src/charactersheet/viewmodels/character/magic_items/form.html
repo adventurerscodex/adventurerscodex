@@ -16,22 +16,24 @@
     <label for="name"
            class="control-label">Item</label>
       <!-- ko if: $component.existingData -->
-      <input type="text"
-             class="form-control"
+      <input class="form-control"
              placeholder="Dagger of Venom"
-             required="true"
+             name="name"
              data-bind="value: name,
-                        hasFocus: $component.formElementHasFocus">
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.name },
+               hasFocus: $component.formElementHasFocus">
       <!-- /ko -->
       <!-- ko ifnot: $component.existingData -->
-      <input type="text"
-             class="form-control"
+      <input class="form-control"
              placeholder="Dagger of Venom"
-             required="true"
+             name="name"
              data-bind="value: name,
-                        hasFocus: $component.formElementHasFocus,
-                        autocomplete: { source: $component.magicItemsPrePopFilter,
-                        onselect: $component.populateMagicItem }">
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.name },
+                hasFocus: $component.formElementHasFocus,
+                autocomplete: { source: $component.magicItemsPrePopFilter,
+                onselect: $component.populateMagicItem }">
       <!-- /ko -->
 
   </div>
@@ -40,8 +42,10 @@
            class="control-label">Type</label>
       <input class="form-control"
              placeholder="Wand"
-             required="true"
-             data-bind="textInput: type,
+             name="type"
+             data-bind="value: type,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.type },
              autocomplete: { source: $component.typeOptions,
                              onselect: $component.setMagicItemType }">
   </div>
@@ -50,49 +54,53 @@
            class="control-label">Rarity</label>
       <input class="form-control"
              placeholder="Legendary"
-             required="true"
-             data-bind="textInput: rarity,
+             name="rarity"
+             data-bind="value: rarity,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.quantity },
              autocomplete: { source: $component.rarityOptions,
                              onselect: $component.setMagicItemRarity }">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="magicItemMaxCharges"
            class="control-label">Max Charges</label>
-      <input type="number"
-             class="form-control"
+      <input class="form-control"
              placeholder="1"
-             min="0"
-             max="100"
-             data-bind='textInput: maxCharges'>
+             data-bind="value: maxCharges,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.maxCharges }">
     </div>
   <div data-bind="visible: maxCharges() != 0">
     <div class="form-group col-sm-4 col-md-4 col-lg-4">
       <label for="usedCharges"
              class="control-label">Charges</label>
-        <input type="number"
-               class="form-control"
+        <input class="form-control"
                placeholder="1"
-               min="0"
-               max="100"
-               data-bind='textInput: usedCharges'>
+               data-bind="value: usedCharges,
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.usedCharges }">
     </div>
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="weight"
            class="control-label">Weight</label>
-      <input type="number"
-             class="form-control"
+      <input class="form-control"
              placeholder="1"
-             min="0"
-             max="1000"
-             data-bind='textInput: weight'>
+             name="weight"
+             data-bind="value: weight,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.weight }">
     </div>
   <div class="form-group col-sm-6 col-md-12 col-lg-8">
     <div class="row" style="padding-top: 3ex">
       <div class="col-sm-7">
       <input type='checkbox'
              class='pseudo-checkbox sr-only'
-             data-bind="checked: requiresAttunement, attr: {id: `${$component.containerId}_requiresAttunement`}"></input>
+             data-bind="checked: requiresAttunement,
+             attr: {id: `${$component.containerId}_requiresAttunement`,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.requiresAttunement }
+           }"></input>
       <label data-bind="attr: {for: `${$component.containerId}_requiresAttunement`}"
              class='fancy-checkbox-label'> Requires Attunement
       </label>
@@ -101,7 +109,9 @@
       <div data-bind="visible: requiresAttunement() === true">
         <input type='checkbox'
                class='pseudo-checkbox sr-only'
-               data-bind="checked: attuned, attr: {id: `${$component.containerId}_attuned`}"></input>
+               data-bind="checked: attuned, attr: {id: `${$component.containerId}_attuned`},
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.attuned }"></input>
         <label data-bind="attr: {for: `${$component.containerId}_attuned`}"
                class='fancy-checkbox-label'> Attuned
           </label>
@@ -116,7 +126,10 @@
       <textarea class="form-control"
                 rows="4"
                 placeholder="Awesome stuff goes here"
-                data-bind='textInput: description, markdownEditor: true'>
+                data-bind="value: description,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.quantity },
+                markdownEditor: true">
         </textarea>
         <small class="text-muted">
           Text in this panel can be styled using Markdown. Click

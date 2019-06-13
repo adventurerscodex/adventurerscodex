@@ -5,17 +5,21 @@
   <div data-bind="with: entity">
     <div class="form-group">
       <label class=" control-label">Skill Name</label>
-      <input type="text"
-             class="form-control"
+      <input class="form-control"
              placeholder="Name"
              required="true"
-             data-bind='textInput: name, hasFocus: $component.formElementHasFocus'>
+             data-bind='value: name,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
+             hasFocus: $component.formElementHasFocus'>
     </div>
     <div class="form-group">
       <label class="control-label">Proficient</label>
        <select class="form-control"
               style="width: 100%"
               data-bind="value: proficiency,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.proficiency },
               options: $component.proficiencyOptions,
               select2: {
                 placeholder: '',
@@ -32,6 +36,8 @@
               style="width: 100%"
               required="true"
               data-bind="value: $component.abilityScoreChoice,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.abilityScore },
                 options: $component.abilityScoreOptions(),
                 select2: {
                   minimumResultsForSearch: Infinity,

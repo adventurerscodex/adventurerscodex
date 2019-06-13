@@ -7,7 +7,6 @@ export class ACTableFormModel extends ACTableComponent {
     constructor(params) {
         super(params);
       // Data to be managed by this form
-      // modelName is used for dynamic type generation
         const noOp = (entity) => { /* no op */ };
         this.show = params.show ? params.show : ko.observable(true);
         this.flip = params.flip ? params.flip : noOp;
@@ -73,5 +72,18 @@ export class ACTableFormModel extends ACTableComponent {
 
     dispose() {
         this.disposeOfSubscriptions();
+    }
+
+    reviewInput = (data, event) => {
+        if (event.target.checkValidity()) {
+            event.target.classList.remove('error');
+        } else {
+            event.target.classList.add('error');
+        }
+    }
+
+    invalidate = (data, event) => {
+        event.target.classList.add('error');
+        return true; // Continue validating
     }
 }

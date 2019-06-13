@@ -1,4 +1,6 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import {
+    ACTableComponent
+} from 'charactersheet/components/table-component';
 import ko from 'knockout';
 
 export class ACTableViewModel extends ACTableComponent {
@@ -9,7 +11,7 @@ export class ACTableViewModel extends ACTableComponent {
         this.flip = params.flip;
     }
 
-    disposeOfSubscriptions () {
+    disposeOfSubscriptions() {
         this.subscriptions.forEach((subscription) => subscription.dispose());
         this.subscriptions = [];
     }
@@ -23,9 +25,9 @@ export class ACTableViewModel extends ACTableComponent {
         this.subscriptions.push(showSubscription);
     }
 
-    subscribeToShowForm = () => {
+    subscribeToShowForm = async () => {
         if (this.show()) {
-            this.refresh();
+            await this.refresh();
         }
     }
 }

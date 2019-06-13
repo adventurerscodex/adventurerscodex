@@ -44,7 +44,7 @@ export class FormController extends FormBaseController {
             this.addToParent(response.object);
         } else {
             const response = await this.entity().ps.save();
-            this.replaceInParent(response.object);
+            await this.replaceInParent(response.object);
         }
     }
 

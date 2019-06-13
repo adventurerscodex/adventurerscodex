@@ -140,17 +140,17 @@ Item.validationConstraints = {
             maxlength: 256
         },
         quantity: {
-            number: true,
+            type:'number',
             min: 0,
             max: 1000000
         },
         weight: {
-            number: true,
+            type:'number',
             min: 0,
             max: 1000000
         },
         cost: {
-            number: true,
+            type:'number',
             min: 0,
             max: 100000000
         },
