@@ -5,7 +5,7 @@ import icon from 'images/nested-hearts.svg';
 import ko from 'knockout';
 import template from './index.html';
 
-class ACCardModel {
+class StatsModel {
     constructor(params) {
         this.containerId = params.containerId;
         this.showBack = params.showBack;
@@ -15,6 +15,6 @@ class ACCardModel {
 }
 
 ko.components.register('stats', {
-    viewModel: ACCardModel,
+    viewModel: StatsModel,
     template: template
 });

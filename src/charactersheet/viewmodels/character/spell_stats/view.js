@@ -3,14 +3,14 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 
-import { ACViewModel } from 'charactersheet/components/view-component';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import { SpellStats } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
-class SpellStatsViewModel extends ACViewModel {
+class SpellStatsViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         autoBind(this);

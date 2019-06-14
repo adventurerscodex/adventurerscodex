@@ -1,6 +1,5 @@
-import ko from 'knockout';
 import { find } from 'lodash';
-
+import ko from 'knockout';
 /**
  * Adds a find method to the global KO object.
  * Find matching objects in a list.

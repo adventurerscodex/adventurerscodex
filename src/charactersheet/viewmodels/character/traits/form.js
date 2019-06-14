@@ -2,14 +2,13 @@ import {
     DataRepository,
     Fixtures
 } from 'charactersheet/utilities';
+import {
+    AbstractChildTrackedFormModel
+} from 'charactersheet/viewmodels/abstract';
 
 import {
     Notifications
 } from 'charactersheet/utilities';
-
-import {
-    TrackedFormController
-} from 'charactersheet/components/form-controller-tracked-component';
 import {
     Trait
 } from 'charactersheet/models';
@@ -18,7 +17,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class TraitFormViewModel extends TrackedFormController {
+export class TraitFormViewModel extends AbstractChildTrackedFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

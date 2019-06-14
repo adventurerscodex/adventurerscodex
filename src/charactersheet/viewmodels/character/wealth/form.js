@@ -2,9 +2,12 @@ import {
   CoreManager,
   Notifications
 } from 'charactersheet/utilities';
-
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
+import {
+  AbstractFormModel
+} from 'charactersheet/viewmodels/abstract';
+import {
+  CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 import { Wealth } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
@@ -17,7 +20,7 @@ import spCoins from 'images/sp-coin.svg';
 import template from './form.html';
 
 
-export class WealthFormViewModel  extends FormBaseController {
+export class WealthFormViewModel  extends AbstractFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

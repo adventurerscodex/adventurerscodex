@@ -1,13 +1,15 @@
 import { CoreManager, Notifications } from 'charactersheet/utilities';
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import {
+  CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 import { OtherStats } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class OtherStatsFormViewModel extends FormBaseController {
+export class OtherStatsFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         // Notification Properties

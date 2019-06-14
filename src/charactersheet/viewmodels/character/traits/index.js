@@ -1,6 +1,6 @@
 import {
-    ACTableComponent
-} from 'charactersheet/components/table-component';
+    AbstractTabularViewModel
+} from 'charactersheet/viewmodels/abstract';
 import {
     Notifications
 } from 'charactersheet/utilities';
@@ -16,7 +16,7 @@ import ko from 'knockout';
 import template from './index.html';
 
 
-export class TraitsViewModel extends ACTableComponent {
+export class TraitsViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-trait';

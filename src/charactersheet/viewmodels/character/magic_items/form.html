@@ -1,5 +1,5 @@
 <form data-bind="submit: $component.submit">
-<card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+<card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
 <div class="row" data-bind="with: entity">
   <!-- ko if: $component.existingData -->
   <div class="h4 col-xs-12">
@@ -139,10 +139,10 @@
       <!-- /ko -->
     </div>
 </div>
-<form-card-footer params="{
+<form-submit-actions params="{
   reset: $component.reset,
   delete: $component.delete,
   addForm: $component.addForm,
   showDisclaimer: $component.showDisclaimer
-}"></form-card-footer>
+}"></form-submit-actions>
 </form>

@@ -1,4 +1,4 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Armor } from 'charactersheet/models/common';
 import { ArmorDetailViewModel } from './view';
 import { ArmorFormViewModel } from './form';
@@ -9,7 +9,7 @@ import { filter } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
-export class ArmorViewModel extends ACTableComponent {
+export class ArmorViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-armor';

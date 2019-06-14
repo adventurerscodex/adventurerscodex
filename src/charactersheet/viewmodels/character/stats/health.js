@@ -6,7 +6,7 @@ import {
     Profile
 } from 'charactersheet/models/character';
 
-import { ACViewModel } from 'charactersheet/components/view-component';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
@@ -15,7 +15,7 @@ import {find} from 'lodash';
 import ko from 'knockout';
 import template from './health.html';
 
-class StatsHealthViewModel extends ACViewModel {
+class StatsHealthViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         this.forceCardResize = params.forceCardResize;

@@ -1,5 +1,5 @@
-import { ACViewModel } from 'charactersheet/components/view-component';
-import { CardFlipButton } from 'charactersheet/components/card-flip-button';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { CardEditActionComponent } from 'charactersheet/components/card-edit-actions';
 import { CoreManager } from 'charactersheet/utilities';
 import { Wealth } from 'charactersheet/models/common';
 
@@ -11,7 +11,7 @@ import ppCoins from 'images/pp-coin.svg';
 import spCoins from 'images/sp-coin.svg';
 import template from './view.html';
 
-class WealthViewModel extends ACViewModel {
+class WealthViewModel extends AbstractViewModel {
 
     generateBlank () {
         return new Wealth();

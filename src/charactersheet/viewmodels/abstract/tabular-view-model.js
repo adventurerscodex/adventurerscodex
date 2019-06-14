@@ -9,7 +9,7 @@ import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
-export class ACTableComponent {
+export class AbstractTabularViewModel {
     constructor(params) {
         this.tabId = params.tabId;
         this.loaded = ko.observable(false);

@@ -2,7 +2,7 @@ import campingTentWhite from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditationWhite from 'images/meditation.svg';
 
-export class ACTrackedForm {
+export class TrackedForm {
     constructor(params) {
         this.tracked = params.tracked;
         this.meditationWhite = meditationWhite;
@@ -10,8 +10,8 @@ export class ACTrackedForm {
     }
 }
 
-ko.components.register('ac-tracked-form', {
-    viewModel: ACTrackedForm,
+ko.components.register('form-tracked-component', {
+    viewModel: TrackedForm,
     template: '\
     <fieldset class="fieldset-bordered">\
       <legend>Tracked</legend>\

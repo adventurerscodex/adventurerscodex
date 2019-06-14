@@ -6,11 +6,11 @@ import {
     Skill
 } from 'charactersheet/models/character';
 import {
+    AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
+import {
     CoreManager
 } from 'charactersheet/utilities';
-import {
-    FormController
-} from 'charactersheet/components/form-controller-component';
 import {
     ProficiencyTypeComponentViewModel
 } from 'charactersheet/components/proficiency-marker';
@@ -22,7 +22,7 @@ import {
 import ko from 'knockout';
 import template from './addForm.html';
 
-export class SkillsAddFormViewModel extends FormController {
+export class SkillsAddFormViewModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         this.flipOnSave = params.flipOnSave;

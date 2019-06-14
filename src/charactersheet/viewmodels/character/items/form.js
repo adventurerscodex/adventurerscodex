@@ -3,11 +3,12 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-
 import {
-    FormController
-} from 'charactersheet/components/form-controller-component';
+    AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
+import {
+  CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 import {
     Item
 } from 'charactersheet/models';
@@ -16,7 +17,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class ItemFormViewModel extends FormController {
+export class ItemFormViewModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

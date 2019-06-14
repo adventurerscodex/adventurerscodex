@@ -1,5 +1,5 @@
 <form data-bind="{submit: $component.submit}">
-  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <div class="h4 card-title">
     Profile
   </div>
@@ -131,8 +131,8 @@
                attr: { ...$component.validation.hairColor }">
     </div>
   </div>
-  <form-card-footer params="{
+  <form-submit-actions params="{
     addForm: ko.observable(false),
     reset: $component.reset,
-  }"></form-card-footer>
+  }"></form-submit-actions>
 </form>

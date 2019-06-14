@@ -1,4 +1,6 @@
-import { ACTableViewModel } from 'charactersheet/components/table-view-component';
+import {
+  AbstractGridViewModel
+ } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
 import { Skill } from 'charactersheet/models/character';
 
@@ -6,7 +8,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
-export class SkillsViewModel extends ACTableViewModel {
+export class SkillsViewModel extends AbstractGridViewModel {
     constructor(params) {
         super(params);
         this.flip = params.flip;

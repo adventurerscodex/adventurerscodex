@@ -4,12 +4,11 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import {
-    CardActionButton
-} from 'charactersheet/components/card-action-buttons';
-
+    AbstractFormModel
+} from 'charactersheet/viewmodels/abstract';
 import {
-    FormBaseController
-} from 'charactersheet/components/form-base-controller';
+    CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 import {
     Profile
 } from 'charactersheet/models/character';
@@ -18,7 +17,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class ProfileFormViewModel extends FormBaseController {
+export class ProfileFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         this.levelHasChanged = ko.observable(false);

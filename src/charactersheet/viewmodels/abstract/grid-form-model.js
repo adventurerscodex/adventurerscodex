@@ -1,8 +1,10 @@
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import {
+  AbstractTabularViewModel
+} from './tabular-view-model';
 import ko from 'knockout';
 
-export class ACTableFormModel extends ACTableComponent {
+export class AbstractGridFormModel extends AbstractTabularViewModel {
 
     constructor(params) {
         super(params);

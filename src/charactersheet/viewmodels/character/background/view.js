@@ -5,7 +5,7 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 
-import { ACViewModel } from 'charactersheet/components/view-component';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import {
     Background
 } from 'charactersheet/models/character';
@@ -17,7 +17,7 @@ import { getModifier } from 'charactersheet/models/character/ability_score';
 import ko from 'knockout';
 import template from './view.html';
 
-export class BackgroundViewModel extends ACViewModel {
+export class BackgroundViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         // Calculated Field

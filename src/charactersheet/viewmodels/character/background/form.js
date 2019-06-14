@@ -4,20 +4,20 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import {
+    AbstractFormModel
+} from 'charactersheet/viewmodels/abstract';
+import {
     Background
 } from 'charactersheet/models/character';
 import {
-    CardActionButton
-} from 'charactersheet/components/card-action-buttons';
-import {
-    FormBaseController
-} from 'charactersheet/components/form-base-controller';
+    CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class BackgroundFormViewModel extends FormBaseController {
+export class BackgroundFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         // Notification Properties

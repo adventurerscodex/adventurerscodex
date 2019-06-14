@@ -5,7 +5,7 @@ import {
 
 import ko from 'knockout';
 
-export class ACViewModel {
+export class AbstractViewModel {
     constructor(params) {
         this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.show = params.show;

@@ -1,6 +1,6 @@
+import 'jquery-validation';
 import $ from 'jquery';
 import ko from 'knockout';
-import 'jquery-validation';
 
 /**
 * Binds a form element to use jQuery validation tools

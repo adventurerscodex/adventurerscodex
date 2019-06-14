@@ -1,9 +1,9 @@
 import {
-    ACTableComponent
-} from 'charactersheet/components/table-component';
+    AbstractTabularViewModel
+} from './tabular-view-model';
 import ko from 'knockout';
 
-export class ACTableViewModel extends ACTableComponent {
+export class AbstractGridViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.containerId = ko.utils.unwrapObservable(params.containerId);

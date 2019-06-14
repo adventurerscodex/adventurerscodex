@@ -3,8 +3,8 @@ import 'select2/dist/css/select2.min.css';
 import 'bin/knockout-select2';
 
 import {
-    ACTableFormModel
-} from 'charactersheet/components/table-form-component';
+    AbstractGridFormModel
+} from 'charactersheet/viewmodels/abstract';
 import {
     Notifications
 } from 'charactersheet/utilities';
@@ -25,7 +25,7 @@ import {
 import ko from 'knockout';
 import template from './form.html';
 
-export class SkillsFormViewModel extends ACTableFormModel {
+export class SkillsFormViewModel extends AbstractGridFormModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-skill';

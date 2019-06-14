@@ -1,12 +1,12 @@
 import { Feat, Feature, Tracked, Trait } from 'charactersheet/models';
+import { AbstractChildTrackedFormModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
-import { TrackedFormController } from 'charactersheet/components/form-controller-tracked-component';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class TrackedDetailForm extends TrackedFormController {
+export class TrackedDetailForm extends AbstractChildTrackedFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

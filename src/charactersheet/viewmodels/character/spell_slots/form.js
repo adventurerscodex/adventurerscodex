@@ -1,6 +1,6 @@
 import {
-    FormController
-} from 'charactersheet/components/form-controller-component';
+    AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
 import {
     Notifications
 } from 'charactersheet/utilities';
@@ -14,7 +14,7 @@ import ko from 'knockout';
 import meditationWhite from 'images/meditation.svg';
 import template from './form.html';
 
-export class SpellSlotFormComponentViewModel extends FormController {
+export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
 
     constructor(params) {
         super(params);

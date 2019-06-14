@@ -7,7 +7,7 @@ import {
 
 import { flatMap, maxBy } from 'lodash';
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { SpellSlot } from 'charactersheet/models/character';
 
 import { SpellSlotFormComponentViewModel } from './form';
@@ -18,7 +18,7 @@ import ko from 'knockout';
 import meditation from 'images/meditation-blue.svg';
 import template from './index.html';
 
-class SpellSlotsViewModel extends ACTableComponent {
+class SpellSlotsViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-spell-slot';

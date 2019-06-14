@@ -4,7 +4,7 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Note } from 'charactersheet/models/common';
 import { NotesFormViewModel } from './form';
 import autoBind from 'auto-bind';
@@ -13,7 +13,7 @@ import template from './index.html';
 
 
 
-export class NotesListModel extends ACTableComponent {
+export class NotesListModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-note';

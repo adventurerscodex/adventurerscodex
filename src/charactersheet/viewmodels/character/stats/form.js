@@ -3,8 +3,8 @@ import {
     HitDice
 } from 'charactersheet/models/character';
 
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
 import { Notifications } from 'charactersheet/utilities';
 
 import { StatsCardViewModel } from './view';
@@ -16,7 +16,7 @@ import ko from 'knockout';
 import template from './form.html';
 
 
-export class StatsHealthFormViewModel extends FormBaseController {
+export class StatsHealthFormViewModel extends AbstractFormModel {
 
     constructor(params) {
         super(params);

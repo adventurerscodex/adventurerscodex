@@ -6,7 +6,7 @@ import {
 import { Spell, SpellSlot, SpellStats } from 'charactersheet/models';
 import { filter, maxBy } from 'lodash';
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { SortService } from 'charactersheet/services/common';
 import { SpellDetailViewModel } from './view';
 import { SpellFormViewModel } from './form';
@@ -16,7 +16,7 @@ import ko from 'knockout';
 import template from './index.html';
 
 
-class SpellbookViewModel extends ACTableComponent {
+class SpellbookViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.filteredByCastable = ko.observable(false);

@@ -3,14 +3,12 @@ import {
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-
 import {
-    CardActionButton
-} from 'charactersheet/components/card-action-buttons';
+    AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
 import {
-    FormController
-} from 'charactersheet/components/form-controller-component';
-
+    CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 import {
     Weapon
 } from 'charactersheet/models';
@@ -20,7 +18,7 @@ import ko from 'knockout';
 import template from './form.html';
 
 
-export class WeaponFormViewModel extends FormController {
+export class WeaponFormViewModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

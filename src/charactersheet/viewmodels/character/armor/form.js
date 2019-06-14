@@ -3,17 +3,20 @@ import {
   Fixtures,
   Notifications
 } from 'charactersheet/utilities';
-
+import { 
+  AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
 import { Armor } from 'charactersheet/models';
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormController } from 'charactersheet/components/form-controller-component';
+import {
+  CardSubmitActionComponent
+} from 'charactersheet/components/card-submit-actions';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 
-export class ArmorFormViewModel  extends FormController {
+export class ArmorFormViewModel  extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

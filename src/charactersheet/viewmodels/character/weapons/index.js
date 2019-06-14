@@ -4,7 +4,7 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Weapon } from 'charactersheet/models/common';
 import { WeaponDetailViewModel } from './view';
 import { WeaponFormViewModel } from './form';
@@ -13,7 +13,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
-export class WeaponsViewModel extends ACTableComponent {
+export class WeaponsViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-weapon';

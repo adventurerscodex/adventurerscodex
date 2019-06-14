@@ -3,14 +3,14 @@ import {
   Notifications
 } from 'charactersheet/utilities';
 
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { SpellStats } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class SpellStatsFormViewModel  extends FormBaseController {
+export class SpellStatsFormViewModel  extends AbstractFormModel {
     constructor(params) {
         super(params);
         autoBind(this);

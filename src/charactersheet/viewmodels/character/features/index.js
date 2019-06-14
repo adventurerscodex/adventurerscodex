@@ -1,4 +1,4 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Feature } from 'charactersheet/models';
 import { FeatureFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
@@ -7,7 +7,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
-export class FeaturesViewModel extends ACTableComponent {
+export class FeaturesViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-feature';

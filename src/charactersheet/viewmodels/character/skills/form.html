@@ -1,6 +1,6 @@
 <form class="form-horizontal"
       data-bind="{submit: $component.submit}">
-  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead class="ac-table-header">
       <tr>
@@ -49,7 +49,7 @@
             <input type="number"
                    class="form-control"
                    data-bind="value: modifier,
-                    event: { 
+                    event: {
                       change: $component.updateEntity,
                       blur: $component.reviewInput,
                       invalid: $component.invalidate },

@@ -7,7 +7,9 @@
 
     <div class="card-flip-container"
          data-bind="css: {'flipped':  showBack}, style: { height: elementHeight}">
-      <div style="opacity: 1" class="card-flipper" data-bind="attr:{id: `${elementId}_card`}">
+      <div style="opacity: 1"
+           class="card-flipper"
+           data-bind="attr:{id: `${elementId}_card`}">
         <!-- ko template: {
         nodes: $componentTemplateNodes,
         data: {

@@ -1,6 +1,6 @@
 import ko from 'knockout';
 
-export class FormBaseController {
+export class AbstractFormModel {
     constructor(params) {
         // Data to be managed by this form
         const noOp = (entity) => { /* no op */ };

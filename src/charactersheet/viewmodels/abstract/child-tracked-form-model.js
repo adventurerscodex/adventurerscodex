@@ -1,12 +1,16 @@
-import { ACTrackedForm } from './ac-tracked-form';
-import { FormController } from './form-controller-component';
-import { Tracked } from 'charactersheet/models';
+import {
+  AbstractChildFormModel
+} from './child-form-model';
+import {
+  Tracked
+} from 'charactersheet/models';
+import { TrackedForm } from 'charactersheet/components';
 
 import campingTentWhite from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditationWhite from 'images/meditation.svg';
 
-export class TrackedFormController extends FormController {
+export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         this.meditationWhite = meditationWhite;

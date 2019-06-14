@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 /**
  * This extender validates the input observeable that it is assigned to. Currently,
@@ -22,8 +22,8 @@ ko.extenders.required = function(target, overrideMessage) {
 
     //define a function to do validation
     function validate(newValue) {
-       target.hasError(newValue ? false : true);
-       target.validationMessage(newValue ? "" : overrideMessage || "This field is required");
+        target.hasError(newValue ? false : true);
+        target.validationMessage(newValue ? '' : overrideMessage || 'This field is required');
     }
 
     //initial validation

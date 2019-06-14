@@ -1,4 +1,4 @@
-import { ACTableViewModel } from 'charactersheet/components/table-view-component';
+import { AbstractGridViewModel } from 'charactersheet/viewmodels/abstract';
 import {  Notifications } from 'charactersheet/utilities';
 import { SavingThrow } from 'charactersheet/models/character';
 
@@ -7,7 +7,7 @@ import { find } from 'lodash';
 import ko from 'knockout';
 import template from './view.html';
 
-class ScoreSaveViewModel extends ACTableViewModel {
+class ScoreSaveViewModel extends AbstractGridViewModel {
     constructor(params) {
         super(params);
         this.order = params.order;

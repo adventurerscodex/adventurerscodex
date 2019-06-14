@@ -1,4 +1,4 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { MagicItem } from 'charactersheet/models/common';
 import { MagicItemDetailViewModel } from './view';
 import { MagicItemFormViewModel } from './form';
@@ -8,7 +8,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
-export class MagicItemsViewModel extends ACTableComponent {
+export class MagicItemsViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-magic-item';

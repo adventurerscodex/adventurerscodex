@@ -2,12 +2,16 @@ import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { FormBaseController } from './form-base-controller';
-import { FormCardFooter } from './form-card-footer';
+import {
+  AbstractFormModel
+} from './form-model';
+import {
+  FormSubmitActionComponent
+} from 'charactersheet/components';
 
 import ko from 'knockout';
 
-export class FormController extends FormBaseController {
+export class AbstractChildFormModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         // the container for this form. Used for collapse rows

@@ -12,7 +12,7 @@ import {
     Trait
 } from 'charactersheet/models/character';
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 
 import { TrackedDetailForm } from './form';
 
@@ -21,7 +21,7 @@ import {flatMap } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
-class TrackerViewModel extends ACTableComponent {
+class TrackerViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.collapseAllId = '#tracker-pane';

@@ -1,13 +1,13 @@
-import { ACViewModel } from 'charactersheet/components/view-component';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import { Armor } from 'charactersheet/models';
-import { CardFlipButton } from 'charactersheet/components/card-flip-button';
+import { CardEditActionComponent } from 'charactersheet/components/card-edit-actions';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
 
-class ArmorDetailViewModel extends ACViewModel {
+class ArmorDetailViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         autoBind(this);
