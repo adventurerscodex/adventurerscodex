@@ -1,46 +1,56 @@
+import { AbstractChildFormModel } from './child-form-model';
+import { DELAY } from 'charactersheet/constants';
+import { Tracked } from 'charactersheet/models';
 import {
-  AbstractChildFormModel
-} from './child-form-model';
-import {
-  Tracked
-} from 'charactersheet/models';
-import { TrackedForm } from 'charactersheet/components';
-
-import campingTentWhite from 'images/camping-tent.svg';
+  TrackedForm
+} from 'charactersheet/components/form-tracked-component';
 import ko from 'knockout';
-import meditationWhite from 'images/meditation.svg';
+
+/**
+ * AbstractChildTrackedFormModel
+ *
+ * Expands upon the AbstractChildFormModel to manage 'tracked' entities.
+ *
+ * @property tracked {observable} the Tracked character data model.
+ * @param isTracked {observable} flag for if the item is tracked.
+ *  Tracked items need to show the 'TrackedForm' to collect tracked data.
+ **/
 
 export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
-        this.meditationWhite = meditationWhite;
-        this.campingTentWhite = campingTentWhite;
-
         this.tracked = ko.observable(new Tracked());
         this.isTracked = ko.observable(false);
+    }
 
-        if (this.existingData && this.existingData.tracked()) {
+    load () {
+        super.load();
+        const tracked = ko.utils.unwrapObservable(this.entity().tracked);
+        if (tracked) {
             this.isTracked(true);
-            this.tracked().importValues(this.entity().tracked());
+            this.tracked().importValues(tracked);
         }
     }
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        const onTrackFormDisplay = this.isTracked.subscribe(()=>{this.forceResizeForTrackedForm();});
+        const onTrackFormDisplay = this.isTracked.subscribe(this.forceResize);
         this.subscriptions.push(onTrackFormDisplay);
     }
 
-    forceResizeForTrackedForm = async () => {
-        setTimeout(this.forceCardResize, 50);
+    forceResize = async () => {
+        // Delay resize to allow the browser time to redraw
+        setTimeout(this.forceCardResize, DELAY.SHORT);
     }
 
     async refresh() {
         await super.refresh();
-        this.isTracked(false);
-        if (this.existingData && this.existingData.tracked()) {
+        const tracked = ko.utils.unwrapObservable(this.entity().tracked);
+        if (tracked) {
             this.isTracked(true);
-            this.tracked().importValues(this.existingData.tracked());
+            this.tracked().importValues(tracked);
+        } else {
+            this.isTracked(false);
         }
     }
 

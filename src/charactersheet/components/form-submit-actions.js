@@ -43,7 +43,7 @@ export class FormSubmitActionComponent {
     }
 
     showDelete = () => {
-        return !ko.unwrapObservable(this.addForm) && !!this.delete;
+        return !ko.utils.unwrapObservable(this.addForm) && !!this.delete; //delete exists
     }
 }
 

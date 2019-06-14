@@ -1,3 +1,4 @@
+
 import ko from 'knockout';
 
 export class AbstractFormModel {
@@ -19,7 +20,7 @@ export class AbstractFormModel {
         this.modelName = params.modelName ? params.modelName : null; // null if unused
 
         /* The item being edited */
-        this.entity = ko.observable(this.generateBlank());
+        this.entity = ko.observable();
 
         /* Flag to denote an "Add Form" to create a new entry */
         this.addForm = ko.observable(false);
@@ -33,9 +34,8 @@ export class AbstractFormModel {
         this.listeners = [];
     }
 
-    modelClass () {
-        /* Halfway to replacing 'generateBlank' in children */
-        throw('Model Class must be defined');
+    modelClass = () => {
+        throw('modelClass must be defined. ModelClass must be a Data Model');
     }
 
     generateBlank() {
@@ -96,6 +96,7 @@ export class AbstractFormModel {
     }
 
     load() {
+        this.entity(this.generateBlank());
         this.setUpSubscriptions();
     }
 
