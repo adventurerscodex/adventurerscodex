@@ -1,5 +1,5 @@
 <form data-bind="{submit: submit}">
-  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <table data-bind="with: entity"
          class="table table-responsive table-ac-bordered table-hover score-save-table">
     <tbody>
@@ -49,8 +49,7 @@
           Cantrips Known
         </th>
         <td class="ac-table-data-cell">
-          <input required="true"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="cantripsKnown"
                  data-bind="value: cantripsKnown,
                  event: { blur: $component.reviewInput, invalid: $component.invalidate },

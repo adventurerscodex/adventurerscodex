@@ -20,9 +20,10 @@ import ko from 'knockout';
  *
  * @param containerId {string} the container of the form. Used to collapse
  * the container when deleted
+ *
  * @param data {observable} The data under edit. Existing Data is imported
  * into the local entity for modification, before being returned to the parent.
- * the container when deleted
+ *
  * @param addToParent {function} callback to add new entries to the parent.
  *
  * @param replaceInParent {function} callback to replace entries in the parent.
@@ -37,9 +38,9 @@ const noOp = (entity) => {/* no op */};
 export class AbstractChildFormModel extends AbstractFormModel {
     constructor(params) {
         super(params);
-        this.containerId = params.containerId;
+        this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.existingData = params.data;
-        // Add/Remove callbacks. Used for lists.
+
         this.addToParent = params.addToParent ? params.addToParent : noOp;
         this.replaceInParent = params.replaceInParent ? params.replaceInParent : noOp;
         this.removeFromParent = params.removeFromParent ? params.removeFromParent : noOp;

@@ -23,8 +23,8 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
         this.isTracked = ko.observable(false);
     }
 
-    load () {
-        super.load();
+    async load() {
+        await super.load();
         const tracked = ko.utils.unwrapObservable(this.entity().tracked);
         if (tracked) {
             this.isTracked(true);
@@ -32,13 +32,13 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
         }
     }
 
-    setUpSubscriptions () {
+    setUpSubscriptions() {
         super.setUpSubscriptions();
         const onTrackFormDisplay = this.isTracked.subscribe(this.forceResize);
         this.subscriptions.push(onTrackFormDisplay);
     }
 
-    forceResize = async () => {
+    async forceResize() {
         // Delay resize to allow the browser time to redraw
         setTimeout(this.forceCardResize, DELAY.SHORT);
     }
@@ -54,7 +54,7 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
         }
     }
 
-    async save () {
+    async save() {
         if (!this.isTracked()) {
             this.tracked(null);
             this.entity().tracked(null);

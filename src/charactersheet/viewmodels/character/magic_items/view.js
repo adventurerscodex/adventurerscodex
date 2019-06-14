@@ -1,6 +1,4 @@
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
-import { CardEditActionComponent } from 'charactersheet/components/card-edit-actions';
-import { MagicItem } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -12,9 +10,7 @@ class MagicItemDetailViewModel extends AbstractViewModel {
         super(params);
         autoBind(this);
     }
-    generateBlank () {
-        return new MagicItem();
-    }
+    modelName = 'MagicItem';
 }
 
 ko.components.register('magic-item-detail-view', {

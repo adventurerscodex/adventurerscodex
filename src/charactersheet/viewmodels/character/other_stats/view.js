@@ -27,7 +27,7 @@ import template from './view.html';
 export class OtherStatsViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
-        // Calculated Field
+        // Calculated Fields
         this.armorClass = ko.observable();
         this.proficiencyLabel = ko.observable();
         this.initiativeLabel = ko.observable();
@@ -37,24 +37,13 @@ export class OtherStatsViewModel extends AbstractViewModel {
         this.armorClassPopover = ko.observable();
         autoBind(this);
     }
-
-    generateBlank () {
-        return new OtherStats();
-    }
+    modelName = 'OtherStats';
 
     async load() {
         await super.load();
         this.calculateInitiativeLabel();
         this.updateArmorClass();
         this.calculatedProficiencyLabel();
-
-    }
-
-    async refresh () {
-        await super.refresh();
-        const key = CoreManager.activeCore().uuid();
-        const response = await OtherStats.ps.read({uuid: key});
-        this.entity().importValues(response.object.exportValues());
     }
 
     setUpSubscriptions = () => {
