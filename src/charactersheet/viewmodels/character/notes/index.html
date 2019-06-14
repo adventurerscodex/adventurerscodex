@@ -7,9 +7,8 @@
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead class="ac-table-header">
       <tr>
-        <th data-bind="click: function(){sortBy('title');}">
+        <th>
           note
-          <span data-bind="css: sortArrow('title')"></span>
         </th>
         <th class="col-xs-1">
           <a href="#"
@@ -20,7 +19,7 @@
     </thead>
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
-      <!-- ko foreach: filteredAndSortedEntities -->
+      <!-- ko foreach: entities -->
       <tr data-toggle="collapse"
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#note_list_${uuid()}`, id: `#note_row_${uuid()}`}">

@@ -15,11 +15,13 @@
           Armor Class
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="armorClassModifier"
                  aria-describedby="basic-addon2"
-                 data-bind="textInput: armorClassModifier, hasFocus: $component.formElementHasFocus">
+                 data-bind="value: armorClassModifier,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.armorClassModifier },
+                 hasFocus: $component.formElementHasFocus">
         </td>
       </tr>
       <tr>
@@ -27,11 +29,12 @@
           Proficiency Bonus
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="proficiencyModifier"
                  aria-describedby="basic-addon2"
-                 data-bind="value: proficiencyModifier">
+                 data-bind="value: proficiencyModifier,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.proficiencyModifier }">
         </td>
       </tr>
       <tr>
@@ -39,11 +42,12 @@
           Initiative
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control  ac-number-input"
+          <input class="form-control  ac-number-input"
                  name="initiativeModifier"
                  aria-describedby="basic-addon2"
-                 data-bind="value: initiativeModifier">
+                 data-bind="value: initiativeModifier,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.initiativeModifier }">
         </td>
       </tr>
       <tr>
@@ -51,12 +55,12 @@
           Movement
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="speed"
                  aria-describedby="basic-addon2"
-                 data-bind="value: speed"
-                 min="0">
+                 data-bind="value: speed,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.speed }">
         </td>
       </tr>
       <tr>

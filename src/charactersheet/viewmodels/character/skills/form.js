@@ -127,6 +127,11 @@ export class SkillsFormViewModel extends ACTableFormModel {
         this.addForm(false);
         this.flip();
     }
+
+    validation = {
+        // Deep copy of properties in object
+        ...Skill.validationConstraints.rules
+    };
 }
 
 ko.components.register('skills-form-view', {

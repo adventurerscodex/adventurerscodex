@@ -45,7 +45,7 @@ export class ArmorFormViewModel  extends FormController {
         let results = [];
         if (term) {
             const keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
-            const results = keys.filter((name, idx, _) => {
+            results = keys.filter((name, idx, _) => {
                 return name.toLowerCase().indexOf(term) > -1;
             });
         }
@@ -63,7 +63,7 @@ export class ArmorFormViewModel  extends FormController {
     }
 
     validation = {
-        ...Armor.validationConstraints
+        ...Armor.validationConstraints.rules
     };
 }
 

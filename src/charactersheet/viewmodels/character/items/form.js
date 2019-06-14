@@ -58,7 +58,7 @@ export class ItemFormViewModel extends FormController {
     }
 
     validation = {
-        ...Item.validationConstraints
+        ...Item.validationConstraints.rules
     };
 }
 

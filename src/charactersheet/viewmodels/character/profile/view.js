@@ -1,8 +1,8 @@
+import { Fixtures, Utility } from 'charactersheet/utilities';
 
 import { ACViewModel } from 'charactersheet/components/view-component';
 import { Core } from 'charactersheet/models/common/core';
 import { CoreManager } from 'charactersheet/utilities';
-import { Fixtures } from 'charactersheet/utilities';
 import { Profile } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
@@ -19,6 +19,10 @@ export class ProfileViewModel extends ACViewModel {
     generateBlank() {
         return new Profile();
     }
+
+    shortName = (string) => {
+        return Utility.string.truncateStringAtLength(string(), 25);
+    };
 
     refresh = async () => {
         var key = CoreManager.activeCore().uuid();

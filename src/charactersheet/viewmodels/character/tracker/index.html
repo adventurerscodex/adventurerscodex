@@ -26,15 +26,13 @@
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities, as: trackable -->
       <tr
-      class="clickable expandRow"
+      class="clickable expandRow trackedRow"
         data-toggle="collapse"
          data-bind="attr:{'data-target': `#tracked_${uuid()}`}, with: $data.tracked()" >
         <td><span data-bind="text: $component.shortName($parent.name)"></span>
         </td>
         <td style="padding: 4px;">
-          <img class="action-bar-icon"
-               data-bind="attr: { src: $component.resetsOnImgSource($data) }">
-          </img>
+          <div class="" data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>
         </td>
         <td style="padding: 4px;">
           <mini-plus-minus params="value: used,

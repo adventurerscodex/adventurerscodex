@@ -37,7 +37,7 @@ export class ArmorViewModel extends ACTableComponent {
         event.stopPropagation();
         data.equipped(!data.equipped());
         const response = await data.ps.save();
-        this.replaceInList(response.object);
+        await this.replaceInList(response.object);
         Notifications.armor.changed.dispatch();
     };
 

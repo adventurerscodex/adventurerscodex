@@ -23,6 +23,12 @@ export class MagicItemFormViewModel  extends FormController {
         return new MagicItem();
     }
 
+    setUpSubscriptions () {
+        super.setUpSubscriptions();
+        this.entity().maxCharges.subscribe(this.resizeOnFieldVisibility);
+        this.entity().requiresAttunement.subscribe(this.resizeOnFieldVisibility);
+    }
+
     typeOptions = Fixtures.magicItem.magicItemTypeOptions;
     rarityOptions = Fixtures.magicItem.magicItemRarityOptions;
 
@@ -69,12 +75,16 @@ export class MagicItemFormViewModel  extends FormController {
         this.showDisclaimer(true);
     };
 
+    resizeOnFieldVisibility = () => {
+        setTimeout(this.forceCardResize, 50);
+    }
+
     notify = () => {
         Notifications.magicItem.changed.dispatch();
     }
 
     validation = {
-        ...MagicItem.validationConstraints
+        ...MagicItem.validationConstraints.rules
     };
 }
 

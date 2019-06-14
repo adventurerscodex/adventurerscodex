@@ -40,18 +40,24 @@
           <!-- ko with: $data.abilityScoreObject -->
           <td class="ac-table-data-cell">
             <!-- ko if: $index() == 0 -->
-            <input type="number"
-                   class="form-control ac-number-input"
-                   min="0"
-                   required="true"
-                   data-bind="value: value, event: {change: $component.updateEntity}, hasFocus: $component.scoreFormHasFocus">
+            <input class="form-control ac-number-input"
+                   data-bind="value: value,
+
+                   attr: { name: `abilityScore-${name()}-value`,
+                      ...$component.validation.AbilityScore.value },
+                    event: { change: $component.updateEntity,
+                             blur: $component.reviewInput,
+                             invalid: $component.invalidate },
+                    hasFocus: $component.scoreFormHasFocus">
             <!-- /ko -->
             <!-- ko if: $index() != 0 -->
-            <input type="number"
-                   class="form-control ac-number-input"
-                   min="0"
-                   required="true"
-                   data-bind="textInput: value, event: {change: $component.updateEntity}">
+            <input class="form-control ac-number-input"
+                   data-bind="value: value,
+                   attr: { name: `abilityScore-${name()}-value`,
+                          ...$component.validation.AbilityScore.value },
+                   event: { change: $component.updateEntity,
+                            blur: $component.reviewInput,
+                            invalid: $component.invalidate }">
             <!-- /ko -->
           </td>
           <td data-bind="text: name"></td>
@@ -82,8 +88,14 @@
           <td>
             <input type='checkbox'
                    class='ac-checkbox sr-only'
-                   data-bind="checked: proficiency, event: {change: $component.updateEntity}, attr: {id: 'savingThrow_'+name()}"></input>
-            <label data-bind="attr: {for: 'savingThrow_'+name()}">
+                   data-bind="checked: proficiency,
+                   event: { change: $component.updateEntity,
+                            blur: $component.reviewInput,
+                            invalid: $component.invalidate },
+                   attr: { id: `savingThrow-${name()}-proficiency`,
+                           name: `savingThrow-${name()}-proficiency`,
+                           ...$component.validation.SavingThrow.proficiency }"></input>
+            <label data-bind="attr: { for: `savingThrow-${name()}-proficiency`}">
           </td>
           <td data-bind="text: name"></td>
           <td>
@@ -91,13 +103,26 @@
             <input type="number"
                    class="form-control ac-number-input"
                    required="true"
-                   data-bind="value: modifier, event: {change: $component.updateEntity}, hasFocus: $component.saveFormHasFocus" />
+                   data-bind="value: modifier,
+                   event: { change: $component.updateEntity,
+                            blur: $component.reviewInput,
+                            invalid: $component.invalidate },
+                   hasFocus: $component.saveFormHasFocus,
+                   attr: { name: `savingThrow-${name()}-modifier`,
+                          ...$component.validation.SavingThrow.modifier },
+                  " />
             <!-- /ko -->
             <!-- ko if: $index() != 0 -->
             <input type="number"
                    class="form-control ac-number-input"
                    required="true"
-                   data-bind="value: modifier, event: {change: $component.updateEntity}" />
+                   data-bind="value: modifier,
+                    event: { change: $component.updateEntity,
+                             blur: $component.reviewInput,
+                             invalid: $component.invalidate },
+                    attr: { name: `savingThrow-${name()}-modifier`,
+                           ...$component.validation.SavingThrow.modifier }
+                    " />
             <!-- /ko -->
           </td>
         </tr>

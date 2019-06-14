@@ -15,11 +15,11 @@
           <span data-bind="css: sortArrow('quantity')"></span></th>
         <th class="hidden-xs"
             data-bind="click: function(){sortBy('totalWeight');}">
-          Weight
+          Total&nbsp;Weight
           <span data-bind="css: sortArrow('totalWeight')"></span></th>
         <th class="hidden-xs"
             data-bind="click: function(){sortBy('totalCalculatedCost');}">
-          Cost
+          Total&nbsp;Value
           <span data-bind="css: sortArrow('totalCalculatedCost')"></span></th>
         <th class=" text-right">
           <a href="#"
@@ -35,7 +35,7 @@
       <tr class="clickable expandRow"
           data-toggle="collapse"
           data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
-        <td><span data-bind="text: name"></span></td>
+        <td><span data-bind="text: $component.shortName(name)"></span></td>
         <td><span data-bind="text: quantity"></span></td>
         <td class="hidden-xs"><span data-bind="text: totalWeightLabel"></span></td>
         <td class="hidden-xs"><span data-bind="text: totalCostLabel"></span></td>

@@ -60,7 +60,7 @@ export class FeatFormViewModel extends TrackedFormController {
     }
 
     validation = {
-        ...Feat.validationConstraints
+        ...Feat.validationConstraints.rules
     };
 }
 

@@ -33,7 +33,7 @@ export class ACViewModel {
         }
     }
 
-    disposeOfSubscriptions () {
+    disposeOfSubscriptions() {
         this.subscriptions.forEach((subscription) => subscription.dispose());
         this.subscriptions = [];
     }
@@ -47,9 +47,9 @@ export class ACViewModel {
         this.subscriptions.push(showSubscription);
     }
 
-    subscribeToShowForm = () => {
+    subscribeToShowForm = async () => {
         if (this.show()) {
-            this.refresh();
+            await this.refresh();
         }
     }
 }

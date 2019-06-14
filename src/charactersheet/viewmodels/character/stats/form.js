@@ -67,6 +67,11 @@ export class StatsHealthFormViewModel extends FormBaseController {
     setHitDiceType = (hitDiceType) => {
         this.hitDice().type(hitDiceType);
     }
+
+    validation = {
+        Health: Health.validationConstraints.rules,
+        HitDice: HitDice.validationConstraints.rules
+    }
 }
 
 ko.components.register('stats-health-form', {

@@ -35,6 +35,12 @@ export class SkillsAddFormViewModel extends FormController {
         return new Skill();
     }
 
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        const onShow = this.show.subscribe(this.delayThenResize);
+        this.subscriptions.push(onShow);
+    }
+
     async refresh() {
         await super.refresh();
         const key = CoreManager.activeCore().uuid();
@@ -44,25 +50,11 @@ export class SkillsAddFormViewModel extends FormController {
         this.abilityScores(abilityScores.objects);
     }
 
+
     async submit() {
         await super.submit();
         this.flipOnSave();
     }
-
-    // refreshOnShow = async () => {
-    //     if (this.show()) {
-    //         await this.refresh();
-    //     }
-    // }
-    // async submit() {
-    //     await super.submit();
-    //     await this.refresh();
-    // }
-
-    // reset = () => {
-    //     this.abilityScoreChoice('Strength');
-    //     super.reset();
-    // }
 
     proficiencyOptions = [
         'not',
@@ -110,7 +102,7 @@ export class SkillsAddFormViewModel extends FormController {
 
     validation = {
         // Deep copy of properties in object
-        ...Skill.validationConstraints
+        ...Skill.validationConstraints.rules
     };
 }
 

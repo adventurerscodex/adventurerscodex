@@ -39,8 +39,8 @@ export class ACTableComponent {
         this.entities(response.objects);
     }
 
-    shortName = (string) => {
-        return Utility.string.truncateStringAtLength(string(), 25);
+    shortName = (string, size=25) => {
+        return Utility.string.truncateStringAtLength(string(), size);
     };
 
     sorts() {

@@ -45,7 +45,7 @@ export class WealthFormViewModel  extends FormBaseController {
 
     validation = {
         // Deep copy of properties in object
-        ...Wealth.validationConstraints
+        ...Wealth.validationConstraints.rules
     };
 }
 

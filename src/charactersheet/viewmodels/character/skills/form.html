@@ -29,7 +29,11 @@
                     style="width: 50px; position:relative"
                     data-bind="value: proficiency,
           options: $component.proficiencyOptions,
-          event: { change: $component.updateEntity  },
+          event: {
+            change: $component.updateEntity,
+            blur: $component.reviewInput,
+            invalid: $component.invalidate },
+          attr: { ...$component.validation.proficiency },
           select2: {
             placeholder: '',
             minimumResultsForSearch: Infinity,
@@ -44,7 +48,12 @@
           <div class="input-group skill-modifier-input">
             <input type="number"
                    class="form-control"
-                   data-bind="textInput: modifier, event: { change: $component.updateEntity }"></input>
+                   data-bind="value: modifier,
+                    event: { 
+                      change: $component.updateEntity,
+                      blur: $component.reviewInput,
+                      invalid: $component.invalidate },
+                    attr: { ...$component.validation.abilityScore }"></input>
             <span class="input-group-addon">
               <span data-bind="text: bonusNumber"></span>
             </span>
@@ -75,6 +84,7 @@
             flipOnSave: flip,
             flip: $component.toggleShowAddForm,
             addToParent: $component.addToList,
+            forceCardResize: $component.forceCardResize
             }">
           </skills-add-form-view>
         </div>

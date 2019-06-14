@@ -63,6 +63,7 @@ export class SavingThrow extends KOModel {
 SavingThrow.validationConstraints = {
     rules: {
         modifier: {
+            type: 'number',
             required: true,
             min: -10000,
             max: 10000

@@ -64,7 +64,7 @@ export class TraitFormViewModel extends TrackedFormController {
     }
 
     validation = {
-        ...Trait.validationConstraints
+        ...Trait.validationConstraints.rules
     };
 }
 

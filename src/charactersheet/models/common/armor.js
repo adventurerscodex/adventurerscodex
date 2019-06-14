@@ -27,6 +27,15 @@ export class Armor extends KOModel {
         return this.type() && this.type().toLowerCase().includes('shield');
     }, this);
 
+    acCalculatedLabel = ko.pureComputed(() => {
+        if (this.armorClass()) {
+            if (this.magicalModifier()) {
+                return this.armorClass() + this.magicalModifier();
+            }
+            return  this.armorClass();
+        }
+        return '';
+    })
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
             return 'AC ' + this.armorClass();
@@ -104,11 +113,18 @@ Armor.validationConstraints = {
             required: true,
             maxlength: 64
         },
+        weight: {
+            type: 'number',
+            min: 0,
+            max: 10000000
+        },
         price: {
+            type: 'number',
             min: 0,
             max: 10000000
         },
         magicalModifier: {
+            type: 'number',
             min: -10000,
             max: 10000
         },
@@ -116,6 +132,7 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         armorClass: {
+            type: 'number',
             required: true,
             min: 0,
             max: 1000000

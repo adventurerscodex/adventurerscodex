@@ -8,12 +8,12 @@
           Spell Attack Bonus
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="spellAttackBonus"
-                 required="true"
-                 data-bind='textInput: spellAttackBonus,
-                    hasFocus: $component.formElementHasFocus'>
+                 data-bind="value: spellAttackBonus,
+                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                    attr: { ...$component.validation.spellAttackBonus },
+                    hasFocus: $component.formElementHasFocus">
         </td>
       </tr>
       <tr>
@@ -21,11 +21,11 @@
           Spell Save DC
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 name="spellSaveDc"
-                 required="true"
+          <input name="spellSaveDc"
                  class="form-control ac-number-input"
-                 data-bind='textInput: spellSaveDc'>
+                 data-bind="value: spellSaveDc,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.spellSaveDc }"">
         </td>
       </tr>
 
@@ -34,12 +34,13 @@
           Spell Casting Ability
         </th>
         <td class="ac-table-data-cell">
-           <input type="text"
-                 class="form-control ac-number-input"
-                 name="castingAbility"
-                 data-bind='value: castingAbility,
+           <input class="form-control ac-number-input"
+                  name="castingAbility"
+                  data-bind="value: castingAbility,
+                  event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                  attr: { ...$component.validation.castingAbility },
                       autocomplete: { source: spellcastingAbilityOptions,
-                      onselect: $component.setSpellCastingAbility }'>
+                      onselect: $component.setSpellCastingAbility }">
         </td>
       </tr>
 
@@ -48,11 +49,12 @@
           Cantrips Known
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                required="true"
+          <input required="true"
                  class="form-control ac-number-input"
                  name="cantripsKnown"
-                 data-bind='textInput: cantripsKnown'>
+                 data-bind="value: cantripsKnown,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.cantripsKnown }">
         </td>
       </tr>
 
@@ -61,11 +63,11 @@
           Spells Known
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="spellsKnown"
-                 required="true"
-                 data-bind='textInput: spellsKnown'>
+                 data-bind="textInput: spellsKnown,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.spellsKnown }">
         </td>
       </tr>
 
@@ -74,11 +76,11 @@
           Max Prepared
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="axPrepared"
-                 required="true"
-                 data-bind='textInput: maxPrepared'>
+                 data-bind="value: maxPrepared,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.maxPrepared }">
         </td>
       </tr>
 
@@ -87,11 +89,11 @@
           Invocations Known
         </th>
         <td class="ac-table-data-cell">
-          <input type="number"
-                 class="form-control ac-number-input"
+          <input class="form-control ac-number-input"
                  name="invocationsKnown"
-                 required="true"
-                 data-bind='textInput: invocationsKnown'>
+                 data-bind="value: invocationsKnown,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.invocationsKnown }">
         </td>
       </tr>
     </tbody>

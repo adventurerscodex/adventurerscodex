@@ -16,3 +16,12 @@ export class HitDice extends KOModel {
     type = ko.observable('');
     hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
 }
+
+HitDice.validationConstraints = {
+    rules: {
+        type: {
+            required: true,
+            maxlength: 32
+        }
+    }
+};

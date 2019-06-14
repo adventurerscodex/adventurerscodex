@@ -12,15 +12,13 @@
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
-       <tr class="clickable expandRow"
+       <tr class="clickable expandRow trackedRow"
          data-toggle="collapse"
           data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}">
         <td style="width: 10%">Lvl&nbsp;<span data-bind="text: level"></span>
         </td>
        <td style="width: 10%">
-          <img class="action-bar-icon"
-               data-bind="attr: { src: $component.resetsOnImgSource($data) }">
-          </img>
+         <div class="" data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>
         </td>
        <td style="width: 5%">
           <mini-plus-minus params="value: used,
