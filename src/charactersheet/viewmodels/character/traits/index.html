@@ -28,13 +28,13 @@
       <tr data-toggle="collapse"
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#trait_list_${uuid()}`, id: `#trait_row_${uuid()}`}">
-        <td><span data-bind="text: $component.shortName(name)"></span>
+        <td><span data-bind="text: $component.shortText(name)"></span>
           <span data-bind="visible: $component.showTracked($data)"
                 style="opacity: .9"
                 class="glyphicon glyphicon-time"
                 aria-hidden="true"></span>
         </td>
-        <td><span data-bind="text: $component.shortName(race)"></span>
+        <td><span data-bind="text: $component.shortText(race)"></span>
 
         </td>
         <td>
@@ -101,7 +101,7 @@
               addToParent: $component.addToList,
              }"></trait-form>
           </div>
-          <!-- ko ifnot: $component.addForm -->
+          <!-- ko ifnot: $component.displayAddForm -->
           <center>
             <button type="button"
                     class="btn btn-link btn-sm btn-block"

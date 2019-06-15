@@ -29,7 +29,7 @@
       class="clickable expandRow trackedRow"
         data-toggle="collapse"
          data-bind="attr:{'data-target': `#tracked_${uuid()}`}, with: $data.tracked()" >
-        <td><span data-bind="text: $component.shortName($parent.name)"></span>
+        <td><span data-bind="text: $component.shortText($parent.name)"></span>
         </td>
         <td style="padding: 4px;">
           <div class="" data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>

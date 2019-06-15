@@ -28,14 +28,14 @@
       <tr data-toggle="collapse"
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#feature_list_${uuid()}`, id: `#feature_row_${uuid()}`}">
-        <td><span data-bind="text: $component.shortName(name)"></span>
+        <td><span data-bind="text: $component.shortText(name)"></span>
           <span data-bind="visible: $component.showTracked($data)"
                 style="opacity: .9"
                 class="glyphicon glyphicon-time"
                 aria-hidden="true"></span>
         </td>
         <td>
-          <span data-bind="text: $component.shortName(characterClass)"></span>
+          <span data-bind="text: $component.shortText(characterClass)"></span>
           <span class="text-muted"
                 data-bind="text:`(${level()})`"></span>
         </td>
@@ -104,7 +104,7 @@
               addToParent: $component.addToList,
              }"></feature-form>
           </div>
-          <!-- ko ifnot: $component.addForm -->
+          <!-- ko ifnot: $component.displayAddForm -->
           <button type="button"
                   class="btn btn-sm btn-link btn-block"
                   data-toggle="collapse"

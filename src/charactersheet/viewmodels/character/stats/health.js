@@ -33,7 +33,9 @@ class StatsHealthViewModel extends AbstractViewModel {
     }
 
     generateBlank() {
-        return new Health();
+      // We do not use the default AbstractView properties here.
+      // We may need to divorce this from the Abstract entirely
+        return null;
     }
 
     async load() {

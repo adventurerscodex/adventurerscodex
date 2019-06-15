@@ -74,7 +74,7 @@
             <!-- /ko -->
           </td>
           <td>
-            <span data-bind="text: $component.shortName(name)"></span>
+            <span data-bind="text: $component.shortText(name)"></span>
             <!-- ko if: isConcentration -->
             <span style="color: #18bc9c"
                   class="glyphicon glyphicon-copyright-mark"></span>
@@ -98,7 +98,7 @@
             <!-- /ko -->
           </td>
           <td class="hidden-xs hidden-sm">
-            <span data-bind="text: $component.trunc(range, 10)"></span>
+            <span data-bind="text: $component.shortText(range, 10)"></span>
           </td>
           <td style="width: 5%" class="toggle-collapse-col">
             <span data-toggle="collapse"
@@ -179,7 +179,7 @@
               <!-- /ko -->
             </div>
             <div class="col-xs-4 ">
-              <!-- ko ifnot: $component.addForm -->
+              <!-- ko ifnot: $component.displayAddForm -->
             <button type="button"
                     class="btn btn-link btn-block btn-sm"
                     id="spellAddButton"

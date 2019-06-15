@@ -1,5 +1,8 @@
-import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
-import { Armor } from 'charactersheet/models/common';
+import {
+  AbstractTabularViewModel,
+  calculateTotalLoad,
+  calculateTotalValue
+ } from 'charactersheet/viewmodels/abstract';
 import { ArmorDetailViewModel } from './view';
 import { ArmorFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
@@ -16,10 +19,7 @@ export class ArmorViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#armor-pane';
         autoBind(this);
     }
-
-    modelClass = () => {
-        return Armor;
-    }
+    modelName = 'Armor';
 
     sorts() {
         return {
@@ -66,41 +66,13 @@ export class ArmorViewModel extends AbstractTabularViewModel {
     };
 
     totalCost = ko.pureComputed(() => {
-        if (this.entities().length === 0) {
-            return '0 (gp)';
-        }
-        const calculateCost = (cost, coin) => {
-            if (coin.toLowerCase() === 'cp') {
-                return parseInt(cost)/100;
-            } else if (coin.toLowerCase() === 'sp') {
-                return parseInt(cost)/10;
-            } else if (coin.toLowerCase() === 'ep') {
-                return parseInt(cost)/2;
-            } else if (coin.toLowerCase() === 'pp') {
-                return parseInt(cost) * 10;
-            }
-            return cost;
-        };
-
-        const total = this.entities().map(
-            entity => calculateCost(entity.price(), entity.currencyDenomination())
-        ).reduce(
-            (a, b) => a + b
-        );
-        return `~${Math.round(total)}(gp)`;
+        return calculateTotalValue(this.entities());
     });
+
 
     totalWeight = ko.pureComputed(() => {
-        if (this.entities().length === 0) {
-            return '0 (lbs)';
-        }
-        const total = this.entities().map(
-            entity => entity.weight()
-        ).reduce(
-            (a, b) => a + b
-        );
-        return `~${Math.round(total)}(lbs)`;
-    });
+        return calculateTotalLoad(this.entities());
+    })
 }
 
 ko.components.register('armor', {

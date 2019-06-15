@@ -13,9 +13,9 @@ import ko from 'knockout';
  *
  * Provides base functionality to view Data instances.
  *
+ * @property modelName {string} the name of the model being displayed.
  *
- *
- * @property containerId {string} The dom id for the container of this component.
+ * @param containerId {string} The dom id for the container of this component.
  *
  * @param flip {function} function for displaying/hiding the view. Used to
  * 'flip' flip-cards, or expand/collapse rows
@@ -24,12 +24,11 @@ import ko from 'knockout';
  *
  * @param existingData {optional observable} Existing data (such as data from a parent).
  *
- *  Tracked items need to show the 'TrackedForm' to collect tracked data.
  **/
 
 export class AbstractViewModel {
     constructor(params) {
-        this.coreKey = CoreManager.activeCore().uuid();
+        this.coreKey = null;
         this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.flip = params.flip;
         this.show = params.show ? params.show : ko.observable(true);
@@ -42,7 +41,7 @@ export class AbstractViewModel {
 
     modelClass() {
         if (!this.modelName) {
-            throw('Model Name or generateBlank must be implemented by Views');
+            throw('Model Name or modelClass must be implemented by Views');
         }
         return Clazz[this.modelName];
     }
@@ -57,6 +56,7 @@ export class AbstractViewModel {
     }
 
     async load() {
+        this.coreKey = CoreManager.activeCore().uuid();
         this.entity(this.generateBlank());
         await this.refresh();
         this.setUpSubscriptions();
@@ -98,8 +98,4 @@ export class AbstractViewModel {
           25
         );
     };
-
-    isNumeric = (n) => {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
 }

@@ -1,5 +1,7 @@
-import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
-import { MagicItem } from 'charactersheet/models/common';
+import {
+  AbstractTabularViewModel,
+  calculateTotalLoad
+ } from 'charactersheet/viewmodels/abstract';
 import { MagicItemDetailViewModel } from './view';
 import { MagicItemFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
@@ -16,9 +18,7 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
         autoBind(this);
     }
 
-    modelClass = () => {
-        return MagicItem;
-    }
+    modelName = 'MagicItem';
 
     sorts() {
         return {
@@ -43,22 +43,14 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
     };
 
     numberOfAttuned = ko.pureComputed(() => {
-        const attuned = ko.utils.arrayFilter(self.entities(), function(item) {
-            return item.attuned() === true;
+        const attuned = ko.utils.arrayFilter(this.entities(), function(item) {
+            return ko.utils.unwrapObservable(item.attuned) === true;
         });
         return attuned.length;
     });
 
     totalWeight = ko.pureComputed(() => {
-        if (this.entities().length === 0) {
-            return '0 (lbs)';
-        }
-        const weightTotal = this.entities().map(
-            item => item.weight()
-        ).reduce(
-            (a, b) => a + b
-        );
-        return `~${Math.round(weightTotal)}(lbs)`;
+        return calculateTotalLoad(this.entities());
     });
 }
 

@@ -1,11 +1,11 @@
 <div id="magic-item-pane"
      class="ac-pane panel-body">
   <div class="h4 card-title">
-    Magic Items<br/>
+    Magic Items<br />
     <small>“This should be in a museum!” -Indiana Jones</small>
   </div>
   <table class="table table-responsive table-ac-bordered table-hover">
-    <thead >
+    <thead>
       <tr class="ac-table-header">
         <th data-bind="click: function(){sortBy('attuned');}">
           Attuned
@@ -28,8 +28,8 @@
         <th>
           <a href="#"
              data-bind="{click: collapseAll}">
-                  <span class="fa fa-minus"></span>
-                </a>
+            <span class="fa fa-minus"></span>
+          </a>
         </th>
       </tr>
     </thead>
@@ -47,15 +47,15 @@
                      data-bind="checked: attuned, attr: {id: `magic_item_attuned_${uuid()}`}"></input>
               <label data-bind="attr: {for: `magic_item_attuned_${uuid()}`}"
                      class='fancy-checkbox-label'>
-                  </label>
+              </label>
             </div>
           </div>
         </td>
         <td>
-          <span data-bind="text: $component.shortName(name)"></span>
+          <span data-bind="text: $component.shortText(name)"></span>
         </td>
         <td class="hidden-xs">
-          <span data-bind="text: $component.shortName(type)"></span>
+          <span data-bind="text: $component.shortText(type)"></span>
         </td>
         <td class="hidden-xs">
           <span data-bind="text: chargesDisplay"></span>
@@ -97,8 +97,7 @@
                   forceCardResize: forceCardResize,
                   replaceInParent: context.replaceInList,
                   removeFromParent: context.removeFromList
-                 }"
-              ></magic-item-form>
+                 }"></magic-item-form>
             </div>
           </flip-card>
         </td>
@@ -108,13 +107,12 @@
         <td colspan="8">
           <div id="add-magic-item"
                class="collapse add-card">
-               <magic-item-form params="{
+            <magic-item-form params="{
                    containerId: 'add-magic-item',
-                   show: addForm,
+                   show: displayAddForm,
                    flip: $component.toggleShowAddForm,
                    addToParent: $component.addToList,
-                  }"
-               ></magic-item-form>
+                  }"></magic-item-form>
           </div>
         </td>
       </tr>
@@ -122,24 +120,31 @@
     <tfoot>
       <tr>
         <td colspan="8">
-        <div class="row">
-          <div class="col-xs-4 text-muted">
-           <small class="table-foot-content visible-xs"><span data-bind="text: totalWeight"></span></small>
-            <span class="table-foot-content hidden-xs">Weight: <span data-bind="text: totalWeight"></span></span>
-          </div>
-          <div class="col-xs-4">
-            <!-- ko ifnot: $component.addForm -->
-            <button type="button"
-                    class="btn btn-link btn-sm btn-block"
-                    id="magicitemAddButton"
-                    data-toggle="collapse"
-                    data-target="#add-magic-item"
-                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Magic Item</button>
-            <!-- /ko -->
-          </div>
-          <div class=" col-xs-4 text-muted" style="text-align: right">
-              <!-- space holding div -->
-          </div>
+          <div class="row">
+            <div class="col-xs-4 text-muted">
+              <small class="table-foot-content">
+                Attuned:<span data-bind="text: numberOfAttuned" />
+              </small>
+            </div>
+            <div class="col-xs-4">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                      class="btn btn-link btn-sm btn-block"
+                      id="magicitemAddButton"
+                      data-toggle="collapse"
+                      data-target="#add-magic-item"
+                      data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Magic Item</button>
+              <!-- /ko -->
+            </div>
+            <div class=" col-xs-4 text-muted"
+                 style="text-align: right">
+                 <small class="table-foot-content">
+
+                 <span class="visible-xs"
+                       data-bind="text: totalWeight" />
+                 <span class="hidden-xs">Weight:<span data-bind="text: totalWeight" /></span>
+                 </small>
+            </div>
         </td>
       </tr>
     </tfoot>

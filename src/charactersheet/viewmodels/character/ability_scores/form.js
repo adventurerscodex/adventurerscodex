@@ -57,10 +57,6 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
 
     findSaveByName = (name) => find(this.entities(), (savingthrow) => savingthrow.name() === name);
 
-    updateEntity = async (entity) => {
-        entity.markedForSave = true;
-    }
-
     async save () {
         const updates = this.entities().map(async (entity) => {
             if (entity.abilityScoreObject().markedForSave) {

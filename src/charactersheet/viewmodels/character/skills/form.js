@@ -67,7 +67,7 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
 
     updateEntity = async (entity) => {
         await entity.updateBonuses();
-        entity.markedForSave = true;
+        super.updateEntity(entity);
     }
 
     setUpSubscriptions = () => {

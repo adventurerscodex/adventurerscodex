@@ -1,5 +1,6 @@
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import autoBind from 'auto-bind';
+import { isNumeric } from 'jquery';
 import ko from 'knockout';
 import template from './view.html';
 
@@ -13,7 +14,7 @@ export class ProfileViewModel extends AbstractViewModel {
 
     weightLabel = ko.pureComputed(() => {
         const weight = ko.utils.unwrapObservable(this.entity().weight);
-        if (this.isNumeric(weight)) {
+        if (isNumeric(weight)) {
             return weight + ' (lbs)';
         } else {
             return 'No Weight';

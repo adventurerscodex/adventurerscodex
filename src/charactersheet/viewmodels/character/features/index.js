@@ -14,10 +14,7 @@ export class FeaturesViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#feature-pane';
         autoBind(this);
     }
-
-    modelClass = () => {
-        return Feature;
-    }
+    modelName = 'Feature';
 
     sorts() {
         return {

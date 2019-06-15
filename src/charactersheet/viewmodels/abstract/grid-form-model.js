@@ -1,40 +1,34 @@
-
 import {
-  AbstractTabularViewModel
-} from './tabular-view-model';
+  AbstractGridViewModel
+} from './grid-view-model';
+import { DELAY } from 'charactersheet/constants';
 import ko from 'knockout';
 
-export class AbstractGridFormModel extends AbstractTabularViewModel {
+/**
+ * AbstractGridFormModel, extends AbstractGridViewModel
+ *
+ * Provides a grid form for data, which is flippable to a view.
+ *
+ **/
+
+export class AbstractGridFormModel extends AbstractGridViewModel {
 
     constructor(params) {
         super(params);
-      // Data to be managed by this form
-        const noOp = (entity) => { /* no op */ };
-        this.show = params.show ? params.show : ko.observable(true);
-        this.flip = params.flip ? params.flip : noOp;
-        this.forceCardResize = params.forceCardResize ? params.forceCardResize : noOp;
-
         this.formElementHasFocus = ko.observable(false);
     }
 
     setUpSubscriptions() {
-        const onShow = this.show.subscribe(this.refreshOnShow);
-        this.subscriptions.push(onShow);
+        super.setUpSubscriptions();
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
-    }
-
-    refreshOnShow = async () => {
-        if (this.show()) {
-            await this.refresh();
-        }
     }
 
     focusOnFlip = () => {
         const setFocus = () => {
             this.formElementHasFocus(this.show());
         };
-        setTimeout(setFocus, 450);
+        setTimeout(setFocus, DELAY.LONG);
     }
 
     async submit() {
@@ -43,8 +37,7 @@ export class AbstractGridFormModel extends AbstractTabularViewModel {
         this.notify();
     }
 
-    updateEntity = async (entity) => {
-        await entity.updateBonuses();
+    async updateEntity (entity) {
         entity.markedForSave = true;
     }
 
@@ -61,7 +54,7 @@ export class AbstractGridFormModel extends AbstractTabularViewModel {
     notify() {}
 
     reset() {
-      // By the power of subscriptions, flip calls refresh;
+        // By the power of subscriptions, flip calls refresh;
         this.flip();
     }
 

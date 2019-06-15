@@ -5,7 +5,6 @@ import ko from 'knockout';
 import template from './index.html';
 
 class ACScoreModel {
-
     order = [
         'Strength',
         'Dexterity',

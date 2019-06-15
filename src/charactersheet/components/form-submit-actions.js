@@ -67,7 +67,7 @@ ko.components.register('form-submit-actions', {
           <button class="btn btn-sm btn-default"\
                   type="reset"\
                   data-bind="click: $component.clickReset">Cancel</button>\
-          <!-- ko ifnot: $component.addForm -->\
+          <!-- ko ifnot: $component.displayAddForm -->\
           <button class="btn btn-sm btn-primary" type="submit">Save</button>\
           <!-- /ko -->\
           <!-- ko if: $component.addForm -->\

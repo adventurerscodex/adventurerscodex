@@ -2,7 +2,6 @@ import {
   AbstractGridViewModel
  } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
-import { Skill } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -11,10 +10,9 @@ import template from './view.html';
 export class SkillsViewModel extends AbstractGridViewModel {
     constructor(params) {
         super(params);
-        this.flip = params.flip;
-        this.show = params.show;
         autoBind(this);
     }
+    modelName = 'Skill';
 
     sorts () {
         return {
@@ -26,28 +24,24 @@ export class SkillsViewModel extends AbstractGridViewModel {
         };
     }
 
-    modelClass = () => {
-        return Skill;
-    }
-
-    refresh = async () => {
+    async refresh () {
         await super.refresh();
         await this.updateValues();
     }
 
-    setUpSubscriptions = () => {
+    setUpSubscriptions () {
         super.setUpSubscriptions();
         Notifications.abilityScores.changed.add(this.refresh);
         Notifications.proficiencyBonus.changed.add(this.updateValues);
     }
 
     // loops through all the skills to calculate bonuses
-    updateValues = async () => {
+    async updateValues () {
         const skillUpdates = this.entities().map((skill) => {
             skill.updateBonuses();
         });
         await Promise.all(skillUpdates);
-    };
+    }
 }
 
 ko.components.register('skills-view', {

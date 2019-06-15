@@ -1,10 +1,4 @@
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
-
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
-import { SpellStats } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -15,16 +9,7 @@ class SpellStatsViewModel extends AbstractViewModel {
         super(params);
         autoBind(this);
     }
-
-    generateBlank () {
-        return new SpellStats();
-    }
-
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const stats = await SpellStats.ps.read({uuid: key});
-        this.entity().importValues(stats.object.exportValues());
-    };
+    modelName = 'SpellStats';
 }
 
 ko.components.register('spell-stats-view', {
