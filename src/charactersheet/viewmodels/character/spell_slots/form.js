@@ -15,7 +15,6 @@ import meditationWhite from 'images/meditation.svg';
 import template from './form.html';
 
 export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
-
     constructor(params) {
         super(params);
         this.nextSlotLevel = params.nextSlotLevel;
@@ -34,13 +33,23 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
     }
     async refresh() {
         await super.refresh();
-        // Reset the textarea size when refreshing
-        console.log('fix next slot level');
         if (this.addForm() && this.nextSlotLevel()) {
             this.entity().level(this.nextSlotLevel());
         }
     }
 
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        if (this.nextSlotLevel) {
+            this.nextSlotLevel.subscribe(this.updateNextSlot);
+        }
+    }
+
+    updateNextSlot () {
+        if (this.addForm()) {
+            this.entity().level(ko.utils.unwrapObservable(this.nextSlotLevel));
+        }
+    }
     notify = () => {
         Notifications.spellSlots.changed.dispatch();
     }
