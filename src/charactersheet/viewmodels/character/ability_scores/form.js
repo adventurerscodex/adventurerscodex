@@ -5,8 +5,8 @@ import {
 } from 'charactersheet/models/character';
 
 import {
-    ACTableFormModel
-} from 'charactersheet/components/table-form-component';
+    AbstractGridFormModel
+} from 'charactersheet/viewmodels/abstract';
 
 import {
     Notifications
@@ -18,7 +18,7 @@ import { find } from 'lodash';
 import ko from 'knockout';
 import template from './form.html';
 
-export class ScoreSaveFormViewModel extends ACTableFormModel {
+export class ScoreSaveFormViewModel extends AbstractGridFormModel {
     constructor(params) {
         super(params);
         this.order = params.order;
@@ -56,10 +56,6 @@ export class ScoreSaveFormViewModel extends ACTableFormModel {
     };
 
     findSaveByName = (name) => find(this.entities(), (savingthrow) => savingthrow.name() === name);
-
-    updateEntity = async (entity) => {
-        entity.markedForSave = true;
-    }
 
     async save () {
         const updates = this.entities().map(async (entity) => {

@@ -1,10 +1,10 @@
 import {
-  DataRepository,
+  AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
+import {
   Fixtures
 } from 'charactersheet/utilities';
-
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormController } from 'charactersheet/components/form-controller-component';
+import { SELECTDATA } from 'charactersheet/constants';
 import { Spell } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
@@ -12,86 +12,64 @@ import ko from 'knockout';
 import template from './form.html';
 
 
-export class SpellFormViewModel  extends FormController {
+export class SpellFormViewModel  extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);
     }
 
-    generateBlank() {
-        return new Spell();
+    modelClass() {
+        return Spell;
     }
+
+    prePopSource = 'spells';
+    prePopLimit = SELECTDATA.LONG;
 
     preparedRowVisibleEdit = () => {
         return parseInt(this.entity().level()) !== 0;
     };
 
-    spellsPrePopFilter = (request, response) => {
-        var term = request.term.toLowerCase();
-        let results = [];
-        if (term && term.length > 2) {
-            const keys = DataRepository.spells
-                    ? Object.keys(DataRepository.spells)
-                    : [];
-            results = keys.filter(function(name, idx, _) {
-                return name.toLowerCase().indexOf(term) > -1;
-            });
-        }
-        response(results);
-    };
-
-    populateSpell = (label, value) => {
-        var spell = DataRepository.spells[label];
-        this.entity().importValues(spell);
-        this.showDisclaimer(true);
-    };
-
+    schoolOptions = Fixtures.spell.schoolOptions;
     setSpellSchool = (label, value) => {
         this.entity().school(value);
     }
 
+    typeOptions = Fixtures.spell.typeOptions;
     setSpellType = (label, value) => {
         this.entity().type(value);
     }
 
+    damageTypeOptions = Fixtures.spell.damageTypeOptions;
     setDamageType = (label, value) => {
         this.entity().damageType(value);
     }
 
+    spellSaveAttrOptions = Fixtures.spell.spellSaveAttrOptions;
     setSpellSaveAttribute = (label, value) => {
         this.entity().spellSaveAttribute(value);
     }
 
+    castingTimeOptions = Fixtures.spell.castingTimeOptions;
     setSpellCastingTime = (label, value) => {
         this.entity().castingTime(value);
     }
 
+    rangeOptions = Fixtures.spell.rangeOptions;
     setSpellRange = (label, value) => {
         this.entity().range(value);
     }
 
+    componentsOptions = Fixtures.spell.componentsOptions;
     setSpellComponents = (label, value) => {
         this.entity().components(value);
     }
 
+    durationOptions = Fixtures.spell.durationOptions;
     setSpellDuration = (label, value) => {
         this.entity().duration(value);
     }
 
     alwaysPreparedPopoverText = () => ('Always prepared spells will not count against total prepared spells.');
-
-    typeOptions = Fixtures.spell.typeOptions;
-    damageTypeOptions = Fixtures.spell.damageTypeOptions;
-    spellSaveAttrOptions = Fixtures.spell.spellSaveAttrOptions;
-    schoolOptions = Fixtures.spell.schoolOptions;
-    castingTimeOptions = Fixtures.spell.castingTimeOptions;
-    durationOptions = Fixtures.spell.durationOptions;
-    componentsOptions = Fixtures.spell.componentsOptions;
-    rangeOptions = Fixtures.spell.rangeOptions;
-
-    validation = {
-        ...Spell.validationConstraints.rules
-    };
 }
 
 ko.components.register('spell-form', {

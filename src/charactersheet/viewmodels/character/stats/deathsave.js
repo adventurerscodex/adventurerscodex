@@ -1,5 +1,5 @@
 import { DeathSave, Health } from 'charactersheet/models/character';
-import { ACViewModel } from 'charactersheet/components/view-component';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -8,7 +8,7 @@ import { find } from 'lodash';
 import ko from 'knockout';
 import template from './deathsave.html';
 
-class StatsDeathSaveViewModel extends ACViewModel {
+class StatsDeathSaveViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         this.stable = params.stable;
@@ -22,8 +22,8 @@ class StatsDeathSaveViewModel extends ACViewModel {
         autoBind(this);
     }
 
-    generateBlank () {
-        return new DeathSave();
+    modelClass () {
+        return DeathSave;
     }
 
     load = async () => {

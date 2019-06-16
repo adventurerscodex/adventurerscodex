@@ -15,7 +15,7 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 
-import { ACViewModel } from 'charactersheet/components/view-component';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 
 import autoBind from 'auto-bind';
 import { getModifier } from 'charactersheet/models/character/ability_score';
@@ -24,10 +24,10 @@ import { getModifier } from 'charactersheet/models/character/ability_score';
 import ko from 'knockout';
 import template from './view.html';
 
-export class OtherStatsViewModel extends ACViewModel {
+export class OtherStatsViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
-        // Calculated Field
+        // Calculated Fields
         this.armorClass = ko.observable();
         this.proficiencyLabel = ko.observable();
         this.initiativeLabel = ko.observable();
@@ -37,24 +37,13 @@ export class OtherStatsViewModel extends ACViewModel {
         this.armorClassPopover = ko.observable();
         autoBind(this);
     }
-
-    generateBlank () {
-        return new OtherStats();
-    }
+    modelName = 'OtherStats';
 
     async load() {
         await super.load();
         this.calculateInitiativeLabel();
         this.updateArmorClass();
         this.calculatedProficiencyLabel();
-
-    }
-
-    async refresh () {
-        await super.refresh();
-        const key = CoreManager.activeCore().uuid();
-        const response = await OtherStats.ps.read({uuid: key});
-        this.entity().importValues(response.object.exportValues());
     }
 
     setUpSubscriptions = () => {

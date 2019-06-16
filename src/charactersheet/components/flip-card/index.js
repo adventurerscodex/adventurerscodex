@@ -4,6 +4,57 @@ import { debounce } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
+
+/**
+ * flip-card component
+ *
+ * A component that provides a 'flip' card. The card has a front and back, and
+ * displays the front by default. Calling the 'flip' action will cause the card.
+ * to display the opposite side than the one currently showing.
+ *
+ * @param dataId {string} Unique id for the card's data.
+ *
+ * @param elementId {string} element dom id containing this card
+ *
+ * @param tabId {string} the tab for this card. Used to resize on tab change
+ *
+ * @param context {object} A passthrough for handing data to child nodes
+ *
+ * @param collapsable {optional observable} If trueish, the card will trigger
+ * animations on collapse
+ *
+ * @param showBack {optional observable} control "show the back of the card"
+ * with an external observable
+ *
+ * @param onFlip {optional function} a callback when the card flips
+ *
+ * @param onResize {optional function} a callback when the card resizes
+ *
+ * @param defaultHeight {optional int} the default height, in pixels, that the
+ * card will be before complete rendering. Useful to manage screen real estate
+ * before load
+ *
+
+ /* Usage example
+ <flip-card params={
+   dataId: $data.__id,
+   elementid: 'unique dom id',
+   collapsable: collapsable,
+   context: {
+     data: $data,
+     parent: $parent,
+ }
+ }>
+   <div class="front">
+     Front of Card
+   </div>
+   <div class="back">
+     Back of Card
+   </div>
+ </flip-card>
+
+ */
+
 ko.bindingHandlers.collapseCard = {
     init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
 
@@ -30,25 +81,6 @@ ko.bindingHandlers.collapseCard = {
     }
 };
 
-/* Usage example
-<flip-card params={
-  dataId: $data.__id,
-  elementid: 'unique dom id',
-  collapsable: collapsable,
-  context: {
-    data: $data,
-    parent: $parent,
-}
-}>
-  <div class="front">
-    Front of Card
-  </div>
-  <div class="back">
-    Back of Card
-  </div>
-</flip-card>
-
-*/
 export class FlipCardComponentViewModel {
     constructor(params) {
         // Unique id for the card's data
@@ -87,7 +119,7 @@ export class FlipCardComponentViewModel {
         this.elementMeasure = ko.observable(0).extend({ deferred: true });
         if (params.defaultHeight) {
             const paramHeight = parseInt(ko.utils.unwrapObservable(params.defaultHeight));
-            if (!Number.isNaN(paramHeight)) {
+            if (Number.isInteger(paramHeight)) {
                 this.elementMeasure(paramHeight);
             }
         }
@@ -155,9 +187,7 @@ export class FlipCardComponentViewModel {
 
     }
     koDescendantsComplete = (node) => {
-        // set the height when the decendents have loaded properly.
-        // Give it a bit so that the measure doesn't happen too quickly
-        this.setNewHeight();//, 50);
+        this.setNewHeight();
     }
 }
 

@@ -3,68 +3,46 @@ import {
   Fixtures,
   Notifications
 } from 'charactersheet/utilities';
-
+import {
+  AbstractChildFormModel
+} from 'charactersheet/viewmodels/abstract';
 import { Armor } from 'charactersheet/models';
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormController } from 'charactersheet/components/form-controller-component';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
 
-export class ArmorFormViewModel  extends FormController {
+export class ArmorFormViewModel  extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);
     }
-    generateBlank() {
-        return new Armor();
+
+    modelClass() {
+        return Armor;
     }
 
-    typeOptions = Fixtures.armor.armorTypeOptions;
-    stealthOptions = Fixtures.armor.armorStealthOptions;
-    currencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    prePopSource = 'armors';
 
-    // Pre-populate methods
+    typeOptions = Fixtures.armor.armorTypeOptions;
     setArmorType = (label, value) => {
         this.entity().type(value);
     };
 
-    setArmorCurrencyDenomination = (label, value) => {
-        this.entity().currencyDenomination(value);
-    };
-
+    stealthOptions = Fixtures.armor.armorStealthOptions;
     setArmorStealth = (label, value) => {
         this.entity().stealth(value);
     };
 
-    /* Modal Methods */
-    armorsPrePopFilter = (request, response) => {
-        const term = request.term.toLowerCase();
-        let results = [];
-        if (term) {
-            const keys = DataRepository.armors ? Object.keys(DataRepository.armors) : [];
-            results = keys.filter((name, idx, _) => {
-                return name.toLowerCase().indexOf(term) > -1;
-            });
-        }
-        response(results);
-    };
-
-    populateArmor = (label, value) => {
-        const armor = DataRepository.armors[label];
-        this.entity().importValues(armor);
-        this.showDisclaimer(true);
+    currencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    setArmorCurrencyDenomination = (label, value) => {
+        this.entity().currencyDenomination(value);
     };
 
     notify = () => {
         Notifications.armor.changed.dispatch();
     }
-
-    validation = {
-        ...Armor.validationConstraints.rules
-    };
 }
 
 ko.components.register('armor-form', {

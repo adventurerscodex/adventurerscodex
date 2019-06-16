@@ -2,16 +2,30 @@ import campingTentWhite from 'images/camping-tent.svg';
 import ko from 'knockout';
 import meditationWhite from 'images/meditation.svg';
 
-export class ACTrackedForm {
+/**
+ * tracked form
+ *
+ * A component that provides a form for tracked items.
+ *
+ * @param tracked {observable} The tracked data model to be modified.
+ *
+ * Usage:
+ * <form-tracked-component params="{
+ * tracked: modelObjectInstance.tracked
+ * }"></form-tracked-component>
+
+ */
+
+export class TrackedForm {
     constructor(params) {
         this.tracked = params.tracked;
-        this.meditationWhite = meditationWhite;
-        this.campingTentWhite = campingTentWhite;
     }
+    meditationWhite = meditationWhite;
+    campingTentWhite = campingTentWhite;
 }
 
-ko.components.register('ac-tracked-form', {
-    viewModel: ACTrackedForm,
+ko.components.register('form-tracked-component', {
+    viewModel: TrackedForm,
     template: '\
     <fieldset class="fieldset-bordered">\
       <legend>Tracked</legend>\
@@ -23,7 +37,7 @@ ko.components.register('ac-tracked-form', {
                  class="form-control"\
                  min="1"\
                  required="true"\
-                 data-bind="textInput: max">\
+                 data-bind="value: max">\
         </div>\
         <div class="form-group">\
           <label class="control-label">Resets on...</label>\

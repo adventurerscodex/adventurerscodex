@@ -1,11 +1,14 @@
 <form data-bind="submit: $component.submit">
-  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <div data-bind="with: entity">
     <!-- ko if: $component.existingData -->
-    <div class="h4" style="padding-top: 5px;" data-bind="text: name"></div>
+    <div class="h4"
+         style="padding-top: 5px;"
+         data-bind="text: name"></div>
     <!-- /ko -->
     <!-- ko ifnot: $component.existingData -->
-    <div class="h4" style="padding-top: 5px;">
+    <div class="h4"
+         style="padding-top: 5px;">
       New Feature
     </div>
     <!-- /ko -->
@@ -13,45 +16,50 @@
       <label for="name"
              class="control-label">Name</label>
       <!-- ko if: $component.existingData -->
-      <input type="text"
-             class="form-control featureEditNameInput"
+      <input class="form-control featureEditNameInput"
              placeholder="Rage"
-             required="true"
-             data-bind='value: name,
-             hasFocus: $component.formElementHasFocus'>
-       <!-- /ko -->
-       <!-- ko ifnot: $component.existingData -->
-       <input type="text"
-              class="form-control featureEditNameInput"
-              placeholder="Rage"
-              required="true"
-              data-bind='value: name,
+             name="name"
+             data-bind="value: name,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
+             hasFocus: $component.formElementHasFocus">
+      <!-- /ko -->
+      <!-- ko ifnot: $component.existingData -->
+      <input class="form-control featureEditNameInput"
+             placeholder="Rage"
+             name="name"
+             data-bind="value: name,
               hasFocus: $component.formElementHasFocus,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: {autocomplete: 'off', ...$component.validation.name },
               autocomplete: {
-                source: $component.featuresPrePopFilter,
-                onselect: $component.populateFeature,
-              delay: 350 }'>
-        <!-- /ko -->
+                source: $component.prePopFilter,
+                onselect: $component.prepoulate,
+              delay: 350 }">
+      <!-- /ko -->
     </div>
     <div class="form-group">
       <label for="class"
              class="control-label">Class</label>
-      <input type="text"
-             class="form-control featureEditClassInput"
+      <input class="form-control featureEditClassInput"
              placeholder="Barbarian"
-             required="true"
-             data-bind="textInput: characterClass,
+             name="characterClass"
+             data-bind="value: characterClass,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.characterClass },
              autocomplete: { source: $component.classOptions,
              onselect: $parent.populateClass }">
     </div>
     <div class="form-group">
       <label for="level"
              class="control-label">Level</label>
-      <input type="number"
-             class="form-control featureEditLevelInput"
+      <input class="form-control featureEditLevelInput"
              placeholder="1"
-             required="true"
-             data-bind='textInput: level'>
+             name="level"
+             data-bind="value: level,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.level },
+             ">
     </div>
 
     <div class="form-group">
@@ -61,32 +69,36 @@
       <textarea type="text"
                 rows="6"
                 class="form-control"
-                data-bind='value: description, markdownEditor: true'></textarea>
+                data-bind="value: description,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: {...$component.validation.name },
+                markdownEditor: true"></textarea>
       <small class="text-muted">
         Text in this panel can be styled using Markdown. Click
         <a target="_blank"
-          href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
+           href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
       </small>
       <!-- /ko -->
     </div>
     <div class="form-group">
       <input type='checkbox'
              class='ac-checkbox sr-only'
-             data-bind="checked: $component.isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
-      <label data-bind="attr: {for: `${$component.containerId}_tracked`}">
+             data-bind="checked: $component.isTracked,
+             attr: { id: `${$component.containerId}_tracked` }"></input>
+      <label data-bind="attr: { for: `${$component.containerId}_tracked` }">
         Tracked?
-    </label>&nbsp;<span class="fa fa-info-circle"
+      </label>&nbsp;<span class="fa fa-info-circle"
             style="cursor:pointer;"
             data-bind="popover: { content: $component.popoverText }"></span>
     </div>
     <!-- ko if: $component.isTracked() -->
-    <ac-tracked-form params="{tracked: $component.tracked}"></ac-tracked-form>
+    <form-tracked-component params="{ tracked: $component.tracked }"></form-tracked-component>
     <!-- /ko -->
   </div>
-    <form-card-footer params="{
+  <form-submit-actions params="{
       reset: $component.reset,
       delete: $component.delete,
       addForm: $component.addForm,
       showDisclaimer: $component.showDisclaimer
-    }"></form-card-footer>
+    }"></form-submit-actions>
 </form>

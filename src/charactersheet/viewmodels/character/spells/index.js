@@ -1,12 +1,8 @@
-import {
-    CoreManager,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import { Spell, SpellSlot, SpellStats } from 'charactersheet/models';
+import { SpellSlot, SpellStats } from 'charactersheet/models';
 import { filter, maxBy } from 'lodash';
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
 import { SortService } from 'charactersheet/services/common';
 import { SpellDetailViewModel } from './view';
 import { SpellFormViewModel } from './form';
@@ -15,29 +11,26 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
-
-class SpellbookViewModel extends ACTableComponent {
+class SpellbookViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
+        this.addFormId = '#add-spell';
+        this.collapseAllId = '#spells-pane';
+
         this.filteredByCastable = ko.observable(false);
         this.spellStats = ko.observable(new SpellStats());
         this.spellSlots = ko.observableArray([]);
-        this.addFormId = '#add-spell';
-        this.collapseAllId = '#spells-pane';
         autoBind(this);
     }
 
-    async load () {
-        super.load();
-        const key = CoreManager.activeCore().uuid();
-        const stats = await SpellStats.ps.read({uuid: key});
-        this.spellStats().importValues(stats.object.exportValues());
-        const spellSlots = await SpellSlot.ps.list({coreUuid: key});
-        this.spellSlots(spellSlots.objects);
-    }
+    modelName = 'Spell';
 
-    modelClass = () => {
-        return Spell;
+    async load () {
+        await super.load();
+        const stats = await SpellStats.ps.read({ uuid: this.coreKey });
+        this.spellStats().importValues(stats.object.exportValues());
+        const spellSlots = await SpellSlot.ps.list({ coreUuid: this.coreKey });
+        this.spellSlots(spellSlots.objects);
     }
 
     sorts() {
@@ -86,14 +79,12 @@ class SpellbookViewModel extends ACTableComponent {
     }
 
     updateSpellStats = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const stats = await SpellStats.ps.read({uuid: key});
+        const stats = await SpellStats.ps.read({ uuid: this.coreKey });
         this.spellStats().importValues(stats.object.exportValues());
     }
 
     updateSpellSlots = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const response = await SpellSlot.ps.list({coreUuid: key});
+        const response = await SpellSlot.ps.list({ coreUuid: this.coreKey });
         this.spellSlots(response.objects);
     }
 
@@ -115,7 +106,9 @@ class SpellbookViewModel extends ACTableComponent {
     spellTypeLabel = (spell) => {
         switch(spell.type()) {
         case 'Savings Throw': {
-            return ('Save vs <strong>' + spell.spellSaveAttribute() + '</strong> <span class="small">DC:' + this.spellStats().spellSaveDc() + '</span>');
+            return (
+              `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
+              `<span class="small">DC:${this.spellStats().spellSaveDc()}</span>`);
         }
         case 'Melee Spell Attack': {
             const spellAttackLabel = this.spellStats().spellAttackBonus();
@@ -123,7 +116,7 @@ class SpellbookViewModel extends ACTableComponent {
             if (parseInt(spellAttackLabel) < 0 ) {
                 sign = ' -';
             }
-            return ('Melee Spell: <strong>' + sign + spellAttackLabel + '</strong>');
+            return (`Melee Spell: <strong>${sign}${spellAttackLabel}</strong>`);
         }
         case 'Ranged Spell Attack': {
             const spellAttackLabel = this.spellStats().spellAttackBonus();
@@ -131,7 +124,7 @@ class SpellbookViewModel extends ACTableComponent {
             if (parseInt(spellAttackLabel) < 0 ) {
                 sign = ' -';
             }
-            return ('Ranged Spell: <strong>' + sign + spellAttackLabel + '</strong>');
+            return (`Ranged Spell: <strong>${sign}${spellAttackLabel}</strong>`);
         }
         default:
             return spell.type();
@@ -145,10 +138,6 @@ class SpellbookViewModel extends ACTableComponent {
             const response = await data.ps.save();
             this.replaceInList(response.object);
         }
-    };
-
-    trunc = function(string, len=20) {
-        return Utility.string.truncateStringAtLength(string(), len);
     };
 
     numberOfPrepared = ko.pureComputed(() => {

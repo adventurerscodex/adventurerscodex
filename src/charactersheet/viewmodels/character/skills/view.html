@@ -1,4 +1,4 @@
-<card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+<card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead class="ac-table-header">
     <tr>
@@ -26,7 +26,7 @@
       <td>
         <prof-marker params="proficiency: proficiency"></prof-marker>
       </td>
-      <td><span data-bind="text: $component.shortName(name)"></span></td>
+      <td><span data-bind="text: $component.shortText(name)"></span></td>
       <td class="ac-table-data-cell"><strong><span data-bind="html: bonusLabel"></span></strong></td>
       <td class="ac-table-data-cell"><span style="color: #666" data-bind="text: passiveBonus"></span></td>
     </tr>

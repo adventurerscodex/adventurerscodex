@@ -2,29 +2,6 @@ import 'select2/dist/css/select2.min.css';
 import $ from 'jquery';
 import ko from 'knockout';
 import select2 from 'select2';
-//
-// ko.bindingHandlers.select2 = {
-//     after: ['options', 'value'],
-//     init: function (el, valueAccessor, allBindingsAccessor, viewModel) {
-//         $(el).select2(ko.unwrap(valueAccessor()));
-//         ko.utils.domNodeDisposal.addDisposeCallback(el, function () {
-//             $(el).select2('destroy');
-//         });
-//     },
-//     update: function (el, valueAccessor, allBindingsAccessor, viewModel) {
-//         var allBindings = allBindingsAccessor();
-//         var select2 = $(el).data('select2');
-//         if ('value' in allBindings) {
-//             var newValue = '' + ko.unwrap(allBindings.value);
-//             if ((allBindings.select2.multiple || el.multiple) && newValue.constructor !== Array) {
-//                 select2.val([newValue.split(',')]);
-//             }
-//             else {
-//                 select2.val([newValue]);
-//             }
-//         }
-//     }
-// };
 
 ko.bindingHandlers.select2 = {
     init: function(el, valueAccessor, allBindingsAccessor, viewModel) {

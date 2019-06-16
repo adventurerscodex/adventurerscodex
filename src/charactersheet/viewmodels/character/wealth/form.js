@@ -1,10 +1,5 @@
-import {
-  CoreManager,
-  Notifications
-} from 'charactersheet/utilities';
-
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
 import { Wealth } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
@@ -17,14 +12,14 @@ import spCoins from 'images/sp-coin.svg';
 import template from './form.html';
 
 
-export class WealthFormViewModel  extends FormBaseController {
+export class WealthFormViewModel  extends AbstractFormModel {
     constructor(params) {
         super(params);
         autoBind(this);
     }
 
-    generateBlank() {
-        return new Wealth();
+    modelClass() {
+        return Wealth;
     }
 
     cpCoins = cpCoins;
@@ -33,20 +28,9 @@ export class WealthFormViewModel  extends FormBaseController {
     ppCoins = ppCoins;
     spCoins = spCoins;
 
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const response = await Wealth.ps.read({uuid: key});
-        this.entity().importValues(response.object.exportValues());
-    }
-
     notify = () => {
         Notifications.wealth.changed.dispatch();
     }
-
-    validation = {
-        // Deep copy of properties in object
-        ...Wealth.validationConstraints.rules
-    };
 }
 
 ko.components.register('wealth-form', {

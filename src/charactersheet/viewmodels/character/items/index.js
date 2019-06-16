@@ -1,4 +1,8 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import {
+  AbstractTabularViewModel,
+  calculateTotalLoad,
+  calculateTotalValue
+ } from 'charactersheet/viewmodels/abstract';
 import { Item } from 'charactersheet/models/common';
 import { ItemDetailViewModel } from './view';
 import { ItemFormViewModel } from './form';
@@ -7,7 +11,7 @@ import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
-export class ItemsViewModel extends ACTableComponent {
+export class ItemsViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-item';
@@ -15,9 +19,7 @@ export class ItemsViewModel extends ACTableComponent {
         autoBind(this);
     }
 
-    modelClass = () => {
-        return Item;
-    }
+    modelName = 'Item';
 
     sorts() {
         return {
@@ -36,26 +38,11 @@ export class ItemsViewModel extends ACTableComponent {
     }
 
     totalCost = ko.pureComputed(() => {
-        if (this.entities().length === 0) {
-            return '0 (gp)';
-        }
-        const total = this.entities().map(entity => entity.totalCalculatedCost()
-        ).reduce(
-            (a, b) => a + b
-        );
-        return `~${Math.round(total)}(gp)`;
+        return calculateTotalValue(this.entities(), 'cost');
     });
 
     totalWeight = ko.pureComputed(() => {
-        if (this.entities().length === 0) {
-            return '0 (lbs)';
-        }
-        const total = this.entities().map(
-            entity => entity.totalWeight()
-        ).reduce(
-            (a, b) => a + b
-        );
-        return `~${Math.round(total)} (lbs)`;
+        return calculateTotalLoad(this.entities());
     });
 }
 

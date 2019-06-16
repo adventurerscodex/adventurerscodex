@@ -1,20 +1,16 @@
-import { ACViewModel } from 'charactersheet/components/view-component';
-import { CardFlipButton } from 'charactersheet/components/card-flip-button';
-import { MagicItem } from 'charactersheet/models';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './view.html';
 
 
-class MagicItemDetailViewModel extends ACViewModel {
+class MagicItemDetailViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         autoBind(this);
     }
-    generateBlank () {
-        return new MagicItem();
-    }
+    modelName = 'MagicItem';
 }
 
 ko.components.register('magic-item-detail-view', {

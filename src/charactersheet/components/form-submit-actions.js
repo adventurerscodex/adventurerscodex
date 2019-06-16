@@ -1,25 +1,54 @@
 import ko from 'knockout';
 
-export class FormCardFooter {
+/**
+ * form-submit-actions
+ *
+ * A component that provides the action buttons for a form.
+ * The Form Submit Action Compoent provides the default way to submit or reset
+ * a form. Submit button will activate the submit of a containing form. As many
+ * forms include information that requires a disclaimer, that disclaimer text
+ * is included here, with an observable for displaying it.
+ * The submit action component will only optionally display the delete button
+ * if the form manages a deletable item (e.g. the item is not new). It will
+ * not display this button if it does not have an action.
+ *
+ * @param showDisclaimer {observable} Whether or not to display the disclaimer.
+ * @param adForm {observable} Whether or not to display the disclaimer.
+ * @param delete {function} The method to delete the item under edit.
+ * @param reset {function} The method to reset the form to its previous state.
+
+ *
+ * Usage:
+ * <card-submit-actions params="{
+ *       addForm: createNew,
+ *       showDisclaimer: isSRD,
+ *       delete: deleteFunction,
+ *       reset: resetFunction }
+ * "></card-submit-actions>
+ */
+export class FormSubmitActionComponent {
     constructor(params) {
-        this.reset = params.reset;
-        this.delete = params.delete;
         this.addForm = params.addForm;
         this.showDisclaimer = params.showDisclaimer;
+        this.reset = params.reset;
+        this.delete = params.delete;
     }
+
     clickReset = () => {
         this.reset();
     }
+
     clickDelete = () => {
         this.delete();
     }
+
     showDelete = () => {
-        return !this.addForm() && !!this.delete;
+        return !ko.utils.unwrapObservable(this.addForm) && !!this.delete; //delete exists
     }
 }
 
-ko.components.register('form-card-footer', {
-    viewModel: FormCardFooter,
+ko.components.register('form-submit-actions', {
+    viewModel: FormSubmitActionComponent,
     template: '\
       <p class="text-muted text-left" style="padding: 10px;" data-bind="visible: $component.showDisclaimer">\
         <sm><i>This data is distributed under the\

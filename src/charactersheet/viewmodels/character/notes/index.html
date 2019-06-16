@@ -48,7 +48,7 @@
               }">
             <div class="front"
                  data-bind="with: context.data">
-              <card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+              <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
               <div class="h4">
                 <span data-bind="text: title"></span>
               </div>
@@ -89,7 +89,7 @@
                  addToParent: $component.addToList,
                 }"></notes-form>
           </div>
-          <!-- ko ifnot: $component.addForm -->
+          <!-- ko ifnot: $component.displayAddForm -->
           <center>
             <button type="button"
                     class="btn btn-link btn-sm btn-block"

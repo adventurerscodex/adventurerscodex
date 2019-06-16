@@ -1,29 +1,61 @@
 import 'bin/knockout-bar-progress';
-
 import {
     Fixtures,
-    Notifications,
-    Utility } from 'charactersheet/utilities';
-
-import { flatMap, maxBy } from 'lodash';
-
-import { ACTableComponent } from 'charactersheet/components/table-component';
-import { SpellSlot } from 'charactersheet/models/character';
-
-import { SpellSlotFormComponentViewModel } from './form';
-
+    Notifications
+} from 'charactersheet/utilities';
+import {
+    flatMap,
+    maxBy
+} from 'lodash';
+import {
+    AbstractTabularViewModel
+} from 'charactersheet/viewmodels/abstract';
+import {
+    SpellSlotFormComponentViewModel
+} from './form';
 import autoBind from 'auto-bind';
-import campingTent from 'images/camping-tent-blue.svg';
 import ko from 'knockout';
-import meditation from 'images/meditation-blue.svg';
 import template from './index.html';
 
-class SpellSlotsViewModel extends ACTableComponent {
+class SpellSlotsViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-spell-slot';
         this.collapseAllId = '#spell-slot-pane';
         autoBind(this);
+    }
+    modelName = 'SpellSlot';
+
+    getDefaultSort() {
+        return this.sorts()['level asc'];
+    }
+
+    sorts() {
+        return {
+            'level asc': {
+                field: 'level',
+                direction: 'asc',
+                numeric: true
+            },
+            'level desc': {
+                field: 'level',
+                direction: 'desc',
+                numeric: true
+            },
+            'resetsOn asc': {
+                field: 'resetsOn',
+                direction: 'asc'
+            },
+            'resetsOn desc': {
+                field: 'resetsOn',
+                direction: 'desc'
+            }
+        };
+    }
+    async onUsedChange(spellslot) {
+        const response = await spellslot.ps.save();
+        this.replaceInList(response.object);
+        this.notify();
     }
 
     nextSlotLevel = ko.pureComputed(() => {
@@ -31,28 +63,11 @@ class SpellSlotsViewModel extends ACTableComponent {
             return 1;
         }
         const currentMax = maxBy(this.entities(), (slot) => (slot.level()));
-        return parseInt(currentMax.level())+1;
+        return parseInt(currentMax.level()) + 1;
     });
 
-    modelClass = () => {
-        return SpellSlot;
-    }
-
-    sorts() {
-        return {
-            'level asc': { field: 'level', direction: 'asc', numeric: true},
-            'level desc': { field: 'level', direction: 'desc', numeric: true},
-            'resetsOn asc': { field: 'resetsOn', direction: 'asc'},
-            'resetsOn desc': { field: 'resetsOn', direction: 'desc'}
-        };
-    }
-
-    getDefaultSort () {
-        return this.sorts()['level asc'];
-    }
-
     resetsOnImg = (trackable) => {
-        if(trackable.resetsOn() === 'long') {
+        if (trackable.resetsOn() === 'long') {
             return 'rest-icon long-rest-icon';
         } else if (trackable.resetsOn() === 'short') {
             return 'rest-icon short-rest-icon';
@@ -60,14 +75,6 @@ class SpellSlotsViewModel extends ACTableComponent {
             throw 'Unexpected feature resets on string.';
         }
     };
-
-    setUpSubscriptions () {
-        super.setUpSubscriptions();
-        const shortRest = Notifications.events.shortRest.add(this.resetShortRestFeatures);
-        this.subscriptions.push(shortRest);
-        const longRest = Notifications.events.longRest.add(this.resetLongRestFeatures);
-        this.subscriptions.push(longRest);
-    }
 
     mapToColor = (level) => {
         switch (level.toString()) {
@@ -95,28 +102,36 @@ class SpellSlotsViewModel extends ACTableComponent {
         }
     };
 
-    mapToChart = (slot) => ({
-        data: {
-            value: parseInt(slot.max()) - parseInt(slot.used()),
-            maxValue: slot.max()
-        },
-        config: {
-            strokeWidth: 2,
-            trailWidth: 1,
-            from: {
-                color: this.mapToColor(slot.level())
+    mapToChart(slot) {
+        return {
+            data: {
+                value: parseInt(slot.max()) - parseInt(slot.used()),
+                maxValue: slot.max()
             },
-            to: {
-                color: this.mapToColor(slot.level())
+            config: {
+                strokeWidth: 2,
+                trailWidth: 1,
+                from: {
+                    color: this.mapToColor(slot.level())
+                },
+                to: {
+                    color: this.mapToColor(slot.level())
+                }
             }
-        }
-    });
+        };
+    }
 
     hideRow = (rowId) => {
         $(`${rowId}`).collapse('hide');
     };
 
-    resetShortRestFeatures = async () => {
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        const shortRest = Notifications.events.shortRest.add(this.resetShortRestFeatures);
+        const longRest = Notifications.events.longRest.add(this.resetLongRestFeatures);
+    }
+
+    async resetShortRestFeatures() {
         const updates = this.entities().map(async (entity) => {
             if (entity.resetsOn() === Fixtures.resting.shortRestEnum) {
                 entity.used(0);
@@ -126,9 +141,9 @@ class SpellSlotsViewModel extends ACTableComponent {
         });
         await Promise.all(updates);
         this.notify();
-    };
+    }
 
-    resetLongRestFeatures = async () => {
+    async resetLongRestFeatures() {
         const updates = this.entities().map(async (entity) => {
             entity.used(0);
             await entity.ps.save();
@@ -137,17 +152,10 @@ class SpellSlotsViewModel extends ACTableComponent {
         });
         await Promise.all(updates);
         this.notify();
-    };
-
-    notify = () => {
-        Notifications.spellSlots.changed.dispatch();
     }
 
-    onUsedChange = async (spellslot) => {
-        const response = await spellslot.ps.save();
-        // TODO: debounce
-        this.replaceInList(response.object);
-        this.notify();
+    notify() {
+        Notifications.spellSlots.changed.dispatch();
     }
 }
 

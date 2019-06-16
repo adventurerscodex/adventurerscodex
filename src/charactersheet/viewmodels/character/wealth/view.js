@@ -1,8 +1,6 @@
-import { ACViewModel } from 'charactersheet/components/view-component';
-import { CardFlipButton } from 'charactersheet/components/card-flip-button';
-import { CoreManager } from 'charactersheet/utilities';
-import { Wealth } from 'charactersheet/models/common';
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 
+import autoBind from 'auto-bind';
 import cpCoins from 'images/cp-coin.svg';
 import epCoins from 'images/ep-coin.svg';
 import gpCoins from 'images/gp-coin.svg';
@@ -11,22 +9,18 @@ import ppCoins from 'images/pp-coin.svg';
 import spCoins from 'images/sp-coin.svg';
 import template from './view.html';
 
-class WealthViewModel extends ACViewModel {
-
-    generateBlank () {
-        return new Wealth();
+class WealthViewModel extends AbstractViewModel {
+    constructor(params) {
+        super(params);
+        autoBind(this);
     }
+    modelName = 'Wealth';
+
     cpCoins = cpCoins;
     epCoins = epCoins;
     gpCoins = gpCoins;
     ppCoins = ppCoins;
     spCoins = spCoins;
-
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const wealth = await Wealth.ps.read({uuid: key});
-        this.entity().importValues(wealth.object.exportValues());
-    }
 }
 
 ko.components.register('wealth-view', {

@@ -3,8 +3,8 @@ import {
     HitDice
 } from 'charactersheet/models/character';
 
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
 import { Notifications } from 'charactersheet/utilities';
 
 import { StatsCardViewModel } from './view';
@@ -16,46 +16,36 @@ import ko from 'knockout';
 import template from './form.html';
 
 
-export class StatsHealthFormViewModel extends FormBaseController {
-
+export class StatsHealthFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         this.defaultHeight = params.defaultHeight;
-        this.loaded = ko.observable(false);
         this.hitDice = ko.observable(new HitDice());
-        this.health = ko.observable(new Health());
         this.hitDiceList = ko.observableArray([]);
         autoBind(this);
     }
 
-    generateBlank () {
-        return new Health();
+    modelClass () {
+        return Health;
     }
 
-    async load() {
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
+    generateBlank() {
+        const thisClazz = this.modelClass();
+        const newEntity = new thisClazz();
+        return newEntity;
     }
 
-    setUpSubscriptions () {
-        super.setUpSubscriptions();
-    }
-
-    refresh = async () => {
-        var key = CoreManager.activeCore().uuid();
-
-        const hitDice = await HitDice.ps.read({uuid: key});
+    async refresh () {
+        await super.refresh();
+        const coreKey = CoreManager.activeCore().uuid();
+        const hitDice = await HitDice.ps.read({uuid: coreKey});
         this.hitDice().importValues(hitDice.object.exportValues());
+    }
 
-        const health = await Health.ps.read({uuid: key});
-        this.health().importValues(health.object.exportValues());
-    };
-
-    save = async () => {
-        await this.health().ps.save();
+    async save () {
+        await super.save();
         await this.hitDice().ps.save();
-    };
+    }
 
     notify = () => {
         Notifications.hitDiceType.changed.dispatch();

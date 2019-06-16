@@ -1,38 +1,34 @@
-
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import {
+  AbstractGridViewModel
+} from './grid-view-model';
+import { DELAY } from 'charactersheet/constants';
 import ko from 'knockout';
 
-export class ACTableFormModel extends ACTableComponent {
+/**
+ * AbstractGridFormModel, extends AbstractGridViewModel
+ *
+ * Provides a grid form for data, with form-like behaviors.
+ *
+ **/
+
+export class AbstractGridFormModel extends AbstractGridViewModel {
 
     constructor(params) {
         super(params);
-      // Data to be managed by this form
-        const noOp = (entity) => { /* no op */ };
-        this.show = params.show ? params.show : ko.observable(true);
-        this.flip = params.flip ? params.flip : noOp;
-        this.forceCardResize = params.forceCardResize ? params.forceCardResize : noOp;
-
         this.formElementHasFocus = ko.observable(false);
     }
 
     setUpSubscriptions() {
-        const onShow = this.show.subscribe(this.refreshOnShow);
-        this.subscriptions.push(onShow);
+        super.setUpSubscriptions();
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
     }
 
-    refreshOnShow = async () => {
-        if (this.show()) {
-            await this.refresh();
-        }
-    }
-
-    focusOnFlip = () => {
+    async focusOnFlip () {
         const setFocus = () => {
             this.formElementHasFocus(this.show());
         };
-        setTimeout(setFocus, 450);
+        await setTimeout(setFocus, DELAY.LONG);
     }
 
     async submit() {
@@ -41,8 +37,7 @@ export class ACTableFormModel extends ACTableComponent {
         this.notify();
     }
 
-    updateEntity = async (entity) => {
-        await entity.updateBonuses();
+    async updateEntity (entity) {
         entity.markedForSave = true;
     }
 
@@ -59,7 +54,7 @@ export class ACTableFormModel extends ACTableComponent {
     notify() {}
 
     reset() {
-      // By the power of subscriptions, flip calls refresh;
+        // By the power of subscriptions, flip calls refresh;
         this.flip();
     }
 

@@ -1,8 +1,8 @@
 <form class="form-horizontal health-form"
       data-bind="{submit: $component.submit}">
-  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <!-- ko if: loaded(), completeOn: 'render' -->
-  <div data-bind="with: health">
+  <div data-bind="with: entity">
     <div class="form-group">
       <label for="name"
              class="col-sm-4 col-md-6 control-label">Max HP</label>

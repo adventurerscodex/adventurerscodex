@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 (function (root, factory) {
     if (typeof exports === 'object') {

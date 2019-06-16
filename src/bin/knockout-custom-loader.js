@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 
 /**
@@ -17,7 +17,7 @@ const LifecycleComponentLoader = {
 function resolveViewModel(errorCallback, viewModelConfig, callback) {
     if (typeof viewModelConfig === 'function') {
         callback(function (params /*, componentInfo */) {
-            var viewModel = new viewModelConfig(params)
+            var viewModel = new viewModelConfig(params);
             if ('load' in viewModel) {
                 viewModel.load();
             }

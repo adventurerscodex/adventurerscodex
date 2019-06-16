@@ -1,40 +1,32 @@
-import {
-  DataRepository,
-  Fixtures,
-  Notifications
-} from 'charactersheet/utilities';
-
-import { FormController } from 'charactersheet/components/form-controller-component';
+import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { Note } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class NotesFormViewModel  extends FormController {
+export class NotesFormViewModel  extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);
     }
-    generateBlank() {
-        return new Note();
+
+    modelClass () {
+        return Note;
     }
 
-    save = async () => {
+    async save() {
         if (!this.entity().title() || this.entity().title().trim() === '') {
             this.entity().updateTitleFromHeadline();
         }
         await super.save();
     }
-    notify() {
-        // Notifications.notes.changed.add(self.reloadData);
-    }
 
     validation = {
-        title: {},
-        contents: {}
-        // Deep copy of properties in object
-        //...Note.validationConstraints.rules
+        title: {
+        },
+        contents: {
+        }
     };
 }
 

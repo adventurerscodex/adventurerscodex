@@ -1,47 +1,65 @@
-import 'bin/knockout-bootstrap-modal';
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
-
+import { CoreManager, Notifications } from 'charactersheet/utilities';
+import { Clazz } from 'charactersheet/models';
 import { SortService } from 'charactersheet/services/common';
-
 import { Utility } from 'charactersheet/utilities';
 import ko from 'knockout';
 
-export class ACTableComponent {
+/**
+ * AbstractTabularViewModel
+ *
+ * Provides a tablular view of data.
+ *
+ * @property modelName {string} the name of the model being listed.
+ *
+ * @property addFormId {string} the dom id for the form to add new entries.
+ * This allows the add form to be shown/hidden.
+ *
+ * @property collapseAllId {string} the dom id for button/link that collapses
+ * All expanded entries.
+ **/
+
+export class AbstractTabularViewModel {
     constructor(params) {
         this.tabId = params.tabId;
+
+        this.addFormId = '';
+        this.collapseAllId = '';
+
+        this.coreKey = CoreManager.activeCore().uuid();
         this.loaded = ko.observable(false);
-        this.addForm = ko.observable(false);
+
+        this.displayAddForm = ko.observable(false);
         this.entities = ko.observableArray([]);
+
         this.sort = ko.observable(this.getDefaultSort());
         this.filter = ko.observable('');
         this.subscriptions = [];
         this.listeners = [];
-        this.refresh = this.refresh.bind(this);
-        this.addToList = this.addToList.bind(this);
-        this.replaceInList = this.replaceInList.bind(this);
-        this.removeFromList = this.removeFromList.bind(this);
     }
 
-    getDefaultSort () {
-        return this.sorts()['name asc'];
+    async load() {
+        await this.refresh();
+        this.setUpSubscriptions();
+        this.loaded(true);
     }
 
-    modelClass = () => {
-        throw('Model Class must be defined');
+    modelClass() {
+        if (!this.modelName) {
+            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
+        }
+        return Clazz[this.modelName];
     }
 
     async refresh () {
-        const key = CoreManager.activeCore().uuid();
-        const response = await this.modelClass().ps.list({coreUuid: key});
+        const response = await this.modelClass().ps.list({coreUuid: this.coreKey});
         this.entities(response.objects);
     }
 
-    shortName = (string, size=25) => {
+    shortText = (string, size=25) => {
         return Utility.string.truncateStringAtLength(string(), size);
     };
+
+    getDefaultSort() { return this.sorts()['name asc'];}
 
     sorts() {
         return {
@@ -55,19 +73,19 @@ export class ACTableComponent {
     }
 
     sortBy (columnName) {
-        this.sort(SortService.sortForName(this.sort(),
-            columnName, this.sorts()));
+        this.sort(
+          SortService.sortForName(
+            this.sort(),
+            columnName,
+            this.sorts()));
     }
 
-    // This can be anonymous because we don't override, and the computed
-    // as a non-anonymous causes 'this' to not be defined.
-    filteredAndSortedEntities = ko.pureComputed(() =>  SortService.sortAndFilter(this.entities(), this.sort(), null));
-
-    async load() {
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
+    filteredAndSortedEntities = ko.pureComputed(
+      () =>  SortService.sortAndFilter(
+        this.entities(),
+        this.sort(),
+        null)
+      );
 
     addToList(item) {
         this.entities.push(item);
@@ -85,14 +103,16 @@ export class ACTableComponent {
         $(this.collapseAllId + ' .collapse.in').collapse('hide');
     }
 
-    showTracked (entity) {return entity.tracked != undefined && entity.tracked() != null;}
+    showTracked (entity) {
+        return !!ko.utils.unwrapObservable(entity.tracked);
+    }
 
     toggleShowAddForm =  () => {
-        if (this.addForm()) {
-            this.addForm(false);
+        if (this.displayAddForm()) {
+            this.displayAddForm(false);
             $(this.addFormId).collapse('hide');
         } else {
-            this.addForm(true);
+            this.displayAddForm(true);
             $(this.addFormId).collapse('show');
         }
     }
@@ -103,8 +123,8 @@ export class ACTableComponent {
         const disposeOfDisposable = (disposable) => {
             if (disposable.dispose) {
                 disposable.dispose();
-            } else if (disposable.remove) {
-                disposable.remove();
+            } else if (disposable.detach) {
+                disposable.detach();
             }
         };
         this.subscriptions.map(disposeOfDisposable);

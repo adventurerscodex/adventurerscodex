@@ -25,7 +25,7 @@
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#feat_list_${uuid()}`, id: `#feat_row_${uuid()}`}">
         <td>
-          <span data-bind="text: $component.shortName(name)"></span>
+          <span data-bind="text: $component.shortText(name)"></span>
           <span data-bind="visible: $component.showTracked($data)"
                 style="opacity: .9"
                 class="glyphicon glyphicon-time"
@@ -53,7 +53,7 @@
               }">
             <div class="front"
                  data-bind="with: context.data">
-                 <card-flip-button params="{ flip: $parent.flip }"></card-flip-button>
+                 <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
 
               <div class="h4">
                 <span data-bind="text: name"></span>
@@ -95,7 +95,7 @@
               addToParent: $component.addToList,
              }"></feat-form>
           </div>
-          <!-- ko ifnot: $component.addForm -->
+          <!-- ko ifnot: $component.displayAddForm -->
           <center>
             <button type="button"
                     class="btn btn-link btn-sm btn-block"

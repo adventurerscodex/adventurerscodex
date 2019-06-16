@@ -1,5 +1,5 @@
 <form data-bind="submit: $component.submit">
-  <card-action-buttons params="{reset: $component.reset}"></card-action-buttons>
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <div data-bind="with: entity">
     <!-- ko if: $component.existingData -->
     <div class="h4"
@@ -33,11 +33,11 @@
               name="name"
               data-bind="value: name,
               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-              attr: { ...$component.validation.name },
+              attr: {autocomplete: 'off', ...$component.validation.name },
               hasFocus: $component.formElementHasFocus,
               autocomplete: {
-                source: $component.featsPrePopFilter,
-                onselect: $component.populateFeat }">
+                source: $component.prePopFilter,
+                onselect: $component.populate }">
         <!-- /ko -->
     </div>
     <div class="form-group">
@@ -69,13 +69,13 @@
             data-bind="popover: { content: $component.popoverText }"></span>
     </div>
   <!-- ko if: $component.isTracked() -->
-  <ac-tracked-form params="{tracked: $component.tracked}"></ac-tracked-form>
+  <form-tracked-component params="{tracked: $component.tracked}"></form-tracked-component>
   <!-- /ko -->
   </div>
-  <form-card-footer params="{
+  <form-submit-actions params="{
     reset: $component.reset,
     delete: $component.delete,
     addForm: $component.addForm,
     showDisclaimer: $component.showDisclaimer
-  }"></form-card-footer>
+  }"></form-submit-actions>
 </form>

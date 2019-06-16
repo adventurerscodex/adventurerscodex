@@ -1,13 +1,13 @@
-import { CoreManager, Notifications } from 'charactersheet/utilities';
-import { CardActionButton } from 'charactersheet/components/card-action-buttons';
-import { FormBaseController } from 'charactersheet/components/form-base-controller';
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import {  Notifications } from 'charactersheet/utilities';
+
 import { OtherStats } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class OtherStatsFormViewModel extends FormBaseController {
+export class OtherStatsFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         // Notification Properties
@@ -18,25 +18,8 @@ export class OtherStatsFormViewModel extends FormBaseController {
         autoBind(this);
     }
 
-    generateBlank() {
-        return new OtherStats();
-    }
-
-    async load() {
-        super.load();
-        await this.refresh();
-    }
-
-    async refresh () {
-        await super.refresh();
-        const key = CoreManager.activeCore().uuid();
-        const response = await OtherStats.ps.read({uuid: key});
-        this.entity().importValues(response.object.exportValues());
-    }
-
-    validation = {
-        ...OtherStats.validationConstraints.rules
-
+    modelClass () {
+        return OtherStats;
     }
 
     toggleInspiration = async () => {

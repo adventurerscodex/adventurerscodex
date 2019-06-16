@@ -1,22 +1,18 @@
-import { ACTableComponent } from 'charactersheet/components/table-component';
-import { Proficiency } from 'charactersheet/models';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { ProficiencyFormViewModel } from './form';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
 
 
-export class ProficienciesViewModel extends ACTableComponent {
+export class ProficienciesViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.addFormId = '#add-proficiency';
         this.collapseAllId = '#proficiency-pane';
         autoBind(this);
     }
-
-    modelClass = () => {
-        return Proficiency;
-    }
+    modelName = 'Proficiency';
 
     sorts() {
         return {

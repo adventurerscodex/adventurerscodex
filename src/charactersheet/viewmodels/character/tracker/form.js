@@ -1,31 +1,29 @@
-import { Feat, Feature, Tracked, Trait } from 'charactersheet/models';
+import { AbstractChildTrackedFormModel } from 'charactersheet/viewmodels/abstract';
+import { Clazz } from 'charactersheet/models';
 import { Notifications } from 'charactersheet/utilities';
-import { TrackedFormController } from 'charactersheet/components/form-controller-tracked-component';
+import { Tracked } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class TrackedDetailForm extends TrackedFormController {
+export class TrackedDetailForm extends AbstractChildTrackedFormModel {
     constructor(params) {
         super(params);
+        this.modelName = params.modelName;
         autoBind(this);
     }
 
-    trackedTypes = [  Feature, Trait, Feat ];
-
-    generateBlank () {
-        const typeName = this.modelName;
-        if (typeName === Feature.name) {
-            return new Feature();
+    modelClass () {
+        if (!this.modelName) {
+            // TODO: something is causing modelClass to be called more
+            // Than desired, including *before* the constructor
+            // can set a modelName. This is crappy. BUT, its still getting
+            // called correctly .... soo we're leaving to discuss with Brian
+            // throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
+            return undefined;
         }
-        if (typeName === Trait.name) {
-            return new Trait();
-        }
-        if (typeName === Feat.name) {
-            return new Feat();
-        }
-        return null;
+        return Clazz[this.modelName];
     }
 
     notify = () => {
@@ -35,7 +33,7 @@ export class TrackedDetailForm extends TrackedFormController {
 
     validation = {
         ...Tracked.validationConstraints.rules
-    };
+    }
 }
 
 ko.components.register('tracked-form', {

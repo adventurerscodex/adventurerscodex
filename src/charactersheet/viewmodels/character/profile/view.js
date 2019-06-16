@@ -1,47 +1,25 @@
-import { Fixtures, Utility } from 'charactersheet/utilities';
-
-import { ACViewModel } from 'charactersheet/components/view-component';
-import { Core } from 'charactersheet/models/common/core';
-import { CoreManager } from 'charactersheet/utilities';
-import { Profile } from 'charactersheet/models/character';
-
+import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import autoBind from 'auto-bind';
-
+import { isNumeric } from 'jquery';
 import ko from 'knockout';
 import template from './view.html';
 
-export class ProfileViewModel extends ACViewModel {
+export class ProfileViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
         autoBind(this);
     }
 
-    generateBlank() {
-        return new Profile();
-    }
+    modelName = 'Profile';
 
-    shortName = (string) => {
-        return Utility.string.truncateStringAtLength(string(), 25);
-    };
-
-    refresh = async () => {
-        var key = CoreManager.activeCore().uuid();
-        const profileResponse = await Profile.ps.read({uuid: key});
-        this.entity().importValues(profileResponse.object.exportValues());
-    };
-
-    isNumeric = (n) => {
-        return !isNaN(parseFloat(n)) && isFinite(n);
-    }
-
-    weightLabel = ko.computed(() => {
-        if (this.isNumeric(this.entity().weight())) {
-            return this.entity().weight()+ ' (lbs)';
+    weightLabel = ko.pureComputed(() => {
+        const weight = ko.utils.unwrapObservable(this.entity().weight);
+        if (isNumeric(weight)) {
+            return weight + ' (lbs)';
         } else {
             return 'No Weight';
         }
     });
-
 }
 
 ko.components.register('profile-view', {

@@ -1,18 +1,17 @@
 import 'bin/knockout-bar-progress';
 
 import {
-  CoreManager,
-    Fixtures,
-    Notifications
-   } from 'charactersheet/utilities';
-import {
     Feat,
     Feature,
-    Tracked,
     Trait
 } from 'charactersheet/models/character';
 
-import { ACTableComponent } from 'charactersheet/components/table-component';
+import {
+    Fixtures,
+    Notifications
+   } from 'charactersheet/utilities';
+
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 
 import { TrackedDetailForm } from './form';
 
@@ -21,14 +20,29 @@ import {flatMap } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
-class TrackerViewModel extends ACTableComponent {
+class TrackerViewModel extends AbstractTabularViewModel {
     constructor(params) {
         super(params);
         this.collapseAllId = '#tracker-pane';
         autoBind(this);
     }
 
-    trackedTypes = [  Feature, Trait, Feat ];
+    trackedModelTypes = [ Feature, Trait, Feat ];
+
+    async refresh () {
+        const fetchTrackedEntities = this.trackedModelTypes.map(
+          (type) => type.ps.list({ coreUuid: this.coreKey }));
+        const responseList = await Promise.all(fetchTrackedEntities);
+        const tracked = flatMap(responseList, (response) => response.objects).filter(this.showTracked);
+        let index = 0;
+        this.entities(tracked.map(
+          (trackable) => {
+              trackable.tracked().color = Fixtures.general.colorHexList[index % 12];
+              index++;
+              return trackable;}
+            )
+        );
+    }
 
     nameMeta = (tracked) => {
         let metaText = '';
@@ -72,23 +86,6 @@ class TrackerViewModel extends ACTableComponent {
             throw 'Unexpected feature resets on string.';
         }
     };
-
-    async refresh () {
-        const key = CoreManager.activeCore().uuid();
-        const trackables = [];
-        let trackedIndex = 0;
-        const fetchTrackedEntities = this.trackedTypes.map((type) => type.ps.list({coreUuid: key}));
-        const potentialTracked = await Promise.all(fetchTrackedEntities);
-        const tracked = flatMap(potentialTracked, (response) => response.objects).filter(this.showTracked);
-        let index = 0;
-        this.entities(tracked.map(
-          (trackable) => {
-              trackable.tracked().color = Fixtures.general.colorHexList[index % 12];
-              index++;
-              return trackable;}
-            )
-        );
-    }
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
