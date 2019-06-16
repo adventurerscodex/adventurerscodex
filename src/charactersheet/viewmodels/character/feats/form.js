@@ -1,18 +1,8 @@
-import {
-    CoreManager,
-    Notifications
-} from 'charactersheet/utilities';
-
-import {
-    DataRepository,
-    Fixtures
-} from 'charactersheet/utilities';
-import {
-    AbstractChildTrackedFormModel
-} from 'charactersheet/viewmodels/abstract';
-import {
-    Feat
-} from 'charactersheet/models';
+import { AbstractChildTrackedFormModel } from 'charactersheet/viewmodels/abstract';
+import { Feat } from 'charactersheet/models';
+import { Fixtures } from 'charactersheet/utilities';
+import { Notifications } from 'charactersheet/utilities';
+import { SELECTDATA } from 'charactersheet/constants';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -23,44 +13,20 @@ export class FeatFormViewModel extends AbstractChildTrackedFormModel {
         super(params);
         autoBind(this);
     }
-    generateBlank() {
-        return new Feat();
+
+    modelClass () {
+        return Feat;
     }
+    prePopSource = 'feats';
+    prePopLimit = SELECTDATA.LONG;
+
     classOptions = Fixtures.profile.classOptions;
-
-    // Pre-pop methods
-    featsPrePopFilter = (request, response) => {
-        const term = request.term.toLowerCase();
-        let results = [];
-        if (term && term.length > 2) {
-            const keys = DataRepository.feats ?
-                Object.keys(DataRepository.feats) :
-                [];
-            results = keys.filter(function(name, idx, _) {
-                return name.toLowerCase().indexOf(term) > -1;
-            });
-        }
-        response(results);
-    };
-
-    populateFeat = (label, value) => {
-        const feat = DataRepository.feats[label];
-        if (feat) {
-            this.entity().importValues(feat);
-            this.showDisclaimer(true);
-            this.forceCardResize();
-        }
-    };
 
     popoverText = () => ('Tracked Feats are listed in the Tracker.');
 
     notify() {
         Notifications.feat.changed.dispatch();
     }
-
-    validation = {
-        ...Feat.validationConstraints.rules
-    };
 }
 
 ko.components.register('feat-form', {

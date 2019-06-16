@@ -22,8 +22,8 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
         autoBind(this);
     }
 
-    generateBlank () {
-        return new DeathSave();
+    modelClass () {
+        return DeathSave;
     }
 
     load = async () => {

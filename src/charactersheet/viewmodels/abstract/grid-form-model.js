@@ -7,7 +7,7 @@ import ko from 'knockout';
 /**
  * AbstractGridFormModel, extends AbstractGridViewModel
  *
- * Provides a grid form for data, which is flippable to a view.
+ * Provides a grid form for data, with form-like behaviors.
  *
  **/
 
@@ -24,11 +24,11 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
         this.subscriptions.push(setFocus);
     }
 
-    focusOnFlip = () => {
+    async focusOnFlip () {
         const setFocus = () => {
             this.formElementHasFocus(this.show());
         };
-        setTimeout(setFocus, DELAY.LONG);
+        await setTimeout(setFocus, DELAY.LONG);
     }
 
     async submit() {

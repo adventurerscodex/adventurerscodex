@@ -1,17 +1,9 @@
 import {
-    CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-import {
-    AbstractFormModel
-} from 'charactersheet/viewmodels/abstract';
-import {
-    CardSubmitActionComponent
-} from 'charactersheet/components/card-submit-actions';
-import {
-    Profile
-} from 'charactersheet/models/character';
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import { Profile } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -24,40 +16,21 @@ export class ProfileFormViewModel extends AbstractFormModel {
         autoBind(this);
     }
 
-    generateBlank() {
-        return new Profile();
-    }
-
-    async load() {
-        await super.load();
-        await this.refresh();
-    }
-
-    async refresh() {
-        await super.refresh();
-        const key = CoreManager.activeCore().uuid();
-        const response = await Profile.ps.read({
-            uuid: key
-        });
-        this.entity().importValues(response.object.exportValues());
-    }
-
-    validation = {
-        ...Profile.validationConstraints.rules
+    modelClass () {
+        return Profile;
     }
 
     alignmentOptions = Fixtures.profile.alignmentOptions;
-    classOptions = Fixtures.profile.classOptions;
-    raceOptions = Fixtures.profile.raceOptions;
-
     setAlignment = (label, value) => {
         this.entity().alignment(value);
     };
 
+    classOptions = Fixtures.profile.classOptions;
     setClass = (label, value) => {
         this.entity().characterClass(value);
     };
 
+    raceOptions = Fixtures.profile.raceOptions;
     setRace = (label, value) => {
         this.entity().race(value);
     };

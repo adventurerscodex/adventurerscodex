@@ -1,8 +1,6 @@
-import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
-import {
-  CardSubmitActionComponent
-} from 'charactersheet/components/card-submit-actions';
+import {  Notifications } from 'charactersheet/utilities';
+
 import { OtherStats } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
@@ -20,25 +18,8 @@ export class OtherStatsFormViewModel extends AbstractFormModel {
         autoBind(this);
     }
 
-    generateBlank() {
-        return new OtherStats();
-    }
-
-    async load() {
-        super.load();
-        await this.refresh();
-    }
-
-    async refresh () {
-        await super.refresh();
-        const key = CoreManager.activeCore().uuid();
-        const response = await OtherStats.ps.read({uuid: key});
-        this.entity().importValues(response.object.exportValues());
-    }
-
-    validation = {
-        ...OtherStats.validationConstraints.rules
-
+    modelClass () {
+        return OtherStats;
     }
 
     toggleInspiration = async () => {

@@ -31,8 +31,8 @@ export class SkillsAddFormViewModel extends AbstractChildFormModel {
         autoBind(this);
     }
 
-    generateBlank() {
-        return new Skill();
+    modelClass () {
+        return Skill;
     }
 
     setUpSubscriptions() {

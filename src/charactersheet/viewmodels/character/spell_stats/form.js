@@ -1,9 +1,5 @@
-import {
-  CoreManager,
-  Notifications
-} from 'charactersheet/utilities';
-
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
 import { SpellStats } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
@@ -15,14 +11,9 @@ export class SpellStatsFormViewModel  extends AbstractFormModel {
         super(params);
         autoBind(this);
     }
-    generateBlank() {
-        return new SpellStats();
-    }
 
-    async refresh() {
-        const key = CoreManager.activeCore().uuid();
-        const stats = await SpellStats.ps.read({uuid: key});
-        this.entity().importValues(stats.object.exportValues());
+    modelClass () {
+        return SpellStats;
     }
 
     setSpellCastingAbility = (label, value) => {
@@ -30,11 +21,6 @@ export class SpellStatsFormViewModel  extends AbstractFormModel {
     };
 
     notify() { Notifications.spellStats.changed.dispatch(); }
-
-    validation = {
-        // Deep copy of properties in object
-        ...SpellStats.validationConstraints.rules
-    };
 }
 
 ko.components.register('spell-stats-form', {

@@ -25,38 +25,25 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
     meditationWhite = meditationWhite;
     campingTentWhite = campingTentWhite;
 
+    modelClass () {
+        return SpellSlot;
+    }
+
     getNextSlotLevel = () => {
         return this.nextSlotLevel();
     }
-
-    generateBlank() {
-        return new SpellSlot();
-    }
-
-    notify = () => {
-        Notifications.spellSlots.changed.dispatch();
-    }
-
     async refresh() {
         await super.refresh();
         // Reset the textarea size when refreshing
+        console.log('fix next slot level');
         if (this.addForm() && this.nextSlotLevel()) {
             this.entity().level(this.nextSlotLevel());
         }
     }
 
-    async delete() {
-        if (this.containerId) {
-            $(`#${this.containerId()}`).collapse('hide');
-        }
-        await this.entity().ps.delete();
-        this.removeFromParent(this.existingData);
-        this.notify();
+    notify = () => {
+        Notifications.spellSlots.changed.dispatch();
     }
-
-    validation = {
-        ...SpellSlot.validationConstraints.rules
-    };
 }
 
 ko.components.register('spell-slot-form', {

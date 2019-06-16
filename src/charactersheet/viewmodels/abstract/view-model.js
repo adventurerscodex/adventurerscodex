@@ -33,24 +33,27 @@ export class AbstractViewModel {
         this.flip = params.flip;
         this.show = params.show ? params.show : ko.observable(true);
         this.existingData = params.data ? params.data : null;
-
+        if (params.modelName) {
+            this.modelName = params.modelName;
+        }
         this.entity = ko.observable();
         this.loaded = ko.observable(false);
         this.subscriptions = [];
     }
 
-    modelClass() {
+    modelClass = () => {
         if (!this.modelName) {
-            throw('Model Name or modelClass must be implemented by Views');
+            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
         }
         return Clazz[this.modelName];
     }
 
-    generateBlank() {
+    generateBlank () {
         if (!this.modelName) {
-            throw('Model Name or generateBlank must be implemented by Views');
+            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
         }
-        const newEntity = new Clazz[this.modelName];
+        const thisClazz = this.modelClass();
+        const newEntity = new thisClazz(); //Clazz[this.modelName];
         newEntity.coreUuid(this.coreKey);
         return newEntity;
     }

@@ -1,5 +1,6 @@
 import {
     CoreManager,
+    DataRepository,
     Notifications
 } from 'charactersheet/utilities';
 import {
@@ -8,7 +9,7 @@ import {
 import {
   FormSubmitActionComponent
 } from 'charactersheet/components/form-submit-actions';
-
+import { SELECTDATA } from 'charactersheet/constants';
 import ko from 'knockout';
 
 /**
@@ -23,6 +24,9 @@ import ko from 'knockout';
  *
  * @param data {observable} The data under edit. Existing Data is imported
  * into the local entity for modification, before being returned to the parent.
+ *
+ * @property addForm (observable) Boolean flag to determine whether this is an addForm
+ * for creating data;
  *
  * @param addToParent {function} callback to add new entries to the parent.
  *
@@ -40,19 +44,14 @@ export class AbstractChildFormModel extends AbstractFormModel {
         super(params);
         this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.existingData = params.data;
+        this.addForm = ko.observable(false);
 
         this.addToParent = params.addToParent ? params.addToParent : noOp;
         this.replaceInParent = params.replaceInParent ? params.replaceInParent : noOp;
         this.removeFromParent = params.removeFromParent ? params.removeFromParent : noOp;
     }
 
-    async load () {
-        super.load();
-        await this.refresh();
-    }
-
     async refresh() {
-        await super.refresh();
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());
         } else {
@@ -60,6 +59,7 @@ export class AbstractChildFormModel extends AbstractFormModel {
             this.entity().coreUuid(CoreManager.activeCore().uuid());
             this.addForm(true);
         }
+        this.showDisclaimer(false);
     }
 
     async save() {
@@ -80,4 +80,29 @@ export class AbstractChildFormModel extends AbstractFormModel {
         await this.removeFromParent(this.existingData);
         this.notify();
     }
+
+    prePopFilter = (request, response) => {
+        if (!this.prePopSource) {
+            throw(`${this.constructor.name} must have a prePopSource`);
+        }
+        const term = request.term.toLowerCase();
+        let results = [];
+
+        if (term && term.length >= (this.prePopLimit || 0)) {
+            const keys = DataRepository[this.prePopSource] ?
+                Object.keys(DataRepository[this.prePopSource]) :
+                [];
+            results = keys.filter((name) => {
+                return name.toLowerCase().indexOf(term) > -1;
+            });
+        }
+        response(results);
+    };
+
+    populate = (label, value) => {
+        const item = DataRepository[this.prePopSource][label];
+        this.entity().importValues(item);
+        this.showDisclaimer(true);
+        this.forceCardResize();
+    };
 }

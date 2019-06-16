@@ -3,7 +3,9 @@ import {
     Notifications
 } from 'charactersheet/utilities';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { Note } from 'charactersheet/models';
 import { NotesFormViewModel } from './form';
+
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
@@ -15,7 +17,10 @@ export class NotesListModel extends AbstractTabularViewModel {
         this.collapseAllId = '#notes-pane';
         autoBind(this);
     }
-    modelName = 'Note';
+
+    modelClass () {
+        return Note;
+    }
 
     async refresh () {
         await super.refresh();

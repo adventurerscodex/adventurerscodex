@@ -30,10 +30,10 @@
              name="name"
              data-bind="value: name,
                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                attr: { ...$component.validation.name },
+                attr: { autocomplete: 'off', ...$component.validation.name },
                 hasFocus: $component.formElementHasFocus,
-                autocomplete: { source: $component.magicItemsPrePopFilter,
-                onselect: $component.populateMagicItem }">
+                autocomplete: { source: $component.prePopFilter,
+                onselect: $component.populate }">
       <!-- /ko -->
 
   </div>

@@ -45,7 +45,7 @@ export class AbstractTabularViewModel {
 
     modelClass() {
         if (!this.modelName) {
-            throw('Model Name or modelClass must be implemented by Views');
+            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
         }
         return Clazz[this.modelName];
     }

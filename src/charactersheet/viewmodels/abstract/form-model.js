@@ -1,65 +1,120 @@
-
+import { Clazz } from 'charactersheet/models';
+import { CoreManager } from 'charactersheet/utilities';
+import { DELAY } from 'charactersheet/constants';
+import { get } from 'lodash';
 import ko from 'knockout';
+
+const noOp = (entity) => { /* no op */ };
+// noOp will be called for orphan forms that are not part of a card
+
+/**
+ * AbstractFormModel
+ *
+ * Provides the basis for forms to modify data.
+ *
+ * @param show {observable} whether or not this view is visible.
+ *
+ * @param flip {function} function for displaying/hiding the view. Used to
+ * 'flip' flip-cards, or expand/collapse rows
+ *
+ * @param forceCardResize {function} function to resize containing card,
+ *  as it is absolutely positioned
+ *
+ * @property formElementHasFocus (observable) Boolean flag to tell a field
+ * it should focus
+ *
+ * @property showDisclaimer (observable) Boolean flag to tell the disclaimer to show
+ * for creating data;
+ **/
 
 export class AbstractFormModel {
     constructor(params) {
-        // Data to be managed by this form
-        const noOp = (entity) => { /* no op */ };
-
-        /* flip card parameters; use if part of a flip card */
-        /* Flag for whether this side of a flip-card is shown */
-        this.show = params.show ? params.show : ko.observable(true);
-        /* Function that will flip a card (or collapse a row) */
         this.flip = params.flip ? params.flip : noOp;
-        /* Callback to resize the card, as it is absolutely positioned */
+        this.show = params.show ? params.show : ko.observable(true);
         this.forceCardResize = params.forceCardResize ? params.forceCardResize : noOp;
-
-        /* Model Name supports creating form tables with multiple objects
-           This is a hack that allows modelName to be available for tracked form */
-        /* A class name that is a string */
-        this.modelName = params.modelName ? params.modelName : null; // null if unused
-
-        /* The item being edited */
+        if (params.modelName) {
+            this.modelName = params.modelName;
+        }
         this.entity = ko.observable();
-
-        /* Flag to denote an "Add Form" to create a new entry */
-        this.addForm = ko.observable(false);
-        /* Flag for focusing the marked element on a form, generally the first */
         this.formElementHasFocus = ko.observable(false);
-        /* Flag to display disclaimer */
         this.showDisclaimer = ko.observable(false);
-
-        // Collects subscriptions to dispose of
+        this.loaded = ko.observable(false);
         this.subscriptions = [];
-        this.listeners = [];
     }
 
-    modelClass = () => {
-        throw('modelClass must be defined. ModelClass must be a Data Model');
+    modelClass () {
+        if (!this.modelName) {
+            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
+        }
+        return Clazz[this.modelName];
     }
 
     generateBlank() {
-        /* Create a new instance of a class for data to be imported */
-        return this.modelClass()();
-//                throw ('Generate Blank must be implemented by subclasses of FormViewModel');
+        const thisClazz = this.modelClass();
+        const newEntity = new thisClazz();
+        const coreKey = CoreManager.activeCore().uuid();
+        newEntity.coreUuid(coreKey);
+        return newEntity;
     }
 
+    async load() {
+        this.entity(this.generateBlank());
+        await this.refresh();
+        this.setUpSubscriptions();
+        this.loaded(true);
+    }
+
+    async refresh() {
+        const response = await this.modelClass().ps.read(
+          { uuid: CoreManager.activeCore().uuid() }
+        );
+        this.entity().importValues(response.object.exportValues());
+        this.showDisclaimer(false);
+    }
+
+    async submit() {
+        await this.save();
+        // Flipping will automatically via subscription refresh dependent views
+        this.flip();
+        this.notify();
+    }
+
+    async save() {
+        const response = await this.entity().ps.save();
+        if ('importValues' in this.entity()) {
+            this.entity().importValues(response.object.exportValues());
+        } else {
+            this.entity(response.object);
+        }
+    }
+
+    notify() {
+      /* Implement via child classes */
+    }
+
+    reset() {
+        // By the power of subscriptions, flip calls refresh;
+        this.flip();
+    }
+
+    validation = {
+        // Deep copy of properties in object
+        ...get(this.modelClass(), 'validationConstraints.rules', {})
+    };
+
     setUpSubscriptions() {
-        /* callback for when this form becomes visible */
-        const onShow = this.show.subscribe(this.refreshOnShow);
+        const onShow = this.show.subscribe(this.subscribeToVisible);
         this.subscriptions.push(onShow);
-        /* callback to focus a field when form becomes visible */
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
-        /* callback to resize when the disclaimer is shown */
-        const showDisclaimerResize = this.showDisclaimer.subscribe(this.delayThenResize);
+        const showDisclaimerResize = this.showDisclaimer.subscribe(this.forceResize);
         this.subscriptions.push(showDisclaimerResize);
     }
 
-    delayThenResize = () => {
+    forceResize = () => {
         // Handle for browser order of operations so we don't calculate size
         // before the view is ready
-        setTimeout(this.forceCardResize, 150);
+        setTimeout(this.forceCardResize, DELAY.MEDIUM);
     }
 
     reviewInput = (data, event) => {
@@ -75,59 +130,22 @@ export class AbstractFormModel {
         return true; // Continue validating
     }
 
-    refreshOnShow = async () => {
+    async subscribeToVisible () {
         if (this.show()) {
             await this.refresh();
         }
     }
 
-    disposeOfSubscriptions() {
-        this.subscriptions.forEach((subscription) => subscription.dispose());
-        this.subscriptions = [];
-        this.listeners.forEach((listener) => listener.remove());
-        this.listeners = [];
-    }
-
-    focusOnFlip = () => {
+    async focusOnFlip () {
         const setFocus = () => {
             this.formElementHasFocus(this.show());
         };
-        setTimeout(setFocus, 450);
+        await setTimeout(setFocus, DELAY.LONG);
     }
 
-    load() {
-        this.entity(this.generateBlank());
-        this.setUpSubscriptions();
-    }
-
-    async submit() {
-        /* The form submit function */
-        await this.save();
-        // Flipping will automatically via subscription refresh dependent views
-        this.flip();
-        this.notify();
-    }
-
-    async refresh () {
-        this.showDisclaimer(false);
-    }
-
-    async save() {
-        const response = await this.entity().ps.save();
-        // TODO: Why check entity is null?
-        if (this.entity() != null) {
-            this.entity().importValues(response.object.exportValues());
-        } else {
-            this.entity(response.object);
-        }
-    }
-
-    notify() {}
-
-    reset() {
-        /* Reset/Cancel buttons on all forms */
-        // By the power of subscriptions, flip calls refresh;
-        this.flip();
+    disposeOfSubscriptions() {
+        this.subscriptions.forEach((subscription) => subscription.dispose());
+        this.subscriptions = [];
     }
 
     dispose() {

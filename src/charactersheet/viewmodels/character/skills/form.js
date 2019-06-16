@@ -56,7 +56,7 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
         };
     }
 
-    modelClass = () => {
+    modelClass () {
         return Skill;
     }
 

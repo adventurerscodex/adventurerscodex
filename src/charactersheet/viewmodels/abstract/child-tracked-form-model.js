@@ -38,11 +38,6 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
         this.subscriptions.push(onTrackFormDisplay);
     }
 
-    async forceResize() {
-        // Delay resize to allow the browser time to redraw
-        setTimeout(this.forceCardResize, DELAY.SHORT);
-    }
-
     async refresh() {
         await super.refresh();
         const tracked = ko.utils.unwrapObservable(this.entity().tracked);

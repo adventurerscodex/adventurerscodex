@@ -1,13 +1,5 @@
-import {
-  CoreManager,
-  Notifications
-} from 'charactersheet/utilities';
-import {
-  AbstractFormModel
-} from 'charactersheet/viewmodels/abstract';
-import {
-  CardSubmitActionComponent
-} from 'charactersheet/components/card-submit-actions';
+import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
 import { Wealth } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
@@ -26,8 +18,8 @@ export class WealthFormViewModel  extends AbstractFormModel {
         autoBind(this);
     }
 
-    generateBlank() {
-        return new Wealth();
+    modelClass() {
+        return Wealth;
     }
 
     cpCoins = cpCoins;
@@ -36,20 +28,9 @@ export class WealthFormViewModel  extends AbstractFormModel {
     ppCoins = ppCoins;
     spCoins = spCoins;
 
-    refresh = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const response = await Wealth.ps.read({uuid: key});
-        this.entity().importValues(response.object.exportValues());
-    }
-
     notify = () => {
         Notifications.wealth.changed.dispatch();
     }
-
-    validation = {
-        // Deep copy of properties in object
-        ...Wealth.validationConstraints.rules
-    };
 }
 
 ko.components.register('wealth-form', {

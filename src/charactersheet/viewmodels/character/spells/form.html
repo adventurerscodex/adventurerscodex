@@ -34,11 +34,11 @@
               name="name"
               data-bind="value: name,
               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-              attr: { ...$component.validation.name },
+              attr: { autocomplete: 'off', ...$component.validation.name },
               hasFocus: $component.formElementHasFocus,
               autocomplete: {
-                source: $component.spellsPrePopFilter,
-              onselect: $component.populateSpell }">
+                source: $component.prePopFilter,
+              onselect: $component.populate }">
         <!-- /ko -->
     </div>
     <div class="form-group col-sm-6 col-md-3 col-lg-3">
