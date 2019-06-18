@@ -1,4 +1,5 @@
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -13,6 +14,12 @@ export class Proficiency extends KOModel {
     name = ko.observable('');
     type = ko.observable('');
     description = ko.observable('');
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.proficiency.changed.dispatch(this);
+        return response;
+    }
 }
 
 Proficiency.validationConstraints = {

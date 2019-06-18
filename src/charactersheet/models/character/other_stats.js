@@ -1,6 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class OtherStats extends KOModel {
@@ -17,24 +18,18 @@ export class OtherStats extends KOModel {
     inspiration = ko.observable(false);
     proficiencyModifier = ko.observable(0);
 
-    toSchemaValues = (values) => {
-        if (values.armorClassModifier === '') {
-            values.armorClassModifier = 0;
-        }
+    toSchemaValues = (values) => ({
+        ...values,
+        armorClassModifier:  values.armorClassModifier  !== '' ? values.armorClassModifier  : 0,
+        initiativeModifier:  values.initiativeModifier  !== '' ? values.initiativeModifier  : 0,
+        speed:               values.speed               !== '' ? values.speed               : 0,
+        proficiencyModifier: values.proficiencyModifier !== '' ? values.proficiencyModifier : 0
+    })
 
-        if (values.initiativeModifier === '') {
-            values.initiativeModifier = 0;
-        }
-
-        if (values.speed === '') {
-            values.speed = 0;
-        }
-
-        if (values.proficiencyModifier === '') {
-            values.proficiencyModifier = 0;
-        }
-
-        return values;
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.otherStats.changed.dispatch(this);
+        return response;
     }
 }
 

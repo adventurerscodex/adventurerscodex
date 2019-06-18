@@ -36,7 +36,7 @@ export class ArmorViewModel extends AbstractTabularViewModel {
     equipArmor = async (data, event) => {
         event.stopPropagation();
         data.equipped(!data.equipped());
-        const response = await data.ps.save();
+        const response = await data.save();
         await this.replaceInList(response.object);
         Notifications.armor.changed.dispatch();
     };
@@ -58,7 +58,7 @@ export class ArmorViewModel extends AbstractTabularViewModel {
         ));
             const unequip = allEquipped.map(async (armor)=> {
                 armor.equipped(false);
-                await armor.ps.save();
+                await armor.save();
                 this.replaceInList(armor);
             });
             await Promise.all(unequip);

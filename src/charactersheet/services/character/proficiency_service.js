@@ -12,67 +12,59 @@ export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {}
 function _ProficiencyService(configuration) {
     var self = this;
 
-    self.proficiency = ko.observable();
-    self.halfProficiency = ko.observable();
-    self.expertise = ko.observable();
-    self.characterId = ko.observable();
-    self.proficiencyModifier = ko.observable();
-    self.proficiencyBonusByLevel = ko.observable();
+    self.otherStats = ko.observable(new OtherStats());
+    self.profile = ko.observable(new Profile());
 
     self.init = async () => {
-        Notifications.otherStats.proficiency.changed.add(self.getProficiencyModifierAndReCalculate);
-        Notifications.profile.level.changed.add(self.getProficiencyBonusByLevelAndReCalculate);
-
-        self.characterId(CoreManager.activeCore().uuid());
-        await self.getProficiencyModifier();
-        await self.getProficiencyBonusByLevel();
-        // Kick it off the first time.
-        await self.dataHasChanged();
+        await self.loadOtherStats();
+        await self.loadProfile();
+        self.setUpSubscriptions();
     };
 
-    self.dataHasChanged = function() {
-        var proficiency = 0;
-
-        proficiency += self.proficiencyModifier();
-        proficiency += self.proficiencyBonusByLevel();
-        proficiency += 1;
-
-        // Set the value and let everyone know.
-        self.proficiency(proficiency);
-        self.halfProficiency(Math.floor(proficiency/2));
-        self.expertise(proficiency*2);
-        Notifications.proficiencyBonus.changed.dispatch();
+    self.setUpSubscriptions = () => {
+        Notifications.otherStats.changed.add(self.updateOtherStats);
+        Notifications.profile.changed.add(self.updateProfile);
+        self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
     };
 
-    /* Public Methods */
+    self.loadOtherStats = async () => {
+        let response = await OtherStats.ps.read({uuid: CoreManager.activeCore().uuid()});
+        self.otherStats().importValues(response.object.exportValues());
+    };
 
-    self.getProficiencyModifier = async () => {
-        let otherStatsResponse = await OtherStats.ps.read({uuid: self.characterId()});
-        const otherStats = otherStatsResponse.object;
-        var proficiencyModifier = 0;
-        if (otherStats) {
-            proficiencyModifier = parseInt(otherStats.proficiencyModifier()) ? parseInt(otherStats.proficiencyModifier()) : 0;
+    self.loadProfile = async () => {
+        let response = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
+        self.profile().importValues(response.object.exportValues());
+    };
+
+    self.proficiencyModifier = ko.pureComputed(() => {
+        if (self.otherStats() && self.otherStats().proficiencyModifier()) {
+            return parseInt(self.otherStats().proficiencyModifier()) ? parseInt(self.otherStats().proficiencyModifier()) : 0;
         }
-        self.proficiencyModifier(proficiencyModifier);
-    };
+        return 0;
+    });
 
-    self.getProficiencyBonusByLevel = async () => {
-        let profileResponse = await Profile.ps.read({uuid: self.characterId()});
-        const profile = profileResponse.object;
-        var level = 0;
-        if (profile) {
-            level = parseInt(profile.level()) ? parseInt(profile.level()) : 0;
+    self.proficiencyBonusByLevel = ko.pureComputed(() => {
+        let level = 0;
+        if (self.profile() && self.profile().level()) {
+            level = parseInt(self.profile().level()) ? parseInt(self.profile().level()) : 0;
         }
-        self.proficiencyBonusByLevel(Math.ceil(level / 4));
+        return Math.ceil(level / 4);
+    });
+
+    self.proficiency = ko.pureComputed(()=> {
+        return 1 + self.proficiencyBonusByLevel() + self.proficiencyModifier();
+    });
+
+    self.updateOtherStats = (otherStats) => {
+        if (otherStats && otherStats.uuid() === self.otherStats().uuid()) {
+            self.otherStats().importValues(otherStats.exportValues());
+        }
     };
 
-    self.getProficiencyModifierAndReCalculate = async () => {
-        await self.getProficiencyModifier();
-        self.dataHasChanged();
-    };
-
-    self.getProficiencyBonusByLevelAndReCalculate = async () => {
-        await self.getProficiencyBonusByLevel();
-        self.dataHasChanged();
+    self.updateProfile = (profile) => {
+        if (profile && profile.uuid() === self.profile().uuid()) {
+            self.profile().importValues(profile.exportValues());
+        }
     };
 }

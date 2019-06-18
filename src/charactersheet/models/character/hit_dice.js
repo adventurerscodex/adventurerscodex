@@ -2,6 +2,7 @@ import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class HitDice extends KOModel {
@@ -15,6 +16,12 @@ export class HitDice extends KOModel {
     used = ko.observable(0);
     type = ko.observable('');
     hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.hitDice.changed.dispatch(this);
+        return response;
+    }
 }
 
 HitDice.validationConstraints = {

@@ -1,4 +1,5 @@
 import { KOModel } from 'hypnos/lib/models/ko';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -30,6 +31,22 @@ export class SpellSlot extends KOModel {
 
     getUsedSpellSlots() {
         return this.used() ? parseInt(this.used()) : 0;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.spellSlots.changed.dispatch(this);
+        console.log(response);
+        console.log(response.object);
+        return response;
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        Notifications.spellSlots.changed.dispatch(this);
+        console.log(response);
+        console.log(response.object);
+        return response;
     }
 }
 

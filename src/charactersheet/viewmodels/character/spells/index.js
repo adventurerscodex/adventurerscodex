@@ -74,16 +74,16 @@ class SpellbookViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        Notifications.spellSlots.changed.add(this.updateSpellSlots);
-        Notifications.spellStats.changed.add(this.updateSpellStats);
+        Notifications.spellSlots.changed.add(this.updateSpellSlots, this);
+        Notifications.spellStats.changed.add(this.updateSpellStats, this);
     }
 
-    updateSpellStats = async () => {
-        const stats = await SpellStats.ps.read({ uuid: this.coreKey });
-        this.spellStats().importValues(stats.object.exportValues());
+    updateSpellStats = async (stats) => {
+        this.spellStats().importValues(stats.exportValues());
     }
 
-    updateSpellSlots = async () => {
+    updateSpellSlots = async (slot) => {
+        console.log(slot);
         const response = await SpellSlot.ps.list({ coreUuid: this.coreKey });
         this.spellSlots(response.objects);
     }
@@ -135,7 +135,7 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         event.stopPropagation();
         if(!(data.level() == 0  || data.alwaysPrepared())) {
             data.prepared(!data.prepared());
-            const response = await data.ps.save();
+            const response = await data.save();
             this.replaceInList(response.object);
         }
     };

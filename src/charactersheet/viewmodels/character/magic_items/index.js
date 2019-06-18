@@ -37,7 +37,7 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
     attuneItem = async (data, event) => {
         event.stopPropagation();
         data.attuned(!data.attuned());
-        const response = await data.ps.save();
+        const response = await data.save();
         this.replaceInList(response.object);
         Notifications.magicItem.changed.dispatch();
     };

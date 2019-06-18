@@ -1,6 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -84,6 +85,12 @@ export class Health extends KOModel {
         }
         return (parseInt(this.tempHitPointsRemaining()) / parseInt(this.totalHitPoints()) * 100) + '%';
     });
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.health.changed.dispatch(this);
+        return response;
+    }
 }
 
 Health.validationConstraints = {

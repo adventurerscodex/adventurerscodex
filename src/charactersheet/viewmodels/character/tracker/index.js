@@ -11,12 +11,13 @@ import {
     Notifications
    } from 'charactersheet/utilities';
 
+import { find, flatMap } from 'lodash';
+
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 
 import { TrackedDetailForm } from './form';
 
 import autoBind from 'auto-bind';
-import {flatMap } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -87,25 +88,33 @@ class TrackerViewModel extends AbstractTabularViewModel {
         }
     };
 
+    onTrackedChanged (trackedItem) {
+        if (trackedItem) {
+            const tracked = find(this.entities(), (trackable)=> {
+                return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
+            });
+            if (tracked) {
+                const color = tracked.tracked().color;
+                tracked.importValues(trackedItem.exportValues());
+                tracked.tracked().color = color;
+            }
+        }
+    }
+
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        const featureChanged = Notifications.feature.changed.add(this.refresh);
-        this.subscriptions.push(featureChanged);
-        const featChanged = Notifications.feat.changed.add(this.refresh);
-        this.subscriptions.push(featChanged);
-        const traitChanged = Notifications.trait.changed.add(this.refresh);
-        this.subscriptions.push(traitChanged);
-        const shortRest = Notifications.events.shortRest.add(this.resetShortRestFeatures);
-        this.subscriptions.push(shortRest);
-        const longRest = Notifications.events.longRest.add(this.resetLongRestFeatures);
-        this.subscriptions.push(longRest);
+        Notifications.feature.changed.add(this.onTrackedChanged);
+        Notifications.feat.changed.add(this.onTrackedChanged);
+        Notifications.trait.changed.add(this.onTrackedChanged);
+        Notifications.events.shortRest.add(this.resetShortRestFeatures);
+        Notifications.events.longRest.add(this.resetLongRestFeatures);
     }
 
     resetShortRestFeatures = async () => {
         const updates = this.entities().map(async (entity) => {
             if (entity.tracked().resetsOn() === Fixtures.resting.shortRestEnum) {
                 entity.tracked().used(0);
-                await entity.ps.save();
+                await entity.save();
                 this.replaceInList(entity);
             }
         });
@@ -115,7 +124,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
     resetLongRestFeatures = async () => {
         const updates = this.entities().map(async (entity) => {
             entity.tracked().used(0);
-            await entity.ps.save();
+            await entity.save();
             this.replaceInList(entity);
 
         });
@@ -123,7 +132,7 @@ class TrackerViewModel extends AbstractTabularViewModel {
     };
 
     onUsedChange = async (trackedItem) => {
-        const response = await trackedItem.ps.save();
+        const response = await trackedItem.save();
         this.replaceInList(response.object);
     }
 }

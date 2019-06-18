@@ -2,7 +2,8 @@ import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
     CoreManager,
-    Fixtures
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
@@ -146,6 +147,12 @@ export class Spell extends KOModel {
             return '';
         }
     }, this);
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.spells.changed.dispatch(this);
+        return response;
+    }
 }
 
 Spell.validationConstraints = {

@@ -91,4 +91,8 @@ export class Note extends KOModel {
 
         return chatNote;
     };
+
+    save = async () => {
+        return await this.ps.save();
+    }
 }

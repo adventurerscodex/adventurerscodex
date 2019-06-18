@@ -4,6 +4,7 @@ import {
 import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
+import { filter } from 'lodash';
 import ko from 'knockout';
 import template from './view.html';
 
@@ -24,23 +25,32 @@ export class SkillsViewModel extends AbstractGridViewModel {
         };
     }
 
-    async refresh () {
-        await super.refresh();
-        await this.updateValues();
+    bonusLabel ( bonus ) {
+        const bonusNumber = parseInt(ko.utils.unwrapObservable(bonus));
+        let str = '+ 0';
+        if (!isNaN(bonusNumber)) {
+            str = bonusNumber >= 0 ? `+ ${bonusNumber}` : `- ${Math.abs(bonusNumber)}`;
+        }
+        return str;
     }
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        Notifications.abilityScores.changed.add(this.refresh);
-        Notifications.proficiencyBonus.changed.add(this.updateValues);
+        Notifications.abilityScores.changed.add(this.updateAbilityScoreValues);
     }
 
-    // loops through all the skills to calculate bonuses
-    async updateValues () {
-        const skillUpdates = this.entities().map((skill) => {
-            skill.updateBonuses();
-        });
-        await Promise.all(skillUpdates);
+    async updateAbilityScoreValues (abilityScore) {
+        if (abilityScore) {
+            const skillUpdates = filter(
+          this.entities(),
+          (skill) => {
+              return skill.abilityScore().uuid() === abilityScore.uuid();
+          } ).map(async (skill) => {
+              const updatedSkill = await skill.updateAbilityScoreValues(abilityScore);
+              this.replaceInList(skill);
+          });
+            await Promise.all(skillUpdates);
+        }
     }
 }
 

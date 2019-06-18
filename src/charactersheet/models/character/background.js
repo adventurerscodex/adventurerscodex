@@ -17,6 +17,10 @@ export class Background extends KOModel {
     flaw = ko.observable('');
     bond = ko.observable('');
     personalityTrait = ko.observable('');
+
+    save = async () => {
+        return await this.ps.save();
+    }
 }
 
 Background.validationConstraints = {

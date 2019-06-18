@@ -1,5 +1,6 @@
 import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -24,6 +25,12 @@ export class SpellStats extends KOModel {
         const castingAbility = values.castingAbility;
         values.castingAbility = castingAbility  === '' ? null : castingAbility;
         return values;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.spellStats.changed.dispatch(this);
+        return response;
     }
 }
 

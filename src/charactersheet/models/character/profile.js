@@ -1,5 +1,6 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class Profile extends KOModel {
@@ -57,6 +58,12 @@ export class Profile extends KOModel {
             + 'internet can provide.';
         return desc;
     });
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.profile.changed.dispatch(this);
+        return response;
+    }
 }
 
 Profile.validationConstraints = {

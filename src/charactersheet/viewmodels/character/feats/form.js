@@ -23,10 +23,6 @@ export class FeatFormViewModel extends AbstractChildTrackedFormModel {
     classOptions = Fixtures.profile.classOptions;
 
     popoverText = () => ('Tracked Feats are listed in the Tracker.');
-
-    notify() {
-        Notifications.feat.changed.dispatch();
-    }
 }
 
 ko.components.register('feat-form', {

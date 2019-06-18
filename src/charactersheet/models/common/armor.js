@@ -1,6 +1,6 @@
 import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
-
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -100,6 +100,12 @@ export class Armor extends KOModel {
         }
 
         return values;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.armor.changed.dispatch(this);
+        return response;
     }
 }
 

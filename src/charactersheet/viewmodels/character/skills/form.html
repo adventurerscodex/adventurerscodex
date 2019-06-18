@@ -43,7 +43,9 @@
            }"></select>
           </div>
         </td>
-        <td><span data-bind="html: nameLabel"></span></td>
+        <td>
+          <span data-bind="text: name" /> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+        </td>
         <td style="width: 100px;">
           <div class="input-group skill-modifier-input">
             <input type="number"
@@ -55,7 +57,7 @@
                       invalid: $component.invalidate },
                     attr: { ...$component.validation.abilityScore }"></input>
             <span class="input-group-addon">
-              <span data-bind="text: bonusNumber"></span>
+              <span data-bind="text: bonus"></span>
             </span>
           </div>
         </td>

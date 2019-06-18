@@ -154,11 +154,17 @@ export var Notifications = {
     },
 
     feat: {
-        changed: new Signal()
+        changed: new Signal(),
+        tracked: {
+            changed: new Signal()
+        }
     },
 
     feature: {
-        changed: new Signal()
+        changed: new Signal(),
+        tracked: {
+            changed: new Signal()
+        }
     },
 
     health: {
@@ -325,7 +331,10 @@ export var Notifications = {
     },
 
     trait: {
-        changed: new Signal()
+        changed: new Signal(),
+        tracked: {
+            changed: new Signal()
+        }
     },
 
     tracked: {

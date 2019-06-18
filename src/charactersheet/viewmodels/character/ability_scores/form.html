@@ -37,7 +37,7 @@
       <tbody>
         <!-- ko foreach: $component.order -->
         <tr data-bind="with: $component.findSaveByName($data)">
-          <!-- ko with: $data.abilityScoreObject -->
+          <!-- ko with: $data.abilityScore -->
           <td class="ac-table-data-cell">
             <!-- ko if: $index() == 0 -->
             <input class="form-control ac-number-input"

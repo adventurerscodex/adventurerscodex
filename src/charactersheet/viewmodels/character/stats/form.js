@@ -44,7 +44,7 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
 
     async save () {
         await super.save();
-        await this.hitDice().ps.save();
+        await this.hitDice().save();
     }
 
     notify = () => {

@@ -24,10 +24,6 @@ export class FeatureFormViewModel  extends AbstractChildTrackedFormModel {
         this.entity().characterClass(value);
     };
 
-    notify() {
-        Notifications.feature.changed.dispatch();
-    }
-
     popoverText = () => ('Tracked Features are listed in the Tracker.');
 }
 

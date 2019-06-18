@@ -82,8 +82,8 @@ export class StatsCardViewModel {
             // Dropped to unconscious. Reset the saving throws.
             this.deathSaveSuccess().used(0);
             this.deathSaveFailure().used(0);
-            const saveSuccesses = await this.deathSaveSuccess().ps.save();
-            const saveFailures = await this.deathSaveFailure().ps.save();
+            const saveSuccesses = await this.deathSaveSuccess().save();
+            const saveFailures = await this.deathSaveFailure().save();
             this.deathSaveSuccess(saveSuccesses.object);
             this.deathSaveFailure(saveFailures.object);
             Notifications.stats.deathSaves.notSuccess.changed.dispatch();
@@ -92,8 +92,8 @@ export class StatsCardViewModel {
             // Healed a bit. Reset saves for next time.
             this.deathSaveSuccess().used(0);
             this.deathSaveFailure().used(0);
-            const saveSuccesses = await this.deathSaveSuccess().ps.save();
-            const saveFailures = await this.deathSaveFailure().ps.save();
+            const saveSuccesses = await this.deathSaveSuccess().save();
+            const saveFailures = await this.deathSaveFailure().save();
             this.deathSaveSuccess(saveSuccesses.object);
             this.deathSaveFailure(saveFailures.object);
             Notifications.stats.deathSaves.success.changed.dispatch();
@@ -101,8 +101,8 @@ export class StatsCardViewModel {
           // Damaged while stable.
             this.deathSaveSuccess().used(0);
             this.deathSaveFailure().used(0);
-            const saveSuccesses = await this.deathSaveSuccess().ps.save();
-            const saveFailures = await this.deathSaveFailure().ps.save();
+            const saveSuccesses = await this.deathSaveSuccess().save();
+            const saveFailures = await this.deathSaveFailure().save();
             this.deathSaveSuccess(saveSuccesses.object);
             this.deathSaveFailure(saveFailures.object);
             Notifications.stats.deathSaves.notSuccess.changed.dispatch();
@@ -111,7 +111,7 @@ export class StatsCardViewModel {
         if (this.massiveDamageTaken()) {
           // oh no ...
             this.deathSaveFailure().used(3);
-            const saveFailures = await this.deathSaveFailure().ps.save();
+            const saveFailures = await this.deathSaveFailure().save();
             this.deathSaveFailure(saveFailures.object);
 
             Notifications.userNotification.dangerNotification.dispatch(

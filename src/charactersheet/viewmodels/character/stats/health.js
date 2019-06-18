@@ -124,7 +124,7 @@ class StatsHealthViewModel extends AbstractViewModel {
         // damage is calculated a 3rd time is smelling like scope creep.
         // damageHandler updated this.health()
         this.damageHandler(healValue);
-        const response = await this.health().ps.save();
+        const response = await this.health().save();
         this.health().importValues(response.object.exportValues());
         Notifications.health.damage.changed.dispatch();
         this.healInput(null);
@@ -136,7 +136,7 @@ class StatsHealthViewModel extends AbstractViewModel {
             tempValue = parseInt(this.tempInput());
         }
         this.health().tempHitPoints(tempValue);
-        const response = await this.health().ps.save();
+        const response = await this.health().save();
         this.health().importValues(response.object.exportValues());
         Notifications.health.tempHitPoints.changed.dispatch();
         this.tempInput(null);
@@ -152,7 +152,7 @@ class StatsHealthViewModel extends AbstractViewModel {
         // damage is calculated a 3rd time is smelling like scope creep.
         // damageHandler updated this.health()
         this.damageHandler(damageValue);
-        const response = await this.health().ps.save();
+        const response = await this.health().save();
         this.health().importValues(response.object.exportValues());
         Notifications.health.damage.changed.dispatch();
         this.dmgInput(null);
@@ -233,7 +233,7 @@ class StatsHealthViewModel extends AbstractViewModel {
     }
 
     saveHitDice = async () => {
-        const response = await this.hitDice().ps.save();
+        const response = await this.hitDice().save();
         this.hitDice().importValues(response.object.exportValues());
         this.calculateHitDice();
         Notifications.hitDice.changed.dispatch();
@@ -264,7 +264,7 @@ class StatsHealthViewModel extends AbstractViewModel {
     resetOnLongRest = async () => {
         this.health().damage(0);
         this.health().tempHitPoints(0);
-        const response = await this.health().ps.save();
+        const response = await this.health().save();
         this.health().importValues(response.object.exportValues());
         Notifications.health.damage.changed.dispatch();
         Notifications.health.tempHitPoints.changed.dispatch();

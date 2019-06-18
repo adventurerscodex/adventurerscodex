@@ -2,7 +2,8 @@ import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
     CoreManager,
-    Fixtures
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
 import { AbilityScore } from 'charactersheet/models/character/ability_score';
 import { KOModel } from 'hypnos';
@@ -258,6 +259,12 @@ export class Weapon extends KOModel {
         }
 
         return values;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.weapons.changed.dispatch(this);
+        return response;
     }
 }
 

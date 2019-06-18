@@ -28,7 +28,7 @@ export class TrackedDetailForm extends AbstractChildTrackedFormModel {
 
     notify = () => {
         const type = this.modelName.toLowerCase();
-        Notifications.tracked[type].changed.dispatch();
+        Notifications.tracked[type].changed.dispatch(this.entity());
     }
 
     validation = {

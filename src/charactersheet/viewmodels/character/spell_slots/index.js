@@ -52,10 +52,10 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
             }
         };
     }
+
     async onUsedChange(spellslot) {
-        const response = await spellslot.ps.save();
+        const response = await spellslot.save();
         this.replaceInList(response.object);
-        this.notify();
     }
 
     nextSlotLevel = ko.pureComputed(() => {
@@ -135,27 +135,21 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
         const updates = this.entities().map(async (entity) => {
             if (entity.resetsOn() === Fixtures.resting.shortRestEnum) {
                 entity.used(0);
-                await entity.ps.save();
+                await entity.save();
                 this.replaceInList(entity);
             }
         });
         await Promise.all(updates);
-        this.notify();
     }
 
     async resetLongRestFeatures() {
         const updates = this.entities().map(async (entity) => {
             entity.used(0);
-            await entity.ps.save();
+            await entity.save();
             this.replaceInList(entity);
 
         });
         await Promise.all(updates);
-        this.notify();
-    }
-
-    notify() {
-        Notifications.spellSlots.changed.dispatch();
     }
 }
 

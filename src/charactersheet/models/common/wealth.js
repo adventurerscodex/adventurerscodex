@@ -1,4 +1,5 @@
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class Wealth extends KOModel {
@@ -74,6 +75,12 @@ export class Wealth extends KOModel {
         }
 
         return values;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.wealth.changed.dispatch(this);
+        return response;
     }
 }
 

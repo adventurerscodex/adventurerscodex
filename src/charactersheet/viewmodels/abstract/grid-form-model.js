@@ -45,7 +45,7 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
         const updates = this.entities().map(async (entity) => {
             if (entity.markedForSave) {
                 delete entity.markedForSave;
-                await entity.ps.save();
+                await entity.save();
             }
         });
         await Promise.all(updates);

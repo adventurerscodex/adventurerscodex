@@ -1,10 +1,14 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
 export class AbilityScore extends KOModel {
+    constructor(params) {
+        super(params);
+    }
     static __skeys__ = ['core', 'abilityScores'];
     static __dependents__ = ['Skill', 'SavingThrow'];
 
@@ -26,21 +30,10 @@ export class AbilityScore extends KOModel {
         }
     }
 
-    modifierLabel() {
-        try {
-            if (this.value() === null || this.value() === '') {
-                return '';
-            }
-            let modifier = this.getModifier();
-            if (modifier >= 0) {
-                modifier = '+ ' + modifier;
-            } else {
-                modifier = '- ' + Math.abs(modifier);
-            }
-            return modifier;
-        } catch (e) {
-            // Ignore
-        }
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.abilityScores.changed.dispatch(this);
+        return response;
     }
 }
 

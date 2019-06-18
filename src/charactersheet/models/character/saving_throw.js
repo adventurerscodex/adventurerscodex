@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { AbilityScore } from './ability_score';
 import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
 
@@ -11,46 +12,50 @@ export class SavingThrow extends KOModel {
     static __skeys__ = ['core', 'savingThrows'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid'],
+        abilityScore: {
+            create: ({ data }) => {
+                const abilityScore = new AbilityScore();
+                if (data) {
+                    abilityScore.importValues(data);
+                }
+                return ko.observable(abilityScore);
+            },
+            update: ({ data }) => {
+                const abilityScore = new AbilityScore();
+                if (data) {
+                    abilityScore.importValues(data);
+                }
+                return abilityScore;
+            }
+        }
     };
 
     coreUuid = ko.observable(null);
     name = ko.observable('');
-    abilityScore = ko.observable();
-    abilityScoreObject = ko.observable(new AbilityScore());
+    abilityScore = ko.observable(new AbilityScore());
     modifier = ko.observable(0);
     proficiency = ko.observable(false);
 
-    toSchemaValues = (values) => {
-        const abilityScoreId = values.abilityScore.uuid;
-        values.abilityScore = abilityScoreId;
-        return values;
-    }
+    toSchemaValues = (values) => ({
+        ...values,
+        abilityScore: values.abilityScore.uuid
+    });
 
-    proficiencyScore = () => {
-        return ProficiencyService.sharedService().proficiency();
-    };
+    proficiencyBonus = ko.pureComputed(() => {
+        const proficiencyBonus = ProficiencyService.sharedService().proficiency();
+        if (this.proficiency()) {
+            return proficiencyBonus;
+        }
+        return 0;
+    });
 
-    async updateAbilityScore() {
-        this.abilityScoreObject().importValues(this.abilityScore());
-    }
-
-    modifierLabel = ko.pureComputed(() => {
+    bonus = ko.pureComputed(() => {
         let bonus = this.modifier() ? parseInt(this.modifier()) : 0;
-        const abilityScoreModifier = this.abilityScoreObject().getModifier();
-        const proficiency = this.proficiency();
-        if (proficiency) {
-            bonus += this.proficiencyScore() + abilityScoreModifier;
-        } else if (abilityScoreModifier) {
-            bonus += abilityScoreModifier;
-        } else {
-            bonus = bonus != null ? bonus : null;
-        }
-        if (bonus === null) {
-            return '+ 0';
-        }
-        return bonus >= 0 ? '+ ' + bonus : '- ' + Math.abs(bonus);
-    })
+        bonus += this.abilityScore().getModifier();
+        bonus += this.proficiencyBonus();
+        return bonus;
+    });
 
     proficiencyLabel = ko.pureComputed(() => {
         if (this.proficiency() === true) {
@@ -58,6 +63,13 @@ export class SavingThrow extends KOModel {
         }
         return '';
     });
+
+    save = async () => {
+        const response = await this.ps.save();
+        // Saving throws have no notification
+        // Notifications.savingThrows.changed.dispatch(this);
+        return response;
+    }
 }
 
 SavingThrow.validationConstraints = {

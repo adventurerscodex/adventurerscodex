@@ -64,10 +64,10 @@ export class AbstractChildFormModel extends AbstractFormModel {
 
     async save() {
         if (this.addForm()) {
-            const response = await this.entity().ps.create();
+            const response = await this.entity().create();
             this.addToParent(response.object);
         } else {
-            const response = await this.entity().ps.save();
+            const response = await this.entity().save();
             await this.replaceInParent(response.object);
         }
     }

@@ -1,7 +1,8 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
+// import { Notifications } from 'charactersheet/utilities';
+import { isEmpty } from 'lodash';
 import ko from 'knockout';
-
 
 export class Tracked {
 
@@ -16,9 +17,10 @@ export class Tracked {
     color = ko.observable();
 
     equals(tracked) {
-        return (this.max() === tracked.max() &&
-        this.used() === tracked.used() &&
-        this.resetsOn() === tracked.resetsOn());
+        return (
+          ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max) &&
+        ko.utils.unwrapObservable(this.used) === ko.utils.unwrapObservable(tracked.used) &&
+        ko.utils.unwrapObservable(this.resetsOn) === ko.utils.unwrapObservable(tracked.resetsOn));
     }
 
     clearValues() {
@@ -30,14 +32,22 @@ export class Tracked {
     }
 
     importValues(values) {
+        // if (!isEmpty(values)) {
         const mapping = ko.mapping.autoignore(this, this.mapping);
         ko.mapping.fromJS(values, mapping, this);
+        // }
     }
 
     exportValues () {
         var mapping = ko.mapping.autoignore(this, this.mapping);
-        return ko.mapping.toJS(this, mapping);
+        return ko.mapping.toJS(this, this.mapping);
     }
+
+    // save = async () => {
+    //     const response = await this.ps.save();
+    //     Notifications.tracked.changed.dispatch(this);
+    //     return response;
+    // }
 }
 
 Tracked.validationConstraints = {

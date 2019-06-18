@@ -1,166 +1,169 @@
+import { AbilityScore, Armor } from 'charactersheet/models';
 import {
     CoreManager,
     Notifications
 } from 'charactersheet/utilities';
-import { AbilityScore } from 'charactersheet/models/character/ability_score';
-import { Armor } from 'charactersheet/models/common/armor';
+
 import { Fixtures } from 'charactersheet/utilities/fixtures';
 import { OtherStats } from 'charactersheet/models/character/other_stats';
 import { SharedServiceManager } from '../common/shared_service_manager';
+
+import { find } from 'lodash';
 import ko from 'knockout';
 
 export var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
 
 function _ArmorClassService(configuration) {
-    var self = this;
+    const self = this;
 
-    self.armorClass = ko.observable();
-    self.equippedArmor = ko.observable();
-    self.equippedShield = ko.observable();
-
-    self.init = function() {
-        Notifications.armor.changed.add(self.dataHasChanged);
-        Notifications.abilityScores.dexterity.changed.add(self.dataHasChanged);
-        Notifications.stats.armorClassModifier.changed.add(self.dataHasChanged);
-
-        // Kick it off the first time.
-        self.dataHasChanged();
+    self.init = async () => {
+        self.equippedArmor = ko.observable(null);
+        self.equippedShield = ko.observable(null);
+        self.dexterity = ko.observable(new AbilityScore());
+        self.otherStats = ko.observable(new OtherStats());
+        await self.loadDexterity();
+        await self.loadArmors();
+        await self.loadOtherStats();
+        self.setUpSubscriptions();
     };
 
-    self.dataHasChanged = async function() {
-        await self.loadAndSetArmors();
-        var calculatedAC = self.baseArmorClass();
-        var dexBonus = await self.dexBonusFromArmor();
-        var armorMagicalModifier = self.equippedArmorMagicalModifier();
-        var shieldMagicalModifier = self.equippedShieldMagicalModifier();
-        var shieldBonus = self.getEquippedShieldBonus();
-        var armorClassModifier = await self.armorClassModifier();
-
-        // Always add this modifier.
-        calculatedAC += armorClassModifier;
-        calculatedAC += dexBonus;
-        calculatedAC += shieldMagicalModifier + shieldBonus;
-        calculatedAC += armorMagicalModifier;
-
-        // Set the value and let everyone know.
-        self.armorClass(calculatedAC);
-        Notifications.armorClass.changed.dispatch();
+    self.loadOtherStats = async () => {
+        const response = await OtherStats.ps.read({
+            uuid: CoreManager.activeCore().uuid()
+        });
+        self.otherStats().importValues(response.object.exportValues());
     };
 
-    /* Public Methods */
-
-    self.baseArmorClass = function() {
-        var armorClass = 10;
-
-        var armor = self.equippedArmor();
-        if (armor) {
-            var value = parseInt(armor.armorClass());
-            return value ? value : 0;
-        }
-
-        return armorClass;
+    self.loadDexterity = async () => {
+        const response = await AbilityScore.ps.list({
+            coreUuid: CoreManager.activeCore().uuid(),
+            name: Fixtures.abilityScores.constants.dexterity.name});
+        self.dexterity().importValues(response.objects[0].exportValues());
     };
 
-    self.equippedArmorMagicalModifier = function() {
-        var armor = self.equippedArmor(),
-            magicalModifier = 0;
-
-        if (armor) {
-            var modifier = parseInt(armor.magicalModifier());
-            magicalModifier = modifier ? modifier : 0;
-        }
-        return magicalModifier;
+    self.loadArmors = async () => {
+        const response = await Armor.ps.list({
+            coreUuid: CoreManager.activeCore().uuid(),
+            equipped: true
+        });
+        self.setEquippedArmor(response.objects);
+        self.setEquippedShield(response.objects);
     };
 
-    self.equippedShieldMagicalModifier = function() {
-        var shield = self.equippedShield(),
-            magicalModifier = 0;
-
-        if (shield) {
-            var modifier = parseInt(shield.magicalModifier());
-            magicalModifier = modifier ? modifier : 0;
+    self.setEquippedArmor = (armors) => {
+        const equippedArmor = find(armors, (armor) => {
+            return (armor.type() !== Fixtures.armor.constants.types.shield) && armor.equipped();
+        });
+        if (equippedArmor) {
+            self.equippedArmor(equippedArmor);
         }
-
-        return magicalModifier;
     };
 
-    self.dexBonusFromArmor = async function() {
-        var score = 0,
-            rawDexBonus = 0;
-
-        var coreUuid = CoreManager.activeCore().uuid();
-        const response = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.dexterity.name});
-        rawDexBonus = response.objects[0];
-
-        if (rawDexBonus === null) {
-            rawDexBonus = 0;
-        } else {
-            rawDexBonus = rawDexBonus.getModifier();
+    self.setEquippedShield = (armors) => {
+        const equippedShield = find(armors, (armor) => {
+            return (armor.type() === Fixtures.armor.constants.types.shield) && armor.equipped();
+        });
+        if (equippedShield) {
+            self.equippedShield(equippedShield);
         }
-
-        if (self.equippedArmor()) {
-            if (self.equippedArmor().type() === Fixtures.armor.constants.types.medium) {
-                // Medium armor gets dex bonus up to 2
-                score = rawDexBonus >= 2 ? 2 : rawDexBonus;
-            } else if (self.equippedArmor().type() === Fixtures.armor.constants.types.light) {
-                // Light armor gets all the dex bonus
-                score = rawDexBonus;
-            } else {
-                // This case would be for armor of type heavy or no type specified
-                score = 0;
-            }
-        } else {
-            // This means the character is wearing no armor,
-            // in which case they get all the dex bonus
-            score = rawDexBonus;
-        }
-        return score;
     };
 
-    self.armorClassModifier = async function() {
-        var uuid = CoreManager.activeCore().uuid();
-        var otherStatsResponse = await OtherStats.ps.read({uuid});
-        const otherStats = otherStatsResponse.object;
-        var armorClassModifier = 0;
+    self.armorClass = ko.pureComputed(() => {
+        return self.baseArmorClass() + self.equippedArmorMagicalModifier() +
+               self.dexBonusFromArmor() + self.getEquippedShieldBonus() +
+               self.equippedShieldMagicalModifier() + self.armorClassModifier();
+    });
 
-        if (otherStats) {
-            armorClassModifier = otherStats.armorClassModifier() ? parseInt(otherStats.armorClassModifier()) : 0;
+    self.baseArmorClass = ko.pureComputed(() => {
+        if (self.equippedArmor() && self.equippedArmor().armorClass()) {
+            const baseAc = parseInt(self.equippedArmor().armorClass());
+            return baseAc ? baseAc : 0;
         }
+        return 10;
+    });
 
-        return armorClassModifier;
-    };
-
-    self.getEquippedShieldBonus = function() {
-        if (self.equippedShield()) {
-            var armorClass = parseInt(self.equippedShield().armorClass());
-            return armorClass ? armorClass : 0;
+    self.equippedArmorMagicalModifier = ko.pureComputed(() => {
+        if (self.equippedArmor() && self.equippedArmor().magicalModifier()) {
+            const modifier = parseInt(self.equippedArmor().magicalModifier());
+            return modifier ? modifier : 0;
         }
-
         return 0;
+    });
+
+    self.getEquippedShieldBonus = ko.pureComputed(() => {
+        if (self.equippedShield() && self.equippedShield().armorClass()) {
+            const shieldAc = parseInt(self.equippedShield().armorClass());
+            return shieldAc ? shieldAc : 0;
+        }
+        return 0;
+    });
+
+    self.equippedShieldMagicalModifier = ko.pureComputed(() => {
+        if (self.equippedShield() && self.equippedShield().magicalModifier()) {
+            const modifier = parseInt(self.equippedShield().magicalModifier());
+            return modifier ? modifier : 0;
+        }
+        return 0;
+    });
+
+    self.dexBonusFromArmor = ko.pureComputed(()=> {
+        let dexMod = self.dexterity().getModifier();
+        if (!dexMod) {
+            return 0;
+        }
+        if (self.equippedArmor()) {
+            if (self.equippedArmor().type() === Fixtures.armor.constants.types.heavy) {
+                return 0;
+            } else if (self.equippedArmor().type() === Fixtures.armor.constants.types.medium) {
+                return dexMod > 2 ? 2 : dexMod;
+            } else if (self.equippedArmor().type() === Fixtures.armor.constants.types.light) {
+                return dexMod;
+            }
+        }
+        return dexMod;
+    });
+
+    self.armorClassModifier = ko.pureComputed(() => {
+        if (self.otherStats() && self.otherStats().armorClassModifier()) {
+            const modifier = parseInt(self.otherStats().armorClassModifier());
+            return modifier ? modifier : 0;
+        }
+        return 0;
+    });
+
+
+    self.setUpSubscriptions = () => {
+        Notifications.armor.changed.add(self.updateArmor);
+        Notifications.abilityScores.changed.add(self.updateDexterity);
+        Notifications.otherStats.changed.add(self.updateOtherStats);
+        self.armorClass.subscribe(() => Notifications.armorClass.changed.dispatch());
     };
 
-    /* Private Methods */
-
-    self.loadAndSetArmors = async function() {
-        var coreUuid = CoreManager.activeCore().uuid();
-        const response = await Armor.ps.list({coreUuid, equipped: true});
-        let armors = response.objects;
-
-        this.setEquippedArmor(armors);
-        this.setEquippedShield(armors);
+    self.updateDexterity = (abilityScore) => {
+        if (abilityScore && abilityScore.uuid() === self.dexterity().uuid()) {
+            self.dexterity().importValues(abilityScore.exportValues());
+        }
     };
 
-    self.setEquippedArmor = function(armors) {
-        const equippedArmor = armors.filter((armor) => {
-            return armor.type() != 'Shield';
-        })[0];
-        self.equippedArmor(equippedArmor);
+    self.updateOtherStats = (otherStats) => {
+        if (otherStats && otherStats.uuid() === self.otherStats().uuid()) {
+            self.otherStats().importValues(otherStats.exportValues());
+        }
     };
 
-    self.setEquippedShield = function(armors) {
-        const equippedShield = armors.filter((armor) => {
-            return armor.type() == 'Shield';
-        })[0];
-        self.equippedShield(equippedShield);
+    self.updateArmor = (armor) => {
+        if (armor) {
+            if (armor.equipped()) {
+                if (armor.type() === Fixtures.armor.constants.types.shield) {
+                    self.equippedShield(armor);
+                } else {
+                    self.equippedArmor(armor);
+                }
+            } else if (armor.uuid() === self.equippedArmor().uuid()) {
+                self.equippedArmor(null);
+            } else if (armor.uuid() === self.equippedShield().uuid()) {
+                self.equippedShield(null);
+            }
+        }
     };
 }

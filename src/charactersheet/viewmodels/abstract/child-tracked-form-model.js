@@ -25,10 +25,10 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
 
     async load() {
         await super.load();
-        const tracked = ko.utils.unwrapObservable(this.entity().tracked);
+        const tracked = this.entity().tracked();
         if (tracked) {
             this.isTracked(true);
-            this.tracked().importValues(tracked);
+            this.tracked().importValues(tracked.exportValues());
         }
     }
 
@@ -40,10 +40,10 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
 
     async refresh() {
         await super.refresh();
-        const tracked = ko.utils.unwrapObservable(this.entity().tracked);
+        const tracked = this.entity().tracked();
         if (tracked) {
             this.isTracked(true);
-            this.tracked().importValues(tracked);
+            this.tracked().importValues(tracked.exportValues());
         } else {
             this.isTracked(false);
         }
@@ -54,7 +54,7 @@ export class AbstractChildTrackedFormModel extends AbstractChildFormModel {
             this.tracked(null);
             this.entity().tracked(null);
         } else {
-            this.entity().tracked(this.tracked().exportValues());
+            this.entity().tracked().importValues(this.tracked().exportValues());
         }
         await super.save();
     }

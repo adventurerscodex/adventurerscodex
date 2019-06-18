@@ -1,4 +1,5 @@
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { Feat } from 'charactersheet/models';
 import { FeatFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 import autoBind from 'auto-bind';
@@ -13,12 +14,8 @@ export class FeatsViewModel extends AbstractTabularViewModel {
         autoBind(this);
     }
 
-    modelName = 'Feat';
-
-    setUpSubscriptions = () => {
-        super.setUpSubscriptions();
-        const featChanged = Notifications.tracked.feat.changed.add(this.refresh);
-        this.subscriptions.push(featChanged);
+    modelClass () {
+        return Feat;
     }
 }
 

@@ -80,7 +80,7 @@ export class AbstractFormModel {
     }
 
     async save() {
-        const response = await this.entity().ps.save();
+        const response = await this.entity().save();
         if ('importValues' in this.entity()) {
             this.entity().importValues(response.object.exportValues());
         } else {

@@ -26,10 +26,6 @@ export class TraitFormViewModel extends AbstractChildTrackedFormModel {
     };
 
     popoverText = () => ('Tracked Traits are listed in the Tracker.');
-
-    notify() {
-        Notifications.feature.changed.dispatch();
-    }
 }
 
 ko.components.register('trait-form', {

@@ -18,23 +18,16 @@ class ScoreSaveViewModel extends AbstractGridViewModel {
     // the view and form designs to do so.
     modelName = 'SavingThrow';
 
-    async refresh () {
-        await super.refresh();
-        await this.updateSavingThrowValues();
-    }
-
-    async updateSavingThrowValues () {
-        const saveUpdates = this.entities().map(async (savingThrow) => {
-            await savingThrow.updateAbilityScore();
-        });
-        await Promise.all(saveUpdates);
-    }
-
-    setUpSubscriptions() {
-        super.setUpSubscriptions();
-        // abilityScore changes not needed, as the card flip should be enough
-        Notifications.proficiencyBonus.changed.add(this.updateSavingThrowValues);
-        Notifications.abilityScores.changed.add(this.updateSavingThrowValues);
+    modifierLabel = (bonus) => {
+        let modifier = '+ 0';
+        let bonusNumber = parseInt(bonus);
+        if (bonusNumber && !isNaN(bonusNumber)) {
+            if (bonusNumber < 0) {
+                return `- ${Math.abs(bonusNumber)}`;
+            }
+            return `+ ${bonusNumber}`;
+        }
+        return '+ 0';
     }
 
     findSaveByName = (name) => find(this.entities(), (savingthrow) => savingthrow.name() === name);

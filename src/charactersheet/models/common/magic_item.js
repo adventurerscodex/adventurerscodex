@@ -1,5 +1,6 @@
 import {
     Fixtures,
+    Notifications,
     Utility
 } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
@@ -78,6 +79,12 @@ export class MagicItem extends KOModel {
             values.weight = 0;
         }
         return values;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.magicItems.changed.dispatch(this);
+        return response;
     }
 }
 

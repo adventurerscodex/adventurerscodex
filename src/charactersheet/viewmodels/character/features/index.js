@@ -4,6 +4,7 @@ import { FeatureFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
+import { find } from 'lodash';
 import ko from 'knockout';
 import template from './index.html';
 
@@ -14,7 +15,10 @@ export class FeaturesViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#feature-pane';
         autoBind(this);
     }
-    modelName = 'Feature';
+
+    modelClass () {
+        return Feature;
+    }
 
     sorts() {
         return {
@@ -22,12 +26,6 @@ export class FeaturesViewModel extends AbstractTabularViewModel {
             'characterClass asc': { field: 'characterClass', direction: 'asc'},
             'characterClass desc': { field: 'characterClass', direction: 'desc'}
         };
-    }
-
-    setUpSubscriptions = () => {
-        super.setUpSubscriptions();
-        const featureChanged = Notifications.tracked.feature.changed.add(this.refresh);
-        this.subscriptions.push(featureChanged);
     }
 }
 

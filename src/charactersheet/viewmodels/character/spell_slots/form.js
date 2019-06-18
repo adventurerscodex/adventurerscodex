@@ -50,9 +50,6 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
             this.entity().level(ko.utils.unwrapObservable(this.nextSlotLevel));
         }
     }
-    notify = () => {
-        Notifications.spellSlots.changed.dispatch();
-    }
 }
 
 ko.components.register('spell-slot-form', {

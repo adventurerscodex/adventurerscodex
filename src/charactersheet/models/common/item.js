@@ -131,6 +131,12 @@ export class Item extends KOModel {
 
         return values;
     }
+
+    save = async () => {
+        const response = await this.ps.save();
+        Notifications.items.changed.dispatch(this);
+        return response;
+    }
 }
 
 Item.validationConstraints = {

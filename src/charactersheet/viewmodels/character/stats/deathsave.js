@@ -76,7 +76,7 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
         } else if (this.deathSaveSuccess().used() < 3) {
             this.deathSaveSuccess().used(this.deathSaveSuccess().used() + 1);
         }
-        const response = await this.deathSaveSuccess().ps.save();
+        const response = await this.deathSaveSuccess().save();
         this.deathSaveSuccess(response.object);
         this.calculateDeathSaveSuccessList();
         if (this.deathSaveSuccess().used() === 3) {
@@ -97,7 +97,7 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
             newDamage = 0;
         }
         this.health().damage(newDamage);
-        const response = await this.health().ps.save();
+        const response = await this.health().save();
         this.health().importValues(response.object.exportValues());
         await this.stabilize();
         Notifications.health.damage.changed.dispatch();
@@ -106,7 +106,7 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
 
     stabilize = async () => {
         this.deathSaveSuccess().used(3);
-        const successResponse = await this.deathSaveSuccess().ps.save();
+        const successResponse = await this.deathSaveSuccess().save();
         this.deathSaveSuccess(successResponse.object);
         await this.characterStabilized();
     }
@@ -118,7 +118,7 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
               timeOut: 0
           });
         this.deathSaveFailure().used(0);
-        const failureResponse = await this.deathSaveFailure().ps.save();
+        const failureResponse = await this.deathSaveFailure().save();
         this.deathSaveFailure(failureResponse.object);
         Notifications.stats.deathSaves.success.changed.dispatch();
     }
@@ -129,7 +129,7 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
         } else if (this.deathSaveSuccess().used() < 3) {
             this.deathSaveFailure().used(this.deathSaveFailure().used() + 1);
         }
-        const response = await this.deathSaveFailure().ps.save();
+        const response = await this.deathSaveFailure().save();
         this.deathSaveFailure(response.object);
         this.calculateDeathSaveFailureList();
 
@@ -147,7 +147,7 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
                 timeOut: 0
             });
         this.deathSaveSuccess().used(0);
-        const successResponse = await this.deathSaveSuccess().ps.save();
+        const successResponse = await this.deathSaveSuccess().save();
         this.deathSaveSuccess(successResponse.object);
         Notifications.stats.deathSaves.fail.changed.dispatch();
     }
