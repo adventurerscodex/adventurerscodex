@@ -110,7 +110,7 @@ export class AbstractTabularViewModel {
         return !!ko.utils.unwrapObservable(entity.isTracked);
     }
 
-    toggleShowAddForm =  () => {
+    toggleShowAddForm () {
         if (this.displayAddForm()) {
             this.displayAddForm(false);
             $(this.addFormId).collapse('hide');

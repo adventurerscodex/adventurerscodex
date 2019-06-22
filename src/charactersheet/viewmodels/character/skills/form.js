@@ -101,9 +101,28 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
         } else return '';
     };
 
-    flipAndCollapse = () => {
-        this.addForm(false);
-        this.flip();
+    toggleShowAddForm () {
+        if (ko.utils.unwrapObservable(this.displayAddForm)) {
+            try {
+                this.displayAddForm(false);
+            } catch (e) {
+              // For some reason, this form, and this form only,
+              // cannot figure out displayAddForm in some cases.
+              // However, catching and trying again works?!?!?
+                this.displayAddForm(false);
+            }
+            $(this.addFormId).collapse('hide');
+        } else {
+            try {
+                this.displayAddForm(true);
+            } catch (e) {
+                // For some reason, this form, and this form only,
+                // cannot figure out displayAddForm in some cases.
+                // However, catching and trying again works?!?!?
+                this.displayAddForm(true);
+            }
+            $(this.addFormId).collapse('show');
+        }
     }
 
     validation = {
