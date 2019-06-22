@@ -27,10 +27,15 @@ export class SpellStats extends KOModel {
         return values;
     }
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.spellStats.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.spellstats.changed.dispatch(this);
     }
 }
 

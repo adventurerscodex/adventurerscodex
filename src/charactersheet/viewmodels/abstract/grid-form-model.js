@@ -59,7 +59,7 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
     }
 
     async delete(entity) {
-        await entity.ps.delete();
+        await entity.delete();
         this.removeFromList(entity);
         this.notify();
         this.flip();

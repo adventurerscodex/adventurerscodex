@@ -52,12 +52,7 @@
                 tabId: $parent.tabId,
                 collapsable: true,
                 elementId: 'feature_list',
-                context: {
-                  data: $data,
-                  replaceInList: $component.replaceInList,
-                  addToList: $component.addToList,
-                  removeFromList: $component.removeFromList
-                }
+                context: { data: $data }
               }">
             <div class="front">
               <div data-bind="with: context.data">
@@ -81,9 +76,7 @@
                 containerId: elementId,
                 show: showBack,
                 flip: flip,
-                forceCardResize: forceCardResize,
-                replaceInParent: context.replaceInList,
-                removeFromParent: context.removeFromList
+                forceCardResize: forceCardResize
                }"></feature-form>
             </div>
           </flip-card>
@@ -99,9 +92,8 @@
             <feature-form params="{
               addForm: true,
               containerId:'add-feature',
-              show: $component.addForm,
-              flip: $component.toggleShowAddForm,
-              addToParent: $component.addToList,
+              show: $component.displayAddForm,
+              flip: $component.toggleShowAddForm
              }"></feature-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->

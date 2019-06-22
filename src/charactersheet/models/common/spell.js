@@ -148,10 +148,26 @@ export class Spell extends KOModel {
         }
     }, this);
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.spell.added.dispatch(this);
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.spells.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.spell.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.spell.deleted.dispatch(this);
     }
 }
 

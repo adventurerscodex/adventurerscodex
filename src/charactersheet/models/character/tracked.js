@@ -7,14 +7,13 @@ import ko from 'knockout';
 export class Tracked {
 
     mapping = {
-        include: ['max', 'used', 'resetsOn', 'color', 'type']
+        include: ['max', 'used', 'resetsOn', 'type']
     };
 
     max = ko.observable(0);
     used = ko.observable(0);
     resetsOn = ko.observable('long');
     type = ko.observable(null);
-    color = ko.observable();
 
     equals(tracked) {
         return (
@@ -28,7 +27,6 @@ export class Tracked {
         this.used(0);
         this.resetsOn('long');
         this.type(null);
-        this.color();
     }
 
     importValues(values) {
@@ -42,12 +40,6 @@ export class Tracked {
         var mapping = ko.mapping.autoignore(this, this.mapping);
         return ko.mapping.toJS(this, this.mapping);
     }
-
-    // save = async () => {
-    //     const response = await this.ps.save();
-    //     Notifications.tracked.changed.dispatch(this);
-    //     return response;
-    // }
 }
 
 Tracked.validationConstraints = {

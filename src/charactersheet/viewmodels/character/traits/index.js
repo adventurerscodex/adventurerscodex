@@ -14,9 +14,7 @@ export class TraitsViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#trait-pane';
         autoBind(this);
     }
-    modelClass () {
-        return Trait;
-    }
+    modelName = 'Trait';
 
     sorts() {
         return {

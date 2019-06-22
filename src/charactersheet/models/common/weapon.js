@@ -261,11 +261,28 @@ export class Weapon extends KOModel {
         return values;
     }
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.weapon.added.dispatch(this);
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.weapons.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.weapon.changed.dispatch(this);
     }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.weapon.deleted.dispatch(this);
+    }
+
 }
 
 Weapon.validationConstraints = {

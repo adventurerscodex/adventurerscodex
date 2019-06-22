@@ -19,6 +19,10 @@ import meditationWhite from 'images/meditation.svg';
 export class TrackedForm {
     constructor(params) {
         this.tracked = params.tracked;
+        this.formElementHasFocus = ko.observable(false);
+        if (params.hasFocus) {
+            this.formElementHasFocus = params.hasFocus;
+        }
     }
     meditationWhite = meditationWhite;
     campingTentWhite = campingTentWhite;
@@ -37,7 +41,8 @@ ko.components.register('form-tracked-component', {
                  class="form-control"\
                  min="1"\
                  required="true"\
-                 data-bind="value: max">\
+                 data-bind="value: max,\
+                 hasFocus: $component.formElementHasFocus">\
         </div>\
         <div class="form-group">\
           <label class="control-label">Resets on...</label>\

@@ -33,21 +33,29 @@ export class SpellSlot extends KOModel {
         return this.used() ? parseInt(this.used()) : 0;
     }
 
-    save = async () => {
-        const response = await this.ps.save();
-        Notifications.spellSlots.changed.dispatch(this);
-        console.log(response);
-        console.log(response.object);
-        return response;
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
     }
 
     create = async () => {
         const response = await this.ps.create();
-        Notifications.spellSlots.changed.dispatch(this);
-        console.log(response);
-        console.log(response.object);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.spellslot.added.dispatch(this);
     }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.spellslot.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.spellslot.deleted.dispatch(this);
+    }
+
 }
 
 SpellSlot.validationConstraints = {

@@ -3,6 +3,7 @@ import {
     DataRepository,
     Notifications
 } from 'charactersheet/utilities';
+import { filter, find } from 'lodash';
 import {
   AbstractFormModel
 } from './form-model';
@@ -28,27 +29,14 @@ import ko from 'knockout';
  * @property addForm (observable) Boolean flag to determine whether this is an addForm
  * for creating data;
  *
- * @param addToParent {function} callback to add new entries to the parent.
- *
- * @param replaceInParent {function} callback to replace entries in the parent.
- *
- * @param removeFromParent {function} callback to remove entries from the parent.
- *
  **/
-
-// No Op to support children forms that don't have parents (so, orphan forms)
-const noOp = (entity) => {/* no op */};
 
 export class AbstractChildFormModel extends AbstractFormModel {
     constructor(params) {
         super(params);
         this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.existingData = params.data;
-        this.addForm = ko.observable(false);
-
-        this.addToParent = params.addToParent ? params.addToParent : noOp;
-        this.replaceInParent = params.replaceInParent ? params.replaceInParent : noOp;
-        this.removeFromParent = params.removeFromParent ? params.removeFromParent : noOp;
+        this.addForm = ko.observable(!this.existingData);
     }
 
     async refresh() {
@@ -64,11 +52,9 @@ export class AbstractChildFormModel extends AbstractFormModel {
 
     async save() {
         if (this.addForm()) {
-            const response = await this.entity().create();
-            this.addToParent(response.object);
+            await this.entity().create();
         } else {
-            const response = await this.entity().save();
-            await this.replaceInParent(response.object);
+            await this.entity().save();
         }
     }
 
@@ -76,9 +62,7 @@ export class AbstractChildFormModel extends AbstractFormModel {
         if (this.containerId) {
             $(`#${this.containerId}`).collapse('hide');
         }
-        await this.entity().ps.delete();
-        await this.removeFromParent(this.existingData);
-        this.notify();
+        await this.entity().delete();
     }
 
     prePopFilter = (request, response) => {
@@ -87,14 +71,10 @@ export class AbstractChildFormModel extends AbstractFormModel {
         }
         const term = request.term.toLowerCase();
         let results = [];
-
         if (term && term.length >= (this.prePopLimit || 0)) {
             const keys = DataRepository[this.prePopSource] ?
-                Object.keys(DataRepository[this.prePopSource]) :
-                [];
-            results = keys.filter((name) => {
-                return name.toLowerCase().indexOf(term) > -1;
-            });
+                Object.keys(DataRepository[this.prePopSource]) : [];
+            results = keys.filter((name) => (name.toLowerCase().includes(term)));
         }
         response(results);
     };

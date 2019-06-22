@@ -1,24 +1,16 @@
 import 'select2/dist/css/select2.min.css';
 import 'bin/knockout-select2';
-
 import {
     AbilityScore,
     Skill
 } from 'charactersheet/models/character';
-import {
-    AbstractChildFormModel
-} from 'charactersheet/viewmodels/abstract';
-import {
-    CoreManager
-} from 'charactersheet/utilities';
+import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
+import { CoreManager } from 'charactersheet/utilities';
 import {
     ProficiencyTypeComponentViewModel
 } from 'charactersheet/components/proficiency-marker';
-
 import autoBind from 'auto-bind';
-import {
-    find
-} from 'lodash';
+import { find } from 'lodash';
 import ko from 'knockout';
 import template from './addForm.html';
 

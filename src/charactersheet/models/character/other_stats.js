@@ -26,10 +26,15 @@ export class OtherStats extends KOModel {
         proficiencyModifier: values.proficiencyModifier !== '' ? values.proficiencyModifier : 0
     })
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.otherStats.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.otherstats.changed.dispatch(this);
     }
 }
 

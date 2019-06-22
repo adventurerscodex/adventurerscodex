@@ -26,8 +26,6 @@ export class ProficiencyFormViewModel  extends AbstractChildFormModel {
     setType = (label, value) => {
         this.entity().type(value);
     };
-
-    notify() { Notifications.proficiency.changed.dispatch(); }
 }
 
 ko.components.register('proficiency-form', {

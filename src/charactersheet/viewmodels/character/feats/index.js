@@ -13,10 +13,7 @@ export class FeatsViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#feat-pane';
         autoBind(this);
     }
-
-    modelClass () {
-        return Feat;
-    }
+    modelName = 'Feat';
 }
 
 ko.components.register('feats', {

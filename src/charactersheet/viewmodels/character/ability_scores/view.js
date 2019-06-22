@@ -1,6 +1,6 @@
 import { AbstractGridViewModel } from 'charactersheet/viewmodels/abstract';
 import {  Notifications } from 'charactersheet/utilities';
-import { SavingThrow } from 'charactersheet/models/character';
+import { SavingThrow } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import { find } from 'lodash';
@@ -16,8 +16,9 @@ class ScoreSaveViewModel extends AbstractGridViewModel {
     // You may be wondering where Ability Scores are. Since they are part
     // of the Saving Throw, it is expedient to get it from there, and simplifies
     // the view and form designs to do so.
-    modelName = 'SavingThrow';
-
+    modelClass() {
+        return SavingThrow;
+    }
     modifierLabel = (bonus) => {
         let modifier = '+ 0';
         let bonusNumber = parseInt(bonus);

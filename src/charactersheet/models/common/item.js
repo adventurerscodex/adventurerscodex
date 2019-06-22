@@ -132,11 +132,28 @@ export class Item extends KOModel {
         return values;
     }
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.item.added.dispatch(this);
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.items.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.item.changed.dispatch(this);
     }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.item.deleted.dispatch(this);
+    }
+
 }
 
 Item.validationConstraints = {

@@ -1,51 +1,13 @@
 <form data-bind="submit: $component.submit">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
-  <fieldset class="fieldset-bordered">
-    <legend>Tracked</legend>
-    <div data-bind="with: $component.tracked">
-      <div class="form-group">
-        <label for="bonus"
-               class="control-label">Max</label>
-        <input class="form-control"
-               data-bind="value: max,
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.max },
-               hasFocus: $component.formElementHasFocus">
-      </div>
-      <div class="form-group">
-        <label class="control-label">Resets on...</label>
-        <div class="btn-group btn-group-justified btn-group-sm"
-             role="group">
-          <label class="btn btn-default btn-sm"
-                 data-bind="css: { active: resetsOn() === 'short'}">
-            <input type="radio"
-                   class="hide-block"
-                   name="featureResetsOnShort"
-                   value="short"
-                   data-bind="checked: resetsOn" />
-            <img class="action-bar-icon"
-                 data-bind="attr: { src: $component.meditationWhite }"></img>
-            &nbsp;&nbsp;&nbsp;Short Rest
-          </label>
-          <label class="btn btn-default  btn-sm"
-                 data-bind="css: { active: resetsOn() === 'long'}">
-            <input type="radio"
-                   class="hide-block"
-                   name="featureResetsOnLong"
-                   value="long"
-                   data-bind="checked: resetsOn" />
-            <img class="action-bar-icon"
-                 data-bind="attr: { src: $component.campingTentWhite }"></img>
-            &nbsp;&nbsp;&nbsp;Long Rest
-          </label>
-        </div>
-      </div>
-  </fieldset>
-  <div class="pull-right">
-    <button class="btn btn-sm btn-default"
-            type="reset"
-            data-bind="click: $component.reset">Cancel</button>
-    <button class="btn btn-sm btn-primary"
-            type="submit">Save</button>
+  <div data-bind="with: entity">
+    <form-tracked-component params="{
+      tracked: tracked,
+      hasFocus: $component.formElementHasFocus
+     }"></form-tracked-component>
   </div>
+  <form-submit-actions params="{
+    reset: $component.reset,
+  }"></form-submit-actions>
+
 </form>

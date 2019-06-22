@@ -8,24 +8,18 @@ export class Feat extends KOModel {
     static __skeys__ = ['core', 'feats'];
 
     static mapping = {
-        include: ['coreUuid'],
+        include: ['coreUuid', 'tracked'],
         tracked: {
-            create: ({ data }) => {
+            update: ({ data, parent, observable }) => {
                 const tracked = new Tracked();
-                if (!isEmpty(data)) {
+                if (!isEmpty(data) && !tracked.equals(data)) {
+                    parent.isTracked(true);
                     tracked.importValues(data);
-                    return tracked;
+                } else {
+                    parent.isTracked(false);
                 }
-                return null;
+                return tracked;
             }
-            // update: ({ data }) => {
-            //     const tracked = new Tracked();
-            //     if (!isEmpty(data)) {
-            //         tracked.importValues(data);
-            //         return tracked;
-            //     }
-            //     return null;
-            // }
         }
     };
 
@@ -33,12 +27,31 @@ export class Feat extends KOModel {
     name = ko.observable('');
     description = ko.observable('');
     isTracked = ko.observable(false);
-    tracked = ko.observable(null);
+    tracked = ko.observable(new Tracked());
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.feat.added.dispatch(this);
+    }
 
     save = async () => {
+        if (!this.isTracked()) {
+            this.tracked(null);
+        }
         const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
         Notifications.feat.changed.dispatch(this);
-        return response;
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.feat.deleted.dispatch(this);
     }
 }
 

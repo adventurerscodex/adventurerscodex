@@ -37,9 +37,8 @@ export class ProfileFormViewModel extends AbstractFormModel {
 
     notify = async () => {
         if (this.levelHasChanged()) {
-            Notifications.profile.level.changed.dispatch();
+            Notifications.profile.level.changed.dispatch(this.entity());
         }
-        Notifications.profile.changed.dispatch();
         this.levelHasChanged(false);
     }
     //

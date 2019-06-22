@@ -1,6 +1,6 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
-import { Fixtures } from 'charactersheet/utilities/fixtures';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import ko from 'knockout';
 import marked from 'bin/textarea-markdown-editor/marked.min';
@@ -92,7 +92,26 @@ export class Note extends KOModel {
         return chatNote;
     };
 
-    save = async () => {
-        return await this.ps.save();
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        Notifications.note.added.dispatch(this);
     }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.note.changed.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.note.deleted.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+    }
+
 }

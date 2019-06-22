@@ -18,8 +18,14 @@ export class Background extends KOModel {
     bond = ko.observable('');
     personalityTrait = ko.observable('');
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
     save = async () => {
-        return await this.ps.save();
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
     }
 }
 

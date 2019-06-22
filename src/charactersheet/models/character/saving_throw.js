@@ -14,13 +14,6 @@ export class SavingThrow extends KOModel {
     static mapping = {
         include: ['coreUuid'],
         abilityScore: {
-            create: ({ data }) => {
-                const abilityScore = new AbilityScore();
-                if (data) {
-                    abilityScore.importValues(data);
-                }
-                return ko.observable(abilityScore);
-            },
             update: ({ data }) => {
                 const abilityScore = new AbilityScore();
                 if (data) {
@@ -64,11 +57,19 @@ export class SavingThrow extends KOModel {
         return '';
     });
 
-    save = async () => {
-        const response = await this.ps.save();
+    load = async (params) => {
+        const response = await this.ps.read(params);
+        this.importValues(response.object.exportValues());
         // Saving throws have no notification
         // Notifications.savingThrows.changed.dispatch(this);
-        return response;
+    }
+
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        // Saving throws have no notification
+        // Notifications.savingThrows.changed.dispatch(this);
     }
 }
 

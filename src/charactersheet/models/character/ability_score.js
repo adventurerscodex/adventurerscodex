@@ -30,10 +30,15 @@ export class AbilityScore extends KOModel {
         }
     }
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.abilityScores.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.abilityscore.changed.dispatch(this);
     }
 }
 

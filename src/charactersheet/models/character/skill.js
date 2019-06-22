@@ -12,13 +12,6 @@ export class Skill extends KOModel {
     static mapping = {
         include: ['coreUuid', 'uuid'],
         abilityScore: {
-            create: ({ data }) => {
-                const abilityScore = new AbilityScore();
-                if (data) {
-                    abilityScore.importValues(data);
-                }
-                return ko.observable(abilityScore);
-            },
             update: ({ data }) => {
                 const abilityScore = new AbilityScore();
                 if (data) {
@@ -44,24 +37,6 @@ export class Skill extends KOModel {
         proficiency: values.proficiency !== '' ? values.proficiency : 'not',
         abilityScore: values.abilityScore.uuid
     })
-    //     // TODO: I have to do this because when delete is called, it only includes the IDs in the
-    //     // TODO: values object.
-    //     if (values.abilityScore) {
-    //         const abilityScoreId = ko.utils.unwrapObservable(ko.utils.unwrapObservable(values.abilityScore).uuid);
-    //         values.abilityScore = abilityScoreId;
-    //     }
-    //
-    //     // assign default values if they are somehow not provided by service code
-    //     if (values.modifier === '') {
-    //         values.modifier = 0;
-    //     }
-    //
-    //     if (values.proficiency === '') {
-    //         values.proficiency = 'not';
-    //     }
-    //
-    //     return values;
-    // }
 
     proficiencyBonus = ko.pureComputed(() => {
         var profBonus = ProficiencyService.sharedService().proficiency();
@@ -92,11 +67,29 @@ export class Skill extends KOModel {
         }
     };
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object);
+        Notifications.skill.added.dispatch(this);
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.skills.changed.dispatch(this);
-        return response;
+        this.importValues(response.object);
+        Notifications.skill.changed.dispatch(this);
     }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.skill.deleted.dispatch(this);
+    }
+
 }
 
 Skill.validationConstraints = {

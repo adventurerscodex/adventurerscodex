@@ -81,11 +81,29 @@ export class MagicItem extends KOModel {
         return values;
     }
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.magicItems.added.dispatch(this);
+    }
+
     save = async () => {
         const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
         Notifications.magicItems.changed.dispatch(this);
-        return response;
+        return response.object;
     }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.magicItems.deleted.dispatch(this);
+    }
+
 }
 
 MagicItem.validationConstraints = {

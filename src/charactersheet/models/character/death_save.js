@@ -16,9 +16,14 @@ export class DeathSave extends KOModel {
     used = ko.observable();
     type = ko.observable();
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
     save = async () => {
         const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
         Notifications.deathSaves.changed.dispatch(this);
-        return response;
     }
 }

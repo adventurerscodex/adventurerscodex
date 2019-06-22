@@ -77,10 +77,16 @@ export class Wealth extends KOModel {
         return values;
     }
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
+    }
+
     save = async () => {
         const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
         Notifications.wealth.changed.dispatch(this);
-        return response;
     }
 }
 

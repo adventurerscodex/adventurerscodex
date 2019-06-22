@@ -3,24 +3,18 @@ import {
     AbilityScore,
     OtherStats
 } from 'charactersheet/models/character';
-
 import {
     ArmorClassService,
     ProficiencyService
 } from 'charactersheet/services';
-
 import {
     CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
-
 import autoBind from 'auto-bind';
 import { getModifier } from 'charactersheet/models/character/ability_score';
-
-
 import ko from 'knockout';
 import template from './view.html';
 
@@ -57,7 +51,7 @@ export class OtherStatsViewModel extends AbstractViewModel {
 
     updateDexterity = (abilityScore) => {
         if (abilityScore && abilityScore.name() === Fixtures.abilityScores.constants.dexterity.name) {
-            this.dexterity(abilityScore);
+            this.dexterity().importValues(abilityScore.exportValues());
         }
     }
 
@@ -118,7 +112,6 @@ export class OtherStatsViewModel extends AbstractViewModel {
         Notifications.otherStats.inspiration.changed.dispatch();
     }
 }
-console.log('TODO: inspiration dispatch');
 
 ko.components.register('other-stats-view', {
     viewModel: OtherStatsViewModel,
