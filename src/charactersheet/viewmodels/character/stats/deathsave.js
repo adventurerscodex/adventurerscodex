@@ -46,7 +46,6 @@ class StatsDeathSaveViewModel {
               'You have died.', {
                   timeOut: 0
               });
-            Notifications.stats.deathSaves.fail.changed.dispatch();
             this.massiveDamageTaken(false);
         }
     }
@@ -70,12 +69,16 @@ class StatsDeathSaveViewModel {
     });
 
     async resetSaves() {
-        this.deathSaveSuccess().used(0);
-        this.deathSaveFailure().used(0);
-        await this.deathSaveFailure().save();
-        await this.deathSaveSuccess().save();
-
+        if (this.deathSaveFailure().used() > 0) {
+            this.deathSaveFailure().used(0);
+            await this.deathSaveFailure().save();
+        }
+        if (this.deathSaveSuccess().used() > 0) {
+            this.deathSaveSuccess().used(0);
+            await this.deathSaveSuccess().save();
+        }
     }
+
     succeedOnDeathSave = async (undo) => {
         if (this.rip()) {
             return;
@@ -88,8 +91,6 @@ class StatsDeathSaveViewModel {
         await this.deathSaveSuccess().save();
         if (this.deathSaveSuccess().used() === 3) {
             await this.stabilize();
-        } else {
-            Notifications.stats.deathSaves.notSuccess.changed.dispatch();
         }
     }
 
@@ -102,8 +103,6 @@ class StatsDeathSaveViewModel {
         await this.deathSaveFailure().save();
         if (this.deathSaveFailure().used() === 3) {
             await this.die();
-        } else {
-            Notifications.stats.deathSaves.notFail.changed.dispatch();
         }
     }
 
@@ -125,16 +124,11 @@ class StatsDeathSaveViewModel {
     stabilize = async () => {
         this.health().dying(false);
         await this.health().save();
-        this.deathSaveSuccess().used(0);
-        this.deathSaveFailure().used(0);
-        await this.deathSaveSuccess().save();
-        await this.deathSaveFailure().save();
         Notifications.userNotification.successNotification.dispatch(
           'You have been spared...for now.',
           'You are now stable.', {
               timeOut: 0
           });
-        Notifications.stats.deathSaves.success.changed.dispatch();
     }
 
     die = async () => {
@@ -143,7 +137,6 @@ class StatsDeathSaveViewModel {
             'You have died.', {
                 timeOut: 0
             });
-        Notifications.stats.deathSaves.fail.changed.dispatch();
     }
 
     rip = ko.pureComputed(() => {

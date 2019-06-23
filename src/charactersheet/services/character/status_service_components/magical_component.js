@@ -1,6 +1,7 @@
 import {
     CoreManager,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -10,6 +11,7 @@ import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { getMagicTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 
+import ko from 'knockout';
 
 /**
  * A Status Service Component that calculates the player's Magical potential.
@@ -23,23 +25,60 @@ export function MagicalStatusServiceComponent() {
     self.statusIdentifier = 'Status.Magical';
 
     self.init = function() {
-        Notifications.spellSlots.changed.add(self.dataHasChanged);
+        self.spellSlots = ko.observableArray([]);
+        Notifications.spellslot.added.add(self.spellSlotAdded);
+        Notifications.spellslot.changed.add(self.spellSlotChanged);
+        Notifications.spellslot.deleted.add(self.spellSlotDeleted);
+        self.load();
+    };
+
+    self.load = async () => {
+        const response = await SpellSlot.ps.list({coreUuid: CoreManager.activeCore().uuid()});
+        self.spellSlots(response.objects);
+        if (!self.spellSlots().length) {
+            return;
+        }
         self.dataHasChanged();
+    };
+
+    self.spellSlotAdded = function (spellSlot) {
+        if (spellSlot) {
+            const existingSpellSlot = find(self.spellSlots(), (item)=> {
+                return ko.utils.unwrapObservable(spellSlot).uuid() === ko.utils.unwrapObservable(item).uuid();
+            });
+            if (!existingSpellSlot) {
+                self.spellSlots.push(spellSlot);
+                self.dataHasChanged();
+            } else {
+                self.spellSlotChanged(spellSlot);
+            }
+        }
+    };
+
+    self.spellSlotDeleted = function (spellSlot) {
+        if (spellSlot) {
+            self.spellSlots.remove(
+              (entry) => {
+                  return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(spellSlot.uuid);
+              });
+            self.dataHasChanged();
+        }
+    };
+
+    self.spellSlotChanged = function (item) {
+        if (item) {
+            Utility.array.updateElement(self.spellSlots(), item, ko.utils.unwrapObservable(item.uuid));
+            self.dataHasChanged();
+        }
     };
 
     /**
      * This method determines wether to update or remove the Magical status
      * component from the player's status line.
      */
-    self.dataHasChanged = async () => {
-        var key = CoreManager.activeCore().uuid();
-        const response = await SpellSlot.ps.list({coreUuid: key});
-        var spellSlots = response.objects;
-
-        if (!spellSlots) { return; }
-
-        if (spellSlots.length > 0) {
-            self._updateStatus(spellSlots);
+    self.dataHasChanged = () => {
+        if (self.spellSlots().length > 0) {
+            self._updateStatus();
         } else {
             self._removeStatus();
         }
@@ -47,7 +86,7 @@ export function MagicalStatusServiceComponent() {
 
     /* Private Methods */
 
-    self._updateStatus = function(spellSlots) {
+    self._updateStatus = function() {
         var key = CoreManager.activeCore().uuid();
         var valueWeightPairs = [];
 
@@ -61,7 +100,7 @@ export function MagicalStatusServiceComponent() {
             status.identifier(self.statusIdentifier);
         }
 
-        valueWeightPairs = self.prepareValueWeightPairs(spellSlots);
+        valueWeightPairs = self.prepareValueWeightPairs(self.spellSlots());
 
         var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
         var phrase = StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), weightedTotal);
@@ -125,7 +164,7 @@ export function MagicalStatusServiceComponent() {
             totalWeight += pair.weight;
         });
         valueWeightPairs.forEach(function(pair, idx, _) {
-            pair.weight = pair.weight / totalWeight;
+            pair.weight = (pair.weight / totalWeight).toFixed(2);
         });
 
         return valueWeightPairs;

@@ -128,13 +128,9 @@ export class AbstractTabularViewModel {
 
     setUpSubscriptions () {
         const modelNotification = this.modelClass().prototype.constructor.name.toLowerCase();
-        try {
-            Notifications[modelNotification].added.add(this.addToList);
-            Notifications[modelNotification].changed.add(this.replaceInList);
-            Notifications[modelNotification].deleted.add(this.removeFromList);
-        } catch (e) {
-            console.log('attempting to get ', modelNotification, ' but it was not found');
-        }
+        Notifications[modelNotification].added.add(this.addToList);
+        Notifications[modelNotification].changed.add(this.replaceInList);
+        Notifications[modelNotification].deleted.add(this.removeFromList);
     }
 
     disposeOfSubscriptions () {

@@ -16,8 +16,8 @@ function _ProficiencyService(configuration) {
     self.profile = ko.observable(new Profile());
 
     self.init = async () => {
-        await self.loadOtherStats();
-        await self.loadProfile();
+        await self.otherStats().load({uuid: CoreManager.activeCore().uuid()});
+        await self.profile().load({uuid: CoreManager.activeCore().uuid()});
         self.setUpSubscriptions();
     };
 
@@ -25,16 +25,6 @@ function _ProficiencyService(configuration) {
         Notifications.otherStats.changed.add(self.updateOtherStats);
         Notifications.profile.changed.add(self.updateProfile);
         self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
-    };
-
-    self.loadOtherStats = async () => {
-        let response = await OtherStats.ps.read({uuid: CoreManager.activeCore().uuid()});
-        self.otherStats().importValues(response.object.exportValues());
-    };
-
-    self.loadProfile = async () => {
-        let response = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-        self.profile().importValues(response.object.exportValues());
     };
 
     self.proficiencyModifier = ko.pureComputed(() => {
@@ -57,13 +47,13 @@ function _ProficiencyService(configuration) {
     });
 
     self.updateOtherStats = (otherStats) => {
-        if (otherStats && otherStats.uuid() === self.otherStats().uuid()) {
+        if (otherStats) {
             self.otherStats().importValues(otherStats.exportValues());
         }
     };
 
     self.updateProfile = (profile) => {
-        if (profile && profile.uuid() === self.profile().uuid()) {
+        if (profile) {
             self.profile().importValues(profile.exportValues());
         }
     };

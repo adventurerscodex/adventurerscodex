@@ -7,6 +7,7 @@ import { OtherStats } from 'charactersheet/models/character/other_stats';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { Status } from 'charactersheet/models/common/status';
 
+import ko from 'knockout';
 /**
  * A Status Service Component that tracks the total weight that a character
  * is carrying, and any modifiers that are applied due to this weight.
@@ -17,23 +18,26 @@ export function InspirationStatusServiceComponent() {
     self.statusIdentifier = 'Status.Inspired';
 
     self.init = function() {
-        Notifications.otherStats.inspiration.changed.add(self.dataHasChanged);
-
-        // Calculate the first one.
-        self.dataHasChanged();
+        Notifications.otherStats.changed.add(self.dataHasChanged);
+        self.load();
     };
 
+    self.load = async () => {
+        var key = CoreManager.activeCore().uuid();
+        var otherStatsResponse = await OtherStats.ps.read({uuid: key});
+        let otherStats = otherStatsResponse.object;
+        if (!otherStats.inspiration()) {
+            self._removeStatus();
+        } else {
+            self._updateStatus();
+        }
+    };
     /**
      * This method generates and persists a status that reflects
      * the character's encumbrance.
      */
-    self.dataHasChanged = async () => {
-        var key = CoreManager.activeCore().uuid();
-        var otherStatsResponse = await OtherStats.ps.read({uuid: key});
-        let otherStats = otherStatsResponse.object;
-
+    self.dataHasChanged = (otherStats) => {
         if (!otherStats) { return; }
-
         if (!otherStats.inspiration()) {
             self._removeStatus();
         } else {

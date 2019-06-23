@@ -48,12 +48,6 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
         await this.hitDice().save();
     }
 
-    // notify = () => {
-    //     Notifications.hitDiceType.changed.dispatch();
-    //     Notifications.health.damage.changed.dispatch();
-    //     Notifications.health.maxHitPoints.changed.dispatch();
-    // }
-
     setHitDiceType = (hitDiceType) => {
         this.hitDice().type(hitDiceType);
     }
