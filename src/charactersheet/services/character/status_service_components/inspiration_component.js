@@ -18,7 +18,8 @@ export function InspirationStatusServiceComponent() {
     self.statusIdentifier = 'Status.Inspired';
 
     self.init = function() {
-        Notifications.otherStats.changed.add(self.dataHasChanged);
+        Notifications.otherstats.changed.add(self.dataHasChanged);
+        Notifications.coreManager.changed.add(self.load);
         self.load();
     };
 

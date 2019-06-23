@@ -19,21 +19,32 @@ export function HealthinessStatusServiceComponent() {
     self.HEALTH_WEIGHT = 0.85;
     self.HIT_DICE_WEIGHT = 0.15;
 
-    self.init = function() {
-        self.deathSaveFailure = ko.observable(new DeathSave());
 
-        self.health = ko.observable(new Health());
-        self.hitDice = ko.observable(new HitDice());
-        self.profile = ko.observable(new Profile());
+    self.health = ko.observable();
+    self.deathSaveFailure = ko.observable();
+    self.hitDice = ko.observable();
+    self.profile = ko.observable();
+
+    self.init = function() {
+        self.health(new Health());
+        self.deathSaveFailure(new DeathSave());
+        self.hitDice(new HitDice());
+        self.profile(new Profile());
 
         Notifications.health.changed.add(self.healthChanged);
         Notifications.hitdice.changed.add(self.hitDiceChanged);
         Notifications.deathsave.changed.add(self.deathSaveChanged);
         Notifications.profile.changed.add(self.profileChanged);
+        Notifications.coreManager.changed.add(self.load);
         self.load();
     };
 
     self.load = async () => {
+        self.deathSaveFailure(new DeathSave());
+        self.health(new Health());
+        self.hitDice(new HitDice());
+        self.profile(new Profile());
+
         var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
                 [new KeyValuePredicate('characterId', key),
@@ -48,6 +59,7 @@ export function HealthinessStatusServiceComponent() {
         await self.hitDice().load({uuid: key});
         const deathSaves = await DeathSave.ps.list({coreUuid: key});
         self.deathSaveFailure(find(deathSaves.objects, (save) => save.type() === 'failure'));
+        self._updateStatus();
     };
 
     self.healthChanged = (health) => {

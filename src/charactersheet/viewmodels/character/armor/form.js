@@ -1,5 +1,4 @@
 import {
-  DataRepository,
   Fixtures,
   Notifications
 } from 'charactersheet/utilities';

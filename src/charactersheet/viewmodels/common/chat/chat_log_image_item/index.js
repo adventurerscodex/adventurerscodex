@@ -80,9 +80,7 @@ export function ChatLogImageItem(params) {
 
         let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
         note.appendTextToNote(self.html() + '\n\n' + date + '\n\n' + self.imageHtml());
-        await note.ps.save();
-
-        Notifications.notes.changed.dispatch();
+        await note.save();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
 

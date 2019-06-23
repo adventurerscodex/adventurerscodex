@@ -16,17 +16,25 @@ export var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
 function _ArmorClassService(configuration) {
     const self = this;
 
+    self.equippedArmor = ko.observable(null);
+    self.equippedShield = ko.observable(null);
+    self.dexterity = ko.observable(new AbilityScore());
+    self.otherStats = ko.observable(new OtherStats());
+
     self.init = async () => {
-        self.equippedArmor = ko.observable(null);
-        self.equippedShield = ko.observable(null);
-        self.dexterity = ko.observable(new AbilityScore());
-        self.otherStats = ko.observable(new OtherStats());
-        await self.loadDexterity();
-        await self.loadArmors();
-        await self.loadOtherStats();
+        await self.load();
         self.setUpSubscriptions();
     };
 
+    self.load = async () => {
+        self.otherStats(new OtherStats());
+        self.dexterity(new AbilityScore());
+        self.equippedArmor(null);
+        self.equippedShield(null);
+        await self.loadDexterity();
+        await self.loadArmors();
+        await self.loadOtherStats();
+    };
     self.loadOtherStats = async () => {
         await self.otherStats().load({
             uuid: CoreManager.activeCore().uuid()
@@ -37,7 +45,7 @@ function _ArmorClassService(configuration) {
         const response = await AbilityScore.ps.list({
             coreUuid: CoreManager.activeCore().uuid(),
             name: Fixtures.abilityScores.constants.dexterity.name});
-        self.dexterity().importValues(response.objects[0].exportValues());
+        self.updateDexterity(response.objects[0]);
     };
 
     self.loadArmors = async () => {
@@ -132,20 +140,23 @@ function _ArmorClassService(configuration) {
 
 
     self.setUpSubscriptions = () => {
+        Notifications.armor.added.add(self.updateArmor);
         Notifications.armor.changed.add(self.updateArmor);
+        Notifications.armor.deleted.add(self.deleteArmor);
         Notifications.abilityscore.changed.add(self.updateDexterity);
         Notifications.otherstats.changed.add(self.updateOtherStats);
+        Notifications.coreManager.changed.add(self.load);
         self.armorClass.subscribe(() => Notifications.armorClass.changed.dispatch());
     };
 
     self.updateDexterity = (abilityScore) => {
-        if (abilityScore && abilityScore.uuid() === self.dexterity().uuid()) {
+        if (abilityScore && abilityScore.name() === Fixtures.abilityScores.constants.dexterity.name) {
             self.dexterity().importValues(abilityScore.exportValues());
         }
     };
 
     self.updateOtherStats = (otherStats) => {
-        if (otherStats && otherStats.uuid() === self.otherStats().uuid()) {
+        if (otherStats) {
             self.otherStats().importValues(otherStats.exportValues());
         }
     };
@@ -158,9 +169,19 @@ function _ArmorClassService(configuration) {
                 } else {
                     self.equippedArmor(armor);
                 }
-            } else if (armor.uuid() === self.equippedArmor().uuid()) {
+            } else if (self.equippedArmor() && armor.uuid() === self.equippedArmor().uuid()) {
                 self.equippedArmor(null);
-            } else if (armor.uuid() === self.equippedShield().uuid()) {
+            } else if (self.equippedShield() && armor.uuid() === self.equippedShield().uuid()) {
+                self.equippedShield(null);
+            }
+        }
+    };
+
+    self.deleteArmor = (armor) => {
+        if (armor) {
+            if (self.equippedArmor() && armor.uuid() === self.equippedArmor().uuid()) {
+                self.equippedArmor(null);
+            } else if (self.equippedShield() && armor.uuid() === self.equippedShield().uuid()) {
                 self.equippedShield(null);
             }
         }

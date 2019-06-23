@@ -85,10 +85,8 @@ export class Note extends KOModel {
             chatNote.coreUuid(coreUuid);
             chatNote.contents('# Saved from Chat');
             chatNote.type(Fixtures.notes.type.chat);
-            const { object } = await chatNote.ps.create();
-            chatNote = object;
+            await chatNote.create();
         }
-
         return chatNote;
     };
 

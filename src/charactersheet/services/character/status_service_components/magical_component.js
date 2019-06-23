@@ -23,16 +23,18 @@ export function MagicalStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Magical';
+    self.spellSlots = ko.observableArray([]);
 
     self.init = function() {
-        self.spellSlots = ko.observableArray([]);
         Notifications.spellslot.added.add(self.spellSlotAdded);
         Notifications.spellslot.changed.add(self.spellSlotChanged);
         Notifications.spellslot.deleted.add(self.spellSlotDeleted);
+        Notifications.coreManager.changed.add(self.load);
         self.load();
     };
 
     self.load = async () => {
+        self.spellSlots([]);
         const response = await SpellSlot.ps.list({coreUuid: CoreManager.activeCore().uuid()});
         self.spellSlots(response.objects);
         if (!self.spellSlots().length) {

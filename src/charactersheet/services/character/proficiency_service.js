@@ -12,18 +12,27 @@ export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {}
 function _ProficiencyService(configuration) {
     var self = this;
 
-    self.otherStats = ko.observable(new OtherStats());
-    self.profile = ko.observable(new Profile());
+    self.otherStats = ko.observable();
+    self.profile = ko.observable();
 
-    self.init = async () => {
+    self.init = () => {
+        self.otherStats(new OtherStats());
+        self.profile(new Profile());
+        self.setUpSubscriptions();
+        self.load();
+    };
+
+    self.load = async () => {
+        self.otherStats(new OtherStats());
+        self.profile(new Profile());
         await self.otherStats().load({uuid: CoreManager.activeCore().uuid()});
         await self.profile().load({uuid: CoreManager.activeCore().uuid()});
-        self.setUpSubscriptions();
     };
 
     self.setUpSubscriptions = () => {
-        Notifications.otherStats.changed.add(self.updateOtherStats);
+        Notifications.otherstats.changed.add(self.updateOtherStats);
         Notifications.profile.changed.add(self.updateProfile);
+        Notifications.coreManager.changed.add(self.load);
         self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
     };
 

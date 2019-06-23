@@ -28,11 +28,9 @@ export function TrackedStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Tracked';
-
+    self.trackedItems = ko.observableArray([]);
 
     self.init = function() {
-        self.trackedItems = ko.observableArray([]);
-
         Notifications.feature.added.add(self.itemAdded);
         Notifications.feature.changed.add(self.itemChanged);
         Notifications.feature.deleted.add(self.itemDeleted);
@@ -44,13 +42,14 @@ export function TrackedStatusServiceComponent() {
         Notifications.trait.added.add(self.itemAdded);
         Notifications.trait.changed.add(self.itemChanged);
         Notifications.trait.deleted.add(self.itemDeleted);
+
+        Notifications.coreManager.changed.add(self.load);
         self.load();
     };
 
-
     self.load = async () => {
+        self.trackedItems = ko.observableArray([]);
         var key = CoreManager.activeCore().uuid();
-
         const trackedModelTypes = [Feature, Feat, Trait];
         const fetchTrackedEntities = trackedModelTypes.map(
           (type) => type.ps.list({ coreUuid: key }));

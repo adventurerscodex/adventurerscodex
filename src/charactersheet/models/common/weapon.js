@@ -127,29 +127,6 @@ export class Weapon extends KOModel {
         }
     });
 
-    // abilityScoreBonus = async (stats) => {
-    //     let dexBonus;
-    //     let strBonus;
-    //     if (this.type().toLowerCase() === this.RANGED) {
-    //         return await this.dexAbilityScoreModifier();
-    //     } else {
-    //         if (this.property().toLowerCase().indexOf(this.FINESSE) >= 0) {
-    //             dexBonus = await this.dexAbilityScoreModifier();
-    //             strBonus = await this.strAbilityScoreModifier();
-    //
-    //             if (dexBonus) {
-    //                 return dexBonus > strBonus ? dexBonus : strBonus;
-    //             } else {
-    //                 return strBonus ? strBonus:0;
-    //             }
-    //         } else {
-    //             strBonus = await this.strAbilityScoreModifier();
-    //             return strBonus;
-    //         }
-    //     }
-    // };
-
-
     totalBonus = ko.pureComputed(() => {
         var bonus = 0;
         // var abilityScoreBonus = await this.abilityScoreBonus();
@@ -157,12 +134,6 @@ export class Weapon extends KOModel {
         const magicalModifier = parseInt(this.magicalModifier());
         const toHitModifier = parseInt(this.toHitModifier());
 
-        // if (abilityScoreBonus) {
-        //     bonus += abilityScoreBonus;
-        // }
-        // if (proficiencyBonus) {
-        //     bonus += proficiencyBonus;
-        // }
         if (magicalModifier) {
             bonus += magicalModifier;
         }
@@ -310,6 +281,7 @@ Weapon.validationConstraints = {
         },
         weight: {
             type: 'number',
+            step: '0.01',
             min: 0,
             max: 100000000
         },

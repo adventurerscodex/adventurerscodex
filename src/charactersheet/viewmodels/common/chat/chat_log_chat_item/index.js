@@ -74,9 +74,7 @@ export function ChatLogChatItem(params) {
     self.saveToNotes = async function() {
         let note = await Note.getSavedFromChatNote(CoreManager.activeCore().uuid());
         note.appendTextToNote(self.message.toText());
-        await note.ps.save();
-
-        Notifications.notes.changed.dispatch();
+        await note.save();
         Notifications.userNotification.successNotification.dispatch('Saved to Notes.');
     };
     /* Card Methods */
