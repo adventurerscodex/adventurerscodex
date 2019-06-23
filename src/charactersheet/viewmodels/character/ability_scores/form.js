@@ -30,10 +30,6 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
         return SavingThrow;
     }
 
-    refresh = async () => {
-        await super.refresh();
-    };
-
     saveFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && this.showSaves()));
     scoreFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && !this.showSaves()));
 

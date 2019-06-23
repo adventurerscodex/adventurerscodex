@@ -1,9 +1,9 @@
-<form class="form-horizontal health-form"
+<form class="form-horizontal health-form container"
       data-bind="{submit: $component.submit}">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <!-- ko if: loaded(), completeOn: 'render' -->
   <div data-bind="with: entity">
-    <div class="form-group">
+    <div class="form-group row">
       <label for="name"
              class="col-sm-4 col-md-6 control-label">Max HP</label>
       <div class="col-sm-8 col-md-6">
@@ -15,7 +15,7 @@
                hasFocus: $component.formElementHasFocus">
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group row">
       <label for="bonus"
              class="col-sm-4 col-md-6 control-label">Damage</label>
       <div class="col-sm-8 col-md-6">

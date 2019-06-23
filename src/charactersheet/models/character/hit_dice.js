@@ -17,10 +17,16 @@ export class HitDice extends KOModel {
     type = ko.observable('');
     hitDiceOptions = ko.observableArray(Fixtures.hitDiceType.hitDiceOptions);
 
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
+    }
+
     save = async () => {
         const response = await this.ps.save();
-        Notifications.hitDice.changed.dispatch(this);
-        return response;
+        this.importValues(response.object.exportValues());
+        Notifications.hitdice.changed.dispatch(this);
     }
 }
 

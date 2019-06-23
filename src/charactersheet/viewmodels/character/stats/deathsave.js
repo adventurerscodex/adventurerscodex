@@ -1,72 +1,81 @@
 import { DeathSave, Health } from 'charactersheet/models/character';
-import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { find, times } from 'lodash';
+
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
-import { find } from 'lodash';
 import ko from 'knockout';
 import template from './deathsave.html';
 
-class StatsDeathSaveViewModel extends AbstractViewModel {
+class StatsDeathSaveViewModel {
     constructor(params) {
-        super(params);
-        this.stable = params.stable;
+        this.loaded = ko.observable(false);
+        this.show = params.show;
         this.forceCardResize = params.forceCardResize;
+        this.massiveDamageTaken = params.massiveDamageTaken;
         this.deathSaveFailure = ko.observable(new DeathSave());
         this.deathSaveSuccess = ko.observable(new DeathSave());
         this.health = ko.observable(new Health());
         this.healInput = ko.observable(null);
-        this.deathSaveSuccessList = ko.observableArray([]);
-        this.deathSaveFailureList = ko.observableArray([]);
         autoBind(this);
     }
 
-    modelClass () {
-        return DeathSave;
-    }
-
     load = async () => {
-        await this.refresh();
-        this.setUpSubscriptions();
-        this.loaded(true);
-    }
-
-    refresh = async () => {
-        var key = CoreManager.activeCore().uuid();
-        // Fetch death saves
+        const key = CoreManager.activeCore().uuid();
         const deathSaves = await DeathSave.ps.list({coreUuid: key});
         this.deathSaveSuccess(find(deathSaves.objects, (save) => save.type() === 'success'));
         this.deathSaveFailure(find(deathSaves.objects, (save) => save.type() === 'failure'));
-
-        const health = await Health.ps.read({uuid: key});
-        this.health().importValues(health.object.exportValues());
-
-        this.calculateDeathSaveSuccessList();
-        this.calculateDeathSaveFailureList();
+        await this.health().load({uuid: key});
+        this.setUpSubscriptions();
         this.forceCardResize();
-    };
+        this.loaded(true);
+    }
 
-    calculateDeathSaveFailureList = () => {
-        this.deathSaveFailureList(new Array(3));
-        for (var i = 0; i < 3; i++) {
-            const isUsed = this.deathSaveFailure().used() > i;
-            this.deathSaveFailureList()[i] = ko.observable(isUsed);
+    setUpSubscriptions() {
+        this.show.subscribe(this.massiveDamageDeath);
+        Notifications.health.changed.add(this.updateHealth);
+    }
+
+    async massiveDamageDeath() {
+        if (this.show() && this.massiveDamageTaken()) {
+            this.deathSaveFailure().used(3);
+            await this.deathSaveFailure().save();
+            Notifications.userNotification.dangerNotification.dispatch(
+              'Massive damage is not to be trifled with...',
+              'You have died.', {
+                  timeOut: 0
+              });
+            Notifications.stats.deathSaves.fail.changed.dispatch();
+            this.massiveDamageTaken(false);
         }
-        // Tell the view to render the list again.
-        this.deathSaveFailureList.valueHasMutated();
-    };
-
-    calculateDeathSaveSuccessList = () => {
-        this.deathSaveSuccessList(new Array(3));
-        for (var i = 0; i < 3; i++) {
-            const isUsed = this.deathSaveSuccess().used() > i;
-            this.deathSaveSuccessList()[i] = ko.observable(isUsed);
+    }
+    updateHealth = (health) => {
+        this.health().importValues(health.exportValues());
+        if (!this.health().dying()) {
+            this.resetSaves();
         }
-        // Tell the view to render the list again.
-        this.deathSaveSuccessList.valueHasMutated();
-    };
+    }
 
+    deathSaveFailureList = ko.pureComputed(()=> {
+        return times(3, (i) => {
+            return ko.observable(this.deathSaveFailure().used() > i);
+        });
+    })
+
+    deathSaveSuccessList = ko.pureComputed(() => {
+        return times(3, (i) => {
+            return ko.observable(this.deathSaveSuccess().used() > i);
+        });
+    });
+
+    async resetSaves() {
+        this.deathSaveSuccess().used(0);
+        this.deathSaveFailure().used(0);
+        await this.deathSaveFailure().save();
+        await this.deathSaveSuccess().save();
+
+    }
     succeedOnDeathSave = async (undo) => {
         if (this.rip()) {
             return;
@@ -76,13 +85,25 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
         } else if (this.deathSaveSuccess().used() < 3) {
             this.deathSaveSuccess().used(this.deathSaveSuccess().used() + 1);
         }
-        const response = await this.deathSaveSuccess().save();
-        this.deathSaveSuccess(response.object);
-        this.calculateDeathSaveSuccessList();
+        await this.deathSaveSuccess().save();
         if (this.deathSaveSuccess().used() === 3) {
-            await this.characterStabilized();
+            await this.stabilize();
         } else {
             Notifications.stats.deathSaves.notSuccess.changed.dispatch();
+        }
+    }
+
+    failOnDeathSave = async (undo) => {
+        if (undo && this.deathSaveFailure().used() > 0) {
+            this.deathSaveFailure().used(this.deathSaveFailure().used() - 1);
+        } else if (this.deathSaveSuccess().used() < 3) {
+            this.deathSaveFailure().used(this.deathSaveFailure().used() + 1);
+        }
+        await this.deathSaveFailure().save();
+        if (this.deathSaveFailure().used() === 3) {
+            await this.die();
+        } else {
+            Notifications.stats.deathSaves.notFail.changed.dispatch();
         }
     }
 
@@ -97,47 +118,23 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
             newDamage = 0;
         }
         this.health().damage(newDamage);
-        const response = await this.health().save();
-        this.health().importValues(response.object.exportValues());
-        await this.stabilize();
-        Notifications.health.damage.changed.dispatch();
+        await this.stabilize(); // Stabilize will save health
         this.healInput(null);
     };
 
     stabilize = async () => {
-        this.deathSaveSuccess().used(3);
-        const successResponse = await this.deathSaveSuccess().save();
-        this.deathSaveSuccess(successResponse.object);
-        await this.characterStabilized();
-    }
-
-    characterStabilized = async () => {
+        this.health().dying(false);
+        await this.health().save();
+        this.deathSaveSuccess().used(0);
+        this.deathSaveFailure().used(0);
+        await this.deathSaveSuccess().save();
+        await this.deathSaveFailure().save();
         Notifications.userNotification.successNotification.dispatch(
           'You have been spared...for now.',
           'You are now stable.', {
               timeOut: 0
           });
-        this.deathSaveFailure().used(0);
-        const failureResponse = await this.deathSaveFailure().save();
-        this.deathSaveFailure(failureResponse.object);
         Notifications.stats.deathSaves.success.changed.dispatch();
-    }
-
-    failOnDeathSave = async (undo) => {
-        if (undo && this.deathSaveFailure().used() > 0) {
-            this.deathSaveFailure().used(this.deathSaveFailure().used() - 1);
-        } else if (this.deathSaveSuccess().used() < 3) {
-            this.deathSaveFailure().used(this.deathSaveFailure().used() + 1);
-        }
-        const response = await this.deathSaveFailure().save();
-        this.deathSaveFailure(response.object);
-        this.calculateDeathSaveFailureList();
-
-        if (this.deathSaveFailure().used() === 3) {
-            await this.die();
-        } else {
-            Notifications.stats.deathSaves.notFail.changed.dispatch();
-        }
     }
 
     die = async () => {
@@ -146,9 +143,6 @@ class StatsDeathSaveViewModel extends AbstractViewModel {
             'You have died.', {
                 timeOut: 0
             });
-        this.deathSaveSuccess().used(0);
-        const successResponse = await this.deathSaveSuccess().save();
-        this.deathSaveSuccess(successResponse.object);
         Notifications.stats.deathSaves.fail.changed.dispatch();
     }
 

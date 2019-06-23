@@ -24,6 +24,6 @@ export class DeathSave extends KOModel {
     save = async () => {
         const response = await this.ps.save();
         this.importValues(response.object.exportValues());
-        Notifications.deathSaves.changed.dispatch(this);
+        Notifications.deathsave.changed.dispatch(this);
     }
 }

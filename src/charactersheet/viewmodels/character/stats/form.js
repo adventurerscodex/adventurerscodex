@@ -37,22 +37,22 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
 
     async refresh () {
         await super.refresh();
-        const coreKey = CoreManager.activeCore().uuid();
-        const hitDice = await HitDice.ps.read({uuid: coreKey});
-        this.hitDice().importValues(hitDice.object.exportValues());
+        await this.hitDice().load({uuid: CoreManager.activeCore().uuid()});
     }
 
     async save () {
+        if (this.entity().damage() < this.entity().maxHitPoints() ) {
+            this.entity().dying(false);
+        }
         await super.save();
         await this.hitDice().save();
     }
 
-    notify = () => {
-        Notifications.hitDiceType.changed.dispatch();
-        Notifications.health.changed.dispatch();
-        Notifications.health.damage.changed.dispatch();
-        Notifications.health.maxHitPoints.changed.dispatch();
-    }
+    // notify = () => {
+    //     Notifications.hitDiceType.changed.dispatch();
+    //     Notifications.health.damage.changed.dispatch();
+    //     Notifications.health.maxHitPoints.changed.dispatch();
+    // }
 
     setHitDiceType = (hitDiceType) => {
         this.hitDice().type(hitDiceType);

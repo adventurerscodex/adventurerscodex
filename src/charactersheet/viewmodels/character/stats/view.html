@@ -8,7 +8,7 @@
           defaultHeight: 415
         }">
   <div class="front">
-    <stats-health-view params="{
+   <stats-health-view params="{
        containerId: elementId,
        show: showFront,
        outerShow: context.show,
@@ -19,11 +19,12 @@
      </stats-health-view>
   </div>
   <div class="back">
-    <stats-deathsave-view params="{
+<stats-deathsave-view params="{
      containerId: elementId,
      show: showBack,
      flip: context.toggleDeathSavesVisible,
-     forceCardResize: forceCardResize
+     forceCardResize: forceCardResize,
+     massiveDamageTaken: context.massiveDamageTaken
    }">
    </stats-deathsave-view>
   </div>
