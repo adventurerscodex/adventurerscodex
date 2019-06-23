@@ -4,7 +4,6 @@ import { filter, maxBy } from 'lodash';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
 import { SortService } from 'charactersheet/services/common';
-import { SpellDetailViewModel } from './view';
 import { SpellFormViewModel } from './form';
 
 import autoBind from 'auto-bind';
@@ -109,7 +108,7 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         case 'Savings Throw': {
             return (
               `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
-              `<span class="small">DC:${this.spellStats().spellSaveDc()}</span>`);
+              ` <span class="small">DC:<strong>${this.spellStats().spellSaveDc()}</strong></span>`);
         }
         case 'Melee Spell Attack': {
             const spellAttackLabel = this.spellStats().spellAttackBonus();

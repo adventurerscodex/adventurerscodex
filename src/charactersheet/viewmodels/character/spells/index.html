@@ -115,18 +115,78 @@
                   elementId: 'spell_list',
                   context: {
                     data: $data,
-                    replaceInList: $component.replaceInList,
-                    removeFromList: $component.removeFromList,
                     spellDamageIcon: $component.spellDamageIcon,
                   }
                 }">
               <div class="front">
-                 <spell-detail-view params="{
+
+                <div data-bind="with: context.data, css: context.data.school().toLowerCase()">
+
+                  <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+                  <div class="h4">
+                    <span data-bind="text: nameLabel"></span>&nbsp;
+                    <small data-bind="text: spellSummaryLabel"></small>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-5 col-md-4 col-lg-3">
+                      <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                        <tbody>
+                          <tr>
+                            <th>Casting Time:</th>
+                            <td><span data-bind="text: castingTime"></span></td>
+                          </tr>
+                          <tr>
+                            <th>Range:</th>
+                            <td><span data-bind="text: range"></span></td>
+                          </tr>
+                          <tr>
+                            <th>Type:</th>
+                            <td><span data-bind="text: type"></span></td>
+                          </tr>
+                          <!-- ko if: type() === 'Savings Throw' && spellSaveAttribute -->
+                          <tr>
+                            <th>Save Attr:</th>
+                            <td><span data-bind="text: spellSaveAttribute"></span></td>
+                          </tr>
+                          <!-- /ko -->
+                          <!-- ko if: damage -->
+                          <tr>
+                            <th>Damage:</th>
+                            <td>
+                              <span data-bind="css: spellDamageIcon"></span>
+                              <span data-bind="text: damage"></span>
+                            </td>
+                          </tr>
+                          <!-- /ko -->
+                          <tr>
+                            <th>Duration:</th>
+                            <td><span data-bind="text: duration"></span></td>
+                          </tr>
+                          <tr>
+                            <th>Components:</th>
+                            <td><span data-bind="text: components"></span></td>
+                          </tr>
+                          <!-- ko if: materialComponents -->
+                          <tr>
+                            <td colspan="2"><i data-bind="text: materialComponents"></i></td>
+                          </tr>
+                          <!-- /ko -->
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="col-sm-7 col-md-8 col-lg-9">
+                        <div class="card-description" data-bind="markdownPreview: descriptionHTML"></div>
+                    </div>
+                  </div>
+                </div>
+
+
+                 <!-- <spell-detail-view params="{
                       data: context.data,
                       containerId: elementId,
                       show: showFront,
                       flip: flip
-                    }"></spell-detail-view>
+                    }"></spell-detail-view> -->
 
               </div>
               <div class="back">
@@ -136,9 +196,7 @@
                     containerId: elementId,
                     show: showBack,
                     flip: flip,
-                    forceCardResize: forceCardResize,
-                    replaceInParent: context.replaceInList,
-                    removeFromParent: context.removeFromList
+                    forceCardResize: forceCardResize
                    }"
                   ></spell-form>
                   </div>
@@ -161,8 +219,7 @@
             <spell-form params="{
               containerId:'add-spell',
               show: $component.displayAddForm,
-              flip: $component.toggleShowAddForm,
-              addToParent: $component.addToList
+              flip: $component.toggleShowAddForm
              }"
             ></spell-form>
           </td>

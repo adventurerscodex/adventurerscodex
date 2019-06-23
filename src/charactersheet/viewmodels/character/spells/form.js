@@ -30,12 +30,12 @@ export class SpellFormViewModel  extends AbstractChildFormModel {
     };
 
     schoolOptions = Fixtures.spell.schoolOptions;
-    setSpellSchool = (label, value) => {
+    setSchool = (label, value) => {
         this.entity().school(value);
     }
 
     typeOptions = Fixtures.spell.typeOptions;
-    setSpellType = (label, value) => {
+    setType = (label, value) => {
         this.entity().type(value);
     }
 
@@ -45,27 +45,27 @@ export class SpellFormViewModel  extends AbstractChildFormModel {
     }
 
     spellSaveAttrOptions = Fixtures.spell.spellSaveAttrOptions;
-    setSpellSaveAttribute = (label, value) => {
+    setSaveAttribute = (label, value) => {
         this.entity().spellSaveAttribute(value);
     }
 
     castingTimeOptions = Fixtures.spell.castingTimeOptions;
-    setSpellCastingTime = (label, value) => {
+    setCastingTime = (label, value) => {
         this.entity().castingTime(value);
     }
 
     rangeOptions = Fixtures.spell.rangeOptions;
-    setSpellRange = (label, value) => {
+    setRange = (label, value) => {
         this.entity().range(value);
     }
 
     componentsOptions = Fixtures.spell.componentsOptions;
-    setSpellComponents = (label, value) => {
+    setComponents = (label, value) => {
         this.entity().components(value);
     }
 
     durationOptions = Fixtures.spell.durationOptions;
-    setSpellDuration = (label, value) => {
+    setDuration = (label, value) => {
         this.entity().duration(value);
     }
 
