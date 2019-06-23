@@ -94,13 +94,88 @@
              }
           }">
             <div class="front">
-              <weapon-detail-view params="{
+
+              <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              <div  data-bind="with: context.data">
+              <div class="h4">
+                <span data-bind="text: name" class="weaponPreviewNameLabel"></span>
+                <strong data-bind="text: magicalModifierLabel"></strong>
+              </div>
+              <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                  <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr>
+                        <th style="width: 40%">To Hit:</th>
+                        <td >
+                          <strong data-bind="text: $parent.context.weaponBonusLabel($data)"></strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Damage:</th>
+                        <td >
+                          <strong data-bind="text: damage"></strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Damage Type:</th>
+                        <td >
+                          <span data-bind="text: damageType"></span>
+                          <span data-bind="css: weaponDamageIcon"></span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Type:</th>
+                        <td ><span data-bind="text: type"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Range:</th>
+                        <td ><span data-bind="text: weaponRangeLabel"></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-6 col-md-4 col-md-push-4 col-lg-3 col-lg-push-6">
+                  <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr>
+                        <th style="width: 40%">Quantity:</th>
+                        <td ><span data-bind="text: quantity"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Handedness:</th>
+                        <td ><span data-bind="text: handedness"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Property:</th>
+                        <td ><span data-bind="text: property"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Proficiency:</th>
+                        <td ><span data-bind="text: proficiency"></span></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 40%">Weight:</th>
+                        <td ><span data-bind="text: weaponWeightLabel"></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-xs-12 col-md-4 col-md-pull-4 col-lg-6 col-lg-pull-3">
+                  <div data-bind="markdownPreview: weaponDescriptionHTML"
+                       class="card-description" style="text-align: center">
+                  </div>
+                </div>
+              </div>
+              </div>
+
+              <!-- <weapon-detail-view params="{
                    data: context.data,
                    containerId: elementId,
                    show: showFront,
                    flip: flip,
                    weaponBonusLabel: context.weaponBonusLabel
-                 }"></weapon-detail-view>
+                 }"></weapon-detail-view> -->
             </div>
             <div class="back">
               <weapon-form params="{

@@ -46,10 +46,6 @@ export class MagicItemFormViewModel  extends AbstractChildFormModel {
     resizeOnFieldVisibility = () => {
         setTimeout(this.forceCardResize, 50);
     }
-
-    notify = () => {
-        Notifications.magicItem.changed.dispatch();
-    }
 }
 
 ko.components.register('magic-item-form', {

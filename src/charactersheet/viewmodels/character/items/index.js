@@ -4,7 +4,6 @@ import {
   calculateTotalValue
  } from 'charactersheet/viewmodels/abstract';
 import { Item } from 'charactersheet/models/common';
-import { ItemDetailViewModel } from './view';
 import { ItemFormViewModel } from './form';
 
 import autoBind from 'auto-bind';

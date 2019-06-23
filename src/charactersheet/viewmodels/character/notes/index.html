@@ -41,9 +41,6 @@
                 elementId: 'note_list',
                 context: {
                   data: $data,
-                  replaceInList: $component.replaceInList,
-                  addToList: $component.addToList,
-                  removeFromList: $component.removeFromList
                 }
               }">
             <div class="front"
@@ -67,9 +64,7 @@
                 containerId: elementId,
                 show: showBack,
                 flip: flip,
-                forceCardResize: forceCardResize,
-                replaceInParent: context.replaceInList,
-                removeFromParent: context.removeFromList
+                forceCardResize: forceCardResize
                }"></notes-form>
             </div>
           </flip-card>
@@ -85,8 +80,7 @@
                <notes-form params="{
                  containerId:'add-note',
                  show: $component.displayAddForm,
-                 flip: $component.toggleShowAddForm,
-                 addToParent: $component.addToList,
+                 flip: $component.toggleShowAddForm
                 }"></notes-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->

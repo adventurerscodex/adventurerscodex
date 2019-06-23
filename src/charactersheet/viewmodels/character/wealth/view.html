@@ -5,44 +5,45 @@
 </div>
 <hr class="ac-table-header" />
 <!-- ko if: loaded(), completeOn: 'render' -->
+<div data-bind="with: entity">
 <div class="input-group">
   <span class="input-group-addon no-top-bottom-padding">
-    <img data-bind="attr: { src: cpCoins }"
+    <img data-bind="attr: { src: $component.cpCoins }"
          width="30px"
          title="Copper Coins"
          alt="Copper Coins" />
   </span>
   <div class="form-control coin-input"
        style="display:block; line-height: 14px; text-align: right"
-       data-bind="text: entity().copper"></div>
+       data-bind="text: copper"></div>
   <span class="input-group-addon no-top-bottom-padding">
     CP
   </span>
 </div>
 <div class="input-group">
   <span class="input-group-addon no-top-bottom-padding">
-    <img data-bind="attr: { src: spCoins }"
+    <img data-bind="attr: { src: $component.spCoins }"
          width="30px"
          title="Silver Coins"
          alt="Silver Coins" />
   </span>
   <div class="form-control coin-input"
        style="display:block; line-height: 14px; text-align: right"
-       data-bind="text: entity().silver"></div>
+       data-bind="text: silver"></div>
   <span class="input-group-addon no-top-bottom-padding">
     SP
   </span>
 </div>
 <div class="input-group">
   <span class="input-group-addon no-top-bottom-padding">
-    <img data-bind="attr: { src: epCoins }"
+    <img data-bind="attr: { src: $component.epCoins }"
          width="30px"
          title="Electrum Coins"
          alt="Electrum Coins" />
   </span>
   <div class="form-control coin-input"
       style="display:block; line-height: 14px; text-align: right"
-       data-bind="text: entity().electrum"></div>
+       data-bind="text: electrum"></div>
   <span class="input-group-addon no-top-bottom-padding">
     EP
   </span>
@@ -50,14 +51,14 @@
 
 <div class="input-group">
   <span class="input-group-addon no-top-bottom-padding">
-    <img data-bind="attr: { src: gpCoins }"
+    <img data-bind="attr: { src: $component.gpCoins }"
          width="30px"
          title="Gold Coins"
          alt="Gold Coins" />
   </span>
   <div class="form-control coin-input"
        style="display:block; line-height: 14px; text-align: right"
-       data-bind="text: entity().gold"></div>
+       data-bind="text: gold"></div>
   <span class="input-group-addon no-top-bottom-padding">
     GP
   </span>
@@ -65,14 +66,14 @@
 
 <div class="input-group">
   <span class="input-group-addon no-top-bottom-padding">
-    <img data-bind="attr: { src: ppCoins }"
+    <img data-bind="attr: { src: $component.ppCoins }"
          width="30px"
          title="Platinum Coins"
          alt="Platinum Coins" />
   </span>
   <div class="form-control coin-input"
       style="display:block; line-height: 14px; text-align: right"
-       data-bind="text: entity().platinum"></div>
+       data-bind="text: platinum"></div>
   <span class="input-group-addon no-top-bottom-padding">
     PP
   </span>
@@ -80,11 +81,12 @@
 <div class="table-foot-content">
   <div class="pull-right text-muted">
     <small>Total:&nbsp;<span id="coinsWorthInGoldLabel"
-            data-bind='text: entity().worthInGold'></span>&nbsp;(gp)</small>
+            data-bind='text: worthInGold'></span>&nbsp;(gp)</small>
   </div>
   <div class="pull-left text-muted">
     <small>Weight:&nbsp;<span id="coinsTotalWeightLabel"
-            data-bind="text: entity().totalWeightLabel"></span></small>
+            data-bind="text: totalWeightLabel"></span></small>
   </div>
+</div>
 </div>
 <!-- /ko -->

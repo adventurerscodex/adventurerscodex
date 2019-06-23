@@ -28,10 +28,6 @@ export class ItemFormViewModel extends AbstractChildFormModel {
     setItemCurrencyDenomination = (label, value) => {
         this.entity().currencyDenomination(value);
     };
-
-    notify = () => {
-        Notifications.item.changed.dispatch();
-    }
 }
 
 ko.components.register('item-form', {

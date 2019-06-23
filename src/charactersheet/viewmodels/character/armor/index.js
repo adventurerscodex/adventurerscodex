@@ -3,7 +3,6 @@ import {
   calculateTotalLoad,
   calculateTotalValue
  } from 'charactersheet/viewmodels/abstract';
-import { ArmorDetailViewModel } from './view';
 import { ArmorFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -36,20 +35,8 @@ export class ArmorViewModel extends AbstractTabularViewModel {
     equipArmor = async (data, event) => {
         event.stopPropagation();
         data.equipped(!data.equipped());
-        const response = await data.save();
-        await this.replaceInList(response.object);
-        Notifications.armor.changed.dispatch();
+        await data.save();
     };
-
-    replaceInList = async (entity) => {
-        await this.handleArmorChange(entity);
-        super.replaceInList(entity);
-    }
-
-    addToList = async (entity) => {
-        await this.handleArmorChange(entity);
-        super.addToList(entity);
-    }
 
     handleArmorChange = async (selectedItem) => {
         if (selectedItem.equipped()) {
@@ -65,6 +52,12 @@ export class ArmorViewModel extends AbstractTabularViewModel {
         }
     };
 
+    setUpSubscriptions () {
+        super.setUpSubscriptions();
+        Notifications.armor.added.add(this.handleArmorChange);
+        Notifications.armor.changed.add(this.handleArmorChange);
+
+    }
     totalCost = ko.pureComputed(() => {
         return calculateTotalValue(this.entities());
     });

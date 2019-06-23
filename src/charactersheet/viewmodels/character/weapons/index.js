@@ -6,7 +6,6 @@ import { Notifications, Utility } from 'charactersheet/utilities';
 import { filter, maxBy } from 'lodash';
 import { AbilityScore } from 'charactersheet/models';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
-import { WeaponDetailViewModel } from './view';
 import { WeaponFormViewModel } from './form';
 
 import autoBind from 'auto-bind';

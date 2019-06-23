@@ -88,18 +88,24 @@ export class AbstractTabularViewModel {
       );
 
     addToList(item) {
-        this.entities.push(item);
+        if (item) {
+            this.entities.push(item);
+        }
     }
 
     replaceInList (item) {
-        Utility.array.updateElement(this.entities(), item, ko.utils.unwrapObservable(item.uuid));
+        if (item) {
+            Utility.array.updateElement(this.entities(), item, ko.utils.unwrapObservable(item.uuid));
+        }
     }
 
     removeFromList (item) {
-        this.entities.remove(
+        if (item) {
+            this.entities.remove(
           (entry) => {
               return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
           });
+        }
     }
 
     collapseAll () {

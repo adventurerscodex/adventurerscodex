@@ -39,10 +39,6 @@ export class ArmorFormViewModel  extends AbstractChildFormModel {
     setArmorCurrencyDenomination = (label, value) => {
         this.entity().currencyDenomination(value);
     };
-
-    notify = () => {
-        Notifications.armor.changed.dispatch();
-    }
 }
 
 ko.components.register('armor-form', {

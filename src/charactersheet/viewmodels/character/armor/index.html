@@ -75,18 +75,45 @@
                   elementId: 'armor_list',
                   context: {
                     data: $data,
-                    replaceInList: $component.replaceInList,
-                    addToList: $component.addToList,
-                    removeFromList: $component.removeFromList
                   }
                 }">
             <div class="front">
-              <armor-detail-view params="{
-                     data: context.data,
-                     containerId: elementId,
-                     show: showFront,
-                     flip: flip
-                   }"></armor-detail-view>
+              <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              <div data-bind="with: context.data" class="h4">
+                <span data-bind="text: name"
+                      class="armorPreviewNameLabel"></span>&nbsp;
+                <!-- ko if: equipped() -->
+                <small>Equipped</small>
+                <!-- /ko -->
+              </div>
+              <div data-bind="with: context.data" class="row">
+                <div class="col-sm-5 col-md-12 col-lg-5">
+                  <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Armor Class:</th>
+                        <td><span data-bind="text: acCalculatedLabel"></span></td>
+                      </tr>
+                      <tr>
+                        <th>Type:</th>
+                        <td><span data-bind="text: type"></span></td>
+                      </tr>
+                      <tr>
+                        <th>Stealth:</th>
+                        <td><span data-bind="text: stealth"></span></td>
+                      </tr>
+                      <tr>
+                        <th>Weight:</th>
+                        <td><span data-bind="text: armorWeightLabel"></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-7 col-md-12 col-lg-7">
+                  <p class="card-description"
+                     data-bind="markdownPreview: armorDescriptionHTML"></p>
+                </div>
+              </div>
             </div>
             <div class="back">
               <armor-form params="{
@@ -94,9 +121,7 @@
                   containerId: elementId,
                   show: showBack,
                   flip: flip,
-                  forceCardResize: forceCardResize,
-                  replaceInParent: context.replaceInList,
-                  removeFromParent: context.removeFromList
+                  forceCardResize: forceCardResize
                  }"></armor-form>
             </div>
           </flip-card>
@@ -110,8 +135,7 @@
             <armor-form params="{
                    containerId: 'add-armor',
                    show: $component.displayAddForm,
-                   flip: $component.toggleShowAddForm,
-                   addToParent: $component.addToList
+                   flip: $component.toggleShowAddForm
                   }"></armor-form>
           </div>
         </td>

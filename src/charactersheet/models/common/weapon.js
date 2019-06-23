@@ -11,7 +11,6 @@ import { ProficiencyService } from 'charactersheet/services/character/proficienc
 
 import ko from 'knockout';
 
-
 export class Weapon extends KOModel {
     static __skeys__ = ['core', 'weapons'];
 
@@ -25,6 +24,7 @@ export class Weapon extends KOModel {
     static REACH = 'reach';
 
     coreUuid = ko.observable(null);
+    uuid = ko.observable(null);
     name = ko.observable('');
     type = ko.observable('');
     damage = ko.observable('');
@@ -42,6 +42,29 @@ export class Weapon extends KOModel {
     quantity = ko.observable(1);
     hitBonusLabel = ko.observable();
 
+    toSchemaValues = (values) => {
+        if (values.price === '') {
+            values.price = 0;
+        }
+
+        if (values.quantity === '') {
+            values.quantity = 0;
+        }
+
+        if (values.weight === '') {
+            values.weight = 0;
+        }
+
+        if (values.magicalModifier === '') {
+            values.magicalModifier = 0;
+        }
+
+        if (values.toHitModifier === '') {
+            values.toHitModifier = 0;
+        }
+
+        return values;
+    }
 
     weaponDamageIcon = ko.pureComputed(() => {
         switch(this.damageType().toLowerCase()) {
@@ -90,75 +113,56 @@ export class Weapon extends KOModel {
     }, this);
 
 
-    proficiencyScore() {
-        return ProficiencyService.sharedService().proficiency();
-    }
+    // proficiencyScore() {
+    //     return ProficiencyService.sharedService().proficiency();
+    // }
 
-    strAbilityScoreModifier = async () => {
-        var score = null;
-        try {
-            var coreUuid = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.strength.name});
-            score = response.objects[0];
-        } catch(err) { /*Ignore*/ }
-
-        if (score === null) {
-            return null;
+    abilityModOptions = ko.pureComputed(() => {
+        if (this.type().toLowerCase() === Weapon.RANGED) {
+            return ['Dexterity'];
+        } else if (this.property().toLowerCase().includes(Weapon.FINESSE)) {
+            return ['Strength', 'Dexterity'];
         } else {
-            return score.getModifier();
+            return ['Strength'];
         }
-    };
+    });
 
-    dexAbilityScoreModifier = async () => {
-        var score = null;
-        try {
-            var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.dexterity.name});
-            score = response.objects[0];
-        } catch(err) { /*Ignore*/ }
+    // abilityScoreBonus = async (stats) => {
+    //     let dexBonus;
+    //     let strBonus;
+    //     if (this.type().toLowerCase() === this.RANGED) {
+    //         return await this.dexAbilityScoreModifier();
+    //     } else {
+    //         if (this.property().toLowerCase().indexOf(this.FINESSE) >= 0) {
+    //             dexBonus = await this.dexAbilityScoreModifier();
+    //             strBonus = await this.strAbilityScoreModifier();
+    //
+    //             if (dexBonus) {
+    //                 return dexBonus > strBonus ? dexBonus : strBonus;
+    //             } else {
+    //                 return strBonus ? strBonus:0;
+    //             }
+    //         } else {
+    //             strBonus = await this.strAbilityScoreModifier();
+    //             return strBonus;
+    //         }
+    //     }
+    // };
 
-        if (score === null) {
-            return null;
-        } else {
-            return score.getModifier();
-        }
-    };
 
-    abilityScoreBonus = async () => {
-        let dexBonus;
-        let strBonus;
-        if (this.type().toLowerCase() === this.RANGED) {
-            return await this.dexAbilityScoreModifier();
-        } else {
-            if (this.property().toLowerCase().indexOf(this.FINESSE) >= 0) {
-                dexBonus = await this.dexAbilityScoreModifier();
-                strBonus = await this.strAbilityScoreModifier();
-
-                if (dexBonus) {
-                    return dexBonus > strBonus ? dexBonus : strBonus;
-                } else {
-                    return strBonus ? strBonus:0;
-                }
-            } else {
-                strBonus = await this.strAbilityScoreModifier();
-                return strBonus;
-            }
-        }
-    };
-
-    totalBonus = async () => {
+    totalBonus = ko.pureComputed(() => {
         var bonus = 0;
-        var abilityScoreBonus = await this.abilityScoreBonus();
-        var proficiencyBonus = this.proficiencyScore();
-        var magicalModifier = parseInt(this.magicalModifier());
-        var toHitModifier = parseInt(this.toHitModifier());
+        // var abilityScoreBonus = await this.abilityScoreBonus();
+        // var proficiencyBonus = this.proficiencyScore();
+        const magicalModifier = parseInt(this.magicalModifier());
+        const toHitModifier = parseInt(this.toHitModifier());
 
-        if (abilityScoreBonus) {
-            bonus += abilityScoreBonus;
-        }
-        if (proficiencyBonus) {
-            bonus += proficiencyBonus;
-        }
+        // if (abilityScoreBonus) {
+        //     bonus += abilityScoreBonus;
+        // }
+        // if (proficiencyBonus) {
+        //     bonus += proficiencyBonus;
+        // }
         if (magicalModifier) {
             bonus += magicalModifier;
         }
@@ -166,7 +170,7 @@ export class Weapon extends KOModel {
             bonus += toHitModifier;
         }
         return bonus;
-    };
+    });
 
     totalWeight = ko.pureComputed(() => {
         var qty = parseInt(this.quantity()) || 1;
@@ -237,29 +241,7 @@ export class Weapon extends KOModel {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
     }, this);
 
-    toSchemaValues = (values) => {
-        if (values.price === '') {
-            values.price = 0;
-        }
 
-        if (values.quantity === '') {
-            values.quantity = 0;
-        }
-
-        if (values.weight === '') {
-            values.weight = 0;
-        }
-
-        if (values.magicalModifier === '') {
-            values.magicalModifier = 0;
-        }
-
-        if (values.toHitModifier === '') {
-            values.toHitModifier = 0;
-        }
-
-        return values;
-    }
 
     load = async (params) => {
         const response = await this.ps.model.ps.read(params);
