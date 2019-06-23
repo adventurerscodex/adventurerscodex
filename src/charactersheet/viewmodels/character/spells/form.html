@@ -97,7 +97,7 @@
                name="spellSaveAttribute"
                data-bind="value: spellSaveAttribute,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.spellSaveAttribute },
+               attr: { ...$component.validation.spellSaveAttribute, required: type === 'Savings Throw' },
                 autocomplete: { source: $component.spellSaveAttrOptions,
                 onselect: $component.setSaveAttribute }">
       </div>

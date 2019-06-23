@@ -22,6 +22,14 @@ export class AbilityScore extends KOModel {
     shortName = ko.observable('');
     abbreviation = ko.observable('');
 
+    modifier = ko.pureComputed(() => {
+        if (this.value()) {
+            return Math.floor((this.value() - 10) / 2);
+        } else {
+            return 0;
+        }
+    })
+
     getModifier() {
         if (this.value()) {
             return Math.floor((this.value() - 10) / 2);

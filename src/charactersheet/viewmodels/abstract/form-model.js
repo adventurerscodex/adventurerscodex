@@ -77,7 +77,7 @@ export class AbstractFormModel {
     }
 
     async save() {
-        this.entity().save();
+        await this.entity().save();
     }
 
     notify() {

@@ -142,9 +142,10 @@ class TrackerViewModel extends AbstractTabularViewModel {
     resetShortRestFeatures = async () => {
         const updates = this.entities().map(async (entity) => {
             if (entity.tracked().resetsOn() === Fixtures.resting.shortRestEnum) {
-                entity.tracked().used(0);
-                await entity.save();
-                this.replaceInList(entity);
+                if (entity.tracked().used() > 0) {
+                    entity.tracked().used(0);
+                    await entity.save();
+                }
             }
         });
         await Promise.all(updates);
@@ -152,8 +153,10 @@ class TrackerViewModel extends AbstractTabularViewModel {
 
     resetLongRestFeatures = async () => {
         const updates = this.entities().map(async (entity) => {
-            entity.tracked().used(0);
-            await entity.save();
+            if (entity.tracked().used() > 0) {
+                entity.tracked().used(0);
+                await entity.save();
+            }
         });
         await Promise.all(updates);
     };

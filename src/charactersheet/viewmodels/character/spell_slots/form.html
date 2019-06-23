@@ -4,6 +4,7 @@
     <form class="form-horizontal"
           data-bind="{submit: $component.submit}">
       <div data-bind="with: entity">
+        <input type="hidden" data-bind="value: used" />
         <div class="form-group">
           <label for="name"
                  class="col-sm-2 control-label">Level</label>

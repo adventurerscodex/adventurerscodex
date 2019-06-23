@@ -60,7 +60,7 @@
           <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span>
         </td>
         <td>
-          <span data-bind="text: hitBonusLabel"></span>
+          <span data-bind="text: $component.weaponBonusLabel($data)"></span>
         </td>
         <td>
           <span data-bind="css: weaponDamageIcon"></span>
@@ -90,17 +90,16 @@
             elementId: 'weapon_list',
             context: {
               data: $data,
-              replaceInList: $component.replaceInList,
-              addToList: $component.addToList,
-              removeFromList: $component.removeFromList
-            }
+              weaponBonusLabel: $component.weaponBonusLabel
+             }
           }">
             <div class="front">
               <weapon-detail-view params="{
                    data: context.data,
                    containerId: elementId,
                    show: showFront,
-                   flip: flip
+                   flip: flip,
+                   weaponBonusLabel: context.weaponBonusLabel
                  }"></weapon-detail-view>
             </div>
             <div class="back">
@@ -109,9 +108,7 @@
                   containerId: elementId,
                   show: showBack,
                   flip: flip,
-                  forceCardResize: forceCardResize,
-                  replaceInParent: context.replaceInList,
-                  removeFromParent: context.removeFromList
+                  forceCardResize: forceCardResize
                  }"
               ></weapon-form>
             </div>

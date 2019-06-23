@@ -28,9 +28,6 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
         return SpellSlot;
     }
 
-    getNextSlotLevel = () => {
-        return this.nextSlotLevel();
-    }
     async refresh() {
         await super.refresh();
         if (this.addForm() && this.nextSlotLevel()) {
@@ -38,17 +35,16 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
         }
     }
 
-    setUpSubscriptions() {
-        super.setUpSubscriptions();
-        if (this.nextSlotLevel) {
-            this.nextSlotLevel.subscribe(this.updateNextSlot);
+    updateFormData = (spellSlot) => {
+        if (ko.utils.unwrapObservable(this.entity().uuid) === ko.utils.unwrapObservable(spellSlot.uuid)) {
+            // Since spell slots forms don't 'flip', we need to update their data manually
+            // When they are updated
+            this.refresh();
         }
     }
-
-    updateNextSlot () {
-        if (this.addForm()) {
-            this.entity().level(ko.utils.unwrapObservable(this.nextSlotLevel));
-        }
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        Notifications.spellslot.changed.add(this.updateFormData);
     }
 }
 

@@ -10,7 +10,7 @@ export class Feat extends KOModel {
     static mapping = {
         include: ['coreUuid', 'tracked'],
         tracked: {
-            update: ({ data, parent, observable }) => {
+            update: ({ data, parent }) => {
                 const tracked = new Tracked();
                 if (!isEmpty(data) && !tracked.equals(data)) {
                     parent.isTracked(true);

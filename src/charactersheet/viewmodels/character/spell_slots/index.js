@@ -54,8 +54,7 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
     }
 
     async onUsedChange(spellslot) {
-        const response = await spellslot.save();
-        this.replaceInList(response.object);
+        await spellslot.save();
     }
 
     nextSlotLevel = ko.pureComputed(() => {
@@ -134,9 +133,10 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
     async resetShortRestFeatures() {
         const updates = this.entities().map(async (entity) => {
             if (entity.resetsOn() === Fixtures.resting.shortRestEnum) {
-                entity.used(0);
-                await entity.save();
-                this.replaceInList(entity);
+                if (entity.used() > 0) {
+                    entity.used(0);
+                    await entity.save();
+                }
             }
         });
         await Promise.all(updates);
@@ -144,10 +144,10 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
 
     async resetLongRestFeatures() {
         const updates = this.entities().map(async (entity) => {
-            entity.used(0);
-            await entity.save();
-            this.replaceInList(entity);
-
+            if (entity.used() > 0) {
+                entity.used(0);
+                await entity.save();
+            }
         });
         await Promise.all(updates);
     }

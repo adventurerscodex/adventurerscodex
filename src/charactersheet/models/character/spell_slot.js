@@ -7,10 +7,11 @@ export class SpellSlot extends KOModel {
     static __skeys__ = ['core', 'spellSlots'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid', 'uuid']
     };
 
     coreUuid = ko.observable(null);
+    uuid =ko.observable(null);
     level = ko.observable(1);
     max = ko.observable(1);
     used = ko.observable(0);

@@ -55,11 +55,10 @@
                 data: $data,
                 containerId: `spell_slot_${uuid()}`,
                 flip: () => {$component.hideRow(`#spell_slot_${uuid()}`)},
-                replaceInParent: $component.replaceInList,
-                removeFromParent: $component.removeFromList,
                 nextSlotLevel: null
              }">
             </spell-slot-form>
+            </div>
         </td>
       </tr>
       <!-- /ko -->
@@ -73,7 +72,6 @@
                   containerId: 'add-spell-slot',
                    show: $component.displayAddForm,
                    flip: $component.toggleShowAddForm,
-                   addToParent: $component.addToList,
                    nextSlotLevel: $component.nextSlotLevel
                 }">
                </spell-slot-form>

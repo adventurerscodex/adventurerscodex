@@ -7,14 +7,10 @@ import template from './view.html';
 class WeaponDetailViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
+        this.weaponBonusLabel = params.weaponBonusLabel;
         autoBind(this);
     }
     modelName = 'Weapon';
-
-    async refresh() {
-        await super.refresh();
-        this.entity().updateHitBonusLabel();
-    }
 }
 
 ko.components.register('weapon-detail-view', {
