@@ -54,18 +54,6 @@ export class Spell extends KOModel {
         }
     }, this);
 
-    calculateSpellDamageLabel = async () => {
-        var key = CoreManager.activeCore().uuid();
-        if (this.type() === 'Attack Roll') {
-            const spellStatsResponse = await SpellStats.ps.read({ uuid: key });
-            const spellStats = spellStatsResponse.object;
-            var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;
-            this.spellDamageLabel(this.damage() + ' [Spell Bonus: +' + spellBonus + ']');
-        } else {
-            this.spellDamageLabel(this.damage());
-        }
-    };
-
     levelLabel = ko.pureComputed(() => {
         if (parseInt(this.level()) === 0) {
             return 'Cantrip';
