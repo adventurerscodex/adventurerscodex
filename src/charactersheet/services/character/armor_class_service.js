@@ -28,10 +28,9 @@ function _ArmorClassService(configuration) {
     };
 
     self.loadOtherStats = async () => {
-        const response = await OtherStats.ps.read({
+        await self.otherStats().load({
             uuid: CoreManager.activeCore().uuid()
         });
-        self.otherStats().importValues(response.object.exportValues());
     };
 
     self.loadDexterity = async () => {
@@ -134,8 +133,8 @@ function _ArmorClassService(configuration) {
 
     self.setUpSubscriptions = () => {
         Notifications.armor.changed.add(self.updateArmor);
-        Notifications.abilityScores.changed.add(self.updateDexterity);
-        Notifications.otherStats.changed.add(self.updateOtherStats);
+        Notifications.abilityscore.changed.add(self.updateDexterity);
+        Notifications.otherstats.changed.add(self.updateOtherStats);
         self.armorClass.subscribe(() => Notifications.armorClass.changed.dispatch());
     };
 
