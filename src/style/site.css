@@ -1603,17 +1603,18 @@ hr.ac-table-header {
 }
 
 .safari-card-fix {
-  opacity: 0.99;
+  /* opacity: 0.99; */
+  /* Seems like this is now hurting things, instead of helping things. Thanks, apple */
 }
 
 .add-card {
-  padding: 10px
+  padding: 10px;
 }
 
 .skill-modifier-input input {
   font-size: 15px;
   padding: 10px 0 10px 10px;
-  width:45px
+  width:45px;
 }
 
 .skill-modifier-input .input-group-addon {
