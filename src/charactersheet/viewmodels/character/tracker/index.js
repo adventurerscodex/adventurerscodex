@@ -56,9 +56,15 @@ class TrackerViewModel extends AbstractTabularViewModel {
                 value: parseInt(trackedItem.max()) - parseInt(trackedItem.used()),
                 maxValue: trackedItem.max()
             },
+
             config: {
                 strokeWidth: 2,
                 trailWidth: 1,
+                svgStyle: {
+                    display: 'block',
+                    width: '100%',
+                    minHeight: '3px'
+                },
                 from: {
                     color
                 },

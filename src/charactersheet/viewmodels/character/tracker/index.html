@@ -10,10 +10,10 @@
         <th data-bind="click: ()=> {sortBy('name');}">Name
           <i data-bind="css: sortArrow('name')"></i>
         </th>
-        <th colspan="3">Resets&nbsp;on
+        <th class="hidden-xs" colspan="4">Resets&nbsp;on
         </th>
-        <th></th>
-        <th class="hidden-xs">Used</th>
+        <th class="visible-xs" colspan=3"></th>
+        <th>Used</th>
         <th>
           <a href="#"
              class=""
@@ -31,7 +31,7 @@
          data-bind="attr:{'data-target': `#tracked_${uuid()}`}" >
         <td><span data-bind="text: $component.shortText(name)"></span>
         </td>
-        <td style="padding: 4px;">
+        <td style="padding: 4px;" class="hidden-xs">
           <div class="" data-bind="attr: {'class': $component.resetsOnImg(tracked)}"></div>
         </td>
         <td style="padding: 4px;">
@@ -49,8 +49,7 @@
                data-bind="barProgress: $component.mapToChart($data)"> </div>
         </td>
 
-        <td style="padding: 4px;"
-            class="hidden-xs">
+        <td style="padding: 4px;">
           <span data-bind="text: parseInt(tracked().max()) - parseInt(tracked().used())"></span>&nbsp;/&nbsp;<span data-bind=" text: tracked().max"></span>
         </td>
         <td style="padding: 4px;">
