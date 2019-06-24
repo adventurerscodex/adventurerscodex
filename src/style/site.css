@@ -1529,9 +1529,16 @@ margin: -5px;
   margin-top: 20px;
 }
 
-.statsPopover {
+.statsPopover,
+.statsPopover:hover,
+.statsPopover:focus,
+.statsPopover:active,
+.statsPopover:visited {
   cursor:pointer;
   display: inline;
+  color: black;
+  text-decoration: none !important;
+  outline: none;
 }
 
 .ac-table-data-cell {
