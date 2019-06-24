@@ -108,7 +108,7 @@ export function HealthinessStatusServiceComponent() {
             self.hitDice(),
             self.profile(),
             self.deathSaveFailure(),
-        ).toFixed(2);
+        );
 
         var phrase = StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), weightedTotal);
 

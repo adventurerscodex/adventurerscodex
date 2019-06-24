@@ -28,7 +28,9 @@ StatusWeightPair.processStatusWeights = function(valueWeightPairs) {
     valueWeightPairs.forEach(function(pair, i, _) {
         totalStatusWeight += pair.value * pair.weight;
     });
-
+    if (totalStatusWeight > 1) {
+        totalStatusWeight = 1.00;
+    }
     return totalStatusWeight;
 };
 

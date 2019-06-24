@@ -50,7 +50,7 @@ export function TrackedStatusServiceComponent() {
 
         Notifications.coreManager.changing.add(self.clear);
     };
-    
+
     self.load = async () => {
 
         if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
@@ -175,7 +175,7 @@ export function TrackedStatusServiceComponent() {
             return new StatusWeightPair(trackedValue, featureWeight);
         });
 
-        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs).toFixed(2);
+        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
         var phrase = StatusWeightPair.determinePhraseAndColor(getTrackedTypeEnum(), weightedTotal);
 
         status.name(phrase.status);

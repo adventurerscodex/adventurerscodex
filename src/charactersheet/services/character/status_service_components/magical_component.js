@@ -115,7 +115,6 @@ export function MagicalStatusServiceComponent() {
         }
 
         valueWeightPairs = self.prepareValueWeightPairs(self.spellSlots());
-
         var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
         var phrase = StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), weightedTotal);
 
@@ -178,7 +177,7 @@ export function MagicalStatusServiceComponent() {
             totalWeight += pair.weight;
         });
         valueWeightPairs.forEach(function(pair, idx, _) {
-            pair.weight = (pair.weight / totalWeight).toFixed(2);
+            pair.weight = pair.weight / totalWeight;
         });
 
         return valueWeightPairs;
