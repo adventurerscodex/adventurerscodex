@@ -24,6 +24,9 @@ export function InspirationStatusServiceComponent() {
     };
 
     self.load = async () => {
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
         var key = CoreManager.activeCore().uuid();
         var otherStatsResponse = await OtherStats.ps.read({uuid: key});
         let otherStats = otherStatsResponse.object;

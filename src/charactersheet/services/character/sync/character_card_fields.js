@@ -137,11 +137,9 @@ export var CharacterCardFields = [
         }
     }, {
         name: 'hitDiceType',
-        refreshOn: Notifications.hitDiceType.changed,
-        valueAccessor: async () => {
-            const hitDiceResponse = await HitDice.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const hitDiceType = hitDiceResponse.object;
-            return hitDiceType ? hitDiceType.type() : '';
+        refreshOn: Notifications.hitdice.changed,
+        valueAccessor: async (hitDice) => {
+            return hitDice ? hitDice.type() : '';
         }
     }, {
         name: 'hitDice',

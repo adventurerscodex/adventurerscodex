@@ -16,10 +16,10 @@ export var ArmorClassService = new SharedServiceManager(_ArmorClassService, {});
 function _ArmorClassService(configuration) {
     const self = this;
 
-    self.equippedArmor = ko.observable(null);
-    self.equippedShield = ko.observable(null);
-    self.dexterity = ko.observable(new AbilityScore());
-    self.otherStats = ko.observable(new OtherStats());
+    self.equippedArmor = ko.observable();
+    self.equippedShield = ko.observable();
+    self.dexterity = ko.observable();
+    self.otherStats = ko.observable();
 
     self.init = async () => {
         await self.load();
@@ -27,6 +27,9 @@ function _ArmorClassService(configuration) {
     };
 
     self.load = async () => {
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
         self.otherStats(new OtherStats());
         self.dexterity(new AbilityScore());
         self.equippedArmor(null);
@@ -34,6 +37,13 @@ function _ArmorClassService(configuration) {
         await self.loadDexterity();
         await self.loadArmors();
         await self.loadOtherStats();
+    };
+
+    self.clear = () => {
+        self.otherStats(null);
+        self.dexterity(null);
+        self.equippedArmor(null);
+        self.equippedShield(null);
     };
     self.loadOtherStats = async () => {
         await self.otherStats().load({
@@ -114,10 +124,12 @@ function _ArmorClassService(configuration) {
     });
 
     self.dexBonusFromArmor = ko.pureComputed(()=> {
-        let dexMod = self.dexterity().getModifier();
-        if (!dexMod) {
+
+        let dex = self.dexterity();
+        if (!dex) {
             return 0;
         }
+        let dexMod = dex.getModifier();
         if (self.equippedArmor()) {
             if (self.equippedArmor().type() === Fixtures.armor.constants.types.heavy) {
                 return 0;
@@ -145,6 +157,7 @@ function _ArmorClassService(configuration) {
         Notifications.armor.deleted.add(self.deleteArmor);
         Notifications.abilityscore.changed.add(self.updateDexterity);
         Notifications.otherstats.changed.add(self.updateOtherStats);
+        Notifications.coreManager.changing.add(self.clear);
         Notifications.coreManager.changed.add(self.load);
         self.armorClass.subscribe(() => Notifications.armorClass.changed.dispatch());
     };

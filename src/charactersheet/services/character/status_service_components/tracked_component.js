@@ -43,16 +43,21 @@ export function TrackedStatusServiceComponent() {
         Notifications.trait.changed.add(self.itemChanged);
         Notifications.trait.deleted.add(self.itemDeleted);
 
+        Notifications.coreManager.changing.add(self.clear);
         Notifications.coreManager.changed.add(self.load);
         self.load();
     };
 
     self.load = async () => {
-        self.trackedItems = ko.observableArray([]);
+
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
+        self.trackedItems([]);
         var key = CoreManager.activeCore().uuid();
         const trackedModelTypes = [Feature, Feat, Trait];
         const fetchTrackedEntities = trackedModelTypes.map(
-          (type) => type.ps.list({ coreUuid: key }));
+                (type) => type.ps.list({ coreUuid: key }));
         const responseList = await Promise.all(fetchTrackedEntities);
         const tracked = flatMap(responseList, (response) => response.objects).filter(self.showTracked);
         self.trackedItems(tracked);
@@ -62,6 +67,11 @@ export function TrackedStatusServiceComponent() {
         } else {
             self._removeStatus();
         }
+    };
+
+    self.clear = () => {
+        self._removeStatus();
+        self.trackedItems([]);
     };
 
     self.itemAdded = function (item) {

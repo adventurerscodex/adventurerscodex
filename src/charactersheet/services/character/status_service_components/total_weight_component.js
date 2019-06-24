@@ -32,10 +32,6 @@ export function TotalWeightStatusServiceComponent() {
 
 
     self.init = function() {
-        self.strength(new AbilityScore());
-        self.wealth(new Wealth());
-        self.allMass([]);
-
         Notifications.abilityscore.changed.add(self.abilityScoreChanged);
         Notifications.wealth.changed.add(self.wealthChanged);
 
@@ -54,6 +50,7 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.weapon.added.add(self.massAdded);
         Notifications.weapon.changed.add(self.massChanged);
         Notifications.weapon.deleted.add(self.massDeleted);
+        Notifications.coreManager.changing.add(self.clear);
         Notifications.coreManager.changed.add(self.load);
 
         self.load();
@@ -61,9 +58,13 @@ export function TotalWeightStatusServiceComponent() {
     };
 
     self.load = async () => {
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
         self.strength(new AbilityScore());
         self.wealth(new Wealth());
         self.allMass([]);
+
         const coreUuid = CoreManager.activeCore().uuid();
         const strResponse = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.strength.name});
 
@@ -84,8 +85,14 @@ export function TotalWeightStatusServiceComponent() {
         const weaponResponse = await Weapon.ps.list({ coreUuid });
         self.allMass.push(...weaponResponse.objects);
         self._updateStatus();
+
     };
 
+    self.clear = () => {
+        self.strength(null);
+        self.wealth(null);
+        self.allMass([]);
+    };
 
     self.abilityScoreChanged = function (abilityScore) {
         if (abilityScore.name() === Fixtures.abilityScores.constants.strength.name) {

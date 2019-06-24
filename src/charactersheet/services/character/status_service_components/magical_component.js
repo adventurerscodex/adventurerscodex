@@ -29,11 +29,15 @@ export function MagicalStatusServiceComponent() {
         Notifications.spellslot.added.add(self.spellSlotAdded);
         Notifications.spellslot.changed.add(self.spellSlotChanged);
         Notifications.spellslot.deleted.add(self.spellSlotDeleted);
+        Notifications.coreManager.changing.add(self.clear);
         Notifications.coreManager.changed.add(self.load);
         self.load();
     };
 
     self.load = async () => {
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
         self.spellSlots([]);
         const response = await SpellSlot.ps.list({coreUuid: CoreManager.activeCore().uuid()});
         self.spellSlots(response.objects);
@@ -41,6 +45,11 @@ export function MagicalStatusServiceComponent() {
             return;
         }
         self.dataHasChanged();
+    };
+
+    self.clear = () => {
+        self.spellSlots([]);
+        self._removeStatus();
     };
 
     self.spellSlotAdded = function (spellSlot) {

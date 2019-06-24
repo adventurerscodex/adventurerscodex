@@ -16,22 +16,27 @@ function _ProficiencyService(configuration) {
     self.profile = ko.observable();
 
     self.init = () => {
-        self.otherStats(new OtherStats());
-        self.profile(new Profile());
         self.setUpSubscriptions();
         self.load();
     };
 
     self.load = async () => {
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
         self.otherStats(new OtherStats());
         self.profile(new Profile());
         await self.otherStats().load({uuid: CoreManager.activeCore().uuid()});
         await self.profile().load({uuid: CoreManager.activeCore().uuid()});
     };
-
+    self.clear =  () => {
+        self.otherStats(null);
+        self.profile(null);
+    };
     self.setUpSubscriptions = () => {
         Notifications.otherstats.changed.add(self.updateOtherStats);
         Notifications.profile.changed.add(self.updateProfile);
+        Notifications.coreManager.changing.add(self.clear);
         Notifications.coreManager.changed.add(self.load);
         self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
     };
