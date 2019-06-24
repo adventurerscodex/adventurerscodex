@@ -141,6 +141,9 @@ class StatsHealthViewModel {
         let tempValue = 1;
         if (this.tempInput()) {
             tempValue = parseInt(this.tempInput());
+        } else {
+            // allow the user to increment via the button;
+            tempValue = parseInt(this.health().tempHitPoints()) + 1;
         }
         this.health().tempHitPoints(tempValue);
         await this.health().save();

@@ -1,7 +1,22 @@
 <div id="spells-pane" class="ac-pane panel-body">
     <div class="h4 card-title">
-      Spells<br/>
-      <small>You can sort your spells by clicking on the headers. View the
+      <span data-bind="if: filteredByCastable">
+          Castable
+        </span>
+        Spells<br/>
+        <small data-bind="if: filteredByCastable">
+          Your spells are filtered. Only <strong>prepared spells</strong> that you can cast with an available
+          spell slot are visible. To see all of your spells,
+          <input id="filterByCastableTitle"
+                 type='checkbox'
+                 class='filter-checkbox sr-only'
+                 data-bind="checked: filteredByCastable"></input>
+          <label for="filterByCastableTitle">
+            Unfilter the list.
+            </label>
+            <br />
+            </small>
+      <small data-bind="ifnot: filteredByCastable">You can sort your spells by clicking on the headers. View the
     bottom of the list for a count of your prepared spells.</small>
     </div>
     <table class="listing table table-responsive table-ac-bordered table-hover">
