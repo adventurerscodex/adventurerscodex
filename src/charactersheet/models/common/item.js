@@ -165,10 +165,12 @@ Item.validationConstraints = {
         },
         quantity: {
             type:'number',
+            pattern: '\\d*',
             min: 0,
             max: 1000000
         },
         weight: {
+            // cannot have number filter, because it can be a decimal
             type:'number',
             step: '0.25',
             min: 0,
@@ -176,6 +178,7 @@ Item.validationConstraints = {
         },
         cost: {
             type:'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000
         },

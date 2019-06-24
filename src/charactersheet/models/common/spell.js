@@ -187,6 +187,7 @@ Spell.validationConstraints = {
             min: 0,
             max: 10000,
             type: 'number',
+            pattern: '\\d*',
             required: true
         },
         castingTime: {

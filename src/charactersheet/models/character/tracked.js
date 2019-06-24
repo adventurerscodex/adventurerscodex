@@ -47,6 +47,7 @@ Tracked.validationConstraints = {
         max: {
             required: true,
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         }

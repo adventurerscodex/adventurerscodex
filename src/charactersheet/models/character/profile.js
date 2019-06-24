@@ -87,21 +87,25 @@ Profile.validationConstraints = {
         },
         age: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 1000000
         },
         level: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         experience: {
             type: 'number',
+            pattern: '\\d*',
             min: -1000000,
             max: 100000000
         },
         weight: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },

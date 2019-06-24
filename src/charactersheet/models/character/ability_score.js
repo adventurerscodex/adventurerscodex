@@ -54,6 +54,7 @@ AbilityScore.validationConstraints = {
     rules: {
         value: {
             type: 'number',
+            pattern: '\\d*',
             required: true,
             min: -10000,
             max: 1000000

@@ -105,6 +105,7 @@ Skill.validationConstraints = {
         },
         modifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },

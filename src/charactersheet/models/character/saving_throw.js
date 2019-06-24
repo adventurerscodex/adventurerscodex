@@ -77,6 +77,7 @@ SavingThrow.validationConstraints = {
     rules: {
         modifier: {
             type: 'number',
+            pattern: '\\d*',
             required: true,
             min: -10000,
             max: 10000

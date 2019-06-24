@@ -64,18 +64,21 @@ SpellSlot.validationConstraints = {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         max: {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         used: {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         }
     }

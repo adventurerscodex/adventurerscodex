@@ -122,11 +122,13 @@ MagicItem.validationConstraints = {
         },
         maxCharges: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         usedCharges: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },

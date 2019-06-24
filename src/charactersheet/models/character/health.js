@@ -107,18 +107,21 @@ Health.validationConstraints = {
             min: 0,
             max: 1000000,
             required: true,
+            pattern: '\\d*',
             type: 'number'
         },
         tempHitPoints: {
             min: 0,
             max: 1000000,
             required: true,
+            pattern: '\\d*',
             type: 'number'
         },
         damage: {
             min: 0,
             max: 1000000,
             required: true,
+            pattern: '\\d*',
             type: 'number'
         }
     }

@@ -45,36 +45,42 @@ SpellStats.validationConstraints = {
             required: true,
             min: -10000,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         spellAttackBonus: {
             required: true,
             min: -10000,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         spellsKnown: {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         cantripsKnown: {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         invocationsKnown: {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         },
         maxPrepared: {
             required: true,
             min: 0,
             max: 10000,
+            pattern: '\\d*',
             type: 'number'
         }
     }

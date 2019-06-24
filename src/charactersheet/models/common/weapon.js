@@ -263,6 +263,7 @@ Weapon.validationConstraints = {
         },
         price: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000
         },
@@ -271,11 +272,13 @@ Weapon.validationConstraints = {
         },
         magicalModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
         toHitModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
@@ -293,6 +296,7 @@ Weapon.validationConstraints = {
         },
         quantity: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000
         }

@@ -42,21 +42,25 @@ OtherStats.validationConstraints = {
     rules: {
         armorClassModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
         initiativeModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
         speed: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         proficiencyModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         }

@@ -137,6 +137,7 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         weight: {
+            // cannot have number filter, because it can be a decimal
             type: 'number',
             step: '0.25',
             min: 0,
@@ -144,11 +145,13 @@ Armor.validationConstraints = {
         },
         price: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000000
         },
         magicalModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
@@ -157,6 +160,7 @@ Armor.validationConstraints = {
         },
         armorClass: {
             type: 'number',
+            pattern: '\\d*',
             required: true,
             min: 0,
             max: 1000000

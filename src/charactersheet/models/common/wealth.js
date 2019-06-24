@@ -94,30 +94,35 @@ Wealth.validationConstraints = {
     rules: {
         platinum: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         gold: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         silver: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         copper: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         electrum: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true

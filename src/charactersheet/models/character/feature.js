@@ -83,6 +83,7 @@ Feature.validationConstraints = {
         },
         level: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000,
             required: true
