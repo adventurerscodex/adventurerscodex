@@ -15,12 +15,12 @@ import {find} from 'lodash';
 import ko from 'knockout';
 import template from './health.html';
 
-class StatsHealthViewModel extends AbstractViewModel {
+class StatsHealthViewModel {
     constructor(params) {
-        super(params);
+        this.loaded = ko.observable(false);
         this.forceCardResize = params.forceCardResize;
         this.massiveDamageTaken = params.massiveDamageTaken;
-        this.outerShow = params.outerShow;
+        this.outerShow = ko.observable(false);//params.outerShow;
         this.profile = ko.observable(new Profile());
         this.hitDice = ko.observable(new HitDice());
         this.health = ko.observable(new Health());
@@ -32,35 +32,41 @@ class StatsHealthViewModel extends AbstractViewModel {
         this.dmgInput = ko.observable(null);
     }
 
-    generateBlank() {
-      // We do not use the default AbstractView properties here.
-      // We may need to divorce this from the Abstract entirely
-        return null;
-    }
-
     async load() {
-        await this.profileDidUpdate();
-        await super.load();
+        var key = CoreManager.activeCore().uuid();
+        await this.hitDice().load({uuid: key});
+        await this.health().load({uuid: key});
+        await this.profile().load({uuid: key});
+
+        this.calculateHitDice();
+        this.setUpSubscriptions();
+        this.loaded(true);
     }
 
     refresh = async () => {
         var key = CoreManager.activeCore().uuid();
-
-        const hitDice = await HitDice.ps.read({uuid: key});
-        this.hitDice().importValues(hitDice.object.exportValues());
-
-        const health = await Health.ps.read({uuid: key});
-        this.health().importValues(health.object.exportValues());
+        await this.profile().load({uuid: key});
+        await this.hitDice().load({uuid: key});
+        await this.health().load({uuid: key});
         this.forceCardResize();
     };
 
     setUpSubscriptions = () => {
-        super.setUpSubscriptions();
-        const subscribeToOuterShow = this.outerShow.subscribe(this.subscribeToShowForm);
+        this.outerShow.subscribe(this.subscribeToVisible);
         Notifications.events.longRest.add(this.resetOnLongRest);
-        Notifications.profile.level.changed.add(this.profileDidUpdate);
+        Notifications.profile.changed.add(this.profileDidUpdate);
+        Notifications.health.changed.add(this.healthDidUpdate);
     }
 
+    healthDidUpdate = (health) => {
+        this.health().importValues(health.exportValues());
+    }
+
+    subscribeToVisible = async () => {
+        if (this.outerShow()) {
+            await this.refresh();
+        }
+    }
     // Hit Point Display ******************************************************
     hpText = ko.pureComputed(() => {
         let tempHp = '';
@@ -124,9 +130,10 @@ class StatsHealthViewModel extends AbstractViewModel {
         // damage is calculated a 3rd time is smelling like scope creep.
         // damageHandler updated this.health()
         this.damageHandler(healValue);
-        const response = await this.health().ps.save();
-        this.health().importValues(response.object.exportValues());
-        Notifications.health.damage.changed.dispatch();
+        if (this.health().damage() < this.health().maxHitPoints()) {
+            this.health().dying(false);
+        }
+        await this.health().save();
         this.healInput(null);
     };
 
@@ -134,11 +141,12 @@ class StatsHealthViewModel extends AbstractViewModel {
         let tempValue = 1;
         if (this.tempInput()) {
             tempValue = parseInt(this.tempInput());
+        } else {
+            // allow the user to increment via the button;
+            tempValue = parseInt(this.health().tempHitPoints()) + 1;
         }
         this.health().tempHitPoints(tempValue);
-        const response = await this.health().ps.save();
-        this.health().importValues(response.object.exportValues());
-        Notifications.health.tempHitPoints.changed.dispatch();
+        await this.health().save();
         this.tempInput(null);
     };
 
@@ -152,9 +160,11 @@ class StatsHealthViewModel extends AbstractViewModel {
         // damage is calculated a 3rd time is smelling like scope creep.
         // damageHandler updated this.health()
         this.damageHandler(damageValue);
-        const response = await this.health().ps.save();
-        this.health().importValues(response.object.exportValues());
-        Notifications.health.damage.changed.dispatch();
+        if (this.health().damage() >= this.health().maxHitPoints()) {
+            this.health().dying(true);
+        }
+
+        await this.health().save();
         this.dmgInput(null);
     };
 
@@ -203,10 +213,8 @@ class StatsHealthViewModel extends AbstractViewModel {
     });
 
     // Hit Point Interaction ***************************************************
-    profileDidUpdate = async () => {
-        const key = CoreManager.activeCore().uuid();
-        const profile = await Profile.ps.read({uuid: key});
-        this.profile().importValues(profile.object.exportValues());
+    profileDidUpdate = async (profile) => {
+        this.profile().importValues(profile.exportValues());
         this.calculateHitDice();
     };
 
@@ -233,10 +241,8 @@ class StatsHealthViewModel extends AbstractViewModel {
     }
 
     saveHitDice = async () => {
-        const response = await this.hitDice().ps.save();
-        this.hitDice().importValues(response.object.exportValues());
+        await this.hitDice().save();
         this.calculateHitDice();
-        Notifications.hitDice.changed.dispatch();
     }
 
     /**
@@ -264,40 +270,29 @@ class StatsHealthViewModel extends AbstractViewModel {
     resetOnLongRest = async () => {
         this.health().damage(0);
         this.health().tempHitPoints(0);
-        const response = await this.health().ps.save();
-        this.health().importValues(response.object.exportValues());
-        Notifications.health.damage.changed.dispatch();
-        Notifications.health.tempHitPoints.changed.dispatch();
+        await this.health().save();
         await this.resetHitDice();
-        // reset hit dice does the notification we need
     };
 
     validation = {
-        submitHandler: (form, event) => {
-            // event.preventDefault();
-            // this.modalFinishedClosing();
-        },
-        updateHandler: ($element) => {
-            this.addFormIsValid($element.valid());
-        },
         rules: {
             maxHitPoints: {
                 min: 0,
                 max: 1000000,
                 required: true,
-                number: true
+                type: 'number'
             },
             tempHitPoints: {
                 min: 0,
                 max: 1000000,
                 required: true,
-                number: true
+                type: 'number'
             },
             damage: {
                 min: 0,
                 max: 1000000,
                 required: true,
-                number: true
+                type: 'number'
             },
             type: {
                 required: true,

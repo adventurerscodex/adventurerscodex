@@ -88,15 +88,24 @@ export class AbstractTabularViewModel {
       );
 
     addToList(item) {
-        this.entities.push(item);
+        if (item) {
+            this.entities.push(item);
+        }
     }
 
     replaceInList (item) {
-        Utility.array.updateElement(this.entities(), item, item.uuid);
+        if (item) {
+            Utility.array.updateElement(this.entities(), item, ko.utils.unwrapObservable(item.uuid));
+        }
     }
 
     removeFromList (item) {
-        this.entities.remove(item);
+        if (item) {
+            this.entities.remove(
+          (entry) => {
+              return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+          });
+        }
     }
 
     collapseAll () {
@@ -104,10 +113,10 @@ export class AbstractTabularViewModel {
     }
 
     showTracked (entity) {
-        return !!ko.utils.unwrapObservable(entity.tracked);
+        return !!ko.utils.unwrapObservable(entity.isTracked);
     }
 
-    toggleShowAddForm =  () => {
+    toggleShowAddForm () {
         if (this.displayAddForm()) {
             this.displayAddForm(false);
             $(this.addFormId).collapse('hide');
@@ -117,7 +126,12 @@ export class AbstractTabularViewModel {
         }
     }
 
-    setUpSubscriptions () {}
+    setUpSubscriptions () {
+        const modelNotification = this.modelClass().prototype.constructor.name.toLowerCase();
+        Notifications[modelNotification].added.add(this.addToList);
+        Notifications[modelNotification].changed.add(this.replaceInList);
+        Notifications[modelNotification].deleted.add(this.removeFromList);
+    }
 
     disposeOfSubscriptions () {
         const disposeOfDisposable = (disposable) => {

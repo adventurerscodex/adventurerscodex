@@ -1,14 +1,14 @@
-import { AbstractChildTrackedFormModel } from 'charactersheet/viewmodels/abstract';
+import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { Feat } from 'charactersheet/models';
 import { Fixtures } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 import { SELECTDATA } from 'charactersheet/constants';
-
+import { TrackedForm } from 'charactersheet/components/form-tracked-component';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class FeatFormViewModel extends AbstractChildTrackedFormModel {
+export class FeatFormViewModel extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         autoBind(this);
@@ -17,6 +17,7 @@ export class FeatFormViewModel extends AbstractChildTrackedFormModel {
     modelClass () {
         return Feat;
     }
+
     prePopSource = 'feats';
     prePopLimit = SELECTDATA.LONG;
 
@@ -24,8 +25,10 @@ export class FeatFormViewModel extends AbstractChildTrackedFormModel {
 
     popoverText = () => ('Tracked Feats are listed in the Tracker.');
 
-    notify() {
-        Notifications.feat.changed.dispatch();
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        const onTrackFormDisplay = this.entity().isTracked.subscribe(this.forceResize);
+        this.subscriptions.push(onTrackFormDisplay);
     }
 }
 

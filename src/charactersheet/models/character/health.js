@@ -1,6 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -18,6 +19,7 @@ export class Health extends KOModel {
     maxHitPoints = ko.observable(10);
     tempHitPoints = ko.observable(0);
     damage = ko.observable(0);
+    dying = ko.observable(false);
 
     hitPoints = ko.pureComputed(() => {
         return this.regularHitPointsRemaining();
@@ -84,6 +86,19 @@ export class Health extends KOModel {
         }
         return (parseInt(this.tempHitPointsRemaining()) / parseInt(this.totalHitPoints()) * 100) + '%';
     });
+
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.health.changed.dispatch(this);
+    }
 }
 
 Health.validationConstraints = {
@@ -92,18 +107,21 @@ Health.validationConstraints = {
             min: 0,
             max: 1000000,
             required: true,
+            pattern: '\\d*',
             type: 'number'
         },
         tempHitPoints: {
             min: 0,
             max: 1000000,
             required: true,
+            pattern: '\\d*',
             type: 'number'
         },
         damage: {
             min: 0,
             max: 1000000,
             required: true,
+            pattern: '\\d*',
             type: 'number'
         }
     }

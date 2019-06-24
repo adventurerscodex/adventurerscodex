@@ -35,6 +35,8 @@ ko.bindingHandlers.popover = {
     },
     options: {
         placement: 'top',
-        html: true
+        html: true,
+        container: 'body',
+        trigger: 'focus'
     }
 };

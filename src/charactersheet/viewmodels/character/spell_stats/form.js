@@ -19,8 +19,6 @@ export class SpellStatsFormViewModel  extends AbstractFormModel {
     setSpellCastingAbility = (label, value) => {
         this.entity().castingAbility(label);
     };
-
-    notify() { Notifications.spellStats.changed.dispatch(); }
 }
 
 ko.components.register('spell-stats-form', {

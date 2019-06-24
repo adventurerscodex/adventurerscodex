@@ -1,13 +1,14 @@
-import { AbstractChildTrackedFormModel } from 'charactersheet/viewmodels/abstract';
+import { AbstractChildFormModel } from 'charactersheet/viewmodels/abstract';
 import { Clazz } from 'charactersheet/models';
 import { Notifications } from 'charactersheet/utilities';
 import { Tracked } from 'charactersheet/models';
+import { TrackedForm } from 'charactersheet/components/form-tracked-component';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './form.html';
 
-export class TrackedDetailForm extends AbstractChildTrackedFormModel {
+export class TrackedDetailForm extends AbstractChildFormModel {
     constructor(params) {
         super(params);
         this.modelName = params.modelName;
@@ -24,11 +25,6 @@ export class TrackedDetailForm extends AbstractChildTrackedFormModel {
             return undefined;
         }
         return Clazz[this.modelName];
-    }
-
-    notify = () => {
-        const type = this.modelName.toLowerCase();
-        Notifications.tracked[type].changed.dispatch();
     }
 
     validation = {

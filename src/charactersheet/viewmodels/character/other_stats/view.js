@@ -3,111 +3,112 @@ import {
     AbilityScore,
     OtherStats
 } from 'charactersheet/models/character';
-
 import {
     ArmorClassService,
     ProficiencyService
 } from 'charactersheet/services';
-
 import {
     CoreManager,
     Fixtures,
     Notifications
 } from 'charactersheet/utilities';
-
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
-
 import autoBind from 'auto-bind';
 import { getModifier } from 'charactersheet/models/character/ability_score';
-
-
 import ko from 'knockout';
 import template from './view.html';
 
 export class OtherStatsViewModel extends AbstractViewModel {
     constructor(params) {
         super(params);
-        // Calculated Fields
-        this.armorClass = ko.observable();
-        this.proficiencyLabel = ko.observable();
-        this.initiativeLabel = ko.observable();
-
-        this.initiativePopover = ko.observable();
-        this.proficiencyPopover = ko.observable();
-        this.armorClassPopover = ko.observable();
+        this.dexterity = ko.observable(new AbilityScore());
         autoBind(this);
     }
     modelName = 'OtherStats';
 
     async load() {
         await super.load();
-        this.calculateInitiativeLabel();
-        this.updateArmorClass();
-        this.calculatedProficiencyLabel();
+        await this.getDexterity();
     }
+
+    armorClass = ko.pureComputed(() => {
+        return ArmorClassService.sharedService().armorClass();
+    })
 
     setUpSubscriptions = () => {
         super.setUpSubscriptions();
-        Notifications.armorClass.changed.add(this.updateArmorClass);
-        Notifications.abilityScores.dexterity.changed.add(this.calculateInitiativeLabel);
-        Notifications.proficiencyBonus.changed.add(this.calculatedProficiencyLabel);
+        Notifications.abilityscore.changed.add(this.updateDexterity);
     }
 
-    // Calculate proficiency label and popover
-    calculatedProficiencyLabel = async () => {
-        const proficiencyService = ProficiencyService.sharedService();
-        var level = await proficiencyService.proficiencyBonusByLevel();
-        const proficiency = parseInt(this.entity().proficiencyModifier());
-        this.updateProficiencyPopoverMessage(level, proficiency);
-        this.proficiencyLabel(proficiencyService.proficiency());
-    }
-
-    updateProficiencyPopoverMessage = (level, proficiency) => {
-        this.proficiencyPopover('<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
-            + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />'
-            + `Proficiency = ${level} + 1 + ${proficiency}`);
-    }
-
-    // Calculate initiative label and popover
-    calculateInitiativeLabel = async () => {
+    getDexterity = async () => {
         const key = CoreManager.activeCore().uuid();
         const response = await AbilityScore.ps.list({
             coreUuid: key,
             name: Fixtures.abilityScores.constants.dexterity.name
         });
-        const dexterityModifier = response.objects[0].getModifier();
-        const initiativeModifier = this.entity().initiativeModifier();
-        this.updateInitiativePopoverMessage(dexterityModifier, initiativeModifier);
-        this.initiativeLabel(parseInt(dexterityModifier) + parseInt(initiativeModifier));
+        this.dexterity(response.objects[0]);
     }
 
-    updateInitiativePopoverMessage = (dexterityModifier, initiativeModifier) => {
-        this.initiativePopover('<span style="white-space:nowrap;"><strong>Initiative</strong> = ' +
-        'Dexterity Modifier + Modifier</span><br />' +
-        `Initiative = ${dexterityModifier} + ${initiativeModifier}`);
+    updateDexterity = (abilityScore) => {
+        if (abilityScore && abilityScore.name() === Fixtures.abilityScores.constants.dexterity.name) {
+            this.dexterity().importValues(abilityScore.exportValues());
+        }
     }
 
-    updateArmorClassPopoverMessage = async () => {
-        const acService = ArmorClassService.sharedService();
-        const baseAC = acService.baseArmorClass();
-        const dexMod = await acService.dexBonusFromArmor();
-        const magicModifiers = acService.equippedArmorMagicalModifier() + acService.equippedShieldMagicalModifier();
-        const shield = acService.getEquippedShieldBonus();
+    proficiency = ko.pureComputed(()=> {
+        return ProficiencyService.sharedService().proficiency();
+    })
+
+    proficiencyLabel = ko.pureComputed(()=> {
+        // let bonus = ProficiencyService.sharedService().proficiency();
+        // The modifier is added in the service, so no need to duplicate here
+        if (this.proficiency() < 0) {
+            return `- ${Math.abs(this.proficiency())}`;
+        }
+        return `+ ${this.proficiency()}`;
+    })
+
+    proficiencyPopover = ko.pureComputed(() => {
+        const level = ProficiencyService.sharedService().proficiencyBonusByLevel();
+        return '<span style="white-space:nowrap;"><strong>Proficiency</strong> = '
+          + '(<strong>Level</strong> / 4) + 1 + <strong>Modifier</strong></span><br />'
+          + `Proficiency = ${level} + 1 + ${this.entity().proficiencyModifier()}`;
+    })
+
+    initiativeLabel = ko.pureComputed(() => {
+        let bonus = this.dexterity().getModifier();
+        if (this.entity().initiativeModifier()) {
+            bonus += parseInt(this.entity().initiativeModifier());
+        }
+        if (bonus < 0) {
+            return `- ${Math.abs(bonus)}`;
+        }
+        return `+ ${bonus}`;
+    })
+
+    initiativePopover = ko.pureComputed(() => {
+        const dexMod = this.dexterity().getModifier();
+        return '<span style="overflow: visible; white-space:nowrap;"><strong>Initiative</strong> = ' +
+               'Dexterity Modifier + Modifier</span><br />' +
+               `Initiative = ${dexMod} + ${this.entity().initiativeModifier()}`;
+    })
+
+    armorClassPopover = ko.pureComputed(()=> {
+        const baseAC = ArmorClassService.sharedService().baseArmorClass();
+        const dexMod = ArmorClassService.sharedService().dexBonusFromArmor();
+        const magicModifiers = ArmorClassService.sharedService().equippedArmorMagicalModifier() +
+                               ArmorClassService.sharedService().equippedShieldMagicalModifier();
+        const shield = ArmorClassService.sharedService().getEquippedShieldBonus();
         const modifier = this.entity().armorClassModifier() ? this.entity().armorClassModifier() : 0;
-        this.armorClassPopover('<span><strong>Armor Class</strong> = '
-         + 'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />'
-         + `<strong>Armor Class</strong> = ${baseAC} + ${dexMod} + ${magicModifiers} + ${shield} + ${modifier}`);
-    }
+        return '<span><strong>Armor Class</strong> = '
+       + 'Base AC + Dexterity Modifier + Magical Modifier(s) + Shield + Modifier</span><br />'
+       + `<strong>Armor Class</strong> = ${baseAC} + ${dexMod} + ${magicModifiers} + ${shield} + ${modifier}`;
 
-    updateArmorClass = async () => {
-        await this.updateArmorClassPopoverMessage();
-        this.armorClass(ArmorClassService.sharedService().armorClass());
-    }
+    })
 
     toggleInspiration = async () => {
         this.entity().inspiration(!this.entity().inspiration());
-        await this.entity().ps.save();
-        Notifications.otherStats.inspiration.changed.dispatch();
+        await this.entity().save();
     }
 }
 

@@ -99,30 +99,14 @@ export var Notifications = {
         toggle: new Signal()
     },
 
-    abilityScores: {
-        changed: new Signal(),
-        strength: {
-            changed: new Signal()
-        },
-        dexterity: {
-            changed: new Signal()
-        },
-        constitution: {
-            changed: new Signal()
-        },
-        intelligence: {
-            changed: new Signal()
-        },
-        wisdom: {
-            changed: new Signal()
-        },
-        charisma: {
-            changed: new Signal()
-        }
+    abilityscore: {
+        changed: new Signal()
     },
 
     armor: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     armorClass: {
@@ -148,33 +132,30 @@ export var Notifications = {
             left: new Signal()
         }
     },
-
+    deathsave: {
+        changed: new Signal()
+    },
     exhibit: {
         changed: new Signal()
     },
 
     feat: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     feature: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     health: {
-        changed: new Signal(),
-        maxHitPoints: {
-            changed: new Signal()
-        },
-        tempHitPoints: {
-            changed: new Signal()
-        },
-        damage: {
-            changed: new Signal()
-        }
+        changed: new Signal()
     },
 
-    hitDice: {
+    hitdice: {
         changed: new Signal()
     },
 
@@ -183,29 +164,29 @@ export var Notifications = {
     },
 
     item: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
-    magicItem: {
-        changed: new Signal()
+    magicitem: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
-    notes: {
-        changed: new Signal()
+    note: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     encounters: {
         changed: new Signal()
     },
 
-    otherStats: {
-        changed: new Signal(),
-        proficiency: {
-            changed: new Signal()
-        },
-        inspiration: {
-            changed: new Signal()
-        }
+    otherstats: {
+        changed: new Signal()
     },
 
     party: {
@@ -233,15 +214,6 @@ export var Notifications = {
 
     profile: {
         changed: new Signal(),
-        level: {
-            changed: new Signal()
-        },
-        experience: {
-            changed: new Signal()
-        },
-        characterName: {
-            changed: new Signal()
-        },
         playerName: {
             changed: new Signal()
         },
@@ -250,17 +222,13 @@ export var Notifications = {
         },
         playerType: {
             changed: new Signal()
-        },
-        race: {
-            changed: new Signal()
-        },
-        playerClass: {
-            changed: new Signal()
         }
     },
 
     proficiency: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     proficiencyBonus: {
@@ -275,40 +243,30 @@ export var Notifications = {
         changed: new Signal()
     },
 
-    skills: {
+    skill: {
+        added: new Signal(),
         changed: new Signal(),
-        perception: {
-            changed: new Signal()
-        }
+        deleted: new Signal()
     },
 
-    spellSlots: {
+    spellslot: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
+    },
+
+    spellstats: {
         changed: new Signal()
     },
 
-    spellStats: {
-        changed: new Signal()
+    spell: {
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     stats: {
-        changed: new Signal(),
-        armorClassModifier: {
-            changed: new Signal()
-        },
-        deathSaves: {
-            fail: {
-                changed: new Signal()
-            },
-            success: {
-                changed: new Signal()
-            },
-            notFail: {
-                changed: new Signal()
-            },
-            notSuccess: {
-                changed: new Signal()
-            }
-        }
+        changed: new Signal()
     },
 
     status: {
@@ -325,24 +283,21 @@ export var Notifications = {
     },
 
     trait: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     tracked: {
+        added: new Signal(),
         changed: new Signal(),
-        feat: {
-            changed: new Signal()
-        },
-        feature: {
-            changed: new Signal()
-        },
-        trait: {
-            changed: new Signal()
-        }
+        deleted: new Signal()
     },
 
     weapon: {
-        changed: new Signal()
+        added: new Signal(),
+        changed: new Signal(),
+        deleted: new Signal()
     },
 
     wealth: {

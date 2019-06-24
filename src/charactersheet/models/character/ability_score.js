@@ -1,10 +1,14 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
 export class AbilityScore extends KOModel {
+    constructor(params) {
+        super(params);
+    }
     static __skeys__ = ['core', 'abilityScores'];
     static __dependents__ = ['Skill', 'SavingThrow'];
 
@@ -18,6 +22,14 @@ export class AbilityScore extends KOModel {
     shortName = ko.observable('');
     abbreviation = ko.observable('');
 
+    modifier = ko.pureComputed(() => {
+        if (this.value()) {
+            return Math.floor((this.value() - 10) / 2);
+        } else {
+            return 0;
+        }
+    })
+
     getModifier() {
         if (this.value()) {
             return Math.floor((this.value() - 10) / 2);
@@ -26,21 +38,15 @@ export class AbilityScore extends KOModel {
         }
     }
 
-    modifierLabel() {
-        try {
-            if (this.value() === null || this.value() === '') {
-                return '';
-            }
-            let modifier = this.getModifier();
-            if (modifier >= 0) {
-                modifier = '+ ' + modifier;
-            } else {
-                modifier = '- ' + Math.abs(modifier);
-            }
-            return modifier;
-        } catch (e) {
-            // Ignore
-        }
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.abilityscore.changed.dispatch(this);
     }
 }
 
@@ -48,6 +54,7 @@ AbilityScore.validationConstraints = {
     rules: {
         value: {
             type: 'number',
+            pattern: '\\d*',
             required: true,
             min: -10000,
             max: 1000000

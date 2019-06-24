@@ -12,7 +12,6 @@ import template from './form.html';
 export class ProfileFormViewModel extends AbstractFormModel {
     constructor(params) {
         super(params);
-        this.levelHasChanged = ko.observable(false);
         autoBind(this);
     }
 
@@ -34,25 +33,6 @@ export class ProfileFormViewModel extends AbstractFormModel {
     setRace = (label, value) => {
         this.entity().race(value);
     };
-
-    notify = async () => {
-        if (this.levelHasChanged()) {
-            Notifications.profile.level.changed.dispatch();
-        }
-        Notifications.profile.changed.dispatch();
-        this.levelHasChanged(false);
-    }
-    //
-    setUpSubscriptions = () => {
-        super.setUpSubscriptions();
-        // Subscribe to the fields changing so that the correct notifications
-        // are fired when saving.
-        this.entity().level.subscribe(this.markLevelAsChanged);
-    }
-
-    markLevelAsChanged = () => {
-        this.levelHasChanged(true);
-    }
 }
 
 ko.components.register('profile-form', {

@@ -23,10 +23,10 @@
   <tbody>
     <!-- ko foreach: order -->
     <tr data-bind="with: $component.findSaveByName($data)">
-      <td ><span data-bind='text: abilityScoreObject().value'></span></td>
-      <td><span data-bind="text: abilityScoreObject().abbreviation"></span></td>
-      <td><strong data-bind="text: abilityScoreObject().modifierLabel()"> </strong></td>
-      <td><span class="defenseShield" data-bind="text: modifierLabel()"> </span></td>
+      <td ><span data-bind='text: abilityScore().value'></span></td>
+      <td><span data-bind="text: abilityScore().abbreviation"></span></td>
+       <td><strong data-bind="text: $component.modifierLabel(abilityScore().getModifier())"> </strong></td>
+      <td><span class="defenseShield" data-bind="text: $component.modifierLabel(bonus())"> </span></td>
     </tr>
     <!-- /ko -->
   </tbody>

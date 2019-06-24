@@ -37,6 +37,9 @@ export function StatusLineViewModel(params) {
     self.coreHasChanged = async () => {
         const key = CoreManager.activeCore().uuid();
         const statuses = PersistenceService.findBy(Status, 'characterId', key);
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
         const profileResponse = await Profile.ps.read({uuid: key});
         let profile = profileResponse.object;
 

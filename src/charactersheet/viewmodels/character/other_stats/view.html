@@ -9,9 +9,9 @@
   <tbody>
     <tr>
       <th>
-        <span class="h4">Armor Class</span>&nbsp;<span class="fa fa-info-circle statsPopover"
-              data-bind="popover: { content: armorClassPopover }">
-        </span>
+        <span class="h4">Armor Class</span>&nbsp;<a class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: armorClassPopover }" role="button" tabindex="0">
+        </a>
       </th>
       <td class="ac-table-data-cell">
         <div id="ArmorClassShield"
@@ -22,22 +22,21 @@
     </tr>
     <tr>
       <th>
-        Proficiency Bonus&nbsp;<span class="fa fa-info-circle statsPopover"
-              data-bind="popover: { content: proficiencyPopover }">
-        </span>
+        Proficiency Bonus&nbsp;<a class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: proficiencyPopover }" role="button" tabindex="1">
+        </a>
       </th>
       <td class="ac-table-data-cell">
-        +<span data-bind="text: proficiencyLabel"></span>
+        <span data-bind="text: proficiencyLabel"></span>
       </td>
     </tr>
     <tr>
       <th>
-        Initiative&nbsp;<span class="fa fa-info-circle statsPopover"
-              data-bind="popover: { content: initiativePopover }">
-        </span>
+        Initiative&nbsp;<a class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: initiativePopover }" role="button" tabindex="2">
+        </q>
       </th>
       <td class="ac-table-data-cell">
-        <span data-bind="text: parseInt(initiativeLabel) < 0 ? '' : '+'"></span>
         <span data-bind="text: initiativeLabel"></span>
       </td>
     </tr>

@@ -1,6 +1,6 @@
 import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
-
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -101,6 +101,29 @@ export class Armor extends KOModel {
 
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.armor.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.armor.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.armor.deleted.dispatch(this);
+    }
+
 }
 
 Armor.validationConstraints = {
@@ -114,17 +137,21 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         weight: {
+            // cannot have number filter, because it can be a decimal
             type: 'number',
+            step: '0.25',
             min: 0,
             max: 10000000
         },
         price: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000000
         },
         magicalModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
@@ -133,6 +160,7 @@ Armor.validationConstraints = {
         },
         armorClass: {
             type: 'number',
+            pattern: '\\d*',
             required: true,
             min: 0,
             max: 1000000

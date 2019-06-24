@@ -2,7 +2,6 @@ import {
   AbstractTabularViewModel,
   calculateTotalLoad
  } from 'charactersheet/viewmodels/abstract';
-import { MagicItemDetailViewModel } from './view';
 import { MagicItemFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -37,9 +36,7 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
     attuneItem = async (data, event) => {
         event.stopPropagation();
         data.attuned(!data.attuned());
-        const response = await data.ps.save();
-        this.replaceInList(response.object);
-        Notifications.magicItem.changed.dispatch();
+        await data.save();
     };
 
     numberOfAttuned = ko.pureComputed(() => {

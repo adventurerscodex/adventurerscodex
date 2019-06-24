@@ -4,7 +4,6 @@ import { filter, maxBy } from 'lodash';
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
 import { SortService } from 'charactersheet/services/common';
-import { SpellDetailViewModel } from './view';
 import { SpellFormViewModel } from './form';
 
 import autoBind from 'auto-bind';
@@ -25,8 +24,8 @@ class SpellbookViewModel extends AbstractTabularViewModel {
 
     modelName = 'Spell';
 
-    async load () {
-        await super.load();
+    async refresh () {
+        await super.refresh();
         const stats = await SpellStats.ps.read({ uuid: this.coreKey });
         this.spellStats().importValues(stats.object.exportValues());
         const spellSlots = await SpellSlot.ps.list({ coreUuid: this.coreKey });
@@ -74,16 +73,17 @@ class SpellbookViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        Notifications.spellSlots.changed.add(this.updateSpellSlots);
-        Notifications.spellStats.changed.add(this.updateSpellStats);
+        Notifications.spellslot.changed.add(this.updateSpellSlots, this);
+        Notifications.spellslot.added.add(this.updateSpellSlots, this);
+        Notifications.spellslot.deleted.add(this.updateSpellSlots, this);
+        Notifications.spellstats.changed.add(this.updateSpellStats, this);
     }
 
-    updateSpellStats = async () => {
-        const stats = await SpellStats.ps.read({ uuid: this.coreKey });
-        this.spellStats().importValues(stats.object.exportValues());
+    updateSpellStats = async (stats) => {
+        this.spellStats().importValues(stats.exportValues());
     }
 
-    updateSpellSlots = async () => {
+    updateSpellSlots = async (slot) => {
         const response = await SpellSlot.ps.list({ coreUuid: this.coreKey });
         this.spellSlots(response.objects);
     }
@@ -108,7 +108,7 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         case 'Savings Throw': {
             return (
               `Save vs <strong>${spell.spellSaveAttribute()}</strong>` +
-              `<span class="small">DC:${this.spellStats().spellSaveDc()}</span>`);
+              ` <span class="small">DC:<strong>${this.spellStats().spellSaveDc()}</strong></span>`);
         }
         case 'Melee Spell Attack': {
             const spellAttackLabel = this.spellStats().spellAttackBonus();
@@ -135,8 +135,7 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         event.stopPropagation();
         if(!(data.level() == 0  || data.alwaysPrepared())) {
             data.prepared(!data.prepared());
-            const response = await data.ps.save();
-            this.replaceInList(response.object);
+            await data.save();
         }
     };
 

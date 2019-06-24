@@ -65,10 +65,7 @@ export class AbstractFormModel {
     }
 
     async refresh() {
-        const response = await this.modelClass().ps.read(
-          { uuid: CoreManager.activeCore().uuid() }
-        );
-        this.entity().importValues(response.object.exportValues());
+        this.entity().load({ uuid: CoreManager.activeCore().uuid() });
         this.showDisclaimer(false);
     }
 
@@ -80,12 +77,7 @@ export class AbstractFormModel {
     }
 
     async save() {
-        const response = await this.entity().ps.save();
-        if ('importValues' in this.entity()) {
-            this.entity().importValues(response.object.exportValues());
-        } else {
-            this.entity(response.object);
-        }
+        await this.entity().save();
     }
 
     notify() {

@@ -1,7 +1,9 @@
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { AbilityScore } from './ability_score';
-import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
+import { isEmpty } from 'lodash';
+
 import ko from 'knockout';
 
 
@@ -9,42 +11,41 @@ export class Skill extends KOModel {
     static __skeys__ = ['core', 'skills'];
 
     static mapping = {
-        include: ['coreUuid']
-    };
+        include: ['coreUuid'],
+        abilityScore: {
+            update: ({ data, parent }) => {
+                const abilityScore = new AbilityScore();
+                if (!isEmpty(data)) {
+                    abilityScore.importValues(ko.utils.unwrapObservable(data));
+                    return abilityScore;
+                }
+            }
+        }
+    }
 
     coreUuid = ko.observable(null);
     name = ko.observable('');
     modifier = ko.observable(0);
     abilityScore = ko.observable(null);
     proficiency = ko.observable('not');
-    bonusLabel = ko.observable('');
-    bonusNumber = ko.observable('');
-    passiveBonus = ko.observable('');
-    abilityScoreObject = ko.observable(new AbilityScore());
+    abilityScore = ko.observable(new AbilityScore());
+
     toSchemaValues = (values) => {
-        // TODO: I have to do this because when delete is called, it only includes the IDs in the
-        // TODO: values object.
+        let schemaValues = {...values};
         if (values.abilityScore) {
-            const abilityScoreId = values.abilityScore.uuid;
-            values.abilityScore = abilityScoreId;
+            schemaValues.abilityScore = values.abilityScore.uuid;
         }
-
-        // assign default values if they are somehow not provided by service code
         if (values.modifier === '') {
-            values.modifier = 0;
+            schemaValues.modifier = 0;
         }
-
         if (values.proficiency === '') {
-            values.proficiency = 'not';
+            schemaValues.proficiency = 'not';
         }
-
-        return values;
+        return schemaValues;
     }
 
-    proficiencyScore() {
-        // this._dummy();
+    proficiencyBonus = ko.pureComputed(() => {
         var profBonus = ProficiencyService.sharedService().proficiency();
-
         if (this.proficiency() === 'half') {
             return Math.floor(profBonus / 2);
         } else if (this.proficiency() === 'expertise') {
@@ -52,57 +53,48 @@ export class Skill extends KOModel {
         } else if (this.proficiency() === 'proficient') {
             return profBonus;
         }
-
-        // Will get to here if proficiency is null or empty
         return 0;
-    }
+    })
 
-    abilityScoreModifier = async () => {
-        var score = null;
-        try {
-            this.abilityScoreObject().importValues(this.abilityScore());
-        } catch(err) {/*Ignore*/ }
-        if (!this.abilityScoreObject()) {
-            return 0;
-        } else {
-            return this.abilityScoreObject().getModifier();
-        }
-    }
-
-    bonus = async () => {
-        var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
-        const abilityScore = await this.abilityScoreModifier();
-        if (this.proficiency()) {
-            bonus += this.proficiencyScore();
-        }
-
-        bonus += abilityScore;
-
+    bonus = ko.pureComputed(()=> {
+        let bonus = this.modifier() ? parseInt(this.modifier()) : 0;
+        bonus += this.abilityScore().getModifier();
+        bonus += this.proficiencyBonus();
         return bonus;
-    };
+    })
 
-    updateBonuses = async () => {
-        var str = '+ 0';
-        let bonus = await this.bonus();
-        if (bonus) {
-            str = bonus >= 0 ? '+ ' + bonus : '- ' +
-            Math.abs(bonus);
+    passiveBonus = ko.pureComputed(() => {
+        return 10 + ko.utils.unwrapObservable(this.bonus);
+    })
+
+    updateAbilityScoreValues = async (abilityScore) => {
+        if (this.abilityScore().uuid() === abilityScore.uuid()) {
+            this.abilityScore().importValues(abilityScore.exportValues());
         }
-        this.bonusNumber(bonus);
-        str += ' <i><small class="skills-ability-type">('
-                  + this.abilityScore().abbreviation() + ')</small></i>';
-        this.bonusLabel(str);
-        this.passiveBonus(10 + bonus);
     };
 
-    nameLabel = ko.pureComputed(() => {
-        // this._dummy();
-        var str = this.name();
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
 
-        str += ' <i><small class="skills-ability-type">(' + this.abilityScore().abbreviation() + ')</small></i>';
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.skill.added.dispatch(this);
+    }
 
-        return str;
-    });
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.skill.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.skill.deleted.dispatch(this);
+    }
+
 }
 
 Skill.validationConstraints = {
@@ -113,6 +105,7 @@ Skill.validationConstraints = {
         },
         modifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },

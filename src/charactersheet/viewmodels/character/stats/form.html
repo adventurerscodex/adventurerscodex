@@ -1,12 +1,12 @@
-<form class="form-horizontal health-form"
+<form class="form-horizontal health-form panel-body"
       data-bind="{submit: $component.submit}">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
   <!-- ko if: loaded(), completeOn: 'render' -->
   <div data-bind="with: entity">
     <div class="form-group">
       <label for="name"
-             class="col-sm-4 col-md-6 control-label">Max HP</label>
-      <div class="col-sm-8 col-md-6">
+             class="col-sm-4 control-label">Max HP</label>
+      <div class="col-sm-8">
         <input class="form-control"
                name="maxHitPoints"
                data-bind="value: maxHitPoints,
@@ -17,8 +17,8 @@
     </div>
     <div class="form-group">
       <label for="bonus"
-             class="col-sm-4 col-md-6 control-label">Damage</label>
-      <div class="col-sm-8 col-md-6">
+             class="col-sm-4 control-label">Damage</label>
+      <div class="col-sm-8">
         <input class="form-control"
                name="damage"
                data-bind="value: damage,
@@ -28,8 +28,8 @@
     </div>
     <div class="form-group">
       <label for="name"
-             class="col-sm-4 col-md-6 control-label">Temporary HP</label>
-      <div class="col-sm-8 col-md-6">
+             class="col-sm-4 control-label">Temporary HP</label>
+      <div class="col-sm-8">
         <input class="form-control"
                name="tempHitPoints"
                data-bind="value: tempHitPoints,
@@ -38,12 +38,10 @@
       </div>
     </div>
   </div>
-  <div data-bind="with: hitDice"
-       <div
-       class="form-group ui-front">
+  <div data-bind="with: hitDice" class="form-group ui-front">
     <label for="name"
-           class="col-sm-4 col-md-6 control-label">Hit Dice Type</label>
-    <div class="col-sm-8 col-md-6">
+           class="col-sm-4 control-label">Hit Dice Type</label>
+    <div class="col-sm-8">
       <input class="form-control"
              placeholder="D4"
              name="type"
@@ -54,7 +52,6 @@
                 source: hitDiceOptions,
                 onselect: $component.setHitDiceType}">
     </div>
-  </div>
   </div>
   <!-- /ko -->
 </form>

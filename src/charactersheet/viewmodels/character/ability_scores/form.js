@@ -23,7 +23,6 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
         super(params);
         this.order = params.order;
         this.showSaves = ko.observable(false);
-        this.abilityScoresChanged = ko.observableArray([]);
         autoBind(this);
     }
 
@@ -31,21 +30,17 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
         return SavingThrow;
     }
 
-    refresh = async () => {
-        await super.refresh();
-        await this.updateSavingThrowValues();
-    };
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        const resetShowSaves = this.show.subscribe(this.resetShowSaves);
+        this.subscriptions.push(resetShowSaves);
+    }
 
-    updateSavingThrowValues = async () => {
-        // By telling each savingThrow to update their labels, we're implicitly
-        // making a networking call. This should not be this way, but because
-        // the fix is too time consuming, at time of writing, I'm just leaving
-        // it and documenting the weirdness.
-        const saveUpdates = this.entities().map(async (savingThrow) => {
-            await savingThrow.updateAbilityScore();
-        });
-        await Promise.all(saveUpdates);
-    };
+    resetShowSaves () {
+        if (!this.show()) {
+            this.showSaves(false);
+        }
+    }
 
     saveFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && this.showSaves()));
     scoreFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && !this.showSaves()));
@@ -59,26 +54,16 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
 
     async save () {
         const updates = this.entities().map(async (entity) => {
-            if (entity.abilityScoreObject().markedForSave) {
-                delete entity.abilityScoreObject().markedForSave;
-                await entity.abilityScoreObject().ps.save();
-                this.abilityScoresChanged().push(entity.abilityScoreObject().name());
+            if (entity.abilityScore().markedForSave) {
+                delete entity.abilityScore().markedForSave;
+                await entity.abilityScore().save();
             }
             if (entity.markedForSave) {
                 delete entity.markedForSave;
-                await entity.ps.save();
+                await entity.save();
             }
         });
         await Promise.all(updates);
-    }
-
-    notify = () => {
-        if (this.abilityScoresChanged().length > 0) {
-            this.abilityScoresChanged().map((name) => {
-                Notifications.abilityScores[name.toLowerCase()].changed.dispatch();
-            });
-            Notifications.abilityScores.changed.dispatch();
-        }
     }
 
     validation = {

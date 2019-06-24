@@ -41,7 +41,7 @@ export class AbstractViewModel {
         this.subscriptions = [];
     }
 
-    modelClass = () => {
+    modelClass() {
         if (!this.modelName) {
             throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
         }
@@ -70,8 +70,7 @@ export class AbstractViewModel {
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());
         } else {
-            const response = await this.modelClass().ps.read({uuid: this.coreKey});
-            this.entity().importValues(response.object.exportValues());
+            await this.entity().load({uuid: this.coreKey});
         }
     }
 

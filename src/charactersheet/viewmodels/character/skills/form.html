@@ -30,7 +30,7 @@
                     data-bind="value: proficiency,
           options: $component.proficiencyOptions,
           event: {
-            change: $component.updateEntity,
+            'select2:select': $component.updateEntity,
             blur: $component.reviewInput,
             invalid: $component.invalidate },
           attr: { ...$component.validation.proficiency },
@@ -43,7 +43,9 @@
            }"></select>
           </div>
         </td>
-        <td><span data-bind="html: nameLabel"></span></td>
+        <td>
+          <span data-bind="text: name" /> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+        </td>
         <td style="width: 100px;">
           <div class="input-group skill-modifier-input">
             <input type="number"
@@ -55,12 +57,12 @@
                       invalid: $component.invalidate },
                     attr: { ...$component.validation.abilityScore }"></input>
             <span class="input-group-addon">
-              <span data-bind="text: bonusNumber"></span>
+              <span data-bind="text: bonus"></span>
             </span>
           </div>
         </td>
         <td>
-          <a data-bind="click: $component.delete"
+          <a data-bind="click: () => $component.delete($data)"
              href="#">
             <i class="fa fa-trash-o fa-color-hover"></i>
           </a>
@@ -80,21 +82,20 @@
              class="collapse panel-body">
           <skills-add-form-view params="{
             containerId: 'add-skill',
-            show: $component.addForm,
+            show: displayAddForm,
             flipOnSave: flip,
-            flip: $component.toggleShowAddForm,
-            addToParent: $component.addToList,
+            flip: toggleShowAddForm,
             forceCardResize: $component.forceCardResize
             }">
           </skills-add-form-view>
         </div>
-        <!-- ko ifnot: $component.displayAddForm -->
+        <!-- ko ifnot: displayAddForm -->
         <button type="button"
                 class="btn btn-link btn-sm btn-block"
                 id="skillAddButton"
                 data-toggle="collapse"
                 data-target="#add-skill"
-                data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Skill</button>
+                data-bind="click: toggleShowAddForm"><i class="fa fa-plus"></i> Add Skill</button>
         <!-- /ko -->
       </td>
     </tr>

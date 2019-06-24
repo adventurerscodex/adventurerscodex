@@ -54,18 +54,40 @@
                     elementId: 'item_list',
                     context: {
                       data: $data,
-                      replaceInList: $component.replaceInList,
-                      addToList: $component.addToList,
-                      removeFromList: $component.removeFromList
                     }
                   }">
             <div class="front">
-              <item-detail-view params="{
-                       data: context.data,
-                       containerId: elementId,
-                       show: showFront,
-                       flip: flip
-                     }"></item-detail-view>
+              <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              <div class="row" data-bind="with: context.data">
+                <div class="col-xs-12">
+                  <div class="h4">
+                    <span data-bind="text: name"
+                          class="inventoryPreviewNameLabel"></span>&nbsp;
+                  </div>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3">
+                  <table class="table table-hover table-condensed table-ac-bordered">
+                    <tbody>
+                      <tr>
+                        <th>Quantity:</th>
+                        <td><span data-bind="text: quantity"></span></td>
+                      </tr>
+                      <tr>
+                        <th>Weight Each:</th>
+                        <td><span data-bind="text: weightLabel"></span></td>
+                      </tr>
+                      <tr>
+                        <th>Price Each:</th>
+                        <td><span data-bind="text: costLabel"></span></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-7 col-md-8 col-lg-9">
+                  <p class="card-description"
+                     data-bind="markdownPreview: itemDescriptionHTML"></p>
+                </div>
+              </div>
             </div>
             <div class="back">
               <item-form params="{
@@ -74,9 +96,7 @@
                     containerId: elementId,
                     show: showBack,
                     flip: flip,
-                    forceCardResize: forceCardResize,
-                    replaceInParent: context.replaceInList,
-                    removeFromParent: context.removeFromList
+                    forceCardResize: forceCardResize
                    }"></item-form>
             </div>
           </flip-card>
@@ -89,9 +109,8 @@
                class="collapse add-card">
             <item-form params="{
                 containerId: 'add-item',
-                show: $component.addForm,
+                show: $component.displayAddForm,
                 flip: $component.toggleShowAddForm,
-                addToParent: $component.addToParent,
                }"></item-form>
           </div>
         </td>

@@ -19,8 +19,9 @@ export class Item extends KOModel {
     static __skeys__ = ['core', 'items'];
 
     static mapping = {
-        include: ['coreUuid']
-    };
+        include: ['coreUuid', 'quantity']
+    }; // Not sure why quantity is required here, but without it
+       // we cannot create a large 'quantity' of items
     static SHORT_DESCRIPTION_MAX_LENGTH = 100;
     static DESCRIPTION_MAX_LENGTH = 200;
 
@@ -131,6 +132,29 @@ export class Item extends KOModel {
 
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    async create () {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.item.added.dispatch(this);
+    }
+
+    async save () {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.item.changed.dispatch(this);
+    }
+
+    async delete () {
+        await this.ps.delete();
+        Notifications.item.deleted.dispatch(this);
+    }
+
 }
 
 Item.validationConstraints = {
@@ -141,16 +165,20 @@ Item.validationConstraints = {
         },
         quantity: {
             type:'number',
+            pattern: '\\d*',
             min: 0,
             max: 1000000
         },
         weight: {
+            // cannot have number filter, because it can be a decimal
             type:'number',
+            step: '0.25',
             min: 0,
             max: 1000000
         },
         cost: {
             type:'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000
         },

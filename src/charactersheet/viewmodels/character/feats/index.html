@@ -44,12 +44,7 @@
                 tabId: $parent.tabId,
                 collapsable: true,
                 elementId: 'feat_list',
-                context: {
-                  data: $data,
-                  replaceInList: $component.replaceInList,
-                  addToList: $component.addToList,
-                  removeFromList: $component.removeFromList
-                }
+                context: { data: $data }
               }">
             <div class="front"
                  data-bind="with: context.data">
@@ -72,9 +67,7 @@
                 containerId: elementId,
                 show: showBack,
                 flip: flip,
-                forceCardResize: forceCardResize,
-                replaceInParent: context.replaceInList,
-                removeFromParent: context.removeFromList
+                forceCardResize: forceCardResize
                }"></feat-form>
             </div>
           </flip-card>
@@ -90,9 +83,8 @@
             <feat-form params="{
               addForm: true,
               containerId:'add-feat',
-              show: $component.addForm,
-              flip: $component.toggleShowAddForm,
-              addToParent: $component.addToList,
+              show: $component.displayAddForm,
+              flip: $component.toggleShowAddForm
              }"></feat-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->

@@ -1,5 +1,6 @@
 import {
     Fixtures,
+    Notifications,
     Utility
 } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
@@ -79,6 +80,30 @@ export class MagicItem extends KOModel {
         }
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.magicitem.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.magicitem.changed.dispatch(this);
+        return response.object;
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.magicitem.deleted.dispatch(this);
+    }
+
 }
 
 MagicItem.validationConstraints = {
@@ -97,16 +122,19 @@ MagicItem.validationConstraints = {
         },
         maxCharges: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         usedCharges: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         weight: {
             type: 'number',
+            step: '0.25',
             min: 0,
             max: 1000000
         }

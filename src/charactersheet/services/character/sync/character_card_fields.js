@@ -29,10 +29,9 @@ export var CharacterCardFields = [
         }
     }, {
         name: 'name',
-        refreshOn: Notifications.profile.characterName.changed,
-        valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
+        refreshOn: Notifications.profile.changed,
+        // refreshOn: Notifications.profile.characterName.changed,
+        valueAccessor: async (profile) => {
             return profile ? profile.characterName() : '';
         }
     }, {
@@ -44,10 +43,8 @@ export var CharacterCardFields = [
         }
     }, {
         name: 'playerSummary',
-        refreshOn: Notifications.profile.characterName.changed,
-        valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
+        refreshOn: Notifications.profile.changed,
+        valueAccessor: async (profile) => {
             return profile ? profile.summary() : '';
         }
     }, {
@@ -78,34 +75,30 @@ export var CharacterCardFields = [
         }
     }, {
         name: 'race',
-        refreshOn: Notifications.profile.race.changed,
-        valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
+        refreshOn: Notifications.profile.changed,
+        // refreshOn: Notifications.profile.race.changed,
+        valueAccessor: async (profile) => {
             return profile ? profile.race() : '';
         }
     }, {
         name: 'playerClass',
-        refreshOn: Notifications.profile.playerClass.changed,
-        valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
+        // refreshOn: Notifications.profile.playerClass.changed,
+        refreshOn: Notifications.profile.changed,
+        valueAccessor: async (profile) => {
             return profile ? profile.characterClass() : '';
         }
     }, {
         name: 'level',
-        refreshOn: Notifications.profile.level.changed,
-        valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
+        refreshOn: Notifications.profile.changed,
+        // refreshOn: Notifications.profile.level.changed,
+        valueAccessor: async (profile) => {
             return profile ? profile.level() : '';
         }
     }, {
         name: 'experience',
-        refreshOn: Notifications.profile.experience.changed,
-        valueAccessor: async () => {
-            const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const profile = profileResponse.object;
+        refreshOn: Notifications.profile.changed,
+        // refreshOn: Notifications.profile.experience.changed,
+        valueAccessor: async (profile) => {
             return profile ? profile.experience() : '';
         }
     }, {
@@ -118,49 +111,40 @@ export var CharacterCardFields = [
     }, {
         name: 'gold',
         refreshOn: Notifications.wealth.changed,
-        valueAccessor: async () => {
-            const response = await Wealth.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const wealth = response.object;
+        valueAccessor: async (wealth) => {
             return wealth ? wealth.worthInGold() : 0;
         }
     }, {
         name: 'maxHitPoints',
-        refreshOn: Notifications.health.maxHitPoints.changed,
-        valueAccessor: async () => {
-            const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const health = healthResponse.object;
+        refreshOn: Notifications.health.changed,
+        // refreshOn: Notifications.health.maxHitPoints.changed,
+        valueAccessor: async (health) => {
             return health ? health.maxHitPoints() : 0;
         }
     }, {
         name: 'damage',
-        refreshOn: Notifications.health.damage.changed,
-        valueAccessor: async () => {
-            const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const health = healthResponse.object;
+        refreshOn: Notifications.health.changed,
+        // refreshOn: Notifications.health.damage.changed,
+        valueAccessor: async (health) => {
             return health ? health.damage() : 0;
         }
     }, {
         name: 'tempHitPoints',
-        refreshOn: Notifications.health.tempHitPoints.changed,
-        valueAccessor: async () => {
-            const healthResponse = await Health.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const health = healthResponse.object;
+        refreshOn: Notifications.health.changed,
+        // refreshOn: Notifications.health.tempHitPoints.changed,
+        valueAccessor: async (health) => {
             return health ? health.tempHitPoints() : 0;
         }
     }, {
         name: 'hitDiceType',
-        refreshOn: Notifications.hitDiceType.changed,
-        valueAccessor: async () => {
-            const hitDiceResponse = await HitDice.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const hitDiceType = hitDiceResponse.object;
-            return hitDiceType ? hitDiceType.type() : '';
+        refreshOn: Notifications.hitdice.changed,
+        valueAccessor: async (hitDice) => {
+            return hitDice ? hitDice.type() : '';
         }
     }, {
         name: 'hitDice',
-        refreshOn: Notifications.hitDice.changed,
-        valueAccessor: async () => {
-            const hitDiceResponse = await HitDice.ps.read({uuid: CoreManager.activeCore().uuid()});
-            const hitDice = hitDiceResponse.object;
+        refreshOn: Notifications.hitdice.changed,
+        valueAccessor: async (hitdice) => {
             const profileResponse = await Profile.ps.read({uuid: CoreManager.activeCore().uuid()});
             const profile = profileResponse.object;
             if (!hitDice || !profile) { return; }
@@ -168,28 +152,30 @@ export var CharacterCardFields = [
         }
     }, {
         name: 'passivePerception',
-        refreshOn: Notifications.skills.perception.changed,
-        valueAccessor: async () => {
-            const skillResponse = await Skill.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: 'Perception'});
-            var skill = skillResponse.objects[0];
-            await skill.updateBonuses();
-            return skill ? skill.passiveBonus() : 0;
+        refreshOn: Notifications.skill.changed,
+        valueAccessor: async (skill) => {
+            if (skill.name() === 'Perception') {
+                return skill ? skill.passiveBonus() : 0;
+            }
         }
     }, {
         name: 'passiveIntelligence',
-        refreshOn: Notifications.abilityScores.intelligence.changed,
-        valueAccessor: async () => {
-            const response = await AbilityScore.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: Fixtures.abilityScores.constants.intelligence.name});
-            const score = response.objects[0];
-            var modifier = score.getModifier();
-            return modifier ? 10 + modifier : 0;
+        refreshOn: Notifications.abilityscore.changed,
+        valueAccessor: async (abilityScore) => {
+            if (abilityScore.name() === 'intelligence') {
+                return skill ? skill.passiveBonus() : 0;
+                // var modifier = abilityScore.getModifier();
+                // return modifier ? 10 + modifier : 0;
+            }
+            // const response = await AbilityScore.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: Fixtures.abilityScores.constants.intelligence.name});
+            // const score = response.objects[0];
+            // var modifier = score.getModifier();
+            // return modifier ? 10 + modifier : 0;
         }
     }, {
         name: 'spellSaveDC',
-        refreshOn: Notifications.spellStats.changed,
-        valueAccessor: async () => {
-            var spellStatsResponse = await SpellStats.ps.read({uuid: CoreManager.activeCore().uuid()});
-            var spellStats = spellStatsResponse.object;
+        refreshOn: Notifications.spellstats.changed,
+        valueAccessor: async (spellStats) => {
             return spellStats ? spellStats.spellSaveDc() : 0;
         }
     }, {

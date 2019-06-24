@@ -109,9 +109,10 @@
       <div data-bind="visible: requiresAttunement() === true">
         <input type='checkbox'
                class='pseudo-checkbox sr-only'
-               data-bind="checked: attuned, attr: {id: `${$component.containerId}_attuned`},
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.attuned }"></input>
+               data-bind="checked: attuned,
+               attr: { id: `${$component.containerId}_attuned` },
+               event: { blur: $component.reviewInput, invalid: $component.invalidate }
+               "></input>
         <label data-bind="attr: {for: `${$component.containerId}_attuned`}"
                class='fancy-checkbox-label'> Attuned
           </label>

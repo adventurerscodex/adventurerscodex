@@ -1,4 +1,5 @@
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class Wealth extends KOModel {
@@ -75,36 +76,53 @@ export class Wealth extends KOModel {
 
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.wealth.changed.dispatch(this);
+    }
 }
 
 Wealth.validationConstraints = {
     rules: {
         platinum: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         gold: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         silver: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         copper: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true
         },
         electrum: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 100000000,
             required: true

@@ -2,6 +2,7 @@ import {
   AbstractGridViewModel
 } from './grid-view-model';
 import { DELAY } from 'charactersheet/constants';
+import { filter } from 'lodash';
 import ko from 'knockout';
 
 /**
@@ -20,6 +21,8 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
+        const resizeForAdd = this.displayAddForm.subscribe(this.delayThenResize);
+        this.subscriptions.push(resizeForAdd);
         const setFocus = this.show.subscribe(this.focusOnFlip);
         this.subscriptions.push(setFocus);
     }
@@ -42,12 +45,12 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
     }
 
     async save () {
-        const updates = this.entities().map(async (entity) => {
-            if (entity.markedForSave) {
-                delete entity.markedForSave;
-                await entity.ps.save();
-            }
-        });
+        const updates = filter(this.entities(), 'markedForSave').map(
+          async (entity) => {
+              delete entity.markedForSave;
+              await entity.save();
+          }
+      );
         await Promise.all(updates);
     }
 
@@ -59,14 +62,10 @@ export class AbstractGridFormModel extends AbstractGridViewModel {
     }
 
     async delete(entity) {
-        await entity.ps.delete();
+        await entity.delete();
         this.removeFromList(entity);
         this.notify();
         this.flip();
-    }
-
-    dispose() {
-        this.disposeOfSubscriptions();
     }
 
     reviewInput = (data, event) => {

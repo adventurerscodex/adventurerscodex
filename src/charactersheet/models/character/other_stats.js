@@ -1,6 +1,7 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class OtherStats extends KOModel {
@@ -17,24 +18,23 @@ export class OtherStats extends KOModel {
     inspiration = ko.observable(false);
     proficiencyModifier = ko.observable(0);
 
-    toSchemaValues = (values) => {
-        if (values.armorClassModifier === '') {
-            values.armorClassModifier = 0;
-        }
+    toSchemaValues = (values) => ({
+        ...values,
+        armorClassModifier:  values.armorClassModifier  !== '' ? values.armorClassModifier  : 0,
+        initiativeModifier:  values.initiativeModifier  !== '' ? values.initiativeModifier  : 0,
+        speed:               values.speed               !== '' ? values.speed               : 0,
+        proficiencyModifier: values.proficiencyModifier !== '' ? values.proficiencyModifier : 0
+    })
 
-        if (values.initiativeModifier === '') {
-            values.initiativeModifier = 0;
-        }
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
 
-        if (values.speed === '') {
-            values.speed = 0;
-        }
-
-        if (values.proficiencyModifier === '') {
-            values.proficiencyModifier = 0;
-        }
-
-        return values;
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.otherstats.changed.dispatch(this);
     }
 }
 
@@ -42,21 +42,25 @@ OtherStats.validationConstraints = {
     rules: {
         armorClassModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
         initiativeModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         },
         speed: {
             type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         proficiencyModifier: {
             type: 'number',
+            pattern: '\\d*',
             min: -10000,
             max: 10000
         }

@@ -40,7 +40,7 @@ export function PlayerImageViewModel() {
 
     self.load = async () => {
         //Subscriptions
-        Notifications.otherStats.inspiration.changed.add(self.inspirationHasChanged);
+        Notifications.otherstats.changed.add(self.inspirationHasChanged);
         Notifications.xmpp.connected.add(self._handleConnectionStatusChanged);
         Notifications.xmpp.disconnected.add(self._handleConnectionStatusChanged);
         Notifications.coreManager.changed.add(self.dataHasChanged);
@@ -75,19 +75,18 @@ export function PlayerImageViewModel() {
         }
         self.dataIsChanging(false);
 
-        // update inspiration glow
-        self.inspirationHasChanged();
-    };
-
-    self.inspirationHasChanged = async () => {
         var core = CoreManager.activeCore();
         if (core.type.name() === PlayerTypes.character.key) {
-            var otherStatsResponse = await OtherStats.ps.read({uuid: core.uuid()});
+            const otherStatsResponse = await OtherStats.ps.read({uuid: core.uuid()});
             const otherStats = otherStatsResponse.object;
-            self.hasInspiredGlow(otherStats && otherStats.inspiration());
+            self.inspirationHasChanged(otherStats);
         } else {
             self.hasInspiredGlow(false);
         }
+    };
+
+    self.inspirationHasChanged =  (otherStats) => {
+        self.hasInspiredGlow(otherStats && otherStats.inspiration());
     };
 
     self.inspiredGlowClass = ko.pureComputed(function() {

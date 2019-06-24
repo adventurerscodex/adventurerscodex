@@ -2,7 +2,8 @@ import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
 import {
     CoreManager,
-    Fixtures
+    Fixtures,
+    Notifications
 } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
 import { SpellStats } from 'charactersheet/models/character/spell_stats';
@@ -52,18 +53,6 @@ export class Spell extends KOModel {
             return this.name();
         }
     }, this);
-
-    calculateSpellDamageLabel = async () => {
-        var key = CoreManager.activeCore().uuid();
-        if (this.type() === 'Attack Roll') {
-            const spellStatsResponse = await SpellStats.ps.read({ uuid: key });
-            const spellStats = spellStatsResponse.object;
-            var spellBonus = spellStats ? spellStats.spellAttackBonus() : 0;
-            this.spellDamageLabel(this.damage() + ' [Spell Bonus: +' + spellBonus + ']');
-        } else {
-            this.spellDamageLabel(this.damage());
-        }
-    };
 
     levelLabel = ko.pureComputed(() => {
         if (parseInt(this.level()) === 0) {
@@ -146,6 +135,28 @@ export class Spell extends KOModel {
             return '';
         }
     }, this);
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.spell.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.spell.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.spell.deleted.dispatch(this);
+    }
 }
 
 Spell.validationConstraints = {
@@ -176,6 +187,7 @@ Spell.validationConstraints = {
             min: 0,
             max: 10000,
             type: 'number',
+            pattern: '\\d*',
             required: true
         },
         castingTime: {

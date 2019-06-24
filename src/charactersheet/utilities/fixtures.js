@@ -107,7 +107,8 @@ export var Fixtures = {
             types: {
                 shield: 'Shield',
                 light: 'Light',
-                medium: 'Medium'
+                medium: 'Medium',
+                heavy: 'Heavy'
             }
         },
         armorTypeOptions : [

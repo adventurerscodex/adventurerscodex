@@ -17,7 +17,7 @@
           data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}">
         <td style="width: 10%">Lvl&nbsp;<span data-bind="text: level"></span>
         </td>
-       <td style="width: 10%">
+       <td style="width: 10%" class="hidden-xs">
          <div class="" data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>
         </td>
        <td style="width: 5%">
@@ -35,8 +35,7 @@
           <div style="padding: 10px"
                data-bind="barProgress: $component.mapToChart({max, used, level})"> </div>
         </td>
-        <td style="width: 10%"
-            class="hidden-xs">
+        <td style="width: 10%">
           <span
           data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span
           data-bind=" text: max"></span>
@@ -55,11 +54,10 @@
                 data: $data,
                 containerId: `spell_slot_${uuid()}`,
                 flip: () => {$component.hideRow(`#spell_slot_${uuid()}`)},
-                replaceInParent: $component.replaceInList,
-                removeFromParent: $component.removeFromList,
                 nextSlotLevel: null
              }">
             </spell-slot-form>
+            </div>
         </td>
       </tr>
       <!-- /ko -->
@@ -71,9 +69,8 @@
                class="collapse">
                <spell-slot-form params="{
                   containerId: 'add-spell-slot',
-                   show: $component.addForm,
+                   show: $component.displayAddForm,
                    flip: $component.toggleShowAddForm,
-                   addToParent: $component.addToList,
                    nextSlotLevel: $component.nextSlotLevel
                 }">
                </spell-slot-form>

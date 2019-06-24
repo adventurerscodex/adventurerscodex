@@ -1,6 +1,7 @@
 import {
     CoreManager,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import {
     Feat,
@@ -11,11 +12,12 @@ import {
     Status,
     StatusWeightPair
 } from 'charactersheet/models';
+import { find, flatMap } from 'lodash';
 import { KeyValuePredicate } from 'charactersheet/services/common';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import { getTrackedTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 
-
+import ko from 'knockout';
 /**
  * A Status Service Component that calculates the player's tracked ability potential.
  * Each tracked ability is weighed equally, as there is no way to programmatically determine
@@ -26,66 +28,129 @@ export function TrackedStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Tracked';
+    self.trackedItems = ko.observableArray([]);
 
     self.init = function() {
-        Notifications.tracked.changed.add(self.dataHasChanged);
-        Notifications.events.shortRest.add(self.dataHasChanged);
-        Notifications.events.longRest.add(self.dataHasChanged);
-        Notifications.feat.changed.add(self.dataHasChanged);
-        Notifications.trait.changed.add(self.dataHasChanged);
-        Notifications.feature.changed.add(self.dataHasChanged);
-        self.dataHasChanged();
+        Notifications.feature.added.add(self.itemAdded);
+        Notifications.feature.changed.add(self.itemChanged);
+        Notifications.feature.deleted.add(self.itemDeleted);
+
+        Notifications.feat.added.add(self.itemAdded);
+        Notifications.feat.changed.add(self.itemChanged);
+        Notifications.feat.deleted.add(self.itemDeleted);
+
+        Notifications.trait.added.add(self.itemAdded);
+        Notifications.trait.changed.add(self.itemChanged);
+        Notifications.trait.deleted.add(self.itemDeleted);
+
+        Notifications.coreManager.changing.add(self.clear);
+        Notifications.coreManager.changed.add(self.load);
+        self.load();
     };
 
-    /**
-     * This method determines wether to update or remove the Tracked status
-     * component from the player's status line.
-     */
-    self.dataHasChanged = async () => {
+    self.load = async () => {
+
+        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+            return;
+        }
+        self.trackedItems([]);
         var key = CoreManager.activeCore().uuid();
-        var trackables = [];
+        const trackedModelTypes = [Feature, Feat, Trait];
+        const fetchTrackedEntities = trackedModelTypes.map(
+                (type) => type.ps.list({ coreUuid: key }));
+        const responseList = await Promise.all(fetchTrackedEntities);
+        const tracked = flatMap(responseList, (response) => response.objects).filter(self.showTracked);
+        self.trackedItems(tracked);
 
-        // Fetch trackable objects
-        var features = await Feature.ps.list({coreUuid: key});
-        var feats = await Feat.ps.list({coreUuid: key});
-        var traits = await Trait.ps.list({coreUuid: key});
-
-        if (features.objects) {
-            features.objects.forEach((e) => {
-                if (e.tracked()) {
-                    trackables.push(e.tracked());
-                }
-            });
-        }
-
-        if (feats.objects) {
-            feats.objects.forEach((e) => {
-                if (e.tracked()) {
-                    trackables.push(e.tracked());
-                }
-            });
-        }
-
-        if (traits.objects) {
-            traits.objects.forEach((e) => {
-                if (e.tracked()) {
-                    trackables.push(e.tracked());
-                }
-            });
-        }
-
-        if (!trackables || trackables.length > 0) {
-            self._updateStatus(trackables);
+        if (!self.trackedItems() || self.trackedItems().length > 0) {
+            self._updateStatus();
         } else {
             self._removeStatus();
         }
     };
 
+    self.clear = () => {
+        self._removeStatus();
+        self.trackedItems([]);
+    };
+
+    self.itemAdded = function (item) {
+        if (item && item.isTracked()) {
+            const tracked = find(self.trackedItems(), (trackable)=> {
+                return ko.utils.unwrapObservable(item).uuid() === ko.utils.unwrapObservable(trackable).uuid();
+            });
+            if (!tracked) {
+                self.trackedItems.push(item);
+                if (!self.trackedItems() || self.trackedItems().length > 0) {
+                    self._updateStatus();
+                } else {
+                    self._removeStatus();
+                }
+            }
+        }
+    };
+
+    self.itemDeleted = function (item) {
+        if (item) {
+            self.trackedItems.remove(
+              (entry) => {
+                  return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+              });
+            if (!self.trackedItems() || self.trackedItems().length > 0) {
+                self._updateStatus();
+            } else {
+                self._removeStatus();
+            }
+        }
+    };
+
+    self.itemChanged = function (item) {
+        if (item) {
+            const tracked = find(self.trackedItems(), (trackable)=> {
+                return ko.utils.unwrapObservable(item).uuid() === ko.utils.unwrapObservable(trackable).uuid();
+            });
+            let changed = false;
+            if (tracked) {
+                if (!ko.utils.unwrapObservable(item).isTracked()) {
+                    // Used to be tracked, is no longer tracked;
+                    self.trackedItems.remove(
+                      (entry) => {
+                          return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+                      });
+                    changed = true;
+                } else {
+                    // Used to be tracked, tracked properties changed;
+                    Utility.array.updateElement(self.trackedItems(), item, ko.utils.unwrapObservable(item.uuid));
+                    changed = true;
+                }
+            } else if (ko.utils.unwrapObservable(item).isTracked()) {
+                // Was not tracked, is now tracked;
+                self.trackedItems.push(item);
+                changed = true;
+            }
+            if (changed) {
+                if (!self.trackedItems() || self.trackedItems().length > 0) {
+                    self._updateStatus();
+                } else {
+                    self._removeStatus();
+                }
+            }
+        }
+    };
+
+    self.showTracked = (entity) => {
+        return !!ko.utils.unwrapObservable(entity.isTracked);
+    };
+    /**
+     * This method determines wether to update or remove the Tracked status
+     * component from the player's status line.
+     */
+
+
     /* Private Methods */
 
-    self._updateStatus = function(trackables) {
+    self._updateStatus = function() {
         var key = CoreManager.activeCore().uuid();
-        var valueWeightPairs = [];
 
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
@@ -98,15 +163,16 @@ export function TrackedStatusServiceComponent() {
         }
 
         // Each tracked ability is weighted equally.
-        var featureWeight = 1 / trackables.length;
-        trackables.forEach(function(tracked) {
+        var featureWeight = 1 / self.trackedItems().length;
+        const valueWeightPairs = self.trackedItems().map(function(trackableItem) {
+            const tracked = ko.utils.unwrapObservable(trackableItem).tracked();
             var maxUses = tracked.max() ? tracked.max() : 0;
             var used = tracked.used() ? tracked.used() : 0;
             var trackedValue = maxUses ? (maxUses - used) / maxUses : 0;
-            valueWeightPairs.push(new StatusWeightPair(trackedValue, featureWeight));
+            return new StatusWeightPair(trackedValue, featureWeight);
         });
 
-        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
+        var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs).toFixed(2);
         var phrase = StatusWeightPair.determinePhraseAndColor(getTrackedTypeEnum(), weightedTotal);
 
         status.name(phrase.status);

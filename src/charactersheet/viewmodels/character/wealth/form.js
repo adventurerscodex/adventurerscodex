@@ -27,10 +27,6 @@ export class WealthFormViewModel  extends AbstractFormModel {
     gpCoins = gpCoins;
     ppCoins = ppCoins;
     spCoins = spCoins;
-
-    notify = () => {
-        Notifications.wealth.changed.dispatch();
-    }
 }
 
 ko.components.register('wealth-form', {
