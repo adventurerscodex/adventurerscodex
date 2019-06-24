@@ -17,10 +17,19 @@ export function InspirationStatusServiceComponent() {
 
     self.statusIdentifier = 'Status.Inspired';
 
-    self.init = function() {
+    self.init = async function() {
+
+        await self.load();
+        self.setUpSubscriptions();
+    };
+
+    self.setUpSubscriptions = () => {
         Notifications.otherstats.changed.add(self.dataHasChanged);
-        Notifications.coreManager.changed.add(self.load);
-        self.load();
+        Notifications.coreManager.changing.add(self.clear);
+    };
+
+    self.clear = () => {
+        self._removeStatus();
     };
 
     self.load = async () => {

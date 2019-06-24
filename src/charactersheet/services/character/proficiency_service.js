@@ -15,9 +15,9 @@ function _ProficiencyService(configuration) {
     self.otherStats = ko.observable();
     self.profile = ko.observable();
 
-    self.init = () => {
+    self.init = async () => {
+        await self.load();
         self.setUpSubscriptions();
-        self.load();
     };
 
     self.load = async () => {
@@ -37,7 +37,6 @@ function _ProficiencyService(configuration) {
         Notifications.otherstats.changed.add(self.updateOtherStats);
         Notifications.profile.changed.add(self.updateProfile);
         Notifications.coreManager.changing.add(self.clear);
-        Notifications.coreManager.changed.add(self.load);
         self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
     };
 

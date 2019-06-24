@@ -30,7 +30,12 @@ export function TrackedStatusServiceComponent() {
     self.statusIdentifier = 'Status.Tracked';
     self.trackedItems = ko.observableArray([]);
 
-    self.init = function() {
+    self.init = async function() {
+        await self.load();
+        self.setUpSubscriptions();
+    };
+
+    self.setUpSubscriptions = () => {
         Notifications.feature.added.add(self.itemAdded);
         Notifications.feature.changed.add(self.itemChanged);
         Notifications.feature.deleted.add(self.itemDeleted);
@@ -44,10 +49,8 @@ export function TrackedStatusServiceComponent() {
         Notifications.trait.deleted.add(self.itemDeleted);
 
         Notifications.coreManager.changing.add(self.clear);
-        Notifications.coreManager.changed.add(self.load);
-        self.load();
     };
-
+    
     self.load = async () => {
 
         if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {

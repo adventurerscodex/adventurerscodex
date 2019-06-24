@@ -25,13 +25,16 @@ export function MagicalStatusServiceComponent() {
     self.statusIdentifier = 'Status.Magical';
     self.spellSlots = ko.observableArray([]);
 
-    self.init = function() {
+    self.init = async function() {
+        await self.load();
+        self.setUpSubscriptions();
+    };
+
+    self.setUpSubscriptions = () => {
         Notifications.spellslot.added.add(self.spellSlotAdded);
         Notifications.spellslot.changed.add(self.spellSlotChanged);
         Notifications.spellslot.deleted.add(self.spellSlotDeleted);
         Notifications.coreManager.changing.add(self.clear);
-        Notifications.coreManager.changed.add(self.load);
-        self.load();
     };
 
     self.load = async () => {

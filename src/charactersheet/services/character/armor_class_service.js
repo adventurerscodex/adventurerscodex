@@ -158,7 +158,6 @@ function _ArmorClassService(configuration) {
         Notifications.abilityscore.changed.add(self.updateDexterity);
         Notifications.otherstats.changed.add(self.updateOtherStats);
         Notifications.coreManager.changing.add(self.clear);
-        Notifications.coreManager.changed.add(self.load);
         self.armorClass.subscribe(() => Notifications.armorClass.changed.dispatch());
     };
 

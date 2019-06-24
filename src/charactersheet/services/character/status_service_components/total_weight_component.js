@@ -31,7 +31,13 @@ export function TotalWeightStatusServiceComponent() {
     self.allMass = ko.observableArray([]);
 
 
-    self.init = function() {
+    self.init = async function() {
+        await self.load();
+        self.setUpSubscriptions();
+        // Calculate the first one.
+    };
+
+    self.setUpSubscriptions = () => {
         Notifications.abilityscore.changed.add(self.abilityScoreChanged);
         Notifications.wealth.changed.add(self.wealthChanged);
 
@@ -51,10 +57,6 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.weapon.changed.add(self.massChanged);
         Notifications.weapon.deleted.add(self.massDeleted);
         Notifications.coreManager.changing.add(self.clear);
-        Notifications.coreManager.changed.add(self.load);
-
-        self.load();
-        // Calculate the first one.
     };
 
     self.load = async () => {
@@ -63,16 +65,14 @@ export function TotalWeightStatusServiceComponent() {
         }
         self.strength(new AbilityScore());
         self.wealth(new Wealth());
-        self.allMass([]);
 
         const coreUuid = CoreManager.activeCore().uuid();
         const strResponse = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.strength.name});
-
         const score = strResponse.objects[0];
-
         self.strength().importValues(score.exportValues());
         await self.wealth().load({ uuid: coreUuid });
 
+        self.allMass.removeAll();
         const armorResponse = await Armor.ps.list({ coreUuid });
         self.allMass.push(...armorResponse.objects);
 
@@ -91,7 +91,7 @@ export function TotalWeightStatusServiceComponent() {
     self.clear = () => {
         self.strength(null);
         self.wealth(null);
-        self.allMass([]);
+        self.allMass.removeAll();
     };
 
     self.abilityScoreChanged = function (abilityScore) {
@@ -201,8 +201,9 @@ export function TotalWeightStatusServiceComponent() {
     self.getWeightForMass = () => {
         return reduce(self.allMass(), function(sum, item) {
             const quantity = item.quantity ? item.quantity() : 1;
+            // console.log(item.name(), ' weighs ', item.weight(), ' and there are ', quantity, 'of them');
             if (item.weight && item.weight() && quantity) {
-                const weightValue = parseFloat(item.weight()) * quantity;
+                const weightValue = parseFloat(item.weight()).toFixed(2) * quantity;
                 return sum + weightValue;
             }
             return sum;

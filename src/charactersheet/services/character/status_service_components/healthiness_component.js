@@ -25,16 +25,18 @@ export function HealthinessStatusServiceComponent() {
     self.hitDice = ko.observable();
     self.profile = ko.observable();
 
-    self.init = function() {
+    self.init = async function() {
+        await self.load();
+        self.setUpSubscriptions();
+    };
+
+    self.setUpSubscriptions = () => {
         Notifications.health.changed.add(self.healthChanged);
         Notifications.hitdice.changed.add(self.hitDiceChanged);
         Notifications.deathsave.changed.add(self.deathSaveChanged);
         Notifications.profile.changed.add(self.profileChanged);
         Notifications.coreManager.changing.add(self.clear);
-        Notifications.coreManager.changed.add(self.load);
-        self.load();
     };
-
     self.load = async () => {
         if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
             return;
