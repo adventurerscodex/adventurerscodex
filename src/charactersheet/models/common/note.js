@@ -17,7 +17,7 @@ export class Note extends KOModel {
     title = ko.observable('');
     contents = ko.observable('');
     headline = ko.observable('');
-    type = ko.observable('');
+    type = ko.observable('default');
 
     updateTitleFromHeadline () {
         if (!this.title() || this.title() === '') {

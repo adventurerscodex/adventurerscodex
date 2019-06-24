@@ -30,6 +30,18 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
         return SavingThrow;
     }
 
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        const resetShowSaves = this.show.subscribe(this.resetShowSaves);
+        this.subscriptions.push(resetShowSaves);
+    }
+
+    resetShowSaves () {
+        if (!this.show()) {
+            this.showSaves(false);
+        }
+    }
+
     saveFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && this.showSaves()));
     scoreFormHasFocus = ko.pureComputed(()=>(this.formElementHasFocus() && !this.showSaves()));
 

@@ -15,7 +15,7 @@ export class Weapon extends KOModel {
     static __skeys__ = ['core', 'weapons'];
 
     static mapping = {
-        include: ['coreUuid', 'description', 'magicalModifier']
+        include: ['coreUuid', 'description', 'magicalModifier', 'toHitModifier', 'quantity']
     };
 
     static FINESSE = 'finesse';
@@ -281,7 +281,7 @@ Weapon.validationConstraints = {
         },
         weight: {
             type: 'number',
-            step: '0.01',
+            step: '0.25',
             min: 0,
             max: 100000000
         },

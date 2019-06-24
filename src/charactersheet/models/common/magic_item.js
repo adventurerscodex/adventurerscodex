@@ -132,7 +132,7 @@ MagicItem.validationConstraints = {
         },
         weight: {
             type: 'number',
-            step: '0.01',
+            step: '0.25',
             min: 0,
             max: 1000000
         }
