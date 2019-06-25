@@ -33,34 +33,6 @@ export class FeatureFormViewModel  extends AbstractChildFormModel {
         const onTrackFormDisplay = this.entity().isTracked.subscribe(this.forceResize);
         this.subscriptions.push(onTrackFormDisplay);
     }
-
-    // prePopFilter = (request, response) => {
-    //     if (!this.prePopSource) {
-    //         throw(`${this.constructor.name} must have a prePopSource`);
-    //     }
-    //     const term = request.term.toLowerCase();
-    //     let results = [];
-    //     if (term && term.length >= (this.prePopLimit || 0)) {
-    //         results = filter(
-    //               DataRepository[this.prePopSource],
-    //               (entry) => (
-    //                 entry.displayName.toLowerCase().includes(term))
-    //               ).map((result) => ({
-    //                   label: result.displayName,
-    //                   value: result.name
-    //               }));
-    //     }
-    //     response(results);
-    // };
-    //
-    // populate = (label, value) => {
-    //     const item = find(DataRepository[this.prePopSource], (entry) => (entry.displayName === label));
-    //         // include the previous entity in cas there are required fields not available in the
-    //         // data load
-    //     this.entity().importValues(item);
-    //     this.showDisclaimer(true);
-    //     this.forceCardResize();
-    // };
 }
 
 ko.components.register('feature-form', {

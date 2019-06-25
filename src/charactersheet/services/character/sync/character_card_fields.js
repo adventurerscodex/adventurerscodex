@@ -154,7 +154,7 @@ export var CharacterCardFields = [
         name: 'passivePerception',
         refreshOn: Notifications.skill.changed,
         valueAccessor: async (skill) => {
-            if (skill.name() === 'Perception') {
+            if (skill && skill.name().toLowerCase() === 'perception') {
                 return skill ? skill.passiveBonus() : 0;
             }
         }
@@ -162,15 +162,9 @@ export var CharacterCardFields = [
         name: 'passiveIntelligence',
         refreshOn: Notifications.abilityscore.changed,
         valueAccessor: async (abilityScore) => {
-            if (abilityScore.name() === 'intelligence') {
-                return skill ? skill.passiveBonus() : 0;
-                // var modifier = abilityScore.getModifier();
-                // return modifier ? 10 + modifier : 0;
+            if (abilityScore && abilityScore.name() === Fixtures.abilityScores.constants.intelligence.name) {
+                return abilityScore ? 10 + abilityScore.getModifier() : 0;
             }
-            // const response = await AbilityScore.ps.list({coreUuid: CoreManager.activeCore().uuid(), name: Fixtures.abilityScores.constants.intelligence.name});
-            // const score = response.objects[0];
-            // var modifier = score.getModifier();
-            // return modifier ? 10 + modifier : 0;
         }
     }, {
         name: 'spellSaveDC',

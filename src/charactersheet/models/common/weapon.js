@@ -124,8 +124,6 @@ export class Weapon extends KOModel {
 
     totalBonus = ko.pureComputed(() => {
         var bonus = 0;
-        // var abilityScoreBonus = await this.abilityScoreBonus();
-        // var proficiencyBonus = this.proficiencyScore();
         const magicalModifier = parseInt(this.magicalModifier());
         const toHitModifier = parseInt(this.toHitModifier());
 

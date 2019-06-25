@@ -1604,7 +1604,10 @@ hr.ac-table-header {
 
 .safari-card-fix {
   /* opacity: 0.99; */
-  /* Seems like this is now hurting things, instead of helping things. Thanks, apple */
+  /* This used to fix an animation issue in safari.
+  Seems like this is now hurting things, instead of helping things.
+  Thanks, apple
+  */
 }
 
 .add-card {
