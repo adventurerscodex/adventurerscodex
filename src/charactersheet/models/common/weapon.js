@@ -112,11 +112,6 @@ export class Weapon extends KOModel {
         }
     }, this);
 
-
-    // proficiencyScore() {
-    //     return ProficiencyService.sharedService().proficiency();
-    // }
-
     abilityModOptions = ko.pureComputed(() => {
         if (this.type().toLowerCase() === Weapon.RANGED) {
             return ['Dexterity'];

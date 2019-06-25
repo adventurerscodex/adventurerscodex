@@ -106,7 +106,7 @@ export class AbstractFormModel {
     forceResize = () => {
         // Handle for browser order of operations so we don't calculate size
         // before the view is ready
-        setTimeout(this.forceCardResize, DELAY.MEDIUM);
+        setTimeout(this.forceCardResize, DELAY.SHORT);
     }
 
     reviewInput = (data, event) => {

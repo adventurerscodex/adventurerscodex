@@ -13,7 +13,7 @@ export class Skill extends KOModel {
     static mapping = {
         include: ['coreUuid'],
         abilityScore: {
-            update: ({ data, parent }) => {
+            update: ({ data }) => {
                 const abilityScore = new AbilityScore();
                 if (!isEmpty(data)) {
                     abilityScore.importValues(ko.utils.unwrapObservable(data));

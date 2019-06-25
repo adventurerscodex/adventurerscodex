@@ -1,53 +1,67 @@
 <!-- ko if: visible -->
 <div class="h3">
-  <img class="encounter-section-img" data-bind="attr: { src: sectionIcon }">
+  <img class="encounter-section-img"
+       data-bind="attr: { src: sectionIcon }">
   Traps<br />
   <small data-bind="text: tagline"></small>
 </div>
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead>
     <tr>
-      <th data-bind="click: function(){sortBy('isActive');}" class="col-md-1">
+      <th data-bind="click: function(){sortBy('isActive');}"
+          class="col-md-1">
         Armed
         <span data-bind="css: sortArrow('isActive')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('name');}" class="col-md-2">
+      <th data-bind="click: function(){sortBy('name');}"
+          class="col-md-2">
         Name
         <span data-bind="css: sortArrow('name')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('trigger');}" class="col-md-4">
+      <th data-bind="click: function(){sortBy('trigger');}"
+          class="col-md-4">
         Trigger
         <span data-bind="css: sortArrow('trigger')"></span>
       </th>
-      <th data-bind="click: function(){sortBy('effect');}" class="col-md-4">
+      <th data-bind="click: function(){sortBy('effect');}"
+          class="col-md-4">
         Effect
         <span data-bind="css: sortArrow('effect')"></span>
       </th>
       <th class="text-right col-md-1">
-        <a data-bind="click: toggleAddModal" href="#">
+        <a data-bind="click: toggleAddModal"
+           href="#">
           <i class="fa fa-plus fa-color"></i>
         </a>
       </th>
     </tr>
   </thead>
   <tbody>
-  <!-- ko foreach: filteredAndSortedTraps -->
+    <!-- ko foreach: filteredAndSortedTraps -->
     <tr class="clickable">
       <td class="col-xs-1">
-        <input data-bind="checked: isActive" type="checkbox" href="#">
+        <input data-bind="checked: isActive"
+               type="checkbox"
+               href="#">
       </td>
       <td data-bind="text: name, click: $parent.editTrap"
-          class="col-xs-2" href="#"></td>
+          class="col-xs-2"
+          href="#"></td>
       <td data-bind="html: shortTrigger, click: $parent.editTrap"
-          class="col-xs-4 hidden-md hidden-lg" href="#"></td>
+          class="col-xs-4 hidden-md hidden-lg"
+          href="#"></td>
       <td data-bind="html: longTrigger, click: $parent.editTrap"
-          class="col-md-4 hidden-sm hidden-xs" href="#"></td>
+          class="col-md-4 hidden-sm hidden-xs"
+          href="#"></td>
       <td data-bind="html: shortEffect, click: $parent.editTrap"
-          class="col-xs-4 hidden-md hidden-lg" href="#"></td>
+          class="col-xs-4 hidden-md hidden-lg"
+          href="#"></td>
       <td data-bind="html: longEffect, click: $parent.editTrap"
-          class="col-md-4 hidden-sm hidden-xs" href="#"></td>
+          class="col-md-4 hidden-sm hidden-xs"
+          href="#"></td>
       <td class="text-right col-xs-1">
-        <a data-bind="click: $parent.removeTrap" href="#">
+        <a data-bind="click: $parent.removeTrap"
+           href="#">
           <i class="fa fa-trash-o fa-color-hover">
           </i>
         </a>
@@ -57,7 +71,8 @@
     <!-- ko if: filteredAndSortedTraps().length == 0 -->
     <tr class="clickable">
       <td data-bind="click: toggleAddModal"
-        colspan="12" class="text-center">
+          colspan="12"
+          class="text-center">
         <i class="fa fa-plus fa-color"></i>
         Add a new Trap
       </td>
@@ -71,11 +86,13 @@
 <div class="modal fade"
      id="addTrap"
      tabindex="-1"
-     role="dialog" data-bind="modal: {
+     role="dialog"
+     data-bind="modal: {
       onopen: addModalFinishedOpening,
       onclose: addModalFinishedClosing,
       open: addModalIsOpen }">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog"
+       role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button"
@@ -88,7 +105,8 @@
             id="addTrapLabel">Add a new Trap</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
+        <form class="form-horizontal"
+              data-bind="element: _addForm, validate: validation">
           <div class="form-group">
             <label class="col-sm-3 control-label">
               Name<i class="required"></i>
@@ -109,10 +127,10 @@
             </label>
             <div class="col-sm-9">
               <input type="text"
-                      class="form-control"
-                      name="level"
-                      placeholder="5-10"
-                      data-bind="textInput: blankTrap().level">
+                     class="form-control"
+                     name="level"
+                     placeholder="5-10"
+                     data-bind="textInput: blankTrap().level">
             </div>
           </div>
           <div class="form-group">
@@ -133,11 +151,11 @@
             </label>
             <div class="col-sm-9">
               <textarea type="text"
-                     class="form-control"
-                     name="trigger"
-                     rows="4"
-                     placeholder="Stepping on the false floor covering the pit..."
-                     data-bind="value: blankTrap().trigger"></textarea>
+                        class="form-control"
+                        name="trigger"
+                        rows="4"
+                        placeholder="Stepping on the false floor covering the pit..."
+                        data-bind="value: blankTrap().trigger"></textarea>
             </div>
           </div>
           <div class="form-group">
@@ -146,54 +164,55 @@
             </label>
             <div class="col-sm-9">
               <textarea type="text"
-                     class="form-control"
-                     rows="4"
-                     name="effect"
-                     placeholder="The triggering creature must make a DC 10..."
-                     data-bind="value: blankTrap().effect"></textarea>
+                        class="form-control"
+                        rows="4"
+                        name="effect"
+                        placeholder="The triggering creature must make a DC 10..."
+                        data-bind="value: blankTrap().effect"></textarea>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">
               Countermeasure
             </label>
-              <div class="col-sm-9">
-                <textarea type="text"
-                       class="form-control"
-                       rows="4"
-                       name="countermeasure"
-                       placeholder="A successful Perception check..."
-                       data-bind="value: blankTrap().countermeasure"></textarea>
-              </div>
+            <div class="col-sm-9">
+              <textarea type="text"
+                        class="form-control"
+                        rows="4"
+                        name="countermeasure"
+                        placeholder="A successful Perception check..."
+                        data-bind="value: blankTrap().countermeasure"></textarea>
+            </div>
           </div>
           <div class="form-group">
             <label for="isActive"
-                    class="col-sm-3 control-label">Is the trap Armed?</label>
-              <div class="col-sm-9">
-                <input type="checkbox"
-                        class="form-control"
-                        id="isActive"
-                        name="isActive"
-                        data-bind='checked: blankTrap().isActive'>
-              </div>
+                   class="col-sm-3 control-label">Is the trap Armed?</label>
+            <div class="col-sm-9">
+              <input type="checkbox"
+                     class="form-control"
+                     id="isActive"
+                     name="isActive"
+                     data-bind='checked: blankTrap().isActive'>
+            </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">
               Description
             </label>
-              <div class="col-sm-9">
-                <textarea type="text"
-                       class="form-control" rows="4"
-                       name="description"
-                       placeholder="The simplest of pit traps consist of..."
-                       data-bind="value: blankTrap().description">
+            <div class="col-sm-9">
+              <textarea type="text"
+                        class="form-control"
+                        rows="4"
+                        name="description"
+                        placeholder="The simplest of pit traps consist of..."
+                        data-bind="value: blankTrap().description">
                 </textarea>
-                <small class="text-muted">
-                  Text in this panel can be styled using Markdown. Click
-                  <a target="_blank"
-                    href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                </small>
-              </div>
+              <small class="text-muted">
+                Text in this panel can be styled using Markdown. Click
+                <a target="_blank"
+                   href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
+              </small>
+            </div>
           </div>
 
           <!-- Complex Trap Fields -->
@@ -218,51 +237,54 @@
               <label class="col-sm-3 control-label">
                 Active Elements
               </label>
-                <div class="col-sm-9">
-                  <textarea type="text"
-                         class="form-control" rows="4"
-                         name="active-elements"
-                         placeholder="On a trap's turn, it produces the specific effect listed here."
-                         data-bind="value: activeElements"></textarea>
-                </div>
+              <div class="col-sm-9">
+                <textarea type="text"
+                          class="form-control"
+                          rows="4"
+                          name="active-elements"
+                          placeholder="On a trap's turn, it produces the specific effect listed here."
+                          data-bind="value: activeElements"></textarea>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">
                 Dynamic Elements
               </label>
-                <div class="col-sm-9">
-                  <textarea type="text"
-                         class="form-control" rows="4"
-                         name="dynamic-elements"
-                         placeholder="A dynamic element is a threat that arises or evolves while the trap functions."
-                         data-bind="value: dynamicElements"></textarea>
-                </div>
+              <div class="col-sm-9">
+                <textarea type="text"
+                          class="form-control"
+                          rows="4"
+                          name="dynamic-elements"
+                          placeholder="A dynamic element is a threat that arises or evolves while the trap functions."
+                          data-bind="value: dynamicElements"></textarea>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-3 control-label">
                 Constant Elements
               </label>
-                <div class="col-sm-9">
-                  <textarea type="text"
-                         class="form-control" rows="4"
-                         name="constant-elements"
-                         placeholder="A complex trap poses a threat even when its not taking its turn."
-                         data-bind="value: constantElements"></textarea>
-                </div>
+              <div class="col-sm-9">
+                <textarea type="text"
+                          class="form-control"
+                          rows="4"
+                          name="constant-elements"
+                          placeholder="A complex trap poses a threat even when its not taking its turn."
+                          data-bind="value: constantElements"></textarea>
+              </div>
             </div>
           </named-fields-well>
           <div class="modal-footer">
-            <button
-              type="submit"
-              class="btn btn-primary">
+            <button type="submit"
+                    class="btn btn-primary">
               Add
             </button>
-            <p class="text-muted text-left" data-bind="visible: showDisclaimer">
+            <p class="text-muted text-left"
+               data-bind="visible: showDisclaimer">
               <sm><i>This data is distributed under the
-                <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
-                  target="_blank">
-                  OGL</a><br/>
-                  Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
+                  <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf"
+                     target="_blank">
+                    OGL</a><br />
+                  Open Game License v 1.0a Copyright 2000, Wizards of the Coast, LLC.
                 </i>
               </sm>
             </p>
@@ -281,7 +303,8 @@
      data-bind="modal: {
       open: viewEditModalIsOpen,
       onclose: viewEditModalIsClosing }">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog"
+       role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button"
@@ -295,19 +318,30 @@
       <div class="modal-body">
         <!-- Begin Tabs -->
         <ul class="nav nav-tabs tabs">
-          <li role="presentation" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#" aria-controls="trapModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
+          <li role="presentation"
+              data-bind="click: selectPreviewTab, css: previewTabStatus">
+            <a href="#"
+               aria-controls="trapModalPreview"
+               role="tab"
+               data-toggle="tab">
+              <b>Preview</b>
             </a>
           </li>
-          <li role="presentation" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#" aria-controls="trapModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
+          <li role="presentation"
+              data-bind="click: selectEditTab, css: editTabStatus">
+            <a href="#"
+               aria-controls="trapModalEdit"
+               role="tab"
+               data-toggle="tab">
+              <b>Edit</b>
             </a>
           </li>
         </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
+        <div class="tab-content"
+             data-bind="with: currentEditItem">
+          <div role="tabpanel"
+               data-bind="css: $parent.previewTabStatus"
+               class="tab-pane">
             <div class="h3">
               <span data-bind="text: name"></span>&nbsp;
               <small data-bind="text: nameLabel"></small>
@@ -349,7 +383,7 @@
               <div class="col-xs-12 col-padded">
                 <b>Countermeasure:</b>&nbsp;
                 <div data-bind="markdownPreview: countermeasure"
-                      class="preview-modal-overflow">
+                     class="preview-modal-overflow">
                 </div>
               </div>
             </div>
@@ -388,8 +422,11 @@
               </div>
             </div>
           </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
+          <div role="tabpanel"
+               data-bind="css: $parent.editTabStatus"
+               class="tab-pane">
+            <form class="form-horizontal"
+                  data-bind="element: $parent._editForm, validate: $parent.updateValidation">
               <div class="form-group">
                 <label class="col-sm-3 control-label">
                   Name<i class="required"></i>
@@ -409,10 +446,10 @@
                 </label>
                 <div class="col-sm-9">
                   <input type="text"
-                          class="form-control"
-                          name="level"
-                          placeholder="5-10"
-                          data-bind="textInput: level">
+                         class="form-control"
+                         name="level"
+                         placeholder="5-10"
+                         data-bind="textInput: level">
                 </div>
               </div>
               <div class="form-group">
@@ -433,10 +470,10 @@
                 </label>
                 <div class="col-sm-9">
                   <textarea type="text"
-                         class="form-control"
-                         name="trigger"
-                         placeholder="Stepping on the false floor covering the pit..."
-                         data-bind="value: trigger"></textarea>
+                            class="form-control"
+                            name="trigger"
+                            placeholder="Stepping on the false floor covering the pit..."
+                            data-bind="value: trigger"></textarea>
                 </div>
               </div>
               <div class="form-group">
@@ -445,49 +482,51 @@
                 </label>
                 <div class="col-sm-9">
                   <textarea type="text"
-                         class="form-control"
-                         name="effect"
-                         rows="4"
-                         placeholder="The triggering creature must make a DC 10..."
-                         data-bind="value: effect"></textarea>
+                            class="form-control"
+                            name="effect"
+                            rows="4"
+                            placeholder="The triggering creature must make a DC 10..."
+                            data-bind="value: effect"></textarea>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Countermeasure</label>
-                  <div class="col-sm-9">
-                    <textarea type="text"
-                           class="form-control" rows="4"
-                           name="countermeasure"
-                           placeholder="A successful Perception check..."
-                           data-bind="value: countermeasure"></textarea>
-                  </div>
+                <div class="col-sm-9">
+                  <textarea type="text"
+                            class="form-control"
+                            rows="4"
+                            name="countermeasure"
+                            placeholder="A successful Perception check..."
+                            data-bind="value: countermeasure"></textarea>
+                </div>
               </div>
               <div class="form-group">
                 <label for="isActive"
                        class="col-sm-3 control-label">Is the trap Armed?</label>
-                  <div class="col-sm-9">
-                    <input type="checkbox"
-                            class="form-control"
-                            id="isActive"
-                            name="isActive"
-                            data-bind='checked: isActive'>
-                  </div>
+                <div class="col-sm-9">
+                  <input type="checkbox"
+                         class="form-control"
+                         id="isActive"
+                         name="isActive"
+                         data-bind='checked: isActive'>
+                </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-3 control-label">Description</label>
-                  <div class="col-sm-9">
-                    <textarea type="text"
-                           class="form-control" rows="4"
-                           name="description"
-                           placeholder="The simplest of pit traps consist of..."
-                           data-bind="value: description">
+                <div class="col-sm-9">
+                  <textarea type="text"
+                            class="form-control"
+                            rows="4"
+                            name="description"
+                            placeholder="The simplest of pit traps consist of..."
+                            data-bind="value: description">
                     </textarea>
-                    <small class="text-muted">
-                      Text in this panel can be styled using Markdown. Click
-                      <a target="_blank"
-                        href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                    </small>
-                  </div>
+                  <small class="text-muted">
+                    Text in this panel can be styled using Markdown. Click
+                    <a target="_blank"
+                       href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
+                  </small>
+                </div>
               </div>
 
               <!-- Complex Trap Fields -->
@@ -510,33 +549,36 @@
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Active Elements</label>
-                    <div class="col-sm-9">
-                      <textarea type="text"
-                             class="form-control" rows="4"
-                             name="active-elements"
-                             placeholder="On a trap's turn, it produces the specific effect listed here."
-                             data-bind="value: activeElements"></textarea>
-                    </div>
+                  <div class="col-sm-9">
+                    <textarea type="text"
+                              class="form-control"
+                              rows="4"
+                              name="active-elements"
+                              placeholder="On a trap's turn, it produces the specific effect listed here."
+                              data-bind="value: activeElements"></textarea>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Dynamic Elements</label>
-                    <div class="col-sm-9">
-                      <textarea type="text"
-                             class="form-control" rows="4"
-                             name="dynamic-elements"
-                             placeholder="A dynamic element is a threat that arises or evolves while the trap functions."
-                             data-bind="value: dynamicElements"></textarea>
-                    </div>
+                  <div class="col-sm-9">
+                    <textarea type="text"
+                              class="form-control"
+                              rows="4"
+                              name="dynamic-elements"
+                              placeholder="A dynamic element is a threat that arises or evolves while the trap functions."
+                              data-bind="value: dynamicElements"></textarea>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label class="col-sm-3 control-label">Constant Elements</label>
-                    <div class="col-sm-9">
-                      <textarea type="text"
-                             class="form-control" rows="4"
-                             name="constant-elements"
-                             placeholder="A complex trap poses a threat even when its not taking its turn."
-                             data-bind="value: constantElements"></textarea>
-                    </div>
+                  <div class="col-sm-9">
+                    <textarea type="text"
+                              class="form-control"
+                              rows="4"
+                              name="constant-elements"
+                              placeholder="A complex trap poses a threat even when its not taking its turn."
+                              data-bind="value: constantElements"></textarea>
+                  </div>
                 </div>
               </named-fields-well>
               <div class="modal-footer">
@@ -550,4 +592,3 @@
     </div> <!-- Modal Content -->
   </div> <!-- Modal Dialog -->
 </div> <!-- Modal Fade -->
-<!-- /ko -->
