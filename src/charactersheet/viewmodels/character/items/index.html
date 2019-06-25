@@ -11,15 +11,16 @@
           Item
           <span data-bind="css: sortArrow('name')"></span></th>
         <th data-bind="click: function(){sortBy('quantity');}">
-          Quantity
+          <span class="hidden-xs hidden-sm">Quantity</span>
+          <span class="visible-xs visible-sm">Qty</span>
           <span data-bind="css: sortArrow('quantity')"></span></th>
         <th class="hidden-xs"
             data-bind="click: function(){sortBy('totalWeight');}">
-          Total&nbsp;Weight
+          Total Weight
           <span data-bind="css: sortArrow('totalWeight')"></span></th>
         <th class="hidden-xs"
             data-bind="click: function(){sortBy('totalCalculatedCost');}">
-          Total&nbsp;Value
+          Total Value
           <span data-bind="css: sortArrow('totalCalculatedCost')"></span></th>
         <th class=" text-right">
           <a href="#"
