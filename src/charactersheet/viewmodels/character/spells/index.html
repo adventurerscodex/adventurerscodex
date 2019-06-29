@@ -13,8 +13,8 @@
     <thead>
       <tr class="ac-table-header">
         <th class="col-xs-1 checkbox-data-cell">
-          <input type='checkbox'
-              class='filter-checkbox sr-only'
+          <input type="checkbox"
+              class="filter-checkbox sr-only"
               data-bind="checked: filteredByCastable"></input>
           <label for="filterByCastable"></label>
         </th>
@@ -53,9 +53,8 @@
         <td class="col-xs-1 checkbox-data-cell"
             data-bind="click: $parent.memorizeSpell">
           <!-- ko ifnot: level() == 0  || alwaysPrepared -->
-          <input type='checkbox'
-              style=""
-              class='ac-checkbox sr-only'
+          <input type="checkbox"
+              class="ac-checkbox sr-only"
               data-bind="checked: prepared, attr: {id: `spell_memorize_${uuid()}`}"></input>
           <label data-bind="attr: {for: `spell_memorize_${uuid()}`}"></label>
           <!-- /ko -->

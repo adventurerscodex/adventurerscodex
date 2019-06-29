@@ -1255,8 +1255,8 @@ transition : height 0.25s ease opacity 0.2s linear;
 }
 
 .card-flip-container.flipped > .card-flipper {
-  -webkit-transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
-  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,-50px);
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,1px);
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,1px);
   -webkit-transition-property: -webkit-transform;
 
 }
@@ -1279,6 +1279,7 @@ transition : height 0.25s ease opacity 0.2s linear;
   left: 0;
   width: 100%;
 }
+
 .front{
   overflow: hidden;
 }
@@ -1292,8 +1293,8 @@ transition : height 0.25s ease opacity 0.2s linear;
 
 .inner-back,
 .back {
-  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
-  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-1px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-1px);
   -webkit-transition-property: -webkit-transform;
 
 }
@@ -1302,45 +1303,45 @@ transition : height 0.25s ease opacity 0.2s linear;
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .front {
   z-index: 2;
-  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
-  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,1px);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,1px);
   -webkit-transition-property: -webkit-transform;
 
 }
 
 .card-flip-container.flipped > .card-flipper > .front {
   z-index: 1;
-  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
-  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-1px);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-1px);
   -webkit-transition-property: -webkit-transform;
 
 }
 
 /* front pane, placed above back */
 .card-flip-container > .card-flipper > .back {
-  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
-  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-1px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-1px);
   -webkit-transition-property: -webkit-transform;
 
 }
 
 .card-flip-container.flipped > .card-flipper > .back {
-  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
-  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,1px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,1px);
   -webkit-transition-property: -webkit-transform;
 
   z-index: 2;
 }
 
 .card-flip-container.flipped > .card-flipper > .back .card-flip-container.flipped > .card-flipper > .back {
-  -webkit-transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
-  transform: rotate3d(0, 1, 0, 180deg) translateZ(-50px);
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translateZ(1px);
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(1px);
   -webkit-transition-property: -webkit-transform;
 
 }
 
 .inner-back {
-  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0, 1px);
 }
 
 .edit-btn {
@@ -1598,7 +1599,7 @@ hr.ac-table-header {
 }
 
 .safari-card-fix {
-  /* opacity: 0.99; */
+   opacity: 0.99;
   /* This used to fix an animation issue in safari.
   Seems like this is now hurting things, instead of helping things.
   Thanks, apple
