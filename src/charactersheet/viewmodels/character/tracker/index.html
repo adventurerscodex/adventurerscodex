@@ -29,28 +29,28 @@
         <td>
           <span data-bind="text: $component.shortText(name)"></span>
         </td>
-        <td style="padding: 4px;" class="hidden-xs">
+        <td style="padding: 6px;" class="hidden-xs">
           <div class="" data-bind="attr: {'class': $component.resetsOnImg(tracked)}"></div>
         </td>
-        <td style="padding: 4px;">
+        <td style="padding: 6px;">
           <mini-plus-minus params="value: tracked().used,
                     max: tracked().max, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-        <td style="padding: 4px;">
+        <td style="padding: 6px;">
           <mini-plus-minus params="value: tracked().used,
                     max: tracked().max, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-        <td style="padding: 4px;">
+        <td style="padding: 6px;">
           <div style="padding: 10px"
                data-bind="barProgress: $component.mapToChart($data)"> </div>
         </td>
 
-        <td style="padding: 4px; width: 5%" class="text-right">
+        <td style="padding: 6px; width: 5%" class="text-right">
           <span data-bind="text: parseInt(tracked().max()) - parseInt(tracked().used())"></span>&nbsp;/&nbsp;<span data-bind=" text: tracked().max"></span>
         </td>
-        <td style="padding: 4px;" class="col-xs-1 text-right">
+        <td style="padding: 6px;" class="col-xs-1 text-right">
           <span data-toggle="collapse"
                 data-bind="attr:{'data-target': `#tracked_${$data.uuid()}`}"
                 class="rotate fa fa-chevron-left"></span>
