@@ -6,8 +6,8 @@ import {
     Profile,
     Status
 } from 'charactersheet/models';
+import { debounce, reverse } from 'lodash';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
-import { debounce } from 'lodash';
 import ko from 'knockout';
 
 export function StatusLineViewModel(params) {
@@ -35,6 +35,9 @@ export function StatusLineViewModel(params) {
 
     // Private Methods
     self.coreHasChanged = async () => {
+        if (CoreManager.activeCore().type.name() != 'character' ) {
+            return;
+        }
         const key = CoreManager.activeCore().uuid();
         await self.profile().load({uuid: key});
         self.statusHasChanged();
@@ -66,7 +69,7 @@ export function StatusLineViewModel(params) {
             return '';
         }
 
-        return `${self.profile().characterName()} is ${self.oxfordList(statuses.map(self.prettyStatus))}.`;
+        return `${self.profile().characterName()} is ${self.oxfordList(reverse(statuses).map(self.prettyStatus))}.`;
     };
 }
 

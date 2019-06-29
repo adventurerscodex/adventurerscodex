@@ -1224,16 +1224,6 @@ opacity: 0;
 transition : height 0.25s ease opacity 0.2s linear;
 }
 
-/* .collapsing {
-visibility: visible;
-
-transition: opacity 0.3s linear;
--webkit-transition: opacity 0.3s linear;
--moz-transition: opacity 0.3s linear;
--o-transition: opacity 0.3s linear;
-} */
-
-
 .rotate {
     -moz-transition: all 0.3s linear;
     -webkit-transition: all 0.3s linear;
