@@ -1,14 +1,8 @@
 <form class="other-stats-form"
     data-bind="{submit: $component.submit}">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <hr class="ac-table-header" />
   <table class="table table-responsive table-ac-bordered table-hover">
-    <thead class="ac-table-header">
-      <tr>
-        <th style="width:65%">
-        </th>
-        <th class="ac-table-data-cell">Modify</th>
-      </tr>
-    </thead>
     <tbody data-bind="with: $component.entity">
       <tr>
         <th> Armor Class </th>

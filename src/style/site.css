@@ -1484,11 +1484,10 @@ fieldset.fieldset-bordered {
 }
 
 .card-title {
-background: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(255, 255, 255, 0.0));
-border-radius: 4px;
+  background: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(255, 255, 255, 0.0));
+  border-radius: 4px;
   text-align: center;
   padding: 10px;
-  margin-bottom: -5px;
 }
 
 @media screen and (max-width: 767px){

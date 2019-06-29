@@ -2,12 +2,8 @@
   <div class="h4 card-title"> Spell Slots<br />
     <small>These slots are configurable to reset on a short or long rest. Click on a slot to edit it.</small>
   </div>
+  <hr class="ac-table-header" />
   <table class="table table-responsive table-ac-bordered">
-    <thead class="ac-table-header">
-      <tr>
-        <th colspan="7" /><!-- provide the border at the top -->
-      </tr>
-    </thead>
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
