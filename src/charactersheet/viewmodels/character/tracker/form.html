@@ -1,13 +1,11 @@
 <form data-bind="submit: $component.submit">
-  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
-  <div data-bind="with: entity">
+  <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
+  <div class="panel-body" data-bind="with: entity">
     <form-tracked-component params="{
       tracked: tracked,
-      hasFocus: $component.formElementHasFocus
-     }"></form-tracked-component>
+      hasFocus: $component.formElementHasFocus }">
+    </form-tracked-component>
   </div>
-  <form-submit-actions params="{
-    reset: $component.reset,
-  }"></form-submit-actions>
-
+  <form-submit-actions params="{ reset: $component.reset }">
+  </form-submit-actions>
 </form>

@@ -1,15 +1,15 @@
 <div style="margin-bottom: 0px;"
-     data-bind="attr:{id: `${elementId}`}, style: { height: elementHeight},
-  collapseCard: { hiddenCallback: hiddenCallback, shownCallback: shownCallback },
-  css: collapsable() ? 'panel panel-default collapse':''">
-  <div class="panel-body"
-       style="position: relative; height: 100%;">
-
+    data-bind="attr:{ id: `${elementId}`},
+     style: { height: elementHeight},
+     collapseCard: { hiddenCallback: hiddenCallback, shownCallback: shownCallback },
+     css: collapsable() ? 'panel panel-default collapse':''">
+  <div data-bind="css: collapsable() ? 'panel-body':''"
+      style="position: relative; height: 100%;">
     <div class="card-flip-container"
-         data-bind="css: {'flipped':  showBack}, style: { height: elementHeight}">
+        data-bind="css: {'flipped':  showBack}, style: { height: elementHeight}">
       <div style="opacity: 1"
-           class="card-flipper"
-           data-bind="attr:{id: `${elementId}_card`}">
+          class="card-flipper"
+          data-bind="attr:{id: `${elementId}_card`}">
         <!-- ko template: {
         nodes: $componentTemplateNodes,
         data: {

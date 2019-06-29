@@ -5,32 +5,20 @@
         defaultHeight: 450,
         }">
     <div class="front">
-      <div class="h4 card-title">
-        Health <br />
-        <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
-      </div>
-      <hr class="ac-table-header" />
       <stats-card-view params="{
        containerId: elementId,
        show: showFront,
        forceCardResize: forceCardResize,
        flip: flip}">
-       </stats-card-view>
+      </stats-card-view>
     </div>
     <div class="back">
-      <div id="health-panel-form">
-        <div class="h4 card-title">
-          Health <br />
-          <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
-        </div>
-        <hr class="ac-table-header" />
-        <stats-health-form params="{
+      <stats-health-form params="{
          containerId: elementId,
          show: showBack,
          flip: flip,
          forceCardResize: forceCardResize}">
-         </stats-health-form>
-      </div>
+      </stats-health-form>
     </div>
   </flip-card>
 </div>

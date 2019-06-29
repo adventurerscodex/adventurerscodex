@@ -25,9 +25,9 @@ export class SpellFormViewModel  extends AbstractChildFormModel {
     prePopSource = 'spells';
     prePopLimit = SELECTDATA.LONG;
 
-    preparedRowVisibleEdit = () => {
+    preparedRowVisibleEdit = ko.pureComputed(() => {
         return parseInt(this.entity().level()) !== 0;
-    };
+    });
 
     schoolOptions = Fixtures.spell.schoolOptions;
     setSchool = (label, value) => {

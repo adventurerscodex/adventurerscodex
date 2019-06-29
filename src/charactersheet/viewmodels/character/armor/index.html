@@ -1,34 +1,22 @@
-<div id="armor-pane"
-     class="ac-pane panel-body">
-  <div class="h4 card-title">
-    Armor<br />
-    <small>Armor Class calculations are based on your equipped Armor, Shield, Magical Modifiers, and Dexterity.
-      Be sure to Don your armor and/or shield so your AC will be calculated.
-    </small>
+<div id="armor-pane">
+  <div class="h4 card-title"> Armor<br />
+    <small>Armor Class calculations are based on your equipped Armor, Shield, Magical Modifiers, and Dexterity. Be sure to Don your armor and/or shield so your AC will be calculated. </small>
   </div>
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th data-bind="click: function(){sortBy('equipped');}">
-          Equipped
-        </th>
-        <th data-bind="click: function(){sortBy('name');}">
-          Armor
-          <span data-bind="css: sortArrow('name')"></span>
+        <th class="col-xs-1" data-bind="click: function(){sortBy('equipped');}"> Equipped </th>
+        <th data-bind="click: function(){sortBy('name');}"> Armor <span data-bind="css: sortArrow('name')"></span>
         </th>
         <th class="hidden-xs"
-            data-bind="click: function(){sortBy('type');}">
-          Type
-          <span data-bind="css: sortArrow('type')"></span>
+            data-bind="click: function(){sortBy('type');}"> Type <span data-bind="css: sortArrow('type')"></span>
         </th>
         <th data-bind="click: function(){sortBy('armorClass');}"
-            class="ac-table-data-cell">
-          Armor Class
-          <span data-bind="css: sortArrow('armorClass')"></span>
+            class="ac-table-data-cell"> Armor Class <span data-bind="css: sortArrow('armorClass')"></span>
         </th>
-        <th>
+        <th class="col-xs-1 text-right">
           <a href="#"
-             data-bind="{click: collapseAll}"><span class="fa fa-minus"></span></a>
+              data-bind="{click: collapseAll}"><span class="fa fa-minus"></span></a>
         </th>
       </tr>
     </thead>
@@ -39,19 +27,18 @@
           data-toggle="collapse"
           data-bind="css: {notCastable: !equipped() },
           attr:{'data-target': `#armor_list_${uuid()}`}">
-        <td class="memorize-spell"
+        <td class="col-xs-1 checkbox-data-cell"
             data-bind="click: $component.equipArmor">
           <div>
             <input type='checkbox'
-                   class='ac-checkbox sr-only'
-                   data-bind="checked: equipped,
+                class='ac-checkbox sr-only'
+                data-bind="checked: equipped,
                    attr: {id: `equpped_${uuid()}`}"></input>
             <label data-bind="attr: {for: `equipped_${uuid()}`}"></label>
           </div>
         </td>
         <td>
-          <span data-bind="text: $component.shortText(name)"></span>&nbsp;
-          <span data-bind="text: magicalModifierLabel,
+          <span data-bind="text: $component.shortText(name)"></span>&nbsp; <span data-bind="text: magicalModifierLabel,
           css: { badge: applyMagicalModifierLabel }"></span>
         </td>
         <td class="hidden-xs">
@@ -60,10 +47,10 @@
         <td class="ac-table-data-cell">
           <span data-bind="text: acCalculatedLabel"></span>
         </td>
-        <td>
+        <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
-                data-bind="attr:{'data-target': `#armor_list_${uuid()}`}"
-                class="rotate fa fa-chevron-left"></span>
+              data-bind="attr:{'data-target': `#armor_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
       <tr class="collapseRow">
@@ -79,16 +66,17 @@
                 }">
             <div class="front">
               <card-edit-actions params="{ flip: flip }"></card-edit-actions>
-              <div data-bind="with: context.data" class="h4">
-                <span data-bind="text: name"
-                      class="armorPreviewNameLabel"></span>&nbsp;
+              <div data-bind="with: context.data"
+                  class="h4 collapsable-card-title">
+                <span data-bind="text: name" />&nbsp;
                 <!-- ko if: equipped() -->
                 <small>Equipped</small>
                 <!-- /ko -->
               </div>
-              <div data-bind="with: context.data" class="row">
-                <div class="col-sm-5 col-md-12 col-lg-5">
-                  <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+              <div data-bind="with: context.data"
+                  class="panel-body row">
+                <div class="col col-sm-5 col-md-12 col-lg-5">
+                  <table class="table table-hover table-condensed table-ac-bordered">
                     <tbody>
                       <tr>
                         <th>Armor Class:</th>
@@ -109,9 +97,9 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="col-sm-7 col-md-12 col-lg-7">
-                  <p class="card-description"
-                     data-bind="markdownPreview: armorDescriptionHTML"></p>
+                <div class="col col-sm-7 col-md-12 col-lg-7">
+                  <div class="card-description"
+                      data-bind="markdownPreview: armorDescriptionHTML"></div>
                 </div>
               </div>
             </div>
@@ -131,7 +119,7 @@
       <tr class="collapseRow">
         <td colspan="5">
           <div id="add-armor"
-               class="add-card collapse">
+              class="add-card collapse">
             <armor-form params="{
                    containerId: 'add-armor',
                    show: $component.displayAddForm,
@@ -145,25 +133,27 @@
       <tr>
         <td colspan="5">
           <div class="row">
-            <div class="col-xs-4 text-muted">
+            <div class="col col-xs-4 text-muted">
               <small class="table-foot-content">
-                <span class="visible-xs" data-bind="text: totalCost" />
+                <span class="visible-xs"
+                    data-bind="text: totalCost" />
                 <span class="hidden-xs">Value:<span data-bind="text: totalCost" /></span>
               </small>
             </div>
-            <div class="col-xs-4">
+            <div class="col col-xs-4">
               <!-- ko ifnot: $component.displayAddForm -->
               <button type="button"
-                      class="btn btn-link btn-sm btn-block"
-                      data-toggle="collapse"
-                      data-target="#add-armor"
-                      data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Armor</button>
+                  class="btn btn-link btn-sm btn-block"
+                  data-toggle="collapse"
+                  data-target="#add-armor"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Armor</button>
               <!-- /ko -->
             </div>
-            <div class="pull-right col-xs-4 text-muted"
-                 style="text-align: right">
+            <div class="pull-right col col-xs-4 text-muted"
+                style="text-align: right">
               <small class="table-foot-content">
-                <span class="visible-xs" data-bind="text: totalWeight" />
+                <span class="visible-xs"
+                    data-bind="text: totalWeight" />
                 <span class="hidden-xs">Weight:<span data-bind="text: totalWeight" /></span>
               </small>
             </div>

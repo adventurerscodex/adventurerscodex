@@ -52,6 +52,11 @@ nav.navbar {
   margin-bottom:15px;
 }
 
+.navbar-collapse {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 a.navbar-brand.navbar-divider:after {
   position: relative;
   top: 0em;
@@ -525,6 +530,7 @@ textarea.dark-area {
 
 .clickable {
   cursor:pointer;
+  height: 100%
 }
 
 .hide-block {
@@ -1349,24 +1355,32 @@ transition: opacity 0.3s linear;
 
 .edit-btn {
   position: absolute;
-  top: -10px;
-  right: -10px;
+  top: 5px;
+  right: -5px;
+  z-index: 6;
+}
+
+.panel-body .edit-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
   z-index: 6;
 }
 
 .add-card .edit-btn {
   position: relative;
-  top: -15px;
+  top: 30px; /* matches the -15px top of a panel-body edit button */
   right: -10px;
   z-index: 6;
   float: right;
+  margin-top: -45px;
+  /* 45px is the height of the button, so cancel having it be in-flow */
 }
 
 .edit-btn.btn-group .btn+.btn {
   margin-left: -10px;
 }
 /* end Flip Card */
-
 
 .table .table.spellDetail {
   background-color: transparent;
@@ -1404,17 +1418,6 @@ transition: opacity 0.3s linear;
 @-moz-document url-prefix() {
   fieldset { display: table-cell; }
 }
-
-/* #ArmorClassShield {
-  background:url('../images/shield.svg') no-repeat;
-   background-size: 100% 100%;
-   text-align: center;
-   vertical-align: middle;
-   height: 6ex;
-   color: white;
-   padding: 5px;
-   padding-top: 3px;
-  } */
 
   .defenseShield {
     background:url('../images/shield.svg') no-repeat;
@@ -1463,21 +1466,31 @@ fieldset.fieldset-bordered {
   visibility: hidden;
 }
 
-#health-buttons {
+.health-buttons {
   text-align: center;
 }
 
-#health-buttons .glyphicon-menu-down:before {
+.health-buttons .glyphicon-menu-down:before {
   font-size: 2em;
   content: "\e143";
   color: #e74c3c;
   margin: 5%;
 }
 
-#health-buttons .glyphicon-menu-up:before {
+.health-buttons .glyphicon-menu-up:before {
   font-size: 2em;
   content: "\e005";
   margin: 5%;
+}
+
+.health-buttons .input-group-addon {
+  height: 30px;
+  padding: 0px;
+}
+
+.healthBtn.btn-info {
+  background-color: rgb(113, 212, 232);
+  border-color: rgb(113, 212, 232);
 }
 
 .card-title {
@@ -1485,11 +1498,7 @@ background: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(255, 255,
 border-radius: 4px;
   text-align: center;
   padding: 10px;
-margin: -5px;
-}
-
-.card-title small {
-  color: #2c3e50;
+  margin-bottom: -5px;
 }
 
 @media screen and (max-width: 767px){
@@ -1611,7 +1620,15 @@ hr.ac-table-header {
 }
 
 .add-card {
-  padding: 10px;
+  padding: 15px;
+      border-color: #ecf0f1;
+      border-width: 1px;
+      border-style: solid;
+      box-shadow: 1px 2px 0px 0px #ecf0f1;
+}
+
+.table-ac-bordered tfoot tr td {
+  padding: 0px;
 }
 
 .skill-modifier-input input {
@@ -1628,6 +1645,9 @@ hr.ac-table-header {
 .ac-pane {
   background-color: white;
   margin-bottom: 10px;
+}
+.ac-pane.panel-body {
+   padding: 0px;
 }
 
 .ogl-disclaimer {
@@ -1881,4 +1901,78 @@ hr.ac-table-header {
   margin-top: 5px;
   margin-bottom: 5px;
   display: inline-block;
+}
+
+.navbar-header .icon-bar {
+  background-color:white;
+  margin: 5px;
+  width: 70%;
+  margin-right: 15%;
+  margin-left: 15%;
+}
+
+.icon-bar.top-bar {
+  margin-top: 0px;
+}
+.icon-bar.bottom-bar {
+   margin-bottom: 0px;
+}
+
+.navbar-header .btn {
+  background-color: #2c3e50;
+  float: initial;
+}
+
+.secondary-nav {
+    text-align: right;
+}
+
+.tab-pane>.row>.col {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+form .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+tr .panel {
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0px 3px 0px 0px #ecf0f1;
+}
+
+.collapsable-card-title {
+   padding-left: 15px;
+}
+
+.coin-display {
+  display:block;
+  line-height: 14px;
+  text-align: right;
+}
+
+.coins div.form-control {
+  display: table-cell;
+  line-height: 14px;
+  text-align: right;
+  padding-right: 10px;
+  background-color: rgb(0,0,0, 0.02);
+}
+
+.coins input.form-control {
+  padding-right: 10px;
+}
+
+.coins .input-group-addon {
+  min-width: 2.25em;
+}
+
+.checkbox-data-cell {
+  text-align: center
+}
+
+
+.rotate.fa.fa-chevron-left {
+    padding-right: 4px;
 }

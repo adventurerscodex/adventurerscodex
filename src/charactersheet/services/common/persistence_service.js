@@ -673,7 +673,9 @@ PersistenceService._shouldApplyMigration = function(appVersion, dbVersion, migra
     if (!dbVersion) {
         dbVersion = '0.0.0';
     }
-
+    if (!migration) {
+        return false;
+    }
     var appAndDBVerionsDiffer = PersistenceService._compareVersions(appVersion, dbVersion);
     var migrationVersionHigherThanDB = PersistenceService._compareVersions(migration.version, dbVersion);
     var migrationVersionLowerOrEqualApp = !PersistenceService._compareVersions(migration.version, appVersion);

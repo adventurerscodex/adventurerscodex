@@ -1,23 +1,10 @@
 <form data-bind="submit: $component.submit">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
-  <div class="row"
-       data-bind="with: entity">
-    <div class="col-xs-12">
-      <!-- ko if: $component.existingData -->
-      <div class="h4 pull-left">
-        <span data-bind="text: name"></span>&nbsp;
-        <!-- ko if: equipped -->
-        <small>Equipped</small>
-        <!-- /ko -->
-      </div>
-      <!-- /ko -->
-      <!-- ko ifnot: $component.existingData -->
-      <div class="h4">
-        New Armor
-      </div>
-      <!-- /ko -->
-    </div>
-    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title">New Armor</div>
+  <!-- /ko -->
+  <div class="panel-body row" data-bind="with: entity">
+    <div class="form-group col col-sm-4 col-md-6 col-lg-4">
       <label for="name"
              class="control-label">Name</label>
       <!-- ko if: $component.existingData -->
@@ -42,7 +29,7 @@
               }">
       <!-- /ko -->
     </div>
-    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <div class="form-group col col-sm-4 col-md-6 col-lg-4">
       <label for="armorType"
              class="control-label">Type</label>
       <input class="form-control"
@@ -54,17 +41,16 @@
              autocomplete: { source: $component.typeOptions,
              onselect: $component.setArmorType }">
     </div>
-    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <div class="form-group col col-sm-4 col-md-6 col-lg-4">
       <label for="armorEditMagicalModifierInput"
              class="control-label">Magical Modifier</label>
       <input class="form-control"
               name="magicalModifier"
              data-bind="value: magicalModifier,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
-             attr: { ...$component.validation.magicalModifier }
-            ">
+             attr: { ...$component.validation.magicalModifier }">
     </div>
-    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <div class="form-group col col-sm-4 col-md-6 col-lg-4">
       <label for="weight"
              class="control-label">Weight</label>
       <input class="form-control"
@@ -74,7 +60,7 @@
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
              attr: { ...$component.validation.weight }">
     </div>
-    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <div class="form-group col col-sm-4 col-md-6 col-lg-4">
       <label for="armorClass"
              class="control-label">Armor Class</label>
       <input class="form-control"
@@ -84,7 +70,7 @@
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
              attr: { ...$component.validation.armorClass }">
     </div>
-    <div class="form-group col-sm-4 col-md-6 col-lg-4">
+    <div class="form-group col col-sm-4 col-md-6 col-lg-4">
       <label for="stealth"
              class="control-label">Stealth</label>
       <input class="form-control"
@@ -96,7 +82,7 @@
              autocomplete: { source: $component.stealthOptions,
              onselect: $component.setArmorStealth }">
     </div>
-    <div class="form-group col-sm-6 col-md-12 col-lg-6">
+    <div class="form-group col col-sm-6 col-md-12 col-lg-6">
       <label for="price"
              class="control-label">Price</label>
       <div class="input-group">
@@ -118,7 +104,7 @@
         </span>
       </div>
     </div>
-    <div class="form-group col-sm-6 col-md-12 col-lg-6">
+    <div class="form-group col col-sm-6 col-md-12 col-lg-6">
       <label class="control-label">Equipped</label>
       <div class="btn-group btn-group-justified"
            role="group">
@@ -148,7 +134,7 @@
         </label>
       </div>
     </div>
-    <div class="form-group col-xs-12">
+    <div class="form-group col col-xs-12">
       <label for="armorDescription"
              class="control-label">Description</label>
       <!-- ko if: $component.show -->
@@ -168,11 +154,11 @@
       </small>
       <!-- /ko -->
     </div>
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
   </div>
-  <form-submit-actions params="{
-    reset: $component.reset,
-    delete: $component.delete,
-    addForm: $component.addForm,
-    showDisclaimer: $component.showDisclaimer
-  }"></form-submit-actions>
 </form>

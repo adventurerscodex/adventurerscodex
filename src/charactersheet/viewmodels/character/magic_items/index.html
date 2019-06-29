@@ -1,33 +1,23 @@
-<div id="magic-item-pane"
-     class="ac-pane panel-body">
-  <div class="h4 card-title">
-    Magic Items<br />
+<div id="magic-item-pane">
+  <div class="h4 card-title"> Magic Items<br />
     <small>“This should be in a museum!” -Indiana Jones</small>
   </div>
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th data-bind="click: function(){sortBy('attuned');}">
-          Attuned
-          <span data-bind="css: sortArrow('attuned')"></span>
+        <th class="col-xs-1" data-bind="click: function(){sortBy('attuned');}"> Attuned <span data-bind="css: sortArrow('attuned')"></span>
         </th>
-        <th data-bind="click: function(){sortBy('name');}">
-          Magic Item
-          <span data-bind="css: sortArrow('name')"></span>
+        <th data-bind="click: function(){sortBy('name');}"> Magic Item <span data-bind="css: sortArrow('name')"></span>
         </th>
         <th class="hidden-xs"
-            data-bind="click: function(){sortBy('type');}">
-          Type
-          <span data-bind="css: sortArrow('type')"></span>
+            data-bind="click: function(){sortBy('type');}"> Type <span data-bind="css: sortArrow('type')"></span>
         </th>
         <th class="hidden-xs"
-            data-bind="click: function(){sortBy('usedCharges');}">
-          Charges
-          <span data-bind="css: sortArrow('usedCharges')"></span>
+            data-bind="click: function(){sortBy('usedCharges');}"> Charges <span data-bind="css: sortArrow('usedCharges')"></span>
         </th>
-        <th>
+        <th class="col-xs-1 text-right">
           <a href="#"
-             data-bind="{click: collapseAll}">
+              data-bind="{click: collapseAll}">
             <span class="fa fa-minus"></span>
           </a>
         </th>
@@ -38,32 +28,33 @@
       <!-- ko foreach: filteredAndSortedEntities -->
       <tr class="clickable expandRow"
           data-toggle="collapse"
-          data-bind="css: {notCastable: requiresAttunement() == true && !attuned() }, attr:{'data-target': `#magic_item_${uuid()}`}">
-        <td data-bind="click: $component.attuneItem">
+          data-bind="css: {
+            notCastable: requiresAttunement() == true && !attuned()
+          },
+          attr:{ 'data-target': `#magic_item_${uuid()}` }">
+        <td class="col-xs-1 checkbox-data-cell" data-bind="click: $component.attuneItem">
           <div data-bind="visible: requiresAttunement() === true">
-            <div>
-              <input type='checkbox'
-                     class='pseudo-checkbox sr-only'
-                     data-bind="checked: attuned, attr: {id: `magic_item_attuned_${uuid()}`}"></input>
-              <label data-bind="attr: {for: `magic_item_attuned_${uuid()}`}"
-                     class='fancy-checkbox-label'>
-              </label>
-            </div>
+            <input type='checkbox'
+                class='pseudo-checkbox sr-only'
+                data-bind="checked: attuned, attr: {id: `magic_item_attuned_${uuid()}`}"></input>
+            <label data-bind="attr: {for: `magic_item_attuned_${uuid()}`}"
+                class='fancy-checkbox-label'>
+            </label>
           </div>
         </td>
         <td>
-          <span data-bind="text: $component.shortText(name)"></span>
+          <span data-bind="text: $component.shortText(name)" />
         </td>
         <td class="hidden-xs">
-          <span data-bind="text: $component.shortText(type)"></span>
+          <span data-bind="text: $component.shortText(type)" />
         </td>
         <td class="hidden-xs">
           <span data-bind="text: chargesDisplay"></span>
         </td>
-        <td>
+        <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
-                data-bind="attr:{'data-target': `#magic_item_${uuid()}`}"
-                class="rotate fa fa-chevron-left"></span>
+              data-bind="attr:{'data-target': `#magic_item_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
       <tr class="collapseRow">
@@ -73,49 +64,42 @@
                   tabId: $parent.tabId,
                   collapsable: true,
                   elementId: 'magic_item',
-                  context: {
-                    data: $data,
-                  }
+                  context: { data: $data }
                 }">
             <div class="front">
               <card-edit-actions params="{ flip: flip }"></card-edit-actions>
               <div data-bind="with: context.data">
-              <div class="row"
-                   data-bind="css: cardBackground">
-                <div class="col-xs-12">
-                  <div class="h4 pull-left">
-                    <span data-bind="text: name"></span>&nbsp;
-                    <!-- ko if: attuned -->
-                    (Attuned)
-                    <!-- /ko -->
-                    <small data-bind="text: rarity"></small>
+                <div class="h4 collapsable-card-title">
+                  <span data-bind="text: name"></span>&nbsp;<span data-bind="visible: attuned">(Attuned)</span>
+                  <small data-bind="text: rarity"></small>
+                </div>
+                <div class="panel-body row"
+                    data-bind="css: cardBackground">
+                  <div class="col-sm-5 col-md-12 col-lg-5">
+                    <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Type:</th>
+                          <td><span data-bind="text: type"></span></td>
+                        </tr>
+                        <!-- ko if: maxCharges() > 0 -->
+                        <tr>
+                          <th>Charges:</th>
+                          <td><span data-bind="text: usedCharges"></span> of <span data-bind="text: maxCharges"></span></td>
+                        </tr>
+                        <!-- /ko -->
+                        <tr>
+                          <th>Weight:</th>
+                          <td><span data-bind="text: magicItemWeightLabel"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col-sm-7 col-md-12 col-lg-7">
+                    <div class="card-description"
+                        data-bind="markdownPreview: magicItemDescriptionHTML"></div>
                   </div>
                 </div>
-                <div class="col-sm-5 col-md-12 col-lg-5">
-                  <table class="spellDetail table table-hover table-condensed table-ac-bordered">
-                    <tbody>
-                      <tr>
-                        <th>Type:</th>
-                        <td><span data-bind="text: type"></span></td>
-                      </tr>
-                      <!-- ko if: maxCharges() > 0 -->
-                      <tr>
-                        <th>Charges:</th>
-                        <td><span data-bind="text: usedCharges"></span> of <span data-bind="text: maxCharges"></span></td>
-                      </tr>
-                      <!-- /ko -->
-                      <tr>
-                        <th>Weight:</th>
-                        <td><span data-bind="text: magicItemWeightLabel"></span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-sm-7 col-md-12 col-lg-7">
-                  <p class="card-description"
-                     data-bind="markdownPreview: magicItemDescriptionHTML"></p>
-                </div>
-              </div>
               </div>
             </div>
             <div class="back">
@@ -132,9 +116,9 @@
       </tr>
       <!-- /ko -->
       <tr class="collapseRow">
-        <td colspan="8">
+        <td colspan="5">
           <div id="add-magic-item"
-               class="collapse add-card">
+              class="collapse add-card">
             <magic-item-form params="{
                    containerId: 'add-magic-item',
                    show: displayAddForm,
@@ -146,31 +130,28 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="8">
+        <td colspan="5">
           <div class="row">
-            <div class="col-xs-4 text-muted">
-              <small class="table-foot-content">
-                Attuned:<span data-bind="text: numberOfAttuned" />
+            <div class="col col-xs-4 text-muted">
+              <small class="table-foot-content"> Attuned:<span data-bind="text: numberOfAttuned" />
               </small>
             </div>
-            <div class="col-xs-4">
+            <div class="col col-xs-4">
               <!-- ko ifnot: $component.displayAddForm -->
               <button type="button"
-                      class="btn btn-link btn-sm btn-block"
-                      id="magicitemAddButton"
-                      data-toggle="collapse"
-                      data-target="#add-magic-item"
-                      data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Magic Item</button>
+                  class="btn btn-link btn-sm btn-block"
+                  id="magicitemAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-magic-item"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Magic Item</button>
               <!-- /ko -->
             </div>
-            <div class=" col-xs-4 text-muted"
-                 style="text-align: right">
-                 <small class="table-foot-content">
-
-                 <span class="visible-xs"
-                       data-bind="text: totalWeight" />
-                 <span class="hidden-xs">Weight:<span data-bind="text: totalWeight" /></span>
-                 </small>
+            <div class="col col-xs-4 text-muted text-right">
+              <small class="table-foot-content">
+                <span class="visible-xs"
+                    data-bind="text: totalWeight" />
+                <span class="hidden-xs">Weight:<span data-bind="text: totalWeight" /></span>
+              </small>
             </div>
         </td>
       </tr>

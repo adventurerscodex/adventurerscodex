@@ -132,7 +132,9 @@ export class AbstractFormModel {
         const setFocus = () => {
             this.formElementHasFocus(this.show());
         };
-        await setTimeout(setFocus, DELAY.LONG);
+        if (ko.utils.unwrapObservable(this.addForm)) {
+            await setTimeout(setFocus, DELAY.LONG);
+        }
     }
 
     disposeOfSubscriptions() {

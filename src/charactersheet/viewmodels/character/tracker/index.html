@@ -1,5 +1,4 @@
-<div id="tracker-pane"
-     class=" ac-pane panel-body">
+<div id="tracker-pane">
   <div class="h4 card-title">
     Tracked Features, Feats, and Traits<br />
     <small>Configure to reset on a short or long rest.</small>
@@ -13,10 +12,9 @@
         <th class="hidden-xs" colspan="4">Resets&nbsp;on
         </th>
         <th class="visible-xs" colspan=3"></th>
-        <th>Used</th>
-        <th>
+        <th class="text-right" style="width: 5%">Used</th>
+        <th class="col-xs-1 text-right">
           <a href="#"
-             class=""
              data-bind="{click: collapseAll}">
             <span class="fa fa-minus"></span></a>
         </th>
@@ -25,11 +23,11 @@
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
-      <tr
-      class="clickable expandRow trackedRow"
-        data-toggle="collapse"
+      <tr class="clickable expandRow trackedRow"
+         data-toggle="collapse"
          data-bind="attr:{'data-target': `#tracked_${uuid()}`}" >
-        <td><span data-bind="text: $component.shortText(name)"></span>
+        <td>
+          <span data-bind="text: $component.shortText(name)"></span>
         </td>
         <td style="padding: 4px;" class="hidden-xs">
           <div class="" data-bind="attr: {'class': $component.resetsOnImg(tracked)}"></div>
@@ -49,10 +47,10 @@
                data-bind="barProgress: $component.mapToChart($data)"> </div>
         </td>
 
-        <td style="padding: 4px;">
+        <td style="padding: 4px; width: 5%" class="text-right">
           <span data-bind="text: parseInt(tracked().max()) - parseInt(tracked().used())"></span>&nbsp;/&nbsp;<span data-bind=" text: tracked().max"></span>
         </td>
-        <td style="padding: 4px;">
+        <td style="padding: 4px;" class="col-xs-1 text-right">
           <span data-toggle="collapse"
                 data-bind="attr:{'data-target': `#tracked_${$data.uuid()}`}"
                 class="rotate fa fa-chevron-left"></span>
@@ -73,15 +71,17 @@
                         }">
             <div class="front">
               <card-edit-actions params="{ flip: flip }"></card-edit-actions>
-              <div class="h4">
+              <div class="h4 collapsable-card-title">
                 <span data-bind="text: context.data.name"></span>
                 <small data-bind="text: context.nameMeta(context.data)"></small>
               </div>
-              <p class="card-description"
-                 data-bind="markdownPreview: context.data.description"></p>
+              <div class="panel-body">
+              <div class="card-description"
+                 data-bind="markdownPreview: context.data.description"></div>
+              </div>
             </div>
             <div class="back">
-              <div class="h4">
+              <div class="h4 collapsable-card-title">
                 <span data-bind="text: context.data.name"></span>
                 <small data-bind="text: context.nameMeta(context.data)"></small>
               </div>

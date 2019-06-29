@@ -2,7 +2,7 @@
 <table class="table table-responsive table-ac-bordered table-hover">
   <thead class="ac-table-header">
     <tr>
-      <th colspan=2"></th>
+      <th colspan=2"><!-- show a header border --></th>
     </tr>
   </thead>
   <!-- ko if: loaded(), completeOn: 'render' -->
@@ -16,7 +16,7 @@
       <td class="ac-table-data-cell">
         <div id="ArmorClassShield"
              class="defenseShield">
-          <span data-bind="text: armorClass"></span>
+          <span data-bind="text: armorClass" />
         </div>
       </td>
     </tr>
@@ -27,17 +27,17 @@
         </a>
       </th>
       <td class="ac-table-data-cell">
-        <span data-bind="text: proficiencyLabel"></span>
+        <span data-bind="text: proficiencyLabel" />
       </td>
     </tr>
     <tr>
       <th>
         Initiative&nbsp;<a class="fa fa-info-circle statsPopover"
               data-bind="popover: { content: initiativePopover }" role="button" tabindex="2">
-        </q>
+        </a>
       </th>
       <td class="ac-table-data-cell">
-        <span data-bind="text: initiativeLabel"></span>
+        <span data-bind="text: initiativeLabel" />
       </td>
     </tr>
     <tr data-bind="with: entity">
@@ -45,7 +45,7 @@
         Movement
       </th>
       <td class="ac-table-data-cell">
-        <span data-bind="text: speed"></span>
+        <span data-bind="text: speed" />
       </td>
     </tr>
     <tr>
@@ -53,8 +53,10 @@
         Inspiration
       </th>
       <td class="ac-table-data-cell">
-        <span data-bind="{click: toggleInspiration, css: entity().inspiration() ? 'inspiration-full':'inspiration-empty'}"
-              style="cursor: pointer;"></span>
+        <span style="cursor: pointer;"
+            data-bind="{
+          click: $component.toggleInspiration,
+          css: $component.entity().inspiration() ? 'inspiration-full':'inspiration-empty'}" />
       </td>
     </tr>
   </tbody>

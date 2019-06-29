@@ -21,6 +21,14 @@ class WealthViewModel extends AbstractViewModel {
     gpCoins = gpCoins;
     ppCoins = ppCoins;
     spCoins = spCoins;
+
+    toFormatted = (number) => {
+        const intNum = parseInt(ko.utils.unwrapObservable(number));
+        if (!isNaN(intNum)) {
+            return number().toLocaleString('en', {useGrouping:true});
+        }
+        return number;
+    }
 }
 
 ko.components.register('wealth-view', {

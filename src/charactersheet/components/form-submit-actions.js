@@ -50,14 +50,14 @@ export class FormSubmitActionComponent {
 ko.components.register('form-submit-actions', {
     viewModel: FormSubmitActionComponent,
     template: '\
-      <p class="text-muted text-left" style="padding: 10px;" data-bind="visible: $component.showDisclaimer">\
+      <p class="col col-xs-12 text-muted text-left" style="padding: 10px;" data-bind="visible: $component.showDisclaimer">\
         <sm><i>This data is distributed under the\
             <a href="http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf" target="_blank">OGL</a>\
             <br />Open Game License v 1.0a Copyright 2000, Wizards of the Coast, LLC.\
             </i>\
         <sm>\
       </p>\
-      <div class="col-xs-12">\
+      <div class="col col-xs-12">\
         <div data-bind="if: $component.showDelete()" class="pull-left">\
           <button class="btn btn-sm btn-danger"\
                   type="button"\

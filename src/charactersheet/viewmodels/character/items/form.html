@@ -1,40 +1,28 @@
 <form data-bind="submit: $component.submit">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title"> New Item </div>
+  <!-- /ko -->
   <div class="row"
-       data-bind="with: entity">
-    <!-- ko if: $component.existingData -->
-    <div class="col-xs-12">
-      <div class="h4"
-           data-bind="text: name">
-      </div>
-    </div>
-    <!-- /ko -->
-    <!-- ko ifnot: $component.existingData -->
-    <div class="col-xs-12">
-      <div class="h4">
-        New Item
-      </div>
-    </div>
-    <!-- /ko -->
-    <div class="form-group col-sm-12">
+      data-bind="with: entity">
+    <div class="form-group col col-sm-12">
       <label for="name"
-             class=" control-label">Name</label>
-      <!-- ko if: $component.existingData -->
+          class=" control-label">Name</label>
+      <!-- ko ifnot: $component.addForm -->
       <input type="text"
-             class="form-control"
-             placeholder="Rations"
-             name="name"
-             data-bind="value: name,
+          class="form-control"
+          placeholder="Rations"
+          name="name"
+          data-bind="value: name,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.name },
-               hasFocus: $component.formElementHasFocus">
+               attr: { ...$component.validation.name }">
       <!-- /ko -->
-      <!-- ko ifnot: $component.existingData -->
+      <!-- ko if: $component.addForm -->
       <input type="text"
-             class="form-control"
-             placeholder="Rations"
-             name="name"
-             data-bind="value: name,
+          class="form-control"
+          placeholder="Rations"
+          name="name"
+          data-bind="value: name,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
                attr: { autocomplete: 'off', ...$component.validation.name },
                hasFocus: $component.formElementHasFocus,
@@ -43,42 +31,42 @@
                  onselect: $component.populate }">
       <!-- /ko -->
     </div>
-    <div class="form-group col-sm-6 col-lg-3">
+    <div class="form-group col col-sm-6 col-lg-3">
       <label for="weight"
-             class="control-label">Weight</label>
+          class="control-label">Weight</label>
       <div class="input-group">
         <input class="form-control"
-               placeholder="Item Weight"
-               name="weight"
-               data-bind='value: weight,
+            placeholder="Item Weight"
+            name="weight"
+            data-bind='value: weight,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
                attr: { ...$component.validation.weight }'>
-        <span class="input-group-addon no-top-bottom-padding">lbs.</span>
+        <span class="input-group-addon no-top-bottom-padding"> lbs. </span>
       </div>
     </div>
-    <div class="form-group col-sm-6 col-lg-3">
+    <div class="form-group col col-sm-6 col-lg-3">
       <label for="quantity"
-             class="control-label">Quantity</label>
+          class="control-label">Quantity</label>
       <input class="form-control"
-             placeholder="Item Quantity"
-             name="quantity"
-             data-bind="value: quantity,
+          placeholder="Item Quantity"
+          name="quantity"
+          data-bind="value: quantity,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
              attr: { ...$component.validation.quantity },">
     </div>
-    <div class="form-group col-sm-12 col-lg-6">
+    <div class="form-group col col-sm-12 col-lg-6">
       <label class="control-label">Cost</label>
       <div class="input-group">
         <input class="form-control input-jquery-addon"
-              name="cost"
-               data-bind="value: cost,
+            name="cost"
+            data-bind="value: cost,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
                attr: { ...$component.validation.cost }" />
         <span class="input-group-addon input-group-addon-jquery">
           <input class="form-control"
-                 placeholder="GP"
-                 name="currencyDenomination"
-                 data-bind="value: currencyDenomination,
+              placeholder="GP"
+              name="currencyDenomination"
+              data-bind="value: currencyDenomination,
                  event: { blur: $component.reviewInput, invalid: $component.invalidate },
                  attr: { ...$component.validation.currencyDenomination },
                  autocomplete: {
@@ -88,30 +76,27 @@
         </span>
       </div>
     </div>
-    <div class="form-group col-xs-12">
+    <div class="form-group col col-xs-12">
       <label for="description"
-             class="control-label">Description</label>
-      <!-- ko if: $component.show() -->
+          class="control-label">Description</label>
+      <!-- ko if: $component.show -->
       <textarea class="form-control"
-                placeholder="Rations consist of..."
-                rows="4"
-                data-bind='value: description,
+          placeholder="Rations consist of..."
+          rows="4"
+          data-bind='value: description,
                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
                 attr: { ...$component.validation.description },
                 markdownEditor: true'>
      </textarea>
-      <small class="text-muted">
-        Text in this panel can be styled using Markdown. Click
-        <a target="_blank"
-           href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-      </small>
+      <small class="text-muted"> Text in this panel can be styled using Markdown. Click <a target="_blank"
+            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide. </small>
       <!-- /ko -->
     </div>
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
   </div>
-  <form-submit-actions params="{
-    reset: $component.reset,
-    delete: $component.delete,
-    addForm: $component.addForm,
-    showDisclaimer: $component.showDisclaimer
-  }"></form-submit-actions>
 </form>

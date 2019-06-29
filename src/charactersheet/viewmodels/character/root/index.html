@@ -1,6 +1,5 @@
 <div role="presentation"
-     class="secondary-nav visible-xs"
-     style="text-align:right">
+     class="secondary-nav visible-xs">
   <button class="btn btn-sm btn-primary"
           id="actionsActionsButton"
           data-toggle="collapse"
@@ -8,23 +7,23 @@
           data-target="#actionsCollapse"
           aria-expanded="false"
           aria-controls="actionsCollapse">
-      Actions
-      <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
+    Actions
+    <i data-bind="css: arrowIconClass"
+       aria-hidden="true"></i>
   </button>
 </div>
 
 <div class="navbar-header"><button type="button"
-          style="background-color:#2c3e50; float: initial"
           class="btn btn-block navbar-toggle collapsed"
           data-toggle="collapse"
           data-target="#descriptionTab"
           aria-expanded="false"
           aria-controls="navbar">
-  <span class="sr-only">Toggle navigation</span>
-  <span style="background-color:white; margin: 5px; width: 70%; margin-top: 0px; margin-right: 15%; margin-left: 15%;" class="icon-bar"></span>
-  <span style="background-color:white; margin: 5px;width: 70%; margin-right: 15%; margin-left: 15%" class="icon-bar"></span>
-  <span style="background-color:white; margin: 5px;width: 70%;margin-bottom: 0px; margin-right: 15%; margin-left: 15%" class="icon-bar"></span>
-</button>
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
 </div>
 <div class="navbar-collapse collapse"
      id="descriptionTab">
@@ -53,7 +52,6 @@
           <span class="text-center"
                 id="tabStatsSpan"><small>Stats</small></span>
         </div>
-
       </a>
     </li>
     <li role="presentation"
@@ -83,8 +81,7 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabSpellsLink"
-        >
+        id="tabSpellsLink">
       <a href="#spells"
          aria-controls="spells"
          role="tab"
@@ -110,8 +107,7 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabEquipmentLink"
-      >
+        id="tabEquipmentLink">
       <a href="#equipment"
          aria-controls="equipment"
          role="tab"
@@ -138,8 +134,7 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabInventoryLink"
-        >
+        id="tabInventoryLink">
       <a href="#inventory"
          aria-controls="inventory"
          role="tab"
@@ -167,8 +162,7 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabNotesLink"
-        >
+        id="tabNotesLink">
       <a href="#notes"
          aria-controls="notes"
          role="tab"
@@ -195,8 +189,7 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabChatLink"
-        >
+        id="tabChatLink">
       <a href="#chat"
          aria-controls="chat"
          role="tab"
@@ -214,7 +207,6 @@
                 id="tabChatSpan"><small>Chat</small></span>
         </div>
         <div class="hidden-xs">
-
           <img class="tab-icon"
                data-bind="attr: { src: icons.chatTab }" />
           <br />
@@ -224,8 +216,7 @@
       </a>
     </li>
     <li role="presentation"
-        id="tabExhibitLink"
-        >
+        id="tabExhibitLink">
       <a href="#exhibit"
          aria-controls="exhibit"
          role="tab"
@@ -261,8 +252,9 @@
               aria-expanded="false"
               aria-controls="actionsCollapse">
         Actions
-        <i data-bind="css: arrowIconClass" aria-hidden="true"></i>
-    </button>
+        <i data-bind="css: arrowIconClass"
+           aria-hidden="true"></i>
+      </button>
     </li>
   </ul>
 </div>
@@ -273,26 +265,27 @@
        id="stats"
        data-bind="css: statsTabStatus">
     <div class="row">
-      <div class="col-sm-12 col-md-8 col-lg-6 col-lg-push-3"
-           style=" z-index: 6">
+      <div class="col col-sm-12 col-md-8 col-lg-6 col-lg-push-3"
+           style="z-index: 6">
         <stats params="{tabId: 'stats'}"></stats>
       </div>
-      <div class="col-sm-6 col-md-4 col-lg-3 col-lg-push-3"
-           style=" z-index: 4">
+      <div class="col col-sm-6 col-md-4 col-lg-3 col-lg-push-3"
+           style="z-index: 4">
         <ability-scores params="{tabId: 'stats'}"></ability-scores>
       </div>
       <div class="clearfix visible-md-block"></div>
-      <div class="col-sm-6 col-md-4 col-md-push-8 col-lg-3 col-lg-push-0 col-lg-pull-9"
-           style=" z-index: 5">
+      <div class="col col-sm-6 col-md-4 col-md-push-8 col-lg-3 col-lg-push-0 col-lg-pull-9"
+           style="z-index: 5">
         <other-stats params="{tabId: 'stats'}"></other-stats>
       </div>
       <div class="clearfix visible-lg-block"></div>
-      <div class="col-sm-12 col-md-8 col-md-pull-4 col-lg-12 col-lg-pull-0"
-           style=" z-index: 3">
+      <div class="col col-sm-12 col-md-8 col-md-pull-4 col-lg-12 col-lg-pull-0"
+           style="z-index: 3">
         <profile params="{tabId: 'stats'}"></profile>
       </div>
       <div class="clearfix"></div>
-      <div class="col-xs-12" style="z-index: 5">
+      <div class="col col-xs-12"
+           style="z-index: 5">
         <background params="{tabId: 'stats'}"></background>
       </div>
     </div>
@@ -304,38 +297,38 @@
        id="skills"
        data-bind="css: skillsTabStatus">
     <div class="row">
-      <div class="col-xs-12 col-lg-8"
+      <div class="col col-xs-12 col-lg-8"
            style="position:relative; z-index: 9">
         <tracker params="{tabId: 'skills'}"></tracker>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4"
+      <div class="col col-xs-12 col-sm-6 col-md-5 col-lg-4"
            style="position:relative; z-index: 7; float:right">
         <skills params="{tabId: 'skills'}"></skills>
       </div>
-      <div class="col-xs-12 col-sm-6 col-md-7 col-lg-8">
+      <div class="col col-xs-12 col-sm-6 col-md-7 col-lg-8">
         <div class="row">
-          <div class="col-sm-12 col-lg-6">
-             <div class="row">
-                 <div class="col-xs-12"
-                      style="position:relative; z-index: 8">
-                      <features params="{tabId: 'skills'}"></features>
-                 </div>
-                 <div class="col-xs-12"
-                      style="position:relative; z-index: 7">
-                      <traits params="{tabId: 'skills'}"></traits>
-                 </div>
-               </div>
+          <div class="col col-sm-12 col-lg-6">
+            <div class="row">
+              <div class="col col-xs-12"
+                   style="position:relative; z-index: 8">
+                <features params="{tabId: 'skills'}"></features>
+              </div>
+              <div class="col col-xs-12"
+                   style="position:relative; z-index: 7">
+                <traits params="{tabId: 'skills'}"></traits>
+              </div>
+            </div>
           </div>
-          <div class="col-sm-12 col-lg-6">
-             <div class="row">
-                 <div class="col-xs-12"
-                       style="position:relative; z-index: 6">
-                       <feats params="{tabId: 'skills'}"></feats>
-                 </div>
-                 <div class="col-xs-12"
-                      style="position:relative; z-index: 6">
-                      <proficiencies params="{tabId: 'skills'}"></proficiencies>
-                 </div>
+          <div class="col col-sm-12 col-lg-6">
+            <div class="row">
+              <div class="col col-xs-12"
+                   style="position:relative; z-index: 6">
+                <feats params="{tabId: 'skills'}"></feats>
+              </div>
+              <div class="col col-xs-12"
+                   style="position:relative; z-index: 6">
+                <proficiencies params="{tabId: 'skills'}"></proficiencies>
+              </div>
             </div>
           </div>
         </div>
@@ -343,54 +336,49 @@
     </div>
   </div>
   <!-- End Skills Tab -->
-
   <div role="tabpanel"
        class="tab-pane"
        id="spells"
        data-bind="css: spellsTabStatus">
     <div class="row">
-      <div class="col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-3 col-lg-push-9">
+      <div class="col col-sm-5 col-sm-push-7 col-md-4 col-md-push-8 col-lg-3 col-lg-push-9">
         <spell-stats params="{tabId: 'spells'}"></spell-stats>
       </div>
-      <div class="col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-9 col-lg-pull-3">
+      <div class="col col-sm-7 col-sm-pull-5 col-md-8 col-md-pull-4 col-lg-9 col-lg-pull-3">
         <spell-slots params="{tabId: 'spells'}"></spell-slots>
       </div>
-
-      <div class="col-sm-12">
+      <div class="col col-sm-12">
         <spells params="{tabId: 'spells'}"></spells>
       </div>
     </div>
   </div>
   <!-- End Spells Tab -->
-
   <div role="tabpanel"
        class="tab-pane"
        id="equipment"
        data-bind="css: equipmentTabStatus">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col col-xs-12">
         <weapons params="{tabId: 'equipment'}"></weapons>
       </div>
-      <div class="col-xs-12 col-md-6">
+      <div class="col col-xs-12 col-md-6">
         <magic-items params="{tabId: 'equipment'}"></magic-items>
       </div>
-      <div class="col-xs-12 col-md-6">
+      <div class="col col-xs-12 col-md-6">
         <armor params="{tabId: 'equipment'}"></armor>
       </div>
     </div>
   </div>
   <!-- End Equipment Tab -->
-
   <div role="tabpanel"
        class="tab-pane"
        id="inventory"
-       data-bind="css: inventoryTabStatus"
-       >
+       data-bind="css: inventoryTabStatus">
     <div class="row">
-      <div class="col-sm-4 col-lg-3">
+      <div class="col col-sm-4 col-lg-3">
         <wealth params="{tabId: 'inventory'}"></wealth>
       </div>
-      <div class="col-sm-8 col-lg-9">
+      <div class="col col-sm-8 col-lg-9">
         <items params="{tabId: 'inventory'}"></items>
       </div>
     </div>
@@ -401,13 +389,13 @@
        id="notes"
        data-bind="css: notesTabStatus">
     <div class="row">
-      <div class="col-xs-12" style="z-index: 4">
+      <div class="col col-xs-12"
+           style="z-index: 4">
         <notes-list params="{tabId: 'notes'}"></notes-list>
       </div>
     </div>
   </div>
   <!-- End Notes Tab -->
-
   <div role="tabpanel"
        class="tab-pane"
        id="chat"
@@ -415,7 +403,6 @@
     <chat params="isActive: chatTabStatus"></chat>
   </div>
   <!-- End Chat Tab -->
-
   <div role="tabpanel"
        class="tab-pane"
        id="exhibit"

@@ -4,19 +4,12 @@
     <tr>
       <th data-bind="click: () => {$component.sortBy('proficiency');}"
           style="min-width: 40px">
-        <span class="glyphicon glyphicon-ok"></span>
-        <span data-bind="css: $component.sortArrow('proficiency')"></span>
+        <span class="glyphicon glyphicon-ok" /><span data-bind="css: $component.sortArrow('proficiency')" />
       </th>
-      <th data-bind="click: () => {$component.sortBy('name');}">
-        Skill
-        <span data-bind="css: $component.sortArrow('name')"></span>
+      <th data-bind="click: () => {$component.sortBy('name');}"> Skill&nbsp;<span data-bind="css: $component.sortArrow('name')" />
       </th>
-      <th class="ac-table-data-cell">
-        Modifier
-      </th>
-      <th class="ac-table-data-cell">
-        Passive
-      </th>
+      <th class="ac-table-data-cell"> Modifier </th>
+      <th class="ac-table-data-cell"> Passive </th>
     </tr>
   </thead>
   <!-- ko if: loaded(), completeOn: 'render' -->
@@ -26,11 +19,17 @@
       <td>
         <prof-marker params="proficiency: proficiency"></prof-marker>
       </td>
-      <td><span data-bind="text: $component.shortText(name)"></span></td>
-      <td class="ac-table-data-cell" style="white-space: nowrap">
-        <strong><span data-bind="text: $component.bonusLabel(bonus)"></span></strong> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+      <td>
+        <span data-bind="text: $component.shortText(name)" />
       </td>
-      <td class="ac-table-data-cell"><span style="color: #666" data-bind="text: passiveBonus"></span></td>
+      <td class="ac-table-data-cell"
+          style="white-space: nowrap">
+        <strong><span data-bind="text: $component.bonusLabel(bonus)" /></strong> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+      </td>
+      <td class="ac-table-data-cell">
+        <span style="color: #666"
+            data-bind="text: passiveBonus" />
+      </td>
     </tr>
     <!-- /ko -->
   </tbody>

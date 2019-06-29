@@ -1,129 +1,105 @@
-<div id="spells-pane" class="ac-pane panel-body">
-    <div class="h4 card-title">
-      <span data-bind="if: filteredByCastable">
-          Castable
-        </span>
-        Spells<br/>
-        <small data-bind="if: filteredByCastable">
-          Your spells are filtered. Only <strong>prepared spells</strong> that you can cast with an available
-          spell slot are visible. To see all of your spells,
-          <input id="filterByCastableTitle"
-                 type='checkbox'
-                 class='filter-checkbox sr-only'
-                 data-bind="checked: filteredByCastable"></input>
-          <label for="filterByCastableTitle">
-            Unfilter the list.
-            </label>
-            <br />
-            </small>
-      <small data-bind="ifnot: filteredByCastable">You can sort your spells by clicking on the headers. View the
-    bottom of the list for a count of your prepared spells.</small>
-    </div>
-    <table class="listing table table-responsive table-ac-bordered table-hover">
-      <thead>
-        <tr class="ac-table-header">
-          <th>
-            <input id="filterByCastable"
-                   type='checkbox'
-                   class='filter-checkbox sr-only'
-                   data-bind="checked: filteredByCastable"></input>
-            <label for="filterByCastable">
-           </label>
-          </th>
-          <th data-bind="click: ()=> {sortBy('name');}">
-            Spell
-            <span data-bind="css: sortArrow('name')"></span>
-          </th>
-          <th class="ac-table-data-cell"
-              data-bind="click: () => {sortBy('level');}">
-            Level
-            <span data-bind="css: sortArrow('level')"></span>
-          </th>
-          <th class="hidden-xs"
-              data-bind="click: () => {sortBy('typeLabel');}">
-            Type
-            <span data-bind="css: sortArrow('typeLabel')"></span>
-          </th>
-          <th class="hidden-xs hidden-sm"
-              data-bind="click: () => {sortBy('damageType');}">
-            Damage
-            <span data-bind="css: sortArrow('damageType')"></span>
-          </th>
-          <th class="hidden-xs"
-              data-bind="click: () => {sortBy('castingTime');}">
-            Casting Time
-            <span data-bind="css: sortArrow('castingTime')"></span>
-          </th>
-          <th class="hidden-xs hidden-sm"
-              data-bind="click: () => {sortBy('range');}">
-            Range
-            <span data-bind="css: sortArrow('range')"></span>
-          </th>
-          <th style="width: 5%" class="toggle-collapse-col">
-            <a href="#" data-bind="{click: collapseAll}">
-                  <span class="fa fa-minus"></span>
-                </a>
-          </th>
-        </tr>
-      </thead>
-      <!-- ko if: loaded(), completeOn: 'render' -->
-      <tbody>
-        <!-- ko foreach: filteredAndSortedEntities -->
-        <tr
-            data-toggle="collapse"
-            class="clickable spellRow"
-            data-bind="css: {notCastable: !isCastable()}, attr:{'data-target': `#spell_list_${uuid()}`, id: `#spell_row_${uuid()}`}">
-          <td class="memorize-spell"
-              data-bind="click: $parent.memorizeSpell">
-            <!-- ko ifnot: level() == 0  || alwaysPrepared -->
-            <div>
-              <input type='checkbox'
-                     style=""
-                     class='ac-checkbox sr-only'
-                     data-bind="checked: prepared, attr: {id: `spell_memorize_${uuid()}`}"></input>
-              <label data-bind="attr: {for: `spell_memorize_${uuid()}`}"></label>
-            </div>
-            <!-- /ko -->
-            <!-- ko if: level() == 0  || alwaysPrepared -->
-            <span class="glyphicon glyphicon-ok-sign"></span>
-            <!-- /ko -->
-          </td>
-          <td>
-            <span data-bind="text: $component.shortText(name)"></span>
-            <!-- ko if: isConcentration -->
-            <span style="color: #18bc9c"
-                  class="glyphicon glyphicon-copyright-mark"></span>
-            <!-- /ko -->
-          </td>
-          <td class="ac-table-data-cell">
-            <span data-bind="text: levelLabel"></span>
-          </td>
-          <td class="hidden-xs">
-            <span data-bind="html: $component.spellTypeLabel($data)"></span>
-          </td>
-          <td class="hidden-xs  hidden-sm">
-            <span data-bind="css: spellDamageIcon"></span>
-            <span data-bind="text: damage"></span>
-          </td>
-          <td class="hidden-xs">
-            <span data-bind="text: castingTime"></span>
-            <!-- ko if: isRitual -->
-            <span style="color: #18bc9c"
-                  class="glyphicon glyphicon-registration-mark"></span>
-            <!-- /ko -->
-          </td>
-          <td class="hidden-xs hidden-sm">
-            <span data-bind="text: $component.shortText(range, 10)"></span>
-          </td>
-          <td style="width: 5%" class="toggle-collapse-col">
-            <span data-toggle="collapse"
-                  data-bind="attr:{'data-target': `#spell_list_${uuid()}`}"
-                  class="rotate fa fa-chevron-left"></span>
-          </td>
-        </tr>
-        <tr class="collapseRow safari-card-fix">
-          <td colspan="8">
-            <flip-card params="{
+<div id="spells-pane">
+  <div class="h4 card-title">
+    <span data-bind="if: filteredByCastable"> Castable </span> Spells<br />
+    <small data-bind="if: filteredByCastable"> Your spells are filtered. Only <strong>prepared spells</strong> that you can cast with an available spell slot are visible. To see all of your spells, <input type='checkbox'
+          class='filter-checkbox sr-only'
+          data-bind="checked: filteredByCastable"></input>
+      <label for="filterByCastableTitle"> Unfilter the list. </label>
+      <br />
+    </small>
+    <small data-bind="ifnot: filteredByCastable">You can sort your spells by clicking on the headers. View the bottom of the list for a count of your prepared spells.</small>
+  </div>
+  <table class="listing table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr class="ac-table-header">
+        <th class="col-xs-1 checkbox-data-cell">
+          <input type='checkbox'
+              class='filter-checkbox sr-only'
+              data-bind="checked: filteredByCastable"></input>
+          <label for="filterByCastable"></label>
+        </th>
+        <th data-bind="click: ()=> {sortBy('name');}"> Spell <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th class="ac-table-data-cell"
+            data-bind="click: () => {sortBy('level');}"> Level <span data-bind="css: sortArrow('level')"></span>
+        </th>
+        <th class="hidden-xs"
+            data-bind="click: () => {sortBy('typeLabel');}"> Type <span data-bind="css: sortArrow('typeLabel')"></span>
+        </th>
+        <th class="hidden-xs hidden-sm"
+            data-bind="click: () => {sortBy('damageType');}"> Damage <span data-bind="css: sortArrow('damageType')"></span>
+        </th>
+        <th class="hidden-xs"
+            data-bind="click: () => {sortBy('castingTime');}"> Casting Time <span data-bind="css: sortArrow('castingTime')"></span>
+        </th>
+        <th class="hidden-xs hidden-sm"
+            data-bind="click: () => {sortBy('range');}"> Range <span data-bind="css: sortArrow('range')"></span>
+        </th>
+        <th style="col-xs-1 text-right"
+            class="toggle-collapse-col">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr data-toggle="collapse"
+          class="clickable spellRow"
+          data-bind="css: {notCastable: !isCastable()}, attr:{'data-target': `#spell_list_${uuid()}`, id: `#spell_row_${uuid()}`}">
+        <td class="col-xs-1 checkbox-data-cell"
+            data-bind="click: $parent.memorizeSpell">
+          <!-- ko ifnot: level() == 0  || alwaysPrepared -->
+          <input type='checkbox'
+              style=""
+              class='ac-checkbox sr-only'
+              data-bind="checked: prepared, attr: {id: `spell_memorize_${uuid()}`}"></input>
+          <label data-bind="attr: {for: `spell_memorize_${uuid()}`}"></label>
+          <!-- /ko -->
+          <!-- ko if: level() == 0  || alwaysPrepared -->
+          <span class="glyphicon glyphicon-ok-sign"></span>
+          <!-- /ko -->
+        </td>
+        <td>
+          <span data-bind="text: $component.shortText(name)"></span>
+          <!-- ko if: isConcentration -->
+          <span style="color: #18bc9c"
+              class="glyphicon glyphicon-copyright-mark"></span>
+          <!-- /ko -->
+        </td>
+        <td class="ac-table-data-cell">
+          <span data-bind="text: levelLabel"></span>
+        </td>
+        <td class="hidden-xs">
+          <span data-bind="html: $component.spellTypeLabel($data)"></span>
+        </td>
+        <td class="hidden-xs  hidden-sm">
+          <span data-bind="css: spellDamageIcon"></span>
+          <span data-bind="text: damage"></span>
+        </td>
+        <td class="hidden-xs">
+          <span data-bind="text: castingTime"></span>
+          <!-- ko if: isRitual -->
+          <span style="color: #18bc9c"
+              class="glyphicon glyphicon-registration-mark"></span>
+          <!-- /ko -->
+        </td>
+        <td class="hidden-xs hidden-sm">
+          <span data-bind="text: $component.shortText(range, 10)"></span>
+        </td>
+        <td style="col-xs-1 text-right"
+            class="toggle-collapse-col">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#spell_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow safari-card-fix">
+        <td colspan="8">
+          <flip-card params="{
                   dataId: $data.uuid(),
                   tabId: $parent.tabId,
                   collapsable: true,
@@ -133,141 +109,119 @@
                     spellDamageIcon: $component.spellDamageIcon,
                   }
                 }">
-              <div class="front">
-
-                <div data-bind="with: context.data, css: context.data.school().toLowerCase()">
-
-                  <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
-                  <div class="h4">
-                    <span data-bind="text: nameLabel"></span>&nbsp;
-                    <small data-bind="text: spellSummaryLabel"></small>
+            <div class="front">
+              <div data-bind="with: context.data, css: context.data.school().toLowerCase()">
+                <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+                <div class="h4 collapsable-card-title">
+                  <span data-bind="text: nameLabel"></span>&nbsp; <small data-bind="text: spellSummaryLabel"></small>
+                </div>
+                <div class="panel-body row">
+                  <div class="col col-sm-5 col-md-4 col-lg-3">
+                    <table class="spellDetail table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Casting Time:</th>
+                          <td><span data-bind="text: castingTime"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Range:</th>
+                          <td><span data-bind="text: range"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Type:</th>
+                          <td><span data-bind="text: type"></span></td>
+                        </tr>
+                        <tr data-bind="visible: type === 'Savings Throw' && spellSaveAttribute">
+                          <th>Save Attr:</th>
+                          <td><span data-bind="text: spellSaveAttribute"></span></td>
+                        </tr>
+                        <tr data-bind="visible: damage">
+                          <th>Damage:</th>
+                          <td>
+                            <span data-bind="css: spellDamageIcon"></span>
+                            <span data-bind="text: damage"></span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th>Duration:</th>
+                          <td><span data-bind="text: duration"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Components:</th>
+                          <td><span data-bind="text: components"></span></td>
+                        </tr>
+                        <tr data-bind="visible: materialComponents">
+                          <td colspan="2"><i data-bind="text: materialComponents"></i></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="row">
-                    <div class="col-sm-5 col-md-4 col-lg-3">
-                      <table class="spellDetail table table-hover table-condensed table-ac-bordered">
-                        <tbody>
-                          <tr>
-                            <th>Casting Time:</th>
-                            <td><span data-bind="text: castingTime"></span></td>
-                          </tr>
-                          <tr>
-                            <th>Range:</th>
-                            <td><span data-bind="text: range"></span></td>
-                          </tr>
-                          <tr>
-                            <th>Type:</th>
-                            <td><span data-bind="text: type"></span></td>
-                          </tr>
-                          <!-- ko if: type() === 'Savings Throw' && spellSaveAttribute -->
-                          <tr>
-                            <th>Save Attr:</th>
-                            <td><span data-bind="text: spellSaveAttribute"></span></td>
-                          </tr>
-                          <!-- /ko -->
-                          <!-- ko if: damage -->
-                          <tr>
-                            <th>Damage:</th>
-                            <td>
-                              <span data-bind="css: spellDamageIcon"></span>
-                              <span data-bind="text: damage"></span>
-                            </td>
-                          </tr>
-                          <!-- /ko -->
-                          <tr>
-                            <th>Duration:</th>
-                            <td><span data-bind="text: duration"></span></td>
-                          </tr>
-                          <tr>
-                            <th>Components:</th>
-                            <td><span data-bind="text: components"></span></td>
-                          </tr>
-                          <!-- ko if: materialComponents -->
-                          <tr>
-                            <td colspan="2"><i data-bind="text: materialComponents"></i></td>
-                          </tr>
-                          <!-- /ko -->
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="col-sm-7 col-md-8 col-lg-9">
-                        <div class="card-description" data-bind="markdownPreview: descriptionHTML"></div>
-                    </div>
+                  <div class="col col-sm-7 col-md-8 col-lg-9">
+                    <div class="card-description"
+                        data-bind="markdownPreview: descriptionHTML"></div>
                   </div>
                 </div>
-
-
-                 <!-- <spell-detail-view params="{
-                      data: context.data,
-                      containerId: elementId,
-                      show: showFront,
-                      flip: flip
-                    }"></spell-detail-view> -->
-
               </div>
-              <div class="back">
-                <div data-bind="css: context.data.school().toLowerCase()">
-                  <spell-form params="{
+            </div>
+            <div class="back">
+              <div data-bind="css: context.data.school().toLowerCase()">
+                <spell-form params="{
                     data: context.data,
                     containerId: elementId,
                     show: showBack,
                     flip: flip,
                     forceCardResize: forceCardResize
-                   }"
-                  ></spell-form>
-                  </div>
+                   }"></spell-form>
               </div>
-            </flip-card>
-          </td>
-        </tr>
-        <!-- /ko -->
-        <!-- ko if: entities().length > 0 && filteredAndSortedEntities().length == 0 -->
-        <tr class="clickable">
-          <td href="#"
-              colspan="8"
-              class="text-center">
-            No Spells are currently castable
-          </td>
-        </tr>
-        <!-- /ko -->
-        <tr id="add-spell" class="collapse add-card">
-          <td colspan="8">
-            <spell-form params="{
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <!-- ko if: entities().length > 0 && filteredAndSortedEntities().length == 0 -->
+      <tr class="clickable">
+        <td colspan="8" class="text-center"> No Spells are currently castable </td>
+      </tr>
+      <!-- /ko -->
+      <tr id="add-spell"
+          class="collapse add-card">
+        <td colspan="8">
+          <spell-form params="{
               containerId:'add-spell',
               show: $component.displayAddForm,
               flip: $component.toggleShowAddForm
-             }"
-            ></spell-form>
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colspan="8">
-            <div class="row">
-            <div class="col-xs-4 text-muted">
+             }"></spell-form>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8">
+          <div class="row">
+            <div class="col col-xs-4 text-muted">
               <!-- ko if: $component.spellStats().maxPrepared() -->
               <small class="table-foot-content visible-xs">Prepared: <span data-bind="text: $component.numberOfPrepared"></span></small>
               <span class="table-foot-content hidden-xs">Prepared: <span data-bind="text: $component.numberOfPrepared"></span> of <span data-bind="text: $component.spellStats().maxPrepared"></span></span>
               <!-- /ko -->
             </div>
-            <div class="col-xs-4 ">
+            <div class="col col-xs-4 ">
               <!-- ko ifnot: $component.displayAddForm -->
-            <button type="button"
-                    class="btn btn-link btn-block btn-sm"
-                    id="spellAddButton"
-                    data-toggle="collapse"
-                    data-target="#add-spell"
-                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell</button>
+              <button type="button"
+                  class="btn btn-link btn-block btn-sm"
+                  id="spellAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-spell"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell</button>
               <!-- /ko -->
             </div>
-              <div class="col-xs-4 text-muted">
-                <small class="table-foot-content pull-right visible-xs">Spells: <span data-bind="text: $component.numberOfSpells"></span></small>
-                <span class="table-foot-content pull-right hidden-xs">Total Spells: <span data-bind="text: $component.numberOfSpells"></span></span>
-              </div>
+            <div class="col col-xs-4 text-muted">
+              <small class="table-foot-content pull-right visible-xs">Spells: <span data-bind="text: $component.numberOfSpells"></span></small>
+              <span class="table-foot-content pull-right hidden-xs">Total Spells: <span data-bind="text: $component.numberOfSpells"></span></span>
             </div>
-          </td>
-        </tr>
-      </tfoot>
-      <!-- /ko -->
-    </table>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /ko -->
+  </table>
 </div>

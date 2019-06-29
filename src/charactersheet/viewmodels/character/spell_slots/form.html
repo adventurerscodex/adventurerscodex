@@ -1,70 +1,67 @@
 <div class="panel panel-default"
-     style="margin-bottom: 0px;">
+    style="margin-bottom: 0px;">
   <div class="panel-body">
     <form class="form-horizontal"
-          data-bind="{submit: $component.submit}">
+        data-bind="{submit: $component.submit}">
       <div data-bind="with: entity">
-        <input type="hidden" data-bind="value: used" />
+        <input type="hidden"
+            data-bind="value: used" />
         <div class="form-group">
           <label for="name"
-                 class="col-sm-2 control-label">Level</label>
-          <div class="col-sm-10">
+              class="col col-sm-2 control-label">Level</label>
+          <div class="col col-sm-10">
             <input class="form-control"
-                   required="true"
-                   data-bind="value: level,
+                required="true"
+                data-bind="value: level,
                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
                    attr: { ...$component.validation.level }">
           </div>
         </div>
         <div class="form-group">
           <label for="bonus"
-                 class="col-sm-2 control-label">Max</label>
-          <div class="col-sm-10">
+              class="col col-sm-2 control-label">Max</label>
+          <div class="col col-sm-10">
             <input class="form-control"
-                   data-bind="value: max,
+                data-bind="value: max,
                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
                    attr: { ...$component.validation.max },
                   hasFocus: $component.formElementHasFocus">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label">Resets on...</label>
-          <div class="col-sm-10">
+          <label class="col col-sm-2 control-label">Resets on...</label>
+          <div class="col col-sm-10">
             <div class="btn-group btn-group-justified"
-                 role="group">
+                role="group">
               <label class="btn btn-default btn-sm"
-                     data-bind="css: { active: resetsOn() == 'short'}">
+                  data-bind="css: { active: resetsOn() == 'short'}">
                 <input type="radio"
-                       class="hide-block"
-                       name="resetsOnShort"
-                       value="short"
-                       data-bind="checked: resetsOn" />
+                    class="hide-block"
+                    name="resetsOnShort"
+                    value="short"
+                    data-bind="checked: resetsOn" />
                 <img class="action-bar-icon"
-                     data-bind="attr: { src: $parent.meditationWhite }"></img>
-                &nbsp;&nbsp;&nbsp;Short Rest
-              </label>
-              <label class="btn btn-default  btn-sm"
-                     data-bind="css: { active: resetsOn() != 'short'}">
+                    data-bind="attr: { src: $parent.meditationWhite }"></img> &nbsp;&nbsp;&nbsp;Short Rest </label>
+              <label class="btn btn-default btn-sm"
+                  data-bind="css: { active: resetsOn() != 'short'}">
                 <input type="radio"
-                       class="hide-block"
-                       name="resetsOnLong"
-                       value="long"
-                       data-bind="checked: resetsOn" />
+                    class="hide-block"
+                    name="resetsOnLong"
+                    value="long"
+                    data-bind="checked: resetsOn" />
                 <img class="action-bar-icon"
-                     data-bind="attr: { src: $parent.campingTentWhite }"></img>
-                &nbsp;&nbsp;&nbsp;Long Rest
-              </label>
+                    data-bind="attr: { src: $parent.campingTentWhite }"></img> &nbsp;&nbsp;&nbsp;Long Rest </label>
             </div>
           </div>
-          </div>
-          <div class="col-xs-12">
+        </div>
+        <div class="col col-xs-12">
           <form-submit-actions params="{
             reset: $component.reset,
             delete: $component.delete,
             addForm: $component.addForm,
             showDisclaimer: $component.showDisclaimer
           }"></form-submit-actions>
-          </div>
+        </div>
     </form>
   </div>
 </div>

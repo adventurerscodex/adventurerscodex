@@ -1,51 +1,30 @@
-<div id="weapon-pane" class="ac-pane panel-body">
-  <div class="h4 card-title">
-    Weapons<br />
-    <small>A weapon's To Hit bonus is automatically calculated based on
-       your Strength or Dexterity, proficiency bonus, magical modifier,
-       and property. Use the To Hit Modifier to adjust for features, feats,
-       or special cases.</small>
+<div id="weapon-pane">
+  <div class="h4 card-title"> Weapons<br />
+    <small>A weapon's To Hit bonus is automatically calculated based on your Strength or Dexterity, proficiency bonus, magical modifier, and property. Use the To Hit Modifier to adjust for features, feats, or special cases.</small>
   </div>
-  <table class="table table-responsive table-ac-bordered table-hover" id="weaponTable">
-    <thead >
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
       <tr class="ac-table-header">
-        <th id="weaponTableWeaponHeader"
-            data-bind="click: function(){sortBy('name');}">
-          Weapon
-          <span data-bind="css: sortArrow('name')"></span>
+        <th data-bind="click: function(){sortBy('name');}"> Weapon <span data-bind="css: sortArrow('name')"></span>
         </th>
-        <th id="weaponTableToHitHeader"
-            data-bind="click: function(){sortBy('totalBonus');}">
-          To Hit
-          <span data-bind="css: sortArrow('totalBonus')"></span>
+        <th data-bind="click: function(){sortBy('totalBonus');}"> To Hit <span data-bind="css: sortArrow('totalBonus')"></span>
         </th>
-        <th id="weaponTableDamageHeader"
-            data-bind="click: function(){sortBy('damageType');}">
-          Damage
-          <span data-bind="css: sortArrow('damage')"></span>
+        <th data-bind="click: function(){sortBy('damageType');}"> Damage <span data-bind="css: sortArrow('damage')"></span>
         </th>
-        <th id="weaponTableRangeHeader"
-            class="hidden-xs"
-            data-bind="click: function(){sortBy('range');}">
-          Range
-          <span data-bind="css: sortArrow('range')"></span>
+        <th class="hidden-xs"
+            data-bind="click: function(){sortBy('range');}"> Range <span data-bind="css: sortArrow('range')"></span>
         </th>
-        <th id="weaponTablePropertyHeader"
-            class="hidden-xs  hidden-sm"
-            data-bind="click: function(){sortBy('property');}">
-          Property
-          <span data-bind="css: sortArrow('property')"></span>
+        <th class="hidden-xs  hidden-sm"
+            data-bind="click: function(){sortBy('property');}"> Property <span data-bind="css: sortArrow('property')"></span>
         </th>
-        <th id="weaponTableQuantityHeader"
-            class="hidden-xs"
-            data-bind="click: function(){sortBy('quantity');}">
-          Quantity
-          <span data-bind="css: sortArrow('quantity')"></span>
+        <th class="hidden-xs"
+            data-bind="click: function(){sortBy('quantity');}"> Quantity <span data-bind="css: sortArrow('quantity')"></span>
         </th>
-        <th>
-          <a href="#" data-bind="{click: collapseAll}">
-                  <span class="fa fa-minus"></span>
-            </a>
+        <th class="col-xs-1 text-right">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span>
+          </a>
         </th>
       </tr>
     </thead>
@@ -56,8 +35,7 @@
           class="clickable expandRow weaponRow"
           data-bind="attr:{'data-target': `#weapon_list_${uuid()}`, id: `#weapon_row_${uuid()}`}">
         <td>
-          <span data-bind="text: $component.shortText(name)"></span>&nbsp;
-          <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span>
+          <span data-bind="text: $component.shortText(name)"></span>&nbsp; <span data-bind="text: magicalModifierLabel, css: { badge: applyMagicalModifierLabel }"></span>
         </td>
         <td>
           <span data-bind="text: $component.weaponBonusLabel($data)"></span>
@@ -75,10 +53,10 @@
         <td class="hidden-xs">
           <span data-bind="text: quantity"></span>
         </td>
-        <td>
+        <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
-                data-bind="attr:{'data-target': `#weapon_list_${uuid()}`}"
-                class="rotate fa fa-chevron-left"></span>
+              data-bind="attr:{'data-target': `#weapon_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
       <tr class="collapseRow">
@@ -94,88 +72,80 @@
              }
           }">
             <div class="front">
-
               <card-edit-actions params="{ flip: flip }"></card-edit-actions>
-              <div  data-bind="with: context.data">
-              <div class="h4">
-                <span data-bind="text: name" class="weaponPreviewNameLabel"></span>
-                <strong data-bind="text: magicalModifierLabel"></strong>
-              </div>
-              <div class="row">
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                  <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
-                    <tbody>
-                      <tr>
-                        <th style="width: 40%">To Hit:</th>
-                        <td >
-                          <strong data-bind="text: $parent.context.weaponBonusLabel($data)"></strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Damage:</th>
-                        <td >
-                          <strong data-bind="text: damage"></strong>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Damage Type:</th>
-                        <td >
-                          <span data-bind="text: damageType"></span>
-                          <span data-bind="css: weaponDamageIcon"></span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Type:</th>
-                        <td ><span data-bind="text: type"></span></td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Range:</th>
-                        <td ><span data-bind="text: weaponRangeLabel"></span></td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div data-bind="with: context.data">
+                <div class="h4 collapsable-card-title">
+                  <span data-bind="text: name"></span>
+                  <strong data-bind="text: magicalModifierLabel"></strong>
                 </div>
-                <div class="col-sm-6 col-md-4 col-md-push-4 col-lg-3 col-lg-push-6">
-                  <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
-                    <tbody>
-                      <tr>
-                        <th style="width: 40%">Quantity:</th>
-                        <td ><span data-bind="text: quantity"></span></td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Handedness:</th>
-                        <td ><span data-bind="text: handedness"></span></td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Property:</th>
-                        <td ><span data-bind="text: property"></span></td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Proficiency:</th>
-                        <td ><span data-bind="text: proficiency"></span></td>
-                      </tr>
-                      <tr>
-                        <th style="width: 40%">Weight:</th>
-                        <td ><span data-bind="text: weaponWeightLabel"></span></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="col-xs-12 col-md-4 col-md-pull-4 col-lg-6 col-lg-pull-3">
-                  <div data-bind="markdownPreview: weaponDescriptionHTML"
-                       class="card-description" style="text-align: center">
+                <div class="panel-body row">
+                  <div class="col col-sm-6 col-md-4 col-lg-3">
+                    <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th style="width: 40%">To Hit:</th>
+                          <td>
+                            <strong data-bind="text: $parent.context.weaponBonusLabel($data)"></strong>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Damage:</th>
+                          <td>
+                            <strong data-bind="text: damage"></strong>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Damage Type:</th>
+                          <td>
+                            <span data-bind="text: damageType"></span>
+                            <span data-bind="css: weaponDamageIcon"></span>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Type:</th>
+                          <td><span data-bind="text: type"></span></td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Range:</th>
+                          <td><span data-bind="text: weaponRangeLabel"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col col-sm-6 col-md-4 col-md-push-4 col-lg-3 col-lg-push-6">
+                    <table class="weaponDetail table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th style="width: 40%">Quantity:</th>
+                          <td><span data-bind="text: quantity"></span></td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Handedness:</th>
+                          <td><span data-bind="text: handedness"></span></td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Property:</th>
+                          <td><span data-bind="text: property"></span></td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Proficiency:</th>
+                          <td><span data-bind="text: proficiency"></span></td>
+                        </tr>
+                        <tr>
+                          <th style="width: 40%">Weight:</th>
+                          <td><span data-bind="text: weaponWeightLabel"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="col col-xs-12 col-md-4 col-md-pull-4 col-lg-6 col-lg-pull-3">
+                    <div data-bind="markdownPreview: weaponDescriptionHTML"
+                        class="card-description"
+                        style="text-align: center">
+                    </div>
                   </div>
                 </div>
               </div>
-              </div>
-
-              <!-- <weapon-detail-view params="{
-                   data: context.data,
-                   containerId: elementId,
-                   show: showFront,
-                   flip: flip,
-                   weaponBonusLabel: context.weaponBonusLabel
-                 }"></weapon-detail-view> -->
             </div>
             <div class="back">
               <weapon-form params="{
@@ -184,8 +154,7 @@
                   show: showBack,
                   flip: flip,
                   forceCardResize: forceCardResize
-                 }"
-              ></weapon-form>
+                 }"></weapon-form>
             </div>
           </flip-card>
         </td>
@@ -193,14 +162,14 @@
       <!-- /ko -->
       <tr class="collapseRow">
         <td colspan="7">
-          <div id="add-weapon" class="collapse add-card">
+          <div id="add-weapon"
+              class="collapse add-card">
             <weapon-form params="{
               containerId:'add-weapon',
                 show: $component.displayAddForm,
                 flip: $component.toggleShowAddForm,
                 addToParent: $component.addToList
-               }"
-            ></weapon-form>
+               }"></weapon-form>
           </div>
         </td>
       </tr>
@@ -209,28 +178,29 @@
       <tr>
         <td colspan="7">
           <div class="row">
-          <div class="col-xs-4 text-muted">
-            <small class="table-foot-content visible-xs"><span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span></small>
-            <span class="table-foot-content hidden-xs">Weight: <span id="weaponTableTotalWeightSpan" data-bind="text: totalWeight"></span></span>
-          </div>
-          <div class="col-xs-4">
-            <!-- ko ifnot: $component.displayAddForm -->
-            <button type="button"
-                    class="btn btn-link btn-sm btn-block"
-                    id="weaponAddButton"
-                    data-toggle="collapse"
-                    data-target="#add-weapon"
-                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Weapon</button>
-            <!-- /ko -->
-          </div>
-          <div class="pull-right col-xs-4 text-muted" style="text-align: right">
-            <small class="table-foot-content visible-xs"
-                   data-bind="text: totalCost">
-            </small>
-            <span class="table-foot-content hidden-xs">Value:
-              <span data-bind="text: totalCost"></span>
-            </span>
-          </div>
+            <div class="col col-xs-4 text-muted">
+              <small class="table-foot-content visible-xs"><span id="weaponTableTotalWeightSpan"
+                    data-bind="text: totalWeight"></span></small>
+              <span class="table-foot-content hidden-xs">Weight: <span id="weaponTableTotalWeightSpan"
+                    data-bind="text: totalWeight"></span></span>
+            </div>
+            <div class="col col-xs-4">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-sm btn-block"
+                  id="weaponAddButton"
+                  data-toggle="collapse"
+                  data-target="#add-weapon"
+                  data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Weapon</button>
+              <!-- /ko -->
+            </div>
+            <div class="pull-right col col-xs-4 text-muted text-right">
+              <small class="table-foot-content visible-xs"
+                  data-bind="text: totalCost">
+              </small>
+              <span class="table-foot-content hidden-xs">Value: <span data-bind="text: totalCost"></span>
+              </span>
+            </div>
         </td>
       </tr>
     </tfoot>

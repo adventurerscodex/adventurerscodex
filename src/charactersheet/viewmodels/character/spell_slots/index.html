@@ -1,55 +1,52 @@
-<div id="slot-pane"
-     class="ac-pane panel-body">
-  <div class="h4 card-title">
-    Spell Slots<br/>
-    <small>These slots are configurable to reset on a short or long rest. Click
-      on a slot to edit it.</small>
+<div id="slot-pane">
+  <div class="h4 card-title"> Spell Slots<br />
+    <small>These slots are configurable to reset on a short or long rest. Click on a slot to edit it.</small>
   </div>
   <table class="table table-responsive table-ac-bordered">
     <thead class="ac-table-header">
-      <tr><th colspan="7" /></tr>
+      <tr>
+        <th colspan="7" /><!-- provide the border at the top -->
+      </tr>
     </thead>
     <!-- ko if: loaded(), completeOn: 'render' -->
     <tbody>
       <!-- ko foreach: filteredAndSortedEntities -->
-       <tr class="clickable expandRow trackedRow"
-         data-toggle="collapse"
+      <tr class="clickable expandRow trackedRow"
+          data-toggle="collapse"
           data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}">
-        <td style="width: 10%">Lvl&nbsp;<span data-bind="text: level"></span>
+        <td style="padding: 4px; width: 10%">Lvl&nbsp;<span data-bind="text: level"></span>
         </td>
-       <td style="width: 10%" class="hidden-xs">
-         <div class="" data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>
+        <td style="padding: 4px; width: 10%"
+            class="hidden-xs">
+          <div data-bind="attr: {'class': $component.resetsOnImg($data)}"></div>
         </td>
-       <td style="width: 5%">
+        <td style="padding: 4px; width: 5%">
           <mini-plus-minus params="value: used,
                     max: max, hideUp: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-        <td style="width: 5%">
+        <td style="padding: 4px; width: 5%">
           <mini-plus-minus params="value: used,
                     max: max, hideDown: true, onChange: ()=>{$component.onUsedChange($data)}">
           </mini-plus-minus>
         </td>
-
-        <td style=" width: auto">
+        <td style="padding: 4px; width: auto">
           <div style="padding: 10px"
-               data-bind="barProgress: $component.mapToChart({max, used, level})"> </div>
+              data-bind="barProgress: $component.mapToChart({max, used, level})"> </div>
         </td>
-        <td style="width: 10%">
-          <span
-          data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span
-          data-bind=" text: max"></span>
+        <td style="padding: 4px; width: 5%">
+          <span data-bind="text: parseInt(max()) - parseInt(used())"></span>&nbsp;/&nbsp;<span data-bind=" text: max"></span>
         </td>
-        <td style="width: 5%">
+        <td style="padding: 4px;" class="col-xs-1 text-right">
           <span data-toggle="collapse"
-                data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}"
-                class="rotate fa fa-chevron-left"></span>
+              data-bind="attr:{'data-target': `#spell_slot_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
       <tr class="collapseRow">
-        <td colspan="8">
+        <td colspan="7">
           <div class="collapse"
-               data-bind="attr: {id:`spell_slot_${uuid()}`}">
+              data-bind="attr: {id:`spell_slot_${uuid()}`}">
             <spell-slot-form params="{
                 data: $data,
                 containerId: `spell_slot_${uuid()}`,
@@ -57,7 +54,7 @@
                 nextSlotLevel: null
              }">
             </spell-slot-form>
-            </div>
+          </div>
         </td>
       </tr>
       <!-- /ko -->
@@ -66,26 +63,26 @@
       <tr class="collapseRow">
         <td colspan="7">
           <div id="add-spell-slot"
-               class="collapse">
-               <spell-slot-form params="{
+              class="collapse">
+            <spell-slot-form params="{
                   containerId: 'add-spell-slot',
                    show: $component.displayAddForm,
                    flip: $component.toggleShowAddForm,
                    nextSlotLevel: $component.nextSlotLevel
                 }">
-               </spell-slot-form>
+            </spell-slot-form>
           </div>
           <!-- ko ifnot: $component.displayAddForm -->
-            <button type="button"
-                    class="btn btn-link btn-sm btn-block"
-                    id="proficiencyAddButton"
-                    data-toggle="collapse"
-                    data-target="#add-spell-slot"
-                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell Slot</button>
+          <button type="button"
+              class="btn btn-link btn-sm btn-block"
+              id="proficiencyAddButton"
+              data-toggle="collapse"
+              data-target="#add-spell-slot"
+              data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Spell Slot</button>
           <!-- /ko -->
         </td>
       </tr>
     </tfoot>
     <!-- /ko -->
   </table>
-  </div>
+</div>

@@ -1,57 +1,64 @@
-<form class="form-horizontal health-form panel-body"
-      data-bind="{submit: $component.submit}">
-  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+<form class="form-horizontal"
+    data-bind="{ submit: $component.submit }">
+  <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
+  <div class="h4 card-title"> Health <br />
+    <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
+  </div>
+  <hr class="ac-table-header" />
   <!-- ko if: loaded(), completeOn: 'render' -->
-  <div data-bind="with: entity">
-    <div class="form-group">
-      <label for="name"
-             class="col-sm-4 control-label">Max HP</label>
-      <div class="col-sm-8">
-        <input class="form-control"
-               name="maxHitPoints"
-               data-bind="value: maxHitPoints,
+  <div class="panel-body row">
+    <div data-bind="with: entity">
+      <div class="form-group">
+        <label for="name"
+            class="col-sm-4 control-label">Max HP</label>
+        <div class="col-sm-8">
+          <input class="form-control"
+              name="maxHitPoints"
+              data-bind="value: maxHitPoints,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.Health.maxHitPoints },
-               hasFocus: $component.formElementHasFocus">
+               attr: { ...$component.validation.Health.maxHitPoints }">
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="bonus"
-             class="col-sm-4 control-label">Damage</label>
-      <div class="col-sm-8">
-        <input class="form-control"
-               name="damage"
-               data-bind="value: damage,
+      <div class="form-group">
+        <label for="bonus"
+            class="col-sm-4 control-label">Damage</label>
+        <div class="col-sm-8">
+          <input class="form-control"
+              name="damage"
+              data-bind="value: damage,
                event: { blur: $component.reviewInput, invalid: $component.invalidate },
                attr: { ...$component.validation.Health.damage }">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name"
+            class="col-sm-4 control-label">Temporary HP</label>
+        <div class="col-sm-8">
+          <input class="form-control"
+              name="tempHitPoints"
+              data-bind="value: tempHitPoints,
+                  event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                  attr: { ...$component.validation.Health.tempHitPoints }">
+        </div>
       </div>
     </div>
-    <div class="form-group">
+    <div data-bind="with: hitDice"
+        class="form-group ui-front">
       <label for="name"
-             class="col-sm-4 control-label">Temporary HP</label>
+          class="col-sm-4 control-label">Hit Dice Type</label>
       <div class="col-sm-8">
         <input class="form-control"
-               name="tempHitPoints"
-               data-bind="value: tempHitPoints,
-               event: { blur: $component.reviewInput, invalid: $component.invalidate },
-               attr: { ...$component.validation.Health.tempHitPoints }">
+            placeholder="D4"
+            name="type"
+            data-bind="value: type,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.HitDice.type },
+                 autocomplete: {
+                    source: hitDiceOptions,
+                    onselect: $component.setHitDiceType}">
       </div>
     </div>
-  </div>
-  <div data-bind="with: hitDice" class="form-group ui-front">
-    <label for="name"
-           class="col-sm-4 control-label">Hit Dice Type</label>
-    <div class="col-sm-8">
-      <input class="form-control"
-             placeholder="D4"
-             name="type"
-             data-bind="value: type,
-             event: { blur: $component.reviewInput, invalid: $component.invalidate },
-             attr: { ...$component.validation.HitDice.type },
-             autocomplete: {
-                source: hitDiceOptions,
-                onselect: $component.setHitDiceType}">
-    </div>
+    <form-submit-actions params="{reset: $component.reset}"></form-submit-actions>
   </div>
   <!-- /ko -->
 </form>

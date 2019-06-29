@@ -6,15 +6,15 @@
   </div>
   <hr class="ac-table-header" />
   <div data-bind="with: entity">
-    <div class="input-group">
+    <div class="input-group coins">
       <span class="input-group-addon no-top-bottom-padding">
         <img data-bind="attr: { src: $component.cpCoins }"
              width="30px"
              title="Copper Coins"
              alt="Copper Coins" />
       </span>
-      <input class="form-control coin-input"
-            name="copper"
+      <input class="form-control"
+             name="copper"
              data-bind='value: copper,
            event: { blur: $component.reviewInput, invalid: $component.invalidate },
            attr: { ...$component.validation.copper },
@@ -23,14 +23,14 @@
         CP
       </span>
     </div>
-    <div class="input-group">
+    <div class="input-group coins">
       <span class="input-group-addon no-top-bottom-padding">
         <img data-bind="attr: { src: $component.spCoins }"
              width="30px"
              title="Silver Coins"
              alt="Silver Coins" />
       </span>
-      <input class="form-control coin-input"
+      <input class="form-control"
              name="silver"
              data-bind="value: silver,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
@@ -39,14 +39,14 @@
         SP
       </span>
     </div>
-    <div class="input-group">
+    <div class="input-group coins">
       <span class="input-group-addon no-top-bottom-padding">
         <img data-bind="attr: { src: $component.epCoins }"
              width="30px"
              title="Electrum Coins"
              alt="Electrum Coins" />
       </span>
-      <input class="form-control coin-input"
+      <input class="form-control"
              name="electrum"
              data-bind="value: electrum,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
@@ -55,7 +55,6 @@
         EP
       </span>
     </div>
-
     <div class="input-group">
       <span class="input-group-addon no-top-bottom-padding">
         <img data-bind="attr: { src: $component.gpCoins }"
@@ -72,8 +71,7 @@
         GP
       </span>
     </div>
-
-    <div class="input-group">
+    <div class="input-group coins">
       <span class="input-group-addon no-top-bottom-padding">
         <img data-bind="attr: { src: $component.ppCoins }"
              width="30px"

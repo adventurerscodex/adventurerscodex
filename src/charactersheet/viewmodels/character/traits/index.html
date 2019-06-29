@@ -1,24 +1,16 @@
-<div id="trait-pane"
-     class="ac-pane panel-body">
-  <div class="h4 card-title">
-    Traits
-  </div>
+<div id="trait-pane">
+  <div class="h4 card-title"> Traits </div>
   <table class="table table-responsive table-ac-bordered table-hover">
     <thead class="ac-table-header">
       <tr>
-        <th data-bind="click: function(){sortBy('name');}">
-          Trait
-          <span data-bind="css: sortArrow('name')"></span>
+        <th data-bind="click: function(){sortBy('name');}"> Trait <span data-bind="css: sortArrow('name')" />
         </th>
-        <th data-bind="click: function(){sortBy('race');}">
-          Race
-          <span data-bind="css: sortArrow('race')"></span>
+        <th data-bind="click: function(){sortBy('race');}"> Race <span data-bind="css: sortArrow('race')" />
         </th>
-        <th>
+        <th class="col-xs-1 text-right">
           <a href="#"
-             class=""
-             data-bind="{click: collapseAll}">
-            <span class="fa fa-minus"></span></a>
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus" /></a>
         </th>
       </tr>
     </thead>
@@ -28,19 +20,19 @@
       <tr data-toggle="collapse"
           class="clickable expandRow"
           data-bind="attr:{'data-target': `#trait_list_${uuid()}`, id: `#trait_row_${uuid()}`}">
-        <td><span data-bind="text: $component.shortText(name)"></span>
+        <td>
+          <span data-bind="text: $component.shortText(name)" />
           <span data-bind="visible: $component.showTracked($data)"
-                style="opacity: .9"
-                class="glyphicon glyphicon-time"
-                aria-hidden="true"></span>
+              style="opacity: .9"
+              class="glyphicon glyphicon-time"
+              aria-hidden="true"></span>
         </td>
         <td><span data-bind="text: $component.shortText(race)"></span>
-
         </td>
-        <td>
+        <td class="col-xs-1 text-right">
           <span data-toggle="collapse"
-                data-bind="attr:{'data-target': `#trait_list_${uuid()}`}"
-                class="rotate fa fa-chevron-left"></span>
+              data-bind="attr:{'data-target': `#trait_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
         </td>
       </tr>
       <tr class="collapseRow">
@@ -50,27 +42,24 @@
             tabId: $parent.tabId,
             collapsable: true,
             elementId: 'trait_list',
-            context: {
-              data: $data,
-              replaceInList: $component.replaceInList,
-              addToList: $component.addToList,
-              removeFromList: $component.removeFromList
-              }
+            context: { data: $data }
             }">
             <div class="front"
-                 data-bind="with: context.data">
+                data-bind="with: context.data">
               <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
-              <div class="h4">
-                <div data-bind="text:name"></div>
-                <small><span data-bind="text: race"></span></small>
+              <div class="h4 collapsable-card-title">
+                <div data-bind="text:name" />
+                <small><span data-bind="text: race" /></small>
               </div>
+              <div class="panel-body">
               <!-- ko if: description -->
-              <p class="card-description"
-                 data-bind="markdownPreview: description"></p>
-              <!-- /ko -->
-              <!-- ko ifnot: description -->
-              <p>No Description</p>
-              <!-- /ko -->
+                <div class="card-description"
+                    data-bind="markdownPreview: description"></div>
+                <!-- /ko -->
+                <!-- ko ifnot: description -->
+                <p>No Description</p>
+                <!-- /ko -->
+              </div>
             </div>
             <div class="back">
               <trait-form params="{
@@ -92,7 +81,7 @@
       <tr>
         <td colspan="4">
           <div id="add-trait"
-               class="collapse add-card">
+              class="collapse add-card">
             <trait-form params="{
               addForm: true,
               containerId:'add-trait',
@@ -104,11 +93,11 @@
           <!-- ko ifnot: $component.displayAddForm -->
           <center>
             <button type="button"
-                    class="btn btn-link btn-sm btn-block"
-                    id="proficiencyAddButton"
-                    data-toggle="collapse"
-                    data-target="#add-trait"
-                    data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Trait</button>
+                class="btn btn-link btn-sm btn-block"
+                id="proficiencyAddButton"
+                data-toggle="collapse"
+                data-target="#add-trait"
+                data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Trait</button>
           </center>
           <!-- /ko -->
         </td>

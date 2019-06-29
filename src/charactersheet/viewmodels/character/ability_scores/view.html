@@ -1,32 +1,33 @@
 <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
 <div class="h4 card-title">
-  Abilities &amp; Saves
+  Abilities &amp; Saving Throws
 </div>
 <table class="table table-responsive table-ac-bordered table-hover ac-table-data-cell score-save-table">
   <thead class="ac-table-header">
     <tr>
-      <th style="width:15%">
-        Score
-      </th>
-      <th style="width: 40%">
-        Ability
-      </th>
-      <th style="width: 20%">
-        Bonus
-      </th>
-      <th style="width: 15%">
-        Save
-      </th>
+      <th style="width:15%"> Score </th>
+      <th style="width: 40%"> Ability </th>
+      <th style="width: 20%"> Bonus </th>
+      <th style="width: 15%"> Save </th>
     </tr>
   </thead>
   <!-- ko if: loaded(), completeOn: 'render' -->
   <tbody>
     <!-- ko foreach: order -->
     <tr data-bind="with: $component.findSaveByName($data)">
-      <td ><span data-bind='text: abilityScore().value'></span></td>
-      <td><span data-bind="text: abilityScore().abbreviation"></span></td>
-       <td><strong data-bind="text: $component.modifierLabel(abilityScore().getModifier())"> </strong></td>
-      <td><span class="defenseShield" data-bind="text: $component.modifierLabel(bonus())"> </span></td>
+      <td>
+        <span data-bind="text: abilityScore().value" />
+      </td>
+      <td>
+        <span data-bind="text: abilityScore().abbreviation" />
+      </td>
+      <td>
+        <strong data-bind="text: $component.modifierLabel(abilityScore().getModifier())" />
+      </td>
+      <td>
+        <span class="defenseShield"
+            data-bind="text: $component.modifierLabel(bonus())" />
+      </td>
     </tr>
     <!-- /ko -->
   </tbody>

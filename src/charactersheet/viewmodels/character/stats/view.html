@@ -1,4 +1,8 @@
 <card-edit-actions params="{ flip: $component.flip }"></card-edit-actions>
+<div class="h4 card-title"> Health <br />
+  <small>Click on the edit icon to change max hit points, hit die, or manage damage directly.</small>
+</div>
+<hr class="ac-table-header" />
 <flip-card params="{
           tabId: 'stats',
           elementId: 'healthContainer',
@@ -8,7 +12,7 @@
           defaultHeight: 415
         }">
   <div class="front">
-   <stats-health-view params="{
+    <stats-health-view params="{
        containerId: elementId,
        show: showFront,
        outerShow: context.show,
@@ -16,16 +20,16 @@
        forceCardResize: forceCardResize,
        massiveDamageTaken: context.massiveDamageTaken
      }">
-     </stats-health-view>
+    </stats-health-view>
   </div>
   <div class="back">
-<stats-deathsave-view params="{
+    <stats-deathsave-view params="{
      containerId: elementId,
      show: showBack,
      flip: context.toggleDeathSavesVisible,
      forceCardResize: forceCardResize,
      massiveDamageTaken: context.massiveDamageTaken
    }">
-   </stats-deathsave-view>
+    </stats-deathsave-view>
   </div>
- </flip-card>
+</flip-card>

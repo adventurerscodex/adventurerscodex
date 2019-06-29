@@ -1,60 +1,97 @@
 <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
-<div class="h4 card-title">
-  Profile
-</div>
-<hr />
+<div class="h4 card-title"> Profile </div>
+<hr class="ac-table-header" />
 <!-- ko if: loaded(), completeOn: 'render' -->
-<div class="row profile-view" data-bind="with: entity">
+<div class="panel-body row profile-view"
+    data-bind="with: entity">
   <div class="col-sm-6 col-lg-3">
-    <h4><span class="row-title">Level:</span> <strong style="font-size: 20px" class="row-data" data-bind="text: level"></strong></h4>
+    <h4>
+      <span class="row-title">Level:</span>
+      <strong style="font-size: 20px"class="row-data" data-bind="text: level" />
+    </h4>
   </div>
   <hr class="visible-xs-block" />
   <div class="col-sm-6 col-lg-3">
-    <h4><span class="row-title">Race:</span> <span class="row-data" data-bind="text: race() ? $component.shortText(race) : '-'"></span></h4>
+    <h4>
+      <span class="row-title">Race:</span>
+      <span class="row-data" data-bind="text: race() ? $component.shortText(race) : '-'" />
+    </h4>
   </div>
   <hr class="visible-xs-block visible-sm-block visible-md-block" />
   <div class="col-sm-6 col-lg-3">
-    <h4><span class="row-title">Class:</span> <span class="row-data" data-bind="text: characterClass() ? $component.shortText(characterClass) : '-'"></span></h4>
+    <h4>
+      <span class="row-title">Class:</span>
+      <span class="row-data" data-bind="text: characterClass() ? $component.shortText(characterClass) : '-'" />
+    </h4>
   </div>
   <hr class="visible-xs-block" />
   <div class="col-sm-6 col-lg-3">
-    <h4><span class="row-title">Alignment:</span> <span class="row-data" data-bind="text: alignment() ? $component.shortText(alignment) : '-'"></span></h4>
+    <h4>
+      <span class="row-title">Alignment:</span>
+      <span class="row-data" data-bind="text: alignment() ? $component.shortText(alignment) : '-'" />
+    </h4>
   </div>
   <hr class="visible-xs-block visible-sm-block visible-md-block visible-lg-block" />
   <div class="col-sm-6 col-lg-3">
-    <div class="profile-data-row"><span class="row-title">Age:</span> <span class="row-data" data-bind="text: age() ? age : 'No Age'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Age:</span>
+      <span class="row-data" data-bind="text: age() ? age : 'No Age'" />
+    </div>
   </div>
   <hr class="visible-xs-block" />
   <div class="col-sm-6 col-lg-3">
-    <div class="profile-data-row"><span class="row-title">Gender:</span> <span class="row-data" data-bind="text: gender() ? gender : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Gender:</span>
+      <span class="row-data" data-bind="text: gender() ? gender : '-'" />
+    </div>
   </div>
   <hr class="visible-xs-block visible-sm-block visible-md-block" />
   <div class="col-sm-6 col-lg-3">
-    <div class="profile-data-row"><span class="row-title">Height:</span> <span class="row-data" data-bind="text: height() ? height : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Height:</span>
+      <span class="row-data" data-bind="text: height() ? height : '-'" />
+    </div>
   </div>
   <hr class="visible-xs-block" />
   <div class="col-sm-6 col-lg-3">
-    <div class="profile-data-row"><span class="row-title">Weight:</span> <span class="row-data" data-bind="text: weight() ? $component.weightLabel : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Weight:</span>
+      <span class="row-data" data-bind="text: weight() ? $component.weightLabel : '-'" />
+    </div>
   </div>
   <hr class="visible-xs-block visible-sm-block visible-md-block visible-lg-block" />
   <div class="col-sm-6 col-lg-3">
-    <div class="profile-data-row"><span class="row-title">Experience:</span> <span class="row-data" data-bind="text: experience() ? experience : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Experience:</span>
+      <span class="row-data" data-bind="text: experience() ? experience : '-'" /></div>
   </div>
   <hr class="visible-xs-block" />
   <div class="col-sm-6 col-lg-3">
-    <div class="profile-data-row"><span class="row-title">Deity:</span> <span class="row-data" data-bind="text: deity() ? $component.shortText(deity) : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Deity:</span>
+      <span class="row-data" data-bind="text: deity() ? $component.shortText(deity) : '-'" />
+    </div>
   </div>
   <hr class="visible-xs-block visible-sm-block visible-md-block" />
   <div class="col-sm-6 col-lg-6">
-    <div class="profile-data-row"><span class="row-title">Eyes:</span> <span class="row-data" data-bind="text: eyeColor() ? eyeColor : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Eyes:</span>
+      <span class="row-data" data-bind="text: eyeColor() ? eyeColor : '-'" />
+    </div>
   </div>
   <hr class="visible-xs-block visible-lg-block" />
   <div class="col-sm-6 col-lg-6">
-    <div class="profile-data-row"><span class="row-title">Skin:</span> <span class="row-data" data-bind="text: skinColor() ? skinColor : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Skin:</span>
+      <span class="row-data" data-bind="text: skinColor() ? skinColor : '-'" />
+    </div>
   </div>
   <hr class="visible-xs-block visible-sm-block visible-md-block" />
   <div class="col-sm-12 col-lg-6">
-    <div class="profile-data-row"><span class="row-title">Hair:</span> <span class="row-data" data-bind="text: hairColor() ? hairColor : '-'"></span></div>
+    <div class="profile-data-row">
+      <span class="row-title">Hair:</span>
+      <span class="row-data" data-bind="text: hairColor() ? hairColor : '-'" />
+    </div>
   </div>
 </div>
 <!-- /ko -->

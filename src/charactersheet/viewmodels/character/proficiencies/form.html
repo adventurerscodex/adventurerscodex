@@ -1,33 +1,25 @@
 <form data-bind="submit: $component.submit">
   <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
-  <div data-bind="with: entity">
-    <!-- ko if: $component.existingData -->
-    <div class="h4">
-      <span data-bind="text: name"></span>
-    </div>
-    <!-- /ko -->
-    <!-- ko ifnot: $component.existingData -->
-    <div class="h4">
-      New Proficiency
-    </div>
-    <!-- /ko -->
+  <div data-bind="visible: $component.addForm"
+      class="h4 collapsable-card-title"> New Proficiency </div>
+  <div class="panel-body"
+      data-bind="with: entity">
     <div class="form-group">
       <label for="name"
-             class="control-label">Name</label>
-      <!-- ko if: $component.existingData -->
+          class="control-label">Name</label>
+      <!-- ko ifnot: $component.addForm -->
       <input class="form-control proficiencyEditNameInput"
-             placeholder="Daggers"
-             name="name"
-             data-bind="value: name,
+          placeholder="Daggers"
+          name="name"
+          data-bind="value: name,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
-             attr: { ...$component.validation.name },
-             hasFocus: $component.formElementHasFocus">
-       <!-- /ko -->
-       <!-- ko ifnot: $component.existingData -->
-       <input class="form-control proficiencyEditNameInput"
-              placeholder="Daggers"
-              name="name"
-              data-bind="value: name,
+             attr: { ...$component.validation.name }">
+      <!-- /ko -->
+      <!-- ko if: $component.addForm -->
+      <input class="form-control proficiencyEditNameInput"
+          placeholder="Daggers"
+          name="name"
+          data-bind="value: name,
               event: { blur: $component.reviewInput, invalid: $component.invalidate },
               attr: {autocomplete: 'off', ...$component.validation.name },
               hasFocus: $component.formElementHasFocus,
@@ -35,15 +27,15 @@
                 source: $component.prePopFilter,
                 onselect: $component.populate
               }">
-        <!-- /ko -->
+      <!-- /ko -->
     </div>
     <div class="form-group">
       <label for="type"
-             class="control-label">Type</label>
+          class="control-label">Type</label>
       <input class="form-control proficiencyEditTypeInput"
-             placeholder="Weapon"
-             name="type"
-             data-bind="value: type,
+          placeholder="Weapon"
+          name="type"
+          data-bind="value: type,
              event: { blur: $component.reviewInput, invalid: $component.invalidate },
              attr: { ...$component.validation.type },
              autocomplete: {
@@ -52,27 +44,24 @@
     </div>
     <div class="form-group">
       <label for="description"
-             clas="control-label">Description</label>
-         <!-- ko if: $component.show -->
-         <textarea rows="3"
-                   class="form-control proficiencyEditDescriptionTextarea"
-                   data-bind="value: description,
+          clas="control-label">Description</label>
+      <!-- ko if: $component.show -->
+      <textarea rows="3"
+          class="form-control proficiencyEditDescriptionTextarea"
+          data-bind="value: description,
                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
                    attr: { ...$component.validation.description },
                    markdownEditor: true">
          </textarea>
-         <small class="text-muted">
-           Text in this panel can be styled using Markdown. Click
-           <a target="_blank"
-             href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-         </small>
-         <!-- /ko -->
+      <small class="text-muted"> Text in this panel can be styled using Markdown. Click <a target="_blank"
+            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide. </small>
+      <!-- /ko -->
     </div>
+    <form-submit-actions params="{
+      reset: $component.reset,
+      delete: $component.delete,
+      addForm: $component.addForm,
+      showDisclaimer: $component.showDisclaimer
+    }"></form-submit-actions>
   </div>
-  <form-submit-actions params="{
-    reset: $component.reset,
-    delete: $component.delete,
-    addForm: $component.addForm,
-    showDisclaimer: $component.showDisclaimer
-  }"></form-submit-actions>
 </form>
