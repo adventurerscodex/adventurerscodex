@@ -232,7 +232,7 @@ export class Weapon extends KOModel {
 }
 
 Weapon.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256
@@ -290,6 +290,63 @@ Weapon.validationConstraints = {
         quantity: {
             type: 'number',
             pattern: '\\d*',
+            min: 0,
+            max: 100000
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        type: {
+            required: true,
+            maxlength: 128
+        },
+        damage: {
+            required: true,
+            maxlength: 128
+        },
+        damageType: {
+            maxlength: 128
+        },
+        handedness: {
+            maxlength: 128
+        },
+        proficiency: {
+            maxlength: 128
+        },
+        price: {
+            number:true,
+            min: 0,
+            max: 100000000
+        },
+        currencyDenomination: {
+            maxlength: 128
+        },
+        magicalModifier: {
+            number: true,
+            min: -10000,
+            max: 10000
+        },
+        toHitModifier: {
+            number: true,
+            min: -10000,
+            max: 10000
+        },
+        weight: {
+            number: true,
+            min: 0,
+            max: 100000000
+        },
+        range: {
+            maxlength: 128
+        },
+        property: {
+            maxlength: 128
+        },
+        quantity: {
+            number: true,
             min: 0,
             max: 100000
         }

@@ -98,7 +98,7 @@ export class Skill extends KOModel {
 }
 
 Skill.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256

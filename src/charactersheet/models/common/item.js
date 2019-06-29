@@ -158,7 +158,7 @@ export class Item extends KOModel {
 }
 
 Item.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256
@@ -170,7 +170,7 @@ Item.validationConstraints = {
             max: 1000000
         },
         weight: {
-            // cannot have number filter, because it can be a decimal
+                // cannot have number filter, because it can be a decimal
             type:'number',
             step: '0.25',
             min: 0,
@@ -179,6 +179,30 @@ Item.validationConstraints = {
         cost: {
             type:'number',
             pattern: '\\d*',
+            min: 0,
+            max: 100000000
+        },
+        currencyDenomination: {
+            maxlength: 64
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        quantity: {
+            number: true,
+            min: 0,
+            max: 1000000
+        },
+        weight: {
+            number:true,
+            min: 0,
+            max: 1000000
+        },
+        cost: {
+            number: true,
             min: 0,
             max: 100000000
         },

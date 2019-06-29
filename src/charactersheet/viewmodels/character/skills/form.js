@@ -126,7 +126,7 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
     }
 
     validation = {
-        ...Skill.validationConstraints.rules
+        ...Skill.validationConstraints.fieldParams
     };
 }
 

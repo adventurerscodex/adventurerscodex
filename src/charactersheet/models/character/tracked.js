@@ -43,7 +43,7 @@ export class Tracked {
 }
 
 Tracked.validationConstraints = {
-    rules: {
+    fieldParams: {
         max: {
             required: true,
             type: 'number',

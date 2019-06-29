@@ -58,25 +58,8 @@ export class Feature extends KOModel {
     }
 }
 
-Feature.formProps = {
-    name: {
-        required: true,
-        maxlength: 256
-    },
-    level: {
-        type: 'number',
-        min: 0,
-        max: 10000,
-        required: true
-    },
-    characterClass: {
-        maxlength: 64,
-        required: true
-    }
-};
-
 Feature.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256

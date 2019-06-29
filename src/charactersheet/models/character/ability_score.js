@@ -51,7 +51,7 @@ export class AbilityScore extends KOModel {
 }
 
 AbilityScore.validationConstraints = {
-    rules: {
+    fieldParams: {
         value: {
             type: 'number',
             pattern: '\\d*',

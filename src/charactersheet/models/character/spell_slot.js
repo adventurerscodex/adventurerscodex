@@ -59,7 +59,7 @@ export class SpellSlot extends KOModel {
 }
 
 SpellSlot.validationConstraints = {
-    rules: {
+    fieldParams: {
         level: {
             required: true,
             min: 0,

@@ -28,7 +28,7 @@ export class TrackedDetailForm extends AbstractChildFormModel {
     }
 
     validation = {
-        ...Tracked.validationConstraints.rules
+        ...Tracked.validationConstraints.fieldParams
     }
 }
 

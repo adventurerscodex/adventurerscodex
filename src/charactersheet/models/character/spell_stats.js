@@ -40,7 +40,7 @@ export class SpellStats extends KOModel {
 }
 
 SpellStats.validationConstraints = {
-    rules: {
+    fieldParams: {
         spellSaveDc: {
             required: true,
             min: -10000,

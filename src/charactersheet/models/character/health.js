@@ -102,7 +102,7 @@ export class Health extends KOModel {
 }
 
 Health.validationConstraints = {
-    rules: {
+    fieldParams: {
         maxHitPoints: {
             min: 0,
             max: 1000000,

@@ -93,8 +93,7 @@ export class SkillsAddFormViewModel extends AbstractChildFormModel {
     }
 
     validation = {
-        // Deep copy of properties in object
-        ...Skill.validationConstraints.rules
+        ...Skill.validationConstraints.fieldParams
     };
 }
 

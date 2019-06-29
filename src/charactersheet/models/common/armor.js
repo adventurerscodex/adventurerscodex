@@ -127,7 +127,7 @@ export class Armor extends KOModel {
 }
 
 Armor.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256
@@ -137,7 +137,7 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         weight: {
-            // cannot have number filter, because it can be a decimal
+          // cannot have number filter, because it can be a decimal
             type: 'number',
             step: '0.25',
             min: 0,
@@ -161,6 +161,45 @@ Armor.validationConstraints = {
         armorClass: {
             type: 'number',
             pattern: '\\d*',
+            required: true,
+            min: 0,
+            max: 1000000
+        },
+        stealth: {
+            maxlength: 64,
+            required: true
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        type: {
+            required: true,
+            maxlength: 64
+        },
+        weight: {
+            // cannot have number filter, because it can be a decimal
+            number: true,
+            min: 0,
+            max: 10000000
+        },
+        price: {
+            number: true,
+            min: 0,
+            max: 10000000
+        },
+        magicalModifier: {
+            number: true,
+            min: -10000,
+            max: 10000
+        },
+        currencyDenomination: {
+            maxlength: 64
+        },
+        armorClass: {
+            number: true,
             required: true,
             min: 0,
             max: 1000000

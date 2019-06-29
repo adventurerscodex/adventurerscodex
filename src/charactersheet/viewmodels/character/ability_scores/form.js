@@ -68,10 +68,10 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
 
     validation = {
         'AbilityScore': {
-            ...AbilityScore.validationConstraints.rules
+            ...AbilityScore.validationConstraints.fieldParams
         },
         'SavingThrow': {
-            ...SavingThrow.validationConstraints.rules
+            ...SavingThrow.validationConstraints.fieldParams
         }
     }
 }

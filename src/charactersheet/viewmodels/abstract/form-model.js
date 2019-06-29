@@ -91,7 +91,7 @@ export class AbstractFormModel {
 
     validation = {
         // Deep copy of properties in object
-        ...get(this.modelClass(), 'validationConstraints.rules', {})
+        ...get(this.modelClass(), 'validationConstraints.fieldParams', {})
     };
 
     setUpSubscriptions() {

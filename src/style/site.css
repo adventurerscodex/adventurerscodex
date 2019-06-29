@@ -1560,13 +1560,10 @@ thead.ac-table-header tr  {
   border-bottom: 1px solid #2c3e50;
 }
 
-hr {
-  border-bottom: 1px solid #2c3e50;
-}
-
 hr.ac-table-header {
    margin-top: 5px;
    margin-bottom: 5px;
+   border-bottom: 1px solid #2c3e50;
 }
 
 .score-save-table > thead > tr > th,

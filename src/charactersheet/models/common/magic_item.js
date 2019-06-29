@@ -107,7 +107,7 @@ export class MagicItem extends KOModel {
 }
 
 MagicItem.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256
@@ -135,6 +135,35 @@ MagicItem.validationConstraints = {
         weight: {
             type: 'number',
             step: '0.25',
+            min: 0,
+            max: 1000000
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        type: {
+            required: true,
+            maxlength: 64
+        },
+        rarity: {
+            required: true,
+            maxlength: 64
+        },
+        maxCharges: {
+            number: true,
+            min: 0,
+            max: 10000
+        },
+        usedCharges: {
+            number: true,
+            min: 0,
+            max: 10000
+        },
+        weight: {
+            number: true,
             min: 0,
             max: 1000000
         }

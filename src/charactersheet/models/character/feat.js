@@ -56,7 +56,7 @@ export class Feat extends KOModel {
 }
 
 Feat.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256

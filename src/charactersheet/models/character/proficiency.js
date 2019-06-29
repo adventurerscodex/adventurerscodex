@@ -41,7 +41,7 @@ export class Proficiency extends KOModel {
 }
 
 Proficiency.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256

@@ -31,7 +31,7 @@ export class HitDice extends KOModel {
 }
 
 HitDice.validationConstraints = {
-    rules: {
+    fieldParams: {
         type: {
             required: true,
             maxlength: 32

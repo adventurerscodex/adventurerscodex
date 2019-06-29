@@ -57,7 +57,7 @@ export class Trait extends KOModel {
 }
 
 Trait.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256

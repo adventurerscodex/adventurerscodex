@@ -74,7 +74,7 @@ export class SavingThrow extends KOModel {
 }
 
 SavingThrow.validationConstraints = {
-    rules: {
+    fieldParams: {
         modifier: {
             type: 'number',
             pattern: '\\d*',

@@ -53,8 +53,8 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
     }
 
     validation = {
-        Health: Health.validationConstraints.rules,
-        HitDice: HitDice.validationConstraints.rules
+        Health: Health.validationConstraints.fieldParams,
+        HitDice: HitDice.validationConstraints.fieldParams
     }
 }
 

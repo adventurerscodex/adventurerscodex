@@ -160,7 +160,7 @@ export class Spell extends KOModel {
 }
 
 Spell.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             required: true,
             maxlength: 256
@@ -188,6 +188,52 @@ Spell.validationConstraints = {
             max: 10000,
             type: 'number',
             pattern: '\\d*',
+            required: true
+        },
+        castingTime: {
+            maxlength: 128,
+            required: true
+        },
+        range: {
+            maxlength: 128,
+            required: true
+        },
+        duration: {
+            maxlength: 128,
+            required: true
+        },
+        components: {
+            maxlength: 256,
+            required: true
+        }
+    },
+    rules: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        type: {
+            required: true,
+            maxlength: 128
+        },
+        spellSaveAttribute: {
+            maxlength: 3,
+            required: true
+        },
+        damage: {
+            maxlength: 128
+        },
+        damageType: {
+            maxlength: 128
+        },
+        school: {
+            maxlength: 128,
+            required: true
+        },
+        level: {
+            min: 0,
+            max: 10000,
+            number:true,
             required: true
         },
         castingTime: {

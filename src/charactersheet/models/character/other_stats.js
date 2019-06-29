@@ -39,7 +39,7 @@ export class OtherStats extends KOModel {
 }
 
 OtherStats.validationConstraints = {
-    rules: {
+    fieldParams: {
         armorClassModifier: {
             type: 'number',
             pattern: '\\d*',

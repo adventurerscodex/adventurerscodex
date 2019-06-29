@@ -30,7 +30,7 @@ export class Background extends KOModel {
 }
 
 Background.validationConstraints = {
-    rules: {
+    fieldParams: {
         name: {
             maxlength: 256
         }
