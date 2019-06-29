@@ -7,19 +7,20 @@ import {
     Status
 } from 'charactersheet/models';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
+import { debounce } from 'lodash';
 import ko from 'knockout';
-import template from './index.html';
 
 export function StatusLineViewModel(params) {
     var self = this;
 
     self.statusLine = ko.observable('');
     self.character = params.character;
+    self.profile = ko.observable();
 
     self.load = function() {
-        Notifications.status.changed.add(self.coreHasChanged);
+        self.profile(new Profile());
+        Notifications.status.changed.add(debounce(self.statusHasChanged, 200));
         self.character.subscribe(self.coreHasChanged);
-
         self.coreHasChanged();
     };
 
@@ -33,38 +34,43 @@ export function StatusLineViewModel(params) {
     };
 
     // Private Methods
-
     self.coreHasChanged = async () => {
+        const key = CoreManager.activeCore().uuid();
+        await self.profile().load({uuid: key});
+        self.statusHasChanged();
+    };
+
+    self.statusHasChanged = () => {
         const key = CoreManager.activeCore().uuid();
         const statuses = PersistenceService.findBy(Status, 'characterId', key);
         if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
             return;
         }
-        const profileResponse = await Profile.ps.read({uuid: key});
-        let profile = profileResponse.object;
-
-        self.statusLine(self.getStatusLine(profile, statuses));
+        self.statusLine(self.getStatusLine(statuses));
     };
 
-    self.getStatusLine = function(profile, statuses) {
-        if (!profile || statuses.length == 0) { return ''; }
+    self.prettyStatus = (status) => {
+        return `<span class="text-${status.type()}">${status.name()}</span>`;
+    };
 
-        return profile.characterName() + ' is ' + statuses.map(function(e, i, _) {
-            var status = '<span class="text-' + e.type() + '">' + e.name() + '</span>';
-            if (statuses.length > 1 && i == statuses.length - 1) {
-                return 'and ' + status;
-            } else if (statuses.length > 2) {
-                return status + ',&nbsp;';
-            } else if (statuses.length > 1) {
-                return status + '&nbsp;';
-            } else {
-                return status;
-            }
-        }).join('') + '.';
+    self.oxfordList = (arr) => {
+        const lastStatus = arr.pop();
+        if (!arr.length) {
+            return lastStatus;
+        }
+        return `${arr.join(',&nbsp; ')} and ${lastStatus}`;
+    };
+
+    self.getStatusLine = function(statuses) {
+        if (!ko.utils.unwrapObservable(self.profile).characterName || statuses.length == 0) {
+            return '';
+        }
+
+        return `${self.profile().characterName()} is ${self.oxfordList(statuses.map(self.prettyStatus))}.`;
     };
 }
 
 ko.components.register('player-status-line', {
     viewModel: StatusLineViewModel,
-    template: template
+    template: '<span data-bind="html: statusLine"></span>'
 });
