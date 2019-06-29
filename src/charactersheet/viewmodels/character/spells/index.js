@@ -67,6 +67,10 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         return SortService.sortAndFilter(spellbook, this.sort(), null);
     }, this);
 
+    toggleSpellFilter = () => {
+        this.filteredByCastable(!this.filteredByCastable());
+    }
+
     getDefaultSort () {
         return this.sorts()['level asc'];
     }

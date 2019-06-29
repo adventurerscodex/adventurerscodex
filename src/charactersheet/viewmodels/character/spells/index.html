@@ -1,18 +1,19 @@
 <div id="spells-pane">
   <div class="h4 card-title">
     <span data-bind="if: filteredByCastable"> Castable </span> Spells<br />
-    <small data-bind="if: filteredByCastable"> Your spells are filtered. Only <strong>prepared spells</strong> that you can cast with an available spell slot are visible. To see all of your spells, <input type='checkbox'
-          class='filter-checkbox sr-only'
-          data-bind="checked: filteredByCastable"></input>
-      <label for="filterByCastableTitle"> Unfilter the list. </label>
-      <br />
+    <small data-bind="if: filteredByCastable"> Your spells are filtered. Only <strong>prepared spells</strong> that you can cast with an available spell slot are visible. To see all of your spells, <br />
+      <span css="color: #2c3e50;"
+          data-bind="click: $component.toggleSpellFilter"><input type="checkbox"
+            class="filter-checkbox sr-only"
+            data-bind="checked: filteredByCastable"></input><label for="filterByCastable"></label> Unfilter the list.</span>
     </small>
     <small data-bind="ifnot: filteredByCastable">You can sort your spells by clicking on the headers. View the bottom of the list for a count of your prepared spells.</small>
   </div>
   <table class="listing table table-responsive table-ac-bordered table-hover">
     <thead>
       <tr class="ac-table-header">
-        <th class="col-xs-1 checkbox-data-cell">
+        <th class="col-xs-1 checkbox-data-cell"
+            data-bind="click: $component.toggleSpellFilter">
           <input type="checkbox"
               class="filter-checkbox sr-only"
               data-bind="checked: filteredByCastable"></input>
@@ -51,7 +52,7 @@
           class="clickable spellRow"
           data-bind="css: {notCastable: !isCastable()}, attr:{'data-target': `#spell_list_${uuid()}`, id: `#spell_row_${uuid()}`}">
         <td class="col-xs-1 checkbox-data-cell"
-            data-bind="click: $parent.memorizeSpell">
+            data-bind="click: $component.memorizeSpell">
           <!-- ko ifnot: level() == 0  || alwaysPrepared -->
           <input type="checkbox"
               class="ac-checkbox sr-only"
@@ -179,7 +180,8 @@
       <!-- /ko -->
       <!-- ko if: entities().length > 0 && filteredAndSortedEntities().length == 0 -->
       <tr class="clickable">
-        <td colspan="8" class="text-center"> No Spells are currently castable </td>
+        <td colspan="8"
+            class="text-center"> No Spells are currently castable </td>
       </tr>
       <!-- /ko -->
       <tr id="add-spell"
