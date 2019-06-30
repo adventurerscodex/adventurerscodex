@@ -42,7 +42,7 @@ export function MiniPlusMinusComponentViewModel(params) {
 ko.components.register('mini-plus-minus', {
     viewModel: MiniPlusMinusComponentViewModel,
     template: '\
-    <div class="btn-group btn-group-vertical" role="group" aria-label="...">\
+    <div class="btn-group btn-group-vertical" role="group">\
         <!-- ko if: !hideUp -->\
         <button type="button" style="padding: 0px; border-width: 0px" class="btn btn-link"\
           data-bind="click: decrease">\

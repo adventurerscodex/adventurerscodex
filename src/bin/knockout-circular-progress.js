@@ -89,7 +89,10 @@ ko.bindingHandlers.circleProgress = {
             ...ko.bindingHandlers.circleProgress.defaultOptions(),
             ...config
         };
-        const percentage = maxValue && value ? parseInt(value)/parseInt(maxValue) : 1;
+        let percentage = 1;
+        if (!isNaN(value) && !isNaN(maxValue) && maxValue !== 0) {
+            percentage = value/maxValue;
+        }
 
         $(element).data('progressBar').animate(percentage, opts);
         if (text) {
