@@ -135,6 +135,7 @@ class StatsHealthViewModel {
         }
         await this.health().save();
         this.healInput(null);
+        $('#health-heal-input').blur();
     };
 
     handleTemp = async () => {
@@ -148,6 +149,7 @@ class StatsHealthViewModel {
         this.health().tempHitPoints(tempValue);
         await this.health().save();
         this.tempInput(null);
+        $('#health-temp-input').blur();
     };
 
     handleDmg = async () => {
@@ -166,6 +168,7 @@ class StatsHealthViewModel {
 
         await this.health().save();
         this.dmgInput(null);
+        $('#health-dmg-input').blur();
     };
 
     damageHandler = ko.computed({
