@@ -296,7 +296,6 @@ export const spellDataFixture = [
     }
 ];
 
-
 export const weaponDataFixture = [
     {
         id: 0,
@@ -336,7 +335,6 @@ export const dailyFeaturesFixture = [
         }
     }
 ];
-
 
 export const scoresFixture = [
     {

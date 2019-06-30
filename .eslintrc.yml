@@ -22,6 +22,11 @@ rules:
   semi:
     - error
     - always
+  no-multiple-empty-lines:
+    - error
+    - max: 2
+      maxEOF: 1
+      maxBOF: 0
   sort-imports:
   - error
   - ignoreCase: false
@@ -30,4 +35,3 @@ rules:
 parserOptions:
   ecmaVersion: 6
   sourceType: "module"
-

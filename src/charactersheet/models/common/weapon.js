@@ -206,7 +206,6 @@ export class Weapon extends KOModel {
     }, this);
 
 
-
     load = async (params) => {
         const response = await this.ps.model.ps.read(params);
         this.importValues(response.object.exportValues());

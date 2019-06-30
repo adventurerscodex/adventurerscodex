@@ -45,47 +45,57 @@ export class AbstractTabularViewModel {
 
     modelClass() {
         if (!this.modelName) {
-            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
+            throw (`Model Name or modelClass must be implemented by ${this.constructor.name}`);
         }
         return Clazz[this.modelName];
     }
 
-    async refresh () {
-        const response = await this.modelClass().ps.list({coreUuid: this.coreKey});
+    async refresh() {
+        const response = await this.modelClass().ps.list({
+            coreUuid: this.coreKey
+        });
         this.entities(response.objects);
     }
 
-    shortText = (string, size=25) => {
+    shortText = (string, size = 25) => {
         return Utility.string.truncateStringAtLength(string(), size);
     };
 
-    getDefaultSort() { return this.sorts()['name asc'];}
+    getDefaultSort() {
+        return this.sorts()['name asc'];
+    }
 
     sorts() {
         return {
-            'name asc': { field: 'name', direction: 'asc'},
-            'name desc': { field: 'name', direction: 'desc'}
+            'name asc': {
+                field: 'name',
+                direction: 'asc'
+            },
+            'name desc': {
+                field: 'name',
+                direction: 'desc'
+            }
         };
     }
 
-    sortArrow (columnName) {
+    sortArrow(columnName) {
         return SortService.sortArrow(columnName, this.sort());
     }
 
-    sortBy (columnName) {
+    sortBy(columnName) {
         this.sort(
-          SortService.sortForName(
-            this.sort(),
-            columnName,
-            this.sorts()));
+            SortService.sortForName(
+                this.sort(),
+                columnName,
+                this.sorts()));
     }
 
     filteredAndSortedEntities = ko.pureComputed(
-      () =>  SortService.sortAndFilter(
-        this.entities(),
-        this.sort(),
-        null)
-      );
+        () => SortService.sortAndFilter(
+            this.entities(),
+            this.sort(),
+            null)
+    );
 
     addToList(item) {
         if (item) {
@@ -93,30 +103,30 @@ export class AbstractTabularViewModel {
         }
     }
 
-    replaceInList (item) {
+    replaceInList(item) {
         if (item) {
             Utility.array.updateElement(this.entities(), item, ko.utils.unwrapObservable(item.uuid));
         }
     }
 
-    removeFromList (item) {
+    removeFromList(item) {
         if (item) {
             this.entities.remove(
-          (entry) => {
-              return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
-          });
+                (entry) => {
+                    return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
+                });
         }
     }
 
-    collapseAll () {
+    collapseAll() {
         $(this.collapseAllId + ' .collapse.in').collapse('hide');
     }
 
-    showTracked (entity) {
+    showTracked(entity) {
         return !!ko.utils.unwrapObservable(entity.isTracked);
     }
 
-    toggleShowAddForm () {
+    toggleShowAddForm() {
         if (this.displayAddForm()) {
             this.displayAddForm(false);
             $(this.addFormId).collapse('hide');
@@ -126,14 +136,14 @@ export class AbstractTabularViewModel {
         }
     }
 
-    setUpSubscriptions () {
+    setUpSubscriptions() {
         const modelNotification = this.modelClass().prototype.constructor.name.toLowerCase();
         Notifications[modelNotification].added.add(this.addToList);
         Notifications[modelNotification].changed.add(this.replaceInList);
         Notifications[modelNotification].deleted.add(this.removeFromList);
     }
 
-    disposeOfSubscriptions () {
+    disposeOfSubscriptions() {
         const disposeOfDisposable = (disposable) => {
             if (disposable.dispose) {
                 disposable.dispose();
@@ -145,7 +155,7 @@ export class AbstractTabularViewModel {
         this.subscriptions = [];
     }
 
-    dispose () {
+    dispose() {
         this.disposeOfSubscriptions();
     }
 }
