@@ -678,11 +678,12 @@ body {
 
 /*
 * translate3d fixes a z-index issue on safari
+* this number MUST be greater than the translateZ of the flip card to work
 */
 .ui-autocomplete {
   z-index: 1051;
-  -webkit-transform: translate3d(0,0,1px);
-  transform: translate3d(0,0,1px);
+  -webkit-transform: translate3d(0,0,60px);
+  transform: translate3d(0,0,60px);
 }
 
 ul.ui-autocomplete {
