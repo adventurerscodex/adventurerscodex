@@ -1892,8 +1892,8 @@ hr.ac-table-header {
   display: inline-block;
 }
 
-.navbar-header .icon-bar {
-  background-color:white;
+.tab-actions.navbar-header .icon-bar {
+  background-color: white;
   margin: 5px;
   width: 70%;
   margin-right: 15%;
