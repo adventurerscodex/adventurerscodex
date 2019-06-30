@@ -1,5 +1,8 @@
-<card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+<!-- ko ifnot: loaded(), completeOn: 'render' -->
+<div class="loader-wrapper"><div class="loader"></div></div>
+<!-- /ko -->
 <!-- ko if: loaded(), completeOn: 'render' -->
+<card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
 <div data-bind="with: entity">
   <h3 class="collapsable-card-title"
       data-bind="text: name"></h3>

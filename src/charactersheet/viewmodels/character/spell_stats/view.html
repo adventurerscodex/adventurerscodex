@@ -1,6 +1,9 @@
 <card-edit-actions params="{ flip: $component.flip }"></card-edit-actions>
 <table data-bind="{with: entity}"
     class="table table-responsive table-ac-bordered table-hover">
+  <!-- ko ifnot: $component.loaded(), completeOn: 'render' -->
+  <tbody><tr><td><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+  <!-- /ko -->
   <!-- ko if: $component.loaded(), completeOn: 'render' -->
   <tbody class="spell-stat-table">
     <tr>

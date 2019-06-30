@@ -116,7 +116,7 @@ export class FlipCardComponentViewModel {
             this.onResize = params.onResize;
         }
         // calculated element height
-        this.elementMeasure = ko.observable(0).extend({ deferred: true });
+        this.elementMeasure = ko.observable(350).extend({ deferred: true });
         if (params.defaultHeight) {
             const paramHeight = parseInt(ko.utils.unwrapObservable(params.defaultHeight));
             if (Number.isInteger(paramHeight)) {
@@ -146,7 +146,7 @@ export class FlipCardComponentViewModel {
     }
 
     load = () => {
-        $(window).on('resize', this.setNewHeight);
+        $(window).on('resize', debounce(this.setNewHeight));
         // Listen to tab changes as the window may have resized when the component
         // was off screen
         if (this.tabId) {
@@ -157,7 +157,7 @@ export class FlipCardComponentViewModel {
     shownCallback = () => {
         if(this.collapsable()){
             this.showBack(false);
-            this.setNewHeight();
+            setTimeout(this.setNewHeight, 0);
         }
     }
 
@@ -168,7 +168,9 @@ export class FlipCardComponentViewModel {
         }
     }
 
-    setNewHeight = (initialSetHeight) => {
+    setNewHeight = debounce((initialHeight) => {this._setNewHeight(initialHeight);});
+
+    _setNewHeight = (initialSetHeight) => {
         const HEIGHT_MOD = 25;
         let setHeight = 0;
         if (this.showBack()) {
@@ -187,7 +189,7 @@ export class FlipCardComponentViewModel {
 
     }
     koDescendantsComplete = (node) => {
-        this.setNewHeight();
+        setTimeout(this.setNewHeight, 0);
     }
 }
 

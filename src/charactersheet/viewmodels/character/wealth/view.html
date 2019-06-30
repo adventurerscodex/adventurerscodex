@@ -3,6 +3,9 @@
   <small>watch for pickpockets</small>
 </div>
 <hr class="ac-table-header" />
+<!-- ko ifnot: loaded(), completeOn: 'render' -->
+<div class="loader-wrapper"><div class="loader"></div></div>
+<!-- /ko -->
 <!-- ko if: loaded(), completeOn: 'render' -->
 <div data-bind="with: entity">
   <div class="input-group coins">

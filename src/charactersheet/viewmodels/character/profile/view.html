@@ -1,6 +1,9 @@
 <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
 <div class="h4 card-title"> Profile </div>
 <hr class="ac-table-header" />
+<!-- ko ifnot: loaded(), completeOn: 'render' -->
+<div class="loader-wrapper"><div class="loader"></div></div>
+<!-- /ko -->
 <!-- ko if: loaded(), completeOn: 'render' -->
 <div class="panel-body row profile-view"
     data-bind="with: entity">
