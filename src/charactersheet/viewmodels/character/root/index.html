@@ -305,7 +305,9 @@
            style="position:relative; z-index: 7; float:right">
         <skills params="{tabId: 'skills'}"></skills>
       </div>
-      <div class="col col-xs-12 col-sm-6 col-md-7 col-lg-8">
+      <div class="col col-xs-12 col-sm-6 col-md-7 col-lg-8" style="overflow:hidden">
+        <!-- overflow: hidden fixes an issue on iOS where the multiple negative
+             margins of the nested rows causes a left-right wiggle -->
         <div class="row">
           <div class="col col-xs-12 col-sm-12 col-lg-6">
             <div class="row">
