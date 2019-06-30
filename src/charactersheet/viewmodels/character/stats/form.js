@@ -21,7 +21,6 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
         super(params);
         this.defaultHeight = params.defaultHeight;
         this.hitDice = ko.observable(new HitDice());
-        this.hitDiceList = ko.observableArray([]);
         autoBind(this);
     }
 
