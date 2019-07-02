@@ -6,8 +6,10 @@ import { NodeServiceManager } from 'charactersheet/services/common/account/messa
 import { SharedServiceManager } from '../shared_service_manager';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
 import { debounce } from 'lodash';
+import ko from 'knockout';
 import { pCard } from 'charactersheet/models/common/pCard';
 import uuid from 'node-uuid';
+
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
     compression: 'lz-string',
@@ -102,8 +104,9 @@ function _pCardService(configuration) {
     };
 
     self._buildCard = async () => {
-        var { object } = pCard().ps.read({uuid: ko.unwrap(CoreManager.activeCore().uuid)});
-        return object;
+        const key = CoreManager.activeCore().uuid();
+        var response = await pCard.ps.read({ uuid: key });
+        return response.object;
     };
 
     /* Event Handlers */
