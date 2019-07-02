@@ -115,8 +115,12 @@ export class FlipCardComponentViewModel {
             // callback on
             this.onResize = params.onResize;
         }
+        let initialDefaultHeight = 350;
+        if (this.collapsable()) {
+            initialDefaultHeight = 0;
+        }
         // calculated element height
-        this.elementMeasure = ko.observable(350).extend({ deferred: true });
+        this.elementMeasure = ko.observable(initialDefaultHeight).extend({ deferred: true });
         if (params.defaultHeight) {
             const paramHeight = parseInt(ko.utils.unwrapObservable(params.defaultHeight));
             if (Number.isInteger(paramHeight)) {
