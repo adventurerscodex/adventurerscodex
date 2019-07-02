@@ -1269,9 +1269,9 @@ transition : height 0.25s ease opacity 0.2s linear;
 }
 
 .card-flip-container > .card-flipper {
-  transition: 0.5s;
+  transition: 0.2s;
   transform-style: preserve-3d;
-  -webkit-transition: 0.5s;
+  -webkit-transition: 0.2s;
   -webkit-transform-style: preserve-3d;
   position: relative;
 }
