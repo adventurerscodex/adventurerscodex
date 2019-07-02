@@ -118,7 +118,6 @@ export function HealthinessStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
-        Notifications.status.healthiness.changed.dispatch();
     };
 
     /**

@@ -1,13 +1,13 @@
+import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { CharacterCardFields } from 'charactersheet/services/character/sync/character_card_fields';
 import { ChatServiceManager } from 'charactersheet/services/common/account/messaging/chat_service';
 import { DMCardFields } from 'charactersheet/services/dm/sync/dm_card_fields';
 import { NodeServiceManager } from 'charactersheet/services/common/account/messaging/node_service';
-import { Notifications } from 'charactersheet/utilities';
 import { SharedServiceManager } from '../shared_service_manager';
 import { XMPPService } from 'charactersheet/services/common/account/xmpp_connection_service';
+import { debounce } from 'lodash';
 import { pCard } from 'charactersheet/models/common/pCard';
 import uuid from 'node-uuid';
-
 var CharacterCardPublishingServiceConfiguration = {
     enableCompression: true,
     compression: 'lz-string',
@@ -49,13 +49,13 @@ function _pCardService(configuration) {
         self._teardownNotifications();
     };
 
-    self.dataHasChanged = async () => {
+    self.dataHasChanged = debounce(async () => {
         // we only want to generate cards if we're in a party
         if (self.currentPartyNode) {
             var card = await self._buildCard();
             self.publishCard(card);
         }
-    };
+    }, 1000);
 
     self.publishCard = function(card) {
         /*eslint no-console:0*/
@@ -88,9 +88,8 @@ function _pCardService(configuration) {
 
     self._setupNotifications = function() {
         Notifications.party.joined.add(self._updateCurrentNode);
-
         self.configuration.fields.forEach(function(field, idx, _) {
-            field.refreshOn.add(self.dataHasChanged);
+            field.refreshOn.add((changedValue) => { field.shouldRefresh(changedValue) && self.dataHasChanged(); });
         });
     };
 
@@ -103,14 +102,8 @@ function _pCardService(configuration) {
     };
 
     self._buildCard = async () => {
-        var card = new pCard();
-
-        for (const field of self.configuration.fields) {
-            const value = await field.valueAccessor();
-            card.set(uuid.v4(), field.name, null, value);
-        }
-
-        return card;
+        var { object } = pCard().ps.read({uuid: ko.unwrap(CoreManager.activeCore().uuid)});
+        return object;
     };
 
     /* Event Handlers */

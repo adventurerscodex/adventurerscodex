@@ -146,7 +146,7 @@ export class FlipCardComponentViewModel {
     }
 
     load = () => {
-        $(window).on('resize', debounce(this.setNewHeight));
+        $(window).on('resize', this.setNewHeight);
         // Listen to tab changes as the window may have resized when the component
         // was off screen
         if (this.tabId) {

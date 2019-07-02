@@ -124,7 +124,6 @@ export function MagicalStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
-        Notifications.status.magic.changed.dispatch();
     };
 
     self._removeStatus = function() {
@@ -135,7 +134,6 @@ export function MagicalStatusServiceComponent() {
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();
-            Notifications.status.magic.changed.dispatch();
         }
     };
 

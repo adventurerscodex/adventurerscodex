@@ -270,16 +270,7 @@ export var Notifications = {
     },
 
     status: {
-        changed: new Signal(),
-        healthiness: {
-            changed: new Signal()
-        },
-        magic: {
-            changed: new Signal()
-        },
-        tracked: {
-            changed: new Signal()
-        }
+        changed: new Signal()
     },
 
     trait: {
