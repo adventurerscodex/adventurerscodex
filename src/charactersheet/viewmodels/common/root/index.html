@@ -47,7 +47,7 @@
             <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party
           </a>
         </li>
-        <!-- ko if: selectedCore().type.name() != 'dm' -->
+        <!-- ko if: selectedCore() && selectedCore().type.name() != 'dm' -->
         <li>
           <a data-bind="click: toggleShareModal" href="#">
             <i class="fa fa-share-square-o"></i>&nbsp;&nbsp;Share
