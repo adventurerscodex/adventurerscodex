@@ -36,11 +36,17 @@ export class MagicItemFormViewModel  extends AbstractChildFormModel {
         this.entity().rarity(value);
     }
 
+    updateAttunement = (requiresAttunement) => {
+        if (!this.entity().requiresAttunement()) {
+            this.entity().attuned(false);
+        }
+    }
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
         this.entity().maxCharges.subscribe(this.resizeOnFieldVisibility);
         this.entity().requiresAttunement.subscribe(this.resizeOnFieldVisibility);
+        this.entity().requiresAttunement.subscribe(this.updateAttunement);
     }
 
     resizeOnFieldVisibility = () => {
