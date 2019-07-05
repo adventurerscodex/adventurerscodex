@@ -11,6 +11,7 @@ import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 import { CoreManager } from 'charactersheet/utilities';
 import { Notifications } from 'charactersheet/utilities';
 
+import autoBind from 'auto-bind';
 import {find} from 'lodash';
 import ko from 'knockout';
 import template from './health.html';
@@ -30,6 +31,7 @@ class StatsHealthViewModel {
         this.healInput = ko.observable(null);
         this.tempInput = ko.observable(null);
         this.dmgInput = ko.observable(null);
+        autoBind(this);
     }
 
     async load() {
