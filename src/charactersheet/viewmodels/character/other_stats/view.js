@@ -37,7 +37,7 @@ export class OtherStatsViewModel extends AbstractViewModel {
 
     setUpSubscriptions = () => {
         super.setUpSubscriptions();
-        Notifications.abilityscore.changed.add(this.updateDexterity);
+        this.subscriptions.push(Notifications.abilityscore.changed.add(this.updateDexterity));
     }
 
     getDexterity = async () => {

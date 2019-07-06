@@ -5,14 +5,15 @@ import {
     HitDice,
     Profile
 } from 'charactersheet/models/character';
+import { defer, find } from 'lodash';
 
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
 
 import { CoreManager } from 'charactersheet/utilities';
+import { DELAY } from 'charactersheet/constants';
 import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
-import {find} from 'lodash';
 import ko from 'knockout';
 import template from './health.html';
 
@@ -31,7 +32,9 @@ class StatsHealthViewModel {
         this.healInput = ko.observable(null);
         this.tempInput = ko.observable(null);
         this.dmgInput = ko.observable(null);
+        this.subscriptions = [];
         autoBind(this);
+
     }
 
     async load() {
@@ -54,10 +57,27 @@ class StatsHealthViewModel {
     };
 
     setUpSubscriptions = () => {
-        this.outerShow.subscribe(this.subscribeToVisible);
-        Notifications.events.longRest.add(this.resetOnLongRest);
-        Notifications.profile.changed.add(this.profileDidUpdate);
-        Notifications.health.changed.add(this.healthDidUpdate);
+        this.subscriptions.push(this.outerShow.subscribe(this.subscribeToVisible));
+        this.subscriptions.push(Notifications.events.longRest.add(this.resetOnLongRest));
+        this.subscriptions.push(Notifications.profile.changed.add(this.profileDidUpdate));
+        this.subscriptions.push(Notifications.health.changed.add(this.healthDidUpdate));
+    }
+
+    disposeOfSubscriptions() {
+        const disposeOfDisposable = (disposable) => {
+            if (disposable.dispose) {
+                disposable.dispose();
+            } else if (disposable.detach) {
+                disposable.detach();
+            }
+
+        };
+        this.subscriptions.map((disposable) => defer(disposeOfDisposable, disposable));
+        this.subscriptions = [];
+    }
+
+    dispose() {
+        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 
     healthDidUpdate = (health) => {

@@ -77,10 +77,10 @@ class SpellbookViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        Notifications.spellslot.changed.add(this.updateSpellSlots, this);
-        Notifications.spellslot.added.add(this.updateSpellSlots, this);
-        Notifications.spellslot.deleted.add(this.updateSpellSlots, this);
-        Notifications.spellstats.changed.add(this.updateSpellStats, this);
+        this.subscriptions.push(Notifications.spellslot.changed.add(this.updateSpellSlots, this));
+        this.subscriptions.push(Notifications.spellslot.added.add(this.updateSpellSlots, this));
+        this.subscriptions.push(Notifications.spellslot.deleted.add(this.updateSpellSlots, this));
+        this.subscriptions.push(Notifications.spellstats.changed.add(this.updateSpellStats, this));
     }
 
     updateSpellStats = async (stats) => {

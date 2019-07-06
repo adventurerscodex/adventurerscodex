@@ -44,7 +44,7 @@ export class SpellSlotFormComponentViewModel extends AbstractChildFormModel {
     }
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        Notifications.spellslot.changed.add(this.updateFormData);
+        this.subscriptions.push(Notifications.spellslot.changed.add(this.updateFormData));
     }
 }
 

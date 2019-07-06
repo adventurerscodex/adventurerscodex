@@ -32,8 +32,7 @@ export class ScoreSaveFormViewModel extends AbstractGridFormModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        const resetShowSaves = this.show.subscribe(this.resetShowSaves);
-        this.subscriptions.push(resetShowSaves);
+        this.subscriptions.push(this.show.subscribe(this.resetShowSaves));
     }
 
     resetShowSaves () {

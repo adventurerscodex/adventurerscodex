@@ -1,6 +1,7 @@
 import { Clazz } from 'charactersheet/models';
 import { CoreManager } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
+import { defer } from 'lodash';
 import { get } from 'lodash';
 import ko from 'knockout';
 
@@ -138,11 +139,18 @@ export class AbstractFormModel {
     }
 
     disposeOfSubscriptions() {
-        this.subscriptions.forEach((subscription) => subscription.dispose());
+        const disposeOfDisposable = (disposable) => {
+            if (disposable.dispose) {
+                disposable.dispose();
+            } else if (disposable.detach) {
+                disposable.detach();
+            }
+        };
+        this.subscriptions.map((disposable) => defer(disposeOfDisposable, disposable));
         this.subscriptions = [];
     }
 
     dispose() {
-        this.disposeOfSubscriptions();
+        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 }

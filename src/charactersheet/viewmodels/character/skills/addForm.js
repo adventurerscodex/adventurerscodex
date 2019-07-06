@@ -29,8 +29,7 @@ export class SkillsAddFormViewModel extends AbstractChildFormModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        const onShow = this.show.subscribe(this.delayThenResize);
-        this.subscriptions.push(onShow);
+        this.subscriptions.push(this.show.subscribe(this.delayThenResize));
     }
 
     async refresh() {

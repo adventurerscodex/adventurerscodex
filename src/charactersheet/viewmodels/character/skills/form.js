@@ -50,7 +50,7 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        Notifications.abilityscore.changed.add(this.updateAbilityScoreValues);
+        this.subscriptions.push(Notifications.abilityscore.changed.add(this.updateAbilityScoreValues));
     }
 
     async updateAbilityScoreValues (abilityScore) {

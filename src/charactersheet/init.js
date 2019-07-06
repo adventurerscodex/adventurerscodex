@@ -26,6 +26,8 @@ import {
 import $ from 'jquery';
 import { AuthenticationToken } from 'charactersheet/models/common/authentication_token';
 import Clipboard from 'clipboard';
+import { DELAY } from 'charactersheet/constants';
+
 import { Hypnos } from 'hypnos';
 import { Settings } from 'charactersheet/settings';
 import URI from 'urijs';
@@ -121,7 +123,7 @@ export var init = function(viewModel) {
     // Import static data
     $(() => {
         Settings.srdDataRepositoryLocations.forEach(function(location, idx, _) {
-            $.ajax({
+            setTimeout(()=> {$.ajax({
                 url: location.url,
                 dataType: 'json',
                 async: true,
@@ -133,7 +135,7 @@ export var init = function(viewModel) {
                         });
                     }
                 }
-            });
+            });}, DELAY.LONG);
         });
     });
 
