@@ -1,6 +1,7 @@
 import 'bin/knockout-custom-loader';
 import {
     CoreManager,
+    Fixtures,
     Notifications
 } from 'charactersheet/utilities';
 import { Note } from 'charactersheet/models/common';
@@ -36,6 +37,7 @@ export function NotesViewModel() {
         var key = CoreManager.activeCore().uuid();
         var note = new Note();
         note.coreUuid(key);
+        note.type(Fixtures.notes.type.default);
         const newNote = await note.ps.create();
         self.notes.push(newNote.object);
         self.selectNote(newNote.object);
