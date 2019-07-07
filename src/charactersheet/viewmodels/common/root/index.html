@@ -47,7 +47,7 @@
             <i class="fa fa-users"></i>&nbsp;&nbsp;Manage Party
           </a>
         </li>
-        <!-- ko if: selectedCore().type.name() != 'dm' -->
+        <!-- ko if: selectedCore() && selectedCore().type.name() != 'dm' -->
         <li>
           <a data-bind="click: toggleShareModal" href="#">
             <i class="fa fa-share-square-o"></i>&nbsp;&nbsp;Share
@@ -129,7 +129,7 @@
             <player-name></player-name>
             <div class="row row-padded">
               <div class="col-xs-12">
-                <!-- ko if: selectedCore -->
+                <!-- ko if: selectedCore() -->
                   <!-- ko if: selectedCore().type.name() == 'character' -->
                     <player-status-line params="character: selectedCore"></player-status-line>
                   <!-- /ko -->
@@ -148,11 +148,11 @@
       </div>
     </div>
     <div class="spacer"></div>
-      <!-- ko if: selectedCore -->
-                  <!-- ko if: selectedCore().type.name() == 'character' -->
+      <!-- ko if: selectedCore() -->
+        <!-- ko if: selectedCore().type.name() == 'character' -->
         <character-root params="activeCharacter: selectedCore"></character-root>
         <!-- /ko -->
-                  <!-- ko if: selectedCore().type.name() == 'dm' -->
+        <!-- ko if: selectedCore().type.name() == 'dm' -->
         <dm-root params="activeCharacter: selectedCore"></dm-root>
         <!-- /ko -->
       <!-- /ko -->
