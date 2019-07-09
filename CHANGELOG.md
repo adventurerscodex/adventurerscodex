@@ -1,3 +1,7 @@
+version 2.2.0 (07/8/2019)
+* Adds Sharable Character Sheets feature
+* Fixes bug in creating notes
+
 version 2.1.0 (04/29/2019)
 * Updates some more validation constraints
 * Fixes a bug with switching tabs
