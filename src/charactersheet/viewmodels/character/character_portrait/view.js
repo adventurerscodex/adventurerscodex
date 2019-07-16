@@ -44,6 +44,9 @@ export class CharacterPortraitViewModel {
         await this.profileImage().load({uuid: key});
     };
 
+    coreDidUpdate = (core) => {
+        this.core().importValues(core.exportValues());
+    };
     profileDidUpdate = (profile) => {
         this.profile().importValues(profile.exportValues());
     };
@@ -51,6 +54,7 @@ export class CharacterPortraitViewModel {
         this.otherStats().importValues(otherstats.exportValues());
     };
     setUpSubscriptions = () => {
+        this.subscriptions.push(Notifications.profile.playerName.changed.add(this.coreDidUpdate));
         this.subscriptions.push(Notifications.profile.changed.add(this.profileDidUpdate));
         this.subscriptions.push(Notifications.otherstats.changed.add(this.otherStatsDidUpdate));
     }

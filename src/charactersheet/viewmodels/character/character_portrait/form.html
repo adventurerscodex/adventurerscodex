@@ -1,34 +1,99 @@
 <form class="form-horizontal"
     data-bind="{ submit: $component.submit }">
+  <div class="h4 card-title"> Name&nbsp;&amp; Portrait </div>
   <!-- ko if: loaded(), completeOn: 'render' -->
+  <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
   <div class="panel-body row">
-    <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
-    <div data-bind="with: profile"
-        class="form-group ui-front">
-      <label for="characterName"
-          class="col-sm-4 control-label">Character Name</label>
-      <div class="col-sm-8">
-        <input class="form-control"
-            placeholder=""
-            name="characterName"
-            data-bind="value: characterName,
-                 event: { blur: $component.reviewInput, invalid: $component.invalidate }">
-                 <!-- attr: { ...$component.validation.HitDice.type }"> -->
+    <div class="col col-sm-6" data-bind="with: profile">
+      <div class="form-group">
+      <label class="control-label">Character Name</label>
+      <input class="form-control"
+          placeholder=""
+          name="characterName"
+          data-bind="value: characterName,
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.Profile.characterName }">
       </div>
     </div>
-    <div data-bind="with: core"
-        class="form-group ui-front">
-      <label for="playerName"
-          class="col-sm-4 control-label">Player Name</label>
-      <div class="col-sm-8">
-        <input class="form-control"
-            placeholder=""
-            name="playerName"
-            data-bind="value: playerName,
-                 event: { blur: $component.reviewInput, invalid: $component.invalidate }">
-                 <!-- attr: { ...$component.validation.HitDice.type }"> -->
+    <div class="col col-sm-6" data-bind="with: core">
+      <div class="form-group">
+      <label class="control-label">Player Name</label>
+      <input class="form-control"
+          placeholder=""
+          name="playerName"
+          data-bind="value: playerName,
+                     event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                     attr: { ...$component.validation.Core.playerName }">
       </div>
     </div>
+    <div class="col col-md-6" data-bind="with: entity">
+
+      <!-- <div class="btn-group btn-group-justified" role="group">
+        <label class="btn btn-default"
+          data-bind="css: { active: type() === 'picker' || !type()}">
+          <input type="radio" class="hide-block"
+            name="imageSourcePicker" value="picker" data-bind="checked: type, event: { click: $component.forceCardResize }" />
+            Choose a default
+        </label>
+        <label class="btn btn-default"
+          data-bind="css: { active: type() === 'url'}">
+          <input type="radio" class="hide-block"
+            name="imageSourceLink" value="url" data-bind="checked: type, event: { click: $component.forceCardResize }"/>
+            Image Link
+        </label>
+        <label class="btn btn-default"
+          data-bind="css: { active: type() === 'email'}">
+          <input type="radio" class="hide-block"
+            name="imageSourceEmail" value="email" data-bind="checked: type, event: { click: $component.forceCardResize }"/>
+            Gravatar Email
+        </label>
+      </div> -->
+      <!-- <div class="form-group center-block">
+        <image-picker params="cells: $component.defaultImages, selectedCells: $component.selectedStockImage, multiselect: false"></image-picker>
+      </div> -->
+      <div class="form-group">
+        <!-- Image URL -->
+        <label class="control-label">
+          Image Link
+        </label>
+        <div class="input-group">
+          <span class="input-group-addon" style="line-height: 0.75">
+              <input type="radio" name="type" value="url" data-bind="checked: type">
+          </span>
+          <input type="text"
+                 class="form-control"
+                 data-bind="value: type() === 'url' ? sourceUrl : '', disabled: type() =! 'url'">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <!-- Image URL -->
+        <label class="control-label">
+          Gravatar Email
+        </label>
+        <div class="input-group">
+          <span class="input-group-addon" style="line-height: 0.75">
+              <input type="radio" name="type" value="email" data-bind="checked: type">
+          </span>
+          <input type="text"
+                 placeholder="Gravatar Email"
+                 class="form-control"
+                 data-bind="value: type() === 'email' ? email : '', disabled: type() =! 'url'">
+        </div>
+      </div>
+
+      <!-- ko if: type() === 'url' -->
+      <div class="row">
+        <p class="text-muted text-center"><small>Paste in a link to your favorite profile picture. Make sure it's the full image link though.</small></p>
+      </div>
+      <!-- /ko -->
+      <!-- ko if: type() === 'email' -->
+      <div class="row">
+        <p class="text-muted text-center"><small><a href="http://en.gravatar.com" target="_blank">Gravatar is a free service</a> that allows you to set a profile picture based on your email, and it works in lots of places.</small></p>
+      </div>
+      <!-- /ko -->
+    </div>
+
     <form-submit-actions params="{reset: $component.reset}"></form-submit-actions>
   </div>
   <!-- /ko -->
