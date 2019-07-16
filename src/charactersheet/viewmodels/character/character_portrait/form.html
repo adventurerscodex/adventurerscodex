@@ -1,0 +1,35 @@
+<form class="form-horizontal"
+    data-bind="{ submit: $component.submit }">
+  <!-- ko if: loaded(), completeOn: 'render' -->
+  <div class="panel-body row">
+    <card-submit-actions params="{ reset: $component.reset }"></card-submit-actions>
+    <div data-bind="with: profile"
+        class="form-group ui-front">
+      <label for="characterName"
+          class="col-sm-4 control-label">Character Name</label>
+      <div class="col-sm-8">
+        <input class="form-control"
+            placeholder=""
+            name="characterName"
+            data-bind="value: characterName,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate }">
+                 <!-- attr: { ...$component.validation.HitDice.type }"> -->
+      </div>
+    </div>
+    <div data-bind="with: core"
+        class="form-group ui-front">
+      <label for="playerName"
+          class="col-sm-4 control-label">Player Name</label>
+      <div class="col-sm-8">
+        <input class="form-control"
+            placeholder=""
+            name="playerName"
+            data-bind="value: playerName,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate }">
+                 <!-- attr: { ...$component.validation.HitDice.type }"> -->
+      </div>
+    </div>
+    <form-submit-actions params="{reset: $component.reset}"></form-submit-actions>
+  </div>
+  <!-- /ko -->
+</form>

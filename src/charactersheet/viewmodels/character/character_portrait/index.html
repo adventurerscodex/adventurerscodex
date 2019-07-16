@@ -1,0 +1,25 @@
+<div id="character-portrait">
+  <flip-card params="{
+        elementId: 'character-portrait',
+        defaultHeight: 80,
+        }">
+    <div class="front">
+      <character-portrait-view params="{
+       containerId: elementId,
+       show: showFront,
+       forceCardResize: forceCardResize,
+       flip: flip
+     }">
+      </character-portrait-view>
+    </div>
+    <div class="back">
+      <character-portrait-form params="{
+        containerId: elementId,
+        show: showBack,
+        forceCardResize: forceCardResize,
+        flip: flip
+      }">
+      </character-portrait-form>
+    </div>
+  </flip-card>
+</div>

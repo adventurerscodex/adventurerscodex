@@ -14,13 +14,13 @@ export function StatusLineViewModel(params) {
     var self = this;
 
     self.statusLine = ko.observable('');
-    self.character = params.character;
+    // self.character = params.character;
     self.profile = ko.observable();
 
     self.load = function() {
         self.profile(new Profile());
         Notifications.status.changed.add(debounce(self.statusHasChanged, 200));
-        self.character.subscribe(self.coreHasChanged);
+        // self.character.subscribe(self.coreHasChanged);
         self.coreHasChanged();
     };
 
@@ -73,7 +73,7 @@ export function StatusLineViewModel(params) {
     };
 }
 
-ko.components.register('player-status-line', {
+ko.components.register('character-status-line', {
     viewModel: StatusLineViewModel,
     template: '<span data-bind="html: statusLine"></span>'
 });
