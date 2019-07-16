@@ -20,23 +20,31 @@ function _ProficiencyService(configuration) {
         self.setUpSubscriptions();
     };
 
-    self.load = async () => {
-        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
             return;
         }
         self.otherStats(new OtherStats());
         self.profile(new Profile());
-        await self.otherStats().load({uuid: CoreManager.activeCore().uuid()});
-        await self.profile().load({uuid: CoreManager.activeCore().uuid()});
+        await self.otherStats().load({uuid: activeCore.uuid()});
+        await self.profile().load({uuid: activeCore.uuid()});
+
     };
-    self.clear =  () => {
+    self.reload = (oldCore, newCore) => {
         self.otherStats(null);
         self.profile(null);
+        self.load(newCore);
     };
     self.setUpSubscriptions = () => {
         Notifications.otherstats.changed.add(self.updateOtherStats);
         Notifications.profile.changed.add(self.updateProfile);
-        Notifications.coreManager.changing.add(self.clear);
+        Notifications.coreManager.changing.add(self.reload);
         self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
     };
 

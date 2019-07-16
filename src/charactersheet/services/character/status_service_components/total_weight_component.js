@@ -56,54 +56,62 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.weapon.added.add(self.massAdded);
         Notifications.weapon.changed.add(self.massChanged);
         Notifications.weapon.deleted.add(self.massDeleted);
-        Notifications.coreManager.changing.add(self.clear);
+        Notifications.coreManager.changing.add(self.reload);
     };
 
-    self.load = async () => {
-        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
             return;
         }
         self.strength(new AbilityScore());
         self.wealth(new Wealth());
 
-        const coreUuid = CoreManager.activeCore().uuid();
-        const strResponse = await AbilityScore.ps.list({coreUuid, name: Fixtures.abilityScores.constants.strength.name});
+        const coreKey = activeCore.uuid();
+        const strResponse = await AbilityScore.ps.list({coreUuid: coreKey, name: Fixtures.abilityScores.constants.strength.name});
         const score = strResponse.objects[0];
         self.strength().importValues(score.exportValues());
-        await self.wealth().load({ uuid: coreUuid });
+        await self.wealth().load({ uuid: coreKey });
 
         self.allMass.removeAll();
-        const armorResponse = await Armor.ps.list({ coreUuid });
+        const armorResponse = await Armor.ps.list({ coreUuid: coreKey });
         self.allMass.push(...armorResponse.objects);
 
-        const itemResponse = await Item.ps.list({ coreUuid });
+        const itemResponse = await Item.ps.list({ coreUuid: coreKey });
         self.allMass.push(...itemResponse.objects);
 
-        const magicItemResponse = await MagicItem.ps.list({ coreUuid });
+        const magicItemResponse = await MagicItem.ps.list({ coreUuid: coreKey });
         self.allMass.push(...magicItemResponse.objects);
 
-        const weaponResponse = await Weapon.ps.list({ coreUuid });
+        const weaponResponse = await Weapon.ps.list({ coreUuid: coreKey });
         self.allMass.push(...weaponResponse.objects);
-        self._updateStatus();
+        self._updateStatus(coreKey);
 
     };
 
-    self.clear = () => {
+    self.reload = (oldCore, newCore) => {
         self.strength(null);
         self.wealth(null);
         self.allMass.removeAll();
+        self._removeStatus(oldCore.uuid());
+        self.load(newCore);
     };
 
     self.abilityScoreChanged = function (abilityScore) {
         if (abilityScore.name() === Fixtures.abilityScores.constants.strength.name) {
             self.strength().importValues(abilityScore.exportValues());
-            self._updateStatus();
+            self._updateStatus(abilityScore.coreUuid());
         }
     };
 
     self.wealthChanged = function (wealth) {
         self.wealth().importValues(wealth.exportValues());
-        self._updateStatus();
+        self._updateStatus(wealth.uuid());
     };
 
     self.massAdded = function (item) {
@@ -113,7 +121,7 @@ export function TotalWeightStatusServiceComponent() {
             });
             if (!existingItem) {
                 self.allMass.push(item);
-                self._updateStatus();
+                self._updateStatus(item.coreUuid());
             } else {
                 // the mass was already added. change it instead
                 self.massChanged(item);
@@ -127,14 +135,14 @@ export function TotalWeightStatusServiceComponent() {
               (entry) => {
                   return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
               });
-            self._updateStatus();
+            self._updateStatus(item.coreUuid());
         }
     };
 
     self.massChanged = function (item) {
         if (item) {
             Utility.array.updateElement(self.allMass(), item, ko.utils.unwrapObservable(item.uuid));
-            self._updateStatus();
+            self._updateStatus(item.coreUuid());
         }
     };
 
@@ -165,14 +173,13 @@ export function TotalWeightStatusServiceComponent() {
 
     /* Private Methods */
 
-    self._updateStatus = async (score) => {
-        var key = CoreManager.activeCore().uuid();
+    self._updateStatus = async (coreKey) => {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
-            status.characterId(key);
+            status.characterId(coreKey);
             status.identifier(self.statusIdentifier);
         }
 
@@ -187,7 +194,7 @@ export function TotalWeightStatusServiceComponent() {
         Notifications.status.changed.dispatch();
     };
 
-    self._removeStatus = function() {
+    self._removeStatus = function(coreKey) {
         var key = CoreManager.activeCore().uuid();
         var status = PersistenceService.findByPredicates(Status,
             [new KeyValuePredicate('characterId', key),
@@ -201,7 +208,6 @@ export function TotalWeightStatusServiceComponent() {
     self.getWeightForMass = () => {
         return reduce(self.allMass(), function(sum, item) {
             const quantity = item.quantity ? item.quantity() : 1;
-            // console.log(item.name(), ' weighs ', item.weight(), ' and there are ', quantity, 'of them');
             if (item.weight && item.weight() && quantity) {
                 const weightValue = parseFloat(item.weight()).toFixed(2) * quantity;
                 return sum + weightValue;

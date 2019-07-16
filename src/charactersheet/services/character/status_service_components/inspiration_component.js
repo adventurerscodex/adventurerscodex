@@ -18,58 +18,62 @@ export function InspirationStatusServiceComponent() {
     self.statusIdentifier = 'Status.Inspired';
 
     self.init = async function() {
-
         await self.load();
         self.setUpSubscriptions();
     };
 
     self.setUpSubscriptions = () => {
-        Notifications.otherstats.changed.add(self.dataHasChanged);
-        Notifications.coreManager.changing.add(self.clear);
+        Notifications.otherstats.changed.add(self.statsHasChanged);
+        Notifications.coreManager.changing.add(self.coreHasChanged);
     };
 
-    self.clear = () => {
-        self._removeStatus();
+    self.coreHasChanged = (oldCore, newCore) => {
+        self._removeStatus(oldCore.uuid());
+        self.load(newCore);
     };
 
-    self.load = async () => {
-        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
             return;
         }
-        var key = CoreManager.activeCore().uuid();
-        var otherStatsResponse = await OtherStats.ps.read({uuid: key});
+        var coreKey = activeCore.uuid();
+        var otherStatsResponse = await OtherStats.ps.read({uuid: coreKey});
         let otherStats = otherStatsResponse.object;
         if (!otherStats.inspiration()) {
-            self._removeStatus();
+            self._removeStatus(coreKey);
         } else {
-            self._updateStatus();
+            self._updateStatus(coreKey);
         }
     };
     /**
      * This method generates and persists a status that reflects
      * the character's encumbrance.
      */
-    self.dataHasChanged = (otherStats) => {
+    self.statsHasChanged = (otherStats) => {
         if (!otherStats) { return; }
         if (!otherStats.inspiration()) {
-            self._removeStatus();
+            self._removeStatus(otherStats.uuid());
         } else {
-            self._updateStatus();
+            self._updateStatus(otherStats.uuid());
         }
     };
 
     /* Private Methods */
 
-    self._updateStatus = function() {
-        var key = CoreManager.activeCore().uuid();
-
+    self._updateStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
-            status.characterId(key);
+            status.characterId(coreKey);
             status.identifier(self.statusIdentifier);
         }
 
@@ -81,10 +85,9 @@ export function InspirationStatusServiceComponent() {
         Notifications.status.changed.dispatch();
     };
 
-    self._removeStatus = function() {
-        var key = CoreManager.activeCore().uuid();
+    self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();

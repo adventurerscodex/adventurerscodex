@@ -6,7 +6,7 @@ import {
     Profile,
     Status
 } from 'charactersheet/models';
-import { debounce, reverse } from 'lodash';
+import { clone, debounce, reverse } from 'lodash';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
 import ko from 'knockout';
 
@@ -68,8 +68,7 @@ export function StatusLineViewModel(params) {
         if (!ko.utils.unwrapObservable(self.profile).characterName || statuses.length == 0) {
             return '';
         }
-
-        return `${self.profile().characterName()} is ${self.oxfordList(reverse(statuses).map(self.prettyStatus))}.`;
+        return `${self.profile().characterName()} is ${self.oxfordList(statuses.map(self.prettyStatus))}.`;
     };
 }
 

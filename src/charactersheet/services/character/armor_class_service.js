@@ -26,41 +26,48 @@ function _ArmorClassService(configuration) {
         self.setUpSubscriptions();
     };
 
-    self.load = async () => {
-        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
             return;
         }
         self.otherStats(new OtherStats());
         self.dexterity(new AbilityScore());
         self.equippedArmor(null);
         self.equippedShield(null);
-        await self.loadDexterity();
-        await self.loadArmors();
-        await self.loadOtherStats();
+        await self.loadDexterity(activeCore.uuid());
+        await self.loadArmors(activeCore.uuid());
+        await self.loadOtherStats(activeCore.uuid());
     };
 
-    self.clear = () => {
+    self.reload = (oldCore, newCore) => {
         self.otherStats(null);
         self.dexterity(null);
         self.equippedArmor(null);
         self.equippedShield(null);
+        self.load(newCore);
     };
-    self.loadOtherStats = async () => {
+    self.loadOtherStats = async (coreKey) => {
         await self.otherStats().load({
-            uuid: CoreManager.activeCore().uuid()
+            uuid: coreKey
         });
     };
 
-    self.loadDexterity = async () => {
+    self.loadDexterity = async (coreKey) => {
         const response = await AbilityScore.ps.list({
-            coreUuid: CoreManager.activeCore().uuid(),
+            coreUuid: coreKey,
             name: Fixtures.abilityScores.constants.dexterity.name});
         self.updateDexterity(response.objects[0]);
     };
 
-    self.loadArmors = async () => {
+    self.loadArmors = async (coreKey) => {
         const response = await Armor.ps.list({
-            coreUuid: CoreManager.activeCore().uuid(),
+            coreUuid: coreKey,
             equipped: true
         });
         self.setEquippedArmor(response.objects);
@@ -157,7 +164,7 @@ function _ArmorClassService(configuration) {
         Notifications.armor.deleted.add(self.deleteArmor);
         Notifications.abilityscore.changed.add(self.updateDexterity);
         Notifications.otherstats.changed.add(self.updateOtherStats);
-        Notifications.coreManager.changing.add(self.clear);
+        Notifications.coreManager.changing.add(self.reload);
         self.armorClass.subscribe(() => Notifications.armorClass.changed.dispatch());
     };
 

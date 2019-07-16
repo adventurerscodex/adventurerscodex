@@ -48,33 +48,39 @@ export function TrackedStatusServiceComponent() {
         Notifications.trait.changed.add(self.itemChanged);
         Notifications.trait.deleted.add(self.itemDeleted);
 
-        Notifications.coreManager.changing.add(self.clear);
+        Notifications.coreManager.changing.add(self.reload);
     };
 
-    self.load = async () => {
-
-        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
             return;
         }
         self.trackedItems([]);
-        var key = CoreManager.activeCore().uuid();
+        var coreKey = activeCore.uuid();
         const trackedModelTypes = [Feature, Feat, Trait];
         const fetchTrackedEntities = trackedModelTypes.map(
-                (type) => type.ps.list({ coreUuid: key }));
+                (type) => type.ps.list({ coreUuid: coreKey }));
         const responseList = await Promise.all(fetchTrackedEntities);
         const tracked = flatMap(responseList, (response) => response.objects).filter(self.showTracked);
         self.trackedItems(tracked);
 
         if (!self.trackedItems() || self.trackedItems().length > 0) {
-            self._updateStatus();
+            self._updateStatus(coreKey);
         } else {
-            self._removeStatus();
+            self._removeStatus(coreKey);
         }
     };
 
-    self.clear = () => {
-        self._removeStatus();
+    self.reload = (oldCore, newCore) => {
+        self._removeStatus(oldCore.uuid());
         self.trackedItems([]);
+        self.load(newCore);
     };
 
     self.itemAdded = function (item) {
@@ -85,9 +91,9 @@ export function TrackedStatusServiceComponent() {
             if (!tracked) {
                 self.trackedItems.push(item);
                 if (!self.trackedItems() || self.trackedItems().length > 0) {
-                    self._updateStatus();
+                    self._updateStatus(item.coreUuid());
                 } else {
-                    self._removeStatus();
+                    self._removeStatus(item.coreUuid());
                 }
             }
         }
@@ -100,9 +106,9 @@ export function TrackedStatusServiceComponent() {
                   return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(item.uuid);
               });
             if (!self.trackedItems() || self.trackedItems().length > 0) {
-                self._updateStatus();
+                self._updateStatus(item.coreUuid());
             } else {
-                self._removeStatus();
+                self._removeStatus(item.coreUuid());
             }
         }
     };
@@ -133,9 +139,9 @@ export function TrackedStatusServiceComponent() {
             }
             if (changed) {
                 if (!self.trackedItems() || self.trackedItems().length > 0) {
-                    self._updateStatus();
+                    self._updateStatus(item.coreUuid());
                 } else {
-                    self._removeStatus();
+                    self._removeStatus(item.coreUuid());
                 }
             }
         }
@@ -152,16 +158,14 @@ export function TrackedStatusServiceComponent() {
 
     /* Private Methods */
 
-    self._updateStatus = function() {
-        var key = CoreManager.activeCore().uuid();
-
+    self._updateStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
-            status.characterId(key);
+            status.characterId(coreKey);
             status.identifier(self.statusIdentifier);
         }
 
@@ -186,10 +190,9 @@ export function TrackedStatusServiceComponent() {
         Notifications.status.changed.dispatch();
     };
 
-    self._removeStatus = function() {
-        var key = CoreManager.activeCore().uuid();
+    self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();

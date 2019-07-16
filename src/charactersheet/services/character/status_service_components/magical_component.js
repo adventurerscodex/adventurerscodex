@@ -34,25 +34,32 @@ export function MagicalStatusServiceComponent() {
         Notifications.spellslot.added.add(self.spellSlotAdded);
         Notifications.spellslot.changed.add(self.spellSlotChanged);
         Notifications.spellslot.deleted.add(self.spellSlotDeleted);
-        Notifications.coreManager.changing.add(self.clear);
+        Notifications.coreManager.changing.add(self.reload);
     };
 
-    self.load = async () => {
-        if (ko.utils.unwrapObservable(CoreManager.activeCore().type.name) !== 'character') {
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
             return;
         }
         self.spellSlots([]);
-        const response = await SpellSlot.ps.list({coreUuid: CoreManager.activeCore().uuid()});
+        const response = await SpellSlot.ps.list({coreUuid: activeCore.uuid()});
         self.spellSlots(response.objects);
         if (!self.spellSlots().length) {
             return;
         }
-        self.dataHasChanged();
+        self.dataHasChanged(activeCore.uuid());
     };
 
-    self.clear = () => {
+    self.reload = (oldCore, newCore) => {
         self.spellSlots([]);
-        self._removeStatus();
+        self._removeStatus(oldCore);
+        self.load(newCore);
     };
 
     self.spellSlotAdded = function (spellSlot) {
@@ -62,7 +69,7 @@ export function MagicalStatusServiceComponent() {
             });
             if (!existingSpellSlot) {
                 self.spellSlots.push(spellSlot);
-                self.dataHasChanged();
+                self.dataHasChanged(spellSlot.coreUuid());
             } else {
                 self.spellSlotChanged(spellSlot);
             }
@@ -75,14 +82,14 @@ export function MagicalStatusServiceComponent() {
               (entry) => {
                   return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(spellSlot.uuid);
               });
-            self.dataHasChanged();
+            self.dataHasChanged(spellSlot.coreUuid());
         }
     };
 
     self.spellSlotChanged = function (item) {
         if (item) {
             Utility.array.updateElement(self.spellSlots(), item, ko.utils.unwrapObservable(item.uuid));
-            self.dataHasChanged();
+            self.dataHasChanged(item.coreUuid());
         }
     };
 
@@ -90,27 +97,26 @@ export function MagicalStatusServiceComponent() {
      * This method determines wether to update or remove the Magical status
      * component from the player's status line.
      */
-    self.dataHasChanged = () => {
+    self.dataHasChanged = (coreKey) => {
         if (self.spellSlots().length > 0) {
-            self._updateStatus();
+            self._updateStatus(coreKey);
         } else {
-            self._removeStatus();
+            self._removeStatus(coreKey);
         }
     };
 
     /* Private Methods */
 
-    self._updateStatus = function() {
-        var key = CoreManager.activeCore().uuid();
+    self._updateStatus = function(coreKey) {
         var valueWeightPairs = [];
 
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
-            status.characterId(key);
+            status.characterId(coreKey);
             status.identifier(self.statusIdentifier);
         }
 
@@ -126,10 +132,9 @@ export function MagicalStatusServiceComponent() {
         Notifications.status.changed.dispatch();
     };
 
-    self._removeStatus = function() {
-        var key = CoreManager.activeCore().uuid();
+    self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();

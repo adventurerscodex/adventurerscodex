@@ -26,7 +26,6 @@ export class Skill extends KOModel {
     coreUuid = ko.observable(null);
     name = ko.observable('');
     modifier = ko.observable(0);
-    abilityScore = ko.observable(null);
     proficiency = ko.observable('not');
     abilityScore = ko.observable(new AbilityScore());
 
