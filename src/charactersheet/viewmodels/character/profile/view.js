@@ -1,4 +1,5 @@
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { Profile } from 'charactersheet/models/character';
 import autoBind from 'auto-bind';
 import { isNumeric } from 'jquery';
 import ko from 'knockout';
@@ -10,7 +11,9 @@ export class ProfileViewModel extends AbstractViewModel {
         autoBind(this);
     }
 
-    modelName = 'Profile';
+    modelClass() {
+        return Profile;
+    }
 
     weightLabel = ko.pureComputed(() => {
         const weight = ko.utils.unwrapObservable(this.entity().weight);

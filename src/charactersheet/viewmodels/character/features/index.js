@@ -1,4 +1,5 @@
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { Feature } from 'charactersheet/models';
 import { FeatureFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -14,7 +15,10 @@ export class FeaturesViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#feature-pane';
         autoBind(this);
     }
-    modelName = 'Feature';
+
+    modelClass() {
+        return Feature;
+    }
 
     sorts() {
         return {

@@ -1,4 +1,5 @@
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { SpellStats } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -9,7 +10,10 @@ class SpellStatsViewModel extends AbstractViewModel {
         super(params);
         autoBind(this);
     }
-    modelName = 'SpellStats';
+
+    modelClass() {
+        return SpellStats;
+    }
 }
 
 ko.components.register('spell-stats-view', {

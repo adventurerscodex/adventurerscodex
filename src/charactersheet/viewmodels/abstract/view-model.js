@@ -30,38 +30,28 @@ import ko from 'knockout';
 
 export class AbstractViewModel {
     constructor(params) {
-        this.coreKey = null;
         this.containerId = ko.utils.unwrapObservable(params.containerId);
         this.flip = params.flip;
         this.show = params.show ? params.show : ko.observable(true);
         this.existingData = params.data ? params.data : null;
-        if (params.modelName) {
-            this.modelName = params.modelName;
-        }
         this.entity = ko.observable();
         this.loaded = ko.observable(false);
         this.subscriptions = [];
     }
 
     modelClass() {
-        if (!this.modelName) {
-            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
-        }
-        return Clazz[this.modelName];
+        throw(`modelClass must be implemented by ${this.constructor.name}`);
     }
 
-    generateBlank () {
-        if (!this.modelName) {
-            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
-        }
+    generateBlank() {
         const thisClazz = this.modelClass();
-        const newEntity = new thisClazz(); //Clazz[this.modelName];
-        newEntity.coreUuid(this.coreKey);
+        const newEntity = new thisClazz();
+        const coreKey = CoreManager.activeCore().uuid();
+        newEntity.coreUuid(coreKey);
         return newEntity;
     }
 
     async load() {
-        this.coreKey = CoreManager.activeCore().uuid();
         this.entity(this.generateBlank());
         await this.refresh();
         this.setUpSubscriptions();
@@ -72,7 +62,8 @@ export class AbstractViewModel {
         if (this.existingData) {
             this.entity().importValues(this.existingData.exportValues());
         } else {
-            await this.entity().load({uuid: this.coreKey});
+            const coreKey = CoreManager.activeCore().uuid();
+            await this.entity().load({uuid: coreKey});
         }
     }
 

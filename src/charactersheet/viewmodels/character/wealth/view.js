@@ -1,4 +1,5 @@
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
+import { Wealth } from 'charactersheet/models';
 
 import autoBind from 'auto-bind';
 import cpCoins from 'images/cp-coin.svg';
@@ -14,7 +15,10 @@ class WealthViewModel extends AbstractViewModel {
         super(params);
         autoBind(this);
     }
-    modelName = 'Wealth';
+
+    modelClass() {
+        return Wealth;
+    }
 
     cpCoins = cpCoins;
     epCoins = epCoins;

@@ -2,6 +2,7 @@ import {
   AbstractTabularViewModel,
   calculateTotalLoad
  } from 'charactersheet/viewmodels/abstract';
+import { MagicItem } from 'charactersheet/models';
 import { MagicItemFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -17,7 +18,9 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
         autoBind(this);
     }
 
-    modelName = 'MagicItem';
+    modelClass () {
+        return MagicItem;
+    }
 
     sorts() {
         return {

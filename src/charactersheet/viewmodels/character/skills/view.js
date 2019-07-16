@@ -1,7 +1,6 @@
-import {
-  AbstractGridViewModel
- } from 'charactersheet/viewmodels/abstract';
+import { AbstractGridViewModel } from 'charactersheet/viewmodels/abstract';
 import { Notifications } from 'charactersheet/utilities';
+import { Skill } from 'charactersheet/models/character';
 
 import autoBind from 'auto-bind';
 import { filter } from 'lodash';
@@ -13,7 +12,10 @@ export class SkillsViewModel extends AbstractGridViewModel {
         super(params);
         autoBind(this);
     }
-    modelName = 'Skill';
+
+    modelClass () {
+        return Skill;
+    }
 
     sorts () {
         return {

@@ -1,10 +1,10 @@
+import { AbilityScore, Weapon } from 'charactersheet/models';
 import { AbstractTabularViewModel,
   calculateTotalLoad,
   calculateTotalValue
  } from 'charactersheet/viewmodels/abstract';
 import { Notifications, Utility } from 'charactersheet/utilities';
 import { filter, maxBy } from 'lodash';
-import { AbilityScore } from 'charactersheet/models';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import { WeaponFormViewModel } from './form';
 
@@ -20,7 +20,10 @@ export class WeaponsViewModel extends AbstractTabularViewModel {
         this.abilityScores = ko.observableArray([]);
         autoBind(this);
     }
-    modelName = 'Weapon';
+
+    modelClass () {
+        return Weapon;
+    }
 
     sorts() {
         return {

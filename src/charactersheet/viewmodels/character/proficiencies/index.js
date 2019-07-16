@@ -1,4 +1,5 @@
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { Proficiency } from 'charactersheet/models';
 import { ProficiencyFormViewModel } from './form';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -12,7 +13,10 @@ export class ProficienciesViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#proficiency-pane';
         autoBind(this);
     }
-    modelName = 'Proficiency';
+
+    modelClass () {
+        return Proficiency;
+    }
 
     sorts() {
         return {

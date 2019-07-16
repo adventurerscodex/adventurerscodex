@@ -1,18 +1,9 @@
 import 'bin/knockout-bar-progress';
-import {
-    Fixtures,
-    Notifications
-} from 'charactersheet/utilities';
-import {
-    flatMap,
-    maxBy
-} from 'lodash';
-import {
-    AbstractTabularViewModel
-} from 'charactersheet/viewmodels/abstract';
-import {
-    SpellSlotFormComponentViewModel
-} from './form';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
+import { flatMap, maxBy } from 'lodash';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { SpellSlot } from 'charactersheet/models/character';
+import { SpellSlotFormComponentViewModel } from './form';
 import autoBind from 'auto-bind';
 import ko from 'knockout';
 import template from './index.html';
@@ -24,7 +15,10 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#spell-slot-pane';
         autoBind(this);
     }
-    modelName = 'SpellSlot';
+
+    modelClass () {
+        return SpellSlot;
+    }
 
     getDefaultSort() {
         return this.sorts()['level asc'];
