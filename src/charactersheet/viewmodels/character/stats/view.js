@@ -4,13 +4,14 @@ import {
     Health
 } from 'charactersheet/models/character';
 
+import { defer, find } from 'lodash';
 import { CoreManager } from 'charactersheet/utilities';
+import { DELAY } from 'charactersheet/constants';
 import { Notifications } from 'charactersheet/utilities';
 import { StatsDeathSaveViewModel } from './deathsave';
 import { StatsHealthViewModel } from './health';
 
 import autoBind from 'auto-bind';
-import { find } from 'lodash';
 import ko from 'knockout';
 import template from './view.html';
 
@@ -27,6 +28,7 @@ export class StatsCardViewModel {
         this.health = ko.observable(new Health());
         this.massiveDamageTaken = ko.observable(false);
         this.deathSavesVisible = ko.observable(false);
+        this.subscriptions = [];
         autoBind(this);
     }
 
@@ -38,8 +40,25 @@ export class StatsCardViewModel {
     }
 
     setUpSubscriptions = () => {
-        Notifications.health.changed.add(this.healthChanged);
-        this.deathSavesVisible.subscribe(this.subscribeToShowForm);
+        this.subscriptions.push(Notifications.health.changed.add(this.healthChanged));
+        this.subscriptions.push(this.deathSavesVisible.subscribe(this.subscribeToShowForm));
+    }
+
+    disposeOfSubscriptions() {
+        const disposeOfDisposable = (disposable) => {
+            if (disposable.dispose) {
+                disposable.dispose();
+            } else if (disposable.detach) {
+                disposable.detach();
+            }
+
+        };
+        this.subscriptions.map((disposable) => defer(disposeOfDisposable, disposable));
+        this.subscriptions = [];
+    }
+
+    dispose() {
+        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 
     healthChanged = (health) => {

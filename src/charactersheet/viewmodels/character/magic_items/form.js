@@ -44,9 +44,9 @@ export class MagicItemFormViewModel  extends AbstractChildFormModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        this.entity().maxCharges.subscribe(this.resizeOnFieldVisibility);
-        this.entity().requiresAttunement.subscribe(this.resizeOnFieldVisibility);
-        this.entity().requiresAttunement.subscribe(this.updateAttunement);
+        this.subscriptions.push(this.entity().maxCharges.subscribe(this.resizeOnFieldVisibility));
+        this.subscriptions.push(this.entity().requiresAttunement.subscribe(this.resizeOnFieldVisibility));
+        this.subscriptions.push(this.entity().requiresAttunement.subscribe(this.updateAttunement));
     }
 
     resizeOnFieldVisibility = () => {

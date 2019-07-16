@@ -54,8 +54,8 @@ export class ArmorViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions () {
         super.setUpSubscriptions();
-        Notifications.armor.added.add(this.handleArmorChange);
-        Notifications.armor.changed.add(this.handleArmorChange);
+        this.subscriptions.push(Notifications.armor.added.add(this.handleArmorChange));
+        this.subscriptions.push(Notifications.armor.changed.add(this.handleArmorChange));
 
     }
     totalCost = ko.pureComputed(() => {

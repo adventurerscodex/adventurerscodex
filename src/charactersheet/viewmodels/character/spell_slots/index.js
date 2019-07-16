@@ -109,8 +109,8 @@ class SpellSlotsViewModel extends AbstractTabularViewModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        const shortRest = Notifications.events.shortRest.add(this.resetShortRestFeatures);
-        const longRest = Notifications.events.longRest.add(this.resetLongRestFeatures);
+        this.subscriptions.push(Notifications.events.shortRest.add(this.resetShortRestFeatures));
+        this.subscriptions.push(Notifications.events.longRest.add(this.resetLongRestFeatures));
     }
 
     async resetShortRestFeatures() {

@@ -1,8 +1,11 @@
 import { CoreManager, Notifications } from 'charactersheet/utilities';
 import { Clazz } from 'charactersheet/models';
+import { DELAY } from 'charactersheet/constants';
 import { SortService } from 'charactersheet/services/common';
 import { Utility } from 'charactersheet/utilities';
+import { defer } from 'lodash';
 import ko from 'knockout';
+
 
 /**
  * AbstractTabularViewModel
@@ -138,9 +141,9 @@ export class AbstractTabularViewModel {
 
     setUpSubscriptions() {
         const modelNotification = this.modelClass().prototype.constructor.name.toLowerCase();
-        Notifications[modelNotification].added.add(this.addToList);
-        Notifications[modelNotification].changed.add(this.replaceInList);
-        Notifications[modelNotification].deleted.add(this.removeFromList);
+        this.subscriptions.push(Notifications[modelNotification].added.add(this.addToList));
+        this.subscriptions.push(Notifications[modelNotification].changed.add(this.replaceInList));
+        this.subscriptions.push(Notifications[modelNotification].deleted.add(this.removeFromList));
     }
 
     disposeOfSubscriptions() {
@@ -150,12 +153,13 @@ export class AbstractTabularViewModel {
             } else if (disposable.detach) {
                 disposable.detach();
             }
+
         };
-        this.subscriptions.map(disposeOfDisposable);
+        this.subscriptions.map((disposable) => defer(disposeOfDisposable, disposable));
         this.subscriptions = [];
     }
 
     dispose() {
-        this.disposeOfSubscriptions();
+        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 }

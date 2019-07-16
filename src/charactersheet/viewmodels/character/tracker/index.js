@@ -129,20 +129,20 @@ class TrackerViewModel extends AbstractTabularViewModel {
     }
 
     setUpSubscriptions () {
-        Notifications.feature.changed.add(this.onTrackedChanged);
-        Notifications.feat.changed.add(this.onTrackedChanged);
-        Notifications.trait.changed.add(this.onTrackedChanged);
+        this.subscriptions.push(Notifications.feature.changed.add(this.onTrackedChanged));
+        this.subscriptions.push(Notifications.feat.changed.add(this.onTrackedChanged));
+        this.subscriptions.push(Notifications.trait.changed.add(this.onTrackedChanged));
 
-        Notifications.feature.added.add(this.onTrackedAdded);
-        Notifications.feat.added.add(this.onTrackedAdded);
-        Notifications.trait.added.add(this.onTrackedAdded);
+        this.subscriptions.push(Notifications.feature.added.add(this.onTrackedAdded));
+        this.subscriptions.push(Notifications.feat.added.add(this.onTrackedAdded));
+        this.subscriptions.push(Notifications.trait.added.add(this.onTrackedAdded));
 
-        Notifications.feature.deleted.add(this.onTrackedDeleted);
-        Notifications.feat.deleted.add(this.onTrackedDeleted);
-        Notifications.trait.deleted.add(this.onTrackedDeleted);
+        this.subscriptions.push(Notifications.feature.deleted.add(this.onTrackedDeleted));
+        this.subscriptions.push(Notifications.feat.deleted.add(this.onTrackedDeleted));
+        this.subscriptions.push(Notifications.trait.deleted.add(this.onTrackedDeleted));
 
-        Notifications.events.shortRest.add(this.resetShortRestFeatures);
-        Notifications.events.longRest.add(this.resetLongRestFeatures);
+        this.subscriptions.push(Notifications.events.shortRest.add(this.resetShortRestFeatures));
+        this.subscriptions.push(Notifications.events.longRest.add(this.resetLongRestFeatures));
     }
 
     resetShortRestFeatures = async () => {

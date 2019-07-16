@@ -27,8 +27,7 @@ export class FeatFormViewModel extends AbstractChildFormModel {
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        const onTrackFormDisplay = this.entity().isTracked.subscribe(this.forceResize);
-        this.subscriptions.push(onTrackFormDisplay);
+        this.subscriptions.push(this.entity().isTracked.subscribe(this.forceResize));
     }
 }
 

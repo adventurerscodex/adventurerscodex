@@ -5,6 +5,8 @@ import {
 } from 'charactersheet/utilities';
 import { CardEditActionComponent } from 'charactersheet/components/card-edit-actions';
 import { Clazz } from 'charactersheet/models';
+import { DELAY } from 'charactersheet/constants';
+import { defer } from 'lodash';
 
 import ko from 'knockout';
 
@@ -86,12 +88,20 @@ export class AbstractViewModel {
     }
 
     disposeOfSubscriptions() {
-        this.subscriptions.forEach((subscription) => subscription.dispose());
+        const disposeOfDisposable = (disposable) => {
+            if (disposable.dispose) {
+                disposable.dispose();
+            } else if (disposable.detach) {
+                disposable.detach();
+            }
+
+        };
+        this.subscriptions.map((disposable) => defer(disposeOfDisposable, disposable));
         this.subscriptions = [];
     }
 
     dispose() {
-        this.disposeOfSubscriptions();
+        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 
     shortText = (string) => {

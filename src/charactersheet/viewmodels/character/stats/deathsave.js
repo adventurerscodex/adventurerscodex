@@ -1,7 +1,8 @@
 import { DeathSave, Health } from 'charactersheet/models/character';
-import { find, times } from 'lodash';
+import { defer, find, times } from 'lodash';
 
 import { CoreManager } from 'charactersheet/utilities';
+import { DELAY } from 'charactersheet/constants';
 import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
@@ -18,6 +19,7 @@ class StatsDeathSaveViewModel {
         this.deathSaveSuccess = ko.observable(new DeathSave());
         this.health = ko.observable(new Health());
         this.healInput = ko.observable(null);
+        this.subscriptions = [];
         autoBind(this);
     }
 
@@ -34,7 +36,23 @@ class StatsDeathSaveViewModel {
 
     setUpSubscriptions() {
         this.show.subscribe(this.massiveDamageDeath);
-        Notifications.health.changed.add(this.updateHealth);
+        this.subscriptions.push(Notifications.health.changed.add(this.updateHealth));
+    }
+    disposeOfSubscriptions() {
+        const disposeOfDisposable = (disposable) => {
+            if (disposable.dispose) {
+                disposable.dispose();
+            } else if (disposable.detach) {
+                disposable.detach();
+            }
+
+        };
+        this.subscriptions.map((disposable) => defer(disposeOfDisposable, disposable));
+        this.subscriptions = [];
+    }
+
+    dispose() {
+        setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 
     async massiveDamageDeath() {
