@@ -17,8 +17,9 @@ export class ItemsViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#item-pane';
         autoBind(this);
     }
-
-    modelName = 'Item';
+    modelClass () {
+        return Item;
+    }
 
     sorts() {
         return {

@@ -1,4 +1,4 @@
-import { SpellSlot, SpellStats } from 'charactersheet/models';
+import { Spell, SpellSlot, SpellStats } from 'charactersheet/models';
 import { filter, maxBy } from 'lodash';
 
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
@@ -22,7 +22,9 @@ class SpellbookViewModel extends AbstractTabularViewModel {
         autoBind(this);
     }
 
-    modelName = 'Spell';
+    modelClass () {
+        return Spell;
+    }
 
     async refresh () {
         await super.refresh();

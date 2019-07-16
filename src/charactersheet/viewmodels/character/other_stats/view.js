@@ -24,7 +24,10 @@ export class OtherStatsViewModel extends AbstractViewModel {
         this.dexterity = ko.observable(new AbilityScore());
         autoBind(this);
     }
-    modelName = 'OtherStats';
+
+    modelClass () {
+        return OtherStats;
+    }
 
     async load() {
         await super.load();

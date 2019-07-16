@@ -33,9 +33,6 @@ export class AbstractFormModel {
         this.flip = params.flip ? params.flip : noOp;
         this.show = params.show ? params.show : ko.observable(true);
         this.forceCardResize = params.forceCardResize ? params.forceCardResize : noOp;
-        if (params.modelName) {
-            this.modelName = params.modelName;
-        }
         this.entity = ko.observable();
         this.formElementHasFocus = ko.observable(false);
         this.showDisclaimer = ko.observable(false);
@@ -44,10 +41,7 @@ export class AbstractFormModel {
     }
 
     modelClass () {
-        if (!this.modelName) {
-            throw(`Model Name or modelClass must be implemented by ${this.constructor.name}`);
-        }
-        return Clazz[this.modelName];
+        throw(`modelClass must be implemented by ${this.constructor.name}`);
     }
 
     generateBlank() {

@@ -3,6 +3,7 @@ import {
   calculateTotalLoad,
   calculateTotalValue
  } from 'charactersheet/viewmodels/abstract';
+import { Armor } from 'charactersheet/models';
 import { ArmorFormViewModel } from './form';
 import { Notifications } from 'charactersheet/utilities';
 
@@ -18,7 +19,10 @@ export class ArmorViewModel extends AbstractTabularViewModel {
         this.collapseAllId = '#armor-pane';
         autoBind(this);
     }
-    modelName = 'Armor';
+
+    modelClass() {
+        return Armor;
+    }
 
     sorts() {
         return {
