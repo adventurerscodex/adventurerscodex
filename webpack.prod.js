@@ -27,7 +27,7 @@ let config = merge(common, {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new CompressionWebpackPlugin(),
+        // new CompressionWebpackPlugin(),
         new webpack.DefinePlugin({
             // Some package detect NODE_ENV to determine which build to use
             'process.env': {
