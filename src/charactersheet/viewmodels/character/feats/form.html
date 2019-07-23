@@ -51,9 +51,8 @@
       <input type="checkbox"
           class="ac-checkbox sr-only"
           data-bind="checked: isTracked, attr: {id: `${$component.containerId}_tracked`}"></input>
-      <label data-bind="attr: {for: `${$component.containerId}_tracked`}"> Tracked? </label>&nbsp;<span class="fa fa-info-circle"
-          style="cursor:pointer;"
-          data-bind="popover: { content: $component.popoverText }"></span>
+      <label data-bind="attr: {for: `${$component.containerId}_tracked`}"> Tracked? </label>&nbsp;<a class="fa fa-info-circle statsPopover"
+          data-bind="popover: { content: $component.popoverText }" role="button" tabindex="0"></a>
     </div>
     <!-- ko if: isTracked() -->
     <form-tracked-component params="{tracked: tracked}"></form-tracked-component>
