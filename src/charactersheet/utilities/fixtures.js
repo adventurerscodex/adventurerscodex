@@ -86,6 +86,20 @@ export var Fixtures = {
             'progress-bar-teal',
             'progress-bar-blue',
             'progress-bar-indigo'
+        ],
+        colorHexList: [
+            '#2F972F',
+            '#71D4E8',
+            '#f0ad4e',
+            '#d9534f',
+            '#800080',
+            '#01DFD7',
+            '#8000FF',
+            '#906713',
+            '#D7DF01',
+            '#C82D78',
+            '#5cb85c',
+            '#337ab7'
         ]
     },
     armor : {
@@ -93,7 +107,8 @@ export var Fixtures = {
             types: {
                 shield: 'Shield',
                 light: 'Light',
-                medium: 'Medium'
+                medium: 'Medium',
+                heavy: 'Heavy'
             }
         },
         armorTypeOptions : [
@@ -245,7 +260,22 @@ export var Fixtures = {
             'Sight',
             'Special',
             'Touch',
-            'Unlimited']
+            'Unlimited'],
+        damageTypeOptions: [
+            'acid',
+            'bludgeoning',
+            'cold',
+            'fire',
+            'force',
+            'lightning',
+            'necrotic',
+            'piercing',
+            'poison',
+            'psychic',
+            'radiant',
+            'slashing',
+            'thunder'
+        ]
     },
     spellStats : {
         spellcastingAbilityOptions: [
@@ -436,11 +466,11 @@ export var Fixtures = {
             'color': 'danger'
         },{
             'value': 0.0,
-            'status': 'unconcious',
+            'status': 'unconscious',
             'color': 'danger'
         },{
             'value': -1,
-            'status': 'unconcious and stable',
+            'status': 'unconscious and stable',
             'color': 'danger'
         },{
             'value': -2,

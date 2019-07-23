@@ -1,356 +1,147 @@
-<div class="panel panel-default">
-  <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover" id="inventoryTable">
-      <thead>
-        <tr>
-          <th id="inventoryTableItemHeader" class="col-md-2 col-xs-4"
-            data-bind="click: function(){sortBy('name');}">
-            Item
-            <span data-bind="css: sortArrow('name')"></span></th>
-          <th id="inventoryTableQuantityHeader" class="col-md-1 col-xs-2"
-            data-bind="click: function(){sortBy('quantity');}">
-            Quantity
-            <span data-bind="css: sortArrow('quantity')"></span></th>
-          <th id="inventoryTableWeightHeader" class="col-md-1 col-xs-2"
-            data-bind="click: function(){sortBy('weight');}">
-            Weight
-            <span data-bind="css: sortArrow('weight')"></span></th>
-          <th id="inventoryTableCostHeader" class="col-md-1 hidden-xs col-sm-2"
-            data-bind="click: function(){sortBy('cost');}">
-            Cost
-            <span data-bind="css: sortArrow('cost')"></span></th>
-          <th class="hidden-sm hidden-xs col-md-5">
-            Description</th>
-          <th class="col-md-1 col-xs-2 text-right">
-           <a data-bind="click: toggleAddModal"
-            id="inventoryAddIcon" href="#">
-              <i class="fa fa-plus fa-color"></i>
-           </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      <!-- ko foreach: filteredAndSortedEquipment -->
-        <tr class="clickable">
-          <td data-bind="text: name, click: $parent.editItem"
-                  href="#"></td>
-          <td data-bind="text: quantity, click: $parent.editItem"
-                  href="#"></td>
-          <td data-bind="text: itemWeightLabel, click: $parent.editItem"
-                  href="#"></td>
-          <td class="hidden-xs" data-bind="text: costLabel,
-                  click: $parent.editItem" href="#"></td>
-          <td class="hidden-sm hidden-xs" data-bind="html: longDescription,
-            click: $parent.editItem" href="#"></td>
-          <td class="text-right">
-            <a data-bind='click: $parent.removeItem' href="#">
-              <i class="fa fa-trash-o fa-color-hover"></i>
-            </a>
-          </td>
-        </tr>
-      <!-- /ko -->
-      <!-- ko if: filteredAndSortedEquipment().length == 0 -->
-        <tr class="clickable">
-          <td data-bind="click: toggleAddModal"
-            colspan="12" class="text-center">
-            <i class="fa fa-plus fa-color"></i>
-            Add a new item
-          </td>
-        </tr>
-      <!-- /ko -->
-      </tbody>
-    </table>
-  </div> <!-- end panel body -->
-  <div class="container-fluid panel-footer">
-     <span class="pull-right">Total weight:&nbsp;
-      <span id="inventoryTableTotalWeightSpan" data-bind="text: totalItemWeight"></span>
-    </span>
-  </div> <!-- end panel footer -->
-</div>
-
-
-<!-- Add Modal -->
-<div class="modal fade"
-  id="addItem" tabindex="-1" role="dialog" aria-labelledby="addItemLabel"
-  data-bind="modal: { onopen: modalFinishedOpening,
-    open: addModalOpen,
-    onclose: toggleCloseModal }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Add an Item to your Inventory.</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-          <div class="form-group ui-front">
-           <label for="name"
-             class="col-sm-2 control-label">
-              Name <i class="required"></i>
-            </label>
-           <div class="col-sm-10">
-             <input type="text"
-               class="form-control"
-               id="inventoryAddNameInput"
-               name="name"
-               placeholder="Rations"
-               data-bind='textInput: blankItem().name,
-                 autocomplete: { source: itemsPrePopFilter, onselect: populateItem },
-                 hasFocus: firstModalElementHasFocus'>
-           </div>
-         </div>
-         <div class="form-group">
-           <label for="weight"
-             class="col-sm-2 control-label">Weight</label>
-           <div class="col-sm-10">
-             <div class="input-group">
-               <input type="number"
-                      class="form-control"
-                      id="inventoryAddWeightInput"
-                      name="weight"
-                 placeholder="Item Weight"
-                 data-bind='textInput: blankItem().weight'>
-                 <span class="input-group-addon">lbs.</span>
-             </div>
-           </div>
-         </div>
-         <div class="form-group">
-           <label for="itemQuantity"
-             class="col-sm-2 control-label">Quantity</label>
-           <div class="col-sm-10">
-             <input type="number"
-               class="form-control"
-               name="quantity"
-               id="inventoryAddQuantityInput"
-               placeholder="Item Quantity"
-               data-bind='textInput: blankItem().quantity'>
-           </div>
-         </div>
-         <div class="form-group ui-front">
-           <label
-             class="col-sm-2 control-label">Cost</label>
-           <div class="col-sm-10">
-      		   <div class="input-group">
-      			 <input type="number"
-               name="cost"
-      			   class="form-control input-jquery-addon"
-               id="inventoryAddCostInput"
-      			   data-bind="value: blankItem().cost" />
-      			 <span class="input-group-addon input-group-addon-jquery">
-               <input class="form-control"
-                      id="inventoryAddCurrencyDenominationInput"
-                      placeholder="GP"
-                      name="currencyDenomination"
-      						    data-bind="textInput: blankItem().currencyDenomination, autocomplete: {
-                          source: blankItem().itemCurrencyDenominationOptions,
-                          onselect: setItemCurrencyDenomination }">
-              </span>
-      		   </div>
-    	      </div>
-         </div>
-         <div class="form-group">
-           <label for="itemDescription"
-             class="col-sm-2 control-label">Description</label>
-           <div class="col-sm-10">
-             <textarea type="password"
-               class="form-control"
-               name="description"
-               id="inventoryAddDescriptionTextarea"
-               placeholder="Rations consist of..."
-               rows="4"
-               data-bind='textInput: blankItem().description'>
-             </textarea>
-             <small class="text-muted">
-              Text in this panel can be styled using Markdown. Click
-              <a target="_blank"
-                href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-            </small>
-           </div>
-         </div>
-         <div class="modal-footer">
-           <button type="button"
-             class="btn btn-default"
-             id="inventoryAddCancelButton"
-             data-dismiss="modal">
-             Cancel
-           </button>
-           <button type="submit"
-             class="btn btn-primary"
-             id="inventoryAddAddButton">
-             Add
-           </button>
-           <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
-             <sm><i>This data is distributed under the
-               <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-                 target='_blank'>
-                 OGL</a><br/>
-                 Open	Game	License	v	1.0a	Copyright	2000,	Wizards	of	the	Coast,	LLC.
-               </i></sm>
-           </p>
-         </div>
-        </form>
-      </div>
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     data-bind="modal: {
-       open: modalOpen,
-       onopen: modalFinishedOpening,
-       onclose: closeEditModal
-      }"
-     id="viewItem"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="viewSpellLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">View an item from your inventory.</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Begin Tabs -->
-        <ul class="nav nav-tabs tabs">
-          <li role="presentation" id="inventoryModalPreviewTab" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#magicItemsModalPreview" aria-controls="itemsModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
-            </a>
-          </li>
-          <li role="presentation" id="inventoryModalEditTab" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#magicItemsModalEdit" aria-controls="itemsModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane" id="itemsModalPreview">
-            <div class="h3">
-              <span data-bind="text: name" id="inventoryPreviewNameLabel"></span>&nbsp;
-            </div>
-            <hr />
-            <div class="row">
-              <div class="col-sm-4 col-xs-12"><b>Weight:</b>&nbsp;<span data-bind="text: itemWeightLabel" id="inventoryPreviewWeightLabel"></span></div>
-              <div class="col-sm-4 col-xs-12"><b>Quantity:</b>&nbsp;<span data-bind="text: quantity" id="inventoryPreviewQuantityInput"></span></div>
-              <div class="col-sm-4 col-xs-12"><b>Cost:</b>&nbsp;<span data-bind="text: costLabel" id="inventoryPreviewCostInput"></span></div>
-            </div>
-            <hr />
-            <h4>Description</h4>
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: itemDescriptionHTML"
-                     class="preview-modal-overflow"
-                     id="inventoryPreviewDescriptionTextarea">
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane" id="magicItemsModalEdit">
-            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-              <div class="form-group">
-                <label for="name"
-                       class="col-sm-2 control-label">
-                        Name <i class="required"></i>
-                </label>
-                <div class="col-sm-10">
-                  <input type="text"
-                         class="form-control"
-                         name="name"
-                         id="inventoryEditNameInput"
-                         placeholder="Rations"
-                         data-bind='textInput: name,
-                          hasFocus: $parent.editFirstModalElementHasFocus'>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="weight"
-                       class="col-sm-2 control-label">Weight</label>
-                <div class="col-sm-10">
-                  <div class="input-group">
-                    <input type="number"
-                           class="form-control"
-                           id="inventoryEditWeightInput"
-                           name="weight"
-                           placeholder="Item Weight"
-                           data-bind='textInput: weight'>
-                    <span class="input-group-addon">lbs.</span>
+<div id="item-pane">
+  <div class="h4 card-title"> Inventory<br />
+    <small>Don't hoard too much stuff; it's no fun to be encumbered.</small>
+  </div>
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead>
+      <tr class="ac-table-header">
+        <th data-bind="click: function(){sortBy('name');}"> Item <span data-bind="css: sortArrow('name')" />
+        </th>
+        <th data-bind="click: function(){sortBy('quantity');}">
+          <span class="hidden-xs hidden-sm">Quantity</span>
+          <span class="visible-xs visible-sm">Qty</span>
+          <span data-bind="css: sortArrow('quantity')" />
+        </th>
+        <th class="hidden-xs"
+            data-bind="click: function(){sortBy('totalWeight');}"> Total Weight <span data-bind="css: sortArrow('totalWeight')" />
+        </th>
+        <th class="hidden-xs"
+            data-bind="click: function(){sortBy('totalCalculatedCost');}"> Total Value <span data-bind="css: sortArrow('totalCalculatedCost')" />
+        </th>
+        <th class="col-xss-1 text-right">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus" />
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko ifnot: loaded(), completeOn: 'render' -->
+    <tbody><tr><td colspan=5><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+    <!-- /ko -->
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr class="clickable expandRow"
+          data-toggle="collapse"
+          data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}">
+        <td><span data-bind="text: $component.shortText(name)" /></td>
+        <td><span data-bind="text: quantity" /></td>
+        <td class="hidden-xs"><span data-bind="text: totalWeightLabel" /></td>
+        <td class="hidden-xs"><span data-bind="text: totalCostLabel" /></td>
+        <td class="col-xs-1 text-right">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#item_list_${$data.uuid()}`}"
+              class="rotate fa fa-chevron-left" />
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="5">
+          <flip-card params="{
+                    dataId: $data.uuid,
+                    tabId: $parent.tabId,
+                    collapsable: true,
+                    elementId: 'item_list',
+                    context: { data: $data }
+                  }">
+            <div class="front">
+              <card-edit-actions params="{ flip: flip }"></card-edit-actions>
+              <div data-bind="with: context.data">
+                <div class="h4 collapsable-card-title"
+                    data-bind="text: name" />
+                <div class="panel-body row">
+                  <div class="col-sm-5 col-md-4 col-lg-3">
+                    <table class="table table-hover table-condensed table-ac-bordered">
+                      <tbody>
+                        <tr>
+                          <th>Quantity:</th>
+                          <td><span data-bind="text: quantity"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Weight Each:</th>
+                          <td><span data-bind="text: weightLabel"></span></td>
+                        </tr>
+                        <tr>
+                          <th>Price Each:</th>
+                          <td><span data-bind="text: costLabel"></span></td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                 </div>
-              </div>
-              <div class="form-group">
-                <label for="itemQuantity"
-                       class="col-sm-2 control-label">Quantity</label>
-                <div class="col-sm-10">
-                  <input type="number"
-                         class="form-control"
-                         name="quantity"
-                         id="inventoryEditQuantityInput"
-                         placeholder="Item Quantity"
-                         data-bind='textInput: quantity'>
+                  <div class="col-sm-7 col-md-8 col-lg-9">
+                    <p class="card-description"
+                        data-bind="markdownPreview: itemDescriptionHTML"></p>
+                  </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Cost</label>
-                  <div class="col-sm-10">
-          		      <div class="input-group">
-          			      <input type="number"
-                             name="cost"
-          			             class="form-control input-jquery-addon"
-                             id="inventoryEditCostInput"
-          			             data-bind="value: cost" />
-          			      <span class="input-group-addon input-group-addon-jquery">
-                      <input class="form-control"
-                             name="currencyDenomination"
-                             id="inventoryEditCurrencyDenominationInput"
-          					         placeholder="GP"
-                             data-bind="textInput: currencyDenomination">
-                      </span>
-          		      </div>
-        	        </div>
-              </div>
-              <div class="form-group">
-                <label for="itemDescription"
-                       class="col-sm-2 control-label">Description</label>
-                <div class="col-sm-10">
-                  <textarea type="password"
-                            class="form-control"
-                            name="description"
-                            id="inventoryEditDescriptionTextarea"
-                            placeholder="Rations consist of..."
-                            rows="4"
-                            data-bind='textInput: description'>
-                  </textarea>
-                  <small class="text-muted">
-                    Text in this panel can be styled using Markdown. Click
-                    <a target="_blank"
-                      href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                  </small>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="submit"
-                  class="btn btn-primary"
-                  id="inventoryEditDoneButton">
-                  Done
-                </button>
-              </div>
-            </form>
-          </div> <!-- End Edit Tab -->
-        </div> <!-- End Content -->
-      </div> <!-- End Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
+            </div>
+            <div class="back">
+              <item-form params="{
+                    data: context.data,
+                    tabId: $parent.tabId,
+                    containerId: elementId,
+                    show: showBack,
+                    flip: flip,
+                    forceCardResize: forceCardResize
+                   }"></item-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+      <tr class="collapseRow add-form">
+        <td colspan="5">
+          <div id="add-item" class="collapse add-card">
+            <item-form params="{
+                containerId: 'add-item',
+                show: $component.displayAddForm,
+                flip: $component.toggleShowAddForm,
+               }"></item-form>
+          </div>
+        </td>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="5">
+          <div class="row">
+            <div class="pull-left col col-xs-4 text-muted">
+              <small class="table-foot-content">
+                <span class="visible-xs"
+                    data-bind="text: totalCost" />
+                <span class="hidden-xs">Value:<span data-bind="text: totalCost" /></span>
+              </small>
+            </div>
+            <div class="col col-xs-4">
+              <!-- ko ifnot: $component.displayAddForm -->
+              <button type="button"
+                  class="btn btn-link btn-sm btn-block"
+                  data-toggle="collapse"
+                  data-target="#add-item"
+                  data-bind="click: $component.toggleShowAddForm">
+                <i class="fa fa-plus"></i> Add Item </button>
+              <!-- /ko -->
+            </div>
+            <div class="pull-right col col-xs-4 text-muted text-right">
+              <small class="table-foot-content">
+                <span class="visible-xs"
+                    data-bind="text: totalWeight" />
+                <span class="hidden-xs">Weight:<span data-bind="text: totalWeight" /></span>
+              </small>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /ko -->
+  </table>
+</div>

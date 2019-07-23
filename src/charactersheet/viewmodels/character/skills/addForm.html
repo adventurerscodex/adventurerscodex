@@ -1,0 +1,53 @@
+<form data-bind="submit: $component.submit">
+  <div class="h4 collapsable-card-title"> New Skill </div>
+  <div class="panel-body"
+      data-bind="with: entity">
+    <div class="form-group">
+      <label class=" control-label">Skill Name</label>
+      <input class="form-control"
+          placeholder="Name"
+          data-bind='value: name,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.name },
+             hasFocus: $component.formElementHasFocus'>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Proficient</label>
+      <select class="form-control"
+          style="width: 100%"
+          data-bind="value: proficiency,
+              event: { blur: $component.reviewInput, invalid: $component.invalidate },
+              attr: { ...$component.validation.proficiency },
+              options: $component.proficiencyOptions,
+              select2: {
+                placeholder: '',
+                minimumResultsForSearch: Infinity,
+                templateSelection: $component.formatProficiencyOptions,
+                templateResult: $component.formatProficiencyOptions,
+                dropdownAutoWidth: true
+               }"></select>
+    </div>
+    <div class="form-group">
+      <label class="control-label">Ability Score</label>
+      <select class="form-control"
+          style="width: 100%"
+          data-bind="value: $component.abilityScoreChoice,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.abilityScore },
+                options: $component.abilityScoreOptions(),
+                select2: {
+                  minimumResultsForSearch: Infinity,
+                  dropdownAutoWidth: true,
+                  required: true
+                 }"></select>
+    </div>
+    <div class="pull-right">
+      <button type="button"
+          class="btn btn-default btn-sm"
+          data-bind="click: $component.reset">Cancel</button>
+      <button type="submit"
+          class="btn btn-primary btn-sm"
+          id="skillAddAddButton">Add</button>
+    </div>
+  </div>
+</form>

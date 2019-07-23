@@ -1,36 +1,53 @@
 import 'bin/knockout-mapping-autoignore';
 import 'knockout-mapping';
+// import { Notifications } from 'charactersheet/utilities';
+import { isEmpty } from 'lodash';
 import ko from 'knockout';
 
+export class Tracked {
 
-export function Tracked() {
-    var self = this;
-    self.mapping = {
-        include: ['max', 'used', 'resetsOn', 'color', 'type']
+    mapping = {
+        include: ['max', 'used', 'resetsOn', 'type']
     };
 
-    self.max = ko.observable(0);
-    self.used = ko.observable(0);
-    self.resetsOn = ko.observable('long');
-    self.type = ko.observable(null);
-    self.color = ko.observable();
+    max = ko.observable(0);
+    used = ko.observable(0);
+    resetsOn = ko.observable('long');
+    type = ko.observable(null);
 
-    self.importValues = function(values) {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        ko.mapping.fromJS(values, mapping, self);
-    };
+    equals(tracked) {
+        return (
+          ko.utils.unwrapObservable(this.max) === ko.utils.unwrapObservable(tracked.max) &&
+        ko.utils.unwrapObservable(this.used) === ko.utils.unwrapObservable(tracked.used) &&
+        ko.utils.unwrapObservable(this.resetsOn) === ko.utils.unwrapObservable(tracked.resetsOn));
+    }
 
-    self.exportValues = function() {
-        var mapping = ko.mapping.autoignore(self, self.mapping);
-        return ko.mapping.toJS(self, mapping);
-    };
+    clearValues() {
+        this.max(0);
+        this.used(0);
+        this.resetsOn('long');
+        this.type(null);
+    }
+
+    importValues(values) {
+        // if (!isEmpty(values)) {
+        const mapping = ko.mapping.autoignore(this, this.mapping);
+        ko.mapping.fromJS(values, mapping, this);
+        // }
+    }
+
+    exportValues () {
+        var mapping = ko.mapping.autoignore(this, this.mapping);
+        return ko.mapping.toJS(this, this.mapping);
+    }
 }
 
 Tracked.validationConstraints = {
-    rules: {
+    fieldParams: {
         max: {
             required: true,
-            number: true,
+            type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         }

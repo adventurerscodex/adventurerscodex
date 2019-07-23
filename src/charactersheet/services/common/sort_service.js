@@ -2,6 +2,7 @@
  * A utility class that provides helpers for sorting, filtering, and
  * determining the various properties of sortable tables.
  */
+import { reverse, sortBy } from 'lodash';
 export var SortService = {
 
     /**
@@ -17,30 +18,12 @@ export var SortService = {
         if (filter) {
             //TODO
         }
-
-        return data.sort(function(a, b) {
-            var asc = sort.direction === 'asc' ? true : false;
-            var res = null;
-
-            var aprop = a[sort.field]();
-            var bprop = b[sort.field]();
-
-            if (sort.numeric) {
-                aprop = parseInt(a[sort.field]());
-                bprop = parseInt(b[sort.field]());
-            }
-
-            if (asc && sort.booleanType) {
-                res = (aprop === bprop) ? 0 : aprop ? -1 : 1;
-            } else if (asc) {
-                res = aprop > bprop ? 1 : -1;
-            } else if (!asc && sort.booleanType) {
-                res = (aprop === bprop) ? 0 : aprop ? 1 : -1;
-            } else {
-                res = aprop < bprop ? 1 : -1;
-            }
-            return res;
-        });
+        var asc = sort.direction === 'asc' ? true : false;
+        const sorted = sortBy(data, (entity) => {return entity[sort.field]();});
+        if (sort.direction !== 'asc') {
+            reverse(sorted);
+        }
+        return sorted;
     },
 
     /**

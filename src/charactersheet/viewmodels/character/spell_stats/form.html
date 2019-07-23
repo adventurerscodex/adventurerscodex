@@ -1,0 +1,80 @@
+<form data-bind="{submit: submit}">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <table data-bind="with: entity"
+      class="table table-responsive table-ac-bordered table-hover score-save-table">
+    <tbody>
+      <tr>
+        <th> Spell Attack Bonus </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="spellAttackBonus"
+              data-bind="value: spellAttackBonus,
+                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                    attr: { ...$component.validation.spellAttackBonus }">
+        </td>
+      </tr>
+      <tr>
+        <th> Spell Save DC </th>
+        <td class="ac-table-data-cell">
+          <input name="spellSaveDc"
+              class="form-control ac-number-input"
+              data-bind="value: spellSaveDc,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.spellSaveDc }">
+        </td>
+      </tr>
+      <tr>
+        <th> Spell Casting Ability </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="castingAbility"
+              data-bind="value: castingAbility,
+                  event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                  attr: { ...$component.validation.castingAbility },
+                      autocomplete: { source: spellcastingAbilityOptions,
+                      onselect: $component.setSpellCastingAbility }">
+        </td>
+      </tr>
+      <tr>
+        <th> Cantrips Known </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="cantripsKnown"
+              data-bind="value: cantripsKnown,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.cantripsKnown }">
+        </td>
+      </tr>
+      <tr>
+        <th> Spells Known </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="spellsKnown"
+              data-bind="textInput: spellsKnown,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.spellsKnown }">
+        </td>
+      </tr>
+      <tr>
+        <th> Max Prepared </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="axPrepared"
+              data-bind="value: maxPrepared,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.maxPrepared }">
+        </td>
+      </tr>
+      <tr>
+        <th> Invocations Known </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="invocationsKnown"
+              data-bind="value: invocationsKnown,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.invocationsKnown }">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

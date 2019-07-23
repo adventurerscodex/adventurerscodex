@@ -1,10 +1,3 @@
-i.required {
-  color: red;
-}
-i.required:after {
-  content:"*";
-}
-
 /*
 Responsive Styles
 */
@@ -52,11 +45,22 @@ Responsive Styles
 /*
 General Styling
 */
-html, body {height: 100%;}
+html {
+  touch-action: manipulation;
+}
+
+html, body {
+  height: 100%;
+}
 
 nav.navbar {
   /* Bootstrap adds too much top padding below the nav-bar. */
   margin-bottom:15px;
+}
+
+.navbar-collapse {
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 a.navbar-brand.navbar-divider:after {
@@ -71,12 +75,15 @@ a.navbar-brand.navbar-divider:after {
 #content {
   max-width: 100%;
   font-family: "Lato", sans-serif;
-  min-height: 100%;
+  /* min-height: 100%; */
 }
 
 .main {
   padding-bottom:150px;
-  overflow:auto;
+  /* since the contents of the site are within their own padded containers
+  remove this padding to keep the size reasonable */
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 h1, h2, h3, h4, .h1, .h2, .h3, .h4 {
@@ -95,7 +102,7 @@ small {
 .footer {
   position: relative;
   height: 178px;
-	clear:both;
+  clear:both;
   margin-top:0px;
   padding-top:30px;
   background-color: #ecf0f1;
@@ -118,11 +125,6 @@ small {
 .row-padded {
   padding-top: 5px;
   padding-bottom: 5px;
-}
-
-.row-padded-horizontal {
-  padding-left: 15px;
-  padding-right: 15px;
 }
 
 .img-padded {
@@ -159,8 +161,8 @@ small {
 }
 
 .spacer {
-	width:10px;
-	height:10px;
+  width:10px;
+  height:10px;
 }
 
 .spacer-lg {
@@ -169,27 +171,27 @@ small {
 }
 
 .inline-left {
-	float:left;
-	display:inline;
-	width: 49%;
+  float:left;
+  display:inline;
+  width: 49%;
 }
 
 .inline-right {
-	float:right;
-	display:inline;
-	width: 49%
+  float:right;
+  display:inline;
+  width: 49%
 }
 
 .tri {
-	margin-left:2%;
-	margin-right:2%;
-	width:30%;
+  margin-left:2%;
+  margin-right:2%;
+  width:30%;
 }
 
 .quad {
-	margin-left:2%;
-	margin-right:2%;
-	width:22%;
+  margin-left:2%;
+  margin-right:2%;
+  width:22%;
 }
 
 /**
@@ -278,6 +280,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-failure-empty {
@@ -287,6 +290,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-success-full {
@@ -296,6 +300,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .ds-success-empty {
@@ -305,6 +310,7 @@ div.hr {
   height:24px;
   display: inline-block;
   padding: 0 0 0 0px;
+  margin: 5px;
 }
 
 .inspiration-full {
@@ -324,12 +330,12 @@ div.hr {
 }
 
 .circular-profile {
-	width: 80px;
-	height: 80px;
-	border-radius: 40px;
-	-webkit-border-radius: 40px;
-	-moz-border-radius: 40px;
-	overflow:hidden;
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  overflow:hidden;
 }
 
 .no-padding {
@@ -477,7 +483,7 @@ textarea.dark-area {
 
 .hit-dice-list {
   height:100%;
-  padding:15px;
+  padding:5px;
   line-height:0.7em;
 }
 
@@ -530,6 +536,7 @@ textarea.dark-area {
 
 .clickable {
   cursor:pointer;
+  height: 100%
 }
 
 .hide-block {
@@ -570,10 +577,10 @@ textarea.dark-area {
 }
 
 .tabs .secondary-nav {
-	float:right;
-	margin-left:10px;
-	margin-right:10px;
-	line-height: 3.6em
+  float:right;
+  margin-left:10px;
+  margin-right:10px;
+  line-height: 3.6em
 }
 
 table.table-no-margin {
@@ -590,6 +597,8 @@ div.h3 small {
 
 .ability-score-input {
   width: 65px;
+  height: 30px;
+  margin: auto;
 }
 
 .modal-footer-ability-scores {
@@ -634,14 +643,6 @@ ul.footer-icons li {
   max-height: 225px;
 }
 
-.preview-modal-image {
-  display: block;
-  max-height: 400px;
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .btn-group-padding {
   padding: 10px 0px;
 }
@@ -675,8 +676,14 @@ body {
  */
 
 
+/*
+* translate3d fixes a z-index issue on safari
+* this number MUST be greater than the translateZ of the flip card to work
+*/
 .ui-autocomplete {
   z-index: 1051;
+  -webkit-transform: translate3d(0,0,60px);
+  transform: translate3d(0,0,60px);
 }
 
 ul.ui-autocomplete {
@@ -867,11 +874,6 @@ li.info-chat-highlight {
   padding-left: 1em;
 }
 
-.light-blue-left-highlight {
-  border-left: 2px solid #3498db;
-  padding-left: 1em;
-}
-
 .image-border-inspired {
    -webkit-box-shadow: 0px 0px 20px 0px #3498db;
    -moz-box-shadow: 0px 0px 20px 0px #3498db;
@@ -993,8 +995,8 @@ div.toggle-arrow-container {
  */
 .input-group-addon-jquery {
   min-width: 125px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .ui-autocomplete {
@@ -1016,11 +1018,991 @@ div.toggle-arrow-container {
   left:0;
 }
 
-.text-muted-italics {
-  color: #b4bcc2;
-  font-style: italic;
+.hpChart {
+  font-size: 1.3em;
 }
 
-.btn-text-no-hover:hover {
-  color:unset;
+.death-save-panel {
+    min-height: 40px;
+    padding: 15px;
+}
+
+#healthContainer {
+  width: 175px;
+  display: block;
+  position: relative;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.bio .panel-body {
+  border: 0px;
+}
+
+.btn:focus,.btn:active {
+   outline: none !important;
+   box-shadow: none;
+}
+
+
+.list-side-by-side  dt {
+    float: left;
+    margin-right: 10%;
+    max-width: 40%;
+    font-weight: bold;
+  }
+
+.list-side-by-side  dd {
+    margin-left: 50%;
+    margin-bottom: .5em;
+  }
+
+.list-side-by-side  dd::after {
+    content: " ";
+    display: block;
+    clear: left;
+  }
+
+.list-side-by-side  hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+@-moz-document url-prefix() {
+    .form-control {
+      padding: 0px 15px;
+    }
+}
+
+input[type='checkbox'].pseudo-checkbox + label:before,
+input[type='checkbox'].pseudo-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].pseudo-checkbox + label:before{/*unchecked icon*/
+    content: "\e157";
+}
+
+input[type='checkbox']:disabled.pseudo-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+}
+
+input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+    /* content:"\e138"; */
+}
+
+
+
+input[type='checkbox'].ac-checkbox + label:before,
+input[type='checkbox'].ac-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].ac-checkbox + label:before{/*unchecked icon*/
+    content: "\e157";
+}
+
+input[type='checkbox']:disabled.ac-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+}
+
+input[type='checkbox']:checked.ac-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+}
+
+
+input[type='checkbox'].filter-checkbox + label:before,
+input[type='checkbox'].filter-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].filter-checkbox + label:before{/*unchecked icon*/
+  color: #999;
+  content:"\e138";
+}
+input[type='checkbox']:checked.filter-checkbox + label:before{/*checked icon*/
+  color: #2c3e50;
+  content:"\e138";
+}
+
+.error:invalid {
+   border-color: rgb(169,66,34);
+   background-color: rgba(169,66,34, .075);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.notCastable {
+  color: #999;
+}
+.spellRow[aria-expanded="true"],
+.spellRow[aria-expanded="true"]:hover {
+  background-color:  #2c3e50;
+  color: #fff!important;
+}
+
+.spellRow.notCastable[aria-expanded="true"],
+.spellRow.notCastable[aria-expanded="true"]:hover {
+  background-color: #95a5a6;
+  color: #fff!important;
+}
+
+
+tr.expandRow[aria-expanded="true"],
+tr.expandRow[aria-expanded="true"]:hover {
+  background-color:  #2c3e50;
+  color: #fff!important;
+}
+
+.spellRow.notCastable[aria-expanded="true"],
+.spellRow.notCastable[aria-expanded="true"]:hover {
+  background-color: #95a5a6;
+  color: #fff!important;
+}
+
+.collapseAddButton[aria-expanded="true"]
+ {
+   display: none;
+}
+
+.collapseFormButton
+ {
+   display: none;
+}
+
+.collapseFormButton[aria-expanded="true"]
+ {
+   display: inline-block;
+}
+
+.spellDetail th {
+  white-space: nowrap;
+}
+
+/* Animations */
+
+.collapsing {
+position: relative;
+overflow: hidden;
+opacity: 0;
+-webkit-transition: height .25s ease opacity 0.2s linear;
+-moz-transition: height .25s ease opacity 0.2s linear;
+-o-transition: height .25s ease opacity 0.2s linear;
+transition : height 0.25s ease opacity 0.2s linear;
+}
+
+.rotate {
+    -moz-transition: all 0.3s linear;
+    -webkit-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+}
+
+.rotate[aria-expanded="true"]{
+    -ms-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+
+/* end Animations */
+
+/* Flip Card */
+
+/* entire container, keeps perspective */
+.card-flip-container {
+  position: relative;
+  -webkit-perspective-origin: 0;
+  perspective: 0px;
+  padding-top: 0px;
+  -webkit-transition: all 0.4s ease height 0.35s ease;
+  -moz-transition: all 0.4s ease height 0.35s ease;
+  -o-transition: all 0.4s ease height 0.35s ease;
+  transition: all 0.4s ease height 0.35s ease;
+  width: 100%;
+}
+
+.card-flip-container.flipped > .card-flipper {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,1px);
+  transform: rotate3d(0, 1, 0, 180deg) translate3d(0,0,1px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.card-flip-container > .card-flipper {
+  transition: 0.2s;
+  transform-style: preserve-3d;
+  -webkit-transition: 0.2s;
+  -webkit-transform-style: preserve-3d;
+  position: relative;
+}
+
+ .front,
+ .back {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  visibility: visible;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.front{
+  overflow: hidden;
+}
+
+.card-flip-container,
+ .front, .back,
+.inner-flip-container, .inner-front, .inner-back,
+.flip-container {
+  width: 100%;
+}
+
+.inner-back,
+.back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+
+/* front pane, placed above back */
+.card-flip-container > .card-flipper > .front {
+  z-index: 2;
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,50px);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.card-flip-container.flipped > .card-flipper > .front {
+  z-index: 1;
+  -webkit-transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, 0deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+/* front pane, placed above back */
+.card-flip-container > .card-flipper > .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,-50px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.card-flip-container.flipped > .card-flipper > .back {
+  -webkit-transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,50px);
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0,50px);
+  -webkit-transition-property: -webkit-transform;
+
+  z-index: 2;
+}
+
+.card-flip-container.flipped > .card-flipper > .back .card-flip-container.flipped > .card-flipper > .back {
+  -webkit-transform: rotate3d(0, 1, 0, 180deg) translateZ(1px);
+  transform: rotate3d(0, 1, 0, 180deg) translateZ(1px);
+  -webkit-transition-property: -webkit-transform;
+
+}
+
+.inner-back {
+  transform:  rotate3d(0, 1, 0, -180deg) translate3d(0,0, 1px);
+}
+
+.edit-btn {
+  position: absolute;
+  top: 5px;
+  right: -5px;
+  z-index: 6;
+}
+
+.panel-body .edit-btn {
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  z-index: 6;
+}
+
+.add-card .edit-btn {
+  position: relative;
+  top: 30px; /* matches the -15px top of a panel-body edit button */
+  right: -10px;
+  z-index: 6;
+  float: right;
+  margin-top: -45px;
+  /* 45px is the height of the button, so cancel having it be in-flow */
+}
+
+.edit-btn.btn-group .btn+.btn {
+  margin-left: -10px;
+}
+/* end Flip Card */
+
+.table .table.spellDetail {
+  background-color: transparent;
+}
+
+.table-hover>tbody>tr.collapse:hover {
+  background-color: inherit;
+}
+.table-hover>tbody>tr .well {
+  margin-bottom: 0px;
+}
+
+.table-ac-bordered {
+  vertical-align: middle;
+  border-style: none;
+}
+.table.table-ac-bordered>thead>tr>th,
+.table.table-ac-bordered>tbody>tr>th,
+.table.table-ac-bordered>tfoot>tr>th,
+.table.table-ac-bordered>thead>tr>td,
+.table.table-ac-bordered>tbody>tr>td,
+.table,table-ac-bordered>tfoot>tr>td {
+  vertical-align: middle;
+}
+
+.table-ac-bordered > tbody > tr:last-of-type {
+  border-bottom: none;
+}
+
+.table-ac-bordered > tfoot > tr:last-of-type {
+  border-bottom: none;
+}
+
+
+@-moz-document url-prefix() {
+  fieldset { display: table-cell; }
+}
+
+  .defenseShield {
+    background:url('../images/shield.svg') no-repeat;
+     background-size: 100% 100%;
+     text-align: center;
+     vertical-align: middle;
+     height: 6ex;
+     color: white;
+     padding: 10px;
+     white-space: nowrap;
+     padding-top: 3px;
+    }
+
+  #ArmorClassShield > * {
+    font-size: 1.4em;
+  }
+
+.form-control {
+  height: 35px;
+}
+
+.form-control.hit-dice-list {
+  height: 100%;
+  text-align: center;
+}
+
+fieldset.fieldset-bordered {
+      border: 1px solid #ddd;
+      padding: 0 1.4em 1.4em 1.4em;
+      margin: 0 0 1.5em 0;
+  }
+
+
+.fieldset-bordered>legend {
+    font-size: 1.1em;
+    width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+}
+
+.collapsing .back {
+  display: none;
+}
+
+.front .collapsing, .back .collapsing  {
+  visibility: hidden;
+}
+
+.health-buttons {
+  text-align: center;
+}
+
+.health-buttons .glyphicon-menu-down:before {
+  font-size: 2em;
+  content: "\e143";
+  color: #e74c3c;
+  margin: 5%;
+}
+
+.health-buttons .glyphicon-menu-up:before {
+  font-size: 2em;
+  content: "\e005";
+  margin: 5%;
+}
+
+.health-buttons .input-group-addon {
+  height: 30px;
+  padding: 0px;
+}
+
+.healthBtn.btn-info {
+  background-color: rgb(113, 212, 232);
+  border-color: rgb(113, 212, 232);
+}
+
+.card-title {
+  background: linear-gradient(to bottom, rgba(200, 200, 200, 0.25), rgba(255, 255, 255, 0.0));
+  border-radius: 4px;
+  text-align: center;
+  padding: 10px;
+}
+
+@media screen and (max-width: 767px){
+    .nav-tabs > li{
+    display:block;
+    width:100%;
+    }
+    .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #2c3e50;
+    background-color: #ecf0f1;
+    border: 0px;
+  }
+}
+
+#health-pane {
+    text-align: center;
+}
+
+#health-chart {
+  width: 200px;
+  height: 200px;
+  position:
+  relative;
+  margin: auto;
+}
+
+#health-chart .hp-circle.tempHp {
+  padding: 0px;
+}
+#health-chart .hp-circle {
+   padding: 10px;
+   position: absolute;
+   top:0px;
+}
+
+#stabilize {
+  margin-top: 20px;
+}
+
+.statsPopover,
+.statsPopover:hover,
+.statsPopover:focus,
+.statsPopover:active,
+.statsPopover:visited {
+  cursor:pointer;
+  display: inline;
+  color: black;
+  text-decoration: none !important;
+  outline: none;
+}
+
+.ac-table-data-cell {
+  text-align: center;
+}
+.ac-table-data-cell input {
+  text-align: center;
+}
+.ac-number-input {
+  height: 30px;
+}
+
+.score-save-table .ac-number-input {
+  width: 65px;
+  margin: auto;
+}
+
+.table-ac-bordered tr.ac-table-header,
+tr.ac-table-header,
+thead.ac-table-header tr  {
+  border-bottom: 1px solid #2c3e50;
+}
+
+hr.ac-table-header {
+   margin-top: 5px;
+   margin-bottom: 5px;
+   border-bottom: 1px solid #2c3e50;
+}
+
+.score-save-table > thead > tr > th,
+.score-save-table > tbody > tr > td,
+.score-save-table > tbody > tr > td input
+ {
+  text-align: center;
+}
+
+.table-hover>tbody>tr.collapseRow:hover,
+.table-hover>thead>tr.collapseRow:hover {
+  background-color: transparent;
+}
+
+.table>thead>tr.collapseRow>th,
+.table>tbody>tr.collapseRow>th,
+.table>tfoot>tr.collapseRow>th,
+.table>thead>tr.collapseRow>td,
+.table>tbody>tr.collapseRow>td,
+.table>tfoot>tr.collapseRow>td {
+  padding: 0px;
+  height: 100%;
+  background-color: transparent;
+}
+
+.card-description {
+  text-align: justify;
+}
+
+.card-description .table {
+  background-color: transparent;
+}
+
+.safari-card-fix {
+   opacity: 0.99;
+  /* This used to fix an animation issue in safari.
+  Seems like this is now hurting things, instead of helping things.
+  Thanks, apple
+  */
+}
+
+.add-card {
+  padding: 15px;
+      border-color: #ecf0f1;
+      border-width: 1px;
+      border-style: solid;
+      box-shadow: 1px 2px 0px 0px #ecf0f1;
+}
+
+.skill-modifier-input input {
+  font-size: 15px;
+  padding: 10px 0 10px 10px;
+  width:45px;
+}
+
+.skill-modifier-input .input-group-addon {
+  padding: 0px 10px;
+  width: auto;
+}
+
+.ac-pane {
+  background-color: white;
+  margin-bottom: 10px;
+}
+.ac-pane.panel-body {
+   padding: 0px;
+}
+
+.ogl-disclaimer {
+  display: block;
+  clear: both
+}
+
+.toggle-collapse-col {
+  width: 40px
+}
+
+.table-foot-content {
+  display:block;
+  line-height: 1.5;
+  padding: 6px 9px;
+}
+
+.front>.row,
+.back>.row  {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.add-form {
+  padding: 10px;
+}
+
+
+#coins-pane .input-group {
+  padding-top:5px;
+   padding-bottom:5px
+}
+
+
+.select-proficiency .select2-dropdown {
+  width: 150px !important;
+}
+
+
+.healthBtn {
+  width: 35px;
+  height: 28px;
+  padding: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 0px;
+}
+
+.damage-icon {
+  width: 1.25em;
+  height: 2.5ex;
+  display: inline-block;
+  padding: 0px 0 0 0px;
+  margin: 0px 2px 0px 2px;
+  opacity: 0.6;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  vertical-align: text-bottom;
+}
+
+
+.rest-icon {
+  width: 25px;
+  height: 25px;
+  background-size: 25px 25px;
+  display: inline-block;
+  padding: 0px 0 0 0px;
+  margin: 0px 2px 0px 2px;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  vertical-align: text-bottom;
+}
+
+.trackedRow .short-rest-icon {
+  background: url('../images/meditation-blue.svg');
+}
+
+.trackedRow[aria-expanded="true"] .short-rest-icon {
+  background: url('../images/meditation.svg');
+}
+
+
+.trackedRow .long-rest-icon {
+  background: url('../images/camping-tent-blue.svg');
+}
+
+.trackedRow[aria-expanded="true"] .long-rest-icon {
+  background: url('../images/camping-tent.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-icon,
+.spellRow[aria-expanded="true"] .damage-icon {
+  opacity: 0.8;
+}
+
+.damage-fire {
+  background: url('../images/damage_types/flame.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-fire,
+.spellRow[aria-expanded="true"] .damage-fire {
+  background: url('../images/damage_types/flame-white.svg');
+}
+
+.damage-poison {
+  background: url('../images/damage_types/biohazard.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-poison,
+.spellRow[aria-expanded="true"] .damage-poison {
+  background: url('../images/damage_types/biohazard-white.svg');
+}
+
+.damage-slashing {
+  background: url('../images/damage_types/blade-drag.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-slashing,
+.spellRow[aria-expanded="true"] .damage-slashing {
+  background: url('../images/damage_types/blade-drag-white.svg');
+}
+
+.damage-force {
+    background: url('../images/damage_types/ringed-beam.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-force,
+.spellRow[aria-expanded="true"] .damage-force {
+    background: url('../images/damage_types/ringed-beam-white.svg');
+}
+
+.damage-necrotic {
+  background: url('../images/damage_types/death-zone.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-necrotic,
+.spellRow[aria-expanded="true"] .damage-necrotic {
+  background: url('../images/damage_types/death-zone-white.svg');
+}
+
+.damage-bludgeoning {
+  background: url('../images/damage_types/flanged-mace.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-bludgeoning,
+.spellRow[aria-expanded="true"] .damage-bludgeoning {
+  background: url('../images/damage_types/flanged-mace-white.svg');
+}
+
+.damage-acid {
+  background: url('../images/damage_types/dripping-tube.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-acid,
+.spellRow[aria-expanded="true"] .damage-acid {
+  background: url('../images/damage_types/dripping-tube-white.svg');
+}
+
+.damage-cold {
+  background: url('../images/damage_types/snowflake.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-cold ,
+.spellRow[aria-expanded="true"] .damage-cold {
+  background: url('../images/damage_types/snowflake-white.svg');
+}
+
+.damage-lightning {
+  background: url('../images/damage_types/power-lightning.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-lightning,
+.spellRow[aria-expanded="true"] .damage-lightning {
+  background: url('../images/damage_types/power-lightning-white.svg');
+}
+
+.damage-piercing {
+  background: url('../images/damage_types/pierced-body.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-piercing,
+.spellRow[aria-expanded="true"] .damage-piercing {
+  background: url('../images/damage_types/pierced-body-white.svg');
+}
+
+.damage-psychic {
+  background: url('../images/damage_types/psychic-waves.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-psychic,
+.spellRow[aria-expanded="true"] .damage-psychic {
+  background: url('../images/damage_types/psychic-waves-white.svg');
+}
+
+.damage-radiant {
+  background: url('../images/damage_types/sunbeams.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-radiant,
+.spellRow[aria-expanded="true"] .damage-radiant {
+  background: url('../images/damage_types/sunbeams-white.svg');
+}
+
+.damage-thunder {
+  background: url('../images/damage_types/echo-ripples.svg');
+}
+
+.weaponRow[aria-expanded="true"] .damage-thunder,
+.spellRow[aria-expanded="true"] .damage-thunder {
+  background: url('../images/damage_types/echo-ripples-white.svg');
+}
+
+.profile-view h4 {
+  font-size: 17px;
+  padding-left: 5px;
+  margin-top: 0px;
+  margin-bottom: 5px
+}
+
+.profile-view .row-title {
+  width: 90px;
+  display: inline-block;
+}
+
+.profile-view .row-data {
+  display: inline-block;
+}
+
+.profile-view .profile-data-row {
+  padding-left: 5px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+.background-card label {
+  display: block;
+  width: 100%;
+  border-bottom: thin solid #ecf0f1;
+}
+
+.profile-view hr {
+  clear: both;
+  border: thin solid #ecf0f1;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px
+}
+
+.spell-stat-table h4 {
+  font-size: 18px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
+}
+
+.tab-actions.navbar-header .icon-bar {
+  background-color: white;
+  margin: 5px;
+  width: 70%;
+  margin-right: 15%;
+  margin-left: 15%;
+}
+
+.icon-bar.top-bar {
+  margin-top: 0px;
+}
+.icon-bar.bottom-bar {
+   margin-bottom: 0px;
+}
+
+.navbar-header .btn {
+  background-color: #2c3e50;
+  float: initial;
+}
+
+.secondary-nav {
+    text-align: right;
+}
+
+.tab-pane>.row>.col {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+form .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+tr .panel {
+  border-radius: 0px 0px 4px 4px;
+  box-shadow: 0px 3px 0px 0px #ecf0f1;
+}
+
+.collapsable-card-title {
+   padding-left: 15px;
+}
+
+.coin-display {
+  display:block;
+  line-height: 14px;
+  text-align: right;
+}
+
+.coins div.form-control {
+  display: table-cell;
+  line-height: 14px;
+  text-align: right;
+  padding-right: 10px;
+  background-color: rgb(0,0,0, 0.02);
+}
+
+.coins input.form-control {
+  padding-right: 10px;
+}
+
+.coins .input-group-addon {
+  min-width: 2.25em;
+}
+
+.checkbox-data-cell {
+  text-align: center
+}
+
+
+.rotate.fa.fa-chevron-left {
+    padding-right: 4px;
+}
+
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-right: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.1em solid rgba(255, 255, 255, 0.2);
+  border-left: 1.1em solid #2c3e50;
+  opacity: 0.85;
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }

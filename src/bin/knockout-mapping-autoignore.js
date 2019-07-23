@@ -1,5 +1,5 @@
-import ko from 'knockout'
-import 'knockout-mapping'
+import 'knockout-mapping';
+import ko from 'knockout';
 
 /**
  * A Knockout Mapping addition that will automatically add any field not

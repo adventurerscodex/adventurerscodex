@@ -1,6 +1,6 @@
 import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
-
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -11,7 +11,6 @@ export class Armor extends KOModel {
         include: ['coreUuid', 'equipped', 'magicalModifier']
     };
 
-    _dummy = ko.observable(null);
     coreUuid = ko.observable(null);
     name = ko.observable('');
     type = ko.observable('');
@@ -24,10 +23,19 @@ export class Armor extends KOModel {
     description = ko.observable('');
     equipped = ko.observable(false);
 
-    armorTypeOptions = ko.observableArray(Fixtures.armor.armorTypeOptions);
-    armorStealthOptions = ko.observableArray(Fixtures.armor.armorStealthOptions);
-    armorCurrencyDenominationOptions = Fixtures.general.currencyDenominationList;
+    isShield = ko.pureComputed(() => {
+        return this.type() && this.type().toLowerCase().includes('shield');
+    }, this);
 
+    acCalculatedLabel = ko.pureComputed(() => {
+        if (this.armorClass()) {
+            if (this.magicalModifier()) {
+                return this.armorClass() + this.magicalModifier();
+            }
+            return  this.armorClass();
+        }
+        return '';
+    })
     acLabel = ko.pureComputed(() => {
         if (this.armorClass()) {
             return 'AC ' + this.armorClass();
@@ -35,27 +43,24 @@ export class Armor extends KOModel {
         else {
             return '';
         }
-    });
+    }, this);
 
     armorDescriptionHTML = ko.pureComputed(() => {
         if (!this.description()) {
             return '<div class="h3"><small>Add a description via the edit tab.</small></div>';
         }
-
         return this.description();
-    });
+    }, this);
 
     magicalModifierLabel = ko.pureComputed(() => {
-        this._dummy();
-
-        var magicalModifier = this.magicalModifier();
+        const magicalModifier = this.magicalModifier();
         if (magicalModifier != 0) {
             return magicalModifier >= 0 ? ('+ ' + magicalModifier) : '- ' +
             Math.abs(magicalModifier);
         } else {
             return '';
         }
-    });
+    }, this);
 
     armorSummaryLabel = ko.pureComputed(() => {
         if (this.magicalModifier() != 0) {
@@ -67,7 +72,7 @@ export class Armor extends KOModel {
         } else {
             return this.acLabel();
         }
-    });
+    }, this);
 
     applyMagicalModifierLabel = ko.pureComputed(() => {
         if (this.magicalModifierLabel() !== '' ) {
@@ -75,15 +80,11 @@ export class Armor extends KOModel {
         } else {
             return false;
         }
-    });
+    }, this);
 
     armorWeightLabel = ko.pureComputed(() => {
         return this.weight() !== '' && this.weight() >= 0 ? this.weight() + ' lbs.' : '0 lbs.';
-    });
-
-    updateValues = () => {
-        this._dummy.notifySubscribers();
-    };
+    }, this);
 
     toSchemaValues = (values) => {
         if (values.price === '') {
@@ -100,9 +101,75 @@ export class Armor extends KOModel {
 
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    create = async () => {
+        const response = await this.ps.create();
+        this.importValues(response.object.exportValues());
+        Notifications.armor.added.dispatch(this);
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.armor.changed.dispatch(this);
+    }
+
+    delete = async () => {
+        await this.ps.delete();
+        Notifications.armor.deleted.dispatch(this);
+    }
+
 }
 
 Armor.validationConstraints = {
+    fieldParams: {
+        name: {
+            required: true,
+            maxlength: 256
+        },
+        type: {
+            required: true,
+            maxlength: 64
+        },
+        weight: {
+          // cannot have number filter, because it can be a decimal
+            type: 'number',
+            step: '0.25',
+            min: 0,
+            max: 10000000
+        },
+        price: {
+            type: 'number',
+            pattern: '\\d*',
+            min: 0,
+            max: 10000000
+        },
+        magicalModifier: {
+            type: 'number',
+            pattern: '\\d*',
+            min: -10000,
+            max: 10000
+        },
+        currencyDenomination: {
+            maxlength: 64
+        },
+        armorClass: {
+            type: 'number',
+            pattern: '\\d*',
+            required: true,
+            min: 0,
+            max: 1000000
+        },
+        stealth: {
+            maxlength: 64,
+            required: true
+        }
+    },
     rules: {
         name: {
             required: true,
@@ -112,11 +179,19 @@ Armor.validationConstraints = {
             required: true,
             maxlength: 64
         },
+        weight: {
+            // cannot have number filter, because it can be a decimal
+            number: true,
+            min: 0,
+            max: 10000000
+        },
         price: {
+            number: true,
             min: 0,
             max: 10000000
         },
         magicalModifier: {
+            number: true,
             min: -10000,
             max: 10000
         },
@@ -124,6 +199,7 @@ Armor.validationConstraints = {
             maxlength: 64
         },
         armorClass: {
+            number: true,
             required: true,
             min: 0,
             max: 1000000

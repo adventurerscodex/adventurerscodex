@@ -1,0 +1,40 @@
+<card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+<table class="table table-responsive table-ac-bordered table-hover">
+  <thead class="ac-table-header">
+    <tr>
+      <th data-bind="click: () => {$component.sortBy('proficiency');}"
+          style="min-width: 40px">
+        <span class="glyphicon glyphicon-ok" /><span data-bind="css: $component.sortArrow('proficiency')" />
+      </th>
+      <th data-bind="click: () => {$component.sortBy('name');}"> Skill&nbsp;<span data-bind="css: $component.sortArrow('name')" />
+      </th>
+      <th class="ac-table-data-cell"> Modifier </th>
+      <th class="ac-table-data-cell"> Passive </th>
+    </tr>
+  </thead>
+  <!-- ko ifnot: loaded(), completeOn: 'render' -->
+  <tbody><tr><td colspan=4><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+  <!-- /ko -->
+  <!-- ko if: loaded(), completeOn: 'render' -->
+  <tbody>
+    <!-- ko foreach: $component.filteredAndSortedEntities -->
+    <tr>
+      <td>
+        <prof-marker params="proficiency: proficiency"></prof-marker>
+      </td>
+      <td>
+        <span data-bind="text: $component.shortText(name)" />
+      </td>
+      <td class="ac-table-data-cell"
+          style="white-space: nowrap">
+        <strong><span data-bind="text: $component.bonusLabel(bonus)" /></strong> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+      </td>
+      <td class="ac-table-data-cell">
+        <span style="color: #666"
+            data-bind="text: passiveBonus" />
+      </td>
+    </tr>
+    <!-- /ko -->
+  </tbody>
+  <!-- /ko -->
+</table>

@@ -1,6 +1,6 @@
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
-
 
 export class Wealth extends KOModel {
     static __skeys__ = ['core', 'characters', 'wealth'];
@@ -37,10 +37,10 @@ export class Wealth extends KOModel {
         const total = platinumToGold + adjGold;
 
         return total;
-    });
+    }, this);
 
     totalWeight = ko.pureComputed(() => {
-        var weight = 0;
+        let weight = 0;
 
         weight += this.platinum() ? parseInt(this.platinum()) : 0;
         weight += this.gold() ? parseInt(this.gold()) : 0;
@@ -51,11 +51,11 @@ export class Wealth extends KOModel {
         weight = Math.floor(weight / 50);
 
         return weight;
-    });
+    }, this);
 
     totalWeightLabel = ko.pureComputed(() => {
         return this.totalWeight() + ' (lbs)';
-    });
+    }, this);
 
     toSchemaValues = (values) => {
         if (values.platinum === '') {
@@ -76,9 +76,58 @@ export class Wealth extends KOModel {
 
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+        return response.object;
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.wealth.changed.dispatch(this);
+    }
 }
 
 Wealth.validationConstraints = {
+    fieldParams: {
+        platinum: {
+            type: 'number',
+            pattern: '\\d*',
+            min: 0,
+            max: 100000000,
+            required: true
+        },
+        gold: {
+            type: 'number',
+            pattern: '\\d*',
+            min: 0,
+            max: 100000000,
+            required: true
+        },
+        silver: {
+            type: 'number',
+            pattern: '\\d*',
+            min: 0,
+            max: 100000000,
+            required: true
+        },
+        copper: {
+            type: 'number',
+            pattern: '\\d*',
+            min: 0,
+            max: 100000000,
+            required: true
+        },
+        electrum: {
+            type: 'number',
+            pattern: '\\d*',
+            min: 0,
+            max: 100000000,
+            required: true
+        }
+    },
     rules: {
         platinum: {
             number: true,

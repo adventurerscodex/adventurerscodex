@@ -1,0 +1,63 @@
+<card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+<hr class="ac-table-header" />
+<table class="table table-responsive table-ac-bordered table-hover">
+  <!-- ko ifnot: loaded(), completeOn: 'render' -->
+  <tbody><tr><td><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+  <!-- /ko -->
+  <!-- ko if: loaded(), completeOn: 'render' -->
+  <tbody>
+    <tr>
+      <th>
+        <span class="h4">Armor Class</span>&nbsp;<a class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: armorClassPopover }" role="button" tabindex="0">
+        </a>
+      </th>
+      <td class="ac-table-data-cell">
+        <div id="ArmorClassShield"
+             class="defenseShield">
+          <span data-bind="text: armorClass" />
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <th>
+        Proficiency Bonus&nbsp;<a class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: proficiencyPopover }" role="button" tabindex="1">
+        </a>
+      </th>
+      <td class="ac-table-data-cell">
+        <span data-bind="text: proficiencyLabel" />
+      </td>
+    </tr>
+    <tr>
+      <th>
+        Initiative&nbsp;<a class="fa fa-info-circle statsPopover"
+              data-bind="popover: { content: initiativePopover }" role="button" tabindex="2">
+        </a>
+      </th>
+      <td class="ac-table-data-cell">
+        <span data-bind="text: initiativeLabel" />
+      </td>
+    </tr>
+    <tr data-bind="with: entity">
+      <th>
+        Movement
+      </th>
+      <td class="ac-table-data-cell">
+        <span data-bind="text: speed" />
+      </td>
+    </tr>
+    <tr>
+      <th>
+        Inspiration
+      </th>
+      <td class="ac-table-data-cell">
+        <span style="cursor: pointer;"
+            data-bind="{
+          click: $component.toggleInspiration,
+          css: $component.entity().inspiration() ? 'inspiration-full':'inspiration-empty'}" />
+      </td>
+    </tr>
+  </tbody>
+  <!-- /ko -->
+</table>

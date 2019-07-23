@@ -1,267 +1,133 @@
-import 'bin/knockout-bootstrap-modal';
-import {
-    CoreManager,
-    Notifications,
-    Utility
-} from 'charactersheet/utilities';
-import { Fixtures } from 'charactersheet/utilities';
-import { SortService } from 'charactersheet/services/common';
+import 'bin/knockout-bar-progress';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
+import { flatMap, maxBy } from 'lodash';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
 import { SpellSlot } from 'charactersheet/models/character';
-import campingTent from 'images/camping-tent-blue.svg';
-import campingTentWhite from 'images/camping-tent.svg';
+import { SpellSlotFormComponentViewModel } from './form';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
-import meditation from 'images/meditation-blue.svg';
-import meditationWhite from 'images/meditation.svg';
 import template from './index.html';
 
-export function SpellSlotsViewModel() {
-    var self = this;
+class SpellSlotsViewModel extends AbstractTabularViewModel {
+    constructor(params) {
+        super(params);
+        this.addFormId = '#add-spell-slot';
+        this.collapseAllId = '#spell-slot-pane';
+        autoBind(this);
+    }
 
-    self.sorts = {
-        'level asc': { field: 'level', direction: 'asc', numeric: true},
-        'level desc': { field: 'level', direction: 'desc', numeric: true},
-        'max asc': { field: 'max', direction: 'asc', numeric: true},
-        'max desc': { field: 'max', direction: 'desc', numeric: true},
-        'used asc': { field: 'used', direction: 'asc', numeric: true},
-        'used desc': { field: 'used', direction: 'desc', numeric: true},
-        'resetsOn asc': { field: 'resetsOn', direction: 'asc'},
-        'resetsOn desc': { field: 'resetsOn', direction: 'desc'}
-    };
+    modelClass () {
+        return SpellSlot;
+    }
 
-    self.slots = ko.observableArray([]);
-    self.blankSlot = ko.observable(new SpellSlot());
-    self.openModal = ko.observable(false);
-    self.editHasFocus = ko.observable(false);
-    self.addFormIsValid = ko.observable(false);
-    self.addModalOpen = ko.observable(false);
-    self.editItemIndex = null;
-    self.currentEditItem = ko.observable();
-    self.modifierHasFocus = ko.observable(false);
-    self.sort = ko.observable(self.sorts['level asc']);
-    self.filter = ko.observable('');
-    self.slotColors = Fixtures.general.colorList;
-    self.meditation = meditation;
-    self.campingTent = campingTent;
-    self.meditationWhite = meditationWhite;
-    self.campingTentWhite = campingTentWhite;
+    getDefaultSort() {
+        return this.sorts()['level asc'];
+    }
 
-    self._addForm = ko.observable();
-    self._editForm = ko.observable();
+    sorts() {
+        return {
+            'level asc': {
+                field: 'level',
+                direction: 'asc',
+                numeric: true
+            },
+            'level desc': {
+                field: 'level',
+                direction: 'desc',
+                numeric: true
+            },
+            'resetsOn asc': {
+                field: 'resetsOn',
+                direction: 'asc'
+            },
+            'resetsOn desc': {
+                field: 'resetsOn',
+                direction: 'desc'
+            }
+        };
+    }
 
-    self.load = async () => {
-        var key = CoreManager.activeCore().uuid();
-        const response = await SpellSlot.ps.list({coreUuid: key});
-        self.slots(response.objects);
-        self.blankSlot().level(self.slots().length + 1);
-        self.assignSlotColors();
+    async onUsedChange(spellslot) {
+        await spellslot.save();
+    }
 
-        //Notifications
-        Notifications.events.longRest.add(self.resetOnLongRest);
-        Notifications.events.shortRest.add(self.resetShortRest);
-
-        self.slots().forEach(function(slot, idx, _) {
-            slot.max.subscribe(self.dataHasChanged, slot);
-            slot.used.subscribe(self.dataHasChanged, slot);
-        });
-    };
-
-    /* UI Methods */
-
-    self.needsResetsOnImg = function(slot) {
-        return slot.resetsOn() != '';
-    };
-
-    self.resetsOnImgSource = function(slot) {
-        if (slot.resetsOn() === 'long') {
-            return campingTent;
-        } else if (slot.resetsOn() === 'short') {
-            return meditation;
-        } else {
-            throw 'Unexpected slot resets on string.';
+    nextSlotLevel = ko.pureComputed(() => {
+        if (!this.entities().length) {
+            return 1;
         }
-    };
-
-    /**
-     * Filters and sorts the slots for presentation in a table.
-     */
-    self.filteredAndSortedSlots = ko.computed(function() {
-        return SortService.sortAndFilter(self.slots(), self.sort(), null);
+        const currentMax = maxBy(this.entities(), (slot) => (slot.level()));
+        return parseInt(currentMax.level()) + 1;
     });
 
-    /**
-     * Determines whether a column should have an up/down/no arrow for sorting.
-     */
-    self.sortArrow = function(columnName) {
-        return SortService.sortArrow(columnName, self.sort());
+    resetsOnImg = (trackable) => {
+        if (trackable.resetsOn() === 'long') {
+            return 'rest-icon long-rest-icon';
+        } else if (trackable.resetsOn() === 'short') {
+            return 'rest-icon short-rest-icon';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
     };
 
-    /**
-     * Given a column name, determine the current sort type & order.
-     */
-    self.sortBy = function(columnName) {
-        self.sort(SortService.sortForName(self.sort(),
-            columnName, self.sorts));
+    mapToColor = (level) => {
+        return Fixtures.general.colorHexList[level % 12];
     };
 
-    //Manipulating slots
+    mapToChart(slot) {
+        return {
+            data: {
+                value: parseInt(slot.max()) - parseInt(slot.used()),
+                maxValue: slot.max()
+            },
+            config: {
+                strokeWidth: 2,
+                trailWidth: 1,
+                svgStyle: {
+                    display: 'block',
+                    width: '100%',
+                    minHeight: '3px'
+                },
+                from: {
+                    color: this.mapToColor(slot.level())
+                },
+                to: {
+                    color: this.mapToColor(slot.level())
+                }
+            }
+        };
+    }
 
-    /**
-     * Resets all slots on a long-rest.
-     */
-    self.resetOnLongRest = function() {
-        ko.utils.arrayForEach(self.slots(), function(slot) {
-            slot.used(0);
-        });
+    hideRow = (rowId) => {
+        $(`${rowId}`).collapse('hide');
     };
 
-    /**
-     * Resets all short-rest slot.
-     */
-    self.resetShortRest = function() {
-        ko.utils.arrayForEach(self.slots(), function(slot) {
-            if (slot.resetsOn() === Fixtures.resting.shortRestEnum) {
-                slot.used(0);
+    setUpSubscriptions() {
+        super.setUpSubscriptions();
+        this.subscriptions.push(Notifications.events.shortRest.add(this.resetShortRestFeatures));
+        this.subscriptions.push(Notifications.events.longRest.add(this.resetLongRestFeatures));
+    }
+
+    async resetShortRestFeatures() {
+        const updates = this.entities().map(async (entity) => {
+            if (entity.resetsOn() === Fixtures.resting.shortRestEnum) {
+                if (entity.used() > 0) {
+                    entity.used(0);
+                    await entity.save();
+                }
             }
         });
-    };
+        await Promise.all(updates);
+    }
 
-    self.assignSlotColors = () => {
-        if (self.slots()) {
-            self.slots().forEach((e) => {
-                e.color(self.slotColors[e.level() - 1]);
-            });
-        }
-    };
-
-    // Modal Methods
-
-    self.validation = {
-        submitHandler: (form, event) => {
-            event.preventDefault();
-            self.addSlot();
-        },
-        updateHandler: ($element) => {
-            self.addFormIsValid($element.valid());
-        },
-        // Deep copy of properties in object
-        ...SpellSlot.validationConstraints
-    };
-
-    self.updateValidation = {
-        submitHandler: (form, event) => {
-            event.preventDefault();
-            self.modalFinishedClosing();
-        },
-        updateHandler: ($element) => {
-            self.addFormIsValid($element.valid());
-        },
-        // Deep copy of properties in object
-        ...SpellSlot.validationConstraints
-    };
-
-    self.toggleAddModal = () => {
-        self.addModalOpen(!self.addModalOpen());
-    };
-
-    self.closeAddModal = () => {
-        self.addModalOpen(false);
-
-        // Let the validator reset the validation in the form.
-        $(self._addForm()).validate().resetForm();
-    };
-
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
-    };
-
-    self.editModalOpen = function() {
-        self.editHasFocus(true);
-    };
-
-    self.modalFinishedClosing = async () => {
-        if (self.openModal() && self.addFormIsValid()) {
-            const response = await self.currentEditItem().ps.save();
-            Utility.array.updateElement(self.slots(), response.object, self.editItemIndex);
-            Notifications.spellSlots.changed.dispatch();
-        }
-
-        self.openModal(false);
-    };
-
-    self.closeEditModal = () => {
-        self.openModal(false);
-
-        // Let the validator reset the validation in the form.
-        $(self._editForm()).validate().resetForm();
-    };
-
-    //Manipulating spell slots
-
-    self.maxAvailableSlots = function() {
-        var maxSlots = 0;
-        self.slots().forEach(function(e, i, _) {
-            maxSlots = maxSlots + parseInt(e.max());
+    async resetLongRestFeatures() {
+        const updates = this.entities().map(async (entity) => {
+            if (entity.used() > 0) {
+                entity.used(0);
+                await entity.save();
+            }
         });
-        return maxSlots;
-    };
-
-    self.currentSlotWidth = (progressWidth, maxSlotsForLevel) => {
-        var maxSlots = self.maxAvailableSlots();
-        maxSlotsForLevel = parseInt(maxSlotsForLevel);
-        var maxSlotWidth = (100 * maxSlotsForLevel) / maxSlots;
-        return (progressWidth * maxSlotWidth+ '%');
-    };
-
-    self.getProgressWidth = (slot) => {
-        return (slot.max()-slot.used()) / slot.max();
-    };
-
-    self.editSlot = async (slot) => {
-        self.editItemIndex = slot.uuid;
-        self.currentEditItem(new SpellSlot());
-        self.currentEditItem().importValues(slot.exportValues());
-        self.openModal(true);
-    };
-
-    self.addSlot = async () => {
-        var slot = self.blankSlot();
-        slot.coreUuid(CoreManager.activeCore().uuid());
-        const newSlotResponse = await slot.ps.create();
-        var newSlot = newSlotResponse.object;
-        newSlot.max.subscribe(self.dataHasChanged, newSlot);
-        newSlot.used.subscribe(self.dataHasChanged, newSlot);
-        newSlot.color(self.slotColors[slot.level()-1]);
-        self.slots.push(newSlot);
-
-        self.blankSlot(new SpellSlot());
-        self.blankSlot().level(self.slots().length + 1);
-        self.toggleAddModal();
-        Notifications.spellSlots.changed.dispatch();
-    };
-
-    self.removeSlot = async (slot) => {
-        await slot.ps.delete();
-        self.slots.remove(slot);
-        self.blankSlot().level(self.slots().length + 1);
-        Notifications.spellSlots.changed.dispatch();
-    };
-
-    self.resetSlot = function(slot) {
-        slot.used(0);
-    };
-
-    self.resetSlots = function() {
-        self.slots().forEach(function(slot, i, _) {
-            slot.used(0);
-        });
-    };
-
-    self.dataHasChanged = async function() {
-        if (this.ps) {
-            await this.ps.save();
-            Notifications.spellSlots.changed.dispatch();
-        }
-    };
+        await Promise.all(updates);
+    }
 }
 
 ko.components.register('spell-slots', {

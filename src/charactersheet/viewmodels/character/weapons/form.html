@@ -1,0 +1,208 @@
+<form data-bind="submit: $component.submit">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <!-- ko if: $component.addForm -->
+  <div class="h4 collapsable-card-title"> New Weapon </div>
+  <!-- /ko -->
+  <div class="panel-body row"
+      data-bind="with: entity">
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="name"
+          class="control-label">Name</label>
+      <!-- ko ifnot: $component.addForm -->
+      <input class="form-control"
+          placeholder="Short Sword"
+          name="name"
+          data-bind="value: name,
+                    event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                    attr: { autocomplete: 'off', ...$component.validation.platinum }">
+      <!-- /ko -->
+      <!-- ko if: $component.addForm -->
+      <input class="form-control"
+          placeholder="Short Sword"
+          name="name"
+          data-bind="value: name,
+                   event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                   attr: { ...$component.validation.platinum },
+                   hasFocus: $component.formElementHasFocus,
+                   autocomplete: {
+                   source: $component.prePopFilter,
+                   onselect: $component.populate }"">
+            <!-- /ko -->
+    </div>
+    <div class="
+          form-group
+          col
+          col-sm-6
+          col-md-4
+          col-lg-3">
+      <label for="damage"
+          class="control-label">Damage</label>
+      <input class="form-control"
+          placeholder="1d4"
+          name="damage"
+          data-bind="value: damage,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.damage }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="magicalModifier"
+          class="control-label">Magical Modifier</label>
+      <input class="form-control"
+          placeholder="Place magical modifier here"
+          name="magicalModifier"
+          data-bind="value: magicalModifier,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.magicalModifier }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="toHitModifier"
+          class="control-label">To Hit Modifier</label>
+      <input class="form-control"
+          placeholder="Adjust to hit modifier here"
+          name="toHitModifier"
+          data-bind="value: toHitModifier,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.toHitModifier }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="type"
+          class="control-label">Type</label>
+      <input class="form-control"
+          placeholder="Melee"
+          name="type"
+          data-bind="value: type,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.type },
+             autocomplete: {
+              source: $component.typeOptions,
+              onselect: $component.setWeaponType }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="handedness"
+          class="control-label">Handedness</label>
+      <input class="form-control"
+          placeholder="One-Handed"
+          name="handedness"
+          data-bind="value: handedness,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.handedness },
+             autocomplete: {
+              source: $component.handednessOptions,
+              onselect: $parent.setWeaponHandedness }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="proficiency"
+          class="control-label">Proficiency</label>
+      <input class="form-control"
+          placeholder="Simple"
+          name="proficiency"
+          data-bind="value: proficiency,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.proficiency },
+             autocomplete: {
+              source: $component.proficiencyOptions,
+              onselect: $component.setWeaponProficiency }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="weaponWeight"
+          class="control-label">Weight</label>
+      <input class="form-control"
+          name="weight"
+          placeholder="6"
+          data-bind="value: weight,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.weight }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="range"
+          class="control-label">Range</label>
+      <input class="form-control"
+          name="range"
+          placeholder="25/100"
+          data-bind="value: range,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.range }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="damageType"
+          class="control-label">Damage Type</label>
+      <input class="form-control"
+          placeholder="Fire"
+          name="damageType"
+          data-bind="value: damageType,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.damageType },
+             autocomplete: {
+              source: $component.damageTypeOptions,
+              onselect: $component.setWeaponDamageType }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="weaponProperty"
+          class="control-label">Property</label>
+      <input class="form-control"
+          placeholder="Finesse"
+          name="property"
+          data-bind="value: property,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.property },
+             autocomplete: {
+              source: $component.propertyOptions,
+              onselect: $component.setWeaponProperty }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-4 col-lg-3">
+      <label for="quantity"
+          class="control-label">Quantity</label>
+      <input class="form-control"
+          name="quantity"
+          placeholder="1"
+          data-bind="value: quantity,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.quantity }">
+    </div>
+    <div class="form-group col col-sm-6 col-md-6 col-lg-6">
+      <label for="price"
+          class="control-label">Price</label>
+      <div class="input-group">
+        <input class="form-control input-jquery-addon"
+            placeholder="5"
+            data-bind="value: price,
+               event: { blur: $component.reviewInput, invalid: $component.invalidate },
+               attr: { ...$component.validation.price }">
+        <span class="input-group-addon input-group-addon-jquery">
+          <input class="form-control"
+              placeholder="GP"
+              name="currencyDenomination"
+              data-bind="value: currencyDenomination,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.currencyDenomination },
+                   autocomplete: {
+                source: $component.currencyDenominationOptions,
+                onselect: $component.setWeaponCurrencyDenomination }">
+        </span>
+      </div>
+    </div>
+    <div class="form-group col col-xs-12">
+      <label for="description"
+          class="control-label">Description</label>
+      <!-- ko if: $component.show -->
+      <textarea class="form-control"
+          rows="4"
+          placeholder="A sword...that is short..."
+          name="description"
+          data-bind="value: description,
+                event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                attr: { ...$component.validation.description },
+                markdownEditor: true">
+      </textarea>
+      <small class="text-muted"> Text in this panel can be styled using Markdown. Click <a target="_blank"
+            href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide. </small>
+      <!-- /ko -->
+    </div>
+    <form-submit-actions params="{
+        reset: $component.reset,
+        delete: $component.delete,
+        addForm: $component.addForm,
+        showDisclaimer: $component.showDisclaimer
+      }"></form-submit-actions>
+  </div>
+</form>

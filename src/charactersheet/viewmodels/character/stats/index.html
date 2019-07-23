@@ -1,187 +1,24 @@
-<div class="panel panel-default bio">
-  <div class="panel-body tight-inner">
-	<!--Health items -->
-    <div class="row row-padded">
-      <!-- ko if: health() -->
-      <div class="col-md-12 col-padded">
-        <div class="progress clickable" data-toggle="modal" data-bind="click: editHealth">
-          <div id="regularHitPoints" class="progress-bar" role="progressbar" aria-valuemin="0"
-            data-bind="style: { width: health().regularProgressWidth }, css: health().progressType">
-            <span class="sr-only"></span>
-          </div>
-          <div id="tempHitPoints" class="progress-bar progress-bar-sky" role="progressbar"
-           aria-valuemin="0" data-bind="style: { width: health().tempProgressWidth }"
-           aria-describedby="hitpointsCounter">
-            <span class="sr-only"></span>
-          </div>
-          <span class="progress-value" id="hitpointsCounter" data-bind="text: health().hitpointsText"></span>
-        </div>
-        <table class="table table-responsive table-ac-bordered table-hover">
-          <thead data-toggle="modal" data-bind="click: editHealth" class="clickable">
-            <tr>
-              <th class="col-md-2"></th>
-              <th class="text-center col-md-2">Max</th>
-              <th class="text-center col-md-5">Damage</th>
-              <th class="text-center col-md-3">Reset</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="col-content-vertical clickable"
-                data-toggle="modal" data-bind="click: editHealth">
-                <b>Hit Points:</b>
-              </td>
-              <td class="col-content-vertical text-center clickable"
-               data-toggle="modal" data-bind="click: editHealth">
-                  <span data-bind="text: health().maxHitPoints"></span>
-              </td>
-              <td>
-                <plus-minus params="value: damageHandler,
-                  max: health().totalHitpoints">
-                  </plus-minus>
-              </td>
-              <td class="text-center col-content-vertical">
-                <a data-bind="click: resetDamage" href="#">
-                  <i class="fa fa-refresh fa-color"> </i>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="input-group">
-          <span class="input-group-addon">Hit Dice:</span>
-          <div class="form-control hit-dice-list">
-            <!-- ko foreach: hitDiceList -->
-            <!-- ko if: $data -->
-            <span data-bind="attr: { id: $index, name: $index }, click: $parent.useHitDice" class="dice-full"></span>
-            <!-- /ko -->
-            <!-- ko ifnot: $data -->
-            <span data-bind="attr: { id: $index, name: $index }, click: $parent.recoverHitDice" class="dice-empty"></span>
-            <!-- /ko -->
-            <!-- /ko -->
-          </div>
-
-        </div>
-        <br />
-        <!-- ko if: deathSavesVisible() -->
-        <div class="row row-padded">
-          <div class="col-md-6 col-sm-12 col-padded">
-            <!-- ko if: deathSaveSuccessVisible() -->
-            <div class="input-group">
-              <span class="input-group-addon">Death Save Successes</span>
-              <div class="form-control hit-dice-list">
-              <!-- ko foreach: deathSaveSuccessList -->
-                <!-- ko if: $data -->
-                <span data-bind="attr: { id: $index, name: $index },
-                  click: $parent.useDeathSaveSuccess" class="ds-success-empty"></span>
-                <!-- /ko -->
-                <!-- ko ifnot: $data -->
-                <span data-bind="attr: { id: $index, name: $index },
-                  click: $parent.recoverDeathSaveSuccess" class="ds-success-full"></span>
-                <!-- /ko -->
-              <!-- /ko -->
-              </div>
-            </div>
-            <!-- /ko -->
-          </div>
-          <div class="col-md-6 col-sm-12 col-padded">
-            <!-- ko if: deathSaveFailureVisible() -->
-            <div class="input-group">
-              <span class="input-group-addon">Death Save Failures</span>
-              <div class="form-control hit-dice-list">
-                <!-- ko foreach: deathSaveFailureList -->
-                  <!-- ko if: $data -->
-                  <span data-bind="attr: { id: $index, name: $index },
-                    click: $parent.useDeathSaveFailure" class="ds-failure-empty"></span>
-                  <!-- /ko -->
-                  <!-- ko ifnot: $data -->
-                  <span data-bind="attr: { id: $index, name: $index },
-                    click: $parent.recoverDeathSaveFailure" class="ds-failure-full"></span>
-                  <!-- /ko -->
-                <!-- /ko -->
-              </div>
-            </div>
-            <!-- /ko -->
-          </div>
-        </div>
-        <!-- /ko -->
-        </div>
-        <!-- /ko -->
-      </div>
+<div id="health-pane">
+  <flip-card params="{
+        tabId: 'stats',
+        elementId: 'health-panel-card',
+        defaultHeight: 450,
+        }">
+    <div class="front">
+      <stats-card-view params="{
+       containerId: elementId,
+       show: showFront,
+       forceCardResize: forceCardResize,
+       flip: flip}">
+      </stats-card-view>
     </div>
-  </div>
-<!--End Panel-->
-<!--HP Modal-->
-<div class="modal fade" id="viewHealth" tabindex="-1" role="dialog"
-  data-bind="modal: {
-    open: modalOpen,
-    onopen: modalFinishedAnimating,
-    onclose: modalFinishedClosing}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"
-          aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
-        <h4 class="modal-title" id="healthLabel"> Edit your Hit Points.
-        </h4>
-      </div>
-      <div class="modal-body">
-        <!-- ko if: modalOpen -->
-        <form class="form-horizontal" data-bind="validate: validation">
-          <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">
-              Max HP<i class="required"></i>
-            </label>
-            <div class="col-sm-9">
-              <input type="number" class="form-control"
-                name="maxHitPoints"
-                data-bind='textInput: editHealthItem().maxHitPoints, hasFocus: modifierHasFocus'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="bonus" class="col-sm-3 control-label">
-              Damage<i class="required"></i>
-            </label>
-            <div class="col-sm-9">
-              <input type="number"
-                class="form-control"
-                name="damage"
-                data-bind='textInput: editHealthItem().damage'>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="name" class="col-sm-3 control-label">
-              Temporary HP<i class="required"></i>
-            </label>
-            <div class="col-sm-9">
-              <input type="number"
-                class="form-control"
-                data-bind='textInput: editHealthItem().tempHitPoints'
-                name="tempHitPoints">
-            </div>
-          </div>
-          <div class="form-group ui-front">
-            <label for="name" class="col-sm-3 control-label">
-              Hit Dice Type<i class="required"></i>
-            </label>
-            <div class="col-sm-9">
-              <input class="form-control"
-                    placeholder="D4"
-                    name="type"
-                    data-bind="textInput: hitDice().type, autocomplete: {
-                          source: hitDice().hitDiceOptions,
-                          onselect: setHitDiceType}">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit"
-              class="btn btn-primary">
-              Done</button>
-          </div>
-        </form>
-        <!-- /ko -->
-			</div><!-- Modal Body -->
-		</div><!-- Modal Content -->
-	</div><!-- Modal Dialog -->
-</div><!-- Modal Fade -->
+    <div class="back">
+      <stats-health-form params="{
+         containerId: elementId,
+         show: showBack,
+         flip: flip,
+         forceCardResize: forceCardResize}">
+      </stats-health-form>
+    </div>
+  </flip-card>
+</div>

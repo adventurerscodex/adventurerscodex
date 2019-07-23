@@ -1,5 +1,4 @@
 export { AbilityScoresViewModel } from './ability_scores';
-export { AbilityScoresViewModelDelegate } from './ability_scores/delegate.js';
 export { ActionsToolbarViewModel } from './actions_toolbar';
 export { ArmorViewModel } from './armor';
 export { ExhibitViewModel } from './exhibit';
@@ -8,10 +7,10 @@ export { FeatsViewModel } from './feats';
 export { FeaturesViewModel } from './features';
 export { ItemsViewModel } from './items';
 export { MagicItemsViewModel } from './magic_items';
+export { NotesListModel } from './notes';
 export { ProficienciesViewModel } from './proficiencies';
 export { ProfileViewModel } from './profile';
 export { CharacterRootViewModel } from './root';
-export { SavingThrowsViewModel } from './saving_throws';
 export { SkillsViewModel } from './skills';
 export { SpellSlotsViewModel } from './spell_slots';
 export { SpellStatsViewModel } from './spell_stats';

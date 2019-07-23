@@ -12,63 +12,70 @@ export var ProficiencyService = new SharedServiceManager(_ProficiencyService, {}
 function _ProficiencyService(configuration) {
     var self = this;
 
-    self.proficiency = ko.observable();
-    self.characterId = ko.observable();
-    self.proficiencyModifier = ko.observable();
-    self.proficiencyBonusByLevel = ko.observable();
+    self.otherStats = ko.observable();
+    self.profile = ko.observable();
 
     self.init = async () => {
-        Notifications.otherStats.proficiency.changed.add(self.getProficiencyModifierAndReCalculate);
-        Notifications.profile.level.changed.add(self.getProficiencyBonusByLevelAndReCalculate);
-
-        self.characterId(CoreManager.activeCore().uuid());
-        await self.getProficiencyModifier();
-        await self.getProficiencyBonusByLevel();
-        // Kick it off the first time.
-        await self.dataHasChanged();
+        await self.load();
+        self.setUpSubscriptions();
     };
 
-    self.dataHasChanged = function() {
-        var proficiency = 0;
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
+            return;
+        }
+        self.otherStats(new OtherStats());
+        self.profile(new Profile());
+        await self.otherStats().load({uuid: activeCore.uuid()});
+        await self.profile().load({uuid: activeCore.uuid()});
 
-        proficiency += self.proficiencyModifier();
-        proficiency += self.proficiencyBonusByLevel();
-        proficiency += 1;
-
-        // Set the value and let everyone know.
-        self.proficiency(proficiency);
-        Notifications.proficiencyBonus.changed.dispatch();
+    };
+    self.reload = (oldCore, newCore) => {
+        self.otherStats(null);
+        self.profile(null);
+        self.load(newCore);
+    };
+    self.setUpSubscriptions = () => {
+        Notifications.otherstats.changed.add(self.updateOtherStats);
+        Notifications.profile.changed.add(self.updateProfile);
+        Notifications.coreManager.changing.add(self.reload);
+        self.proficiency.subscribe(()=> { Notifications.proficiencyBonus.changed.dispatch(); });
     };
 
-    /* Public Methods */
+    self.proficiencyModifier = ko.pureComputed(() => {
+        if (self.otherStats() && self.otherStats().proficiencyModifier()) {
+            return parseInt(self.otherStats().proficiencyModifier()) ? parseInt(self.otherStats().proficiencyModifier()) : 0;
+        }
+        return 0;
+    });
 
-    self.getProficiencyModifier = async () => {
-        let otherStatsResponse = await OtherStats.ps.read({uuid: self.characterId()});
-        const otherStats = otherStatsResponse.object;
-        var proficiencyModifier = 0;
+    self.proficiencyBonusByLevel = ko.pureComputed(() => {
+        let level = 0;
+        if (self.profile() && self.profile().level()) {
+            level = parseInt(self.profile().level()) ? parseInt(self.profile().level()) : 0;
+        }
+        return Math.ceil(level / 4);
+    });
+
+    self.proficiency = ko.pureComputed(()=> {
+        return 1 + self.proficiencyBonusByLevel() + self.proficiencyModifier();
+    });
+
+    self.updateOtherStats = (otherStats) => {
         if (otherStats) {
-            proficiencyModifier = parseInt(otherStats.proficiencyModifier()) ? parseInt(otherStats.proficiencyModifier()) : 0;
+            self.otherStats().importValues(otherStats.exportValues());
         }
-        self.proficiencyModifier(proficiencyModifier);
     };
 
-    self.getProficiencyBonusByLevel = async () => {
-        let profileResponse = await Profile.ps.read({uuid: self.characterId()});
-        const profile = profileResponse.object;
-        var level = 0;
+    self.updateProfile = (profile) => {
         if (profile) {
-            level = parseInt(profile.level()) ? parseInt(profile.level()) : 0;
+            self.profile().importValues(profile.exportValues());
         }
-        self.proficiencyBonusByLevel(Math.ceil(level / 4));
-    };
-
-    self.getProficiencyModifierAndReCalculate = async () => {
-        await self.getProficiencyModifier();
-        self.dataHasChanged();
-    };
-
-    self.getProficiencyBonusByLevelAndReCalculate = async () => {
-        await self.getProficiencyBonusByLevel();
-        self.dataHasChanged();
     };
 }

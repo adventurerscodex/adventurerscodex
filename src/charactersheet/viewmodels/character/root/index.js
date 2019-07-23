@@ -163,6 +163,12 @@ export function CharacterRootViewModel() {
     self.load = () => {
         self.activeTab(TabFragmentManager.activeTab());
 
+        $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
+
+        self.activeTab.subscribe(()=>{
+            $(`.nav-tabs a[href="#${self.activeTab()}"]`).tab('show');
+        });
+
         Notifications.party.joined.add(self._updateCurrentNode);
         Notifications.party.left.add(self._removeCurrentNode);
         Notifications.xmpp.disconnected.add(self._removeCurrentNode);
@@ -179,9 +185,8 @@ export function CharacterRootViewModel() {
         HotkeysService.registerHotkey('4', self.activateEquipmentTab);
         HotkeysService.registerHotkey('5', self.activateInventoryTab);
         HotkeysService.registerHotkey('6', self.activateNotesTab);
-        HotkeysService.registerHotkey('7', self.activateProfileTab);
-        HotkeysService.registerHotkey('8', self.activateChatTab);
-        HotkeysService.registerHotkey('9', self.activateExhibitTab);
+        HotkeysService.registerHotkey('7', self.activateChatTab);
+        HotkeysService.registerHotkey('8', self.activateExhibitTab);
     };
 
     self.unload = () => {

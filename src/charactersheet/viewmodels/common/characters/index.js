@@ -21,7 +21,7 @@ export function CharactersViewModel(params) {
     self.load = async () => {
         const response = await Core.ps.list();
         const cores = response.objects;
-        self.modalStatus(self.componentStatus());
+        self.modalStatus(ko.utils.unwrapObservable(self.componentStatus));
 
         Notifications.coreManager.changed.add(self._updatedSelectedCharacter);
         self._updatedSelectedCharacter();
@@ -44,6 +44,7 @@ export function CharactersViewModel(params) {
         if (core.uuid() !== activeCharacterKey) {
             CoreManager.changeCore(core.uuid());
         }
+        self.modalStatus(false);
     };
 
     self.removeCore = async (core) => {

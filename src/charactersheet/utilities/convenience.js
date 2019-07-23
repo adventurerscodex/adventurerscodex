@@ -163,7 +163,6 @@ Utility.oauth.putData = function(url, data, onsuccess, onerror, accessToken) {
 };
 
 
-
 /* JID Methods */
 
 /**

@@ -1,82 +1,29 @@
-<div class="panel panel-default bio">
-  <div class="panel-body">
-    <div class="row" data-bind="click: openModal" title="Click to edit Ability Scores.">
-      <div class="table-responsive">
-        <table class="table table-hover table-no-margin" id="abilityScoresTable">
-          <thead>
-            <tr class="clickable">
-              <th width="16%" class="text-center">Strength</th>
-              <th width="16%" class="text-center">Dexterity</th>
-              <th width="16%" class="text-center">Constitution</th>
-              <th width="16%" class="text-center">Intelligence</th>
-              <th width="16%" class="text-center">Wisdom</th>
-              <th width="16%" class="text-center">Charisma</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="clickable">
-            <!-- ko foreach: abilityScores -->
-              <td class="text-center">
-                <span data-bind='text: value' id="abilityScoresTableStrengthSpan"></span>
-                <sup>
-                  <span class="badge" id="abilityScoresTableStrengthModifierSpan" data-bind="text: modifierLabel()"></span>
-                </sup>
-              </td>
-            <!-- /ko -->
-            </tr>
-          </tbody>
-        </table>
-      </div>
+<div id="score-pane">
+  <flip-card params="{
+              tabId: 'stats',
+              elementId: 'ability_and_saves',
+              context: {
+                order: order,
+              }
+            }">
+    <div class="front">
+      <ability-scores-saving-throws-view params="{
+           containerId: elementId,
+           show: showFront,
+           flip: flip,
+           order: context.order
+         }">
+      </ability-scores-saving-throws-view>
     </div>
-  </div>
-</div>
-
-<!-- Edit Modal -->
-<div class="modal fade" tabindex="-1" role="dialog"
-   data-bind="modal: {
-      open: modalStatus,
-      onopen: modalFinishedAnimating,
-      onclose: closeModal
-    }">
-  <div class="modal-dialog modal-sm" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"> <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">
-          Edit Ability Scores
-        </h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="validate: validation">
-          <!-- ko foreach: editItems -->
-          <div class="form-group">
-            <label class="col-xs-6 pull-left">
-              <span data-bind="text: name"></span>
-              <i class="required"></i>
-            </label>
-            <div class="col-xs-6">
-              <input type="number"
-                     class="form-control pull-left"
-                     data-bind='value: value, attr: { name: name }'>
-            </div>
-          </div>
-          <!-- /ko -->
-          <div class="modal-footer-ability-scores">
-            <div class="form-group">
-              <div class="col-xs-offset-7 col-xs-5">
-                <button type="submit"
-                        class="btn btn-primary"
-                        id="abilityScoresEditDoneButton">
-                        Done</button>
-              </div>
-             </div>
-          </div>
-        </form>
-      </div>
+    <div class="back">
+      <score-save-form params="{
+          containerId: elementId,
+          show: showBack,
+          flip: flip,
+          forceCardResize: forceCardResize,
+          order: context.order
+        }">
+      </score-save-form>
     </div>
-  </div>
+  </flip-card>
 </div>

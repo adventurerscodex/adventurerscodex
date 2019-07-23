@@ -1,5 +1,6 @@
 import { Fixtures } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 
@@ -25,45 +26,62 @@ export class SpellStats extends KOModel {
         values.castingAbility = castingAbility  === '' ? null : castingAbility;
         return values;
     }
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.spellstats.changed.dispatch(this);
+    }
 }
 
 SpellStats.validationConstraints = {
-    rules: {
+    fieldParams: {
         spellSaveDc: {
             required: true,
             min: -10000,
             max: 10000,
-            number: true
+            pattern: '\\d*',
+            type: 'number'
         },
         spellAttackBonus: {
             required: true,
             min: -10000,
             max: 10000,
-            number: true
+            pattern: '\\d*',
+            type: 'number'
         },
         spellsKnown: {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            pattern: '\\d*',
+            type: 'number'
         },
         cantripsKnown: {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            pattern: '\\d*',
+            type: 'number'
         },
         invocationsKnown: {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            pattern: '\\d*',
+            type: 'number'
         },
         maxPrepared: {
             required: true,
             min: 0,
             max: 10000,
-            number: true
+            pattern: '\\d*',
+            type: 'number'
         }
     }
 };

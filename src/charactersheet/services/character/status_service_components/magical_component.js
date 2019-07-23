@@ -1,6 +1,7 @@
 import {
     CoreManager,
-    Notifications
+    Notifications,
+    Utility
 } from 'charactersheet/utilities';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
 import { PersistenceService } from 'charactersheet/services/common/persistence_service';
@@ -10,6 +11,7 @@ import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
 import { getMagicTypeEnum } from 'charactersheet/models/common/status_weight_pair';
 
+import ko from 'knockout';
 
 /**
  * A Status Service Component that calculates the player's Magical potential.
@@ -21,48 +23,104 @@ export function MagicalStatusServiceComponent() {
     var self = this;
 
     self.statusIdentifier = 'Status.Magical';
+    self.spellSlots = ko.observableArray([]);
 
-    self.init = function() {
-        Notifications.spellSlots.changed.add(self.dataHasChanged);
-        self.dataHasChanged();
+    self.init = async function() {
+        await self.load();
+        self.setUpSubscriptions();
+    };
+
+    self.setUpSubscriptions = () => {
+        Notifications.spellslot.added.add(self.spellSlotAdded);
+        Notifications.spellslot.changed.add(self.spellSlotChanged);
+        Notifications.spellslot.deleted.add(self.spellSlotDeleted);
+        Notifications.coreManager.changing.add(self.reload);
+    };
+
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
+            return;
+        }
+        self.spellSlots([]);
+        const response = await SpellSlot.ps.list({coreUuid: activeCore.uuid()});
+        self.spellSlots(response.objects);
+        if (!self.spellSlots().length) {
+            return;
+        }
+        self.dataHasChanged(activeCore.uuid());
+    };
+
+    self.reload = (oldCore, newCore) => {
+        self.spellSlots([]);
+        self._removeStatus(oldCore);
+        self.load(newCore);
+    };
+
+    self.spellSlotAdded = function (spellSlot) {
+        if (spellSlot) {
+            const existingSpellSlot = find(self.spellSlots(), (item)=> {
+                return ko.utils.unwrapObservable(spellSlot).uuid() === ko.utils.unwrapObservable(item).uuid();
+            });
+            if (!existingSpellSlot) {
+                self.spellSlots.push(spellSlot);
+                self.dataHasChanged(spellSlot.coreUuid());
+            } else {
+                self.spellSlotChanged(spellSlot);
+            }
+        }
+    };
+
+    self.spellSlotDeleted = function (spellSlot) {
+        if (spellSlot) {
+            self.spellSlots.remove(
+              (entry) => {
+                  return ko.utils.unwrapObservable(entry.uuid) === ko.utils.unwrapObservable(spellSlot.uuid);
+              });
+            self.dataHasChanged(spellSlot.coreUuid());
+        }
+    };
+
+    self.spellSlotChanged = function (item) {
+        if (item) {
+            Utility.array.updateElement(self.spellSlots(), item, ko.utils.unwrapObservable(item.uuid));
+            self.dataHasChanged(item.coreUuid());
+        }
     };
 
     /**
      * This method determines wether to update or remove the Magical status
      * component from the player's status line.
      */
-    self.dataHasChanged = async () => {
-        var key = CoreManager.activeCore().uuid();
-        const response = await SpellSlot.ps.list({coreUuid: key});
-        var spellSlots = response.objects;
-
-        if (!spellSlots) { return; }
-
-        if (spellSlots.length > 0) {
-            self._updateStatus(spellSlots);
+    self.dataHasChanged = (coreKey) => {
+        if (self.spellSlots().length > 0) {
+            self._updateStatus(coreKey);
         } else {
-            self._removeStatus();
+            self._removeStatus(coreKey);
         }
     };
 
     /* Private Methods */
 
-    self._updateStatus = function(spellSlots) {
-        var key = CoreManager.activeCore().uuid();
+    self._updateStatus = function(coreKey) {
         var valueWeightPairs = [];
 
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
 
         if (!status) {
             status = new Status();
-            status.characterId(key);
+            status.characterId(coreKey);
             status.identifier(self.statusIdentifier);
         }
 
-        valueWeightPairs = self.prepareValueWeightPairs(spellSlots);
-
+        valueWeightPairs = self.prepareValueWeightPairs(self.spellSlots());
         var weightedTotal = StatusWeightPair.processStatusWeights(valueWeightPairs);
         var phrase = StatusWeightPair.determinePhraseAndColor(getMagicTypeEnum(), weightedTotal);
 
@@ -72,18 +130,15 @@ export function MagicalStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
-        Notifications.status.magic.changed.dispatch();
     };
 
-    self._removeStatus = function() {
-        var key = CoreManager.activeCore().uuid();
+    self._removeStatus = function(coreKey) {
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (status) {
             status.delete();
             Notifications.status.changed.dispatch();
-            Notifications.status.magic.changed.dispatch();
         }
     };
 

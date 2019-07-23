@@ -1,0 +1,99 @@
+<form class="form-horizontal"
+    data-bind="{submit: $component.submit}">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <table style="margin-bottom: 0px" class="table table-responsive table-ac-bordered table-hover">
+    <thead class="ac-table-header">
+      <tr>
+        <th data-bind="click: ()=>{sortBy('proficiency');}">
+          <span class="glyphicon glyphicon-ok" />
+          <span data-bind="css: sortArrow('proficiency')" />
+        </th>
+        <th data-bind="click: ()=>{sortBy('name');}"> Skill <span data-bind="css: sortArrow('name')" />
+        </th>
+        <th colspan="2"> Modifier (Bonus) </th>
+      </tr>
+    </thead>
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr>
+        <td class="selectDropdown">
+          <div data-bind="attr: {id: `skill_proficiency_select_${$data.__id}`}"
+              class="selectit select-proficiency"
+              style="position:relative">
+            <select class="form-control"
+                style="width: 50px; position:relative"
+                data-bind="value: proficiency,
+                    options: $component.proficiencyOptions,
+                    event: {
+                      'select2:select': $component.updateEntity,
+                      blur: $component.reviewInput,
+                      invalid: $component.invalidate },
+                    attr: { ...$component.validation.proficiency },
+                    select2: {
+                      placeholder: '',
+                      minimumResultsForSearch: Infinity,
+                      templateSelection: $component.formatProficiency,
+                      templateResult: $component.formatProficiencyOptions,
+                      dropdownParent: $(`#skill_proficiency_select_${$data.__id}`)
+           }"></select>
+          </div>
+        </td>
+        <td>
+          <span data-bind="text: name" /> <i><small class="skills-ability-type">(<span data-bind="text: abilityScore().abbreviation()" />)</small></i>
+        </td>
+        <td style="width: 100px;">
+          <div class="input-group skill-modifier-input">
+            <input type="number"
+                class="form-control"
+                data-bind="value: modifier,
+                    event: {
+                      change: $component.updateEntity,
+                      blur: $component.reviewInput,
+                      invalid: $component.invalidate },
+                    attr: { ...$component.validation.abilityScore }"></input>
+            <span class="input-group-addon">
+              <span data-bind="text: bonus"></span>
+            </span>
+          </div>
+        </td>
+        <td>
+          <a data-bind="click: () => $component.delete($data)"
+              href="#">
+            <i class="fa fa-trash-o fa-color-hover"></i>
+          </a>
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+    <!-- /ko -->
+  </table>
+</form>
+<!-- extra table? its because of the form wrapping the one above -->
+<table class="table table-responsive table-ac-bordered table-hover">
+  <tfoot>
+    <tr>
+      <td>
+        <div id="add-skill"
+            class="collapse add-card">
+          <skills-add-form-view params="{
+            containerId: 'add-skill',
+            show: displayAddForm,
+            flipOnSave: flip,
+            flip: toggleShowAddForm,
+            forceCardResize: $component.forceCardResize
+            }">
+          </skills-add-form-view>
+        </div>
+        <!-- ko ifnot: displayAddForm -->
+        <button type="button"
+            class="btn btn-link btn-sm btn-block"
+            id="skillAddButton"
+            data-toggle="collapse"
+            data-target="#add-skill"
+            data-bind="click: toggleShowAddForm"><i class="fa fa-plus" /> Add Skill</button>
+        <!-- /ko -->
+      </td>
+    </tr>
+  </tfoot>
+</table>

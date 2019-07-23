@@ -1,326 +1,103 @@
-<div class="panel panel-default bio">
-  <div class="panel-body tight-inner">
-    <table class="table table-responsive table-ac-bordered table-hover" id="featTable">
-      <thead>
-        <tr>
-          <th data-bind="click: function(){sortBy('name');}" class="col-md-11">
-            Feat
-            <span data-bind="css: sortArrow('name')"></span>
-          </th>
-          <th class="col-md-1">
-            <a data-toggle="modal"
-              data-bind="click: toggleAddModal" id="featAddIcon">
-              <i class="fa fa-plus fa-color clickable"></i>
-            </a>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-      <!-- ko foreach: filteredAndSortedFeats -->
-        <tr class="clickable">
-          <td data-bind="text: name, click: $parent.editFeat" href="#"></td>
-          <td class="col-content-vertical">
-            <a data-bind="click: $parent.removeFeat" href="#">
-              <i class="fa fa-trash-o fa-color-hover">
-              </i>
-            </a>
-          </td>
-        </tr>
-        <!-- /ko -->
-        <!-- ko if: filteredAndSortedFeats().length == 0 -->
-        <tr class="clickable">
-          <td data-toggle="modal" data-bind="click: toggleAddModal"
-            colspan="12" class="text-center">
-            <i class="fa fa-plus fa-color"></i>
-            Add a new Feat
-          </td>
-        </tr>
-        <!-- /ko -->
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<!-- Add Modal -->
-<div class="modal fade"
-     id="addFeat"
-     tabindex="-1"
-     role="dialog" data-bind="modal: {
-      onopen: modalFinishedOpening,
-      onclose: closeAddModal,
-      open: addModalOpen}">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title"
-            id="addFeatLabel">Add a new Feat.</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" data-bind="element: _addForm, validate: validation">
-          <div class="form-group ui-front">
-            <label for="name" class="col-sm-2 control-label">
-              Name<i class="required"></i>
-            </label>
-              <div class="col-sm-10">
-                <input type="text"
-                        class="form-control"
-                        id="featAddNameInput"
-                        name="name"
-                        placeholder="Grappler"
-                        data-bind='textInput: blankFeat().name,
-                        autocomplete: { source: featsPrePopFilter,
-                        onselect: populateFeat }, hasFocus: firstModalElementHasFocus'>
+<div id="feat-pane">
+  <div class="h4 card-title"> Feats </div>
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <thead class="ac-table-header">
+      <tr>
+        <th data-bind="click: function(){sortBy('name');}"> Feat <span data-bind="css: sortArrow('name')"></span>
+        </th>
+        <th class="col-xs-1 text-right">
+          <a href="#"
+              data-bind="{click: collapseAll}">
+            <span class="fa fa-minus"></span></a>
+        </th>
+      </tr>
+    </thead>
+    <!-- ko ifnot: loaded(), completeOn: 'render' -->
+    <tbody><tr><td colspan=2><div class="loader-wrapper"><div class="loader"></div></div></td></tr></tbody>
+    <!-- /ko -->
+    <!-- ko if: loaded(), completeOn: 'render' -->
+    <tbody>
+      <!-- ko foreach: filteredAndSortedEntities -->
+      <tr data-toggle="collapse"
+          class="clickable expandRow"
+          data-bind="attr:{'data-target': `#feat_list_${uuid()}`, id: `#feat_row_${uuid()}`}">
+        <td>
+          <span data-bind="text: $component.shortText(name)"></span>
+          <span data-bind="visible: $component.showTracked($data)"
+              style="opacity: .9"
+              class="glyphicon glyphicon-time"
+              aria-hidden="true"></span>
+        </td>
+        <td class="col-xs-1 text-right">
+          <span data-toggle="collapse"
+              data-bind="attr:{'data-target': `#feat_list_${uuid()}`}"
+              class="rotate fa fa-chevron-left"></span>
+        </td>
+      </tr>
+      <tr class="collapseRow">
+        <td colspan="3">
+          <flip-card params="{
+                dataId: $data.uuid,
+                tabId: $parent.tabId,
+                collapsable: true,
+                elementId: 'feat_list',
+                context: { data: $data }
+              }">
+            <div class="front"
+                data-bind="with: context.data">
+              <card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+              <div class="h4 collapsable-card-title">
+                <span data-bind="text: name"></span>
               </div>
-          </div>
-          <div class="form-group">
-            <label for="featDescription" class="col-sm-2 control-label">Description</label>
-              <div class="col-sm-10">
-                <textarea type="password"
-                          class="form-control"
-                          id="featAddDescriptionTextarea"
-                          rows="4"
-                          name="description"
-                          placeholder="You've developed the skills necessary to hold your own in close-quarters grappling."
-                          data-bind='textInput: blankFeat().description'>
-                </textarea>
-                <small class="text-muted">
-                  Text in this panel can be styled using Markdown. Click
-                  <a target="_blank"
-                    href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                </small>
-              </div>
-          </div>
-          <div class="form-group">
-            <label for="featDescription" class="col-sm-3 control-label content-left">
-              <span class="fa fa-info-circle" style="cursor:pointer;"
-                      data-bind="popover: { content: trackedPopoverText }"></span>&nbsp;Tracked?</label>
-              <div class="col-sm-7">
-                <input type="checkbox"
-                         class="form-control"
-                         id="featAddTrackedCheckbox"
-                         data-bind='checked: blankFeat().isTracked'>
-              </div>
-          </div>
-          <div data-bind="visible: blankFeat().isTracked">
-            <div class="form-group">
-              <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
-              </div>
-              <label for="bonus" class="col-sm-2 control-label">
-                Max<i class="required"></i>
-              </label>
-              <div class="col-sm-9">
-                <input type="number"
-                  class="form-control"
-                  id="featAddMaxInput"
-                  min="1"
-                  data-bind='textInput: blankTracked().max'
-                  name="max">
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:50px">
-              </div>
-              <label class="col-sm-2 control-label">Resets on...</label>
-              <div class="col-sm-9">
-                <div class="btn-group btn-group-justified" role="group">
-                  <label class="btn btn-default" id="featAddShortRestInput"
-                        data-bind="css: { active: blankTracked().resetsOn() == 'short'}">
-                    <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
-                            data-bind="checked: blankTracked().resetsOn"/>
-                      <img class="action-bar-icon" data-bind="attr: { src: meditation }">
-                      &nbsp;&nbsp;&nbsp;Short Rest
-                  </label>
-                  <label class="btn btn-default" id="featAddLongRestInput"
-                  data-bind="css: { active: blankTracked().resetsOn() == 'long'}">
-                    <input type="radio" class="hide-block" name="blankresetsOnLong"
-                            value="long" data-bind="checked: blankTracked().resetsOn"/>
-                    <img class="action-bar-icon" data-bind="attr: { src: campingTent }">
-                      &nbsp;&nbsp;&nbsp;Long Rest
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="submit"
-                    id="featAddAddButton"
-                    class="btn btn-primary">
-                    Add</button>
-            <p class="text-muted text-left" data-bind='visible: shouldShowDisclaimer'>
-              <sm><i>This data is distributed under the
-                <a href='http://media.wizards.com/2016/downloads/DND/SRD-OGL_V5.1.pdf'
-                  target='_blank'>
-                  OGL</a><br/>
-                  Open  Game  License v 1.0a  Copyright 2000, Wizards of  the Coast,  LLC.
-                </i></sm>
-            </p>
-          </div>
-        </form>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
-
-<!-- ViewEdit Modal -->
-<div class="modal fade"
-     id="viewFeats"
-     tabindex="-1"
-     role="dialog"
-     data-bind="modal: {
-      open: modalOpen,
-      onopen: modalFinishedOpening,
-      onclose: closeEditModal
-    }">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <h4 class="modal-title">Edit a Feat.</h4>
-      </div>
-      <div class="modal-body">
-        <!-- Begin Tabs -->
-        <ul class="nav nav-tabs tabs">
-          <li role="presentation" id="featModalPreview" data-bind="click: selectPreviewTab, css: previewTabStatus">
-            <a href="#" aria-controls="featModalPreview" role="tab" data-toggle="tab">
-                <b>Preview</b>
-            </a>
-          </li>
-          <li role="presentation" id="featModalEdit" data-bind="click: selectEditTab, css: editTabStatus">
-            <a href="#" aria-controls="featModalEdit" role="tab" data-toggle="tab">
-                <b>Edit</b>
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content" data-bind="with: currentEditItem">
-          <div role="tabpanel" data-bind="css: $parent.previewTabStatus" class="tab-pane">
-            <div class="h3">
-              <span data-bind="text: name"></span>
-            </div>
-            <!-- ko if: isTracked -->
-            <div class="row" >
-              <div class="col-sm-6 col-xs-12">
-                <b>Max Uses:</b>&nbsp;
-                <span data-bind="text: $parent.currentEditTracked().max"></span>
-              </div>
-              <div class="col-sm-6 col-xs-12">
-                <b>Resets on:</b>&nbsp;
-                <span data-bind="visible: $parent.currentEditTracked().resetsOn() === 'short'">
-                  Short Rest
-                </span>
-                <span data-bind="visible: $parent.currentEditTracked().resetsOn() === 'long'">
-                  Long Rest
-                </span>
-              </div>
-            </div>
-            <!-- /ko -->
-            <hr />
-            <div class="row row-padded">
-              <div class="col-xs-12 col-padded">
-                <div data-bind="markdownPreview: description"
-                     class="preview-modal-overflow-sm">
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Preview Tab -->
-          <div role="tabpanel" data-bind="css: $parent.editTabStatus" class="tab-pane">
-            <form class="form-horizontal" data-bind="element: $parent._editForm, validate: $parent.updateValidation">
-              <div class="form-group">
-                <label for="name" class="col-sm-2 control-label">
-                  Name<i class="required"></i>
-                </label>
-                <div class="col-sm-10">
-                  <input type="text"
-                        id="featEditNameInput"
-                        class="form-control"
-                        placeholder="Grappler"
-                        name="name"
-                        data-bind='textInput: name, hasFocus: $parent.editFirstModalElementHasFocus'>
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="featDescription"
-                       class="col-sm-2 control-label">Description</label>
-                  <div class="col-sm-10">
-                    <textarea type="text" rows="6"
-                           id="featEditDescriptionTextarea"
-                           class="form-control"
-                           name="description"
-                           placeholder="You've developed the skills necessary to hold your own in close-quarters grappling."
-                           data-bind='value: description, markdownEditor: true'>
-                    </textarea>
-                    <small class="text-muted">
-                      Text in this panel can be styled using Markdown. Click
-                      <a target="_blank"
-                        href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">here</a> to see a guide.
-                    </small>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label for="featDescription" class="col-sm-2 control-label">Tracked?</label>
-                  <div class="col-sm-10">
-                    <input type="checkbox" class="form-control" id="featEditTrackedCheckbox"
-                            data-bind='checked: isTracked'>
-                  </div>
-              </div>
-              <!-- ko if: isTracked -->
-                <div class="form-group">
-                  <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:40px">
-                  </div>
-                  <label for="bonus" class="col-sm-2 control-label">
-                    Max<i class="required"></i>
-                  </label>
-                  <div class="col-sm-9">
-                    <input type="number"
-                      class="form-control"
-                      id="featEditMaxInput"
-                      name="max"
-                      data-bind='textInput: $parent.currentEditTracked().max'>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-sm-1 col-content-vertical" style="border-right:5px ridge #dce4ec;height:50px">
-                  </div>
-                  <label class="col-sm-2 control-label">Resets on...</label>
-                  <div class="col-sm-9">
-                    <div class="btn-group btn-group-justified" role="group">
-                      <label class="btn btn-default" id="featEditShortRestInput"
-                            data-bind="css: { active: $parent.currentEditTracked().resetsOn() == 'short'}">
-                        <input type="radio" class="hide-block" name="blankresetsOnShort" value="short"
-                                data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                          <img class="action-bar-icon" data-bind="attr: { src: $parent.meditation }">
-                          &nbsp;&nbsp;&nbsp;Short Rest
-                      </label>
-                      <label class="btn btn-default" id="featEditLongRestInput"
-                      data-bind="css: { active: $parent.currentEditTracked().resetsOn() != 'short'}">
-                        <input type="radio" class="hide-block" name="blankresetsOnLong"
-                                value="long" data-bind="checked: $parent.currentEditTracked().resetsOn"/>
-                        <img class="action-bar-icon" data-bind="attr: { src: $parent.campingTent }">
-                          &nbsp;&nbsp;&nbsp;Long Rest
-                      </label>
-                    </div>
-                  </div>
-                </div>
+              <div class="panel-body">
+                <!-- ko if: description -->
+                <div class="card-description"
+                    data-bind="markdownPreview: description "></div>
                 <!-- /ko -->
-              <div class="modal-footer">
-                <button type="submit"
-                        id="featEditDoneButton"
-                        class="btn btn-primary">Done</button>
+                <!-- ko ifnot: description -->
+                <p>No Description</p>
+                <!-- /ko -->
               </div>
-            </form>
+            </div>
+            <div class="back">
+              <feat-form params="{
+                data: context.data,
+                containerId: elementId,
+                show: showBack,
+                flip: flip,
+                forceCardResize: forceCardResize
+               }"></feat-form>
+            </div>
+          </flip-card>
+        </td>
+      </tr>
+      <!-- /ko -->
+    </tbody>
+    <tfoot>
+      <tr class="collapseRow">
+        <td colspan="4">
+          <div id="add-feat"
+              class="collapse add-card">
+            <feat-form params="{
+              addForm: true,
+              containerId:'add-feat',
+              show: $component.displayAddForm,
+              flip: $component.toggleShowAddForm
+             }"></feat-form>
           </div>
-        </div>
-      </div> <!-- Modal Body -->
-    </div> <!-- Modal Content -->
-  </div> <!-- Modal Dialog -->
-</div> <!-- Modal Fade -->
+          <!-- ko ifnot: $component.displayAddForm -->
+          <center>
+            <button type="button"
+                class="btn btn-link btn-sm btn-block"
+                id="proficiencyAddButton"
+                data-toggle="collapse"
+                data-target="#add-feat"
+                data-bind="click: $component.toggleShowAddForm"><i class="fa fa-plus"></i> Add Feat</button>
+          </center>
+          <!-- /ko -->
+        </td>
+      </tr>
+    </tfoot>
+    <!-- /ko -->
+  </table>
+</div>

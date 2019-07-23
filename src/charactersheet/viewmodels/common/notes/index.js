@@ -18,7 +18,9 @@ export function NotesViewModel() {
     self.load = async () => {
         await self.reloadData();
 
-        Notifications.notes.changed.add(self.reloadData);
+        Notifications.note.added.add(self.reloadData);
+        Notifications.note.changed.add(self.reloadData);
+        Notifications.note.deleted.add(self.reloadData);
     };
 
     self.reloadData = async () => {

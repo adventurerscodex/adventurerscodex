@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 /**
  * Obtained this binding from:
@@ -30,11 +30,13 @@ ko.bindingHandlers.popover = {
         $(element).popover(options);
 
         ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-            $(element).popover("destroy");
+            $(element).popover('destroy');
         });
     },
     options: {
-        placement: "top",
-        html: true
+        placement: 'top',
+        html: true,
+        container: 'body',
+        trigger: 'focus'
     }
 };

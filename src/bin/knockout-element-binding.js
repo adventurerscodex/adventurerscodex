@@ -1,4 +1,4 @@
-import ko from 'knockout'
+import ko from 'knockout';
 
 /**
  * Adds a binding that allows a view model to save and access a reference to
@@ -11,7 +11,7 @@ import ko from 'knockout'
  */
 ko.bindingHandlers.element = {
     init: function(element, valueAccessor) {
-      var value = valueAccessor();
-      value(element);
+        var value = valueAccessor();
+        value(element);
     }
 };

@@ -1,0 +1,91 @@
+<form class="form-horizontal"
+    data-bind="{submit: $component.submit}">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <div class="h4 card-title"> Abilities &amp;<br />Saving Throws </div>
+  <div class="btn-group btn-group-justified"
+      role="group"
+      aria-label="Toggle Ability Score/Saving Throws">
+    <div class="btn-group"
+        role="group">
+      <button type="button"
+          class="btn btn-info btn-sm"
+          data-bind="click: $component.toggleSaves(false), css: {active: !$component.showSaves()}">Scores</button>
+    </div>
+    <div class="btn-group"
+        role="group">
+      <button type="button"
+          class="btn btn-info btn-sm"
+          data-bind="click: $component.toggleSaves(true), css: {active: $component.showSaves()}">Saves</button>
+    </div>
+  </div>
+  <div data-bind="visible: !$component.showSaves()">
+    <table class="table table-responsive table-ac-bordered table-hover score-save-table"
+        id="abilityScoreTable">
+      <thead class="ac-table-header">
+        <tr>
+          <th>Score</th>
+          <th>Ability</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ko foreach: $component.order -->
+        <tr data-bind="with: $component.findSaveByName($data)">
+          <!-- ko with: $data.abilityScore -->
+          <td class="ac-table-data-cell">
+            <input class="form-control ac-number-input"
+                data-bind="value: value,
+                   attr: { name: `abilityScore-${name()}-value`,
+                          ...$component.validation.AbilityScore.value },
+                   event: { change: $component.updateEntity,
+                            blur: $component.reviewInput,
+                            invalid: $component.invalidate }">
+          </td>
+          <td data-bind="text: name"></td>
+          <!-- /ko -->
+        </tr>
+        <!-- /ko -->
+      </tbody>
+    </table>
+  </div>
+  <div data-bind="visible: $component.showSaves()">
+    <table class="table table-responsive table-ac-bordered table-hover score-save-table">
+      <thead class="ac-table-header">
+        <tr>
+          <th> Prof </th>
+          <th> Ability </th>
+          <th> Modify </th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ko foreach: $component.order -->
+        <tr data-bind="with: $component.findSaveByName($data)">
+          <td>
+            <input type='checkbox'
+                class='ac-checkbox sr-only'
+                data-bind="checked: proficiency,
+                   event: { change: $component.updateEntity,
+                            blur: $component.reviewInput,
+                            invalid: $component.invalidate },
+                   attr: { id: `savingThrow-${name()}-proficiency`,
+                           name: `savingThrow-${name()}-proficiency`,
+                           ...$component.validation.SavingThrow.proficiency }"></input>
+            <label data-bind="attr: { for: `savingThrow-${name()}-proficiency`}">
+          </td>
+          <td data-bind="text: name"></td>
+          <td>
+            <input type="number"
+                class="form-control ac-number-input"
+                required="true"
+                data-bind="value: modifier,
+                    event: { change: $component.updateEntity,
+                             blur: $component.reviewInput,
+                             invalid: $component.invalidate },
+                    attr: { name: `savingThrow-${name()}-modifier`,
+                           ...$component.validation.SavingThrow.modifier }"></input>
+          </td>
+        </tr>
+        <!-- /ko -->
+      </tbody>
+    </table>
+  </div>
+</form>

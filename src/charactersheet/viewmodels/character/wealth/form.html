@@ -1,0 +1,101 @@
+<form data-bind="submit: $component.submit">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <div class="h4 card-title">
+    Coins<br />
+    <small>watch for pickpockets</small>
+  </div>
+  <hr class="ac-table-header" />
+  <div data-bind="with: entity">
+    <div class="input-group coins">
+      <span class="input-group-addon no-top-bottom-padding">
+        <img data-bind="attr: { src: $component.cpCoins }"
+             width="30px"
+             title="Copper Coins"
+             alt="Copper Coins" />
+      </span>
+      <input class="form-control"
+             name="copper"
+             data-bind='value: copper,
+           event: { blur: $component.reviewInput, invalid: $component.invalidate },
+           attr: { ...$component.validation.copper },
+           hasFocus: $component.formElementHasFocus'>
+      <span class="input-group-addon no-top-bottom-padding">
+        CP
+      </span>
+    </div>
+    <div class="input-group coins">
+      <span class="input-group-addon no-top-bottom-padding">
+        <img data-bind="attr: { src: $component.spCoins }"
+             width="30px"
+             title="Silver Coins"
+             alt="Silver Coins" />
+      </span>
+      <input class="form-control"
+             name="silver"
+             data-bind="value: silver,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.silver }">
+      <span class="input-group-addon no-top-bottom-padding">
+        SP
+      </span>
+    </div>
+    <div class="input-group coins">
+      <span class="input-group-addon no-top-bottom-padding">
+        <img data-bind="attr: { src: $component.epCoins }"
+             width="30px"
+             title="Electrum Coins"
+             alt="Electrum Coins" />
+      </span>
+      <input class="form-control"
+             name="electrum"
+             data-bind="value: electrum,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.electrum }">
+      <span class="input-group-addon no-top-bottom-padding">
+        EP
+      </span>
+    </div>
+    <div class="input-group">
+      <span class="input-group-addon no-top-bottom-padding">
+        <img data-bind="attr: { src: $component.gpCoins }"
+             width="30px"
+             title="Gold Coins"
+             alt="Gold Coins" />
+      </span>
+      <input class="form-control"
+             name="gold"
+             data-bind="value: gold,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.gold }" />
+      <span class="input-group-addon no-top-bottom-padding">
+        GP
+      </span>
+    </div>
+    <div class="input-group coins">
+      <span class="input-group-addon no-top-bottom-padding">
+        <img data-bind="attr: { src: $component.ppCoins }"
+             width="30px"
+             title="Platinum Coins"
+             alt="Platinum Coins" />
+      </span>
+      <input class="form-control coin-input"
+             name="platinum"
+             data-bind="value: platinum,
+             event: { blur: $component.reviewInput, invalid: $component.invalidate },
+             attr: { ...$component.validation.platinum }" />
+      <span class="input-group-addon no-top-bottom-padding">
+        PP
+      </span>
+    </div>
+    <div class="table-foot-content">
+      <div class="pull-right text-muted">
+        <small>Total:&nbsp;<span id="coinsWorthInGoldLabel"
+                data-bind='text: worthInGold'></span>&nbsp;(gp)</small>
+      </div>
+      <div class="pull-left text-muted">
+        <small>Weight:&nbsp;<span id="coinsTotalWeightLabel"
+                data-bind="text: totalWeightLabel"></span></small>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,5 +1,6 @@
 import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import ko from 'knockout';
 
 export class Profile extends KOModel {
@@ -57,10 +58,21 @@ export class Profile extends KOModel {
             + 'internet can provide.';
         return desc;
     });
+
+    load = async (params) => {
+        const response = await this.ps.model.ps.read(params);
+        this.importValues(response.object.exportValues());
+    }
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        Notifications.profile.changed.dispatch(this);
+    }
 }
 
 Profile.validationConstraints = {
-    rules: {
+    fieldParams: {
         characterName: {
             maxlength: 256
         },
@@ -74,22 +86,26 @@ Profile.validationConstraints = {
             maxlength: 64
         },
         age: {
-            number: true,
+            type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 1000000
         },
         level: {
-            number: true,
+            type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },
         experience: {
-            number: true,
+            type: 'number',
+            pattern: '\\d*',
             min: -1000000,
             max: 100000000
         },
         weight: {
-            number: true,
+            type: 'number',
+            pattern: '\\d*',
             min: 0,
             max: 10000
         },

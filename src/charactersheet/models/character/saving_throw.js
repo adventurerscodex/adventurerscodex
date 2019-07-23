@@ -3,6 +3,7 @@ import 'knockout-mapping';
 import { AbilityScore } from './ability_score';
 import { CoreManager } from 'charactersheet/utilities';
 import { KOModel } from 'hypnos';
+import { Notifications } from 'charactersheet/utilities';
 import { ProficiencyService } from 'charactersheet/services/character/proficiency_service';
 import ko from 'knockout';
 
@@ -11,64 +12,43 @@ export class SavingThrow extends KOModel {
     static __skeys__ = ['core', 'savingThrows'];
 
     static mapping = {
-        include: ['coreUuid']
+        include: ['coreUuid'],
+        abilityScore: {
+            update: ({ data }) => {
+                const abilityScore = new AbilityScore();
+                if (data) {
+                    abilityScore.importValues(data);
+                }
+                return abilityScore;
+            }
+        }
     };
 
     coreUuid = ko.observable(null);
     name = ko.observable('');
-    abilityScore = ko.observable();
+    abilityScore = ko.observable(new AbilityScore());
     modifier = ko.observable(0);
     proficiency = ko.observable(false);
-    modifierLabel = ko.observable('');
 
-    toSchemaValues = (values) => {
-        const abilityScoreId = values.abilityScore.uuid;
-        values.abilityScore = abilityScoreId;
-        return values;
-    }
+    toSchemaValues = (values) => ({
+        ...values,
+        abilityScore: values.abilityScore.uuid
+    });
 
-    proficiencyScore = () => {
-        return ProficiencyService.sharedService().proficiency();
-    };
-
-    abilityScoreModifier = async () => {
-        var score = null;
-        try {
-            var key = CoreManager.activeCore().uuid();
-            const response = await AbilityScore.ps.list({coreUuid: key,
-                name: this.abilityScore().name()});
-            score = response.objects[0];
-        } catch(err) { /*Ignore*/ }
-
-        if (score === null) {
-            return null;
-        } else {
-            return score.getModifier();
+    proficiencyBonus = ko.pureComputed(() => {
+        const proficiencyBonus = ProficiencyService.sharedService().proficiency();
+        if (this.proficiency()) {
+            return proficiencyBonus;
         }
-    };
+        return 0;
+    });
 
-    bonus = async () => {
-        var bonus = this.modifier() ? parseInt(this.modifier()) : 0;
-        const abilityScoreModifier = await this.abilityScoreModifier();
-        const proficiency = this.proficiency();
-        if (proficiency) {
-            bonus += this.proficiencyScore() + abilityScoreModifier;
-        } else if (abilityScoreModifier) {
-            bonus += abilityScoreModifier;
-        } else {
-            bonus = bonus != null ? bonus : null;
-        }
+    bonus = ko.pureComputed(() => {
+        let bonus = this.modifier() ? parseInt(this.modifier()) : 0;
+        bonus += this.abilityScore().getModifier();
+        bonus += this.proficiencyBonus();
         return bonus;
-    };
-
-    updateModifierLabel = async () => {
-        const bonus = await this.bonus();
-        if (bonus === null) {
-            return '+ 0';
-        }
-        var str = bonus >= 0 ? '+ ' + bonus : '- ' + Math.abs(bonus);
-        this.modifierLabel(str);
-    };
+    });
 
     proficiencyLabel = ko.pureComputed(() => {
         if (this.proficiency() === true) {
@@ -76,11 +56,28 @@ export class SavingThrow extends KOModel {
         }
         return '';
     });
+
+    load = async (params) => {
+        const response = await this.ps.read(params);
+        this.importValues(response.object.exportValues());
+        // Saving throws have no notification
+        // Notifications.savingThrows.changed.dispatch(this);
+    }
+
+
+    save = async () => {
+        const response = await this.ps.save();
+        this.importValues(response.object.exportValues());
+        // Saving throws have no notification
+        // Notifications.savingThrows.changed.dispatch(this);
+    }
 }
 
 SavingThrow.validationConstraints = {
-    rules: {
+    fieldParams: {
         modifier: {
+            type: 'number',
+            pattern: '\\d*',
             required: true,
             min: -10000,
             max: 10000

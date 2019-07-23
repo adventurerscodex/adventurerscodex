@@ -1,0 +1,56 @@
+<!-- ko ifnot: loaded(), completeOn: 'render' -->
+<div class="loader-wrapper"><div class="loader"></div></div>
+<!-- /ko -->
+<!-- ko if: loaded(), completeOn: 'render' -->
+<card-edit-actions params="{ flip: $parent.flip }"></card-edit-actions>
+<div data-bind="with: entity">
+  <h3 class="collapsable-card-title"
+      data-bind="text: name"></h3>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="personalityTrait">Personality Traits</label>
+        <!-- ko if: personalityTrait -->
+        <div class="card-description"
+            data-bind="markdownPreview: personalityTrait"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: personalityTrait -->
+        <p>No Personality Traits</p>
+        <!-- /ko -->
+      </div>
+      <div class="col-sm-6">
+        <label for="ideal">Ideals</label>
+        <!-- ko if: ideal -->
+        <div class="card-description"
+            data-bind="markdownPreview: ideal"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: ideal -->
+        <p>No Ideals</p>
+        <!-- /ko -->
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="bond">Bonds</label>
+        <!-- ko if: bond -->
+        <div class="card-description"
+            data-bind="markdownPreview: bond"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: bond -->
+        <p>No Bonds</p>
+        <!-- /ko -->
+      </div>
+      <div class="col-sm-6">
+        <label for="flaw">Flaws</label>
+        <!-- ko if: flaw -->
+        <div class="card-description"
+            data-bind="markdownPreview: flaw"></div>
+        <!-- /ko -->
+        <!-- ko ifnot: flaw -->
+        <p>No Flaws</p>
+        <!-- /ko -->
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /ko -->

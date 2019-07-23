@@ -1,13 +1,11 @@
 import { CoreManager, Notifications } from 'charactersheet/utilities';
-import { DeathSave } from 'charactersheet/models/character/death_save';
-import { Health } from 'charactersheet/models/character/health';
-import { HitDice } from 'charactersheet/models/character/hit_dice';
+import { DeathSave, Health, HitDice, Profile } from 'charactersheet/models';
 import { KeyValuePredicate } from 'charactersheet/services/common/persistence_service_components/persistence_service_predicates';
-import { Profile } from 'charactersheet/models/character/profile';
 import { Status } from 'charactersheet/models/common/status';
 import { StatusWeightPair } from 'charactersheet/models/common/status_weight_pair';
+import { find } from 'lodash';
 import { getHealthTypeEnum } from 'charactersheet/models/common/status_weight_pair';
-
+import ko from 'knockout';
 
 /**
  * A Status Service Component that calculates the player's overall healthiness.
@@ -21,89 +19,103 @@ export function HealthinessStatusServiceComponent() {
     self.HEALTH_WEIGHT = 0.85;
     self.HIT_DICE_WEIGHT = 0.15;
 
-    self.init = function() {
-        Notifications.health.changed.add(self.dataHasChanged);
-        Notifications.hitDice.changed.add(self.dataHasChanged);
-        Notifications.health.damage.changed.add(self.dataHasChanged);
-        Notifications.stats.deathSaves.fail.changed.add(self._initDeathSavesFail);
-        Notifications.stats.deathSaves.notFail.changed.add(self._initDeathSavesNotFail);
-        Notifications.stats.deathSaves.success.changed.add(self._initDeathSavesSuccess);
-        Notifications.stats.deathSaves.notSuccess.changed.add(self._initDeathSavesNotSuccess);
-        self.dataHasChanged();
+
+    self.health = ko.observable();
+    self.deathSaveFailure = ko.observable();
+    self.hitDice = ko.observable();
+    self.profile = ko.observable();
+
+    self.init = async function() {
+        await self.load();
+        self.setUpSubscriptions();
     };
 
-    /**
-     * This method determines whether to update or remove the Healthiness status
-     * component from the player's status line.
-     */
-    self.dataHasChanged = async function() {
-        var key = CoreManager.activeCore().uuid();
-
-        // Fetch death saves
-        const deathSavesResponse = await DeathSave.ps.list({coreUuid: key});
-        let deathSaves = deathSavesResponse.objects;
-
-        var deathSavesDidFail = false;
-        var deathSavesDidSucceed = false;
-
-        const deathSaveFailure = deathSaves.filter((save, i, _) => {
-            return save.type() === 'failure';
-        })[0];
-
-        const deathSaveSuccess = deathSaves.filter((save, i, _) => {
-            return save.type() === 'success';
-        })[0];
-
-        deathSavesDidFail = deathSaveFailure.used() == 3 ? true : false;
-        deathSavesDidSucceed = deathSaveSuccess.used() == 3 ? true : false;
-
-        self._updateStatus(deathSavesDidFail, deathSavesDidSucceed);
+    self.setUpSubscriptions = () => {
+        Notifications.health.changed.add(self.healthChanged);
+        Notifications.hitdice.changed.add(self.hitDiceChanged);
+        Notifications.deathsave.changed.add(self.deathSaveChanged);
+        Notifications.profile.changed.add(self.profileChanged);
+        Notifications.coreManager.changing.add(self.reload);
     };
 
-    /* Private Methods */
-
-    // 3 death saves failed
-    self._initDeathSavesFail = function() {
-        self._updateStatus(true, false);
-    };
-
-    // _alertPlayerHasDied was called and all 3 death saves did not fail
-    self._initDeathSavesNotFail = function() {
-        self._updateStatus(false, false);
-    };
-
-    // 3 death saves succeeded
-    self._initDeathSavesSuccess = function() {
-        self._updateStatus(false, true);
-    };
-
-    // _alertPlayerIsStable was called and all 3 death saves did not succeed
-    self._initDeathSavesNotSuccess = function() {
-        self._updateStatus(false, false);
-    };
-
-    self._updateStatus = async function(deathSavesDidFail, deathSavesDidSucceed) {
-        var key = CoreManager.activeCore().uuid();
-        const healthResponse = await Health.ps.read({uuid: key});
-        let health = healthResponse.object;
-
-        const hitDiceResponse = await HitDice.ps.read({uuid: key});
-        let hitDice = hitDiceResponse.object;
-
-        const profileResponse = await Profile.ps.read({uuid: key});
-        let profile = profileResponse.object;
-
+    self.load = async (core) => {
+        let activeCore;
+        if (core) {
+            activeCore = core;
+        } else {
+            activeCore = CoreManager.activeCore();
+        }
+        if (ko.utils.unwrapObservable(activeCore.type.name) !== 'character') {
+            return;
+        }
+        var coreKey = activeCore.uuid();
+        self.deathSaveFailure(new DeathSave());
+        self.health(new Health());
+        self.hitDice(new HitDice());
+        self.profile(new Profile());
         var status = PersistenceService.findByPredicates(Status,
-            [new KeyValuePredicate('characterId', key),
+            [new KeyValuePredicate('characterId', coreKey),
             new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
         if (!status) {
             status = new Status();
-            status.characterId(key);
+            status.characterId(coreKey);
+            status.identifier(self.statusIdentifier);
+        }
+        await self.health().load({uuid: coreKey});
+        await self.profile().load({uuid: coreKey});
+        await self.hitDice().load({uuid: coreKey});
+        const deathSaves = await DeathSave.ps.list({coreUuid: coreKey});
+        self.deathSaveFailure(find(deathSaves.objects, (save) => save.type() === 'failure'));
+        self._updateStatus(coreKey);
+    };
+
+    self.reload = (oldCore, newCore) => {
+        self.deathSaveFailure(null);
+        self.health(null);
+        self.hitDice(null);
+        self.profile(null);
+        self.load(newCore);
+    };
+
+    self.healthChanged = (health) => {
+        self.health().importValues(health.exportValues());
+        self._updateStatus(health.uuid());
+    };
+
+    self.hitDiceChanged = (hitDice) => {
+        self.hitDice().importValues(hitDice.exportValues());
+        self._updateStatus(hitDice.uuid());
+    };
+
+    self.deathSaveChanged = (deathSave) => {
+        if (deathSave.type() === 'failure') {
+            self.deathSaveFailure().importValues(deathSave.exportValues());
+            self._updateStatus(deathSave.coreUuid());
+        }
+    };
+
+    self.profileChanged = (profile) => {
+        self.profile().importValues(profile.exportValues());
+        self._updateStatus(profile.uuid());
+    };
+
+    /* Private Methods */
+    self._updateStatus = async function(coreKey) {
+        var status = PersistenceService.findByPredicates(Status,
+            [new KeyValuePredicate('characterId', coreKey),
+            new KeyValuePredicate('identifier', self.statusIdentifier)])[0];
+        if (!status) {
+            status = new Status();
+            status.characterId(coreKey);
             status.identifier(self.statusIdentifier);
         }
 
-        var weightedTotal = self._getWeightedTotal(health, hitDice, profile, deathSavesDidFail,
-            deathSavesDidSucceed);
+        var weightedTotal = self._getWeightedTotal(
+            self.health(),
+            self.hitDice(),
+            self.profile(),
+            self.deathSaveFailure(),
+        );
 
         var phrase = StatusWeightPair.determinePhraseAndColor(getHealthTypeEnum(), weightedTotal);
 
@@ -113,36 +125,37 @@ export function HealthinessStatusServiceComponent() {
 
         status.save();
         Notifications.status.changed.dispatch();
-        Notifications.status.healthiness.changed.dispatch();
     };
 
     /**
      * This method calculates the weighted values and performs special handling
      * for dead, unconscious and stable, and unconscious states.
      */
-    self._getWeightedTotal = function(health, hitDice, profile, deathSavesDidFail,
-            deathSavesDidSucceed) {
+    self._getWeightedTotal = function(healthParam, hitDiceParam, profileParam, deathSaveFailureParam) {
+        const health = ko.utils.unwrapObservable(healthParam);
+        const hitDice = ko.utils.unwrapObservable(hitDiceParam);
+        const profile = ko.utils.unwrapObservable(profileParam);
+        const deathSaveFailure = ko.utils.unwrapObservable(deathSaveFailureParam);
 
         var valueWeightPairs = [];
-
         // Character is in a state of no health after character creation
         if (!health) {
             return 1;
         }
 
         // Character is dead
-        if (health.regularHitpointsRemaining() <= 0 && deathSavesDidFail) {
+        if (deathSaveFailure.used() >= 3) {
             return -2;
         }
 
         // Character is unconscious and stable
-        if (health.regularHitpointsRemaining() <= 0 && deathSavesDidSucceed) {
-            return -1;
+        if (health.dying()) {
+            return 0.0;
         }
 
         // Character is unconscious
-        if (health.regularHitpointsRemaining() <= 0) {
-            return 0.0;
+        if (health.regularHitPointsRemaining() <= 0) {
+            return -1; // why? I swapped with 0.0 (above)
         }
 
         if (health) {
@@ -165,7 +178,7 @@ export function HealthinessStatusServiceComponent() {
      * @return StatusWeightPair
      */
     self.prepareHealthValueWeightPairs = function(health) {
-        var value = health.hitpoints() / health.totalHitpoints();
+        var value = health.hitPoints() / health.totalHitPoints();
 
         return new StatusWeightPair(value, self.HEALTH_WEIGHT);
     };

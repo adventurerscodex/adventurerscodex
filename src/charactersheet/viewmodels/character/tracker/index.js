@@ -1,248 +1,175 @@
-import 'bin/knockout-bootstrap-modal';
-import {
-    CoreManager,
-    Fixtures,
-    Notifications,
-    Utility } from 'charactersheet/utilities';
+import 'bin/knockout-bar-progress';
 import {
     Feat,
     Feature,
-    Tracked,
     Trait
 } from 'charactersheet/models/character';
-import { SortService } from 'charactersheet/services/common';
-import campingTent from 'images/camping-tent-blue.svg';
-import campingTentWhite from 'images/camping-tent.svg';
+import {
+    Fixtures,
+    Notifications
+   } from 'charactersheet/utilities';
+import { find, findIndex, flatMap } from 'lodash';
+import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { TrackedDetailForm } from './form';
+import autoBind from 'auto-bind';
 import ko from 'knockout';
-import meditation from 'images/meditation-blue.svg';
-import meditationWhite from 'images/meditation.svg';
 import template from './index.html';
 
-export function TrackerViewModel() {
-    var self = this;
+class TrackerViewModel extends AbstractTabularViewModel {
+    constructor(params) {
+        super(params);
+        this.collapseAllId = '#tracker-pane';
+        autoBind(this);
+    }
 
-    self.sorts = {
-        'name asc': { field: 'name', direction: 'asc'},
-        'name desc': { field: 'name', direction: 'desc'}
-    };
+    trackedModelTypes = [ Feature, Trait, Feat ];
 
-    self.trackables = ko.observableArray([]);
-    self.editItem = ko.observable();
-    self.editParent = ko.observable();
-    self.modalOpen = ko.observable(false);
-    self.addFormIsValid = ko.observable(false);
-    self.editModalTitle = ko.observable('');
-    self.sort = ko.observable(self.sorts['name asc']);
-    self.filter = ko.observable('');
-    self.meditation = meditation;
-    self.campingTent = campingTent;
-    self.meditationWhite = meditationWhite;
-    self.campingTentWhite = campingTentWhite;
-    self.slotColors = Fixtures.general.colorList;
+    async refresh () {
+        const fetchTrackedEntities = this.trackedModelTypes.map(
+          (type) => type.ps.list({ coreUuid: this.coreKey }));
+        const responseList = await Promise.all(fetchTrackedEntities);
+        const tracked = flatMap(responseList, (response) => response.objects).filter(this.showTracked);
+        this.entities(tracked);
+    }
 
-    self.load = function() {
-        self.loadTrackedItems();
-
-        //Notifications
-        Notifications.events.shortRest.add(self.resetShortRestFeatures);
-        Notifications.events.longRest.add(self.resetLongRestFeatures);
-        Notifications.feat.changed.add(self.loadTrackedItems);
-        Notifications.trait.changed.add(self.loadTrackedItems);
-        Notifications.feature.changed.add(self.loadTrackedItems);
-    };
-
-    self.loadTrackedItems = async () => {
-        var key = CoreManager.activeCore().uuid();
-        var trackables = [];
-        let trackedIndex = 0;
-
-        // Fetch trackable objects
-        var features = await Feature.ps.list({coreUuid: key});
-        var feats = await Feat.ps.list({coreUuid: key});
-        var traits = await Trait.ps.list({coreUuid: key});
-
-        if (features.objects) {
-            features = features.objects.filter((e, i, _) => {
-                if (e.tracked()) {
-                    e.tracked().type = 'Feature';
-                    e.tracked().color = self.slotColors[trackedIndex % 17];
-                    trackedIndex++;
-                    return true;
-                }
-            });
-            trackables = trackables.concat(features);
+    nameMeta = (tracked) => {
+        let metaText = '';
+        if (tracked.characterClass) {
+            metaText = `${tracked.characterClass()}`;
         }
-
-        if (feats.objects) {
-            feats = feats.objects.filter((e, i, _) => {
-                if (e.tracked()) {
-                    e.tracked().type = 'Feat';
-                    e.tracked().color = self.slotColors[trackedIndex % 17];
-                    trackedIndex++;
-                    return true;
-                }
-            });
-            trackables = trackables.concat(feats);
+        if (tracked.level) {
+            metaText += ` (Lvl ${tracked.level()})`;
         }
-
-        if (traits.objects) {
-            traits = traits.objects.filter((e, i, _) => {
-                if (e.tracked()) {
-                    e.tracked().type = 'Trait';
-                    e.tracked().color = self.slotColors[trackedIndex % 17];
-                    trackedIndex++;
-                    return true;
-                }
-            });
-            trackables = trackables.concat(traits);
+        if (tracked.race) {
+            metaText = `${tracked.race()}`;
         }
-
-        self.trackables(trackables);
-        self.trackables().forEach(function(tracked) {
-            tracked.tracked().max.subscribe(self.dataHasChanged, tracked);
-            tracked.tracked().used.subscribe(self.dataHasChanged, tracked);
-        });
+        return metaText;
     };
 
-    /* UI Methods */
+    mapToChart = (trackable) => {
+        const trackableIndex = findIndex(this.entities(), (entity) => {
+            return entity.uuid === trackable.uuid;});
+        const color = Fixtures.general.colorHexList[trackableIndex % 12];
+        const trackedItem = ko.utils.unwrapObservable(trackable).tracked();
+        return {
+            data: {
+                value: parseInt(trackedItem.max()) - parseInt(trackedItem.used()),
+                maxValue: trackedItem.max()
+            },
 
-    self.trackedElementProgressWidth = function(max, used) {
-        return (parseInt(max) - parseInt(used)) / parseInt(max);
-    };
+            config: {
+                strokeWidth: 2,
+                trailWidth: 1,
+                svgStyle: {
+                    display: 'block',
+                    width: '100%',
+                    minHeight: '3px'
+                },
+                from: {
+                    color
+                },
+                to: {
+                    color
+                }
 
-    self.shortName = function(string) {
-        return Utility.string.truncateStringAtLength(string(), 15);
-    };
-
-    /**
-     * Filters and sorts the trackables for presentation in a table.
-     */
-    self.filteredAndSortedTrackables = ko.computed(function() {
-        return SortService.sortAndFilter(self.trackables(), self.sort(), null);
-    });
-
-    /**
-     * Determines whether a column should have an up/down/no arrow for sorting.
-     */
-    self.sortArrow = function(columnName) {
-        return SortService.sortArrow(columnName, self.sort());
-    };
-
-    /**
-     * Given a column name, determine the current sort type & order.
-     */
-    self.sortBy = function(columnName) {
-        self.sort(SortService.sortForName(self.sort(), columnName, self.sorts));
-    };
-
-    //Manipulating tracked elements
-
-    self.resetShortRestFeatures = function() {
-        ko.utils.arrayForEach(self.trackables(), function(item) {
-            if (item.tracked().resetsOn() === Fixtures.resting.shortRestEnum) {
-                item.tracked().used(0);
             }
-        });
+        };
     };
 
-    self.resetLongRestFeatures = function() {
-        ko.utils.arrayForEach(self.trackables(), function(item) {
-            item.tracked().used(0);
-        });
+    resetsOnImg = (tracked) => {
+        if(tracked().resetsOn() === 'long') {
+            return 'rest-icon long-rest-icon';
+        } else if (tracked().resetsOn() === 'short') {
+            return 'rest-icon short-rest-icon';
+        } else {
+            throw 'Unexpected feature resets on string.';
+        }
     };
 
-    self.maxTrackerWidth = function() {
-        return 100 / self.trackables().length;
-    };
-
-    // Modal Methods
-
-    self.validation = {
-        submitHandler: (form, event) => {
-            event.preventDefault();
-            self.modalFinishedClosing();
-        },
-        updateHandler: ($element) => {
-            self.addFormIsValid($element.valid());
-        },
-        // Deep copy of properties in object
-        ...Tracked.validationConstraints
-    };
-
-    self.modifierHasFocus = ko.observable(false);
-    self.editHasFocus = ko.observable(false);
-
-    self.modalFinishedAnimating = function() {
-        self.modifierHasFocus(true);
-    };
-
-    self.modalFinishedClosing = async () => {
-        if (self.modalOpen() && self.addFormIsValid()) {
-            self.editParent().tracked().max(self.editItem().max());
-            self.editParent().tracked().resetsOn(self.editItem().resetsOn());
-            const response = await self.editParent().ps.save();
-            Utility.array.updateElement(self.trackables(), response.object, response.object.uuid());
-            switch(self.editItem().type()) {
-            case 'Feature':
-                Notifications.tracked.feature.changed.dispatch();
-                break;
-            case 'Trait':
-                Notifications.tracked.trait.changed.dispatch();
-                break;
-            case 'Feat':
-                Notifications.tracked.feat.changed.dispatch();
-                break;
+    onTrackedAdded (trackedItem) {
+        if (trackedItem && trackedItem.isTracked()) {
+            const tracked = find(this.entities(), (trackable)=> {
+                return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
+            });
+            if (!tracked) {
+                this.addToList(trackedItem);
             }
         }
+    }
 
-        self.modalOpen(false);
-    };
-
-    self.dataHasChanged = async function() {
-        if (this.ps) {
-            await this.ps.save();
-            Notifications.tracked.changed.dispatch();
+    onTrackedChanged (trackedItem) {
+        if (trackedItem) {
+            const tracked = find(this.entities(), (trackable)=> {
+                return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
+            });
+            if (tracked) {
+                if (!ko.utils.unwrapObservable(trackedItem).isTracked()) {
+                    // Used to be tracked, is no longer tracked;
+                    this.removeFromList(tracked);
+                } else {
+                    // Used to be tracked, tracked properties changed;
+                    this.replaceInList(trackedItem);
+                }
+            } else if (ko.utils.unwrapObservable(trackedItem).isTracked()) {
+                // Was not tracked, is now tracked;
+                this.addToList(trackedItem);
+            }
         }
-    };
+    }
 
-    self.editModalOpen = function() {
-        self.editHasFocus(true);
-    };
-
-    self.closeEditModal = () => {
-        self.modalOpen(false);
-    };
-
-    self.editTracked = function(item) {
-        switch(item.tracked().type) {
-        case 'Feature':
-            self.editParent(new Feature());
-            self.editParent().importValues(item.exportValues());
-            break;
-        case 'Trait':
-            self.editParent(new Trait());
-            self.editParent().importValues(item.exportValues());
-            break;
-        case 'Feat':
-            self.editParent(new Feat());
-            self.editParent().importValues(item.exportValues());
-            break;
+    onTrackedDeleted (trackedItem) {
+        if (trackedItem) {
+            const tracked = find(this.entities(), (trackable)=> {
+                return ko.utils.unwrapObservable(trackedItem).uuid() === ko.utils.unwrapObservable(trackable).uuid();
+            });
+            if (tracked) {
+                this.removeFromList(tracked);
+            }
         }
-        self.editModalTitle(item.name());
-        self.editItem(new Tracked());
-        self.editItem().max(item.tracked().max());
-        self.editItem().resetsOn(item.tracked().resetsOn());
-        self.editItem().type(item.tracked().type);
-        self.modalOpen(true);
+    }
+
+    setUpSubscriptions () {
+        this.subscriptions.push(Notifications.feature.changed.add(this.onTrackedChanged));
+        this.subscriptions.push(Notifications.feat.changed.add(this.onTrackedChanged));
+        this.subscriptions.push(Notifications.trait.changed.add(this.onTrackedChanged));
+
+        this.subscriptions.push(Notifications.feature.added.add(this.onTrackedAdded));
+        this.subscriptions.push(Notifications.feat.added.add(this.onTrackedAdded));
+        this.subscriptions.push(Notifications.trait.added.add(this.onTrackedAdded));
+
+        this.subscriptions.push(Notifications.feature.deleted.add(this.onTrackedDeleted));
+        this.subscriptions.push(Notifications.feat.deleted.add(this.onTrackedDeleted));
+        this.subscriptions.push(Notifications.trait.deleted.add(this.onTrackedDeleted));
+
+        this.subscriptions.push(Notifications.events.shortRest.add(this.resetShortRestFeatures));
+        this.subscriptions.push(Notifications.events.longRest.add(this.resetLongRestFeatures));
+    }
+
+    resetShortRestFeatures = async () => {
+        const updates = this.entities().map(async (entity) => {
+            if (entity.tracked().resetsOn() === Fixtures.resting.shortRestEnum) {
+                if (entity.tracked().used() > 0) {
+                    entity.tracked().used(0);
+                    await entity.save();
+                }
+            }
+        });
+        await Promise.all(updates);
     };
 
-    self.refreshTracked = function(item) {
-        item.tracked().used(0);
+    resetLongRestFeatures = async () => {
+        const updates = this.entities().map(async (entity) => {
+            if (entity.tracked().used() > 0) {
+                entity.tracked().used(0);
+                await entity.save();
+            }
+        });
+        await Promise.all(updates);
     };
 
-    self.clear = function() {
-        self.trackables([]);
-    };
+    onUsedChange = async (trackedItem) => {
+        await trackedItem.save();
+    }
 }
 
 ko.components.register('tracker', {

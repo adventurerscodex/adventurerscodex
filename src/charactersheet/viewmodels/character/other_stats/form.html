@@ -1,0 +1,62 @@
+<form class="other-stats-form"
+    data-bind="{submit: $component.submit}">
+  <card-submit-actions params="{reset: $component.reset}"></card-submit-actions>
+  <hr class="ac-table-header" />
+  <table class="table table-responsive table-ac-bordered table-hover">
+    <tbody data-bind="with: $component.entity">
+      <tr>
+        <th> Armor Class </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="armorClassModifier"
+              aria-describedby="basic-addon2"
+              data-bind="value: armorClassModifier,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.armorClassModifier }">
+        </td>
+      </tr>
+      <tr>
+        <th> Proficiency Bonus </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="proficiencyModifier"
+              aria-describedby="basic-addon2"
+              data-bind="value: proficiencyModifier,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.proficiencyModifier }">
+        </td>
+      </tr>
+      <tr>
+        <th> Initiative </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control  ac-number-input"
+              name="initiativeModifier"
+              aria-describedby="basic-addon2"
+              data-bind="value: initiativeModifier,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.initiativeModifier }">
+        </td>
+      </tr>
+      <tr>
+        <th> Movement </th>
+        <td class="ac-table-data-cell">
+          <input class="form-control ac-number-input"
+              name="speed"
+              aria-describedby="basic-addon2"
+              data-bind="value: speed,
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                 attr: { ...$component.validation.speed }">
+        </td>
+      </tr>
+      <tr>
+        <th> Inspiration </th>
+        <td class="ac-table-data-cell">
+          <span style="cursor: pointer;"
+              data-bind="{
+            click: $component.toggleInspiration,
+            css: $component.entity().inspiration() ? 'inspiration-full':'inspiration-empty'}" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>

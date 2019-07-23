@@ -4,7 +4,6 @@ import Should from 'should';
 import { scoresFixture } from '../fixtures';
 import simple from 'simple-mock';
 
-
 describe('152 Monster Ability Score', () => {
     describe('Get Unique Hashes', () => {
         it('should return a list of scores that are unique', () => {

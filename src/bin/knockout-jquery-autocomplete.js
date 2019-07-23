@@ -1,9 +1,9 @@
-import 'jquery-ui/ui/core'
-import 'jquery-ui/ui/widgets/autocomplete'
-import 'jquery-ui/themes/base/all.css'
+import 'jquery-ui/ui/core';
+import 'jquery-ui/ui/widgets/autocomplete';
+import 'jquery-ui/themes/base/all.css';
 
-import ko from 'knockout'
-import $ from 'jquery'
+import $ from 'jquery';
+import ko from 'knockout';
 
 /**
  * Knockout jQuery Autocomplete Binding
@@ -43,11 +43,11 @@ ko.bindingHandlers.autocomplete = {
                 if (onselect) {
                     onselect(ui.item.label, ui.item.value);
                 }
-            },
-        })
+            }
+        });
         $(element).focus(function() {
             $(element).data('ui-autocomplete').menu.bindings = $();
             $(element).autocomplete('search', '');
-        })
+        });
     }
 };
