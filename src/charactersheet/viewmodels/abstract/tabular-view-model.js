@@ -137,10 +137,6 @@ export class AbstractTabularViewModel {
     }
 
     setUpSubscriptions() {
-        const modelNotification = this.modelClass().prototype.constructor.name.toLowerCase();
-        this.subscriptions.push(Notifications[modelNotification].added.add(this.addToList));
-        this.subscriptions.push(Notifications[modelNotification].changed.add(this.replaceInList));
-        this.subscriptions.push(Notifications[modelNotification].deleted.add(this.removeFromList));
     }
 
     disposeOfSubscriptions() {

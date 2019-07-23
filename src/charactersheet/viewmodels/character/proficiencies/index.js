@@ -1,4 +1,5 @@
 import { AbstractTabularViewModel } from 'charactersheet/viewmodels/abstract';
+import { Notifications } from 'charactersheet/utilities';
 import { Proficiency } from 'charactersheet/models';
 import { ProficiencyFormViewModel } from './form';
 import autoBind from 'auto-bind';
@@ -24,6 +25,12 @@ export class ProficienciesViewModel extends AbstractTabularViewModel {
             'type asc': { field: 'type', direction: 'asc'},
             'type desc': { field: 'type', direction: 'desc'}
         };
+    }
+
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.proficiency.added.add(this.addToList));
+        this.subscriptions.push(Notifications.proficiency.changed.add(this.replaceInList));
+        this.subscriptions.push(Notifications.proficiency.deleted.add(this.removeFromList));
     }
 }
 

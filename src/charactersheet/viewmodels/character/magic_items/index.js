@@ -52,6 +52,12 @@ export class MagicItemsViewModel extends AbstractTabularViewModel {
     totalWeight = ko.pureComputed(() => {
         return calculateTotalLoad(this.entities());
     });
+
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.magicitem.added.add(this.addToList));
+        this.subscriptions.push(Notifications.magicitem.changed.add(this.replaceInList));
+        this.subscriptions.push(Notifications.magicitem.deleted.add(this.removeFromList));
+    }
 }
 
 ko.components.register('magic-items', {

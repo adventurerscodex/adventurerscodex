@@ -5,6 +5,7 @@ import {
  } from 'charactersheet/viewmodels/abstract';
 import { Item } from 'charactersheet/models/common';
 import { ItemFormViewModel } from './form';
+import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -44,6 +45,12 @@ export class ItemsViewModel extends AbstractTabularViewModel {
     totalWeight = ko.pureComputed(() => {
         return calculateTotalLoad(this.entities());
     });
+
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.item.added.add(this.addToList));
+        this.subscriptions.push(Notifications.item.changed.add(this.replaceInList));
+        this.subscriptions.push(Notifications.item.deleted.add(this.removeFromList));
+    }
 }
 
 ko.components.register('items', {
