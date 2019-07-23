@@ -52,7 +52,7 @@ export class Trait extends KOModel {
 
     delete = async () => {
         await this.ps.delete();
-        Notifications.feat.deleted.dispatch(this);
+        Notifications.trait.deleted.dispatch(this);
     }
 }
 
