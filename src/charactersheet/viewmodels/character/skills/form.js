@@ -4,6 +4,7 @@ import 'bin/knockout-select2';
 
 import { filter, find } from 'lodash';
 import { AbstractGridFormModel } from 'charactersheet/viewmodels/abstract';
+import { DELAY } from 'charactersheet/constants';
 import { Notifications } from 'charactersheet/utilities';
 import { ProficiencyTypeComponentViewModel } from 'charactersheet/components/proficiency-marker';
 import { Skill } from 'charactersheet/models/character';
@@ -53,6 +54,11 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
         this.subscriptions.push(Notifications.abilityscore.changed.add(this.updateAbilityScoreValues));
     }
 
+    forceResize = () => {
+        // Handle for browser order of operations so we don't calculate size
+        // before the view is ready
+        setTimeout(this.forceCardResize, DELAY.MEDIUM);
+    }
     async updateAbilityScoreValues (abilityScore) {
         if (abilityScore) {
             const skillUpdates = filter(
@@ -112,6 +118,7 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
                 this.displayAddForm(false);
             }
             $(this.addFormId).collapse('hide');
+            this.forceResize();
         } else {
             try {
                 this.displayAddForm(true);
@@ -122,6 +129,7 @@ export class SkillsFormViewModel extends AbstractGridFormModel {
                 this.displayAddForm(true);
             }
             $(this.addFormId).collapse('show');
+            this.forceResize();
         }
     }
 
