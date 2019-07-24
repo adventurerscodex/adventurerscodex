@@ -45,6 +45,12 @@ export class NotesListModel extends AbstractTabularViewModel {
             }
         });
     };
+
+    setUpSubscriptions() {
+        this.subscriptions.push(Notifications.note.added.add(this.addToList));
+        this.subscriptions.push(Notifications.note.changed.add(this.replaceInList));
+        this.subscriptions.push(Notifications.note.deleted.add(this.removeFromList));
+    }
 }
 
 ko.components.register('notes-list', {

@@ -32,6 +32,7 @@ class ScoreSaveViewModel extends AbstractGridViewModel {
     }
 
     findSaveByName = (name) => find(this.entities(), (savingthrow) => savingthrow.name() === name);
+
 }
 
 ko.components.register('ability-scores-saving-throws-view', {
