@@ -46,7 +46,6 @@
           class="form-control"
           data-bind="value: description,
                 event: { blur: $component.reviewInput, invalid: $component.invalidate },
-                attr: { ...$component.validation.name },
                 markdownEditor: true">
               </textarea>
       <small class="text-muted"> Text in this panel can be styled using Markdown. Click <a target="_blank"
