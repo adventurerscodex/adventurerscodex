@@ -1710,7 +1710,15 @@ hr.ac-table-header {
   vertical-align: text-bottom;
 }
 
-.trackedRow .short-rest-icon {
+.rest-description {
+  text-align: center;
+}
+.rest-description .rest-icon {
+  vertical-align: bottom;
+}
+
+.trackedRow .short-rest-icon,
+.rest-description .short-rest-icon {
   background: url('../images/meditation-blue.svg');
 }
 
@@ -1719,7 +1727,8 @@ hr.ac-table-header {
 }
 
 
-.trackedRow .long-rest-icon {
+.trackedRow .long-rest-icon,
+.rest-description .long-rest-icon  {
   background: url('../images/camping-tent-blue.svg');
 }
 
