@@ -34,9 +34,9 @@ import template from './index.html';
 import weaponSection from 'images/spinning-sword.svg';
 
 
-export function CharacterRootViewModel() {
+export function CharacterRootViewModel(params) {
     var self = this;
-
+    self.activeCharacter = params.activeCharacter;
     self.icons = {
         statsTab: statsTab,
         skillsTab: skillsTab,

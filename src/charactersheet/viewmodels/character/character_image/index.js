@@ -16,7 +16,7 @@ import md5 from 'blueimp-md5';
 import template from './index.html';
 
 
-export function PlayerImageViewModel() {
+export function CharacterImageViewModel() {
     var self = this;
 
     self.openModal = ko.observable(false);
@@ -165,6 +165,7 @@ export function PlayerImageViewModel() {
                 return self.getGravatarUrl();
             }
         }
+
         return '';
     });
 
@@ -193,7 +194,7 @@ export function PlayerImageViewModel() {
     };
 }
 
-ko.components.register('player-image', {
-    viewModel: PlayerImageViewModel,
+ko.components.register('character-image', {
+    viewModel: CharacterImageViewModel,
     template: template
 });
