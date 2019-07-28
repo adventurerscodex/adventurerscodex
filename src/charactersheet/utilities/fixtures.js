@@ -100,7 +100,14 @@ export var Fixtures = {
             '#C82D78',
             '#5cb85c',
             '#337ab7'
-        ]
+        ],
+        healthColor: {
+            dangerous: '#E74C3C',
+            warning: '#F39C12',
+            healthy: '#18bC9C',
+            tempHP: '#71D4E8',
+            tempHPBackground: '#FFF'
+        }
     },
     armor : {
         constants: {

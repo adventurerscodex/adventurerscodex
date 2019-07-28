@@ -5,13 +5,12 @@ import {
     HitDice,
     Profile
 } from 'charactersheet/models/character';
+import { Fixtures, Notifications } from 'charactersheet/utilities';
 import { defer, find } from 'lodash';
 
 import { AbstractViewModel } from 'charactersheet/viewmodels/abstract';
-
 import { CoreManager } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
-import { Notifications } from 'charactersheet/utilities';
 
 import autoBind from 'auto-bind';
 import ko from 'knockout';
@@ -93,9 +92,14 @@ class StatsHealthViewModel {
     hpText = ko.pureComputed(() => {
         let tempHp = '';
         if (this.health().tempHitPointsRemaining()) {
-            tempHp = `<span style="color: #71D4E8">+${this.health().tempHitPointsRemaining()}</span>`;
+            tempHp = `
+            <span style="color: ${Fixtures.general.healthColor.tempHP}">
+            +${this.health().tempHitPointsRemaining()}
+            </span>`;
         }
-        return `${this.health().regularHitPointsRemaining()} ${tempHp}<br />of&nbsp;${this.health().maxHitPoints()}&nbsp;HP`;
+        return `${this.health().regularHitPointsRemaining()} ${tempHp}
+        <br />
+        of&nbsp;${this.health().maxHitPoints()}&nbsp;HP`;
     });
 
     // Configure the knockout-circular-progress display for health
@@ -117,29 +121,32 @@ class StatsHealthViewModel {
 
     getHealthColor = () => {
         if (this.health().isDangerous()) {
-            return '#e74c3c';
+            return Fixtures.general.healthColor.dangerous;
         } else if (this.health().isWarning()) {
-            return '#f39c12';
+            return Fixtures.general.healthColor.warning;
         }
-        return '#18bc9c';
+        return Fixtures.general.healthColor.healthy;
     };
 
     // Configure the knockout-circular-progress display for tempHp
-    tempHpChart =  ko.pureComputed(()=>({
-        data: {
-            text: null,
-            value: this.health().tempHitPointsRemaining(),
-            maxValue: this.health().maxHitPoints()
-        },
-        config: {
-            trailColor: '#FFF',
-            strokeWidth: 6,
-            from: { color: this.tempHpColor },
-            to: { color: this.tempHpColor }
-        }
-    }));
-
-    tempHpColor = '#71D4E8';
+    tempHpChart =  ko.pureComputed(()=> {
+        const tempHP = this.health().tempHitPointsRemaining() <= this.health().maxHitPoints() ?
+                      this.health().tempHitPointsRemaining() :
+                      this.health().maxHitPoints();
+        return {
+            data: {
+                text: null,
+                value: tempHP,
+                maxValue: this.health().maxHitPoints()
+            },
+            config: {
+                trailColor: Fixtures.general.healthColor.tempHPBackground,
+                strokeWidth: 6,
+                from: { color: Fixtures.general.healthColor.tempHP },
+                to: { color: Fixtures.general.healthColor.tempHP }
+            }
+        };
+    });
 
     // Hit Point Interaction ***************************************************
     handleHeal = async () => {
