@@ -1,7 +1,7 @@
 <card-edit-actions params="{ flip: $component.flip }"></card-edit-actions>
 <div id="characters"
     class="container-fluid characters-module-style">
-  <div class="row">
+  <div class="row" style="padding-right: 15px"> <!-- padding for edit button -->
     <!-- ko ifnot: loaded(), completeOn: 'render' -->
     <div style="hieight: 100px" class="loader-wrapper"><div style="width: 75px; height:75px; margin: 25px auto" class="loader"></div></div>
     <!-- /ko -->
@@ -9,20 +9,20 @@
     <div class="col-sm-2 col-xs-12">
       <div class="circular-profile no-padding center-block"
         data-bind="attr: {
-            height: imageHeight,
-            width: imageWidth,
+            height: $component.imageHeight,
+            width: $component.imageWidth,
           },
           css: imageBorderClass">
-        <div class="image-upload-preview text-center">
-          <!-- ko if: playerImageSrc -->
+        <div class="image-upload-preview text-center" data-bind="with: profileImage">
+          <!-- ko if: imageUrl -->
           <img class="img-circle"
             data-bind="attr: {
-              src: playerImageSrc,
-              height: imageHeight,
-              width: imageWidth
+              src: imageUrl,
+              height: $component.imageHeight,
+              width: $component.imageWidth
             }">
           <!-- /ko -->
-          <!-- ko ifnot: playerImageSrc -->
+          <!-- ko ifnot: imageUrl -->
           <div class="text-muted player-image-style" id="profilePictureAddToggle">
             <small>A mysterious stranger</small>
           </div>

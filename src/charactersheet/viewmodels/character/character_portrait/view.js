@@ -1,15 +1,12 @@
 import { Core, ProfileImage } from 'charactersheet/models/common';
-import { Notifications, Utility } from 'charactersheet/utilities';
 import { OtherStats, Profile } from 'charactersheet/models/character';
 import { CoreManager } from 'charactersheet/utilities';
 import { DELAY } from 'charactersheet/constants';
+import { Notifications } from 'charactersheet/utilities';
 import autoBind from 'auto-bind';
 import { defer } from 'lodash';
 import ko from 'knockout';
-import md5 from 'blueimp-md5';
 import template from './view.html';
-
-const GRAVATAR_BASE_URL = 'https://www.gravatar.com/avatar/{}?d=mm';
 
 export class CharacterPortraitViewModel {
     constructor(params) {
@@ -81,30 +78,8 @@ export class CharacterPortraitViewModel {
         setTimeout(this.disposeOfSubscriptions, DELAY.DISPOSE);
     }
 
-    getGravatarUrl = (email) => {
-        try {
-            const hash = md5(email.trim());
-            return self.GRAVATAR_BASE_URL.replace('{}', hash);
-        } catch(err) {
-            return '';
-        }
-    };
-
-    playerImageSrc = ko.pureComputed(() => {
-        switch(this.profileImage().type()) {
-        case 'url':
-            return Utility.string.createDirectDropboxLink(this.profileImage().sourceUrl());
-
-        case 'email':
-            return self.getGravatarUrl();
-        default:
-
-        }
-        return '';
-    });
-
     imageBorderClass = ko.pureComputed(() => {
-        const border = this.playerImageSrc().length ? 'no-border' : 'dashed-border';
+        const border = this.profileImage().imageUrl().length ? 'no-border' : 'dashed-border';
         const inspired = this.otherStats().inspiration() ? 'image-border-inspired' : '';
         return `${border} ${inspired}`;
     });

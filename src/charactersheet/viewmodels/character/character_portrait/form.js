@@ -3,6 +3,7 @@ import { CoreManager, Fixtures, Notifications } from 'charactersheet/utilities';
 import { AbstractFormModel } from 'charactersheet/viewmodels/abstract';
 import { Profile } from 'charactersheet/models/character';
 import autoBind from 'auto-bind';
+import { find } from 'lodash';
 import ko from 'knockout';
 
 import template from './form.html';
@@ -13,12 +14,18 @@ export class CharacterPortraitFormModel extends AbstractFormModel {
         this.defaultHeight = params.defaultHeight;
         this.profile = ko.observable(new Profile());
         this.core = ko.observable(new Core());
-        this.showPortrait = ko.observable(false);
+
+        // Stores the image type since it does not map to the backend 1:1
+        this.imageType = ko.observable('');
+
+        this.showStockImages = ko.observable(false);
         this.selectedStockImage = ko.observableArray([]);
-        this.defaultImages = ko.observableArray(Fixtures.defaultProfilePictures);
+        this.stockImages = ko.observableArray(Fixtures.defaultProfilePictures);
+
+        this.imageHeight = 80;
+        this.imageWidth = 80;
         autoBind(this);
     }
-
     modelClass () {
         return ProfileImage;
     }
@@ -33,40 +40,65 @@ export class CharacterPortraitFormModel extends AbstractFormModel {
         await super.refresh();
         await this.profile().load({uuid: CoreManager.activeCore().uuid()});
         await this.core().importValues(CoreManager.activeCore().exportValues());
+        this.selectedStockImage([]);
+        this.configureImages();
     }
 
     setUpSubscriptions() {
         super.setUpSubscriptions();
-        this.subscriptions.push(this.show.subscribe(this.resetShowPortrait));
-        this.subscriptions.push(this.entity().type.subscribe(this.togglePortrait));
+        this.subscriptions.push(this.show.subscribe(this.resetShowStockImages));
+        this.subscriptions.push(this.imageType.subscribe(this.toggleShowStockImages));
+        this.subscriptions.push(this.selectedStockImage.subscribe(this.stockImageSelected));
     }
 
-    resetShowPortrait () {
-        if (!this.show()) {
-            this.showPortrait(false);
+    configureImages = () => {
+        this.imageType(this.entity().type());
+        if (this.entity().type() === 'url' && this.entity().sourceUrl()) {
+            const stockImage = find(this.stockImages(), {'image': this.entity().sourceUrl()});
+            if (stockImage) {
+                this.selectedStockImage().push(stockImage);
+                this.imageType('picker');
+            }
         }
     }
 
-    togglePortrait = (type) => {
-        if (type === 'picker' && !this.showPortrait()) {
-            this.showPortrait(true);
+    resetShowStockImages () {
+        if (!this.show()) {
+            this.showStockImages(false);
+        }
+    }
+
+    toggleShowStockImages = (type) => {
+        if (type === 'picker') {
+            this.entity().type('url');
+        } else {
+            this.entity().type(this.imageType());
+        }
+        if (type === 'picker' && !this.showStockImages()) {
+            this.showStockImages(true);
             this.forceCardResize();
-        } else if (this.showPortrait()); {
-            this.showPortrait(false);
+        } else if (this.showStockImages()); {
+            this.showStockImages(false);
             this.forceCardResize();
         }
     };
 
+    stockImageSelected = (imageList) => {
+        if (imageList.length > 0) {
+            const selectedImage = imageList[0];
+            this.entity().sourceUrl(imageList[0].image);
+        }
+    }
 
     async save () {
-        if (this.entity().type() === 'picker') {
-            this.entity().sourceUrl(this.selectedStockImage()[0].image);
+        this.entity().type(this.imageType());
+        if (this.imageType() === 'picker') {
             this.entity().type('url');
-        } else if (this.entity().type() === 'email') {
+        }
+        if (this.imageType() === 'email') {
             this.entity().sourceUrl(null);
-            this.selectedStockImage = ko.observableArray([]);
         } else {
-            this.selectedStockImage = ko.observableArray([]);
+            this.entity().email(null);
         }
         await super.save();
         await this.profile().save();
@@ -75,6 +107,7 @@ export class CharacterPortraitFormModel extends AbstractFormModel {
         // Core gets notified here.
         const response = await this.core().ps.save();
         this.core().importValues(response.object.exportValues());
+        this.selectedStockImage([]);
         Notifications.profile.playerName.changed.dispatch(this.core());
     }
 
