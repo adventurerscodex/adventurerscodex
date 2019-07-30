@@ -28,7 +28,7 @@ export class ProfileImage extends KOModel {
         } else if (this.sourceUrl()) {
             return Utility.string.createDirectDropboxLink(this.sourceUrl());
         }
-        return '';
+        return Utility.GRAVATAR_BASE_URL;
     });
 
     load = async (params) => {

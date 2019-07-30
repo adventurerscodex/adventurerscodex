@@ -1,7 +1,6 @@
 export { AbilityScoresViewModel } from './ability_scores';
 export { ActionsToolbarViewModel } from './actions_toolbar';
 export { ArmorViewModel } from './armor';
-export { CharacterImageViewModel } from './character_image';
 export { CharacterNameViewModel } from './character_name';
 export { CharacterPortraitModel } from './character_portrait';
 export { CharacterStatusLineViewModel } from './character_status_line';
