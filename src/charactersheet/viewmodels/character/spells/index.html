@@ -2,7 +2,7 @@
   <div class="h4 card-title">
     <span data-bind="if: filteredByCastable"> Castable </span> Spells<br />
     <small data-bind="if: filteredByCastable"> Your spells are filtered. Only <strong>prepared spells</strong> that you can cast with an available spell slot are visible. To see all of your spells, <br />
-      <span css="color: #2c3e50;"
+      <span style="color: #2c3e50;"
           data-bind="click: $component.toggleSpellFilter"><input type="checkbox"
             class="filter-checkbox sr-only"
             data-bind="checked: filteredByCastable"></input><label for="filterByCastable"></label> Unfilter the list.</span>
@@ -36,8 +36,7 @@
         <th class="hidden-xs hidden-sm"
             data-bind="click: () => {sortBy('range');}"> Range <span data-bind="css: sortArrow('range')"></span>
         </th>
-        <th style="col-xs-1 text-right"
-            class="toggle-collapse-col">
+        <th class="col-xs-1 text-right toggle-collapse-col">
           <a href="#"
               data-bind="{click: collapseAll}">
             <span class="fa fa-minus"></span>
@@ -93,8 +92,7 @@
         <td class="hidden-xs hidden-sm">
           <span data-bind="text: $component.shortText(range, 10)"></span>
         </td>
-        <td style="col-xs-1 text-right"
-            class="toggle-collapse-col">
+        <td class="col-xs-1 text-right toggle-collapse-col">
           <span data-toggle="collapse"
               data-bind="attr:{'data-target': `#spell_list_${uuid()}`}"
               class="rotate fa fa-chevron-left"></span>

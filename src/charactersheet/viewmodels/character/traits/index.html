@@ -25,8 +25,8 @@
           data-bind="attr:{'data-target': `#trait_list_${uuid()}`, id: `#trait_row_${uuid()}`}">
         <td>
           <span data-bind="text: $component.shortText(name)" />
-          <span data-bind="visible: $component.showTracked($data)"
-              style="opacity: .9"
+          <span data-bind="visible: isTracked"
+              style="opacity: .9; color: #18bc9c"
               class="glyphicon glyphicon-time"
               aria-hidden="true"></span>
         </td>
@@ -54,6 +54,16 @@
                 <div data-bind="text:name" />
                 <small><span data-bind="text: race" /></small>
               </div>
+              <!-- ko if: isTracked -->
+              <div data-bind="with: tracked" class="panel-footer rest-description">
+                <span
+                    style="opacity: .9; color: #18bc9c"
+                    class="glyphicon glyphicon-time"
+                    aria-hidden="true" /> Max uses: <strong data-bind="text: max" />. 
+                    <span data-bind="visible: resetsOn() == 'long'">Resets on Long Rest <span class="rest-icon long-rest-icon" aria-hidden="true" /> </span>
+                    <span data-bind="visible: resetsOn() == 'short'">Resets on Short Rest <span class="rest-icon short-rest-icon" aria-hidden="true" /> </span>
+              </div>
+              <!-- /ko -->
               <div class="panel-body">
               <!-- ko if: description -->
                 <div class="card-description"

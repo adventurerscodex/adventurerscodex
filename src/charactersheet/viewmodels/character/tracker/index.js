@@ -32,6 +32,10 @@ class TrackerViewModel extends AbstractTabularViewModel {
         this.entities(tracked);
     }
 
+    showTracked(entity) {
+        return !!ko.utils.unwrapObservable(entity.isTracked);
+    }
+
     nameMeta = (tracked) => {
         let metaText = '';
         if (tracked.characterClass) {
