@@ -118,6 +118,34 @@
 <!-- ko if: shouldShowApp -->
 <div class="container-fluid main">
   <div class="col-lg-10 col-xs-12 col-lg-offset-1">
+  <div class="alert alert-info alert-dismissible">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8">
+        <h4>Check out the new beta version of Adventurer's Codex!</h4>
+        We're excited to share the beta of the new version with you.
+        If you have any issues, you can return to this version at any time.
+      </div>
+      <div class="col-xs-12 col-sm-4 text-right">
+        <a
+          data-bind="attr: { href: '/v2/' + window.location.hash }"
+          type="button"
+          class="btn btn-sm btn-primary"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          Try the Beta!
+        </a>
+        <button
+          type="button"
+          class="btn btn-sm btn-info"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          No Thanks
+        </button>
+      </div>
+    </div>
+  </div>
   <div id="characters" class="container-fluid characters-module-style">
     <div class="row">
       <div class="col-sm-12">
