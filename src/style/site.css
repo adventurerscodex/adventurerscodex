@@ -1291,6 +1291,11 @@ transition : height 0.25s ease opacity 0.2s linear;
   overflow: hidden;
 }
 
+#toast-container {
+  /* Position the toaster above the cards, or anything really */
+  transform: translateZ(999px);
+}
+
 .card-flip-container,
  .front, .back,
 .inner-flip-container, .inner-front, .inner-back,
