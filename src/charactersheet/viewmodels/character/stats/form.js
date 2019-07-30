@@ -41,7 +41,7 @@ export class StatsHealthFormViewModel extends AbstractFormModel {
 
     async save () {
         if (this.entity().damage() < this.entity().maxHitPoints() ) {
-            this.entity().dying(false);
+            this.entity().isDying(false);
         }
         await super.save();
         await this.hitDice().save();
