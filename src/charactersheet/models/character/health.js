@@ -19,7 +19,7 @@ export class Health extends KOModel {
     maxHitPoints = ko.observable(10);
     tempHitPoints = ko.observable(0);
     damage = ko.observable(0);
-    dying = ko.observable(false);
+    isDying = ko.observable(false);
 
     hitPoints = ko.pureComputed(() => {
         return this.regularHitPointsRemaining();

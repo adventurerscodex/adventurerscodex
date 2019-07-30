@@ -149,7 +149,7 @@ export function HealthinessStatusServiceComponent() {
         }
 
         // Character is unconscious and stable
-        if (health.dying()) {
+        if (health.isDying()) {
             return 0.0;
         }
 

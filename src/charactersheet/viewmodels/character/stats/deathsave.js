@@ -69,7 +69,7 @@ class StatsDeathSaveViewModel {
     }
     updateHealth = (health) => {
         this.health().importValues(health.exportValues());
-        if (!this.health().dying()) {
+        if (!this.health().isDying()) {
             this.resetSaves();
         }
     }
@@ -140,7 +140,7 @@ class StatsDeathSaveViewModel {
     };
 
     stabilize = async () => {
-        this.health().dying(false);
+        this.health().isDying(false);
         await this.health().save();
         Notifications.userNotification.successNotification.dispatch(
           'You have been spared...for now.',

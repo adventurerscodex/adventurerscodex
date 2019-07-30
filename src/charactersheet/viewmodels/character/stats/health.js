@@ -160,7 +160,7 @@ class StatsHealthViewModel {
         // damageHandler updated this.health()
         this.damageHandler(healValue);
         if (this.health().damage() < this.health().maxHitPoints()) {
-            this.health().dying(false);
+            this.health().isDying(false);
         }
         await this.health().save();
         this.healInput(null);
@@ -192,7 +192,7 @@ class StatsHealthViewModel {
         // damageHandler updated this.health()
         this.damageHandler(damageValue);
         if (this.health().damage() >= this.health().maxHitPoints()) {
-            this.health().dying(true);
+            this.health().isDying(true);
         }
 
         await this.health().save();

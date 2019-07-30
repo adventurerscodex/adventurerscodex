@@ -35,7 +35,7 @@ export class StatsCardViewModel {
     load = async () => {
         const key = CoreManager.activeCore().uuid();
         await this.health().load({uuid: key});
-        this.deathSavesVisible(this.health().dying());
+        this.deathSavesVisible(this.health().isDying());
         this.setUpSubscriptions();
     }
 
@@ -63,7 +63,7 @@ export class StatsCardViewModel {
 
     healthChanged = (health) => {
         this.health().importValues(health.exportValues());
-        this.deathSavesVisible(this.health().dying());
+        this.deathSavesVisible(this.health().isDying());
     }
 
     subscribeToShowForm = () => {
