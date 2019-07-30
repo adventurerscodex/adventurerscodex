@@ -68,9 +68,10 @@
                     value="url"
                     data-bind="checked: $component.imageType">
               </span>
-              <input type="text"
+              <input type="url"
                   class="form-control"
-                  data-bind="value: $component.imageType() === 'url' ? sourceUrl : '', enable: $component.imageType() === 'url'">
+                  data-bind="event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                  value: $component.imageType() === 'url' ? sourceUrl : '', enable: $component.imageType() === 'url'">
             </div>
             <small class="help-block">Paste in a link to your favorite profile picture. Make sure it's the full image link though.</small>
           </div>
@@ -85,10 +86,11 @@
                     value="email"
                     data-bind="checked: $component.imageType">
               </span>
-              <input type="text"
+              <input type="email"
                   placeholder="Gravatar Email"
                   class="form-control"
-                  data-bind="value: $component.imageType() === 'email' ? email : '', enable: $component.imageType() === 'email'">
+                  data-bind="event: { blur: $component.reviewInput, invalid: $component.invalidate },
+                  value: $component.imageType() === 'email' ? email : '', enable: $component.imageType() === 'email'">
             </div>
             <small class="help-block"><a href="http://en.gravatar.com"
                   target="_blank">Gravatar is a free service</a> that allows you to set a profile picture based on your email, and it works in lots of places.</small>
