@@ -33,7 +33,7 @@
           <span data-bind="text: $component.shortText(name)"></span>
         </td>
         <td style="padding: 6px;" class="hidden-xs">
-          <div class="" data-bind="attr: {'class': $component.resetsOnImg(tracked)}"></div>
+          <div data-bind="attr: {'class': $component.resetsOnImg(tracked)}"></div>
         </td>
         <td style="padding: 6px;">
           <mini-plus-minus params="value: tracked().used,
@@ -77,6 +77,14 @@
               <div class="h4 collapsable-card-title">
                 <span data-bind="text: context.data.name"></span>
                 <small data-bind="text: context.nameMeta(context.data)"></small>
+              </div>
+              <div data-bind="with: context.data.tracked" class="panel-footer rest-description">
+                <span
+                    style="opacity: .9;"
+                    class="glyphicon glyphicon-time"
+                    aria-hidden="true" /> Max uses: <strong data-bind="text: max" />.
+                    <span data-bind="visible: resetsOn() == 'long'">Resets on Long Rest <span class="rest-icon long-rest-icon" aria-hidden="true" /> </span>
+                    <span data-bind="visible: resetsOn() == 'short'">Resets on Short Rest <span class="rest-icon short-rest-icon" aria-hidden="true" /> </span>
               </div>
               <div class="panel-body">
               <div class="card-description"
