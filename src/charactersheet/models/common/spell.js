@@ -15,7 +15,7 @@ export class Spell extends KOModel {
     static __skeys__ = ['core', 'spells'];
 
     static mapping = {
-        include: ['coreUuid', 'prepared']
+        include: ['coreUuid', 'prepared', 'alwaysPrepared']
     };
 
     coreUuid = ko.observable(null);
