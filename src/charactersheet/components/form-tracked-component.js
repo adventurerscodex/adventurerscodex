@@ -1,4 +1,6 @@
+import { Tracked } from 'charactersheet/models/character';
 import campingTentWhite from 'images/camping-tent.svg';
+import { get } from 'lodash';
 import ko from 'knockout';
 import meditationWhite from 'images/meditation.svg';
 
@@ -26,6 +28,23 @@ export class TrackedForm {
     }
     meditationWhite = meditationWhite;
     campingTentWhite = campingTentWhite;
+
+    validation = {
+        ...get(Tracked, 'validationConstraints.fieldParams', {})
+    };
+
+    reviewInput = (data, event) => {
+        if (event.target.checkValidity()) {
+            event.target.classList.remove('error');
+        } else {
+            event.target.classList.add('error');
+        }
+    }
+
+    invalidate = (data, event) => {
+        event.target.classList.add('error');
+        return true; // Continue validating
+    }
 }
 
 ko.components.register('form-tracked-component', {
@@ -37,11 +56,10 @@ ko.components.register('form-tracked-component', {
         <div class="form-group">\
           <label for="bonus"\
                  class="control-label">Max</label>\
-          <input type="number"\
-                 class="form-control"\
-                 min="1"\
-                 required="true"\
+          <input class="form-control"\
                  data-bind="value: max,\
+                 attr: { ...$component.validation.max },\
+                 event: { blur: $component.reviewInput, invalid: $component.invalidate },\
                  hasFocus: $component.formElementHasFocus">\
         </div>\
         <div class="form-group">\
