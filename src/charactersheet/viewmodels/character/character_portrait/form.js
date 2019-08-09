@@ -107,6 +107,7 @@ export class CharacterPortraitFormModel extends AbstractFormModel {
         // Core gets notified here.
         const response = await this.core().ps.save();
         this.core().importValues(response.object.exportValues());
+        CoreManager.activeCore().playerName(this.core().playerName());
         this.selectedStockImage([]);
         Notifications.profile.playerName.changed.dispatch(this.core());
     }
